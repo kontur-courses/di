@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure;
+using NUnit.Framework;
 
 namespace FractalPainting.App
 {

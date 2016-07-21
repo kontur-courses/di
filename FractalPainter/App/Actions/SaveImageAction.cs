@@ -6,7 +6,7 @@ namespace FractalPainting.App.Actions
 {
 	public class SaveImageAction : IUiAction, INeed<IImageDirectoryProvider>, INeed<IImageHolder>
 	{
-		private IImageDirectoryProvider imageSettings;
+		private IImageDirectoryProvider imageDirectoryProvider;
 		private IImageHolder imageHolder;
 		public string Category => "Файл";
 		public string Name => "Сохранить...";
@@ -18,7 +18,7 @@ namespace FractalPainting.App.Actions
 			{
 				CheckFileExists = false,
 				Multiselect = false,
-				InitialDirectory = Path.GetFullPath(imageSettings.ImagesDirectory)
+				InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory)
 				
 			};
 			var res = dialog.ShowDialog();
@@ -28,7 +28,7 @@ namespace FractalPainting.App.Actions
 
 		public void SetDependency(IImageDirectoryProvider dependency)
 		{
-			imageSettings = dependency;
+			imageDirectoryProvider = dependency;
 		}
 
 		public void SetDependency(IImageHolder dependency)

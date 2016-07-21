@@ -29,28 +29,4 @@ namespace FractalPainting.App.Actions
 			imageHolder = dependency;
 		}
 	}
-
-	//container.Bind<ImageSettings>().ToPart().Of<AppSettings>(s => s.ImageSettings);
-	public static class DependencyProviderKernelExtensions
-	{
-		public static PartSyntax<TDep> ToPart<TDep>(
-			this IBindingToSyntax<TDep> syntax)
-		{
-			return new PartSyntax<TDep>(syntax);
-		}
-	}
-
-	public class PartSyntax<T>
-	{
-		private readonly IBindingToSyntax<T> syntax;
-
-		public PartSyntax(IBindingToSyntax<T> syntax)
-		{
-			this.syntax = syntax;
-		}
-		public IBindingWhenInNamedWithOrOnSyntax<T> Of<TPartHolder>(Func<TPartHolder, T> getDependency)
-		{
-			return syntax.ToMethod(ctx => getDependency(ctx.Kernel.Get<TPartHolder>()));
-		}
-	}
 }
