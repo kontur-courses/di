@@ -8,23 +8,6 @@ namespace FractalPainting.App.Actions
 	{
 		private IImageDirectoryProvider imageDirectoryProvider;
 		private IImageHolder imageHolder;
-		public string Category => "Файл";
-		public string Name => "Сохранить...";
-		public string Description => "Сохранить изображение в файл";
-
-		public void Perform()
-		{
-			var dialog = new OpenFileDialog
-			{
-				CheckFileExists = false,
-				Multiselect = false,
-				InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory)
-				
-			};
-			var res = dialog.ShowDialog();
-			if (res == DialogResult.OK)
-				imageHolder.SaveImage(dialog.FileName);
-		}
 
 		public void SetDependency(IImageDirectoryProvider dependency)
 		{
@@ -35,6 +18,21 @@ namespace FractalPainting.App.Actions
 		{
 			imageHolder = dependency;
 		}
-	}
 
+		public string Category => "Файл";
+		public string Name => "Сохранить...";
+		public string Description => "Сохранить изображение в файл";
+
+		public void Perform()
+		{
+			var dialog = new SaveFileDialog
+			{
+				CheckFileExists = false,
+				InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory)
+			};
+			var res = dialog.ShowDialog();
+			if (res == DialogResult.OK)
+				imageHolder.SaveImage(dialog.FileName);
+		}
+	}
 }

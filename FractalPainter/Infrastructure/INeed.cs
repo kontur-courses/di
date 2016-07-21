@@ -1,4 +1,4 @@
-namespace FractalPainting.App.Actions
+namespace FractalPainting.Infrastructure
 {
 	public interface INeed<T>
 	{

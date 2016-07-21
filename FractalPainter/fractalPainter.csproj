@@ -55,9 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Actions\PaletteSettingsAction.cs" />
-    <Compile Include="App\Actions\Palette.cs" />
+    <Compile Include="App\Palette.cs" />
     <Compile Include="App\Actions\SaveImageAction.cs" />
-    <Compile Include="App\Actions\INeed.cs" />
+    <Compile Include="Infrastructure\INeed.cs" />
     <Compile Include="App\Actions\KochFractalAction.cs" />
     <Compile Include="App\Actions\ImageSettingsAction.cs" />
     <Compile Include="App\Actions\DragonFractalAction.cs" />

@@ -3,18 +3,22 @@ using System.Drawing;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure;
-using NUnit.Framework;
 
 namespace FractalPainting.App
 {
 	public class MainForm : Form
 	{
-		private readonly PictureBoxImageHolder pictureBox;
 		private readonly ImageSettings imageSettings;
+		private readonly PictureBoxImageHolder pictureBox;
 
-		public MainForm() : this(new IUiAction[] { new SaveImageAction(), new DragonFractalAction(), new KochFractalAction(),  new ImageSettingsAction(), new PaletteSettingsAction(),  })
+		public MainForm()
+			: this(
+				new IUiAction[]
+				{
+					new SaveImageAction(), new DragonFractalAction(), new KochFractalAction(), new ImageSettingsAction(),
+					new PaletteSettingsAction()
+				})
 		{
-
 		}
 
 		public MainForm(IUiAction[] actions)

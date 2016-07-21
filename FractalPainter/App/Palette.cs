@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace FractalPainting.App.Actions
+namespace FractalPainting.App
 {
 	public class Palette
 	{

@@ -5,6 +5,12 @@ namespace FractalPainting.App.Actions
 	public class PaletteSettingsAction : IUiAction, INeed<Palette>
 	{
 		private Palette palette;
+
+		public void SetDependency(Palette dependency)
+		{
+			palette = dependency;
+		}
+
 		public string Category => "Настройки";
 		public string Name => "Палитра...";
 		public string Description => "Цвета для рисования фракталов";
@@ -12,10 +18,6 @@ namespace FractalPainting.App.Actions
 		public void Perform()
 		{
 			SettingsForm.For(palette).ShowDialog();
-		}
-		public void SetDependency(Palette dependency)
-		{
-			palette = dependency;
 		}
 	}
 }

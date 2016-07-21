@@ -21,7 +21,7 @@ namespace FractalPainting.App
 			try
 			{
 				settingsFilename = "app.settings";
-				byte[] data = storage.Get(settingsFilename);
+				var data = storage.Get(settingsFilename);
 				if (data == null)
 				{
 					var defaultSettings = CreateDefaultSettings();
@@ -50,6 +50,5 @@ namespace FractalPainting.App
 		{
 			storage.Set(settingsFilename, serializer.Serialize(settings));
 		}
-
 	}
 }
