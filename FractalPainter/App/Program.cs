@@ -22,10 +22,24 @@ namespace FractalPainting.App
 			container.Bind<IUiAction>().To<DragonFractalAction>();
 			container.Bind<IUiAction>().To<ImageSettingsAction>();
 			container.Bind<IUiAction>().To<PaletteSettingsAction>();
-
+			container.Bind<IImageHolder, PictureBoxImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
+			container.Bind<IObjectSerializer>().To<XmlObjectSerializer>().WhenInjectedInto<SettingsManager>();
+			container.Bind<IBlobStorage>().To<FileBlobStorage>().WhenInjectedInto<SettingsManager>();
+			container.Bind<IImageDirectoryProvider, AppSettings>()
+				.ToMethod(context => context.Kernel.Get<SettingsManager>().Load()).InSingletonScope();
+			container.Bind<Palette>().ToSelf().InSingletonScope();
+			container.Bind<ImageSettings>()
+				.ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(container.Get<MainForm>());
+			try
+			{
+				Application.Run(container.Get<MainForm>());
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(e.ToString());
+			}
 		}
 	}
 }
