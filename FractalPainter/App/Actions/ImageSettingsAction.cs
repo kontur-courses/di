@@ -1,11 +1,10 @@
-using System.Drawing.Drawing2D;
 using FractalPainting.Infrastructure;
 
 namespace FractalPainting.App.Actions
 {
-	public class ImageSettingsAction : IUiAction, INeed<ImageSettings>, INeed<IImageHolder>
+	public class ImageSettingsAction : IUiAction, INeed<IImageSettingsProvider>, INeed<IImageHolder>
 	{
-		private ImageSettings imageSettings;
+		private IImageSettingsProvider imageSettingsProvider;
 		private IImageHolder imageHolder;
 		public string Category => "Настройки";
 		public string Name => "Изображение...";
@@ -13,13 +12,14 @@ namespace FractalPainting.App.Actions
 
 		public void Perform()
 		{
+			var imageSettings = imageSettingsProvider.ImageSettings;
 			SettingsForm.For(imageSettings).ShowDialog();
 			imageHolder.RecreateImage(imageSettings);
 		}
 
-		public void SetDependency(ImageSettings dependency)
+		public void SetDependency(IImageSettingsProvider dependency)
 		{
-			imageSettings = dependency;
+			imageSettingsProvider = dependency;
 		}
 
 		public void SetDependency(IImageHolder dependency)

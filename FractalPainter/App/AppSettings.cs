@@ -1,18 +1,18 @@
-using System.IO;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-
 namespace FractalPainting.App
 {
-	public interface IImageDirectorySettings
+	public interface IImageDirectoryProvider
 	{
-		string ImagePath { get; }
+		string ImagesDirectory { get; }
 	}
 
-	public class AppSettings : IImageDirectorySettings
+	public interface IImageSettingsProvider
 	{
-		public string ImagePath { get; set; }
+		ImageSettings ImageSettings { get; }
+	}
+
+	public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider
+	{
 		public ImageSettings ImageSettings { get; set; }
-		public FormWindowState MainWindowState { get; set; }
+		public string ImagesDirectory { get; set; }
 	}
 }

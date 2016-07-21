@@ -4,9 +4,9 @@ using FractalPainting.Infrastructure;
 
 namespace FractalPainting.App.Actions
 {
-	public class SaveImageAction : IUiAction, INeed<IImageDirectorySettings>, INeed<IImageHolder>
+	public class SaveImageAction : IUiAction, INeed<IImageDirectoryProvider>, INeed<IImageHolder>
 	{
-		private IImageDirectorySettings imageSettings;
+		private IImageDirectoryProvider imageSettings;
 		private IImageHolder imageHolder;
 		public string Category => "Файл";
 		public string Name => "Сохранить...";
@@ -18,7 +18,7 @@ namespace FractalPainting.App.Actions
 			{
 				CheckFileExists = false,
 				Multiselect = false,
-				InitialDirectory = Path.GetFullPath(imageSettings.ImagePath)
+				InitialDirectory = Path.GetFullPath(imageSettings.ImagesDirectory)
 				
 			};
 			var res = dialog.ShowDialog();
@@ -26,7 +26,7 @@ namespace FractalPainting.App.Actions
 				imageHolder.SaveImage(dialog.FileName);
 		}
 
-		public void SetDependency(IImageDirectorySettings dependency)
+		public void SetDependency(IImageDirectoryProvider dependency)
 		{
 			imageSettings = dependency;
 		}

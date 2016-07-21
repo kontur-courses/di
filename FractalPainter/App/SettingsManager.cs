@@ -41,9 +41,8 @@ namespace FractalPainting.App
 		{
 			return new AppSettings
 			{
-				ImagePath = ".",
-				ImageSettings = new ImageSettings(),
-				MainWindowState = FormWindowState.Normal
+				ImagesDirectory = ".",
+				ImageSettings = new ImageSettings()
 			};
 		}
 

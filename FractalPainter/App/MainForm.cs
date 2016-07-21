@@ -11,7 +11,7 @@ namespace FractalPainting.App
 		private readonly PictureBoxImageHolder pictureBox;
 		private readonly ImageSettings imageSettings;
 
-		public MainForm() : this(new IUiAction[] { new SaveImageAction(), new DragonFractalAction(), new TriangleFractalAction(),  new ImageSettingsAction(), })
+		public MainForm() : this(new IUiAction[] { new SaveImageAction(), new DragonFractalAction(), new KochFractalAction(),  new ImageSettingsAction(), new PaletteSettingsAction(),  })
 		{
 
 		}
@@ -20,9 +20,11 @@ namespace FractalPainting.App
 		{
 			pictureBox = new PictureBoxImageHolder();
 			var mainMenu = new MenuStrip();
+
 			var settingsManager = new SettingsManager(new XmlObjectSerializer(), new FileBlobStorage());
 			var settings = settingsManager.Load();
 			imageSettings = settings.ImageSettings;
+			var palette = new Palette();
 
 			mainMenu.Items.AddRange(actions.ToMenuItems());
 			Controls.Add(mainMenu);
@@ -33,8 +35,9 @@ namespace FractalPainting.App
 			ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
 			DependencyInjector.Inject<IImageHolder>(actions, pictureBox);
-			DependencyInjector.Inject<IImageDirectorySettings>(actions, settings);
-			DependencyInjector.Inject(actions, imageSettings);
+			DependencyInjector.Inject<IImageDirectoryProvider>(actions, settings);
+			DependencyInjector.Inject<IImageSettingsProvider>(actions, settings);
+			DependencyInjector.Inject(actions, palette);
 		}
 
 		protected override void OnShown(EventArgs e)
