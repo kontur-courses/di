@@ -3,19 +3,20 @@ using System.Drawing;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure;
+using Ninject;
 
 namespace FractalPainting.App
 {
 	public class MainForm : Form
 	{
-		private readonly ImageSettings imageSettings;
-		private readonly PictureBoxImageHolder pictureBox;
-
 		public MainForm()
 			: this(
 				new IUiAction[]
 				{
-					new SaveImageAction(), new DragonFractalAction(), new KochFractalAction(), new ImageSettingsAction(),
+					new SaveImageAction(),
+					new DragonFractalAction(),
+					new KochFractalAction(),
+					new ImageSettingsAction(),
 					new PaletteSettingsAction()
 				})
 		{
@@ -23,33 +24,36 @@ namespace FractalPainting.App
 
 		public MainForm(IUiAction[] actions)
 		{
-			pictureBox = new PictureBoxImageHolder();
+			var imageSettings = CreateSettingsManager().Load().ImageSettings;
+			ClientSize = new Size(imageSettings.Width, imageSettings.Height);
+
 			var mainMenu = new MenuStrip();
-
-			var settingsManager = new SettingsManager(new XmlObjectSerializer(), new FileBlobStorage());
-			var settings = settingsManager.Load();
-			imageSettings = settings.ImageSettings;
-			var palette = new Palette();
-
 			mainMenu.Items.AddRange(actions.ToMenuItems());
 			Controls.Add(mainMenu);
 
+			var pictureBox = new PictureBoxImageHolder();
+			pictureBox.RecreateImage(imageSettings);
 			pictureBox.Dock = DockStyle.Fill;
 			Controls.Add(pictureBox);
 
-			ClientSize = new Size(imageSettings.Width, imageSettings.Height);
-
 			DependencyInjector.Inject<IImageHolder>(actions, pictureBox);
-			DependencyInjector.Inject<IImageDirectoryProvider>(actions, settings);
-			DependencyInjector.Inject<IImageSettingsProvider>(actions, settings);
-			DependencyInjector.Inject(actions, palette);
+			DependencyInjector.Inject<IImageDirectoryProvider>(actions, CreateSettingsManager().Load());
+			DependencyInjector.Inject<IImageSettingsProvider>(actions, CreateSettingsManager().Load());
+			DependencyInjector.Inject(actions, new Palette());
+		}
+
+		private static SettingsManager CreateSettingsManager()
+		{
+			var container = new StandardKernel();
+			container.Bind<IObjectSerializer>().To<XmlObjectSerializer>();
+			container.Bind<IBlobStorage>().To<FileBlobStorage>();
+			return container.Get<SettingsManager>();
 		}
 
 		protected override void OnShown(EventArgs e)
 		{
 			base.OnShown(e);
 			Text = "Fractal Painter";
-			pictureBox.RecreateImage(imageSettings);
 		}
 	}
 }

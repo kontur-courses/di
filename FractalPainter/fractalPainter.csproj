@@ -57,6 +57,7 @@
     <Compile Include="App\Actions\PaletteSettingsAction.cs" />
     <Compile Include="App\Palette.cs" />
     <Compile Include="App\Actions\SaveImageAction.cs" />
+    <Compile Include="Fractals\DragonSettingsGenerator.cs" />
     <Compile Include="Infrastructure\INeed.cs" />
     <Compile Include="App\Actions\KochFractalAction.cs" />
     <Compile Include="App\Actions\ImageSettingsAction.cs" />
@@ -97,6 +98,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.settings">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>app.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
