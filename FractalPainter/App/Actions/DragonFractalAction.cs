@@ -1,4 +1,4 @@
-using FractalPainting.Fractals;
+Ôªøusing FractalPainting.Fractals;
 using FractalPainting.Infrastructure;
 using Ninject;
 
@@ -12,10 +12,10 @@ namespace FractalPainting.App.Actions
 		{
 			imageHolder = dependency;
 		}
-
-		public string Category => "‘‡ÍÚ‡Î˚";
-		public string Name => "ƒ‡ÍÓÌ";
-		public string Description => "ƒ‡ÍÓÌ ’‡ÚÂ‡-’ÂÈÚÛ˝ˇ";
+		
+		public string Category => "–§—Ä–∞–∫—Ç–∞–ª—ã";
+		public string Name => "–î—Ä–∞–∫–æ–Ω";
+		public string Description => "–î—Ä–∞–∫–æ–Ω –•–∞—Ä—Ç–µ—Ä–∞-–•–µ–π—Ç—É—ç—è";
 
 		public void Perform()
 		{

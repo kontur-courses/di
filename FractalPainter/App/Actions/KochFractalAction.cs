@@ -1,4 +1,4 @@
-using FractalPainting.Fractals;
+Ôªøusing FractalPainting.Fractals;
 using FractalPainting.Infrastructure;
 using Ninject;
 
@@ -19,9 +19,9 @@ namespace FractalPainting.App.Actions
 			palette = dependency;
 		}
 
-		public string Category => "‘‡ÍÚ‡Î˚";
-		public string Name => " Ë‚‡ˇ  Óı‡";
-		public string Description => " Ë‚‡ˇ  Óı‡";
+		public string Category => "–§—Ä–∞–∫—Ç–∞–ª—ã";
+		public string Name => "–ö—Ä–∏–≤–∞—è –ö–æ—Ö–∞";
+		public string Description => "–ö—Ä–∏–≤–∞—è –ö–æ—Ö–∞";
 
 		public void Perform()
 		{

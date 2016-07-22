@@ -1,4 +1,4 @@
-using System.IO;
+ï»¿using System.IO;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure;
 
@@ -19,9 +19,9 @@ namespace FractalPainting.App.Actions
 			imageHolder = dependency;
 		}
 
-		public string Category => "Ôàéë";
-		public string Name => "Ñîõðàíèòü...";
-		public string Description => "Ñîõðàíèòü èçîáðàæåíèå â ôàéë";
+		public string Category => "Ð¤Ð°Ð¹Ð»";
+		public string Name => "Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ...";
+		public string Description => "Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ Ð² Ñ„Ð°Ð¹Ð»";
 
 		public void Perform()
 		{

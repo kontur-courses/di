@@ -1,4 +1,4 @@
-using FractalPainting.Infrastructure;
+п»їusing FractalPainting.Infrastructure;
 
 namespace FractalPainting.App.Actions
 {
@@ -17,9 +17,9 @@ namespace FractalPainting.App.Actions
 			imageSettingsProvider = dependency;
 		}
 
-		public string Category => "Настройки";
-		public string Name => "Изображение...";
-		public string Description => "Размеры изображения";
+		public string Category => "РќР°СЃС‚СЂРѕР№РєРё";
+		public string Name => "РР·РѕР±СЂР°Р¶РµРЅРёРµ...";
+		public string Description => "Р Р°Р·РјРµСЂС‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ";
 
 		public void Perform()
 		{
