@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using FractalPainting.Infrastructure;
 using FractalPainting.Solved.App.Actions;
 using Ninject;
+using Ninject.Extensions.Conventions;
 
 namespace FractalPainting.Solved.App
 {
@@ -16,12 +17,14 @@ namespace FractalPainting.Solved.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             var container = new StandardKernel();
-            container.Bind<IUiAction>().To<SaveImageAction>();
-            container.Bind<IUiAction>().To<DragonFractalAction>();
-            container.Bind<IUiAction>().To<KochFractalAction>();
-            container.Bind<IUiAction>().To<ImageSettingsAction>();
-            container.Bind<IUiAction>().To<PaletteSettingsAction>();
+            
+            container.Bind(kernel => kernel
+                .FromThisAssembly()
+                .SelectAllClasses()
+                .InheritedFrom<IUiAction>()
+                .BindAllInterfaces());
 
             container.Bind<Palette>().ToConstant(new Palette())
                 .InSingletonScope();
