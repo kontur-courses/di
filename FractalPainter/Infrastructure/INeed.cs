@@ -1,6 +1,6 @@
 namespace FractalPainting.Infrastructure
 {
-	public interface INeed<T>
+	public interface INeed<in T>
 	{
 		void SetDependency(T dependency);
 	}

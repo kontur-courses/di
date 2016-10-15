@@ -15,17 +15,19 @@ namespace FractalPainting.Infrastructure
 	{
 		public SettingsForm(TSettings settings)
 		{
-			Controls.Add(new Button
-			{
-				Text = "OK",
-				DialogResult = DialogResult.OK,
-				Dock = DockStyle.Bottom
-			});
+		    var okButton = new Button
+		    {
+		        Text = "OK",
+		        DialogResult = DialogResult.OK,
+		        Dock = DockStyle.Bottom,
+		    };
+            Controls.Add(okButton);
 			Controls.Add(new PropertyGrid
 			{
 				SelectedObject = settings,
 				Dock = DockStyle.Fill
 			});
+		    AcceptButton = okButton;
 		}
 
 		protected override void OnLoad(EventArgs e)

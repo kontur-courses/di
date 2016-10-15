@@ -28,7 +28,10 @@ namespace FractalPainting.App.Actions
 			var dialog = new SaveFileDialog
 			{
 				CheckFileExists = false,
-				InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory)
+				InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
+                DefaultExt = "bmp",
+                FileName = "image.bmp",
+                Filter = "Изображения (*.bmp)|*.bmp" 
 			};
 			var res = dialog.ShowDialog();
 			if (res == DialogResult.OK)
