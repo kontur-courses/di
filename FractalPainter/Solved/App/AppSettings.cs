@@ -1,8 +1,8 @@
 using FractalPainting.Infrastructure;
 
-namespace FractalPainting.App
+namespace FractalPainting.Solved.App
 {
-	public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider
+    public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider
 	{
 		public string ImagesDirectory { get; set; }
 		public ImageSettings ImageSettings { get; set; }

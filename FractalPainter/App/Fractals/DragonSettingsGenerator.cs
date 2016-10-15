@@ -1,6 +1,6 @@
 using System;
 
-namespace FractalPainting.Fractals
+namespace FractalPainting.App.Fractals
 {
 	public class DragonSettingsGenerator
 	{

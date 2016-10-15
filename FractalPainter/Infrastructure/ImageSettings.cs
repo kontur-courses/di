@@ -1,4 +1,4 @@
-namespace FractalPainting.App
+namespace FractalPainting.Infrastructure
 {
 	public class ImageSettings
 	{

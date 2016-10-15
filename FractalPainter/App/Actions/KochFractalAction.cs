@@ -1,4 +1,4 @@
-﻿using FractalPainting.Fractals;
+﻿using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure;
 using Ninject;
 

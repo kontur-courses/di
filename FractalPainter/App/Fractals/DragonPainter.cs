@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using FractalPainting.Infrastructure;
 
-namespace FractalPainting.Fractals
+namespace FractalPainting.App.Fractals
 {
 	public class DragonPainter
 	{
