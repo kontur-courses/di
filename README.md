@@ -52,3 +52,8 @@ https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
 
 8. Избавьтесь от остальных использований INeed и удалите этот интерфейс 
 и класс DependencyInjector из проекта.
+
+9. Обратите внимание на многочисленные привязки к IUiAction. В реальных
+проектах количество классов может исчисляться десятками и сотнями. Воспользуйтесь
+документацией https://github.com/ninject/Ninject.Extensions.Conventions 
+и найдите, как все эти привязки сделать в одну строчку. 
