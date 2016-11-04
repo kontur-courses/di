@@ -19,12 +19,7 @@
 чтобы его зависимости IImageHolder и Pallette инжектировались 
 явно через конструктор, без использования интерфейса INeed.
 
-  Подсказка 1. Окружите создание MainForm в try-catch, 
-  и выводите текст исключения на экран. Это поможет с отладкой.
-
-  `MessageBox.Show(ex.ToString())`
-
-  Подсказка 2. Сложность в том, чтобы в MainForm и KochFractalAction 
+  Подсказка. Сложность в том, чтобы в MainForm и KochFractalAction 
   оказались ссылки на один и тот же объект PictureBoxImageHolder.
 
 4. Еще рефакторинг. Изучите KochFractalAction и поймите, что 
