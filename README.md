@@ -21,20 +21,21 @@
 
   Подсказка. Сложность в том, чтобы в MainForm и KochFractalAction 
   оказались ссылки на один и тот же объект PictureBoxImageHolder.
+  
+Убедитесь, что настройка палитры для рисования кривой Коха всё ещё работает.
 
 4. Еще рефакторинг. Изучите KochFractalAction и поймите, что 
 на самом деле IImageHolder и Pallette ему не нужны. Измените его так,
 чтобы он принимал только KochPainter. 
 
-5. Фабрика. Аналогично удалите INeed из класса DragonFractalAction.
+5. Фабрика. Аналогично удалите INeed, 
+и явное использование контейнера из класса DragonFractalAction.
 Дополнительное ограничение — нельзя менять публичный интерфейс DragonPainter.
 Особенность в том, что одна из зависимостей DragonPainter — 
 DragonSettings оказывается известной только в процессе работы экшена.
 Из-за этого вы не можете просить инжектировать в конструктор уже готовый Painter.
 Вместо этого, используйте возможность инжектировать фабрику.
 https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
-
-	Подсказка. Ninject.Extensions.Factory нужно установить через NuGet.
 
 6. Новая зависимость. Переведите DragonPainter на использование цветов палитры, 
 как это сделано в KochPainter. 
@@ -43,6 +44,8 @@ https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
 
 7. Источник зависимости. Аналогично отрефакторите ImageSettingsAction.
 Попробуйте придумать, как избавиться от класса IImageSettingsProvider.
+
+Убедитесь, что окно настройки размера изображения запоминает установленный размер.
 
 8. Избавьтесь от остальных использований INeed и удалите этот интерфейс 
 и класс DependencyInjector из проекта.
