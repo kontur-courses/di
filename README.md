@@ -25,7 +25,7 @@
   `MessageBox.Show(ex.ToString())`
 
   Подсказка 2. Сложность в том, чтобы в MainForm и KochFractalAction 
-  оказались ссылки на один и тот же объект PictureBoxImageHandler.
+  оказались ссылки на один и тот же объект PictureBoxImageHolder.
 
 4. Еще рефакторинг. Изучите KochFractalAction и поймите, что 
 на самом деле IImageHolder и Pallette ему не нужны. Измените его так,
@@ -47,8 +47,7 @@ https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
 Убедитесь, что экшен настройки палитры работает как надо.
 
 7. Источник зависимости. Аналогично отрефакторите ImageSettingsAction.
-Попробуйте придумать, как сделать так, чтобы ImageSettingsAction принимал 
-в качестве зависимости не IImageSettingsProvider, а сам ImageSettings.
+Попробуйте придумать, как избавиться от класса IImageSettingsProvider.
 
 8. Избавьтесь от остальных использований INeed и удалите этот интерфейс 
 и класс DependencyInjector из проекта.
