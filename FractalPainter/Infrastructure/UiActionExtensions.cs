@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,11 +8,17 @@ namespace FractalPainting.Infrastructure
 	{
 		public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
 		{
-			return
-				actions.GroupBy(a => a.Category)
-					.Select(g => new ToolStripMenuItem(g.Key, null, g.Select(a => a.ToMenuItem()).ToArray()))
-					.Cast<ToolStripItem>()
-					.ToArray();
+			var items = actions.GroupBy(a => a.Category)
+				.Select(g => CreateToplevelMenuItem(g.Key, g.ToList()))
+				.Cast<ToolStripItem>()
+				.ToArray();
+			return items;
+		}
+
+		private static ToolStripMenuItem CreateToplevelMenuItem(string name, IList<IUiAction> items)
+		{
+			var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
+			return new ToolStripMenuItem(name, null, menuItems);
 		}
 
 		public static ToolStripItem ToMenuItem(this IUiAction action)
@@ -19,7 +26,8 @@ namespace FractalPainting.Infrastructure
 			return
 				new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())
 				{
-					ToolTipText = action.Description
+					ToolTipText = action.Description,
+					Tag = action
 				};
 		}
 	}

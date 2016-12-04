@@ -20,12 +20,19 @@ namespace FractalPainting.App.Actions
 
 		public void Perform()
 		{
-			var dragonSettings = new DragonSettingsGenerator(new Random()).Generate();
+			var dragonSettings = CreateRandomSettings();
+			// редактируем настройки:
 			SettingsForm.For(dragonSettings).ShowDialog();
+			// создаём painter с такими настройками
 			var container = new StandardKernel();
 			container.Bind<IImageHolder>().ToConstant(imageHolder);
 			container.Bind<DragonSettings>().ToConstant(dragonSettings);
 			container.Get<DragonPainter>().Paint();
+		}
+
+		private static DragonSettings CreateRandomSettings()
+		{
+			return new DragonSettingsGenerator(new Random()).Generate();
 		}
 	}
 }
