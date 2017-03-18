@@ -2,7 +2,7 @@ using System;
 
 namespace FractalPainting.Solved.App.Fractals
 {
-	public class DragonSettingsGenerator
+    public class DragonSettingsGenerator : IDragonSettingsGenerator
 	{
 		private readonly Random random;
 

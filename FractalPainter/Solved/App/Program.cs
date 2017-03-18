@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
+using FractalPainting.Solved.App.Fractals;
 using FractalPainting.Infrastructure;
 using FractalPainting.Solved.App.Actions;
 using Ninject;
@@ -42,6 +43,9 @@ namespace FractalPainting.Solved.App
                 .InSingletonScope();
             container.Bind<ImageSettings>()
                 .ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings);
+
+            container.Bind<Random>().To<Random>().WhenInjectedInto<DragonSettingsGenerator>().InThreadScope();
+            container.Bind<IDragonSettingsGenerator>().To<DragonSettingsGenerator>();
 
             try
             {

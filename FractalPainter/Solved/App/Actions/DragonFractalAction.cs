@@ -7,10 +7,12 @@ namespace FractalPainting.Solved.App.Actions
 	public class DragonFractalAction : IUiAction
     {
         private readonly Func<DragonSettings, DragonPainter> createDragonPainer;
+        private readonly IDragonSettingsGenerator dragonSettingsGenerator;
 
-        public DragonFractalAction(Func<DragonSettings, DragonPainter> createDragonPainer)
+        public DragonFractalAction(Func<DragonSettings, DragonPainter> createDragonPainer, IDragonSettingsGenerator dragonSettingsGenerator)
         {
             this.createDragonPainer = createDragonPainer;
+            this.dragonSettingsGenerator = dragonSettingsGenerator;
         }
 
 		public string Category => "Фракталы";
@@ -19,7 +21,7 @@ namespace FractalPainting.Solved.App.Actions
 
 		public void Perform()
 		{
-            var dragonSettings = new DragonSettingsGenerator(new Random()).Generate();
+            var dragonSettings = dragonSettingsGenerator.Generate();
             SettingsForm.For(dragonSettings).ShowDialog();
             createDragonPainer(dragonSettings).Paint();
 		}

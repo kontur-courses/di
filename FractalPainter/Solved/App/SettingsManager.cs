@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using FractalPainting.Infrastructure;
 
 namespace FractalPainting.Solved.App
+namespace FractalPainting.App
 {
 	public class SettingsManager
 	{
