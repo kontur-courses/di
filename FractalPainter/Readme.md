@@ -1,4 +1,4 @@
-# Задание FractalPainer
+# Задание FractalPainter
 
 1. Разминка. В классе Program переделайте Main так, чтобы MainForm 
 создавался контейнером. Удалите у MainForm конструктор без параметров 
