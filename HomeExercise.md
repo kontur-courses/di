@@ -1,4 +1,4 @@
-# Задание TagsCloudApp
+# Задание TagsCloudContainer
 
 Сделай fork этого репозитория и работай в нем.
 
