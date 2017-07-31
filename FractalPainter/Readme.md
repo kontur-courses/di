@@ -30,8 +30,9 @@ DragonSettings оказывается известной только в про�
 Вместо этого инжектируйте фабрику DragonPainter-ов.
 https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
 
-6. Фабрика 2. Преобразуйте DragonSettingsGenerator также в фабрику 
+6. Фабрика 2. Используйте для создания DragonSettingsGenerator Func-фабрику 
 и инжектируйте эту зависимость в DragonFractalAction.
+https://github.com/ninject/Ninject.Extensions.Factory/wiki/Func
 
 7. Новая зависимость. Переведите DragonPainter на использование цветов палитры, 
 как это сделано в KochPainter. 
@@ -42,6 +43,8 @@ https://github.com/ninject/Ninject.Extensions.Factory/wiki/Factory-interface
 
 8. Источник зависимости. Аналогично отрефакторите ImageSettingsAction.
 Попробуйте придумать, как избавиться от класса IImageSettingsProvider.
+Вам поможет ToMethod.
+https://github.com/ninject/Ninject/wiki/Providers,-Factory-Methods-and-the-Activation-Context#factory-methods
 
   Убедитесь, что окно настройки размера изображения запоминает установленный размер.
 
