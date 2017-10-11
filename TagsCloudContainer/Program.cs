@@ -22,6 +22,7 @@ namespace TagsCloudContainer
             Container.RegisterCollection<IWordFormater>(new[] { typeof(BoringWordsFormater), typeof(LowerCaseFormater) });
             Container.Register<IWordPreprocessor, SimpleWordPreprocessor>();
             Container.Register<ITagsData, TagsData>();
+            Container.Register<ICircularCloudLayouter, CircularCloudLayouter>();
             Container.Register<TagsCloudContainer>();
             Container.Verify();
         }
