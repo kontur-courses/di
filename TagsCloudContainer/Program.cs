@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace TagsCloudContainer
     {
         private static readonly Container Container;
         private static string fileName = "words.txt";
+        private static Point _center;
+
         static Program()
         {
             string[] boringWords = new[] { "Аврора", "Агата", "Александрина", "Алира", "Альберта", "Авигея" };
@@ -22,14 +25,18 @@ namespace TagsCloudContainer
             Container.RegisterCollection<IWordFormater>(new[] { typeof(BoringWordsFormater), typeof(LowerCaseFormater) });
             Container.Register<IWordPreprocessor, SimpleWordPreprocessor>();
             Container.Register<ITagsData, TagsData>();
-            Container.Register<ICircularCloudLayouter, CircularCloudLayouter>();
-            Container.Register<TagsCloudContainer>();
+            Container.Register<ICircularCloudLayouter>(() => new CircularCloudLayouter(_center), Lifestyle.Singleton);
+            Container.Register<TagsCloudContainer>(Lifestyle.Singleton);
             Container.Verify();
         }
 
         static void Main(string[] args)
         {
-            var tcc = Container.GetInstance<TagsCloudContainer>();
+            using (Container)
+            {
+                var tcc = Container.GetInstance<TagsCloudContainer>();
+            }
+
 
         }
     }

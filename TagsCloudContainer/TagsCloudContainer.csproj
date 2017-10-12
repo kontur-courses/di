@@ -144,7 +144,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoringWordsFormater_Should.cs" />
+    <Compile Include="Test\BoringWordsFormater_Should.cs" />
     <Compile Include="Implementation\BoringWordsFormater.cs" />
     <Compile Include="Implementation\CircularCloudLayouter.cs" />
     <Compile Include="Test\LowerCaseFormater_Should.cs" />

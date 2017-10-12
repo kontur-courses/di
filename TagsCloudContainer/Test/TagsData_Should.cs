@@ -32,7 +32,7 @@ namespace TagsCloudContainer
             fileParser.ReadLinesToArray().Returns(words);
             wordPreprocessor.Handle(Arg.Any<string[]>()).Returns(new string[] { "ольга", "нина", "альбина" });
 
-            tagsData.GetData().Should().BeEquivalentTo(new string[] { "ольга", "нина", "альбина" });
+            tagsData.GetData().Should().Equal(new string[] { "ольга", "нина", "альбина" });
         }
 
         [Test]

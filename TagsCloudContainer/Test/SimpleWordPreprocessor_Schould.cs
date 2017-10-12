@@ -33,7 +33,7 @@ namespace TagsCloudContainer
         {
             simpleWordPreprocessor = new SimpleWordPreprocessor(null);
 
-            simpleWordPreprocessor.Handle(strings).Should().BeEquivalentTo(strings);
+            simpleWordPreprocessor.Handle(strings).Should().Equal(strings);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace TagsCloudContainer
         {
             simpleWordPreprocessor = new SimpleWordPreprocessor(new IWordFormater[] { });
 
-            simpleWordPreprocessor.Handle(strings).Should().BeEquivalentTo(strings);
+            simpleWordPreprocessor.Handle(strings).Should().Equal(strings);
         }
 
         [Test]
