@@ -18,6 +18,7 @@ namespace TagsCloudContainer
         static Program()
         {
             string[] boringWords = new[] { "Аврора", "Агата", "Александрина", "Алира", "Альберта", "Авигея" };
+            Font font = new Font(FontFamily.GenericMonospace, 16);
 
             Container = new Container();
             Container.Register<IFileParser>(() => new TxtFileParser(fileName));
@@ -25,6 +26,7 @@ namespace TagsCloudContainer
             Container.RegisterCollection<IWordFormater>(new[] { typeof(BoringWordsFormater), typeof(LowerCaseFormater) });
             Container.Register<IWordPreprocessor, SimpleWordPreprocessor>();
             Container.Register<ITagsData, TagsData>();
+            Container.Register<ITagSizeNormalizer>(() => new TagSizeNormalizer(font));
             Container.Register<ICircularCloudLayouter>(() => new CircularCloudLayouter(_center));
             Container.Register<TagsCloudContainer>();
             Container.Verify();
@@ -35,6 +37,7 @@ namespace TagsCloudContainer
             using (Container)
             {
                 var tcc = Container.GetInstance<TagsCloudContainer>();
+                var data = tcc.GetTagsRectangleData();
             }
 
 

@@ -11,13 +11,15 @@ namespace TagsCloudContainer
     {
         private ITagsData tagsData;
         private ICircularCloudLayouter circularCloudLayouter;
+        private ITagSizeNormalizer tagSizeNormalizer;
 
         private Dictionary<string, Rectangle> tagRectanglesData;
 
-        public TagsCloudContainer(ITagsData tagsData, ICircularCloudLayouter circularCloudLayouter)
+        public TagsCloudContainer(ITagsData tagsData, ICircularCloudLayouter circularCloudLayouter, ITagSizeNormalizer tagSizeNormalizer)
         {
             this.tagsData = tagsData;
             this.circularCloudLayouter = circularCloudLayouter;
+            this.tagSizeNormalizer = tagSizeNormalizer;
 
             tagRectanglesData = new Dictionary<string, Rectangle>();
         }
@@ -26,7 +28,7 @@ namespace TagsCloudContainer
         {
             foreach (var word in tagsData.GetData())
             {
-                var size = new Size();
+                var size = tagSizeNormalizer.GetTagSize(word);
                 var rectangle = circularCloudLayouter.PutNextRectangle(size);
 
                 tagRectanglesData.Add(word, rectangle);
@@ -34,11 +36,5 @@ namespace TagsCloudContainer
 
             return tagRectanglesData;
         }
-
-
-
-
-
-
     }
 }

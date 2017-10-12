@@ -17,14 +17,17 @@ namespace TagsCloudContainer
         private ICircularCloudLayouter circularCloudLoyauter;
         private ITagsData tagsData;
         private TagsCloudContainer tagsCloudConteiner;
+        private ITagSizeNormalizer tagSizeNormalizer;
 
         [SetUp]
         public void SetUp()
         {
             tagsData = Substitute.For<ITagsData>();
             circularCloudLoyauter = Substitute.For<ICircularCloudLayouter>();
+            tagSizeNormalizer = Substitute.For<ITagSizeNormalizer>();
 
-            tagsCloudConteiner = new TagsCloudContainer(tagsData, circularCloudLoyauter);
+
+            tagsCloudConteiner = new TagsCloudContainer(tagsData, circularCloudLoyauter, tagSizeNormalizer);
         }
 
 
@@ -72,6 +75,23 @@ namespace TagsCloudContainer
             circularCloudLoyauter
                 .PutNextRectangle(Arg.Any<Size>())
                 .ReturnsForAnyArgs(x => new Rectangle())
+                .AndDoes(x => counter++);
+
+            tagsCloudConteiner.GetTagsRectangleData();
+
+            counter.Should().Be(5);
+        }
+
+
+        [Test]
+        public void CallsOfNormalizerEquelsCountOfTagsData()
+        {
+            var strings = new string[] { "1", "2", "3", "4", "5" };
+            var counter = 0;
+            tagsData.GetData().Returns(strings);
+            tagSizeNormalizer
+                .GetTagSize(Arg.Any<string>())
+                .ReturnsForAnyArgs(x => new Size())
                 .AndDoes(x => counter++);
 
             tagsCloudConteiner.GetTagsRectangleData();
