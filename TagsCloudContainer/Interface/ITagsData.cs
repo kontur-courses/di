@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    interface ITagsData
+    public interface ITagsData
     {
         string[] GetData();
     }

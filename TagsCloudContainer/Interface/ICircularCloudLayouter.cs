@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    interface ICircularCloudLayouter
+    public interface ICircularCloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
     }
