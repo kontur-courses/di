@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NSubstitute;
 
 namespace TagsCloudContainer
@@ -12,7 +13,7 @@ namespace TagsCloudContainer
             BoringWords = boringWords;
         }
 
-        public string[] HandleWords(string[] words)
+        public IEnumerable<string> HandleWords(IEnumerable<string> words)
         {
             return words.Where(w => !BoringWords.Contains(w)).ToArray();
         }

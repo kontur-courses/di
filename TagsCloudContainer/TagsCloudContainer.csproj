@@ -145,8 +145,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\RandomColorPicker.cs" />
+    <Compile Include="Implementation\TagsCloudSaver.cs" />
+    <Compile Include="Implementation\WhiteColorPicker.cs" />
+    <Compile Include="Interface\IColorPicker.cs" />
     <Compile Include="Interface\ITagSizeNormalizer.cs" />
     <Compile Include="Implementation\TagSizeNormalizer.cs" />
+    <Compile Include="Interface\ITagsCloudContainer.cs" />
+    <Compile Include="Interface\ITagsCloudVisualizator.cs" />
+    <Compile Include="Implementation\TagsCloudVisualizator.cs" />
+    <Compile Include="Interface\ITagCloudSaver.cs" />
+    <Compile Include="Test\RandomColorPicker_Should.cs" />
     <Compile Include="Test\TagSizeNormalizer_Should.cs" />
     <Compile Include="Test\BoringWordsFormater_Should.cs" />
     <Compile Include="Implementation\BoringWordsFormater.cs" />
@@ -168,6 +177,7 @@
     <Compile Include="Implementation\TagsData.cs" />
     <Compile Include="Test\TagsData_Should.cs" />
     <Compile Include="Implementation\TxtFileParser.cs" />
+    <Compile Include="Test\WhiteColorPicker_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

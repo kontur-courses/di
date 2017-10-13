@@ -49,8 +49,8 @@ namespace TagsCloudContainer
         {
             simpleWordPreprocessor.Handle(strings);
 
-            wordFormater1.Received().HandleWords(Arg.Any<string[]>());
-            wordFormater2.Received().HandleWords(Arg.Any<string[]>());
+            wordFormater1.Received().HandleWords(Arg.Any<IEnumerable<string>>());
+            wordFormater2.Received().HandleWords(Arg.Any<IEnumerable<string>>());
         }
     }
 }

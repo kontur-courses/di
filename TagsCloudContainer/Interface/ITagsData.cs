@@ -8,6 +8,6 @@ namespace TagsCloudContainer
 {
     public interface ITagsData
     {
-        string[] GetData();
+        IEnumerable<string> GetData();
     }
 }

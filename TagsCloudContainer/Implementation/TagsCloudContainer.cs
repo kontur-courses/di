@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    class TagsCloudContainer
+    class TagsCloudContainer : ITagsCloudContainer
     {
         private ITagsData tagsData;
         private ICircularCloudLayouter circularCloudLayouter;

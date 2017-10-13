@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    public interface IFileParser
+    class WhiteColorPicker : IColorPicker
     {
-        IEnumerable<string> ReadLinesToArray();
+        public Brush GenerateColor()
+        {
+            return Brushes.White;
+        }
     }
 }

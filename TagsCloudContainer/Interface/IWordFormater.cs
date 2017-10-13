@@ -1,7 +1,9 @@
-﻿namespace TagsCloudContainer
+﻿using System.Collections.Generic;
+
+namespace TagsCloudContainer
 {
     public interface IWordFormater
     {
-        string[] HandleWords(string[] words);
+        IEnumerable<string> HandleWords(IEnumerable<string> words);
     }
 }

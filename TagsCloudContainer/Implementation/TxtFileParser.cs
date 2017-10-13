@@ -16,9 +16,11 @@ namespace TagsCloudContainer
             this.filename = filename;
         }
 
-        public string[] ReadLinesToArray()
+        public IEnumerable<string> ReadLinesToArray()
         {
-            return File.ReadAllLines(filename, Encoding.Default);
+
+
+            return File.ReadLines(filename, Encoding.Default);
         }
     }
 }

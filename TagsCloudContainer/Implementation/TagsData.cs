@@ -17,7 +17,7 @@ namespace TagsCloudContainer
             this.preprocessor = preprocessor;
         }
 
-        public string[] GetData()
+        public IEnumerable<string> GetData()
         {
             return preprocessor.Handle(parser.ReadLinesToArray());
         }

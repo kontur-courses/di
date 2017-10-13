@@ -15,7 +15,7 @@ namespace TagsCloudContainer
             this.worsFormaters = worsFormaters;
         }
 
-        public string[] Handle(string[] words)
+        public IEnumerable<string> Handle(IEnumerable<string> words)
         {
             if (worsFormaters != null && worsFormaters.Length > 0)
             {

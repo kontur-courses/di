@@ -61,7 +61,7 @@ namespace TagsCloudContainer
             Received.InOrder(() =>
             {
                 fileParser.ReadLinesToArray();
-                wordPreprocessor.Handle(Arg.Any<string[]>());
+                wordPreprocessor.Handle(Arg.Any<IEnumerable<string>>());
             });
         }
     }

@@ -10,7 +10,7 @@ namespace TagsCloudContainer
     {
         public LowerCaseFormater() { }
 
-        public string[] HandleWords(string[] words)
+        public IEnumerable<string> HandleWords(IEnumerable<string> words)
         {
             return words.Select(w => w.ToLower()).ToArray();
         }

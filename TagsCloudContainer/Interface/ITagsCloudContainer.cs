@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    public interface IFileParser
+    public interface ITagsCloudContainer
     {
-        IEnumerable<string> ReadLinesToArray();
+        Dictionary<string, Rectangle> GetTagsRectangleData();
     }
 }

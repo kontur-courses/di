@@ -8,6 +8,6 @@ namespace TagsCloudContainer
 {
     public interface IWordPreprocessor
     {
-        string[] Handle(string[] words);
+        IEnumerable<string> Handle(IEnumerable<string> words);
     }
 }
