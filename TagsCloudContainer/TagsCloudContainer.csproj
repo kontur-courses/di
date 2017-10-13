@@ -156,6 +156,7 @@
     <Compile Include="Implementation\TagsCloudVisualizator.cs" />
     <Compile Include="Interface\ITagCloudSaver.cs" />
     <Compile Include="Test\RandomColorPicker_Should.cs" />
+    <Compile Include="Test\TagsCloudVisualizator_Should.cs" />
     <Compile Include="Test\TagSizeNormalizer_Should.cs" />
     <Compile Include="Test\BoringWordsFormater_Should.cs" />
     <Compile Include="Implementation\BoringWordsFormater.cs" />

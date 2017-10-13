@@ -19,13 +19,13 @@ namespace TagsCloudContainer
 
         static Program()
         {
-            string[] boringWords = new[] { "Аврора", "Агата", "Александрина", "Алира", "Альберта", "Авигея" };
+            string[] _boringWords = new[] { "Аврора", "Агата", "Александрина", "Алира", "Альберта", "Авигея" };
             Font _font = new Font(FontFamily.GenericMonospace, 16, FontStyle.Bold, GraphicsUnit.Point);
             Point _center = new Point(500, 500);
 
             Container = new Container();
             Container.Register<IFileParser>(() => new TxtFileParser(fileName));
-            Container.Register<BoringWordsFormater>(() => new BoringWordsFormater(boringWords));
+            Container.Register<BoringWordsFormater>(() => new BoringWordsFormater(_boringWords));
             Container.RegisterCollection<IWordFormater>(new[] { typeof(BoringWordsFormater), typeof(LowerCaseFormater) });
             Container.Register<IWordPreprocessor, SimpleWordPreprocessor>();
             Container.Register<ITagsData, TagsData>();

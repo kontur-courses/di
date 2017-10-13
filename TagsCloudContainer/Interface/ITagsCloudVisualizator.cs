@@ -10,5 +10,6 @@ namespace TagsCloudContainer
     public interface ITagsCloudVisualizator
     {
         Bitmap GetTagsCloudImage();
+        Font TextFont { get; set; }
     }
 }
