@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B3B74A6C-256B-4E5B-A605-6A78A6DA2955}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Infrastructure\DependencyInjector.cs">
+      <Link>Infrastructure\DependencyInjector.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\FileBlobStorage.cs">
+      <Link>Infrastructure\FileBlobStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IBlobStorage.cs">
+      <Link>Infrastructure\IBlobStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IImageDirectoryProvider.cs">
+      <Link>Infrastructure\IImageDirectoryProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IImageHolder.cs">
+      <Link>Infrastructure\IImageHolder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IImageSettingsProvider.cs">
+      <Link>Infrastructure\IImageSettingsProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\ImageSettings.cs">
+      <Link>Infrastructure\ImageSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\INeed.cs">
+      <Link>Infrastructure\INeed.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IObjectSerializer.cs">
+      <Link>Infrastructure\IObjectSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\IUiAction.cs">
+      <Link>Infrastructure\IUiAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\Palette.cs">
+      <Link>Infrastructure\Palette.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\SettingsForm.cs">
+      <Link>Infrastructure\SettingsForm.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\UiActionExtensions.cs">
+      <Link>Infrastructure\UiActionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Infrastructure\XmlObjectSerializer.cs">
+      <Link>Infrastructure\XmlObjectSerializer.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
