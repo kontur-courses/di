@@ -1,4 +1,6 @@
-﻿using FractalPainting.Infrastructure;
+﻿using FractalPainting.Infrastructure.Common;
+using FractalPainting.Solved.Step08.Infrastructure.Injection;
+using FractalPainting.Solved.Step08.Infrastructure.UiActions;
 
 namespace FractalPainting.Solved.Step08.App.Actions
 {

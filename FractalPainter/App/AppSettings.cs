@@ -1,4 +1,4 @@
-using FractalPainting.Infrastructure;
+using FractalPainting.Infrastructure.Common;
 
 namespace FractalPainting.App
 {

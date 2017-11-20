@@ -105,20 +105,20 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\DependencyInjector.cs" />
-    <Compile Include="Infrastructure\FileBlobStorage.cs" />
-    <Compile Include="Infrastructure\IBlobStorage.cs" />
-    <Compile Include="Infrastructure\IImageDirectoryProvider.cs" />
-    <Compile Include="Infrastructure\IImageHolder.cs" />
-    <Compile Include="Infrastructure\IImageSettingsProvider.cs" />
-    <Compile Include="Infrastructure\ImageSettings.cs" />
-    <Compile Include="Infrastructure\INeed.cs" />
-    <Compile Include="Infrastructure\IObjectSerializer.cs" />
-    <Compile Include="Infrastructure\IUiAction.cs" />
-    <Compile Include="Infrastructure\Palette.cs" />
-    <Compile Include="Infrastructure\SettingsForm.cs" />
-    <Compile Include="Infrastructure\UiActionExtensions.cs" />
-    <Compile Include="Infrastructure\XmlObjectSerializer.cs" />
+    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
+    <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
+    <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
+    <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
+    <Compile Include="Infrastructure\Common\IImageHolder.cs" />
+    <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
+    <Compile Include="Infrastructure\Common\ImageSettings.cs" />
+    <Compile Include="Infrastructure\Injection\INeed.cs" />
+    <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
+    <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
+    <Compile Include="Infrastructure\Common\Palette.cs" />
+    <Compile Include="Infrastructure\Common\SettingsForm.cs" />
+    <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
+    <Compile Include="Infrastructure\Common\XmlObjectSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

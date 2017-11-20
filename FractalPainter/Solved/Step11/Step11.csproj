@@ -92,22 +92,10 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\DependencyInjector.cs" />
-    <Compile Include="Infrastructure\FileBlobStorage.cs" />
-    <Compile Include="Infrastructure\IBlobStorage.cs" />
-    <Compile Include="Infrastructure\IImageDirectoryProvider.cs" />
-    <Compile Include="Infrastructure\IImageHolder.cs" />
-    <Compile Include="Infrastructure\IImageSettingsProvider.cs" />
-    <Compile Include="Infrastructure\ImageSettings.cs" />
-    <Compile Include="Infrastructure\INeed.cs" />
-    <Compile Include="Infrastructure\IObjectSerializer.cs" />
-    <Compile Include="Infrastructure\Palette.cs" />
-    <Compile Include="Infrastructure\SettingsForm.cs" />
-    <Compile Include="Infrastructure\XmlObjectSerializer.cs" />
-    <Compile Include="Modified\EnumExtensions.cs" />
-    <Compile Include="Modified\IUiAction.cs" />
-    <Compile Include="Modified\MenuCategory.cs" />
-    <Compile Include="Modified\UiActionExtensions.cs" />
+    <Compile Include="Infrastructure\UiActions\EnumExtensions.cs" />
+    <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
+    <Compile Include="Infrastructure\UiActions\MenuCategory.cs" />
+    <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,5 +128,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{b3b74a6c-256b-4e5b-a605-6a78a6da2955}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

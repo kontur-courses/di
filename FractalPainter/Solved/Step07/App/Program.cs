@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Solved.Step07.App.Actions;
 using FractalPainting.Solved.Step07.App.Fractals;
+using FractalPainting.Solved.Step07.Infrastructure.UiActions;
 using Ninject;
 using Ninject.Extensions.Factory;
 
