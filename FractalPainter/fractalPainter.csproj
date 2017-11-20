@@ -82,6 +82,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>app.settings</DependentUpon>
+    </Compile>
     <Compile Include="App\Actions\DragonFractalAction.cs" />
     <Compile Include="App\Actions\ImageSettingsAction.cs" />
     <Compile Include="App\Actions\KochFractalAction.cs" />
