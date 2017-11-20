@@ -1,6 +1,7 @@
 ﻿using System;
 using FractalPainting.Solved.Step10.App.Fractals;
-using FractalPainting.Infrastructure;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Solved.Step10.Infrastructure.UiActions;
 
 namespace FractalPainting.Solved.Step10.App.Actions
 {

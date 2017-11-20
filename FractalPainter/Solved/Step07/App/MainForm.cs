@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Solved.Step07.Infrastructure.Injection;
+using FractalPainting.Solved.Step07.Infrastructure.UiActions;
 using Ninject;
 
 namespace FractalPainting.Solved.Step07.App

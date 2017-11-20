@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.Solved.Step11.Infrastructure;
-using FractalPainting.Solved.Step11.Modified;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Solved.Step11.Infrastructure.UiActions;
 
 namespace FractalPainting.Solved.Step11.App
 {

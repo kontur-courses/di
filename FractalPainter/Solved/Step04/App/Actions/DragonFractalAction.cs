@@ -1,6 +1,8 @@
 ﻿using System;
-using FractalPainting.Infrastructure;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Solved.Step04.App.Fractals;
+using FractalPainting.Solved.Step04.Infrastructure.Injection;
+using FractalPainting.Solved.Step04.Infrastructure.UiActions;
 using Ninject;
 
 namespace FractalPainting.Solved.Step04.App.Actions

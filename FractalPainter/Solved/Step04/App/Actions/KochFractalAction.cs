@@ -1,5 +1,5 @@
-﻿using FractalPainting.Infrastructure;
-using FractalPainting.Solved.Step04.App.Fractals;
+﻿using FractalPainting.Solved.Step04.App.Fractals;
+using FractalPainting.Solved.Step04.Infrastructure.UiActions;
 
 namespace FractalPainting.Solved.Step04.App.Actions
 {
