@@ -36,7 +36,7 @@ namespace TagsCloudVisualization
             if (layout.Rectangles.Count != 0)
                 actualMaxRadius = (int) layout.Rectangles.Max(rectangle => rectangle.DistanceTo(cloudCenter)) + 100;
 
-            CloudTagDrawer.DrawRectanglesToFile(cloudCenter, layout.Rectangles.ToList(), path, 2*actualMaxRadius, 2*actualMaxRadius);
+//            CloudTagDrawer.DrawRectanglesToFile(cloudCenter, layout.Rectangles.ToList(), path, 2*actualMaxRadius, 2*actualMaxRadius);
 
             Console.WriteLine($@"Tag cloud visualization saved to file {path}");
         }

@@ -5,62 +5,72 @@ using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
-    public static class CloudTagDrawer
+    public class CloudTagDrawer
     {
-        public static void DrawTagsToFile(Point cloudCenter, Dictionary<Rectangle, (string, Font)> tagsDict, string name, int width, int height)
+        private readonly ICloudLayouter cloudLayouter;
+        private readonly IFontSizeMaker fontSizeMaker;
+        private readonly IFileAnalyzer fileAnalyzer;
+        private readonly ITagHandler tagHandler;
+        private readonly int height;
+        private readonly int width;
+
+        public CloudTagDrawer(
+            ICloudLayouter cloudLayouter,
+            IFontSizeMaker fontSizeMaker,
+            IFileAnalyzer fileAnalyzer,
+            ITagHandler tagHandler,
+            int height,
+            int width
+            )
         {
+            this.cloudLayouter = cloudLayouter;
+            this.fontSizeMaker = fontSizeMaker;
+            this.fileAnalyzer = fileAnalyzer;
+            this.tagHandler = tagHandler;
+            this.height = height;
+            this.width = width;
+        }
+
+
+
+        public  void DrawTagsToFile(IEnumerable<string> input, string output)
+        {
+            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
+            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
+            
             using (var bitmap = new Bitmap(width, height))
             {
-                DrawTagsOnBitmap(cloudCenter, tagsDict, bitmap);
-                bitmap.Save(name);
+                DrawTagsOnBitmap(tagRectangles, bitmap);
+                bitmap.Save(output);
             }
         }
-        public static void DrawTagsToForm(Point cloudCenter, Dictionary<Rectangle, (string, Font)> tagsDict, int width, int height)
+        public  void DrawTagsToForm(IEnumerable<string> input)
         {
+            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
+            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
+            
             using (var bitmap = new Bitmap(width, height))
             {
-                DrawTagsOnBitmap(cloudCenter, tagsDict, bitmap);
+                DrawTagsOnBitmap(tagRectangles, bitmap);
                 Form aForm = new Form();
-                aForm.Width = 800;
-                aForm.Height = 800;
+                aForm.Width = width;
+                aForm.Height = height;
                 aForm.BackgroundImage = bitmap;
                 aForm.ShowDialog();
             }
         }
 
-        private static void DrawTagsOnBitmap(Point cloudCenter, Dictionary<Rectangle, (string, Font)> tagsDict, Bitmap bitmap)
+        private  void DrawTagsOnBitmap(Dictionary<Rectangle, (string, Font)> tagsDict, Bitmap bitmap)
         {
             using (var g = Graphics.FromImage(bitmap))
             {
                 var selPen = new Pen(Color.Blue);
                 var selBrush = new SolidBrush(Color.Black);
-                g.DrawRectangle(new Pen(Color.Red), (int) cloudCenter.X, (int) cloudCenter.Y, 1, 1);
                 foreach (var tag in tagsDict)
                 {
                     g.DrawRectangle(selPen, tag.Key);
                     g.DrawString(tag.Value.Item1, tag.Value.Item2, selBrush, tag.Key.X, tag.Key.Y);
                 }
-            }
-        }
-        
-        private static void DrawRectanglesOnBitmap(Point cloudCenter, List<Rectangle> rectangles, Bitmap bitmap)
-        {
-            using (var g = Graphics.FromImage(bitmap))
-            {
-                var selPen = new Pen(Color.Blue);
-                var selBrush = new SolidBrush(Color.Black);
-                g.DrawRectangle(new Pen(Color.Red), (int)cloudCenter.X, (int)cloudCenter.Y, 1, 1);
-                foreach (var rectangle in rectangles)
-                    g.DrawRectangle(selPen, rectangle);
-
-            }
-        }
-        public static void DrawRectanglesToFile(Point cloudCenter,List<Rectangle> rectangles, string name, int width, int height)
-        {
-            using (var bitmap = new Bitmap(width, height))
-            {
-                DrawRectanglesOnBitmap(cloudCenter, rectangles, bitmap);
-                bitmap.Save(name);
             }
         }
 
