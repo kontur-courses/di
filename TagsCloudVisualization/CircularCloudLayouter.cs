@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly Vector cloudCenter;
         private readonly List<Rectangle> rectangles;
@@ -16,12 +16,12 @@ namespace TagsCloudVisualization
         private const double AngleShift = Math.PI / 18;
         private const int RadiusShift = 10;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point cloudCenter)
         {
-            if (center.X < 0 || center.Y < 0)
-                throw new ArgumentException($"Coordinates must be non-negative, but was ({center.X},{center.Y})");
+            if (cloudCenter.X < 0 || cloudCenter.Y < 0)
+                throw new ArgumentException($"Coordinates must be non-negative, but was ({cloudCenter.X},{cloudCenter.Y})");
 
-            cloudCenter = new Vector(center);
+            this.cloudCenter = new Vector(cloudCenter);
             rectangles = new List<Rectangle>();
         }
 

@@ -23,6 +23,7 @@ namespace TagsCloudVisualization
                     new char[] { ' ', '\t', ',', ';', '?', '\n', '.'},
                     StringSplitOptions.RemoveEmptyEntries))
                 .Where(word=>word.Length > minLength)
+                .Where(word=>word != "CHAPTER")
                 .GroupBy(word => word)
                 .OrderByDescending(x=>x.Count())
                 .Take(count)

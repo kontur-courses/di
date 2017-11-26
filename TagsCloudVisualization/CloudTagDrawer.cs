@@ -15,7 +15,6 @@ namespace TagsCloudVisualization
                 bitmap.Save(name);
             }
         }
-
         public static void DrawTagsToForm(Point cloudCenter, Dictionary<Rectangle, (string, Font)> tagsDict, int width, int height)
         {
             using (var bitmap = new Bitmap(width, height))
@@ -43,6 +42,7 @@ namespace TagsCloudVisualization
                 }
             }
         }
+        
         private static void DrawRectanglesOnBitmap(Point cloudCenter, List<Rectangle> rectangles, Bitmap bitmap)
         {
             using (var g = Graphics.FromImage(bitmap))
@@ -55,7 +55,6 @@ namespace TagsCloudVisualization
 
             }
         }
-
         public static void DrawRectanglesToFile(Point cloudCenter,List<Rectangle> rectangles, string name, int width, int height)
         {
             using (var bitmap = new Bitmap(width, height))
