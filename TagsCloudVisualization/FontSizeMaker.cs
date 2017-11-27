@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    public class FontSizeMaker:IFontSizeMaker
+    public class FontSizeMaker :IFontSizeMaker
     {
         private readonly int minSize;
         private readonly int maxSize;

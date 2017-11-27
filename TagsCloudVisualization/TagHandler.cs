@@ -8,11 +8,13 @@ namespace TagsCloudVisualization
     public class TagHandler : ITagHandler
     {
         private readonly ICloudLayouter layouter;
+        private readonly IFontSizeMaker fontSizeMaker;
         private readonly string fontFamily;
 
-        public TagHandler(ICloudLayouter layouter, string fontFamily)
+        public TagHandler(ICloudLayouter layouter,IFontSizeMaker fontSizeMaker, string fontFamily)
         {
             this.layouter = layouter;
+            this.fontSizeMaker = fontSizeMaker;
             this.fontFamily = fontFamily;
         }
         
@@ -21,13 +23,11 @@ namespace TagsCloudVisualization
         {
             
             var tagsDict = new Dictionary<Rectangle, (string, Font)>();
-
             var maxfreq = frequencyDict.Values.Max();            
-            var fontSize = new FontSizeMaker(10,80);
             
             foreach (var word in frequencyDict)
             {
-                var font = new Font(new FontFamily(fontFamily), fontSize.GetFontSizeByFreq(maxfreq, word.Value), FontStyle.Regular, GraphicsUnit.Pixel);
+                var font = new Font(new FontFamily(fontFamily), fontSizeMaker.GetFontSizeByFreq(maxfreq, word.Value), FontStyle.Regular, GraphicsUnit.Pixel);
                 var tagSize = TextRenderer.MeasureText(word.Key,font);
                 tagsDict.Add(layouter.PutNextRectangle(tagSize), (word.Key, font));
             }
