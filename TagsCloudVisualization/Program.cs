@@ -23,7 +23,7 @@ namespace TagsCloudVisualization
             container.Register(b => new FileAnalyzer(options.Count, options.MinLength))
                 .As<IFileAnalyzer>();
             container.Register(b => new FontSizeMaker(options.MinFont, options.MaxFont))
-                .As<IFontSizeMaker>();
+                .As<IFontSizeMaker>().SingleInstance();
             container.RegisterType<TagHandler>().As<ITagHandler>()
                 .WithParameter("fontFamily", options.Font);
             container.RegisterType<CloudTagDrawer>().AsSelf()
@@ -32,9 +32,11 @@ namespace TagsCloudVisualization
             
             var build = container.Build();
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
-                       
-            cloudtagDrawer.DrawTagsToFile(File.ReadLines(options.InputFile),
-                options.OutputFile);
+            
+            cloudtagDrawer.DrawTagsToForm(File.ReadLines(options.InputFile));
+            
+//            cloudtagDrawer.DrawTagsToFile(File.ReadLines(options.InputFile),
+//                options.OutputFile);
             
         }
     }
@@ -49,18 +51,23 @@ namespace TagsCloudVisualization
         
         [Option('w', "width", DefaultValue = 800, HelpText = "output image width")]
         public int Width { get; set; }
+
         [Option('h', "height", DefaultValue = 800, HelpText = "output image height")]
         public int Height { get; set; }
-        
+
+        [Option("maxFont", DefaultValue = 81, HelpText = "maximal font size")]
+        public int MaxFont { get; set; }
+
+        [Option("minFont", DefaultValue = 21, HelpText = "minimal font size")]
+        public int MinFont { get; set; }
+
+
         [Option('l', "minLen", DefaultValue = 0, HelpText = "minimal word length")]
         public int MinLength { get; set; }
         [Option('c', "count", DefaultValue = 50, HelpText = "count of word in cloud")]
         public int Count { get; set; }
         
-        [Option('m', "minFont", DefaultValue = 20, HelpText = "minminal font size")]
-        public int  MinFont { get; set; }
-        [Option('M', "maxFont", DefaultValue = 80, HelpText = "maximal font size")]
-        public int MaxFont { get; set; }
+
         
         [Option('f', "Font", DefaultValue = "Tahoma", HelpText = "Font Name")]
         public string Font { get; set; }
