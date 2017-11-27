@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace TagsCloudVisualization
@@ -21,7 +23,7 @@ namespace TagsCloudVisualization
             ITagHandler tagHandler,
             int height,
             int width
-            )
+        )
         {
             this.cloudLayouter = cloudLayouter;
             this.fontSizeMaker = fontSizeMaker;
@@ -32,47 +34,55 @@ namespace TagsCloudVisualization
         }
 
 
+//
+//        public  void DrawTagsToFile(IEnumerable<string> input, string output)
+//        {
+//            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
+//            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
+//            
+//            using (var bitmap = new Bitmap(width, height))
+//            {
+//                DrawTagsOnBitmap(tagRectangles, bitmap);
+//                bitmap.Save(output);
+//            }
+//        }
+//        public  void DrawTagsToForm(IEnumerable<string> input)
+//        {
+//            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
+//            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
+//            
+//            using (var bitmap = new Bitmap(width, height))
+//            {
+//                DrawTagsOnBitmap(tagRectangles, bitmap);
+//                Form aForm = new Form();
+//                aForm.Width = width;
+//                aForm.Height = height;
+//                aForm.BackgroundImage = bitmap;
+//                aForm.ShowDialog();
+//            }
+//        }
 
-        public  void DrawTagsToFile(IEnumerable<string> input, string output)
+        public Bitmap DrawTags(IEnumerable<string> input)
         {
             var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
             var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
-            
-            using (var bitmap = new Bitmap(width, height))
-            {
-                DrawTagsOnBitmap(tagRectangles, bitmap);
-                bitmap.Save(output);
-            }
-        }
-        public  void DrawTagsToForm(IEnumerable<string> input)
-        {
-            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
-            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
-            
-            using (var bitmap = new Bitmap(width, height))
-            {
-                DrawTagsOnBitmap(tagRectangles, bitmap);
-                Form aForm = new Form();
-                aForm.Width = width;
-                aForm.Height = height;
-                aForm.BackgroundImage = bitmap;
-                aForm.ShowDialog();
-            }
-        }
+            var bitmap = new Bitmap(width, height);
 
-        private  void DrawTagsOnBitmap(Dictionary<Rectangle, (string, Font)> tagsDict, Bitmap bitmap)
-        {
             using (var g = Graphics.FromImage(bitmap))
             {
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
                 var selPen = new Pen(Color.Blue);
                 var selBrush = new SolidBrush(Color.Black);
-                foreach (var tag in tagsDict)
+
+
+                foreach (var tag in tagRectangles)
                 {
-                    g.DrawRectangle(selPen, tag.Key);
-                    g.DrawString(tag.Value.Item1, tag.Value.Item2, selBrush, tag.Key.X, tag.Key.Y);
+                    StringFormat stringFormat = new StringFormat();
+//                    g.DrawRectangle(selPen, tag.Key);
+                    g.DrawString(tag.Value.Item1, tag.Value.Item2, selBrush, tag.Key.X, tag.Key.Y, stringFormat);
                 }
             }
+            return bitmap;
         }
-
     }
 }

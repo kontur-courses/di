@@ -33,10 +33,8 @@ namespace TagsCloudVisualization
             var build = container.Build();
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
-            cloudtagDrawer.DrawTagsToForm(File.ReadLines(options.InputFile));
-            
-//            cloudtagDrawer.DrawTagsToFile(File.ReadLines(options.InputFile),
-//                options.OutputFile);
+//            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).Save(options.OutputFile);
+            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).ToForm();
             
         }
     }
@@ -55,16 +53,16 @@ namespace TagsCloudVisualization
         [Option('h', "height", DefaultValue = 800, HelpText = "output image height")]
         public int Height { get; set; }
 
-        [Option("maxFont", DefaultValue = 81, HelpText = "maximal font size")]
+        [Option("maxFont", DefaultValue = 80, HelpText = "maximal font size")]
         public int MaxFont { get; set; }
 
-        [Option("minFont", DefaultValue = 21, HelpText = "minimal font size")]
+        [Option("minFont", DefaultValue = 10, HelpText = "minimal font size")]
         public int MinFont { get; set; }
 
 
         [Option('l', "minLen", DefaultValue = 0, HelpText = "minimal word length")]
         public int MinLength { get; set; }
-        [Option('c', "count", DefaultValue = 50, HelpText = "count of word in cloud")]
+        [Option('c', "count", DefaultValue = 150, HelpText = "count of word in cloud")]
         public int Count { get; set; }
         
 
@@ -77,8 +75,18 @@ namespace TagsCloudVisualization
         {
             return HelpText.AutoBuild(this);
         }
-        
-        
-          
+         
+    }
+
+    internal static class BitmapExtensions
+    {
+        public static void ToForm(this Bitmap bitmap)
+        {
+            Form aForm = new Form();
+            aForm.Width = bitmap.Width;
+            aForm.Height = bitmap.Height;
+            aForm.BackgroundImage = bitmap;
+            aForm.ShowDialog();
+        } 
     }
 }

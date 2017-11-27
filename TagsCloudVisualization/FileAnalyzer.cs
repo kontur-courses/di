@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FluentAssertions;
 using NHunspell;
 using NUnit.Framework;
 
@@ -20,17 +21,12 @@ namespace TagsCloudVisualization
 
         public Dictionary<string, int> GetWordsFrequensy(IEnumerable<string> input)
         {
-//            return input
-//                .SelectMany(line => line.Split(
-//                    new char[] { ' ', '\t', ',', ';', '?', '\n', '.'},
-//                    StringSplitOptions.RemoveEmptyEntries))
             using (var hunspell = new Hunspell("en_US.aff", "en_US.dic"))
             {
                 return input.SelectMany(line => Regex.Split(line, @"[^\p{L}]*\p{Z}[^\p{L}]*"))
                     .Select(x =>
                     {
                         var word = x.ToLower();
-                        //var morphs = hunspell.Analyze(word);
                         var stems = hunspell.Stem(word);
                         return stems.Any() ? stems[0] : word;
                     })
@@ -55,13 +51,10 @@ namespace TagsCloudVisualization
                 TestContext.CurrentContext.TestDirectory+"\\en_US.aff", 
                 TestContext.CurrentContext.TestDirectory+"\\en_US.dic"))
             {
-                Console.WriteLine("");
-                Console.WriteLine("Find the word stem of the word 'decompressed'");
-                List<string> stems = hunspell.Analyze("decompressed");
-                foreach (string stem in stems)
-                {
-                    Console.WriteLine("Word Stem is: " + stem);
-                }
+                var stems = hunspell.Stem("decompressed");
+                var actualWord = stems[0];
+                var expected = "compress";
+                actualWord.Should().Be(expected);
             }
         }
     }
