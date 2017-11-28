@@ -1,7 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using Autofac;
+using Autofac.Core;
 using CommandLine;
 using CommandLine.Text;
 
@@ -22,8 +26,9 @@ namespace TagsCloudVisualization
                 .As<ICloudLayouter>()
                 .WithParameter("cloudCenter", cloudCenter);
             container.RegisterType<FileAnalyzer>()
-                .WithParameter("count", options.Count)
-                .WithParameter("minLength",options.MinLength)
+                .WithParameters(new List<Parameter>(){
+                    new NamedParameter("count", options.Count),
+                    new NamedParameter("minLength",options.MinLength)})
                 .As<IFileAnalyzer>();
             container.Register(b => new FontSizeMaker(options.MinFont, options.MaxFont))
                 .As<IFontSizeMaker>().SingleInstance();
@@ -40,8 +45,8 @@ namespace TagsCloudVisualization
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
 //            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).Save(options.OutputFile);
-            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).ToForm();
-            
+            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile, Encoding.GetEncoding("Windows-1251"))).ToForm();
+
         }
     }
 
