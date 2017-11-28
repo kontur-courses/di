@@ -18,19 +18,25 @@ namespace TagsCloudVisualization
             var cloudCenter = new Point(400, 400);
             
             var container = new ContainerBuilder();
-            container.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>()
+            container.RegisterType<CircularCloudLayouter>()
+                .As<ICloudLayouter>()
                 .WithParameter("cloudCenter", cloudCenter);
-            container.Register(b => new FileAnalyzer(options.Count, options.MinLength))
+            container.RegisterType<FileAnalyzer>()
+                .WithParameter("count", options.Count)
+                .WithParameter("minLength",options.MinLength)
                 .As<IFileAnalyzer>();
             container.Register(b => new FontSizeMaker(options.MinFont, options.MaxFont))
                 .As<IFontSizeMaker>().SingleInstance();
             container.RegisterType<TagHandler>().As<ITagHandler>()
                 .WithParameter("fontFamily", options.Font);
+            container.RegisterType<BoringWordsDeterminer>()
+                .As<IBoringWordDeterminer>();
             container.RegisterType<CloudTagDrawer>().AsSelf()
                 .WithParameter("width", options.Width)
                 .WithParameter("height", options.Height);
             
             var build = container.Build();
+            
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
 //            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).Save(options.OutputFile);

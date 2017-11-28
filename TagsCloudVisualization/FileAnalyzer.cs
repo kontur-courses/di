@@ -12,11 +12,16 @@ namespace TagsCloudVisualization
     {
         private readonly int count;
         private readonly int minLength;
+        private readonly IBoringWordDeterminer boringWordDeterminer;
 
-        public FileAnalyzer(int count,int minLength = 0)
+        public FileAnalyzer( 
+            IBoringWordDeterminer boringWordDeterminer,
+            int count, 
+            int minLength = 0)
         {
             this.count = count;
             this.minLength = minLength;
+            this.boringWordDeterminer = boringWordDeterminer;
         }
 
         public Dictionary<string, int> GetWordsFrequensy(IEnumerable<string> input)
@@ -30,6 +35,7 @@ namespace TagsCloudVisualization
                         var stems = hunspell.Stem(word);
                         return stems.Any() ? stems[0] : word;
                     })
+                    .Where(word => !boringWordDeterminer.IsBoringWord(word))
                     .Where(word => word.Length > minLength)
                     .GroupBy(word => word)
                     .OrderByDescending(x => x.Count())

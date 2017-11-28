@@ -80,7 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoringWordsDeterminer.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="IBoringWordDeterminer.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="IFileAnalyzer.cs" />
     <Compile Include="IFontSizeMaker.cs" />
