@@ -11,25 +11,28 @@ namespace TagsCloudVisualization
     {
         private readonly IFileAnalyzer fileAnalyzer;
         private readonly ITagHandler tagHandler;
+        private readonly IReader reader;
         private readonly int height;
         private readonly int width;
 
         public CloudTagDrawer(
             IFileAnalyzer fileAnalyzer,
             ITagHandler tagHandler,
+            IReader reader,
             int height,
             int width
         )
         {
             this.fileAnalyzer = fileAnalyzer;
             this.tagHandler = tagHandler;
+            this.reader = reader;
             this.height = height;
             this.width = width;
         }
         
-        public Bitmap DrawTags(IEnumerable<string> input)
+        public Bitmap DrawTags()
         {
-            var frequencyDict = fileAnalyzer.GetWordsFrequensy(input);
+            var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
             var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
             var bitmap = new Bitmap(width, height);
 

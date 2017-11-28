@@ -82,10 +82,12 @@
   <ItemGroup>
     <Compile Include="BoringWordsDeterminer.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="FileReader.cs" />
     <Compile Include="IBoringWordDeterminer.cs" />
     <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="IFileAnalyzer.cs" />
+    <Compile Include="ITextAnalyzer.cs" />
     <Compile Include="IFontSizeMaker.cs" />
+    <Compile Include="IReader.cs" />
     <Compile Include="ITagHandler.cs" />
     <Compile Include="TagHandler.cs" />
     <Compile Include="FontSizeMaker.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Vector.cs" />
     <Compile Include="Tests\Vector_Tests.cs" />
     <Compile Include="VectorExtensions.cs" />
-    <Compile Include="FileAnalyzer.cs" />
+    <Compile Include="TextAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -120,15 +122,12 @@
     <Content Include="book3.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="en_US.aff">
+    <Content Include="dictionaries\en_US.aff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="en_US.dic">
+    <Content Include="dictionaries\en_US.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dictionary" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

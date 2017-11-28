@@ -26,9 +26,9 @@ namespace TagsCloudVisualization
 
         public Dictionary<string, int> GetWordsFrequensy(IEnumerable<string> input)
         {
-            using (var hunspell = new Hunspell("en_US.aff", "en_US.dic"))
+            using (var hunspell = new Hunspell("dictionaries/en_US.aff", "dictionaries/en_US.dic"))
             {
-                return input.SelectMany(line => Regex.Split(line, @"[^\p{L}]*\p{Z}[^\p{L}]*"))
+                return input
                     .Select(x =>
                     {
                         var word = x.ToLower();

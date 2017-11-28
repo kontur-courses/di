@@ -39,16 +39,20 @@ namespace TagsCloudVisualization
             container.RegisterType<CloudTagDrawer>().AsSelf()
                 .WithParameter("width", options.Width)
                 .WithParameter("height", options.Height);
+            container.RegisterType<FileReader>()
+                .WithParameter("filename", options.InputFile)
+                .As<IReader>();
             
             var build = container.Build();
             
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
 //            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).Save(options.OutputFile);
-            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile, Encoding.GetEncoding("Windows-1251"))).ToForm();
+            cloudtagDrawer.DrawTags().ToForm();
 
         }
     }
+
 
     class Options
     {
@@ -73,11 +77,11 @@ namespace TagsCloudVisualization
 
         [Option('l', "minLen", DefaultValue = 0, HelpText = "minimal word length")]
         public int MinLength { get; set; }
+        
         [Option('c', "count", DefaultValue = 150, HelpText = "count of word in cloud")]
         public int Count { get; set; }
-        
 
-        
+
         [Option('f', "Font", DefaultValue = "Tahoma", HelpText = "Font Name")]
         public string Font { get; set; }
 
