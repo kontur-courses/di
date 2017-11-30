@@ -9,6 +9,8 @@ DI-контейнеры используется во многих команд 
 
 ## Необходимые знания
 
+Понадобится знание C#
+
 Рекомендуется пройти блоки [SOLID](https://github.com/kontur-csharper/solid-design) и [Тестирование](https://github.com/kontur-csharper/testing)
 
 
