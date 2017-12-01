@@ -14,13 +14,15 @@ namespace TagsCloudVisualization
         private readonly IReader reader;
         private readonly int height;
         private readonly int width;
+        private readonly string outputFilename;
 
         public CloudTagDrawer(
             IFileAnalyzer fileAnalyzer,
             ITagMaker tagMaker,
             IReader reader,
             int height,
-            int width
+            int width,
+            string outputFilename
         )
         {
             this.fileAnalyzer = fileAnalyzer;
@@ -28,15 +30,16 @@ namespace TagsCloudVisualization
             this.reader = reader;
             this.height = height;
             this.width = width;
+            this.outputFilename = outputFilename;
         }
 
-        public void DrawTagsToFile(string filename)
+        public void DrawTagsToFile()
         {
             var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
             var tagRectangles = tagMaker.MakeTagRectangles(frequencyDict);
             
             var bitmap = DrawTagsOnBitmap(tagRectangles);
-            bitmap.Save(filename);
+            bitmap.Save(outputFilename);
         }
 
         public void DrawTagsToForm()

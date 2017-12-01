@@ -22,7 +22,7 @@ namespace TagsCloudVisualization
         {
             return File.ReadLines(filename)
                 .SelectMany(line => line.Split(
-                    new Char [] {' ', ',', '.', ':', ';', '!', '?', '\t', '–'}, 
+                    new Char [] {' ', ',', '.', ':', ';', '!', '?', '\t', '–', '"'}, 
                     StringSplitOptions.RemoveEmptyEntries));
         }
     }

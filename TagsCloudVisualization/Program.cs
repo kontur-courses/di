@@ -38,7 +38,8 @@ namespace TagsCloudVisualization
                 .As<IBoringWordDeterminer>();
             container.RegisterType<CloudTagDrawer>().AsSelf()
                 .WithParameter("width", options.Width)
-                .WithParameter("height", options.Height);
+                .WithParameter("height", options.Height)
+                .WithParameter("outputFilename", options.OutputFile);
             container.RegisterType<FileReader>()
                 .WithParameter("filename", options.InputFile)
                 .As<IReader>();
@@ -48,7 +49,7 @@ namespace TagsCloudVisualization
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
 //            cloudtagDrawer.DrawTagsToForm();
-            cloudtagDrawer.DrawTagsToFile(options.OutputFile);
+            cloudtagDrawer.DrawTagsToFile();
 
         }
     }
