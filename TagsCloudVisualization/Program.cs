@@ -32,7 +32,7 @@ namespace TagsCloudVisualization
                 .As<IFileAnalyzer>();
             container.Register(b => new FontSizeMaker(options.MinFont, options.MaxFont))
                 .As<IFontSizeMaker>().SingleInstance();
-            container.RegisterType<TagHandler>().As<ITagHandler>()
+            container.RegisterType<TagMaker>().As<ITagMaker>()
                 .WithParameter("fontFamily", options.Font);
             container.RegisterType<BoringWordsDeterminer>()
                 .As<IBoringWordDeterminer>();
@@ -47,8 +47,8 @@ namespace TagsCloudVisualization
             
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
             
-//            cloudtagDrawer.DrawTags(File.ReadLines(options.InputFile)).Save(options.OutputFile);
-            cloudtagDrawer.DrawTags().ToForm();
+//            cloudtagDrawer.DrawTagsToForm();
+            cloudtagDrawer.DrawTagsToFile(options.OutputFile);
 
         }
     }
@@ -93,15 +93,5 @@ namespace TagsCloudVisualization
          
     }
 
-    internal static class BitmapExtensions
-    {
-        public static void ToForm(this Bitmap bitmap)
-        {
-            Form aForm = new Form();
-            aForm.Width = bitmap.Width;
-            aForm.Height = bitmap.Height;
-            aForm.BackgroundImage = bitmap;
-            aForm.ShowDialog();
-        } 
-    }
+
 }

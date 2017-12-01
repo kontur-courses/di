@@ -88,8 +88,8 @@
     <Compile Include="ITextAnalyzer.cs" />
     <Compile Include="IFontSizeMaker.cs" />
     <Compile Include="IReader.cs" />
-    <Compile Include="ITagHandler.cs" />
-    <Compile Include="TagHandler.cs" />
+    <Compile Include="ITagMaker.cs" />
+    <Compile Include="TagMaker.cs" />
     <Compile Include="FontSizeMaker.cs" />
     <Compile Include="Tests\CircularCloudLayouter_Tests.cs" />
     <Compile Include="CloudTagDrawer.cs" />

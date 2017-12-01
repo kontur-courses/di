@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
-    public class TagHandler : ITagHandler
+    public class TagMaker : ITagMaker
     {
         private readonly ICloudLayouter layouter;
         private readonly IFontSizeMaker fontSizeMaker;
         private readonly string fontFamily;
 
-        public TagHandler(ICloudLayouter layouter, IFontSizeMaker fontSizeMaker, string fontFamily)
+        public TagMaker(ICloudLayouter layouter, IFontSizeMaker fontSizeMaker, string fontFamily)
         {
             this.layouter = layouter;
             this.fontSizeMaker = fontSizeMaker;

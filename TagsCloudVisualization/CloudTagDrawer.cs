@@ -10,30 +10,47 @@ namespace TagsCloudVisualization
     public class CloudTagDrawer
     {
         private readonly IFileAnalyzer fileAnalyzer;
-        private readonly ITagHandler tagHandler;
+        private readonly ITagMaker tagMaker;
         private readonly IReader reader;
         private readonly int height;
         private readonly int width;
 
         public CloudTagDrawer(
             IFileAnalyzer fileAnalyzer,
-            ITagHandler tagHandler,
+            ITagMaker tagMaker,
             IReader reader,
             int height,
             int width
         )
         {
             this.fileAnalyzer = fileAnalyzer;
-            this.tagHandler = tagHandler;
+            this.tagMaker = tagMaker;
             this.reader = reader;
             this.height = height;
             this.width = width;
         }
-        
-        public Bitmap DrawTags()
+
+        public void DrawTagsToFile(string filename)
         {
             var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
-            var tagRectangles = tagHandler.MakeTagRectangles(frequencyDict);
+            var tagRectangles = tagMaker.MakeTagRectangles(frequencyDict);
+            
+            var bitmap = DrawTagsOnBitmap(tagRectangles);
+            bitmap.Save(filename);
+        }
+
+        public void DrawTagsToForm()
+        {
+            var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
+            var tagRectangles = tagMaker.MakeTagRectangles(frequencyDict);
+            
+            var bitmap = DrawTagsOnBitmap(tagRectangles);
+            bitmap.ToForm();
+        }
+
+
+        private Bitmap DrawTagsOnBitmap(Dictionary<Rectangle, (string, Font)>tagRectangles)
+        {
             var bitmap = new Bitmap(width, height);
 
             using (var g = Graphics.FromImage(bitmap))
@@ -48,5 +65,16 @@ namespace TagsCloudVisualization
             }
             return bitmap;
         }
+    }
+    internal static class BitmapExtensions
+    {
+        public static void ToForm(this Bitmap bitmap)
+        {
+            Form aForm = new Form();
+            aForm.Width = bitmap.Width;
+            aForm.Height = bitmap.Height;
+            aForm.BackgroundImage = bitmap;
+            aForm.ShowDialog();
+        } 
     }
 }
