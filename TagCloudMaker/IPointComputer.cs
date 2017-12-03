@@ -4,6 +4,6 @@ namespace TagCloud
 {
     public interface IPointComputer
     {
-        Point GetNextPoint(double radiusStep, double angleStep);
+        Point GetNextPoint(double firstParam, double secondParam);
     }
 }

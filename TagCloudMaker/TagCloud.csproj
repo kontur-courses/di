@@ -44,7 +44,7 @@
     <Compile Include="RectangleExtention.cs" />
     <Compile Include="SpiralPointComputer.cs" />
     <Compile Include="TagCloudMaker.cs" />
-    <Compile Include="TagCloudPrinter.cs" />
+    <Compile Include="TagCloudDrawer.cs" />
     <Compile Include="TextRectangle.cs" />
   </ItemGroup>
   <ItemGroup>

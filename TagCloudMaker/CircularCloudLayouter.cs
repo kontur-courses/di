@@ -7,7 +7,7 @@ namespace TagCloud
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<TextRectangle> rectangles;
-        public TextRectangle[] Cloud => rectangles.ToArray();
+        public TextRectangle[] CloudRectangles => rectangles.ToArray();
         private readonly SpiralPointComputer pointComputer;
 
         public CircularCloudLayouter()

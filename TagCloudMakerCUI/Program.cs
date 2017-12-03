@@ -1,4 +1,5 @@
-﻿using TagCloud;
+﻿using System.Collections;
+using TagCloud;
 
 namespace TagCloudMakerCUI
 {
@@ -6,7 +7,7 @@ namespace TagCloudMakerCUI
     {
         static void Main(string[] args)
         {
-            TagCloudMaker.MakeTagCloud("");
+            var cloudRectangles = TagCloudMaker.GetTagCloudRectangles(new [] {"qwe"});
         }
     }
 }

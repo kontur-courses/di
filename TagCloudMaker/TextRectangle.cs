@@ -17,5 +17,11 @@ namespace TagCloud
         }
 
         public void SetLocation(Point newLocation) => rectangle.Location = newLocation;
+
+        public void ChangeSize(double widthCoeff, double heightCoeff)
+        {
+            rectangle.Width = (int)(rectangle.Width * widthCoeff);
+            rectangle.Height = (int)(rectangle.Height * heightCoeff);
+        }
     }
 }
