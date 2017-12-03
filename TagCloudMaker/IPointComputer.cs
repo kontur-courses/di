@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagCloudMaker
+namespace TagCloud
 {
     public interface IPointComputer
     {

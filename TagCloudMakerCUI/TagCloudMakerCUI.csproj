@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9CA9F8C7-7A6A-4921-A1AB-61E0AC0DD429}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{FAF7EA8B-D7D1-438A-9734-9BD02A475F41}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TagCloudMaker</RootNamespace>
-    <AssemblyName>TagCloudMaker</AssemblyName>
+    <RootNamespace>TagCloudMakerCUI</RootNamespace>
+    <AssemblyName>TagCloudMakerCUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,7 +39,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,16 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="IPointComputer.cs" />
-    <Compile Include="PointExtention.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleExtention.cs" />
-    <Compile Include="SpiralPointComputer.cs" />
-    <Compile Include="TagCloudMaker.cs" />
-    <Compile Include="TagCloudPrinter.cs" />
-    <Compile Include="TextRectangle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TagCloudMaker\TagCloud.csproj">
+      <Project>{9ca9f8c7-7a6a-4921-a1ab-61e0ac0dd429}</Project>
+      <Name>TagCloud</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">
@@ -63,9 +67,6 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace TagCloudMaker
+namespace TagCloud
 {
     public class SpiralPointComputer: IPointComputer
     {
