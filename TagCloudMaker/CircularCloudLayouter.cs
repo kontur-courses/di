@@ -7,22 +7,22 @@ namespace TagCloudMaker
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<TextRectangle> rectangles;
+        public TextRectangle[] Cloud => rectangles.ToArray();
         private readonly SpiralPointComputer pointComputer;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter()
         {
             rectangles = new List<TextRectangle>();
-            pointComputer = new SpiralPointComputer(center);
+            pointComputer = new SpiralPointComputer();
         }
 
-        public TextRectangle PutNextRectangle(Size rectangleSize, string text)
+        public void PutNextRectangle(Size rectangleSize, string text)
         {
             var nextRectangle = GetNextRectangle(rectangleSize, text);
             while (rectangles.Any(tr => tr.Rectangle.IntersectsWith(nextRectangle.Rectangle)))
                 nextRectangle = GetNextRectangle(rectangleSize, text);
 
             rectangles.Add(nextRectangle);
-            return nextRectangle;
         }
         
         private TextRectangle GetNextRectangle(Size rectangleSize, string text)

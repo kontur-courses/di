@@ -4,6 +4,7 @@ namespace TagCloudMaker
 {
     public interface ICloudLayouter
     {
-        TextRectangle PutNextRectangle(Size rectangleSize, string text);
+        void PutNextRectangle(Size rectangleSize, string text);
+        TextRectangle[] Cloud { get; }
     }
 }

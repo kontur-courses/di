@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -6,9 +7,9 @@ using System.Linq;
 
 namespace TagCloudMaker
 {
-    class TagCloudPrinter
+    public class TagCloudPrinter
     {
-        public static void PrintTagCloud(TextRectangle[] rectangles)
+        public static void PrintTagCloud(IEnumerable<TextRectangle> rectangles)
         {
             var left = rectangles.Select(tr => tr.Rectangle).Min(r => r.Left);
             var top = rectangles.Select(tr => tr.Rectangle).Min(r => r.Top);

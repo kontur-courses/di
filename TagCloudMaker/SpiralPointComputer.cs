@@ -9,9 +9,9 @@ namespace TagCloudMaker
         private double currentRadius;
         private double currentAngle;
 
-        public SpiralPointComputer(Point center)
+        public SpiralPointComputer()
         {
-            this.center = center;
+            center = new Point(0, 0);
         }
         
         public Point GetNextPoint(double radiusStep, double angleStep)
