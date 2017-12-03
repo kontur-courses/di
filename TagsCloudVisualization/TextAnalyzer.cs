@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using FluentAssertions;
+using Moq;
 using NHunspell;
 using NUnit.Framework;
 
@@ -47,10 +48,32 @@ namespace TagsCloudVisualization
     }
 
     [TestFixture]
-    public class FileAnalyzer_Should
+    public class TextAnalyzer_Mock
     {
         [Test]
         
+        public void SimpleMockTest()
+        {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            var input = new List<string>(){"What", "is", "the", "reason"};
+            var stopWords = new List<string>(){"is", "the", "are"};
+            var mock = new Mock<IBoringWordDeterminer>();
+            mock.Setup(x => x.IsBoringWord(It.IsAny<string>()))
+                .Returns((string s) => stopWords.Contains(s));
+            var expected = new Dictionary<string, int>()
+            {
+                {"what",1},
+                {"reason",1}
+            };
+            var actual = new FileAnalyzer(mock.Object, 50, 0).GetWordsFrequensy(input);
+            actual.ShouldBeEquivalentTo(expected);
+        }
+    }
+    
+    [TestFixture]
+    public class FileAnalyzer_Should
+    {
+        [Test]        
         public void DoSomething_WhenSomething()
         {
             using (var hunspell = new Hunspell(

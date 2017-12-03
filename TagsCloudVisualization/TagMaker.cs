@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using NUnit.Framework;
 
 namespace TagsCloudVisualization
 {
@@ -32,6 +33,16 @@ namespace TagsCloudVisualization
                 tagsDict.Add(layouter.PutNextRectangle(tagSize), (word.Key, font));
             }
             return tagsDict;
+        }
+    }
+
+    [TestFixture]
+    public class TagMaker_Should
+    {
+        [Test]
+        public void DoSomething_WhenSomething()
+        {
+
         }
     }
 }
