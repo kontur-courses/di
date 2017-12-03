@@ -9,15 +9,15 @@ using NUnit.Framework;
 
 namespace TagsCloudVisualization
 {
-    public class FileAnalyzer:IFileAnalyzer
+    public class FileAnalyzer : IFileAnalyzer
     {
         private readonly int count;
         private readonly int minLength;
         private readonly IBoringWordDeterminer boringWordDeterminer;
 
-        public FileAnalyzer( 
+        public FileAnalyzer(
             IBoringWordDeterminer boringWordDeterminer,
-            int count, 
+            int count,
             int minLength = 0)
         {
             this.count = count;
@@ -30,7 +30,7 @@ namespace TagsCloudVisualization
             using (var hunspell = new Hunspell("dictionaries/en_US.aff", "dictionaries/en_US.dic"))
             {
                 return input
-                    .Select(x =>
+                    .Select(x=>
                     {
                         var word = x.ToLower();
                         var stems = hunspell.Stem(word);
@@ -44,41 +44,64 @@ namespace TagsCloudVisualization
                     .ToDictionary(x => x.Key, x => x.Count());
             }
         }
-        
     }
 
     [TestFixture]
     public class TextAnalyzer_Mock
     {
-        [Test]
-        
-        public void SimpleMockTest()
+        private Mock<IBoringWordDeterminer> mock;
+        private List<string> input;
+
+        [SetUp]
+        public void SetUp()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            var input = new List<string>(){"What", "is", "the", "reason"};
-            var stopWords = new List<string>(){"is", "the", "are"};
-            var mock = new Mock<IBoringWordDeterminer>();
+            mock = new Mock<IBoringWordDeterminer>();
+            input = new List<string>() { "Where", "iS", "my", "Mind" };
+        }
+
+        [Test]
+        public void SimpleMockTest()
+        {
             mock.Setup(x => x.IsBoringWord(It.IsAny<string>()))
-                .Returns((string s) => stopWords.Contains(s));
+                .Returns(false);
             var expected = new Dictionary<string, int>()
             {
-                {"what",1},
-                {"reason",1}
+                {"where", 1},
+                {"is", 1},
+                {"my", 1},
+                {"mind", 1}
             };
             var actual = new FileAnalyzer(mock.Object, 50, 0).GetWordsFrequensy(input);
             actual.ShouldBeEquivalentTo(expected);
         }
+
+        [Test]
+        public void MockTest_WithBoringList()
+        {
+            var stopWords = new List<string>() {"is", "my"};
+            mock.Setup(x => x.IsBoringWord(It.IsAny<string>()))
+                .Returns((string s) => stopWords.Contains(s));
+            var expected = new Dictionary<string, int>()
+            {
+                {"where", 1},
+                {"mind", 1}
+            };
+            var actual = new FileAnalyzer(mock.Object, 50, 0).GetWordsFrequensy(input);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
     }
-    
+
     [TestFixture]
     public class FileAnalyzer_Should
     {
-        [Test]        
+        [Test]
         public void DoSomething_WhenSomething()
         {
             using (var hunspell = new Hunspell(
-                TestContext.CurrentContext.TestDirectory+"\\en_US.aff", 
-                TestContext.CurrentContext.TestDirectory+"\\en_US.dic"))
+                TestContext.CurrentContext.TestDirectory + "\\en_US.aff",
+                TestContext.CurrentContext.TestDirectory + "\\en_US.dic"))
             {
                 var stems = hunspell.Stem("decompressed");
                 var actualWord = stems[0];
