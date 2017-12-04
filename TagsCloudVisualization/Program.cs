@@ -47,9 +47,9 @@ namespace TagsCloudVisualization
             var build = container.Build();
             
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
-            
-//            cloudtagDrawer.DrawTagsToForm();
-            cloudtagDrawer.DrawTagsToFile();
+
+            cloudtagDrawer.DrawTagsToForm();
+            //cloudtagDrawer.DrawTagsToFile();
 
         }
     }

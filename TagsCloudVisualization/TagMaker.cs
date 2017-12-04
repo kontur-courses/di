@@ -65,6 +65,6 @@ namespace TagsCloudVisualization
             actualTag.Value.Item2.Size.Should().Be(80);
         }
 
-        }
+        
     }
 }
