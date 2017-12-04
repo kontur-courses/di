@@ -58,14 +58,6 @@
     <Compile Include="Implementations\WordProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Hunspellx64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Hunspellx86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
