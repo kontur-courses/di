@@ -2,8 +2,8 @@
 
 namespace TagsCloudVisualization
 {
-    public interface IFileAnalyzer
+    public interface IWordsAnalyzer
     {
-        Dictionary<string, int> GetWordsFrequensy(IEnumerable<string> input);
+        Dictionary<string, int> GetWordsFrequensy();
     }
 }

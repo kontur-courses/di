@@ -9,25 +9,22 @@ namespace TagsCloudVisualization
 {
     public class CloudTagDrawer
     {
-        private readonly IFileAnalyzer fileAnalyzer;
+        private readonly IWordsAnalyzer wordsAnalyzer;
         private readonly ITagMaker tagMaker;
-        private readonly IReader reader;
         private readonly int height;
         private readonly int width;
         private readonly string outputFilename;
 
         public CloudTagDrawer(
-            IFileAnalyzer fileAnalyzer,
+            IWordsAnalyzer wordsAnalyzer,
             ITagMaker tagMaker,
-            IReader reader,
             int height,
             int width,
             string outputFilename
         )
         {
-            this.fileAnalyzer = fileAnalyzer;
+            this.wordsAnalyzer = wordsAnalyzer;
             this.tagMaker = tagMaker;
-            this.reader = reader;
             this.height = height;
             this.width = width;
             this.outputFilename = outputFilename;
@@ -35,7 +32,7 @@ namespace TagsCloudVisualization
 
         public void DrawTagsToFile()
         {
-            var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
+            var frequencyDict = wordsAnalyzer.GetWordsFrequensy();
             var tagRectangles = tagMaker.MakeTagRectangles(frequencyDict);
             
             var bitmap = DrawTagsOnBitmap(tagRectangles);
@@ -44,7 +41,7 @@ namespace TagsCloudVisualization
 
         public void DrawTagsToForm()
         {
-            var frequencyDict = fileAnalyzer.GetWordsFrequensy(reader.ReadWords());
+            var frequencyDict = wordsAnalyzer.GetWordsFrequensy();
             var tagRectangles = tagMaker.MakeTagRectangles(frequencyDict);
             
             var bitmap = DrawTagsOnBitmap(tagRectangles);

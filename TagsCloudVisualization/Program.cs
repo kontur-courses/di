@@ -25,11 +25,11 @@ namespace TagsCloudVisualization
             container.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>()
                 .WithParameter("cloudCenter", cloudCenter);
-            container.RegisterType<FileAnalyzer>()
+            container.RegisterType<WordsAnalyzer>()
                 .WithParameters(new List<Parameter>(){
                     new NamedParameter("count", options.Count),
                     new NamedParameter("minLength",options.MinLength)})
-                .As<IFileAnalyzer>();
+                .As<IWordsAnalyzer>();
             container.Register(b => new FontSizeMaker(options.MinFont, options.MaxFont))
                 .As<IFontSizeMaker>().SingleInstance();
             container.RegisterType<TagMaker>().As<ITagMaker>()
@@ -47,9 +47,9 @@ namespace TagsCloudVisualization
             var build = container.Build();
             
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
-            
-//            cloudtagDrawer.DrawTagsToForm();
-            cloudtagDrawer.DrawTagsToFile();
+
+            cloudtagDrawer.DrawTagsToForm();
+            //cloudtagDrawer.DrawTagsToFile();
 
         }
     }
