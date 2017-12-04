@@ -8,12 +8,12 @@ namespace TagCloud
     {
         private readonly List<TextRectangle> rectangles;
         public TextRectangle[] CloudRectangles => rectangles.ToArray();
-        private readonly SpiralPointComputer pointComputer;
+        private readonly IPointComputer pointComputer;
 
-        public CircularCloudLayouter()
+        public CircularCloudLayouter(IPointComputer computer)
         {
             rectangles = new List<TextRectangle>();
-            pointComputer = new SpiralPointComputer();
+            pointComputer = computer;
         }
 
         public void PutNextRectangle(Size rectangleSize, string text)

@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using TagCloud;
+using Autofac;
 
 namespace TagCloudMakerCUI
 {
     class Program
     {
+        void ConfigurationPoint()
+        {
+            var container = new ContainerBuilder();
+        }
         static void Main(string[] args)
         {
-            var cloudRectangles = TagCloudMaker.GetTagCloudRectangles(new [] {"qwe"});
+            var q = new WordProcessor(new []{""}, new[] { "" }, true);
         }
     }
 }
