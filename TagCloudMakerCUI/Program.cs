@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TagCloud;
+﻿using TagCloud;
 using Autofac;
 
 namespace TagCloudMakerCUI
@@ -12,7 +11,7 @@ namespace TagCloudMakerCUI
         }
         static void Main(string[] args)
         {
-            var q = new WordProcessor(new []{""}, new[] { "" }, true);
+            //var q = new WordProcessor(new []{""}, new[] { "" }, true);
         }
     }
 }
