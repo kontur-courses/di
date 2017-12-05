@@ -13,10 +13,6 @@ namespace TagsCloudVisualization
         {
             this.filename = filename;
         }
-        public IEnumerable<string> ReadLines()
-        {
-            return File.ReadLines(filename);
-        }
 
         public IEnumerable<string> ReadWords()
         {

@@ -88,7 +88,6 @@
     <Compile Include="ITagMaker.cs" />
     <Compile Include="TagMaker.cs" />
     <Compile Include="FontSizeMaker.cs" />
-    <Compile Include="TagMaker_Mock.cs" />
     <Compile Include="Tests\CircularCloudLayouter_Tests.cs" />
     <Compile Include="CloudTagDrawer.cs" />
     <Compile Include="Program.cs" />
@@ -96,11 +95,12 @@
     <Compile Include="RectangleExteinsions.cs" />
     <Compile Include="Tests\FileAnalyzer_GetWordsFrequency_Should.cs" />
     <Compile Include="Tests\RectangleExtensions_Tests.cs" />
+    <Compile Include="Tests\TagMaker_Tests.cs" />
+    <Compile Include="Tests\WordsAnalyzer_Tests.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Tests\Vector_Tests.cs" />
     <Compile Include="VectorExtensions.cs" />
     <Compile Include="WordsAnalyzer.cs" />
-    <Compile Include="WordsAnalyzer_Mock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
