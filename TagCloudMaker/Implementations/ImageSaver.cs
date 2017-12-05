@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Implementations
 {
     public class ImageSaver: IImageSaver
     {

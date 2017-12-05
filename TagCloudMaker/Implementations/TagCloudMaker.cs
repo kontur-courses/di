@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Implementations
 {
     public class TagCloudMaker: ITagCloudMaker
     {
@@ -22,9 +23,9 @@ namespace TagCloud
             this.imageSaver = imageSaver;
         }
 
-        public IEnumerable<TextRectangle> CreateTagCloud(IEnumerable<string> words, int minLetterSize, string pathToSave)
+        public IEnumerable<TextRectangle> CreateTagCloud(string filePath, int minLetterSize, string pathToSave)
         {
-            return GetTagCloudRectangles(words, minLetterSize);
+            return GetTagCloudRectangles(filePath, minLetterSize);
         }
 
         public Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings)
@@ -37,9 +38,9 @@ namespace TagCloud
             return imageSaver.SaveImage(image, format);
         }
 
-        private IEnumerable<TextRectangle> GetTagCloudRectangles(IEnumerable<string> words, int minLetterSize)
+        private IEnumerable<TextRectangle> GetTagCloudRectangles(string filePath, int minLetterSize)
         {
-            var frecDict = wordProcessor.GetFrequencyDictionary(words);
+            var frecDict = wordProcessor.GetFrequencyDictionary(filePath);
             var tenPercent = frecDict.Select(p => p.Value).Max() / 10;
             foreach (var pair in frecDict)
             {

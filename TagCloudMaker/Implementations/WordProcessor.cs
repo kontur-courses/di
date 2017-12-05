@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Implementations
 {
     public class WordProcessor: IWordProcessor
     {
@@ -10,13 +12,14 @@ namespace TagCloud
 
         public WordProcessor(IEnumerable<string> badWords, bool fromLiterature)
         {
-            this.badWords = badWords;
+            this.badWords = badWords.Select(w => w.ToLower());
             this.fromLiterature = fromLiterature;
         }
 
-        public IDictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
+        public IDictionary<string, int> GetFrequencyDictionary(string filePath)
         {
-            return words.Select(s => s.ToLower())
+            return File.ReadLines(filePath)
+                .Select(s => s.ToLower())
                 .Except(badWords)
                 .GroupBy(w => w)
                 .OrderByDescending(g => g.Count())

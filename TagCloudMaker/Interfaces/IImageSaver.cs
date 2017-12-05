@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IImageSaver
     {

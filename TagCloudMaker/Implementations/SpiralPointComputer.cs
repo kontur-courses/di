@@ -1,7 +1,8 @@
 using System;
 using System.Drawing;
+using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Implementations
 {
     public class SpiralPointComputer: IPointComputer
     {

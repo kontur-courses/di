@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IWordProcessor
     {
-        IDictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words);
+        IDictionary<string, int> GetFrequencyDictionary(string filePath);
     }
 }

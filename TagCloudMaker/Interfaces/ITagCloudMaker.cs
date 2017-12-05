@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface ITagCloudMaker
     {
-        IEnumerable<TextRectangle> CreateTagCloud(IEnumerable<string> words, int minLetterSize, string pathToSave);
+        IEnumerable<TextRectangle> CreateTagCloud(string filePath, int minLetterSize, string pathToSave);
 
         Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings);
 
