@@ -3,24 +3,62 @@ using Ninject;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using Autofac;
 using Ninject.Parameters;
 using TagCloud;
 using TagCloud.Implementations;
 using TagCloud.Interfaces;
+using CommandLine;
+using CommandLine.Text;
 
 namespace TagCloudMakerCUI
 {
+    class Option
+    {
+        [Option('i', "inputFile", Required = true, HelpText = "Input file path.")]
+        public string InputFilePath { get; set; }
+
+        [Option('e', "excludFile", Required = false, HelpText = "File with words to exclude.")]
+        public string ExcludingFilePath { get; set; }
+
+        [Option('f', "fintSize", Required = true, HelpText = "Font size in pixels.")]
+        public int FontSize { get; set; }
+
+        [Option('b', "background", Required = true, HelpText = "Background color.")]
+        public Color BackColor { get; set; }
+
+        [Option('c', "textColor", Required = true, HelpText = "Text color.")]
+        public Color TextColor { get; set; }
+
+        [Option('w', "width", Required = true, HelpText = "Image width.")]
+        public int Width { get; set; }
+
+        [Option('h', "height", Required = true, HelpText = "Image height.")]
+        public int Height { get; set; }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            using (var scope = GetContainer(new [] {"qwertyuiop"}).BeginLifetimeScope())
+            var option = new Option();
+            var isValid = CommandLine.Parser.Default.ParseArguments(args, option);
+
+            if (!isValid)
+            {
+                Console.WriteLine("Not all required arguments was passed.");
+                return;
+            }
+
+            var excludingWords = string.IsNullOrWhiteSpace(option.ExcludingFilePath)
+                ? new string[0]
+                : File.ReadLines(option.ExcludingFilePath);
+            using (var scope = GetContainer(excludingWords).BeginLifetimeScope())
             {
                 var maker = scope.Resolve<ITagCloudMaker>();
-                var path = maker.CreateTagCloud("in.txt", 10,
-                    new DrawingSettings(Color.White, Color.Black, FontFamily.GenericMonospace,
-                        new Size(1000, 500), ImageFormat.Png));
+                var path = maker.CreateTagCloud(option.InputFilePath, option.FontSize,
+                    new DrawingSettings(option.BackColor, option.TextColor, FontFamily.GenericMonospace,
+                        new Size(option.Width, option.Height), ImageFormat.Png));
                 Console.WriteLine(path);
             }
         }
