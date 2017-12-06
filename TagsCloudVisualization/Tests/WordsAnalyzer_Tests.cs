@@ -40,7 +40,7 @@ namespace TagsCloudVisualization
                 {"mind", 1}
             };
             var actual = new WordsAnalyzer(
-                mockBoringWord.Object, mockReader.Object, 50, 0).GetWordsFrequensy();
+                mockBoringWord.Object, mockReader.Object, 50).GetWordsFrequensy();
             actual.ShouldBeEquivalentTo(expected);
         }
 
@@ -58,7 +58,7 @@ namespace TagsCloudVisualization
                 {"mind", 1}
             };
             var actual = new WordsAnalyzer(
-                mockBoringWord.Object, mockReader.Object, 50, 0).GetWordsFrequensy();
+                mockBoringWord.Object, mockReader.Object, 50).GetWordsFrequensy();
             
             actual.ShouldBeEquivalentTo(expected);
         }

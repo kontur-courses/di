@@ -36,6 +36,10 @@ namespace TagsCloudVisualization
                 .WithParameter("fontFamily", options.Font);
             container.RegisterType<BoringWordsDeterminer>()
                 .As<IBoringWordDeterminer>();
+            container.RegisterType<BitmapViewerToForm>().As<IBitmapViewer>();
+//            container.RegisterType<BitmapViewerToFile>().As<IBitmapViewer>()
+//                .WithParameter("filename", options.OutputFile);
+            
             container.RegisterType<CloudTagDrawer>().AsSelf()
                 .WithParameter("width", options.Width)
                 .WithParameter("height", options.Height)
@@ -48,7 +52,7 @@ namespace TagsCloudVisualization
             
             var cloudtagDrawer = build.Resolve<CloudTagDrawer>();
 
-            cloudtagDrawer.DrawTagsToForm();
+            cloudtagDrawer.DrawTags();
             //cloudtagDrawer.DrawTagsToFile();
 
         }

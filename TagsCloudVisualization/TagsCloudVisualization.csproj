@@ -77,9 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapViewerToFile.cs" />
+    <Compile Include="BitmapViewerToForm.cs" />
     <Compile Include="BoringWordsDeterminer.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="IBitmapViewer.cs" />
     <Compile Include="IBoringWordDeterminer.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ITextAnalyzer.cs" />
