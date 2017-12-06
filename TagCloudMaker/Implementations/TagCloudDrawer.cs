@@ -27,7 +27,7 @@ namespace TagCloud.Implementations
         private int PickUpFontSize(TextRectangle tr, FontFamily family)
         {
             var fits = false;
-            var size = tr.Rectangle.Width;
+            var size = tr.Rectangle.Height;
             using (var image = new Bitmap(1, 1))
             {
                 using (var g = Graphics.FromImage(image))

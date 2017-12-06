@@ -10,12 +10,11 @@ namespace TagCloud.Implementations
     {
         public string SaveImage(Image image, ImageFormat format)
         {
-            var pictureName = Path.GetRandomFileName() + ImageFormat.Png;
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pictureName);
+            var picturePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetRandomFileName());
 
-            image.Save(path, format);
+            image.Save($"{picturePath}.{format}", format);
 
-            return path;
+            return $"{picturePath}.{format}";
         }
     }
 }

@@ -22,6 +22,8 @@ namespace TagCloud
 
         public void ChangeSize(double widthCoeff, double heightCoeff)
         {
+            rectangle.X = (int) (rectangle.X * widthCoeff);
+            rectangle.Y = (int) (rectangle.Y * heightCoeff);
             rectangle.Width = (int)(rectangle.Width * widthCoeff);
             rectangle.Height = (int)(rectangle.Height * heightCoeff);
         }
@@ -29,8 +31,8 @@ namespace TagCloud
         public static IEnumerable<TextRectangle> NormalizeRectangles(IEnumerable<TextRectangle> rectangles, Size size)
         {
             var movedRectangles = MoveToFourthQuarter(rectangles);
-            var heightCoeff = size.Height * movedRectangles.Select(tr => tr.Rectangle).Max(r => r.Bottom);
-            var widthCoeff = size.Width * movedRectangles.Select(tr => tr.Rectangle).Max(r => r.Right);
+            var heightCoeff = size.Height * 1.0 / movedRectangles.Select(tr => tr.Rectangle).Max(r => r.Bottom);
+            var widthCoeff = size.Width * 1.0 / movedRectangles.Select(tr => tr.Rectangle).Max(r => r.Right);
             return ChangeSize(movedRectangles, widthCoeff, heightCoeff);
         }
 

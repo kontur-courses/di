@@ -23,17 +23,19 @@ namespace TagCloud.Implementations
             this.imageSaver = imageSaver;
         }
 
-        public IEnumerable<TextRectangle> CreateTagCloud(string filePath, int minLetterSize, string pathToSave)
+        public string CreateTagCloud(string filePath, int minLetterSize, DrawingSettings settings)
         {
-            return GetTagCloudRectangles(filePath, minLetterSize);
+            var rects = TextRectangle.NormalizeRectangles(GetTagCloudRectangles(filePath, minLetterSize), settings.ImageSize);
+            var img = DrawTagCloud(rects, settings);
+            return SaveTagCloud(img, settings.ImageFormat);
         }
 
-        public Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings)
+        private Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings)
         {
             return tagCloudDrawer.DrawTagCloud(rectangles, settings);
         }
 
-        public string SaveTagCloud(Image image, ImageFormat format)
+        private string SaveTagCloud(Image image, ImageFormat format)
         {
             return imageSaver.SaveImage(image, format);
         }
@@ -41,11 +43,11 @@ namespace TagCloud.Implementations
         private IEnumerable<TextRectangle> GetTagCloudRectangles(string filePath, int minLetterSize)
         {
             var frecDict = wordProcessor.GetFrequencyDictionary(filePath);
-            var tenPercent = frecDict.Select(p => p.Value).Max() / 10;
+            var maxToMin = Math.Max(1, frecDict.Select(p => p.Value).Max() / frecDict.Select(p => p.Value).Min());
             foreach (var pair in frecDict)
             {
-                var fontCoeff = Math.Max(1, pair.Value / tenPercent);
-                var size = new Size(minLetterSize * fontCoeff, minLetterSize * pair.Key.Length * fontCoeff);
+                var fontCoeff = Math.Max(1, pair.Value / maxToMin);
+                var size = new Size(minLetterSize * pair.Key.Length * fontCoeff, minLetterSize * fontCoeff);
                 cloudLayouter.PutNextRectangle(size, pair.Key);
             }
             return cloudLayouter.CloudRectangles;
