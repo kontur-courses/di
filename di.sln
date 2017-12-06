@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloudMaker\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudMakerCUI", "TagCloudMakerCUI\TagCloudMakerCUI.csproj", "{FAF7EA8B-D7D1-438A-9734-9BD02A475F41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudMockTests", "TagCloudMockTests\TagCloudMockTests.csproj", "{1E94C03A-8621-425F-90D2-C82FCE4A8D14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FAF7EA8B-D7D1-438A-9734-9BD02A475F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAF7EA8B-D7D1-438A-9734-9BD02A475F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAF7EA8B-D7D1-438A-9734-9BD02A475F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E94C03A-8621-425F-90D2-C82FCE4A8D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E94C03A-8621-425F-90D2-C82FCE4A8D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E94C03A-8621-425F-90D2-C82FCE4A8D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E94C03A-8621-425F-90D2-C82FCE4A8D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

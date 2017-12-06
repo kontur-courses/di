@@ -9,14 +9,16 @@ namespace TagCloud.Implementations
 {
     public class TagCloudMaker: ITagCloudMaker
     {
+        private readonly IMystemShell mystemShell;
         private readonly IWordProcessor wordProcessor;
         private readonly ICloudLayouter cloudLayouter;
         private readonly ITagCloudDrawer tagCloudDrawer;
         private readonly IImageSaver imageSaver;
 
-        public TagCloudMaker(IWordProcessor wordProcessor, ICloudLayouter cloudLayouter, 
+        public TagCloudMaker(IMystemShell mystemShell, IWordProcessor wordProcessor, ICloudLayouter cloudLayouter, 
                              ITagCloudDrawer tagCloudDrawer, IImageSaver imageSaver)
         {
+            this.mystemShell = mystemShell;
             this.wordProcessor = wordProcessor;
             this.cloudLayouter = cloudLayouter;
             this.tagCloudDrawer = tagCloudDrawer;
@@ -42,7 +44,7 @@ namespace TagCloud.Implementations
 
         private IEnumerable<TextRectangle> GetTagCloudRectangles(string filePath, int minLetterSize)
         {
-            var frecDict = wordProcessor.GetFrequencyDictionary(filePath);
+            var frecDict = wordProcessor.GetFrequencyDictionary(mystemShell.Analyze(filePath));
             var maxToMin = Math.Max(1, frecDict.Select(p => p.Value).Max() / frecDict.Select(p => p.Value).Min());
             foreach (var pair in frecDict)
             {

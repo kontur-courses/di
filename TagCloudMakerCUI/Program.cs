@@ -42,13 +42,14 @@ namespace TagCloudMakerCUI
         static void Main(string[] args)
         {
             var option = new Option();
-            var isValid = CommandLine.Parser.Default.ParseArguments(args, option);
+            var isValid = Parser.Default.ParseArguments(args, option);
 
-            if (!isValid)
-            {
-                Console.WriteLine("Not all required arguments was passed.");
-                return;
-            }
+            //Эта либа странно работает, поэтому вот так...
+            //if (!isValid)
+            //{
+            //    Console.WriteLine("Not all required arguments was passed.");
+            //    return;
+            //}
 
             var excludingWords = string.IsNullOrWhiteSpace(option.ExcludingFilePath)
                 ? new string[0]
@@ -66,6 +67,7 @@ namespace TagCloudMakerCUI
         static IContainer GetContainer(IEnumerable<string> badWords)
         {
             var container = new ContainerBuilder();
+            container.RegisterType<MystemShell>().As<IMystemShell>();
             container.RegisterType<WordProcessor>().As<IWordProcessor>().WithParameter("badWords", badWords);
             container.RegisterType<SpiralPointComputer>().As<IPointComputer>().WithParameter("center", new Point(0, 0));
             container.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();

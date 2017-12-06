@@ -19,9 +19,9 @@ namespace TagCloud.Implementations
             this.badWords = badWords.Select(w => w.ToLower());
         }
 
-        public IDictionary<string, int> GetFrequencyDictionary(string filePath)
+        public IDictionary<string, int> GetFrequencyDictionary(IEnumerable<string> analyzedWords)
         {
-            return MysteamShell.Analyze(filePath)
+            return analyzedWords
                 .Where(s => !borringWordsType.Any(t => s.Contains(t)))
                 .Select(s => s.Substring(0, s.IndexOf("{")).ToLower())
                 .Except(badWords.Select(w => w.ToLower()))

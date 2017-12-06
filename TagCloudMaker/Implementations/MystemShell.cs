@@ -7,9 +7,9 @@ using System.Text;
 
 namespace TagCloud
 {
-    public static class MysteamShell
+    public class MystemShell: IMystemShell
     {
-        public static List<string> Analyze(string filePath)
+        public IEnumerable<string> Analyze(string filePath)
         {
             var analyzeResult = new List<string>();
             using (var mystem = new Process())
