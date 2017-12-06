@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Implementations
 {
     public class MystemShell: IMystemShell
     {

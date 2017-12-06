@@ -26,10 +26,10 @@ namespace TagCloudMakerCUI
         public int FontSize { get; set; }
 
         [Option('b', "background", Required = true, HelpText = "Background color.")]
-        public Color BackColor { get; set; }
+        public string BackColor { get; set; }
 
         [Option('c', "textColor", Required = true, HelpText = "Text color.")]
-        public Color TextColor { get; set; }
+        public string TextColor { get; set; }
 
         [Option('w', "width", Required = true, HelpText = "Image width.")]
         public int Width { get; set; }
@@ -41,15 +41,15 @@ namespace TagCloudMakerCUI
     {
         static void Main(string[] args)
         {
+            args = "TagCloudMakerCUI.exe -i in.txt -f 10 -b White -c Black -w 500 -h 500".Split(' ');
             var option = new Option();
             var isValid = Parser.Default.ParseArguments(args, option);
-
-            //Эта либа странно работает, поэтому вот так...
-            //if (!isValid)
-            //{
-            //    Console.WriteLine("Not all required arguments was passed.");
-            //    return;
-            //}
+            
+            if (!isValid)
+            {
+                Console.WriteLine("Not all required arguments was passed.");
+                return;
+            }
 
             var excludingWords = string.IsNullOrWhiteSpace(option.ExcludingFilePath)
                 ? new string[0]
@@ -58,8 +58,8 @@ namespace TagCloudMakerCUI
             {
                 var maker = scope.Resolve<ITagCloudMaker>();
                 var path = maker.CreateTagCloud(option.InputFilePath, option.FontSize,
-                    new DrawingSettings(option.BackColor, option.TextColor, FontFamily.GenericMonospace,
-                        new Size(option.Width, option.Height), ImageFormat.Png));
+                    new DrawingSettings(Color.FromName(option.BackColor), Color.FromName(option.TextColor), 
+                    FontFamily.GenericMonospace, new Size(option.Width, option.Height), ImageFormat.Png));
                 Console.WriteLine(path);
             }
         }

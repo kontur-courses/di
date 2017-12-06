@@ -11,17 +11,19 @@ namespace TagCloud.Implementations
 {
     public class WordProcessor: IWordProcessor
     {
+        private readonly IMystemShell mystemShell;
         private readonly IEnumerable<string> badWords;
         private readonly HashSet<string> borringWordsType = new HashSet<string> { "ADVPRO", "APRO", "CONJ", "PART", "PR", "SPRO" };
 
-        public WordProcessor(IEnumerable<string> badWords)
+        public WordProcessor(IEnumerable<string> badWords, IMystemShell mystemShell)
         {
+            this.mystemShell = mystemShell;
             this.badWords = badWords.Select(w => w.ToLower());
         }
 
-        public IDictionary<string, int> GetFrequencyDictionary(IEnumerable<string> analyzedWords)
+        public IDictionary<string, int> GetFrequencyDictionary(string filePath)
         {
-            return analyzedWords
+            return mystemShell.Analyze(filePath)
                 .Where(s => !borringWordsType.Any(t => s.Contains(t)))
                 .Select(s => s.Substring(0, s.IndexOf("{")).ToLower())
                 .Except(badWords.Select(w => w.ToLower()))

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IMystemShell
     {
