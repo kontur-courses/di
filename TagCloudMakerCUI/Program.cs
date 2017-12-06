@@ -41,7 +41,6 @@ namespace TagCloudMakerCUI
     {
         static void Main(string[] args)
         {
-            args = "TagCloudMakerCUI.exe -i in.txt -f 10 -b White -c Black -w 500 -h 500".Split(' ');
             var option = new Option();
             var isValid = Parser.Default.ParseArguments(args, option);
             
