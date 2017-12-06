@@ -10,14 +10,23 @@ namespace TagsCloudVisualization
     [TestFixture]
     public class TagMaker_Mock
     {
-        [Test]
-        public void SimpleMockTest()
+        private Mock<IFontSizeMaker> fontSizeMakerMock;
+        private Mock<ICloudLayouter> layouterMock;
+        private TagMaker tagMaker;
+
+        [SetUp]
+        public void SetUp()
         {
-            var fontSizeMakerMock = new Mock<IFontSizeMaker>();
+            fontSizeMakerMock = new Mock<IFontSizeMaker>();
+            layouterMock = new Mock<ICloudLayouter>();
+            tagMaker = new TagMaker(layouterMock.Object, fontSizeMakerMock.Object, "Tahoma");
+        }
+
+        [Test]
+        public void TagMaker_ShouldReturnTagWithCorrectProperties()
+        {
             fontSizeMakerMock.Setup(x => x.GetFontSizeByFreq(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(80);
-
-            var layouterMock = new Mock<ICloudLayouter>();
             layouterMock.Setup(x => x.PutNextRectangle(It.IsAny<Size>()))
                 .Returns((Size size) => new Rectangle(new Point(10, 10), size));
 
@@ -26,13 +35,13 @@ namespace TagsCloudVisualization
                 {"test", 5}
             };
 
-            var actualTag = new TagMaker(layouterMock.Object, fontSizeMakerMock.Object, "Tahoma")
-                .MakeTagRectangles(frequencyDict).ToList()[0];
+            var actualTag = tagMaker.MakeTagRectangles(frequencyDict).ToList()[0];
 
             actualTag.Key.Location.Should().Be(new Point(10, 10));
             actualTag.Value.Item1.Should().Be("test");
             actualTag.Value.Item2.Size.Should().Be(80);
         }
+
 
         
     }

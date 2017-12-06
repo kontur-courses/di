@@ -14,6 +14,7 @@ namespace TagsCloudVisualization
         private Mock<IReader> mockReader;
         private List<string> input;
         private List<string> stopList;
+        private WordsAnalyzer wordsAnalyzer;
 
         [SetUp]
         public void SetUp()
@@ -21,12 +22,13 @@ namespace TagsCloudVisualization
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             mockBoringWord = new Mock<IBoringWordDeterminer>();
             mockReader = new Mock<IReader>();
+            wordsAnalyzer = new WordsAnalyzer(mockBoringWord.Object, mockReader.Object, 50);
             input = new List<string>() {"Where", "iS", "my", "Mind", "Where", "Is"};
             stopList = new List<string>() {"is", "my", "the"};
         }
 
         [Test]
-        public void GetWordFrequency_ShouldBeCorrect()
+        public void GetWordFrequency_ReturnCorrectPairs()
         {
             mockBoringWord.Setup(x => x.IsBoringWord(It.IsAny<string>()))
                 .Returns(false);
@@ -39,13 +41,12 @@ namespace TagsCloudVisualization
                 {"my", 1},
                 {"mind", 1}
             };
-            var actual = new WordsAnalyzer(
-                mockBoringWord.Object, mockReader.Object, 50).GetWordsFrequensy();
+            var actual = wordsAnalyzer.GetWordsFrequensy();
             actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
-        public void GetWordsFrequency_ShouldIgnoreWordsFromStopList()
+        public void GetWordsFrequency_IgnoreWordsFromStopList()
         {
             
             mockBoringWord.Setup(x => x.IsBoringWord(It.IsAny<string>()))
@@ -57,14 +58,13 @@ namespace TagsCloudVisualization
                 {"where", 2},
                 {"mind", 1}
             };
-            var actual = new WordsAnalyzer(
-                mockBoringWord.Object, mockReader.Object, 50).GetWordsFrequensy();
+            var actual = wordsAnalyzer.GetWordsFrequensy();
             
             actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
-        public void GetWordFrequency_ShouldIgnoreWordsOfSrecificLength()
+        public void GetWordFrequency_IgnoreWordsShortetThanMinLength()
         {
             mockBoringWord.Setup(x => x.IsBoringWord(It.IsAny<string>()))
                 .Returns(false);
@@ -82,7 +82,7 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void GetWordFrequency_ShouldReturnSpecificCountOfWordFrequencePairs()
+        public void GetWordFrequency_ReturnSpecificCountOfWordFrequencePairs()
         {
             var input1 = new List<string>()
             {
