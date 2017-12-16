@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace TagCloudMakerCUI
             }
         }
 
-        [Option('e', "excludFile", Required = false, HelpText = "File with words to exclude.")]
+        [Option('e', "excludingFile", Required = false, HelpText = "File with words to exclude.")]
         public string ExcludingFilePath
         {
             get { return excludingFilePath; }
@@ -37,7 +38,7 @@ namespace TagCloudMakerCUI
             }
         }
 
-        [Option('f', "fintSize", Required = true, HelpText = "Font size in pixels.")]
+        [Option('f', "fontSize", Required = true, HelpText = "Font size in pixels.")]
         public int? FontSize
         {
             get { return fontSize; }
@@ -87,14 +88,14 @@ namespace TagCloudMakerCUI
             return true;
         }
 
-        public bool AllParamsSet()
+        public IEnumerable<string> GetUnsetParamtersNames()
         {
-            var parameters = new object[]
+            var properties = GetType().GetProperties();
+            foreach (var property in properties)
             {
-                inputFilePath, fontSize,
-                width, height, backColor, textColor
-            };
-            return parameters.All(o => o != null);
+                if (property.GetValue(this) == null)
+                    yield return property.Name;
+            }
         }
     }
 }

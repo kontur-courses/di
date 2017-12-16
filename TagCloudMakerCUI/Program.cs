@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using Autofac;
 using Ninject.Parameters;
 using TagCloud;
@@ -20,10 +21,10 @@ namespace TagCloudMakerCUI
         {
             var option = new Option();
             var isValid = Parser.Default.ParseArguments(args, option);
-            
-            if (!isValid || !option.AllParamsSet())
+            var unsetParams = option.GetUnsetParamtersNames();
+            if (!isValid || unsetParams.Any())
             {
-                Console.WriteLine("Not all required arguments was passed correctly.");
+                Console.WriteLine($"{String.Join(", ", unsetParams)} wasn't passed correctly.");
                 return;
             }
 
