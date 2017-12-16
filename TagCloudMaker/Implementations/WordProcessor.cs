@@ -21,15 +21,19 @@ namespace TagCloud.Implementations
             this.badWords = badWords.Select(w => w.ToLower());
         }
 
-        public IDictionary<string, int> GetFrequencyDictionary(string filePath)
+        public Result<Dictionary<string, int>> GetFrequencyDictionary(string filePath)
         {
-            return mystemShell.Analyze(filePath)
+            var result = mystemShell.GetInterestingWords(filePath);
+
+            if (!result.IsSuccess)
+                return Result.Fail<Dictionary<string, int>>(result.Error);
+
+            return Result.Ok(result.Value
                 .Where(s => !borringWordsType.Any(t => s.Contains(t)))
                 .Select(s => s.Substring(0, s.IndexOf("{")).ToLower())
                 .Except(badWords.Select(w => w.ToLower()))
                 .GroupBy(w => w)
-                .OrderByDescending(g => g.Count())
-                .ToDictionary(g => g.Key, g => g.Count());
+                .ToDictionary(g => g.Key, g => g.Count()));
         }
     }
 }

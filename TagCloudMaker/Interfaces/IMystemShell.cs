@@ -4,6 +4,6 @@ namespace TagCloud.Interfaces
 {
     public interface IMystemShell
     {
-        IEnumerable<string> Analyze(string filePath);
+        Result<IEnumerable<string>> GetInterestingWords(string filePath);
     }
 }

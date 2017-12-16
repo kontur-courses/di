@@ -8,7 +8,6 @@ namespace TagCloud.Implementations
     {
         public Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings)
         {
-
             var canvasBitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             var canvas = Graphics.FromImage(canvasBitmap);
             canvas.Clear(settings.Background);

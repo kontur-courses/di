@@ -61,6 +61,7 @@
     <Compile Include="Implementations\SpiralPointComputer.cs" />
     <Compile Include="Implementations\TagCloudMaker.cs" />
     <Compile Include="Implementations\TagCloudDrawer.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="TextRectangle.cs" />
     <Compile Include="Implementations\WordProcessor.cs" />
   </ItemGroup>

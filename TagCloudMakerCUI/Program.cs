@@ -30,14 +30,18 @@ namespace TagCloudMakerCUI
             var excludingWords = string.IsNullOrWhiteSpace(option.ExcludingFilePath)
                 ? new string[0]
                 : File.ReadLines(option.ExcludingFilePath);
-            using (var scope = GetContainer(excludingWords).BeginLifetimeScope())
-            {
-                var maker = scope.Resolve<ITagCloudMaker>();
-                var path = maker.CreateTagCloud(option.InputFilePath, (int)option.FontSize,
-                    new DrawingSettings(Color.FromName(option.BackColor), Color.FromName(option.TextColor), 
-                    FontFamily.GenericMonospace, new Size((int)option.Width, (int)option.Height), ImageFormat.Png));
-                Console.WriteLine(path);
-            }
+
+            var scope = GetContainer(excludingWords).BeginLifetimeScope();
+            var maker = scope.Resolve<ITagCloudMaker>();
+
+            var settings = new DrawingSettings(Color.FromName(option.BackColor), Color.FromName(option.TextColor),
+                FontFamily.GenericMonospace, new Size((int) option.Width, (int) option.Height), ImageFormat.Png);
+            var result = maker.CreateTagCloud(option.InputFilePath, (int)option.FontSize, settings);
+
+            if (!result.IsSuccess)
+                Console.WriteLine(result.Error);
+
+            Console.WriteLine(result.GetValueOrThrow());
         }
 
         static IContainer GetContainer(IEnumerable<string> badWords)

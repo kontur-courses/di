@@ -6,6 +6,6 @@ namespace TagCloud.Interfaces
 {
     public interface ITagCloudMaker
     {
-        string CreateTagCloud(string filePath, int minLetterSize, DrawingSettings settings);
+        Result<string> CreateTagCloud(string filePath, int minLetterSize, DrawingSettings settings);
     }
 }

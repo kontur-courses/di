@@ -17,21 +17,33 @@ namespace TagCloud.Implementations
             pointComputer = computer;
         }
 
-        public void PutNextRectangle(Size rectangleSize, string text)
+        public Result<None> PutNextRectangle(Size rectangleSize, string text)
         {
-            var nextRectangle = GetNextRectangle(rectangleSize, text);
-            while (rectangles.Any(tr => tr.Rectangle.IntersectsWith(nextRectangle.Rectangle)))
-                nextRectangle = GetNextRectangle(rectangleSize, text);
+            var result = GetNextRectangle(rectangleSize, text);
+            if (!result.IsSuccess)
+                return Result.Fail<None>(result.Error);
 
-            rectangles.Add(nextRectangle);
+            while (rectangles.Any(tr => tr.Rectangle.IntersectsWith(result.Value.Rectangle)))
+            {
+                result = GetNextRectangle(rectangleSize, text);
+                if (!result.IsSuccess)
+                    return Result.Fail<None>(result.Error);
+            }
+
+            rectangles.Add(result.Value);
+            return Result.Ok();
         }
         
-        private TextRectangle GetNextRectangle(Size rectangleSize, string text)
+        private Result<TextRectangle> GetNextRectangle(Size rectangleSize, string text)
         {
-            var location =
-                    (rectangles.Count == 0 ? pointComputer.GetNextPoint(0, 0) : pointComputer.GetNextPoint(0.1, 50))
-                    .GetLeftTopCorner(rectangleSize);
-            return new TextRectangle(location, rectangleSize, text);
+            Result<Point> result = rectangles.Count == 0
+                ? pointComputer.GetNextPoint(0, 0)
+                : pointComputer.GetNextPoint(0.1, 50);
+            if (!result.IsSuccess)
+                return Result.Fail<TextRectangle>(result.Error);
+
+            var location = result.Value.GetLeftTopCorner(rectangleSize);
+            return Result.Ok(new TextRectangle(location, rectangleSize, text));
         }
     }
 }

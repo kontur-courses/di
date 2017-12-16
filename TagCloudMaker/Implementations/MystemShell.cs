@@ -10,8 +10,13 @@ namespace TagCloud.Implementations
 {
     public class MystemShell: IMystemShell
     {
-        public IEnumerable<string> Analyze(string filePath)
+        public Result<IEnumerable<string>> GetInterestingWords(string filePath)
         {
+            if (!File.Exists(filePath))
+                return Result.Fail<IEnumerable<string>>($"File {filePath} doesn't exists.");
+            if(!File.Exists("mystem.exe"))
+                return Result.Fail<IEnumerable<string>>($"Place mystem.exe into {AppDomain.CurrentDomain.BaseDirectory}.");
+
             var analyzeResult = new List<string>();
             using (var mystem = new Process())
             {
@@ -28,7 +33,7 @@ namespace TagCloud.Implementations
                 mystem.WaitForExit();
                 mystem.Close();
             }
-            return analyzeResult;
+            return Result.Ok((IEnumerable<string>)analyzeResult);
         }
     }
 }

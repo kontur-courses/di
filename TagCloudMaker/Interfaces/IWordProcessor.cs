@@ -4,6 +4,6 @@ namespace TagCloud.Interfaces
 {
     public interface IWordProcessor
     {
-        IDictionary<string, int> GetFrequencyDictionary(string filePath);
+        Result<Dictionary<string, int>> GetFrequencyDictionary(string filePath);
     }
 }
