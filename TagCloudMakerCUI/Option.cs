@@ -27,7 +27,7 @@ namespace TagCloudMakerCUI
             }
         }
 
-        [Option('e', "excludFile", Required = false, HelpText = "File with words to exclude.")]
+        [Option('e', "excludingFile", Required = false, HelpText = "File with words to exclude.")]
         public string ExcludingFilePath
         {
             get { return excludingFilePath; }
@@ -38,7 +38,7 @@ namespace TagCloudMakerCUI
             }
         }
 
-        [Option('f', "fintSize", Required = true, HelpText = "Font size in pixels.")]
+        [Option('f', "fontSize", Required = true, HelpText = "Font size in pixels.")]
         public int? FontSize
         {
             get { return fontSize; }
