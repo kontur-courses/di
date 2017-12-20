@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -87,14 +88,14 @@ namespace TagCloudMakerCUI
             return true;
         }
 
-        public bool AllParamsSet()
+        public IEnumerable<string> GetUnsetParamtersNames()
         {
-            var parameters = new object[]
+            var properties = GetType().GetProperties().Where(p => p.Name != "ExcludingFilePath");
+            foreach (var property in properties)
             {
-                inputFilePath, fontSize,
-                width, height, backColor, textColor
-            };
-            return parameters.All(o => o != null);
+                if (property.GetValue(this) == null)
+                    yield return property.Name;
+            }
         }
     }
 }

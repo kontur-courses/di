@@ -13,28 +13,30 @@ namespace TagCloud.Implementations
         private readonly ICloudLayouter cloudLayouter;
         private readonly ITagCloudDrawer tagCloudDrawer;
         private readonly IImageSaver imageSaver;
+        private readonly DrawingSettings settings;
 
         public TagCloudMaker(IWordProcessor wordProcessor, ICloudLayouter cloudLayouter, 
-                             ITagCloudDrawer tagCloudDrawer, IImageSaver imageSaver)
+                             ITagCloudDrawer tagCloudDrawer, IImageSaver imageSaver, DrawingSettings settings)
         {
             this.wordProcessor = wordProcessor;
             this.cloudLayouter = cloudLayouter;
             this.tagCloudDrawer = tagCloudDrawer;
             this.imageSaver = imageSaver;
+            this.settings = settings;
         }
 
-        public Result<string> CreateTagCloud(string filePath, int minLetterSize, DrawingSettings settings)
+        public Result<string> CreateTagCloud(string filePath, int minLetterSize)
         {
             var result = GetTagCloudRectangles(filePath, minLetterSize);
             if (!result.IsSuccess)
                 return Result.Fail<string>(result.Error);
 
             var rects = TextRectangle.NormalizeRectangles(result.Value, settings.ImageSize);
-            var img = DrawTagCloud(rects, settings);
+            var img = DrawTagCloud(rects);
             return Result.Ok(SaveTagCloud(img, settings.ImageFormat));
         }
 
-        private Image DrawTagCloud(IEnumerable<TextRectangle> rectangles, DrawingSettings settings)
+        private Image DrawTagCloud(IEnumerable<TextRectangle> rectangles)
         {
             return tagCloudDrawer.DrawTagCloud(rectangles, settings);
         }
