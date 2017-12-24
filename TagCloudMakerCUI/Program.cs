@@ -37,11 +37,11 @@ namespace TagCloudMakerCUI
 
 
             var settings = new DrawingSettings(Color.FromName(option.BackColor), Color.FromName(option.TextColor),
-                FontFamily.GenericMonospace, new Size((int) option.Width, (int) option.Height), ImageFormat.Png);
+                FontFamily.GenericMonospace, new Size(option.Width, option.Height), ImageFormat.Png);
 
             var scope = GetContainer(excludingWords, settings).BeginLifetimeScope();
             var maker = scope.Resolve<ITagCloudMaker>();
-            var result = maker.CreateTagCloud(option.InputFilePath, (int)option.FontSize);
+            var result = maker.CreateTagCloud(option.InputFilePath, option.FontSize);
 
             if (!result.IsSuccess)
                 Console.WriteLine(result.Error);

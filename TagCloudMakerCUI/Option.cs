@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -10,9 +11,6 @@ namespace TagCloudMakerCUI
     {
         private string inputFilePath;
         private string excludingFilePath;
-        private int? fontSize;
-        private int? width;
-        private int? height;
         private string backColor;
         private string textColor;
 
@@ -39,11 +37,7 @@ namespace TagCloudMakerCUI
         }
 
         [Option('f', "fintSize", Required = true, HelpText = "Font size in pixels.")]
-        public int? FontSize
-        {
-            get { return fontSize; }
-            set { fontSize = value > 0 ? value : null; }
-        }
+        public int FontSize { get; set; }
 
         [Option('b', "background", Required = true, HelpText = "Background color.")]
         public string BackColor
@@ -68,18 +62,10 @@ namespace TagCloudMakerCUI
         }
 
         [Option('w', "width", Required = true, HelpText = "Image width.")]
-        public int? Width
-        {
-            get { return width; }
-            set { width = value > 0 ? value : null; }
-        }
+        public int Width { get; set; }
 
         [Option('h', "height", Required = true, HelpText = "Image height.")]
-        public int? Height
-        {
-            get { return height; }
-            set { height = value > 0 ? value : null; }
-        }
+        public int Height { get; set; }
 
         private bool IsCorrectColorName(string name)
         {
@@ -93,7 +79,10 @@ namespace TagCloudMakerCUI
             var properties = GetType().GetProperties().Where(p => p.Name != "ExcludingFilePath");
             foreach (var property in properties)
             {
-                if (property.GetValue(this) == null)
+                var propertyType = property.PropertyType;
+                if (propertyType.IsValueType && property.GetValue(this).Equals(Activator.CreateInstance(propertyType)))
+                    yield return property.Name;
+                else if (property.GetValue(this) == null)
                     yield return property.Name;
             }
         }
