@@ -11,7 +11,7 @@ DI-контейнеры используется во многих команд 
 
 Понадобится знание C#
 
-Рекомендуется пройти блоки [SOLID](https://github.com/kontur-csharper/solid-design) и [Тестирование](https://github.com/kontur-csharper/testing)
+Рекомендуется пройти блоки [SOLID](https://github.com/kontur-courses/solid-design) и [Тестирование](https://github.com/kontur-courses/testing)
 
 
 ## Самостоятельная подготовка
