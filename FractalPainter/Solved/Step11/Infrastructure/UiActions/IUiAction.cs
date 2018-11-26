@@ -1,10 +1,10 @@
-namespace    FractalPainting.Solved.Step11.Infrastructure.UiActions
+namespace FractalPainting.Solved.Step11.Infrastructure.UiActions
 {
-                public    interface    IUiAction
+    public interface IUiAction
 	{
-                                MenuCategory    Category    {    get;    }
-		string    Name    {    get;    }
-		string    Description    {    get;    }
-		void    Perform();
+        MenuCategory Category { get; }
+		string Name { get; }
+		string Description { get; }
+		void Perform();
 	}
 }

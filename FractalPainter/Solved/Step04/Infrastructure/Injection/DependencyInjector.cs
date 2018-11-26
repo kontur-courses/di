@@ -1,19 +1,19 @@
-using    System.Collections;
+using System.Collections;
 
-namespace    FractalPainting.Solved.Step04.Infrastructure.Injection
+namespace FractalPainting.Solved.Step04.Infrastructure.Injection
 {
-	public    class    DependencyInjector
+	public class DependencyInjector
 	{
-		public    static    void    Inject<TDependency>(object    service,    TDependency    dependency)
+		public static void Inject<TDependency>(object service, TDependency dependency)
 		{
-			var    need    =    service    as    INeed<TDependency>;
+			var need = service as INeed<TDependency>;
 			need?.SetDependency(dependency);
 		}
 
-		public    static    void    Inject<TDependency>(IEnumerable    services,    TDependency    dependency)
+		public static void Inject<TDependency>(IEnumerable services, TDependency dependency)
 		{
-			foreach    (var    service    in    services)
-				Inject(service,    dependency);
+			foreach (var service in services)
+				Inject(service, dependency);
 		}
 	}
 }

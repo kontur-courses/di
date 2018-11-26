@@ -1,7 +1,7 @@
-namespace    FractalPainting.Solved.Step01.Infrastructure.Injection
+namespace FractalPainting.Solved.Step01.Infrastructure.Injection
 {
-	public    interface    INeed<in    T>
+	public interface INeed<in T>
 	{
-		void    SetDependency(T    dependency);
+		void SetDependency(T dependency);
 	}
 }

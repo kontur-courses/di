@@ -1,24 +1,24 @@
-﻿using    FractalPainting.Solved.Step06.App.Fractals;
-using    FractalPainting.Solved.Step06.Infrastructure.UiActions;
+﻿using FractalPainting.Solved.Step06.App.Fractals;
+using FractalPainting.Solved.Step06.Infrastructure.UiActions;
 
-namespace    FractalPainting.Solved.Step06.App.Actions
+namespace FractalPainting.Solved.Step06.App.Actions
 {
-	public    class    KochFractalAction    :    IUiAction
+	public class KochFractalAction : IUiAction
 	{
-	                private    readonly    KochPainter    kochPainter;
+	    private readonly KochPainter kochPainter;
 
-	                public    KochFractalAction(KochPainter    kochPainter)
-	                {
-	                                this.kochPainter    =    kochPainter;
-	                }
+	    public KochFractalAction(KochPainter kochPainter)
+	    {
+	        this.kochPainter = kochPainter;
+	    }
 
-		public    string    Category    =>    "Фракталы";
-		public    string    Name    =>    "Кривая    Коха";
-		public    string    Description    =>    "Кривая    Коха";
+		public string Category => "Фракталы";
+		public string Name => "Кривая Коха";
+		public string Description => "Кривая Коха";
 
-		public    void    Perform()
+		public void Perform()
 		{
-                                                kochPainter.Paint();
+            kochPainter.Paint();
 		}
 	}
 }

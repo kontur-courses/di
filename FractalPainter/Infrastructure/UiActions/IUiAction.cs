@@ -1,10 +1,10 @@
-namespace    FractalPainting.Infrastructure.UiActions
+namespace FractalPainting.Infrastructure.UiActions
 {
-	public    interface    IUiAction
+	public interface IUiAction
 	{
-		string    Category    {    get;    }
-		string    Name    {    get;    }
-		string    Description    {    get;    }
-		void    Perform();
+		string Category { get; }
+		string Name { get; }
+		string Description { get; }
+		void Perform();
 	}
 }

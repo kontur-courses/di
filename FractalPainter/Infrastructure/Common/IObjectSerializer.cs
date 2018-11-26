@@ -1,8 +1,8 @@
-namespace    FractalPainting.Infrastructure.Common
+namespace FractalPainting.Infrastructure.Common
 {
-	public    interface    IObjectSerializer
+	public interface IObjectSerializer
 	{
-		T    Deserialize<T>(byte[]    bytes);
-		byte[]    Serialize<T>(T    obj);
+		T Deserialize<T>(byte[] bytes);
+		byte[] Serialize<T>(T obj);
 	}
 }

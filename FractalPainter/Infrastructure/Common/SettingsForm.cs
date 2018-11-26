@@ -1,39 +1,39 @@
-using    System;
-using    System.Windows.Forms;
+using System;
+using System.Windows.Forms;
 
-namespace    FractalPainting.Infrastructure.Common
+namespace FractalPainting.Infrastructure.Common
 {
-	public    static    class    SettingsForm
+	public static class SettingsForm
 	{
-		public    static    SettingsForm<TSettings>    For<TSettings>(TSettings    settings)
+		public static SettingsForm<TSettings> For<TSettings>(TSettings settings)
 		{
-			return    new    SettingsForm<TSettings>(settings);
+			return new SettingsForm<TSettings>(settings);
 		}
 	}
 
-	public    class    SettingsForm<TSettings>    :    Form
+	public class SettingsForm<TSettings> : Form
 	{
-		public    SettingsForm(TSettings    settings)
+		public SettingsForm(TSettings settings)
 		{
-		                var    okButton    =    new    Button
-		                {
-		                                Text    =    "OK",
-		                                DialogResult    =    DialogResult.OK,
-		                                Dock    =    DockStyle.Bottom,
-		                };
-                                                Controls.Add(okButton);
-			Controls.Add(new    PropertyGrid
+		    var okButton = new Button
+		    {
+		        Text = "OK",
+		        DialogResult = DialogResult.OK,
+		        Dock = DockStyle.Bottom,
+		    };
+            Controls.Add(okButton);
+			Controls.Add(new PropertyGrid
 			{
-				SelectedObject    =    settings,
-				Dock    =    DockStyle.Fill
+				SelectedObject = settings,
+				Dock = DockStyle.Fill
 			});
-		                AcceptButton    =    okButton;
+		    AcceptButton = okButton;
 		}
 
-		protected    override    void    OnLoad(EventArgs    e)
+		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			Text    =    "Настройки";
+			Text = "Настройки";
 		}
 	}
 }

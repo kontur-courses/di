@@ -1,7 +1,7 @@
-namespace    FractalPainting.Infrastructure.Common
+namespace FractalPainting.Infrastructure.Common
 {
-                public    interface    IImageDirectoryProvider
-                {
-                                string    ImagesDirectory    {    get;    }
-                }
+    public interface IImageDirectoryProvider
+    {
+        string ImagesDirectory { get; }
+    }
 }

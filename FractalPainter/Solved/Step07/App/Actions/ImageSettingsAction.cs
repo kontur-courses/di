@@ -1,31 +1,31 @@
-﻿using    FractalPainting.Infrastructure.Common;
-using    FractalPainting.Solved.Step07.Infrastructure.Injection;
-using    FractalPainting.Solved.Step07.Infrastructure.UiActions;
+﻿using FractalPainting.Infrastructure.Common;
+using FractalPainting.Solved.Step07.Infrastructure.Injection;
+using FractalPainting.Solved.Step07.Infrastructure.UiActions;
 
-namespace    FractalPainting.Solved.Step07.App.Actions
+namespace FractalPainting.Solved.Step07.App.Actions
 {
-	public    class    ImageSettingsAction    :    IUiAction,    INeed<IImageSettingsProvider>,    INeed<IImageHolder>
+	public class ImageSettingsAction : IUiAction, INeed<IImageSettingsProvider>, INeed<IImageHolder>
 	{
-		private    IImageHolder    imageHolder;
-		private    IImageSettingsProvider    imageSettingsProvider;
+		private IImageHolder imageHolder;
+		private IImageSettingsProvider imageSettingsProvider;
 
-		public    void    SetDependency(IImageHolder    dependency)
+		public void SetDependency(IImageHolder dependency)
 		{
-			imageHolder    =    dependency;
+			imageHolder = dependency;
 		}
 
-		public    void    SetDependency(IImageSettingsProvider    dependency)
+		public void SetDependency(IImageSettingsProvider dependency)
 		{
-			imageSettingsProvider    =    dependency;
+			imageSettingsProvider = dependency;
 		}
 
-		public    string    Category    =>    "Настройки";
-		public    string    Name    =>    "Изображение...";
-		public    string    Description    =>    "Размеры    изображения";
+		public string Category => "Настройки";
+		public string Name => "Изображение...";
+		public string Description => "Размеры изображения";
 
-		public    void    Perform()
+		public void Perform()
 		{
-			var    imageSettings    =    imageSettingsProvider.ImageSettings;
+			var imageSettings = imageSettingsProvider.ImageSettings;
 			SettingsForm.For(imageSettings).ShowDialog();
 			imageHolder.RecreateImage(imageSettings);
 		}

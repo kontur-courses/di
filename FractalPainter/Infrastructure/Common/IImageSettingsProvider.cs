@@ -1,7 +1,7 @@
-namespace    FractalPainting.Infrastructure.Common
+namespace FractalPainting.Infrastructure.Common
 {
-                public    interface    IImageSettingsProvider
-                {
-                                ImageSettings    ImageSettings    {    get;    }
-                }
+    public interface IImageSettingsProvider
+    {
+        ImageSettings ImageSettings { get; }
+    }
 }

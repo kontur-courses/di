@@ -1,8 +1,8 @@
-namespace    FractalPainting.Infrastructure.Common
+namespace FractalPainting.Infrastructure.Common
 {
-	public    interface    IBlobStorage
+	public interface IBlobStorage
 	{
-		byte[]    Get(string    name);
-		void    Set(string    name,    byte[]    content);
+		byte[] Get(string name);
+		void Set(string name, byte[] content);
 	}
 }
