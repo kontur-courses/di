@@ -4,51 +4,51 @@ using FractalPainting.Infrastructure.Common;
 
 namespace FractalPainting.Solved.Step03.App
 {
-	public class SettingsManager
-	{
-		private readonly IObjectSerializer serializer;
-		private readonly IBlobStorage storage;
-		private string settingsFilename;
+    public class SettingsManager
+    {
+        private readonly IObjectSerializer serializer;
+        private readonly IBlobStorage storage;
+        private string settingsFilename;
 
-		public SettingsManager(IObjectSerializer serializer, IBlobStorage storage)
-		{
-			this.serializer = serializer;
-			this.storage = storage;
-		}
+        public SettingsManager(IObjectSerializer serializer, IBlobStorage storage)
+        {
+            this.serializer = serializer;
+            this.storage = storage;
+        }
 
-		public AppSettings Load()
-		{
-			try
-			{
-				settingsFilename = "app.settings";
-				var data = storage.Get(settingsFilename);
-				if (data == null)
-				{
-					var defaultSettings = CreateDefaultSettings();
-					Save(defaultSettings);
-					return defaultSettings;
-				}
-				return serializer.Deserialize<AppSettings>(data);
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(e.Message, "Не удалось загрузить настройки");
-				return CreateDefaultSettings();
-			}
-		}
+        public AppSettings Load()
+        {
+            try
+            {
+                settingsFilename = "app.settings";
+                var data = storage.Get(settingsFilename);
+                if (data == null)
+                {
+                    var defaultSettings = CreateDefaultSettings();
+                    Save(defaultSettings);
+                    return defaultSettings;
+                }
+                return serializer.Deserialize<AppSettings>(data);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Не удалось загрузить настройки");
+                return CreateDefaultSettings();
+            }
+        }
 
-		private static AppSettings CreateDefaultSettings()
-		{
-			return new AppSettings
-			{
-				ImagesDirectory = ".",
-				ImageSettings = new ImageSettings()
-			};
-		}
+        private static AppSettings CreateDefaultSettings()
+        {
+            return new AppSettings
+            {
+                ImagesDirectory = ".",
+                ImageSettings = new ImageSettings()
+            };
+        }
 
-		public void Save(AppSettings settings)
-		{
-			storage.Set(settingsFilename, serializer.Serialize(settings));
-		}
-	}
+        public void Save(AppSettings settings)
+        {
+            storage.Set(settingsFilename, serializer.Serialize(settings));
+        }
+    }
 }

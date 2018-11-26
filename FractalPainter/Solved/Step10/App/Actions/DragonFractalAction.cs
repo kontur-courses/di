@@ -5,8 +5,8 @@ using FractalPainting.Solved.Step10.Infrastructure.UiActions;
 
 namespace FractalPainting.Solved.Step10.App.Actions
 {
-	public class DragonFractalAction : IUiAction
-	{
+    public class DragonFractalAction : IUiAction
+    {
         private readonly IDragonPainterFactory dragonPainterFactory;
         private readonly Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator;
 
@@ -31,8 +31,8 @@ namespace FractalPainting.Solved.Step10.App.Actions
         }
 
         private DragonSettings CreateRandomSettings()
-		{
-		    return createDragonSettingsGenerator(new Random()).Generate();
-		}
-	}
+        {
+            return createDragonSettingsGenerator(new Random()).Generate();
+        }
+    }
 }
