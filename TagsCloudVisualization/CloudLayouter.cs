@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
     /// <summary>
     /// Put rectangles in cloud in order of distance from center
     /// </summary>
-    class CloudLayouter
+    public class CloudLayouter
     {
         public CloudLayouter(ISpiral spiral, Point center)
         {

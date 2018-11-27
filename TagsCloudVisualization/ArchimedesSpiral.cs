@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    class ArchimedesSpiral: ISpiral
+    public class ArchimedesSpiral: ISpiral
     {
         public ArchimedesSpiral(Point center)
         {

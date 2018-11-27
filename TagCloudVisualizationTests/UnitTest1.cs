@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudVisualization;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualizationTests
 {
     [TestFixture]
     class CloudLayouterTests
@@ -33,7 +34,7 @@ namespace TagsCloudVisualization
         [Test]
         public void NextRectangleShouldByFartherOfCenter()
         {
-            var rectanglesSizes = new [] { new Size(2, 2), new Size(2, 2) };
+            var rectanglesSizes = new[] { new Size(2, 2), new Size(2, 2) };
 
             var lastDistance = 0.0;
 
@@ -51,7 +52,7 @@ namespace TagsCloudVisualization
         [Test]
         public void RectanglesAreNotIntersectingAfterAdditionNew()
         {
-            var rectanglesSizes = new [] { new Size(100, 100), new Size(100, 100) };
+            var rectanglesSizes = new[] { new Size(100, 100), new Size(100, 100) };
             foreach (var rectangleSize in rectanglesSizes)
             {
                 cloudLayouter.PutNextRectangle(rectangleSize);
@@ -74,7 +75,7 @@ namespace TagsCloudVisualization
         public static void SaveImageOfWrongTestCase()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            
+
             var directory = TestContext.CurrentContext.TestDirectory;
             var path = $"{directory}\\..\\..\\Images\\FailedOn{TestContext.CurrentContext.Test.Name}.png";
 

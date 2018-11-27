@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    class CircularCloudVisualization
+    public class CircularCloudVisualization
     {
         private const int CountOfRectangles = 100;
         

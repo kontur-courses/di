@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    class SquareSpiral : ISpiral
+    public class SquareSpiral : ISpiral
     {
         public SquareSpiral(Point center)
         {

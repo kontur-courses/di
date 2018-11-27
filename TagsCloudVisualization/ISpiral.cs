@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    interface ISpiral
+    public interface ISpiral
     {
         Rectangle GetRectangleInNextLocation(Size rectangleSize);
     }

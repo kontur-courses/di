@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    static class CircularCloudLayouterExtensions
+    public static class CircularCloudLayouterExtensions
     {
         public static Rectangle ShiftCoordinatesToCenterRectangle(this Rectangle rectangle)
         {
