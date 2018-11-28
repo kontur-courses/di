@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagCloud.TagCloudVisualization.Extensions;
+using TagCloud.TagCloudVisualization.Layouter;
+using TagCloud.TagCloudVisualization.Visualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization_Tests
 {
     [TestFixture]
     class CircularCloudLayouter_Should
@@ -34,8 +37,8 @@ namespace TagsCloudVisualization
                 var directory = TestContext.CurrentContext.TestDirectory;
                 var filename = TestContext.CurrentContext.Test.Name;
                 var path = $"{directory}\\{filename}.png";
-                var bitmap = visualizer.GetTagCloudImage();
-                bitmap.Save(path);
+                visualizer.GetTagCloudImage();
+                visualizer.ImageBox.SaveImage(path);
                 TestContext.WriteLine($"Tag cloud visualization saved to file {path}");
             }
         }

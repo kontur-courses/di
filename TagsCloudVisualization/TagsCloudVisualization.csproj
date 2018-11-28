@@ -47,18 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudVisualizer.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="Visualization.cs" />
-    <Compile Include="PointExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleExtension.cs" />
-    <Compile Include="Spiral.cs" />
-    <Compile Include="TagCloudLayouter.cs" />
-    <Compile Include="TagCloudVisualization.cs" />
-    <Compile Include="WordAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

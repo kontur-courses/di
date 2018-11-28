@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.TagCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization
 {

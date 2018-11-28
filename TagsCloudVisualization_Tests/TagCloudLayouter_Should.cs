@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.Settings;
+using TagCloud.TagCloudVisualization.Analyzer;
+using TagCloud.TagCloudVisualization.Layouter;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualization_Tests
@@ -10,13 +13,12 @@ namespace TagsCloudVisualization_Tests
     class TagCloudLayouter_Should
     {
         private CircularCloudLayouter layout;
-        private WordAnalyzer analyzer;
+        private WordAnalyzer WordAnalyzer;
 
         [SetUp]
         public void SetUp()
         {
             layout = new CircularCloudLayouter();
-            analyzer = new WordAnalyzer();
 
         }
 
@@ -25,9 +27,9 @@ namespace TagsCloudVisualization_Tests
         {
             var text
                 = "So I said yes to Thomas Clinton and later thought that I had said yes to God and later still realized I had said yes only to Thomas Clinton";
-            var weightedWords = analyzer.WeightWords(analyzer.TextAnalyzer(text));
-            var tagLayouter = new TagCloudLayouter(layout, weightedWords);
-            tagLayouter.GetTags().Count.Should().Be(weightedWords.Count);
+            var weightedWords = WordAnalyzer.WeightWords(WordAnalyzer.SplitWords(text));
+            var tagLayouter = new TagCloudLayouter(new FontSettings());
+            tagLayouter.GetTags(weightedWords).Count.Should().Be(weightedWords.Count);
         }
 
         [Test]
@@ -35,9 +37,9 @@ namespace TagsCloudVisualization_Tests
         {
             var text
                 = "So I said yes to Thomas Clinton and later thought that I had said yes to God and later still realized I had said yes only to Thomas Clinton";
-            var weightedWords = analyzer.WeightWords(analyzer.TextAnalyzer(text));
-            var tagLayouter = new TagCloudLayouter(layout, weightedWords);
-            var tags = tagLayouter.GetTags();
+            var weightedWords = WordAnalyzer.WeightWords(WordAnalyzer.SplitWords(text));
+            var tagLayouter = new TagCloudLayouter(new FontSettings());
+            var tags = tagLayouter.GetTags(weightedWords);
             var tagFontsSizes = tags.Select(tag => tag.Font.Size).ToList();
             tagFontsSizes.Should().BeInDescendingOrder();
         }
@@ -47,9 +49,9 @@ namespace TagsCloudVisualization_Tests
         {
             var text
                 = "So I said yes to Thomas Clinton and later thought that I had said yes to God and later still realized I had said yes only to Thomas Clinton";
-            var weightedWords = analyzer.WeightWords(analyzer.TextAnalyzer(text));
-            var tagLayouter = new TagCloudLayouter(layout, weightedWords);
-            var tags = tagLayouter.GetTags();
+            var weightedWords = WordAnalyzer.WeightWords(WordAnalyzer.SplitWords(text));
+            var tagLayouter = new TagCloudLayouter(new FontSettings());
+            var tags = tagLayouter.GetTags(weightedWords);
             tags.Select(tag => tag.Word).Should().ContainInOrder(weightedWords.Select(word => word.Key));        
         }
 
@@ -57,8 +59,8 @@ namespace TagsCloudVisualization_Tests
         public void GetTags_AddSingleWord_ReturnWordWithMaxSize()
         {
             var weightedWords = new Dictionary<String, int> {{"hello", 3}};
-            var tagLayouter = new TagCloudLayouter(layout, weightedWords);
-            var tags = tagLayouter.GetTags();
+            var tagLayouter = new TagCloudLayouter(new FontSettings());
+            var tags = tagLayouter.GetTags(weightedWords);
             tags.First().Font.SizeInPoints.Should().Be(50);
         }
 
@@ -66,8 +68,8 @@ namespace TagsCloudVisualization_Tests
         public void GetTags_AddThreeWordsWithDescendingFrequensies_ReturnTagsWithCorrectSizes()
         {
             var weightedWords = new Dictionary<String, int> { { "how", 4 }, {"are", 2}, {"you", 1} };
-            var tagLayouter = new TagCloudLayouter(layout, weightedWords);
-            var tags = tagLayouter.GetTags();
+            var tagLayouter = new TagCloudLayouter(new FontSettings());
+            var tags = tagLayouter.GetTags(weightedWords);
             var sizes = new[] {40, 20, 10};
             tags.Select(tag => tag.Font.SizeInPoints).ShouldAllBeEquivalentTo(sizes);
         }

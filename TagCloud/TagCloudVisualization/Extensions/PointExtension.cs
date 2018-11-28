@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagCloud.TagCloudVisualization.Extensions
 {
     public static class PointExtension
     {

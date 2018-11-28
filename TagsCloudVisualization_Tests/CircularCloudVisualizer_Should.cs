@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.TagCloudVisualization.Extensions;
+using TagCloud.TagCloudVisualization.Layouter;
+using TagCloud.TagCloudVisualization.Visualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization_Tests
 {
     [TestFixture]
     public class CircularCloudVisualizer_Should
@@ -20,14 +22,6 @@ namespace TagsCloudVisualization
             layout = new CircularCloudLayouter();
             rectangles = new List<Rectangle>();
             visualizer = new CircularCloudVisualizer(rectangles);
-        }
-
-        [Test]
-        public void DrawRectangles_AddSingleRectangle_DefaultSizes()
-        {
-            var newRectangle = layout.PutNextRectangle(new Size(100, 100));
-            rectangles.Add(newRectangle);
-            visualizer.GetTagCloudImage().Size.Should().Be(new Size(500, 500));
         }
 
         private static int GetRectangleRadius(Rectangle newRectangle)

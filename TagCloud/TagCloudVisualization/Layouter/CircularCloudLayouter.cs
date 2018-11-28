@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.TagCloudVisualization.Extensions;
 
-namespace TagsCloudVisualization
+namespace TagCloud.TagCloudVisualization.Layouter
 {
     public class CircularCloudLayouter
     {
         private List<Rectangle> Rectangles;
-        private readonly IEnumerable<Point> spiralPoints;
+        private IEnumerable<Point> spiralPoints;
         private Point center = new Point(0, 0);
 
         public CircularCloudLayouter()
@@ -40,6 +40,12 @@ namespace TagsCloudVisualization
         private bool RectanglesDoNotIntersect(Rectangle newRectangle)
         {
             return !(Rectangles.Any(newRectangle.IntersectsWith));
+        }
+
+        public void Clear()
+        {
+            Rectangles.Clear();
+            spiralPoints = new Spiral().GenerateRectangleLocation();
         }
     }
 }

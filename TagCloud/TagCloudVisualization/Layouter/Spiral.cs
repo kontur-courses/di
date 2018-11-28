@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagCloud.TagCloudVisualization.Layouter
 {
     public class Spiral
     {
@@ -17,8 +16,6 @@ namespace TagsCloudVisualization
 
         public IEnumerable<Point> GenerateRectangleLocation()
         {
-            //For generating rectangle location (left-upper corner)
-            //I'm using Archimedean Spiral
             while (true)
             {
                 var distanceBetweenTurnings = 1;
