@@ -6,41 +6,38 @@ using System.Linq;
 namespace TagsCloudVisualization
 {
     /// <summary>
-    /// Put rectangles in cloud in order of distance from center
+    /// Put rectangles in cloud in order of distance from Center
     /// </summary>
-    public class CloudLayouter
+    public partial class CloudLayouter : ICloudLayouter
     {
-        public CloudLayouter(ISpiral spiral, Point center)
+        public CloudLayouter(ISpiral spiral)
         {
             Rectangles = new List<Rectangle>();
-            Center = center;
-            this.spiral = spiral;
+            Spiral = spiral;
         }
 
-        enum Direction { Up, Down, Left, Right };
-        private readonly ISpiral spiral;
-
-        public Point Center { get; }
+        public ISpiral Spiral { get; }
+        
         public List<Rectangle> Rectangles { get; }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            var rectangle = spiral.GetRectangleInNextLocation(rectangleSize);
+            var rectangle = Spiral.GetRectangleInNextLocation(rectangleSize);
             while (IntersectsWithPrevious(rectangle))
-                rectangle = spiral.GetRectangleInNextLocation(rectangleSize);
+                rectangle = Spiral.GetRectangleInNextLocation(rectangleSize);
 
             if (Rectangles.Count != 0)
             {
-                if (Center.X > rectangle.X)
+                if (Spiral.Center.X > rectangle.X)
                     OffsetRectangle(rectangle, Direction.Right);
 
-                if (Center.X > rectangle.X)
+                if (Spiral.Center.X > rectangle.X)
                     OffsetRectangle(rectangle, Direction.Left);
 
-                if (Center.Y > rectangle.Y)
+                if (Spiral.Center.Y > rectangle.Y)
                     OffsetRectangle(rectangle, Direction.Down);
 
-                if (Center.Y < rectangle.Y)
+                if (Spiral.Center.Y < rectangle.Y)
                     OffsetRectangle(rectangle, Direction.Up);
             }
 
@@ -57,19 +54,19 @@ namespace TagsCloudVisualization
             {
                 case Direction.Right:
                     offset = new Point(0, 1);
-                    counter = Center.X - rectangle.GetCenter().X;
+                    counter = Spiral.Center.X - rectangle.GetCenter().X;
                     break;
                 case Direction.Left:
                     offset = new Point(0, -1);
-                    counter = rectangle.GetCenter().X - Center.X;
+                    counter = rectangle.GetCenter().X - Spiral.Center.X;
                     break;
                 case Direction.Up:
                     offset = new Point(-1, 0);
-                    counter = rectangle.GetCenter().Y - Center.Y;
+                    counter = rectangle.GetCenter().Y - Spiral.Center.Y;
                     break;
                 case Direction.Down:
                     offset = new Point(1, 0);
-                    counter = Center.Y - rectangle.GetCenter().Y;
+                    counter = Spiral.Center.Y - rectangle.GetCenter().Y;
                     break;
             }
 
@@ -77,7 +74,7 @@ namespace TagsCloudVisualization
             {
                 var location = rectangle.Location;
                 location.Offset(offset);
-                rectangle = new Rectangle(location, rectangle.Size);   
+                rectangle = new Rectangle(location, rectangle.Size);
                 counter--;
             }
         }

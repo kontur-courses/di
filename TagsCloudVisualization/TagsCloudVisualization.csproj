@@ -47,7 +47,10 @@
     <Compile Include="CloudLayouter.cs" />
     <Compile Include="CircularCloudLayouterExtensions.cs" />
     <Compile Include="CircularCloudVisualization.cs" />
+    <Compile Include="CloudLayouter.Direction.cs" />
+    <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ISpiral.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SquareSpiral.cs" />
   </ItemGroup>

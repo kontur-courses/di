@@ -7,10 +7,10 @@ namespace TagsCloudVisualization
     {
         public ArchimedesSpiral(Point center)
         {
-            this.center = center;
+            Center = center;
         }
 
-        private readonly Point center;
+        public Point Center { get; }
         private double angle = 0;
 
         private const double SpiralShift = 1;
@@ -18,8 +18,8 @@ namespace TagsCloudVisualization
 
         private Point GetCurrentPositionOnTheSpiral()
         {
-            var x = center.X + (SpiralShift * angle * Math.Cos(angle));
-            var y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+            var x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+            var y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
 
             return new Point((int)x, (int)y);
         }

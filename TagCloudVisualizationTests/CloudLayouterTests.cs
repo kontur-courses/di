@@ -12,12 +12,13 @@ namespace TagCloudVisualizationTests
     {
         private static Point center;
         private static CloudLayouter cloudLayouter;
+
         [SetUp]
         public void InitializeTests()
         {
             center = new Point(1000, 1000);
             var spiral = new ArchimedesSpiral(center);
-            cloudLayouter = new CloudLayouter(spiral, center);
+            cloudLayouter = new CloudLayouter(spiral);
         }
 
         [TestCase(0, 0, TestName = "CenterOfCloudAreEquivalentToLeftUpperBoundOfFirstRectangleOnZeroSize")]
@@ -81,10 +82,10 @@ namespace TagCloudVisualizationTests
 
             TestContext.Out.WriteLine($"Tag cloud visualization saved to file {path}");
 
-            var bitmap = CircularCloudVisualization.GetBitmapWithRectangles(cloudLayouter);
-
-            bitmap.Save(path, ImageFormat.Png);
+            var visualizator = new CircularCloudVisualization(cloudLayouter);
+            visualizator.SaveCloudLayouter($"FailedOn{TestContext.CurrentContext.Test.Name}", TestContext.CurrentContext.TestDirectory);
         }
+
         //private IEnumerable TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter()
         //{
         //    yield return new TestCaseData(new[] { new Size(2, 2), new Size(2, 2) })

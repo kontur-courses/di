@@ -7,10 +7,10 @@ namespace TagsCloudVisualization
     {
         public SquareSpiral(Point center)
         {
-            this.center = center;
+            this.Center = center;
         }
 
-        private readonly Point center;
+        public Point Center { get; }
         private double angle = 0;
 
         private const double SpiralShift = 1;
@@ -27,26 +27,26 @@ namespace TagsCloudVisualization
                 {
                     if (a < Math.PI / 4)
                     {
-                        x = center.X + (SpiralShift * angle * GetSmthCos(angle));
-                        y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+                        x = Center.X + (SpiralShift * angle * GetSmthCos(angle));
+                        y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
                     }
                     else
                     {
-                        x = center.X + (SpiralShift * angle * Math.Cos(angle));
-                        y = center.Y + (SpiralShift * angle * GetSmthSin(angle));
+                        x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+                        y = Center.Y + (SpiralShift * angle * GetSmthSin(angle));
                     }
                 }
                 else
                 {
                     if (a < Math.PI * 3 / 4)
                     {
-                        x = center.X + (SpiralShift * angle * Math.Cos(angle));
-                        y = center.Y + (SpiralShift * angle * GetSmthSin(angle));
+                        x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+                        y = Center.Y + (SpiralShift * angle * GetSmthSin(angle));
                     }
                     else
                     {
-                        x = center.X + (SpiralShift * angle * GetSmthCos(angle));
-                        y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+                        x = Center.X + (SpiralShift * angle * GetSmthCos(angle));
+                        y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
                     }
                 }
             }
@@ -59,56 +59,56 @@ namespace TagsCloudVisualization
                 {
                     if (a > Math.PI / 4)
                     {
-                        x = center.X + (SpiralShift * angle * GetSmthCos(angle));
-                        y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+                        x = Center.X + (SpiralShift * angle * GetSmthCos(angle));
+                        y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
                     }
                     else
                     {
-                        x = center.X + (SpiralShift * angle * Math.Cos(angle));
-                        y = center.Y + (SpiralShift * angle * GetSmthSin(angle));
+                        x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+                        y = Center.Y + (SpiralShift * angle * GetSmthSin(angle));
                     }
                 }
                 else
                 {
                     if (a < Math.PI * 3 / 4)
                     {
-                        x = center.X + (SpiralShift * angle * GetSmthCos(angle));
-                        y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+                        x = Center.X + (SpiralShift * angle * GetSmthCos(angle));
+                        y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
                     }
                     else
                     {
-                        x = center.X + (SpiralShift * angle * Math.Cos(angle));
-                        y = center.Y + (SpiralShift * angle * GetSmthSin(angle));
+                        x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+                        y = Center.Y + (SpiralShift * angle * GetSmthSin(angle));
                     }
                 }
             }
             return new Point((int)x, (int)y);
-            //var x = center.X + (SpiralShift * angle * GetSmthCos(angle));
-            //var y = center.Y + (SpiralShift * angle * GetSmthSin(angle));
+            //var x = Center.X + (SpiralShift * angle * GetSmthCos(angle));
+            //var y = Center.Y + (SpiralShift * angle * GetSmthSin(angle));
 
             //if (Math.Sign(Math.Cos(angle) * Math.Sin(angle)) == 1)
             //{
-            //    var x = center.X + (SpiralShift * angle * Math.Sign(Math.Cos(angle)));
-            //    var y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+            //    var x = Center.X + (SpiralShift * angle * Math.Sign(Math.Cos(angle)));
+            //    var y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
             //    return new Point((int)x, (int)y);
             //}
             //else if (Math.Sign(Math.Cos(angle) * Math.Sin(angle)) == -1)
             //{
-            //    var x = center.X + (SpiralShift * angle * Math.Cos(angle));
-            //    var y = center.Y + (SpiralShift * angle * Math.Sign(Math.Sin(angle)));
+            //    var x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+            //    var y = Center.Y + (SpiralShift * angle * Math.Sign(Math.Sin(angle)));
             //    return new Point((int)x, (int)y);
             //}
             //throw new ArgumentException();
             //if (a > Math.PI / 4)
             //{
-            //    var x = center.X + (SpiralShift * angle * Math.Sign(Math.Cos(angle)));
-            //    var y = center.Y + (SpiralShift * angle * Math.Sin(angle));
+            //    var x = Center.X + (SpiralShift * angle * Math.Sign(Math.Cos(angle)));
+            //    var y = Center.Y + (SpiralShift * angle * Math.Sin(angle));
             //    return new Point((int)x, (int)y);
             //}
             //else
             //{
-            //    var x = center.X + (SpiralShift * angle * Math.Cos(angle));
-            //    var y = center.Y + (SpiralShift * angle * Math.Sign(Math.Sin(angle)));
+            //    var x = Center.X + (SpiralShift * angle * Math.Cos(angle));
+            //    var y = Center.Y + (SpiralShift * angle * Math.Sign(Math.Sin(angle)));
             //    return new Point((int)x, (int)y);
             //}
 
