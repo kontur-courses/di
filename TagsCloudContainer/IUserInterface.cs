@@ -1,0 +1,6 @@
+﻿namespace TagsCloudContainer
+{
+    interface IUserInterface
+    {
+    }
+}
