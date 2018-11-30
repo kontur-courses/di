@@ -12,7 +12,7 @@ namespace TagsCloudVisualization
 
         public static void Main()
         {
-            var center = new Point(500, 500);
+            var center = new Point(400, 400);
             var spiral = new ArchimedesSpiral(center);
 
             var directory = Environment.CurrentDirectory;
@@ -22,6 +22,7 @@ namespace TagsCloudVisualization
             var visualization = new TagCloudVisualization(cloud);
 
             var font = new Font("Times New Roman", 40.0f);
+
             var words = new List<string>
             {
                 "Россия",

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TagsCloudContainer
 {
-    class TxtReader:IReader
+    public class TxtReader:IReader
     {
         public string ReadFromFile(string path)
         {

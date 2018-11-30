@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer
 {
-    interface IPreprocessor
+    public interface IPreprocessor
     {
         IEnumerable<string> GetValidWords(IEnumerable<string> words);
     }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    class SimplePreprocessor : IPreprocessor
+    public class SimplePreprocessor : IPreprocessor
     {
         public IEnumerable<string> GetValidWords(IEnumerable<string> words)
         {

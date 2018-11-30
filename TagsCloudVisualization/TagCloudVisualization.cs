@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
-    class TagCloudVisualization
+    public class TagCloudVisualization
     {
         public TagCloudVisualization(ICloudLayouter cloudLayouter)
         {
@@ -40,9 +40,8 @@ namespace TagsCloudVisualization
         public void SaveCloudLayouter(string bitmapName, string directory, int count, int minSize, int maxSize)
         {
             FillCloudWithRectangles(cloudLayouter, count, minSize, maxSize);
-            var countOfRectangles = cloudLayouter.Rectangles.Count;
             var bitmap = GetBitmapWithRectangles();
-            var path = $"{directory}\\..\\..\\Images\\{bitmapName}-{countOfRectangles}.png";
+            var path = $"{directory}\\{bitmapName}-{count}.png";
 
             bitmap.Save(path, ImageFormat.Png);
         }
@@ -52,7 +51,7 @@ namespace TagsCloudVisualization
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
 
-            var i = 1;
+            var i = 0;
 
             var count = words.Count();
             var delta = font.Size / 2 / count;
@@ -60,22 +59,23 @@ namespace TagsCloudVisualization
             foreach (var word in words)
             {
                 font = new Font(font.Name, font.Size - delta);
-                var brush = new SolidBrush(GetColorOfWord(i, count + 1));
+                var brush = new SolidBrush(GetColorOfWord(i, count));
                 var size = GetSizeOfWord(word, font);
                 var rec = cloudLayouter.PutNextRectangle(size);
+                g.FillRectangle(new SolidBrush(Color.White), rec);
                 g.DrawString(word, font, brush, rec);
                 i++;
             }
 
             var countOfRectangles = cloudLayouter.Rectangles.Count;
-            var path = $"{directory}\\..\\..\\Images\\{bitmapName}-{countOfRectangles}.png";
+            var path = $"{directory}\\{bitmapName}-{countOfRectangles}.png";
 
             bitmap.Save(path, ImageFormat.Png);
         }
 
         private Size GetSizeOfWord(string word, Font font)
         {
-            return new Size((int)(font.Size * word.Length), (int)(font.Height * 2));
+            return new Size((int)(font.SizeInPoints * word.Length), (int)(font.Height * 2));
         }
 
         private Bitmap GetBitmapWithRectangles()

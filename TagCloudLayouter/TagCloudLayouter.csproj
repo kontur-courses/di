@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0A52585B-39D4-47E5-B1B0-F98078711275}</ProjectGuid>
+    <ProjectGuid>{7C430F18-29A6-44A0-AC83-77BB25EB0F5D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TagsCloudContainer</RootNamespace>
-    <AssemblyName>TagsCloudContainer</AssemblyName>
+    <RootNamespace>TagCloudLayouter</RootNamespace>
+    <AssemblyName>TagCloudLayouter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,20 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITextParser.cs" />
-    <Compile Include="IPreprocessor.cs" />
-    <Compile Include="IReader.cs" />
-    <Compile Include="IUserInterface.cs" />
-    <Compile Include="LinesWithWordsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimplePreprocessor.cs" />
-    <Compile Include="TextParser.cs" />
-    <Compile Include="TxtReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
+      <Project>{0a52585b-39d4-47e5-b1b0-f98078711275}</Project>
+      <Name>TagsCloudContainer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
+      <Project>{bd2f5f99-5247-42c9-92d6-92406778ddbb}</Project>
+      <Name>TagsCloudVisualization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

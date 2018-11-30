@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer
 {
-    interface IReader
+    public interface IReader
     {
         string ReadFromFile(string path);
     }
