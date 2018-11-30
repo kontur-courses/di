@@ -7,7 +7,7 @@ namespace TagsCloudContainer
     {
         public IEnumerable<string> GetValidWords(IEnumerable<string> words)
         {
-            var frequencyDictionary = GetFrequencyDictionary(words);
+            var frequencyDictionary = GetFrequencyDictionary(words.Where(w => !GetForbiddenWords().Contains(w)));
             var validWords = frequencyDictionary
                 .OrderBy(pair => pair.Value)
                 .Reverse()
@@ -27,6 +27,55 @@ namespace TagsCloudContainer
             }
 
             return frequencyDictionary;
+        }
+
+        private HashSet<string> GetForbiddenWords()
+        {
+            //надо будет переделать 
+            //борать слова из файла (json?)
+            return new HashSet<string>{
+                "the",
+                "a",
+                "of",
+                "his",
+                "to",
+                "in",
+                "was",
+                "and",
+                "their",
+                "its",
+                "who",
+                "as",
+                "from",
+                "we",
+                "he",
+                "they",
+                "with",
+                "is",
+                "at",
+                "for",
+                "an",
+                "are",
+                "by",
+                "have",
+                "that",
+                "also",
+                "over",
+                "get",
+                "on",
+                "most",
+                "my",
+                "it",
+                "but",
+                "be",
+                "has",
+                "i",
+                "you",
+                "so",
+                "there",
+                "us",
+                "csn"
+            };
         }
     }
 }
