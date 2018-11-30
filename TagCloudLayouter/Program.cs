@@ -16,9 +16,9 @@ namespace TagCloudLayouter
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
-            builder.RegisterType<SimplePreprocessor>().As<IPreprocessor>();
-            builder.RegisterType<DocReader>().As<IReader>();
-            builder.RegisterType<TextParser>().As<ITextParser>();
+            builder.RegisterType<PreprocessorLinear>().As<IPreprocessor>();
+            builder.RegisterType<TxtReader>().As<IReader>();
+            builder.RegisterType<LinesWithWordsParser>().As<ITextParser>();
 
             builder.Register(ctx => new ArchimedesSpiral(center)).As<ISpiral>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
