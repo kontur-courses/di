@@ -4,9 +4,11 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-	public static class RectangleExtesions
-	{
-		public static bool IntersectsWith(this Rectangle rectangle, IEnumerable<Rectangle> rectangles) =>
-			rectangles.Any(r => r.IntersectsWith(rectangle));
-	}
+    public static class RectangleExtesions
+    {
+        public static bool IntersectsWith(this Rectangle rectangle, IEnumerable<Rectangle> rectangles)
+        {
+            return rectangles.Any(r => r.IntersectsWith(rectangle));
+        }
+    }
 }

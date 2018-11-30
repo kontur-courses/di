@@ -2,8 +2,8 @@
 
 namespace TagsCloudVisualization.Curves
 {
-	public interface ICurve
-	{
-		Point GetNextPoint();
-	}
+    public interface ICurve
+    {
+        Point GetNextPoint();
+    }
 }
