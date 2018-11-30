@@ -51,7 +51,6 @@
     <Compile Include="ITextParser.cs" />
     <Compile Include="IPreprocessor.cs" />
     <Compile Include="IReader.cs" />
-    <Compile Include="IUserInterface.cs" />
     <Compile Include="LinesWithWordsParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplePreprocessor.cs" />
