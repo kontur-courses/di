@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
@@ -101,11 +100,16 @@ namespace TagsCloudVisualization
             return Color.FromArgb(r, g, b);
         }
 
+        private double GetSmooth(double coefficient)
+        {
+            return Math.Pow(coefficient, 0.2);
+        }
+
         private Color GetColorOfWord(int num, int count)
         {
-            var r = (int)(((double)num / count) * 255 * 0.9);
-            var g = (int)(((double)num / count) * 255 * 0.7);
-            var b = (int)(((double)num / count) * 255 * 0.5);
+            var r = (int)((GetSmooth((double)num / count)) * 250 * 0.8);
+            var g = (int)((GetSmooth((double)num / count)) * 250 * 0.6);
+            var b = (int)((GetSmooth((double)num / count)) * 250 * 0.4);
 
             return Color.FromArgb(r, g, b);
         }
