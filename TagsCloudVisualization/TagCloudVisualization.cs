@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
@@ -37,7 +36,7 @@ namespace TagsCloudVisualization
         private readonly int bitmapWidth;
         private readonly int bitmapHeight;
 
-        public void SaveCloudLayouter(string bitmapName, string directory, int count, int minSize, int maxSize)
+        public void SaveRectanglesCloud(string bitmapName, string directory, int count, int minSize, int maxSize)
         {
             FillCloudWithRectangles(cloudLayouter, count, minSize, maxSize);
             var bitmap = GetBitmapWithRectangles();
@@ -46,36 +45,27 @@ namespace TagsCloudVisualization
             bitmap.Save(path, ImageFormat.Png);
         }
 
-        public void SaveCloudLayouter(string bitmapName, string directory, Font font, IEnumerable<string> words)
+        public void SaveTagCloud(string bitmapName, string directory, Font font, List<string> words)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
 
-            var i = 0;
-
-            var count = words.Count();
-            var delta = font.Size / 2 / count;
-
+            var num = 0;
+            var count = words.Count;
+            var delta = (float)(font.SizeInPoints / 2) / count;
+            g.FillRectangle(Brushes.White, 0, 0, bitmapWidth, bitmapHeight);
             foreach (var word in words)
             {
-                font = new Font(font.Name, font.Size - delta);
-                var brush = new SolidBrush(GetColorOfWord(i, count));
-                var size = GetSizeOfWord(word, font);
-                var rec = cloudLayouter.PutNextRectangle(size);
-                g.FillRectangle(new SolidBrush(Color.White), rec);
+                font = new Font(font.Name, (font.SizeInPoints - delta));
+                var brush = new SolidBrush(GetColorOfWord(num, count));
+                var size = g.MeasureString(word, font);
+                var rec = cloudLayouter.PutNextRectangle(new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height)));
+                g.FillEllipse(new SolidBrush(Color.AliceBlue), rec);//debug
                 g.DrawString(word, font, brush, rec);
-                i++;
+                num++;
             }
 
-            var countOfRectangles = cloudLayouter.Rectangles.Count;
-            var path = $"{directory}\\{bitmapName}-{countOfRectangles}.png";
-
-            bitmap.Save(path, ImageFormat.Png);
-        }
-
-        private Size GetSizeOfWord(string word, Font font)
-        {
-            return new Size((int)(font.SizeInPoints * word.Length), (int)(font.Height * 2));
+            bitmap.Save($"{directory}\\{bitmapName}.png", ImageFormat.Png);
         }
 
         private Bitmap GetBitmapWithRectangles()

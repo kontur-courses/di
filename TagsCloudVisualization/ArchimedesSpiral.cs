@@ -13,8 +13,8 @@ namespace TagsCloudVisualization
         public Point Center { get; }
         private double angle = 0;
 
-        private const double SpiralShift = 1;
-        private const double AngleShift = 0.05;
+        private const double SpiralShift = 0.5;
+        private const double AngleShift = 0.01;
 
         private Point GetCurrentPositionOnTheSpiral()
         {

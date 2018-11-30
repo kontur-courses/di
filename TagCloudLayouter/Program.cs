@@ -12,10 +12,10 @@ namespace TagCloudLayouter
         static void Main(string[] args)
         {
             //args 
-            var count = 20;
+            var count = 40;
             var center = new Point(500, 500);
             var font = new Font("Times New Roman", 40.0f);
-
+            var inputFile = "C:\\Users\\vas21\\Desktop\\wp.txt";
 
             var builder = new ContainerBuilder();
 
@@ -32,13 +32,16 @@ namespace TagCloudLayouter
             var layouter = container.Resolve<ICloudLayouter>();
 
             var proc = container.Resolve<IPreprocessor>();
-            var text = container.Resolve<IReader>().ReadFromFile("C:\\Users\\vas21\\Desktop\\wp.txt");
+            var text = container.Resolve<IReader>().ReadFromFile(inputFile);
             var allWords = container.Resolve<ITextParser>().GetWords(text);
-            var validWords = proc.GetValidWords(allWords).Take(count);
+            var validWords = proc
+                .GetValidWords(allWords)
+                .Take(count)
+                .ToList();
 
 
             var vis = new TagCloudVisualization(layouter);
-            vis.SaveCloudLayouter("SimpleCloud", Environment.CurrentDirectory, font, validWords);
+            vis.SaveTagCloud("SimpleCloud", Environment.CurrentDirectory, font, validWords);
         }
     }
 }
