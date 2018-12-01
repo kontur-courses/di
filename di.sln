@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{2FF49238-09DE-4E13-B5F4-D7C1B893E446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualizationTest", "TagsCloudVisualizationTest\TagsCloudVisualizationTest.csproj", "{3875F4E8-CD54-4076-9425-3FB6830B15D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudConsole", "TagsCloudConsole\TagsCloudConsole.csproj", "{26E1CC41-DF4F-49E8-9C4F-B74D3C4B33FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,23 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF49238-09DE-4E13-B5F4-D7C1B893E446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF49238-09DE-4E13-B5F4-D7C1B893E446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF49238-09DE-4E13-B5F4-D7C1B893E446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF49238-09DE-4E13-B5F4-D7C1B893E446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3875F4E8-CD54-4076-9425-3FB6830B15D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3875F4E8-CD54-4076-9425-3FB6830B15D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3875F4E8-CD54-4076-9425-3FB6830B15D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3875F4E8-CD54-4076-9425-3FB6830B15D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E1CC41-DF4F-49E8-9C4F-B74D3C4B33FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E1CC41-DF4F-49E8-9C4F-B74D3C4B33FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E1CC41-DF4F-49E8-9C4F-B74D3C4B33FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E1CC41-DF4F-49E8-9C4F-B74D3C4B33FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {565B57D1-7675-439D-923B-0F65F4B9A814}
 	EndGlobalSection
 EndGlobal
