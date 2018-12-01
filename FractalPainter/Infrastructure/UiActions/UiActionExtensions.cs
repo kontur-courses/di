@@ -9,6 +9,7 @@ namespace FractalPainting.Infrastructure.UiActions
         public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
         {
             var items = actions.GroupBy(a => a.Category)
+                .OrderBy(g => g.Key.Length)
                 .Select(g => CreateToplevelMenuItem(g.Key, g.ToList()))
                 .Cast<ToolStripItem>()
                 .ToArray();

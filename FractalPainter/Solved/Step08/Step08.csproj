@@ -121,7 +121,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>app.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -134,9 +136,6 @@
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Injection\" />
-    <Folder Include="UiActions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

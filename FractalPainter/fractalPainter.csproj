@@ -41,14 +41,6 @@
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions, Version=4.15.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.15.0\lib\net45\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.15.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.15.0\lib\net45\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -63,10 +55,6 @@
     </Reference>
     <Reference Include="Ninject.Extensions.Factory, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Extensions.Factory.3.2.1.0\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -96,6 +84,7 @@
     <Compile Include="App\Fractals\DragonPainter.cs" />
     <Compile Include="App\Fractals\DragonSettings.cs" />
     <Compile Include="App\Fractals\DragonSettingsGenerator.cs" />
+    <Compile Include="App\Fractals\IDragonPainterFactory.cs" />
     <Compile Include="App\Fractals\KochPainter.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
@@ -105,14 +94,12 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
     <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
-    <Compile Include="Infrastructure\Injection\INeed.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
     <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />
@@ -137,6 +124,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>app.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
