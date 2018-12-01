@@ -43,7 +43,7 @@ namespace TagCloudLayouter
                 .ToList();
 
             var vis = new TagCloudVisualization(layouter);
-            vis.SaveTagCloud(config.FileName, config.OutPath, config.Font, validWords);
+            vis.SaveTagCloud(config.FileName, config.OutPath, config.Font, config.Color, validWords);
         }
     }
 }

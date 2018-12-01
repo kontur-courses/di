@@ -44,7 +44,7 @@ namespace TagsCloudVisualization
             bitmap.Save(path, ImageFormat.Png);
         }
 
-        public void SaveTagCloud(string bitmapName, string directory, Font font, List<string> words)
+        public void SaveTagCloud(string bitmapName, string directory, Font font, Color color, List<string> words)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
@@ -56,7 +56,7 @@ namespace TagsCloudVisualization
             foreach (var word in words)
             {
                 font = new Font(font.Name, (font.SizeInPoints - delta));
-                var brush = new SolidBrush(GetColorOfWord(num, count));
+                var brush = new SolidBrush(GetColorOfWord(num, count, color));
                 var size = g.MeasureString(word, font);
                 var rec = cloudLayouter.PutNextRectangle(new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height)));
                 g.FillEllipse(new SolidBrush(Color.AliceBlue), rec);//debug
@@ -80,7 +80,7 @@ namespace TagsCloudVisualization
 
             foreach (var rectangle in rectangles)
             {
-                var color = GetColorOfRectangle(rectangle, cloudLayouter.Spiral.Center, maxDist);
+                var color = GetColorOfRectangle(rectangle, cloudLayouter.Spiral.Center, maxDist, Color.DeepPink);
                 var brush = new SolidBrush(color);
 
                 Graphics.FromImage(bitmap).FillRectangle(brush, rectangle);
@@ -90,26 +90,26 @@ namespace TagsCloudVisualization
             return bitmap;
         }
 
-        private Color GetColorOfRectangle(Rectangle rectangle, Point center, int maxDist)
+        private Color GetColorOfRectangle(Rectangle rectangle, Point center, int maxDist, Color color)
         {
             var dist = GetDistanceFromRectangleToPoint(rectangle, center);
-            var r = (int)(dist / maxDist * 255 * 0.9);
-            var g = (int)(dist / maxDist * 255 * 0.7);
-            var b = (int)(dist / maxDist * 255 * 0.5);
+            var r = (int)(dist / maxDist * color.R);
+            var g = (int)(dist / maxDist * color.G);
+            var b = (int)(dist / maxDist * color.B);
 
             return Color.FromArgb(r, g, b);
         }
 
         private double GetSmooth(double coefficient)
         {
-            return Math.Pow(coefficient, 0.2);
+            return Math.Pow(coefficient, 0.4);
         }
 
-        private Color GetColorOfWord(int num, int count)
+        private Color GetColorOfWord(int num, int count, Color color)
         {
-            var r = (int)((GetSmooth((double)num / count)) * 250 * 0.8);
-            var g = (int)((GetSmooth((double)num / count)) * 250 * 0.6);
-            var b = (int)((GetSmooth((double)num / count)) * 250 * 0.4);
+            var r = (int)((GetSmooth((double)num / count)) * color.R);
+            var g = (int)((GetSmooth((double)num / count)) * color.G);
+            var b = (int)((GetSmooth((double)num / count)) * color.B);
 
             return Color.FromArgb(r, g, b);
         }

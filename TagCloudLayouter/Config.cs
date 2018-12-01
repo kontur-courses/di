@@ -4,7 +4,7 @@ namespace TagCloudLayouter
 {
     public class Config
     {
-        public Config(Point center, string inputFile, int count, Font font, string fileName, string outPath)
+        public Config(Point center, string inputFile, int count, Font font, string fileName, string outPath, Color color)
         {
             Center = center;
             InputFile = inputFile;
@@ -12,6 +12,7 @@ namespace TagCloudLayouter
             Font = font;
             FileName = fileName;
             OutPath = outPath;
+            Color = color;
         }
 
         public Point Center { get; }
@@ -20,5 +21,6 @@ namespace TagCloudLayouter
         public Font Font { get; }
         public string FileName { get; }
         public string OutPath { get; }
+        public Color Color { get; }
     }
 }

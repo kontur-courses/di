@@ -23,6 +23,9 @@ namespace TagCloudLayouter
             [Option('n', "name", Default = "Cloud", HelpText = "Input file name.")]
             public string FileName { get; set; }
 
+            [Option("color", Default = "Black", HelpText = "Input color.")]
+            public string Color{ get; set; }
+
             [Option("out-path", HelpText = "Input path to directory to save image.")]
             public string OutPath { get; set; }
 
@@ -38,6 +41,7 @@ namespace TagCloudLayouter
             var fileName = "SimpleCloud";
             var outPath = "";
             var font = new Font("Times New Roman", 40.0f);
+            var color = Color.Black;
 
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(o =>
@@ -49,6 +53,7 @@ namespace TagCloudLayouter
                     fileName = o.FileName;
                     outPath = o.OutPath ?? Environment.CurrentDirectory;
                     font = new Font(fontName, fontSize);
+                    color = Color.FromName(o.Color);
                 });
 
             return new Config(
@@ -57,7 +62,8 @@ namespace TagCloudLayouter
                 count,
                 font,
                 fileName,
-                outPath);
+                outPath,
+                color);
         }
     }
 }
