@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace TagsCloudContainer
 {
     public class SimplePreprocessor : IPreprocessor
     {
+        private IWordExcluder wordExcluder;
+
+        public SimplePreprocessor(IWordExcluder wordExcluder)
+        {
+            this.wordExcluder = wordExcluder;
+        }
+
         public IEnumerable<string> GetValidWords(IEnumerable<string> words)
         {
             var forbiddenWords = GetForbiddenWords();
@@ -35,9 +39,7 @@ namespace TagsCloudContainer
 
         private HashSet<string> GetForbiddenWords()
         {
-            var filename = Environment.CurrentDirectory + "\\..\\..\\"+ "words.xml";
-            var file = new FileStream(filename, FileMode.Open);
-            return (HashSet<string>)new XmlSerializer(typeof(HashSet<string>)).Deserialize(file);
+            return wordExcluder.GetExcludedWords();
         }
     }
 }
