@@ -44,7 +44,7 @@ namespace TagsCloudVisualization
             bitmap.Save(path, ImageFormat.Png);
         }
 
-        public void SaveTagCloud(string bitmapName, string directory, Font font, Color color, List<string> words)
+        public void SaveTagCloud(string bitmapName, string directory, Font font, Color color, Color backgroundColor, List<string> words)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
@@ -59,7 +59,7 @@ namespace TagsCloudVisualization
                 var brush = new SolidBrush(GetColorOfWord(num, count, color));
                 var size = g.MeasureString(word, font);
                 var rec = cloudLayouter.PutNextRectangle(new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height)));
-                g.FillEllipse(new SolidBrush(Color.AliceBlue), rec);//debug
+                g.FillEllipse(new SolidBrush(backgroundColor), rec);//debug
                 g.DrawString(word, font, brush, rec);
                 num++;
             }
