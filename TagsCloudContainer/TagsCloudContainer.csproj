@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -43,15 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\BasicAlgorithm.cs" />
+    <Compile Include="Algorithms\IAlgorithm.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouterDrawer.cs" />
     <Compile Include="CircularCloudLayouterGenerator.cs" />
+    <Compile Include="Clients\ConsoleClient.cs" />
+    <Compile Include="Clients\IClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultFormatters\BasicResultFormatter.cs" />
+    <Compile Include="ResultFormatters\IResultFormatter.cs" />
+    <Compile Include="SourceTextReaders\ISourceTextReader.cs" />
+    <Compile Include="SourceTextReaders\TxtSourceTextReader.cs" />
     <Compile Include="Spiral.cs" />
+    <Compile Include="TextPreprocessors\BasicTextPreprocessor.cs" />
+    <Compile Include="TextPreprocessors\ITextPreprocessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
