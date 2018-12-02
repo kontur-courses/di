@@ -7,14 +7,14 @@ namespace TagsCloudContainer
 {
     public class XmlWordExcluder : IWordExcluder
     {
-        public XmlWordExcluder()
+        public XmlWordExcluder(string pathToSolutionDirectory)
         {
+            var filename = pathToSolutionDirectory + "\\Resources\\ExcludedWords\\" + "russianWords.xml";
             file = new FileStream(filename, FileMode.OpenOrCreate);
         }
 
-        private readonly string filename = Environment.CurrentDirectory + "\\..\\..\\Resources\\ExcludedWords\\" + "russianWords.xml";
         private readonly XmlSerializer hashSetSerializer = new XmlSerializer(typeof(HashSet<string>));
-        private Stream file; 
+        private readonly Stream file;
 
         public HashSet<string> GetExcludedWords()
         {

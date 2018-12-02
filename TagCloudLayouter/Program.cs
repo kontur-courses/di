@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Autofac;
 using TagsCloudContainer;
@@ -16,7 +17,7 @@ namespace TagCloudLayouter
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
             //builder.RegisterType<PreprocessorLinear>().As<IPreprocessor>();
-            builder.Register(ctx => new SimplePreprocessor(new XmlWordExcluder())).As<IPreprocessor>();
+            builder.Register(ctx => new SimplePreprocessor(new XmlWordExcluder(Environment.CurrentDirectory + "\\..\\..\\.."))).As<IPreprocessor>();
             builder.RegisterType<TxtReader>().As<IReader>();
             //builder.RegisterType<LinesWithWordsParser>().As<ITextParser>();
             builder.RegisterType<TextParser>().As<ITextParser>();
