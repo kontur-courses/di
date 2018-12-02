@@ -7,7 +7,14 @@ namespace TagsCloudContainer
 {
     public class XmlWordExcluder : IWordExcluder
     {
+        public XmlWordExcluder()
+        {
+            file = new FileStream(filename, FileMode.OpenOrCreate);
+        }
+
         private readonly string filename = Environment.CurrentDirectory + "\\..\\..\\Resources\\ExcludedWords\\" + "russianWords.xml";
+        private readonly XmlSerializer hashSetSerializer = new XmlSerializer(typeof(HashSet<string>));
+        private Stream file; 
 
         public HashSet<string> GetExcludedWords()
         {
@@ -23,14 +30,12 @@ namespace TagsCloudContainer
 
         private HashSet<string> ReadForbiddenWords()
         {
-            var file = new FileStream(filename, FileMode.Open);
-            return (HashSet<string>)new XmlSerializer(typeof(HashSet<string>)).Deserialize(file);
+            return (HashSet<string>)hashSetSerializer.Deserialize(file);
         }
 
         private void WriteForbiddenWords(HashSet<string> forbiddenWords)
         {
-            var file = new FileStream(filename, FileMode.OpenOrCreate);
-            new XmlSerializer(typeof(HashSet<string>)).Serialize(file, forbiddenWords);
+            hashSetSerializer.Serialize(file, forbiddenWords);
         }
     }
 }
