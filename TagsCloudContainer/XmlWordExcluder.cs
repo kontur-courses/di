@@ -7,7 +7,7 @@ namespace TagsCloudContainer
 {
     public class XmlWordExcluder : IWordExcluder
     {
-        private readonly string filename = Environment.CurrentDirectory + "\\..\\..\\" + "russianWords.xml";
+        private readonly string filename = Environment.CurrentDirectory + "\\..\\..\\Resources\\ExcludedWords\\" + "russianWords.xml";
 
         public HashSet<string> GetExcludedWords()
         {
