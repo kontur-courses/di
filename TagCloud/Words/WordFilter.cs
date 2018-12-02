@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using TagCloud.Interfaces;
 
 namespace TagCloud.Words
 {
-    public class WordFilter
+    public class WordFilter : IWordFilter
     {
-        private readonly ExcludingWords excludingWords;
+        private readonly ExcludingWordsRepository excludingWordsRepository;
         
-        public WordFilter(ExcludingWords excludingWords)
+        public WordFilter(ExcludingWordsRepository excludingWordsRepository)
         {
-            this.excludingWords = excludingWords;
+            this.excludingWordsRepository = excludingWordsRepository;
         }
         
         public IEnumerable<string> Filter(IEnumerable<string> words)
         {
-            return words.Where(w => !excludingWords.Contains(w));
+            return words.Where(w => !excludingWordsRepository.Contains(w));
         }
     }
 } 

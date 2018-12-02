@@ -3,30 +3,36 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagCloud.Interfaces;
 using TagCloud.Settings;
 using TagCloud.TagCloudVisualization.Analyzer;
 
 namespace TagCloud.TagCloudVisualization.Layouter
 {
-    public class TagCloudLayouter
+    public class TagCloudLayouter : ITagCloudLayouter
     {
         private readonly CircularCloudLayouter layouter;
         private readonly FontSettings fontSettings;
         private int minFrequency;
         private int maxFrequency;
 
-        public TagCloudLayouter(FontSettings fontSettings)
+        public TagCloudLayouter(FontSettings fontSettings, CircularCloudLayouter layouter)
         {
             this.fontSettings = fontSettings;
-            layouter = new CircularCloudLayouter();
+            this.layouter = layouter;
         }
 
         public List<Tag> GetTags(Dictionary<String, int> weightedWords)
         {
             layouter.Clear();
+            var tags = new List<Tag>();
+            if (weightedWords.Count == 0)
+            {
+                return tags;
+            }
             minFrequency = weightedWords.Values.Min();
             maxFrequency = weightedWords.Values.Max();
-            var tags = new List<Tag>();
+            
             foreach (var weightedWord in weightedWords)
             {
                 var fontSize = GetFontSize(weightedWord.Value);

@@ -11,6 +11,7 @@ namespace TagCloud.TagCloudVisualization.Analyzer
         {
             return words.GroupBy(w => w)
                 .OrderByDescending(word => word.Count())
+                .Take(100)
                 .ToDictionary(w => w.Key, w => w.Count());
         }
         

@@ -7,16 +7,16 @@ namespace TagCloud.Actions
 {
     public class LoadWordsAction : IUiAction
     {
-        private readonly Words.Words words;
+        private readonly Words.WordsRepository wordsRepository;
 
-        public LoadWordsAction(Words.Words words)
+        public LoadWordsAction(Words.WordsRepository wordsRepository)
         {
-            this.words = words;
+            this.wordsRepository = wordsRepository;
         }
 
         public string Category => "File";
         public string Name => "Tag Words";
-        public string Description => "Load file with Tag Words";
+        public string Description => "Load file with Tag WordsRepository";
 
         public void Perform()
         {
@@ -30,7 +30,7 @@ namespace TagCloud.Actions
                 {
                     var fileContent = reader.ReadToEnd();
                     var splittedWords = WordAnalyzer.SplitWords(fileContent);
-                    words.Load(splittedWords);
+                    wordsRepository.Load(splittedWords);
                 }
             }
 

@@ -19,7 +19,7 @@ namespace TagCloud.TagCloudVisualization.Visualization
         {
             var mostDistantRectangle = Rectangles
                 .OrderByDescending(rect => rect.GetCircumcircleRadius())
-                .First();
+                .FirstOrDefault();
             var circleRadius = mostDistantRectangle.GetCircumcircleRadius();
             var bitmapSide = Math.Max(circleRadius * 2, Math.Max(ImageSettings.Width, ImageSettings.Height));
             bitmapSize = new Size(bitmapSide, bitmapSide);

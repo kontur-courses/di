@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TagCloud.Interfaces;
 using TagCloud.TagCloudVisualization.Analyzer;
 using TagCloud.TagCloudVisualization.Layouter;
 
@@ -7,10 +8,10 @@ namespace TagCloud.Words
 {
     public class TagGenerator
     {
-        private readonly WordFilter wordFilter;
-        private readonly TagCloudLayouter tagLayouter;
+        private readonly IWordFilter wordFilter;
+        private readonly ITagCloudLayouter tagLayouter;
         
-        public TagGenerator(WordFilter wordFilter, TagCloudLayouter tagLayouter)
+        public TagGenerator(IWordFilter wordFilter, TagCloudLayouter tagLayouter)
         {
             this.wordFilter = wordFilter;
             this.tagLayouter = tagLayouter;
