@@ -6,7 +6,7 @@ using TagsCloudVisualization.Curves;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly ICurve curve;
         private readonly List<Rectangle> rectangles;

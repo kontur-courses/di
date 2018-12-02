@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
     {
         public Size? ImageSize { get; set; }
         public Color? Color { get; set; }
-        public Font Font { get; set; }
+        public string FontName { get; set; }
         public ICurve Curve { get; set; }
 
         public bool IsCorrect()
@@ -22,19 +22,19 @@ namespace TagsCloudVisualization
 
             if (Color == null)
             {
-                Console.WriteLine("#####");
+                Console.WriteLine("Error in the name of the color. Choose simple color, in example red");
                 return false;
             }
 
             if (ImageSize == null)
             {
-                Console.WriteLine("#####");
+                Console.WriteLine("Error in imageSize. Format input is numberxnumber, in example 800x600");
                 return false;
             }
 
-            if (Font == null)
+            if (FontName == null)
             {
-                Console.WriteLine("#####");
+                Console.WriteLine("Error in fontName. Choose simple fontName, in example arial");
                 return false;
             }
 

@@ -24,9 +24,14 @@ namespace TagsCloudVisualization
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Passed)
             {
-                var startPoints = cloud.GetStartPointWords();
-                var picture = RectangleTagsCloudVisualizer.GetPicture(startPoints,
-                    new List<KeyValuePair<string, int>>(), Color.Aqua);
+                var cloudParameters = new CloudParameters
+                {
+                    Color = Color.Red,
+                    ImageSize = new Size(1024, 768),
+                    FontName = "arial",
+                    Curve = new Spiral(0.5, Math.PI / 18)
+                };
+                var picture = TagsCloudVisualizer.GetPicture(new List<CloudWordData>(), cloudParameters); //сломал заглушкой на время
                 var path = $"{TestContext.CurrentContext.TestDirectory}\\{TestContext.CurrentContext.Test.FullName}";
                 picture.Save($"{path}.png");
                 TestContext.WriteLine($"Tag cloud visualization saved to file {path}");

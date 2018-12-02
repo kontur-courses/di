@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using TagsCloudVisualization.Curves;
 
 namespace TagsCloudVisualization
 {
-    public class CloudParametersParser
+    public class CloudParametersParser : ICloudParametersParser
     {
-        public static CloudParameters Parse(string[] input)
+        public CloudParameters Parse(string[] input)
         {
             ICurve curve = null;
-            Font font = null;
+            string fontName = null;
             Color? color = null;
             Size? imageSize = null;
 
@@ -22,8 +23,8 @@ namespace TagsCloudVisualization
                     case "-curve":
                         curve = GetCurve(input, i);
                         break;
-                    case "-font":
-                        font = GetFont(input, i);
+                    case "-fontName":
+                        fontName = input[i + 1];
                         break;
                     case "-imageSize":
                         imageSize = GetImageSize(input, i);
@@ -32,29 +33,27 @@ namespace TagsCloudVisualization
 
             return new CloudParameters
             {
-                Font = font,
+                FontName = fontName,
                 Curve = curve,
                 Color = color,
                 ImageSize = imageSize
             };
         }
 
-        private static Size? GetImageSize(string[] input, int i)
+        private Size? GetImageSize(string[] args, int position)
         {
-            throw new NotImplementedException();
+            var delimiter = args[position + 1].IndexOf('x');
+            int.TryParse(args[position + 1].Substring(0, delimiter), out var width);
+            int.TryParse(args[position + 1].Substring(delimiter + 1), out var height);
+            return new Size(width, height);
         }
 
-        private static Font GetFont(string[] args, int position)
+        private Color? GetColor(string[] args, int position)
         {
-            throw new NotImplementedException();
+            return Color.FromName(args[position + 1]);
         }
 
-        private static Color? GetColor(string[] args, int position)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ICurve GetCurve(string[] args, int position)
+        private ICurve GetCurve(string[] args, int position)
         {
             ICurve curve = null;
             switch (args[position + 1])
