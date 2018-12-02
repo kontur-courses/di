@@ -32,9 +32,13 @@ namespace TagCloudLayouter
             [Option("out-path", HelpText = "Input path to directory to save image.")]
             public string OutPath { get; set; }
 
-
             [Value(0, HelpText = "Path to directory to save.")]
             public string PathToSave { get; set; }
+            //ToDo Сделать вызов help с ключем -h
+            //ToDo Сделать режимы работы (сохранение картинки, добавление слов в исключенные)
+            //ToDo Сделать выбор языка
+            //ToDo Выбор разрешения сохраняемого файла
+            //ToDo Пофиксить баг, что после запуска программы с --help -- version начинается создание облака тегов 
         }
 
         public Config GetConfig(string[] args)

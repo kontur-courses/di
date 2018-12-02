@@ -5,6 +5,7 @@ namespace TagsCloudContainer
 {
     public class SimplePreprocessor : IPreprocessor
     {
+        //ToDo Создать класс, где слова будут приводиться к одной форме, там же будет исключение разных частей речи
         private IWordExcluder wordExcluder;
 
         public SimplePreprocessor(IWordExcluder wordExcluder)
