@@ -55,7 +55,10 @@
     <Compile Include="Actions\UiActionExtensions.cs" />
     <Compile Include="Forms\ApplicationWindow.cs" />
     <Compile Include="Forms\ImageBox.cs" />
+    <Compile Include="Interfaces\IReader.cs" />
     <Compile Include="Interfaces\ITagCloudLayouter.cs" />
+    <Compile Include="Interfaces\ITagGenerator.cs" />
+    <Compile Include="Interfaces\IWordAnalyzer.cs" />
     <Compile Include="Interfaces\IWordFilter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="TagCloudVisualization\Visualization\TagCloudVisualization.cs" />
     <Compile Include="TagCloudVisualization\Visualization\Visualization.cs" />
     <Compile Include="Words\ExcludingWordsRepository.cs" />
+    <Compile Include="Words\FileReader.cs" />
     <Compile Include="Words\WordsRepository.cs" />
     <Compile Include="Words\TagGenerator.cs" />
     <Compile Include="Words\WordFilter.cs" />

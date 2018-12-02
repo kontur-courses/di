@@ -22,7 +22,7 @@ namespace TagCloud.TagCloudVisualization.Layouter
             this.layouter = layouter;
         }
 
-        public List<Tag> GetTags(Dictionary<String, int> weightedWords)
+        public List<Tag> GetCloudTags(Dictionary<String, int> weightedWords)
         {
             layouter.Clear();
             var tags = new List<Tag>();

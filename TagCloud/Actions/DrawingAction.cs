@@ -1,4 +1,6 @@
-﻿using TagCloud.Settings;
+﻿using System;
+using TagCloud.Interfaces;
+using TagCloud.Settings;
 using TagCloud.Words;
 
 namespace TagCloud.Actions
@@ -7,11 +9,11 @@ namespace TagCloud.Actions
     {
         private readonly ImageBox imageBox;
         private readonly WordsRepository wordsRepository;
-        private readonly TagGenerator tagGenerator;
+        private readonly ITagGenerator tagGenerator;
         private readonly ImageSettings imageSettings;
         
         public DrawingAction(ImageBox imageBox, WordsRepository wordsRepository, 
-                                TagGenerator tagGenerator, ImageSettings imageSettings)
+                                ITagGenerator tagGenerator, ImageSettings imageSettings)
         {
             this.imageBox = imageBox;
             this.wordsRepository = wordsRepository;

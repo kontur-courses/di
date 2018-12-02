@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TagCloud.Interfaces;
 
 namespace TagCloud.Words
 {
@@ -12,10 +13,11 @@ namespace TagCloud.Words
             excludingWords.Clear();
             excludingWords.UnionWith(words);
         }
-        
+
         public bool Contains(string word)
         {
             return excludingWords.Contains(word);
         }
+        
     }
 }

@@ -19,14 +19,11 @@ namespace TagCloud
                 Application.SetCompatibleTextRenderingDefault(false);
                 var builder = new ContainerBuilder();
                 builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(Program))).AsImplementedInterfaces();
-                builder.RegisterType<TagGenerator>().AsSelf().SingleInstance();
                 builder.RegisterType<ExcludingWordsRepository>().AsSelf().SingleInstance();
-                builder.RegisterType<CircularCloudLayouter>().AsSelf();
-                builder.RegisterType<TagCloudLayouter>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsRepository>().AsSelf().SingleInstance();
+                builder.RegisterType<CircularCloudLayouter>().AsSelf();
                 builder.RegisterType<ImageBox>().AsSelf().SingleInstance();
                 builder.RegisterType<ApplicationWindow>().AsSelf();
-                builder.RegisterType<WordFilter>().AsSelf();
                 builder.RegisterType<TagCloudVisualization.Visualization.TagCloudVisualization>().AsSelf();
                 builder.RegisterInstance(new ImageSettings()).AsSelf().SingleInstance();
                 builder.RegisterInstance(new FontSettings()).AsSelf().SingleInstance();

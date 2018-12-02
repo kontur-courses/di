@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Windows.Forms;
+using TagCloud.Interfaces;
 using TagCloud.TagCloudVisualization.Analyzer;
 using TagCloud.Words;
 
@@ -7,11 +9,15 @@ namespace TagCloud.Actions
 {
     public class LoadWordsAction : IUiAction
     {
-        private readonly Words.WordsRepository wordsRepository;
+        private readonly WordsRepository wordsRepository;
+        private IWordAnalyzer wordAnalyzer;
+        private IReader reader;
 
-        public LoadWordsAction(Words.WordsRepository wordsRepository)
+        public LoadWordsAction(WordsRepository wordsRepository, IWordAnalyzer wordAnalyzer, IReader reader)
         {
             this.wordsRepository = wordsRepository;
+            this.wordAnalyzer = wordAnalyzer;
+            this.reader = reader;
         }
 
         public string Category => "File";
@@ -25,13 +31,9 @@ namespace TagCloud.Actions
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() != DialogResult.OK)
                     return;
-                var fileStream = openFileDialog.OpenFile();
-                using (StreamReader reader = new StreamReader(fileStream))
-                {
-                    var fileContent = reader.ReadToEnd();
-                    var splittedWords = WordAnalyzer.SplitWords(fileContent);
-                    wordsRepository.Load(splittedWords);
-                }
+                var fileContent = reader.Read(openFileDialog.FileName);
+                var splittedWords = wordAnalyzer.SplitWords(fileContent);
+                wordsRepository.Load(splittedWords);
             }
 
         }

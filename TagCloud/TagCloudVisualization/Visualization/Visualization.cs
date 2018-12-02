@@ -7,7 +7,7 @@ using TagCloud.TagCloudVisualization.Extensions;
 
 namespace TagCloud.TagCloudVisualization.Visualization
 {
-    public class Visualization
+    public abstract class Visualization
     {
         public ImageBox ImageBox;
         protected ImageSettings ImageSettings;
@@ -46,9 +46,6 @@ namespace TagCloud.TagCloudVisualization.Visualization
             }
         }
 
-        protected virtual void DrawElements()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void DrawElements();
     }
 }

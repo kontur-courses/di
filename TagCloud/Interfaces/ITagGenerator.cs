@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using TagCloud.TagCloudVisualization.Analyzer;
 
 namespace TagCloud.Interfaces
 {
-    public interface ITagCloudLayouter
+    public interface ITagGenerator
     {
-        List<Tag> GetCloudTags(Dictionary<String, int> weightedWords);
+        List<Tag> GetTags(IEnumerable<string> words);
     }
 }
