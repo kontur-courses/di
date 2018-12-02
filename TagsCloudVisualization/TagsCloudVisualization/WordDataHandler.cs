@@ -4,14 +4,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
-    public class WordDataHandler
+    public class WordDataHandler : IWordDataHandler
     {
-        public List<CloudWordData> GetDatas(CircularCloudLayouter cloud)
+        public List<CloudWordData> GetDatas(ICloudLayouter cloud)
         {
             var words = GetWords("input.txt");
             var wordWeightTuples = GetWordWeightTuples(words);
@@ -25,7 +24,7 @@ namespace TagsCloudVisualization
             .Select(str => new Tuple<string, int>(str, words.Count(s => s == str))).Distinct()
             .OrderByDescending(t => t.Item2).ToList();
 
-        public static Point[] GetStartPoints(CircularCloudLayouter cloud, List<Tuple<string, int>> wordWeightTuples)
+        public static Point[] GetStartPoints(ICloudLayouter cloud, List<Tuple<string, int>> wordWeightTuples)
         {
             var e = new PaintEventArgs(Graphics.FromImage(new Bitmap(100, 100)), new Rectangle());
             foreach (var wordWeightTuple in wordWeightTuples)
