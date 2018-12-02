@@ -1,10 +1,12 @@
-namespace FractalPainting.Solved.Step11.Infrastructure.UiActions
+using CloudLayouter.Infrastructer.Common;
+
+namespace CloudLayouter.Infrastructer
 {
     public interface IUiAction
     {
-        MenuCategory Category { get; }
         string Name { get; }
         string Description { get; }
         void Perform();
+        MenuCategory Category { get; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
-using FractalPainting.Solved.Step11.Infrastructure.UiActions;
+using CloudLayouter.Infrastructer;
+using CloudLayouter.Infrastructer.Common;
 
-namespace FractalPainting.Solved.Step11.App.Actions
+namespace CloudLayouter.Actions
 {
     public class SaveImageAction : IUiAction
     {
@@ -16,7 +16,6 @@ namespace FractalPainting.Solved.Step11.App.Actions
             this.imageHolder = imageHolder;
         }
 
-        public MenuCategory Category => MenuCategory.File;
         public string Name => "Сохранить...";
         public string Description => "Сохранить изображение в файл";
 
@@ -34,5 +33,7 @@ namespace FractalPainting.Solved.Step11.App.Actions
             if (res == DialogResult.OK)
                 imageHolder.SaveImage(dialog.FileName);
         }
+
+        public MenuCategory Category => MenuCategory.SaveFile;
     }
 }

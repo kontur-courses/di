@@ -2,9 +2,10 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
+using CloudLayouter.Infrastructer;
+using CloudLayouter.Infrastructer.Common;
 
-namespace FractalPainting.Solved.Step11.App
+namespace CloudLayouter
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder
     {

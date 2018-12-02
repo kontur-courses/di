@@ -1,6 +1,6 @@
 using FractalPainting.Infrastructure.Common;
 
-namespace FractalPainting.App
+namespace FractalPainting.Solved.Step11.App
 {
     public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider
     {

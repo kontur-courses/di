@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
 
-namespace FractalPainting.App
+namespace FractalPainting.Solved.Step11.App
 {
     public class SettingsManager
     {
@@ -28,6 +28,7 @@ namespace FractalPainting.App
                     Save(defaultSettings);
                     return defaultSettings;
                 }
+
                 return serializer.Deserialize<AppSettings>(data);
             }
             catch (Exception e)

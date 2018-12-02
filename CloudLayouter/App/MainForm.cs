@@ -1,18 +1,20 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
-using FractalPainting.Solved.Step11.Infrastructure.UiActions;
+using CloudLayouter.Infrastructer;
+using CloudLayouter.Infrastructer.Common;
+using CloudLayouter.Infrastructer.Extensions;
 
-namespace FractalPainting.Solved.Step11.App
+namespace CloudLayouter
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions,
-            PictureBoxImageHolder pictureBox,
-            ImageSettings imageSettings)
+        
+        
+        public MainForm(IUiAction[] actions,PictureBoxImageHolder pictureBox, ImageSettings imageSettings)
         {
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
+
 
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());
@@ -25,8 +27,8 @@ namespace FractalPainting.Solved.Step11.App
 
         protected override void OnShown(EventArgs e)
         {
+            Text = "Cloud Layouter";
             base.OnShown(e);
-            Text = "Fractal Painter";
         }
     }
 }
