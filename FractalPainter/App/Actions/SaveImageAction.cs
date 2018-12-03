@@ -6,19 +6,15 @@ using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    public class SaveImageAction : IUiAction, INeed<IImageDirectoryProvider>, INeed<IImageHolder>
+    public class SaveImageAction : IUiAction
     {
         private IImageDirectoryProvider imageDirectoryProvider;
         private IImageHolder imageHolder;
 
-        public void SetDependency(IImageDirectoryProvider dependency)
+        public SaveImageAction(IImageHolder imageHolder, IImageDirectoryProvider directoryProvider)
         {
-            imageDirectoryProvider = dependency;
-        }
-
-        public void SetDependency(IImageHolder dependency)
-        {
-            imageHolder = dependency;
+            this.imageHolder = imageHolder;
+            this.imageDirectoryProvider = directoryProvider;
         }
 
         public string Category => "Файл";

@@ -7,13 +7,21 @@ using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class DragonFractalAction : IUiAction, INeed<IImageHolder>
+    public class DragonFractalAction : IUiAction /*INeed<IImageHolder>*/
     {
-        private IImageHolder imageHolder;
+        //private IImageHolder imageHolder;
+        private IDragonFactory dragonFactory;
+        private readonly Func<Random, DragonSettingsGenerator> settingsFactory;
 
-        public void SetDependency(IImageHolder dependency)
+        //public void SetDependency(IImageHolder dependency)
+        //{
+        //    imageHolder = dependency;
+        //}
+
+        public DragonFractalAction(IDragonFactory dragonFactory, Func<Random, DragonSettingsGenerator> dragonSettingsFactory)
         {
-            imageHolder = dependency;
+            this.dragonFactory = dragonFactory;
+            this.settingsFactory = dragonSettingsFactory;
         }
 
         public string Category => "Фракталы";
@@ -26,15 +34,16 @@ namespace FractalPainting.App.Actions
             // редактируем настройки:
             SettingsForm.For(dragonSettings).ShowDialog();
             // создаём painter с такими настройками
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<DragonSettings>().ToConstant(dragonSettings);
-            container.Get<DragonPainter>().Paint();
+            dragonFactory.CreateDragonPainter(dragonSettings).Paint();
+            //var container = new StandardKernel();
+            //container.Bind<IImageHolder>().ToConstant(imageHolder);
+            //container.Bind<DragonSettings>().ToConstant(dragonSettings);
+            //container.Get<DragonPainter>().Paint();
         }
 
-        private static DragonSettings CreateRandomSettings()
+        private DragonSettings CreateRandomSettings()
         {
-            return new DragonSettingsGenerator(new Random()).Generate();
+            return this.settingsFactory(new Random()).Generate();
         }
     }
 }
