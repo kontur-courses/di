@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Interfaces;
 using TagCloud.TagCloudVisualization.Extensions;
 
 namespace TagCloud.TagCloudVisualization.Layouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter    
     {
         private List<Rectangle> Rectangles;
         private IEnumerable<Point> spiralPoints;

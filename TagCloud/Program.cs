@@ -19,7 +19,6 @@ namespace TagCloud
                 Application.SetCompatibleTextRenderingDefault(false);
                 var builder = new ContainerBuilder();
                 builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(Program))).AsImplementedInterfaces().SingleInstance();
-                builder.RegisterType<CircularCloudLayouter>().AsSelf();
                 builder.RegisterType<ImageBox>().AsSelf().SingleInstance();
                 builder.RegisterType<ApplicationWindow>().AsSelf();
                 builder.RegisterType<TagCloudVisualization.Visualization.TagCloudVisualization>().AsSelf();

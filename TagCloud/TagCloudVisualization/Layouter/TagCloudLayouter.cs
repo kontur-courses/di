@@ -11,12 +11,12 @@ namespace TagCloud.TagCloudVisualization.Layouter
 {
     public class TagCloudLayouter : ITagCloudLayouter
     {
-        private readonly CircularCloudLayouter layouter;
+        private readonly ICloudLayouter layouter;
         private readonly FontSettings fontSettings;
         private int minFrequency;
         private int maxFrequency;
 
-        public TagCloudLayouter(FontSettings fontSettings, CircularCloudLayouter layouter)
+        public TagCloudLayouter(FontSettings fontSettings, ICloudLayouter layouter)
         {
             this.fontSettings = fontSettings;
             this.layouter = layouter;
