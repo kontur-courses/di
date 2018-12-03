@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.RectanglesLayouter.PointsGenerator;
 
-namespace TagCloud
+namespace TagCloud.RectanglesLayouter
 {
-    public class CircularCloudLayouter : ILayouter
+    public class CircularCloudLayouter : IRectangleLayouter
     {
         private readonly Point center;
         private readonly IEnumerator<Point> pointsEnumerator;
