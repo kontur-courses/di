@@ -54,14 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="ResultRenderer\PngRenderer.cs" />
+    <Compile Include="RectangleFExtensions.cs" />
+    <Compile Include="ResultRenderer\ImageRenderer.cs" />
     <Compile Include="ResultRenderer\IResultRenderer.cs" />
     <Compile Include="TagsCloudBuilder.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />
     <Compile Include="WordFormatters\SimpleFormatter.cs" />
-    <Compile Include="WordLayouts\CircularCloudLayout.cs" />
+    <Compile Include="WordLayouts\CircularCloudLayouter.cs" />
     <Compile Include="WordLayouts\CircularCloudLayoutConfig.cs" />
-    <Compile Include="WordLayouts\IWordLayout.cs" />
+    <Compile Include="WordLayouts\ILayouter.cs" />
     <Compile Include="WordsPreprocessors\BoringWordsRemover.cs" />
     <Compile Include="WordsPreprocessors\CustomBoringWordsRemover.cs" />
     <Compile Include="WordsPreprocessors\WordsLower.cs" />
@@ -69,8 +70,7 @@
     <Compile Include="WordsPreprocessors\IWordsPreprocessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsReaders\TxtReader.cs" />
-    <Compile Include="WordFormatters\IFormattedWord.cs" />
-    <Compile Include="WordLayouts\IPositionedWord.cs" />
+    <Compile Include="WordLayouts\IPosition.cs" />
     <Compile Include="Word.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +78,10 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="mystem.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

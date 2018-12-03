@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -12,14 +13,14 @@ namespace TagsCloudContainer.Tests
     public class CircularCloudLayoutTests
     {
         private readonly PointF startPoint = PointF.Empty;
-        private CircularCloudLayout layout;
-        private IPositionedWord word;
+        private CircularCloudLayouter layouter;
+        private IPosition word;
         private List<RectangleF> rectangles;
 
         [SetUp]
         public void DoBeforeAnyTest()
         {
-            layout = new CircularCloudLayout(new CircularCloudLayoutConfig(startPoint, 10));
+            layouter = new CircularCloudLayouter(new CircularCloudLayoutConfig(startPoint, 10));
             word = new CustomWord();
             rectangles = new List<RectangleF>();
         }
@@ -39,7 +40,7 @@ namespace TagsCloudContainer.Tests
 
                     return result;
                 });
-                new PngRenderer(new Size(2000, 2000)).Generate(words, savePath);
+                new ImageRenderer(new Size(2000, 2000), ImageFormat.Png).Generate(words, savePath);
             }
         }
 
@@ -50,7 +51,7 @@ namespace TagsCloudContainer.Tests
             var expected = word;
             expected.Position = new RectangleF(PointF.Empty, size);
 
-            var result = layout.PositionNextWord(word, size)
+            var result = layouter.GetNextPosition(word, size)
                 .Position;
 
             result
@@ -67,7 +68,7 @@ namespace TagsCloudContainer.Tests
             for (var i = 0; i < 100; i++)
             {
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
-                var generatedRectangle = layout.PositionNextWord(word, size)
+                var generatedRectangle = layouter.GetNextPosition(word, size)
                     .Position;
 
                 foreach (var rectangle in rectangles)
@@ -101,7 +102,7 @@ namespace TagsCloudContainer.Tests
         [TestCaseSource(nameof(OnInvalidSizes))]
         public void PutNextRectangle_ThrowsException_OnInvalidSize(Size size)
         {
-            Action action = () => layout.PositionNextWord(word, size);
+            Action action = () => layouter.GetNextPosition(word, size);
 
             action
                 .Should()
@@ -176,7 +177,7 @@ namespace TagsCloudContainer.Tests
             for (var i = 0; i < amount; i++)
             {
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
-                var rectangle = layout.PositionNextWord(word, size)
+                var rectangle = layouter.GetNextPosition(word, size)
                     .Position;
                 rectangles.Add(rectangle);
             }
@@ -207,7 +208,7 @@ namespace TagsCloudContainer.Tests
         }
     }
 
-    public class CustomWord : IPositionedWord
+    public class CustomWord : IPosition
     {
         public CustomWord()
         {

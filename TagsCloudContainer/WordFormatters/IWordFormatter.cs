@@ -4,6 +4,6 @@ namespace TagsCloudContainer.WordFormatters
 {
     public interface IWordFormatter
     {
-        IEnumerable<IFormattedWord> FormatWords(IEnumerable<string> words);
+        IEnumerable<Word> FormatWords(IEnumerable<string> words);
     }
 }

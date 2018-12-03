@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.WordFormatters;
 using TagsCloudContainer.WordLayouts;
 
 namespace TagsCloudContainer
 {
-    public class Word : IFormattedWord, IPositionedWord
+    public class Word : IPosition
     {
         public Font Font { get; }
 

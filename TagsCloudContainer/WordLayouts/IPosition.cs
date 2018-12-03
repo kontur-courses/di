@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.WordLayouts
 {
-    public interface IPositionedWord
+    public interface IPosition
     {
         RectangleF Position { get; set; }
     }

@@ -14,19 +14,19 @@ namespace TagsCloudContainer
         private readonly IWordsReader wordsReader;
         private readonly IWordsPreprocessor[] wordsPreprocessors;
         private readonly IWordFormatter wordFormatter;
-        private readonly IWordLayout wordLayout;
+        private readonly ILayouter layouter;
         private readonly IResultRenderer resultRenderer;
 
         public TagsCloudBuilder(IWordsReader wordsReader,
             IWordsPreprocessor[] wordsPreprocessors,
             IWordFormatter wordFormatter,
-            IWordLayout wordLayout,
+            ILayouter layouter,
             IResultRenderer resultRenderer)
         {
             this.wordsReader = wordsReader;
             this.wordsPreprocessors = wordsPreprocessors;
             this.wordFormatter = wordFormatter;
-            this.wordLayout = wordLayout;
+            this.layouter = layouter;
             this.resultRenderer = resultRenderer;
         }
 
@@ -36,9 +36,16 @@ namespace TagsCloudContainer
             rawWords = wordsPreprocessors.Aggregate(rawWords,
                 (current, preprocessor) => preprocessor.Preprocess(current));
             var words = wordFormatter.FormatWords(rawWords)
-                .Select(word => (Word)word);
+                .Select(word => word);
             var positionedWords = words
-                .Select(word => wordLayout.PositionNextWord(word, resultRenderer.GetWordSize(word)) as Word)
+                .Select(word =>
+                {
+                    word.Position = layouter
+                        .GetNextPosition(word, resultRenderer.GetWordSize(word))
+                        .Position;
+
+                    return word;
+                })
                 .ToList();
             resultRenderer.Generate(positionedWords, outputFilename);
         }

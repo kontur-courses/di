@@ -6,14 +6,15 @@ using System.Linq;
 
 namespace TagsCloudContainer.ResultRenderer
 {
-    public class PngRenderer : IResultRenderer
+    public class ImageRenderer : IResultRenderer
     {
         private readonly Image image;
         private readonly Graphics graphics;
+        private readonly ImageFormat imageFormat;
 
         private bool DrawRectangles { get; set; }
 
-        public PngRenderer(Size imageSize)
+        public ImageRenderer(Size imageSize, ImageFormat imageFormat)
         {
             if (imageSize.Width <= 0 || imageSize.Height <= 0)
             {
@@ -21,6 +22,8 @@ namespace TagsCloudContainer.ResultRenderer
                     "Width and height of image have to be > 0",
                     nameof(imageSize));
             }
+
+            this.imageFormat = imageFormat;
 
             image = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(image);
@@ -61,7 +64,7 @@ namespace TagsCloudContainer.ResultRenderer
                 }
             }
 
-            image.Save(filename, ImageFormat.Png);
+            image.Save(filename, imageFormat);
         }
 
         public SizeF GetWordSize(Word word)

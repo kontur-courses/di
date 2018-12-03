@@ -9,22 +9,20 @@ namespace TagsCloudContainer.Tests
 {
     public class SimpleFormatterTests
     {
-        private Font font = new Font(FontFamily.GenericMonospace, 12);
-        private Color color = Color.MidnightBlue;
-        private IFormattedWord formattedWord;
+        private readonly Font font = new Font(FontFamily.GenericMonospace, 12);
+        private readonly Color color = Color.MidnightBlue;
         private IWordFormatter formatter;
 
         [SetUp]
         public void DoBeforeAnyTest()
         {
-            formattedWord = new CustomFormattedWord();
             formatter = new SimpleFormatter(font, color);
         }
 
         [Test]
         public void FormatWords_WorksCorrectly()
         {
-            var words = new List<string>()
+            var words = new List<string>
             {
                 "hello",
                 "hello",
@@ -33,12 +31,12 @@ namespace TagsCloudContainer.Tests
                 "test"
             };
 
-            var expected = new List<IFormattedWord>
+            var expected = new List<Word>
             {
-                new CustomFormattedWord(new Font(FontFamily.GenericMonospace, 12 + 1 * 7), color),
-                new CustomFormattedWord(font, color),
-                new CustomFormattedWord(font, color),
-                new CustomFormattedWord(font, color),
+                new Word(new Font(FontFamily.GenericMonospace, 12 + 1 * 7), color, "hello"),
+                new Word(font, color, "world"),
+                new Word(font, color, "from"),
+                new Word(font, color, "test"),
             };
 
             var formattedWords = formatter.FormatWords(words);
@@ -51,7 +49,7 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void FormatWords_SetsValueToTheWord()
         {
-            var words = new List<string>()
+            var words = new List<string>
             {
                 "hello",
                 "hello",
@@ -60,30 +58,12 @@ namespace TagsCloudContainer.Tests
                 "test"
             };
 
-            var formattedWords = formatter.FormatWords(words)
-                .Select(w => (Word)w);
+            var formattedWords = formatter.FormatWords(words);
 
             formattedWords
                 .Select(z => z.Value)
                 .Should()
                 .BeEquivalentTo(words.Skip(1));
-        }
-
-        public class CustomFormattedWord : IFormattedWord
-        {
-            public Font Font { get; }
-
-            public Color Color { get; }
-
-            public CustomFormattedWord()
-            {
-            }
-
-            public CustomFormattedWord(Font font, Color color)
-            {
-                Font = font;
-                Color = color;
-            }
         }
     }
 }

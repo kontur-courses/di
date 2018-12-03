@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace TagsCloudContainer.WordsReaders
@@ -9,15 +8,7 @@ namespace TagsCloudContainer.WordsReaders
     {
         public IEnumerable<string> GetWords(string filename)
         {
-            using (var reader = new StreamReader(filename, Encoding.Default))
-            {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    yield return line;
-                }
-            }
+            return File.ReadLines(filename, Encoding.Default);
         }
     }
 }

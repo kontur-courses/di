@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Drawing.Imaging;
+using Autofac;
 using TagsCloudContainer.ResultRenderer;
 using TagsCloudContainer.WordFormatters;
 using TagsCloudContainer.WordLayouts;
@@ -16,9 +17,10 @@ namespace TagsCloudContainer.Cmd
             var builder = new Autofac.ContainerBuilder();
 
             builder
-                .RegisterType<PngRenderer>()
+                .RegisterType<ImageRenderer>()
                 .As<IResultRenderer>()
-                .WithParameter("imageSize", config.ImageSize);
+                .WithParameter("imageSize", config.ImageSize)
+                .WithParameter("imageFormat", ImageFormat.Png);
 
             builder
                 .RegisterType<SimpleFormatter>()
@@ -29,8 +31,8 @@ namespace TagsCloudContainer.Cmd
             builder.RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower))
                 .As<IWordsPreprocessor>();
 
-            builder.RegisterType<CircularCloudLayout>()
-                .As<IWordLayout>()
+            builder.RegisterType<CircularCloudLayouter>()
+                .As<ILayouter>()
                 .WithParameter("config", circularCloudLayoutConfig);
 
             builder.RegisterType<TxtReader>()
