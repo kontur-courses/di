@@ -22,7 +22,7 @@ namespace TagsCloudVisualization
 
             var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(ICurve), parameters.Curve));
             var wordDataHandler = container.Resolve<IWordDataHandler>();
-            var data = wordDataHandler.GetDatas(cloud);
+            var data = wordDataHandler.GetDatas(cloud, parameters.FilePath);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
             picture.Save($"{Application.StartupPath}\\CloudTags.png");
             Console.WriteLine($"Picture saved in {Application.StartupPath}\\CloudTags.png");

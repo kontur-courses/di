@@ -10,6 +10,7 @@ namespace TagsCloudVisualization
         public Color? Color { get; set; }
         public string FontName { get; set; }
         public ICurve Curve { get; set; }
+        public string FilePath { get; set; }
 
         public bool IsCorrect()
         {
@@ -35,6 +36,12 @@ namespace TagsCloudVisualization
             if (FontName == null)
             {
                 Console.WriteLine("Error in fontName. Choose simple fontName, in example arial");
+                return false;
+            }
+
+            if (FilePath == null)
+            {
+                Console.WriteLine("Error in filePath, try again");
                 return false;
             }
 

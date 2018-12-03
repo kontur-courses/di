@@ -13,6 +13,7 @@ namespace TagsCloudVisualization
             string fontName = null;
             Color? color = null;
             Size? imageSize = null;
+            string filePath = null;
 
             for (var i = 0; i < input.Length; i++)
                 switch (input[i])
@@ -29,6 +30,9 @@ namespace TagsCloudVisualization
                     case "-imageSize":
                         imageSize = GetImageSize(input, i);
                         break;
+                    case "-filePath":
+                        filePath = input[i + 1];
+                        break;
                 }
 
             return new CloudParameters
@@ -36,7 +40,8 @@ namespace TagsCloudVisualization
                 FontName = fontName,
                 Curve = curve,
                 Color = color,
-                ImageSize = imageSize
+                ImageSize = imageSize,
+                FilePath = filePath
             };
         }
 

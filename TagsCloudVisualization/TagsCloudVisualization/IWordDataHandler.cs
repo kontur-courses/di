@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface IWordDataHandler
     {
-        List<CloudWordData> GetDatas(ICloudLayouter cloud);
+        List<CloudWordData> GetDatas(ICloudLayouter cloud, string parametersFilePath);
     }
 }
