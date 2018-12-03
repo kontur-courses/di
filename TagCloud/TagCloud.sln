@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "..\..\..\tdd\cs\TagsCloudVisualization\TagsCloudVisualization.csproj", "{A755FAA4-D120-4336-82E3-341CE64AEC6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagCloud\TagsCloudVisualization.csproj", "{A755FAA4-D120-4336-82E3-341CE64AEC6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
