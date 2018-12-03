@@ -57,7 +57,7 @@ namespace TagsCloudContainer.Helpers
             var directory = Path.GetDirectoryName(filePath);
 
             using (var file =
-                new System.IO.StreamWriter(Path.Combine(directory, "1984_lines.txt")))
+                new StreamWriter(Path.Combine(directory, "1984_lines.txt")))
             {
                 foreach (var line in textLines)
                 {

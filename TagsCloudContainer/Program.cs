@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using Autofac;
 using TagsCloudContainer.Algorithms;
@@ -35,18 +36,15 @@ namespace TagsCloudContainer
 //
 //            TextFileHelper.Rebuildtext(l);
 
-
             using (var scope = Container.BeginLifetimeScope())
             {
                 var textReader = scope.Resolve<ISourceTextReader>();
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "1984_lines.txt");
 
-                var resourceName = "1984_lines.txt";
-
-                var lines = textReader.ReadText(resourceName);
+                var lines = textReader.ReadText(filePath);
 
                 var writer = scope.Resolve<IWordsPreprocessor>();
                 var preprocessWords = writer.PreprocessWords(lines);
-
 
                 var res = new Dictionary<string, int>();
 
@@ -70,7 +68,7 @@ namespace TagsCloudContainer
                 var rectangles = algorithm.GenerateRectanglesSet(pairs.Take(50));
 
                 var drawer = scope.Resolve<IResultFormatter>();
-                drawer.GenerateResult(size, font, brush, $"tag-cloud.png", rectangles);
+                drawer.GenerateResult(size, font, brush, "tag-cloud.png", rectangles);
 
             }
 

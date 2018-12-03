@@ -8,10 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Resources;
+using System.Runtime.CompilerServices;
+
 namespace TagsCloudContainer.Properties {
-    using System;
-    
-    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,27 +24,27 @@ namespace TagsCloudContainer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [DebuggerNonUserCode()]
+    [CompilerGenerated()]
     public class Resources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        private static ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        private static CultureInfo resourceCulture;
         
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public static ResourceManager ResourceManager {
             get {
-                if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TagsCloudContainer.Properties.Resources", typeof(Resources).Assembly);
+                if (ReferenceEquals(resourceMan, null)) {
+                    ResourceManager temp = new ResourceManager("TagsCloudContainer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -50,89 +55,13 @@ namespace TagsCloudContainer.Properties {
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public static CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Джордж
-        ///Оруэлл
-        ///Своеобразный
-        ///антипод
-        ///второй
-        ///великой
-        ///антиутопии
-        ///XX
-        ///века
-        ///О
-        ///дивный
-        ///новый
-        ///мир
-        ///Олдоса
-        ///Хаксли
-        ///Что
-        ///в
-        ///сущности
-        ///страшнее
-        ///доведенное
-        ///до
-        ///абсурда
-        ///общество
-        ///потребления
-        ///или
-        ///доведенное
-        ///до
-        ///абсолюта
-        ///общество
-        ///идеи
-        ///По
-        ///Оруэллу
-        ///нет
-        ///и
-        ///не
-        ///может
-        ///быть
-        ///ничего
-        ///ужаснее
-        ///тотальной
-        ///несвободы
-        ///Джордж
-        ///Оруэлл
-        ///Часть
-        ///первая
-        ///I
-        ///Был
-        ///холодный
-        ///ясный
-        ///апрельский
-        ///день
-        ///и
-        ///часы
-        ///пробили
-        ///тринадцать
-        ///Уткнув
-        ///подбородок
-        ///в
-        ///грудь
-        ///чтобы
-        ///спастись
-        ///от
-        ///злого
-        ///ветра
-        ///Уинстон
-        ///Смит
-        ///торопливо
-        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string _1984_lines {
-            get {
-                return ResourceManager.GetString("_1984_lines", resourceCulture);
             }
         }
     }

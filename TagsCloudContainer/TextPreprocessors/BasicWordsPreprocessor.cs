@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NHunspell;
 
@@ -8,13 +9,14 @@ namespace TagsCloudContainer.TextPreprocessors
     {
         public IEnumerable<string> PreprocessWords(string[] words)
         {
-            //TODO: вынести файлы в ресурсы
-            using (var hunspell = new Hunspell("ru.aff", "ru.dic"))
+            var dir = Path.Combine(Directory.GetCurrentDirectory(),"Resources", "HunspellDicts", "Russian");
+            var affFile = Path.Combine(dir, "ru.aff");
+            var dictFile = Path.Combine(dir, "ru.dic");
+            using (var hunspell = new Hunspell(affFile, dictFile))
             {
                 foreach (var word in words)
                 {
-                    //TODO: настроить нормальное считывание файла
-                    var lemma = hunspell.Stem(word.TrimEnd('\r')).FirstOrDefault();
+                    var lemma = hunspell.Stem(word).FirstOrDefault();
 
                     // Заглушка. TODO: исключать скучные слова по части речи?
                     if (lemma?.Length > 4)
