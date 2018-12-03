@@ -1,13 +1,19 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Autofac;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
 using TagsCloudVisualization;
 
 namespace TagCloud
 {
     class TagCloudApp
     {
+        private static readonly string[] BoringWords = {""};
+
+        
+
         public static void Main(string[] args)
         {
             var container = new  ContainerBuilder();
@@ -23,8 +29,10 @@ namespace TagCloud
                      .As<ITagCloudStatsGenerator>();
             container.RegisterType<FileSaver>()
                      .As<ITagCloudSaver>();
-            container.RegisterType<UserInterface>()
-                     .AsSelf();
+            container.RegisterType<ConsoleUserInterface>()
+                     .As<UserInterface>();
+            container.Register(ctx=>new SimpleWordsPreparer(BoringWords))
+                     .As<SimpleWordsPreparer>();
             using (var scope = container.Build().BeginLifetimeScope())
             {
                 var ui = scope.Resolve<UserInterface>();

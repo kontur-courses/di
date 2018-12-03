@@ -2,11 +2,11 @@
 {
     abstract class UserInterface
     {
-        private readonly TagCloudCreator _creator;
+        protected readonly TagCloudCreator Creator;
 
         protected UserInterface(TagCloudCreator creator)
         {
-            _creator = creator;
+            Creator = creator;
         }
 
         public abstract void Run(string[] startupArgs);
