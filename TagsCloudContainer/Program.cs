@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using Autofac;
-using NHunspell;
 using TagsCloudContainer.Algorithms;
 using TagsCloudContainer.Clients;
-using TagsCloudContainer.Helpers;
 using TagsCloudContainer.ResultFormatters;
 using TagsCloudContainer.SourceTextReaders;
 using TagsCloudContainer.TextPreprocessors;
@@ -25,12 +20,13 @@ namespace TagsCloudContainer
 
             builder.RegisterType<TxtSourceTextReader>().As<ISourceTextReader>();
             builder.RegisterType<BasicWordsPreprocessor>().As<IWordsPreprocessor>();
-            builder.RegisterType<CircularCloudLayouter>().As<IAlgorithm>();
-            builder.RegisterType<CircularCloudLayouterDrawer>().As<IResultFormatter>();
+            builder.RegisterType<CircularCloudAlgorithm>().As<IAlgorithm>();
+            builder.RegisterType<CircularCloudLayouterResultFormatter>().As<IResultFormatter>();
 
             builder.RegisterType<ConsoleClient>().As<IClient>();
 
             Container = builder.Build();
+
 
 //            var path = Assembly.GetExecutingAssembly().Location;
 //            var directory = Path.GetDirectoryName(path);
@@ -42,19 +38,12 @@ namespace TagsCloudContainer
 
             using (var scope = Container.BeginLifetimeScope())
             {
-                var x = scope.Resolve<ISourceTextReader>();
+                var textReader = scope.Resolve<ISourceTextReader>();
 
-                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = "1984_lines.txt";
 
-                var resourceName = "_1984_lines";
+                var lines = textReader.ReadText(resourceName);
 
-//                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-//                using (StreamReader reader = new StreamReader(stream))
-//                {
-//                    string result = reader.ReadLine();
-//                }
-                var lines = x.ReadText(resourceName);
-//
                 var writer = scope.Resolve<IWordsPreprocessor>();
                 var preprocessWords = writer.PreprocessWords(lines);
 
@@ -68,18 +57,17 @@ namespace TagsCloudContainer
                 }
 
                 var pairs = res.OrderByDescending(e => e.Value);
-//                var layouter = new CircularCloudLayouter(new Point(5000, 5000));
 
+
+                // TODO: задавать через аргументы коммандной строки
+                var size = new Size(10000, 10000);
+                var font = new Font("Times New Roman", 10);
+                var brush = Brushes.Black;
                 var centerPoint = new Point(5000, 5000);
 
-                var layouter = scope.Resolve<IAlgorithm>(
-                    new TypedParameter(typeof(Point), centerPoint));
+                var algorithm = scope.Resolve<IAlgorithm>(new TypedParameter(typeof(Point), centerPoint));
 
-                var rectangles = layouter.GenerateRectanglesSet(pairs.Take(50), 100, 150, 50, 75);
-
-                var size = new Size(10000, 10000);
-                var font = new Font("Times New Roman", 12);
-                var brush = Brushes.Red;
+                var rectangles = algorithm.GenerateRectanglesSet(pairs.Take(50));
 
                 var drawer = scope.Resolve<IResultFormatter>();
                 drawer.GenerateResult(size, font, brush, $"tag-cloud.png", rectangles);

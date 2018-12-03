@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Algorithms;
 
 namespace TagsCloudContainer
 {
     public static class CircularCloudLayouterGenerator
     {
-        public static Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(CircularCloudLayouter layouter, 
+        public static Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(CircularCloudAlgorithm layouter, 
             IEnumerable<KeyValuePair<string, int>> words,
             int widthBottomBound, int widthTopBound, int heightBottomBound, int heightTopBound)
         {

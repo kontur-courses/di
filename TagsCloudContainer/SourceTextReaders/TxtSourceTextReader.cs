@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace TagsCloudContainer.SourceTextReaders
 {
@@ -17,17 +16,17 @@ namespace TagsCloudContainer.SourceTextReaders
             //            }
             //                return System.IO.File.ReadAllLines(filePath);
 
-            var assembly = Assembly.GetExecutingAssembly(); 
+            var assembly = Assembly.GetExecutingAssembly();
 
 //            resourceName = FormatResourceName(assembly, resourceName);
+            //TODO: Получать файл по имени ресурса
+            resourceName = assembly.GetManifestResourceNames().Single();
             using (Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
             {
 
                 if (resourceStream == null)
                 {
-                    var x = assembly.GetManifestResourceNames();
                     return null;
-
                 }
 
                 using (StreamReader reader = new StreamReader(resourceStream))

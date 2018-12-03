@@ -4,7 +4,7 @@ using TagsCloudContainer.ResultFormatters;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouterDrawer : IResultFormatter
+    public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
         public void GenerateResult(Size size, Font font, Brush brush, string outputFileName,
             Dictionary<string, (Rectangle, int)> rectangles)
@@ -15,7 +15,6 @@ namespace TagsCloudContainer
                 {
                     foreach (var entry in rectangles)
                     {
-                        //graphics.DrawRectangle(new Pen(Color.Red), rectangle);
                         DrawStringInside(graphics, entry.Value.Item1,
                             font, brush, entry.Key);
                     }

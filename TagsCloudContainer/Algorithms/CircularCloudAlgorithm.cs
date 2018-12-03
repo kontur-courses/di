@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Algorithms;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Algorithms
 {
-    public class CircularCloudLayouter : IAlgorithm
+    public class CircularCloudAlgorithm : IAlgorithm
     {
         public Size Size { get; }
         public Point Center { get; }
         private readonly List<Rectangle> rectangles;
         private readonly Spiral spiral;
         
-        public CircularCloudLayouter(Point center)
+        public CircularCloudAlgorithm(Point center)
         {
             Center = center;
             Size = new Size(center.X * 2, center.Y * 2);
@@ -54,34 +53,33 @@ namespace TagsCloudContainer
                 rect.Top + rect.Height / 2);
         }
 
-        public Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> words,
-            int widthBottomBound, int widthTopBound, int heightBottomBound, int heightTopBound)
+        public Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> words)
         {
             //var rectangles = new List<Rectangle>();
 
             var result = new Dictionary<string, (Rectangle, int)>();
 
-            var random = new Random();
+//            var random = new Random();
 
             var wordsList = words.ToList();
 
             foreach (var word in wordsList)
             {
-                var randomSize = new Size(random.Next(word.Value - widthBottomBound, word.Value - widthTopBound + 50),
-                    random.Next(word.Value - heightBottomBound, word.Value - heightTopBound + 50));
+//                var randomSize = new Size(random.Next(word.Value - widthBottomBound, word.Value - widthTopBound + 50),
+//                    random.Next(word.Value - heightBottomBound, word.Value - heightTopBound + 50));
 
-                //                var size = new Size(Math.Abs(word.Value - 10000 / wordsList.Count())+1, Math.Abs(word.Value - 1000 / wordsList.Count())+1);
+                //var size = new Size(Math.Abs(word.Value - 10000 / wordsList.Count())+1, Math.Abs(word.Value - 1000 / wordsList.Count())+1);
                 var size = new Size(word.Value + (int)(word.Value * 1.5) + 100, (word.Value + (int)(word.Value * 1.5)) / 2 + 50);
-                //                var newRectangle = layouter.PutNextRectangle(randomSize);
+                //var newRectangle = layouter.PutNextRectangle(randomSize);
                 var newRectangle = PutNextRectangle(size);
-                //                rectangles.Add(newRectangle);
+                //rectangles.Add(newRectangle);
 
                 var w = $"{word.Key}({word.Value})";
                 result[w] = (newRectangle, word.Value);
             }
 
             return result;
-            //            return rectangles;
+            //return rectangles;
         }
         private Rectangle MoveRectangleCloserToCenter(Rectangle rectangle)
         {
@@ -118,7 +116,6 @@ namespace TagsCloudContainer
 
                 if(GetRectangleCenter(rectangle).X == Center.X || rectangles.Any(e => e.IntersectsWith(rectangle)))
                     return result;
-
             }
         }
 
