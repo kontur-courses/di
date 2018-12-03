@@ -18,7 +18,7 @@ namespace TagCloud
 
         public Size CreateRectangle()
         {
-            throw new System.NotImplementedException();
+            return new Size(50*Count*Word.Length, 50*Count);
         }
     }
 }

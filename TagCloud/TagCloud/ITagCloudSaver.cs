@@ -5,6 +5,6 @@ namespace TagCloud
 {
     internal interface ITagCloudSaver
     {
-        TagCloudImage CreateTagCloudImage(IEnumerable<Rectangle> tagCloud);
+        TagCloudImage CreateTagCloudImage(IEnumerable<(Rectangle, WordInfo)> tagCloud);
     }
 }

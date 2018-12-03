@@ -29,8 +29,8 @@ namespace TagCloud
             var words = _reader.ReadWords();
             words = _preparer.PrepareWords(words);
             var stats = _generator.GenerateStats(words);
-            _layouter.PutNextRectangles(stats.Select(w => w.CreateRectangle()));
-            return _saver.CreateTagCloudImage(_layouter.Rectangles);
+            var wordPairs = stats.Select(s => (_layouter.PutNextRectangle(s.CreateRectangle()), s));
+            return _saver.CreateTagCloudImage(wordPairs);
         }
     }
 }
