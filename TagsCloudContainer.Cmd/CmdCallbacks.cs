@@ -9,17 +9,7 @@ namespace TagsCloudContainer.Cmd
 
         public Color Color { get; set; } = Color.BlueViolet;
 
-        public string FontFamily { get; set; } = "Arial";
-
-        public float FontSize { get; set; } = 12;
-
         public PointF SpiralOffset { get; set; } = new PointF(-70, -50);
-
-        public double SpiralAngleStep { get; set; } = 10f;
-
-        public string InputFilename { get; set; } = "input.txt";
-
-        public string OutputFilename { get; set; } = "result.png";
     }
 
     public class CmdCallbacks
@@ -42,16 +32,6 @@ namespace TagsCloudContainer.Cmd
 ";
         }
 
-        public void SetInputFilename(string inputFilename)
-        {
-            CmdArgs.InputFilename = inputFilename;
-        }
-
-        public void SetOutputFilename(string filename)
-        {
-            CmdArgs.OutputFilename = filename;
-        }
-
         public void SetImageSize(string imageSize)
         {
             var size = imageSize.Split(' ', ',', 'x');
@@ -62,11 +42,6 @@ namespace TagsCloudContainer.Cmd
             }
 
             CmdArgs.ImageSize = new Size(int.Parse(size[0]), int.Parse(size[1]));
-        }
-
-        public void SetFontSize(double font)
-        {
-            CmdArgs.FontSize = (float)font;
         }
 
         public void SetColor(string color)
@@ -84,16 +59,6 @@ namespace TagsCloudContainer.Cmd
             }
 
             CmdArgs.SpiralOffset = new PointF(int.Parse(size[0]), int.Parse(size[1]));
-        }
-
-        public void SetSpiralAngleStep(double spiralAngleStep)
-        {
-            CmdArgs.SpiralAngleStep = spiralAngleStep;
-        }
-
-        public void SetFont(string font)
-        {
-            CmdArgs.FontFamily = font;
         }
     }
 }
