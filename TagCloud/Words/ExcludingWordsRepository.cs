@@ -4,7 +4,7 @@ using TagCloud.Interfaces;
 
 namespace TagCloud.Words
 {
-    public class ExcludingWordsRepository
+    public class ExcludingWordsRepository : IExcludingRepository
     {
         private readonly HashSet<string> excludingWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         

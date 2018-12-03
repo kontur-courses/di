@@ -8,11 +8,11 @@ namespace TagCloud.Actions
     public class DrawingAction : IUiAction
     {
         private readonly ImageBox imageBox;
-        private readonly WordsRepository wordsRepository;
+        private readonly IRepository wordsRepository;
         private readonly ITagGenerator tagGenerator;
         private readonly ImageSettings imageSettings;
         
-        public DrawingAction(ImageBox imageBox, WordsRepository wordsRepository, 
+        public DrawingAction(ImageBox imageBox, IRepository wordsRepository, 
                                 ITagGenerator tagGenerator, ImageSettings imageSettings)
         {
             this.imageBox = imageBox;

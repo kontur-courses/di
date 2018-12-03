@@ -6,9 +6,9 @@ namespace TagCloud.Words
 {
     public class WordFilter : IWordFilter
     {
-        private readonly ExcludingWordsRepository excludingWordsRepository;
+        private readonly IExcludingRepository excludingWordsRepository;
         
-        public WordFilter(ExcludingWordsRepository excludingWordsRepository)
+        public WordFilter(IExcludingRepository excludingWordsRepository)
         {
             this.excludingWordsRepository = excludingWordsRepository;
         }

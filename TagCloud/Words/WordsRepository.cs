@@ -5,7 +5,7 @@ using TagCloud.Interfaces;
 
 namespace TagCloud.Words
 {
-    public class WordsRepository
+    public class WordsRepository : IRepository
     {
         private List<string> words = new List<string>();
         

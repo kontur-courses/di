@@ -55,7 +55,9 @@
     <Compile Include="Actions\UiActionExtensions.cs" />
     <Compile Include="Forms\ApplicationWindow.cs" />
     <Compile Include="Forms\ImageBox.cs" />
+    <Compile Include="Interfaces\IExcludingRepository.cs" />
     <Compile Include="Interfaces\IReader.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITagCloudLayouter.cs" />
     <Compile Include="Interfaces\ITagGenerator.cs" />
     <Compile Include="Interfaces\IWordAnalyzer.cs" />

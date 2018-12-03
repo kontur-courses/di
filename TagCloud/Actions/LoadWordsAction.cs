@@ -9,11 +9,11 @@ namespace TagCloud.Actions
 {
     public class LoadWordsAction : IUiAction
     {
-        private readonly WordsRepository wordsRepository;
+        private readonly IRepository wordsRepository;
         private IWordAnalyzer wordAnalyzer;
         private IReader reader;
 
-        public LoadWordsAction(WordsRepository wordsRepository, IWordAnalyzer wordAnalyzer, IReader reader)
+        public LoadWordsAction(IRepository wordsRepository, IWordAnalyzer wordAnalyzer, IReader reader)
         {
             this.wordsRepository = wordsRepository;
             this.wordAnalyzer = wordAnalyzer;
