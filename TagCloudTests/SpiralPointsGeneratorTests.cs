@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud;
+using TagCloud.RectanglesLayouter.PointsGenerator;
 
 namespace TagCloudTests
 {
