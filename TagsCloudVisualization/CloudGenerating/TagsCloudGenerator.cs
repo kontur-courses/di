@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
+using TagsCloudVisualization.Utils;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudGenerating
 {
     public class TagsCloudGenerator
     {
         private readonly float maxFontSize = 40;
-        private readonly Statistics wordsStatistics;
         private readonly ILayouter wordRectanglesLayouter;
+        private readonly ImageSettings settings;
 
-        public TagsCloudGenerator(Statistics wordsStatistics, ILayouter wordRectanglesLayouter)
+        public TagsCloudGenerator(ILayouter wordRectanglesLayouter, ImageSettings settings)
         {
-            this.wordsStatistics = wordsStatistics;
             this.wordRectanglesLayouter = wordRectanglesLayouter;
+            this.settings = settings;
         }
 
-        public IEnumerable<Tag> GenerateTagsCloud()
+        public IEnumerable<Tag> GenerateTagsCloud(Statistics wordsStatistics)
         {
             if (wordsStatistics.OrderedWordsStatistics.Count == 0)
                 yield break;
@@ -25,7 +26,8 @@ namespace TagsCloudVisualization
 
             foreach (var wordStatistics in wordsStatistics.OrderedWordsStatistics)
             {
-                var font = new Font("Arial", maxFontSize * wordStatistics.Count / maxCount);
+                var font = new Font(settings.FontName, maxFontSize * wordStatistics.Count / maxCount);
+
                 var wordSize = TextRenderer.MeasureText(
                     wordStatistics.Word, font);
 

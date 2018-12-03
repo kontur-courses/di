@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudGenerating
 {
     public class ArchimedeanSpiralGenerator
     {

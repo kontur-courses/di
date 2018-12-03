@@ -14,7 +14,7 @@ namespace TagsCloudVisualizationTest
         [Test]
         public void Should_ReadFile_Correctly()
         {
-            var sr = new SimpleFileReader(
+            var sr = new TextFileReader(
                 Path.Combine(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     "Resources", "words.txt"));

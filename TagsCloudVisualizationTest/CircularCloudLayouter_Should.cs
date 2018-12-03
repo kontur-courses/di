@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
+using TagsCloudVisualization.CloudGenerating;
+using TagsCloudVisualization.Utils;
 
 namespace TagsCloudVisualizationTest
 {

@@ -2,7 +2,7 @@
 using System.Linq;
 
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Utils
 {
     public class StatisticsCalculator
     {

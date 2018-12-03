@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Preprocessors
 {
     public interface IFilter
     {

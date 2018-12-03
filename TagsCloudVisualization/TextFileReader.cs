@@ -5,11 +5,11 @@ using System.Text;
 
 namespace TagsCloudVisualization
 {
-    public class SimpleFileReader : IReader
+    public class TextFileReader : IReader
     {
         private readonly string fileName;
 
-        public SimpleFileReader(string fileName)
+        public TextFileReader(string fileName)
         {
             this.fileName = fileName;
         }

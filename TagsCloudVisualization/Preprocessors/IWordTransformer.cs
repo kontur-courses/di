@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Preprocessors
 {
     public interface IWordTransformer
     {

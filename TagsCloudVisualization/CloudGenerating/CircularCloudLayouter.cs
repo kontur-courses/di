@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.Utils;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudGenerating
 {
     public class CircularCloudLayouter : ILayouter
     {
