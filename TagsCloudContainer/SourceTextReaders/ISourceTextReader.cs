@@ -2,6 +2,6 @@
 {
     public interface ISourceTextReader
     {
-        string ReadText(string filePath);
+        string[] ReadText(string filePath);
     }
 }

@@ -35,6 +35,9 @@
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -53,20 +56,38 @@
     <Compile Include="CircularCloudLayouterGenerator.cs" />
     <Compile Include="Clients\ConsoleClient.cs" />
     <Compile Include="Clients\IClient.cs" />
+    <Compile Include="Helpers\TextFileHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    
+    
     <Compile Include="ResultFormatters\BasicResultFormatter.cs" />
     <Compile Include="ResultFormatters\IResultFormatter.cs" />
     <Compile Include="SourceTextReaders\ISourceTextReader.cs" />
     <Compile Include="SourceTextReaders\TxtSourceTextReader.cs" />
     <Compile Include="Spiral.cs" />
-    <Compile Include="TextPreprocessors\BasicTextPreprocessor.cs" />
-    <Compile Include="TextPreprocessors\ITextPreprocessor.cs" />
+    <Compile Include="TextPreprocessors\BasicWordsPreprocessor.cs" />
+    <Compile Include="TextPreprocessors\IWordsPreprocessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="bin\Debug\1984_lines.txt" />
+  </ItemGroup>
+  
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
