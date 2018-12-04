@@ -10,10 +10,10 @@ namespace TagCloud.Tests
     [TestFixture]
     public class Spiral_Should
     {
-        [TestCase(0, TestName = "Then step length is 0")]
-        [TestCase(-0.00000000001, TestName = "Then step length is small negative number")]
-        [TestCase(-5, TestName = "Then step length is negative")]
-        public void ConstructorThrowArgumentException(double stepLength)
+        [TestCase(0f, TestName = "Then step length is 0")]
+        [TestCase(-0.00001f, TestName = "Then step length is small negative number")]
+        [TestCase(-5f, TestName = "Then step length is negative")]
+        public void ConstructorThrowArgumentException(float stepLength)
         {
             Action constructor = () => new SpiralBuilder()
                 .WithStepLength(stepLength)
@@ -49,9 +49,9 @@ namespace TagCloud.Tests
             size.Width.Should().BeCloseTo(size.Height, 10);
         }
 
-        [TestCase(Math.PI * 3, TestName = "If step equal to PI * 3")]
-        [TestCase(100, TestName = "If step equal to 100")]
-        public void ReturnDifferentPoints(double stepLength)
+        [TestCase((float)Math.PI * 3f, TestName = "If step equal to PI * 3")]
+        [TestCase(100f, TestName = "If step equal to 100")]
+        public void ReturnDifferentPoints(float stepLength)
         {
             var spiral = new SpiralBuilder()
                 .WithStepLength(stepLength)

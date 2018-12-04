@@ -52,15 +52,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\NumericExtensions.cs" />
+    <Compile Include="Visualizer\Settings\DrawSettings.cs" />
+    <Compile Include="Visualizer\Settings\IDrawSettings.cs" />
     <Compile Include="Models\CloudItem.cs" />
     <Compile Include="RectanglePlacer\CenterRectanglePlacer.cs" />
-    <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
-    <Compile Include="CloudLayouter\CloudLayouter.cs" />
+    <Compile Include="Layouter\CircularCloudLayouter.cs" />
+    <Compile Include="Layouter\CloudLayouter.cs" />
     <Compile Include="RectanglePlacer\IRectanglePlacer.cs" />
-    <Compile Include="CloudVisualizer\CloudVisualizer.cs" />
-    <Compile Include="CloudLayouter\ICloudLayouter.cs" />
-    <Compile Include="CloudVisualizer\DrawSettings.cs" />
-    <Compile Include="CloudVisualizer\ICloudVisualizer.cs" />
+    <Compile Include="Visualizer\CloudVisualizer.cs" />
+    <Compile Include="Layouter\ICloudLayouter.cs" />
+    <Compile Include="Visualizer\Settings\DrawFormat.cs" />
+    <Compile Include="Visualizer\ICloudVisualizer.cs" />
     <Compile Include="PointsSequence\IPointsSequence.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="PointsSequence\PointsSequence.cs" />

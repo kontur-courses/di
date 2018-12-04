@@ -1,6 +1,6 @@
-﻿namespace TagCloud.CloudVisualizer
+﻿namespace TagCloud.Visualizer.Settings
 {
-    public enum DrawSettings
+    public enum DrawFormat
     {
         OnlyWords,
         WordsInRectangles,

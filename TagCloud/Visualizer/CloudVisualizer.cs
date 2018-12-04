@@ -3,13 +3,19 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.Models;
+using TagCloud.Visualizer.Settings;
 
-namespace TagCloud.CloudVisualizer
+namespace TagCloud.Visualizer
 {
     public class CloudVisualizer : ICloudVisualizer
     {
-        public DrawSettings Settings { get; set; }
+        public IDrawSettings Settings { get; set; }
         private Graphics graphics;
+
+        public CloudVisualizer(IDrawSettings settings)
+        {
+            Settings = settings;
+        }
 
         public Bitmap CreatePictureWithItems(CloudItem[] cloudItems)
         {
@@ -36,12 +42,12 @@ namespace TagCloud.CloudVisualizer
         {
             var bounds = cloudItems.Select(t => t.Bounds).ToArray();
             var words = cloudItems.Select(t => t.Word).ToArray();
-            if (Settings != DrawSettings.OnlyWords)
+            if (Settings.DrawFormat != DrawFormat.OnlyWords)
                 graphics.DrawRectangles(Pens.Black, bounds);
-            if (Settings == DrawSettings.OnlyWords || Settings == DrawSettings.WordsInRectangles)
+            if (Settings.DrawFormat == DrawFormat.OnlyWords || Settings.DrawFormat == DrawFormat.WordsInRectangles)
                 for (var i = 0; i < words.Length; i++)
                     DrawString(words[i], bounds[i]);
-            if (Settings == DrawSettings.RectanglesWithNumeration)
+            if (Settings.DrawFormat == DrawFormat.RectanglesWithNumeration)
                 for (var i = 0; i < words.Length; i++)
                 {
                     var word = i.ToString();
@@ -53,16 +59,16 @@ namespace TagCloud.CloudVisualizer
         {
             var bounds = cloudItem.Bounds;
             var word = cloudItem.Word;
-            var font = new Font("Arial", 15);
+            var font = Settings.Font;
             var stringSize = graphics.MeasureString(word, font);
 
             while (stringSize.Height < bounds.Height && stringSize.Width < bounds.Width)
             {
-                font = new Font("Arial", font.Size + 1);
+                font = new Font(font.FontFamily, font.Size + 1);
                 stringSize = graphics.MeasureString(word, font);
             }
 
-            return new Font("Arial", font.Size - 1);
+            return new Font(font.FontFamily, font.Size - 1);
         }
 
         private void DrawString(string str, Rectangle bounds)
@@ -71,7 +77,7 @@ namespace TagCloud.CloudVisualizer
             graphics.DrawString(
                 str,
                 font,
-                Brushes.Black,
+                Settings.Brush,
                 bounds);
         }
     }

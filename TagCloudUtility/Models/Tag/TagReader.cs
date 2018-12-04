@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using TagCloud.Models;
 
-namespace TagCloud.Utility.Models
+namespace TagCloud.Utility.Models.Tag
 {
-    public class TagReader
+    public class TagReader : ITagReader
     {
-        public readonly TagGroups TagGroups;
+        private readonly TagContainer _tagContainer;
 
-        public TagReader(TagGroups tagGroups)
+        public TagReader(TagContainer tagContainer)
         {
-            TagGroups = tagGroups;
+            this._tagContainer = tagContainer;
         }
 
-        public List<TagItem> GetTags(string pathToWords)
+        public List<TagItem> GetTags(string[] words)
         {
-            var words = WordReader
-                .ReadAllWords(pathToWords)
-                .Select(word => word.ToLower());
             var frequencyDictionary = GetFrequencyOfWord(words);
 
             return GetTagItems(frequencyDictionary);
@@ -33,14 +29,13 @@ namespace TagCloud.Utility.Models
         {
             var items = new List<TagItem>();
             var maxRepeats = frequencyDictionary.Values.Max();
-            foreach (var group in TagGroups.Groups)
+            foreach (var group in _tagContainer)
             {
-                var sizeGroup = group.Value;
                 var wordsInGroup = frequencyDictionary
-                    .Where(pair => sizeGroup.Contains((double)pair.Value / maxRepeats))
+                    .Where(pair => group.Contains((double)pair.Value / maxRepeats))
                     .Select(pair => pair.Key);
                 var tags = wordsInGroup
-                    .Select(word => new TagItem(word, sizeGroup.GetSizeForWord(word)))
+                    .Select(word => new TagItem(word, group.GetSizeForWord(word)))
                     .ToList();
                 items.AddRange(tags);
             }

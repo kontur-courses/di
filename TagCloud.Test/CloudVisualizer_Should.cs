@@ -3,19 +3,22 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.CloudVisualizer;
 using TagCloud.Models;
+using TagCloud.Visualizer;
+using TagCloud.Visualizer.Settings;
 
 namespace TagCloud.Tests
 {
     [TestFixture]
     public class CloudVisualizer_Should
     {
+        private readonly CloudVisualizer visualizer =
+            new CloudVisualizer(new DrawSettings(DrawFormat.OnlyRectangles, new Font("Arial", 15), Brushes.Black));
+
         [TestCase(1, TestName = "For 1 rectangle")]
         [TestCase(100, TestName = "For 100 rectangles")]
         public void CreatePictureWithRectangles(int amountOfRectangles)
         {
-            var visualizer = new CloudVisualizer.CloudVisualizer { Settings = DrawSettings.OnlyRectangles };
             var items = new CloudItem[amountOfRectangles];
             for (var i = 0; i < amountOfRectangles; i++)
                 items[i] = new CloudItem(null, new Rectangle(0, 0, 10, 10));
@@ -36,7 +39,6 @@ namespace TagCloud.Tests
         [TestCase(true, TestName = "Then items list is empty")]
         public void ThrowArgumentException(bool isArrayInitialized)
         {
-            var visualizer = new CloudVisualizer.CloudVisualizer();
             Action creation = ()
                 => visualizer.CreatePictureWithItems(
                     isArrayInitialized

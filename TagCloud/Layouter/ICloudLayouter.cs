@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.CloudLayouter
+namespace TagCloud.Layouter
 {
     public interface ICloudLayouter
     {

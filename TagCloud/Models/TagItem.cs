@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.Models
 {
-    public class TagItem
+    public struct TagItem
     {
         public string Word { get; }
         public Size Size { get; }

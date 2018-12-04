@@ -3,8 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.Models
 {
-
-    public class CloudItem
+    public struct CloudItem
     {
         public string Word { get; }
         public Rectangle Bounds { get; }

@@ -2,7 +2,7 @@
 using TagCloud.PointsSequence;
 using TagCloud.RectanglePlacer;
 
-namespace TagCloud.CloudLayouter
+namespace TagCloud.Layouter
 {
     public class CircularCloudLayouter : CloudLayouter
     {

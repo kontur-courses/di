@@ -1,19 +1,36 @@
 ## Input:
-Format: [pathToWords] [pathToPicture] [pathToGroups] [drawSettings = WordsInRectangles]  
-(Paths starting from exe directory)
+Format: 
+  -w, --words           Required. Path to words in format .../words.txt (type is required)
+
+  -p, --picture         Required. Path to picture in format .../picture.png (type is required)
+
+  -d, --drawSettings    (Default: WordsInRectangles) Draw settings:(only words == 0)(words in rectangles == 1)(only
+                        rectangles == 2)(rectangles with numeration == 3)
+
+  -t, --tags            Path to tags in format .../tags.txt (type is required)
+
+  -c, --color           (Default: black) Color of brush
+
+  -s, --size            Size of picture in format (width)x(height)
+
+  -f, --font            (Default: arial) Font family name
+
+  --stopWords           Path to stop words in format .../stopwords.txt (type is required)
+
+  --help                Display this help screen.
+
+  --version             Display version information.
 
 ## Example of using:
 Exe in C:.../Test/TagCloud.Utility.exe  
-Input: words.txt result tagGroups.txt  
+Input: -w words.txt -p result.pnh -t tagGroups.txt -c red -f arial
 In result  
 Words should be in ../Test/words.txt  
 Groups should be in ../Test/tagGroups.txt  
-Picture will be saved in ../Test/result.png  
-(Picture will contain words in recntagles)  
+Picture will be saved in ../Test/result.png
+Words will be red in arial style
 
-## Draw Settings:
-To change draw setting write in input number of choosed option  
-Options:  
+## Draw Settings: 
 Only Words == 0  
 Words In Rectangles == 1  
 Only Rectangles == 2  
@@ -41,14 +58,14 @@ Descending rectangles:
 ###
 Random rectangles:
 ======
-![Descending](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/randomCloudTest.png?raw=true")
+![Random](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/randomCloudTest.png?raw=true")
 
 ###
 Similar rectangles:
 ======
-![Descending](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/similarCloudTest.png?raw=true")
+![Similar](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/similarCloudTest.png?raw=true")
 
 ###
 Kolobok test:
 ======
-![Descending](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/result.png?raw=true")
+![Kolobok](https://github.com/Rozentor/tdd/blob/master/cs/TagCloudUtility/result.png?raw=true")

@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.CloudLayouter;
-using TagCloud.CloudVisualizer;
 using TagCloud.Extensions;
+using TagCloud.Layouter;
 using TagCloud.Models;
 using TagCloud.PointsSequence;
+using TagCloud.Visualizer;
+using TagCloud.Visualizer.Settings;
 
 namespace TagCloud.Tests
 {
@@ -30,15 +31,17 @@ namespace TagCloud.Tests
             var context = TestContext.CurrentContext;
             if (context.Result.FailCount == 0) return;
 
-            var visualizer = new CloudVisualizer.CloudVisualizer
-            {
-                Settings = DrawSettings.RectanglesWithNumeration
-            };
+            var visualizer =
+                new CloudVisualizer(
+                    new DrawSettings(
+                        DrawFormat.RectanglesWithNumeration,
+                        new Font("Arial", 15),
+                        Brushes.Black));
 
             var testName = string.Join("_",
                 context.Test.FullName.Split(' '), StringSplitOptions.RemoveEmptyEntries);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(),$"{context.Test.MethodName}_{testName}.png");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), $"{context.Test.MethodName}_{testName}.png");
             var items = currentLayout.Select(r => new CloudItem(null, r));
             var picture = visualizer.CreatePictureWithItems(items.ToArray());
             picture.Save(path);

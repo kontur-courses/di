@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.Utility.Models
+namespace TagCloud.Utility.Models.Tag
 {
     public class TagGroup
     {

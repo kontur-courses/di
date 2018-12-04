@@ -11,7 +11,7 @@ namespace TagCloud.PointsSequence
             spiral = new Spiral();
         }
 
-        public SpiralBuilder WithStepLength(double stepLength)
+        public SpiralBuilder WithStepLength(float stepLength)
         {
             spiral.SetStepLength(stepLength);
             return this;

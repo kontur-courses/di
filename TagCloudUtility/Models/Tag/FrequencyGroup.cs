@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagCloud.Utility.Models
+namespace TagCloud.Utility.Models.Tag
 {
     public class FrequencyGroup
     {
