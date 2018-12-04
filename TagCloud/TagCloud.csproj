@@ -37,6 +37,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -53,6 +57,9 @@
     <Compile Include="Actions\LoadWordsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\UiActionExtensions.cs" />
+    <Compile Include="Filters\BasicFormFormatter.cs" />
+    <Compile Include="Filters\ExcludingWordRemover.cs" />
+    <Compile Include="Filters\FilterManager.cs" />
     <Compile Include="Forms\ApplicationWindow.cs" />
     <Compile Include="Forms\ImageBox.cs" />
     <Compile Include="Interfaces\ICloudLayouter.cs" />
@@ -85,6 +92,20 @@
     <Compile Include="Words\WordFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dictionaries\russian-aot.aff" />
+    <Content Include="Dictionaries\russian-aot.dic" />
+    <Content Include="Dictionaries\ru_RU.aff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dictionaries\ru_RU.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
