@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class Parser
+    public class TxtWordsReader : IWordsReader
     {
         public List<string> ReadWords(string path)
         {

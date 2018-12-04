@@ -10,7 +10,7 @@ namespace TagsCloudContainer
         {
             var path = "hello.txt";
             var generator = new TagsCloudGenerator(new Size(16, 20));
-            var parser = new Parser();
+            var parser = new TxtWordsReader();
             var words = parser.ReadWords(path);
             var blackList = new HashSet<string>() {"в", "на", "к", "а", "не", "и", "с", "о"};
             var cloud = generator.CreateCloud(words,
