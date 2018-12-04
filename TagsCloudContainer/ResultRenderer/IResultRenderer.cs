@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagsCloudContainer.ResultRenderer
 {
     public interface IResultRenderer
     {
-        void Generate(IEnumerable<Word> words, string filename);
+        Image Generate(IEnumerable<Word> words);
         SizeF GetWordSize(Word word);
     }
 }

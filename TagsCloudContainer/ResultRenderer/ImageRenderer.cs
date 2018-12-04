@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
 
 namespace TagsCloudContainer.ResultRenderer
@@ -10,11 +9,10 @@ namespace TagsCloudContainer.ResultRenderer
     {
         private readonly Image image;
         private readonly Graphics graphics;
-        private readonly ImageFormat imageFormat;
 
         private bool DrawRectangles { get; set; }
 
-        public ImageRenderer(Size imageSize, ImageFormat imageFormat)
+        public ImageRenderer(Size imageSize)
         {
             if (imageSize.Width <= 0 || imageSize.Height <= 0)
             {
@@ -23,15 +21,13 @@ namespace TagsCloudContainer.ResultRenderer
                     nameof(imageSize));
             }
 
-            this.imageFormat = imageFormat;
-
             image = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(image);
             var background = new RectangleF(0, 0, image.Width, image.Height);
             graphics.FillRectangle(new SolidBrush(Color.Black), background);
         }
 
-        public void Generate(IEnumerable<Word> words, string filename)
+        public Image Generate(IEnumerable<Word> words)
         {
             var center = new PointF(image.Width / 2f, image.Height / 2f);
 
@@ -64,7 +60,7 @@ namespace TagsCloudContainer.ResultRenderer
                 }
             }
 
-            image.Save(filename, imageFormat);
+            return image;
         }
 
         public SizeF GetWordSize(Word word)

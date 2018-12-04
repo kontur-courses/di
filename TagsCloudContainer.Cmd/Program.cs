@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
+using System.Drawing.Imaging;
+using Autofac;
 using Fclp;
 using TagsCloudContainer.WordLayouts;
+using TagsCloudContainer.WordsReaders;
 
 namespace TagsCloudContainer.Cmd
 {
@@ -68,8 +70,14 @@ namespace TagsCloudContainer.Cmd
             var tagsCloudContainer =
                 new ContainerBuilder().BuildTagsCloudContainer(config, circularCloudLayoutConfig);
 
-            tagsCloudContainer.Visualize(parametrizedParser.Object.InputFilename,
-                parametrizedParser.Object.OutputFilename);
+            var words = tagsCloudContainer
+                .Resolve<TxtReader>()
+                .GetWords(parametrizedParser.Object.InputFilename);
+
+            tagsCloudContainer
+                .Resolve<TagsCloudBuilder>()
+                .Visualize(words)
+                .Save(parametrizedParser.Object.OutputFilename, ImageFormat.Png);
         }
     }
 }

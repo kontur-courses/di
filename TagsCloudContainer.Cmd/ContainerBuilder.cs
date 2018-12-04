@@ -10,33 +10,26 @@ namespace TagsCloudContainer.Cmd
 {
     public class ContainerBuilder
     {
-        public TagsCloudBuilder BuildTagsCloudContainer(
+        public IContainer BuildTagsCloudContainer(
             Config config,
             CircularCloudLayoutConfig circularCloudLayoutConfig)
         {
             var builder = new Autofac.ContainerBuilder();
 
-            builder
-                .RegisterType<ImageRenderer>()
-                .As<IResultRenderer>()
-                .WithParameter("imageSize", config.ImageSize)
-                .WithParameter("imageFormat", ImageFormat.Png);
+            builder.Register(z => new ImageRenderer(config.ImageSize))
+                .As<IResultRenderer>();
 
-            builder
-                .RegisterType<SimpleFormatter>()
-                .As<IWordFormatter>()
-                .WithParameter("font", config.Font)
-                .WithParameter("color", config.Color);
+            builder.Register(z => new SimpleFormatter(config.Font, config.Color))
+                .As<IWordFormatter>();
+
+            builder.Register(z => new CircularCloudLayouter(circularCloudLayoutConfig))
+                .As<ILayouter>();
 
             builder.RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower))
                 .As<IWordsPreprocessor>();
 
-            builder.RegisterType<CircularCloudLayouter>()
-                .As<ILayouter>()
-                .WithParameter("config", circularCloudLayoutConfig);
-
             builder.RegisterType<TxtReader>()
-                .As<IWordsReader>();
+                .AsSelf();
 
             builder
                 .RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower), typeof(BoringWordsRemover))
@@ -46,8 +39,7 @@ namespace TagsCloudContainer.Cmd
                 .RegisterType<TagsCloudBuilder>()
                 .AsSelf();
 
-            return builder.Build()
-                .Resolve<TagsCloudBuilder>();
+            return builder.Build();
         }
     }
 }
