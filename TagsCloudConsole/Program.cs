@@ -45,10 +45,15 @@ namespace TagsCloudConsole
                 .WithParameter("fileName", arguments.WordsFile);
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
-            builder.RegisterType<CircularCloudLayouter>()
-                .As<ILayouter>()
-                .WithParameter("center", new Point(0, 0));
-
+            builder.RegisterType<ArchimedeanSpiralGenerator>()
+                .As<ISpiralGenerator>()
+                .WithParameters(new []
+                {
+                    new NamedParameter("center", new PointF(0, 0)),
+                    new NamedParameter("step", 1),
+                    new NamedParameter("angleDeltaInRadians", (float) (1 / (180 * Math.PI)))
+                });
+            builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
             builder.RegisterType<TagsCloudGenerator>().AsSelf();

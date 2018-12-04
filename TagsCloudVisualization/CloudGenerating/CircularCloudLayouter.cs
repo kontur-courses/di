@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudVisualization.Utils;
 
@@ -9,13 +8,12 @@ namespace TagsCloudVisualization.CloudGenerating
     {
         private readonly List<Rectangle> placedRectangles;
         public IReadOnlyList<Rectangle> PlacedRectangles => placedRectangles.AsReadOnly();
-        private readonly ArchimedeanSpiralGenerator spiralGenerator;
-        private const float SpiralGeneratorAngleDelta = (float) (1 / (180 * Math.PI));
+        private readonly ISpiralGenerator spiralGenerator;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(ISpiralGenerator spiralGenerator)
         {
             placedRectangles = new List<Rectangle>();
-            spiralGenerator = new ArchimedeanSpiralGenerator(center, 1, SpiralGeneratorAngleDelta);
+            this.spiralGenerator = spiralGenerator;
         }
        
         public Rectangle PutNextRectangle(Size rectangleSize)

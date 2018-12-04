@@ -17,7 +17,8 @@ namespace TagsCloudVisualizationTest
         public void SetUp()
         {
             center = new Point(0, 0);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new CircularCloudLayouter(
+                new ArchimedeanSpiralGenerator(center, 1, (float)(1 / (180 * Math.PI))));
         }
 
         [Test]
