@@ -68,9 +68,17 @@
     <Compile Include="CircularCloudLayouter\Direction.cs" />
     <Compile Include="CircularCloudLayouter\DoubleExtension.cs" />
     <Compile Include="CircularCloudLayouter\IDirection.cs" />
+    <Compile Include="IWord.cs" />
+    <Compile Include="IWordsReader.cs" />
+    <Compile Include="IWordStorage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagsCloudContainerTests\WordStorageTests.cs" />
     <Compile Include="Visualizer.cs" />
+    <Compile Include="Word.cs" />
+    <Compile Include="WordsCustomizer.cs" />
+    <Compile Include="WordsReader.cs" />
+    <Compile Include="WordStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
