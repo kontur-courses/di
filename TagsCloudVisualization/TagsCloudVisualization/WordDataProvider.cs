@@ -9,11 +9,8 @@ namespace TagsCloudVisualization
 {
     public class WordDataProvider : IWordDataProvider
     {
-        public List<CloudWordData> GetData(ICloudLayouter cloud, string filePath)
+        public List<CloudWordData> GetData(ICloudLayouter cloud, List<string> words)
         {
-            var settings = new WordsExtractorSettings();
-            var extractor = new WordsExtractor(settings);
-            var words = extractor.Extract(filePath);
             var wordWeightTuples = GetWordWeightTuples(words);
             var startPoints = GetStartPoints(cloud, wordWeightTuples);
             var data = startPoints.Select((t, i) => new CloudWordData

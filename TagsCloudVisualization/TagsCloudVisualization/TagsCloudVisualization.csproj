@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TagsCloudApp.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CloudParameters.cs" />
     <Compile Include="CloudWordData.cs" />
