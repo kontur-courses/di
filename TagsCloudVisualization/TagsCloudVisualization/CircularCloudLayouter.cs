@@ -28,6 +28,11 @@ namespace TagsCloudVisualization
             return nextRect;
         }
 
+        public IReadOnlyList<Rectangle> GetRectangles()
+        {
+            return rectangles;
+        }
+
         private Rectangle GetNextNotIntersectingRectangle(Size size)
         {
             Rectangle nextRectangle;
@@ -44,7 +49,5 @@ namespace TagsCloudVisualization
             var nextPoint = pointGenerator.GetNextPoint();
             return new Rectangle(nextPoint.X, nextPoint.Y, size.Width, size.Height);
         }
-
-        public IReadOnlyList<Rectangle> GetRectangles() => rectangles;
     }
 }

@@ -6,7 +6,7 @@ using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
 {
-    public class WordsExtractor :IWordsExtractor
+    public class WordsExtractor : IWordsExtractor
     {
         private readonly WordsExtractorSettings settings;
 

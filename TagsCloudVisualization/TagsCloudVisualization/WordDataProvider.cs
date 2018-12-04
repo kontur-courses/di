@@ -14,13 +14,16 @@ namespace TagsCloudVisualization
             var wordWeightTuples = GetWordWeightTuples(words);
             var startPoints = GetStartPoints(cloud, wordWeightTuples);
             var data = startPoints.Select((t, i) => new CloudWordData
-            { StartPoint = t, Weight = wordWeightTuples[i].Item2, Word = wordWeightTuples[i].Item1 }).ToList();
+                {StartPoint = t, Weight = wordWeightTuples[i].Item2, Word = wordWeightTuples[i].Item1}).ToList();
             return data;
         }
 
-        private static List<Tuple<string, int>> GetWordWeightTuples(List<string> words) => words
-            .Select(str => new Tuple<string, int>(str, words.Count(s => s == str))).Distinct()
-            .OrderByDescending(t => t.Item2).ToList();
+        private static List<Tuple<string, int>> GetWordWeightTuples(List<string> words)
+        {
+            return words
+                .Select(str => new Tuple<string, int>(str, words.Count(s => s == str))).Distinct()
+                .OrderByDescending(t => t.Item2).ToList();
+        }
 
         public static Point[] GetStartPoints(ICloudLayouter cloud, List<Tuple<string, int>> wordWeightTuples)
         {

@@ -32,7 +32,9 @@ namespace TagsCloudVisualizationTests
                     FontName = "arial",
                     PointGenerator = new Spiral(0.5, Math.PI / 18)
                 };
-                var picture = TagsCloudVisualizer.GetPicture(new List<CloudWordData>(), cloudParameters); //сломал заглушкой на время
+                var picture =
+                    TagsCloudVisualizer.GetPicture(new List<CloudWordData>(),
+                        cloudParameters); //сломал заглушкой на время
                 var path = $"{TestContext.CurrentContext.TestDirectory}\\{TestContext.CurrentContext.Test.FullName}";
                 picture.Save($"{path}.png");
                 TestContext.WriteLine($"Tag cloud visualization saved to file {path}");

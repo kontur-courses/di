@@ -8,12 +8,15 @@ namespace TagsCloudVisualization
     {
         private static void Main(string[] args)
         {
-            CompositionRoot().Resolve<TagsCloudApp>().Run(args);
+            var container = CompositionRoot();
+            var app = container.Resolve<TagsCloudApp>();
+            app.Run(args, container);
         }
 
         private static IContainer CompositionRoot()
         {
             var builder = new ContainerBuilder();
+            builder.RegisterType<TagsCloudApp>();
             builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
             builder.RegisterType<WordDataProvider>().As<IWordDataProvider>();
             builder.RegisterType<CircularCloudLayouter>()

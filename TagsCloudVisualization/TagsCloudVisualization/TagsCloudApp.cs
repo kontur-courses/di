@@ -10,15 +10,13 @@ namespace TagsCloudVisualization
     public class TagsCloudApp
     {
         protected readonly IWordDataProvider wordDataProvider;
-        protected readonly IWordsExtractor wordsExtractor;
 
-        public TagsCloudApp(IWordDataProvider wordDataProvider, IWordsExtractor wordsExtractor)
+        public TagsCloudApp(IWordDataProvider wordDataProvider)
         {
             this.wordDataProvider = wordDataProvider;
-            this.wordsExtractor = wordsExtractor;
         }
 
-        public void Run(string[] args)
+        public void Run(string[] args, IContainer container)
         {
             var options = new Options();
 
@@ -33,8 +31,11 @@ namespace TagsCloudVisualization
                 new TypedParameter(typeof(double), parameters.FactorStep),
                 new TypedParameter(typeof(double), parameters.DegreeStep));
 
-            var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(IPointGenerator), parameters.PointGenerator));
-            var extractor = container.Resolve<IWordsExtractor>(new TypedParameter(typeof(WordsExtractorSettings), new WordsExtractorSettings()));
+            var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(IPointGenerator),
+                parameters.PointGenerator));
+            var extractor =
+                container.Resolve<IWordsExtractor>(new TypedParameter(typeof(WordsExtractorSettings),
+                    new WordsExtractorSettings()));
             var words = extractor.Extract(options.FilePath);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
