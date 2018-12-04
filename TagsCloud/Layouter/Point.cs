@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization
 {
     public class Point
     {
