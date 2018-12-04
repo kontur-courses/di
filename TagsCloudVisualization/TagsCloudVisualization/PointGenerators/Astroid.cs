@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Curves
+namespace TagsCloudVisualization.PointGenerators
 {
-    public class Astroid : ICurve
+    public class Astroid : IPointGenerator
     {
         private readonly double degreeStep;
         private readonly double factorStep;

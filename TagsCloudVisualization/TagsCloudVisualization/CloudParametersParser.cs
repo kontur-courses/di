@@ -1,80 +1,52 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using TagsCloudVisualization.Curves;
+using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {
     public class CloudParametersParser : ICloudParametersParser
     {
-        public CloudParameters Parse(string[] input)
+        public CloudParameters Parse(Options options)
         {
-            ICurve curve = null;
-            string fontName = null;
-            Color? color = null;
-            Size? imageSize = null;
-            string filePath = null;
-
-            for (var i = 0; i < input.Length; i++)
-                switch (input[i])
-                {
-                    case "-color":
-                        color = GetColor(input, i);
-                        break;
-                    case "-curve":
-                        curve = GetCurve(input, i);
-                        break;
-                    case "-fontName":
-                        fontName = input[i + 1];
-                        break;
-                    case "-imageSize":
-                        imageSize = GetImageSize(input, i);
-                        break;
-                    case "-filePath":
-                        filePath = input[i + 1];
-                        break;
-                }
+            var color = Color.FromName(options.Color);
+            var imageSize = GetImageSize(options.ImageSize);
+            var pointGenerator = GetPointGenerator(options.PointGenerator);
 
             return new CloudParameters
             {
-                FontName = fontName,
-                Curve = curve,
+                FontName = options.FontName,
+                PointGenerator = pointGenerator,
                 Color = color,
-                ImageSize = imageSize,
-                FilePath = filePath
+                ImageSize = imageSize
             };
         }
 
-        private Size? GetImageSize(string[] args, int position)
+        private Size GetImageSize(string input)
         {
-            var delimiter = args[position + 1].IndexOf('x');
-            int.TryParse(args[position + 1].Substring(0, delimiter), out var width);
-            int.TryParse(args[position + 1].Substring(delimiter + 1), out var height);
+            var delimiter = input.IndexOf('x');
+            int.TryParse(input.Substring(0, delimiter), out var width);
+            int.TryParse(input.Substring(delimiter + 1), out var height);
             return new Size(width, height);
         }
 
-        private Color? GetColor(string[] args, int position)
+        private IPointGenerator GetPointGenerator(string input)
         {
-            return Color.FromName(args[position + 1]);
-        }
-
-        private ICurve GetCurve(string[] args, int position)
-        {
-            ICurve curve = null;
-            switch (args[position + 1])
+            IPointGenerator pointGenerator = null;
+            switch (input)
             {
                 case "spiral":
-                    curve = new Spiral(0.2, Math.PI / 36);
+                    pointGenerator = new Spiral(0.2, Math.PI / 36);
                     break;
                 case "heart":
-                    curve = new Heart(0.2, Math.PI / 36);
+                    pointGenerator = new Heart(0.2, Math.PI / 36);
                     break;
                 case "astroid":
-                    curve = new Astroid(0.2, Math.PI / 36);
+                    pointGenerator = new Astroid(0.2, Math.PI / 36);
                     break;
             }
 
-            return curve;
+            return pointGenerator;
         }
     }
 }

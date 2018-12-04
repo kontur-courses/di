@@ -9,8 +9,8 @@ namespace TagsCloudVisualization
 
         public static Bitmap GetPicture(List<CloudWordData> data, CloudParameters parameters)
         {
-            var width = parameters.ImageSize.Value.Width;
-            var height = parameters.ImageSize.Value.Height;
+            var width = parameters.ImageSize.Width;
+            var height = parameters.ImageSize.Height;
             var color = parameters.Color;
             var fontName = parameters.FontName;
             var bitmap = new Bitmap(width + EdgeLength, height + EdgeLength);
@@ -24,7 +24,7 @@ namespace TagsCloudVisualization
 
                 foreach (var wordData in data)
                     graphics.DrawString(wordData.Word, new Font(fontName, wordData.Weight * 14),
-                        new SolidBrush((Color) color),
+                        new SolidBrush(color),
                         wordData.StartPoint);
             }
 

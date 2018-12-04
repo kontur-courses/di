@@ -5,9 +5,10 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization.Curves;
+using TagsCloudVisualization;
+using TagsCloudVisualization.PointGenerators;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualizationTests
 {
     [TestFixture]
     internal class CircularCloudLayouterTests
@@ -29,7 +30,7 @@ namespace TagsCloudVisualization
                     Color = Color.Red,
                     ImageSize = new Size(1024, 768),
                     FontName = "arial",
-                    Curve = new Spiral(0.5, Math.PI / 18)
+                    PointGenerator = new Spiral(0.5, Math.PI / 18)
                 };
                 var picture = TagsCloudVisualizer.GetPicture(new List<CloudWordData>(), cloudParameters); //сломал заглушкой на время
                 var path = $"{TestContext.CurrentContext.TestDirectory}\\{TestContext.CurrentContext.Test.FullName}";

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
 {
-    public class WordDataHandler : IWordDataHandler
+    public class WordDataProvider : IWordDataProvider
     {
-        public List<CloudWordData> GetDatas(ICloudLayouter cloud, string filePath)
+        public List<CloudWordData> GetData(ICloudLayouter cloud, string filePath)
         {
-            var words = GetWords(filePath);
+            var settings = new WordsExtractorSettings();
+            var extractor = new WordsExtractor(settings);
+            var words = extractor.GetWords(filePath);
             var wordWeightTuples = GetWordWeightTuples(words);
             var startPoints = GetStartPoints(cloud, wordWeightTuples);
             var data = startPoints.Select((t, i) => new CloudWordData
@@ -34,24 +35,8 @@ namespace TagsCloudVisualization
                 cloud.PutNextRectangle(stringSize);
             }
 
-            return cloud.GetStartPointWords();
-        }
-
-        private static List<string> GetWords(string path)
-        {
-            var stopChars = new[]
-                {"?", "@", ",", ".", ";", ")", "(", ":", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-            var stopWords = new[]
-            {
-                "the", "and", "to", "a", "of", "in", "on", "at", "that",
-                "as", "but", "with", "out", "for", "up", "one", "from", "into"
-            };
-
-            var text = File.ReadAllText(path, Encoding.Default).Replace("\n", " ").Replace("\r", " ");
-            text = stopChars.Aggregate(text, (current, c) => current.Replace(c, string.Empty));
-            var words = text.Split(' ').Where(w => w != string.Empty && !stopWords.Contains(w))
-                .Select(w => w.ToLowerInvariant()).ToList();
-            return words;
+            var startPointWords = cloud.GetRectangles().Select(r => new Point(r.Left, r.Top)).ToArray();
+            return startPointWords;
         }
     }
 }

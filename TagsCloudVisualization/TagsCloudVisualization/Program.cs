@@ -1,7 +1,9 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloudVisualization.Curves;
+using CommandLine;
+using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {
@@ -14,15 +16,16 @@ namespace TagsCloudVisualization
             var builder = new ContainerBuilder();
             Load(builder);
             container = builder.Build();
-            var cloudParametersParser = container.Resolve<ICloudParametersParser>();
-            var parameters = cloudParametersParser.Parse(args);
+            var options = new Options();
 
-            if (!parameters.IsCorrect())
+            if (!Parser.Default.ParseArguments(args, options))
                 return;
 
-            var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(ICurve), parameters.Curve));
-            var wordDataHandler = container.Resolve<IWordDataHandler>();
-            var data = wordDataHandler.GetDatas(cloud, parameters.FilePath);
+            var cloudParametersParser = container.Resolve<ICloudParametersParser>();
+            var parameters = cloudParametersParser.Parse(options);
+            var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(IPointGenerator), parameters.PointGenerator));
+            var wordDataHandler = container.Resolve<IWordDataProvider>();
+            var data = wordDataHandler.GetData(cloud, options.FilePath);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
             picture.Save($"{Application.StartupPath}\\CloudTags.png");
             Console.WriteLine($"Picture saved in {Application.StartupPath}\\CloudTags.png");
@@ -31,13 +34,11 @@ namespace TagsCloudVisualization
         protected static void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
-            builder.RegisterType<WordDataHandler>().As<IWordDataHandler>();
+            builder.RegisterType<WordDataProvider>().As<IWordDataProvider>();
             builder.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>()
-                .WithParameter(new TypedParameter(typeof(ICurve), "curve"));
-            builder.RegisterType<Spiral>().As<ICurve>();
-            builder.RegisterType<Astroid>().As<ICurve>();
-            builder.RegisterType<Heart>().As<ICurve>();
+                .WithParameter(new TypedParameter(typeof(IPointGenerator), "pointGenerator"));
+            builder.RegisterTypes(typeof(Spiral), typeof(Astroid), typeof(Heart)).As<IPointGenerator>();
         }
     }
 }

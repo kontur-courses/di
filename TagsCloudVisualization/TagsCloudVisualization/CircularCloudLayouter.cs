@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using TagsCloudVisualization.Curves;
+using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly ICurve curve;
+        private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> rectangles;
 
-        public CircularCloudLayouter(ICurve curve)
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            this.curve = curve;
+            this.pointGenerator = pointGenerator;
             rectangles = new List<Rectangle>();
         }
 
@@ -41,18 +41,10 @@ namespace TagsCloudVisualization
 
         private Rectangle GetNextRectangle(Size size)
         {
-            var nextPoint = curve.GetNextPoint();
+            var nextPoint = pointGenerator.GetNextPoint();
             return new Rectangle(nextPoint.X, nextPoint.Y, size.Width, size.Height);
         }
 
-        public Rectangle[] GetRectangles()
-        {
-            return rectangles.ToArray();
-        }
-
-        public Point[] GetStartPointWords()
-        {
-            return rectangles.Select(r => new Point(r.Left, r.Top)).ToArray();
-        }
+        public IReadOnlyList<Rectangle> GetRectangles() => rectangles;
     }
 }
