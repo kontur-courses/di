@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization
 {
-    internal class RoundSpiralGenerator : IEnumerable<Point>
+    public class RoundSpiralGenerator : IEnumerable<Point>, ISpiralGenerator
     {
         private const double AngleDelta = Math.PI / 64;
         private readonly Point center;

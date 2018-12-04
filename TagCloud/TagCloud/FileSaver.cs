@@ -8,7 +8,7 @@ namespace TagCloud
 {
     internal class FileSaver : ITagCloudSaver
     {
-        public TagCloudImage CreateTagCloudImage(IEnumerable<(Rectangle, WordInfo)> tagCloud)
+        public TagCloudImage CreateTagCloudImage(IEnumerable<(Rectangle, WordInfo)> tagCloud, IImageOptions options)
         {
             throw new NotImplementedException();
         }

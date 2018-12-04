@@ -10,14 +10,13 @@ namespace TagsCloudVisualization
         private readonly List<Rectangle> _rectangles = new List<Rectangle>();
         private readonly IEnumerator<Point> _spiralGenerator;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(ISpiralGenerator generator)
         {
-            Center = center;
-            _spiralGenerator = new RoundSpiralGenerator(center, 0.1).GetEnumerator();
+            _spiralGenerator = generator.GetEnumerator();
             _spiralGenerator.MoveNext();
         }
 
-        public Point Center { get; }
+        public Point Center { get; set; }
 
         public IEnumerable<Rectangle> Rectangles => _rectangles;
 

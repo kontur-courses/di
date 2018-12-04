@@ -29,6 +29,10 @@ namespace TagCloud
                      .As<ITagCloudStatsGenerator>();
             container.RegisterType<FileSaver>()
                      .As<ITagCloudSaver>();
+            container.RegisterType<ImageOptions>()
+                     .As<IImageOptions>();
+            container.RegisterType<SquareSpiralGenerator>()
+                     .As<ISpiralGenerator>();
             container.RegisterType<ConsoleUserInterface>()
                      .As<UserInterface>();
             container.Register(ctx=>new SimpleWordsPreparer(BoringWords))
