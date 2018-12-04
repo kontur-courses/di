@@ -20,6 +20,12 @@ namespace TagsCloudVisualization
         [Option('g', "pointgen", Required = true, HelpText = "Input one of them: spiral | heart | astroid")]
         public string PointGenerator { get; set; }
 
+        [Option('f', "factorstep", Required = false, HelpText = "Input a factor step to get the next point", DefaultValue = "0,2")]
+        public string FactorStep { get; set; }
+
+        [Option('d', "degreestep", Required = false, HelpText = "Input a degree step to get the next point", DefaultValue = "0,087")]
+        public string DegreeStep { get; set; }
+
         [HelpOption]
         public string GetUsage()
         {

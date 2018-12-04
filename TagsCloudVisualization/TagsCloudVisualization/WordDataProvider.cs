@@ -13,7 +13,7 @@ namespace TagsCloudVisualization
         {
             var settings = new WordsExtractorSettings();
             var extractor = new WordsExtractor(settings);
-            var words = extractor.GetWords(filePath);
+            var words = extractor.Extract(filePath);
             var wordWeightTuples = GetWordWeightTuples(words);
             var startPoints = GetStartPoints(cloud, wordWeightTuples);
             var data = startPoints.Select((t, i) => new CloudWordData

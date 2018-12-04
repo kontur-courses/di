@@ -21,8 +21,13 @@ namespace TagsCloudVisualization
             if (!Parser.Default.ParseArguments(args, options))
                 return;
 
-            var cloudParametersParser = container.Resolve<ICloudParametersParser>();
-            var parameters = cloudParametersParser.Parse(options);
+            var parameters = container.Resolve<CloudParameters>();
+            var cloudParametersParser =
+                container.Resolve<ICloudParametersParser>(new TypedParameter(typeof(CloudParameters), parameters));
+            parameters = cloudParametersParser.Parse(options);
+            parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator,
+                new TypedParameter(typeof(double), parameters.FactorStep),
+                new TypedParameter(typeof(double), parameters.DegreeStep));
             var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(IPointGenerator), parameters.PointGenerator));
             var wordDataHandler = container.Resolve<IWordDataProvider>();
             var data = wordDataHandler.GetData(cloud, options.FilePath);
@@ -38,7 +43,10 @@ namespace TagsCloudVisualization
             builder.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>()
                 .WithParameter(new TypedParameter(typeof(IPointGenerator), "pointGenerator"));
-            builder.RegisterTypes(typeof(Spiral), typeof(Astroid), typeof(Heart)).As<IPointGenerator>();
+            builder.RegisterType<Spiral>().Named<IPointGenerator>("spiral");
+            builder.RegisterType<Heart>().Named<IPointGenerator>("heart");
+            builder.RegisterType<Astroid>().Named<IPointGenerator>("astroid");
+            builder.RegisterType<CloudParameters>();
         }
     }
 }

@@ -9,5 +9,7 @@ namespace TagsCloudVisualization
         public Color Color { get; set; }
         public string FontName { get; set; }
         public IPointGenerator PointGenerator { get; set; }
+        public double FactorStep { get; set; }
+        public double DegreeStep { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.Interfaces
 {
     public interface IWordsExtractor
     {
-        List<string> GetWords(string path);
+        List<string> Extract(string path);
     }
 }
