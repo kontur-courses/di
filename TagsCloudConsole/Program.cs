@@ -4,6 +4,7 @@ using System.Drawing;
 using Autofac;
 using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.Preprocessors;
+using TagsCloudVisualization.Visualizing;
 
 namespace TagsCloudConsole
 {
@@ -22,8 +23,14 @@ namespace TagsCloudConsole
                 Console.WriteLine(e.Message);
                 return;
             }
-            
 
+            var container = BuildContainer(arguments);
+            var app = container.Resolve<App>();
+            app.Run();
+        }
+
+        private static IContainer BuildContainer(CustomArgs arguments)
+        {
             ImageSettings imageSettings = new ImageSettings()
             {
                 BackgroundColor = arguments.BackgroundColor,
@@ -41,23 +48,18 @@ namespace TagsCloudConsole
             builder.RegisterType<CircularCloudLayouter>()
                 .As<ILayouter>()
                 .WithParameter("center", new Point(0, 0));
-            
+
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
             builder.RegisterType<TagsCloudGenerator>().AsSelf();
             builder.RegisterType<CloudBuilder>().AsSelf();
+            builder.RegisterType<CustomPainter>().As<ITagPainter>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
-            var container = builder.Build();
+            builder.RegisterType<App>()
+                .AsSelf()
+                .WithParameter("outputFileName", arguments.OutputFileName);
 
-            var reader = container.Resolve<IReader>();
-            var words = reader.ReadAllWords();
-
-            var cloudBuilder = container.Resolve<CloudBuilder>();
-            var tagCloud = cloudBuilder.BuildTagCloud(words);
-            var visualizer = container.Resolve<TagsCloudVisualizer>();
-
-            var picture = visualizer.GetPictureOfRectangles(tagCloud);
-            picture.Save(arguments.OutputFileName);
+            return builder.Build();
         }
     }
 }

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizing
 {
     public class TagsCloudVisualizer
     {
         private readonly ImageSettings settings;
+        private readonly ITagPainter tagPainter;
 
-        public TagsCloudVisualizer(ImageSettings settings)
+        public TagsCloudVisualizer(ITagPainter tagPainter, ImageSettings settings)
         {
             this.settings = settings;
+            this.tagPainter = tagPainter;
         }
 
         public Bitmap GetPictureOfRectangles(IEnumerable<Tag> tags)
@@ -34,7 +36,7 @@ namespace TagsCloudVisualization
 
         private void DrawTag(Graphics graphics, Tag tag)
         {
-            graphics.DrawString(tag.Word, tag.Font, new SolidBrush(settings.TextColor), tag.Location);
+            graphics.DrawString(tag.Word, tag.Font, tagPainter.ChooseBrushForTag(tag), tag.Location);
         }
 
         private Rectangle CalculatePictureRectangle(IReadOnlyList<Rectangle> rectangles)

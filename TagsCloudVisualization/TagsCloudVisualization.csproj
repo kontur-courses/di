@@ -49,9 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Visualizing\BasicTagPainter.cs" />
     <Compile Include="CloudGenerating\ArchimedeanSpiralGenerator.cs" />
     <Compile Include="CloudBuilder.cs" />
+    <Compile Include="Visualizing\CustomPainter.cs" />
     <Compile Include="ImageSettings.cs" />
+    <Compile Include="Visualizing\ITagPainter.cs" />
     <Compile Include="Preprocessors\BasicTransformer.cs" />
     <Compile Include="CloudGenerating\CircularCloudLayouter.cs" />
     <Compile Include="Preprocessors\DullWordsFilter.cs" />
@@ -66,7 +69,7 @@
     <Compile Include="Utils\StatisticsCalculator.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="CloudGenerating\TagsCloudGenerator.cs" />
-    <Compile Include="TagsCloudVisualizer.cs" />
+    <Compile Include="Visualizing\TagsCloudVisualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
