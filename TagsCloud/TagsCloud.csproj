@@ -53,16 +53,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="CurcularCloudExtensions.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Layouter\CircularCloudLayouter.cs" />
+    <Compile Include="Layouter\CurcularCloudExtensions.cs" />
+    <Compile Include="Layouter\Point.cs" />
+    <Compile Include="Preprocessor\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rectangle.cs" />
-    <Compile Include="RectangleExtensions.cs" />
-    <Compile Include="Size.cs" />
-    <Compile Include="Vector.cs" />
-    <Compile Include="Visualizator.cs" />
-    <Compile Include="VisualizatorExtensions.cs" />
+    <Compile Include="Layouter\Rectangle.cs" />
+    <Compile Include="Layouter\RectangleExtensions.cs" />
+    <Compile Include="Layouter\Size.cs" />
+    <Compile Include="Layouter\Vector.cs" />
+    <Compile Include="TagsCloudGenerator.cs" />
+    <Compile Include="Visualizator\Visualizator.cs" />
+    <Compile Include="Visualizator\VisualizatorExtensions.cs" />
+    <Compile Include="Preprocessor\WordPreprocessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
