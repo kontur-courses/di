@@ -1,10 +1,11 @@
 using System.Drawing;
 using System.Windows.Forms;
+using TagCloud.Interfaces;
 using TagCloud.Settings;
 
 namespace TagCloud
 {
-    class ApplicationWindow : Form
+    class ApplicationWindow : Form, IClient
     {
         public ApplicationWindow(IUiAction[] actions, ImageBox imageBox, ImageSettings imageSettings)
         {
@@ -14,6 +15,11 @@ namespace TagCloud
             Controls.Add(mainMenu);
             imageBox.Dock = DockStyle.Fill;
             Controls.Add(imageBox);
+        }
+
+        public void RunApplication()
+        {
+            Application.Run(this);
         }
     }
 } 

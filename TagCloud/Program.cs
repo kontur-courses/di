@@ -27,8 +27,7 @@ namespace TagCloud
                 builder.RegisterInstance(new ImageSettings()).AsSelf().SingleInstance();
                 builder.RegisterInstance(new FontSettings()).AsSelf().SingleInstance();
                 var mainForm = builder.Build().ResolveOptional<ApplicationWindow>();
-                Application.Run(mainForm);
-
+                mainForm.RunApplication();
             }
             catch(Exception e)
             {

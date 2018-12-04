@@ -62,6 +62,7 @@
     <Compile Include="Filters\FilterManager.cs" />
     <Compile Include="Forms\ApplicationWindow.cs" />
     <Compile Include="Forms\ImageBox.cs" />
+    <Compile Include="Interfaces\IClient.cs" />
     <Compile Include="Interfaces\ICloudLayouter.cs" />
     <Compile Include="Interfaces\IExcludingRepository.cs" />
     <Compile Include="Interfaces\IReader.cs" />
