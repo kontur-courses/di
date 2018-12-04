@@ -22,7 +22,7 @@ namespace TagCloud
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.DefaultExt = "png";
                 openFileDialog.FileName = "TagCloud.png";
-                openFileDialog.Filter = "PNG (*.png)|*.png";
+                openFileDialog.Filter = "PNG (*.png)|*.png|JPEG (*.jpg; *.jpeg)|*.jpg|GIF (*.gif)|*.gif";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                     imageBox.SaveImage(openFileDialog.FileName);
             }
