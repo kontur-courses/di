@@ -12,12 +12,12 @@ namespace TagCloudApplication
         private FontFamily fontFamily = FontFamily.GenericMonospace;
         private IColorScheme colorScheme;
         public List<(string word, Rectangle rect)> Words { get; }
-        private readonly Size imageSize;
+        public Size ImageSize { get; }
 
         public TagCloud(List<(string word,Rectangle rect)> words, Size imageSize)
         {
-            Words = words;
-            this.imageSize = imageSize;
+            Words = words.OrderByDescending(tuple => tuple.rect.Size.Height*tuple.rect.Height).ToList();
+            ImageSize = imageSize;
         }
 
         public TagCloud ApplyColorScheme(IColorScheme colorScheme)
@@ -38,15 +38,15 @@ namespace TagCloudApplication
             imageSaver.Save(fileName, tCImage);
         }      
 
-        private Bitmap CreateImage()
+        public Bitmap CreateImage()
         {
-            var resultBitmap = new Bitmap(imageSize.Width, imageSize.Height);
+            var resultBitmap = new Bitmap(ImageSize.Width, ImageSize.Height);
             var g = Graphics.FromImage(resultBitmap);
-            g.FillRectangle(new SolidBrush(colorScheme.BackColor), new Rectangle(0,0, imageSize.Width, imageSize.Height));
-            g.TranslateTransform(imageSize.Width/2, imageSize.Height/2);
+            g.FillRectangle(new SolidBrush(colorScheme.BackColor), new Rectangle(0,0, ImageSize.Width, ImageSize.Height));
+            g.TranslateTransform(ImageSize.Width/2, ImageSize.Height/2);
             foreach (var pair in Words)
             {
-                float emSize = pair.rect.Width / pair.word.Length;
+                float emSize = pair.rect.Width / pair.word.Length/1.8f;
                 g.DrawString(pair.word,
                     new Font(fontFamily, emSize),
                     new SolidBrush(colorScheme.GetNextColorForWord()),

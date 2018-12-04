@@ -19,7 +19,7 @@ namespace TagCloudApplication
         public TagCloudCreator(ICloudLayouter layouter,
                 IWordKeeper wordKeeper, 
                 Size tagCloudSize,
-                double precisionFactor = 0.1)
+                double precisionFactor = 0.005)
         {
             this.layouter = layouter;
             this.wordKeeper = wordKeeper;
@@ -47,7 +47,7 @@ namespace TagCloudApplication
         }
 
         private Size GetWordSize(int wordLenght, int frequency) =>
-            new Size((int)(frequency * tagCloudSize.Width * PrecisionFactor),
+            new Size((int)(frequency * tagCloudSize.Width * PrecisionFactor * wordLenght),
                 (int)(frequency * tagCloudSize.Height * PrecisionFactor));
             
     }

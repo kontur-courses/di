@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{63B8F0A4-2560-48D8-9B40-274C67BB7E82}</ProjectGuid>
+    <ProjectGuid>{46910CF8-8EC6-49FA-96F7-32BC6981964F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TagCloudApplication</RootNamespace>
-    <AssemblyName>TagCloudApplication</AssemblyName>
+    <RootNamespace>TagCloudApplicationTests</RootNamespace>
+    <AssemblyName>TagCloudApplicationTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,14 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColorScheme.cs" />
-    <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="ISaver.cs" />
-    <Compile Include="IWordKeeper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagCloudCreator.cs" />
-    <Compile Include="TagCloud.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
