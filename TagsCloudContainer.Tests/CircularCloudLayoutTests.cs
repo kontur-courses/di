@@ -40,7 +40,9 @@ namespace TagsCloudContainer.Tests
 
                     return result;
                 });
-                new ImageRenderer(new Size(2000, 2000)).Generate(words).Save(savePath, ImageFormat.Png);
+                var imageRenderer = new ImageRenderer(new Size(2000, 2000)) {DrawRectangles = true};
+                imageRenderer.Generate(words).Save(savePath, ImageFormat.Png);
+                imageRenderer.Dispose();
             }
         }
 

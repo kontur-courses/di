@@ -1,5 +1,4 @@
-﻿using System.Drawing.Imaging;
-using Autofac;
+﻿using Autofac;
 using TagsCloudContainer.ResultRenderer;
 using TagsCloudContainer.WordFormatters;
 using TagsCloudContainer.WordLayouts;

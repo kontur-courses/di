@@ -84,10 +84,13 @@ namespace TagsCloudContainer.Cmd
                 .Resolve<TxtReader>()
                 .GetWords(parser.Object.InputFilename);
 
-            tagsCloudContainer
-                .Resolve<TagsCloudBuilder>()
-                .Visualize(words)
-                .Save(parser.Object.OutputFilename, ImageFormat.Png);
+            using (var scope = tagsCloudContainer.BeginLifetimeScope())
+            {
+                scope
+                    .Resolve<TagsCloudBuilder>()
+                    .Visualize(words)
+                    .Save(parser.Object.OutputFilename, ImageFormat.Png);
+            }
         }
     }
 }

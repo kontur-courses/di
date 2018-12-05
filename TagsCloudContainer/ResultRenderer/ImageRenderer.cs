@@ -10,7 +10,7 @@ namespace TagsCloudContainer.ResultRenderer
         private readonly Image image;
         private readonly Graphics graphics;
 
-        private bool DrawRectangles { get; set; }
+        public bool DrawRectangles { get; set; }
 
         public ImageRenderer(Size imageSize)
         {
@@ -66,6 +66,12 @@ namespace TagsCloudContainer.ResultRenderer
         public SizeF GetWordSize(Word word)
         {
             return graphics.MeasureString(word.Value, word.Font);
+        }
+
+        public void Dispose()
+        {
+            image?.Dispose();
+            graphics?.Dispose();
         }
     }
 }
