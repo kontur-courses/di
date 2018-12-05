@@ -80,6 +80,8 @@
     <Compile Include="Processing\Filtering\CommonWordsFilter.cs" />
     <Compile Include="Processing\Filtering\DefaultFilter.cs" />
     <Compile Include="Processing\Filtering\IWordFilter.cs" />
+    <Compile Include="Processing\PartOfSpeech.cs" />
+    <Compile Include="Processing\PartOfSpeechDetector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,5 +89,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\mystem.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
