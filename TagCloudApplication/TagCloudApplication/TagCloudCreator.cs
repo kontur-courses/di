@@ -13,24 +13,18 @@ namespace TagCloudApplication
         private readonly IWordKeeper wordKeeper;
         private readonly Size tagCloudSize;
 
-        public double PrecisionFactor { get; }
-
 
         public TagCloudCreator(ICloudLayouter layouter,
-                IWordKeeper wordKeeper, 
-                Size tagCloudSize,
-                double precisionFactor = 0.005)
+                IWordKeeper wordKeeper)
         {
             this.layouter = layouter;
             this.wordKeeper = wordKeeper;
-            this.tagCloudSize = tagCloudSize;
-            PrecisionFactor = precisionFactor;
         }
 
         public TagCloud BuildTagCloudBy(string source)
         {
             var rects = GetRectangles(wordKeeper.GetWordFrequency(source));             
-            return new TagCloud(rects, tagCloudSize);
+            return new TagCloud(rects);
         }
 
         private List<(string, Rectangle)> GetRectangles(Dictionary<string, int> wordFreq)
@@ -47,8 +41,7 @@ namespace TagCloudApplication
         }
 
         private Size GetWordSize(int wordLenght, int frequency) =>
-            new Size((int)(frequency * tagCloudSize.Width * PrecisionFactor * wordLenght),
-                (int)(frequency * tagCloudSize.Height * PrecisionFactor));
+            new Size((frequency * wordLenght / 2), (frequency));
             
     }
 

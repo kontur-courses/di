@@ -12,29 +12,33 @@ namespace TagCloudApplicationTest
     [TestFixture]
     public class TagCloudCreatorUnitTest
     {
-        [Test]
-        public void BuildTagCloud_ShouldBuildTagCloudByGivenSize()
+        [TestCase(300,300, TestName = "300x300")]
+        [TestCase(500, 500, TestName = "500x500")]
+        [TestCase(1000, 1000, TestName = "1000x1000")]
+        [TestCase(150, 150, TestName = "150x150")]
+        public void BuildTagCloud_ShouldBuildCorrectTagCloudByDifferentSquareImageSize(int width, int height)
         {
-            var givenSize = new Size(300, 300);
+            var givenSize = new Size(width, height);
             var creator = new TagCloudCreator(new CircularCloudLayouter(new Point(0, 0)),
-                new TestWordKeeper(),givenSize);
+                new TestWordKeeper());
             
             var tagCloud = creator.BuildTagCloudBy("");
-            tagCloud.SaveAsImage("testTagCloud1", new SimpleBMPSaver());
-            Assert.AreEqual(givenSize, tagCloud.ImageSize);
+            tagCloud.SaveAsImage($"Test_BuildTagCloud1 {TestContext.CurrentContext.Test.Name}", givenSize, 0, new SimpleBMPSaver());
+            //Assert.AreEqual(givenSize, tagCloud.ImageSize);
         }
 
 
-        [Test]
-        public void BuildTagCloud_ShouldBuildTagCloud()
+        [TestCase(1000, 300, TestName = "1000x300")]
+        [TestCase(200, 700, TestName = "200x700")]
+        public void BuildTagCloud_ShouldBuildCorrectTagCloudByDifferentRectangleImageSize(int width, int height)
         {
-            var givenSize = new Size(300, 300);
+            var givenSize = new Size(width, height);
             var creator = new TagCloudCreator(new CircularCloudLayouter(new Point(0, 0)),
-                new TestWordkeeper2(), givenSize);
+                new TestWordkeeper2());
 
             var tagCloud = creator.BuildTagCloudBy("");
-            tagCloud.SaveAsImage("testTagCloud2", new SimpleBMPSaver());
-            Assert.AreEqual(givenSize, tagCloud.ImageSize);
+            tagCloud.SaveAsImage($"Test_BuildTagCloud2 {TestContext.CurrentContext.Test.Name}", givenSize, 0, new SimpleBMPSaver());
+            //Assert.AreEqual(givenSize, tagCloud.ImageSize);
         }
     }
 }

@@ -9,13 +9,11 @@ namespace TagCloudApplication
     {
         private FontFamily fontFamily = FontFamily.GenericSerif;
         private IColorScheme colorScheme = new SimpleColorScheme();
-        public List<(string word, Rectangle rect)> Words { get; }
-        public Size ImageSize { get; }
+        private List<(string word, Rectangle rect)> tempRect;
 
-        public TagCloud(List<(string word,Rectangle rect)> words, Size imageSize)
+        public TagCloud(List<(string word,Rectangle rect)> tempRect)
         {
-            Words = words;
-            ImageSize = imageSize;
+            this.tempRect = tempRect;
         }
 
         public TagCloud ApplyColorScheme(IColorScheme colorScheme)
@@ -30,28 +28,50 @@ namespace TagCloudApplication
             return this;
         }
 
-        public void SaveAsImage(string fileName, ISaver imageSaver)
+
+
+        public void SaveAsImage(string fileName, Size imageSize, int borderWidth, ISaver imageSaver)
         {
-            var tCImage = CreateImage();
+            var tagCloudSize = new Size(imageSize.Width - 2*borderWidth, imageSize.Height - 2*borderWidth);
+            var rects = ScaleRectangleToSize(tagCloudSize);
+
+            var tCImage = CreateImage(rects, imageSize, borderWidth);
             imageSaver.Save(fileName, tCImage);
         }      
 
-        public Bitmap CreateImage()
+        private Bitmap CreateImage(List<(string word, Rectangle rect)> rects, Size imageSize, int borderWidth)
         {
-            var resultBitmap = new Bitmap(ImageSize.Width, ImageSize.Height);
+            var resultBitmap = new Bitmap(imageSize.Width, imageSize.Height);
             var g = Graphics.FromImage(resultBitmap);
-            g.FillRectangle(new SolidBrush(colorScheme.BackColor), new Rectangle(0,0, ImageSize.Width, ImageSize.Height));
-            g.TranslateTransform(ImageSize.Width/2, ImageSize.Height/2);
-            foreach (var pair in Words)
+            g.FillRectangle(new SolidBrush(colorScheme.BackColor), new Rectangle(0,0, imageSize.Width, imageSize.Height));
+            g.TranslateTransform(imageSize.Width/2, imageSize.Height/2);
+            foreach (var pair in rects)
             {
-                float emSize = pair.rect.Width / pair.word.Length/1.7f;
+                var currentFont = CreateFont(pair.rect, pair.word.Length);
                 g.DrawString(pair.word,
-                    new Font(fontFamily, emSize),
+                    currentFont,
                     new SolidBrush(colorScheme.GetNextColorForWord()),
                     pair.rect);
             }
             return resultBitmap;
         }
+
+        private List<(string word, Rectangle rect)> ScaleRectangleToSize(Size tagCloudSize)
+        {
+            var mainSide = tagCloudSize.Height < tagCloudSize.Width ? tagCloudSize.Height : tagCloudSize.Width;
+            var scale = mainSide / 100;
+            return tempRect.Select(r => (r.word, new Rectangle(r.rect.X * scale, r.rect.Y * scale,
+                (r.rect.Width * scale), (r.rect.Height * scale)))).ToList();
+        }
+
+        private Font CreateFont(Rectangle rect, int wordLenght)
+        { 
+            var emSize = rect.Width / wordLenght;
+            while (new Font(fontFamily, emSize).Height > rect.Height)
+                emSize -= 1;
+            return new Font(fontFamily,emSize);
+        }
+
 
     }
 }
