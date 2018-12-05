@@ -41,7 +41,8 @@ namespace TagsCloudContainer.Tests
                     return result;
                 });
                 var imageRenderer = new ImageRenderer(new Size(2000, 2000)) {DrawRectangles = true};
-                imageRenderer.Generate(words).Save(savePath, ImageFormat.Png);
+                imageRenderer.Generate(words)
+                    .Save(savePath, ImageFormat.Png);
                 imageRenderer.Dispose();
             }
         }
@@ -53,8 +54,7 @@ namespace TagsCloudContainer.Tests
             var expected = word;
             expected.Position = new RectangleF(PointF.Empty, size);
 
-            var result = layouter.GetNextPosition(word, size)
-                .Position;
+            var result = layouter.GetNextPosition(size);
 
             result
                 .Equals(expected.Position)
@@ -70,8 +70,7 @@ namespace TagsCloudContainer.Tests
             for (var i = 0; i < 100; i++)
             {
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
-                var generatedRectangle = layouter.GetNextPosition(word, size)
-                    .Position;
+                var generatedRectangle = layouter.GetNextPosition(size);
 
                 foreach (var rectangle in rectangles)
                 {
@@ -104,7 +103,7 @@ namespace TagsCloudContainer.Tests
         [TestCaseSource(nameof(OnInvalidSizes))]
         public void PutNextRectangle_ThrowsException_OnInvalidSize(Size size)
         {
-            Action action = () => layouter.GetNextPosition(word, size);
+            Action action = () => layouter.GetNextPosition(size);
 
             action
                 .Should()
@@ -179,8 +178,7 @@ namespace TagsCloudContainer.Tests
             for (var i = 0; i < amount; i++)
             {
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
-                var rectangle = layouter.GetNextPosition(word, size)
-                    .Position;
+                var rectangle = layouter.GetNextPosition(size);
                 rectangles.Add(rectangle);
             }
         }

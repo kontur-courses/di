@@ -4,6 +4,6 @@ namespace TagsCloudContainer.WordLayouts
 {
     public interface ILayouter
     {
-        IPosition GetNextPosition(IPosition position, SizeF size);
+        RectangleF GetNextPosition(SizeF size);
     }
 }

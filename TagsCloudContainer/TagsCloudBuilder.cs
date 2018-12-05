@@ -37,8 +37,7 @@ namespace TagsCloudContainer
                 .Select(word =>
                 {
                     word.Position = layouter
-                        .GetNextPosition(word, resultRenderer.GetWordSize(word))
-                        .Position;
+                        .GetNextPosition(resultRenderer.GetWordSize(word));
 
                     return word;
                 })

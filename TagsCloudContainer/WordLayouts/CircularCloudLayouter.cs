@@ -18,7 +18,7 @@ namespace TagsCloudContainer.WordLayouts
             angleDelta = config.AngleDelta;
         }
 
-        public IPosition GetNextPosition(IPosition position, SizeF size)
+        public RectangleF GetNextPosition(SizeF size)
         {
             if (size.Width <= 0 || size.Height <= 0)
             {
@@ -37,9 +37,7 @@ namespace TagsCloudContainer.WordLayouts
                 {
                     rectangles.Add(rectangle);
 
-                    position.Position = rectangle;
-
-                    return position;
+                    return rectangle;
                 }
             }
 
