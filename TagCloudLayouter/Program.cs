@@ -31,7 +31,9 @@ namespace TagCloudLayouter
         static void Main(string[] args)
         {
             var client = new ConsoleClient();
-            var config = client.GetConfig(args);
+            var config = client.GetConfig(args, out var toExit);
+            if(toExit)
+                Environment.Exit(0);
             InitContainer(config.Center);
 
             var layouter = container.Resolve<ICloudLayouter>();

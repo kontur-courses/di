@@ -2,6 +2,6 @@
 {
     public interface IUserInterface
     {
-        Config GetConfig(string[] args);
+        Config GetConfig(string[] args, out bool toExit);
     }
 }

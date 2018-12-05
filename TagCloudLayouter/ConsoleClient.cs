@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using CommandLine;
+using CommandLine.Text;
 
 namespace TagCloudLayouter
 {
@@ -32,7 +33,7 @@ namespace TagCloudLayouter
             [Option("out-path", HelpText = "Input path to directory to save image.")]
             public string OutPath { get; set; }
 
-            [Value(0, HelpText = "Path to directory to save.")]
+            [Value(0, Required = true, HelpText = "Path to directory to save.")]
             public string PathToSave { get; set; }
             //ToDo Сделать вызов help с ключем -h
             //ToDo Сделать режимы работы (сохранение картинки, добавление слов в исключенные)
@@ -41,10 +42,11 @@ namespace TagCloudLayouter
             //ToDo Пофиксить баг, что после запуска программы с --help -- version начинается создание облака тегов 
         }
 
-        public Config GetConfig(string[] args)
+        public Config GetConfig(string[] args, out bool toExit)
         {
+            toExit = false;
             var center = new Point(500, 500);
-            var inputFile = "";
+            string inputFile = null;
             var count = 20;
             var fileName = "SimpleCloud";
             var outPath = "";
@@ -66,6 +68,9 @@ namespace TagCloudLayouter
                     backgroundColor = Color.FromName(o.BackgroundColor);
                 });
 
+            if (inputFile == null)
+                toExit = true;
+            //CommandLine.ErrorType.HelpRequestedError;
             return new Config(
                 center,
                 inputFile,
