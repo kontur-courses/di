@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.Visualizer
 {
     public class VisualElement
     {
-        public Point Position { get; }
+        public Point Position { get; set; }
         public Color Color { get; }
         public string Word { get; }
         public Size Size { get; }

@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Layouter
     public class CircularCloudLayouter : ICloudLayouter
     {
         private const double SpiralAngleInterval = 0.1;
-        private const double SpiralTurnsInterval = 0.5;
+        private const double SpiralTurnsInterval = 0.1;
         private double currentSpiralAngle;
 
         private readonly Point origin;

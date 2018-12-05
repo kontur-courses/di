@@ -6,13 +6,10 @@ namespace TagsCloudVisualization
 {
     public class LinearSizeScheme : ISizeScheme
     {
-        private const double CharWidth = 25;
-        private const double CharHeight = 40;
-
         public Size GetSize(FrequentedFontedWord element)
         {
-            var width = element.Word.Length * CharWidth * element.Frequency;
-            return new Size(width, CharHeight * element.Frequency);
+            var width = element.Word.Length * element.Font.Size;
+            return new Size(width, element.Font.Height);
         }
     }
 }

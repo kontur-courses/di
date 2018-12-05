@@ -1,14 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Interfaces;
-using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization
 {
     public class TagsCloud
     {
-        public void Generate(
+        private ICloudLayouter layouter;
+        private IVisualizer visualizer;
+        private IFileReader fileReader;
+        private IColorScheme colorScheme;
+        private ISizeScheme sizeScheme;
+        private IFontScheme fontScheme;
+        private IStatisticsCollector statisticsCollector;
+        private IWordExcluder wordExcluder;
+
+        public TagsCloud(
             ICloudLayouter layouter,
             IVisualizer visualizer,
             IFileReader fileReader,
@@ -18,12 +27,26 @@ namespace TagsCloudVisualization
             IStatisticsCollector statisticsCollector,
             IWordExcluder wordExcluder)
         {
-            var input = fileReader.ReadLines();
+            this.layouter = layouter;
+            this.visualizer = visualizer;
+            this.fileReader = fileReader;
+            this.colorScheme = colorScheme;
+            this.sizeScheme = sizeScheme;
+            this.fontScheme = fontScheme;
+            this.statisticsCollector = statisticsCollector;
+            this.wordExcluder = wordExcluder;
+        }
+
+        public void Generate(string file)
+        {
+            fileReader.Path = file;
+            var input = fileReader.Read();
+            input = input.Select(s => s.ToLower());
             var filteredInput = ExcludeWords(input, wordExcluder);
             var statistics = statisticsCollector.GetStatistics(filteredInput);
             var fontedElements = ApplyFontScheme(statistics, fontScheme);
             var positionedElements = FillCloud(fontedElements, layouter, sizeScheme);
-            var visualElements = ApplyColorSchemes(positionedElements, colorScheme, fontScheme);
+            var visualElements = ApplyColorSchemes(positionedElements, colorScheme);
             visualizer.Visualize(visualElements);
         }
 
@@ -44,8 +67,7 @@ namespace TagsCloudVisualization
 
         private IEnumerable<VisualElement> ApplyColorSchemes(
             IEnumerable<PositionedElement> elements,
-            IColorScheme colorScheme, 
-            IFontScheme fontScheme)
+            IColorScheme colorScheme)
         {
             var result = new List<VisualElement>();
             foreach (var element in elements)

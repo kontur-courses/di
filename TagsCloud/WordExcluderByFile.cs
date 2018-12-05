@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
@@ -11,12 +12,10 @@ namespace TagsCloudVisualization
         public WordExcluderByFile(IFileReader fileReader, string path)
         {
             fileReader.Path = path;
-            stopWords = fileReader.ReadLines();
+            stopWords = fileReader.Read();
         }
 
         public bool ToExclude(string word)
-        {
-            throw new System.NotImplementedException();
-        }
+            => stopWords.Contains(word);
     }
 }

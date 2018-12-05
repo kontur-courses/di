@@ -11,14 +11,6 @@
         public double X { get; }
         public double Y { get; }
 
-        public static Point operator +(Point p1, System.Drawing.Point p2)
-        {
-            var x = p1.X + p2.X;
-            var y = p1.Y + p2.Y;
-
-            return new Point(x, y);
-        }
-
         public static Point operator +(Point p1, Point p2)
         {
             var x = p1.X + p2.X;

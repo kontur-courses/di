@@ -6,6 +6,6 @@ namespace TagsCloudVisualization.Interfaces
     {
         string Path { get; set; }
 
-        IEnumerable<string> ReadLines();
+        IEnumerable<string> Read();
     }
 }

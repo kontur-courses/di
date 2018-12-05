@@ -5,16 +5,22 @@ using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
 {
-    public class FileReader : IFileReader
+    public class FileReaderByLines : IFileReader
     {
         public string Path { get; set; }
 
+        public FileReaderByLines(string path)
+            => Path = path;
+
         public IEnumerable<string> Read()
         {
+            var result = new List<string>();
             using (var sr = new StreamReader(Path, Encoding.Default))
             {
-                return sr.ReadToEnd().Split(' ');
+                while (!sr.EndOfStream) result.Add(sr.ReadLine());
             }
+
+            return result;
         }
     }
 }

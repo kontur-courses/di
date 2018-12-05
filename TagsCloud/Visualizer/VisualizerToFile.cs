@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Web.UI;
+using Castle.MicroKernel.Lifestyle;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizator;
 
@@ -22,13 +23,21 @@ namespace TagsCloudVisualization.Visualizer
 
         public void Visualize(IEnumerable<VisualElement> objects)
         {
-            var sourceToDraw = objects
-                .Select(o => TranslatePositionByHalfSize(o, Size));
+            var sourceToDraw = objects.Select(NormalizePosition);
             using (var bitmap = new Bitmap(Size.Width, Size.Height))
             {
                 DrawElements(bitmap, sourceToDraw, Size);
                 bitmap.Save(Path);
             }
+        }
+
+        private VisualElement NormalizePosition(VisualElement element)
+        {
+            var newPosition = new Layouter.Point(
+                (int) (element.Position.X - element.Size.Width / 2), 
+                (int) (element.Position.Y - element.Size.Height / 2));
+            element.Position = newPosition;
+            return element;
         }
 
         private void DrawElements(
@@ -38,7 +47,7 @@ namespace TagsCloudVisualization.Visualizer
         {
             using (var graphics = Graphics.FromImage(bitmap))
             {
-                graphics.TranslateTransform(size.Width, size.Height);
+                graphics.TranslateTransform(size.Width / 2, size.Height / 2);
                 graphics.Clear(BackgroundColor);
                 foreach (var element in elements)
                     DrawElement(graphics, element);
@@ -49,6 +58,12 @@ namespace TagsCloudVisualization.Visualizer
         {
             using (var pen = new Pen(element.Color))
             {
+                //graphics.DrawRectangle(
+                //    pen,
+                //    (int) element.Position.X,
+                //    (int) element.Position.Y,
+                //    (int) element.Size.Width,
+                //    (int) element.Size.Height);
                 graphics.DrawString(element.Word, element.Font, pen.Brush, ExtractRectangleF(element));
             }
         }
@@ -58,19 +73,6 @@ namespace TagsCloudVisualization.Visualizer
             var locationF = element.Position.ToPointF();
             var sizeF = element.Size.ToSizeF();
             return new RectangleF(locationF, sizeF);
-        }
-
-        private VisualElement TranslatePositionByHalfSize(VisualElement element, Size size)
-        {
-            var offset = new Point(size.Width / 2, size.Height / 2);
-            var newPosition = element.Position + offset;
-            return new VisualElement(
-                element.Word, 
-                newPosition, 
-                element.Size, 
-                element.Color, 
-                element.Font, 
-                element.Frequency);
         }
     }
 }

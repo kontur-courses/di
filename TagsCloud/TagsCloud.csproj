@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="ArialFontScheme.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="FileReaderByLines.cs" />
     <Compile Include="FrequentedFontedWord.cs" />
     <Compile Include="FrequentedWord.cs" />
     <Compile Include="Interfaces\ICloudLayouter.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Layouter\Vector.cs" />
     <Compile Include="PositionedElement.cs" />
     <Compile Include="RandomColorScheme.cs" />
+    <Compile Include="StatisticsCollector.cs" />
     <Compile Include="TagsCloud.cs" />
     <Compile Include="Visualizer\VisualElement.cs" />
     <Compile Include="Visualizer\VisualizatorExtensions.cs" />

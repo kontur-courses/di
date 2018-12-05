@@ -17,7 +17,7 @@ namespace TagsCloudTests
         {
             var origin = new Point(0, 0);
             var container = new WindsorContainer();
-            container.Register(Component.For<IFileReader>().ImplementedBy<FileReader>());
+            container.Register(Component.For<IFileReader>().ImplementedBy<FileReaderByLines>());
             container.Register(Component.For<CircularCloudLayouter>().ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("origin", origin)));
             container.Register(Component.For<TagsCloud>().ImplementedBy<TagsCloud>());
