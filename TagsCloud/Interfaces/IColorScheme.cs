@@ -1,9 +1,10 @@
-﻿using TagsCloudVisualization.Visualizer;
+﻿using System.Drawing;
+using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization.Interfaces
 {
     public interface IColorScheme
     {
-        VisualElement Process(VisualElement element);
+        Color Process(PositionedElement element);
     }
 }

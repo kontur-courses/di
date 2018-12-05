@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.Interfaces
 {
     public interface IFileReader
     {
-        IEnumerable<string> ReadLines(string path);
+        IEnumerable<string> ReadLines();
     }
 }

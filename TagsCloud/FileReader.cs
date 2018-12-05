@@ -7,10 +7,15 @@ namespace TagsCloudVisualization
 {
     public class FileReader : IFileReader
     {
-        public IEnumerable<string> ReadLines(string path)
+        public string Path { get; set; }
+
+        public FileReader(string path)
+            => Path = path;
+
+        public IEnumerable<string> ReadLines()
         {
             var result = new List<string>();
-            using (var sr = new StreamReader(path, Encoding.Default))
+            using (var sr = new StreamReader(Path, Encoding.Default))
             {
                 while (!sr.EndOfStream) result.Add(sr.ReadLine());
             }

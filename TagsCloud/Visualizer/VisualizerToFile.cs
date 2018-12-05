@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Web.UI;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizator;
 
@@ -8,22 +9,24 @@ namespace TagsCloudVisualization.Visualizer
 {
     public class VisualizerToFile : IVisualizer
     {
-        public VisualizerToFile(string outputPath, Color backgroundColor)
+        public VisualizerToFile(string outputPath, Color backgroundColor, Size imageSize)
         {
             Path = outputPath;
             BackgroundColor = backgroundColor;
+            Size = imageSize;
         }
 
         public string Path { get; set; }
         public Color BackgroundColor { get; set; }
+        public Size Size { get; }
 
-        public void Visualize(IEnumerable<VisualElement> objects, Size size)
+        public void Visualize(IEnumerable<VisualElement> objects)
         {
             var sourceToDraw = objects
-                .Select(o => TranslatePositionByHalfSize(o, size));
-            using (var bitmap = new Bitmap(size.Width, size.Height))
+                .Select(o => TranslatePositionByHalfSize(o, Size));
+            using (var bitmap = new Bitmap(Size.Width, Size.Height))
             {
-                DrawElements(bitmap, sourceToDraw, size);
+                DrawElements(bitmap, sourceToDraw, Size);
                 bitmap.Save(Path);
             }
         }

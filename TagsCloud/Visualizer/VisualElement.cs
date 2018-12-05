@@ -14,6 +14,19 @@ namespace TagsCloudVisualization.Visualizer
         public int Frequency { get; }
 
         public VisualElement(
+            PositionedElement element,
+            Color color,
+            Font font)
+        {
+            Word = element.Word;
+            Position = element.Rectangle.Center;
+            Color = color;
+            Size = element.Rectangle.Size;
+            Font = font;
+            Frequency = element.Frequency;
+        }
+
+        public VisualElement(
             string word,
             Point position,
             Size size,
@@ -27,6 +40,6 @@ namespace TagsCloudVisualization.Visualizer
             Size = size;
             Font = font;
             Frequency = frequency;
-        }        
+        }
     }
 }

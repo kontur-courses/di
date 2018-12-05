@@ -1,9 +1,10 @@
-﻿using TagsCloudVisualization.Visualizer;
+﻿using TagsCloudVisualization.Layouter;
+using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization.Interfaces
 {
     public interface ISizeScheme
     {
-        VisualElement Process(VisualElement element);
+        Size GetSize(FrequentedWord element);
     }
 }

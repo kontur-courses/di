@@ -2,7 +2,6 @@
 using Castle.Windsor;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Layouter;
-using TagsCloudVisualization.Visualizator;
 using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization
