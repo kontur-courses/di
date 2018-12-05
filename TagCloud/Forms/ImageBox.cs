@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -16,16 +17,13 @@ namespace TagCloud.Forms
         public Graphics StartDrawing()
         {
             FailIfNotInitialized();
-            return Graphics.FromImage(Image);
+            return Graphics.FromImage(Image);       
         }
 
         private void FailIfNotInitialized()
         {
             if (Image == null)
-            {
-                MessageBox.Show("TagCloud hasn't been initialized. Please select words and draw new tag");
-                Image = new Bitmap(100, 100, PixelFormat.Format24bppRgb);
-            }
+                throw new Exception("TagCloud hasn't been initialized. Please select words and draw new tag");
         }
 
         public void RecreateImage(ImageSettings imageSettings)
@@ -35,8 +33,15 @@ namespace TagCloud.Forms
         
         public void SaveImage(string fileName)
         {
-            FailIfNotInitialized();
-            Image.Save(fileName);
+            try
+            {
+                FailIfNotInitialized();
+                Image.Save(fileName);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }
