@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
@@ -13,10 +12,7 @@ namespace TagsCloudVisualization
             var result = new List<string>();
             using (var sr = new StreamReader(path, Encoding.Default))
             {
-                while (!sr.EndOfStream)
-                {
-                   result.Add(sr.ReadLine());
-                }
+                while (!sr.EndOfStream) result.Add(sr.ReadLine());
             }
 
             return result;

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private const double SpiralAngleInterval = 0.1;
         private const double SpiralTurnsInterval = 0.5;
-
-        private Point origin;
-        private List<Rectangle> rectanglesList;
         private double currentSpiralAngle;
+
+        private readonly Point origin;
+        private readonly List<Rectangle> rectanglesList;
 
         public CircularCloudLayouter(Point origin)
         {
@@ -19,7 +20,9 @@ namespace TagsCloudVisualization
         }
 
         public IReadOnlyCollection<Rectangle> GetCloud()
-            => rectanglesList;
+        {
+            return rectanglesList;
+        }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
@@ -36,7 +39,7 @@ namespace TagsCloudVisualization
             var directionToCenter = new Vector(rectangle.Center, origin).Normalized();
             var currentDirection = directionToCenter;
             var previousPosition = new Point(0, 0);
-            while (directionToCenter.IsSameDirection(currentDirection) 
+            while (directionToCenter.IsSameDirection(currentDirection)
                    && !rectangle.IsIntersectsWithAnyRect(rectanglesList))
             {
                 previousPosition = rectangle.Center;
@@ -63,8 +66,8 @@ namespace TagsCloudVisualization
 
         private Point ArithmeticSpiral(double angle, double turnsInterval)
         {
-            var x = origin.X + (turnsInterval * angle) * Math.Cos(angle);
-            var y = origin.Y + (turnsInterval * angle) * Math.Sin(angle);
+            var x = origin.X + turnsInterval * angle * Math.Cos(angle);
+            var y = origin.Y + turnsInterval * angle * Math.Sin(angle);
 
             return new Point(x, y);
         }

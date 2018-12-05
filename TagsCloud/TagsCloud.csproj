@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>TagsCloudVisualization</RootNamespace>
     <AssemblyName>TagsCloudVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -35,15 +35,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>TagsCloudVisualization.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,11 +63,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileReader.cs" />
+    <Compile Include="Interfaces\ICloudLayouter.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
+    <Compile Include="Interfaces\IPoint.cs" />
+    <Compile Include="Interfaces\IRectangle.cs" />
+    <Compile Include="Interfaces\ISize.cs" />
+    <Compile Include="Interfaces\IVector.cs" />
+    <Compile Include="Interfaces\IVisualizable.cs" />
+    <Compile Include="Interfaces\IVisualizer.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\CurcularCloudExtensions.cs" />
     <Compile Include="Layouter\Point.cs" />
     <Compile Include="Preprocessor\Tag.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Layouter\Rectangle.cs" />
     <Compile Include="Layouter\RectangleExtensions.cs" />

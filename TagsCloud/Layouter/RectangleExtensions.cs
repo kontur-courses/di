@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
     public static class RectangleExtensions
     {
         public static bool IsIntersectsWithAnyRect(this Rectangle rectangle, IEnumerable<Rectangle> rectangles)
-            => rectangles.Any(r => r.Intersects(rectangle));
+        {
+            return rectangles.Any(r => r.Intersects(rectangle));
+        }
     }
 }

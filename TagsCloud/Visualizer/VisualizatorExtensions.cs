@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
+using Point = TagsCloudVisualization.Layouter.Point;
+using Rectangle = TagsCloudVisualization.Layouter.Rectangle;
+using Size = TagsCloudVisualization.Layouter.Size;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizator
 {
     public static class VisualizatorExtensions
     {
@@ -13,9 +16,13 @@ namespace TagsCloudVisualization
         }
 
         public static PointF ToPointF(this Point point)
-            => new PointF((float)point.X, (float)point.Y);
+        {
+            return new PointF((float) point.X, (float) point.Y);
+        }
 
         public static SizeF ToSizeF(this Size size)
-            => new SizeF((float)size.Width, (float)size.Height);
+        {
+            return new SizeF((float) size.Width, (float) size.Height);
+        }
     }
 }

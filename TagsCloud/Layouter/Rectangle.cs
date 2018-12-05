@@ -1,30 +1,32 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Layouter
 {
     public class Rectangle
     {
-        public Point Center { get; set; }
-        public Size Size { get; }
-
-        public double LeftXCoord => Center.X - Size.Width / 2;
-        public double RightXCoord => Center.X + Size.Width / 2;
-        public double TopYCoord => Center.Y + Size.Height / 2;
-        public double BottomYCoord => Center.Y - Size.Height / 2;
-
         public Rectangle(Point center, Size size)
         {
             Center = center;
             Size = size;
         }
 
+        public Point Center { get; set; }
+        public Size Size { get; }
+
+        public double Left => Center.X - Size.Width / 2;
+        public double Right => Center.X + Size.Width / 2;
+        public double Top => Center.Y + Size.Height / 2;
+        public double Bottom => Center.Y - Size.Height / 2;
+
         public bool Intersects(Rectangle otherRectangle)
         {
-            return !(LeftXCoord > otherRectangle.RightXCoord
-                     || RightXCoord < otherRectangle.LeftXCoord
-                     || TopYCoord < otherRectangle.BottomYCoord
-                     || BottomYCoord > otherRectangle.TopYCoord);
+            return !(Left > otherRectangle.Right
+                     || Right < otherRectangle.Left
+                     || Top < otherRectangle.Bottom
+                     || Bottom > otherRectangle.Top);
         }
 
         public override string ToString()
-            => $"Rectangle (X: {Center.X}; Y: {Center.Y})";
+        {
+            return $"Rectangle (X: {Center.X}; Y: {Center.Y})";
+        }
     }
 }

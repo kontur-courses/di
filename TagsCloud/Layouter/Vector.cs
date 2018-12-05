@@ -1,25 +1,35 @@
 ﻿using System;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
     public class Vector
     {
-        public Point Position { get; }
-
         public Vector(Point position)
-            => Position = position;
+        {
+            Position = position;
+        }
 
         public Vector(Point startPoint, Point endPoint)
-            => Position = endPoint - startPoint;
+        {
+            Position = endPoint - startPoint;
+        }
+
+        public Point Position { get; }
 
         public Vector Normalized()
-            => new Vector(Position.Normalized());
+        {
+            return new Vector(Position.Normalized());
+        }
 
         public double GetLength()
-            => Math.Sqrt(Math.Pow(Position.X, 2) + Math.Pow(Position.Y, 2));
+        {
+            return Math.Sqrt(Math.Pow(Position.X, 2) + Math.Pow(Position.Y, 2));
+        }
 
         public static double GetLength(Point start, Point end)
-            => new Vector(start, end).GetLength();
+        {
+            return new Vector(start, end).GetLength();
+        }
 
         public double ScalarMultiply(Vector otherVector)
         {

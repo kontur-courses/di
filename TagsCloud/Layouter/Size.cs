@@ -1,15 +1,15 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Layouter
 {
     public class Size
     {
-        public double Width { get; }
-        public double Height { get; }
-        public double Square => Width * Height;
-
         public Size(double width, double height)
         {
             Width = width;
             Height = height;
         }
+
+        public double Width { get; }
+        public double Height { get; }
+        public double Square => Width * Height;
     }
 }

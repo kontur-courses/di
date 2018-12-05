@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using TagsCloudVisualization.Visualizator;
+using Point = TagsCloudVisualization.Layouter.Point;
+using Rectangle = TagsCloudVisualization.Layouter.Rectangle;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizer
 {
-    public static class Visualizator
+    public static class Visualizer
     {
         public static Color BackgroundColor = Color.AliceBlue;
         public static Color ObjectsColor = Color.Blue;
@@ -22,7 +25,7 @@ namespace TagsCloudVisualization
                 var sourceToDraw = source
                     .Select(TranslateCenterByHalfSize)
                     .ToDictionary(t => t.Item1, f => f.Item2);
-                
+
                 DrawWords(bitmap, sourceToDraw, width, height);
                 bitmap.Save(path, ImageFormat.Png);
             }
@@ -41,10 +44,7 @@ namespace TagsCloudVisualization
                 graphics.Clear(BackgroundColor);
                 using (var pen = new Pen(ObjectsColor))
                 {
-                    foreach (var pair in source)
-                    {
-                        graphics.DrawString(pair.Key, font, pen.Brush, pair.Value);
-                    }
+                    foreach (var pair in source) graphics.DrawString(pair.Key, font, pen.Brush, pair.Value);
                 }
             }
         }
