@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagCloudApplication.ColorSchemes;
 
 namespace TagCloudApplication
 {
     public class TagCloud
     {
-        private FontFamily fontFamily = FontFamily.GenericMonospace;
-        private IColorScheme colorScheme;
+        private FontFamily fontFamily = FontFamily.GenericSerif;
+        private IColorScheme colorScheme = new SimpleColorScheme();
         public List<(string word, Rectangle rect)> Words { get; }
         public Size ImageSize { get; }
 
         public TagCloud(List<(string word,Rectangle rect)> words, Size imageSize)
         {
-            Words = words.OrderByDescending(tuple => tuple.rect.Size.Height*tuple.rect.Height).ToList();
+            Words = words;
             ImageSize = imageSize;
         }
 
@@ -46,7 +44,7 @@ namespace TagCloudApplication
             g.TranslateTransform(ImageSize.Width/2, ImageSize.Height/2);
             foreach (var pair in Words)
             {
-                float emSize = pair.rect.Width / pair.word.Length/1.8f;
+                float emSize = pair.rect.Width / pair.word.Length/1.7f;
                 g.DrawString(pair.word,
                     new Font(fontFamily, emSize),
                     new SolidBrush(colorScheme.GetNextColorForWord()),

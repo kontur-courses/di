@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColorScheme.cs" />
+    <Compile Include="ColorSchemes\IColorScheme.cs" />
+    <Compile Include="ColorSchemes\SimpleColorScheme.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ISaver.cs" />
     <Compile Include="IWordKeeper.cs" />

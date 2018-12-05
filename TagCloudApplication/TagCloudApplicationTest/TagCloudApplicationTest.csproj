@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagCloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="WordKeepers\TestWordKeeper.cs" />
+    <Compile Include="WordKeepers\TestWordkeeper2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

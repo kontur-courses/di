@@ -20,7 +20,20 @@ namespace TagCloudApplicationTest
                 new TestWordKeeper(),givenSize);
             
             var tagCloud = creator.BuildTagCloudBy("");
-            tagCloud.ApplyColorScheme(new SimpleRandomColorScheme()).SaveAsImage("testTagCloud", new SimpleBMPSaver());
+            tagCloud.SaveAsImage("testTagCloud1", new SimpleBMPSaver());
+            Assert.AreEqual(givenSize, tagCloud.ImageSize);
+        }
+
+
+        [Test]
+        public void BuildTagCloud_ShouldBuildTagCloud()
+        {
+            var givenSize = new Size(300, 300);
+            var creator = new TagCloudCreator(new CircularCloudLayouter(new Point(0, 0)),
+                new TestWordkeeper2(), givenSize);
+
+            var tagCloud = creator.BuildTagCloudBy("");
+            tagCloud.SaveAsImage("testTagCloud2", new SimpleBMPSaver());
             Assert.AreEqual(givenSize, tagCloud.ImageSize);
         }
     }
