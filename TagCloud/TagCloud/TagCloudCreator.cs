@@ -9,30 +9,29 @@ namespace TagCloud
     
     internal class TagCloudCreator
     {
-        private readonly CircularCloudLayouter _layouter;
-        private readonly ITextReader _reader;
-        private readonly IWordsPreparer _preparer;
-        private readonly ITagCloudStatsGenerator _generator;
-        private readonly ITagCloudSaver _saver;
-        private readonly IImageOptions _options;
+        private readonly CircularCloudLayouter.Factory layouterFactory;
+        private readonly ITextReader reader;
+        private readonly IWordsPreparer preparer;
+        private readonly ITagCloudStatsGenerator generator;
+        private readonly ITagCloudSaver saver;
 
-        public  TagCloudCreator(CircularCloudLayouter layouter, ITextReader reader, IWordsPreparer preparer, ITagCloudStatsGenerator generator, ITagCloudSaver saver, IImageOptions options)
+        public  TagCloudCreator(CircularCloudLayouter.Factory layouterFactory, ITextReader reader, IWordsPreparer preparer, ITagCloudStatsGenerator generator, ITagCloudSaver saver)
         {
-            _layouter = layouter;
-            _reader = reader;
-            _preparer = preparer;
-            _generator = generator;
-            _saver = saver;
-            _options = options;
+            this.layouterFactory = layouterFactory;
+            this.reader = reader;
+            this.preparer = preparer;
+            this.generator = generator;
+            this.saver = saver;
         }
 
-        public TagCloudImage CreateImage()
+        public TagCloudImage CreateImage(TagCloudOptions options)
         {
-            var words = _reader.ReadWords();
-            words = _preparer.PrepareWords(words);
-            var stats = _generator.GenerateStats(words);
-            var wordPairs = stats.Select(s => (_layouter.PutNextRectangle(s.CreateRectangle()), s));
-            return _saver.CreateTagCloudImage(wordPairs, _options);
+            var words = this.reader.ReadWords();
+            words = this.preparer.PrepareWords(words);
+            var stats = this.generator.GenerateStats(words);
+            var layouter = this.layouterFactory.Invoke(options.Spiral, options.Center);
+            var wordPairs = stats.Select(s => (layouter.PutNextRectangle(s.CreateRectangle()), s));
+            return this.saver.CreateTagCloudImage(wordPairs, options);
         }
     }
 }

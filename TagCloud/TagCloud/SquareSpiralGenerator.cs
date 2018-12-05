@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization
 {
-    public class SquareSpiralGenerator : IEnumerable<Point>, ISpiralGenerator
+    public class SquareSpiralGenerator : ISpiralGenerator
     {
-        private readonly Point _center;
+        private readonly Point center;
 
-        public SquareSpiralGenerator(Point center)
+        public SquareSpiralGenerator(Point center, double _)
         {
-            this._center = center;
+            this.center = center;
         }
 
         public IEnumerator<Point> GetEnumerator()
         {
             Point currentPoint;
-            yield return _center;
-            yield return _center + Point.UnaryX;
-            yield return currentPoint = _center + Point.UnaryX - Point.UnaryY;
+            yield return this.center;
+            yield return this.center + Point.UnaryX;
+            yield return currentPoint = this.center + Point.UnaryX - Point.UnaryY;
             var iteration = 1;
             while (true)
             {

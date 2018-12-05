@@ -7,14 +7,14 @@ using NUnit.Framework;
 namespace TagsCloudVisualization
 {
     [TestFixture]
-    public class RoundSpiralGenerator_Should
+    public class RoundSpiralGeneratorShould
     {
         [SetUp]
         public void SetUp()
         {
-            generator = new RoundSpiralGenerator(new Point(), 2);
-            generatorEnumerator = generator.GetEnumerator();
-            generatorEnumerator.MoveNext();
+            this.generator = new RoundSpiralGenerator(new Point(), 2);
+            this.generatorEnumerator = this.generator.GetEnumerator();
+            this.generatorEnumerator.MoveNext();
         }
 
         private const int K = 2;
@@ -26,8 +26,8 @@ namespace TagsCloudVisualization
         public void FitInRectangle_ForFullCircle()
         {
             var fitRectangle = new Rectangle(new Point(-6,-9),new Size(19,13) );
-           
-            generator.Take(FullCircleAmount)
+
+            this.generator.Take(FullCircleAmount)
                      .Should()
                      .OnlyContain(point => fitRectangle.Contains(point.X, point.Y));
         }
@@ -36,7 +36,7 @@ namespace TagsCloudVisualization
         [Test]
         public void ShouldHaveFirst64PointsWithPositiveY()
         {
-            generator.Take(64)
+            this.generator.Take(64)
                      .All(point => point.Y >= 0)
                      .Should()
                      .BeTrue("upper half of spiral is above y = 0");
@@ -45,7 +45,7 @@ namespace TagsCloudVisualization
         [Test]
         public void YieldZero_AsFirstPoint()
         {
-            generatorEnumerator.Current.Should()
+            this.generatorEnumerator.Current.Should()
                                .BeEquivalentTo(new Point());
         }
     }

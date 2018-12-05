@@ -6,8 +6,8 @@ namespace TagsCloudVisualization
     {
         public Point(int x = 0, int y = 0)
         {
-            X = x;
-            Y = y;
+            this.X = x;
+            this.Y = y;
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace TagsCloudVisualization
         /// </summary>
         public static Point UnaryX => new Point(1);
 
-        public override int GetHashCode() => X ^ Y;
+        public override int GetHashCode() => this.X ^ this.Y;
 
         public static Point operator +(Point left, Point right) => new Point(left.X + right.X, left.Y + right.Y);
 
@@ -30,7 +30,7 @@ namespace TagsCloudVisualization
         public static Point operator -(Point left, Point right) => new Point(left.X - right.X, left.Y - right.Y);
         public static Point operator -(Point point) => new Point(-point.X, -point.Y);
 
-        public override string ToString() => $"Point {{X={X}, Y={Y}}}";
+        public override string ToString() => $"Point {{X={this.X}, Y={this.Y}}}";
         public int X { get; }
         public int Y { get; }
 

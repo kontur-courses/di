@@ -23,9 +23,9 @@ namespace TagsCloudVisualization
         {
             public CreatorInfo(Func<int, int, Size> creator, int start, int count)
             {
-                Creator = creator;
-                Start = start;
-                Count = count;
+                this.Creator = creator;
+                this.Start = start;
+                this.Count = count;
             }
 
             public Func<int, int, Size> Creator { get; }

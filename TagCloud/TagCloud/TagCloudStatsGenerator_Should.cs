@@ -5,23 +5,23 @@ using NUnit.Framework;
 namespace TagCloud
 {
     [TestFixture]
-    public class TagCloudStatsGenerator_Should
+    public class TagCloudStatsGeneratorShould
     {
-        private TagCloudStatsGenerator _tagCloudStatsGenerator;
-        private string[] _words;
+        private TagCloudStatsGenerator tagCloudStatsGenerator;
+        private string[] words;
 
         [SetUp]
         public void SetUp()
         {
-            _tagCloudStatsGenerator = new TagCloudStatsGenerator();
-            _words = "Lorem ipsum dolor sit amet.".Split(' ');
+            this.tagCloudStatsGenerator = new TagCloudStatsGenerator();
+            this.words = "Lorem ipsum dolor sit amet.".Split(' ');
         }
 
         [Test]
         public void ReturnEachWord_WhenEveryWordIsDoubled()
         {
-            var repeatedWords = _words.Concat(_words);
-            _tagCloudStatsGenerator.GenerateStats(repeatedWords)
+            var repeatedWords = this.words.Concat(this.words);
+            this.tagCloudStatsGenerator.GenerateStats(repeatedWords)
                                    .Should()
                                    .OnlyContain(w => w.Count == 2);
 

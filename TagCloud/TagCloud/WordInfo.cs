@@ -6,8 +6,8 @@ namespace TagCloud
     {
         public WordInfo(string word, int count)
         {
-            Word = word;
-            Count = count;
+            this.Word = word;
+            this.Count = count;
         }
 
         public string Word { get; }
@@ -18,7 +18,7 @@ namespace TagCloud
 
         public Size CreateRectangle()
         {
-            return new Size(50*Count*Word.Length, 50*Count);
+            return new Size(50* this.Count* this.Word.Length, 50* this.Count);
         }
     }
 }

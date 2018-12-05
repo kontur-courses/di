@@ -105,8 +105,7 @@
     <Compile Include="ConsoleUserInterface.cs" />
     <Compile Include="FileSaver.cs" />
     <Compile Include="FileTextReader.cs" />
-    <Compile Include="IImageOptions.cs" />
-    <Compile Include="ImageOptions.cs" />
+    <Compile Include="TagCloudOptions.cs" />
     <Compile Include="ITagCloudSaver.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
     <Compile Include="ITextReader.cs" />

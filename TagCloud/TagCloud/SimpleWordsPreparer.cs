@@ -7,16 +7,16 @@ namespace TagCloud
 {
     internal class SimpleWordsPreparer : IWordsPreparer
     {
-        private readonly HashSet<string> _boringWords;
+        private readonly HashSet<string> boringWords;
 
         public IEnumerable<string> PrepareWords(IEnumerable<string> words)
         {
-            return words.Where(w => !_boringWords.Contains(w));
+            return words.Where(w => !this.boringWords.Contains(w));
         }
 
         public SimpleWordsPreparer(string[] boringWords)
         {
-            _boringWords = boringWords.ToHashSet();
+            this.boringWords = boringWords.ToHashSet();
         }
     }
 

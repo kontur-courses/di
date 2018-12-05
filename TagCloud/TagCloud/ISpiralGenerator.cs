@@ -1,6 +1,10 @@
-﻿namespace TagsCloudVisualization
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization
 {
-    public interface ISpiralGenerator
+    public interface ISpiralGenerator : IEnumerable<Point>
     {
+
     }
+    
 }

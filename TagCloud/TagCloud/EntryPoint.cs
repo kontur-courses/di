@@ -9,7 +9,7 @@ namespace TagsCloudVisualization
     {
         public static void Main(string[] args)
         {
-            var layouter = new CircularCloudLayouter(new Point(500, 500));
+            var layouter = new CircularCloudLayouter(new RoundSpiralGenerator(new Point(500,500),3), new Point(500, 500));
             var rectangles = layouter.PutNextRectangles(GenerateRectangles(SizeSequenceCreators.Random))
                                      .ToList();
             Console.Out.WriteLine(rectangles.Count);

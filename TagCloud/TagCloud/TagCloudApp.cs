@@ -1,22 +1,15 @@
-﻿using System.IO;
-using System.Linq;
-using Autofac;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
+﻿using Autofac;
 using TagsCloudVisualization;
 
 namespace TagCloud
 {
-    class TagCloudApp
+    internal class TagCloudApp
     {
         private static readonly string[] BoringWords = {""};
 
-        
-
         public static void Main(string[] args)
         {
-            var container = new  ContainerBuilder();
+            var container = new ContainerBuilder();
             container.RegisterType<TagCloudCreator>()
                      .AsSelf();
             container.RegisterType<CircularCloudLayouter>()
@@ -29,20 +22,27 @@ namespace TagCloud
                      .As<ITagCloudStatsGenerator>();
             container.RegisterType<FileSaver>()
                      .As<ITagCloudSaver>();
-            container.RegisterType<ImageOptions>()
-                     .As<IImageOptions>();
+            container.RegisterType<TagCloudOptions>()
+                     .AsSelf();
             container.RegisterType<SquareSpiralGenerator>()
                      .As<ISpiralGenerator>();
             container.RegisterType<ConsoleUserInterface>()
-                     .As<UserInterface>();
-            container.Register(ctx=>new SimpleWordsPreparer(BoringWords))
+                     .As<UserInterface>()
+                     .SingleInstance();
+            container.Register(ctx => new RoundSpiralGenerator(ctx.Resolve<TagCloudOptions>()
+                                                                  .Center,
+                                                               ctx.Resolve<TagCloudOptions>()
+                                                                  .SizeCoefficient))
+                     .As<ISpiralGenerator>();
+            container.Register(ctx => new SimpleWordsPreparer(BoringWords))
                      .As<SimpleWordsPreparer>();
-            using (var scope = container.Build().BeginLifetimeScope())
+
+            using (var scope = container.Build()
+                                        .BeginLifetimeScope())
             {
                 var ui = scope.Resolve<UserInterface>();
                 ui.Run(args);
             }
-
         }
     }
 }
