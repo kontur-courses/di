@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{BAA65ED5-CD11-4DD9-98AC-49FF3B6B28E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization_Tests", "TagsCloudVisualization_Tests\TagsCloudVisualization_Tests.csproj", "{C4C733C7-4D4C-4558-AC4C-ACFECD0729AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +19,19 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA65ED5-CD11-4DD9-98AC-49FF3B6B28E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA65ED5-CD11-4DD9-98AC-49FF3B6B28E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA65ED5-CD11-4DD9-98AC-49FF3B6B28E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA65ED5-CD11-4DD9-98AC-49FF3B6B28E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C733C7-4D4C-4558-AC4C-ACFECD0729AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C733C7-4D4C-4558-AC4C-ACFECD0729AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C733C7-4D4C-4558-AC4C-ACFECD0729AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C733C7-4D4C-4558-AC4C-ACFECD0729AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA117124-F9AD-40C9-A634-AE2F6E14F509}
 	EndGlobalSection
 EndGlobal
