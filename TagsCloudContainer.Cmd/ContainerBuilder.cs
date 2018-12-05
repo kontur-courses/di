@@ -18,7 +18,10 @@ namespace TagsCloudContainer.Cmd
             builder.Register(z => new ImageRenderer(config.ImageSize))
                 .As<IResultRenderer>();
 
-            builder.Register(z => new SimpleFormatter(config.Font, config.Color))
+            builder.Register(z => new SimpleFormatter(
+                    z.Resolve<WordsWeighter>(),
+                    config.Font,
+                    config.Color))
                 .As<IWordFormatter>();
 
             builder.Register(z => new CircularCloudLayouter(circularCloudLayoutConfig))
@@ -26,6 +29,9 @@ namespace TagsCloudContainer.Cmd
 
             builder.RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower))
                 .As<IWordsPreprocessor>();
+
+            builder.RegisterType<WordsWeighter>()
+                .AsSelf();
 
             builder.RegisterType<TxtReader>()
                 .AsSelf();

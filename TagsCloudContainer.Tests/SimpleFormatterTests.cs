@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void DoBeforeAnyTest()
         {
-            formatter = new SimpleFormatter(font, color);
+            formatter = new SimpleFormatter(new WordsWeighter(), font, color);
         }
 
         [Test]

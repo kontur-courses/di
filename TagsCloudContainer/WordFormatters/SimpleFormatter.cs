@@ -6,12 +6,14 @@ namespace TagsCloudContainer.WordFormatters
 {
     public class SimpleFormatter : IWordFormatter
     {
+        private readonly WordsWeighter wordsWeighter;
         private readonly Font font;
         private readonly Color color;
         private readonly bool frequentWordsAsHuge;
         private readonly float fontMultiplier;
 
         public SimpleFormatter(
+            WordsWeighter wordsWeighter,
             Font font,
             Color color,
             bool frequentWordsAsHuge = true,
@@ -21,13 +23,14 @@ namespace TagsCloudContainer.WordFormatters
             this.color = color;
             this.frequentWordsAsHuge = frequentWordsAsHuge;
             this.fontMultiplier = fontMultiplier;
+            this.wordsWeighter = wordsWeighter;
         }
 
         private readonly HashSet<string> usedWords = new HashSet<string>();
 
         public IEnumerable<Word> FormatWords(IEnumerable<string> words)
         {
-            var wordsWeight = GetWordsWeight(words);
+            var wordsWeight = wordsWeighter.GetWordsWeight(words);
             var maxWeight = wordsWeight.Values.Max();
 
             foreach (var word in words)
@@ -43,25 +46,6 @@ namespace TagsCloudContainer.WordFormatters
                     yield return new Word(newFont, color, word);
                 }
             }
-        }
-
-        private IDictionary<string, int> GetWordsWeight(IEnumerable<string> words)
-        {
-            var wordsWeight = new Dictionary<string, int>();
-
-            foreach (var word in words)
-            {
-                if (wordsWeight.ContainsKey(word))
-                {
-                    wordsWeight[word]++;
-                }
-                else
-                {
-                    wordsWeight[word] = 0;
-                }
-            }
-
-            return wordsWeight;
         }
     }
 }

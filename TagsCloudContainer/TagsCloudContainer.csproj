@@ -60,6 +60,7 @@
     <Compile Include="TagsCloudBuilder.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />
     <Compile Include="WordFormatters\SimpleFormatter.cs" />
+    <Compile Include="WordFormatters\WordsWeighter.cs" />
     <Compile Include="WordLayouts\CircularCloudLayouter.cs" />
     <Compile Include="WordLayouts\CircularCloudLayoutConfig.cs" />
     <Compile Include="WordLayouts\ILayouter.cs" />
