@@ -1,19 +1,20 @@
 ﻿using System;
 using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class DragonFractalAction : IUiAction, INeed<IImageHolder>
+    public class DragonFractalAction : IUiAction
     {
-        private IImageHolder imageHolder;
+        private IDragonPainterFactory factory;
+        private readonly Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator;
 
-        public void SetDependency(IImageHolder dependency)
+        public DragonFractalAction(IDragonPainterFactory factory, Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator)
         {
-            imageHolder = dependency;
+            this.factory = factory;
+            this.createDragonSettingsGenerator = createDragonSettingsGenerator;
         }
 
         public string Category => "Фракталы";
@@ -26,15 +27,19 @@ namespace FractalPainting.App.Actions
             // редактируем настройки:
             SettingsForm.For(dragonSettings).ShowDialog();
             // создаём painter с такими настройками
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<DragonSettings>().ToConstant(dragonSettings);
-            container.Get<DragonPainter>().Paint();
+
+            var dragonPainter = factory.CreateDragonPainter(dragonSettings);
+            dragonPainter.Paint();
         }
 
-        private static DragonSettings CreateRandomSettings()
+        private DragonSettings CreateRandomSettings()
         {
-            return new DragonSettingsGenerator(new Random()).Generate();
+            return createDragonSettingsGenerator(new Random()).Generate();
         }
+    }
+
+    public interface IDragonPainterFactory
+    {
+        DragonPainter CreateDragonPainter(DragonSettings settings);
     }
 }
