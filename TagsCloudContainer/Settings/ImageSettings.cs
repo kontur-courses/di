@@ -1,21 +1,20 @@
 using System.Drawing;
-using System.Runtime.InteropServices;
 
 namespace TagsCloudContainer.Settings
 {
     public class ImageSettings
     {
-        public int Heigth { get; set; }
-        public int Width { get; set; }
-        public Point Center { get; set; }
-        public string OutputFile { get; set; }
-
-        public ImageSettings(int h, int w, string outputFile)
+        public ImageSettings(int height, int width, string outputFile)
         {
             OutputFile = outputFile;
-            Heigth = h;
-            Width = w;
-            Center = new Point(h/2, w/2);
+            Height = height;
+            Width = width;
+            Center = new Point(height / 2, width / 2);
         }
+
+        public int Height { get; }
+        public int Width { get; }
+        public Point Center { get; }
+        public string OutputFile { get; }
     }
 }

@@ -4,11 +4,6 @@ namespace TagsCloudContainer.Tags
 {
     public class Tag
     {
-        public int FontSize { get; set; }
-        public string Word { get; set; }
-        public Rectangle Rectangle { get; set; }
-        public Font Font { get; }
-
         public Tag(int fontSize, string font, string word)
         {
             FontSize = fontSize;
@@ -16,5 +11,9 @@ namespace TagsCloudContainer.Tags
             Word = word;
         }
 
+        public int FontSize { get; }
+        public string Word { get; }
+        public Rectangle Rectangle { get; set; }
+        public Font Font { get; }
     }
 }

@@ -9,21 +9,16 @@ namespace TagsCloudContainer.TextParsers
 {
     public class TextParser : ITextParser
     {
-        private int countWords { get; set; }
-        private IFileReader fileReader { get; set; }
-        private IWordHandler wordHandler { get; set; }
-
         public TextParser(IFileReader fileReader, IWordHandler wordHandler, TextSettings textSettings)
         {
             this.fileReader = fileReader;
             this.wordHandler = wordHandler;
-            this.countWords = textSettings.CountWords;
+            countWords = textSettings.CountWords;
         }
 
-        private bool IsBoring(string word)
-        {
-            return word.Length < 2;
-        }
+        private int countWords { get; }
+        private IFileReader fileReader { get; }
+        private IWordHandler wordHandler { get; }
 
         public List<(string, int)> Parse()
         {
@@ -37,6 +32,11 @@ namespace TagsCloudContainer.TextParsers
                 .ThenBy(tuple => tuple.Item1)
                 .Take(countWords)
                 .ToList();
+        }
+
+        private bool IsBoring(string word)
+        {
+            return word.Length < 2;
         }
     }
 }
