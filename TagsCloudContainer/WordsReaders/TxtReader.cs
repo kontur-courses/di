@@ -8,7 +8,7 @@ namespace TagsCloudContainer.WordsReaders
     {
         public IEnumerable<string> GetWords(string filename)
         {
-            return File.ReadLines(filename, Encoding.Default);
+            return File.ReadLines(filename, Encoding.UTF8);
         }
     }
 }

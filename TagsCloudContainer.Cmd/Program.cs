@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Cmd
 {
     public class ParserArgs
     {
-        public string InputFilename { get; set; } = "input.txt";
+        public string InputFilename { get; set; }
 
         public string OutputFilename { get; set; } = "result.png";
 
@@ -25,59 +25,69 @@ namespace TagsCloudContainer.Cmd
     {
         static void Main(string[] args)
         {
-            var parametrizedParser = new FluentCommandLineParser<ParserArgs>();
-            parametrizedParser.Setup(arg => arg.InputFilename)
-                .As("input");
+            var parser = new FluentCommandLineParser<ParserArgs>();
+            parser.Setup(arg => arg.InputFilename)
+                .As("input")
+                .Required();
 
-            parametrizedParser.Setup(arg => arg.OutputFilename)
+            parser.Setup(arg => arg.OutputFilename)
                 .As("output");
 
-            parametrizedParser.Setup(arg => arg.FontFamily)
+            parser.Setup(arg => arg.FontFamily)
                 .As("font");
 
-            parametrizedParser.Setup(arg => arg.FontSize)
+            parser.Setup(arg => arg.FontSize)
                 .As("fontSize");
 
-            parametrizedParser.Setup(arg => arg.SpiralAngleStep)
+            parser.Setup(arg => arg.SpiralAngleStep)
                 .As("spiralAngleStep");
 
-            parametrizedParser.Parse(args);
-
-            var parser = new FluentCommandLineParser();
             var callbacks = new CmdCallbacks();
 
-            parser.SetupHelp("?", "help")
+            parser.Parser.SetupHelp("?", "help")
                 .Callback(text => Console.WriteLine(callbacks.GetHelpInformation()));
 
-            parser.Setup<string>("imageSize")
+            parser.Parser.Setup<string>("imageSize")
                 .Callback(imageSize => callbacks.SetImageSize(imageSize));
 
-            parser.Setup<string>("color")
+            parser.Parser.Setup<string>("color")
                 .Callback(color => callbacks.SetColor(color));
 
-            parser.Setup<string>("spiralOffset")
+            parser.Parser.Setup<string>("spiralOffset")
                 .Callback(spiralOffset => callbacks.SetSpiralOffset(spiralOffset));
 
-            parser.Parse(args);
+            var parserResult = parser.Parse(args);
+
+            if (parserResult.HasErrors)
+            {
+                Console.WriteLine(parserResult.ErrorText);
+
+                return;
+            }
+
+            if (parserResult.HelpCalled)
+            {
+                return;
+            }
 
             var cmdArgs = callbacks.CmdArgs;
             var config = new Config(cmdArgs.ImageSize,
-                new Font(parametrizedParser.Object.FontFamily, (float)parametrizedParser.Object.FontSize),
+                new Font(parser.Object.FontFamily, (float)parser.Object.FontSize),
                 cmdArgs.Color);
             var circularCloudLayoutConfig =
-                new CircularCloudLayoutConfig(cmdArgs.SpiralOffset, parametrizedParser.Object.SpiralAngleStep);
+                new CircularCloudLayoutConfig(cmdArgs.SpiralOffset, parser.Object.SpiralAngleStep);
 
             var tagsCloudContainer =
                 new ContainerBuilder().BuildTagsCloudContainer(config, circularCloudLayoutConfig);
 
             var words = tagsCloudContainer
                 .Resolve<TxtReader>()
-                .GetWords(parametrizedParser.Object.InputFilename);
+                .GetWords(parser.Object.InputFilename);
 
             tagsCloudContainer
                 .Resolve<TagsCloudBuilder>()
                 .Visualize(words)
-                .Save(parametrizedParser.Object.OutputFilename, ImageFormat.Png);
+                .Save(parser.Object.OutputFilename, ImageFormat.Png);
         }
     }
 }
