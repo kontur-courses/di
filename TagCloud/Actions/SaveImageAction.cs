@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.IO;
+using System.Windows.Forms;
+using TagCloud.Forms;
 
 namespace TagCloud
 {
@@ -22,9 +24,11 @@ namespace TagCloud
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.DefaultExt = "png";
                 openFileDialog.FileName = "TagCloud.png";
-                openFileDialog.Filter = "PNG (*.png)|*.png|JPEG (*.jpg; *.jpeg)|*.jpg|GIF (*.gif)|*.gif";
+                openFileDialog.Filter = "Bitmap files (*.bmp)|*.bmp|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|PNG files (*.png)|*.png|TIF files (*.tif)|*.tif|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
                     imageBox.SaveImage(openFileDialog.FileName);
+                }
             }
 
             

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using TagCloud.Interfaces;
 using TagCloud.Settings;
 
-namespace TagCloud
+namespace TagCloud.Forms
 {
     class ApplicationWindow : Form, IClient
     {

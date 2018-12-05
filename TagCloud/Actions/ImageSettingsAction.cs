@@ -1,4 +1,5 @@
 ﻿using TagCloud;
+using TagCloud.Forms;
 using TagCloud.Settings;
 
 namespace TagsCloudApp.Actions

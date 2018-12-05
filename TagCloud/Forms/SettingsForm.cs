@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace TagCloud.Settings
+namespace TagCloud.Forms
 {
     public static class SettingsForm
     {

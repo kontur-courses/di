@@ -3,11 +3,11 @@ using System.Linq;
 using NHunspell;
 using TagCloud.Interfaces;
 
-namespace TagCloud.Filters
+namespace TagCloud
 {
-    public class BasicFormConverter : IWordFilter
+    public class BasicFormConverter : IWordProcessor
     {
-        public IEnumerable<string> Filter(IEnumerable<string> words)
+        public IEnumerable<string> Preprocess (IEnumerable<string> words)
         {
             List<string> wordsInBasicForm;
             using (var hunspell = new Hunspell("Dictionaries/ru_RU.aff", "Dictionaries/ru_RU.dic"))

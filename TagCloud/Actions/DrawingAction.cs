@@ -1,6 +1,8 @@
 ﻿using System;
+using TagCloud.Forms;
 using TagCloud.Interfaces;
 using TagCloud.Settings;
+using TagCloud.TagCloudVisualization.Visualization;
 using TagCloud.Words;
 
 namespace TagCloud.Actions
@@ -27,7 +29,7 @@ namespace TagCloud.Actions
         public void Perform()
         {
             var tags = tagGenerator.GetTags(wordsRepository.Get());
-            new TagCloudVisualization.Visualization.TagCloudVisualization(imageBox, imageSettings, tags).GetTagCloudImage();
+            new TagCloudVisualizer(imageBox, imageSettings, tags).GetTagCloudImage();
         }
     }
 

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Forms;
 using TagCloud.Settings;
 using TagCloud.TagCloudVisualization.Analyzer;
 
 namespace TagCloud.TagCloudVisualization.Visualization
 {
-    public class TagCloudVisualization : Visualization
+    public class TagCloudVisualizer : Visualization
     {
         private readonly List<Tag> tags;
 
-        public TagCloudVisualization(ImageBox imageBox, ImageSettings imageSettings, List<Tag> tags)
+        public TagCloudVisualizer(ImageBox imageBox, ImageSettings imageSettings, List<Tag> tags)
         {
             ImageBox = imageBox;
             ImageSettings = imageSettings;

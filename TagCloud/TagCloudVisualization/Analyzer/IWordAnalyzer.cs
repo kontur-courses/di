@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagCloud.Interfaces
+namespace TagCloud.TagCloudVisualization.Analyzer
 {
     public interface IWordAnalyzer
     {
