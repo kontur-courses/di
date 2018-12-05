@@ -25,8 +25,6 @@ namespace TagsCloudVisualization
                 circularCloudLayouter.PutNextRectangle(r);
             }
 
-            var render = new TagsCloudRenderer(FontFamily.GenericMonospace, Color.DodgerBlue);
-            render.RenderIntoFile("img.png", circularCloudLayouter.TagsCloud);
         }
     }
 }

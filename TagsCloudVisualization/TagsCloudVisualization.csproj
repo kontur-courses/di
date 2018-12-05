@@ -59,7 +59,8 @@
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="ITagsCloud.cs" />
     <Compile Include="ITagsCloudLayouter.cs" />
-    <Compile Include="TagsCloudRenderer.cs" />
+    <Compile Include="ITagsCloudRenderer.cs" />
+    <Compile Include="IMGTagsCloudRenderer.cs" />
     <Compile Include="TagsCloud.cs" />
     <Compile Include="TagsCloudVisualization.cs" />
     <Compile Include="CircularCloudLayouter.cs" />

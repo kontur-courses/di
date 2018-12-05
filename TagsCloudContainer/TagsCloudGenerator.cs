@@ -8,16 +8,20 @@ namespace TagsCloudContainer
     public class TagsCloudGenerator
     {
         private readonly Size minLetterSize;
+        private readonly IWordsFormatter wordsFormatter;
+        private readonly IWordsFilter wordsFilter;
+        private readonly ITagsCloudLayouter layouter;
 
-        public TagsCloudGenerator(Size minLetterSize)
+        public TagsCloudGenerator(Size minLetterSize, IWordsFilter wordsFilter, IWordsFormatter wordsFormatter,
+            ITagsCloudLayouter layouter)
         {
             this.minLetterSize = minLetterSize;
+            this.wordsFilter = wordsFilter;
+            this.wordsFormatter = wordsFormatter;
+            this.layouter = layouter;
         }
 
-        public ITagsCloud CreateCloud(List<string> words,
-            IWordsFilter wordsFilter,
-            IWordsFormatter wordsFormatter,
-            ITagsCloudLayouter layouter)
+        public ITagsCloud CreateCloud(List<string> words)
         {
             words = words.Select(wordsFormatter.Format).Where(wordsFilter.Filter).ToList();
             var frequencies = GetWordsFrequencies(words);

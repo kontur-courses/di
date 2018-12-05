@@ -6,20 +6,22 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class TagsCloudRenderer
+    public class IMGTagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly Size boundary = new Size(100, 100);
         private readonly FontFamily fontFamily;
         private readonly Color textColor;
         private readonly Color rectangleColor;
+        private readonly Size pictureSize;
 
-        public TagsCloudRenderer(FontFamily fontFamily, Color textColor)
+        public IMGTagsCloudRenderer(FontFamily fontFamily, Color textColor, Size pictureSize)
         {
+            this.pictureSize = pictureSize;
             this.textColor = textColor;
             this.fontFamily = fontFamily;
         }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, Size pictureSize)
+        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud)
         {
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
             var obj = Graphics.FromImage(btm);
@@ -30,14 +32,12 @@ namespace TagsCloudVisualization
                 obj.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
                     new SolidBrush(textColor),
                     new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
-
-                
             }
 
             btm.Save(filePath);
         }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud)
+        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, bool auto)
         {
             var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles);
             var tagCloudToDraw = new TagsCloud(tagsCloud.Center, shiftedRectangles);
@@ -81,5 +81,7 @@ namespace TagsCloudVisualization
                 shiftY = minY * -1 + boundary.Height;
             return rectangles.Select(x => new Rectangle(x.X + shiftX, x.Y + shiftY, x.Width, x.Height)).ToList();
         }
+
+        
     }
 }
