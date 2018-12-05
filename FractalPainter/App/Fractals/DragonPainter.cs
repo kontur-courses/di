@@ -8,9 +8,9 @@ namespace FractalPainting.App.Fractals
     public class DragonPainter
     {
         private readonly IImageHolder imageHolder;
+        private readonly Size imageSize;
         private readonly DragonSettings settings;
         private readonly float size;
-        private readonly Size imageSize;
 
         public DragonPainter(IImageHolder imageHolder, DragonSettings settings)
         {

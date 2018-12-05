@@ -63,6 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArialFontScheme.cs" />
+    <Compile Include="Enums\CloudLayouterType.cs" />
+    <Compile Include="Enums\ColorScheme.cs" />
+    <Compile Include="Enums\FontScheme.cs" />
+    <Compile Include="Enums\SizeScheme.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileReaderByLines.cs" />
     <Compile Include="FrequentedFontedWord.cs" />

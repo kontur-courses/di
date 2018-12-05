@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizer;
@@ -8,14 +7,14 @@ namespace TagsCloudVisualization
 {
     public class TagsCloud
     {
-        private ICloudLayouter layouter;
-        private IVisualizer visualizer;
-        private IFileReader fileReader;
-        private IColorScheme colorScheme;
-        private ISizeScheme sizeScheme;
-        private IFontScheme fontScheme;
-        private IStatisticsCollector statisticsCollector;
-        private IWordExcluder wordExcluder;
+        private readonly IColorScheme colorScheme;
+        private readonly IFileReader fileReader;
+        private readonly IFontScheme fontScheme;
+        private readonly ICloudLayouter layouter;
+        private readonly ISizeScheme sizeScheme;
+        private readonly IStatisticsCollector statisticsCollector;
+        private readonly IVisualizer visualizer;
+        private readonly IWordExcluder wordExcluder;
 
         public TagsCloud(
             ICloudLayouter layouter,
@@ -44,15 +43,14 @@ namespace TagsCloudVisualization
             input = input.Select(s => s.ToLower());
             var filteredInput = ExcludeWords(input, wordExcluder);
             var statistics = statisticsCollector.GetStatistics(filteredInput);
-            var fontedElements = ApplyFontScheme(statistics, fontScheme);
-            var positionedElements = FillCloud(fontedElements, layouter, sizeScheme);
-            var visualElements = ApplyColorSchemes(positionedElements, colorScheme);
+            var fontedElements = ApplyFontScheme(statistics);
+            var positionedElements = FillCloud(fontedElements);
+            var visualElements = ApplyColorSchemes(positionedElements);
             visualizer.Visualize(visualElements);
         }
 
         private IEnumerable<FrequentedFontedWord> ApplyFontScheme(
-            IEnumerable<FrequentedWord> elements,
-            IFontScheme fontScheme)
+            IEnumerable<FrequentedWord> elements)
         {
             var result = new List<FrequentedFontedWord>();
             foreach (var frequentedWord in elements)
@@ -66,8 +64,7 @@ namespace TagsCloudVisualization
         }
 
         private IEnumerable<VisualElement> ApplyColorSchemes(
-            IEnumerable<PositionedElement> elements,
-            IColorScheme colorScheme)
+            IEnumerable<PositionedElement> elements)
         {
             var result = new List<VisualElement>();
             foreach (var element in elements)
@@ -81,12 +78,12 @@ namespace TagsCloudVisualization
         }
 
         private IEnumerable<string> ExcludeWords(IEnumerable<string> words, IWordExcluder excluder)
-            => words.Where(w => !excluder.ToExclude(w));
+        {
+            return words.Where(w => !excluder.ToExclude(w));
+        }
 
         private IEnumerable<PositionedElement> FillCloud(
-            IEnumerable<FrequentedFontedWord> statistics, 
-            ICloudLayouter layouter,
-            ISizeScheme sizeScheme)
+            IEnumerable<FrequentedFontedWord> statistics)
         {
             var elements = new List<PositionedElement>();
             foreach (var word in statistics)

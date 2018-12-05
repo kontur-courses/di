@@ -6,13 +6,6 @@ namespace TagsCloudVisualization.Visualizer
 {
     public class VisualElement
     {
-        public Point Position { get; set; }
-        public Color Color { get; }
-        public string Word { get; }
-        public Size Size { get; }
-        public Font Font { get; }
-        public int Frequency { get; }
-
         public VisualElement(
             PositionedElement element,
             Color color)
@@ -40,5 +33,12 @@ namespace TagsCloudVisualization.Visualizer
             Font = font;
             Frequency = frequency;
         }
+
+        public Point Position { get; set; }
+        public Color Color { get; }
+        public string Word { get; }
+        public Size Size { get; }
+        public Font Font { get; }
+        public int Frequency { get; }
     }
 }

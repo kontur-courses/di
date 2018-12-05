@@ -7,10 +7,12 @@ namespace TagsCloudVisualization
 {
     public class FileReaderByLines : IFileReader
     {
-        public string Path { get; set; }
-
         public FileReaderByLines(string path)
-            => Path = path;
+        {
+            Path = path;
+        }
+
+        public string Path { get; set; }
 
         public IEnumerable<string> Read()
         {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Web.UI;
-using Castle.MicroKernel.Lifestyle;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizator;
+using Point = TagsCloudVisualization.Layouter.Point;
 
 namespace TagsCloudVisualization.Visualizer
 {
@@ -33,8 +32,8 @@ namespace TagsCloudVisualization.Visualizer
 
         private VisualElement NormalizePosition(VisualElement element)
         {
-            var newPosition = new Layouter.Point(
-                (int) (element.Position.X - element.Size.Width / 2), 
+            var newPosition = new Point(
+                (int) (element.Position.X - element.Size.Width / 2),
                 (int) (element.Position.Y - element.Size.Height / 2));
             element.Position = newPosition;
             return element;
@@ -58,12 +57,6 @@ namespace TagsCloudVisualization.Visualizer
         {
             using (var pen = new Pen(element.Color))
             {
-                //graphics.DrawRectangle(
-                //    pen,
-                //    (int) element.Position.X,
-                //    (int) element.Position.Y,
-                //    (int) element.Size.Width,
-                //    (int) element.Size.Height);
                 graphics.DrawString(element.Word, element.Font, pen.Brush, ExtractRectangleF(element));
             }
         }

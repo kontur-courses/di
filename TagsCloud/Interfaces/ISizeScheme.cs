@@ -1,5 +1,4 @@
 ﻿using TagsCloudVisualization.Layouter;
-using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization.Interfaces
 {

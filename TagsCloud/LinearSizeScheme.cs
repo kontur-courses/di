@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using TagsCloudVisualization.Interfaces;
-using Size = TagsCloudVisualization.Layouter.Size;
+﻿using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.Layouter;
 
 namespace TagsCloudVisualization
 {
