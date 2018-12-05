@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Interfaces
 {
-    public interface IStatisticsMaker
+    public interface IStatisticsCollector
     {
         IEnumerable<FrequentedWord> GetStatistics(IEnumerable<string> words);
     }

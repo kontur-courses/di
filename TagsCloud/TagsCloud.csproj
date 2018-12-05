@@ -62,28 +62,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArialFontScheme.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="FrequentedFontedWord.cs" />
+    <Compile Include="FrequentedWord.cs" />
     <Compile Include="Interfaces\ICloudLayouter.cs" />
+    <Compile Include="Interfaces\IColorScheme.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
-    <Compile Include="Interfaces\IPoint.cs" />
-    <Compile Include="Interfaces\IRectangle.cs" />
-    <Compile Include="Interfaces\ISize.cs" />
-    <Compile Include="Interfaces\IVector.cs" />
-    <Compile Include="Interfaces\IVisualizable.cs" />
+    <Compile Include="Interfaces\IFontScheme.cs" />
+    <Compile Include="Interfaces\ISizeScheme.cs" />
+    <Compile Include="Interfaces\IStatisticsCollector.cs" />
     <Compile Include="Interfaces\IVisualizer.cs" />
+    <Compile Include="Interfaces\IWordExcluder.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\CurcularCloudExtensions.cs" />
     <Compile Include="Layouter\Point.cs" />
-    <Compile Include="Preprocessor\Tag.cs" />
+    <Compile Include="LinearSizeScheme.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Layouter\Rectangle.cs" />
     <Compile Include="Layouter\RectangleExtensions.cs" />
     <Compile Include="Layouter\Size.cs" />
     <Compile Include="Layouter\Vector.cs" />
+    <Compile Include="PositionedElement.cs" />
+    <Compile Include="RandomColorScheme.cs" />
     <Compile Include="TagsCloud.cs" />
-    <Compile Include="Visualizator\Visualizator.cs" />
-    <Compile Include="Visualizator\VisualizatorExtensions.cs" />
+    <Compile Include="Visualizer\VisualElement.cs" />
+    <Compile Include="Visualizer\VisualizatorExtensions.cs" />
+    <Compile Include="Visualizer\VisualizerToFile.cs" />
+    <Compile Include="WordExcluderByFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

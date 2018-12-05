@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.Interfaces
 {
     public interface IFontScheme
     {
-        Font Process(PositionedElement element);
+        Font Process(FrequentedWord element);
     }
 }

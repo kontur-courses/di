@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.Interfaces
 {
     public interface ISizeScheme
     {
-        Size GetSize(FrequentedWord element);
+        Size GetSize(FrequentedFontedWord element);
     }
 }

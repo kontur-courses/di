@@ -16,6 +16,11 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IFileReader>().ImplementedBy<FileReader>());
             container.Register(Component.For<ICloudLayouter>().ImplementedBy<CircularCloudLayouter>());
             container.Register(Component.For<IVisualizer>().ImplementedBy<VisualizerToFile>());
+            container.Register(Component.For<IColorScheme>().ImplementedBy<RandomColorScheme>());
+            container.Register(Component.For<IFontScheme>().ImplementedBy<ArialFontScheme>());
+            container.Register(Component.For<ISizeScheme>().ImplementedBy<LinearSizeScheme>());
+            container.Register(Component.For<IWordExcluder>().ImplementedBy<>());
+            container.Register(Component.For<IStatisticsCollector>().ImplementedBy<>());
             container.Register(Component.For<TagsCloud>().ImplementedBy<TagsCloud>());
             var tagsCloud = container.Resolve<TagsCloud>();
         }

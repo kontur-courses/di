@@ -15,14 +15,13 @@ namespace TagsCloudVisualization.Visualizer
 
         public VisualElement(
             PositionedElement element,
-            Color color,
-            Font font)
+            Color color)
         {
             Word = element.Word;
             Position = element.Rectangle.Center;
             Color = color;
             Size = element.Rectangle.Size;
-            Font = font;
+            Font = element.Font;
             Frequency = element.Frequency;
         }
 
