@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -38,7 +39,7 @@ namespace TagsCloudVisualization_Tests
                 var filename = TestContext.CurrentContext.Test.Name;
                 var path = $"{directory}\\{filename}.png";
                 visualizer.GetTagCloudImage();
-                visualizer.ImageBox.SaveImage(path);
+                visualizer.ImageBox.SaveImage(path, ImageFormat.Png);
                 TestContext.WriteLine($"Tag cloud visualization saved to file {path}");
             }
         }

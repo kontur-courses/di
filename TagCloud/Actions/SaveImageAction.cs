@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 using TagCloud.Forms;
 
@@ -7,6 +9,7 @@ namespace TagCloud
     public class SaveImageAction : IUiAction
     {
         private readonly ImageBox imageBox;
+
 
         public SaveImageAction(ImageBox imageBox)
         {
@@ -23,15 +26,41 @@ namespace TagCloud
             {
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.DefaultExt = "png";
-                openFileDialog.FileName = "TagCloud.png";
-                openFileDialog.Filter = "Bitmap files (*.bmp)|*.bmp|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|PNG files (*.png)|*.png|TIF files (*.tif)|*.tif|All files (*.*)|*.*";
+                openFileDialog.FileName = "TagCloud";
+                openFileDialog.Filter = "Bitmap files (*.bmp)|*.bmp|PNG files (*.png)|*.png|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    imageBox.SaveImage(openFileDialog.FileName);
+                    var currentExtension = GetImageFormat(openFileDialog.FileName);
+                    imageBox.SaveImage(openFileDialog.FileName, currentExtension);
                 }
             }
 
-            
+        }
+        
+        private ImageFormat GetImageFormat(string fileName)
+        {
+            string extension = Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+                return ImageFormat.Png;
+
+            switch (extension.ToLower())
+            {
+                case @".bmp":
+                    return ImageFormat.Bmp;
+
+                case @".gif":
+                    return ImageFormat.Gif;
+
+                case @".jpg":
+                case @".jpeg":
+                    return ImageFormat.Jpeg;
+
+                case @".png":
+                    return ImageFormat.Png;
+
+                default:
+                    return ImageFormat.Png;
+            }
         }
     }
 }
