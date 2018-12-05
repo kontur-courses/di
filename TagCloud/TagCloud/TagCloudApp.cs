@@ -22,20 +22,9 @@ namespace TagCloud
                      .As<ITagCloudStatsGenerator>();
             container.RegisterType<FileSaver>()
                      .As<ITagCloudSaver>();
-            container.RegisterType<TagCloudOptions>()
-                     .AsSelf();
-            container.RegisterType<SquareSpiralGenerator>()
-                     .As<ISpiralGenerator>();
             container.RegisterType<ConsoleUserInterface>()
                      .As<UserInterface>()
                      .SingleInstance();
-            container.Register(ctx => new RoundSpiralGenerator(ctx.Resolve<TagCloudOptions>()
-                                                                  .Center,
-                                                               ctx.Resolve<TagCloudOptions>()
-                                                                  .SizeCoefficient))
-                     .As<ISpiralGenerator>();
-            container.Register(ctx => new SimpleWordsPreparer(BoringWords))
-                     .As<SimpleWordsPreparer>();
 
             using (var scope = container.Build()
                                         .BeginLifetimeScope())

@@ -10,11 +10,14 @@ namespace TagsCloudVisualization
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly IEnumerator<Point> spiralGenerator;
 
-        public CircularCloudLayouter(ISpiralGenerator generator, Point center)
+        public delegate CircularCloudLayouter Factory(TagCloudLayoutOptions options);
+
+
+        public CircularCloudLayouter(TagCloudLayoutOptions options )
         {
-            this.spiralGenerator = generator.GetEnumerator();
+            this.spiralGenerator = options.Spiral.GetEnumerator();
             this.spiralGenerator.MoveNext();
-            this.Center = center;
+            this.Center = options.Center;
         }
 
         public Point Center { get; }
@@ -68,7 +71,6 @@ namespace TagsCloudVisualization
         public IEnumerable<Rectangle> PutNextRectangles(IEnumerable<Size> rectanglesSizes) =>
             rectanglesSizes.Select(PutNextRectangle);
 
-        public delegate CircularCloudLayouter Factory(ISpiralGenerator generator, Point point);
         
     }
 }

@@ -1,19 +1,15 @@
-﻿using System;
-using TagsCloudVisualization;
+﻿using TagsCloudVisualization;
 
 namespace TagCloud
 {
-    internal abstract class TagCloudOptions
+    public class TagCloudOptions
     {
-        protected TagCloudOptions(ISpiralGenerator spiral, Point center)
+        public TagCloudOptions(ISpiralGenerator spiral, Point center, double sizeCoefficient)
         {
-            this.Spiral = spiral;
-            this.Center = center;
+            this.LayoutOptions = new TagCloudLayoutOptions(spiral, center, sizeCoefficient);
         }
 
-        public delegate TagCloudOptions Factory(ISpiralGenerator spiral, Point center);
-
-
+        public TagCloudLayoutOptions LayoutOptions { get; }
         public ISpiralGenerator Spiral { get; private set; }
         public Point Center { get; private set; }
         public double SizeCoefficient => 3;

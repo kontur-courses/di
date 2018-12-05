@@ -7,9 +7,6 @@ namespace TagCloud
     [TestFixture]
     public class TagCloudStatsGeneratorShould
     {
-        private TagCloudStatsGenerator tagCloudStatsGenerator;
-        private string[] words;
-
         [SetUp]
         public void SetUp()
         {
@@ -17,16 +14,16 @@ namespace TagCloud
             this.words = "Lorem ipsum dolor sit amet.".Split(' ');
         }
 
+        private TagCloudStatsGenerator tagCloudStatsGenerator;
+        private string[] words;
+
         [Test]
         public void ReturnEachWord_WhenEveryWordIsDoubled()
         {
             var repeatedWords = this.words.Concat(this.words);
             this.tagCloudStatsGenerator.GenerateStats(repeatedWords)
-                                   .Should()
-                                   .OnlyContain(w => w.Count == 2);
-
+                .Should()
+                .OnlyContain(w => w.Count == 2);
         }
-
-        
     }
 }

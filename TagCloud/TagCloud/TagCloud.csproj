@@ -116,7 +116,7 @@
     <Compile Include="TagCloudCreator.cs" />
     <Compile Include="TagCloudImage.cs" />
     <Compile Include="TagCloudStatsGenerator.cs" />
-    <Compile Include="TagCloudStatsGenerator_Should.cs" />
+    <Compile Include="TagCloudStatsGeneratorShould.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="WordInfo.cs" />
   </ItemGroup>

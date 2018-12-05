@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TagCloud
@@ -9,8 +8,8 @@ namespace TagCloud
         public IEnumerable<WordInfo> GenerateStats(IEnumerable<string> words)
         {
             words = words.ToList();
-            return words.
-                 GroupBy(w=>w).Select(g=>new WordInfo(g.Key, g.Count()));
+            return words.GroupBy(w => w)
+                        .Select(g => new WordInfo(g.Key, g.Count()));
         }
     }
 }

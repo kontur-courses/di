@@ -4,17 +4,10 @@ using TagsCloudVisualization;
 
 namespace TagCloud
 {
-    class ConsoleUserInterface : UserInterface
+    internal class ConsoleUserInterface : UserInterface
     {
-        public class Options
+        public ConsoleUserInterface(TagCloudCreator creator) : base(creator)
         {
-            [Value(0, MetaName = "path", HelpText = "Path where to save image")]
-            public string Path { get; set; }
-        }
-
-        public ConsoleUserInterface(TagCloudCreator creator, TagCloudOptions.Factory optionsFactory) : base(creator, optionsFactory)
-        {
-
         }
 
         public override void Run(string[] startupArgs)
@@ -29,7 +22,7 @@ namespace TagCloud
                           Console.WriteLine("Using default path");
                       }
 
-                      var options = this.OptionsFactory.Invoke(null, new Point());
+                      var options = new TagCloudOptions(null, new Point(), 3);
                       var image = this.Creator.CreateImage(options);
                       SaveImage(image, path);
                       Console.WriteLine("Image is saved!");
@@ -39,6 +32,12 @@ namespace TagCloud
         private void SaveImage(TagCloudImage image, string path)
         {
             throw new NotImplementedException();
+        }
+
+        public class Options
+        {
+            [Value(0, MetaName = "path", HelpText = "Path where to save image")]
+            public string Path { get; set; }
         }
     }
 }
