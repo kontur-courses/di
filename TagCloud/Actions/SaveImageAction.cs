@@ -27,7 +27,7 @@ namespace TagCloud
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.DefaultExt = "png";
                 openFileDialog.FileName = "TagCloud";
-                openFileDialog.Filter = "Bitmap files (*.bmp)|*.bmp|PNG files (*.png)|*.png|All files (*.*)|*.*";
+                openFileDialog.Filter = "Bitmap (*.bmp)|*.bmp|PNG (*.png)|*.png|Gif (*.gif)|*.gif |JPEG (*.jpeg)|*.jpeg  |All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var currentExtension = GetImageFormat(openFileDialog.FileName);
