@@ -4,12 +4,13 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {
     public class WordDataProvider : IWordDataProvider
     {
-        public List<CloudWordData> GetData(ICloudLayouter cloud, List<string> words)
+        public List<CloudWordData> GetData(CircularCloudLayouter cloud, List<string> words)
         {
             var wordWeightTuples = GetWordWeightTuples(words);
             var startPoints = GetStartPoints(cloud, wordWeightTuples);
@@ -25,14 +26,14 @@ namespace TagsCloudVisualization
                 .OrderByDescending(t => t.Item2).ToList();
         }
 
-        public static Point[] GetStartPoints(ICloudLayouter cloud, List<Tuple<string, int>> wordWeightTuples)
+        public static Point[] GetStartPoints(CircularCloudLayouter cloud, List<Tuple<string, int>> wordWeightTuples)
         {
             var e = new PaintEventArgs(Graphics.FromImage(new Bitmap(100, 100)), new Rectangle());
             foreach (var wordWeightTuple in wordWeightTuples)
             {
-                var stringSize = e.Graphics
+                var size = e.Graphics
                     .MeasureString(wordWeightTuple.Item1, new Font("Arial", wordWeightTuple.Item2 * 14)).ToSize();
-                cloud.PutNextRectangle(stringSize);
+                cloud.PutNextRectangle(size);
             }
 
             var startPointWords = cloud.GetRectangles().Select(r => new Point(r.Left, r.Top)).ToArray();

@@ -16,7 +16,7 @@ namespace TagsCloudVisualizationTests
         [SetUp]
         public void SetUp()
         {
-            var spiral = new Spiral(0.5, Math.PI / 18);
+            var spiral = new Spiral();
             cloud = new CircularCloudLayouter(spiral);
         }
 
@@ -30,7 +30,7 @@ namespace TagsCloudVisualizationTests
                     Color = Color.Red,
                     ImageSize = new Size(1024, 768),
                     FontName = "arial",
-                    PointGenerator = new Spiral(0.5, Math.PI / 18)
+                    PointGenerator = new Spiral()
                 };
                 var picture =
                     TagsCloudVisualizer.GetPicture(new List<CloudWordData>(),

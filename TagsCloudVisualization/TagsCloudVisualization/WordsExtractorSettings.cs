@@ -5,9 +5,9 @@ namespace TagsCloudVisualization
 {
     public class WordsExtractorSettings
     {
-        public List<char> StopChars = "?@,.;)(:0123456789".ToCharArray().ToList();
+        public List<char> StopChars { get; set; } = "?@,.;)(:0123456789".ToCharArray().ToList();
 
-        public List<string> StopWords = new List<string>
+        public List<string> StopWords { get; set; } = new List<string>
         {
             "the",
             "and",

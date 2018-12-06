@@ -27,15 +27,10 @@ namespace TagsCloudVisualization
             var cloudParametersParser =
                 container.Resolve<ICloudParametersParser>(new TypedParameter(typeof(CloudParameters), parameters));
             parameters = cloudParametersParser.Parse(options);
-            parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator,
-                new TypedParameter(typeof(double), parameters.FactorStep),
-                new TypedParameter(typeof(double), parameters.DegreeStep));
+            parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator);
 
-            var cloud = container.Resolve<ICloudLayouter>(new TypedParameter(typeof(IPointGenerator),
-                parameters.PointGenerator));
-            var extractor =
-                container.Resolve<IWordsExtractor>(new TypedParameter(typeof(WordsExtractorSettings),
-                    new WordsExtractorSettings()));
+            var cloud = new CircularCloudLayouter(parameters.PointGenerator);
+            var extractor =container.Resolve<IWordsExtractor>();
             var words = extractor.Extract(options.FilePath);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);

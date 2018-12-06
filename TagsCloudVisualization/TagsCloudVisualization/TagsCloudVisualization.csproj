@@ -66,6 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="IPointGeneratorSettingsProvider.cs" />
+    <Compile Include="IWordsExtractorSettingsProvider.cs" />
+    <Compile Include="PointGenerators\PointGeneratorSettings.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="TagsCloudApp.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CloudParameters.cs" />
@@ -81,7 +86,6 @@
     <Compile Include="PointGenerators\IPointGenerator.cs" />
     <Compile Include="PointGenerators\Spiral.cs" />
     <Compile Include="CloudParametersParser.cs" />
-    <Compile Include="Interfaces\ICloudLayouter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtesions.cs" />

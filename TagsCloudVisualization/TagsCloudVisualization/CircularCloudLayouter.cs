@@ -6,7 +6,7 @@ using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    public class CircularCloudLayouter
     {
         private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> rectangles;
@@ -28,10 +28,7 @@ namespace TagsCloudVisualization
             return nextRect;
         }
 
-        public IReadOnlyList<Rectangle> GetRectangles()
-        {
-            return rectangles;
-        }
+        public IReadOnlyList<Rectangle> GetRectangles() => rectangles;
 
         private Rectangle GetNextNotIntersectingRectangle(Size size)
         {

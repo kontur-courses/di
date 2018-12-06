@@ -17,10 +17,10 @@ namespace TagsCloudVisualization
             parameters.Color = Color.FromName(options.Color);
             parameters.ImageSize = GetImageSize(options.ImageSize);
             parameters.FontName = options.FontName;
-            double.TryParse(options.FactorStep, out var factorStep);
-            parameters.FactorStep = factorStep;
-            double.TryParse(options.DegreeStep, out var degreeStep);
-            parameters.FactorStep = degreeStep;
+            //double.TryParse(options.FactorStep, out var factorStep);
+            //parameters.FactorStep = factorStep;
+            //double.TryParse(options.DegreeStep, out var degreeStep);
+            //parameters.FactorStep = degreeStep;
 
             return parameters;
         }

@@ -5,21 +5,12 @@ namespace TagsCloudVisualization.PointGenerators
 {
     public class Astroid : IPointGenerator
     {
-        private readonly double degreeStep;
-        private readonly double factorStep;
         private int nextPointCounter;
-
-        public Astroid(double factorStep, double degreeStep)
-        {
-            this.factorStep = factorStep;
-            this.degreeStep = degreeStep;
-            nextPointCounter = 0;
-        }
 
         public Point GetNextPoint()
         {
-            var degree = degreeStep * nextPointCounter;
-            var factor = factorStep * nextPointCounter;
+            var degree = new PointGeneratorSettings().DegreeStep * nextPointCounter;
+            var factor = new PointGeneratorSettings().FactorStep * nextPointCounter;
             var x = (int) (factor * Math.Pow(Math.Cos(degree), 3));
             var y = (int) (factor * Math.Pow(Math.Sin(degree), 3));
             nextPointCounter++;
