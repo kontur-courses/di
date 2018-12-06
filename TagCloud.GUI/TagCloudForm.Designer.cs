@@ -40,6 +40,7 @@
             this.Picture = new System.Windows.Forms.PictureBox();
             this.OutputLabel = new System.Windows.Forms.Label();
             this.OutputPanel = new System.Windows.Forms.Panel();
+            this.ResolutionLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.YBox = new System.Windows.Forms.TextBox();
             this.XBox = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@
             this.ChangeColorButton = new System.Windows.Forms.Button();
             this.DrawButton = new System.Windows.Forms.Button();
             this.Output = new System.Windows.Forms.TextBox();
+            this.setTagsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
             this.OutputPanel.SuspendLayout();
@@ -79,6 +81,7 @@
             this.loadTextFileToolStripMenuItem,
             this.saveImageToolStripMenuItem,
             this.addStopwordsToolStripMenuItem,
+            this.setTagsFileToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.programmToolStripMenuItem.Name = "programmToolStripMenuItem";
             this.programmToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -87,28 +90,28 @@
             // loadTextFileToolStripMenuItem
             // 
             this.loadTextFileToolStripMenuItem.Name = "loadTextFileToolStripMenuItem";
-            this.loadTextFileToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.loadTextFileToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.loadTextFileToolStripMenuItem.Text = "Load text file";
             this.loadTextFileToolStripMenuItem.Click += new System.EventHandler(this.LoadTextFileToolStripMenuItem_Click);
             // 
             // saveImageToolStripMenuItem
             // 
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.saveImageToolStripMenuItem.Text = "Set output image path";
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.saveImageToolStripMenuItem.Text = "Set output image file";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
             // addStopwordsToolStripMenuItem
             // 
             this.addStopwordsToolStripMenuItem.Name = "addStopwordsToolStripMenuItem";
-            this.addStopwordsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.addStopwordsToolStripMenuItem.Text = "Add stopwords";
+            this.addStopwordsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.addStopwordsToolStripMenuItem.Text = "Set stop words file";
             this.addStopwordsToolStripMenuItem.Click += new System.EventHandler(this.AddStopwordsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -138,6 +141,7 @@
             // OutputPanel
             // 
             this.OutputPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.OutputPanel.Controls.Add(this.ResolutionLabel);
             this.OutputPanel.Controls.Add(this.label1);
             this.OutputPanel.Controls.Add(this.YBox);
             this.OutputPanel.Controls.Add(this.XBox);
@@ -148,6 +152,16 @@
             this.OutputPanel.Name = "OutputPanel";
             this.OutputPanel.Size = new System.Drawing.Size(185, 129);
             this.OutputPanel.TabIndex = 5;
+            // 
+            // ResolutionLabel
+            // 
+            this.ResolutionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ResolutionLabel.AutoSize = true;
+            this.ResolutionLabel.Location = new System.Drawing.Point(65, 114);
+            this.ResolutionLabel.Name = "ResolutionLabel";
+            this.ResolutionLabel.Size = new System.Drawing.Size(57, 13);
+            this.ResolutionLabel.TabIndex = 14;
+            this.ResolutionLabel.Text = "Resolution";
             // 
             // label1
             // 
@@ -219,7 +233,7 @@
             // DrawButton
             // 
             this.DrawButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DrawButton.Location = new System.Drawing.Point(581, 346);
+            this.DrawButton.Location = new System.Drawing.Point(581, 352);
             this.DrawButton.Name = "DrawButton";
             this.DrawButton.Size = new System.Drawing.Size(75, 23);
             this.DrawButton.TabIndex = 6;
@@ -231,17 +245,25 @@
             // 
             this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Output.Location = new System.Drawing.Point(527, 191);
+            this.Output.Location = new System.Drawing.Point(527, 192);
             this.Output.Multiline = true;
             this.Output.Name = "Output";
-            this.Output.ReadOnly = true;
-            this.Output.Size = new System.Drawing.Size(185, 149);
-            this.Output.TabIndex = 7;
+            this.Output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Output.Size = new System.Drawing.Size(185, 158);
+            this.Output.TabIndex = 9;
+            // 
+            // setTagsFileToolStripMenuItem
+            // 
+            this.setTagsFileToolStripMenuItem.Name = "setTagsFileToolStripMenuItem";
+            this.setTagsFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.setTagsFileToolStripMenuItem.Text = "Set tags file";
+            this.setTagsFileToolStripMenuItem.Click += new System.EventHandler(this.SetTagsFileToolStripMenuItem_Click);
             // 
             // TagCloudForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(724, 381);
             this.Controls.Add(this.Output);
             this.Controls.Add(this.DrawButton);
@@ -253,7 +275,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(740, 420);
             this.Name = "TagCloudForm";
-            this.Text = "a";
+            this.Text = "Tag Cloud";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
@@ -284,7 +306,9 @@
         private System.Windows.Forms.TextBox YBox;
         private System.Windows.Forms.TextBox XBox;
         private System.Windows.Forms.Button DrawButton;
+        private System.Windows.Forms.Label ResolutionLabel;
         private System.Windows.Forms.TextBox Output;
+        private System.Windows.Forms.ToolStripMenuItem setTagsFileToolStripMenuItem;
     }
 }
 

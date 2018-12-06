@@ -5,6 +5,7 @@ using TagCloud.PointsSequence;
 using TagCloud.RectanglePlacer;
 using TagCloud.Utility.Data;
 using TagCloud.Utility.Models.Tag;
+using TagCloud.Utility.Models.Tag.Container;
 using TagCloud.Utility.Models.TextReader;
 using TagCloud.Utility.Models.WordFilter;
 using TagCloud.Visualizer;
@@ -25,8 +26,15 @@ namespace TagCloud.Utility
             builder
                 .RegisterType<TxtReader>()
                 .As<ITextReader>()
-                .Named<ITextReader>("txt");
+                .Named<ITextReader>(".txt")
+                .Named<ITextReader>(".ini");
 
+            builder
+                .RegisterType<TagContainerReader>()
+                .As<ITagContainerReader>()
+                .Named<ITagContainerReader>(".txt")
+                .Named<ITagContainerReader>(".ini");
+            
             builder
                 .RegisterType<RusFilter>()
                 .As<IWordFilter>();
@@ -60,7 +68,7 @@ namespace TagCloud.Utility
             builder
                 .RegisterType<TagReader>()
                 .As<ITagReader>()
-                .WithParameter(new TypedParameter(typeof(TagContainer), "tagGroups"));
+                .WithParameter(new TypedParameter(typeof(TagContainer), "tagContainer"));
 
             builder
                 .RegisterInstance(
@@ -70,7 +78,7 @@ namespace TagCloud.Utility
                         {"Average", new FrequencyGroup(0.6, 0.9), new Size(60, 100)},
                         {"Small", new FrequencyGroup(0, 0.6), new Size(30, 50)}
                     })
-                .AsSelf();
+                .As<ITagContainer>();
 
             return builder.Build();
         }

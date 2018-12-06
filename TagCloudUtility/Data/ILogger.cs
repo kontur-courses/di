@@ -11,6 +11,7 @@ namespace TagCloud.Utility.Data
 
         CloudItem[] Items { get; }
         Bitmap Picture { get; }
+        Options LastRunningOptions { get; }
         List<Exception> Exceptions { get; }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TagCloud.Models;
+using TagCloud.Utility.Models.Tag.Container;
 
 namespace TagCloud.Utility.Models.Tag
 {
     public class TagReader : ITagReader
     {
-        private readonly TagContainer _tagContainer;
+        private readonly ITagContainer tagContainer;
 
-        public TagReader(TagContainer tagContainer)
+        public TagReader(ITagContainer tagContainer)
         {
-            this._tagContainer = tagContainer;
+            this.tagContainer = tagContainer;
         }
 
-        public List<TagItem> GetTags(string[] words)
+        public List<TagItem> ReadTags(string[] words)
         {
             var frequencyDictionary = GetFrequencyOfWord(words);
 
@@ -29,7 +30,7 @@ namespace TagCloud.Utility.Models.Tag
         {
             var items = new List<TagItem>();
             var maxRepeats = frequencyDictionary.Values.Max();
-            foreach (var group in _tagContainer)
+            foreach (var group in tagContainer)
             {
                 var wordsInGroup = frequencyDictionary
                     .Where(pair => group.Contains((double)pair.Value / maxRepeats))

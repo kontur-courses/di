@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Linq;
-using CommandLine;
+﻿using CommandLine;
 using TagCloud.Visualizer.Settings;
 
 namespace TagCloud.Utility
@@ -10,8 +8,6 @@ namespace TagCloud.Utility
         [Option('w', "words", Required = true,
             HelpText = "Path to words in format .../words.txt (type is required)")]
         public string PathToWords { get; set; }
-
-        public string WordsFileType => PathToWords.Split('.').Last();
 
         [Option('p', "picture", Required = true,
             HelpText = "Path to picture in format .../picture.png (type is required)")]

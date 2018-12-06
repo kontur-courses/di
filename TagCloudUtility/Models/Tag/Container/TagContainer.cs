@@ -2,16 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
-namespace TagCloud.Utility.Models.Tag
+namespace TagCloud.Utility.Models.Tag.Container
 {
-    public class TagContainer : ITagContainer, IEnumerable<TagGroup>
+    public class TagContainer : ITagContainer
     {
-        private readonly Dictionary<string, TagGroup> tags;
+        private readonly IDictionary<string, ITagGroup> tags;
 
         public TagContainer()
         {
-            tags = new Dictionary<string, TagGroup>();
+            tags = new Dictionary<string, ITagGroup>();
         }
 
         public void Add(string name, FrequencyGroup frequencyGroup, Size size)
@@ -35,10 +36,11 @@ namespace TagCloud.Utility.Models.Tag
                 tags.Remove(groupName);
         }
 
-        public IEnumerator<TagGroup> GetEnumerator()
+        public IEnumerator<ITagGroup> GetEnumerator()
         {
-            foreach (var tagGroup in tags)
-                yield return tagGroup.Value;
+            return tags
+                .Select(tagGroup => tagGroup.Value)
+                .GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

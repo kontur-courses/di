@@ -18,9 +18,9 @@ namespace TagCloud.Utility.Models.TextReader
             if (!pathToWords.EndsWith(".txt"))
                 throw new InvalidOperationException($"Wrong format of file {pathToWords}, {this} requires .txt format");
             if (!File.Exists(pathToWords))
-                throw new ArgumentException($"{pathToWords} isn't exist!");
-           var text = new StreamReader(pathToWords, Encoding.Default)
-                .ReadToEnd();
+                throw new ArgumentException($"{pathToWords} doesn't exist!");
+
+            var text = File.ReadAllText(pathToWords, Encoding.Default);
             return Regex
                 .Split(text, @"\W+")
                 .Where(w => !string.IsNullOrEmpty(w))

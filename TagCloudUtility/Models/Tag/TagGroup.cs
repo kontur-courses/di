@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.Utility.Models.Tag
 {
-    public class TagGroup
+    public class TagGroup : ITagGroup
     {
         public Size Size { get; }
         public FrequencyGroup FrequencyGroup { get; }

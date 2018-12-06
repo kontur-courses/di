@@ -5,10 +5,12 @@ using TagCloud.Models;
 
 namespace TagCloud.Utility.Data
 {
-    public class Logger : ILogger // Should keep data for future using, probably wrong naming(suggested: Data,Info)
+    public class Logger : ILogger 
     {
         public CloudItem[] Items { get; private set; }
         public Bitmap Picture { get; private set; }
+
+        public Options LastRunningOptions { get; private set; }
         public List<Exception> Exceptions { get; }
 
         public Logger()
@@ -20,6 +22,9 @@ namespace TagCloud.Utility.Data
         {
             switch (obj)
             {
+                case Options options:
+                    LastRunningOptions = options;
+                    break;
                 case CloudItem[] cloudItems:
                     Items = cloudItems;
                     break;

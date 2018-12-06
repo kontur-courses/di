@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using TagCloud.GUI.Properties;
 using TagCloud.Utility;
 using TagCloud.Utility.Data;
 using TagCloud.Visualizer.Settings;
@@ -10,7 +12,7 @@ namespace TagCloud.GUI
 {
     public partial class TagCloudForm : Form
     {
-        private Options options = new Options
+        private readonly Options options = new Options
         {
             Color = "#000000",
             DrawFormat = DrawFormat.WordsInRectangles,
@@ -26,6 +28,7 @@ namespace TagCloud.GUI
         {
             InitializeComponent();
             CollectInfo();
+            Format.SetSelected(1,true);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -37,8 +40,8 @@ namespace TagCloud.GUI
         {
             using (var selectFileDialog = new OpenFileDialog
             {
-                Filter = "Text|*.txt",
-                Title = "Open Text File"
+                Filter = @"Text|*.txt;*.ini",
+                Title = Resources.TagCloudForm_LoadTextFile
             })
             {
                 if (selectFileDialog.ShowDialog() != DialogResult.OK)
@@ -53,8 +56,8 @@ namespace TagCloud.GUI
         {
             var fileDialog = new SaveFileDialog
             {
-                Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif",
-                Title = "Save an Image File"
+                Filter = @"Images|*.jpg;*.bmp;*.gif;*.png",
+                Title = Resources.TagCloudForm_SaveImage
             };
             if (fileDialog.ShowDialog() != DialogResult.OK)
                 return;
@@ -89,8 +92,8 @@ namespace TagCloud.GUI
             var fontDialog = new FontDialog
             {
                 ShowHelp = true,
-                MaxSize = 15,
-                MinSize = 15,
+                MaxSize = 1,
+                MinSize = 1,
                 ShowColor = false,
                 ShowEffects = false,
                 ShowApply = false,
@@ -102,12 +105,72 @@ namespace TagCloud.GUI
             CollectInfo();
         }
 
+        private void XBox_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(XBox.Text, out var res))
+                options.Size = $"{res}x{options.Size.Split('x').Last()}";
+            else
+                XBox.Text = Resources.TagCloudForm_ResolutionStandart;
+            CollectInfo();
+        }
+
+        private void YBox_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(YBox.Text, out var res))
+                options.Size = $"{options.Size.Split('x').First()}x{res}";
+            else
+                YBox.Text = Resources.TagCloudForm_ResolutionStandart;
+            CollectInfo();
+        }
+
+        private void DrawButton_Click(object sender, EventArgs e)
+        {
+            if (options.PathToWords == null)
+                loadTextFileToolStripMenuItem.PerformClick();
+            if (options.PathToPicture == null)
+                saveImageToolStripMenuItem.PerformClick();
+            if (options.PathToWords == null || options.PathToPicture == null)
+                return;
+
+            var logger = new Logger();
+            Utility.Program.Start(options, logger);
+
+            if (logger.Exceptions.Any())
+                Output.Text = string.Concat(logger.Exceptions.Select(er => er.Message));
+            else
+            {
+                Picture.Image = logger.Picture;
+                Output.Text += Resources.TagCloudForm_DrawButton_DONE___ + Environment.NewLine;
+            }
+        }
+
+        private void CollectInfo()
+        {
+            var sb = new StringBuilder();
+            sb.Append(GetLine("Path to text", options.PathToWords));
+            sb.Append(GetLine("Path to picture", options.PathToPicture));
+            sb.Append(GetLine("Path to stopwords", options.PathToStopWords));
+            sb.Append(GetLine("Path to tags", options.PathToTags));
+            sb.Append(GetLine("Color", options.Color));
+            sb.Append(GetLine("Font", options.Font));
+            sb.Append(GetLine("Size", options.Size));
+            Output.Text = sb.ToString();
+        }
+
+        private string GetLine(string name, string value)
+        {
+            if (value == null) return null;
+            return $"{name.ToUpper()}:" + Environment.NewLine
+                   + value + Environment.NewLine
+                   + Environment.NewLine;
+        }
+
         private void AddStopwordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var selectFileDialog = new OpenFileDialog
             {
-                Filter = "Text|*.txt",
-                Title = "Open Text File"
+                Filter = @"Text|*.txt;*.ini",
+                Title = Resources.TagCloudForm_AddStopwords
             })
             {
                 if (selectFileDialog.ShowDialog() != DialogResult.OK)
@@ -117,52 +180,19 @@ namespace TagCloud.GUI
             CollectInfo();
         }
 
-        private void XBox_TextChanged(object sender, EventArgs e)
+        private void SetTagsFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(XBox.Text, out var res))
-                options.Size = $"{res}x{options.Size.Split('x').Last()}";
-            else
-                XBox.Text = "100";
-        }
-
-        private void YBox_TextChanged(object sender, EventArgs e)
-        {
-            if (int.TryParse(YBox.Text, out var res))
-                options.Size = $"{options.Size.Split('x').First()}x{res}";
-            else
-                YBox.Text = "100";
-        }
-
-        private void DrawButton_Click(object sender, EventArgs e)
-        {
-            var log = new Logger();
-            if (options.PathToWords == null)
-                loadTextFileToolStripMenuItem.PerformClick();
-            if (options.PathToPicture == null)
-                saveImageToolStripMenuItem.PerformClick();
-            Utility.Program.Start(options, log);
-            if (log.Exceptions.Any())
-                OutputLabel.Text = string.Concat(log.Exceptions.Select(er => er.Message));
-            else
+            using (var selectFileDialog = new OpenFileDialog
             {
-                Picture.Image = log.Picture;
-                CollectInfo();
-                Output.Text += "DONE..." + Environment.NewLine;
+                Filter = @"Text|*.txt;*.ini",
+                Title = Resources.TagCloudForm_SetTagsFile
+            })
+            {
+                if (selectFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+                options.PathToTags = selectFileDialog.FileName;
             }
-        }
-
-        private void CollectInfo()
-        {
-            Output.Text = "Path to text:" + Environment.NewLine + options.PathToWords + Environment.NewLine +
-                          "Path to picture:" + Environment.NewLine + options.PathToPicture + Environment.NewLine +
-                          "Color:" + Environment.NewLine + options.Color + Environment.NewLine +
-                          "Font:" + Environment.NewLine + options.Font + Environment.NewLine;
-            if (options.PathToStopWords != null)
-                Output.Text += "Path to stopwords:" + Environment.NewLine +
-                               options.PathToStopWords + Environment.NewLine;
-            if (options.PathToTags != null)
-                Output.Text += "Path to tags:" + Environment.NewLine +
-                               options.PathToTags + Environment.NewLine;
+            CollectInfo();
         }
     }
 }

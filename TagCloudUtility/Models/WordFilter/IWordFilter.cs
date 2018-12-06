@@ -4,6 +4,6 @@
     {
         string[] FilterWords(string[] words);
 
-        void AddStopWord(string stopWord);
+        void Add(string stopWord);
     }
 }
