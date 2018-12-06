@@ -10,10 +10,12 @@ namespace TagsCloudVisualization
     {
         private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> rectangles;
+        private readonly IPointGeneratorSettingsProvider pointGeneratorSettingsProvider;
 
-        public CircularCloudLayouter(IPointGenerator pointGenerator)
+        public CircularCloudLayouter(IPointGenerator pointGenerator, IPointGeneratorSettingsProvider pointGeneratorSettingsProvider)
         {
             this.pointGenerator = pointGenerator;
+            this.pointGeneratorSettingsProvider = pointGeneratorSettingsProvider;
             rectangles = new List<Rectangle>();
         }
 
@@ -43,7 +45,7 @@ namespace TagsCloudVisualization
 
         private Rectangle GetNextRectangle(Size size)
         {
-            var nextPoint = pointGenerator.GetNextPoint(new PointGeneratorSettings());
+            var nextPoint = pointGenerator.GetNextPoint(pointGeneratorSettingsProvider);
             return new Rectangle(nextPoint.X, nextPoint.Y, size.Width, size.Height);
         }
     }

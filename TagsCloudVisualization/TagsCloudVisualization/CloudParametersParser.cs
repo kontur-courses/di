@@ -5,14 +5,7 @@ namespace TagsCloudVisualization
 {
     public class CloudParametersParser : ICloudParametersParser
     {
-        private readonly CloudParameters parameters;
-
-        public CloudParametersParser(CloudParameters parameters)
-        {
-            this.parameters = parameters;
-        }
-
-        public CloudParameters Parse(Options options)
+        public CloudParameters Parse(Options options, CloudParameters parameters)
         {
             parameters.Color = Color.FromName(options.Color);
             parameters.ImageSize = GetImageSize(options.ImageSize);

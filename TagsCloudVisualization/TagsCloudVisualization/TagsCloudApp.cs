@@ -12,12 +12,15 @@ namespace TagsCloudVisualization
     {
         protected readonly IWordDataProvider wordDataProvider;
         private readonly IWordsExtractorSettingsProvider wordsExtractorSettingsProvider;
+        private readonly IPointGeneratorSettingsProvider pointGeneratorSettingsProvider;
 
         public TagsCloudApp(IWordDataProvider wordDataProvider,
-            IWordsExtractorSettingsProvider wordsExtractorSettingsProvider)
+            IWordsExtractorSettingsProvider wordsExtractorSettingsProvider,
+            IPointGeneratorSettingsProvider pointGeneratorSettingsProvider)
         {
             this.wordDataProvider = wordDataProvider;
             this.wordsExtractorSettingsProvider = wordsExtractorSettingsProvider;
+            this.pointGeneratorSettingsProvider = pointGeneratorSettingsProvider;
         }
 
         public void Run(string[] args, IContainer container)
@@ -28,12 +31,11 @@ namespace TagsCloudVisualization
                 return;
 
             var parameters = new CloudParameters();
-            var cloudParametersParser =
-                container.Resolve<ICloudParametersParser>(new TypedParameter(typeof(CloudParameters), parameters));
-            parameters = cloudParametersParser.Parse(options);
+            var cloudParametersParser = container.Resolve<ICloudParametersParser>();
+            parameters = cloudParametersParser.Parse(options, parameters);
             parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator);
 
-            var cloud = new CircularCloudLayouter(parameters.PointGenerator);
+            var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettingsProvider);
             var extractor = container.Resolve<IWordsExtractor>();
             var words = extractor.Extract(options.FilePath, wordsExtractorSettingsProvider);
             var data = wordDataProvider.GetData(cloud, words);
