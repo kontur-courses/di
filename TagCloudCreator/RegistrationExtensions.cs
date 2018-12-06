@@ -1,0 +1,14 @@
+﻿using Castle.MicroKernel.Registration;
+
+namespace TagCloudCreator
+{
+    public static class RegistrationExtensions
+    {
+        public static ComponentRegistration<TFor> WithArgument<TFor>(
+            this ComponentRegistration<TFor> component, 
+            string name, 
+            object value)
+        where TFor : class 
+            => component.DependsOn(Dependency.OnValue(name, value));
+    }
+}
