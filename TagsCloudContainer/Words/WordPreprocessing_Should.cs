@@ -6,80 +6,78 @@ using FluentAssertions;
 
 namespace TagsCloudContainer.Words
 {
-    class WordPreprocessing_Should
+    [TestFixture]
+    public class WordPreprocessing_Should
     {
-        [TestFixture]
-        public class SuperTightCloudLayouter_Should
+        private WordPreprocessing wordPreprocessing;
+        private string[] words;
+
+        [SetUp]
+        public void SetUp()
         {
-            private WordPreprocessing wordPreprocessing;
-            private string[] words;
+            words = new string[] { "3", "3", "3", "2", "2", "1", "A", "a", "aAa", "подсолнух", "трава" };
+            wordPreprocessing = new WordPreprocessing(words);
+        }
 
-            [SetUp]
-            public void SetUp()
-            {
-                words = new string[] { "3", "3", "3", "2", "2", "1", "A", "a", "aAa", "подсолнух", "трава" };
-                wordPreprocessing = new WordPreprocessing(words);
-            }
-            
-            [Test]
-            public void ToLower_Should()
-            {
-                wordPreprocessing.ToLower();
+        [Test]
+        public void ToLower_Should()
+        {
+            wordPreprocessing.ToLower();
 
-                var newWords = wordPreprocessing.Words.ToArray();
-                newWords.Length.Should().Be(words.Length);
-                newWords[6].Should().Be("a");
-                newWords[8].Should().Be("aaa");
-                newWords[9].Should().Be("подсолнух");
-            }
+            var newWords = wordPreprocessing.Words.ToArray();
+            newWords.Length.Should().Be(words.Length);
+            newWords[6].Should().Be("a");
+            newWords[8].Should().Be("aaa");
+            newWords[9].Should().Be("подсолнух");
+        }
 
-            [Test]
-            public void IgnoreInvalidWords_Should()
-            {
-                wordPreprocessing.IgnoreInvalidWords();
+        [Test]
+        public void IgnoreInvalidWords_Should()
+        {
+            wordPreprocessing.IgnoreInvalidWords();
 
-                var newWords = wordPreprocessing.Words.ToArray();
-                newWords.Length.Should().Be(2);
-                newWords[0].Should().Be("подсолнух");
-                newWords[1].Should().Be("трава");
-            }
+            var newWords = wordPreprocessing.Words.ToArray();
+            newWords.Length.Should().Be(2);
+            newWords[0].Should().Be("подсолнух");
+            newWords[1].Should().Be("трава");
+        }
 
-            [Test]
-            public void Exclude_Should()
-            {
-                var wordsToExclude = new HashSet<string>() {"1", "2", "3"};
+        [Test]
+        public void Exclude_Should()
+        {
+            var wordsToExclude = new HashSet<string>() { "1", "2", "3" };
 
-                wordPreprocessing.Exclude(wordsToExclude);
+            wordPreprocessing.Exclude(wordsToExclude);
 
-                var newWords = wordPreprocessing.Words.ToArray();
-                newWords.Length.Should().Be(5);
-                newWords[0].Should().Be("A");
-                newWords[1].Should().Be("a");
-            }
+            var newWords = wordPreprocessing.Words.ToArray();
+            newWords.Length.Should().Be(5);
+            newWords[0].Should().Be("A");
+            newWords[1].Should().Be("a");
+        }
 
-            [Test]
-            public void CustomPreprocessingWhere_Should()
-            {
-                bool func(string s) => int.TryParse(s, out _);
+        [Test]
+        public void CustomPreprocessingWhere_Should()
+        {
+            bool func(string s) => int.TryParse(s, out _);
 
-                wordPreprocessing.CustomPreprocessingWhere(func);
+            wordPreprocessing.CustomPreprocessingWhere(func);
 
-                var newWords = wordPreprocessing.Words.ToArray();
-                newWords.Length.Should().Be(6);
-                newWords.All(w => int.TryParse(w, out _)).Should().BeTrue();
-            }
+            var newWords = wordPreprocessing.Words.ToArray();
+            newWords.Length.Should().Be(6);
+            newWords.All(w => int.TryParse(w, out _)).Should().BeTrue();
+        }
 
-            [Test]
-            public void CustomPreprocessingSelect_Should()
-            {
-                string func(string s) => s + "ый";
+        [Test]
+        public void CustomPreprocessingSelect_Should()
+        {
+            string func(string s) => s + "ый";
 
-                wordPreprocessing.CustomPreprocessingSelect(func);
+            wordPreprocessing.CustomPreprocessingSelect(func);
 
-                var newWords = wordPreprocessing.Words.ToArray();
-                newWords.Length.Should().Be(words.Length);
-                newWords.All(w => w.EndsWith("ый")).Should().BeTrue();
-            }
+            var newWords = wordPreprocessing.Words.ToArray();
+            newWords.Length.Should().Be(words.Length);
+            newWords.All(w => w.EndsWith("ый")).Should().BeTrue();
         }
     }
+
 }

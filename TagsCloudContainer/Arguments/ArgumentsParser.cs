@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Arguments
 {
     public class ArgumentsParser
     {
         public string InputPath { get; private set; }
         public string OutputPath { get; private set; }
-        public string WordsToExclude { get; private set; }
+        public string WordsToExcludePath { get; private set; }
         public string FontName { get; private set; }
         public Brush Brush { get; private set; }
 
@@ -59,7 +59,7 @@ namespace TagsCloudContainer
                         Brush = Brushes.Black;
 
                     if (o.WordsToExclude != null)
-                        WordsToExclude = o.WordsToExclude;
+                        WordsToExcludePath = o.WordsToExclude;
                 });
         }
     }

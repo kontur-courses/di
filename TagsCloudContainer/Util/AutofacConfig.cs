@@ -4,6 +4,7 @@ using System.Drawing;
 using TagsCloudContainer.Cloud;
 using TagsCloudVisualization;
 using TagsCloudContainer.Words;
+using TagsCloudContainer.Arguments;
 
 namespace TagsCloudContainer.Util
 {
@@ -29,9 +30,9 @@ namespace TagsCloudContainer.Util
             container.Register(c =>
             {
                 var parser = c.Resolve<ArgumentsParser>();
-                if (parser.WordsToExclude == null)
+                if (parser.WordsToExcludePath == null)
                     return new HashSet<string>();
-                return new TextFileReader(parser.WordsToExclude).ReadWordsInHashSet();
+                return new TextFileReader(parser.WordsToExcludePath).ReadWordsInHashSet();
             })
                 .Named<HashSet<string>>("WordsToExclude")
                 .SingleInstance();
