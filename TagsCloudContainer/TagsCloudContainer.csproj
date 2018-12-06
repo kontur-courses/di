@@ -52,7 +52,6 @@
     <Compile Include="Algorithms\IAlgorithm.cs" />
     <Compile Include="Algorithms\CircularCloudAlgorithm.cs" />
     <Compile Include="ResultFormatters\CircularCloudLayouterResultFormatter.cs" />
-    <Compile Include="CircularCloudLayouterGenerator.cs" />
     <Compile Include="Clients\ConsoleClient.cs" />
     <Compile Include="Clients\IClient.cs" />
     <Compile Include="Helpers\TextFileHelper.cs" />

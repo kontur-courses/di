@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudContainer.ResultFormatters;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.ResultFormatters
 {
     public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
@@ -23,7 +22,7 @@ namespace TagsCloudContainer
             }
         }
 
-        private static Graphics DrawStringInside(Graphics graphics, Rectangle rect, Font font, Brush brush, string text)
+        private void DrawStringInside(Graphics graphics, Rectangle rect, Font font, Brush brush, string text)
         {
             var textSize = graphics.MeasureString(text, font);
             var state = graphics.Save();
@@ -31,8 +30,6 @@ namespace TagsCloudContainer
             graphics.ScaleTransform(rect.Width / textSize.Width, rect.Height / textSize.Height);
             graphics.DrawString(text, font, brush, PointF.Empty);
             graphics.Restore(state);
-
-            return graphics;
         }
     }
 }

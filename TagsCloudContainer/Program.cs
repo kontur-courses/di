@@ -28,12 +28,11 @@ namespace TagsCloudContainer
 
             Container = builder.Build();
 
-
+            // Блок использовался для подготовки входных данных из обычного текста
 //            var path = Assembly.GetExecutingAssembly().Location;
 //            var directory = Path.GetDirectoryName(path);
-//            var l = TextFileHelper.ReadFromFile(Path.Combine(directory, "TextSamples",
-//                "1984.txt"));
-//
+//            var l = TextFileHelper.ReadFromFile(Path.Combine(directory, "TextSamples", "1984.txt"));
+// 
 //            TextFileHelper.Rebuildtext(l);
 
             using (var scope = Container.BeginLifetimeScope())
@@ -58,10 +57,10 @@ namespace TagsCloudContainer
 
 
                 // TODO: задавать через аргументы коммандной строки
-                var size = new Size(10000, 10000);
-                var font = new Font("Times New Roman", 10);
+                var size = new Size(2000, 2000);
+                var font = new Font("Times New Roman", 1);
                 var brush = Brushes.Black;
-                var centerPoint = new Point(5000, 5000);
+                var centerPoint = new Point(size.Width / 2, size.Height / 2);
 
                 var algorithm = scope.Resolve<IAlgorithm>(new TypedParameter(typeof(Point), centerPoint));
 
@@ -69,9 +68,7 @@ namespace TagsCloudContainer
 
                 var drawer = scope.Resolve<IResultFormatter>();
                 drawer.GenerateResult(size, font, brush, "tag-cloud.png", rectangles);
-
             }
-
         }
     }
 }
