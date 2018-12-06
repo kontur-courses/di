@@ -40,7 +40,7 @@ namespace FractalPainting.Solved.Step11.App
                     .WhenInjectedInto<SettingsManager>();
                 container.Bind<IBlobStorage>().To<FileBlobStorage>()
                     .WhenInjectedInto<SettingsManager>();
-                container.Bind<AppSettings, IImageDirectoryProvider>()
+                container.Bind<IImageDirectoryProvider>()
                     .ToMethod(context => context.Kernel.Get<SettingsManager>().Load())
                     .InSingletonScope();
                 container.Bind<ImageSettings>()
