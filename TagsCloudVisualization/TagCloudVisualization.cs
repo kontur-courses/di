@@ -44,6 +44,14 @@ namespace TagsCloudVisualization
             bitmap.Save(path, ImageFormat.Png);
         }
 
+        public void SaveRectanglesCloud(string bitmapName, string directory)
+        {
+            var bitmap = GetBitmapWithRectangles();
+            var path = $"{directory}\\{bitmapName}-{cloudLayouter.Rectangles.Count}.png";
+
+            bitmap.Save(path, ImageFormat.Png);
+        }
+        
         public void SaveTagCloud(string bitmapName, string directory, Font font, Color color, Color backgroundColor, List<string> words)
         {
             //ToDo Вынести определение размера шрифта в метод

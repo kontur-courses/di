@@ -81,8 +81,8 @@ namespace TagCloudVisualizationTests
 
             TestContext.Out.WriteLine($"Tag cloud visualization saved to file {path}");
 
-            var visualizator = new CircularCloudVisualization(cloudLayouter);
-            visualizator.SaveCloudLayouter($"FailedOn{TestContext.CurrentContext.Test.Name}", TestContext.CurrentContext.TestDirectory);
+            var visualizator = new TagCloudVisualization(cloudLayouter);
+            visualizator.SaveRectanglesCloud($"FailedOn{TestContext.CurrentContext.Test.Name}", TestContext.CurrentContext.TestDirectory);
         }
         
         

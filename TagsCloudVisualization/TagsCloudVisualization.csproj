@@ -51,7 +51,6 @@
     <Compile Include="ArchimedesSpiral.cs" />
     <Compile Include="CloudLayouter.cs" />
     <Compile Include="CircularCloudLayouterExtensions.cs" />
-    <Compile Include="CircularCloudVisualization.cs" />
     <Compile Include="CloudLayouter.Direction.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ISpiral.cs" />
