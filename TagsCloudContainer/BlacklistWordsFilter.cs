@@ -11,6 +11,11 @@ namespace TagsCloudContainer
             this.blacklist = blacklist;
         }
 
+        public BlacklistWordsFilter(string blacklistPath)
+        {
+            this.blacklist = new HashSet<string>(new TxtWordsReader().ReadWords(blacklistPath));
+        }
+
 
         public bool Filter(string word)
         {
