@@ -23,9 +23,9 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
             {
                 var testDir = TestContext.CurrentContext.TestDirectory;
                 var methodName = TestContext.CurrentContext.Test.Name;
-                var filePath = Path.Combine(testDir, "..", "..", "Tests", "BadCases", "Case" + methodName + ".jpg");
+                var filePath = Path.Combine(testDir, "..", "..", "CircularCloudLayouter", "CircularCloudLayouterTests", "BadCases", "Case" + methodName + ".jpg");
 
-                var visualizer = new Visualizer(_layout);
+                var visualizer = new RectangleVisualizer(_layout);
                 visualizer.DrawTagsCloud(filePath);
                 Console.WriteLine("Tag cloud visualization saved to file: {0}", filePath);
             }
@@ -33,7 +33,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
             _layout = null;
         }
 
-        private CircularCloudLayouter _layout;
+        private CircularCloudLayout _layout;
 
         [TestCase(TestName = "ShouldFall_AndCreateFileReport")]
         public void PutNextRectangle_IncorrectPlacement()
@@ -44,9 +44,9 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
             result.Should().BeFalse();
         }
 
-        public static CircularCloudLayouter GetIncorrectRectanglePlacement()
+        public static CircularCloudLayout GetIncorrectRectanglePlacement()
         {
-            var layout = new CircularCloudLayouter(new RectangleStorage(new Point(0, 0), new Direction()));
+            var layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
             var rect1 = new Rectangle(new Point(0, 10), new Size(20, 10));
             var rect2 = new Rectangle(new Point(-10, 10), new Size(20, 10));
 
@@ -58,7 +58,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(ExpectedResult = false)]
         public bool PutNextRectangle_CorrectInputShouldNotIntersect()
         {
-            _layout = new CircularCloudLayouter(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
             _layout.PutNextRectangle(new Size(69, 39));
             _layout.PutNextRectangle(new Size(68, 44));
             _layout.PutNextRectangle(new Size(85, 53));
@@ -70,7 +70,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(ExpectedResult = false)]
         public bool PutNextRectangle_RandomAmountOfRectanglesShouldNotIntersect()
         {
-            _layout = new CircularCloudLayouter(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
 
             var rnd = new Random();
             for (var i = 0; i < rnd.Next(1, 30); i++)
@@ -89,7 +89,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(10, 4)]
         public void PutNextRectangle(int width, int height)
         {
-            _layout = new CircularCloudLayouter(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
             var rectangle = _layout.PutNextRectangle(new Size(width, height));
 
             rectangle.ShouldBeEquivalentTo(new Rectangle(0, height, width, height));
@@ -100,7 +100,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         public void ConstructorIncorrectInput(int centerX, int centerY, string msg)
         {
             Action act = () =>
-                new CircularCloudLayouter(new RectangleStorage(new Point(centerX, centerY), new Direction()));
+                new CircularCloudLayout(new RectangleStorage(new Point(centerX, centerY), new Direction()));
 
             act.ShouldThrow<ArgumentException>()
                 .WithMessage(msg);

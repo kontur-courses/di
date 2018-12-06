@@ -34,7 +34,7 @@ namespace TagsCloudContainer
                 Add(word);
         }
 
-        public List<Word> ToSortedList()
+        public List<Word> ToList()
         {
             return _words.
                 OrderByDescending(e => e.Value)

@@ -20,7 +20,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void Simple_TMP_test0(string str, int count)
         {
             _wordStorage.Add(str);
-            var lst = _wordStorage.ToSortedList();
+            var lst = _wordStorage.ToList();
             lst[0].Value.Should().Be(str);
             lst[0].Count.Should().Be(count);
         }
@@ -29,7 +29,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void Simple_TMP_test1()
         {
             _wordStorage.Add(new List<string>() {"one", "Two", "two", "two2", "two2"});
-            var lst = _wordStorage.ToSortedList();
+            var lst = _wordStorage.ToList();
             lst[0].Value.Should().Be("two");
             lst[0].Count.Should().Be(2);
 

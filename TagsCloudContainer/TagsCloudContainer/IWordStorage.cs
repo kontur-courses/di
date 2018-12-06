@@ -7,6 +7,6 @@ namespace TagsCloudContainer
     {
         void Add(string word);
         void Add(IEnumerable<string> words);
-        List<Word> ToSortedList();
+        List<Word> ToList();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer
 {
-    class WordsReader: IWordsReader
+    internal class WordsReader: IWordsReader
     {
         public IWordStorage ReadWords(string path, IWordStorage wordStorage)
         {
