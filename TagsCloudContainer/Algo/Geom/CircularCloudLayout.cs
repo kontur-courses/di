@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudContainer.Layout
+namespace TagsCloudContainer.Algo.Geom
 {
-    public class CircularCloudLayout : IRectangleLayout
+    public class CircularCloudLayout
     {
         private readonly List<Rectangle> rectangles;
         private readonly Spiral spiral;
-        private readonly Size cloudSize;
 
+        public IReadOnlyCollection<Rectangle> Rectangles => new ReadOnlyCollection<Rectangle>(rectangles);
         public Point Center => spiral.Center;
         public double Area => Math.Pow(spiral.Radius, 2) * Math.PI;
-        public IEnumerable<Rectangle> Rectangles => rectangles.ToImmutableList();
+        public readonly Size CloudSize;
 
         public CircularCloudLayout(int locationX, int locationY, int width, int height)
             : this(new Point(locationX, locationY), new Size(width, height))
         {
+
         }
 
         public CircularCloudLayout(Point center, Size size)
@@ -28,12 +29,12 @@ namespace TagsCloudContainer.Layout
 
             spiral = new Spiral(center);
             rectangles = new List<Rectangle>();
-            cloudSize = size;
+            CloudSize = size;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            if (rectangleSize.Height > cloudSize.Height || rectangleSize.Width > cloudSize.Width)
+            if (rectangleSize.Height > CloudSize.Height || rectangleSize.Width > CloudSize.Width)
                 throw new ArgumentException("Should be less than CloudSize", nameof(rectangleSize));
 
             Rectangle rectangle;

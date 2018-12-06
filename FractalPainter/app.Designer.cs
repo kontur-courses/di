@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FractalPainting {
+namespace FractalPainting.Solved.Step11 {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

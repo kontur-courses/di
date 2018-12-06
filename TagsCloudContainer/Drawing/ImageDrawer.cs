@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Layout;
+using TagsCloudContainer.Algo;
 
 namespace TagsCloudContainer.Drawing
 {
