@@ -82,7 +82,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PointExtensions.cs" />
-    <Compile Include="Preprocessing\TagCloudLayouterFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileReader\TxtFileReader.cs" />
