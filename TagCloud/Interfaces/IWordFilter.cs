@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.Interfaces
 {
-    public interface IWordExcluder
+    public interface IWordFilter
     {
         bool ToExclude(string word);
     }

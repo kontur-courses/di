@@ -5,9 +5,11 @@ namespace TagCloud
 {
     public class ArialFontScheme : IFontScheme
     {
+        public const string FamilyName = "Arial";
+
         public Font Process(FrequentedWord element)
         {
-            return new Font("Arial", (element.Frequency + 1) * 10);
+            return new Font(FamilyName, (element.Frequency + 1) * 10);
         }
     }
 }

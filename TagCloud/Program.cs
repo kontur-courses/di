@@ -36,7 +36,7 @@ namespace TagCloud
                 container.Register(Component.For<IFontScheme>().ImplementedBy<ArialFontScheme>());
             if (SizeScheme == SizeScheme.Linear)
                 container.Register(Component.For<ISizeScheme>().ImplementedBy<LinearSizeScheme>());
-            container.Register(Component.For<IWordExcluder>().ImplementedBy<WordExcluderByFile>()
+            container.Register(Component.For<IWordFilter>().ImplementedBy<WordFilterByFile>()
                 .DependsOn(Dependency.OnValue("path", @"D:\stopwords.txt")));
             container.Register(Component.For<IStatisticsCollector>().ImplementedBy<StatisticsCollector>());
             container.Register(Component.For<TagsCloud>().ImplementedBy<TagsCloud>());

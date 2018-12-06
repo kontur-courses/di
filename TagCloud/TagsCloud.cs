@@ -14,7 +14,7 @@ namespace TagCloud
         private readonly ISizeScheme sizeScheme;
         private readonly IStatisticsCollector statisticsCollector;
         private readonly IVisualizer visualizer;
-        private readonly IWordExcluder wordExcluder;
+        private readonly IWordFilter wordFilter;
 
         public TagsCloud(
             ICloudLayouter layouter,
@@ -24,7 +24,7 @@ namespace TagCloud
             ISizeScheme sizeScheme,
             IFontScheme fontScheme,
             IStatisticsCollector statisticsCollector,
-            IWordExcluder wordExcluder)
+            IWordFilter wordFilter)
         {
             this.layouter = layouter;
             this.visualizer = visualizer;
@@ -33,7 +33,7 @@ namespace TagCloud
             this.sizeScheme = sizeScheme;
             this.fontScheme = fontScheme;
             this.statisticsCollector = statisticsCollector;
-            this.wordExcluder = wordExcluder;
+            this.wordFilter = wordFilter;
         }
 
         public void Generate(string file)
@@ -41,7 +41,7 @@ namespace TagCloud
             fileReader.Path = file;
             var input = fileReader.Read();
             input = input.Select(s => s.ToLower());
-            var filteredInput = ExcludeWords(input, wordExcluder);
+            var filteredInput = ExcludeWords(input, wordFilter);
             var statistics = statisticsCollector.GetStatistics(filteredInput);
             var fontedElements = ApplyFontScheme(statistics);
             var positionedElements = FillCloud(fontedElements);
@@ -77,9 +77,9 @@ namespace TagCloud
             return result;
         }
 
-        private IEnumerable<string> ExcludeWords(IEnumerable<string> words, IWordExcluder excluder)
+        private IEnumerable<string> ExcludeWords(IEnumerable<string> words, IWordFilter filter)
         {
-            return words.Where(w => !excluder.ToExclude(w));
+            return words.Where(w => !filter.ToExclude(w));
         }
 
         private IEnumerable<PositionedElement> FillCloud(

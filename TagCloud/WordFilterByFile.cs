@@ -4,11 +4,11 @@ using TagCloud.Interfaces;
 
 namespace TagCloud
 {
-    public class WordExcluderByFile : IWordExcluder
+    public class WordFilterByFile : IWordFilter
     {
         private readonly IEnumerable<string> stopWords;
 
-        public WordExcluderByFile(IFileReader fileReader, string path)
+        public WordFilterByFile(IFileReader fileReader, string path)
         {
             fileReader.Path = path;
             stopWords = fileReader.Read();

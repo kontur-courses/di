@@ -35,14 +35,14 @@ namespace TagCloudCreator
             var app = container.Resolve<Application>();
         }
 
-        public static IDictionary<Enum, IRegistration> CollectCapabilities()
+        public static IDictionary<Enum, Type> CollectCapabilities()
         {
-            return new Dictionary<Enum, IRegistration>()
+            return new Dictionary<Enum, Type>
             {
-                {CloudLayouterType.ArithmeticSpiral, GetRegistration<ICloudLayouter, CircularCloudLayouter>()},
-                {ColorScheme.RandomColors, GetRegistration<IColorScheme, RandomColorScheme>()},
-                {FontScheme.Arial, GetRegistration<IFontScheme, ArialFontScheme>()},
-                {SizeScheme.Linear, GetRegistration<ISizeScheme, LinearSizeScheme>()}
+                {CloudLayouterType.ArithmeticSpiral, typeof(CircularCloudLayouter)},
+                {ColorScheme.RandomColors, typeof(RandomColorScheme)},
+                {FontScheme.Arial, typeof(ArialFontScheme)},
+                {SizeScheme.Linear, typeof(LinearSizeScheme)}
             };
         }
 
@@ -57,7 +57,7 @@ namespace TagCloudCreator
             var container = new WindsorContainer();
 
             container.Register(
-                GetRegistration<IWordExcluder, WordExcluderByFile>()
+                GetRegistration<IWordFilter, WordFilterByFile>()
                     .WithArgument("path", configuration.StopWordsFile),
                 GetRegistration<IFileReader, FileReader>()
                     .WithArgument("path", configuration.InputFile),
@@ -68,13 +68,16 @@ namespace TagCloudCreator
                 GetRegistration<IStatisticsCollector, StatisticsCollector>(),
                 GetRegistration<TagsCloud, TagsCloud>(),
                 GetRegistration<Point, Point>(),
-                capabilities[layouterType],
-                capabilities[colorScheme],
-                capabilities[fontScheme],
-                capabilities[sizeScheme]);
+                GetRegistration(typeof(ICloudLayouter), capabilities[layouterType]),
+                GetRegistration(typeof(IColorScheme), capabilities[colorScheme]),
+                GetRegistration(typeof(FontScheme), capabilities[fontScheme]),
+                GetRegistration(typeof(ISizeScheme), capabilities[sizeScheme]));
 
             return container;
         }
+
+        public static ComponentRegistration<object> GetRegistration(Type elementFor, Type by)
+        => Component.For(elementFor).ImplementedBy(by);
 
         public static ComponentRegistration<TFor> GetRegistration<TFor, TBy>()
             where TFor : class
