@@ -81,17 +81,21 @@ namespace TagCloudVisualizationTests
 
             TestContext.Out.WriteLine($"Tag cloud visualization saved to file {path}");
 
-            var visualizator = new TagCloudVisualization(cloudLayouter);
-            visualizator.SaveRectanglesCloud($"FailedOn{TestContext.CurrentContext.Test.Name}", TestContext.CurrentContext.TestDirectory);
+            var visualizer = new TagCloudVisualization();
+            var rectangles = cloudLayouter.Rectangles;
+            visualizer.SaveRectanglesCloud(
+                $"FailedOn{TestContext.CurrentContext.Test.Name}",
+                TestContext.CurrentContext.TestDirectory, 
+                rectangles, 
+                center);
         }
-        
-        
+
         private IEnumerable<TestCaseData> TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter()
         {
             yield return new TestCaseData(new[] { new Size(2, 2), new Size(2, 2) })
                 .SetName("AfterAdditionTwoEqualsRectangles");
         }
-        
+
         [Ignore("Not implemented")]
         [Test, TestCaseSource(nameof(TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter))]
         public void NextRectangleMustByFartherFromCenter(IEnumerable<Size> rectanglesSizes)

@@ -44,10 +44,17 @@ namespace TagCloudLayouter
                 .GetValidWords(allWords)
                 .Take(config.Count)
                 .ToList();
-
-            var vis = new TagCloudVisualization(layouter);
-            vis.SaveTagCloud(config.FileName, config.OutPath, config.Font, config.Color,
-                Color.FromArgb(128, config.BackgroundColor), validWords);
+            
+            
+            var vis = new TagCloudVisualization();
+            vis.SaveTagCloud(
+                config.FileName, 
+                config.OutPath, 
+                config.Font, 
+                config.Color,
+                Color.FromArgb(128, config.BackgroundColor), 
+                layouter,
+                validWords);
         }
     }
 }

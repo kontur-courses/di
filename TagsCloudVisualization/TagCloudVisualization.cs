@@ -8,97 +8,112 @@ namespace TagsCloudVisualization
 {
     public class TagCloudVisualization
     {
-        public TagCloudVisualization(ICloudLayouter cloudLayouter)
+        public TagCloudVisualization()
         {
-            this.cloudLayouter = cloudLayouter;
-
-            bitmapHeight = cloudLayouter.Spiral.Center.Y * 2;
-            bitmapWidth = cloudLayouter.Spiral.Center.X * 2;
+            bitmapHeight = 1000;
+            bitmapWidth = 1000;
         }
-
-        private static void FillCloudWithRectangles(ICloudLayouter cloud, int count, int minSize, int maxSize)
-        {
-            var rnd = new Random();
-            for (var i = 0; i < count; i++)
-            {
-                var width = rnd.Next(minSize * 10, maxSize * 10);
-                var height = rnd.Next(minSize, maxSize);
-
-                var size = new Size(width, height);
-
-                cloud.PutNextRectangle(size);
-            }
-        }
-
-        private readonly ICloudLayouter cloudLayouter;
 
         private readonly int bitmapWidth;
         private readonly int bitmapHeight;
+        private Color defaultColor = Color.Black;
+        private Color defaultBackColor = Color.White;
 
-        public void SaveRectanglesCloud(string bitmapName, string directory, int count, int minSize, int maxSize)
+        public void SaveRectanglesCloud(string bitmapName, string directory, List<Rectangle> rectangles, Point center)
         {
-            FillCloudWithRectangles(cloudLayouter, count, minSize, maxSize);
-            var bitmap = GetBitmapWithRectangles();
-            var path = $"{directory}\\{bitmapName}-{count}.png";
-
-            bitmap.Save(path, ImageFormat.Png);
+            SaveRectanglesCloud(bitmapName, directory, rectangles, center, defaultColor);
         }
 
-        public void SaveRectanglesCloud(string bitmapName, string directory)
+        public void SaveRectanglesCloud(
+            string bitmapName, 
+            string directory, 
+            List<Rectangle> rectangles, 
+            Point center, 
+            Color color)
         {
-            var bitmap = GetBitmapWithRectangles();
-            var path = $"{directory}\\{bitmapName}-{cloudLayouter.Rectangles.Count}.png";
-
-            bitmap.Save(path, ImageFormat.Png);
-        }
-        
-        public void SaveTagCloud(string bitmapName, string directory, Font font, Color color, Color backgroundColor, List<string> words)
-        {
-            //ToDo Вынести определение размера шрифта в метод
-
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
+            DrawBackgroundRectangles(g, rectangles, color, center);
+            var path = $"{directory}\\{bitmapName}-{rectangles.Count}.png";
 
-            var num = 0;
-            var count = words.Count;
-            var delta = (float)(font.SizeInPoints / 2) / count;
+            bitmap.Save(path, ImageFormat.Png);
+        }
+
+        //ToDo Вынести определение размера шрифта в метод
+        public void SaveTagCloud(
+            string bitmapName,
+            string directory,
+            Font font,
+            Color color,
+            Color backgroundColor,
+            ICloudLayouter cloudLayouter,
+            List<string> words)
+        {
+            var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
+            var g = Graphics.FromImage(bitmap);
+            var wordsInCloud = new WordsCloudFiller(cloudLayouter, font).GetRectanglesForWordsInCloud(g, words);
+
             g.FillRectangle(Brushes.White, 0, 0, bitmapWidth, bitmapHeight);
-            foreach (var word in words)
-            {
-                font = new Font(font.Name, (font.SizeInPoints - delta));
-                var brush = new SolidBrush(GetColorOfWord(num, count, color));
-                var size = g.MeasureString(word, font);
-                var rec = cloudLayouter.PutNextRectangle(new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height)));
-                g.FillEllipse(new SolidBrush(backgroundColor), rec);
-                g.DrawString(word, font, brush, rec);
-                num++;
-            }
+            DrawBackgroundEllipses(g, wordsInCloud.Select(w => w.rectangle), backgroundColor);
+            DrawWordsOfCloud(g, color, wordsInCloud);
 
             bitmap.Save($"{directory}\\{bitmapName}.png", ImageFormat.Png);
         }
 
-        private Bitmap GetBitmapWithRectangles()
+        private void DrawBackgroundEllipses(
+            Graphics g,
+            IEnumerable<Rectangle> rectangles,
+            Color backgroundColor)
         {
-            var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
-            var pen = new Pen(Color.Black);
+            var backgroundBrush = new SolidBrush(backgroundColor);
+            foreach (var rectangle in rectangles)
+                g.FillEllipse(backgroundBrush, rectangle);
+        }
 
-            var rectangles = cloudLayouter.Rectangles;
+        private void DrawBackgroundRectangles(
+            Graphics g,
+            IEnumerable<Rectangle> rectangles,
+            Color backgroundColor)
+        {
+            var backgroundBrush = new SolidBrush(backgroundColor);
+            foreach (var rectangle in rectangles)
+                g.FillRectangle(backgroundBrush, rectangle);
+        }
 
+        private void DrawBackgroundRectangles(
+            Graphics g,
+            IEnumerable<Rectangle> rectangles,
+            Color backgroundColor,
+            Point center)
+        {
             var maxDist = (int)rectangles
-                .Select(x => GetDistanceFromRectangleToPoint(x, cloudLayouter.Spiral.Center))
+                .Select(x => GetDistanceFromRectangleToPoint(x, center))
                 .Max();
 
             foreach (var rectangle in rectangles)
             {
-                var color = GetColorOfRectangle(rectangle, cloudLayouter.Spiral.Center, maxDist, Color.DeepPink);
-                var brush = new SolidBrush(color);
-
-                Graphics.FromImage(bitmap).FillRectangle(brush, rectangle);
-                Graphics.FromImage(bitmap).DrawRectangle(pen, rectangle);
+                var currentColor = GetColorOfRectangle(rectangle, center, maxDist, backgroundColor);
+                g.DrawRectangle(new Pen(currentColor), rectangle);
             }
-
-            return bitmap;
         }
+
+        private void DrawWordsOfCloud(
+            Graphics g,
+            Color color,
+            List<(string word, Rectangle rectangle, Font font)> wordsInCloud)
+        {
+            var num = 0;
+            foreach (var pair in wordsInCloud)
+            {
+                var rectangle = pair.rectangle;
+                var word = pair.word;
+                var brush = new SolidBrush(GetColorOfWord(num, wordsInCloud.Count(), color));
+
+                g.DrawString(word, pair.font, brush, rectangle);
+                num++;
+            }
+        }
+        
 
         private Color GetColorOfRectangle(Rectangle rectangle, Point center, int maxDist, Color color)
         {
