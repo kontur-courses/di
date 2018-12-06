@@ -98,11 +98,10 @@
     <Compile Include="UI\IUiAction.cs" />
     <Compile Include="UI\IUiActionExtensions.cs" />
     <Compile Include="UI\MenuCategory.cs" />
-    <Compile Include="Painter\WordDrawInfo.cs" />
-    <Compile Include="Preprocessing\WordsManager.cs" />
+    <Compile Include="WordInfo.cs" />
     <Compile Include="Preprocessing\WordsPreprocessor.cs" />
     <Compile Include="Preprocessing\WordsPreprocessorSettings.cs" />
-    <Compile Include="Preprocessing\DrawInfoGetter.cs" />
+    <Compile Include="Preprocessing\LayouterApplicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

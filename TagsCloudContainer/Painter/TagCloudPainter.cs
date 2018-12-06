@@ -24,10 +24,10 @@ namespace TagsCloudContainer.Painter
             this.painter = painter;
         }
 
-        public void Paint(Point center, WordDrawInfo[] wordDrawInfos)
+        public void Paint(Point center, WordInfo[] wordInfos)
         {
-            var radius = (int)wordDrawInfos.Select(wordInfo => wordInfo.Rect).Select(rect => Math.Ceiling(rect.Location.DistanceTo(center))).Max();
-            var bitmapSize = GetBitmapSize(wordDrawInfos.Select(info => info.Rect), center);
+            var radius = (int)wordInfos.Select(wordInfo => wordInfo.Rect).Select(rect => Math.Ceiling(rect.Location.DistanceTo(center))).Max();
+            var bitmapSize = GetBitmapSize(wordInfos.Select(info => info.Rect), center);
             holder.RecreateImage(new ImageSettings
             {
                 Height = bitmapSize,
@@ -38,7 +38,7 @@ namespace TagsCloudContainer.Painter
                 var delta = bitmapSize / 2;
                 graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0, bitmapSize, bitmapSize);
                 graphics.TranslateTransform(delta, delta);
-                foreach (var wordInfo in wordDrawInfos)
+                foreach (var wordInfo in wordInfos)
                 {
                     var color = painter.GetRectangleColor(center, wordInfo.Rect, radius);
                     graphics.DrawString(

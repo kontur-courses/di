@@ -38,7 +38,7 @@ namespace TagsCloudContainer
                 builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
                 builder.RegisterType<Spiral>().As<IPositionGenerator>().SingleInstance();
                 builder.RegisterType<TagCloudLayouter>().AsSelf();
-                builder.RegisterType<DrawInfoGetter>().AsSelf().SingleInstance();
+                builder.RegisterType<LayouterApplicator>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessor>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessorSettings>().AsSelf().SingleInstance();
                 mainForm = builder.Build().ResolveOptional<MainForm>();

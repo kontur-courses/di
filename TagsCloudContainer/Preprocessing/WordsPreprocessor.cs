@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudContainer.Painter;
 
 namespace TagsCloudContainer.Preprocessing
 {
     public class WordsPreprocessor
     {
-        //private readonly WordsContainer container;
         private readonly WordsPreprocessorSettings settings;
 
         public WordsPreprocessor(WordsPreprocessorSettings settings)
         {
-            //this.container = container;
             this.settings = settings;
         }
 
@@ -22,14 +21,29 @@ namespace TagsCloudContainer.Preprocessing
                 //.Select(word => settings.WordsSelector(word));
         }
 
-        public WordsManager CountWordFrequencies(string[] words)
+        private IEnumerable<WordInfo> OrderWordFrequencies(Dictionary<string, int> frequencies)
+        {
+            return frequencies
+                .OrderBy(kv => kv.Value)
+                .Select(kv => new WordInfo
+                {
+                    Word = kv.Key,
+                    Frequency = kv.Value
+                });
+        }
+
+        public IEnumerable<WordInfo> CountWordFrequencies(string[] words)
         {
             if (words == null)
                 throw new ArgumentNullException("words must be not null");
-            var manager = new WordsManager();
+            var wordsFrequencies = new Dictionary<string, int>();
             foreach (var word in ProcessWords(words))
-                manager.AddWord(word);
-            return manager;
+            {
+                wordsFrequencies.TryGetValue(word, out var value);
+                wordsFrequencies[word] = value + 1;
+            }
+
+            return OrderWordFrequencies(wordsFrequencies);
         }
     }
 }

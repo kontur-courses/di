@@ -14,14 +14,14 @@ namespace TagsCloudContainer.UI.Actions
         private readonly WordsPreprocessorSettings preprocessorSettings;
         private readonly IFilePathProvider filePath;
         private readonly TagCloudPainter painter;
-        private readonly DrawInfoGetter infoGetter;
+        private readonly LayouterApplicator infoGetter;
 
         public CloudDrawAction(IFileReader reader,
             WordsPreprocessor preprocessor,
             WordsPreprocessorSettings preprocessorSettings,
             IFilePathProvider filePath,
             TagCloudPainter painter,
-            DrawInfoGetter infoGetter)
+            LayouterApplicator infoGetter)
         {
             this.reader = reader;
             this.preprocessor = preprocessor;

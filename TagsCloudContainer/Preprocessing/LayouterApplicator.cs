@@ -4,37 +4,36 @@ using System.Drawing;
 using System.Windows.Forms;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.Layouter;
-using TagsCloudContainer.Painter;
 
 namespace TagsCloudContainer.Preprocessing
 {
-    public class DrawInfoGetter
+    public class LayouterApplicator
     {
         private readonly Func<TagCloudLayouter> layouterGenerator;
         private readonly FontSettings fontSettings;
         
         public Point WordsCenter { get; private set; }
 
-        public DrawInfoGetter(Func<TagCloudLayouter> layouterGenerator, FontSettings fontSettings)
+        public LayouterApplicator(Func<TagCloudLayouter> layouterGenerator, FontSettings fontSettings)
         {
             this.layouterGenerator = layouterGenerator;
             this.fontSettings = fontSettings;
         }
 
-        public WordDrawInfo[] GetWordsAndRectangles(WordsManager processedWords)
+        public WordInfo[] GetWordsAndRectangles(IEnumerable<WordInfo> wordsAndFrequencies)
         {
-            if (processedWords == null)
+            if (wordsAndFrequencies == null)
                 throw new InvalidOperationException("You must process words at first");
-            var info = new List<WordDrawInfo>();
+            var info = new List<WordInfo>();
             var layouter = layouterGenerator();
             WordsCenter = layouter.Center;
-            foreach (var wordAndFrequency in processedWords.GetOrderedWordsAndFrequencies())
+            foreach (var wordAndFrequency in wordsAndFrequencies)
             {
-                var word = wordAndFrequency.Item1;
-                var frequency = wordAndFrequency.Item2;
+                var word = wordAndFrequency.Word;
+                var frequency = wordAndFrequency.Frequency;
                 var font = new Font(fontSettings.FontFamily, frequency * fontSettings.FontSizeFactor);
                 var size = TextRenderer.MeasureText(word, font);
-                info.Add(new WordDrawInfo
+                info.Add(new WordInfo
                 {
                     FontSize = frequency,
                     Rect = layouter.PutNextRectangle(size),

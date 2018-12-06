@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Painter
+namespace TagsCloudContainer
 {
-    public class WordDrawInfo
+    public class WordInfo
     {
         public string Word { get; set; }
         public Rectangle Rect { get; set; }
         public int FontSize { get; set; }
+        public int Frequency { get; set; }
     }
 }
