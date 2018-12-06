@@ -9,16 +9,11 @@ namespace TagsCloudVisualization
     {
         private readonly List<Rectangle> rectangles;
 
-        public Point Center { get; }
+        private readonly IPolar polar;
 
-        private Spiral Spiral { get; }
-
-        public int Radius => rectangles.GetSurroundingCircleRadius();
-
-        public CircularCloudLayouter(LayouterSettings layouterSettings)
+        public CircularCloudLayouter(IPolar polar)
         {
-            Center = layouterSettings.Center;
-            Spiral = layouterSettings.Spiral;
+            this.polar = polar;
             rectangles = new List<Rectangle>();
         }
 
@@ -34,18 +29,16 @@ namespace TagsCloudVisualization
 
         private Rectangle GenerateNextRectangle(Size rectangleSize)
         {
-            if (rectangles.Any())
+            if (rectangles.Count == 0) 
+                return new Rectangle(polar.Center, rectangleSize).ShiftRectangleToTopLeftCorner();
+            while (true)
             {
-                while (true)
-                {
-                    var rectangleCenter = Spiral.GetNextPoint(Center);
-                    var nexRectangle = new Rectangle(rectangleCenter, rectangleSize)
-                        .ShiftRectangleToTopLeftCorner();
-                    if (!rectangles.Any(nexRectangle.IntersectsWith))
-                        return nexRectangle;
-                }
+                var rectangleCenter = polar.GetNextPoint();
+                var nexRectangle = new Rectangle(rectangleCenter, rectangleSize)
+                    .ShiftRectangleToTopLeftCorner();
+                if (!rectangles.Any(nexRectangle.IntersectsWith))
+                    return nexRectangle;
             }
-            return new Rectangle(Center, rectangleSize).ShiftRectangleToTopLeftCorner();
         }
     }
 }

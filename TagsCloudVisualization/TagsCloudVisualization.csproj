@@ -75,35 +75,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\IEnumerableStringExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableRectangleExtension.cs" />
-    <Compile Include="Extensions\PointExtension.cs" />
-    <Compile Include="Extensions\RectangleExtension.cs" />
-    <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="IFileReader.cs" />
-    <Compile Include="Layouter\FontSettings.cs" />
-    <Compile Include="Layouter\LayouterSettings.cs" />
-    <Compile Include="TextProcessing\TextPreprocessor.cs" />
-    <Compile Include="TextProcessing\Word.cs" />
+    <Compile Include="Infrastructure\DependenciesBuilder.cs" />
+    <Compile Include="Infrastructure\FontSettings.cs" />
+    <Compile Include="Infrastructure\Palette.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\ICloudLayouter.cs" />
+    <Compile Include="Layouter\IPolar.cs" />
+    <Compile Include="Layouter\IWordsCloudLayouter.cs" />
+    <Compile Include="Layouter\PointExtension.cs" />
+    <Compile Include="Layouter\RectangleExtension.cs" />
     <Compile Include="Layouter\Spiral.cs" />
+    <Compile Include="Layouter\Word.cs" />
     <Compile Include="Layouter\WordsCloudLayouter.cs" />
-    <Compile Include="MathHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TXTReader.cs" />
-    <Compile Include="Visualizer\CircularCloudVisualizer.cs" />
     <Compile Include="Visualizer\IVisualizer.cs" />
-    <Compile Include="Visualizer\Palette.cs" />
     <Compile Include="Visualizer\WordsCloudVisualizer.cs" />
+    <Compile Include="WordsProcessing\BoringWordsFilter.cs" />
+    <Compile Include="WordsProcessing\FrequencyWeighter.cs" />
+    <Compile Include="WordsProcessing\IFilter.cs" />
+    <Compile Include="WordsProcessing\ISizer.cs" />
+    <Compile Include="WordsProcessing\IWeighter.cs" />
+    <Compile Include="WordsProcessing\IWordsChanger.cs" />
+    <Compile Include="WordsProcessing\IWordsProvider.cs" />
+    <Compile Include="WordsProcessing\SizedWord.cs" />
+    <Compile Include="WordsProcessing\Sizer.cs" />
+    <Compile Include="WordsProcessing\TextPreprocessor.cs" />
+    <Compile Include="WordsProcessing\TxtReader.cs" />
+    <Compile Include="WordsProcessing\WeightedWord.cs" />
+    <Compile Include="WordsProcessing\WordsChanger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="T4DocoptNet.tt" />
-    <None Include="T4DocoptNet.tt.hooks.t4" />
-    <None Include="T4DocoptNet.tt.settings.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="examples\textExample.txt">
@@ -111,7 +115,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="boring_words.txt">
+    <Content Include="examples\boring_words.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

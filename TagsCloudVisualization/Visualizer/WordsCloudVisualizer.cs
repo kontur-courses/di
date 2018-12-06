@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class WordsCloudVisualizer : IVisualizer<Word>
+    public class WordsCloudVisualizer : IVisualizer<IList<Word>>
     {
         private readonly Color backgroundColor;
         private readonly Brush wordsColor;
         private readonly Size pictureSize;
         
-        public WordsCloudVisualizer(Palette palette, Size size)
+        public WordsCloudVisualizer(Palette palette, Size pictureSize)
         {
-            this.backgroundColor = palette.BackgroundColor;
-            this.wordsColor = palette.SecondaryColor;
-            this.pictureSize = size;
+            backgroundColor = palette.BackgroundColor;
+            wordsColor = palette.SecondaryColor;
+            this.pictureSize = pictureSize;
         }
         public Bitmap Draw(IList<Word> words)
         {
@@ -22,7 +21,7 @@ namespace TagsCloudVisualization
             using (var g = Graphics.FromImage(bmp))
             {
                 g.Clear(backgroundColor);
-                if (!words.Any()) return bmp;
+                if (words.Count == 0) return bmp;
                 foreach (var word in words)
                     g.DrawString(word.Text, word.Font, wordsColor, word.Rectangle.ShiftRectangleToBitMapCenter(bmp));
             }

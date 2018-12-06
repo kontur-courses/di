@@ -4,22 +4,24 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    public class Spiral
+    public class Spiral : IPolar
     {
         private readonly double step;
         private double angle;
+        public Point Center { get; }
 
-        public Spiral(double step, double angle)
+        public Spiral(Point center, double step, double angle)
         {
             this.step = step;
             this.angle = angle;
+            Center = center;
         }
 
-        public Point GetNextPoint(Point center)
+        public Point GetNextPoint()
         {
             var radius = step * angle;
-            var x = center.X + (int)(radius * Math.Cos(angle));
-            var y = center.Y + (int) (radius * Math.Sin(angle));
+            var x = Center.X + (int)(radius * Math.Cos(angle));
+            var y = Center.Y + (int) (radius * Math.Sin(angle));
             angle++;
             return new Point(x, y);
         }

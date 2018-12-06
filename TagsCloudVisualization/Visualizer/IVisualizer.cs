@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    public interface IVisualizer<T>
+    public interface IVisualizer<in T>
     {
-        Bitmap Draw(IList<T> elements);
+        Bitmap Draw(T elements);
     }
 }
