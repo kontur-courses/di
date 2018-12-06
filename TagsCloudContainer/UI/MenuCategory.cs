@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TagsCloudContainer.UiActions
+namespace TagsCloudContainer.UI
 {
     public enum MenuCategory
     {

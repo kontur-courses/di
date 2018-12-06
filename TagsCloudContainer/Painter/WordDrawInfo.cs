@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Painter
 {
     public class WordDrawInfo
     {

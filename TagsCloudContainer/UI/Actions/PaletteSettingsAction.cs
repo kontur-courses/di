@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.UiActions.Actions
+﻿using TagsCloudContainer.Settings;
+
+namespace TagsCloudContainer.UI.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {

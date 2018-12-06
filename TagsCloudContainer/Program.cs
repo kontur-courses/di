@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloudContainer.UiActions;
-using TagsCloudVisualization;
+using TagsCloudContainer.Settings;
+using TagsCloudContainer.FileReader;
+using TagsCloudContainer.Layouter;
+using TagsCloudContainer.Painter;
+using TagsCloudContainer.Preprocessing;
+using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
 {
@@ -32,13 +33,12 @@ namespace TagsCloudContainer
                 builder.RegisterType<Palette>().AsSelf().SingleInstance();
                 builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
                 builder.RegisterType<GradientPainter>().As<ICloudColorPainter>().SingleInstance();
-                builder.RegisterType<WordsContainer>().AsSelf().SingleInstance();
                 builder.RegisterType<AppSettings>().As<IFilePathProvider, IImageDirectoryProvider>().SingleInstance();
                 builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
                 builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
                 builder.RegisterType<Spiral>().As<IPositionGenerator>().SingleInstance();
                 builder.RegisterType<TagCloudLayouter>().AsSelf();
-                builder.RegisterType<WordDrawInfoGetter>().AsSelf().SingleInstance();
+                builder.RegisterType<DrawInfoGetter>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessor>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessorSettings>().AsSelf().SingleInstance();
                 mainForm = builder.Build().ResolveOptional<MainForm>();

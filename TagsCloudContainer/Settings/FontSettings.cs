@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using System.Drawing.Text;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Settings
 {
     public class FontSettings
     {
         public FontFamily FontFamily { get; set; } = FontFamily.GenericMonospace;
-        public float FontFactor { get; set; } = 1;
+        public float FontSizeFactor { get; set; } = 1;
     }
 }

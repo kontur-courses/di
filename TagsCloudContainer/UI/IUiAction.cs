@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.UiActions
+﻿namespace TagsCloudContainer.UI
 {
     public interface IUiAction
     {

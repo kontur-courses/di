@@ -2,40 +2,32 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization;
+using TagsCloudContainer.Settings;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Painter
 {
     public class TagCloudPainter
     {
         private readonly IImageHolder holder;
-        private readonly WordsContainer container;
         private readonly Palette palette;
         private readonly FontSettings fontSettings;
-        private readonly WordDrawInfoGetter drawInfoGetter;
         private readonly ICloudColorPainter painter;
 
         public TagCloudPainter(IImageHolder holder,
-            WordsContainer container,
             Palette palette,
             FontSettings fontSettings,
-            WordDrawInfoGetter drawInfoGetter,
             ICloudColorPainter painter)
         {
             this.holder = holder;
-            this.container = container;
             this.palette = palette;
             this.fontSettings = fontSettings;
-            this.drawInfoGetter = drawInfoGetter;
             this.painter = painter;
         }
 
-        public void Paint()
+        public void Paint(Point center, WordDrawInfo[] wordDrawInfos)
         {
-            drawInfoGetter.GetWordsAndRectangles();
-            var wordDrawInfos = container.WordsToDraw;
-            var radius = (int)wordDrawInfos.Select(wordInfo => wordInfo.Rect).Select(rect => Math.Ceiling(rect.Location.DistanceTo(container.WordsCenter))).Max();
-            var bitmapSize = GetBitmapSize(wordDrawInfos.Select(info => info.Rect), container.WordsCenter);
+            var radius = (int)wordDrawInfos.Select(wordInfo => wordInfo.Rect).Select(rect => Math.Ceiling(rect.Location.DistanceTo(center))).Max();
+            var bitmapSize = GetBitmapSize(wordDrawInfos.Select(info => info.Rect), center);
             holder.RecreateImage(new ImageSettings
             {
                 Height = bitmapSize,
@@ -48,7 +40,7 @@ namespace TagsCloudContainer
                 graphics.TranslateTransform(delta, delta);
                 foreach (var wordInfo in wordDrawInfos)
                 {
-                    var color = painter.GetRectangleColor(container.WordsCenter, wordInfo.Rect, radius);
+                    var color = painter.GetRectangleColor(center, wordInfo.Rect, radius);
                     graphics.DrawString(
                         wordInfo.Word, 
                         new Font(fontSettings.FontFamily, wordInfo.FontSize), 

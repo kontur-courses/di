@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer.Layouter
 {
     public static class RectangleExtensions
     {

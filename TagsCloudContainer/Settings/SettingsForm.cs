@@ -1,7 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Settings
 {
     public static class SettingsForm
     {

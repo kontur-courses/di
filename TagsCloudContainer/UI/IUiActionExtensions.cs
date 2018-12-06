@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace TagsCloudContainer.UiActions
+namespace TagsCloudContainer.UI
 {
     public static class UiActionExtensions
     {

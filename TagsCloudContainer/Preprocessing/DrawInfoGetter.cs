@@ -2,35 +2,37 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TagsCloudVisualization;
+using TagsCloudContainer.Settings;
+using TagsCloudContainer.Layouter;
+using TagsCloudContainer.Painter;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
-    public class WordDrawInfoGetter
+    public class DrawInfoGetter
     {
-        private readonly WordsContainer container;
         private readonly Func<TagCloudLayouter> layouterGenerator;
         private readonly FontSettings fontSettings;
+        
+        public Point WordsCenter { get; private set; }
 
-        public WordDrawInfoGetter(WordsContainer container, Func<TagCloudLayouter> layouterGenerator, FontSettings fontSettings)
+        public DrawInfoGetter(Func<TagCloudLayouter> layouterGenerator, FontSettings fontSettings)
         {
-            this.container = container;
             this.layouterGenerator = layouterGenerator;
             this.fontSettings = fontSettings;
         }
 
-        public WordDrawInfo[] GetWordsAndRectangles()
+        public WordDrawInfo[] GetWordsAndRectangles(WordsManager processedWords)
         {
-            if (container.ProcessedWords == null)
+            if (processedWords == null)
                 throw new InvalidOperationException("You must process words at first");
             var info = new List<WordDrawInfo>();
             var layouter = layouterGenerator();
-            container.WordsCenter = layouter.Center;
-            foreach (var wordAndFrequency in container.ProcessedWords.GetOrderedWordsAndFrequencies())
+            WordsCenter = layouter.Center;
+            foreach (var wordAndFrequency in processedWords.GetOrderedWordsAndFrequencies())
             {
                 var word = wordAndFrequency.Item1;
                 var frequency = wordAndFrequency.Item2;
-                var font = new Font(fontSettings.FontFamily, frequency * fontSettings.FontFactor);
+                var font = new Font(fontSettings.FontFamily, frequency * fontSettings.FontSizeFactor);
                 var size = TextRenderer.MeasureText(word, font);
                 info.Add(new WordDrawInfo
                 {
@@ -40,8 +42,7 @@ namespace TagsCloudContainer
                 });
             }
 
-            container.WordsToDraw = info.ToArray();
-            return container.WordsToDraw;
+            return info.ToArray();
         }
     }
 }

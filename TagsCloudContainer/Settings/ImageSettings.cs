@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer
+﻿namespace TagsCloudContainer.Settings
 {
     public class ImageSettings
     {

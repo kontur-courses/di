@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace TagsCloudContainer.UiActions
+namespace TagsCloudContainer.UI
 {
     public static class EnumExtensions
     {

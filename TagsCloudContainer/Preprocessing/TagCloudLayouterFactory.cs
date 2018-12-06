@@ -1,6 +1,6 @@
-﻿using TagsCloudVisualization;
+﻿using TagsCloudContainer.Layouter;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
     public interface ITagCloudLayouterFactory
     {

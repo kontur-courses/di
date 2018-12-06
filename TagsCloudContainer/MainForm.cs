@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TagsCloudContainer.UiActions;
+using TagsCloudContainer.Settings;
+using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
 {

@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
-using TagsCloudVisualization;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
     public class WordsManager
     {
