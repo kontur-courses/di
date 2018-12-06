@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 
 namespace MyStemAdapter
@@ -10,6 +9,6 @@ namespace MyStemAdapter
 
         public PartOfSpeech PartOfSpeech => string.IsNullOrWhiteSpace(Gr)
             ? PartOfSpeech.Unknown
-            : PartOfSpeechAbbreviations.Parse(Gr.Split(',').First());
+            : PartOfSpeechAbbreviations.Parse(Gr.Split(',', '=').First());
     }
 }

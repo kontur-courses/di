@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,20 +15,27 @@ namespace MyStemAdapter
         public MyStemAdapter(string myStemExePath = "mystem.exe")
         {
             this.myStemExePath =
-                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}{myStemExePath}";
+                string.Concat(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    Path.DirectorySeparatorChar,
+                    myStemExePath);
         }
 
-        public async Task<WordInfo> GetWordInfo(string word)
+        public WordInfo GetWordInfo(string word)
+        {
+            return GetWordInfoAsync(word).Result;
+        }
+
+        public async Task<WordInfo> GetWordInfoAsync(string word)
         {
             var myStemOutput = await LaunchMyStemAsync("-ngi --format json", word);
             var myStemAnalysis = JsonConvert.DeserializeObject<TextAnalysisResult>(myStemOutput);
-            
-            if (!myStemAnalysis.Analysis.Any()) 
+
+            if (!myStemAnalysis.Analysis.Any())
                 return new WordInfo(word, PartOfSpeech.Unknown, string.Empty);
-            
+
             var wordAnalysis = myStemAnalysis.Analysis.First();
             return new WordInfo(word, wordAnalysis.PartOfSpeech, wordAnalysis.Lex);
-
         }
 
         private async Task<string> LaunchMyStemAsync(string argString, string input)

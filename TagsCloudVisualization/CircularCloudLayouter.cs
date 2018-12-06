@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ILayouter
     {
         private const double SpiralStepCoefficient = 1;
         private const double RadiusStep = 0.001d;
