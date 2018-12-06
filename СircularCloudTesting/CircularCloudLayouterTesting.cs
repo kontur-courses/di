@@ -5,9 +5,11 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization.CloudConstruction;
+using TagsCloudVisualization;
+using TagsCloudVisualization.TagsCloud.CircularCloud;
+using TagsCloudVisualization.TagsCloud.CloudConstruction;
 
-namespace TagsCloudVisualization
+namespace СircularCloudTesting
 {
     [TestFixture]
     public class CircularCloudLayouterTesting
@@ -19,7 +21,7 @@ namespace TagsCloudVisualization
             public void Should_NotThrowArgumentException_When(int x, int y)
             {
                 var center = new Point(x, y);
-                var cloud = new CircularCloudLayouter(center);
+                var cloud = new CircularCloudLayouter(center, new Size(2000,2000));
                 Assert.AreEqual(new Point(x, y), cloud.Center);
             }
 
@@ -30,13 +32,13 @@ namespace TagsCloudVisualization
             public void Should_ThrowArgumentException_When(int x, int y)
             {
                 var center = new Point(x, y);
-                Assert.Throws<ArgumentException>(() => new CircularCloudLayouter(center));
+                Assert.Throws<ArgumentException>(() => new CircularCloudLayouter(center, new Size(2000, 2000)));
             }
 
             [Test]
             public void Should_InitializeRectangles()
             {
-                var cloud = new CircularCloudLayouter(new Point(0, 0));
+                var cloud = new CircularCloudLayouter(new Point(0, 0), new Size(2000, 2000));
                 Assert.AreEqual(new List<Rectangle>(), cloud.Rectangles);
             }
         }
@@ -46,14 +48,15 @@ namespace TagsCloudVisualization
         {
             private CircularCloudLayouter cloud;
             private double stepAngle;
-            private CircularCloudVisualizer cloudVisualizer;
+            private CircularCloudTestVisualizer cloudVisualizer;
 
             [SetUp]
             public void Init()
             {
                 stepAngle = PointGenerator.StepAngle;
-                cloud = new CircularCloudLayouter(new Point(1000, 1000));
-                cloudVisualizer = new CircularCloudVisualizer(new Pen(Brushes.DarkOrchid, 1));
+                cloud = new CircularCloudLayouter(new Point(1000, 1000), new Size(2000, 2000));
+
+                cloudVisualizer = new CircularCloudTestVisualizer();
             }
 
             [TearDown]

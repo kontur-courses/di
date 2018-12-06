@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization.CloudConstruction;
+using TagsCloudVisualization.TagsCloud.CloudConstruction;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.TagsCloud.CircularCloud
 {
     public class CircularCloudLayouter
     {
@@ -13,9 +13,9 @@ namespace TagsCloudVisualization
         public CloudCompactor CloudCompactor { get; set; }
         public RectangleGenerator RectangleGenerator { get; set; }
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point center, Size windowSize)
         {
-            WindowSize = new Size(2000, 2000);
+            WindowSize = windowSize;
             if (center.X < 0 || center.Y < 0 || center.X > WindowSize.Width || center.Y > WindowSize.Height)
                 throw new ArgumentException("Center coordinates must not exceed the window size");
             Center = center;

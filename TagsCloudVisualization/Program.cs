@@ -1,33 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using TagsCloudVisualization.App;
+using TagsCloudVisualization.WordProcessing;
+using Autofac;
+using TagsCloudVisualization.App.Actions;
+using TagsCloudVisualization.TagsCloud;
+using TagsCloudVisualization.TagsCloud.CircularCloud;
 
 namespace TagsCloudVisualization
 {
     public class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine(@"Enter folder path");
-            var folderPath = Console.ReadLine();
-            Console.WriteLine(@"Enter min and max edge length of a rectangle");
-            var inputStr = Console.ReadLine().Split();
-            var minEdgeRectangle = int.Parse(inputStr[0]);
-            var maxEdgeRectangle = int.Parse(inputStr[1]);
-            Console.WriteLine(@"Enter center coordinates");
-            inputStr = Console.ReadLine().Split();
-            var x = int.Parse(inputStr[0]);
-            var y = int.Parse(inputStr[1]);
-            var center = new Point(x, y);
-            Console.WriteLine(@"Enter the number of rectangles");
-            var numberRectangles = int.Parse(Console.ReadLine());
-            var bmp = new CircularCloudVisualizer(new Pen(Brushes.DarkOrchid, 5))
-                .DrawRandomRectanglesInBitmap(minEdgeRectangle, maxEdgeRectangle, center, numberRectangles);
-            bmp.Save(folderPath ?? throw new InvalidOperationException("Folder path is null."));
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            var container = new ContainerBuilder();
+            container.RegisterType<OpenFileAction>().As<IUiAction>();
+            container.RegisterType<TagsCloudAction>().As<IUiAction>();
+            container.RegisterType<SaveImageAction>().As<IUiAction>();
+            container.RegisterType<WordsSettings>().AsSelf().SingleInstance();
+            container.RegisterType<PictureBoxImageHolder>().AsSelf().SingleInstance();
+            container.RegisterType<TagsCloudVisualizer>().AsSelf().SingleInstance();
+            container.RegisterType<TagsCloudSettings>().AsSelf().SingleInstance();
+            container.RegisterType<MainForm>().AsSelf();
+            var form = container.Build().Resolve<MainForm>();
+            Application.Run(form);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudVisualization.TagsCloud.CircularCloud;
 
-namespace TagsCloudVisualization.CloudConstruction
+namespace TagsCloudVisualization.TagsCloud.CloudConstruction
 {
     public class PointGenerator
     {

@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.TagsCloud.CircularCloud;
 
-namespace TagsCloudVisualization.CloudConstruction
+namespace TagsCloudVisualization.TagsCloud.CloudConstruction
 {
     public class RectangleGenerator
     {
