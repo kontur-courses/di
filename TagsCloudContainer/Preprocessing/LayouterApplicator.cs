@@ -23,7 +23,7 @@ namespace TagsCloudContainer.Preprocessing
         public IEnumerable<WordInfo> GetWordsAndRectangles(IEnumerable<WordInfo> wordsAndFrequencies)
         {
             if (wordsAndFrequencies == null)
-                throw new InvalidOperationException("You must process words at first");
+                throw new ArgumentNullException(nameof(wordsAndFrequencies));
             var layouter = layouterGenerator();
             WordsCenter = layouter.Center;
             foreach (var wordAndFrequency in wordsAndFrequencies)
@@ -32,12 +32,9 @@ namespace TagsCloudContainer.Preprocessing
                 var frequency = wordAndFrequency.Frequency;
                 var font = new Font(fontSettings.FontFamily, frequency * fontSettings.FontSizeFactor);
                 var size = TextRenderer.MeasureText(word, font);
-                yield return new WordInfo
-                {
-                    FontSize = frequency,
-                    Rect = layouter.PutNextRectangle(size),
-                    Word = word
-                };
+                wordAndFrequency.FontSize = font.Size;
+                wordAndFrequency.Rect = layouter.PutNextRectangle(size);
+                yield return wordAndFrequency;
             }
         }
     }
