@@ -37,10 +37,10 @@ namespace TagCloudLayouter
             InitContainer(config.Center);
 
             var layouter = container.Resolve<ICloudLayouter>();
-            var proc = container.Resolve<IPreprocessor>();
+            var preprocessor = container.Resolve<IPreprocessor>();
             var text = container.Resolve<IReader>().ReadFromFile(config.InputFile);
             var allWords = container.Resolve<ITextParser>().GetWords(text);
-            var validWords = proc
+            var validWords = preprocessor
                 .GetValidWords(allWords)
                 .Take(config.Count)
                 .ToList();
