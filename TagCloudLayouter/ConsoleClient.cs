@@ -53,6 +53,7 @@ namespace TagCloudLayouter
             var font = new Font("Times New Roman", 40.0f);
             var color = Color.Black;
             var backgroundColor = Color.FromArgb(0, Color.White);
+            var r = Parser.Default.FormatCommandLine(new Options());
 
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(o =>
@@ -70,7 +71,7 @@ namespace TagCloudLayouter
 
             if (inputFile == null)
                 toExit = true;
-            //CommandLine.ErrorType.HelpRequestedError;
+            
             return new Config(
                 center,
                 inputFile,

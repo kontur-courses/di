@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework;
@@ -70,8 +71,6 @@ namespace TagCloudVisualizationTests
                 }
         }
 
-
-
         [TearDown]
         public static void SaveImageOfWrongTestCase()
         {
@@ -85,27 +84,30 @@ namespace TagCloudVisualizationTests
             var visualizator = new CircularCloudVisualization(cloudLayouter);
             visualizator.SaveCloudLayouter($"FailedOn{TestContext.CurrentContext.Test.Name}", TestContext.CurrentContext.TestDirectory);
         }
+        
+        
+        private IEnumerable<TestCaseData> TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter()
+        {
+            yield return new TestCaseData(new[] { new Size(2, 2), new Size(2, 2) })
+                .SetName("AfterAdditionTwoEqualsRectangles");
+        }
+        
+        [Ignore("Not implemented")]
+        [Test, TestCaseSource(nameof(TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter))]
+        public void NextRectangleMustByFartherFromCenter(IEnumerable<Size> rectanglesSizes)
+        {
+            var center = new Point(0, 0);
+            var cloud = new CloudLayouter(new ArchimedesSpiral(center));
+            var lastDistance = 0.0;
 
-        //private IEnumerable TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter()
-        //{
-        //    yield return new TestCaseData(new[] { new Size(2, 2), new Size(2, 2) })
-        //        .SetName("AfterAdditionTwoEqualsRectangles");
-        //}
+            foreach (var rectangleSize in rectanglesSizes)
+            {
+                var rectangle = cloud.PutNextRectangle(rectangleSize);
+                var distance = rectangle.GetDistanceToPoint(center);
+                distance.Should().BeGreaterOrEqualTo(lastDistance);
 
-        //[Test, TestCaseSource(nameof(TestCasesGeneratorFor_NextRectangleMustByFartherFromCenter))]
-        //public void NextRectangleMustByFartherFromCenter(IEnumerable<Size> rectanglesSizes)
-        //{
-        //    var cloud = new CloudLayouter(new Point(0, 0));
-        //    var lastDistance = 0.0;
-
-        //    foreach (var rectangleSize in rectanglesSizes)
-        //    {
-        //        var rectangle = cloud.PutNextRectangle(rectangleSize);
-        //        var distance = GetDistanceFromRectangleToPoint(rectangle, cloud);
-        //        distance.Should().BeGreaterOrEqualTo(lastDistance);
-
-        //        lastDistance = distance;
-        //    }
-        //}
+                lastDistance = distance;
+            }
+        }
     }
 }

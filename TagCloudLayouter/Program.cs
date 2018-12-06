@@ -16,10 +16,10 @@ namespace TagCloudLayouter
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
-            //builder.RegisterType<PreprocessorLinear>().As<IPreprocessor>();
-            builder.Register(ctx => new SimplePreprocessor(new XmlWordExcluder(Environment.CurrentDirectory + "\\..\\..\\.."))).As<IPreprocessor>();
+            builder.Register(ctx => new SimplePreprocessor(
+                new XmlWordExcluder(Environment.CurrentDirectory + "\\..\\..\\.."))
+            ).As<IPreprocessor>();
             builder.RegisterType<TxtReader>().As<IReader>();
-            //builder.RegisterType<LinesWithWordsParser>().As<ITextParser>();
             builder.RegisterType<TextParser>().As<ITextParser>();
 
             builder.Register(ctx => new ArchimedesSpiral(center)).As<ISpiral>();
@@ -32,7 +32,7 @@ namespace TagCloudLayouter
         {
             var client = new ConsoleClient();
             var config = client.GetConfig(args, out var toExit);
-            if(toExit)
+            if (toExit)
                 Environment.Exit(0);
             InitContainer(config.Center);
 
@@ -46,7 +46,8 @@ namespace TagCloudLayouter
                 .ToList();
 
             var vis = new TagCloudVisualization(layouter);
-            vis.SaveTagCloud(config.FileName, config.OutPath, config.Font, config.Color, Color.FromArgb(128, config.BackgroundColor), validWords);
+            vis.SaveTagCloud(config.FileName, config.OutPath, config.Font, config.Color,
+                Color.FromArgb(128, config.BackgroundColor), validWords);
         }
     }
 }
