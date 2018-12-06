@@ -1,22 +1,33 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Geom;
+using TagsCloudContainer.Algo;
 
 namespace TagsCloudContainer.Drawing
 {
     public class ImageDrawer : IDrawer
     {
-        public Bitmap Draw(CircularCloudLayouter layouter, int imageWidth=1024, int imageHeight=1024)
+        public int Width => settings.Size.Width;
+        public int Height => settings.Size.Height;
+
+        private readonly WordLayout layout;
+        private readonly ImageSettings settings;
+
+        public ImageDrawer(WordLayout layout, ImageSettings settings)
         {
-            var image = new Bitmap(imageWidth, imageHeight);
-            var graphics = Graphics.FromImage(image);
+            this.layout = layout;
+            this.settings = settings;
+        }
 
-            foreach (var rectangle in layouter.Rectangles)
-            {
-                graphics.FillRectangle(Brushes.LightCoral, rectangle);
-                graphics.DrawRectangle(Pens.Black, rectangle);
-            }
+        public void Draw(Graphics graphics)
+        {
+            graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(0, 0, Width, Height));
 
-            return image;
+            foreach (var pair in layout.WordRectangles)
+                DrawWord(graphics, pair.Value, pair.Key);
+        }
+
+        private void DrawWord(Graphics graphics, Rectangle containingRectangle, string word)
+        {
+            graphics.DrawString(word, settings.TextFont, new SolidBrush(settings.TextColor), containingRectangle);
         }
     }
 }

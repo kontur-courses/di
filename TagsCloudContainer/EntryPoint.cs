@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using TagsCloudContainer.Algo.Geom;
 using TagsCloudContainer.Drawing;
-using TagsCloudContainer.Geom;
 
 namespace TagsCloudContainer
 {
@@ -12,22 +13,24 @@ namespace TagsCloudContainer
 
         private static void Main(string[] args)
         {
-            var randomLayouter = LayouterWithRandomSizeRectangles();
-            Console.WriteLine("Random generated");
-            var simpleLayouter = SimpleLayouter();
-            Console.WriteLine("Simple generated");
+            Console.WriteLine(File.Exists(@"Resources\mystem.exe"));
 
-            var imageWriter = new ImageWriter();
-            var imageDrawer = new ImageDrawer();
+            //var randomLayouter = LayouterWithRandomSizeRectangles();
+            //Console.WriteLine("Random generated");
+            //var simpleLayouter = SimpleLayouter();
+            //Console.WriteLine("Simple generated");
 
-            imageWriter.Write(imageDrawer.Draw(randomLayouter), "random.png");
-            imageWriter.Write(imageDrawer.Draw(simpleLayouter), "simple.png");
+            //var writer = new BMPWriter();
+            //var imageDrawer = new ImageDrawer();
+
+            //writer.WriteToFIle(imageDrawer.Draw(randomLayouter), "random.png");
+            //writer.WriteToFIle(imageDrawer.Draw(simpleLayouter), "simple.png");
         }
 
-        private static CircularCloudLayouter LayouterWithRandomSizeRectangles()
+        private static CircularCloudLayout LayouterWithRandomSizeRectangles()
         {
             var random = new Random();
-            var layouter = new CircularCloudLayouter(DefaultImageWidth / 2, DefaultImageHeight / 2, DefaultImageWidth, DefaultImageHeight);
+            var layouter = new CircularCloudLayout(DefaultImageWidth / 2, DefaultImageHeight / 2, DefaultImageWidth, DefaultImageHeight);
             for (var i = 0; i < 800; i++)
             {
                 var randomSize = new Size(random.Next(3, 50), random.Next(3, 50));
@@ -37,9 +40,9 @@ namespace TagsCloudContainer
             return layouter;
         }
 
-        private static CircularCloudLayouter SimpleLayouter()
+        private static CircularCloudLayout SimpleLayouter()
         {
-            var layouter = new CircularCloudLayouter(DefaultImageWidth / 2, DefaultImageHeight / 2, DefaultImageWidth, DefaultImageHeight);
+            var layouter = new CircularCloudLayout(DefaultImageWidth / 2, DefaultImageHeight / 2, DefaultImageWidth, DefaultImageHeight);
             for (var i = 0; i < 1000; i++)
                 layouter.PutNextRectangle(new Size(20, 10));
 

@@ -51,6 +51,9 @@
       <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -61,13 +64,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algo\WordLayout.cs" />
+    <Compile Include="Drawing\FileWriter.cs" />
     <Compile Include="Drawing\IDrawer.cs" />
     <Compile Include="Drawing\ImageDrawer.cs" />
-    <Compile Include="Drawing\ImageWriter.cs" />
-    <Compile Include="Drawing\IWriter.cs" />
+    <Compile Include="Drawing\ImageSettings.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
-    <Compile Include="Algo\Geom\CircularCloudLayouter.cs" />
+    <Compile Include="Algo\Geom\CircularCloudLayout.cs" />
     <Compile Include="Algo\Geom\Spiral.cs" />
     <Compile Include="Input\DocxReader.cs" />
     <Compile Include="Input\IFileReader.cs" />

@@ -4,25 +4,25 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudContainer.Geom
+namespace TagsCloudContainer.Algo.Geom
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayout
     {
-        private List<Rectangle> rectangles;
-        private Spiral spiral;
+        private readonly List<Rectangle> rectangles;
+        private readonly Spiral spiral;
 
         public IReadOnlyCollection<Rectangle> Rectangles => new ReadOnlyCollection<Rectangle>(rectangles);
         public Point Center => spiral.Center;
         public double Area => Math.Pow(spiral.Radius, 2) * Math.PI;
         public readonly Size CloudSize;
 
-        public CircularCloudLayouter(int locationX, int locationY, int width, int height)
+        public CircularCloudLayout(int locationX, int locationY, int width, int height)
             : this(new Point(locationX, locationY), new Size(width, height))
         {
 
         }
 
-        public CircularCloudLayouter(Point center, Size size)
+        public CircularCloudLayout(Point center, Size size)
         {
             if (size.Width <= 0 || size.Height <= 0)
                 throw new ArgumentException(nameof(size));
@@ -46,8 +46,8 @@ namespace TagsCloudContainer.Geom
 
             } while (rectangles.Any(rectangle.IntersectsWith));
 
-            //if (rectangle.Location != Center)
-            //    rectangle = ShiftToTheCenter(rectangle);
+            if (rectangle.Location != Center)
+                rectangle = ShiftToTheCenter(rectangle);
 
             rectangles.Add(rectangle);
             return rectangle;
@@ -70,7 +70,7 @@ namespace TagsCloudContainer.Geom
             return previousShiftedRectangle;
         }
 
-        private Point MoveLocationToCenter(Point center, Point location)
+        private static Point MoveLocationToCenter(Point center, Point location)
         {
             var result = location;
 

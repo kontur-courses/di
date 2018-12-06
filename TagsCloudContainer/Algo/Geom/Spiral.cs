@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudContainer.Geom
+namespace TagsCloudContainer.Algo.Geom
 {
     public class Spiral
     {

@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Geom;
 
 namespace TagsCloudContainer.Drawing
 {
     public interface IDrawer
     {
-        Bitmap Draw(CircularCloudLayouter layouter, int imageWidth, int imageHeight);
+        int Width { get; }
+        int Height { get; }
+        void Draw(Graphics graphics);
     }
 }
