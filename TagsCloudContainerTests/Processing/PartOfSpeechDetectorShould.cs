@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using TagsCloudContainer.Processing;
 
-namespace TagsCloudContainerTests
+namespace TagsCloudContainerTests.Processing
 {
     [TestFixture]
     public class PartOfSpeechDetectorShould

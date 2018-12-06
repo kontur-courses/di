@@ -64,15 +64,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algo\WordLayout.cs" />
+    <Compile Include="Layout\IRectangleLayout.cs" />
+    <Compile Include="Layout\WordLayout.cs" />
     <Compile Include="Drawing\FileWriter.cs" />
     <Compile Include="Drawing\IDrawer.cs" />
     <Compile Include="Drawing\ImageDrawer.cs" />
     <Compile Include="Drawing\ImageSettings.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
-    <Compile Include="Algo\Geom\CircularCloudLayout.cs" />
-    <Compile Include="Algo\Geom\Spiral.cs" />
+    <Compile Include="Layout\CircularCloudLayout.cs" />
+    <Compile Include="Layout\Spiral.cs" />
     <Compile Include="Input\DocxReader.cs" />
     <Compile Include="Input\IFileReader.cs" />
     <Compile Include="Input\IWordParser.cs" />

@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Algo.Geom;
-using System.Collections.Immutable;
 
-namespace TagsCloudContainer.Algo
+namespace TagsCloudContainer.Layout
 {
     public class WordLayout
     {
         private const int MaxWordWidth = 40;
-        private const int MaxWordHeight = 30;
+        private const int MinWordWidth = 10;
 
-        private readonly CircularCloudLayout layout;
+        private const int MaxWordHeight = 30;
+        private const int MinWordHeight = 8;
+
+        private readonly IRectangleLayout layout;
         private readonly Dictionary<string, Rectangle> wordRectangles;
 
         public ImmutableDictionary<string, Rectangle> WordRectangles => wordRectangles.ToImmutableDictionary();
 
-        public WordLayout(CircularCloudLayout layout)
+        public WordLayout(IRectangleLayout layout)
         {
             this.layout = layout;
             wordRectangles = new Dictionary<string, Rectangle>();
@@ -30,9 +32,10 @@ namespace TagsCloudContainer.Algo
             foreach (var pair in wordWeights)
             {
                 var coefficient = pair.Value / (double) weightSum;
-                var wordSize = new Size((int) (MaxWordWidth * coefficient), (int) (MaxWordHeight * coefficient);
+                var newWidth = MaxWordWidth * coefficient >= MinWordWidth ? MaxWordWidth * coefficient : MinWordWidth;
+                var newHeight = MaxWordHeight * coefficient >= MinWordHeight ? MaxWordHeight * coefficient : MinWordHeight;
 
-                var rectangle = layout.PutNextRectangle(wordSize);
+                var rectangle = layout.PutNextRectangle(new Size((int) newWidth, (int) newHeight));
                 wordRectangles.Add(pair.Key, rectangle);
             }
         }
