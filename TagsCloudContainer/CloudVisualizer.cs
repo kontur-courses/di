@@ -7,14 +7,14 @@ using TagsCloudVisualization;
 
 namespace TagsCloudContainer
 {
-    public class CloudVisualizer
+    public class CloudVisualizer : ICloudVisualizer
     {
         private readonly Dictionary<string, int> words;
-        private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(new Point(1000, 500));
+        private readonly CircularCloudLayouter layouter = new CircularCloudLayouter(new Point(990, 510));
 
-        public CloudVisualizer(Dictionary<string, int> words)
+        public CloudVisualizer(IWordsPreprocessor preprocessor)
         {
-            this.words = words;
+            words = preprocessor.Prepare();
         }
 
         public void VisualizeCloud()
@@ -28,7 +28,7 @@ namespace TagsCloudContainer
 
         private Bitmap RenderToBitmap()
         {
-            var size = new Size(1980, 1020); // CalculateBitmapSize();
+            var size = new Size(1980, 1020);
             var bitmap = new Bitmap(size.Width, size.Height);
             var graphics = Graphics.FromImage(bitmap);
 
@@ -48,20 +48,9 @@ namespace TagsCloudContainer
         {
             var font = new Font("Arial", 16 + 2 * frequency);
             var size = graphics.MeasureString(word, font);
-            var intSize = new Size((int)size.Width, (int)size.Height);
+            var intSize = new Size((int)size.Width + 1, (int)size.Height + 1);
             var rectangle = layouter.PutNextRectangle(intSize);
             graphics.DrawString(word, font, Brushes.DarkRed, rectangle);
         }
-
-        //private Size CalculateBitmapSize()
-        //{
-        //    if (words.Any())
-        //    {
-        //        var width = rectangles.Max(r => r.Right) + rectangles.Min(r => r.Left);
-        //        var height = rectangles.Max(r => r.Bottom) + rectangles.Min(r => r.Top);
-        //        return new Size(width, height);
-        //    }
-        //    return new Size(100, 100);
-        //}
     }
 }

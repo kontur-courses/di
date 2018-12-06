@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.IO;
+using Autofac;
 using CommandLine;
 using TagsCloudVisualization;
 
@@ -13,22 +14,29 @@ namespace TagsCloudContainer
     public class Options
     {
         [Value(0, MetaName = "filename", HelpText = "Text file", Required = true)]
-        public string Text { get; set; }
+        public string Filename { get; set; }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            Dictionary<string, int> preparedWords = new Dictionary<string, int>();
-
             Parser.Default.ParseArguments<Options>(args).WithParsed(options =>
             {
-                preparedWords = WordsPreprocessor.Prepare(options.Text);
-            });
+                var source = new PreparedFile(options.Filename);
 
-            var visualizer = new CloudVisualizer(preparedWords);
-            visualizer.VisualizeCloud();
+                var builder = new ContainerBuilder();
+                //builder.RegisterType<ConsoleUI>().As<IUserInterface>();
+                builder.RegisterType<WordsPreprocessor>().As<IWordsPreprocessor>();
+                builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
+                builder.RegisterInstance(source).As<ISource>();
+                
+                var container = builder.Build();
+                //var client = container.Resolve<IUserInterface>();
+                var client = container.Resolve<ICloudVisualizer>();
+
+                client.VisualizeCloud();
+            });
         }
     }
 }

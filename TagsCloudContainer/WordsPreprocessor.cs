@@ -5,21 +5,23 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class WordsPreprocessor
+    public class WordsPreprocessor : IWordsPreprocessor
     {
-        public static Dictionary<string, int> Prepare(string fileName)
+        private readonly string[] words;
+
+        public WordsPreprocessor(ISource source)
         {
-            var words = File.ReadAllLines(fileName)
-                .Select(word => word.ToLower());
-
-            var dic = words
-                .Distinct()
-                .ToDictionary(w => w, w => words.Count(s => s == w));
-
-            return dic;
+            words = source.Parse();
         }
 
-        private static string[] RemoveBoring(string[] words)
+        public Dictionary<string, int> Prepare()
+        {
+            return words.Select(word => word.ToLower())
+                .Distinct()
+                .ToDictionary(w => w, w => words.Count(s => s == w));
+        }
+
+        private static string[] RemoveBoring()
         {
             return new string[0];
         }
