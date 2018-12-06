@@ -1,7 +1,7 @@
 using System.Drawing;
-using CloudLayouter.Infrastructer.Common;
+using CloudLayouter.Infrastructer.Common.Settings;
 
-namespace CloudLayouter.Infrastructer
+namespace CloudLayouter.Infrastructer.Interfaces
 {
     public interface IImageHolder
     {

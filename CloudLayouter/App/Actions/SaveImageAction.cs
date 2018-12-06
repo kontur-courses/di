@@ -1,7 +1,7 @@
 using System.IO;
 using System.Windows.Forms;
-using CloudLayouter.Infrastructer;
 using CloudLayouter.Infrastructer.Common;
+using CloudLayouter.Infrastructer.Interfaces;
 
 namespace CloudLayouter.Actions
 {
@@ -34,6 +34,6 @@ namespace CloudLayouter.Actions
                 imageHolder.SaveImage(dialog.FileName);
         }
 
-        public MenuCategory Category => MenuCategory.SaveFile;
+        public MenuCategory Category => MenuCategory.Save;
     }
 }

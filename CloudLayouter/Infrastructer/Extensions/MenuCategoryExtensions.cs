@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using CloudLayouter.Infrastructer.Common;
 
 namespace CloudLayouter.Infrastructer.Extensions
@@ -6,7 +8,13 @@ namespace CloudLayouter.Infrastructer.Extensions
     {
         public static string GetDescription(this MenuCategory menuCategory)
         {
-            return menuCategory.ToString();
+            var field = menuCategory.GetType().GetField(menuCategory.ToString());
+
+            var attribute
+                = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute))
+                    as DescriptionAttribute;
+
+            return attribute == null ? menuCategory.ToString() : attribute.Description;
         }
     }
 }

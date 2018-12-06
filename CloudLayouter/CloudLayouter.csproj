@@ -61,15 +61,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Actions\ImageSettingsAction.cs" />
+    <Compile Include="App\Actions\PaletteSetingsAction.cs" />
     <Compile Include="App\Actions\SaveImageAction.cs" />
+    <Compile Include="App\Actions\TagLayoutAction.cs" />
+    <Compile Include="App\Actions\TagSettingsAction.cs" />
     <Compile Include="App\MainForm.cs" />
+    <Compile Include="App\Painters\TagCloudPainter.cs" />
     <Compile Include="App\PicterBoxImageHolder.cs" />
     <Compile Include="App\Program.cs" />
+    <Compile Include="Infrastructer\Common\CircularCloudLayouter.cs" />
     <Compile Include="Infrastructer\Common\ImageDirectoryProvider.cs" />
-    <Compile Include="Infrastructer\Common\ImageSettings.cs" />
     <Compile Include="Infrastructer\Common\MenuCategory.cs" />
+    <Compile Include="Infrastructer\Common\SettingsForm.cs" />
+    <Compile Include="Infrastructer\Common\Settings\ImageSettings.cs" />
+    <Compile Include="Infrastructer\Common\Settings\Palette.cs" />
+    <Compile Include="Infrastructer\Common\Settings\TagSettings.cs" />
     <Compile Include="Infrastructer\Extensions\MenuCategoryExtensions.cs" />
     <Compile Include="Infrastructer\Extensions\UiActionextensions.cs" />
+    <Compile Include="Infrastructer\Interfaces\ICloudLayouter.cs" />
     <Compile Include="Infrastructer\Interfaces\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructer\Interfaces\IImageHolder.cs" />
     <Compile Include="Infrastructer\Interfaces\IUiAction.cs" />

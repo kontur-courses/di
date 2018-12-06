@@ -2,8 +2,8 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using CloudLayouter.Infrastructer;
-using CloudLayouter.Infrastructer.Common;
+using CloudLayouter.Infrastructer.Common.Settings;
+using CloudLayouter.Infrastructer.Interfaces;
 
 namespace CloudLayouter
 {
@@ -26,6 +26,7 @@ namespace CloudLayouter
             Refresh();
             Application.DoEvents();
         }
+
 
         public void RecreateImage(ImageSettings imageSettings)
         {

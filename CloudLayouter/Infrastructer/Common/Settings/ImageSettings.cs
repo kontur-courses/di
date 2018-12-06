@@ -1,4 +1,4 @@
-namespace CloudLayouter.Infrastructer.Common
+namespace CloudLayouter.Infrastructer.Common.Settings
 {
     public class ImageSettings
     {

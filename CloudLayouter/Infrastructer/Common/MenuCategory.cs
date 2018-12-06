@@ -4,9 +4,8 @@ namespace CloudLayouter.Infrastructer.Common
 {
     public enum MenuCategory
     {
-        [Description("Save")] 
-        SaveFile = 1,
-                
+        [Description("Сохранить")] Save = 1,
+        [Description("Настройки")] Settings = 2,
+        [Description("Визуализация")] DrawTagCloud = 3
     }
-   
 }

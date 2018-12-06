@@ -2,8 +2,10 @@
 using System.Windows.Forms;
 using Autofac;
 using CloudLayouter.Actions;
-using CloudLayouter.Infrastructer;
 using CloudLayouter.Infrastructer.Common;
+using CloudLayouter.Infrastructer.Common.Settings;
+using CloudLayouter.Infrastructer.Interfaces;
+using CloudLayouter.Painters;
 
 namespace CloudLayouter
 {
@@ -17,13 +19,19 @@ namespace CloudLayouter
                 #region Dependencies
 
                 var builder = new ContainerBuilder();
-
-                builder.RegisterType(typeof(MainForm));
+                builder.RegisterType<MainForm>();
+                builder.RegisterType<TagCloudPainter>();
                 builder.RegisterType<ImageSettings>().SingleInstance();
-                builder.RegisterType<PictureBoxImageHolder>().SingleInstance();
-                builder.RegisterType<SaveImageAction>().As<IUiAction>();
-                builder.RegisterType<IImageDirectoryProvider>();
-                builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder>();
+                builder.RegisterType<Palette>().SingleInstance();
+                builder.RegisterType<TagSettings>().SingleInstance();
+                builder.RegisterType<SaveImageAction>().As<IUiAction>().SingleInstance();
+                builder.RegisterType<TagSettingsAction>().As<IUiAction>().SingleInstance();
+                builder.RegisterType<ImageSettingsAction>().As<IUiAction>().SingleInstance();
+                builder.RegisterType<PaletteSettingsAction>().As<IUiAction>().SingleInstance();
+                builder.RegisterType<TagLayoutAction>().As<IUiAction>().SingleInstance();
+
+                builder.RegisterType<PictureBoxImageHolder>()
+                    .As(typeof(PictureBoxImageHolder), typeof(IImageHolder)).SingleInstance();
                 builder.RegisterType<ImageDirectoryProvider>().As<IImageDirectoryProvider>();
                 var container = builder.Build();
 

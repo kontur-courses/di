@@ -1,12 +1,12 @@
 using CloudLayouter.Infrastructer.Common;
 
-namespace CloudLayouter.Infrastructer
+namespace CloudLayouter.Infrastructer.Interfaces
 {
     public interface IUiAction
     {
         string Name { get; }
         string Description { get; }
-        void Perform();
         MenuCategory Category { get; }
+        void Perform();
     }
 }

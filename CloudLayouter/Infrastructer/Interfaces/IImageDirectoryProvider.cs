@@ -1,4 +1,4 @@
-namespace CloudLayouter.Infrastructer
+namespace CloudLayouter.Infrastructer.Interfaces
 {
     public interface IImageDirectoryProvider
     {
