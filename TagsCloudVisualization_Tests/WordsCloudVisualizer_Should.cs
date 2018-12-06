@@ -13,15 +13,10 @@ namespace TagsCloudVisualization_Tests
         [Test]
         public void DrawRectangles_BeCorrectSize()
         {
-            var center = new Point(0, 0);
-            var spiral = new Spiral(0.0005, 0);
-            var layouter = new CircularCloudLayouter(new LayouterSettings(center, spiral));
-            var wordsCloudLayouter = new WordsCloudLayouter(layouter, new FontSettings(new FontFamily("Times New Roman"), FontStyle.Bold));
-            var words = wordsCloudLayouter.LayWords(new List<(string, int)>{("letter", 4)}).ToList();
-            var size = new Size(layouter.Radius * 2, layouter.Radius * 2);
+            var size = new Size(50, 50);
             var visualizer = new WordsCloudVisualizer(new Palette(Color.DimGray, Brushes.FloralWhite), size);
-            visualizer.Draw(words).Width.Should().Be(layouter.Radius * 2);
-            visualizer.Draw(words).Height.Should().Be(layouter.Radius * 2);
+            visualizer.Draw(Enumerable.Empty<Word>().ToList()).Width.Should().Be(50);
+            visualizer.Draw(Enumerable.Empty<Word>().ToList()).Height.Should().Be(50);
         }
     }
 }

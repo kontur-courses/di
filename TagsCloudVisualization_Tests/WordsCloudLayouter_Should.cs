@@ -18,19 +18,17 @@ namespace TagsCloudVisualization_Tests
         public void SetUp()
         {
             var center = new Point(0, 0);
-            var spiral = new Spiral(0.0005, 0);
-            var layouter = new CircularCloudLayouter(new LayouterSettings(center, spiral));
-            wordsCloudLayouter = new WordsCloudLayouter(layouter, new FontSettings(new FontFamily("Times New Roman"), FontStyle.Bold));
+            var spiral = new Spiral(center, 0.0005, 0);
+            var layouter = new CircularCloudLayouter(spiral);
+            wordsCloudLayouter = new WordsCloudLayouter(layouter);
         }
-
-        [Test]
-        public void Radius_BeZeroAfterCreation() => wordsCloudLayouter.Radius.Should().Be(0);
-
 
         [Test]
         public void LayWords_AndReturnWordEntity()
         {
-            var frequencyWords = new List<(string, int)>{("mama",5), ("papa", 8)};
+            var mama = new SizedWord("mama", new Font(FontFamily.GenericSansSerif, 10), new Size(10, 5));
+            var ma = new SizedWord("ma", new Font(FontFamily.GenericSansSerif, 5), new Size(5, 5));
+            var frequencyWords = new List<SizedWord>{mama, ma};
             var words = wordsCloudLayouter.LayWords(frequencyWords);
             words.ToList().Should().HaveCount(2);
         }

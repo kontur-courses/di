@@ -1,8 +1,12 @@
-﻿namespace TagsCloudVisualization_Tests
+﻿using System;
+using Autofac;
+using TagsCloudVisualization;
+
+namespace TagsCloudVisualization_Tests
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
         }
     }
