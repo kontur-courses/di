@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.TextPreprocessors
 {
-    internal interface IWordsPreprocessor
+    public interface IWordsPreprocessor
     {
         IEnumerable<string> PreprocessWords(string[] words);
     }

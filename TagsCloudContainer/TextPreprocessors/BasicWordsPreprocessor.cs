@@ -5,11 +5,11 @@ using NHunspell;
 
 namespace TagsCloudContainer.TextPreprocessors
 {
-    class BasicWordsPreprocessor : IWordsPreprocessor
+    public class BasicWordsPreprocessor : IWordsPreprocessor
     {
         public IEnumerable<string> PreprocessWords(string[] words)
         {
-            var dir = Path.Combine(Directory.GetCurrentDirectory(),"Resources", "HunspellDicts", "Russian");
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "HunspellDicts", "Russian");
             var affFile = Path.Combine(dir, "ru.aff");
             var dictFile = Path.Combine(dir, "ru.dic");
             using (var hunspell = new Hunspell(affFile, dictFile))
@@ -22,7 +22,7 @@ namespace TagsCloudContainer.TextPreprocessors
                     if (lemma?.Length > 4)
                         yield return lemma.ToLower();
                 }
-                
+
             }
         }
     }
