@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Preprocessing
 
         private IEnumerable<string> ProcessWords(string[] words)
         {
-            return words.Select(word => word.ToLower()).Where(word => word.Length > 4 && !settings.ExcludedWords.Contains(word));
+            return words.Select(word => word.ToLower()).Where(word => word.Length > settings.BoringWordsLength && !settings.ExcludedWords.Contains(word));
                 //.Where(word => settings.WordsWhich(word))
                 //.Select(word => settings.WordsSelector(word));
         }
@@ -24,7 +24,7 @@ namespace TagsCloudContainer.Preprocessing
         private IEnumerable<WordInfo> OrderWordFrequencies(Dictionary<string, int> frequencies)
         {
             return frequencies
-                .OrderBy(kv => kv.Value)
+                .OrderByDescending(kv => kv.Value)
                 .Select(kv => new WordInfo
                 {
                     Word = kv.Key,

@@ -9,6 +9,7 @@ namespace TagsCloudContainer.Preprocessing
         //public Func<string, bool> WordsWhich;
         //public Func<string, string> WordsSelector;
 
+        public int BoringWordsLength { get; set; } = 4;
         public string[] ExcludedWords { get; set; } = new string[0];
         public bool BringInTheInitialForm { get; set; }
     }

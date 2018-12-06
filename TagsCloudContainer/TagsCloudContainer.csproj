@@ -88,6 +88,7 @@
     <Compile Include="Painter\TagCloudPainter.cs" />
     <Compile Include="Settings\SettingsForm.cs" />
     <Compile Include="Tests\TagCloudLayouter_Should.cs" />
+    <Compile Include="Tests\WordPreprocessor_Should.cs" />
     <Compile Include="UI\Actions\FontSettingsAction.cs" />
     <Compile Include="UI\Actions\ImageSettingsAction.cs" />
     <Compile Include="UI\Actions\CloudDrawAction.cs" />
