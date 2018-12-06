@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CircularCloudLayouter
 {
-    internal class Visualizer
+    internal class RectangleVisualizer: IDrawer<Rectangle>
     {
-        private readonly CircularCloudLayouter.CircularCloudLayouter _layout;
+        private readonly CircularCloudLayout _layout;
         private Bitmap _bitmap;
 
-        public Visualizer(CircularCloudLayouter.CircularCloudLayouter layout)
+        public RectangleVisualizer(CircularCloudLayout layout)
         {
             _layout = layout;
             CreateBitmapForDrawing(_layout.ImageSize());
@@ -41,7 +42,7 @@ namespace TagsCloudContainer
             var color = Color.FromArgb(rnd.Next());
 
             var brush = new SolidBrush(color);
-            Thread.Sleep(2);
+            Thread.Sleep(25);
 
             return brush;
         }
@@ -49,6 +50,11 @@ namespace TagsCloudContainer
         private void CreateBitmapForDrawing(Size imageSize)
         {
             _bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+        }
+
+        public void DrawItems(IEnumerable<ItemToDraw<Rectangle>> itemsToDraws)
+        {
+            throw new NotImplementedException();
         }
     }
 }
