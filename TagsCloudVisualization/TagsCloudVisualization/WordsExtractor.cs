@@ -3,20 +3,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
     public class WordsExtractor : IWordsExtractor
     {
-        public List<string> Extract(string path)
+        public List<string> Extract(string path, IWordsExtractorSettingsProvider settings)
         {
             var text = File.ReadAllText(path, Encoding.Default)
                 .Replace("\n", " ")
                 .Replace("\r", " ")
                 .Replace("\t", " ");
-            text = new WordsExtractorSettings().StopChars.Aggregate(text, (current, c) => current.Replace(c, ' '));
+            text = settings.StopChars.Aggregate(text, (current, c) => current.Replace(c, ' '));
             var words = text.Split(' ')
-                .Where(w => w.Length >= 3 && w != string.Empty && !new WordsExtractorSettings().StopWords.Contains(w))
+                .Where(w => w.Length >= 3 && w != string.Empty && !settings.StopWords.Contains(w))
                 .Select(w => w.Trim().ToLowerInvariant()).ToList();
             return words;
         }

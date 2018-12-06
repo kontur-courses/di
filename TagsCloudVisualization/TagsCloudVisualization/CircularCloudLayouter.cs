@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
@@ -43,7 +43,7 @@ namespace TagsCloudVisualization
 
         private Rectangle GetNextRectangle(Size size)
         {
-            var nextPoint = pointGenerator.GetNextPoint();
+            var nextPoint = pointGenerator.GetNextPoint(new PointGeneratorSettings());
             return new Rectangle(nextPoint.X, nextPoint.Y, size.Width, size.Height);
         }
     }

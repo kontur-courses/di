@@ -4,16 +4,20 @@ using Autofac;
 using CommandLine;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
     public class TagsCloudApp
     {
         protected readonly IWordDataProvider wordDataProvider;
+        private readonly IWordsExtractorSettingsProvider wordsExtractorSettingsProvider;
 
-        public TagsCloudApp(IWordDataProvider wordDataProvider)
+        public TagsCloudApp(IWordDataProvider wordDataProvider,
+            IWordsExtractorSettingsProvider wordsExtractorSettingsProvider)
         {
             this.wordDataProvider = wordDataProvider;
+            this.wordsExtractorSettingsProvider = wordsExtractorSettingsProvider;
         }
 
         public void Run(string[] args, IContainer container)
@@ -30,8 +34,8 @@ namespace TagsCloudVisualization
             parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator);
 
             var cloud = new CircularCloudLayouter(parameters.PointGenerator);
-            var extractor =container.Resolve<IWordsExtractor>();
-            var words = extractor.Extract(options.FilePath);
+            var extractor = container.Resolve<IWordsExtractor>();
+            var words = extractor.Extract(options.FilePath, wordsExtractorSettingsProvider);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
             picture.Save($"{Application.StartupPath}\\CloudTags.png");

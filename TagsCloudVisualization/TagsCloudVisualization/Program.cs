@@ -1,14 +1,12 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Autofac;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
-    public interface IPipelineStep<T1, T2>{ }
-
     public class Program
     {
         private static void Main(string[] args)
@@ -24,12 +22,8 @@ namespace TagsCloudVisualization
             builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
             builder.RegisterType<WordDataProvider>().As<IWordDataProvider>();
 
-            builder.RegisterType<SettingsManager>().OnActivating(e => e.Instance.Load())
-                .As<IPointGeneratorSettingsProvider>().SingleInstance();
-            builder.RegisterType<SettingsManager>().OnActivating(e => e.Instance.Load())
-                .As<IWordsExtractorSettingsProvider>().SingleInstance();
-
             builder.RegisterType<WordsExtractorSettings>().As<IWordsExtractorSettingsProvider>();
+            builder.RegisterType<PointGeneratorSettings>().As<IPointGeneratorSettingsProvider>();
 
             var pointGeneratorTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                 .Where(x => typeof(IPointGenerator).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)

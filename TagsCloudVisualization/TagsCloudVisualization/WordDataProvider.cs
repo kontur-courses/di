@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudVisualization.Interfaces;
-using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization
 {

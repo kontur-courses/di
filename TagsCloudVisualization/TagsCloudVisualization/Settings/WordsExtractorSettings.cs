@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Settings
 {
-    public class WordsExtractorSettings
+    public class WordsExtractorSettings : IWordsExtractorSettingsProvider
     {
         public List<char> StopChars { get; set; } = "?@,.;)(:0123456789".ToCharArray().ToList();
 
