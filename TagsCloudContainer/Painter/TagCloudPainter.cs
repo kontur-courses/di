@@ -24,8 +24,9 @@ namespace TagsCloudContainer.Painter
             this.painter = painter;
         }
 
-        public void Paint(Point center, WordInfo[] wordInfos)
+        public void Paint(Point center, IEnumerable<WordInfo> wordInfosEnum)
         {
+            var wordInfos = wordInfosEnum.ToArray();
             var radius = (int)wordInfos.Select(wordInfo => wordInfo.Rect).Select(rect => Math.Ceiling(rect.Location.DistanceTo(center))).Max();
             var bitmapSize = GetBitmapSize(wordInfos.Select(info => info.Rect), center);
             holder.RecreateImage(new ImageSettings

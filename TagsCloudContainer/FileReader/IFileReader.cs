@@ -1,7 +1,9 @@
-﻿namespace TagsCloudContainer.FileReader
+﻿using System.Collections.Generic;
+
+namespace TagsCloudContainer.FileReader
 {
     public interface IFileReader
     {
-        string[] Read();
+        IEnumerable<string> Read();
     }
 }

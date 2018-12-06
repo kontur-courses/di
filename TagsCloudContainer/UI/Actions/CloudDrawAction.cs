@@ -54,7 +54,7 @@ namespace TagsCloudContainer.UI.Actions
                 return;
             var processed = preprocessor.CountWordFrequencies(words);
             var wordInfos = infoGetter.GetWordsAndRectangles(processed);
-            painter.Paint(infoGetter.WordsCenter, wordInfos.ToArray());
+            painter.Paint(infoGetter.WordsCenter, wordInfos);
         }
     }
 }

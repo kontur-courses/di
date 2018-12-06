@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Preprocessing
             this.settings = settings;
         }
 
-        private IEnumerable<string> ProcessWords(string[] words)
+        private IEnumerable<string> ProcessWords(IEnumerable<string> words)
         {
             return words.Select(word => word.ToLower()).Where(word => word.Length > settings.BoringWordsLength && !settings.ExcludedWords.Contains(word));
                 //.Where(word => settings.WordsWhich(word))
@@ -32,7 +32,7 @@ namespace TagsCloudContainer.Preprocessing
                 });
         }
 
-        public IEnumerable<WordInfo> CountWordFrequencies(string[] words)
+        public IEnumerable<WordInfo> CountWordFrequencies(IEnumerable<string> words)
         {
             if (words == null)
                 throw new ArgumentNullException(nameof(words));

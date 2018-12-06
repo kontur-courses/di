@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.FileReader
@@ -12,7 +13,7 @@ namespace TagsCloudContainer.FileReader
             this.provider = provider;
         }
 
-        public string[] Read()
+        public IEnumerable<string> Read()
         {
             var lines = File.ReadAllLines(provider.WordsFilePath);
             return lines;
