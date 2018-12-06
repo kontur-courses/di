@@ -8,7 +8,7 @@ using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer.Tests
 {
-    public class TagCloudLayoiter_Should
+    public class TagCloudLayouter_Should
     {
         private Point center;
         private TagCloudLayouter layouter;
@@ -18,8 +18,8 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            center = new Point(0, 1);
             var spiral = new Spiral(new SpiralSettings());
+            center = spiral.GetCenter();
             layouter = new TagCloudLayouter(spiral);
         }
 
