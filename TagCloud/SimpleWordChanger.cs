@@ -1,6 +1,6 @@
 ﻿namespace TagCloud
 {
-    public class SimlpeWordChanger : IWordChanger
+    public class SimpleWordChanger : IWordChanger
     {
         public string ChangeWord(string word)
         {

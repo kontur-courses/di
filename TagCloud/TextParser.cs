@@ -17,12 +17,12 @@ namespace TagCloud
             this.wordParser = wordParser;
         }
 
-        public List<string> TryGetWordsFromText()
+        public List<string> TryGetWordsFromText(string input)
         {
-            var text = textReader.TryReadText();
+            var text = textReader.TryReadText(input);
             if (text == null) return null;
             var notLetterRegexp = @"[^\'`\-A-Za-z]";
-            return Regex.Split(text, notLetterRegexp)
+            return Regex.Split(text, notLetterRegexp, RegexOptions.Compiled)
                 .Where(s => s.Length > 0).ToList();
         }
 

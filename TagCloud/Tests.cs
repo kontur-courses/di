@@ -3,16 +3,15 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
+using TagsCloudVisualization;
 
-
-namespace TagsCloudVisualization
+namespace TagCloud
 {
     class Tests
     {
         private CircularCloudLayouter cloud;
         private TestContext currentContext;
-        private const string filePath = "D://DebugFile.bmp";
+        private const string FilePath = "DebugFile.bmp";
 
         [SetUp]
         public void SetUp()
@@ -26,9 +25,9 @@ namespace TagsCloudVisualization
         {
             if (currentContext.Result.FailCount != 0)
             {
-                var visualisator = new Visualiser(new Size(600, 600), filePath);
-                visualisator.RenderCurrentConfig(cloud);
-                Console.WriteLine("Tag cloud visualization saved to file " + filePath);
+                var visualizer = new Visualizer(new Size(600, 600));
+                visualizer.RenderCurrentConfig(cloud, FilePath);
+                Console.WriteLine("Tag cloud visualization saved to file " + FilePath);
             }
         }
 
@@ -40,25 +39,17 @@ namespace TagsCloudVisualization
 
 
         [Test]
-        public void FirstRectange_ShouldBeNearCenter()
+        public void FirstRectangle_ShouldBeNearCenter()
         {
             var rect = cloud.PutNextRectangle(new Size(10, 10));
             rect.Contains(cloud.Center).Should().BeTrue();
         }
 
-        [Test]
-        public void Rectangles_ShouldNotIntersect()
-        {
-            var firstRectangle = cloud.PutNextRectangle(new Size(20, 10));
-            var secondRectangle = cloud.PutNextRectangle(new Size(10, 20));
-            firstRectangle.IntersectsWith(secondRectangle).Should().BeFalse();
-        }
-
-        [TestCase(-1, 1, TestName = "PutNextRectangle Should Throw Argument Exception With Negative Width")]
-        [TestCase(0, 1, TestName = "PutNextRectangle Should Throw Argument Exception With Zero Width")]
-        [TestCase(1, -1, TestName = "PutNextRectangle Should Throw Argument Exception With Negative Height")]
-        [TestCase(1, 0, TestName = "PutNextRectangle Should Throw Argument Exception With Zero Height")]
-        public void test(int width, int height)
+        [TestCase(-1, 1, TestName = "With Negative Width")]
+        [TestCase(0, 1, TestName = "With Zero Width")]
+        [TestCase(1, -1, TestName = "With Negative Height")]
+        [TestCase(1, 0, TestName = "With Zero Height")]
+        public void PutNextRectangleShouldThrowArgumentException(int width, int height)
         {
             var size = new Size(width, height);
             Assert.Throws<ArgumentException>(() => cloud.PutNextRectangle(size));
@@ -70,9 +61,9 @@ namespace TagsCloudVisualization
             rect.Location.Should().Be(new Point(0, 0));
         }
         [Test]
-        public void ArchimedesSpiralePointsMaker_ShouldReturnCenterAtFirst()
+        public void ArchimedesSpiralPointsMaker_ShouldReturnCenterAtFirst()
         {
-            var value = ArchimedesSpiralePointsMaker
+            var value = ArchimedesSpiralPointsMaker
                 .GenerateNextPoint(new Point(0, 0), 2).First();
             value.Should().Be(new Point(0, 0));
         }

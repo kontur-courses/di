@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization 
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
+        private const int MinWordCount = 10;
+        private const int MaxWordCount = 80;
+        private const double HeightToWidthIndex = 0.75;
         public readonly Point Center;
         private readonly IEnumerator<Point> pointMaker;
         private readonly Dictionary<Rectangle, string> rectangles;
-        public IReadOnlyDictionary<Rectangle, string> Rectangles
-        {
-            get { return rectangles; }
-        }
+        public IReadOnlyDictionary<Rectangle, string> Rectangles => rectangles;
 
         private void AddRectangle(Rectangle newRectangle, string word)
         {
             rectangles.Add(newRectangle, word);
         }
 
-        public CircularCloudLayouter(Point center, double spiraleStep)
+        public CircularCloudLayouter(Point center, double spiralStep)
         {
             this.Center = center;
-            pointMaker = ArchimedesSpiralePointsMaker
-                .GenerateNextPoint(center, spiraleStep)
+            pointMaker = ArchimedesSpiralPointsMaker
+                .GenerateNextPoint(center, spiralStep)
                 .GetEnumerator();
             rectangles = new Dictionary<Rectangle, string>();
         }
@@ -54,12 +55,13 @@ namespace TagsCloudVisualization
         {
             foreach (var word in words)
             {
-                if (word.Value < 10 || word.Value > 80) continue;
-                var width = (int)(word.Key.Length * word.Value * 0.75);
+                if (word.Value < MinWordCount 
+                    || word.Value > MaxWordCount) continue;
+                var width = (int)(word.Key.Length * word.Value * HeightToWidthIndex);
                 var height = word.Value;
                 var rectSize = new Size(width, height);
-                var newRectagle = PutNextRectangle(rectSize);
-                AddRectangle(newRectagle, word.Key);
+                var newRectangle = PutNextRectangle(rectSize);
+                AddRectangle(newRectangle, word.Key);
             }
         }
     }

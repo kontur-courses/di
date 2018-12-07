@@ -5,32 +5,21 @@ namespace TagCloud
 {
     public class TxtTextReader : ITextReader
     {
-        private readonly string fileName;
-
-        public TxtTextReader(string fileName)
+        public string TryReadText(string fileName)
         {
-            this.fileName = fileName;
-            
-        }
-
-        public string TryReadText()
-        {
-            FileStream fileStream = null;
-            try
+            using (var fileStream = new FileStream(fileName, FileMode.Open))
             {
-                fileStream = new FileStream(fileName, FileMode.Open);
-                byte[] fileBytes = new byte[fileStream.Length];
-                fileStream.Read(fileBytes, 0, fileBytes.Length);
-                return System.Text.Encoding.Default.GetString(fileBytes);
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File not found");
-                return null;
-            }
-            finally
-            {
-                fileStream?.Close();
+                try
+                {
+                    var fileBytes = new byte[fileStream.Length];
+                    fileStream.Read(fileBytes, 0, fileBytes.Length);
+                    return System.Text.Encoding.Default.GetString(fileBytes);
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("File not found");
+                    return null;
+                }
             }
         }
     }

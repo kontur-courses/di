@@ -62,22 +62,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchimedesSpiralePointsMaker.cs" />
+    <Compile Include="ArchimedesSpiralPointsMaker.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="ConsoleAplication.cs" />
-    <Compile Include="IAplication.cs" />
+    <Compile Include="ConsoleApplication.cs" />
+    <Compile Include="IApplication.cs" />
+    <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ITextParcer.cs" />
     <Compile Include="ITextReader.cs" />
     <Compile Include="IWordChanger.cs" />
     <Compile Include="IWordParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimlpeWordChanger.cs" />
+    <Compile Include="SimpleWordChanger.cs" />
     <Compile Include="SimpleWordParser.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="TextParser.cs" />
     <Compile Include="TxtTextReader.cs" />
-    <Compile Include="Visualiser.cs" />
+    <Compile Include="Visualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -91,7 +92,6 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Main.usage.txt" />
     <None Include="T4DocoptNet.tt.settings.xml" />
   </ItemGroup>
   <ItemGroup>

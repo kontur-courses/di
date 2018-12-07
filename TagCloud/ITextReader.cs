@@ -2,6 +2,6 @@
 {
     public interface ITextReader
     {
-        string TryReadText();
+        string TryReadText(string fileName);
     }
 }
