@@ -11,5 +11,7 @@ namespace TagsCloudContainer.Interfaces
         int ImageWidth { get; }
         int ImageHeight { get; }
         int RotationAngle { get; }
+        int CenterX { get; }
+        int CenterY { get; }
     }
 }

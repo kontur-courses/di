@@ -21,6 +21,8 @@ namespace TagsCloudContainer
                     configuration.ImageWidth = parsed.ImageWidth;
                     configuration.ImageHeight = parsed.ImageHeight;
                     configuration.RotationAngle = parsed.RotationAngle;
+                    configuration.CenterX = parsed.CenterX;
+                    configuration.CenterY = parsed.CenterY;
                 });
 
             return configuration;
@@ -65,5 +67,13 @@ namespace TagsCloudContainer
         [Option('a', "angle", Default = 1,
             HelpText = "Rotation angle step of Circular Cloud")]
         public int RotationAngle { get; set; }
+
+        [Option('x', "centerX", Default = 0,
+            HelpText = "Center of Cloud by abscissa")]
+        public int CenterX { get; set; }
+
+        [Option('y', "centerY", Default = 0,
+            HelpText = "Center of Cloud by ordinate")]
+        public int CenterY { get; set; }
     }
 }
