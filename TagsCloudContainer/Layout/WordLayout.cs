@@ -2,26 +2,27 @@
 using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Drawing;
+using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainer.Layout
 {
     public class WordLayout
     {
-        private const int MaxWordWidth = 40;
-        private const int MinWordWidth = 10;
-
-        private const int MaxWordHeight = 30;
-        private const int MinWordHeight = 8;
-
         private readonly IRectangleLayout layout;
-        private readonly Dictionary<string, Rectangle> wordRectangles;
+        private readonly IWriter writer;
+        public ImageSettings Settings;
 
-        public ImmutableDictionary<string, Rectangle> WordRectangles => wordRectangles.ToImmutableDictionary();
+        private readonly Dictionary<string, (Rectangle, float)> wordRectangles;
+        public ImmutableDictionary<string, (Rectangle, float)> WordRectangles => wordRectangles.ToImmutableDictionary();
 
-        public WordLayout(IRectangleLayout layout)
+        public WordLayout(IRectangleLayout layout, IWriter writer, ImageSettings settings)
         {
             this.layout = layout;
-            wordRectangles = new Dictionary<string, Rectangle>();
+            this.writer = writer;
+            Settings = settings;
+
+            wordRectangles = new Dictionary<string, (Rectangle, float)>();
         }
 
         public void PlaceWords(Dictionary<string, int> wordWeights)
@@ -31,13 +32,19 @@ namespace TagsCloudContainer.Layout
 
             foreach (var pair in wordWeights)
             {
-                var coefficient = pair.Value / (double) weightSum;
-                var newWidth = MaxWordWidth * coefficient >= MinWordWidth ? MaxWordWidth * coefficient : MinWordWidth;
-                var newHeight = MaxWordHeight * coefficient >= MinWordHeight ? MaxWordHeight * coefficient : MinWordHeight;
+                var fontSize = (float) pair.Value / weightSum * Settings.MaxFontSize;
+                var newSize = GetWordSize(pair.Key, fontSize);
 
-                var rectangle = layout.PutNextRectangle(new Size((int) newWidth, (int) newHeight));
-                wordRectangles.Add(pair.Key, rectangle);
+                var rectangle = layout.PutNextRectangle(newSize);
+                wordRectangles.Add(pair.Key, (rectangle, fontSize));
             }
+        }
+
+        private Size GetWordSize(string word, float fontSize)
+        {
+            var font = Settings.TextFont.SetSize(fontSize);
+            var size = writer.Graphics.MeasureString(word, font);
+            return new Size((int) size.Width, (int) size.Height);
         }
     }
 }

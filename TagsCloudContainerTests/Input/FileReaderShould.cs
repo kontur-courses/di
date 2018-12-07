@@ -6,7 +6,7 @@ using TagsCloudContainer.Input;
 namespace TagsCloudContainerTests.Input
 {
     [TestFixture]
-    public class FileReader
+    public class FileReaderShould
     {
         [Test]
         public void ReadTxt()

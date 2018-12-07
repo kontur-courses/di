@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -54,8 +60,11 @@
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\IWriter.cs" />
+    <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Layout\IRectangleLayout.cs" />
     <Compile Include="Layout\WordLayout.cs" />
     <Compile Include="Drawing\FileWriter.cs" />
@@ -76,10 +87,8 @@
     <Compile Include="Layout\Spiral.cs" />
     <Compile Include="Input\DocxReader.cs" />
     <Compile Include="Input\IFileReader.cs" />
-    <Compile Include="Input\IWordParser.cs" />
-    <Compile Include="Input\TxtParser.cs" />
+    <Compile Include="Processing\WordParser.cs" />
     <Compile Include="Input\TxtReader.cs" />
-    <Compile Include="Processing\Converting\DefaultConverter.cs" />
     <Compile Include="Processing\Converting\IWordConverter.cs" />
     <Compile Include="Processing\Filtering\BlackListFilter.cs" />
     <Compile Include="Processing\Filtering\CommonWordsFilter.cs" />
@@ -97,6 +106,12 @@
   <ItemGroup>
     <Content Include="Resources\mystem.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\article.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\war.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

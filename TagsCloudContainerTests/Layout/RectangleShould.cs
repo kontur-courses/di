@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using TagsCloudContainer.Extensions;
 
-
-namespace TagsCloudVisualizationTests
+namespace TagsCloudContainerTests.Layout
 {
     [TestFixture]
     public class RectangleShould

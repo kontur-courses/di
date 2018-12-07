@@ -13,8 +13,7 @@ namespace TagsCloudContainer.Processing.Filtering
             PartOfSpeech.Interjection,
             PartOfSpeech.Particle,
             PartOfSpeech.Pretext,
-            PartOfSpeech.Pronoun,
-            //PartOfSpeech.Unknown
+            PartOfSpeech.Pronoun
         };
 
         public IEnumerable<string> Filter(IEnumerable<string> words)

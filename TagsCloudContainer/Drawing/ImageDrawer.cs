@@ -1,33 +1,31 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Layout;
 
 namespace TagsCloudContainer.Drawing
 {
     public class ImageDrawer : IDrawer
     {
-        public int Width => settings.Size.Width;
-        public int Height => settings.Size.Height;
+        public  WordLayout Layout { get; }
+        public ImageSettings Settings => Layout.Settings;
 
-        private readonly WordLayout layout;
-        private readonly ImageSettings settings;
-
-        public ImageDrawer(WordLayout layout, ImageSettings settings)
+        public ImageDrawer(WordLayout layout)
         {
-            this.layout = layout;
-            this.settings = settings;
+            Layout = layout;
         }
 
         public void Draw(Graphics graphics)
         {
-            graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(0, 0, Width, Height));
+            graphics.FillRectangle(new SolidBrush(Settings.BackgroundColor), new Rectangle(new Point(0, 0), Settings.Size));
 
-            foreach (var pair in layout.WordRectangles)
-                DrawWord(graphics, pair.Value, pair.Key);
-        }
-
-        private void DrawWord(Graphics graphics, Rectangle containingRectangle, string word)
-        {
-            graphics.DrawString(word, settings.TextFont, new SolidBrush(settings.TextColor), containingRectangle);
+            foreach (var pair in Layout.WordRectangles)
+            {
+                var rectangle = pair.Value.Item1;
+                var font = Settings.TextFont.SetSize(pair.Value.Item2);
+               
+                graphics.DrawRectangle(Pens.Blue, rectangle);
+                graphics.DrawString(pair.Key, font, new SolidBrush(Settings.TextColor), rectangle);
+            }
         }
     }
 }

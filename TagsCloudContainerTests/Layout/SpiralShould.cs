@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Layout;
 
-namespace TagsCloudVisualizationTests
+namespace TagsCloudContainerTests.Layout
 {
     [TestFixture]
     public class SpiralShould

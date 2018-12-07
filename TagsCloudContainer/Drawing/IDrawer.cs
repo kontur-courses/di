@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Layout;
 
 namespace TagsCloudContainer.Drawing
 {
     public interface IDrawer
     {
-        int Width { get; }
-        int Height { get; }
+        WordLayout Layout { get; }
         void Draw(Graphics graphics);
     }
 }

@@ -59,8 +59,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\FileReader.cs" />
-    <Compile Include="Layout\CircularCloudLayouterShould.cs" />
+    <Compile Include="Input\FileReaderShould.cs" />
+    <Compile Include="Layout\CircularCloudLayoutShould.cs" />
     <Compile Include="Layout\RectangleShould.cs" />
     <Compile Include="Layout\SpiralShould.cs" />
     <Compile Include="Processing\WordConverterShould.cs" />
