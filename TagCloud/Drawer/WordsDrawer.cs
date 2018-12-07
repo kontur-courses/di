@@ -24,11 +24,13 @@ namespace TagCloud.Drawer
             var height = Math.Min(bottom - top + SideShift, MaximumSize);
 
             var image = new Bitmap(width, height);
-            var graphics = Graphics.FromImage(image);
-            graphics.FillRectangle(backgroundBrush, new Rectangle(0, 0, image.Width, image.Height));
-            graphics.TranslateTransform(-left + SideShift / 2f, -top + SideShift / 2f);
-            foreach (var info in imageInfos)
-                graphics.DrawString(info.Word, info.Font, wordsBrush, info.Rectangle);
+            using (var graphics = Graphics.FromImage(image))
+            {
+                graphics.FillRectangle(backgroundBrush, new Rectangle(0, 0, image.Width, image.Height));
+                graphics.TranslateTransform(-left + SideShift / 2f, -top + SideShift / 2f);
+                foreach (var info in imageInfos)
+                    graphics.DrawString(info.Word, info.Font, wordsBrush, info.Rectangle);
+            }
 
             return image;
         }
