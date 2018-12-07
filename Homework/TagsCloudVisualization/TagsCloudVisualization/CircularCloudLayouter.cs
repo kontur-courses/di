@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouter
     {
         private readonly SpiralInfo spiralInfo;
-        private List<Rectangle> rectangles;
+        private readonly List<Rectangle> rectangles;
         public List<Rectangle> Rectangles => new List<Rectangle>(rectangles);
 
         public CircularCloudLayouter(Point center, double radiusStep = 0.00001, double angleStep = 0.01)
@@ -47,7 +47,7 @@ namespace TagsCloudVisualization
                     .Add(new Rectangle(GetAppropriatePlace(rectangle.Size), rectangle.Size)));
         }
 
-        public Point GetAppropriatePlace(Size rectangleSize)
+        private Point GetAppropriatePlace(Size rectangleSize)
         {
             if (rectangles.Count == 0)
                 return spiralInfo.Center;

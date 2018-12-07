@@ -22,13 +22,12 @@ namespace TagsCloudVisualization
                     {
                         bitmap.Save($"{path}{name}", ImageFormat.Png);
                     }
-                    catch (ExternalException exception)
+                    catch (ExternalException e)
                     {
-                        Console.Error.WriteLine("Something gone wrong. Check the path correctness.");
+                        Console.Error.WriteLine("Something gone wrong. Check the path correctness.", e);
                     }
                 }
             }
         }
     }
-}
 }
