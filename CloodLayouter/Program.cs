@@ -17,10 +17,12 @@ namespace CloodLayouter
             var logicBuilder = new ContainerBuilder();
             logicBuilder.RegisterType<SimpleWordSelector>().As<IWordSelector>();
             logicBuilder.RegisterType<FileStreamReader>().As<IStreamReader>();
-            logicBuilder.RegisterType<SimpleConverter>().As<IConverter>();
+            logicBuilder.RegisterType<Converter>().As<IConverter>();
             logicBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             logicBuilder.RegisterType<ImageDirectoryProvider>().As<IImageDirectoryProvider>();
             logicBuilder.RegisterType<GraphicsHolder>().As<IGraphicsHolder>();
+            logicBuilder.RegisterType<ImageSettingsProvider>().As<IImageSettingsProvider>().SingleInstance();
+            logicBuilder.RegisterType<TagDrawingSettingProvider>().As<ITagDrawingSettingsProvider>().SingleInstance();
             logicBuilder.RegisterType<LogicPerformer>();
             
             var logicContainer = logicBuilder.Build();

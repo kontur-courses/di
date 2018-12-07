@@ -4,13 +4,13 @@ namespace CloodLayouter.Infrastructer
 {
     public class Tag
     {
-        public Size Size { get; set; }
+        public Font Font{ get; set; }
         public string Word { get; set; }
 
-        public Tag(string word = "", Size size = new Size())
+        public Tag(string word = "",Font font = null)
         {
             Word = word;
-            Size = size;
+            Font = font;
         }
         
     }

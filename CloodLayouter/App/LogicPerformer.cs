@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using CloodLayouter.Infrastructer;
+using CloodLayouter.Infrastructer.Extensions;
 using CloudLayouter.Infrastructer;
 
 namespace CloodLayouter.App
@@ -29,8 +31,9 @@ namespace CloodLayouter.App
             var tags = converter.Convert(selectedWords);
             foreach (var tag in tags)
             {
-                var rectangle = cloudLayouter.PutNextRectangle(tag.Size);
-                graphicsHolder.Draw(rectangle,tag.Word);
+                var size = graphicsHolder.Measure(tag).ToSizeI();
+                var rectangle = cloudLayouter.PutNextRectangle(size);
+                graphicsHolder.Draw(rectangle,tag);
             }
             graphicsHolder.Save();
         }

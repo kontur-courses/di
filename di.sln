@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloodLayouter", "CloodLayouter\CloodLayouter.csproj", "{D3223CBC-F3DC-494B-A612-CE2B829E5A1D}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D3223CBC-F3DC-494B-A612-CE2B829E5A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3223CBC-F3DC-494B-A612-CE2B829E5A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3223CBC-F3DC-494B-A612-CE2B829E5A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using CloodLayouter.Infrastructer;
 using CloudLayouter.Infrastructer;
 
 namespace CloudLayouter.App
@@ -12,12 +13,12 @@ namespace CloudLayouter.App
         public int Count{ get { return rectangles.Count; }}
         private SortedSet<Point> anchorpoints;
         private HashSet<Rectangle> rectangles;
-        private Point center = new Point(250,250);
+        private Point center;
 
 
-        public CircularCloudLayouter()
+        public CircularCloudLayouter(IImageSettingsProvider settingsProvider)
         {
-            // fix center
+            center = new Point(settingsProvider.ImageSize.Width / 2, settingsProvider.ImageSize.Height / 2);
             anchorpoints = new SortedSet<Point>(new PointDistanceComparer(this.center));
             rectangles = new HashSet<Rectangle>();
             
@@ -59,19 +60,6 @@ namespace CloudLayouter.App
                 anchorpoints.Add(point);
             }
         }
-       
-        public Bitmap Draw(Bitmap bitmap)
-        {
-            var graphics = Graphics.FromImage(bitmap);
-            var random = new Random();
-            foreach (var rectangle in rectangles)
-            {
-                var randomColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-                graphics.FillRectangle(new HatchBrush(HatchStyle.Percent90,randomColor),rectangle);
-            }
-            return bitmap;
-        }
-
 
     }
 
