@@ -2,6 +2,7 @@
 using TagsCloudVisualization;
 using System.Drawing;
 using Autofac;
+using Autofac.Builder;
 using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.Preprocessors;
 using TagsCloudVisualization.Visualizing;
@@ -45,14 +46,20 @@ namespace TagsCloudConsole
                 .WithParameter("fileName", arguments.WordsFile);
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
-            builder.RegisterType<ArchimedeanSpiralGenerator>()
-                .As<ISpiralGenerator>()
+            builder.RegisterType<ArchimedeanSpiralGeneratorFactory>()
+                .As<ISpiralGeneratorFactory>()
                 .WithParameters(new []
                 {
                     new NamedParameter("center", new PointF(0, 0)),
                     new NamedParameter("step", 1),
                     new NamedParameter("angleDeltaInRadians", (float) (1 / (180 * Math.PI)))
                 });
+
+            builder.RegisterType<CircularCloudLayouterFactory>()
+                .As<ILayouterFactory>();
+
+            builder.RegisterType<ArchimedeanSpiralGenerator>().AsSelf();
+            builder.RegisterType<ArchimedeanSpiralGenerator>().As<ISpiralGenerator>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
