@@ -5,6 +5,7 @@ using TagCloud.Data;
 using TagCloud.Drawer;
 using TagCloud.Processor;
 using TagCloud.Reader;
+using TagCloud.Saver;
 using TagCloud.Validator;
 using TagCloud.WordsLayouter;
 
@@ -19,6 +20,7 @@ namespace TagCloud
         private readonly IWordsCounter counter;
         private readonly IWordsLayouter wordsLayouter;
         private readonly IWordsDrawer wordsDrawer;
+        private readonly IImageSaver saver;
 
         public TagCloudGenerator(
             IWordsLayouter wordsLayouter,
@@ -27,7 +29,8 @@ namespace TagCloud
             IWordsFileReader boringWordsFileReader,
             IWordsValidator validator, 
             IWordsProcessor processor, 
-            IWordsCounter counter)
+            IWordsCounter counter,
+            IImageSaver saver)
         {
             this.wordsLayouter = wordsLayouter;
             this.wordsDrawer = wordsDrawer;
@@ -36,9 +39,10 @@ namespace TagCloud
             this.validator = validator;
             this.processor = processor;
             this.counter = counter;
+            this.saver = saver;
         }
 
-        public Bitmap Generate(Arguments arguments)
+        public void Generate(Arguments arguments)
         {
             var words = wordsFileReader.Read(arguments.WordsFileName);
             var boringWords = boringWordsFileReader.Read(arguments.BoringWordsFileName);
@@ -46,7 +50,7 @@ namespace TagCloud
             var wordInfos = counter.Count(processor.Process(validator.Validate(words, boringWords)));
             var layout = wordsLayouter.GenerateLayout(wordInfos, arguments.FontFamily, arguments.Multiplier);
             var image = wordsDrawer.CreateImage(layout, arguments.WordsBrush, arguments.BackgroundBrush);
-            return image;
+            saver.Save(image, arguments.ImageFileName);
         }
     }
 }

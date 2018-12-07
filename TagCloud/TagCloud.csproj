@@ -65,6 +65,8 @@
     <Compile Include="RectanglesLayouter\IRectangleLayouter.cs" />
     <Compile Include="RectanglesLayouter\PointsGenerator\IPointsGenerator.cs" />
     <Compile Include="Drawer\IWordsDrawer.cs" />
+    <Compile Include="Saver\FileImageSaver.cs" />
+    <Compile Include="Saver\IImageSaver.cs" />
     <Compile Include="Validator\IWordsValidator.cs" />
     <Compile Include="Validator\WordsValidator.cs" />
     <Compile Include="WordsLayouter\IWordsLayouter.cs" />

@@ -40,8 +40,7 @@ namespace TagCloud
             SetUpContainer(builder);
             var container = builder.Build();
 
-            var image = container.Resolve<TagCloudGenerator>().Generate(arguments);
-            image.Save(arguments.ImageFileName);       
+            container.Resolve<TagCloudGenerator>().Generate(arguments);  
         }
 
         private static bool TryGetArguments(string[] args, out Arguments arguments)
