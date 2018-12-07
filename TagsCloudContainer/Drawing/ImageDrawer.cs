@@ -6,25 +6,26 @@ namespace TagsCloudContainer.Drawing
 {
     public class ImageDrawer : IDrawer
     {
-        public  WordLayout Layout { get; }
-        public ImageSettings Settings => Layout.Settings;
+        private readonly WordLayout layout;
+        public readonly ImageSettings settings;
 
-        public ImageDrawer(WordLayout layout)
+        public ImageDrawer(WordLayout layout, ImageSettings settings)
         {
-            Layout = layout;
+            this.layout = layout;
+            this.settings = settings;
         }
 
         public void Draw(Graphics graphics)
         {
-            graphics.FillRectangle(new SolidBrush(Settings.BackgroundColor), new Rectangle(new Point(0, 0), Settings.Size));
+            graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(new Point(0, 0), settings.Size));
 
-            foreach (var pair in Layout.WordRectangles)
+            foreach (var pair in layout.WordRectangles)
             {
                 var rectangle = pair.Value.Item1;
-                var font = Settings.TextFont.SetSize(pair.Value.Item2);
+                var font = settings.TextFont.SetSize(pair.Value.Item2);
                
                 graphics.DrawRectangle(Pens.Blue, rectangle);
-                graphics.DrawString(pair.Key, font, new SolidBrush(Settings.TextColor), rectangle);
+                graphics.DrawString(pair.Key, font, new SolidBrush(settings.TextColor), rectangle);
             }
         }
     }

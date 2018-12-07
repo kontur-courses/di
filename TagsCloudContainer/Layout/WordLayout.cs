@@ -10,16 +10,16 @@ namespace TagsCloudContainer.Layout
     public class WordLayout
     {
         private readonly IRectangleLayout layout;
-        private readonly IWriter writer;
+        private readonly WriterProvider writerProvider;
         public ImageSettings Settings;
 
         private readonly Dictionary<string, (Rectangle, float)> wordRectangles;
         public ImmutableDictionary<string, (Rectangle, float)> WordRectangles => wordRectangles.ToImmutableDictionary();
 
-        public WordLayout(IRectangleLayout layout, IWriter writer, ImageSettings settings)
+        public WordLayout(IRectangleLayout layout, WriterProvider writerProvider, ImageSettings settings)
         {
             this.layout = layout;
-            this.writer = writer;
+            this.writerProvider = writerProvider;
             Settings = settings;
 
             wordRectangles = new Dictionary<string, (Rectangle, float)>();
@@ -33,6 +33,8 @@ namespace TagsCloudContainer.Layout
             foreach (var pair in wordWeights)
             {
                 var fontSize = (float) pair.Value / weightSum * Settings.MaxFontSize;
+                if (fontSize < Settings.MinFontSize)
+                    fontSize = Settings.MinFontSize;
                 var newSize = GetWordSize(pair.Key, fontSize);
 
                 var rectangle = layout.PutNextRectangle(newSize);
@@ -43,8 +45,8 @@ namespace TagsCloudContainer.Layout
         private Size GetWordSize(string word, float fontSize)
         {
             var font = Settings.TextFont.SetSize(fontSize);
-            var size = writer.Graphics.MeasureString(word, font);
-            return new Size((int) size.Width, (int) size.Height);
+            var size = writerProvider.Writer.Graphics.MeasureString(word, font);
+            return new Size((int) size.Width + 5, (int) size.Height);
         }
     }
 }

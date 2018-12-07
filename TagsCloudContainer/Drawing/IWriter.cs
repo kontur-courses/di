@@ -1,10 +1,11 @@
-﻿using System.Drawing.Imaging;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudContainer.Drawing
 {
     public interface IWriter
     {
-        IDrawer Drawer { get; }
+        Graphics Graphics { get; }
         void WriteToFile(string filename, ImageFormat format);
     }
 }
