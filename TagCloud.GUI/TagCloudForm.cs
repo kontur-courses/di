@@ -14,21 +14,30 @@ namespace TagCloud.GUI
     {
         private readonly Options options = new Options
         {
-            Color = "#000000",
+            Brush = "#000000",
+            Color = "#FFFFFF",
             DrawFormat = DrawFormat.WordsInRectangles,
             Font = "arial",
             PathToPicture = null,
             PathToStopWords = null,
             PathToTags = null,
             PathToWords = null,
-            Size = "100x100"
+            Size = "500x500"
         };
 
         public TagCloudForm()
         {
             InitializeComponent();
+            SetUp();
+        }
+
+        private void SetUp()
+        {
             CollectInfo();
-            Format.SetSelected(1,true);
+            XBox.Text = options.Size.Split('x').First();
+            YBox.Text = options.Size.Split('x').Last();
+            Format.Items.AddRange(Enum.GetNames(typeof(DrawFormat)));
+            Format.SetSelected((int) options.DrawFormat, true);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,7 +74,7 @@ namespace TagCloud.GUI
             CollectInfo();
         }
 
-        private void ChangeColorButton_Click(object sender, EventArgs e)
+        private void ChangeFontColorButton_Click(object sender, EventArgs e)
         {
             var colorDialog = new ColorDialog
             {
@@ -73,17 +82,18 @@ namespace TagCloud.GUI
                 ShowHelp = true,
                 SolidColorOnly = true,
                 FullOpen = false,
-                Color = ColorTranslator.FromHtml(options.Color)
+                Color = ColorTranslator.FromHtml(options.Brush)
             };
 
             if (colorDialog.ShowDialog() == DialogResult.OK)
-                options.Color = ColorTranslator.ToHtml(colorDialog.Color);
+                options.Brush = ColorTranslator.ToHtml(colorDialog.Color);
             CollectInfo();
         }
 
         private void Format_SelectedIndexChanged(object sender, EventArgs e)
         {
             options.DrawFormat = (DrawFormat)Format.SelectedIndex;
+            
         }
 
         private void ChangeFontButton_Click(object sender, EventArgs e)
@@ -109,8 +119,6 @@ namespace TagCloud.GUI
         {
             if (int.TryParse(XBox.Text, out var res))
                 options.Size = $"{res}x{options.Size.Split('x').Last()}";
-            else
-                XBox.Text = Resources.TagCloudForm_ResolutionStandart;
             CollectInfo();
         }
 
@@ -118,8 +126,6 @@ namespace TagCloud.GUI
         {
             if (int.TryParse(YBox.Text, out var res))
                 options.Size = $"{options.Size.Split('x').First()}x{res}";
-            else
-                YBox.Text = Resources.TagCloudForm_ResolutionStandart;
             CollectInfo();
         }
 
@@ -133,14 +139,13 @@ namespace TagCloud.GUI
                 return;
 
             var logger = new Logger();
-            Utility.Program.Start(options, logger);
+            Utility.TagCloudProgram.Start(options, logger);
 
             if (logger.Exceptions.Any())
                 Output.Text = string.Concat(logger.Exceptions.Select(er => er.Message));
             else
             {
                 Picture.Image = logger.Picture;
-                Output.Text += Resources.TagCloudForm_DrawButton_DONE___ + Environment.NewLine;
             }
         }
 
@@ -151,7 +156,8 @@ namespace TagCloud.GUI
             sb.Append(GetLine("Path to picture", options.PathToPicture));
             sb.Append(GetLine("Path to stopwords", options.PathToStopWords));
             sb.Append(GetLine("Path to tags", options.PathToTags));
-            sb.Append(GetLine("Color", options.Color));
+            sb.Append(GetLine("Font color", options.Brush));
+            sb.Append(GetLine("background color", options.Color));
             sb.Append(GetLine("Font", options.Font));
             sb.Append(GetLine("Size", options.Size));
             Output.Text = sb.ToString();
@@ -192,6 +198,22 @@ namespace TagCloud.GUI
                     return;
                 options.PathToTags = selectFileDialog.FileName;
             }
+            CollectInfo();
+        }
+
+        private void ChangeBackgroundColorButton_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog
+            {
+                AllowFullOpen = false,
+                ShowHelp = true,
+                SolidColorOnly = true,
+                FullOpen = false,
+                Color = ColorTranslator.FromHtml(options.Color)
+            };
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                options.Color = ColorTranslator.ToHtml(colorDialog.Color);
             CollectInfo();
         }
     }

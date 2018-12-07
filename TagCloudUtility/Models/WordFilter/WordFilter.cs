@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TagCloud.Utility.Models.WordFilter
@@ -10,13 +11,21 @@ namespace TagCloud.Utility.Models.WordFilter
     {
         protected readonly HashSet<string> stopWords;
         protected readonly int minimalWordLength;
+        protected readonly Func<string, bool> selector;
+        protected readonly Func<string, string> convertor;
 
-        public WordFilter(IEnumerable<string> stopWords,int minimalWordLength = 3)
+        public WordFilter(
+            IEnumerable<string> stopWords,
+            int minimalWordLength = 3,
+            Func<string, bool> selector = null,
+            Func<string, string> convertor = null)
         {
             this.stopWords = new HashSet<string>();
             foreach (var stopWord in stopWords)
                 this.stopWords.Add(stopWord);
             this.minimalWordLength = minimalWordLength;
+            this.selector = selector ?? (w => true);
+            this.convertor = convertor ?? (w => w);
         }
 
         public string[] FilterWords(string[] words)
@@ -24,8 +33,11 @@ namespace TagCloud.Utility.Models.WordFilter
             return words
                 .Select(word => word.ToLower())
                 .Where(word => word.Length > minimalWordLength
-                               && !stopWords.Contains(word))
+                               && !stopWords.Contains(word)
+                               && selector(word))
+                .Select(word => convertor(word))
                 .ToArray();
+
         }
 
         public void Add(string stopWord)

@@ -70,29 +70,11 @@ namespace TagCloud.GUI.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DONE....
-        /// </summary>
-        internal static string TagCloudForm_DrawButton_DONE___ {
-            get {
-                return ResourceManager.GetString("TagCloudForm_DrawButton_DONE___", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Open file with words.
         /// </summary>
         internal static string TagCloudForm_LoadTextFile {
             get {
                 return ResourceManager.GetString("TagCloudForm_LoadTextFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на 100.
-        /// </summary>
-        internal static string TagCloudForm_ResolutionStandart {
-            get {
-                return ResourceManager.GetString("TagCloudForm_ResolutionStandart", resourceCulture);
             }
         }
         

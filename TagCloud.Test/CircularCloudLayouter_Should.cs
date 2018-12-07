@@ -11,6 +11,7 @@ using TagCloud.Models;
 using TagCloud.PointsSequence;
 using TagCloud.Visualizer;
 using TagCloud.Visualizer.Settings;
+using TagCloud.Visualizer.Settings.Colorizer;
 
 namespace TagCloud.Tests
 {
@@ -36,7 +37,8 @@ namespace TagCloud.Tests
                     new DrawSettings(
                         DrawFormat.RectanglesWithNumeration,
                         new Font("Arial", 15),
-                        Brushes.Black));
+                        Color.White,
+                        new SolidColorizer(Color.Black)));
 
             var testName = string.Join("_",
                 context.Test.FullName.Split(' '), StringSplitOptions.RemoveEmptyEntries);

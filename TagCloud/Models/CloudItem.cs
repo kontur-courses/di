@@ -11,7 +11,8 @@ namespace TagCloud.Models
         public CloudItem(string word, Rectangle bounds)
         {
             if (bounds.Size.Width <= 0 || bounds.Size.Height <= 0)
-                throw new ArgumentException("Size can't be less or equal tp 0");
+                throw new ArgumentException(
+                    $"Size can't be less or equal to 0, but was {bounds.Size.Height}x{bounds.Size.Width}");
             Word = word;
             Bounds = bounds;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using Autofac;
 using TagCloud.Models;
@@ -9,40 +8,39 @@ using TagCloud.RectanglePlacer;
 using TagCloud.Utility.Models.Tag;
 using TagCloud.Utility.Models.TextReader;
 using TagCloud.Utility.Models.WordFilter;
-using CommandLine;
 using TagCloud.Layouter;
 using TagCloud.Utility.Data;
 using TagCloud.Utility.Models.Tag.Container;
 using TagCloud.Visualizer;
 using TagCloud.Visualizer.Settings;
+using TagCloud.Visualizer.Settings.Colorizer;
 
 namespace TagCloud.Utility
 {
-    public static class Program
+    public static class TagCloudProgram
     {
         private static IContainer container;
         private static ILogger logger;
 
-        private static void Main(string[] args)
-        {
-            Parser.Default
-                .ParseArguments<Options>(args)
-                .WithParsed(o => Start(o, new Logger()));
-        }
-
         public static void Start(Options options, ILogger logger)
         {
-            Program.logger = logger;
-            Program.logger.Log(options);
-            if (container == null)
-                container = ContainerConfig.Configure();
+            if (options == null)
+                throw new ArgumentNullException($"{nameof(options)} was null");
+            TagCloudProgram.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} was null");
+            TagCloudProgram.logger.Log(options);
+
             try
             {
+                Helper.CheckPaths(options);
+
+                if (container == null)
+                    container = ContainerConfig.Configure();
+
                 Run(options);
             }
             catch (Exception e)
             {
-                Program.logger.Log(e);
+                TagCloudProgram.logger.Log(e);
             }
         }
 
@@ -57,7 +55,10 @@ namespace TagCloud.Utility
             var drawSettings = container.Resolve<IDrawSettings>(
                 new TypedParameter(typeof(DrawFormat), options.DrawFormat),
                 new TypedParameter(typeof(Font), new FontConverter().ConvertFrom(options.Font)),
-                new TypedParameter(typeof(Brush), new SolidBrush(ColorTranslator.FromHtml(options.Color)))
+                new TypedParameter(typeof(IColorizer),
+                    container.Resolve<IColorizer>(new TypedParameter(typeof(Color),
+                        ColorTranslator.FromHtml(options.Brush)))),
+                new TypedParameter(typeof(Color), ColorTranslator.FromHtml(options.Color))
             );
 
             var visualizer = container.Resolve<ICloudVisualizer>(
@@ -67,8 +68,8 @@ namespace TagCloud.Utility
             var tagContainer = container.Resolve<ITagContainer>();
             if (options.PathToTags != null)
             {
-                var tagContainerReader = container.Resolve<ITagContainerReader>(
-                    new TypedParameter(typeof(string), Path.GetExtension(options.PathToTags)));
+                var tagContainerReader =
+                    container.ResolveNamed<ITagContainerReader>(Helper.GetExtension(options.PathToTags));
                 tagContainer = tagContainerReader.ReadTagsContainer(Helper.GetPath(options.PathToTags));
             }
 
@@ -79,13 +80,13 @@ namespace TagCloud.Utility
             if (options.PathToStopWords != null)
             {
                 var stopWordsTextReader =
-                    container.ResolveNamed<ITextReader>(Path.GetExtension(options.PathToStopWords));
+                    container.ResolveNamed<ITextReader>(Helper.GetExtension(options.PathToStopWords));
                 var stopWords = stopWordsTextReader.ReadToEnd(Helper.GetPath(options.PathToStopWords));
                 foreach (var stopWord in stopWords)
                     wordFilter.Add(stopWord);
             }
 
-            var wordsReader = container.ResolveNamed<ITextReader>(Path.GetExtension(options.PathToWords));
+            var wordsReader = container.ResolveNamed<ITextReader>(Helper.GetExtension(options.PathToWords));
             var words = wordsReader
                 .ReadToEnd(Helper.GetPath(options.PathToWords));
 

@@ -114,12 +114,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TagCloudForm_ResolutionStandart" xml:space="preserve">
-    <value>100</value>
-  </data>
-  <data name="TagCloudForm_DrawButton_DONE___" xml:space="preserve">
-    <value>DONE...</value>
-  </data>
   <data name="TagCloudForm_SaveImage" xml:space="preserve">
     <value>Save an picture</value>
   </data>

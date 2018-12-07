@@ -36,6 +36,48 @@ namespace TagCloud.Utility
             return destImage;
         }
 
+        public static string GetExtension(string path)
+        {
+            return Path.GetExtension(path);
+        }
+
+        public static void CheckPaths(Options options)
+        {
+            if (!Path.HasExtension(options.PathToWords))
+                throw new ArgumentException(
+                    $"Path to words should contain file type, but was {options.PathToWords}");
+            if (!File.Exists(options.PathToWords))
+                throw new ArgumentException(
+                    $"File {options.PathToWords} doesn't exists!");
+
+            if (!Path.HasExtension(options.PathToPicture))
+                throw new ArgumentException(
+                    $"Path to picture should contain picture type, but was {options.PathToPicture}");
+            if (!File.Exists(options.PathToPicture))
+                throw new ArgumentException(
+                    $"File {options.PathToPicture} doesn't exists!");
+
+            if (options.PathToTags != null)
+            {
+                if (!Path.HasExtension(options.PathToTags))
+                    throw new ArgumentException(
+                        $"Path to tags should contain file type, but was {options.PathToTags}");
+                if (!File.Exists(options.PathToTags))
+                    throw new ArgumentException(
+                        $"File {options.PathToTags} doesn't exists!");
+            }
+
+            if (options.PathToStopWords != null)
+            {
+                if (!Path.HasExtension(options.PathToStopWords))
+                    throw new ArgumentException(
+                        $"Path to stopwords should contain file type, but was {options.PathToStopWords}");
+                if (!File.Exists(options.PathToStopWords))
+                    throw new ArgumentException(
+                        $"File {options.PathToStopWords} doesn't exists!");
+            }
+        }
+
         public static string GetPath(string path)
         {
             return Path.Combine(Directory.GetCurrentDirectory(), path);

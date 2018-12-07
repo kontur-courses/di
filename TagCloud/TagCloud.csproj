@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Visualizer\Settings\DrawSettings.cs" />
+    <Compile Include="Visualizer\Settings\Colorizer\IColorizer.cs" />
     <Compile Include="Visualizer\Settings\IDrawSettings.cs" />
     <Compile Include="Models\CloudItem.cs" />
     <Compile Include="RectanglePlacer\CenterRectanglePlacer.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Models\TagItem.cs" />
+    <Compile Include="Visualizer\Settings\Colorizer\SolidColorizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

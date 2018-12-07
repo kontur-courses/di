@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.Models;
@@ -28,10 +29,13 @@ namespace TagCloud.Visualizer
                 .SelectMany(tag => new[] { tag.Bounds.Location, new Point(tag.Bounds.Right, tag.Bounds.Bottom) })
                 .ToArray()
                 .GetBounds();
+
             var picture = new Bitmap(bounds.Width, bounds.Height);
 
             using (graphics = Graphics.FromImage(picture))
             {
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.Clear(Settings.Color);
                 graphics.TranslateTransform(-bounds.X, -bounds.Y);
                 Draw(cloudItems);
             }
@@ -46,19 +50,17 @@ namespace TagCloud.Visualizer
                 graphics.DrawRectangles(Pens.Black, bounds);
             if (Settings.DrawFormat == DrawFormat.OnlyWords || Settings.DrawFormat == DrawFormat.WordsInRectangles)
                 for (var i = 0; i < words.Length; i++)
-                    DrawString(words[i], bounds[i]);
+                    DrawAsString(words[i], bounds[i]);
             if (Settings.DrawFormat == DrawFormat.RectanglesWithNumeration)
                 for (var i = 0; i < words.Length; i++)
                 {
                     var word = i.ToString();
-                    DrawString(word, bounds[i]);
+                    DrawAsString(word, bounds[i]);
                 }
         }
 
-        private Font GetSuitableFontFor(CloudItem cloudItem)
+        private Font GetSuitableFontFor(string word, Rectangle bounds)
         {
-            var bounds = cloudItem.Bounds;
-            var word = cloudItem.Word;
             var font = Settings.Font;
             var stringSize = graphics.MeasureString(word, font);
 
@@ -71,13 +73,14 @@ namespace TagCloud.Visualizer
             return new Font(font.FontFamily, font.Size - 1);
         }
 
-        private void DrawString(string str, Rectangle bounds)
+        private void DrawAsString(string str, Rectangle bounds)
         {
-            var font = GetSuitableFontFor(new CloudItem(str, bounds));
+            var cloudItem = new CloudItem(str,bounds);
+            var font = GetSuitableFontFor(str, bounds);
             graphics.DrawString(
                 str,
                 font,
-                Settings.Brush,
+                Settings.Colorizer.GetBrush(cloudItem),
                 bounds);
         }
     }

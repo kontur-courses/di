@@ -6,6 +6,7 @@ using NUnit.Framework;
 using TagCloud.Models;
 using TagCloud.Visualizer;
 using TagCloud.Visualizer.Settings;
+using TagCloud.Visualizer.Settings.Colorizer;
 
 namespace TagCloud.Tests
 {
@@ -13,10 +14,15 @@ namespace TagCloud.Tests
     public class CloudVisualizer_Should
     {
         private readonly CloudVisualizer visualizer =
-            new CloudVisualizer(new DrawSettings(DrawFormat.OnlyRectangles, new Font("Arial", 15), Brushes.Black));
+            new CloudVisualizer(
+                new DrawSettings(
+                    DrawFormat.OnlyRectangles,
+                    new Font("Arial", 15),
+                    Color.White,
+                    new SolidColorizer(Color.Black)));
 
         [TestCase(1, TestName = "For 1 rectangle")]
-        [TestCase(100, TestName = "For 100 rectangles")]
+        [TestCase(5, TestName = "For 5 rectangles")]
         public void CreatePictureWithRectangles(int amountOfRectangles)
         {
             var items = new CloudItem[amountOfRectangles];
@@ -32,7 +38,7 @@ namespace TagCloud.Tests
         public bool IsPictureContainsAllLocationPoints(CloudItem[] items, Bitmap picture)
         {
             return items.All(item =>
-                picture.GetPixel(item.Bounds.Location.X, item.Bounds.Location.Y).ToArgb() == Color.Black.ToArgb());
+                picture.GetPixel(item.Bounds.Location.X, item.Bounds.Location.Y).ToArgb() != Color.White.ToArgb());
         }
 
         [TestCase(false, TestName = "Then items list is null")]

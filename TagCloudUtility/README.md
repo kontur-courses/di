@@ -1,3 +1,6 @@
+#TagCloudUtility 1.0.0.0
+#Copyright c  2018
+
 ## Input:
 Format: 
   -w, --words           Required. Path to words in format .../words.txt (type is required)
@@ -9,7 +12,9 @@ Format:
 
   -t, --tags            Path to tags in format .../tags.txt (type is required)
 
-  -c, --color           (Default: black) Color of brush
+  -b, --brush           (Default: #000000) Color of brush(in html color)
+
+  -c, --color           (Default: #FFFFFF) Color of background(in html color)
 
   -s, --size            Size of picture in format (width)x(height)
 
@@ -23,12 +28,12 @@ Format:
 
 ## Example of using:
 Exe in C:.../Test/TagCloud.Utility.exe  
-Input: -w words.txt -p result.pnh -t tagGroups.txt -c red -f arial
+Input: -w words.txt -p result.pnh -t tagGroups.txt -b red -f arial
 In result  
 Words should be in ../Test/words.txt  
 Groups should be in ../Test/tagGroups.txt  
 Picture will be saved in ../Test/result.png
-Words will be red in arial style
+Words will be red in rectangles on white screen 
 
 ## Draw Settings: 
 Only Words == 0  

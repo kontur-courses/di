@@ -25,8 +25,12 @@ namespace TagCloud.Utility
             HelpText = "Path to tags in format .../tags.txt (type is required)")]
         public string PathToTags { get; set; }
 
-        [Option('c', "color",
+        [Option('b', "brush",
             HelpText = "Color of brush(in html color)", Default = "#000000")]
+        public string Brush { get; set; }
+
+        [Option('c', "color",
+            HelpText = "Color of background(in html color)", Default = "#FFFFFF")]
         public string Color { get; set; }
 
         [Option('s', "size",

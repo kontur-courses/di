@@ -10,6 +10,7 @@ using TagCloud.Utility.Models.TextReader;
 using TagCloud.Utility.Models.WordFilter;
 using TagCloud.Visualizer;
 using TagCloud.Visualizer.Settings;
+using TagCloud.Visualizer.Settings.Colorizer;
 
 namespace TagCloud.Utility
 {
@@ -34,7 +35,11 @@ namespace TagCloud.Utility
                 .As<ITagContainerReader>()
                 .Named<ITagContainerReader>(".txt")
                 .Named<ITagContainerReader>(".ini");
-            
+
+            builder.RegisterType<SolidColorizer>()
+                .As<IColorizer>()
+                .WithParameter(new TypedParameter(typeof(Color), "color"));
+
             builder
                 .RegisterType<RusFilter>()
                 .As<IWordFilter>();

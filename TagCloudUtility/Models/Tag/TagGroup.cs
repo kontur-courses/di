@@ -11,7 +11,7 @@ namespace TagCloud.Utility.Models.Tag
         public TagGroup(Size size, FrequencyGroup frequencyGroup)
         {
             if (size.Width <= 0 || size.Height <= 0)
-                throw new ArgumentException($"Size can't be negative or zero");
+                throw new ArgumentException($"Size can't be negative or zero, but was {Size.Height}x{Size.Width}");
             Size = size;
             FrequencyGroup = frequencyGroup;
         }
