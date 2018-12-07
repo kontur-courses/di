@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TagsCloudContainer;
+using NUnit.Framework;
+using TagsCloudBuilder;
 
-namespace TagsCloudContainerTests
+namespace TagsCloudBuilderTests
 {
-    [TestClass]
+    [TestFixture]
     public class WordsFilter_Should
     {
-        [TestMethod]
+        [Test]
         public void RemoveWord()
         {
             var data = new Dictionary<string, int>
@@ -30,7 +30,7 @@ namespace TagsCloudContainerTests
             actually.Should().BeEquivalentTo(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void RemoveWordsForList()
         {
             var data = new Dictionary<string, int>
@@ -55,7 +55,7 @@ namespace TagsCloudContainerTests
             actually.Should().BeEquivalentTo(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void RemoveWordsLessThanSpecificLength()
         {
             var data = new Dictionary<string, int>
@@ -78,7 +78,7 @@ namespace TagsCloudContainerTests
             actually.Should().BeEquivalentTo(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void RemoveWordsOutOfSpecificLengthRange()
         {
             var data = new Dictionary<string, int>

@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="ContainerFormatter.cs" />
     <Compile Include="ContainerInfo.cs" />
-    <Compile Include="WordsFilters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
