@@ -9,17 +9,18 @@ namespace TagsCloudVisualization.CloudGenerating
     public class TagsCloudGenerator
     {
         private readonly float maxFontSize = 40;
-        private readonly ILayouter wordRectanglesLayouter;
+        private readonly ILayouterFactory wordRectanglesLayouterFactory;
         private readonly ImageSettings settings;
 
-        public TagsCloudGenerator(ILayouter wordRectanglesLayouter, ImageSettings settings)
+        public TagsCloudGenerator(ILayouterFactory wordRectanglesLayouterFactory, ImageSettings settings)
         {
-            this.wordRectanglesLayouter = wordRectanglesLayouter;
+            this.wordRectanglesLayouterFactory = wordRectanglesLayouterFactory;
             this.settings = settings;
         }
 
         public IEnumerable<Tag> GenerateTagsCloud(Statistics wordsStatistics)
         {
+            var wordRectanglesLayouter = wordRectanglesLayouterFactory.Create();
             if (wordsStatistics.OrderedWordsStatistics.Count == 0)
                 yield break;
             var maxCount = wordsStatistics.OrderedWordsStatistics.First().Count;

@@ -49,7 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloudGenerating\ArchimedeanSpiralGeneratorFactory.cs" />
+    <Compile Include="CloudGenerating\CircularCloudLayouterFactory.cs" />
+    <Compile Include="CloudGenerating\ILayouterFactory.cs" />
     <Compile Include="CloudGenerating\ISpiralGenerator.cs" />
+    <Compile Include="CloudGenerating\ISpiralGeneratorFactory.cs" />
     <Compile Include="Visualizing\BasicTagPainter.cs" />
     <Compile Include="CloudGenerating\ArchimedeanSpiralGenerator.cs" />
     <Compile Include="CloudBuilder.cs" />
