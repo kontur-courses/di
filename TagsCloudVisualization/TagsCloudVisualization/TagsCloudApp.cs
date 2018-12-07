@@ -11,16 +11,16 @@ namespace TagsCloudVisualization
     public class TagsCloudApp
     {
         protected readonly IWordDataProvider wordDataProvider;
-        private readonly IWordsExtractorSettingsProvider wordsExtractorSettingsProvider;
-        private readonly IPointGeneratorSettingsProvider pointGeneratorSettingsProvider;
+        private readonly IWordsExtractorSettings wordsExtractorSettings;
+        private readonly IPointGeneratorSettings pointGeneratorSettings;
 
         public TagsCloudApp(IWordDataProvider wordDataProvider,
-            IWordsExtractorSettingsProvider wordsExtractorSettingsProvider,
-            IPointGeneratorSettingsProvider pointGeneratorSettingsProvider)
+            IWordsExtractorSettings wordsExtractorSettings,
+            IPointGeneratorSettings pointGeneratorSettings)
         {
             this.wordDataProvider = wordDataProvider;
-            this.wordsExtractorSettingsProvider = wordsExtractorSettingsProvider;
-            this.pointGeneratorSettingsProvider = pointGeneratorSettingsProvider;
+            this.wordsExtractorSettings = wordsExtractorSettings;
+            this.pointGeneratorSettings = pointGeneratorSettings;
         }
 
         public void Run(string[] args, IContainer container)
@@ -35,9 +35,9 @@ namespace TagsCloudVisualization
             parameters = cloudParametersParser.Parse(options, parameters);
             parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator);
 
-            var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettingsProvider);
+            var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettings);
             var extractor = container.Resolve<IWordsExtractor>();
-            var words = extractor.Extract(options.FilePath, wordsExtractorSettingsProvider);
+            var words = extractor.Extract(options.FilePath, wordsExtractorSettings);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
             picture.Save($"{Application.StartupPath}\\CloudTags.png");

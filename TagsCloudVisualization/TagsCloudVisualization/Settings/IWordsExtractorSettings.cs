@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Settings
 {
-    public interface IWordsExtractorSettingsProvider
+    public interface IWordsExtractorSettings
     {
         List<char> StopChars { get; set; }
 

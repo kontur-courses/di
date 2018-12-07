@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.PointGenerators
 {
     public interface IPointGenerator
     {
-        Point GetNextPoint(IPointGeneratorSettingsProvider settings);
+        Point GetNextPoint(IPointGeneratorSettings settings);
     }
 }

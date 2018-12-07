@@ -9,7 +9,7 @@ namespace TagsCloudVisualization
 {
     public class WordsExtractor : IWordsExtractor
     {
-        public List<string> Extract(string path, IWordsExtractorSettingsProvider settings)
+        public List<string> Extract(string path, IWordsExtractorSettings settings)
         {
             var text = File.ReadAllText(path, Encoding.Default)
                 .Replace("\n", " ")

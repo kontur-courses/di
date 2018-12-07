@@ -66,9 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings\IPointGeneratorSettingsProvider.cs" />
-    <Compile Include="Settings\IWordsExtractorSettingsProvider.cs" />
+    <Compile Include="Settings\IPointGeneratorSettings.cs" />
+    <Compile Include="Settings\IWordsExtractorSettings.cs" />
     <Compile Include="Settings\PointGeneratorSettings.cs" />
+    <Compile Include="Settings\PointGeneratorSettingsProvider.cs" />
+    <Compile Include="Settings\WordsExtractorSettingsProvider.cs" />
     <Compile Include="TagsCloudApp.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CloudParameters.cs" />

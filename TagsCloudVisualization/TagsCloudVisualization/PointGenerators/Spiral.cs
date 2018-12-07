@@ -8,7 +8,7 @@ namespace TagsCloudVisualization.PointGenerators
     {
         private int nextPointCounter;
 
-        public Point GetNextPoint(IPointGeneratorSettingsProvider settings)
+        public Point GetNextPoint(IPointGeneratorSettings settings)
         {
             var degree = settings.DegreeStep * nextPointCounter;
             var factor = settings.FactorStep * nextPointCounter;
