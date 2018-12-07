@@ -29,11 +29,6 @@ namespace TagsCloudContainer
             var color = Color.FromName(Configuration.Color);
             var brush = new SolidBrush(color);
 
-            var horizontalCenter = Configuration.ImageWidth / 2;
-            var verticalCenter = Configuration.ImageHeight / 2;
-            var center = new Point(horizontalCenter, verticalCenter);
-
-            Layouter.SetCenter(center);
             var wordsOrderedByFontSize = Words.OrderByDescending(word => word.Font.Size);
 
             using (var bmp = new Bitmap(Configuration.ImageWidth, Configuration.ImageHeight))

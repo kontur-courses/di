@@ -8,7 +8,7 @@ namespace TagsCloudContainer
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private Point Center { get; set; }
+        private PointF Center { get; set; }
         private readonly List<RectangleF> placedRectangles = new List<RectangleF>();
         private const double ShiftOnSpiral = 0.01;
         private int rotationAngle;
@@ -17,9 +17,20 @@ namespace TagsCloudContainer
         public CircularCloudLayouter(IConfiguration configuration)
         {
             rotationAngleStep = configuration.RotationAngle < 1 ? 1 : configuration.RotationAngle;
+            Center = GetCenter(configuration);
         }
 
-        public void SetCenter(Point center) => Center = center;
+        private PointF GetCenter(IConfiguration configuration)
+        {
+            var imageCenterByAbscissa = configuration.ImageWidth / 2;
+            var imageCenterByOrdinate = configuration.ImageHeight / 2;
+
+            var userCenterByAbscissa = configuration.CenterX;
+            var userCenterByOrdinate = configuration.CenterY;
+
+            return new PointF(imageCenterByAbscissa + userCenterByAbscissa,
+                imageCenterByOrdinate + userCenterByOrdinate);
+        }
 
         public RectangleF PutNextRectangleF(SizeF rectangleSize)
         {
