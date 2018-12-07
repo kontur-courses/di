@@ -13,7 +13,10 @@ namespace TagsCloudVisualization
         {
             this.pointGenerators = pointGenerators;
         }
-        public IPointGenerator GetPointGenerator(string name) =>
-            pointGenerators.FirstOrDefault(pointGenerator => name == pointGenerator.GetType().Name.ToLower());
+
+        public IPointGenerator GetPointGenerator(string name)
+        {
+            return pointGenerators.FirstOrDefault(pointGenerator => name == pointGenerator.GetType().Name.ToLower());
+        }
     }
 }

@@ -11,12 +11,11 @@ namespace TagsCloudVisualization
 {
     public class TagsCloudApp
     {
+        private readonly ICloudParametersParser cloudParametersParser;
+        private readonly IPointGeneratorDetector pointGeneratorDetector;
+        private readonly IPointGeneratorSettings pointGeneratorSettings;
         protected readonly IWordDataProvider wordDataProvider;
         private readonly IWordsExtractorSettings wordsExtractorSettings;
-        private readonly IPointGeneratorSettings pointGeneratorSettings;
-        private readonly ICloudParametersParser cloudParametersParser;
-        private readonly IEnumerable<IPointGenerator> pointGenerators;
-        private readonly IPointGeneratorDetector pointGeneratorDetector;
 
         public TagsCloudApp(IWordDataProvider wordDataProvider,
             IWordsExtractorSettings wordsExtractorSettings,
@@ -30,7 +29,6 @@ namespace TagsCloudVisualization
             this.pointGeneratorSettings = pointGeneratorSettings;
             this.cloudParametersParser = cloudParametersParser;
             this.pointGeneratorDetector = pointGeneratorDetector;
-            this.pointGenerators = pointGenerators;
         }
 
         public void Run(string[] args, IContainer container)

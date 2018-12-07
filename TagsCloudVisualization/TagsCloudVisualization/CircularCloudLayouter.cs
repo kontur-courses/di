@@ -9,8 +9,8 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouter
     {
         private readonly IPointGenerator pointGenerator;
-        private readonly List<Rectangle> rectangles;
         private readonly IPointGeneratorSettings pointGeneratorSettings;
+        private readonly List<Rectangle> rectangles;
 
         public CircularCloudLayouter(IPointGenerator pointGenerator, IPointGeneratorSettings pointGeneratorSettings)
         {
@@ -30,7 +30,10 @@ namespace TagsCloudVisualization
             return nextRect;
         }
 
-        public IReadOnlyList<Rectangle> GetRectangles() => rectangles;
+        public IReadOnlyList<Rectangle> GetRectangles()
+        {
+            return rectangles;
+        }
 
         private Rectangle GetNextNotIntersectingRectangle(Size size)
         {
