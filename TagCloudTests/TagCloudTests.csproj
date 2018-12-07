@@ -56,9 +56,7 @@
   <ItemGroup>
     <Compile Include="CircularCloudLayouterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectanglesDrawer.cs" />
     <Compile Include="SpiralPointsGeneratorTests.cs" />
-    <Compile Include="WordsParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagCloud\TagCloud.csproj">

@@ -57,6 +57,7 @@
     <Compile Include="Counter\IWordsCounter.cs" />
     <Compile Include="Counter\WordsCounter.cs" />
     <Compile Include="Data\Arguments.cs" />
+    <Compile Include="Drawer\IRectanglesDrawer.cs" />
     <Compile Include="Processor\IWordsProcessor.cs" />
     <Compile Include="Processor\WordsProcessor.cs" />
     <Compile Include="Reader\IWordsFileReader.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="TagCloudGenerator.cs" />
     <Compile Include="Data\WordImageInfo.cs" />
     <Compile Include="Data\WordInfo.cs" />
-    <Compile Include="Drawer\WordsDrawer.cs" />
+    <Compile Include="Drawer\Drawer.cs" />
     <Compile Include="WordsLayouter\WordsLayouter.cs" />
   </ItemGroup>
   <ItemGroup>

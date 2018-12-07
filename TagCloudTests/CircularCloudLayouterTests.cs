@@ -7,6 +7,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud;
+using TagCloud.Drawer;
 using TagCloud.RectanglesLayouter;
 using TagCloud.RectanglesLayouter.PointsGenerator;
 
@@ -40,7 +41,7 @@ namespace TagCloudTests
                 return;
             var fileName = $"{TestContext.CurrentContext.Test.Name}TestLayout.png";
             var path = $"{TestContext.CurrentContext.WorkDirectory}/{fileName}";
-            new RectanglesDrawer().GenerateImage(layouter.Rectangles, fileName);
+            new Drawer().CreateImage(layouter.Rectangles).Save(fileName);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 
