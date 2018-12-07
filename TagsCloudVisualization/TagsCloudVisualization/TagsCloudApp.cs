@@ -16,19 +16,21 @@ namespace TagsCloudVisualization
         private readonly IPointGeneratorSettings pointGeneratorSettings;
         protected readonly IWordDataProvider wordDataProvider;
         private readonly IWordsExtractorSettings wordsExtractorSettings;
+        private readonly IWordsExtractor wordsExtractor;
 
         public TagsCloudApp(IWordDataProvider wordDataProvider,
             IWordsExtractorSettings wordsExtractorSettings,
             IPointGeneratorSettings pointGeneratorSettings,
             ICloudParametersParser cloudParametersParser,
-            IEnumerable<IPointGenerator> pointGenerators,
-            IPointGeneratorDetector pointGeneratorDetector)
+            IPointGeneratorDetector pointGeneratorDetector,
+            IWordsExtractor wordsExtractor)
         {
             this.wordDataProvider = wordDataProvider;
             this.wordsExtractorSettings = wordsExtractorSettings;
             this.pointGeneratorSettings = pointGeneratorSettings;
             this.cloudParametersParser = cloudParametersParser;
             this.pointGeneratorDetector = pointGeneratorDetector;
+            this.wordsExtractor = wordsExtractor;
         }
 
         public void Run(string[] args, IContainer container)
@@ -42,8 +44,7 @@ namespace TagsCloudVisualization
             parameters = cloudParametersParser.Parse(options, parameters);
             parameters.PointGenerator = pointGeneratorDetector.GetPointGenerator(options.PointGenerator);
             var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettings);
-            var extractor = container.Resolve<IWordsExtractor>();
-            var words = extractor.Extract(options.FilePath, wordsExtractorSettings);
+            var words = wordsExtractor.Extract(options.FilePath, wordsExtractorSettings);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
             picture.Save($"{Application.StartupPath}\\CloudTags.png");
