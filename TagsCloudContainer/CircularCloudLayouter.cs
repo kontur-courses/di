@@ -8,7 +8,7 @@ namespace TagsCloudContainer
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public Point Center { get; private set; }
+        private Point Center { get; set; }
         private readonly List<RectangleF> placedRectangles = new List<RectangleF>();
         private const double ShiftOnSpiral = 0.01;
         private int rotationAngle;
