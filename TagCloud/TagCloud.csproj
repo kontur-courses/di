@@ -54,13 +54,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Counter\IWordsCounter.cs" />
+    <Compile Include="Counter\WordsCounter.cs" />
     <Compile Include="Data\Arguments.cs" />
+    <Compile Include="Processor\IWordsProcessor.cs" />
+    <Compile Include="Processor\WordsProcessor.cs" />
+    <Compile Include="Reader\IWordsFileReader.cs" />
+    <Compile Include="Reader\TxtWordsFileReader.cs" />
     <Compile Include="RectanglesLayouter\CircularCloudLayouter.cs" />
     <Compile Include="RectanglesLayouter\IRectangleLayouter.cs" />
     <Compile Include="RectanglesLayouter\PointsGenerator\IPointsGenerator.cs" />
     <Compile Include="Drawer\IWordsDrawer.cs" />
+    <Compile Include="Validator\IWordsValidator.cs" />
+    <Compile Include="Validator\WordsValidator.cs" />
     <Compile Include="WordsLayouter\IWordsLayouter.cs" />
-    <Compile Include="Parser\IWordsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtensions.cs" />
@@ -70,7 +77,6 @@
     <Compile Include="Data\WordInfo.cs" />
     <Compile Include="Drawer\WordsDrawer.cs" />
     <Compile Include="WordsLayouter\WordsLayouter.cs" />
-    <Compile Include="Parser\WordsParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

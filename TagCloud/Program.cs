@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
+using System.Reflection;
 using Autofac;
 using Fclp;
 using TagCloud.Data;
-using TagCloud.Drawer;
-using TagCloud.Parser;
-using TagCloud.RectanglesLayouter;
 using TagCloud.RectanglesLayouter.PointsGenerator;
-using TagCloud.WordsLayouter;
 
 namespace TagCloud
 {
@@ -44,10 +40,7 @@ namespace TagCloud
             SetUpContainer(builder);
             var container = builder.Build();
 
-            var words = File.ReadAllLines(arguments.WordsFileName);
-            var boringWords = File.ReadAllLines(arguments.BoringWordsFileName);
-
-            var image = container.Resolve<TagCloudGenerator>().Generate(words, boringWords, arguments);
+            var image = container.Resolve<TagCloudGenerator>().Generate(arguments);
             image.Save(arguments.ImageFileName);       
         }
 
@@ -104,13 +97,12 @@ namespace TagCloud
 
         public static void SetUpContainer(ContainerBuilder builder)
         {
+            builder
+                .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AsImplementedInterfaces()
+                .AsSelf();
             builder.Register(c => new Point()).As<Point>();
-            builder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             builder.Register(c =>  new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
-            builder.RegisterType<WordsParser>().As<IWordsParser>();
-            builder.RegisterType<WordsLayouter.WordsLayouter>().As<IWordsLayouter>();
-            builder.RegisterType<WordsDrawer>().As<IWordsDrawer>();
-            builder.RegisterType<TagCloudGenerator>().AsSelf();
         }
     }
 }
