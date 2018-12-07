@@ -2,8 +2,8 @@
 
 namespace TagsCloud
 {
-	public interface ICoordinateSequence
-	{
-		Point GetNextCoordinate();
-	}
+    public interface ICoordinateSequence
+    {
+        Point GetNextCoordinate();
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace TagsCloud
 {
-	public interface ICloudLayouter
-	{
-		Rectangle PutNextRectangle(Size size);
-	}
+    public interface ICloudLayouter
+    {
+        Rectangle PutNextRectangle(Size size);
+    }
 }

@@ -10,9 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TagsCloud</RootNamespace>
     <AssemblyName>TagsCloud</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,9 +59,21 @@
   <ItemGroup>
     <Compile Include="BoundingCoordinate.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudLayouterTests.cs" />
     <Compile Include="CircularSpiral.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="CreateLayout.cs" />
+    <Compile Include="FrequencyDictionary.cs" />
+    <Compile Include="LowerWordCollection.cs" />
+    <Compile Include="TagCloudRender.cs" />
+    <Compile Include="Tests\ConstWordCollection.cs" />
+    <Compile Include="Tests\FrequencyDictionaryTests.cs" />
+    <Compile Include="Tests\GraphicsTest.cs" />
+    <Compile Include="Tests\LowerWordCollectionTests.cs" />
+    <Compile Include="Tests\TagCloudRenderTests.cs" />
+    <Compile Include="Tests\WithoutBoringWordCollectionTests.cs" />
+    <Compile Include="Tests\WordsFromFileTests.cs" />
+    <Compile Include="WithoutBoringWordCollection.cs" />
+    <Compile Include="WordsFromFile.cs" />
+    <Compile Include="IWordCollection.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ICoordinateSequence.cs" />
@@ -68,6 +81,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BoringWords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DifferentCases.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Empty.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Text.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
