@@ -5,7 +5,7 @@ namespace TagsCloudContainer.ResultFormatters
 {
     public interface IResultFormatter
     {
-        void GenerateResult(Size size, Font font, Brush brush, string outputFileName,
+        void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName,
             Dictionary<string, (Rectangle, int)> rectangles);
     }
 }

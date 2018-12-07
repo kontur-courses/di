@@ -57,8 +57,8 @@ namespace TagsCloudContainer
 
 
                 // TODO: задавать через аргументы коммандной строки
-                var size = new Size(2000, 2000);
-                var font = new Font("Times New Roman", 1);
+                var size = new Size(1500, 1500);
+                var fontFamily = new FontFamily("Times New Roman");
                 var brush = Brushes.Black;
                 var centerPoint = new Point(size.Width / 2, size.Height / 2);
 
@@ -67,7 +67,7 @@ namespace TagsCloudContainer
                 var rectangles = algorithm.GenerateRectanglesSet(pairs.Take(50));
 
                 var drawer = scope.Resolve<IResultFormatter>();
-                drawer.GenerateResult(size, font, brush, "tag-cloud.png", rectangles);
+                drawer.GenerateResult(size, fontFamily, brush, "tag-cloud.png", rectangles);
             }
         }
     }
