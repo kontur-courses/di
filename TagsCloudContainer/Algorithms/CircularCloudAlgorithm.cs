@@ -12,7 +12,7 @@ namespace TagsCloudContainer.Algorithms
         public Point Center { get; }
         private readonly List<Rectangle> rectangles;
         private readonly Spiral spiral;
-        
+
         public CircularCloudAlgorithm(Point center)
         {
             Center = center;
@@ -29,7 +29,7 @@ namespace TagsCloudContainer.Algorithms
 
             if (!rectangles.Any())
             {
-                var firstRectangleLocation 
+                var firstRectangleLocation
                     = new Point(Center.X - rectangleSize.Width / 2, Center.Y - rectangleSize.Height / 2);
                 var firstRectangle = new Rectangle(firstRectangleLocation, rectangleSize);
                 rectangles.Add(firstRectangle);
@@ -58,20 +58,20 @@ namespace TagsCloudContainer.Algorithms
             var result = new Dictionary<string, (Rectangle, int)>();
             var wordsList = words.ToList();
 
+            var relativeWeightsSum = wordsList.Sum(e => e.Value);
+
+            var relativeWeightUnit = (double)relativeWeightsSum / Center.X * 2;
+
             foreach (var word in wordsList)
             {
-                var size = GetSize(word);
+                var wordWeight = word.Value * relativeWeightUnit;
+                var size = new Size((int)wordWeight, (int)(wordWeight / 2));
+
                 var newRectangle = PutNextRectangle(size);
 
                 result[word.Key] = (newRectangle, word.Value);
             }
-
             return result;
-        }
-
-        private Size GetSize(KeyValuePair<string, int> word)
-        {
-            return new Size(word.Value + (int)(word.Value * 1.5) + 100, (word.Value + (int)(word.Value * 1.5)) / 2 + 50);
         }
 
         private Rectangle MoveRectangleCloserToCenter(Rectangle rectangle)
@@ -107,7 +107,7 @@ namespace TagsCloudContainer.Algorithms
                 if (GetRectangleCenter(rectangle).X < Center.X)
                     rectangle.X++;
 
-                if(GetRectangleCenter(rectangle).X == Center.X || rectangles.Any(e => e.IntersectsWith(rectangle)))
+                if (GetRectangleCenter(rectangle).X == Center.X || rectangles.Any(e => e.IntersectsWith(rectangle)))
                     return result;
             }
         }

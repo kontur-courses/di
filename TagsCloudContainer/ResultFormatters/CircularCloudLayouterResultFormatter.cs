@@ -5,7 +5,7 @@ namespace TagsCloudContainer.ResultFormatters
 {
     public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
-        public void GenerateResult(Size size, Font font, Brush brush, string outputFileName,
+        public void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName,
             Dictionary<string, (Rectangle, int)> rectangles)
         {
             using (var bitmap = new Bitmap(size.Width, size.Height))
@@ -14,22 +14,28 @@ namespace TagsCloudContainer.ResultFormatters
                 {
                     foreach (var entry in rectangles)
                     {
-                        DrawStringInside(graphics, entry.Value.Item1,
-                            font, brush, entry.Key);
+                        var font = new Font(fontFamily, 10);
+                        var generatedFont = GetFont(graphics, entry.Key, entry.Value.Item1.Size, font);
+
+                        graphics.DrawString(entry.Key, generatedFont, brush, entry.Value.Item1);
+
                     }
                     bitmap.Save(outputFileName);
                 }
             }
         }
 
-        private void DrawStringInside(Graphics graphics, Rectangle rect, Font font, Brush brush, string text)
+        private Font GetFont(Graphics g, string longString, Size room, Font preferredFont)
         {
-            var textSize = graphics.MeasureString(text, font);
-            var state = graphics.Save();
-            graphics.TranslateTransform(rect.Left, rect.Top);
-            graphics.ScaleTransform(rect.Width / textSize.Width, rect.Height / textSize.Height);
-            graphics.DrawString(text, font, brush, PointF.Empty);
-            graphics.Restore(state);
+            var realSize = g.MeasureString(longString, preferredFont);
+            var heightScaleRatio = room.Height / realSize.Height;
+            var widthScaleRatio = room.Width / realSize.Width;
+
+            var scaleRatio = heightScaleRatio < widthScaleRatio ? heightScaleRatio : widthScaleRatio;
+
+            var scaleFontSize = preferredFont.Size * scaleRatio;
+
+            return new Font(preferredFont.FontFamily, scaleFontSize);
         }
     }
 }
