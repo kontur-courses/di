@@ -29,6 +29,11 @@ namespace TagsCloudContainer.ResultRenderer
 
         public Image Generate(IEnumerable<Word> words)
         {
+            if (words == null)
+            {
+                throw new ArgumentException("Given words can't be null", nameof(words));
+            }
+
             var center = new PointF(image.Width / 2f, image.Height / 2f);
 
             var centeredWords = words
@@ -65,6 +70,11 @@ namespace TagsCloudContainer.ResultRenderer
 
         public SizeF GetWordSize(Word word)
         {
+            if (word == null)
+            {
+                throw new ArgumentException("Given word can't be null", nameof(word));
+            }
+
             return graphics.MeasureString(word.Value, word.Font);
         }
 

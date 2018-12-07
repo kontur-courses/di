@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudContainer
 {
@@ -9,6 +11,8 @@ namespace TagsCloudContainer
         public Font Font { get; }
 
         public Color Color { get; }
+
+        public IEnumerable<string> BoringWords { get; set; } = Enumerable.Empty<string>();
 
         public Config(Size imageSize, Font font, Color color)
         {

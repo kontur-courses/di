@@ -30,6 +30,11 @@ namespace TagsCloudContainer.WordFormatters
 
         public IEnumerable<Word> FormatWords(IEnumerable<string> words)
         {
+            if (!words.Any())
+            {
+                yield break;
+            }
+
             var wordsWeight = wordsWeighter.GetWordsWeight(words);
             var maxWeight = wordsWeight.Values.Max();
 

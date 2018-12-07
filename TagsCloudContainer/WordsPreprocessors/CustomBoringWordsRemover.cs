@@ -5,13 +5,12 @@ namespace TagsCloudContainer.WordsPreprocessors
 {
     public class CustomBoringWordsRemover : IWordsPreprocessor
     {
-        private readonly HashSet<string> customBoringWords = new HashSet<string>
+        private readonly HashSet<string> customBoringWords;
+
+        public CustomBoringWordsRemover(IEnumerable<string> customBoringWords)
         {
-            "острый",
-            "шар",
-            "волосатое",
-            "стекло"
-        };
+            this.customBoringWords = new HashSet<string>(customBoringWords);
+        }
 
         public IEnumerable<string> Preprocess(IEnumerable<string> words)
         {

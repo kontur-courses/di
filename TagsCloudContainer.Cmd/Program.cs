@@ -14,6 +14,8 @@ namespace TagsCloudContainer.Cmd
 
         public string OutputFilename { get; set; } = "result.png";
 
+        public string ExcludeFilename { get; set; }
+
         public string FontFamily { get; set; } = "Arial";
 
         public double FontSize { get; set; } = 12;
@@ -32,6 +34,9 @@ namespace TagsCloudContainer.Cmd
 
             parser.Setup(arg => arg.OutputFilename)
                 .As("output");
+
+            parser.Setup(arg => arg.ExcludeFilename)
+                .As("exclude");
 
             parser.Setup(arg => arg.FontFamily)
                 .As("font");
@@ -79,6 +84,14 @@ namespace TagsCloudContainer.Cmd
 
             var tagsCloudContainer =
                 new ContainerBuilder().BuildTagsCloudContainer(config, circularCloudLayoutConfig);
+
+            if (parser.Object.ExcludeFilename != null)
+            {
+                var boringWords = tagsCloudContainer
+                    .Resolve<TxtReader>()
+                    .GetWords(parser.Object.ExcludeFilename);
+                config.BoringWords = boringWords;
+            }
 
             var words = tagsCloudContainer
                 .Resolve<TxtReader>()

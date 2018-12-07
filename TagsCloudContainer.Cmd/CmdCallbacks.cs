@@ -21,6 +21,7 @@ namespace TagsCloudContainer.Cmd
             return @"TagCloudContainer
 /input filename - задает файл для ввода (по умолчанию: input.txt)
 /output filename - задает файл вывода (по умолчанию: result.png)
+/exclude filename - исключает записанные в файле слова из результата
 Настройки формата вывода:
 /imageSize 800x800 - задает размер изображения 100x100 (вместо x можно использовать: пробел, запятая
 /font Arial - устанавливает шрифт

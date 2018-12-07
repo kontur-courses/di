@@ -20,6 +20,18 @@ namespace TagsCloudContainer.Tests
         }
 
         [Test]
+        public void FormatWords_ReturnsEmptyResult_OnEmptyWords()
+        {
+            var data = Enumerable.Empty<string>();
+
+            var formattedWords = formatter.FormatWords(data);
+
+            formattedWords
+                .Should()
+                .BeEquivalentTo(data);
+        }
+
+        [Test]
         public void FormatWords_WorksCorrectly()
         {
             var words = new List<string>

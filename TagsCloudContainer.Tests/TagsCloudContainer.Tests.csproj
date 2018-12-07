@@ -39,6 +39,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.4.9.1\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.5.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.5.3\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -58,8 +61,10 @@
   <ItemGroup>
     <Compile Include="BoringWordsRemoverTests.cs" />
     <Compile Include="CircularCloudLayoutTests.cs" />
+    <Compile Include="ImageRendererTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleFormatterTests.cs" />
+    <Compile Include="TagCloudBuilderTests.cs" />
     <Compile Include="WordsLowerTests.cs" />
   </ItemGroup>
   <ItemGroup>
