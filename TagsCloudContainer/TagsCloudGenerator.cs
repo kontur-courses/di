@@ -29,7 +29,8 @@ namespace TagsCloudContainer
 
             foreach (var pair in wordsSizes)
             {
-                layouter.PutNextWord(pair.Key, pair.Value);
+                var rectangle = layouter.PutNextRectangle(pair.Value);
+                layouter.TagsCloud.AddWord(new TagsCloudWord(pair.Key, rectangle));
             }
 
             return layouter.TagsCloud;

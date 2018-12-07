@@ -6,6 +6,5 @@ namespace TagsCloudVisualization
     {
         ITagsCloud TagsCloud { get; }
         Rectangle PutNextRectangle(Size rectangleSize);
-        TagsCloudWord PutNextWord(string word, Size WordSize);
     }
 }

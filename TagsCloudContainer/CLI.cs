@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using CommandLine;
@@ -17,16 +18,18 @@ namespace TagsCloudContainer
         public Color TextColor { get; private set; }
         public Size ImageSize { get; private set; }
 
-        private Dictionary<string, Color> colors = new Dictionary<string, Color>()
-        {
-            {"red", Color.Red},
-            {"green", Color.Green},
-            {"blue", Color.Blue},
-            {"black", Color.Black},
-        };
 
         public CLI(string[] args)
         {
+            InputPath = "hello.txt";
+            OutputPath = "output.png";
+            BlacklistPath = "blacklist.txt";
+            TagsCloudCenter = new Point(500, 500);
+            ImageSize = new Size(1920, 1280);
+            TextColor = Color.DarkBlue;
+            LetterSize = new Size(16, 20);
+
+
             ParseArguments(args);
         }
 
@@ -38,7 +41,8 @@ namespace TagsCloudContainer
             [Option('o', "output", Required = false, HelpText = "Set output file path.")]
             public string OutputPath { get; set; }
 
-            [Option('b', "blacklist", Required = false, HelpText = "Set words blacklist file path.")]
+            [Option('b', "blacklist", Required = false, HelpText = "Set words blacklist file path."
+            )]
             public string BlackListPath { get; set; }
 
             [Option('c', "center", Required = false, HelpText = "Set tags cloud center.")]
@@ -61,7 +65,45 @@ namespace TagsCloudContainer
                 .WithParsed<Options>(o =>
                 {
                     if (o.InputPath != null)
-                        InputPath = o.InputPath;
+                    {
+                        if (File.Exists(o.InputPath))
+                        {
+                            InputPath = o.InputPath;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"input file {o.InputPath} not found");
+                            Environment.Exit(0);
+                        }
+                    }
+
+                    if (o.OutputPath != null)
+                    {
+                        if (File.Exists(o.OutputPath))
+                        {
+                            OutputPath = o.OutputPath;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"output file {o.OutputPath} not found");
+                            Environment.Exit(0);
+                        }
+                    }
+
+                    if (o.BlackListPath != null)
+                    {
+                        if (File.Exists(o.BlackListPath))
+                        {
+                            BlacklistPath = o.BlackListPath;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"blacklist file {o.BlackListPath} not found");
+                            Environment.Exit(0);
+                        }
+                    }
+
+
                     if (o.OutputPath != null)
                         OutputPath = o.OutputPath;
                     if (o.BlackListPath != null)
@@ -77,6 +119,7 @@ namespace TagsCloudContainer
                         else
                         {
                             Console.WriteLine("To set center input two numbers");
+                            Environment.Exit(0);
                         }
                     }
 
@@ -92,20 +135,23 @@ namespace TagsCloudContainer
                         else
                         {
                             Console.WriteLine("To set letter size input two numbers");
+                            Environment.Exit(0);
                         }
                     }
 
                     if (o.TextColor != null)
                     {
-                        if (colors.TryGetValue(o.TextColor, out var color))
+                        var color = Color.FromName(o.TextColor);
+                        if (!color.IsKnownColor)
                         {
-                            TextColor = color;
+                            Console.WriteLine($"{o.TextColor} is unknown color");
                         }
                         else
                         {
-                            Console.WriteLine("Unknown Color! Possible colors are red, green, blue, black");
+                            TextColor = color;
                         }
                     }
+
 
                     if (o.ImageSize.Any())
                     {
@@ -118,6 +164,7 @@ namespace TagsCloudContainer
                         else
                         {
                             Console.WriteLine("To set image size input two numbers");
+                            Environment.Exit(0);
                         }
                     }
                 });

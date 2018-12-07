@@ -6,19 +6,18 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class IMGTagsCloudRenderer : ITagsCloudRenderer
+    public class PNGTagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly Size boundary = new Size(100, 100);
         private readonly FontFamily fontFamily;
         private readonly Color textColor;
-        private readonly Color rectangleColor;
         private readonly Size pictureSize;
 
-        public IMGTagsCloudRenderer(FontFamily fontFamily, Color textColor, Size pictureSize)
+        public PNGTagsCloudRenderer(ImageSettings imageSettings)
         {
-            this.pictureSize = pictureSize;
-            this.textColor = textColor;
-            this.fontFamily = fontFamily;
+            pictureSize = imageSettings.PictureSize;
+            textColor = imageSettings.TextColor;
+            fontFamily = imageSettings.FontFamily;
         }
 
         public void RenderIntoFile(string filePath, ITagsCloud tagsCloud)
@@ -81,7 +80,5 @@ namespace TagsCloudVisualization
                 shiftY = minY * -1 + boundary.Height;
             return rectangles.Select(x => new Rectangle(x.X + shiftX, x.Y + shiftY, x.Width, x.Height)).ToList();
         }
-
-        
     }
 }

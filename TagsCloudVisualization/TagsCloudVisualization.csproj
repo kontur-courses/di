@@ -57,10 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral.cs" />
+    <Compile Include="ImageSettings.cs" />
     <Compile Include="ITagsCloud.cs" />
     <Compile Include="ITagsCloudLayouter.cs" />
     <Compile Include="ITagsCloudRenderer.cs" />
-    <Compile Include="IMGTagsCloudRenderer.cs" />
+    <Compile Include="PNGTagsCloudRenderer.cs" />
     <Compile Include="TagsCloud.cs" />
     <Compile Include="TagsCloudVisualization.cs" />
     <Compile Include="CircularCloudLayouter.cs" />

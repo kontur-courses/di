@@ -35,7 +35,7 @@ namespace TagsCloudVisualization
             return currentRectangle;
         }
 
-        public TagsCloudWord PutNextWord(string word, Size wordSize)
+        /*public TagsCloudWord PutNextWord(string word, Size wordSize)
         {
             var currentRectangle = new Rectangle
                 (TagsCloud.Center.X, TagsCloud.Center.Y, wordSize.Width, wordSize.Height);
@@ -51,12 +51,9 @@ namespace TagsCloudVisualization
             TagsCloud.AddWord(tagsCloudWord);
             TagsCloud.AddRectangle(currentRectangle);
             return tagsCloudWord;
-        }
+        }*/
 
-        public void PutNextWord(TagsCloudWord word)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
 
         private Point GetNextPoint()
