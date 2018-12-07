@@ -18,12 +18,11 @@ namespace TagsCloudContainer
         {
             return words.Select(word => word.ToLower())
                 .Distinct()
-                .ToDictionary(w => w, w => words.Count(s => s == w));
-        }
-
-        private static string[] RemoveBoring()
-        {
-            return new string[0];
+                .RemoveBoring()
+                .ToDictionary(w => w, w => words
+                    .Count(s => string.Equals(s, w, StringComparison.OrdinalIgnoreCase)
+                    )
+                );
         }
     }
 }
