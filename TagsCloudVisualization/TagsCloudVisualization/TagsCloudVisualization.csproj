@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IPointGeneratorDetector.cs" />
+    <Compile Include="PointGeneratorDetector.cs" />
     <Compile Include="Settings\IPointGeneratorSettings.cs" />
     <Compile Include="Settings\IWordsExtractorSettings.cs" />
     <Compile Include="Settings\PointGeneratorSettings.cs" />

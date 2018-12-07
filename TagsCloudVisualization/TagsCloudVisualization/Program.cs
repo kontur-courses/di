@@ -21,6 +21,7 @@ namespace TagsCloudVisualization
             builder.RegisterType<TagsCloudApp>();
             builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
             builder.RegisterType<WordDataProvider>().As<IWordDataProvider>();
+            builder.RegisterType<PointGeneratorDetector>().As<IPointGeneratorDetector>();
             builder.Register(c => WordsExtractorSettingsProvider.GetDefaultSettings()).As<IWordsExtractorSettings>();
             builder.Register(c => PointGeneratorSettingsProvider.GetDefaultSettings()).As<IPointGeneratorSettings>();
             builder.RegisterType<WordsExtractor>().As<IWordsExtractor>();
@@ -29,7 +30,7 @@ namespace TagsCloudVisualization
                 .ToList();
 
             foreach (var type in pointGeneratorTypes)
-                builder.RegisterType(type).Named<IPointGenerator>(type.Name.ToLowerInvariant());
+                builder.RegisterType(type).As<IPointGenerator>();
 
             return builder.Build();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Autofac;
 using CommandLine;
@@ -13,14 +14,23 @@ namespace TagsCloudVisualization
         protected readonly IWordDataProvider wordDataProvider;
         private readonly IWordsExtractorSettings wordsExtractorSettings;
         private readonly IPointGeneratorSettings pointGeneratorSettings;
+        private readonly ICloudParametersParser cloudParametersParser;
+        private readonly IEnumerable<IPointGenerator> pointGenerators;
+        private readonly IPointGeneratorDetector pointGeneratorDetector;
 
         public TagsCloudApp(IWordDataProvider wordDataProvider,
             IWordsExtractorSettings wordsExtractorSettings,
-            IPointGeneratorSettings pointGeneratorSettings)
+            IPointGeneratorSettings pointGeneratorSettings,
+            ICloudParametersParser cloudParametersParser,
+            IEnumerable<IPointGenerator> pointGenerators,
+            IPointGeneratorDetector pointGeneratorDetector)
         {
             this.wordDataProvider = wordDataProvider;
             this.wordsExtractorSettings = wordsExtractorSettings;
             this.pointGeneratorSettings = pointGeneratorSettings;
+            this.cloudParametersParser = cloudParametersParser;
+            this.pointGeneratorDetector = pointGeneratorDetector;
+            this.pointGenerators = pointGenerators;
         }
 
         public void Run(string[] args, IContainer container)
@@ -31,10 +41,8 @@ namespace TagsCloudVisualization
                 return;
 
             var parameters = new CloudParameters();
-            var cloudParametersParser = container.Resolve<ICloudParametersParser>();
             parameters = cloudParametersParser.Parse(options, parameters);
-            parameters.PointGenerator = container.ResolveNamed<IPointGenerator>(options.PointGenerator);
-
+            parameters.PointGenerator = pointGeneratorDetector.GetPointGenerator(options.PointGenerator);
             var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettings);
             var extractor = container.Resolve<IWordsExtractor>();
             var words = extractor.Extract(options.FilePath, wordsExtractorSettings);

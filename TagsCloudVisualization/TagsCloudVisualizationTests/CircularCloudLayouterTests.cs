@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
 using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualizationTests
 {
@@ -17,7 +18,8 @@ namespace TagsCloudVisualizationTests
         public void SetUp()
         {
             var spiral = new Spiral();
-            cloud = new CircularCloudLayouter(spiral);
+            var pointGeneratorSettings = PointGeneratorSettingsProvider.GetDefaultSettings();
+            cloud = new CircularCloudLayouter(spiral, pointGeneratorSettings);
         }
 
         [TearDown]
