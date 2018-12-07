@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Fclp;
@@ -16,20 +17,11 @@ namespace TagCloud
             $"USAGE: {AppDomain.CurrentDomain.FriendlyName} -w WordsFile -b BoringWordsFile -i ResultImageName " +
             "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily]\n";
 
-        private static readonly Dictionary<string, Brush> BrushesByName = new Dictionary<string, Brush>
-        {
-            ["black"] = Brushes.Black,
-            ["red"] = Brushes.Red,
-            ["white"] = Brushes.White,
-            ["green"] = Brushes.Green,
-            ["blue"] = Brushes.Blue,
-            ["yellow"] = Brushes.Yellow,
-            ["brown"] = Brushes.Brown,
-            ["gray"] = Brushes.Gray,
-            ["orange"] = Brushes.Orange,
-            ["pink"] = Brushes.Pink,
-            ["cyan"] = Brushes.Cyan
-        };
+        private static readonly Dictionary<string, Brush> BrushesByName = typeof(Brushes)
+            .GetProperties()
+            .ToDictionary(
+                propertyInfo => propertyInfo.Name,
+                propertyInfo => (Brush)propertyInfo.GetValue(null, null));
 
         public static void Main(string[] args)
         {
@@ -45,53 +37,54 @@ namespace TagCloud
 
         private static bool TryGetArguments(string[] args, out Arguments arguments)
         {
+            arguments = null;
             var newArguments = new Arguments();
+
+            var textBrushName = "Black";
+            var backgroundBrushName = "White";
 
             var parser = new FluentCommandLineParser();
             parser.Setup<string>('w').Callback(file => newArguments.WordsFileName = file).Required();
             parser.Setup<string>('b').Callback(boring => newArguments.BoringWordsFileName = boring).Required();
             parser.Setup<string>('i').Callback(name => newArguments.ImageFileName = name).Required();
-            parser.Setup<string>('c').Callback(color => newArguments.WordsBrush = BrushesByName[color]);
-            parser.Setup<string>('g').Callback(color => newArguments.BackgroundBrush = BrushesByName[color]);
+            parser.Setup<string>('c').Callback(color => textBrushName = color);
+            parser.Setup<string>('g').Callback(color => backgroundBrushName = color);
             parser.Setup<string>('f').Callback(font => newArguments.FontFamily = new FontFamily(font));
             parser.Setup<int>('m').Callback(size => newArguments.Multiplier = size);
 
-            if (CheckArgs(args, parser))
+            var result = parser.Parse(args);
+
+            if (TryGetBrush(textBrushName, out var textBrush))
+                newArguments.WordsBrush = textBrush;
+            else
+                return false;
+
+            if (TryGetBrush(backgroundBrushName, out var backgroundBrush))
+                newArguments.BackgroundBrush = backgroundBrush;
+            else
+                return false;
+
+            if (result.HasErrors)
             {
-                arguments = newArguments;
-                return true;
+                Console.WriteLine("Wrong syntax\n");
+                Console.WriteLine(Help);
+                return false;
             }
 
-            arguments = null;
-            return false;
+            arguments = newArguments;
+            return true;
         }
 
-        private static bool CheckArgs(string[] args, FluentCommandLineParser parser)
+        private static bool TryGetBrush(string textBrushName, out Brush brush)
         {
-            try
+            brush = null;
+            if (BrushesByName.TryGetValue(textBrushName, out var backgroundBrush))
             {
-                var result = parser.Parse(args);
-                if (result.HasErrors)
-                {
-                    Console.WriteLine("Wrong syntax\n");
-                    Console.WriteLine(Help);
-                    return false;
-                }
+                brush = backgroundBrush;
+                return true;
             }
-            catch (KeyNotFoundException)
-            {
-                Console.WriteLine("Unknown color");
-                Console.WriteLine("List of PossibleColors:");
-                foreach (var color in BrushesByName.Keys)
-                    Console.WriteLine($"\t{color}");
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Unknown Font");
-                return false;
-            }
-            return true;
+            Console.WriteLine($"Unknown Brush {textBrushName}");
+            return false;
         }
 
         public static void SetUpContainer(ContainerBuilder builder)
