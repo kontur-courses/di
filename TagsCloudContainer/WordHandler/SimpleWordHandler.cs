@@ -4,7 +4,7 @@ namespace TagsCloudContainer.WordHandler
     {
         public string Transform(string word)
         {
-            return word;
+            return word.ToLower();
         }
     }
 }

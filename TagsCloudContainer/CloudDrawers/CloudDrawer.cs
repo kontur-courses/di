@@ -1,36 +1,34 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using TagsCloudContainer.CloudBuilder;
 using TagsCloudContainer.Settings;
+using TagsCloudContainer.Tags;
+using TagsCloudContainer.Themes;
 
 namespace TagsCloudContainer.CloudDrawers
 {
     public class CloudDrawer : ICloudDrawer
     {
-        public CloudDrawer(ICloudBuilder cloudBuilder, ImageSettings imageSettings)
+        private readonly ImageSettings imageSettings;
+        private readonly ITheme theme;
+
+        public CloudDrawer(ImageSettings imageSettings, ITheme theme)
         {
-            this.cloudBuilder = cloudBuilder;
-            height = imageSettings.Height;
-            width = imageSettings.Width;
-            outputFile = imageSettings.OutputFile;
+            this.imageSettings = imageSettings;
+            this.theme = theme;
         }
 
-        private ICloudBuilder cloudBuilder { get; }
-        private int height { get; }
-        private int width { get; }
-        private string outputFile { get; }
-
-        public void Draw()
+        public void Draw(IEnumerable<Tag> tagsCloud)
         {
-            var bmp = new Bitmap(height, width);
-            var graphics = Graphics.FromImage(bmp);
-            
-            cloudBuilder.BuildTagsCloud()
-                .ToList()
-                .ForEach(tag => graphics.DrawString(tag.Word, tag.Font, Brushes.Red, tag.Rectangle.Location));
-            
-            bmp.Save(outputFile, ImageFormat.Png);
+            var bmp = new Bitmap(imageSettings.Height, imageSettings.Width);
+            using (var graphics = Graphics.FromImage(bmp))
+            {
+                graphics.FillRectangle(theme.BackgroundColor, 0, 0, imageSettings.Height, imageSettings.Width);
+                foreach (var tag in tagsCloud)
+                    graphics.DrawString(tag.Word, tag.Font, theme.WordColor, tag.Rectangle.Location);
+            }
+
+            bmp.Save(imageSettings.OutputFile, ImageFormat.Png);
         }
     }
 }

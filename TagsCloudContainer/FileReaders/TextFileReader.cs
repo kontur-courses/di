@@ -5,16 +5,16 @@ namespace TagsCloudContainer.FileReaders
 {
     public class TextFileReader : IFileReader
     {
+        private readonly FileSettings fileSettings;
+
         public TextFileReader(FileSettings fileSettings)
         {
-            fileName = fileSettings.Filename;
+            this.fileSettings = fileSettings;
         }
-
-        private string fileName { get; }
 
         public string Read()
         {
-            return File.ReadAllText(fileName);
+            return File.ReadAllText(fileSettings.Filename);
         }
     }
 }

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using TagsCloudContainer.Tags;
+using TagsCloudContainer.TextParsers;
 
 namespace TagsCloudContainer.CloudBuilder
 {
     public interface ICloudBuilder
     {
-        IEnumerable<Tag> BuildTagsCloud();
+        IEnumerable<Tag> BuildTagsCloud(List<MiniTag> miniTags);
     }
 }

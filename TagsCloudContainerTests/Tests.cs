@@ -22,7 +22,7 @@ namespace TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            var imageSettings = new ImageSettings(1000, 1000, "");
+            var imageSettings = new ImageSettings(1000, 1000, "", "classic");
             
             PointsGenerator = new ArchimedesSpiralPointGenerator(imageSettings);
             CircularCloudLayouter = new CircularCloudLayouter(PointsGenerator);

@@ -79,15 +79,16 @@
     <Compile Include="Settings\TextSettings.cs" />
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="TextParsers\ITextParser.cs" />
+    <Compile Include="TextParsers\MiniTag.cs" />
     <Compile Include="TextParsers\TextParser.cs" />
+    <Compile Include="Themes\Black.cs" />
+    <Compile Include="Themes\Classic.cs" />
+    <Compile Include="Themes\ITheme.cs" />
     <Compile Include="WordHandler\IWordHandler.cs" />
     <Compile Include="WordHandler\SimpleWordHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Themes" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

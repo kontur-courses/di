@@ -9,28 +9,26 @@ namespace TagsCloudContainer.TextParsers
 {
     public class TextParser : ITextParser
     {
-        public TextParser(IFileReader fileReader, IWordHandler wordHandler, TextSettings textSettings)
+        private readonly IWordHandler wordHandler;
+        private readonly TextSettings textSettings;
+        
+        public TextParser(IWordHandler wordHandler, TextSettings textSettings)
         {
-            this.fileReader = fileReader;
             this.wordHandler = wordHandler;
-            countWords = textSettings.CountWords;
+            this.textSettings = textSettings;
         }
 
-        private int countWords { get; }
-        private IFileReader fileReader { get; }
-        private IWordHandler wordHandler { get; }
 
-        public List<(string, int)> Parse()
+        public List<MiniTag> Parse(string text)
         {
-            var text = fileReader.Read();
-            return Regex.Split(text.ToLower(), @"\W+")
+            return text.Split('\n')
                 .Select(e => wordHandler.Transform(e))
                 .Where(word => !string.IsNullOrWhiteSpace(word) && !IsBoring(word))
                 .GroupBy(word => word)
-                .Select(group => (group.Key, group.Count()))
-                .OrderByDescending(tuple => tuple.Item2)
-                .ThenBy(tuple => tuple.Item1)
-                .Take(countWords)
+                .Select(group => new MiniTag(group.Key, group.Count()))
+                .OrderByDescending(miniTag => miniTag.Count)
+                .ThenBy(miniTag => miniTag.Word)
+                .Take(textSettings.CountWords)
                 .ToList();
         }
 

@@ -18,5 +18,8 @@ namespace TagsCloudContainer
         
         [Option('o', "outputfile", Default = "out.png", HelpText = "Файл, куда сохранится картинка")]
         public string OutputFile { get; set; }
+        
+        [Option('s', "styletheme", Default = "classic", HelpText = "Тема, по которой будет отрисовываться")]
+        public string Theme { get; set; }
     }
 }

@@ -4,14 +4,12 @@ namespace TagsCloudContainer.Tags
 {
     public class Tag
     {
-        public Tag(int fontSize, string font, string word)
+        public Tag(int fontSize, FontFamily fontFamily, string word)
         {
-            FontSize = fontSize;
-            Font = new Font(new FontFamily(font), fontSize);
+            Font = new Font(fontFamily, fontSize);
             Word = word;
         }
 
-        public int FontSize { get; }
         public string Word { get; }
         public Rectangle Rectangle { get; set; }
         public Font Font { get; }

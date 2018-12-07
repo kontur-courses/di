@@ -24,7 +24,7 @@ namespace TagsCloudContainer
             
             Parser.Default.ParseArguments<Option>(args).WithParsed(o =>
             {
-                imageSettings = new ImageSettings(o.Height, o.Width, o.OutputFile);
+                imageSettings = new ImageSettings(o.Height, o.Width, o.OutputFile, o.Theme);
                 fileSettings = new FileSettings(o.InputFileName);
                 textSettings = new TextSettings(o.CountWords);
                 
@@ -43,10 +43,13 @@ namespace TagsCloudContainer
                 builder.RegisterType<ArchimedesSpiralPointGenerator>().As<IEnumerable<Point>>();
     
                 var container = builder.Build();
+
+                var fileReader = container.Resolve<IFileReader>();
+                var textParser = container.Resolve<ITextParser>();
+                var cloudBuilder = container.Resolve<ICloudBuilder>();
+                var cloudDrawer = container.Resolve<ICloudDrawer>();
     
-    
-                var draw = container.Resolve<ICloudDrawer>();
-                draw.Draw();
+                cloudDrawer.Draw(cloudBuilder.BuildTagsCloud(textParser.Parse(fileReader.Read())));
             });
         }  
     }
