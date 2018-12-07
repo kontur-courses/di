@@ -4,7 +4,7 @@ namespace TagCloud
 {
     public interface ITextParcer
     {
-        List<string> TryGetWordsFromText();
+        List<string> TryGetWordsFromText(string input);
         Dictionary<string, int> ParseWords(List<string> words);
     }
 }
