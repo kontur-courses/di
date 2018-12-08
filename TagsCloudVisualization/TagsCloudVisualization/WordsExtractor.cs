@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
+using Microsoft.Office.Interop.Word;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Settings;
 
@@ -32,9 +33,11 @@ namespace TagsCloudVisualization
             if (format.StartsWith("doc"))
             {
                 var textBuilder = new StringBuilder();
-                var word = new Microsoft.Office.Interop.Word.Application();
-                object miss = System.Reflection.Missing.Value;
-                object fileName = Path.IsPathRooted(path) ? path : $"{Application.StartupPath}\\{path}";
+                var word = new Application();
+                object miss = Missing.Value;
+                object fileName = Path.IsPathRooted(path)
+                    ? path
+                    : $"{System.Windows.Forms.Application.StartupPath}\\{path}";
                 var docs = word.Documents.Open(ref fileName, ref miss, ref miss, ref miss, ref miss, ref miss,
                     ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss);
 

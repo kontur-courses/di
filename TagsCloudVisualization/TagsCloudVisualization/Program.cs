@@ -25,6 +25,7 @@ namespace TagsCloudVisualization
             builder.Register(c => WordsExtractorSettingsProvider.GetDefaultSettings()).As<IWordsExtractorSettings>();
             builder.Register(c => PointGeneratorSettingsProvider.GetDefaultSettings()).As<IPointGeneratorSettings>();
             builder.RegisterType<WordsExtractor>().As<IWordsExtractor>();
+            builder.RegisterType<WordsTransformer>().As<IWordsTransformer>();
             var pointGeneratorTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                 .Where(x => typeof(IPointGenerator).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
                 .ToList();
