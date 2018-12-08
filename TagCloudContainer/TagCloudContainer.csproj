@@ -96,6 +96,10 @@
       <Project>{0a52585b-39d4-47e5-b1b0-f98078711275}</Project>
       <Name>TagsCloudContainer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TagsCloudPreprocessor\TagsCloudPreprocessor.csproj">
+      <Project>{0a52585b-39d4-47e5-b1b0-f98078711275}</Project>
+      <Name>TagsCloudPreprocessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
       <Project>{bd2f5f99-5247-42c9-92d6-92406778ddbb}</Project>
       <Name>TagsCloudVisualization</Name>
