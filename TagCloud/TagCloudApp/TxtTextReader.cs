@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TagCloud
+namespace TagCloudApp
 {
     internal class TxtTextReader : ITextReader
     {
@@ -21,6 +20,6 @@ namespace TagCloud
             }
         }
 
-        public string Extension => "txt";
+        public string Extension => ".txt";
     }
 }

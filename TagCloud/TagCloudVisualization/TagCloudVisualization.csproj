@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,13 +57,18 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter_Should.cs" />
     <Compile Include="AbstractSpiralGenerator.cs" />
+    <Compile Include="FileImageCreator.cs" />
+    <Compile Include="ImageCreatingOptions.cs" />
+    <Compile Include="ITagCloudImageCreator.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="RoundSpiralGenerator.cs" />
     <Compile Include="RoundSpiralGenerator_Should.cs" />
     <Compile Include="SizeSequenceCreators.cs" />
+    <Compile Include="SpiralGeneratorExtensions.cs" />
     <Compile Include="SquareSpiralGenerator.cs" />
+    <Compile Include="TagCloudImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

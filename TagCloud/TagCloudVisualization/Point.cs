@@ -2,7 +2,6 @@
 {
     public struct Point
     {
-        
         public Point(int x = 0, int y = 0)
         {
             X = x;
@@ -10,6 +9,7 @@
         }
 
         public static Point Empty => new Point();
+
         /// <summary>
         ///     Point {X = 0, Y = 1}
         /// </summary>
@@ -24,7 +24,8 @@
 
         public static Point operator +(Point left, Point right) => new Point(left.X + right.X, left.Y + right.Y);
 
-        public static Point operator *(double left, Point right) => new Point((int)(left * right.X), (int)(left * right.Y));
+        public static Point operator *(double left, Point right) =>
+            new Point((int) (left * right.X), (int) (left * right.Y));
 
         public static Point operator *(Point left, double right) => right * left;
         public static Point operator -(Point left, Point right) => new Point(left.X - right.X, left.Y - right.Y);

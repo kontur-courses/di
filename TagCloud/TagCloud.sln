@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudApp", "TagCloudApp\TagCloudApp.csproj", "{A9E6FC2A-F6EF-4B9D-ACB7-8AEDA94F971F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreation", "TagCloudCreation\TagCloudCreation.csproj", "{F6C2CF79-8CEC-4075-91B4-2EB119D1D960}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7DBFE96-44F6-4508-AE7B-7F8F3AAADE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9E6FC2A-F6EF-4B9D-ACB7-8AEDA94F971F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9E6FC2A-F6EF-4B9D-ACB7-8AEDA94F971F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E6FC2A-F6EF-4B9D-ACB7-8AEDA94F971F}.Release|Any CPU.ActiveCfg = Release|Any CPU

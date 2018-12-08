@@ -6,18 +6,7 @@ using NUnit.Framework;
 
 namespace TagCloud
 {
-    internal class TagCloudStatsGenerator : ITagCloudStatsGenerator
-    {
-        
-
-        public List<WordInfo> GenerateStats(IEnumerable<string> words)
-        {
-            return words.GroupBy(w => w, StringComparer.InvariantCulture)
-                        .Select(g => new WordInfo(g.Key, g.Count())).ToList();
-        }
-    }
-
-    [TestFixture]
+        [TestFixture]
     public class TagCloudStatsGenerator_Should
     {
         private ITagCloudStatsGenerator generator;

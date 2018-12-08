@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloudApp
 {
     internal interface ITextReader
     {
-        bool TryReadWords(string path, out IEnumerable<string> words);
         string Extension { get; }
+        bool TryReadWords(string path, out IEnumerable<string> words);
     }
 }

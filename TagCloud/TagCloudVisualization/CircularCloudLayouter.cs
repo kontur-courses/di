@@ -62,11 +62,10 @@ namespace TagCloudVisualization
             return DoesIntersectWithPreviousRectangles(rectangle) ? oldRectangle : rectangle;
         }
 
-        private bool DoesIntersectWithPreviousRectangles(Rectangle rectangle) => rectangles.Any(rectangle.IntersectsWith);
+        private bool DoesIntersectWithPreviousRectangles(Rectangle rectangle) =>
+            rectangles.Any(rectangle.IntersectsWith);
 
         public IEnumerable<Rectangle> PutNextRectangles(IEnumerable<Size> rectanglesSizes) =>
             rectanglesSizes.Select(PutNextRectangle);
-
-        
     }
 }

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITagCloudStatsGenerator.cs" />
+    <Compile Include="SimpleWordsPreparer.cs" />
+    <Compile Include="TagCloudStatsGenerator.cs" />
+    <Compile Include="IWordsPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagCloudCreationOptions.cs" />
     <Compile Include="TagCloudCreator.cs" />
+    <Compile Include="WordInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TagCloudVisualization\TagCloudVisualization.csproj">
+      <Project>{3618f36b-7d74-480c-9bef-0c9805f0d53a}</Project>
+      <Name>TagCloudVisualization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -102,13 +102,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUserInterface.cs" />
     <Compile Include="FileImageCreator.cs" />
-    <Compile Include="TxtTextReader.cs" />
     <Compile Include="TagCloudOptions.cs" />
     <Compile Include="ITagCloudImageCreator.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
-    <Compile Include="ITextReader.cs" />
     <Compile Include="IWordsPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleWordsPreparer.cs" />
@@ -116,7 +113,6 @@
     <Compile Include="TagCloudImage.cs" />
     <Compile Include="TagCloudStatsGenerator.cs" />
     <Compile Include="TagCloudStatsGeneratorShould.cs" />
-    <Compile Include="WordInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

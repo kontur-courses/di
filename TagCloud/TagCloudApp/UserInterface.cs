@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagCloudCreation;
@@ -11,16 +10,15 @@ namespace TagCloudApp
         protected readonly TagCloudCreator Creator;
         protected readonly Dictionary<string, ITextReader> Readers;
 
-
         protected UserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers)
         {
             Creator = creator;
-            this.Readers = readers.ToDictionary(r=>r.Extension);
+            Readers = readers.ToDictionary(r => r.Extension);
         }
 
         public abstract void Run(string[] startupArgs);
 
-        public bool TryRead(string path, out IEnumerable<string> words)
+        protected bool TryRead(string path, out IEnumerable<string> words)
         {
             words = null;
             var extension = Path.GetExtension(path);
@@ -31,7 +29,6 @@ namespace TagCloudApp
                 return false;
             success = reader.TryReadWords(path, out words);
             return success;
-
         }
     }
 }

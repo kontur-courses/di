@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagCloud
+namespace TagCloudCreation
 {
-    internal class WordInfo
+    public class WordInfo
     {
         public WordInfo(string word, int count)
         {

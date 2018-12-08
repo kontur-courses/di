@@ -15,7 +15,7 @@ namespace TagCloudVisualization
         public void NotThrow_WhenCenter(int x, int y)
         {
             // ReSharper disable once ObjectCreationAsStatement
-            Action creation = () => new CircularCloudLayouter(new Point(x,y),new RoundSpiralGenerator());
+            Action creation = () => new CircularCloudLayouter(new Point(x, y), new RoundSpiralGenerator());
             creation.Should()
                     .NotThrow();
         }

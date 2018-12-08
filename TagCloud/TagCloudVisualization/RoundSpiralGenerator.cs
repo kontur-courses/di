@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace TagCloudVisualization
@@ -11,7 +10,7 @@ namespace TagCloudVisualization
         /// <summary>
         ///     r = K*ф
         /// </summary>
-        private const double K = 3;
+        private const double K = 2;
 
         private protected override IEnumerator<Point> GetEnumerator()
         {
@@ -22,9 +21,9 @@ namespace TagCloudVisualization
                 angle += AngleDelta;
                 yield return Center + PolarCoordinatesToCartesian(K * angle, angle);
             }
+
             // ReSharper disable once IteratorNeverReturns
         }
-
 
         private static Point PolarCoordinatesToCartesian(double distance, double angle)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace TagCloudVisualization
@@ -7,6 +6,10 @@ namespace TagCloudVisualization
     public abstract class AbstractSpiralGenerator
     {
         private protected IEnumerator<Point> Enumerator;
+
+        public bool IsStarted => Enumerator != null;
+
+        private protected Point Center { get; private set; }
 
         public AbstractSpiralGenerator Begin(Point center)
         {
@@ -21,9 +24,6 @@ namespace TagCloudVisualization
 
         private protected abstract IEnumerator<Point> GetEnumerator();
 
-        private protected Point Center { get; private set; }
-        
-
         public Point Next()
         {
             if (Enumerator == null)
@@ -31,9 +31,5 @@ namespace TagCloudVisualization
             Enumerator.MoveNext();
             return Enumerator.Current;
         }
-
-        
-
     }
-    
 }
