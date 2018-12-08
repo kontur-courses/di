@@ -1,3 +1,4 @@
+using System;
 using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
@@ -10,7 +11,7 @@ namespace CloodLayouter.App
         //TODO  add SaveSettings(file format .png, .bpm, e.t.c.)
 
 
-        public ImageSaver(IImageHolder imageHolder, ISaveDirectoryProvider directoryProvider, FileWordProvider provider)
+        public ImageSaver(IImageHolder imageHolder, ISaveDirectoryProvider directoryProvider)
         {
             this.imageHolder = imageHolder;
             this.directoryProvider = directoryProvider;
@@ -19,6 +20,7 @@ namespace CloodLayouter.App
         public void Save()
         {
             imageHolder.Image.Save(directoryProvider.DirectoryToSave);
+            Console.WriteLine("saved to: " + directoryProvider.DirectoryToSave);
         }
     }
 }

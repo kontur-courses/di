@@ -38,7 +38,7 @@ namespace CloodLayouter.App
                 return new Tag
                 {
                     Font = font,
-                    Size = Graphics.FromImage(imageHolder.Image).MeasureString(kvp.Key, font).ToSize(),
+                    Size = Graphics.FromImage(imageHolder.Image).MeasureString(kvp.Key, font).ToSizeI(),
                     Word = kvp.Key
                 };
             }).ToList();

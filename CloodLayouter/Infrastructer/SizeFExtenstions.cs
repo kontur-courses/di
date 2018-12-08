@@ -5,9 +5,10 @@ namespace CloodLayouter.Infrastructer
 {
     public static class SizeFExtenstions
     {
-        public static Size ToSize(this SizeF sizeF)
+        public static Size ToSizeI(this SizeF sizeF)
         {
-            return new Size((int) Math.Ceiling(sizeF.Width) + 1, (int) Math.Ceiling(sizeF.Height) + 1);
+            return new Size(Convert.ToInt32(Math.Ceiling(sizeF.Width)),
+                Convert.ToInt32((int) Math.Ceiling(sizeF.Height)));
         }
     }
 }

@@ -14,15 +14,9 @@ namespace CloodLayouter
 
             logicBuilder.RegisterAssemblyTypes(assembly)
                 .AsImplementedInterfaces().SingleInstance();
-
-            logicBuilder.RegisterType<FileWordProvider>().SingleInstance();
-            logicBuilder.RegisterType<FileStreamReader>().SingleInstance();
-            logicBuilder.RegisterType<Converter>().SingleInstance();
-            logicBuilder.RegisterType<TagProvider>().SingleInstance();
-            logicBuilder.RegisterType<TagCloudDrawer>().SingleInstance();
-
             var logicContainer = logicBuilder.Build();
-
+            
+            //Можно было заинжектить в один класс и один раз вызвать Resolve, но я оставил так для наглядности 
             logicContainer.Resolve<IStreamReader>().Read();
             logicContainer.Resolve<IWordSlector>().Select();
             logicContainer.Resolve<IConverter>().Convert();
