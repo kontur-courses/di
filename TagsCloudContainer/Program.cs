@@ -36,8 +36,14 @@ namespace TagsCloudContainer
                 builder.RegisterType<AppSettings>().As<IFilePathProvider, IImageDirectoryProvider>().SingleInstance();
                 builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
                 builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
-                builder.RegisterType<Spiral>().As<IPositionGenerator>().SingleInstance();
-                builder.RegisterType<TagCloudLayouter>().AsSelf();
+                builder.RegisterType<Spiral>().As<IPositionGenerator>();
+                builder.RegisterType<SpiralSettings>().AsSelf().SingleInstance();
+                //builder.RegisterType<CircularCloudLayouter>().AsSelf();
+                builder.Register<Func<ITagCloudLayouter>>(c =>
+                {
+                    var context = c.Resolve<IComponentContext>();
+                    return () => new CircularCloudLayouter(context.Resolve<IPositionGenerator>());
+                });
                 builder.RegisterType<LayouterApplicator>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessor>().AsSelf().SingleInstance();
                 builder.RegisterType<WordsPreprocessorSettings>().AsSelf().SingleInstance();

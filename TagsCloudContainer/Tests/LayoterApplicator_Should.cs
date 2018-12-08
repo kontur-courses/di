@@ -11,13 +11,13 @@ namespace TagsCloudContainer.Tests
 {
     public class LayoterApplicator_Should
     {
-        private Func<TagCloudLayouter> layouter;
+        private Func<CircularCloudLayouter> layouter;
         private WordInfo[] wordInfos;
 
         [SetUp]
         public void SetUp()
         {
-            layouter = () => new TagCloudLayouter(new Spiral(new SpiralSettings()));
+            layouter = () => new CircularCloudLayouter(new Spiral(new SpiralSettings()));
             var wordInfosList = new List<WordInfo>();
             for (var i = 1; i <= 20; i++)
             {

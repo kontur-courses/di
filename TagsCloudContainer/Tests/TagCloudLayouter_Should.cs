@@ -11,7 +11,7 @@ namespace TagsCloudContainer.Tests
     public class TagCloudLayouter_Should
     {
         private Point center;
-        private TagCloudLayouter layouter;
+        private CircularCloudLayouter layouter;
         private readonly Size defaultSize = new Size(2, 4);
 
 
@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Tests
         {
             var spiral = new Spiral(new SpiralSettings());
             center = spiral.GetCenter();
-            layouter = new TagCloudLayouter(spiral);
+            layouter = new CircularCloudLayouter(spiral);
         }
 
         [Test]

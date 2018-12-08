@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Layouter\ITagCloudLayouter.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\FontSettings.cs" />
     <Compile Include="MainForm.cs">
@@ -68,7 +69,7 @@
     <Compile Include="Painter\GradientPainter.cs" />
     <Compile Include="Painter\ICloudColorPainter.cs" />
     <Compile Include="Settings\IImageHolder.cs" />
-    <Compile Include="Layouter\TagCloudLayouter.cs" />
+    <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\IPositionGenerator.cs" />
     <Compile Include="Layouter\RectangleExtensions.cs" />
     <Compile Include="Layouter\Spiral.cs" />

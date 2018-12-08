@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace TagsCloudContainer.Layouter
 {
-    public class TagCloudLayouter
+    public class CircularCloudLayouter : ITagCloudLayouter
     {
         public Point Center => generator.GetCenter();
         private readonly IPositionGenerator generator;
@@ -12,7 +11,7 @@ namespace TagsCloudContainer.Layouter
 
         public IEnumerable<Rectangle> Rectangles => rectangles;
 
-        public TagCloudLayouter(IPositionGenerator generator)
+        public CircularCloudLayouter(IPositionGenerator generator)
         {
             this.generator = generator;
         }

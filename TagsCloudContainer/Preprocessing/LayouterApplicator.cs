@@ -9,12 +9,12 @@ namespace TagsCloudContainer.Preprocessing
 {
     public class LayouterApplicator
     {
-        private readonly Func<TagCloudLayouter> layouterGenerator;
+        private readonly Func<ITagCloudLayouter> layouterGenerator;
         private readonly FontSettings fontSettings;
         
         public Point WordsCenter { get; private set; }
 
-        public LayouterApplicator(Func<TagCloudLayouter> layouterGenerator, FontSettings fontSettings)
+        public LayouterApplicator(Func<ITagCloudLayouter> layouterGenerator, FontSettings fontSettings)
         {
             this.layouterGenerator = layouterGenerator;
             this.fontSettings = fontSettings;
