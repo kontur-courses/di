@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -22,7 +23,7 @@ namespace TagCloudTests
         private CircularCloudLayouter layouter;
         private Point center;
         private Size rectangleSize;
-        private SpiralPointsGenerator pointsGenerator;
+        private IPointsGenerator pointsGenerator;
 
         private static IEnumerable RectanglesAmountTestCases
         {
@@ -184,6 +185,48 @@ namespace TagCloudTests
             var density = rectanglesSquare / circleSquare;
 
             density.Should().BeGreaterOrEqualTo(expectedDensity);
+        }
+
+        [Test]
+        public void PutNextRectangle_UsesPointsGenerator()
+        {
+            center = new Point(5, 5);
+            pointsGenerator = A.Fake<IPointsGenerator>();
+            layouter = new CircularCloudLayouter(center, pointsGenerator);
+
+            layouter.PutNextRectangle(new Size(10, 10));
+
+            A.CallTo(() => pointsGenerator.GetPoints()).MustHaveHappened();
+        }
+
+        [Test]
+        public void PutNextRectangle_UsesPointsGeneratorOnce()
+        {
+            center = new Point(5, 5);
+            pointsGenerator = A.Fake<IPointsGenerator>();
+            A.CallTo(() => pointsGenerator.GetPoints()).Returns(new[] {new Point(), new Point(100, 100)});
+            layouter = new CircularCloudLayouter(center, pointsGenerator);
+
+            layouter.PutNextRectangle(new Size(10, 10));
+            layouter.PutNextRectangle(new Size(10, 10));
+
+            A.CallTo(() => pointsGenerator.GetPoints()).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
+        [Test]
+        public void PutNextRectangle_UsesPointsFromPointsGenerator()
+        {
+            var points = new[] {new Point(), new Point(2, 0), new Point(0, 2)};
+            center = new Point();
+            pointsGenerator = A.Fake<IPointsGenerator>();
+            A.CallTo(() => pointsGenerator.GetPoints()).Returns(points);
+            layouter = new CircularCloudLayouter(center, pointsGenerator);
+
+            layouter.PutNextRectangle(new Size(1, 1));
+            layouter.PutNextRectangle(new Size(1, 1));
+            layouter.PutNextRectangle(new Size(1, 1));
+
+            layouter.Rectangles.Select(rectangle => rectangle.GetCenter()).Should().BeEquivalentTo(points);
         }
 
         private double GetDistanceToFatherPoint(IEnumerable<Rectangle> rectangles)
