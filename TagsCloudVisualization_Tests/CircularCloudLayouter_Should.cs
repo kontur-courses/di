@@ -26,22 +26,6 @@ namespace TagsCloudVisualization_Tests
             defaultSize = new Size(200, 100);
             rectangles = new List<Rectangle>();
         }
-/*
-
-        [TearDown]
-        public void TearDown()
-        {
-            var testContext = TestContext.CurrentContext;
-            var filename = $"{testContext.WorkDirectory}/{testContext.Test.Name}.png";
-            if (testContext.Result.FailCount != 0)
-            {
-                var size = new Size(800, 800);
-                new CircularCloudVisualizer(new Palette(Color.DimGray, Brushes.FloralWhite), size)
-                    .Draw(rectangles)
-                    .Save(filename);
-                TestContext.WriteLine($"Tag cloud visualization saved to file {filename}");
-            }
-        }*/
 
         [Test]
         public void PutNextRectangle_ThrowArgumentException_OnInvalidSize()
