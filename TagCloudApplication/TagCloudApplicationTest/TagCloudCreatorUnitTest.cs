@@ -1,10 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using NUnit.Framework;
-using TagCloudApplication;
-using TagCloudApplicationTest.ColorSchemes;
-using TagCloudApplicationTest.Savers;
-using TagCloudApplicationTest.TagCloudLayouters;
 
 namespace TagCloudApplicationTest
 {

@@ -47,15 +47,16 @@
     <Compile Include="ColorSchemes\IColorScheme.cs" />
     <Compile Include="ColorSchemes\SimpleColorScheme.cs" />
     <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="ISaver.cs" />
-    <Compile Include="WordKeepers\IReader.cs" />
+    <Compile Include="Savers\BMPSaver.cs" />
+    <Compile Include="Savers\ISaver.cs" />
+    <Compile Include="Readers\IReader.cs" />
     <Compile Include="WordKeepers\IWordKeeper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagCloudCreator.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="WordKeepers\StandartWordKeeper.cs" />
-    <Compile Include="WordKeepers\TXTReader.cs" />
+    <Compile Include="Readers\TXTReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

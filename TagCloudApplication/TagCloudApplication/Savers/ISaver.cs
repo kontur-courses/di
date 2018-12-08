@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloudApplication
+namespace TagCloudApplication.Savers
 {
     public interface ISaver
     {

@@ -1,4 +1,4 @@
-﻿namespace TagCloudApplication.WordKeepers
+﻿namespace TagCloudApplication.Readers
 {
     public interface IReader
     {
