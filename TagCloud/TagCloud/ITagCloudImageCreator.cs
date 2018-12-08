@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    internal interface ITagCloudSaver
+    internal interface ITagCloudImageCreator
     {
         TagCloudImage CreateTagCloudImage(IEnumerable<(Rectangle, WordInfo)> tagCloud, TagCloudOptions options);
     }

@@ -15,9 +15,9 @@ namespace TagsCloudVisualization
         public IEnumerator<Point> GetEnumerator()
         {
             Point currentPoint;
-            yield return this.center;
-            yield return this.center + Point.UnaryX;
-            yield return currentPoint = this.center + Point.UnaryX - Point.UnaryY;
+            yield return center;
+            yield return center + Point.UnaryX;
+            yield return currentPoint = center + Point.UnaryX - Point.UnaryY;
             var iteration = 1;
             while (true)
             {

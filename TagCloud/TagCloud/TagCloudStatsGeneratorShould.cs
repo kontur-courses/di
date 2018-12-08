@@ -10,8 +10,8 @@ namespace TagCloud
         [SetUp]
         public void SetUp()
         {
-            this.tagCloudStatsGenerator = new TagCloudStatsGenerator();
-            this.words = "Lorem ipsum dolor sit amet.".Split(' ');
+            tagCloudStatsGenerator = new TagCloudStatsGenerator();
+            words = "Lorem ipsum dolor sit amet.".Split(' ');
         }
 
         private TagCloudStatsGenerator tagCloudStatsGenerator;
@@ -20,8 +20,8 @@ namespace TagCloud
         [Test]
         public void ReturnEachWord_WhenEveryWordIsDoubled()
         {
-            var repeatedWords = this.words.Concat(this.words);
-            this.tagCloudStatsGenerator.GenerateStats(repeatedWords)
+            var repeatedWords = words.Concat(words);
+            tagCloudStatsGenerator.GenerateStats(repeatedWords)
                 .Should()
                 .OnlyContain(w => w.Count == 2);
         }

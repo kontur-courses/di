@@ -4,9 +4,9 @@
     {
         public TagCloudLayoutOptions(ISpiralGenerator spiral, Point center, double sizeCoefficient)
         {
-            this.Spiral = spiral;
-            this.Center = center;
-            this.SizeCoefficient = sizeCoefficient;
+            Spiral = spiral;
+            Center = center;
+            SizeCoefficient = sizeCoefficient;
         }
 
         public ISpiralGenerator Spiral { get; private set; }

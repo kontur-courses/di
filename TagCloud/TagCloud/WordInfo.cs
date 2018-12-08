@@ -6,13 +6,13 @@ namespace TagCloud
     {
         public WordInfo(string word, int count)
         {
-            this.Word = word;
-            this.Count = count;
+            Word = word;
+            Count = count;
         }
 
         public string Word { get; }
         public int Count { get; }
 
-        public Size CreateRectangle() => new Size(50 * this.Count * this.Word.Length, 50 * this.Count);
+        public Size CreateRectangle() => new Size(50 * Count * Word.Length, 50 * Count);
     }
 }

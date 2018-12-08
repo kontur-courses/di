@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TagCloud
 {
     internal interface ITagCloudStatsGenerator
     {
-        IEnumerable<WordInfo> GenerateStats(IEnumerable<string> words);
+        List<WordInfo> GenerateStats(IEnumerable<string> words);
+
     }
 }

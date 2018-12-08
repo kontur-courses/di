@@ -21,11 +21,11 @@ namespace TagsCloudVisualization
         public IEnumerator<Point> GetEnumerator()
         {
             var angle = 0d;
-            yield return this.center + PolarCoordinatesToCartesian(0d, 0d);
+            yield return center + PolarCoordinatesToCartesian(0d, 0d);
             while (true)
             {
                 angle += AngleDelta;
-                yield return this.center + PolarCoordinatesToCartesian(this.k * angle, angle);
+                yield return center + PolarCoordinatesToCartesian(k * angle, angle);
             }
 
             // ReSharper disable once IteratorNeverReturns

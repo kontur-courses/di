@@ -1,14 +1,35 @@
-﻿namespace TagCloud
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace TagCloud
 {
     internal abstract class UserInterface
     {
         protected readonly TagCloudCreator Creator;
+        protected readonly Dictionary<string,ITextReader> Readers;
 
-        protected UserInterface(TagCloudCreator creator)
+
+        protected UserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers)
         {
-            this.Creator = creator;
+            Creator = creator;
+            this.Readers = readers.ToDictionary(r=>r.Extension);
         }
 
         public abstract void Run(string[] startupArgs);
+
+        public bool TryRead(string path, out IEnumerable<string> words)
+        {
+            words = null;
+            var extension = Path.GetExtension(path);
+            if (extension == null)
+                return false;
+            var success = Readers.TryGetValue(extension, out var reader);
+            if (!success)
+                return false;
+            success = reader.TryReadWords(path, out words);
+            return success;
+
+        }
     }
 }

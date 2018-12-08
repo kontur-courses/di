@@ -12,9 +12,9 @@ namespace TagsCloudVisualization
         [SetUp]
         public void SetUp()
         {
-            this.generator = new RoundSpiralGenerator(new Point(), 2);
-            this.generatorEnumerator = this.generator.GetEnumerator();
-            this.generatorEnumerator.MoveNext();
+            generator = new RoundSpiralGenerator(new Point(), 2);
+            generatorEnumerator = generator.GetEnumerator();
+            generatorEnumerator.MoveNext();
         }
 
         private const int K = 2;
@@ -27,7 +27,7 @@ namespace TagsCloudVisualization
         {
             var fitRectangle = new Rectangle(new Point(-6,-9),new Size(19,13) );
 
-            this.generator.Take(FullCircleAmount)
+            generator.Take(FullCircleAmount)
                      .Should()
                      .OnlyContain(point => fitRectangle.Contains(point.X, point.Y));
         }
@@ -36,7 +36,7 @@ namespace TagsCloudVisualization
         [Test]
         public void ShouldHaveFirst64PointsWithPositiveY()
         {
-            this.generator.Take(64)
+            generator.Take(64)
                      .All(point => point.Y >= 0)
                      .Should()
                      .BeTrue("upper half of spiral is above y = 0");
@@ -45,7 +45,7 @@ namespace TagsCloudVisualization
         [Test]
         public void YieldZero_AsFirstPoint()
         {
-            this.generatorEnumerator.Current.Should()
+            generatorEnumerator.Current.Should()
                                .BeEquivalentTo(new Point());
         }
     }

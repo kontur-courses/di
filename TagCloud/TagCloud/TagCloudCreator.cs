@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TagsCloudVisualization;
 
 namespace TagCloud
@@ -6,33 +8,36 @@ namespace TagCloud
     internal class TagCloudCreator
     {
         private readonly ITagCloudStatsGenerator generator;
-        private readonly CircularCloudLayouter.Factory layouterFactory;
+        private readonly Func<TagCloudLayoutOptions, CircularCloudLayouter> layouterFactory;
         private readonly IWordsPreparer preparer;
-        private readonly ITextReader reader;
-        private readonly ITagCloudSaver saver;
+        private readonly ITagCloudImageCreator imageCreator;
 
         public TagCloudCreator(
-            CircularCloudLayouter.Factory layouterFactory,
-            ITextReader reader,
+            Func<TagCloudLayoutOptions, CircularCloudLayouter> layouterFactory,
             IWordsPreparer preparer,
             ITagCloudStatsGenerator generator,
-            ITagCloudSaver saver)
+            ITagCloudImageCreator imageCreator)
         {
             this.layouterFactory = layouterFactory;
-            this.reader = reader;
             this.preparer = preparer;
             this.generator = generator;
-            this.saver = saver;
+            this.imageCreator = imageCreator;
         }
 
-        public TagCloudImage CreateImage(TagCloudOptions options)
+        public TagCloudImage CreateImage(IEnumerable<string> words, TagCloudOptions options)
         {
-            var words = this.reader.ReadWords();
-            words = this.preparer.PrepareWords(words);
-            var stats = this.generator.GenerateStats(words);
-            var layouter = this.layouterFactory.Invoke(options.LayoutOptions);
+
+            var stats = generator.GenerateStats(words);
+
+            stats = preparer.PrepareWords(stats);
+
+            var layouter = layouterFactory.Invoke(options.LayoutOptions);
+
             var wordPairs = stats.Select(s => (layouter.PutNextRectangle(s.CreateRectangle()), s));
-            return this.saver.CreateTagCloudImage(wordPairs, options);
+
+            return imageCreator.CreateTagCloudImage(wordPairs, options);
         }
+
+        
     }
 }

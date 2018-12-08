@@ -9,7 +9,7 @@ namespace TagCloud
 
         public IEnumerable<string> PrepareWords(IEnumerable<string> words)
         {
-            return words.Where(w => !this.boringWords.Contains(w));
+            return words.Where(w => !boringWords.Contains(w));
         }
     }
 }

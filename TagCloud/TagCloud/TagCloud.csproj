@@ -103,10 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleUserInterface.cs" />
-    <Compile Include="FileSaver.cs" />
-    <Compile Include="FileTextReader.cs" />
+    <Compile Include="FileImageCreator.cs" />
+    <Compile Include="TxtTextReader.cs" />
     <Compile Include="TagCloudOptions.cs" />
-    <Compile Include="ITagCloudSaver.cs" />
+    <Compile Include="ITagCloudImageCreator.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
     <Compile Include="ITextReader.cs" />
     <Compile Include="IWordsPreparer.cs" />

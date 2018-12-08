@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    internal class FileSaver : ITagCloudSaver
+    internal class FileImageCreator : ITagCloudImageCreator
     {
         public TagCloudImage
             CreateTagCloudImage(IEnumerable<(Rectangle, WordInfo)> tagCloud, TagCloudOptions options) =>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommandLine;
 using TagsCloudVisualization;
 
@@ -6,7 +7,7 @@ namespace TagCloud
 {
     internal class ConsoleUserInterface : UserInterface
     {
-        public ConsoleUserInterface(TagCloudCreator creator) : base(creator)
+        public ConsoleUserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers) : base(creator, readers)
         {
         }
 
@@ -23,7 +24,7 @@ namespace TagCloud
                       }
 
                       var options = new TagCloudOptions(null, new Point(), 3);
-                      var image = this.Creator.CreateImage(options);
+                      var image = Creator.CreateImage(options);
                       SaveImage(image, path);
                       Console.WriteLine("Image is saved!");
                   });

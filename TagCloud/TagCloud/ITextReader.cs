@@ -4,6 +4,7 @@ namespace TagCloud
 {
     internal interface ITextReader
     {
-        IEnumerable<string> ReadWords();
+        bool TryReadWords(string path, out IEnumerable<string> words);
+        string Extension { get; }
     }
 }

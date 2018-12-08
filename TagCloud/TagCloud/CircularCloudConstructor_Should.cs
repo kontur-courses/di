@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
         {
             // ReSharper disable once ObjectCreationAsStatement
             var options = new TagCloudLayoutOptions(new RoundSpiralGenerator(new Point(x, y), 3), new Point(x, y),2);
-            Action creation = () => new CircularCloudLayouter(options);
+            Action creation = () => new CircularCloudLayouter(options, new RoundSpiralGenerator(new Point(x, y), 3));
             creation.Should()
                     .NotThrow();
         }

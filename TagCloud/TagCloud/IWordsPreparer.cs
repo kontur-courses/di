@@ -4,6 +4,6 @@ namespace TagCloud
 {
     internal interface IWordsPreparer
     {
-        IEnumerable<string> PrepareWords(IEnumerable<string> words);
+        List<WordInfo> PrepareWords(List<WordInfo> words);
     }
 }
