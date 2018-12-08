@@ -10,7 +10,7 @@ namespace TagsCloudPreprocessorTests
     {
         private IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
-            var excluder = new XmlWordExcluder(TestContext.CurrentContext.TestDirectory + "\\..\\..\\..");
+            var excluder = new XmlWordExcluder();
             var preprocessor = new SimplePreprocessor(excluder);
 
             return preprocessor.GetValidWords(words);
@@ -19,7 +19,7 @@ namespace TagsCloudPreprocessorTests
         [Test]
         public void ExcludeForbiddenWords()
         {
-            var excluder = new XmlWordExcluder(TestContext.CurrentContext.TestDirectory + "\\..\\..\\..");
+            var excluder = new XmlWordExcluder();
             var preprocessor = new SimplePreprocessor(excluder);
             var excludedWords = excluder.GetExcludedWords();
 

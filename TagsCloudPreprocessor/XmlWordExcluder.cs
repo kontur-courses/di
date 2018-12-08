@@ -7,9 +7,9 @@ namespace TagsCloudPreprocessor
 {
     public class XmlWordExcluder : IWordExcluder
     {
-        public XmlWordExcluder(string pathToSolutionDirectory)
+        public XmlWordExcluder()
         {
-            var filename = pathToSolutionDirectory + "\\Resources\\ExcludedWords\\" + "russianWords.xml";
+            var filename = "russianWords.xml";
             file = new FileStream(filename, FileMode.OpenOrCreate);
         }
 

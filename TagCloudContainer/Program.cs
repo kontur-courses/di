@@ -16,8 +16,7 @@ namespace TagCloudContainer
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
-            builder.Register(ctx => new SimplePreprocessor(
-                new XmlWordExcluder(Environment.CurrentDirectory + "\\..\\..\\.."))
+            builder.Register(ctx => new SimplePreprocessor(new XmlWordExcluder())
             ).As<IPreprocessor>();
             builder.RegisterType<TxtReader>().As<IReader>();
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
