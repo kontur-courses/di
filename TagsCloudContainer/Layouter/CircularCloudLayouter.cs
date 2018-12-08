@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Layouter
         {
             Rectangle rect;
             do
-                rect = new Rectangle(generator.GetNextPosition(), rectangleSize);
+                rect = new Rectangle(generator.GetNextPosition(), rectangleSize).MoveToCenter();
             while (rect.IntersectsWithAnyFrom(rectangles));
             
             rectangles.Add(rect);

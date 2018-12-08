@@ -30,7 +30,7 @@ namespace TagsCloudContainer.Preprocessing
             {
                 var word = wordAndFrequency.Word;
                 var frequency = wordAndFrequency.Frequency;
-                var font = new Font(fontSettings.FontFamily, frequency * fontSettings.FontSizeFactor);
+                var font = new Font(fontSettings.Font.FontFamily, frequency * fontSettings.FontSizeFactor);
                 var size = TextRenderer.MeasureText(word, font);
                 wordAndFrequency.FontSize = font.Size;
                 wordAndFrequency.Rect = layouter.PutNextRectangle(size);

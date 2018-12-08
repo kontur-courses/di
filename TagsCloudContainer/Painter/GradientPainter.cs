@@ -18,9 +18,9 @@ namespace TagsCloudContainer.Painter
             //var red = (int)(distanceToCenter / cloudRadius * 255 * 0.8);
             //var green = (int)(distanceToCenter / cloudRadius * 255 * 0.4);
             //var blue = (int)(distanceToCenter / cloudRadius * 255 * 0.9);
-            var red = (int)(distanceToCenter / cloudRadius * palette.PrimaryColor.R);
-            var green = (int)(distanceToCenter / cloudRadius * palette.PrimaryColor.G);
-            var blue = (int)(distanceToCenter / cloudRadius * palette.PrimaryColor.B);
+            var red = (int)(255 - distanceToCenter / cloudRadius * (255 - palette.PrimaryColor.R));
+            var green = (int)(255 - distanceToCenter / cloudRadius * (255 - palette.PrimaryColor.G));
+            var blue = (int)(255 - distanceToCenter / cloudRadius * (255 - palette.PrimaryColor.B));
             return Color.FromArgb(red, green, blue);
         }
     }

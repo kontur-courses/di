@@ -5,7 +5,7 @@ namespace TagsCloudContainer.Settings
 {
     public class FontSettings
     {
-        public FontFamily FontFamily { get; set; } = FontFamily.GenericMonospace;
-        public float FontSizeFactor { get; set; } = 1;
+        public Font Font { get; set; } = new Font(new FontFamily("Calibri Light"), 1);
+        public float FontSizeFactor { get; set; } = 10;
     }
 }
