@@ -1,9 +1,10 @@
-﻿using TagCloud.Layouter;
+﻿using TagCloud.IntermediateClasses;
+using TagCloud.Layouter;
 
 namespace TagCloud.Interfaces
 {
     public interface ISizeScheme
     {
-        Size GetSize(FrequentedFontedWord element);
+        Size GetSize(FrequentedWord word);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NHunspell;
 using TagCloud.Interfaces;
+using TagCloud.IntermediateClasses;
 
 namespace TagCloud
 {

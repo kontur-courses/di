@@ -7,17 +7,10 @@ namespace TagCloud
 {
     public class FileReaderByLines : IFileReader
     {
-        public FileReaderByLines(string path)
-        {
-            Path = path;
-        }
-
-        public string Path { get; set; }
-
-        public IEnumerable<string> Read()
+        public IEnumerable<string> Read(string path)
         {
             var result = new List<string>();
-            using (var sr = new StreamReader(Path, Encoding.Default))
+            using (var sr = new StreamReader(path, Encoding.Default))
             {
                 while (!sr.EndOfStream) result.Add(sr.ReadLine());
             }

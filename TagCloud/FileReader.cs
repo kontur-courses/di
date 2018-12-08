@@ -1,20 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using TagCloud.Interfaces;
 
 namespace TagCloud
 {
     public class FileReader : IFileReader
     {
-        public string Path { get; set; }
 
-        public IEnumerable<string> Read()
+        public IEnumerable<string> Read(string path)
         {
-            using (var sr = new StreamReader(Path, Encoding.Default))
+            IEnumerable<string> result;
+            using (var sr = new StreamReader(path, Encoding.Default))
             {
-                return sr.ReadToEnd().Split(' ');
+                var regex = new Regex("[^\\w]?(\\w+)[^\\w]?");
+                var content = sr.ReadToEnd();
+                result = regex
+                    .Matches(content)
+                    .Cast<Match>()
+                    .Select(m => m.Groups[1].Value);
             }
+
+            return result;
         }
     }
 }

@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud", "TagsCloud\TagsCloud.csproj", "{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTests", "TagsCloudTests\TagsCloudTests.csproj", "{EA8F4970-B685-4FBE-95F4-15A0CFEED1B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloudCreator\TagCloudCreator.csproj", "{1AB817EF-F034-46CF-8F57-C13616AA338C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7295B07-EE9A-45D4-9438-3F2AC1B9BBEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA8F4970-B685-4FBE-95F4-15A0CFEED1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA8F4970-B685-4FBE-95F4-15A0CFEED1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA8F4970-B685-4FBE-95F4-15A0CFEED1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA8F4970-B685-4FBE-95F4-15A0CFEED1B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

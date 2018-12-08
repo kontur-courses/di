@@ -4,8 +4,6 @@ namespace TagCloud.Interfaces
 {
     public interface IFileReader
     {
-        string Path { get; set; }
-
-        IEnumerable<string> Read();
+        IEnumerable<string> Read(string path);
     }
 }

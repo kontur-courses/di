@@ -6,12 +6,11 @@ namespace TagCloud
 {
     public class WordFilterByFile : IWordFilter
     {
-        private readonly IEnumerable<string> stopWords;
+        private readonly string[] stopWords;
 
         public WordFilterByFile(IFileReader fileReader, string path)
         {
-            fileReader.Path = path;
-            stopWords = fileReader.Read();
+            stopWords = fileReader.Read(path).ToArray();
         }
 
         public bool ToExclude(string word)

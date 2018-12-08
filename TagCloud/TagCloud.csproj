@@ -37,6 +37,12 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -56,16 +62,19 @@
     <Compile Include="Enums\SizeScheme.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileReaderByLines.cs" />
-    <Compile Include="FrequentedFontedWord.cs" />
-    <Compile Include="FrequentedWord.cs" />
+    <Compile Include="InfinitiveCastProcessor.cs" />
+    <Compile Include="Interfaces\IWordProcessor.cs" />
+    <Compile Include="IntermediateClasses\FrequentedWord.cs" />
+    <Compile Include="ImageSaver.cs" />
     <Compile Include="Interfaces\ICloudLayouter.cs" />
     <Compile Include="Interfaces\IColorScheme.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
+    <Compile Include="Interfaces\IImageSaver.cs" />
     <Compile Include="Interfaces\IFontScheme.cs" />
     <Compile Include="Interfaces\ISizeScheme.cs" />
     <Compile Include="Interfaces\IStatisticsCollector.cs" />
     <Compile Include="Interfaces\IVisualizer.cs" />
-    <Compile Include="Interfaces\IWordExcluder.cs" />
+    <Compile Include="Interfaces\IWordFilter.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\CurcularCloudExtensions.cs" />
     <Compile Include="Layouter\Point.cs" />
@@ -74,19 +83,27 @@
     <Compile Include="Layouter\Size.cs" />
     <Compile Include="Layouter\Vector.cs" />
     <Compile Include="LinearSizeScheme.cs" />
-    <Compile Include="PositionedElement.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IntermediateClasses\PositionedElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomColorScheme.cs" />
     <Compile Include="StatisticsCollector.cs" />
-    <Compile Include="TagsCloud.cs" />
     <Compile Include="Visualizer\VisualElement.cs" />
-    <Compile Include="Visualizer\VisualizatorExtensions.cs" />
-    <Compile Include="Visualizer\VisualizerToFile.cs" />
-    <Compile Include="WordExcluderByFile.cs" />
+    <Compile Include="Visualizer\VisualizerExtensions.cs" />
+    <Compile Include="Visualizer\Visualizer.cs" />
+    <Compile Include="WordFilterByFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dictionaries\Russian\ru_RU.aff" />
+    <None Include="Dictionaries\Russian\ru_RU.dic" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

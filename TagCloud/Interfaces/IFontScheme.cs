@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
+using TagCloud.IntermediateClasses;
 
 namespace TagCloud.Interfaces
 {
     public interface IFontScheme
     {
-        Font Process(FrequentedWord element);
+        Font Process(PositionedElement element);
     }
 }

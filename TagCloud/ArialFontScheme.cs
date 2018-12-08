@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TagCloud.Interfaces;
+using TagCloud.IntermediateClasses;
 
 namespace TagCloud
 {
@@ -7,9 +8,9 @@ namespace TagCloud
     {
         public const string FamilyName = "Arial";
 
-        public Font Process(FrequentedWord element)
+        public Font Process(PositionedElement element)
         {
-            return new Font(FamilyName, (element.Frequency + 1) * 10);
+            return new Font(FamilyName, 16);
         }
     }
 }
