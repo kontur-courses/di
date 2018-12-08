@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace CloudLayouter.Infrastructer
+namespace CloodLayouter.Infrastructer
 {
     public interface ICloudLayouter
     {

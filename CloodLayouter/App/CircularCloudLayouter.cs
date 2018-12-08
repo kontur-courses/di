@@ -1,33 +1,29 @@
 using System;
-using System.Drawing;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.Linq;
 using CloodLayouter.Infrastructer;
-using CloudLayouter.Infrastructer;
 
 namespace CloudLayouter.App
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public int Count{ get { return rectangles.Count; }}
-        private SortedSet<Point> anchorpoints;
-        private HashSet<Rectangle> rectangles;
-        private Point center;
+        private readonly SortedSet<Point> anchorpoints;
+        private readonly Point center;
+        private readonly HashSet<Rectangle> rectangles;
 
-
-        public CircularCloudLayouter(IImageSettingsProvider settingsProvider)
+        public CircularCloudLayouter(IImageHolder imageHolder)
         {
-            center = new Point(settingsProvider.ImageSize.Width / 2, settingsProvider.ImageSize.Height / 2);
-            anchorpoints = new SortedSet<Point>(new PointDistanceComparer(this.center));
+            center = new Point(imageHolder.Image.Width / 2, imageHolder.Image.Height / 2);
+            anchorpoints = new SortedSet<Point>(new PointDistanceComparer(center));
             rectangles = new HashSet<Rectangle>();
-            
+
             anchorpoints.Add(center);
         }
-        
+
         public Rectangle PutNextRectangle(Size size)
         {
-            if(size.IsEmpty)
+            if (size.IsEmpty)
                 throw new ArgumentException("Size of rectangle can't be Empty.");
 
             var newRectangle = SearchBestValidPlace(size);
@@ -39,28 +35,22 @@ namespace CloudLayouter.App
         private Rectangle SearchBestValidPlace(Size size)
         {
             var newRectangle = new Rectangle(new Point(), size);
-            
-            foreach (var point in anchorpoints)
-            {
-                foreach (var possibleLocationPoint in point.GetPossibleTagLocation(size))
-                {
-                    newRectangle.Location = possibleLocationPoint;
-                    if (!newRectangle.IntersectsWith(rectangles))
-                        return newRectangle;
 
-                }       
+            foreach (var point in anchorpoints)
+            foreach (var possibleLocationPoint in point.GetPossibleTagLocation(size))
+            {
+                newRectangle.Location = possibleLocationPoint;
+                if (!newRectangle.IntersectsWith(rectangles))
+                    return newRectangle;
             }
+
             return newRectangle;
         }
-        
+
         private void AddAnchorPoints(Rectangle rectangle)
         {
-            foreach (var point in rectangle.GetCornerPoints())
-            {
-                anchorpoints.Add(point);
-            }
+            foreach (var point in rectangle.GetCornerPoints()) anchorpoints.Add(point);
         }
-
     }
 
     public static class RectangleExtensions
@@ -69,16 +59,16 @@ namespace CloudLayouter.App
         {
             return rectEnum.Any(rectangle => rectangle.IntersectsWith(basicRectangle));
         }
-        
+
         public static IEnumerable<Point> GetCornerPoints(this Rectangle rectangle)
         {
-            yield return new Point(rectangle.Left,rectangle.Top);
-            yield return new Point(rectangle.Left,rectangle.Bottom);
-            yield return new Point(rectangle.Right,rectangle.Top);
-            yield return new Point(rectangle.Right,rectangle.Bottom);
-        }    
+            yield return new Point(rectangle.Left, rectangle.Top);
+            yield return new Point(rectangle.Left, rectangle.Bottom);
+            yield return new Point(rectangle.Right, rectangle.Top);
+            yield return new Point(rectangle.Right, rectangle.Bottom);
+        }
     }
-    
+
     public static class PointExtensions
     {
         public static double GetDistance(Point a, Point b)
@@ -97,20 +87,18 @@ namespace CloudLayouter.App
 
     public class PointDistanceComparer : IComparer<Point>
     {
-        private Point anchorPoint;
-        
+        private readonly Point anchorPoint;
+
         public PointDistanceComparer(Point anchorPoint)
         {
             this.anchorPoint = anchorPoint;
         }
-        
+
         public int Compare(Point x, Point y)
         {
             if (PointExtensions.GetDistance(x, anchorPoint) > PointExtensions.GetDistance(y, anchorPoint))
                 return 1;
-            else
-                return -1;
+            return -1;
         }
     }
 }
-
