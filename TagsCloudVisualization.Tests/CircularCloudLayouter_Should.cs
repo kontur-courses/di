@@ -75,7 +75,8 @@ namespace TagsCloudVisualization.Tests
                 .Max(point => Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Y, 2)));
             var circleArea = Math.PI * Math.Pow(circumscribedCircleRadius, 2);
 
-            (rectanglesAmount * rectangleSideSize * rectangleSideSize / circleArea).Should().BeGreaterThan(0.8);
+            const int tagCloudArea = rectanglesAmount * rectangleSideSize * rectangleSideSize;
+            (tagCloudArea / circleArea).Should().BeGreaterThan(0.8);
         }
     }
 }
