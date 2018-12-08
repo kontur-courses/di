@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudVisualization.WordsProcessing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
     public class WordsCloudLayouter : IWordsCloudLayouter
     {
         private readonly ICloudLayouter layouter;
+        private readonly ISizer sizer;
 
-        public WordsCloudLayouter(ICloudLayouter layouter)
+        public WordsCloudLayouter(ICloudLayouter layouter, ISizer sizer)
         {
             this.layouter = layouter;
+            this.sizer = sizer;
         }
 
-        public IEnumerable<Word> LayWords(IEnumerable<SizedWord> sizedWords)
+        public IEnumerable<Word> LayWords()
         {
-            return sizedWords.Select(PutNextWord);
+            return sizer.SizeWords().Select(PutNextWord);
         }
 
         private Word PutNextWord(SizedWord sizedWord)

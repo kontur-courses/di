@@ -1,27 +1,43 @@
 using System.Drawing;
-using System.IO;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
-using NSubstitute;
+using TagsCloudVisualization.Layouter;
+using TagsCloudVisualization.WordsProcessing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Infrastructure
 {
-    public static class DependenciesBuilder
+    public class DIBuilder
     {
-        public static IContainer BuildContainer()
+        private readonly IContainer container;
+        public DIBuilder()
+        {
+            container = BuildContainer();
+        }
+
+        public T Resolve<T>()
+        {
+            using (var scope = container.BeginLifetimeScope())
+            {
+               return scope.Resolve<T>();
+            }
+        }
+
+        private static IContainer BuildContainer()
         {
             
             var builder = new ContainerBuilder();
-
-            builder.RegisterType<TextPreprocessor>().As<TextPreprocessor>();
-            builder.RegisterType<TxtReader>().As<IWordsProvider>()
+            
+            builder.RegisterType<TxtReader>().Named<IWordsProvider>("wordsFile")
                 .WithParameter("filename", "examples/textExample.txt");
             builder.RegisterType<TxtReader>().Named<IWordsProvider>("boringWords")
                 .WithParameter("filename", "examples/boring_words.txt");
+            builder.RegisterType<TextPreprocessor>().As<IWordsProvider>()
+                .WithParameter(ResolvedParameter.ForNamed<IWordsProvider>("wordsFile"));
             builder.RegisterType<BoringWordsFilter>().As<IFilter>()
                 .WithParameter(ResolvedParameter.ForNamed<IWordsProvider>("boringWords"));
-            builder.RegisterType<Spiral>().As<IPolar>()
+
+            builder.RegisterType<Spiral>().As<Spiral>()
                 .WithParameters(new[]
                 {
                     new NamedParameter("center", new Point(0, 0)),

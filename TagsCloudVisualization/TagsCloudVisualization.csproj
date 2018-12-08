@@ -75,12 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\DependenciesBuilder.cs" />
+    <Compile Include="Infrastructure\DIBuilder.cs" />
     <Compile Include="Infrastructure\FontSettings.cs" />
     <Compile Include="Infrastructure\Palette.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\ICloudLayouter.cs" />
-    <Compile Include="Layouter\IPolar.cs" />
+    <Compile Include="Layouter\Polar.cs" />
     <Compile Include="Layouter\IWordsCloudLayouter.cs" />
     <Compile Include="Layouter\PointExtension.cs" />
     <Compile Include="Layouter\RectangleExtension.cs" />

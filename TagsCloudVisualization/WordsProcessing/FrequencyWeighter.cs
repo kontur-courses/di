@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class FrequencyWeighter : IWeighter
     {
-        public IEnumerable<WeightedWord> WeightWords(IWordsProvider wordsProvider)
+        private readonly IWordsProvider wordsProvider;
+        public FrequencyWeighter(IWordsProvider wordsProvider)
+        {
+            this.wordsProvider = wordsProvider;
+        }
+
+        public IEnumerable<WeightedWord> WeightWords()
         {
             return wordsProvider.GetWords()
                 .GroupBy(s => s)

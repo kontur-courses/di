@@ -1,27 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
+using TagsCloudVisualization.Infrastructure;
+using TagsCloudVisualization.Layouter;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizer
 {
-    public class WordsCloudVisualizer : IVisualizer<IList<Word>>
+    public class WordsCloudVisualizer : IVisualizer
     {
         private readonly Color backgroundColor;
         private readonly Brush wordsColor;
+        private readonly IWordsCloudLayouter wordsCloudLayouter;
         private readonly Size pictureSize;
         
-        public WordsCloudVisualizer(Palette palette, Size pictureSize)
+        public WordsCloudVisualizer(IWordsCloudLayouter wordsCloudLayouter, Palette palette, Size pictureSize)
         {
             backgroundColor = palette.BackgroundColor;
             wordsColor = palette.SecondaryColor;
             this.pictureSize = pictureSize;
+            this.wordsCloudLayouter = wordsCloudLayouter;
         }
-        public Bitmap Draw(IList<Word> words)
+        public Bitmap Draw()
         {
+            var words = wordsCloudLayouter.LayWords();
             var bmp = new Bitmap(pictureSize.Width, pictureSize.Height);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.Clear(backgroundColor);
-                if (words.Count == 0) return bmp;
                 foreach (var word in words)
                     g.DrawString(word.Text, word.Font, wordsColor, word.Rectangle.ShiftRectangleToBitMapCenter(bmp));
             }

@@ -1,4 +1,4 @@
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class WordsChanger : IWordsChanger
     {

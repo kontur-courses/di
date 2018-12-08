@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public interface IFilter
     {

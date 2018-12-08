@@ -1,6 +1,6 @@
 using System;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class WeightedWord : IComparable
     {

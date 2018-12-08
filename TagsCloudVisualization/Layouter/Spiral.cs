@@ -1,29 +1,25 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
-    public class Spiral : IPolar
+    public class Spiral : Polar
     {
         private readonly double step;
-        private double angle;
         public Point Center { get; }
 
         public Spiral(Point center, double step, double angle)
         {
             this.step = step;
-            this.angle = angle;
             Center = center;
+            Angle = angle;
         }
 
         public Point GetNextPoint()
         {
-            var radius = step * angle;
-            var x = Center.X + (int)(radius * Math.Cos(angle));
-            var y = Center.Y + (int) (radius * Math.Sin(angle));
-            angle++;
-            return new Point(x, y);
+            Radius = step * Angle;
+            var resultPoint = Center.Add(ToCartesian());
+            Angle++;
+            return resultPoint;
         }
     }
 }

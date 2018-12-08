@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudVisualization.Infrastructure;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class Sizer : ISizer
     {
@@ -19,9 +20,9 @@ namespace TagsCloudVisualization
         }
         
         
-        public IEnumerable<SizedWord> SizeWords(IWordsProvider wordsProvider)
+        public IEnumerable<SizedWord> SizeWords()
         {
-            var weightedWords = weighter.WeightWords(wordsProvider).ToList();
+            var weightedWords = weighter.WeightWords().ToList();
             maxWeight = weightedWords.Max().Weight;
             minWeight = weightedWords.Min().Weight;
             foreach (var word in weightedWords)

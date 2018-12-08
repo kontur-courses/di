@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class TxtReader : IWordsProvider
     {

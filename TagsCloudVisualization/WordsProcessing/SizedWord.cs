@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProcessing
 {
     public class SizedWord
     {

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
+using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<Rectangle> rectangles;
 
-        private readonly IPolar polar;
+        private readonly Spiral spiral;
 
-        public CircularCloudLayouter(IPolar polar)
+        public CircularCloudLayouter(Spiral spiral)
         {
-            this.polar = polar;
+            this.spiral = spiral;
             rectangles = new List<Rectangle>();
         }
 
@@ -30,10 +30,10 @@ namespace TagsCloudVisualization
         private Rectangle GenerateNextRectangle(Size rectangleSize)
         {
             if (rectangles.Count == 0) 
-                return new Rectangle(polar.Center, rectangleSize).ShiftRectangleToTopLeftCorner();
+                return new Rectangle(spiral.Center, rectangleSize).ShiftRectangleToTopLeftCorner();
             while (true)
             {
-                var rectangleCenter = polar.GetNextPoint();
+                var rectangleCenter = spiral.GetNextPoint();
                 var nexRectangle = new Rectangle(rectangleCenter, rectangleSize)
                     .ShiftRectangleToTopLeftCorner();
                 if (!rectangles.Any(nexRectangle.IntersectsWith))
