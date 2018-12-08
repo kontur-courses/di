@@ -4,6 +4,7 @@ namespace TagsCloudContainer.TextPreprocessors
 {
     public interface IWordsPreprocessor
     {
-        IEnumerable<string> PreprocessWords(string[] words);
+        IEnumerable<KeyValuePair<string, int>> PreprocessWords(IEnumerable<string> words,
+            IEnumerable<string> wordsToBeExcluded = null);
     }
 }

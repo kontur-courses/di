@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Algorithms
 {
     public interface IAlgorithm
     {
-        Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> pairs);
+        Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> processedWords);
     }
 }

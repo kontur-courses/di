@@ -35,7 +35,7 @@ namespace TagsCloudContainer.ResultFormatters
 
             var scaleFontSize = preferredFont.Size * scaleRatio;
 
-            return new Font(preferredFont.FontFamily, scaleFontSize);
+            return new Font(preferredFont.FontFamily, scaleFontSize - 1 > 0 ? scaleFontSize - 1 : scaleFontSize);
         }
     }
 }

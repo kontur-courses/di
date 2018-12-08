@@ -53,10 +53,10 @@ namespace TagsCloudContainer.Algorithms
                 rect.Top + rect.Height / 2);
         }
 
-        public Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> words)
+        public Dictionary<string, (Rectangle, int)> GenerateRectanglesSet(IEnumerable<KeyValuePair<string, int>> processedWords)
         {
             var result = new Dictionary<string, (Rectangle, int)>();
-            var wordsList = words.ToList();
+            var wordsList = processedWords.ToList();
 
             var relativeWeightsSum = wordsList.Sum(e => e.Value);
 
