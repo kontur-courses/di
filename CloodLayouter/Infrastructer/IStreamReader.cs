@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace CloodLayouter.Infrastructer
 {
     public interface IStreamReader
     {
-        void Read();
+        List<string> Read();
     }
 }

@@ -1,26 +1,33 @@
+using System.Collections.Generic;
 using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
 {
-    public class FileStreamReader : IStreamReader
+    public class FileStreamReader : IStreamReader, IWordProvider
     {
         private readonly IFileProvider fileProvider;
-        private readonly IWordProvider wordProvider;
 
-        public FileStreamReader(IFileProvider fileProvider, IWordProvider wordProvider)
+        public FileStreamReader(IFileProvider fileProvider)
         {
             this.fileProvider = fileProvider;
-            this.wordProvider = wordProvider;
         }
 
-        public void Read()
+        public List<string> Read()
         {
+            var wordList = new List<string>();
             var line = fileProvider.File.ReadLine();
             while (line != null)
             {
-                wordProvider.Words.Add(line);
+                wordList.Add(line.ToLower());
                 line = fileProvider.File.ReadLine();
             }
+
+            return wordList;
+        }
+
+        List<string> IWordProvider.GetWords()
+        {
+            return Read();
         }
     }
 }

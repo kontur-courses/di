@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Autofac;
+using Autofac.Core;
 using CloodLayouter.App;
 using CloodLayouter.Infrastructer;
 
@@ -14,12 +16,23 @@ namespace CloodLayouter
 
             logicBuilder.RegisterAssemblyTypes(assembly)
                 .AsImplementedInterfaces().SingleInstance();
-            var logicContainer = logicBuilder.Build();
+            logicBuilder.RegisterType<Converter>();
             
-            //Можно было заинжектить в один класс и один раз вызвать Resolve, но я оставил так для наглядности 
-            logicContainer.Resolve<IStreamReader>().Read();
-            logicContainer.Resolve<IWordSlector>().Select();
-            logicContainer.Resolve<IConverter>().Convert();
+            logicBuilder.RegisterType<FileStreamReader>().Named<IWordProvider>("FileStreamReader").SingleInstance();
+            logicBuilder.RegisterType<WordSelector>()
+                .WithParameter(ResolvedParameter.ForNamed<IWordProvider>("FileStreamReader")).SingleInstance();
+
+            logicBuilder.RegisterType<WordSelector>().Named<IWordProvider>("WordSelector").SingleInstance();
+            logicBuilder.RegisterType<Converter>().As<ITagProvider>()
+                .WithParameter(ResolvedParameter.ForNamed<IWordProvider>("WordSelector")).SingleInstance();
+
+            logicBuilder.RegisterType<Converter>().Named<ITagProvider>("Converter");
+            logicBuilder.RegisterType<TagCloudDrawer>()
+                .WithParameter(ResolvedParameter.ForNamed<ITagProvider>("Converter"));
+
+            var logicContainer = logicBuilder.Build();
+
+            
             logicContainer.Resolve<IDrawer>().Draw();
             logicContainer.Resolve<IImageSaver>().Save();
         }

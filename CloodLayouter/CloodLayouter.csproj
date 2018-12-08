@@ -55,13 +55,11 @@
     <Compile Include="App\Converter.cs" />
     <Compile Include="App\FileProvider.cs" />
     <Compile Include="App\FileStreamReader.cs" />
-    <Compile Include="App\WordProvider.cs" />
     <Compile Include="App\ImageHolder.cs" />
     <Compile Include="App\ImageSaver.cs" />
     <Compile Include="App\ImageSettingsProvider.cs" />
     <Compile Include="App\SaveDirectoryProvider.cs" />
     <Compile Include="App\TagCloudDrawer.cs" />
-    <Compile Include="App\TagProvider.cs" />
     <Compile Include="App\WordSelector.cs" />
     <Compile Include="Infrastructer\ICloudLayouter.cs" />
     <Compile Include="Infrastructer\IConverter.cs" />

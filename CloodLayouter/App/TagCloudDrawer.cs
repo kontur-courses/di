@@ -21,7 +21,7 @@ namespace CloodLayouter.App
         {
             using (var grapghic = Graphics.FromImage(imageHolder.Image))
             {
-                foreach (var tag in tagProvider.Tags)
+                foreach (var tag in tagProvider.GetTags())
                 {
                     var rect = cloudLayouter.PutNextRectangle(tag.Size);
                     grapghic.DrawString(tag.Word, tag.Font, new SolidBrush(Color.Blue), rect); //HARD DEOENDENCY

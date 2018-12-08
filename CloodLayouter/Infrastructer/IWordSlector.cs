@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace CloodLayouter.App
 {
     public interface IWordSlector
     {
-        void Select();
+        List<string> Select();
     }
 }

@@ -1,20 +1,26 @@
+using System.Collections.Generic;
 using System.Linq;
 using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
 {
-    public class WordSelector : IWordSlector
+    public class WordSelector : IWordSlector, IWordProvider
     {
-        private readonly IWordProvider wordProvider;
+        private readonly IStreamReader streamReader;
 
-        public WordSelector(IWordProvider wordProvider)
+        public WordSelector(IStreamReader streamReader)
         {
-            this.wordProvider = wordProvider;
+            this.streamReader = streamReader;
         }
 
-        public void Select()
+        public List<string> GetWords()
         {
-            wordProvider.Words = wordProvider.Words.Where(x => x.Length >= 4).ToList();
+            return Select();
+        }
+
+        public List<string> Select()
+        {
+            return streamReader.Read().Where(x => x.Length >= 4).ToList();
         }
     }
 }

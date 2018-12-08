@@ -4,6 +4,6 @@ namespace CloodLayouter.Infrastructer
 {
     public interface ITagProvider
     {
-        List<Tag> Tags { get; set; }
+        List<Tag> GetTags();
     }
 }
