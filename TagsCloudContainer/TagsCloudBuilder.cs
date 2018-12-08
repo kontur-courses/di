@@ -31,17 +31,13 @@ namespace TagsCloudContainer
         {
             rawWords = wordsPreprocessors.Aggregate(rawWords,
                 (current, preprocessor) => preprocessor.Preprocess(current));
-            var words = wordFormatter.FormatWords(rawWords)
-                .Select(word => word);
+            var words = wordFormatter.FormatWords(rawWords);
             var positionedWords = words
-                .Select(word =>
+                .Select(word => new Word(word.Font, word.Color, word.Value)
                 {
-                    word.Position = layouter
-                        .GetNextPosition(resultRenderer.GetWordSize(word));
-
-                    return word;
-                })
-                .ToList();
+                    Position = layouter
+                        .GetNextPosition(resultRenderer.GetWordSize(word))
+                });
 
             return resultRenderer.Generate(positionedWords);
         }

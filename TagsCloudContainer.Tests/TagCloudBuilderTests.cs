@@ -28,7 +28,9 @@ namespace TagsCloudContainer.Tests
             preprocessor2 = A.Fake<IWordsPreprocessor>();
             formatter = A.Fake<IWordFormatter>();
             layouter = A.Fake<ILayouter>();
-            renderer = A.Fake<IResultRenderer>();
+            renderer = A.Fake<ImageRenderer>(z =>
+                z.WithArgumentsForConstructor(new object[] {new Size(1024, 1024)})
+                    .Implements<IResultRenderer>());
             builder = new TagsCloudBuilder(
                 new[] {preprocessor1, preprocessor2},
                 formatter, layouter, renderer);
@@ -58,6 +60,10 @@ namespace TagsCloudContainer.Tests
 
             A.CallTo(() => formatter.FormatWords(words))
                 .Returns(formattedWords);
+
+            A.CallTo(() => renderer.Generate(null))
+                .WithAnyArguments()
+                .CallsBaseMethod();
         }
 
         private void AssertVisualizeSuccessful(IEnumerable<string> words, IEnumerable<Word> formattedWords)
