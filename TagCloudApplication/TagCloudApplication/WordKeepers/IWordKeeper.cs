@@ -4,6 +4,6 @@ namespace TagCloudApplication
 {
     public interface IWordKeeper
     {
-        Dictionary<string, int> GetWordFrequency(string text);
+        List<(string Word, int Freq)> GetWordIncidence(string text);
     }
 }

@@ -23,26 +23,25 @@ namespace TagCloudApplication
 
         public TagCloud BuildTagCloudBy(string source)
         {
-            var rects = GetRectangles(wordKeeper.GetWordFrequency(source));             
+            var rects = GetRectangles(wordKeeper.GetWordIncidence(source));             
             return new TagCloud(rects);
         }
 
-        private List<(string, Rectangle)> GetRectangles(Dictionary<string, int> wordFreq)
+        private List<(string, Rectangle)> GetRectangles(List<(string, int)> wordFreq)
         {         
             var res = new List<(string, Rectangle)>();
             foreach (var pair in wordFreq)
             {
-                var size = GetWordSize(pair.Key.Length, pair.Value);
+                var size = GetWordSize(pair.Item1.Length, pair.Item2);
                 var rect = layouter.PutNextRectangle(size);
-                res.Add((pair.Key, rect));
+                res.Add((pair.Item1, rect));
             }
 
             return res;
         }
 
         private Size GetWordSize(int wordLenght, int frequency) =>
-            new Size((frequency * wordLenght / 2), (frequency));
-            
+            new Size((frequency * wordLenght / 2), (frequency));           
     }
 
 }

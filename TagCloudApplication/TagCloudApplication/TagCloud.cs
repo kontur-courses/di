@@ -28,31 +28,33 @@ namespace TagCloudApplication
             return this;
         }
 
-
-
         public void SaveAsImage(string fileName, Size imageSize, int borderWidth, ISaver imageSaver)
         {
             var tagCloudSize = new Size(imageSize.Width - 2*borderWidth, imageSize.Height - 2*borderWidth);
             var rects = ScaleRectangleToSize(tagCloudSize);
 
-            var tCImage = CreateImage(rects, imageSize, borderWidth);
+            var tCImage = CreateImage(rects, imageSize);
             imageSaver.Save(fileName, tCImage);
         }      
 
-        private Bitmap CreateImage(List<(string word, Rectangle rect)> rects, Size imageSize, int borderWidth)
+        private Bitmap CreateImage(List<(string word, Rectangle rect)> rects, Size imageSize)
         {
             var resultBitmap = new Bitmap(imageSize.Width, imageSize.Height);
-            var g = Graphics.FromImage(resultBitmap);
-            g.FillRectangle(new SolidBrush(colorScheme.BackColor), new Rectangle(0,0, imageSize.Width, imageSize.Height));
-            g.TranslateTransform(imageSize.Width/2, imageSize.Height/2);
-            foreach (var pair in rects)
+            using (var g = Graphics.FromImage(resultBitmap))
             {
-                var currentFont = CreateFont(pair.rect, pair.word.Length);
-                g.DrawString(pair.word,
-                    currentFont,
-                    new SolidBrush(colorScheme.GetNextColorForWord()),
-                    pair.rect);
+                g.FillRectangle(new SolidBrush(colorScheme.BackColor),
+                    new Rectangle(0, 0, imageSize.Width, imageSize.Height));
+                g.TranslateTransform(imageSize.Width / 2, imageSize.Height / 2);
+                foreach (var pair in rects)
+                {
+                    var currentFont = CreateFont(pair.rect, pair.word.Length);
+                    g.DrawString(pair.word,
+                        currentFont,
+                        new SolidBrush(colorScheme.GetNextColorForWord()),
+                        pair.rect);
+                }
             }
+
             return resultBitmap;
         }
 
