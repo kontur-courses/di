@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using Autofac;
+using Autofac.Core;
+using Autofac.Core.Activators.Reflection;
 using TagsCloudPreprocessor;
 using TagsCloudVisualization;
 
@@ -9,23 +11,49 @@ namespace TagCloudContainer
 {
     class Program
     {
-        private static IContainer container;
+        private static IContainer preprocessorContainer;
+        private static IContainer layouterContainer;
+        private static IContainer visualizationContainer;
 
-        private static void InitContainer(Point center)
+        private static void InitPreprocessorContainer()
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConsoleClient>().As<IUserInterface>();
-            builder.Register(ctx => new SimplePreprocessor(new XmlWordExcluder())
-            ).As<IPreprocessor>();
+            builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
+            builder.RegisterType<SimplePreprocessor>().As<IPreprocessor>();
             builder.RegisterType<TxtReader>().As<IReader>();
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<TextParser>().As<ITextParser>();
+            
+            preprocessorContainer = builder.Build();
+        }
+        
+        private static void InitLayouterContainer(Point center)
+        {
+            var builder = new ContainerBuilder();
 
             builder.Register(ctx => new ArchimedesSpiral(center)).As<ISpiral>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
+            
+            layouterContainer = builder.Build();
+        }
+        
+        private static void InitVisualisationContainer(Config config)
+        {
+            var builder = new ContainerBuilder();
 
-            container = builder.Build();
+            var layouter = layouterContainer.Resolve<ICloudLayouter>();
+            
+            builder.Register(ctx => 
+                    new TagCloudVisualization(
+                        layouter,
+                        config.Font,
+                        config.Color,
+                        config.BackgroundColor
+                    ))
+                .As<ITagCloudVisualization>();
+            
+            visualizationContainer = builder.Build();
         }
 
         static void Main(string[] args)
@@ -34,28 +62,26 @@ namespace TagCloudContainer
             var config = client.GetConfig(args, out var toExit);
             if (toExit)
                 Environment.Exit(0);
-            InitContainer(config.Center);
-
-            var layouter = container.Resolve<ICloudLayouter>();
-            var preprocessor = container.Resolve<IPreprocessor>();
-            var rawText = container.Resolve<IFileReader>().ReadFromFile(config.InputFile);
-            var text = container.Resolve<IReader>().GetTextFromRawFormat(rawText);
-            var allWords = container.Resolve<ITextParser>().GetWords(text);
+            
+            InitPreprocessorContainer();
+            InitLayouterContainer(config.Center);
+            InitVisualisationContainer(config);
+            
+            var preprocessor = preprocessorContainer.Resolve<IPreprocessor>();
+            var rawText = preprocessorContainer.Resolve<IFileReader>().ReadFromFile(config.InputFile);
+            var text = preprocessorContainer.Resolve<IReader>().GetTextFromRawFormat(rawText);
+            var allWords = preprocessorContainer.Resolve<ITextParser>().GetWords(text);
             var validWords = preprocessor
                 .GetValidWords(allWords)
                 .Take(config.Count)
                 .ToList();
-            
-            
-            var vis = new TagCloudVisualization(
-                layouter, 
-                config.Font, 
-                config.Color,
-                Color.FromArgb(128, config.BackgroundColor));
-            
+
+
+            var vis = visualizationContainer.Resolve<ITagCloudVisualization>();
+
             vis.SaveTagCloud(
-                config.FileName, 
-                config.OutPath, 
+                config.FileName,
+                config.OutPath,
                 validWords);
         }
     }

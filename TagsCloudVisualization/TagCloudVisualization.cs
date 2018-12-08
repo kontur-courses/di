@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class TagCloudVisualization
+    public class TagCloudVisualization:ITagCloudVisualization
     {
         public TagCloudVisualization(
             ICloudLayouter cloudLayouter,

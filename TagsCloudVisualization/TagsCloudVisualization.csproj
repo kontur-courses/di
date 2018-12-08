@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchimedesSpiral.cs" />
+    <Compile Include="ITagCloudVisualization.cs" />
     <Compile Include="WordsCloudFiller.cs" />
     <Compile Include="CloudLayouter.cs" />
     <Compile Include="CircularCloudLayouterExtensions.cs" />
