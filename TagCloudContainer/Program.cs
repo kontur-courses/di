@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Autofac;
-using Autofac.Core;
-using Autofac.Core.Activators.Reflection;
 using TagsCloudPreprocessor;
 using TagsCloudVisualization;
 
@@ -15,16 +14,29 @@ namespace TagCloudContainer
         private static IContainer layouterContainer;
         private static IContainer visualizationContainer;
 
-        private static void InitPreprocessorContainer()
+        private static void InitPreprocessorContainer(Config config)
         {
             var builder = new ContainerBuilder();
-
-            builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
-            builder.RegisterType<SimplePreprocessor>().As<IPreprocessor>();
-            builder.RegisterType<TxtReader>().As<IReader>();
-            builder.RegisterType<TxtFileReader>().As<IFileReader>();
-            builder.RegisterType<TextParser>().As<ITextParser>();
+            var rawText = "";
+            var text = "";
+            var allWords = new List<string>();
+            var validWords = new List<string>();
             
+            builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
+            builder.RegisterType<TxtFileReader>()
+                .As<IFileReader>()
+                .OnActivating(x => rawText = x.Instance.ReadFromFile(config.InputFile));
+            builder.RegisterType<TxtReader>()
+                .As<IReader>()
+                .OnActivated(x => text = x.Instance.GetTextFromRawFormat(rawText));
+            builder.RegisterType<TextParser>()
+                .As<ITextParser>()
+                .OnActivated(x => allWords = x.Instance.GetWords(text).ToList());
+            builder.RegisterType<SimplePreprocessor>()
+                .As<IPreprocessor>()
+                .OnActivated(x => validWords = x.Instance.GetValidWords(allWords).ToList());
+
+            builder.Register(x => allWords).Named<List<string>>("valid words");;
             preprocessorContainer = builder.Build();
         }
         
@@ -63,20 +75,11 @@ namespace TagCloudContainer
             if (toExit)
                 Environment.Exit(0);
             
-            InitPreprocessorContainer();
+            InitPreprocessorContainer(config);
             InitLayouterContainer(config.Center);
             InitVisualisationContainer(config);
             
-            var preprocessor = preprocessorContainer.Resolve<IPreprocessor>();
-            var rawText = preprocessorContainer.Resolve<IFileReader>().ReadFromFile(config.InputFile);
-            var text = preprocessorContainer.Resolve<IReader>().GetTextFromRawFormat(rawText);
-            var allWords = preprocessorContainer.Resolve<ITextParser>().GetWords(text);
-            var validWords = preprocessor
-                .GetValidWords(allWords)
-                .Take(config.Count)
-                .ToList();
-
-
+            var validWords = preprocessorContainer.ResolveKeyed<List<string>>("valid words");
             var vis = visualizationContainer.Resolve<ITagCloudVisualization>();
 
             vis.SaveTagCloud(
