@@ -25,5 +25,23 @@ namespace TagsCloudContainer
             base.OnShown(e);
             Text = "Tag Cloud Visualization";
         }
+
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            // 
+            // MainForm
+            // 
+            ClientSize = new System.Drawing.Size(284, 261);
+            Name = "MainForm";
+            Load += new System.EventHandler(this.MainForm_Load);
+            ResumeLayout(false);
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
