@@ -82,19 +82,21 @@ namespace TagsCloudContainer.Cmd
             var circularCloudLayoutConfig =
                 new CircularCloudLayoutConfig(cmdArgs.SpiralOffset, parser.Object.SpiralAngleStep);
 
-            var tagsCloudContainer =
-                new ContainerBuilder().BuildTagsCloudContainer(config, circularCloudLayoutConfig);
+            var containerBuilder = new CloudContainerBuilder();
+
+            var tagsCloudContainer = containerBuilder.BuildTagsCloudContainer(config, circularCloudLayoutConfig);
+            var reader = containerBuilder
+                .BuildReaderContainer()
+                .Resolve<IWordsReader>();
 
             if (parser.Object.ExcludeFilename != null)
             {
-                var boringWords = tagsCloudContainer
-                    .Resolve<TxtReader>()
+                var boringWords = reader
                     .GetWords(parser.Object.ExcludeFilename);
                 config.BoringWords = boringWords;
             }
 
-            var words = tagsCloudContainer
-                .Resolve<TxtReader>()
+            var words = reader
                 .GetWords(parser.Object.InputFilename);
 
             using (var scope = tagsCloudContainer.BeginLifetimeScope())

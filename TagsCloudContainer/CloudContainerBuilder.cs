@@ -5,15 +5,15 @@ using TagsCloudContainer.WordLayouts;
 using TagsCloudContainer.WordsPreprocessors;
 using TagsCloudContainer.WordsReaders;
 
-namespace TagsCloudContainer.Cmd
+namespace TagsCloudContainer
 {
-    public class ContainerBuilder
+    public class CloudContainerBuilder
     {
         public IContainer BuildTagsCloudContainer(
             Config config,
             CircularCloudLayoutConfig circularCloudLayoutConfig)
         {
-            var builder = new Autofac.ContainerBuilder();
+            var builder = new ContainerBuilder();
 
             builder.Register(z => new ImageRenderer(config.ImageSize))
                 .As<IResultRenderer>();
@@ -36,9 +36,6 @@ namespace TagsCloudContainer.Cmd
             builder.RegisterType<WordsWeighter>()
                 .AsSelf();
 
-            builder.RegisterType<TxtReader>()
-                .AsSelf();
-
             builder
                 .RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower), typeof(BoringWordsRemover))
                 .As<IWordsPreprocessor>();
@@ -46,6 +43,15 @@ namespace TagsCloudContainer.Cmd
             builder
                 .RegisterType<TagsCloudBuilder>()
                 .AsSelf();
+
+            return builder.Build();
+        }
+
+        public IContainer BuildReaderContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<TxtReader>()
+                .As<IWordsReader>();
 
             return builder.Build();
         }
