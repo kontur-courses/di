@@ -88,6 +88,7 @@
       <DependentUpon>app.settings</DependentUpon>
     </Compile>
     <Compile Include="App\Actions\DragonFractalAction.cs" />
+    <Compile Include="App\Actions\IDragonPainterFactory.cs" />
     <Compile Include="App\Actions\ImageSettingsAction.cs" />
     <Compile Include="App\Actions\KochFractalAction.cs" />
     <Compile Include="App\Actions\PaletteSettingsAction.cs" />
@@ -105,20 +106,16 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
-    <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
-    <Compile Include="Infrastructure\Injection\INeed.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
     <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />
     <Compile Include="Infrastructure\Common\SettingsForm.cs" />
     <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
-    <Compile Include="Infrastructure\Common\XmlObjectSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

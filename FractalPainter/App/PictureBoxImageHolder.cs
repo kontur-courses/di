@@ -13,6 +13,8 @@ namespace FractalPainting.App
             FailIfNotInitialized();
             return Image.Size;
         }
+        
+        
 
         public Graphics StartDrawing()
         {

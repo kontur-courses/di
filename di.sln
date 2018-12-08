@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{657DE307-4FA8-4194-9045-255DE0BCC1D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagClouder", "ConsoleTagClouder\ConsoleTagClouder.csproj", "{2E49DA3C-74EB-4D08-A53A-65A992019D71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUITagClouder", "GUITagClouder\GUITagClouder.csproj", "{DD186A65-83DE-4402-A1E1-87AB29544C4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{88AA653D-2565-4312-86DE-F829E827CA19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6C1C1E8F-6B69-4D5E-BA3C-6FEA62F6F4D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657DE307-4FA8-4194-9045-255DE0BCC1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657DE307-4FA8-4194-9045-255DE0BCC1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657DE307-4FA8-4194-9045-255DE0BCC1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657DE307-4FA8-4194-9045-255DE0BCC1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E49DA3C-74EB-4D08-A53A-65A992019D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E49DA3C-74EB-4D08-A53A-65A992019D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E49DA3C-74EB-4D08-A53A-65A992019D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E49DA3C-74EB-4D08-A53A-65A992019D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD186A65-83DE-4402-A1E1-87AB29544C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD186A65-83DE-4402-A1E1-87AB29544C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD186A65-83DE-4402-A1E1-87AB29544C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD186A65-83DE-4402-A1E1-87AB29544C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88AA653D-2565-4312-86DE-F829E827CA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88AA653D-2565-4312-86DE-F829E827CA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88AA653D-2565-4312-86DE-F829E827CA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88AA653D-2565-4312-86DE-F829E827CA19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1C1E8F-6B69-4D5E-BA3C-6FEA62F6F4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1C1E8F-6B69-4D5E-BA3C-6FEA62F6F4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1C1E8F-6B69-4D5E-BA3C-6FEA62F6F4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1C1E8F-6B69-4D5E-BA3C-6FEA62F6F4D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

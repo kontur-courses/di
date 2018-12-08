@@ -14,11 +14,11 @@ namespace FractalPainting.App.Fractals
         {
             this.imageHolder = imageHolder;
             this.palette = palette;
-            imageSize = imageHolder.GetImageSize();
         }
 
         public void Paint()
         {
+            imageSize = imageHolder.GetImageSize();
             using (var graphics = imageHolder.StartDrawing())
             {
                 graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0, imageSize.Width, imageSize.Height);
