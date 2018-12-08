@@ -7,7 +7,7 @@ namespace TagsCloudContainer.TextPreprocessors
 {
     public class BasicWordsPreprocessor : IWordsPreprocessor
     {
-        public IEnumerable<KeyValuePair<string, int>> PreprocessWords(IEnumerable<string> words,
+        public IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words,
             IEnumerable<string> wordsToBeExcluded = null)
         {
             var dir = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "HunspellDicts", "Russian");
@@ -30,7 +30,7 @@ namespace TagsCloudContainer.TextPreprocessors
             return ProcessWords(preprocessedWords, wordsToBeExcluded);
         }
 
-        private IEnumerable<KeyValuePair<string, int>> ProcessWords(IEnumerable<string> preprocessWords,
+        private IReadOnlyDictionary<string, int> ProcessWords(IEnumerable<string> preprocessWords,
             IEnumerable<string> wordsToBeExcluded)
         {
             var result = new Dictionary<string, int>();
@@ -45,7 +45,7 @@ namespace TagsCloudContainer.TextPreprocessors
                 foreach (var word in wordsToBeExcluded)
                     result.Remove(word);
 
-            return result.OrderByDescending(e => e.Value);
+            return result;
         }
     }
 }

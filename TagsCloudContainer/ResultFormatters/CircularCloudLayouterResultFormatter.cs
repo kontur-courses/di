@@ -6,7 +6,7 @@ namespace TagsCloudContainer.ResultFormatters
     public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
         public void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName,
-            Dictionary<string, (Rectangle, int)> rectangles)
+            IReadOnlyDictionary<string, (Rectangle, int)> rectangles)
         {
             using (var bitmap = new Bitmap(size.Width, size.Height))
             {

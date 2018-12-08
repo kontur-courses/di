@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Autofac;
@@ -27,13 +28,6 @@ namespace TagsCloudContainer
 
             Container = builder.Build();
 
-            // Блок использовался для подготовки входных данных из обычного текста
-//            var path = Assembly.GetExecutingAssembly().Location;
-//            var directory = Path.GetDirectoryName(path);
-//            var l = TextFileHelper.ReadFromFile(Path.Combine(directory, "TextSamples", "1984.txt"));
-// 
-//            TextFileHelper.Rebuildtext(l);
-
             using (var scope = Container.BeginLifetimeScope())
             {
                 var textReader = scope.Resolve<ISourceTextReader>();
@@ -47,7 +41,6 @@ namespace TagsCloudContainer
 
                 var preprocessedWords = writer.PreprocessWords(lines, boringWords);
 
-                // TODO: задавать через аргументы коммандной строки
                 var size = new Size(1500, 1500);
                 var fontFamily = new FontFamily("Times New Roman");
                 var brush = Brushes.Black;
@@ -56,7 +49,9 @@ namespace TagsCloudContainer
 
                 var algorithm = scope.Resolve<IAlgorithm>(new TypedParameter(typeof(Point), centerPoint));
 
-                var rectangles = algorithm.GenerateRectanglesSet(preprocessedWords.Take(100));
+                var rectangles = algorithm.GenerateRectanglesSet(preprocessedWords
+                    .OrderByDescending(e => e.Value)
+                    .Take(100).ToDictionary(e => e.Key, e => e.Value));
 
                 var drawer = scope.Resolve<IResultFormatter>();
                 drawer.GenerateResult(size, fontFamily, brush, "tag-cloud.png", rectangles);
