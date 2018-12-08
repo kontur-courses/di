@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TagsCloudContainer.Words;
 
 namespace TagsCloudContainer
 {
-    public class TextFileReader : IWordsReader
+    public class TextFileWordsReader : IWordsReader
     {
         private readonly string filePath;
 
-        public TextFileReader(string filePath)
+        public TextFileWordsReader(string filePath)
         {
             this.filePath = filePath;
         }
@@ -26,20 +27,10 @@ namespace TagsCloudContainer
                 return textFromFile.Split(separators, StringSplitOptions.RemoveEmptyEntries).ToArray();
             }
         }
+
         public HashSet<string> ReadWordsInHashSet()
         {
-            var words = new HashSet<string>();
-            foreach (var word in ReadWords())
-            {
-                words.Add(word);
-            }
-
-            return words;
+            return new HashSet<string>(ReadWords());
         }
-    }
-
-    public interface IWordsReader
-    {
-        string[] ReadWords();
     }
 }

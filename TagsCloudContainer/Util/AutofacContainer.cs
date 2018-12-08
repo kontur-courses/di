@@ -8,9 +8,15 @@ using TagsCloudContainer.Arguments;
 
 namespace TagsCloudContainer.Util
 {
-    class AutofacConfig
+    class AutofacContainer
     {
-        public static IContainer ConfigureContainer(string[] args)
+        private IContainer container;
+        public TagCloud TagCloud => container.Resolve<TagCloud>();
+        public Brush Brush => container.Resolve<Brush>();
+        public string FontName => container.ResolveNamed<string>("FontName");
+        public string OutputPath => container.Resolve<ArgumentsParser>().OutputPath;
+
+        public AutofacContainer(string[] args)
         {
             var container = new ContainerBuilder();
 
@@ -21,8 +27,8 @@ namespace TagsCloudContainer.Util
                 .SingleInstance();
 
             container
-                .Register(c => 
-                    new TextFileReader(c.Resolve<ArgumentsParser>()
+                .Register(c =>
+                    new TextFileWordsReader(c.Resolve<ArgumentsParser>()
                             .InputPath)
                     .ReadWords())
                 .Named<string[]>("words").SingleInstance();
@@ -32,7 +38,7 @@ namespace TagsCloudContainer.Util
                 var parser = c.Resolve<ArgumentsParser>();
                 if (parser.WordsToExcludePath == null)
                     return new HashSet<string>();
-                return new TextFileReader(parser.WordsToExcludePath).ReadWordsInHashSet();
+                return new TextFileWordsReader(parser.WordsToExcludePath).ReadWordsInHashSet();
             })
                 .Named<HashSet<string>>("WordsToExclude")
                 .SingleInstance();
@@ -57,15 +63,19 @@ namespace TagsCloudContainer.Util
                 .WithParameter("center", new Point(1000, 1000))
                 .SingleInstance();
 
-            container.Register(c => new WordPreprocessing(c.ResolveNamed<string[]>("words")))
+            container.Register(c => 
+                    new WordPreprocessing(c.ResolveNamed<string[]>("words"))
+                        .ToLower()
+                        .Exclude(c.ResolveNamed<HashSet<string>>("WordsToExclude"))
+                        .IgnoreInvalidWords())
                 .As<WordPreprocessing>()
-                .SingleInstance();           
+                .SingleInstance();
 
             container.RegisterType<WordAnalizer>()
                 .AsSelf()
                 .SingleInstance();
 
-            return container.Build();
+            this.container = container.Build();
         }
     }
 }
