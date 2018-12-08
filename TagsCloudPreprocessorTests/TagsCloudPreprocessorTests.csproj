@@ -71,6 +71,10 @@
       <Project>{0a52585b-39d4-47e5-b1b0-f98078711275}</Project>
       <Name>TagsCloudContainer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TagsCloudPreprocessor\TagsCloudPreprocessor.csproj">
+      <Project>{0a52585b-39d4-47e5-b1b0-f98078711275}</Project>
+      <Name>TagsCloudPreprocessor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

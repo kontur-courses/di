@@ -48,14 +48,15 @@ namespace TagCloudContainer
                 .ToList();
             
             
-            var vis = new TagCloudVisualization();
+            var vis = new TagCloudVisualization(
+                layouter, 
+                config.Font, 
+                config.Color,
+                Color.FromArgb(128, config.BackgroundColor));
+            
             vis.SaveTagCloud(
                 config.FileName, 
                 config.OutPath, 
-                config.Font, 
-                config.Color,
-                Color.FromArgb(128, config.BackgroundColor), 
-                layouter,
                 validWords);
         }
     }
