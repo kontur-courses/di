@@ -14,29 +14,17 @@ namespace TagCloudContainer
         private static IContainer layouterContainer;
         private static IContainer visualizationContainer;
 
-        private static void InitPreprocessorContainer(Config config)
+        private static void InitPreprocessorContainer()
         {
             var builder = new ContainerBuilder();
-            var rawText = "";
-            var text = "";
-            var allWords = new List<string>();
-            var validWords = new List<string>();
             
             builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
-            builder.RegisterType<TxtFileReader>()
-                .As<IFileReader>()
-                .OnActivating(x => rawText = x.Instance.ReadFromFile(config.InputFile));
-            builder.RegisterType<TxtReader>()
-                .As<IReader>()
-                .OnActivated(x => text = x.Instance.GetTextFromRawFormat(rawText));
-            builder.RegisterType<TextParser>()
-                .As<ITextParser>()
-                .OnActivated(x => allWords = x.Instance.GetWords(text).ToList());
-            builder.RegisterType<SimplePreprocessor>()
-                .As<IPreprocessor>()
-                .OnActivated(x => validWords = x.Instance.GetValidWords(allWords).ToList());
-
-            builder.Register(x => allWords).Named<List<string>>("valid words");;
+            builder.RegisterType<TxtFileReader>().As<IFileReader>();
+            builder.RegisterType<TxtReader>().As<IReader>();
+            builder.RegisterType<TextParser>().As<ITextParser>();
+            builder.RegisterType<SimpleWordsValidator>().As<IWordsValidator>();
+            builder.RegisterType<Preprocessor>().As<IPreprocessor>();
+            
             preprocessorContainer = builder.Build();
         }
         
@@ -75,11 +63,10 @@ namespace TagCloudContainer
             if (toExit)
                 Environment.Exit(0);
             
-            InitPreprocessorContainer(config);
+            InitPreprocessorContainer();
             InitLayouterContainer(config.Center);
             InitVisualisationContainer(config);
-            
-            var validWords = preprocessorContainer.ResolveKeyed<List<string>>("valid words");
+            var validWords = preprocessorContainer.Resolve<IPreprocessor>().GetValidWords(config.InputFile, config.Count).ToList();
             var vis = visualizationContainer.Resolve<ITagCloudVisualization>();
 
             vis.SaveTagCloud(

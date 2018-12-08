@@ -54,17 +54,19 @@
   <ItemGroup>
     <Compile Include="IFileReader.cs" />
     <Compile Include="ITextParser.cs" />
-    <Compile Include="IPreprocessor.cs" />
+    <Compile Include="IWordsValidator.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="IWordExcluder.cs" />
     <Compile Include="LinesWithWordsParser.cs" />
-    <Compile Include="PreprocessorLinear.cs" />
+    <Compile Include="Preprocessor.cs" />
+    <Compile Include="WordsValidatorLinear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimplePreprocessor.cs" />
+    <Compile Include="SimpleWordsValidator.cs" />
     <Compile Include="TextParser.cs" />
     <Compile Include="TxtFileReader.cs" />
     <Compile Include="TxtReader.cs" />
     <Compile Include="XmlWordExcluder.cs" />
+    <Compile Include="IPreprocessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

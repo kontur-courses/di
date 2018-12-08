@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace TagsCloudPreprocessor
 {
-    public class SimplePreprocessor : IPreprocessor
+    public class SimpleWordsValidator : IWordsValidator
     {
         //ToDo Создать класс, где слова будут приводиться к одной форме, там же будет исключение разных частей речи
         private IWordExcluder wordExcluder;
 
-        public SimplePreprocessor(IWordExcluder wordExcluder)
+        public SimpleWordsValidator(IWordExcluder wordExcluder)
         {
             this.wordExcluder = wordExcluder;
         }

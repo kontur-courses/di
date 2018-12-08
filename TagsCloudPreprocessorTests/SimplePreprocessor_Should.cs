@@ -11,7 +11,7 @@ namespace TagsCloudPreprocessorTests
         private IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
             var excluder = new XmlWordExcluder();
-            var preprocessor = new SimplePreprocessor(excluder);
+            var preprocessor = new SimpleWordsValidator(excluder);
 
             return preprocessor.GetValidWords(words);
         }
@@ -20,7 +20,7 @@ namespace TagsCloudPreprocessorTests
         public void ExcludeForbiddenWords()
         {
             var excluder = new XmlWordExcluder();
-            var preprocessor = new SimplePreprocessor(excluder);
+            var preprocessor = new SimpleWordsValidator(excluder);
             var excludedWords = excluder.GetExcludedWords();
 
             preprocessor.GetValidWords(excludedWords).Should().BeEmpty();
