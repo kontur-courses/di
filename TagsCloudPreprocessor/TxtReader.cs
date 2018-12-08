@@ -5,12 +5,9 @@ namespace TagsCloudPreprocessor
 {
     public class TxtReader:IReader
     {
-        public string ReadFromFile(string path)
+        public string GetTextFromRawFormat(string rawText)
         {
-            using (var sr = new StreamReader(path))
-            {
-                return sr.ReadToEnd();
-            }
+            return rawText;
         }
     }
 }

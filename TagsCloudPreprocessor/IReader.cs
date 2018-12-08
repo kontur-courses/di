@@ -2,6 +2,6 @@
 {
     public interface IReader
     {
-        string ReadFromFile(string path);
+        string GetTextFromRawFormat(string rawText);
     }
 }

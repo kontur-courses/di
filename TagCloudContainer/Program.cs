@@ -20,6 +20,7 @@ namespace TagCloudContainer
                 new XmlWordExcluder(Environment.CurrentDirectory + "\\..\\..\\.."))
             ).As<IPreprocessor>();
             builder.RegisterType<TxtReader>().As<IReader>();
+            builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<TextParser>().As<ITextParser>();
 
             builder.Register(ctx => new ArchimedesSpiral(center)).As<ISpiral>();
@@ -38,7 +39,8 @@ namespace TagCloudContainer
 
             var layouter = container.Resolve<ICloudLayouter>();
             var preprocessor = container.Resolve<IPreprocessor>();
-            var text = container.Resolve<IReader>().ReadFromFile(config.InputFile);
+            var rawText = container.Resolve<IFileReader>().ReadFromFile(config.InputFile);
+            var text = container.Resolve<IReader>().GetTextFromRawFormat(rawText);
             var allWords = container.Resolve<ITextParser>().GetWords(text);
             var validWords = preprocessor
                 .GetValidWords(allWords)
