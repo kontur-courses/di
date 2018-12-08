@@ -4,10 +4,10 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualization
 {
     [TestFixture]
-    public class RoundSpiralGeneratorShould
+    public class RoundSpiralGenerator_Should
     {
         [SetUp]
         public void SetUp()

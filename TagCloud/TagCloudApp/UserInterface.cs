@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TagCloudCreation;
 
-namespace TagCloud
+namespace TagCloudApp
 {
     internal abstract class UserInterface
     {
         protected readonly TagCloudCreator Creator;
-        protected readonly Dictionary<string,ITextReader> Readers;
+        protected readonly Dictionary<string, ITextReader> Readers;
 
 
         protected UserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers)

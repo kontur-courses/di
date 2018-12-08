@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -6,18 +7,17 @@ using FluentAssertions;
 using FluentAssertions.Specialized;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using static TagsCloudVisualization.EntryPoint;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualization
 {
     [TestFixture]
-    public class CircularCloudLayouterShould
+    public class CircularCloudLayouter_Should
     {
         [SetUp]
         public void SetUp()
         {
             center = new Point(3, 4);
-            layouter = new CircularCloudLayouter(null,new RoundSpiralGenerator(new Point(3,4),3 ));
+            layouter = new CircularCloudLayouter(center, new RoundSpiralGenerator());
         }
 
         [TearDown]
@@ -54,14 +54,19 @@ namespace TagsCloudVisualization
             {
                 var random = new Random(42);
 
-                for (var i = 0; i < n; i++) layouter.PutNextRectangle(new Size(random.Next(10, 50), random.Next(10, 30)));
+                for (var i = 0; i < n; i++)
+                    layouter.PutNextRectangle(new Size(random.Next(10, 50), random.Next(10, 30)));
             }
 
             new ExecutionTime((Action) Addition).Should()
-                                       .BeLessThan(new TimeSpan(0, 0, 0, 0, m));
+                                                .BeLessThan(new TimeSpan(0, 0, 0, 0, m));
             layouter.Rectangles.Should()
                     .HaveCount(n);
         }
+
+        public static IEnumerable<Size> GenerateRectangles(SizeSequenceCreators.CreatorInfo creatorInfo) =>
+            Enumerable.Range(creatorInfo.Start, creatorInfo.Count)
+                      .Select(creatorInfo.Creator);
 
         [Test]
         public void AddRectangleToRectangles()

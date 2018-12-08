@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualization
 {
     public class CircularCloudLayouter
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
-        private readonly IEnumerator<Point> spiralGenerator;
 
-        public CircularCloudLayouter(TagCloudLayoutOptions options, ISpiralGenerator generator)
+        private readonly AbstractSpiralGenerator spiralGenerator;
+
+        public CircularCloudLayouter(Point center, AbstractSpiralGenerator generator)
         {
-            spiralGenerator = generator.GetEnumerator();
-            spiralGenerator.MoveNext();
-            Center = options.Center;
+            Center = center;
+            spiralGenerator = generator.Begin(center);
         }
 
         public Point Center { get; }
@@ -26,12 +26,11 @@ namespace TagsCloudVisualization
             if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
                 throw new ArgumentException("size has non positive parts");
 
-            var nextPosition = spiralGenerator.Current;
+            var nextPosition = spiralGenerator.Next();
             var rectangle = new Rectangle(nextPosition, rectangleSize);
             while (DoesIntersectWithPreviousRectangles(rectangle))
             {
-                spiralGenerator.MoveNext();
-                nextPosition = spiralGenerator.Current;
+                nextPosition = spiralGenerator.Next();
                 rectangle = new Rectangle(nextPosition, rectangleSize);
             }
 

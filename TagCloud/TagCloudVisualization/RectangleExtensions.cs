@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualization
 {
     public static class RectangleExtensions
     {

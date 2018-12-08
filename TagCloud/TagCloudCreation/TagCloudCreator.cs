@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TagsCloudVisualization;
 
-namespace TagCloud
+namespace TagCloudCreation
 {
-    internal class TagCloudCreator
+    public class TagCloudCreator
     {
         private readonly ITagCloudStatsGenerator generator;
         private readonly Func<TagCloudLayoutOptions, CircularCloudLayouter> layouterFactory;

@@ -2,10 +2,10 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagCloudVisualization
 {
     [TestFixture]
-    public class CircularCloudConstructorShould
+    public class CircularCloudConstructor_Should
     {
         [TestCase(0, 0, TestName = "is zero")]
         [TestCase(100, 100, TestName = "is in I quarter")]
@@ -15,8 +15,7 @@ namespace TagsCloudVisualization
         public void NotThrow_WhenCenter(int x, int y)
         {
             // ReSharper disable once ObjectCreationAsStatement
-            var options = new TagCloudLayoutOptions(new RoundSpiralGenerator(new Point(x, y), 3), new Point(x, y),2);
-            Action creation = () => new CircularCloudLayouter(options, new RoundSpiralGenerator(new Point(x, y), 3));
+            Action creation = () => new CircularCloudLayouter(new Point(x,y),new RoundSpiralGenerator());
             creation.Should()
                     .NotThrow();
         }

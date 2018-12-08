@@ -113,18 +113,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleWordsPreparer.cs" />
     <Compile Include="TagCloudApp.cs" />
-    <Compile Include="TagCloudCreator.cs" />
     <Compile Include="TagCloudImage.cs" />
     <Compile Include="TagCloudStatsGenerator.cs" />
     <Compile Include="TagCloudStatsGeneratorShould.cs" />
-    <Compile Include="UserInterface.cs" />
     <Compile Include="WordInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="TagsCloudVisualization.csproj">
-      <Project>{a755faa4-d120-4336-82e3-341ce64aec6c}</Project>
-      <Name>TagsCloudVisualization</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

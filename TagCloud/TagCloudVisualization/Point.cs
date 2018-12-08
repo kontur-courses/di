@@ -1,13 +1,15 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagCloudVisualization
 {
     public struct Point
     {
+        
         public Point(int x = 0, int y = 0)
         {
             X = x;
             Y = y;
         }
 
+        public static Point Empty => new Point();
         /// <summary>
         ///     Point {X = 0, Y = 1}
         /// </summary>
