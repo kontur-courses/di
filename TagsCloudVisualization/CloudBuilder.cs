@@ -10,9 +10,9 @@ namespace TagsCloudVisualization
     {
         private readonly IFilter[] filters;
         private readonly IWordTransformer[] transformers;
-        private readonly TagsCloudGenerator cloudGenerator;
+        private readonly ITagsCloudGenerator cloudGenerator;
 
-        public CloudBuilder(IFilter[] filters, IWordTransformer[] transformers, TagsCloudGenerator cloudGenerator)
+        public CloudBuilder(IFilter[] filters, IWordTransformer[] transformers, ITagsCloudGenerator cloudGenerator)
         {
             this.filters = filters;
             this.transformers = transformers;
@@ -21,14 +21,12 @@ namespace TagsCloudVisualization
 
         public IEnumerable<Tag> BuildTagCloud(IEnumerable<string> words)
         {
-            var filteredWords = words;
             foreach (var filter in filters)
-                filteredWords = filter.FilterWords(filteredWords);
+                words = filter.FilterWords(words);
 
-            var transformedWords = filteredWords.Select(ApplyAllTransforms);
-
+            words = words.Select(ApplyAllTransforms);
             var statisticsCalculator = new StatisticsCalculator();
-            var wordsStatistics = statisticsCalculator.CalculateStatistics(transformedWords);
+            var wordsStatistics = statisticsCalculator.CalculateStatistics(words);
 
             return cloudGenerator.GenerateTagsCloud(wordsStatistics);
         }

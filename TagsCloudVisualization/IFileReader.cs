@@ -3,8 +3,8 @@
 
 namespace TagsCloudVisualization
 {
-    public interface IReader
+    public interface IFileReader
     {
-        IEnumerable<string> ReadAllWords();
+        IEnumerable<string> ReadAllWords(string fileName);
     }
 }

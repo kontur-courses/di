@@ -6,7 +6,7 @@ using TagsCloudVisualization.Utils;
 
 namespace TagsCloudVisualization.CloudGenerating
 {
-    public class TagsCloudGenerator
+    public class TagsCloudGenerator : ITagsCloudGenerator
     {
         private readonly float maxFontSize = 40;
         private readonly ILayouterFactory wordRectanglesLayouterFactory;
@@ -23,18 +23,27 @@ namespace TagsCloudVisualization.CloudGenerating
             var wordRectanglesLayouter = wordRectanglesLayouterFactory.Create();
             if (wordsStatistics.OrderedWordsStatistics.Count == 0)
                 yield break;
-            var maxCount = wordsStatistics.OrderedWordsStatistics.First().Count;
+            var maxWordCount = wordsStatistics.OrderedWordsStatistics.First().Count;
 
             foreach (var wordStatistics in wordsStatistics.OrderedWordsStatistics)
-            {
-                var font = new Font(settings.FontName, maxFontSize * wordStatistics.Count / maxCount);
+                yield return GenerateTagFromWordStatistics(wordStatistics, wordRectanglesLayouter, maxWordCount);
+        }
 
-                var wordSize = TextRenderer.MeasureText(
-                    wordStatistics.Word, font);
+        private Tag GenerateTagFromWordStatistics(
+            WordStatistics wordStatistics, ILayouter wordRectanglesLayouter, int maxWordCount)
+        {
+            var font = new Font(settings.FontName, CalculateFontSize(wordStatistics, maxWordCount));
 
-                var locationRectangle = wordRectanglesLayouter.PutNextRectangle(wordSize);
-                yield return new Tag(wordStatistics.Word, locationRectangle, font);
-            }
+            var wordSize = TextRenderer.MeasureText(
+                wordStatistics.Word, font);
+
+            var locationRectangle = wordRectanglesLayouter.PutNextRectangle(wordSize);
+            return new Tag(wordStatistics.Word, locationRectangle, font);
+        }
+
+        private float CalculateFontSize(WordStatistics wordStatistics, int maxWordCount)
+        {
+            return maxFontSize * wordStatistics.Count / maxWordCount;
         }
     }
 }

@@ -42,14 +42,12 @@ namespace TagsCloudConsole
 
             var builder = new ContainerBuilder();
             builder.RegisterType<TextFileReader>()
-                .As<IReader>()
-                .WithParameter("fileName", arguments.WordsFile);
+                .As<IFileReader>();
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
             builder.RegisterType<ArchimedeanSpiralGeneratorFactory>()
                 .As<ISpiralGeneratorFactory>()
-                .WithParameters(new []
-                {
+                .WithParameters(new [] {
                     new NamedParameter("center", new PointF(0, 0)),
                     new NamedParameter("step", 1),
                     new NamedParameter("angleDeltaInRadians", (float) (1 / (180 * Math.PI)))
@@ -63,13 +61,16 @@ namespace TagsCloudConsole
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
-            builder.RegisterType<TagsCloudGenerator>().AsSelf();
+            builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
             builder.RegisterType<CloudBuilder>().AsSelf();
             builder.RegisterType<CustomPainter>().As<ITagPainter>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
             builder.RegisterType<App>()
                 .AsSelf()
-                .WithParameter("outputFileName", arguments.OutputFileName);
+                .WithParameters(new[] {
+                    new NamedParameter("outputFileName", arguments.OutputFileName),
+                    new NamedParameter("wordsFileName", arguments.WordsFile)
+                 });
 
             return builder.Build();
         }

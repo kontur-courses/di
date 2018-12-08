@@ -5,16 +5,9 @@ using System.Text;
 
 namespace TagsCloudVisualization
 {
-    public class TextFileReader : IReader
+    public class TextFileReader : IFileReader
     {
-        private readonly string fileName;
-
-        public TextFileReader(string fileName)
-        {
-            this.fileName = fileName;
-        }
-
-        public IEnumerable<string> ReadAllWords()
+        public IEnumerable<string> ReadAllWords(string fileName)
         {
             using (var reader = new StreamReader(fileName, Encoding.UTF8))
             {

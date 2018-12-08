@@ -54,6 +54,7 @@
     <Compile Include="CloudGenerating\ILayouterFactory.cs" />
     <Compile Include="CloudGenerating\ISpiralGenerator.cs" />
     <Compile Include="CloudGenerating\ISpiralGeneratorFactory.cs" />
+    <Compile Include="CloudGenerating\ITagsCloudGenerator.cs" />
     <Compile Include="Visualizing\BasicTagPainter.cs" />
     <Compile Include="CloudGenerating\ArchimedeanSpiralGenerator.cs" />
     <Compile Include="CloudBuilder.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Preprocessors\DullWordsFilter.cs" />
     <Compile Include="Preprocessors\IFilter.cs" />
     <Compile Include="CloudGenerating\ILayouter.cs" />
-    <Compile Include="IReader.cs" />
+    <Compile Include="IFileReader.cs" />
     <Compile Include="Preprocessors\IWordTransformer.cs" />
     <Compile Include="Utils\RectangleExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
