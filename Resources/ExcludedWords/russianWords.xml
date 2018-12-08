@@ -2,6 +2,44 @@
 <ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <string>и</string>
   <string>за</string>
+  <string>был</string>
+  <string>вас</string>
+  <string>они</string>
+  <string>мне</string>
+  <string>ее</string>
+  <string>я</string>
+  <string>когда</string>
+  <string>ни</string>
+  <string>уже</string>
+  <string>вы</string>
+  <string>мы</string>
+  <string>чем</string>
+  <string>этот</string>
+  <string>ли</string>
+  <string>ну</string>
+  <string>всех</string>
+  <string>вам</string>
+  <string>тем</string>
+  <string>будто</string>
+  <string>этого</string>
+  <string>были</string>
+  <string>будет</string>
+  <string>теперь</string>
+  <string>себя</string>
+  <string>быть</string>
+  <string>того</string>
+  <string>него</string>
+  <string>вот</string>
+  <string>ты</string>
+  <string>ему</string>
+  <string>нет</string>
+  <string>да</string>
+  <string>для</string>
+  <string>меня</string>
+  <string>она</string>
+  <string>то</string>
+  <string>о</string>
+  <string>это</string>
   <string>он</string>
   <string>же</string>
   <string>его</string>
@@ -35,5 +73,4 @@
   <string>у</string>
   <string>от</string>
   <string>до</string>
-
 </ArrayOfString>
