@@ -55,6 +55,7 @@
     <Compile Include="TagCloudCreator.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="WordKeepers\StandartWordKeeper.cs" />
+    <Compile Include="WordKeepers\TXTReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using NHunspell;
 using NUnit.Framework;
 using TagCloudApplication;
 using TagCloudApplicationTest.ColorSchemes;
