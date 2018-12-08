@@ -5,6 +5,18 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{B16F57FE-61B8-445E-A17C-C21B270C98BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization.Tests", "TagsCloudVisualization.Tests\TagsCloudVisualization.Tests.csproj", "{BAA8AFDA-3276-41D1-88E0-D6394ADD1414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{82F421C2-B299-402C-AA2B-8884C8AF1AA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStemAdapter", "MyStemAdapter\MyStemAdapter.csproj", "{06AC48E4-3B61-495A-BE1E-558E48D7F046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStemAdapter.Tests", "MyStemAdapter.Tests\MyStemAdapter.Tests.csproj", "{9FB5F8B1-D7B7-4E9A-A363-0E493252BC4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +27,30 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16F57FE-61B8-445E-A17C-C21B270C98BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16F57FE-61B8-445E-A17C-C21B270C98BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16F57FE-61B8-445E-A17C-C21B270C98BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16F57FE-61B8-445E-A17C-C21B270C98BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA8AFDA-3276-41D1-88E0-D6394ADD1414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA8AFDA-3276-41D1-88E0-D6394ADD1414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA8AFDA-3276-41D1-88E0-D6394ADD1414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA8AFDA-3276-41D1-88E0-D6394ADD1414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F421C2-B299-402C-AA2B-8884C8AF1AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F421C2-B299-402C-AA2B-8884C8AF1AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F421C2-B299-402C-AA2B-8884C8AF1AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F421C2-B299-402C-AA2B-8884C8AF1AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AC48E4-3B61-495A-BE1E-558E48D7F046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AC48E4-3B61-495A-BE1E-558E48D7F046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AC48E4-3B61-495A-BE1E-558E48D7F046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AC48E4-3B61-495A-BE1E-558E48D7F046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB5F8B1-D7B7-4E9A-A363-0E493252BC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB5F8B1-D7B7-4E9A-A363-0E493252BC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB5F8B1-D7B7-4E9A-A363-0E493252BC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB5F8B1-D7B7-4E9A-A363-0E493252BC4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
