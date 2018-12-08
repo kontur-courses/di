@@ -56,6 +56,7 @@
     <Compile Include="App\FileProvider.cs" />
     <Compile Include="App\FileStreamReader.cs" />
     <Compile Include="App\ImageHolder.cs" />
+    <Compile Include="App\ImagePerfomer.cs" />
     <Compile Include="App\ImageSaver.cs" />
     <Compile Include="App\ImageSettingsProvider.cs" />
     <Compile Include="App\SaveDirectoryProvider.cs" />

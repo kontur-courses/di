@@ -17,7 +17,7 @@ namespace CloodLayouter.App
             this.tagProvider = tagProvider;
         }
 
-        public void Draw()
+        public Bitmap Draw()
         {
             using (var grapghic = Graphics.FromImage(imageHolder.Image))
             {
@@ -27,6 +27,8 @@ namespace CloodLayouter.App
                     grapghic.DrawString(tag.Word, tag.Font, new SolidBrush(Color.Blue), rect); //HARD DEOENDENCY
                 }
             }
+
+            return imageHolder.Image;
         }
     }
 }

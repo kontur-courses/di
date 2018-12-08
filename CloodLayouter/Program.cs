@@ -29,12 +29,12 @@ namespace CloodLayouter
             logicBuilder.RegisterType<Converter>().Named<ITagProvider>("Converter");
             logicBuilder.RegisterType<TagCloudDrawer>()
                 .WithParameter(ResolvedParameter.ForNamed<ITagProvider>("Converter"));
-
+            logicBuilder.RegisterType<ImagePerfomer>();
+            
             var logicContainer = logicBuilder.Build();
 
             
-            logicContainer.Resolve<IDrawer>().Draw();
-            logicContainer.Resolve<IImageSaver>().Save();
+            logicContainer.Resolve<ImagePerfomer>().DrawAndSave();
         }
     }
 }
