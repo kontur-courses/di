@@ -5,6 +5,6 @@ namespace TagCloudVisualization
 {
     public interface ITagCloudImageCreator
     {
-        TagCloudImage CreateTagCloudImage(IEnumerable<(Rectangle, string)> wordPairs, ImageCreatingOptions options);
+        Bitmap CreateTagCloudImage(IEnumerable<(Rectangle rectangle, string word)> wordPairs, ImageCreatingOptions options);
     }
 }

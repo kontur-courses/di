@@ -9,7 +9,7 @@ namespace TagCloudVisualization
     {
         public static int Area(this Rectangle rectangle) => rectangle.Width * rectangle.Height;
 
-        public static Size GetSize(this IEnumerable<Rectangle> rectangles)
+        public static Size GetUnitedSize(this IEnumerable<Rectangle> rectangles)
         {
             rectangles = rectangles.ToList();
             var maxX = rectangles.Max(rect => rect.Right);
@@ -31,7 +31,7 @@ namespace TagCloudVisualization
             var path = Path.Combine("..", "..", name.Replace(Path.AltDirectorySeparatorChar, '_') + ".png");
 
             var rectangleList = rectangles.ToList();
-            var cloudSize = rectangleList.GetSize();
+            var cloudSize = rectangleList.GetUnitedSize();
             var width = cloudSize.Width;
             var height = cloudSize.Height;
             width *= expandPercent / 100;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TagCloudVisualization;
+using Point = TagCloudVisualization.Point;
 
 namespace TagCloudCreation
 {
@@ -24,13 +26,13 @@ namespace TagCloudCreation
             this.imageCreator = imageCreator;
         }
 
-        public TagCloudImage CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
+        public Bitmap CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
         {
             var stats = generator.GenerateStats(words);
 
             stats = preparer.PrepareWords(stats);
 
-            var layouter = layouterFactory.Invoke(options.Center);
+            var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
 
             var wordPairs = stats.Select(wordInfo => (rectangle: layouter.PutNextRectangle(wordInfo.CreateRectangle()),
                                                       wordInfo.Word));

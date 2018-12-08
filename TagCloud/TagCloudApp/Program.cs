@@ -28,7 +28,7 @@ namespace TagCloudApp
             container.RegisterType<TagCloudStatsGenerator>()
                      .As<ITagCloudStatsGenerator>();
 
-            container.RegisterType<FileImageCreator>()
+            container.RegisterType<ImageCreator>()
                      .As<ITagCloudImageCreator>();
 
             container.RegisterType<ConsoleUserInterface>()

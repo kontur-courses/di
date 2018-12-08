@@ -57,7 +57,7 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter_Should.cs" />
     <Compile Include="AbstractSpiralGenerator.cs" />
-    <Compile Include="FileImageCreator.cs" />
+    <Compile Include="ImageCreator.cs" />
     <Compile Include="ImageCreatingOptions.cs" />
     <Compile Include="ITagCloudImageCreator.cs" />
     <Compile Include="Point.cs" />

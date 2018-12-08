@@ -95,7 +95,7 @@ namespace TagCloudVisualization
             var rectangles = layouter.PutNextRectangles(GenerateRectangles(SizeSequenceCreators.SlowDecreasing))
                                      .ToList();
             var summaryArea = rectangles.Sum(r => r.Area());
-            var cloudSize = rectangles.GetSize();
+            var cloudSize = rectangles.GetUnitedSize();
             var radius = Math.Min(cloudSize.Width, cloudSize.Height);
             var circleArea = Math.PI * radius * radius;
 
