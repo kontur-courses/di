@@ -59,10 +59,9 @@ namespace TagCloudApplicationTest
             CreateNewTestFile("чЕлОвЕк ДеНь РУКА работа чЕлОвЕк ДеНь РУКА чЕлОвЕк ДеНь РУКА чЕлОвЕк ДеНь РУКА чЕлОвЕк ДеНь РУКА", fileName);
 
             testWordKeeper
-                .RemoveUnnecessaryWordsBy(p => p.Frequency < 10)
-                .GetWordIncidenceInPercent(fileName)
+                .GetWordIncidenceInPercent(fileName, 10)
                 .Should()
-                .BeEquivalentTo(new List<(string, int)> { ("человек", 31), ("день", 31), ("рука", 31) });
+                .BeEquivalentTo(new List<(string, int)> { ("человек", 33), ("день", 33), ("рука", 33) });
         }
 
         [Test]
@@ -76,10 +75,10 @@ namespace TagCloudApplicationTest
             CreateNewTestFile(text, fileName);
 
             testWordKeeper
-                .RemoveUnnecessaryWordsBy(p => new Regex("эт[аио]т?").IsMatch(p.Word))
+                .RemoveUnnecessaryWordsBy(w => new Regex("эт[аио]т?").IsMatch(w))
                 .GetWordIncidenceInPercent(fileName)
                 .Should()
-                .BeEquivalentTo(new List<(string, int)> { ("человек", 27), ("день", 27), ("рука", 27) });
+                .BeEquivalentTo(new List<(string, int)> { ("человек", 33), ("день", 33), ("рука", 33) });
         }
 
 

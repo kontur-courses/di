@@ -40,9 +40,10 @@ namespace TagCloudApplication.WordKeepers
         }
 
         private string[] ComplicatedPreprocessWords(string text)
-        {
-            return base.PreprocessWords(text)
-                .Select(w => w.ToCharArray().Where(char.IsLetter).ToString())
+        {            
+         
+            return PreprocessWords(text)
+                .Select(w => string.Join("",w.ToCharArray().Where(char.IsLetter)))
                 .Select(w => gramFormRule(w))
                 .Where(w => !removingUnnecessaryWordsRule(w))
                 .Where(w => wordClassRule(w))

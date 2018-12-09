@@ -37,20 +37,23 @@ namespace TagCloudApplication.WordKeepers
             var wordsFreq = CalculateWordsFrequency(words);
             var wAmount = RemoveWordsWithSmallFreq(words.Length, wordsFreq, minWordFreq);
 
-            return wordsFreq.Select(p => (p.Key, p.Value / wAmount * 100)).ToList();
+            return wordsFreq.Select(p => (p.Key, p.Value * 100 / wAmount)).ToList();
 
         }
 
         private int RemoveWordsWithSmallFreq(int wordsAmount, Dictionary<string, int> wordsFreq, int minWordFreq)
         {
             var newWordsAmount = wordsAmount;
+            var remKeys = new List<string>();
             foreach (var pair in wordsFreq)
             {
-                if(pair.Value / wordsAmount * 100 >= minWordFreq) continue;
-                wordsFreq.Remove(pair.Key);
+                if(pair.Value * 100 / wordsAmount  >= minWordFreq) continue;
+                remKeys.Add(pair.Key);
                 newWordsAmount -= pair.Value;
             }
 
+            foreach (var remKey in remKeys)
+                wordsFreq.Remove(remKey);
             return newWordsAmount;
         }
 
