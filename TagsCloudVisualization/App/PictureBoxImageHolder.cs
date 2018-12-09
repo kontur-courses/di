@@ -18,7 +18,8 @@ namespace TagsCloudVisualization.App
 
         public void RecreateImage(TagsCloudSettings tagCloudSettings)
         {
-            Image = new Bitmap(tagCloudSettings.ImageSize.Width, tagCloudSettings.ImageSize.Height, PixelFormat.Format24bppRgb);
+            var imageSize = tagCloudSettings.ImageSettings.ImageSize;
+            Image = new Bitmap(imageSize.Width, imageSize.Height, PixelFormat.Format24bppRgb);
         }
 
         public void RecreateImage(Bitmap image)

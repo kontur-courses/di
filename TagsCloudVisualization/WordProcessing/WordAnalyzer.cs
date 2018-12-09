@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using NHunspell;
+using Code7248.word_reader;
+using TagsCloudVisualization.WordProcessing.FileHandlers;
+
 
 namespace TagsCloudVisualization.WordProcessing
 {
@@ -11,6 +15,7 @@ namespace TagsCloudVisualization.WordProcessing
     {
         public WordsSettings WordsSettings { get; set; }
         private readonly Hunspell hunspell;
+
         public WordAnalyzer(WordsSettings wordsSettings)
         {
             WordsSettings = wordsSettings;
@@ -20,7 +25,8 @@ namespace TagsCloudVisualization.WordProcessing
 
         public Dictionary<string, int> MakeWordFrequencyDictionary()
         {
-            IEnumerable<string> words = File.ReadAllLines(WordsSettings.PathToFile, Encoding.Default);
+            var fileType = RecognizeFileType(WordsSettings.PathToFile);
+            var words = fileType.ReadFile();
             words = FilterWords(words);
             var dictionary = new Dictionary<string, int>();
             foreach (var word in words)
@@ -33,15 +39,29 @@ namespace TagsCloudVisualization.WordProcessing
             return dictionary;
         }
 
+        private FileHandler RecognizeFileType(string pathToFile)
+        {
+            switch (pathToFile)
+            {
+                case var _ when DocFileHandler.Regex.IsMatch(pathToFile):
+                    return new DocFileHandler(pathToFile);
+                case var _ when TxtFileHandler.Regex.IsMatch(pathToFile):
+                   return new TxtFileHandler(pathToFile);
+                default: 
+                    return new DefaultFileHandler(pathToFile);
+            }
+        }
+
         private IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
             return words
                 .Where(word => word.Length > 2 && hunspell.Spell(word))
                 .Select(word => LeadToInitialForm(word).ToLower())
-                .Where(word => word.Length != 0)
-                .ToArray();
+                .Where(word => word.Length != 0);
         }
 
+
+        //Substing(4) cuts meta information from hunspell
         private string LeadToInitialForm(string word)
         {
             var initialForm = hunspell.Analyze(word).FirstOrDefault();

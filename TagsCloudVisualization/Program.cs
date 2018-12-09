@@ -20,6 +20,10 @@ namespace TagsCloudVisualization
             container.RegisterType<OpenFileAction>().As<IUiAction>();
             container.RegisterType<TagsCloudAction>().As<IUiAction>();
             container.RegisterType<SaveImageAction>().As<IUiAction>();
+            container.RegisterType<PaletteSettingsAction>().As<IUiAction>();
+            container.RegisterType<ImageSettingsAction>().As<IUiAction>();
+            container.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+            container.RegisterType<Palette>().AsSelf().SingleInstance();
             container.RegisterType<WordsSettings>().AsSelf().SingleInstance();
             container.RegisterType<PictureBoxImageHolder>().AsSelf().SingleInstance();
             container.RegisterType<TagsCloudVisualizer>().AsSelf().SingleInstance();

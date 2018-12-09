@@ -2,41 +2,56 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TagsCloudVisualization.TagsCloud.CircularCloud
 {
     public class TagsCloudVisualizer
     {
-        public int MinFont { get; set; }
         private readonly TagsCloudSettings cloudSettings;
         public TagsCloudVisualizer(TagsCloudSettings cloudSettings)
         {
             this.cloudSettings = cloudSettings;
-            MinFont = (int)(cloudSettings.ImageSize.Width / 33.0);
         }
         public Bitmap DrawCircularCloud()
         {
-            var bmp = new Bitmap(cloudSettings.ImageSize.Width, cloudSettings.ImageSize.Height);
-            var gr = Graphics.FromImage(bmp);
-            var processedWords = ProcessWords(cloudSettings.WordFrequencyDictionary);
-            gr.Clear(Color.AliceBlue);
+            var imageSettings = cloudSettings.ImageSettings;
+            var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
+            var graphics = Graphics.FromImage(bmp);
+            var processedWords = ProcessWords(cloudSettings.FrequenciesByWords);
+            var wordsColor = cloudSettings.Palette.WordsColor;
+            var font = imageSettings.Font;
+            const TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter;
+
+            graphics.Clear(cloudSettings.Palette.BackgroundColor);
             foreach (var processedWord in processedWords)
             {
-                var font = new Font("Times New Roman", MinFont * processedWord.NumberRepetitions,
-                    FontStyle.Regular, GraphicsUnit.Pixel);
-                gr.DrawString(processedWord.word, font, Brushes.BlueViolet, processedWord.Region);
+                var enlargedFont = new Font(font.Name, font.Size*processedWord.RepetitionsCount,
+                    font.Style,font.Unit,font.GdiCharSet,font.GdiVerticalFont);
+                TextRenderer.DrawText(graphics, processedWord.word, enlargedFont, processedWord.Region, wordsColor, flags);
             }
             return bmp;
         }
 
-        public IEnumerable<(Rectangle Region, string word, int NumberRepetitions)>
-            ProcessWords(Dictionary<string, int> wordFrequencyDictionary)
+        private IEnumerable<(Rectangle Region, string word, int RepetitionsCount)>
+            ProcessWords(Dictionary<string, int> frequenciesByWords)
         {
-            var circularCloudLayouter = new CircularCloudLayouter(cloudSettings.Center, cloudSettings.ImageSize);
-            return wordFrequencyDictionary.OrderByDescending(pair => pair.Value)
-                .Select(pair => (circularCloudLayouter.PutNextRectangle
-                    (new Size((int)((14.0 / 20) * pair.Key.Length * MinFont * pair.Value),
-                    (int)(1.2 * MinFont * pair.Value))), pair.Key, pair.Value));
+            var imageSettings = cloudSettings.ImageSettings;
+            var circularCloudLayouter = new CircularCloudLayouter(imageSettings.Center, imageSettings.ImageSize);
+
+            return frequenciesByWords.OrderByDescending(pair => pair.Value)
+                .Select(pair => (Word: pair.Key, Frequency: pair.Value))
+                .Select(tuple => (GetRectangle(tuple, circularCloudLayouter), tuple.Word, tuple.Frequency));
+        }
+
+        private Rectangle GetRectangle((string Word, int Frequency) tuple, CircularCloudLayouter circularCloudLayouter)
+        {
+            var fontSize = cloudSettings.ImageSettings.Font.Size;
+            var fontHeight = cloudSettings.ImageSettings.Font.Height;
+
+            return circularCloudLayouter.PutNextRectangle
+                                (new Size((int)(tuple.Word.Length * fontSize * tuple.Frequency),
+                                fontHeight * tuple.Frequency));
         }
     }
 }

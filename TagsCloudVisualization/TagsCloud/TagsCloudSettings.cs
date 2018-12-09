@@ -7,16 +7,16 @@ namespace TagsCloudVisualization.TagsCloud
     public class TagsCloudSettings
     {
         public WordsSettings WordsSettings { get; set; }
-        public Dictionary<string, int> WordFrequencyDictionary { get; set; }
-        public Size ImageSize { get; set; }
-        public Point Center { get; set; }
+        public Dictionary<string, int> FrequenciesByWords { get; set; }
+        public Palette Palette { get; set; }
+        public ImageSettings ImageSettings { get; set; }
 
-        public TagsCloudSettings(WordsSettings wordsSettings)
+        public TagsCloudSettings(WordsSettings wordsSettings, Palette palette, ImageSettings imageSettings)
         {
-            WordFrequencyDictionary = new Dictionary<string, int>() { { "Открой", 3 }, { "Файл", 2 } };
-            Center = new Point(1000, 1000);
-            ImageSize = new Size(2000, 2000);
+            FrequenciesByWords = wordsSettings.WordAnalyzer.MakeWordFrequencyDictionary();
             WordsSettings = wordsSettings;
+            Palette = palette;
+            ImageSettings = imageSettings;
         }
     }
 }

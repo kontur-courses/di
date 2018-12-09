@@ -26,7 +26,7 @@ namespace TagsCloudVisualization.App.Actions
             {
                 tagCloudSettings.WordsSettings.PathToFile = dialog.FileName;
                 var dict = tagCloudSettings.WordsSettings.WordAnalyzer.MakeWordFrequencyDictionary();
-                tagCloudSettings.WordFrequencyDictionary = dict;
+                tagCloudSettings.FrequenciesByWords = dict;
             }
             catch
             {

@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualization.WordProcessing
+﻿using System;
+
+namespace TagsCloudVisualization.WordProcessing
 {
     public class WordsSettings
     {
@@ -7,6 +9,7 @@
 
         public WordsSettings()
         {
+            PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/RuDictionary/DefaultTags.txt";
             WordAnalyzer = new WordAnalyzer(this);
         }
     }
