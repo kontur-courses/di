@@ -61,8 +61,12 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularSpiral.cs" />
     <Compile Include="CreateLayout.cs" />
+    <Compile Include="PictureCreator.cs" />
     <Compile Include="FrequencyDictionary.cs" />
+    <Compile Include="IGraphics.cs" />
+    <Compile Include="Picture.cs" />
     <Compile Include="LowerWordCollection.cs" />
+    <Compile Include="Tag.cs" />
     <Compile Include="TagCloudRender.cs" />
     <Compile Include="Tests\ConstWordCollection.cs" />
     <Compile Include="Tests\FrequencyDictionaryTests.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="WithoutBoringWordCollection.cs" />
     <Compile Include="WordsFromFile.cs" />
     <Compile Include="IWordCollection.cs" />
-    <Compile Include="Graphics.cs" />
+    <Compile Include="CoordinatesAtImage.cs" />
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="ICoordinateSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

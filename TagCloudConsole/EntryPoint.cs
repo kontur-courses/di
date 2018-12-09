@@ -4,7 +4,6 @@ using System.Drawing;
 using Autofac;
 using CommandLine;
 using TagsCloud;
-using Graphics = TagsCloud.Graphics;
 
 namespace TagCloudConsole
 {
@@ -31,7 +30,7 @@ namespace TagCloudConsole
                     )
                 )
             ).As<IWordCollection>();
-            containerBuilder.RegisterInstance(new Graphics(options.Name, options.FontFamily,
+            containerBuilder.RegisterInstance(new CoordinatesAtImage(options.Name, options.FontFamily,
                 Color.FromName(options.Color),
                 new Size(options.Height, options.Width))).AsSelf();
             containerBuilder.RegisterType<CreateLayout>().AsSelf();

@@ -20,8 +20,8 @@ namespace TagsCloud.Tests
             var wordWithCoordinate = layout.GetLayout(words);
             var color = Color.Black;
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "image");
-            var graphics = new Graphics(path, "Arial", color, new Size(1000, 1000));
-            graphics.SaveMap(wordWithCoordinate);
+            var graphics = new CoordinatesAtImage(path, "Arial", color, new Size(1000, 1000));
+            graphics.GetCoordinates(wordWithCoordinate);
         }
     }
 }

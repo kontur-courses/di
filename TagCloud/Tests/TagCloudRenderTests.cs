@@ -19,7 +19,7 @@ namespace TagsCloud.Tests
             var layout = new CreateLayout(new CircularCloudLayouter(new Point(0, 0)));
             var color = Color.Black;
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "image");
-            var graphics = new Graphics(path, "Arial", color, new Size(1000, 1000));
+            var graphics = new CoordinatesAtImage(path, "Arial", color, new Size(1000, 1000));
             var frequencyDictionary = new FrequencyDictionary();
             var render = new TagCloudRender(layout, graphics, new ConstWordCollection(words), frequencyDictionary);
             render.Render();
