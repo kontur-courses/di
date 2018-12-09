@@ -5,21 +5,17 @@ using TagCloudApplication.Readers;
 
 namespace TagCloudApplication.WordKeepers
 {
-    public class StandartWordKeeper : IWordKeeper
+    public class StandartWordKeeper : SimpleWordKeeper
     {
-        private readonly string[] delimiters;
-        private IReader reader;
-        private Func<(string Word, int Frequency), bool> removingUnnecessaryWordsRule = p => false;
+        private Func<string, bool> removingUnnecessaryWordsRule = p => false;
         private Func<string, string> gramFormRule = p => p;
-        private WordClass currentWordClass = WordClass.All;
+        private Func<string, bool> wordClassRule = w => true;
 
-        public StandartWordKeeper(string[] delimiters, IReader reader)
+        public StandartWordKeeper(string[] delimiters, IReader reader) : base(delimiters, reader)
         {
-            this.delimiters = delimiters;
-            this.reader = reader;
         }
 
-        public StandartWordKeeper RemoveUnnecessaryWordsBy(Func<(string Word, int Frequency), bool> removingRule)
+        public StandartWordKeeper RemoveUnnecessaryWordsBy(Func<string, bool> removingRule)
         {
             removingUnnecessaryWordsRule = removingRule;
             return this;
@@ -31,47 +27,26 @@ namespace TagCloudApplication.WordKeepers
             return this;
         }
 
-        public StandartWordKeeper TakeOnly(WordClass wordClass)
+        public StandartWordKeeper TakeOnlyClassFormBy(Func<string, bool> wordClassRule)
         {
-            currentWordClass = wordClass;
+            this.wordClassRule = wordClassRule;
             return this;
         }
 
-        public List<(string Word, int Freq)> GetWordIncidence(string fileName)
+        public new List<(string Word, int Freq)> GetWordIncidenceInPercent(string fileName, int minPossibleWordFrequency = 5)
         {
-            var text = reader.GetText(fileName);
-            return GetWeightedList(text);
+            var words = ComplicatedPreprocessWords(reader.GetText(fileName));
+            return GetWordsFrequencyInPercent(words, minPossibleWordFrequency);
         }
 
-        private List<(string Word, int Freq)> GetWeightedList(string text)
+        private string[] ComplicatedPreprocessWords(string text)
         {
-            var resDick = new Dictionary<string, int>();
-            var words = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-            var prepWords = words.Select(w => gramFormRule(w.ToLower())).Where(w => IsCurrentWordClass(w)).ToList();
-            foreach (var word in prepWords)
-            {
-                if (resDick.ContainsKey(word))
-                    resDick[word]++;
-                else
-                    resDick.Add(word, 1);
-            }
-            return resDick.Select(p => (Word: p.Key, Freq: (int)Math.Round((double)(p.Value * 100 / prepWords.Count))))
-                .Where(p => !removingUnnecessaryWordsRule(p))
-                .ToList();
+            return base.PreprocessWords(text)
+                .Select(w => w.ToCharArray().Where(char.IsLetter).ToString())
+                .Select(w => gramFormRule(w))
+                .Where(w => !removingUnnecessaryWordsRule(w))
+                .Where(w => wordClassRule(w))
+                .ToArray();
         }
-
-        private static bool IsCurrentWordClass(string word)
-        {
-            //доделать
-            return true;
-        }
-    }
-
-    public enum WordClass
-    {
-        Noun,
-        Verb,
-        Adjective, 
-        All
     }
 }

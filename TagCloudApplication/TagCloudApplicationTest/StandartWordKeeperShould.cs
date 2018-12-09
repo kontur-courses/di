@@ -26,7 +26,7 @@ namespace TagCloudApplicationTest
             var fileName = "Test1.txt";
             CreateNewTestFile("человек день рука работа", fileName);
                         
-            testWordKeeper.GetWordIncidence(fileName).Should().BeEquivalentTo(new List<(string, int)>
+            testWordKeeper.GetWordIncidenceInPercent(fileName).Should().BeEquivalentTo(new List<(string, int)>
                 { ("человек", 25), ("день", 25), ("рука", 25), ("работа", 25) });
 
         }
@@ -37,7 +37,7 @@ namespace TagCloudApplicationTest
             var fileName = "Test2.txt";
             CreateNewTestFile("чЕлОвЕк ДеНь РУКА работа", fileName);
 
-            testWordKeeper.GetWordIncidence(fileName).Should().BeEquivalentTo(new List<(string, int)>
+            testWordKeeper.GetWordIncidenceInPercent(fileName).Should().BeEquivalentTo(new List<(string, int)>
                 { ("человек", 25), ("день", 25), ("рука", 25), ("работа", 25) });
 
         }
@@ -48,7 +48,7 @@ namespace TagCloudApplicationTest
             var fileName = "Test3.txt";
             CreateNewTestFile("", fileName);
 
-            testWordKeeper.GetWordIncidence(fileName).Should().BeEquivalentTo(new List<(string, int)>());
+            testWordKeeper.GetWordIncidenceInPercent(fileName).Should().BeEquivalentTo(new List<(string, int)>());
 
         }
 
@@ -60,7 +60,7 @@ namespace TagCloudApplicationTest
 
             testWordKeeper
                 .RemoveUnnecessaryWordsBy(p => p.Frequency < 10)
-                .GetWordIncidence(fileName)
+                .GetWordIncidenceInPercent(fileName)
                 .Should()
                 .BeEquivalentTo(new List<(string, int)> { ("человек", 31), ("день", 31), ("рука", 31) });
         }
@@ -77,7 +77,7 @@ namespace TagCloudApplicationTest
 
             testWordKeeper
                 .RemoveUnnecessaryWordsBy(p => new Regex("эт[аио]т?").IsMatch(p.Word))
-                .GetWordIncidence(fileName)
+                .GetWordIncidenceInPercent(fileName)
                 .Should()
                 .BeEquivalentTo(new List<(string, int)> { ("человек", 27), ("день", 27), ("рука", 27) });
         }

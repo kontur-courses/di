@@ -14,12 +14,12 @@ namespace TagCloudApplicationTest
     [TestFixture]
     public class BMPSaverShould
     {
-        private BMPSaver testSaver;
+        private PNGSaver testSaver;
 
         [SetUp]
         public void SetUp()
         {
-            testSaver = new BMPSaver();
+            testSaver = new PNGSaver();
         }
 
         [Test]

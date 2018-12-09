@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace TagCloudApplication.Savers
 {
-    public class BMPSaver : ISaver
+    public class PNGSaver : ISaver
     {
         public void Save(string fileName, Bitmap image)
         {
-            image.Save($"{fileName}.bmp", ImageFormat.Bmp);
+            image.Save($"{fileName}.png", ImageFormat.Png);
         }
     }
 }

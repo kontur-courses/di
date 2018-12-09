@@ -21,7 +21,7 @@ namespace TagCloudApplicationTest
         public void SetUp()
         {
             container.Register(Component.For<IReader>().ImplementedBy<TXTReader>());
-            container.Register(Component.For<ISaver>().ImplementedBy<BMPSaver>());
+            container.Register(Component.For<ISaver>().ImplementedBy<PNGSaver>());
             container.Register(Component.For<IWordKeeper>()
                 .ImplementedBy<StandartWordKeeper>()
                 .DependsOn(new {delimiters = new [] {"\n"}})

@@ -26,7 +26,7 @@ namespace TagCloudApplication
 
         public TagCloud BuildTagCloudBy(string sourceFileName)
         {
-            var rects = GetRectangles(wordKeeper.GetWordIncidence(sourceFileName));             
+            var rects = GetRectangles(wordKeeper.GetWordIncidenceInPercent(sourceFileName));             
             return new TagCloud(rects, new Size(imageSize.Width+10, imageSize.Height+10));
         }
 
