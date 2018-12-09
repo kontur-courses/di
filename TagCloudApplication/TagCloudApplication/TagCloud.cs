@@ -10,11 +10,13 @@ namespace TagCloudApplication
     {
         private FontFamily fontFamily = FontFamily.GenericSerif;
         private IColorScheme colorScheme = new SimpleColorScheme();
-        private List<(string word, Rectangle rect)> tempRect;
+        private readonly List<(string word, Rectangle rect)> tempRect;
+        private readonly Size imSize;
 
-        public TagCloud(List<(string word,Rectangle rect)> tempRect)
+        public TagCloud(List<(string word,Rectangle rect)> tempRect, Size imSize)
         {
             this.tempRect = tempRect;
+            this.imSize = imSize;
         }
 
         public TagCloud ApplyColorScheme(IColorScheme colorScheme)
@@ -29,24 +31,21 @@ namespace TagCloudApplication
             return this;
         }
 
-        public void SaveAsImage(string fileName, Size imageSize, int borderWidth, ISaver imageSaver)
+        public void SaveAsImage(string fileName, ISaver imageSaver)
         {
-            var tagCloudSize = new Size(imageSize.Width - 2*borderWidth, imageSize.Height - 2*borderWidth);
-            var rects = ScaleRectangleToSize(tagCloudSize);
-
-            var tCImage = CreateImage(rects, imageSize);
+            var tCImage = CreateImage();
             imageSaver.Save(fileName, tCImage);
         }      
 
-        private Bitmap CreateImage(List<(string word, Rectangle rect)> rects, Size imageSize)
+        private Bitmap CreateImage()
         {
-            var resultBitmap = new Bitmap(imageSize.Width, imageSize.Height);
+            var resultBitmap = new Bitmap(imSize.Width, imSize.Height);
             using (var g = Graphics.FromImage(resultBitmap))
             {
                 g.FillRectangle(new SolidBrush(colorScheme.BackColor),
-                    new Rectangle(0, 0, imageSize.Width, imageSize.Height));
-                g.TranslateTransform(imageSize.Width / 2, imageSize.Height / 2);
-                foreach (var pair in rects)
+                    new Rectangle(0, 0, imSize.Width, imSize.Height));
+                g.TranslateTransform(imSize.Width / 2, imSize.Height / 2);
+                foreach (var pair in tempRect)
                 {
                     var currentFont = CreateFont(pair.rect, pair.word.Length);
                     g.DrawString(pair.word,
@@ -59,19 +58,16 @@ namespace TagCloudApplication
             return resultBitmap;
         }
 
-        private List<(string word, Rectangle rect)> ScaleRectangleToSize(Size tagCloudSize)
+        private Font CreateFont(Rectangle rect, int wordLength)
         {
-            var mainSide = tagCloudSize.Height < tagCloudSize.Width ? tagCloudSize.Height : tagCloudSize.Width;
-            var scale = mainSide / 100;
-            return tempRect.Select(r => (r.word, new Rectangle(r.rect.X * scale, r.rect.Y * scale,
-                (r.rect.Width * scale), (r.rect.Height * scale)))).ToList();
-        }
+            if (wordLength+1 > rect.Width) return new Font(fontFamily, 1);
+            float emSize = rect.Width / wordLength+1;
+            
+            while (new Font(fontFamily,emSize).Height > rect.Height)
+                emSize -= 1.0f;
+            while (new Font(fontFamily, emSize).Height < rect.Height)
+                emSize += 1.0f;
 
-        private Font CreateFont(Rectangle rect, int wordLenght)
-        { 
-            var emSize = rect.Width / wordLenght;
-            while (new Font(fontFamily, emSize).Height > rect.Height)
-                emSize -= 1;
             return new Font(fontFamily,emSize);
         }
 

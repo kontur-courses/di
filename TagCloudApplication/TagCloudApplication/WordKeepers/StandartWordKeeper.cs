@@ -8,13 +8,15 @@ namespace TagCloudApplication.WordKeepers
     public class StandartWordKeeper : IWordKeeper
     {
         private readonly string[] delimiters;
+        private IReader reader;
         private Func<(string Word, int Frequency), bool> removingUnnecessaryWordsRule = p => false;
         private Func<string, string> gramFormRule = p => p;
         private WordClass currentWordClass = WordClass.All;
 
-        public StandartWordKeeper(string[] delimiters)
+        public StandartWordKeeper(string[] delimiters, IReader reader)
         {
             this.delimiters = delimiters;
+            this.reader = reader;
         }
 
         public StandartWordKeeper RemoveUnnecessaryWordsBy(Func<(string Word, int Frequency), bool> removingRule)
@@ -35,13 +37,13 @@ namespace TagCloudApplication.WordKeepers
             return this;
         }
 
-        public List<(string Word, int Freq)> GetWordIncidence(string fileName, IReader reader)
+        public List<(string Word, int Freq)> GetWordIncidence(string fileName)
         {
             var text = reader.GetText(fileName);
-            return GetWordIncidence(text);
+            return GetWeightedList(text);
         }
 
-        public List<(string Word, int Freq)> GetWordIncidence(string text)
+        private List<(string Word, int Freq)> GetWeightedList(string text)
         {
             var resDick = new Dictionary<string, int>();
             var words = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);

@@ -12,7 +12,7 @@ namespace TagCloudApplication.Savers
     {
         public void Save(string fileName, Bitmap image)
         {
-            image.Save(fileName, ImageFormat.Bmp);
+            image.Save($"{fileName}.bmp", ImageFormat.Bmp);
         }
     }
 }
