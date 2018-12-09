@@ -27,12 +27,12 @@ namespace TagCloud.Visualizer
 
         public static Size ToSize(this SizeF size)
         {
-            return new Size((int)size.Width, (int)size.Height);
+            return new Size((int) size.Width, (int) size.Height);
         }
 
         public static System.Drawing.Size ToSize(this Size size)
         {
-            return new System.Drawing.Size((int)size.Width, (int)size.Height);
+            return new System.Drawing.Size((int) size.Width, (int) size.Height);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.Interfaces;
@@ -16,7 +15,7 @@ namespace TagCloud.Visualizer
         public Visualizer(
             IColorScheme colorScheme,
             IFontScheme fontScheme,
-            Color backgroundColor, 
+            Color backgroundColor,
             Size imageSize)
         {
             this.colorScheme = colorScheme;
@@ -34,7 +33,6 @@ namespace TagCloud.Visualizer
             var sourceToDraw = source.Select(NormalizePosition);
             var bitmap = new Bitmap(Size.Width, Size.Height);
             DrawElements(bitmap, sourceToDraw, Size);
-            Console.ReadKey();
             return bitmap;
         }
 
@@ -60,7 +58,6 @@ namespace TagCloud.Visualizer
             while (currentSize.Width < necessarySize.Width
                    && currentSize.Height < necessarySize.Height)
             {
-                Console.WriteLine("Word " + word + " Size: " + currentSize + " / " + necessarySize);
                 currentFont = new Font(currentFont.FontFamily, currentFont.SizeInPoints + sizeIncrementInterval);
                 currentSize = graphics.MeasureString(word, currentFont).ToSize();
             }
@@ -96,7 +93,6 @@ namespace TagCloud.Visualizer
             using (var pen = new Pen(element.Color))
             {
                 var font = AdjustFontSize(graphics, element.Font, element.Size.ToSize(), element.Word);
-                //graphics.DrawRectangle(pen, (float)element.Position.X, (float)element.Position.Y, (float)element.Size.Width, (float)element.Size.Height);
                 graphics.DrawString(element.Word, font, pen.Brush, ExtractRectangleF(element));
             }
         }

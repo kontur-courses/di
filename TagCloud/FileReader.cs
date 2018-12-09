@@ -9,7 +9,6 @@ namespace TagCloud
 {
     public class FileReader : IFileReader
     {
-
         public IEnumerable<string> Read(string path)
         {
             IEnumerable<string> result;

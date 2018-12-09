@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagCloud.Enums;
 
 namespace TagCloudCreator
 {
@@ -9,19 +10,9 @@ namespace TagCloudCreator
         public string StopWordsFile { get; set; }
         public Color BackgroundColor { get; set; }
         public Size ImageSize { get; set; }
-
-        public Configuration(
-            string inputFile,
-            string outputFile,
-            string stopWordsFile,
-            Color backgroundColor,
-            Size imageSize)
-        {
-            InputFile = inputFile;
-            OutputFile = outputFile;
-            StopWordsFile = stopWordsFile;
-            BackgroundColor = backgroundColor;
-            ImageSize = imageSize;
-        }
+        public CloudLayouterType LayouterType { get; set; }
+        public ColorScheme ColorScheme { get; set; }
+        public FontScheme FontScheme { get; set; }
+        public SizeScheme SizeScheme { get; set; }
     }
 }

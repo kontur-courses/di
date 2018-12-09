@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using TagCloud.Interfaces;
+﻿using TagCloud.Interfaces;
 using TagCloud.IntermediateClasses;
-using Size = TagCloud.Layouter.Size;
+using TagCloud.Layouter;
 
 namespace TagCloud
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using JetBrains.Annotations;
 using NHunspell;
 using TagCloud.Interfaces;
@@ -19,6 +17,5 @@ namespace TagCloud
         [CanBeNull]
         public string Process(string word)
             => hunspell.Stem(word).FirstOrDefault();
-
     }
 }

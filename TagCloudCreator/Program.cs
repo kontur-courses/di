@@ -1,38 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using CommandLine;
 using TagCloud;
 using TagCloud.Enums;
 using TagCloud.Interfaces;
 using TagCloud.Layouter;
 using TagCloud.Visualizer;
 using Point = TagCloud.Layouter.Point;
-using Size = TagCloud.Layouter.Size;
+using Size = System.Drawing.Size;
 
 namespace TagCloudCreator
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var configuration = new Configuration(
-                @"D:\input.txt",
-                @"D:\output.png",
-                @"D:\stopwords.txt",
-                Color.Azure, 
-                new System.Drawing.Size(5000, 5000));
-            var container = MakeContainer(
-                CloudLayouterType.ArithmeticSpiral, 
-                ColorScheme.RandomColors, 
-                FontScheme.Arial, 
-                SizeScheme.Linear,
-                configuration);
+            var configuration = ParseArguments(args);
+            var container = MakeContainer(configuration);
             var app = container.Resolve<Application>();
             app.Run(@"D:\input.txt", @"D:\output.png");
         }
@@ -48,12 +35,7 @@ namespace TagCloudCreator
             };
         }
 
-        public static IWindsorContainer MakeContainer(
-            CloudLayouterType layouterType,
-            ColorScheme colorScheme,
-            FontScheme fontScheme,
-            SizeScheme sizeScheme,
-            Configuration configuration)
+        public static IWindsorContainer MakeContainer(Configuration configuration)
         {
             var capabilities = CollectCapabilities();
             var container = new WindsorContainer();
@@ -66,26 +48,73 @@ namespace TagCloudCreator
                     .WithArgument("imageSize", configuration.ImageSize),
                 GetRegistration<IWordProcessor, InfinitiveCastProcessor>()
                     .WithArgument("affixFileData", @"D:\Github Repositories\di\TagCloud\Dictionaries\Russian\ru_RU.aff")
-                    .WithArgument("dictionaryFileData", @"D:\Github Repositories\di\TagCloud\Dictionaries\Russian\ru_RU.dic"),
+                    .WithArgument("dictionaryFileData",
+                        @"D:\Github Repositories\di\TagCloud\Dictionaries\Russian\ru_RU.dic"),
                 GetRegistration<IStatisticsCollector, StatisticsCollector>(),
                 GetRegistration<IImageSaver, ImageSaver>(),
                 GetRegistration<IFileReader, FileReader>(),
                 GetRegistration<Point, Point>(),
                 GetRegistration<Application, Application>(),
-                GetRegistration(typeof(ICloudLayouter), capabilities[layouterType]),
-                GetRegistration(typeof(IColorScheme), capabilities[colorScheme]),
-                GetRegistration(typeof(IFontScheme), capabilities[fontScheme]),
-                GetRegistration(typeof(ISizeScheme), capabilities[sizeScheme]));
+                GetRegistration(typeof(ICloudLayouter), capabilities[configuration.LayouterType]),
+                GetRegistration(typeof(IColorScheme), capabilities[configuration.ColorScheme]),
+                GetRegistration(typeof(IFontScheme), capabilities[configuration.FontScheme]),
+                GetRegistration(typeof(ISizeScheme), capabilities[configuration.SizeScheme]));
 
             return container;
         }
 
         public static ComponentRegistration<object> GetRegistration(Type elementFor, Type by)
-        => Component.For(elementFor).ImplementedBy(by);
+        {
+            return Component.For(elementFor).ImplementedBy(by);
+        }
 
         public static ComponentRegistration<TFor> GetRegistration<TFor, TBy>()
             where TFor : class
             where TBy : TFor
-            => Component.For<TFor>().ImplementedBy<TBy>();
+        {
+            return Component.For<TFor>().ImplementedBy<TBy>();
+        }
+
+        public static Configuration ParseArguments(string[] args)
+        {
+            var configuration = new Configuration();
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(o => configuration.InputFile = o.Input)
+                .WithParsed(o => configuration.OutputFile = o.Output)
+                .WithParsed(o => configuration.StopWordsFile = o.Stopwords)
+                .WithParsed(o => configuration.BackgroundColor = Color.FromName(o.Background))
+                .WithParsed(o => configuration.ImageSize = new Size(o.Width, o.Height))
+                .WithParsed(o =>
+                {
+                    if (o.ColorScheme == "RandomColors")
+                        configuration.ColorScheme = ColorScheme.RandomColors;
+                    else
+                        throw new ArgumentException("Unknown color scheme");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.FontScheme == "Arial")
+                        configuration.FontScheme = FontScheme.Arial;
+                    else
+                        throw new ArgumentException("Unknown font scheme");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.Layouter == "ArithmeticSpiral")
+                        configuration.LayouterType = CloudLayouterType.ArithmeticSpiral;
+                    else
+                        throw new ArgumentException("Unknown layouter type");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.SizeScheme == "Linear")
+                        configuration.SizeScheme = SizeScheme.Linear;
+                    else
+                        throw new ArgumentException("Unknown size scheme");
+                })
+                .WithNotParsed(o => throw new ArgumentException("Wrong command line arguments"));
+
+            return configuration;
+        }
     }
 }
