@@ -8,5 +8,4 @@ namespace TagCloudCreation
         List<WordInfo> GenerateStats(IEnumerable<string> words);
         Size GetSizeOfWord(WordInfo wordInfo);
     }
-
 }

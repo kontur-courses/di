@@ -11,16 +11,6 @@ namespace TagCloudApp
 {
     internal class ConsoleUserInterface : UserInterface
     {
-        private FluentCommandLineParser parser;
-
-        
-        [Flags]
-        enum BrushesEnum
-        {
-            Simple,
-            Tough
-        }
-
         [Flags]
         public enum FontsEnum
         {
@@ -28,30 +18,29 @@ namespace TagCloudApp
             Bold
         }
 
+        private readonly Dictionary<BrushesEnum, Brush> brushes = new Dictionary<BrushesEnum, Brush>
+        {
+            [BrushesEnum.Simple] = Brushes.Chartreuse, [BrushesEnum.Tough] = SystemBrushes.ControlDarkDark
+        };
+
+        private readonly Dictionary<FontsEnum, Font> fonts = new Dictionary<FontsEnum, Font>
+        {
+            [FontsEnum.Regular] = new Font(FontFamily.GenericMonospace, 16, FontStyle.Regular),
+            [FontsEnum.Bold] = new Font(FontFamily.GenericMonospace, 16, FontStyle.Bold)
+        };
+
+        private readonly FluentCommandLineParser parser;
+        private Brush brush;
+        private Font font;
+        private string outputPath;
+
+        private string wordsFile;
 
         public ConsoleUserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers) : base(creator, readers)
         {
             parser = new FluentCommandLineParser();
             SetupParser();
-
-
         }
-
-        private string wordsFile;
-        private string outputPath;
-        private Font font;
-        private Brush brush;
-        
-        private readonly Dictionary<BrushesEnum, Brush> brushes = new Dictionary<BrushesEnum, Brush>()
-        {
-            [BrushesEnum.Simple] = Brushes.Chartreuse,
-            [BrushesEnum.Tough] = SystemBrushes.ControlDarkDark
-        };
-        private readonly Dictionary<FontsEnum, Font> fonts = new Dictionary<FontsEnum, Font>()
-        {
-            [FontsEnum.Regular] = new Font(FontFamily.GenericMonospace, 16,FontStyle.Regular),
-            [FontsEnum.Bold] = new Font(FontFamily.GenericMonospace, 16,FontStyle.Bold)
-        };
 
         public override void Run(string[] startupArgs)
         {
@@ -66,6 +55,7 @@ namespace TagCloudApp
                 Console.Error.WriteLine("Can not read given file");
                 return;
             }
+
             var image = Creator.CreateImage(words, options);
             //TODO: check path for validness
             image.Save(outputPath);
@@ -82,13 +72,19 @@ namespace TagCloudApp
                   .Callback(arg => outputPath = arg)
                   .SetDefault($".{Path.DirectorySeparatorChar}tag_cloud.png");
             parser.Setup<FontsEnum>("font")
-
                   .Callback(arg => font = fonts[arg])
                   .SetDefault(FontsEnum.Regular);
 
             parser.Setup<BrushesEnum>("brush")
                   .Callback(arg => brush = brushes[arg])
                   .SetDefault(BrushesEnum.Simple);
+        }
+
+        [Flags]
+        private enum BrushesEnum
+        {
+            Simple,
+            Tough
         }
     }
 }

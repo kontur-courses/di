@@ -32,6 +32,7 @@ namespace TagCloudCreation
 
             stats = preparer.PrepareWords(stats);
 
+            // ReSharper disable once RedundantDelegateInvoke
             var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
 
             var wordPairs = stats.OrderByDescending(wi => wi.Count)

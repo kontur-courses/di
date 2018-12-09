@@ -11,8 +11,8 @@ namespace TagCloudVisualization
             Center = center;
         }
 
-        public Point Center { get;  }
-        public Font Font { get;  }
-        public Brush Brush { get;  }
+        public Point Center { get; }
+        public Font Font { get; }
+        public Brush Brush { get; }
     }
 }

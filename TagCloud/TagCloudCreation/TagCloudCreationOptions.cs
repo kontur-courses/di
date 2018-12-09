@@ -9,6 +9,6 @@ namespace TagCloudCreation
             ImageOptions = imageOptions;
         }
 
-        public ImageCreatingOptions ImageOptions { get;  }
+        public ImageCreatingOptions ImageOptions { get; }
     }
 }

@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace TagCloudVisualization
 {
+    //TODO: move tests to another project
     [TestFixture]
     public class CircularCloudConstructor_Should
     {

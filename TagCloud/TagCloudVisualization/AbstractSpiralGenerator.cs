@@ -7,8 +7,6 @@ namespace TagCloudVisualization
     {
         private protected IEnumerator<Point> Enumerator;
 
-        public bool IsStarted => Enumerator != null;
-
         private protected Point Center { get; private set; }
 
         public AbstractSpiralGenerator Begin(Point center)

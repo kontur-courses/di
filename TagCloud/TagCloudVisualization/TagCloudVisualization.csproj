@@ -68,7 +68,6 @@
     <Compile Include="SizeSequenceCreators.cs" />
     <Compile Include="SpiralGeneratorExtensions.cs" />
     <Compile Include="SquareSpiralGenerator.cs" />
-    <Compile Include="TagCloudImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
