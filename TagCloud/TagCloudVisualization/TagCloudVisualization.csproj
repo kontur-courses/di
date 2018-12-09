@@ -69,6 +69,7 @@
     <Compile Include="SizeSequenceCreators.cs" />
     <Compile Include="SpiralGeneratorExtensions.cs" />
     <Compile Include="SquareSpiralGenerator.cs" />
+    <Compile Include="WordInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

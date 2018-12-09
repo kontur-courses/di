@@ -4,16 +4,16 @@ namespace TagCloudVisualization
 {
     public class ImageCreatingOptions
     {
-        public ImageCreatingOptions(Brush brush, Font font, Point center, Size? imageSize = null)
+        public ImageCreatingOptions(Brush brush, string fontName, Point center, Size? imageSize = null)
         {
             Brush = brush;
-            Font = font;
+            FontName = fontName;
             Center = center;
             ImageSize = imageSize;
         }
 
         public Point Center { get; }
-        public Font Font { get; }
+        public string FontName { get; }
         public Brush Brush { get; }
         public Size? ImageSize { get;  }
     }

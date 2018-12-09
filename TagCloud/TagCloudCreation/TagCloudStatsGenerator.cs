@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloudVisualization;
 
 namespace TagCloudCreation
 {
@@ -16,6 +17,6 @@ namespace TagCloudCreation
 
         //TODO: add font size relation
         public Size GetSizeOfWord(WordInfo wordInfo) =>
-            new Size(wordInfo.Word.Length * 16 * wordInfo.Count, 16 * wordInfo.Count);
+            new Size(wordInfo.Word.Length * 10*wordInfo.Count, 20* wordInfo.Count);
     }
 }

@@ -13,12 +13,10 @@ namespace TagCloudVisualization
             this.drawers = drawers;
         }
 
-        public virtual Bitmap CreateTagCloudImage(
-            IEnumerable<(Rectangle rectangle, string word)> tagCloud,
-            ImageCreatingOptions options)
+        public virtual Bitmap CreateTagCloudImage(IEnumerable<WordInfo> tagCloud, ImageCreatingOptions options)
         {
             tagCloud = tagCloud.ToList();
-            var rectangles = tagCloud.Select(r => r.rectangle)
+            var rectangles = tagCloud.Select(r => r.Rectangle)
                                      .ToList();
 
             var areaSize = rectangles.GetUnitedSize();
@@ -33,14 +31,16 @@ namespace TagCloudVisualization
             }
 
             var image = new Bitmap(areaSize.Width, areaSize.Height);
-            var graphics = Graphics.FromImage(image);
-
-            foreach (var (rectangle, word) in tagCloud)
+            using (var graphics = Graphics.FromImage(image))
             {
-                var imageCenter = new Point(width / 2, height / 2) - options.Center;
-                rectangle.Offset(imageCenter);
+                foreach (var wordInfo in tagCloud)
+                {
+                    var imageCenter = new Point(width / 2, height / 2) - options.Center;
+                    var rectangle = wordInfo.Rectangle;
+                    rectangle.Offset(imageCenter);
 
-                DrawSingleWord(graphics, options, word, rectangle);
+                    DrawSingleWord(graphics, options, wordInfo.With(rectangle));
+                }
             }
 
             return image;
@@ -49,11 +49,10 @@ namespace TagCloudVisualization
         private protected void DrawSingleWord(
             Graphics graphics,
             ImageCreatingOptions options,
-            string word,
-            Rectangle rectangle)
+            WordInfo wordInfo)
         {
-            drawers.Last(d => d.Check(word))
-                   .DrawWord(graphics, options, word, rectangle);
+            drawers.Last(d => d.Check(wordInfo))
+                   .DrawWord(graphics, options, wordInfo);
         }
     }
 }

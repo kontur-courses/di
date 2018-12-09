@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagCloudCreation;
+using TagCloudVisualization;
 
 namespace TagCloudApp
 {

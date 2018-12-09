@@ -4,8 +4,12 @@ namespace TagCloudVisualization
 {
     public interface IWordDrawer
     {
-        void DrawWord(Graphics graphics, ImageCreatingOptions options, string word, Rectangle rectangle);
-        bool Check(string word);
+        void DrawWord(Graphics graphics, ImageCreatingOptions options, WordInfo wordInfo);
+
+        /// <summary>
+        /// Checks if this drawer is meant to draw this word
+        /// </summary>
+        bool Check(WordInfo wordInfo);
 
     }
 }

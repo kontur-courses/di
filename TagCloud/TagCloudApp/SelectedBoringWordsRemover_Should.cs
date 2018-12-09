@@ -3,6 +3,7 @@ using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloudCreation;
+using TagCloudVisualization;
 
 namespace TagCloudApp
 {

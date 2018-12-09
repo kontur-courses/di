@@ -1,4 +1,6 @@
-﻿namespace TagCloudCreation
+﻿using TagCloudVisualization;
+
+namespace TagCloudCreation
 {
     public interface IWordPreparer
     {
