@@ -19,6 +19,9 @@ namespace TagCloudApp
             container.RegisterTypes(typeof(WhitespaceTextReader), typeof(NewLineTextReader))
                      .As<ITextReader>();
 
+            container.RegisterTypes(typeof(BasicDrawer))
+                     .As<IWordDrawer>();
+
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();
 
@@ -28,8 +31,8 @@ namespace TagCloudApp
             container.RegisterType<TagCloudStatsGenerator>()
                      .As<ITagCloudStatsGenerator>();
 
-            container.RegisterType<ImageCreator>()
-                     .As<ITagCloudImageCreator>();
+            container.RegisterType<TagCloudImageCreator>()
+                     .AsSelf();
 
             container.RegisterType<ConsoleUserInterface>()
                      .As<UserInterface>()

@@ -10,7 +10,7 @@ namespace TagCloudCreation
     public class TagCloudCreator
     {
         private readonly ITagCloudStatsGenerator generator;
-        private readonly ITagCloudImageCreator imageCreator;
+        private readonly TagCloudImageCreator imageCreator;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
         private readonly IEnumerable<IWordPreparer> preparers;
 
@@ -18,7 +18,7 @@ namespace TagCloudCreation
             Func<Point, CircularCloudLayouter> layouterFactory,
             IEnumerable<IWordPreparer> preparers,
             ITagCloudStatsGenerator generator,
-            ITagCloudImageCreator imageCreator)
+            TagCloudImageCreator imageCreator)
         {
             this.layouterFactory = layouterFactory;
             this.preparers = preparers;
@@ -28,12 +28,12 @@ namespace TagCloudCreation
 
         public Bitmap CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
         {
+            words = words.Where(w => w != "");
             var stats = generator.GenerateStats(words);
-            stats = preparers.Aggregate(stats, (current, wordPreparer) => current.Select(wi=>wordPreparer.PrepareWords(wi, options))
+            stats = preparers.Aggregate(stats, (current, wordPreparer) => current.Select(wi=>wordPreparer.PrepareWord(wi, options))
                                                                                  .Where(wi => wi != null)
                                                                                  .ToList());
 
-            // ReSharper disable once RedundantDelegateInvoke
             var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
 
             var wordPairs = stats.OrderByDescending(wi => wi.Count)

@@ -8,12 +8,13 @@ namespace TagCloudApp
     internal abstract class UserInterface
     {
         protected readonly TagCloudCreator Creator;
-        protected readonly Dictionary<string, ITextReader> Readers;
+        protected readonly Dictionary<string, List<ITextReader>> Readers;
 
         protected UserInterface(TagCloudCreator creator, IEnumerable<ITextReader> readers)
         {
             Creator = creator;
-            Readers = readers.ToDictionary(r => r.Extension);
+            Readers = readers.GroupBy(r => r.Extension)
+                             .ToDictionary(g => g.Key, g => g.ToList());
         }
 
         public abstract void Run(string[] startupArgs);
@@ -24,11 +25,14 @@ namespace TagCloudApp
             var extension = Path.GetExtension(path);
             if (extension == null)
                 return false;
-            var success = Readers.TryGetValue(extension, out var reader);
-            if (!success)
+            if (!Readers.TryGetValue(extension, out var reader))
                 return false;
-            success = reader.TryReadWords(path, out words);
-            return success;
+            foreach (var textReader in reader)
+            {
+                if (textReader.TryReadWords(path, out words))
+                    return true;
+            }
+            return false;
         }
     }
 }
