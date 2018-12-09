@@ -6,6 +6,8 @@ using System.Reflection;
 using Autofac;
 using Fclp;
 using TagCloud.Data;
+using TagCloud.Processor;
+using TagCloud.Reader;
 using TagCloud.RectanglesLayouter.PointsGenerator;
 
 namespace TagCloud
@@ -95,6 +97,8 @@ namespace TagCloud
                 .AsSelf();
             builder.Register(c => new Point()).As<Point>();
             builder.Register(c =>  new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
+            builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
+            builder.RegisterType<RussianWordsProcessor>().As<IWordsProcessor>();
         }
     }
 }
