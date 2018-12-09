@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
@@ -12,8 +13,24 @@ namespace TagsCloudVisualization
             parameters.Colors = GetColors(options.Color);
             parameters.ImageSize = GetImageSize(options.ImageSize);
             parameters.FontName = options.FontName;
+            parameters.OutFormat = GetImageFormat(options.OutFormat);
 
             return parameters;
+        }
+
+        private ImageFormat GetImageFormat(string input)
+        {
+            switch (input)
+            {
+                case "jpeg":
+                    return ImageFormat.Jpeg;
+                case "tiff":
+                    return ImageFormat.Tiff;
+                case "png":
+                    return ImageFormat.Png;
+                default:
+                    return ImageFormat.Jpeg;
+            }
         }
 
         private static IEnumerable<Color> GetColors(string input)

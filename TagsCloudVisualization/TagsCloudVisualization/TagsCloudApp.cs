@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Autofac;
+﻿using Autofac;
 using CommandLine;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Settings;
@@ -49,8 +47,7 @@ namespace TagsCloudVisualization
             words = wordsTransformer.GetStems(words);
             var data = wordDataProvider.GetData(cloud, words);
             var picture = TagsCloudVisualizer.GetPicture(data, parameters);
-            picture.Save($"{Application.StartupPath}\\CloudTags.png");
-            Console.WriteLine($"Picture saved in {Application.StartupPath}\\CloudTags.png");
+            TagsCloudVisualizer.SavePicture(picture, parameters.OutFormat);
         }
     }
 }

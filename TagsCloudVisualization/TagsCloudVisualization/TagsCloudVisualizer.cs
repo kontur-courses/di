@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
@@ -32,6 +35,13 @@ namespace TagsCloudVisualization
             }
 
             return bitmap;
+        }
+
+        public static void SavePicture(Bitmap picture, ImageFormat format)
+        {
+            var path = $"{Application.StartupPath}";
+            picture.Save($"{path}\\CloudTags.{format}", format);
+            Console.WriteLine($"Pictures saved in {path}\\CloudTags.{format}");
         }
     }
 }
