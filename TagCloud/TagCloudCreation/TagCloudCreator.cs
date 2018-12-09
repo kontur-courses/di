@@ -34,8 +34,10 @@ namespace TagCloudCreation
 
             var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
 
-            var wordPairs = stats.Select(wordInfo => (rectangle: layouter.PutNextRectangle(wordInfo.CreateRectangle()),
-                                                      wordInfo.Word));
+            var wordPairs = stats.OrderByDescending(wi => wi.Count)
+                                 .Select(wordInfo =>
+                                             (rectangle: layouter.PutNextRectangle(generator.GetSizeOfWord(wordInfo)),
+                                              wordInfo.Word));
 
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
         }

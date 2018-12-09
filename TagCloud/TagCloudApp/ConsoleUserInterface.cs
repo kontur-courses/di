@@ -60,7 +60,7 @@ namespace TagCloudApp
             //TODO: add center option for user
             //TODO: add more options for user: font size, gradient brushes
             var options = new TagCloudCreationOptions(new ImageCreatingOptions(brush, font, new Point(500, 500)));
-            var success = TryRead(outputPath, out var words);
+            var success = TryRead(wordsFile, out var words);
             if (!success)
             {
                 Console.Error.WriteLine("Can not read given file");

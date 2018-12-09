@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagCloudCreation
+﻿namespace TagCloudCreation
 {
     public class WordInfo
     {
@@ -12,7 +10,5 @@ namespace TagCloudCreation
 
         public string Word { get; }
         public int Count { get; }
-
-        public Size CreateRectangle() => new Size(50 * Count * Word.Length, 50 * Count);
     }
 }
