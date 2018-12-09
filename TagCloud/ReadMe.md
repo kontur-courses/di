@@ -1,2 +1,3 @@
-# Example of Tag Cloud
-![Example](Example.png)
+# Examples of Tag Cloud
+![Example](EngExample.png)
+![Example](RusExample.png)
