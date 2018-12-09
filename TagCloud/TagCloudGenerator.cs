@@ -47,7 +47,7 @@ namespace TagCloud
             var words = wordsFileReader.Read(arguments.WordsFileName);
             var boringWords = boringWordsFileReader.Read(arguments.BoringWordsFileName);
 
-            var wordInfos = counter.Count(processor.Process(validator.Validate(words, boringWords)));
+            var wordInfos = counter.Count(validator.Validate(processor.Process(words), boringWords));
             var layout = wordsLayouter.GenerateLayout(wordInfos, arguments.FontFamily, arguments.Multiplier);
             var image = wordsDrawer.CreateImage(layout, arguments.WordsBrush, arguments.BackgroundBrush);
             saver.Save(image, arguments.ImageFileName);
