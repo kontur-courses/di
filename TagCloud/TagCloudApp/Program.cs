@@ -22,7 +22,7 @@ namespace TagCloudApp
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();
 
-            container.RegisterTypes(typeof(SimpleWordPreparer), typeof(BasicWordPreparer)) 
+            container.RegisterTypes(typeof(FixedBoringWordsRemover), typeof(BasicWordPreparer), typeof(SelectedBoringWordsRemover)) 
                      .As<IWordPreparer>();
 
             container.RegisterType<TagCloudStatsGenerator>()

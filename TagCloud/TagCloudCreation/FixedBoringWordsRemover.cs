@@ -2,7 +2,7 @@
 
 namespace TagCloudCreation
 {
-    public class SimpleWordPreparer : IWordPreparer
+    public class FixedBoringWordsRemover : IWordPreparer
     {
         private readonly HashSet<string> boringWords = new HashSet<string>
         {
@@ -13,6 +13,6 @@ namespace TagCloudCreation
             "an"
         };
 
-        public WordInfo PrepareWords(WordInfo stat) => boringWords.Contains(stat.Word) ? null : stat;
+        public WordInfo PrepareWords(WordInfo stat, TagCloudCreationOptions _) => boringWords.Contains(stat.Word) ? null : stat;
     }
 }

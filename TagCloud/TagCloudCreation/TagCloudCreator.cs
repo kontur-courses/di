@@ -29,7 +29,7 @@ namespace TagCloudCreation
         public Bitmap CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
         {
             var stats = generator.GenerateStats(words);
-            stats = preparers.Aggregate(stats, (current, wordPreparer) => current.Select(wordPreparer.PrepareWords)
+            stats = preparers.Aggregate(stats, (current, wordPreparer) => current.Select(wi=>wordPreparer.PrepareWords(wi, options))
                                                                                  .Where(wi => wi != null)
                                                                                  .ToList());
 
