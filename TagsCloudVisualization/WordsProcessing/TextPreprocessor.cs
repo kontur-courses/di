@@ -12,12 +12,12 @@ namespace TagsCloudVisualization.WordsProcessing
 
         public TextPreprocessor(IWordsProvider wordsProvider, IFilter wordsFilter, IWordsChanger wordsChanger)
         {
-            words = wordsProvider.GetWords();
+            words = wordsProvider.Provide();
             this.wordsFilter = wordsFilter;
             this.wordsChanger = wordsChanger;
         }
 
-        public IEnumerable<string> GetWords()
+        public IEnumerable<string> Provide()
         {
             return wordsFilter.FilterWords(words.Select(word => wordsChanger.ChangeWord(word)));
         }

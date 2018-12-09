@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.WordsProcessing
 {
     public interface IWordsProvider
     {
-        IEnumerable<string> GetWords();
+        IEnumerable<string> Provide();
     }
 }

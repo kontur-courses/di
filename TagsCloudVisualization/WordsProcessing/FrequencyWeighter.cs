@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.WordsProcessing
 
         public IEnumerable<WeightedWord> WeightWords()
         {
-            return wordsProvider.GetWords()
+            return wordsProvider.Provide()
                 .GroupBy(s => s)
                 .OrderByDescending(s => s.Count())
                 .Select(g => new WeightedWord(g.Key, g.Count()));

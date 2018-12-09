@@ -14,7 +14,7 @@ namespace TagsCloudVisualization.WordsProcessing
             this.filename = filename;
         }
 
-        public IEnumerable<string> GetWords()
+        public IEnumerable<string> Provide()
         {
             using (var streamReader = new StreamReader(filename, Encoding.UTF8))
             {

@@ -9,7 +9,7 @@ namespace TagsCloudVisualization.WordsProcessing
         
         public BoringWordsFilter(IWordsProvider boringWordsProvider)
         {
-            this.boringWords = boringWordsProvider.GetWords();
+            this.boringWords = boringWordsProvider.Provide();
         }
 
 
