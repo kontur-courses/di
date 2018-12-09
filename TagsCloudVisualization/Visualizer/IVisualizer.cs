@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.Visualizer
 {
     public interface IVisualizer
     {
-        Bitmap Draw();
+        ISaver Draw();
     }
 }

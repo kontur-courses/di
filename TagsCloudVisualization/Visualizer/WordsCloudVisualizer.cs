@@ -8,19 +8,19 @@ namespace TagsCloudVisualization.Visualizer
     {
         private readonly Color backgroundColor;
         private readonly Brush wordsColor;
-        private readonly IWordsCloudLayouter wordsCloudLayouter;
+        private readonly IWordsCloudBuilder wordsCloudBuilder;
         private readonly Size pictureSize;
         
-        public WordsCloudVisualizer(IWordsCloudLayouter wordsCloudLayouter, Palette palette, Size pictureSize)
+        public WordsCloudVisualizer(IWordsCloudBuilder wordsCloudBuilder, Palette palette, Size pictureSize)
         {
             backgroundColor = palette.BackgroundColor;
             wordsColor = palette.SecondaryColor;
             this.pictureSize = pictureSize;
-            this.wordsCloudLayouter = wordsCloudLayouter;
+            this.wordsCloudBuilder = wordsCloudBuilder;
         }
-        public Bitmap Draw()
+        public ISaver Draw()
         {
-            var words = wordsCloudLayouter.LayWords();
+            var words = wordsCloudBuilder.Build();
             var bmp = new Bitmap(pictureSize.Width, pictureSize.Height);
             using (var g = Graphics.FromImage(bmp))
             {
@@ -28,7 +28,7 @@ namespace TagsCloudVisualization.Visualizer
                 foreach (var word in words)
                     g.DrawString(word.Text, word.Font, wordsColor, word.Rectangle.ShiftRectangleToBitMapCenter(bmp));
             }
-            return bmp;
+            return new BitmapSaver(bmp);
         }
     }
 }
