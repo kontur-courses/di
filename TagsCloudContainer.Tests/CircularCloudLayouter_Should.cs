@@ -20,7 +20,8 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            layouter = new CircularCloudAlgorithm(new Point(centerWidth, centerHeight));
+            var center = new Point(centerWidth, centerHeight);
+            layouter = new CircularCloudAlgorithm(center, new ArchimedeanSpiral(center));
         }
         [TearDown]
         public void TearDown()
@@ -30,7 +31,9 @@ namespace TagsCloudContainer.Tests
                 var path = TestContext.CurrentContext.TestDirectory;
                 var fileName = $"{TestContext.CurrentContext.Test.Name} failed.png";
                 var outputFileName = Path.Combine(path, fileName);
-                using (var bitmap = new Bitmap(layouter.Size.Width, layouter.Size.Height))
+
+                var size = new Size(2 * centerWidth, 2 * centerHeight);
+                using (var bitmap = new Bitmap(size.Width, size.Height))
                 {
                     using (var graphics = Graphics.FromImage(bitmap))
                     {
@@ -44,11 +47,6 @@ namespace TagsCloudContainer.Tests
 
                 TestContext.WriteLine($"Tag cloud visualization saved to file {outputFileName}");
             }
-        }
-        [Test]
-        public void HaveSizeTwiceAsMuchCenterPoint_OnInitialization()
-        {
-            layouter.Size.Should().Be(new Size(2 * centerWidth, 2 * centerHeight));
         }
 
         [Test]

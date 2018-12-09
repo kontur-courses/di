@@ -1,26 +1,27 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer.Algorithms;
 
 namespace TagsCloudContainer.Tests
 {
     [TestFixture]
     class Spiral_Should
     {
-        private Spiral spiral;
+        private ArchimedeanSpiral archimedeanSpiral;
         private Point center;
 
         [SetUp]
         public void SetUp()
         {
             center = new Point(100, 100);
-            spiral = new Spiral(center);
+            archimedeanSpiral = new ArchimedeanSpiral(center);
         }
 
         [Test]
         public void ReturnCenterPoint_OnFirstInvocation()
         {
-            var firstPoint = spiral.GetNextPoint();
+            var firstPoint = archimedeanSpiral.GetNextPoint();
 
             firstPoint.Should().BeEquivalentTo(center);
         }
@@ -28,10 +29,10 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void IncreaseSpiralAngle_AfterGetNextPointInvocation()
         {
-            var spiralPointInitialValue = spiral.GetCurrentSpiralAngle();
-            spiral.GetNextPoint();
+            var spiralPointInitialValue = archimedeanSpiral.GetCurrentSpiralAngle();
+            archimedeanSpiral.GetNextPoint();
 
-            spiral.GetCurrentSpiralAngle().Should().BeGreaterThan(spiralPointInitialValue);
+            archimedeanSpiral.GetCurrentSpiralAngle().Should().BeGreaterThan(spiralPointInitialValue);
         }
     }
 }

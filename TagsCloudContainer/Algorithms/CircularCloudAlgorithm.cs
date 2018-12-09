@@ -8,17 +8,15 @@ namespace TagsCloudContainer.Algorithms
 {
     public class CircularCloudAlgorithm : IAlgorithm
     {
-        public Size Size { get; }
         public Point Center { get; }
         private readonly List<Rectangle> rectangles;
-        private readonly Spiral spiral;
+        private readonly ISpiral spiral;
 
-        public CircularCloudAlgorithm(Point center)
+        public CircularCloudAlgorithm(Point center, ISpiral spiral)
         {
             Center = center;
-            Size = new Size(center.X * 2, center.Y * 2);
             rectangles = new List<Rectangle>();
-            spiral = new Spiral(Center);
+            this.spiral = spiral;
         }
 
         public ReadOnlyCollection<Rectangle> GetRectangles() => rectangles.AsReadOnly();

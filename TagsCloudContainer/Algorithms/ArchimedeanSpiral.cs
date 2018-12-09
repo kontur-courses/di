@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Algorithms
 {
-    public class Spiral
+    public class ArchimedeanSpiral : ISpiral
     {
         private readonly Point center;
         private double spiralAngle;
 
-        public Spiral(Point center)
+        public ArchimedeanSpiral(Point center)
         {
             this.center = center;
         }

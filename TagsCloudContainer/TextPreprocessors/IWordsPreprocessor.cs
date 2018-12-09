@@ -4,7 +4,6 @@ namespace TagsCloudContainer.TextPreprocessors
 {
     public interface IWordsPreprocessor
     {
-        IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words,
-            IEnumerable<string> wordsToBeExcluded = null);
+        IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words);
     }
 }

@@ -7,8 +7,13 @@ namespace TagsCloudContainer.TextPreprocessors
 {
     public class BasicWordsPreprocessor : IWordsPreprocessor
     {
-        public IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words,
-            IEnumerable<string> wordsToBeExcluded = null)
+        private readonly IEnumerable<string> wordsToBeExcluded;
+
+        public BasicWordsPreprocessor(IEnumerable<string> wordsToBeExcluded)
+        {
+            this.wordsToBeExcluded = wordsToBeExcluded;
+        }
+        public IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words)
         {
             var dir = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "HunspellDicts", "Russian");
             var affFile = Path.Combine(dir, "ru.aff");
@@ -22,16 +27,19 @@ namespace TagsCloudContainer.TextPreprocessors
                 {
                     var lemma = hunspell.Stem(word).FirstOrDefault();
 
-                    // Заглушка. TODO: исключать скучные слова по части речи?
-                    if (lemma?.Length > 4)
+                    if (lemma != null && FilterWord(lemma))
                         preprocessedWords.Add(lemma.ToLower());
                 }
             }
-            return ProcessWords(preprocessedWords, wordsToBeExcluded);
+            return ProcessWords(preprocessedWords);
         }
 
-        private IReadOnlyDictionary<string, int> ProcessWords(IEnumerable<string> preprocessWords,
-            IEnumerable<string> wordsToBeExcluded)
+        private bool FilterWord(string lemma)
+        {
+            return lemma.Length > 4;
+        }
+
+        private IReadOnlyDictionary<string, int> ProcessWords(IEnumerable<string> preprocessWords)
         {
             var result = new Dictionary<string, int>();
 

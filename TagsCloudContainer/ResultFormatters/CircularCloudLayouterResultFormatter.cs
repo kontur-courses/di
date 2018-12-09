@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.DataProviders;
 
 namespace TagsCloudContainer.ResultFormatters
 {
     public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
-        public void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName,
-            IReadOnlyDictionary<string, (Rectangle, int)> rectangles)
+        public IReadOnlyDictionary<string, (Rectangle, int)> Rectangles { get; set; }
+
+        public CircularCloudLayouterResultFormatter(IDataProvider dataProvider)
+        {
+            Rectangles = dataProvider.GetData();
+        }
+        public void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName)
         {
             using (var bitmap = new Bitmap(size.Width, size.Height))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
-                    foreach (var entry in rectangles)
+                    foreach (var entry in Rectangles)
                     {
                         var font = new Font(fontFamily, 10);
                         var generatedFont = GetFont(graphics, entry.Key, entry.Value.Item1.Size, font);
