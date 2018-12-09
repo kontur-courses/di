@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace TagsCloud
 {
-    public class LowerWordCollection : IWordCollection
+    public class LowerWord
     {
         private readonly IWordCollection words;
 
-        public LowerWordCollection(IWordCollection words)
+        public LowerWord(IWordCollection words)
         {
             this.words = words;
         }
 
-        public IEnumerable<string> GetWords()
+        public IEnumerable<string> ToLower()
         {
             var enumerable = words.GetWords();
             return enumerable.Select(word => word.ToLowerInvariant());

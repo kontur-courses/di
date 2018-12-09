@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloud
 {
-    internal class CircularSpiral : ICoordinateSequence
+    public class CircularSpiral : ICoordinateSequence
     {
         private readonly Point center;
         private readonly double step;

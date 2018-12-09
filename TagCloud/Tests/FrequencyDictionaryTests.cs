@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -9,7 +10,7 @@ namespace TagsCloud.Tests
         [Test]
         public void GetNormalizedFreqDic()
         {
-            var frequencyDictionary = new FrequencyDictionary();
+            var frequencyDictionary = new FrequencyCollection();
             var words = new List<string>
             {
                 "car",
@@ -20,7 +21,8 @@ namespace TagsCloud.Tests
                 "automobile"
             };
 
-            var actualDictionary = frequencyDictionary.GetFrequencyDictionary(words);
+            var actualDictionary = frequencyDictionary.GetFrequencyCollection(words)
+                .ToDictionary(word => word.Key, word => word.Value);
             actualDictionary["car"].Should().BeInRange(32, 34);
             actualDictionary["auto"].Should().BeInRange(49, 51);
             actualDictionary["automobile"].Should().BeInRange(15, 17);

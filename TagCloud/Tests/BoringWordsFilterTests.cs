@@ -21,25 +21,23 @@ namespace TagsCloud.Tests
         };
 
         [Test]
-        public void GetWords_TextWithBoringWords_ListWithoutBoringWords()
+        public void DeleteBoringWords_TextWithBoringWords_ListWithoutBoringWords()
         {
             var textPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Text.txt");
-            var words = new LowerWordCollection(
-                new WordsFromFile(textPath)
-            );
-            var boringWords = new WithoutBoringWordCollection(new WordsFromFile(boringWordsPath)
-                , words);
-            var withoutBoring = boringWords.GetWords();
+            var words = new LowerWord(new WordsFromFile(textPath));
+            var boringWords = new WordsFromFile(boringWordsPath).GetWords();
+            var boringWordsFilter = new BoringWordsFilter(boringWords, words.ToLower());
+            var withoutBoring = boringWordsFilter.DeleteBoringWords();
             withoutBoring.Should().BeEquivalentTo(expectedWords);
         }
 
         [Test]
-        public void DoSomething_WhenSomething()
+        public void DeleteBoringWords_EmptyText()
         {
             var words = new List<string>();
-            var boringWords = new WithoutBoringWordCollection(new WordsFromFile(boringWordsPath)
-                , new ConstWordCollection(words));
-            var withoutBoring = boringWords.GetWords();
+            var boringWords = new BoringWordsFilter(new WordsFromFile(boringWordsPath).GetWords()
+                , new ConstWordCollection(words).DeleteBoringWords());
+            var withoutBoring = boringWords.DeleteBoringWords();
             withoutBoring.Should().BeEmpty();
         }
     }

@@ -23,6 +23,9 @@ her
 us
 them
 my
+and
+or
+when
 your
 his
 her

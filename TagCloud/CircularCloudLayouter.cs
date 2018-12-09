@@ -6,14 +6,13 @@ namespace TagsCloud
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly List<Rectangle> allRectangles;
-        private readonly CircularSpiral spiral;
+        private readonly List<Rectangle> allRectangles = new List<Rectangle>();
+        private readonly ICoordinateSequence sequence;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point center, ICoordinateSequence sequence)
         {
             Center = center;
-            allRectangles = new List<Rectangle>();
-            spiral = new CircularSpiral(center, 0.1, 0.01);
+            this.sequence = sequence;
         }
 
         public Point Center { get; }
@@ -31,7 +30,7 @@ namespace TagsCloud
         {
             while (true)
             {
-                var newCoordinate = spiral.GetNextCoordinate();
+                var newCoordinate = sequence.GetNextCoordinate();
                 var rectangle = CreateCenteredRectangle(rectangleSize, newCoordinate);
                 if (!IsIntersectWithExistingRectangles(rectangle))
                     return rectangle;

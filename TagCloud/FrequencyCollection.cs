@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace TagsCloud
 {
-    public class FrequencyDictionary
+    public class FrequencyCollection : IFrequencyCollection
     {
-        public Dictionary<string, double> GetFrequencyDictionary(IEnumerable<string> words)
+        public ICollection<KeyValuePair<string, double>> GetFrequencyCollection(IEnumerable<string> words)
         {
             var frequencyDictionary = new Dictionary<string, int>();
             var wordsList = words.ToList();
@@ -15,10 +15,13 @@ namespace TagsCloud
                 else
                     frequencyDictionary[word] = 1;
 
-            return NormalizedDictionary(frequencyDictionary, wordsList.Count);
+            var normalizedDictionary = NormalizedDictionary(frequencyDictionary, wordsList.Count);
+            var orderedCollection = normalizedDictionary.OrderByDescending(x => x.Value);
+            return orderedCollection.ToList();
         }
 
-        private static Dictionary<string, double> NormalizedDictionary(Dictionary<string, int> frequencyDictionary,
+        private static ICollection<KeyValuePair<string, double>> NormalizedDictionary(
+            Dictionary<string, int> frequencyDictionary,
             int wordsCount)
         {
             var normalizedFrequencyDictionary = new Dictionary<string, double>();

@@ -6,13 +6,14 @@ namespace TagsCloud
 {
     public class Picture : IGraphics
     {
-        private readonly Size imageSize;
         private readonly FontFamily fontFamily;
-        private readonly Color wordColor;
         private readonly ImageFormat imageFormat;
         private readonly string imageName;
+        private readonly Size imageSize;
+        private readonly Color wordColor;
 
-        public Picture(Size imageSize, FontFamily fontFamily, Color wordColor, ImageFormat imageFormat, string imageName)
+        public Picture(Size imageSize, FontFamily fontFamily, Color wordColor, ImageFormat imageFormat,
+            string imageName)
         {
             this.imageSize = imageSize;
             this.fontFamily = fontFamily;
@@ -26,9 +27,9 @@ namespace TagsCloud
             using (var map = new Bitmap(imageSize.Width, imageSize.Height))
             using (var graphics = Graphics.FromImage(map))
             {
-                var image = new PictureCreator(fontFamily, wordColor, words, graphics);
+                var image = new PictureCreator(fontFamily, wordColor, words, graphics, imageSize);
                 image.DrawPicture();
-                map.Save($"{imageName}",imageFormat);
+                map.Save($"{imageName}", imageFormat);
             }
         }
     }

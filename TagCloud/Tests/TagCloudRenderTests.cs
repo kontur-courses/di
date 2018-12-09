@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using NUnit.Framework;
 
@@ -16,12 +17,18 @@ namespace TagsCloud.Tests
                 "auto",
                 "automobile"
             };
-            var layout = new CreateLayout(new CircularCloudLayouter(new Point(0, 0)));
+            var width = 0.1;
+            var step = 0.01;
+            var center = new Point(0, 0);
+            var layout =
+                new TagCloudLayouter(new CircularCloudLayouter(center, new CircularSpiral(center, width, step)));
             var color = Color.Black;
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "image");
-            var graphics = new CoordinatesAtImage(path, "Arial", color, new Size(1000, 1000));
-            var frequencyDictionary = new FrequencyDictionary();
-            var render = new TagCloudRender(layout, graphics, new ConstWordCollection(words), frequencyDictionary);
+            var coordinatesAtImage = new CoordinatesAtImage(new Size(1000, 1000));
+            var frequencyDictionary = new FrequencyCollection();
+            var picture = new Picture(new Size(800, 800), new FontFamily("Arial"), color, ImageFormat.Jpeg, path);
+            var render = new TagCloudRender(layout, coordinatesAtImage, new ConstWordCollection(words),
+                frequencyDictionary, picture);
             render.Render();
         }
     }

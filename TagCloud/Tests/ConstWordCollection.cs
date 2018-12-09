@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TagsCloud.Tests
 {
-    public class ConstWordCollection : IWordCollection
+    public class ConstWordCollection : IBoringWordsCollection
     {
         private readonly List<string> words;
 
@@ -11,7 +11,7 @@ namespace TagsCloud.Tests
             this.words = words;
         }
 
-        public IEnumerable<string> GetWords()
+        public IEnumerable<string> DeleteBoringWords()
         {
             return words;
         }

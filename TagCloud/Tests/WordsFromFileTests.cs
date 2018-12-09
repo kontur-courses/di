@@ -38,6 +38,5 @@ namespace TagsCloud.Tests
             var words = wordsFromFile.GetWords();
             words.Should().BeEquivalentTo(expectedWords);
         }
-
     }
 }
