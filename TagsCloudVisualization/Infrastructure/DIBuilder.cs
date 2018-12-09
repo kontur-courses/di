@@ -1,8 +1,10 @@
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using TagsCloudVisualization.Layouter;
+using TagsCloudVisualization.Visualizer;
 using TagsCloudVisualization.WordsProcessing;
 
 namespace TagsCloudVisualization.Infrastructure
@@ -10,26 +12,28 @@ namespace TagsCloudVisualization.Infrastructure
     public class DIBuilder
     {
         private readonly IContainer container;
-        public DIBuilder()
+        private readonly Options options;
+
+        public DIBuilder(Options options)
         {
+            this.options = options;
             container = BuildContainer();
         }
 
-        public T Resolve<T>()
+        public IVisualizer Resolve()
         {
             using (var scope = container.BeginLifetimeScope())
             {
-               return scope.Resolve<T>();
+               return scope.Resolve<IVisualizer>();
             }
         }
 
-        private static IContainer BuildContainer()
+        private IContainer BuildContainer()
         {
-            
             var builder = new ContainerBuilder();
             
             builder.RegisterType<TxtReader>().Named<IWordsProvider>("wordsFile")
-                .WithParameter("filename", "examples/textExample.txt");
+                .WithParameter("filename", options.WordsFilename);
             builder.RegisterType<TxtReader>().Named<IWordsProvider>("boringWords")
                 .WithParameter("filename", "examples/boring_words.txt");
             builder.RegisterType<TextPreprocessor>().As<IWordsProvider>()
@@ -40,13 +44,13 @@ namespace TagsCloudVisualization.Infrastructure
             builder.RegisterType<Spiral>().As<Spiral>()
                 .WithParameters(new[]
                 {
-                    new NamedParameter("center", new Point(0, 0)),
-                    new NamedParameter("step", 0.0005),
-                    new NamedParameter("angle", 0)
+                    new NamedParameter("center", new Point(options.CentralPoint.ElementAt(0), options.CentralPoint.ElementAt(1))),
+                    new NamedParameter("step", options.Step),
+                    new NamedParameter("angle", options.Angle)
                 });
-            builder.Register(c => new FontSettings(new FontFamily("Times New Roman"), FontStyle.Regular)).AsSelf();
-            builder.Register(c => new Palette(Color.DimGray, Brushes.FloralWhite)).AsSelf();
-            builder.Register(c => new Size(800, 800)).AsSelf();
+            builder.Register(c => new FontSettings(new FontFamily(options.FontFamily), (FontStyle)options.FontStyle, options.MaxFontSize)).AsSelf();
+            builder.Register(c => new Palette(Color.FromName(options.BackgroundColor), new SolidBrush(Color.FromName(options.ForegroundColor)))).AsSelf();
+            builder.Register(c => new Size(options.Size.ElementAt(0), options.Size.ElementAt(1))).AsSelf();
             
             var dataAccess = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(dataAccess)
