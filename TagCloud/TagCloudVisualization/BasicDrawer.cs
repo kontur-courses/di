@@ -9,32 +9,28 @@ namespace TagCloudVisualization
         {
             using (var font = new Font(options.FontName, 2, FontStyle.Regular))
             {
-                var newFont = GetAdjustedFont(graphics, wordInfo.Word, font, wordInfo.Rectangle.Width, 100, 1, false);
+                var newFont = GetAdjustedFont(graphics, wordInfo.Word, font, wordInfo.Rectangle.Width, 100, 1);
                 graphics.DrawString(wordInfo.Word, newFont, options.Brush, wordInfo.Rectangle);
             }
         }
-        public Font GetAdjustedFont(Graphics graphicRef, string graphicString, Font originalFont, int containerWidth, int maxFontSize, int minFontSize, bool smallestOnFail)
+
+        public Font GetAdjustedFont(Graphics graphics, string word, Font originalFont, int width,
+                                    int maxFontSize,
+                                    int minFontSize)
         {
-            Font testFont = null;
-            // We utilize MeasureString which we get via a control instance           
-            for (int adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
+            for (var adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
             {
-                testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style); 
+                var testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style); 
 
-                // Test the string with the new size
-                var adjustedSizeNew = graphicRef.MeasureString(graphicString, testFont);
+                var adjustedSizeNew = graphics.MeasureString(word, testFont);
 
-                if (containerWidth > Convert.ToInt32(adjustedSizeNew.Width))
-                {
-                    // Good font, return it
+                if (width > Convert.ToInt32(adjustedSizeNew.Width))
                     return testFont;
-                }
             }
 
-            // If you get here there was no fontsize that worked
-            // return minimumSize or original?
-            return smallestOnFail ? testFont : originalFont;
+            return originalFont;
         }
+
         public bool Check(WordInfo word) => true;
     }
 }
