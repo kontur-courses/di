@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System.Drawing;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Layouter;
 
 namespace TagsCloudVisualization_Tests
 {
@@ -82,8 +83,8 @@ namespace TagsCloudVisualization_Tests
         {
             if (rectangles.Count == 0) return 0;
             return rectangles
-                .Select(rect => new Point(Helper.MaxSignedAbs(rect.Left, rect.Right),
-                    Helper.MaxSignedAbs(rect.Top, rect.Bottom)))
+                .Select(rect => new Point(MathHelper.MaxSignedAbs(rect.Left, rect.Right),
+                    MathHelper.MaxSignedAbs(rect.Top, rect.Bottom)))
                 .Select(point => point.GetDistanceTo(center)).Max();
         }
     }

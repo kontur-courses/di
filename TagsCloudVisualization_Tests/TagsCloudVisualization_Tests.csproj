@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter_Should.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="MathHelper.cs" />
     <Compile Include="MathHelper_Should.cs" />
     <Compile Include="PointExtension_Should.cs" />
     <Compile Include="Program.cs" />
