@@ -16,14 +16,14 @@ namespace TagCloudApp
             container.RegisterType<CircularCloudLayouter>()
                      .AsSelf();
 
-            container.RegisterTypes(typeof(CsvTextReader), typeof(TxtTextReader))
+            container.RegisterTypes(typeof(WhitespaceTextReader), typeof(NewLineTextReader))
                      .As<ITextReader>();
 
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();
 
-            container.RegisterType<SimpleWordsPreparer>()
-                     .As<IWordsPreparer>();
+            container.RegisterTypes(typeof(SimpleWordPreparer), typeof(BasicWordPreparer)) 
+                     .As<IWordPreparer>();
 
             container.RegisterType<TagCloudStatsGenerator>()
                      .As<ITagCloudStatsGenerator>();

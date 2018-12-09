@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TagCloudApp
 {
-    internal class TxtTextReader : ITextReader
+    internal class WhitespaceTextReader : ITextReader
     {
         public bool TryReadWords(string path, out IEnumerable<string> words)
         {
@@ -22,4 +22,5 @@ namespace TagCloudApp
 
         public string Extension => ".txt";
     }
+
 }

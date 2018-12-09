@@ -40,6 +40,7 @@
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -52,11 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleUserInterface.cs" />
-    <Compile Include="CsvTextReader.cs" />
     <Compile Include="ITextReader.cs" />
+    <Compile Include="NewLineTextReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TxtTextReader.cs" />
+    <Compile Include="WhitespaceTextReader.cs" />
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
