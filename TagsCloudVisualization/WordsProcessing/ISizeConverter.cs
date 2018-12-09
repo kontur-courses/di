@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization.WordsProcessing
 {
-    public interface ISizer
+    public interface ISizeConverter
     {
-        IEnumerable<SizedWord> SizeWords();
+        IEnumerable<SizedWord> Convert();
     }
 }

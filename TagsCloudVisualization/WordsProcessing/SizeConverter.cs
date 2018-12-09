@@ -6,21 +6,21 @@ using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudVisualization.WordsProcessing
 {
-    public class Sizer : ISizer
+    public class SizeConverter : ISizeConverter
     {
         private readonly FontSettings fontSettings;
         private readonly IWeighter weighter;
         private float minWeight;
         private float maxWeight;
         
-        public Sizer(IWeighter weighter, FontSettings fontSettings)
+        public SizeConverter(IWeighter weighter, FontSettings fontSettings)
         {
             this.weighter = weighter;
             this.fontSettings = fontSettings;
         }
         
         
-        public IEnumerable<SizedWord> SizeWords()
+        public IEnumerable<SizedWord> Convert()
         {
             var weightedWords = weighter.WeightWords().ToList();
             maxWeight = weightedWords.Max().Weight;
