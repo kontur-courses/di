@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization.Layouter
 {
-    public interface IWordsCloudLayouter
+    public interface IWordsCloudBuilder
     {
-        IEnumerable<Word> LayWords();
+        IEnumerable<Word> Build();
     }
 }

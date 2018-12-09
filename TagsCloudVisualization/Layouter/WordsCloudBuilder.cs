@@ -5,20 +5,20 @@ using TagsCloudVisualization.WordsProcessing;
 
 namespace TagsCloudVisualization.Layouter
 {
-    public class WordsCloudLayouter : IWordsCloudLayouter
+    public class WordsCloudBuilder : IWordsCloudBuilder
     {
         private readonly ICloudLayouter layouter;
-        private readonly ISizer sizer;
+        private readonly ISizeConverter sizeConverter;
 
-        public WordsCloudLayouter(ICloudLayouter layouter, ISizer sizer)
+        public WordsCloudBuilder(ICloudLayouter layouter, ISizeConverter sizeConverter)
         {
             this.layouter = layouter;
-            this.sizer = sizer;
+            this.sizeConverter = sizeConverter;
         }
 
-        public IEnumerable<Word> LayWords()
+        public IEnumerable<Word> Build()
         {
-            return sizer.SizeWords().Select(PutNextWord);
+            return sizeConverter.Convert().Select(PutNextWord);
         }
 
         private Word PutNextWord(SizedWord sizedWord)
