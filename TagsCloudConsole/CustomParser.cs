@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using CommandLine;
 
 namespace TagsCloudConsole
@@ -11,6 +12,7 @@ namespace TagsCloudConsole
         public readonly Color BackgroundColor;
         public readonly Color TextColor;
         public readonly string OutputFileName;
+        public readonly string ImageExtension;
         public readonly string FontName;
 
         public CustomArgs(CmdOptions options)
@@ -20,6 +22,7 @@ namespace TagsCloudConsole
             BackgroundColor = ParseKnownColor(options.BackgroundColorName);
             TextColor = ParseKnownColor(options.TextColorName);
             OutputFileName = options.OutputFileName;
+            ImageExtension = ExtractExtension(OutputFileName);
             FontName = options.FontName;
         }
 
@@ -29,6 +32,13 @@ namespace TagsCloudConsole
             if (color.IsKnownColor)
                 return color;
             throw new ArgumentException("Color is invalid");
+        }
+
+        private string ExtractExtension(string fileName)
+        {
+            if (!fileName.Contains('.'))
+                throw new ArgumentException("Image has no extension");
+            return fileName.Split('.').LastOrDefault();
         }
 
         private Size ParseImageSize(string imageSizeString)

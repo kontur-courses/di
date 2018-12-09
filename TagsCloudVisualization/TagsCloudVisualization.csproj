@@ -55,6 +55,9 @@
     <Compile Include="CloudGenerating\ISpiralGenerator.cs" />
     <Compile Include="CloudGenerating\ISpiralGeneratorFactory.cs" />
     <Compile Include="CloudGenerating\ITagsCloudGenerator.cs" />
+    <Compile Include="ImageSaving\IImageSaver.cs" />
+    <Compile Include="ImageSaving\ImageSaverSelector.cs" />
+    <Compile Include="ImageSaving\StandardImageSaver.cs" />
     <Compile Include="Visualizing\BasicTagPainter.cs" />
     <Compile Include="CloudGenerating\ArchimedeanSpiralGenerator.cs" />
     <Compile Include="CloudBuilder.cs" />

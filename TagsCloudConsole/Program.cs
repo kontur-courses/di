@@ -2,8 +2,8 @@
 using TagsCloudVisualization;
 using System.Drawing;
 using Autofac;
-using Autofac.Builder;
 using TagsCloudVisualization.CloudGenerating;
+using TagsCloudVisualization.ImageSaving;
 using TagsCloudVisualization.Preprocessors;
 using TagsCloudVisualization.Visualizing;
 
@@ -27,7 +27,14 @@ namespace TagsCloudConsole
 
             var container = BuildContainer(arguments);
             var app = container.Resolve<App>();
-            app.Run();
+            try
+            {
+                app.Run();
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static IContainer BuildContainer(CustomArgs arguments)
@@ -65,13 +72,16 @@ namespace TagsCloudConsole
             builder.RegisterType<CloudBuilder>().AsSelf();
             builder.RegisterType<CustomPainter>().As<ITagPainter>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
+            builder.RegisterType<StandardImageSaver>().As<IImageSaver>();
             builder.RegisterType<App>()
                 .AsSelf()
-                .WithParameters(new[] {
+                .WithParameters(new[]
+                {
                     new NamedParameter("outputFileName", arguments.OutputFileName),
+                    new NamedParameter("extension", arguments.ImageExtension),
                     new NamedParameter("wordsFileName", arguments.WordsFile)
-                 });
-
+                });
+            builder.RegisterType<ImageSaverSelector>().AsSelf();
             return builder.Build();
         }
     }
