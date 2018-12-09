@@ -29,8 +29,6 @@ namespace TagsCloudVisualization.Layouter
 
         private Rectangle GenerateNextRectangle(Size rectangleSize)
         {
-            if (rectangles.Count == 0) 
-                return new Rectangle(spiral.Center, rectangleSize).ShiftRectangleToTopLeftCorner();
             while (true)
             {
                 var rectangleCenter = spiral.GetNextPoint();
