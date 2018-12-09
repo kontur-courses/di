@@ -44,10 +44,10 @@ namespace TagsCloudContainer.Tests
         }
 
         [Test]
-        public void PutFirstRectangleInCenter()
+        public void PutFirstRectangleCenterInCenter()
         {
             var rect = layouter.PutNextRectangle(defaultSize);
-            rect.Location.Should().Be(center);
+            rect.GetCenter().Should().Be(center);
         }
 
         [Test]

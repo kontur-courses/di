@@ -11,9 +11,11 @@ namespace TagsCloudContainer.Layouter
 
         public static Rectangle MoveToCenter(this Rectangle rect)
         {
-            var halfWidth = rect.Width / 2;
-            var halfHeight = rect.Height / 2;
-            return new Rectangle(rect.X - halfWidth, rect.Y - halfHeight, rect.Width, rect.Height);
+            var center = GetCenter(rect);
+            return new Rectangle(2 * rect.X - center.X, 2 * rect.Y - center.Y, rect.Width, rect.Height);
         }
+
+        public static Point GetCenter(this Rectangle rect) => 
+            new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
     }
 }
