@@ -15,7 +15,7 @@ namespace TagsCloudVisualization
         [Option('n', "fontname", Required = false, HelpText = "Input simple font name", DefaultValue = "arial")]
         public string FontName { get; set; }
 
-        [Option('c', "color", Required = false, HelpText = "Input simple color", DefaultValue = "red")]
+        [Option('c', "color", Required = false, HelpText = "Input simple color", DefaultValue = "rainbow")]
         public string Color { get; set; }
 
         [Option('g', "pointgen", Required = true, HelpText = "Input one of them: spiral | heart | astroid")]

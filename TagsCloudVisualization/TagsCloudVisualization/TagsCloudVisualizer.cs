@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
@@ -11,7 +12,7 @@ namespace TagsCloudVisualization
         {
             var width = parameters.ImageSize.Width;
             var height = parameters.ImageSize.Height;
-            var color = parameters.Color;
+            var colors = parameters.Colors.ToArray();
             var fontName = parameters.FontName;
             var bitmap = new Bitmap(width + EdgeLength, height + EdgeLength);
 
@@ -22,10 +23,12 @@ namespace TagsCloudVisualization
                 var verticalOffset = (float) height / 2 + (float) EdgeLength * 3 / 4;
                 graphics.TranslateTransform(horizontalOffset, verticalOffset);
 
-                foreach (var wordData in data)
-                    graphics.DrawString(wordData.Word, new Font(fontName, wordData.Weight * 14),
-                        new SolidBrush(color),
-                        wordData.StartPoint);
+                for (var i = 0; i < data.Count; i++)
+                {
+                    graphics.DrawString(data[i].Word, new Font(fontName, data[i].Weight * 14),
+                        new SolidBrush(colors[i % colors.Length]),
+                        data[i].StartPoint);
+                }
             }
 
             return bitmap;

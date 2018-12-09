@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization
@@ -7,11 +9,34 @@ namespace TagsCloudVisualization
     {
         public CloudParameters Parse(Options options, CloudParameters parameters)
         {
-            parameters.Color = Color.FromName(options.Color);
+            parameters.Colors = GetColors(options.Color);
             parameters.ImageSize = GetImageSize(options.ImageSize);
             parameters.FontName = options.FontName;
 
             return parameters;
+        }
+
+        private static IEnumerable<Color> GetColors(string input)
+        {
+            var rnd = new Random();
+            switch (input)
+            {
+                case "random":
+                    return new[] {Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256))};
+                case "rainbow":
+                    return new[]
+                    {
+                        Color.Red,
+                        Color.Orange,
+                        Color.Yellow,
+                        Color.Green,
+                        Color.DeepSkyBlue,
+                        Color.Blue,
+                        Color.BlueViolet
+                    };
+                default:
+                    return new[] {Color.FromName(input)};
+            }
         }
 
         private Size GetImageSize(string input)
