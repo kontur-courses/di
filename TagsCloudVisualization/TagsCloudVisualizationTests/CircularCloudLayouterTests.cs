@@ -29,7 +29,7 @@ namespace TagsCloudVisualizationTests
             {
                 var cloudParameters = new CloudParameters
                 {
-                    Color = Color.Red,
+                    ColorFunc = x => Color.Red,
                     ImageSize = new Size(1024, 768),
                     FontName = "arial",
                     PointGenerator = new Spiral()
