@@ -6,6 +6,7 @@ using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
 using TagsCloudVisualization.Preprocessors;
 using TagsCloudVisualization.Visualizing;
+using TagsCloudVisualization.WordsFileReading;
 
 namespace TagsCloudConsole
 {
@@ -50,6 +51,7 @@ namespace TagsCloudConsole
             var builder = new ContainerBuilder();
             builder.RegisterType<TextFileReader>()
                 .As<IFileReader>();
+            builder.RegisterType<FileReaderSelector>().AsSelf();
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
             builder.RegisterType<ArchimedeanSpiralGeneratorFactory>()
@@ -77,9 +79,10 @@ namespace TagsCloudConsole
                 .AsSelf()
                 .WithParameters(new[]
                 {
-                    new NamedParameter("outputFileName", arguments.OutputFileName),
-                    new NamedParameter("extension", arguments.ImageExtension),
-                    new NamedParameter("wordsFileName", arguments.WordsFile)
+                    new NamedParameter("imageFileName", arguments.OutputFileName),
+                    new NamedParameter("imageFileExtension", arguments.ImageExtension),
+                    new NamedParameter("wordsFileName", arguments.WordsFile),
+                    new NamedParameter("wordsFileExtension", arguments.WordsFileExtension) 
                 });
             builder.RegisterType<ImageSaverSelector>().AsSelf();
             return builder.Build();

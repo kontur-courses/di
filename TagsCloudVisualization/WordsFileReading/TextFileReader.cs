@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsFileReading
 {
     public class TextFileReader : IFileReader
     {
-        public IEnumerable<string> ReadAllWords(string fileName)
+        public IEnumerable<string> ReadAllWords(string fileName, string extension)
         {
             using (var reader = new StreamReader(fileName, Encoding.UTF8))
             {
@@ -19,6 +20,11 @@ namespace TagsCloudVisualization
                     yield return line.Trim();
                 }
             }
+        }
+
+        public string[] SupportedTypes()
+        {
+            return new[] {"txt"};
         }
     }
 }

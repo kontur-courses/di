@@ -8,6 +8,7 @@ namespace TagsCloudConsole
     class CustomArgs
     {
         public readonly string WordsFile;
+        public readonly string WordsFileExtension;
         public readonly Size ImageSize;
         public readonly Color BackgroundColor;
         public readonly Color TextColor;
@@ -18,6 +19,7 @@ namespace TagsCloudConsole
         public CustomArgs(CmdOptions options)
         {
             WordsFile = options.WordsFile;
+            WordsFileExtension = ExtractExtension(WordsFile);
             ImageSize = ParseImageSize(options.RawImageSize);
             BackgroundColor = ParseKnownColor(options.BackgroundColorName);
             TextColor = ParseKnownColor(options.TextColorName);
@@ -37,7 +39,7 @@ namespace TagsCloudConsole
         private string ExtractExtension(string fileName)
         {
             if (!fileName.Contains('.'))
-                throw new ArgumentException("Image has no extension");
+                throw new ArgumentException($"File {fileName} has no extension");
             return fileName.Split('.').LastOrDefault();
         }
 

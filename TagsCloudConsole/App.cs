@@ -1,39 +1,43 @@
 ﻿using TagsCloudVisualization;
 using TagsCloudVisualization.ImageSaving;
 using TagsCloudVisualization.Visualizing;
+using TagsCloudVisualization.WordsFileReading;
 
 namespace TagsCloudConsole
 {
     class App
-    {
-        private readonly IFileReader reader;
+    { 
         private readonly CloudBuilder cloudBuilder;
         private readonly TagsCloudVisualizer cloudVisualizer;
-        private readonly ImageSaverSelector imageSaverSelector;
-        private readonly string outputFileName;
-        private readonly string extension;
+        private readonly string imageFileName;
+        private readonly string imageFileExtension;
         private readonly string wordsFileName;
+        private readonly string wordsFileExtension;
+        private readonly FileReaderSelector fileReaderSelector;
+        private readonly ImageSaverSelector imageSaverSelector;
 
-        public App(IFileReader reader, CloudBuilder cloudBuilder, TagsCloudVisualizer cloudVisualizer,
-            ImageSaverSelector imageSaverSelector, string outputFileName, string extension, string wordsFileName)
+        public App(FileReaderSelector fileReaderSelector, CloudBuilder cloudBuilder, TagsCloudVisualizer cloudVisualizer,
+            ImageSaverSelector imageSaverSelector, string imageFileName, 
+            string imageFileExtension, string wordsFileName, string wordsFileExtension)
         {
-            this.reader = reader;
+            this.fileReaderSelector = fileReaderSelector;
             this.cloudBuilder = cloudBuilder;
             this.cloudVisualizer = cloudVisualizer;
-            this.outputFileName = outputFileName;
+            this.imageFileName = imageFileName;
             this.wordsFileName = wordsFileName;
+            this.wordsFileExtension = wordsFileExtension;
+            this.imageFileExtension = imageFileExtension;
             this.imageSaverSelector = imageSaverSelector;
-            this.extension = extension;
         }
 
         public void Run()
         {
-            var words = reader.ReadAllWords(wordsFileName);
+            var reader = fileReaderSelector.SelectFileReader(wordsFileExtension);
+            var imageSaver = imageSaverSelector.SelectImageSaver(imageFileExtension);
+            var words = reader.ReadAllWords(wordsFileName, wordsFileExtension);
             var tagCloud = cloudBuilder.BuildTagCloud(words);
             var picture = cloudVisualizer.GetPictureOfRectangles(tagCloud);
-            imageSaverSelector
-                .SelectImageSaver(extension)
-                .SaveImage(picture, extension, outputFileName);
+            imageSaver.SaveImage(picture, imageFileExtension, imageFileName);
         }
     }
 }
