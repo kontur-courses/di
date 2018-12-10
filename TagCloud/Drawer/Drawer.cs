@@ -31,7 +31,10 @@ namespace TagCloud.Drawer
                 FillBitmap(new SolidBrush(backgroundColor), graphics, image);
                 MoveGraphicsToCenter(graphics, rectangles);
                 foreach (var info in imageInfos)
-                    graphics.DrawString(info.Word, info.Font, new SolidBrush(colorPicker.AdjustColor(wordsColor, info.Occurrences)), info.Rectangle);
+                {
+                    var brush = new SolidBrush(colorPicker.AdjustColor(wordsColor, info.Frequency));
+                    graphics.DrawString(info.Word, info.Font, brush, info.Rectangle);
+                }
             }
 
             return image;

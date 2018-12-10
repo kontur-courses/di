@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Fclp;
+using TagCloud.ColorPicker;
 using TagCloud.Data;
 using TagCloud.Processor;
 using TagCloud.Reader;
@@ -100,6 +101,7 @@ namespace TagCloud
             builder.Register(c =>  new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
             builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
             builder.RegisterType<RussianWordsProcessor>().As<IWordsProcessor>();
+            builder.RegisterType<BrightnessColorPicker>().As<IColorPicker>();
         }
     }
 }

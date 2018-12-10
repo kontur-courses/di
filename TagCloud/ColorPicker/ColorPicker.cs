@@ -4,7 +4,7 @@ namespace TagCloud.ColorPicker
 {
     public class ColorPicker : IColorPicker
     {
-        public Color AdjustColor(Color baseColor, int usingFrequency)
+        public Color AdjustColor(Color baseColor, float usingFrequency)
         {
             return baseColor;
         }

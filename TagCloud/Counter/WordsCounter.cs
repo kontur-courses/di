@@ -16,8 +16,10 @@ namespace TagCloud.Counter
                 else
                     occurrences[word] = 1;
             }
+
+            var maxOccurrences = occurrences.Max(pair => pair.Value);
             return occurrences
-                .Select(pair => new WordInfo(pair.Key, pair.Value))
+                .Select(pair => new WordInfo(pair.Key, pair.Value, (float) pair.Value / maxOccurrences))
                 .OrderByDescending(info => info.Occurrences);
         }
     }
