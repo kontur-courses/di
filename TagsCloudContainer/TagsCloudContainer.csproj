@@ -61,6 +61,8 @@
     <Compile Include="CircularCloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouters\CircularPointsChooser.cs" />
     <Compile Include="CircularCloudLayouters\ICircularCloudLayouter.cs" />
+    <Compile Include="Clients\ConsoleClient.cs" />
+    <Compile Include="Clients\IClient.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="FontSizesChoosers\FontSizeChooser.cs" />
     <Compile Include="FontSizesChoosers\IFontSizeChooser.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="ImageSavers\ImageSaver.cs" />
     <Compile Include="ProjectSettings\ProjectSettingsGetter.cs" />
     <Compile Include="RectanglesFilters\FilterRectanglesWithNegativeCoordinates.cs" />
-    <Compile Include="ConsoleClient.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\TextFileReader.cs" />
     <Compile Include="Settings\ImageSettings.cs" />

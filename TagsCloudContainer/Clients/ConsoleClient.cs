@@ -1,19 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using Autofac;
 using CommandLine;
 using TagsCloudContainer.ImageCreators;
 using TagsCloudContainer.ImageSavers;
-using TagsCloudContainer.ProjectSettings;
 using TagsCloudContainer.Readers;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsHandlers;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Clients
 {
-    class ConsoleClient
+    public class ConsoleClient : IClient
     {
-        public class Options
+        private class Options
         {
             [Option('h', "height", Required = true, HelpText = "Set height of image")]
             public int Height { get; set; }
@@ -34,27 +33,39 @@ namespace TagsCloudContainer
             public string Color { get; set; }
         }
 
-        private static void Main(string[] args)
+        private readonly ImageCreator imageCreator;
+        private readonly WordsHandler wordsHandler;
+        private readonly IImageSaver imageSaver;
+        private readonly Func<string, IEnumerable<string>> filesReaderFactory;
+        private readonly SettingsManager settings;
+
+        public ConsoleClient(WordsHandler wordsHandler, ImageCreator imageCreator, Func<string, IEnumerable<string>> filesReaderFactory,
+            SettingsManager settings, IImageSaver imageSaver)
         {
-            var builder = ProjectSettingsGetter.GetSettings();
-            var wordsHandler = builder.Resolve<WordsHandler>();
-            var imageCreator = builder.Resolve<ImageCreator>();
-            var wordSaver = builder.Resolve<IImageSaver>();
-            var settings = builder.Resolve<SettingsManager>();
-            Parser.Default.ParseArguments<Options>(args)
+            this.wordsHandler = wordsHandler;
+            this.imageCreator = imageCreator;
+            this.imageSaver = imageSaver;
+            this.filesReaderFactory = filesReaderFactory;
+            this.settings = settings;
+        }
+
+
+
+        public void Execute(string[] args)
+        {
+            Parser.Default.ParseArguments<Program.Options>(args)
                 .WithParsed(o =>
                 {
                     UpdateSettings(settings, o);
                     var words = new TextFileReader(o.Source);
                     var transformedWord = wordsHandler.HandleWords(words);
                     var image = imageCreator.GetImage(transformedWord);
-                    wordSaver.SaveImage(image, o.Destination);
+                    imageSaver.SaveImage(image, o.Destination);
                     Console.WriteLine("Image successfully created");
                 });
-
         }
 
-        private static void UpdateSettings(SettingsManager settings, Options options)
+        private static void UpdateSettings(SettingsManager settings, Program.Options options)
         {
             var size = new Size(options.Width, options.Height);
             RaiseIsSizeIsIncorrect(size);
@@ -89,6 +100,6 @@ namespace TagsCloudContainer
             else
                 throw new ArgumentException($"Font color ({colorName}) is unknown");
         }
-        
+
     }
 }
