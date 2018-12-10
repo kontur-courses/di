@@ -11,6 +11,7 @@ namespace TagCloud.Core.TextWorking
         private readonly IWordsReader wordsReader;
         private readonly IWordsProcessor wordsProcessor;
         private readonly TextWorkingSettings settings;
+
         public TextWorker(IWordsReader wordsReader, IWordsProcessor wordsProcessor, TextWorkingSettings settings)
         {
             this.wordsReader = wordsReader;

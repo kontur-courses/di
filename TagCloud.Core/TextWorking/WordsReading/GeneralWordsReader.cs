@@ -5,7 +5,7 @@ using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
 
 namespace TagCloud.Core.TextWorking.WordsReading
 {
-    public class GeneralWordsReader
+    public class GeneralWordsReader : IWordsReader
     {
         private readonly IWordsReaderForFile[] wordsReaders;
 
