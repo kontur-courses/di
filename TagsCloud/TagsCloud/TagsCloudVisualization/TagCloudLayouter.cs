@@ -6,14 +6,14 @@ using TagsCloud.CloudStructure;
 
 namespace TagsCloud.TagsCloudVisualization
 {
-    public class TagCloudLayouter
+    public class TagCloudLayouter: ITagCloudLayouter
     {
         private readonly FontFamily fontFamily;
-        public readonly CloudLayouter cloud;
+        public readonly ICloudLayouter cloud;
         public readonly int MinFontSize;
         public readonly int MaxFontSize;
 
-        public TagCloudLayouter(FontFamily fontFamily, CloudLayouter cloud, int minFontSize = 10, int maxFontSize = 100)
+        public TagCloudLayouter(FontFamily fontFamily, ICloudLayouter cloud, int minFontSize = 10, int maxFontSize = 100)
         {
             this.fontFamily = fontFamily;
             this.cloud = cloud;

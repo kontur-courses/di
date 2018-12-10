@@ -37,10 +37,10 @@ namespace TagsCloud
         public IEnumerable<PartOfSpeech> BoringParts { get; set; }
 
 
-        [Option("only", Required = false, HelpText = "Defines boring parts of speech that will not be listed in result. " +
-                                                     "Possible parts are: Adjective, Adverb, PronominalAdverb, NumeralAdjective, " +
-                                                     "PronounAdjective, CompositePart, Conjunction, Interjection, Numeral, Particle, " +
-                                                     "Pretext, Noun, PronounNoun, Verb")]
+        [Option("only", Required = false, Default = null, HelpText = "Defines boring parts of speech that will not be listed in result. " +
+                                                         "Possible parts are: Adjective, Adverb, PronominalAdverb, NumeralAdjective, " +
+                                                         "PronounAdjective, CompositePart, Conjunction, Interjection, Numeral, Particle, " +
+                                                         "Pretext, Noun, PronounNoun, Verb")]
         public IEnumerable<PartOfSpeech> PartsToUse { get; set; }
 
         [Option("infinitive", Required = false, Default = false, HelpText = "Uses infinitive form of words.")]
@@ -52,7 +52,7 @@ namespace TagsCloud
         [Option("minFontSize", Required = false, Default = 10, HelpText = "Defines minimum font size.")]
         public int MinFontSize { get; set; }
 
-        [Option("dangle", Required = false, Default = 100, HelpText = "Defines maximum font size.")]
+        [Option("maxFontSize", Required = false, Default = 100, HelpText = "Defines maximum font size.")]
         public int MaxFontSize { get; set; }
     }
 }

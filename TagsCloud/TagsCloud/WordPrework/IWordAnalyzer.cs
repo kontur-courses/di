@@ -8,8 +8,8 @@ namespace TagsCloud.WordPrework
 {
     interface IWordAnalyzer
     {
-        Dictionary<string, int> GetWordFrequency();
+        Dictionary<string, int> GetWordFrequency(HashSet<PartOfSpeech> boringPartsOfSpeech);
 
-        Dictionary<string, int> GetSpecificWordFrequency(params PartOfSpeech[] partsOfSpeech);
+        Dictionary<string, int> GetSpecificWordFrequency(IEnumerable<PartOfSpeech> partsOfSpeech);
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using MyStemWrapper;
 using Newtonsoft.Json.Linq;
 
 
 namespace TagsCloud.WordPrework
 {
-    public class WordAnalyzer
+    public class WordAnalyzer: IWordAnalyzer
     {
         private readonly Dictionary<string, PartOfSpeech> partsOfSpeechDesignations =
             new Dictionary<string, PartOfSpeech>
@@ -27,7 +29,7 @@ namespace TagsCloud.WordPrework
                 {"V", PartOfSpeech.Verb}
             };
 
-        private readonly HashSet<PartOfSpeech> boringPartsOfSpeech = new HashSet<PartOfSpeech>
+        private readonly HashSet<PartOfSpeech> standartBoringPartsOfSpeech = new HashSet<PartOfSpeech>
         {
             PartOfSpeech.Particle, PartOfSpeech.Conjunction,  PartOfSpeech.Pretext,  PartOfSpeech.PronominalAdverb,
             PartOfSpeech.PronounNoun, PartOfSpeech.PronounAdjective
@@ -39,6 +41,7 @@ namespace TagsCloud.WordPrework
 
         public WordAnalyzer(IWordsGetter wordsGetter,bool useInfinitiveForm = false)
         {
+            stemmer.PathToMyStem = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "mystem.exe");
             stemmer.Parameters = "-i --format json";
             words = wordsGetter.GetWords();
             foreach (var word in words)
@@ -51,20 +54,21 @@ namespace TagsCloud.WordPrework
             }
         }
 
-        public Dictionary<string, int> GetWordFrequency()
+        public Dictionary<string, int> GetWordFrequency(HashSet<PartOfSpeech> newBoringPartOfSpeech = null)
         {
+            if (newBoringPartOfSpeech == null)
+                newBoringPartOfSpeech = standartBoringPartsOfSpeech;
             var result = new Dictionary<string, int>();
             foreach (var item in WordsFrequency)
             {
                 var partOfSpeech = GetPartOfSpeech(item.Key);
-                if (!boringPartsOfSpeech.Contains(partOfSpeech))
+                if (!newBoringPartOfSpeech.Contains(partOfSpeech))
                     result[item.Key] = item.Value;
             }
-
             return result;
         }
 
-        public Dictionary<string, int> GetWordFrequency(params PartOfSpeech[] partsOfSpeech)
+        public Dictionary<string, int> GetSpecificWordFrequency(IEnumerable<PartOfSpeech> partsOfSpeech)
         {
             var result = new Dictionary<string, int>();
             var neededParts = new HashSet<PartOfSpeech>(partsOfSpeech);

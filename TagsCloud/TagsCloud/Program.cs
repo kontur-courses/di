@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
+using System.IO;
+using Autofac;
+using Autofac.Core;
 using TagsCloud.CloudStructure;
 using TagsCloud.TagsCloudVisualization;
 using TagsCloud.WordPrework;
@@ -14,24 +16,50 @@ namespace TagsCloud
     {
         static void Main(string[] args)
         {
-            var options =  Parser.Default.ParseArguments<Options>(args);
-            var container = new WindsorContainer();
-            container.Register(Component.For<ICloudLayouter>().ImplementedBy<ICloudLayouter>());
-            container.Register(Component.For<IPointGenerator>().ImplementedBy<SpiralPointGenerator>());
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(RunOptions);
+        }
 
+        static IContainer BuildContainer(Options options)
+        {
+            var builder = new ContainerBuilder();
 
+            builder.RegisterType<FileReader>().As<IWordsGetter>().WithParameter("fileName", options.File);
+            builder.RegisterType<WordAnalyzer>().As<IWordAnalyzer>().WithParameter("useInfinitiveForm", options.Infinitive);
 
+            builder.RegisterType<SpiralPointGenerator>().As<IPointGenerator>().WithParameter("dAngle", options.DAngle);
+            builder.RegisterType<PointCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point()).SingleInstance(); ;
 
-            var fileReader = new FileReader(@"C:\Users\Дима\Desktop\TestFile.txt");
-            var frequency = new WordAnalyzer(fileReader).GetWordFrequency();
-            var spiralPointGenerator = new SpiralPointGenerator(Math.PI / 16);
-            var cloud = new PointCloudLayouter(new Point(), spiralPointGenerator);
+            builder.RegisterType<TagCloudLayouter>().As<ITagCloudLayouter>().WithParameters(new List<Parameter>
+            {
+                new NamedParameter("fontFamily", new FontFamily(options.Font)),
+                new NamedParameter("minFontSize",options.MinFontSize),
+                new NamedParameter("maxFontSize", options.MaxFontSize)
+            });
+            builder.RegisterType<TagsCloudVisualizer>().As<ITagsCloudVisualizer>().WithParameters(new List<Parameter>
+            {
+                new NamedParameter("pictureSize", new Size(options.Width, options.Height)),
+                new NamedParameter("fontName", options.Font),
+                new NamedParameter("backgroundColor", Color.FromName(options.BackgroundColor)),
+                new NamedParameter("fontColor", Color.FromName(options.FontColor))
+            });
+            return builder.Build();
+        }
 
-            var tagcloudLayouter = new TagCloudLayouter(new FontFamily("Arial"), cloud);
+        static void RunOptions(Options options)
+        {
+            var container = BuildContainer(options);
+            var wordAnalyzer = container.Resolve<IWordAnalyzer>();
 
-            var visualizer = new TagsCloudVisualizer(new Size(1000, 1000), "Arial");
-            var bitmap1 = visualizer.GetCloudVisualization(tagcloudLayouter.GetTags(frequency));
-            bitmap1.Save("cloud1.jpg", ImageFormat.Jpeg);
+            var frequency = options.PartsToUse == null
+                ? wordAnalyzer.GetSpecificWordFrequency(options.PartsToUse)
+                : wordAnalyzer.GetWordFrequency(new HashSet<PartOfSpeech>(options.BoringParts));
+            var visualizer = container.Resolve<ITagsCloudVisualizer>();
+            var tags = container.Resolve<ITagCloudLayouter>().GetTags(frequency);
+            var bitmap = visualizer.GetCloudVisualization(tags);
+            var name = Path.GetFileName(options.File);
+            var newName = Path.ChangeExtension(name, "jpg");
+            bitmap.Save(newName, ImageFormat.Jpeg);
         }
     }
 }

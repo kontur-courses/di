@@ -35,9 +35,16 @@ namespace TagsCloud.TagsCloudVisualization
                 foreach (var tag in tags)
                 {
                     graphics.DrawString(tag.Word, new Font(FontName, tag.FontSize), brush, tag.PosRectangle.Location);
-                } 
+                    graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                }
+            } 
+            var resultBitmap = new Bitmap(PictureSize.Width, PictureSize.Height);
+            using (var graphics = Graphics.FromImage(resultBitmap))
+            {
+                graphics.DrawImage(bitmap, 0, 0, PictureSize.Width, PictureSize.Height);
             }
-            return bitmap;
+
+            return resultBitmap;
         }
 
         private static Rectangle GetPictureRectangle(List<Tag> tags)
