@@ -11,6 +11,14 @@ namespace TagsCloud
 {
     public class Options
     {
+        public static Options Parse(string[] args)
+        {
+            Options result = new Options();
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(o => result = o);
+            return result;
+        }
+
         [Option('f', "file", Required = true, HelpText = "File with words to build tag cloud from.")]
         public string File{ get; set; }
 
@@ -30,10 +38,10 @@ namespace TagsCloud
         public String FontColor { get; set; }
 
 
-        [Option("boring", Required = false, HelpText = "Defines boring parts of speech that will not be listed in result. " +
-                                                       "Possible parts are: Adjective, Adverb, PronominalAdverb, NumeralAdjective, " +
-                                                       "PronounAdjective, CompositePart, Conjunction, Interjection, Numeral, Particle, " +
-                                                       "Pretext, Noun, PronounNoun, Verb")]
+        [Option("boring", Required = false, Default = null, HelpText = "Defines boring parts of speech that will not be listed in result. " +
+                                                           "Possible parts are: Adjective, Adverb, PronominalAdverb, NumeralAdjective, " +
+                                                           "PronounAdjective, CompositePart, Conjunction, Interjection, Numeral, Particle, " +
+                                                           "Pretext, Noun, PronounNoun, Verb")]
         public IEnumerable<PartOfSpeech> BoringParts { get; set; }
 
 

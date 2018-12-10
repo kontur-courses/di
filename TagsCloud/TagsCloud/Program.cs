@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using Autofac;
 using Autofac.Core;
 using TagsCloud.CloudStructure;
@@ -12,15 +13,22 @@ using CommandLine;
 
 namespace TagsCloud
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(RunOptions);
         }
 
-        static IContainer BuildContainer(Options options)
+        public static void RunOptions(Options options)
+        {
+            var container = BuildContainer(options);
+            var tags = GetTags(options, container);
+            DrawTagCloudAndSave(options, container, tags);
+        }
+
+        public static IContainer BuildContainer(Options options)
         {
             var builder = new ContainerBuilder();
 
@@ -46,16 +54,19 @@ namespace TagsCloud
             return builder.Build();
         }
 
-        static void RunOptions(Options options)
+        public static List<Tag> GetTags(Options options, IContainer container)
         {
-            var container = BuildContainer(options);
             var wordAnalyzer = container.Resolve<IWordAnalyzer>();
 
-            var frequency = options.PartsToUse == null
+            var frequency = options.PartsToUse.Any()
                 ? wordAnalyzer.GetSpecificWordFrequency(options.PartsToUse)
                 : wordAnalyzer.GetWordFrequency(new HashSet<PartOfSpeech>(options.BoringParts));
+            return container.Resolve<ITagCloudLayouter>().GetTags(frequency);
+        }
+
+        public static void DrawTagCloudAndSave(Options options, IContainer container, List<Tag> tags)
+        {
             var visualizer = container.Resolve<ITagsCloudVisualizer>();
-            var tags = container.Resolve<ITagCloudLayouter>().GetTags(frequency);
             var bitmap = visualizer.GetCloudVisualization(tags);
             var name = Path.GetFileName(options.File);
             var newName = Path.ChangeExtension(name, "jpg");

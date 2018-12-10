@@ -31,7 +31,7 @@ namespace TagsCloud.TagsCloudVisualization
                 var fontSize = GetFontSize(maxFrequency, minFrequency, item.Value);
                 var size = TextRenderer.MeasureText(item.Key, new Font(fontFamily, fontSize));
                 var posRectangle = cloud.PutNextRectangle(size);
-                tags.Add(new Tag(posRectangle, item.Key, fontSize));
+                tags.Add(new Tag(posRectangle, item.Key, fontSize, item.Value));
             }
             return tags;
         }

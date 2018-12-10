@@ -15,11 +15,14 @@ namespace TagsCloud.TagsCloudVisualization
 
         public readonly int FontSize;
 
-        public Tag(Rectangle posRectangle, string word, int fontSize)
+        public readonly int Frequency;
+
+        public Tag(Rectangle posRectangle, string word, int fontSize, int frequency)
         {
             PosRectangle = posRectangle;
             Word = word;
             FontSize = fontSize;
+            Frequency = frequency;
         }
     }
 }

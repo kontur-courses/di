@@ -56,7 +56,7 @@ namespace TagsCloud.WordPrework
 
         public Dictionary<string, int> GetWordFrequency(HashSet<PartOfSpeech> newBoringPartOfSpeech = null)
         {
-            if (newBoringPartOfSpeech == null)
+            if (newBoringPartOfSpeech == null || newBoringPartOfSpeech.Count == 0)
                 newBoringPartOfSpeech = standartBoringPartsOfSpeech;
             var result = new Dictionary<string, int>();
             foreach (var item in WordsFrequency)
