@@ -47,9 +47,10 @@ namespace TagCloudCreator
                     .WithArgument("backgroundColor", configuration.BackgroundColor)
                     .WithArgument("imageSize", configuration.ImageSize),
                 GetRegistration<IWordProcessor, InfinitiveCastProcessor>()
-                    .WithArgument("affixFileData", @"D:\Github Repositories\di\TagCloud\Dictionaries\Russian\ru_RU.aff")
+                    .WithArgument("affixFileData",
+                        @"D:\GitRepositories\di\TagCloud\Dictionaries\Russian\ru_RU.aff")
                     .WithArgument("dictionaryFileData",
-                        @"D:\Github Repositories\di\TagCloud\Dictionaries\Russian\ru_RU.dic"),
+                        @"D:\GitRepositories\di\TagCloud\Dictionaries\Russian\ru_RU.dic"),
                 GetRegistration<IStatisticsCollector, StatisticsCollector>(),
                 GetRegistration<IImageSaver, ImageSaver>(),
                 GetRegistration<IFileReader, FileReader>(),

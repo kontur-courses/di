@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{64A17BDF-3665-4286-AE3C-C4DEB6E2DBD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloudCreator\TagCloudCreator.csproj", "{1AB817EF-F034-46CF-8F57-C13616AA338C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Cli", "TagCloud.Cli\TagCloud.Cli.csproj", "{1AB817EF-F034-46CF-8F57-C13616AA338C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
