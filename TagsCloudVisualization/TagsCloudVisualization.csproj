@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISaver.cs" />
-    <Compile Include="BitmapSaver.cs" />
+    <Compile Include="CloudSaver.cs" />
     <Compile Include="Infrastructure\DIBuilder.cs" />
     <Compile Include="Infrastructure\FontSettings.cs" />
     <Compile Include="Infrastructure\Palette.cs" />

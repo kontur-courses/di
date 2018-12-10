@@ -20,11 +20,11 @@ namespace TagsCloudVisualization.Infrastructure
             container = BuildContainer();
         }
 
-        public IVisualizer Resolve()
+        public ISaver<Bitmap> Resolve()
         {
             using (var scope = container.BeginLifetimeScope())
             {
-               return scope.Resolve<IVisualizer>();
+               return scope.Resolve<ISaver<Bitmap>>();
             }
         }
 

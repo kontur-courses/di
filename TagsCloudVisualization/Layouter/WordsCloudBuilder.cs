@@ -9,16 +9,18 @@ namespace TagsCloudVisualization.Layouter
     {
         private readonly ICloudLayouter layouter;
         private readonly ISizeConverter sizeConverter;
+        private readonly IWeighter weighter;
 
-        public WordsCloudBuilder(ICloudLayouter layouter, ISizeConverter sizeConverter)
+        public WordsCloudBuilder(ICloudLayouter layouter, ISizeConverter sizeConverter, IWeighter weighter)
         {
             this.layouter = layouter;
             this.sizeConverter = sizeConverter;
+            this.weighter = weighter;
         }
 
         public IEnumerable<Word> Build()
         {
-            return sizeConverter.Convert().Select(PutNextWord);
+            return sizeConverter.Convert(weighter.WeightWords()).Select(PutNextWord);
         }
 
         private Word PutNextWord(SizedWord sizedWord)

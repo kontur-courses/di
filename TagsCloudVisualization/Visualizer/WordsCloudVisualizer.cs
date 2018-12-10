@@ -18,7 +18,7 @@ namespace TagsCloudVisualization.Visualizer
             this.pictureSize = pictureSize;
             this.wordsCloudBuilder = wordsCloudBuilder;
         }
-        public ISaver Draw()
+        public Bitmap Draw()
         {
             var words = wordsCloudBuilder.Build();
             var bmp = new Bitmap(pictureSize.Width, pictureSize.Height);
@@ -28,7 +28,7 @@ namespace TagsCloudVisualization.Visualizer
                 foreach (var word in words)
                     g.DrawString(word.Text, word.Font, wordsColor, word.Rectangle.ShiftRectangleToBitMapCenter(bmp));
             }
-            return new BitmapSaver(bmp);
+            return bmp;
         }
     }
 }

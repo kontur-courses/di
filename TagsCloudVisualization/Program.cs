@@ -50,7 +50,7 @@ namespace TagsCloudVisualization
 
         private static int RunAndReturnExitCode(Options options)
         {
-            new DIBuilder(options).Resolve().Draw().Save(options.OutFilename);
+            new DIBuilder(options).Resolve().Save(options.OutFilename);
             return 0;
         }
     }

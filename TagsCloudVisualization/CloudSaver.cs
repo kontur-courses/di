@@ -4,16 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization
 {
-    public class BitmapSaver : ISaver
+    public class CloudSaver : ISaver<Bitmap>
     {
         private readonly Bitmap bitmapFile;
 
-        public BitmapSaver(Bitmap bitmapFile)
+        public CloudSaver(IVisualizer visualizer)
         {
-            this.bitmapFile = bitmapFile;
+            this.bitmapFile = visualizer.Draw();
         }
 
         public void Save(string filename)

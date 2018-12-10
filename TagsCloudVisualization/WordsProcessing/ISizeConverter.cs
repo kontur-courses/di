@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.WordsProcessing
 {
     public interface ISizeConverter
     {
-        IEnumerable<SizedWord> Convert();
+        IEnumerable<SizedWord> Convert(IEnumerable<WeightedWord> weightedWords);
     }
 }
