@@ -1,14 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
+using System.Linq;
+using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     public class CircularCloudLayouter : ITagsCloudLayouter
     {
         public ITagsCloud TagsCloud { get; set; }
 
         private readonly IEnumerator<Point> geometryEnumerator;
+
+        public CircularCloudLayouter(TagsCloudLayouterSettings settings)
+        {
+            TagsCloud = new TagsCloud(settings.Center);
+            const double coefficients = 0.5;
+            const double spiralStep = 0.05;
+            var geometryObject = new ArchimedeanSpiral(settings.Center, coefficients, spiralStep);
+            geometryEnumerator = geometryObject.GetEnumerator();
+        }
 
         public CircularCloudLayouter(Point center)
         {
@@ -35,25 +45,7 @@ namespace TagsCloudVisualization
             return currentRectangle;
         }
 
-        /*public TagsCloudWord PutNextWord(string word, Size wordSize)
-        {
-            var currentRectangle = new Rectangle
-                (TagsCloud.Center.X, TagsCloud.Center.Y, wordSize.Width, wordSize.Height);
-
-            while (RectanglesAreIntersecting(currentRectangle))
-            {
-                var currentPoint = GetNextPoint();
-                currentRectangle = new Rectangle
-                    (currentPoint.X, currentPoint.Y, wordSize.Width, wordSize.Height);
-            }
-
-            var tagsCloudWord = new TagsCloudWord(word, currentRectangle);
-            TagsCloud.AddWord(tagsCloudWord);
-            TagsCloud.AddRectangle(currentRectangle);
-            return tagsCloudWord;
-        }*/
-
-      
+       
 
 
         private Point GetNextPoint()
@@ -67,4 +59,7 @@ namespace TagsCloudVisualization
             return TagsCloud.AddedRectangles.Any(rect => rect.IntersectsWith(rectangle));
         }
     }
+    
+
+   
 }

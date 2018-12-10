@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization;
 using Autofac;
 using Autofac.Core;
+using FluentAssertions;
+using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer
 {
@@ -11,51 +12,39 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var cb = new ContainerBuilder();
-            cb.RegisterType<CLI>().As<IUI>().WithParameter("args", args);
-            var ui = cb.Build().Resolve<IUI>();
-            var words = ReadWords(ui.InputPath);
-            var cloud = CreateCloud(words, ui.BlacklistPath, ui.TagsCloudCenter, ui.LetterSize);
-            RenderCloud(ui.OutputPath, cloud, FontFamily.GenericMonospace, ui.TextColor, ui.ImageSize);
-        }
-
-
-        public static List<string> ReadWords(string inputPath)
-        {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<TxtWordsReader>().As<IWordsReader>();
-            var parser = containerBuilder.Build().Resolve<IWordsReader>();
-            return parser.ReadWords(inputPath);
-        }
+            containerBuilder.RegisterType<CLI>().As<IUI>().WithParameter("args", args).SingleInstance();
+            containerBuilder.RegisterType<TxtWordsReader>().As<IWordsReader>().SingleInstance();
 
-        public static ITagsCloud CreateCloud(List<string> words, string blacklistPath, Point center, Size minLetterSize)
-        {
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<BlacklistWordsFilter>().As<IWordsFilter>().WithParameter
-                ("blacklistPath", blacklistPath);
+            containerBuilder.RegisterType<BlackListFilterSettings>().AsSelf();
+
+            containerBuilder.RegisterType<BlacklistWordsFilter>().As<IWordsFilter>().SingleInstance()
+                .UsingConstructor(typeof(BlackListFilterSettings));
+
             containerBuilder.RegisterType<ToLowerCaseFormatter>().As<IWordsFormatter>();
-            containerBuilder.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>()
-                .WithParameter("center", center);
+            containerBuilder.RegisterType<FrequencyWordsWeighter>().As<IWordsWeighter>().SingleInstance();
+
+            containerBuilder.RegisterType<TagsCloudGeneratorSettings>()
+                .UsingConstructor
+                (typeof(IUI), typeof(IWordsFormatter), typeof(IWordsFilter), typeof(ITagsCloudLayouter),
+                    typeof(IWordsWeighter))
+                .SingleInstance();
             containerBuilder.RegisterType<TagsCloudGenerator>().AsSelf()
-                .WithParameter("minLetterSize", minLetterSize);
-            var generator = containerBuilder.Build().Resolve<TagsCloudGenerator>();
-            return generator.CreateCloud(words);
-        }
+                .UsingConstructor(typeof(TagsCloudGeneratorSettings)).SingleInstance();
 
-        private static void RenderCloud
-            (string outputPath, ITagsCloud cloud, FontFamily fontFamily, Color textColor, Size pictureSize)
-        {
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<ImageSettings>().AsSelf().WithParameters(new List<Parameter>()
-            {
-                new NamedParameter("fontFamily", fontFamily),
-                new NamedParameter("textColor", textColor),
-                new NamedParameter("pictureSize", pictureSize)
-            }).SingleInstance();
+            containerBuilder.RegisterType<TagsCloudLayouterSettings>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>()
+                .UsingConstructor(typeof(TagsCloudLayouterSettings)).SingleInstance();
 
-            containerBuilder.RegisterType<PNGTagsCloudRenderer>().As<ITagsCloudRenderer>();
-            var renderer = containerBuilder.Build().Resolve<ITagsCloudRenderer>();
-            renderer.RenderIntoFile(outputPath, cloud);
+
+            containerBuilder.RegisterType<ImageSettings>().AsSelf().UsingConstructor(typeof(IUI)).SingleInstance();
+
+            containerBuilder.RegisterType<PNGTagsCloudRenderer>().As<ITagsCloudRenderer>()
+                .UsingConstructor(typeof(ImageSettings)).SingleInstance();
+            containerBuilder.RegisterType<TagsCloudContainerApplication>().AsSelf().SingleInstance();
+            var containerApplication = containerBuilder.Build();
+            var app = containerApplication.Resolve<TagsCloudContainerApplication>();
+            app.Run();
         }
     }
 }

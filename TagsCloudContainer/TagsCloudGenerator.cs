@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization;
+using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer
 {
@@ -11,21 +11,22 @@ namespace TagsCloudContainer
         private readonly IWordsFormatter wordsFormatter;
         private readonly IWordsFilter wordsFilter;
         private readonly ITagsCloudLayouter layouter;
+        private readonly IWordsWeighter wordsWeighter;
 
-        public TagsCloudGenerator(Size minLetterSize, IWordsFilter wordsFilter, IWordsFormatter wordsFormatter,
-            ITagsCloudLayouter layouter)
+        public TagsCloudGenerator(TagsCloudGeneratorSettings settings)
         {
-            this.minLetterSize = minLetterSize;
-            this.wordsFilter = wordsFilter;
-            this.wordsFormatter = wordsFormatter;
-            this.layouter = layouter;
+            minLetterSize = settings.LetterSize;
+            wordsFilter = settings.WordsFilter;
+            wordsFormatter = settings.WordsFormatter;
+            layouter = settings.TagsCloudLayouter;
+            wordsWeighter = settings.WordsWeighter;
         }
 
         public ITagsCloud CreateCloud(List<string> words)
         {
-            words = words.Select(wordsFormatter.Format).Where(wordsFilter.Filter).ToList();
-            var frequencies = GetWordsFrequencies(words);
-            var wordsSizes = GetWordsSizes(frequencies);
+            words = words.Select(wordsFormatter.Format).ToList();
+            words = wordsFilter.Filter(words).ToList();
+            var wordsSizes = wordsWeighter.GetWordsSizes(words, minLetterSize);
 
             foreach (var pair in wordsSizes)
             {
@@ -34,37 +35,6 @@ namespace TagsCloudContainer
             }
 
             return layouter.TagsCloud;
-        }
-
-
-        private Dictionary<string, int> GetWordsFrequencies(List<string> words)
-        {
-            var frequencies = new Dictionary<string, int>();
-            foreach (var word in words)
-            {
-                if (frequencies.ContainsKey(word))
-                    frequencies[word]++;
-                else
-                {
-                    frequencies[word] = 1;
-                }
-            }
-
-            return frequencies;
-        }
-
-        private Dictionary<string, Size> GetWordsSizes(Dictionary<string, int> frequencies)
-        {
-            var wordsSizes = new Dictionary<string, Size>();
-            foreach (var pair in frequencies)
-            {
-                var word = pair.Key;
-                var frequency = pair.Value;
-                wordsSizes[word] = new Size(minLetterSize.Width * frequency * word.Length,
-                    minLetterSize.Height * frequency);
-            }
-
-            return wordsSizes;
         }
     }
 }

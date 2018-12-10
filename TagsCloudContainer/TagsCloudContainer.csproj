@@ -71,11 +71,20 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CLI.cs" />
+    <Compile Include="BlackListFilterSettings.cs" />
+    <Compile Include="ITagsCloud.cs" />
     <Compile Include="IUI.cs" />
     <Compile Include="IWordsReader.cs" />
     <Compile Include="IWordsFilter.cs" />
     <Compile Include="IWordsFormatter.cs" />
+    <Compile Include="FrequencyWordsWeighter.cs" />
+    <Compile Include="IWordsWeighter.cs" />
+    <Compile Include="TagsCloud.cs" />
+    <Compile Include="TagsCloudGeneratorSettings.cs" />
+    <Compile Include="TagsCloudContainerApplication.cs" />
+    <Compile Include="TagsCloudLayouterSettings.cs" />
     <Compile Include="Tests\TagsCloudGeneratorTests.cs" />
     <Compile Include="TxtWordsReader.cs" />
     <Compile Include="Program.cs" />
@@ -83,12 +92,12 @@
     <Compile Include="TagsCloudGenerator.cs" />
     <Compile Include="BlacklistWordsFilter.cs" />
     <Compile Include="ToLowerCaseFormatter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
-      <Project>{85bb8ed3-0341-4444-8f63-d7f5fd2ff8d6}</Project>
-      <Name>TagsCloudVisualization</Name>
-    </ProjectReference>
+    <Compile Include="Visualisation\ArchimedeanSpiral.cs" />
+    <Compile Include="Visualisation\ImageSettings.cs" />
+    <Compile Include="Visualisation\ITagsCloudLayouter.cs" />
+    <Compile Include="Visualisation\ITagsCloudRenderer.cs" />
+    <Compile Include="Visualisation\PNGTagsCloudRenderer.cs" />
+    <Compile Include="Visualisation\TagsCloudWord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer.Visualisation
 {
     public class PNGTagsCloudRenderer : ITagsCloudRenderer
     {
@@ -15,7 +14,7 @@ namespace TagsCloudVisualization
 
         public PNGTagsCloudRenderer(ImageSettings imageSettings)
         {
-            pictureSize = imageSettings.PictureSize;
+            pictureSize = imageSettings.ImageSize;
             textColor = imageSettings.TextColor;
             fontFamily = imageSettings.FontFamily;
         }

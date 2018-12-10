@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer.Visualisation
 {
     public class ArchimedeanSpiral : IEnumerable<Point>
     {

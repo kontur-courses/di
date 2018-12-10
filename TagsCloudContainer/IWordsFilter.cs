@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace TagsCloudContainer
 {
     public interface IWordsFilter
     {
-        bool Filter(string word);
+        List<string> Filter(List<string> words);
     }
 }

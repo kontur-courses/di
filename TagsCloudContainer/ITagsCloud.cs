@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     public interface ITagsCloud
     {

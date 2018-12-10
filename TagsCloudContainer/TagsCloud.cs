@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     public class TagsCloud : ITagsCloud
     {
