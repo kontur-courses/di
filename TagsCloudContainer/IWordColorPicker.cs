@@ -7,6 +7,8 @@ namespace TagsCloudContainer
     {
         Dictionary<string, Color> PickColors(List<(string word, int count)> words);
 
-        Color BackgroundColor { get; }
+        void SetBaseWordColor(Color color);
+
+        void SetBackgroundColor(Color color);
     }
 }

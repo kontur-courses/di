@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStemAdapter.Tests", "MySt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudConsoleClient", "TagCloudConsoleClient\TagCloudConsoleClient.csproj", "{D56BCA2A-F90C-4655-B6E8-DF3EF83A874E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F0DDA0E-575F-431B-85F1-7677BFDE8A3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D56BCA2A-F90C-4655-B6E8-DF3EF83A874E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D56BCA2A-F90C-4655-B6E8-DF3EF83A874E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D56BCA2A-F90C-4655-B6E8-DF3EF83A874E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D56BCA2A-F90C-4655-B6E8-DF3EF83A874E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
