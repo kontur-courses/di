@@ -104,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="Dictionaries\Russian\ru_RU.aff" />
+    <EmbeddedResource Include="Dictionaries\Russian\ru_RU.dic" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

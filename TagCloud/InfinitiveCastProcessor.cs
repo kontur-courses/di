@@ -9,7 +9,7 @@ namespace TagCloud
     {
         private readonly Hunspell hunspell;
 
-        public InfinitiveCastProcessor(string affixFileData, string dictionaryFileData)
+        public InfinitiveCastProcessor(byte[] affixFileData, byte[] dictionaryFileData)
         {
             hunspell = new Hunspell(affixFileData, dictionaryFileData);
         }

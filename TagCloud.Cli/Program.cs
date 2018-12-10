@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using CommandLine;
@@ -21,7 +25,20 @@ namespace TagCloudCreator
             var configuration = ParseArguments(args);
             var container = MakeContainer(configuration);
             var app = container.Resolve<Application>();
-            app.Run(@"D:\input.txt", @"D:\output.png");
+            app.Run(configuration.InputFile, configuration.OutputFile);
+        }
+
+        public static byte[] ReadEmbeddedFile(string resourceName)
+        {
+            byte[] result;
+            var assembly = Assembly.GetExecutingAssembly();
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            using (var reader = new StreamReader(stream))
+            {
+                result = Encoding.ASCII.GetBytes(reader.ReadToEnd());
+            }
+
+            return result;
         }
 
         public static IDictionary<Enum, Type> CollectCapabilities()
@@ -47,10 +64,10 @@ namespace TagCloudCreator
                     .WithArgument("backgroundColor", configuration.BackgroundColor)
                     .WithArgument("imageSize", configuration.ImageSize),
                 GetRegistration<IWordProcessor, InfinitiveCastProcessor>()
-                    .WithArgument("affixFileData",
-                        @"D:\GitRepositories\di\TagCloud\Dictionaries\Russian\ru_RU.aff")
+                    .WithArgument("affixFileData", 
+                        ReadEmbeddedFile("TagCloudCreator.Dictionaries.Russian.ru_RU.aff"))
                     .WithArgument("dictionaryFileData",
-                        @"D:\GitRepositories\di\TagCloud\Dictionaries\Russian\ru_RU.dic"),
+                       ReadEmbeddedFile("TagCloudCreator.Dictionaries.Russian.ru_RU.dic")),
                 GetRegistration<IStatisticsCollector, StatisticsCollector>(),
                 GetRegistration<IImageSaver, ImageSaver>(),
                 GetRegistration<IFileReader, FileReader>(),

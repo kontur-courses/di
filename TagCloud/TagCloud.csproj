@@ -87,8 +87,6 @@
     <Compile Include="WordFilterByFile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dictionaries\Russian\ru_RU.aff" />
-    <None Include="Dictionaries\Russian\ru_RU.dic" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
