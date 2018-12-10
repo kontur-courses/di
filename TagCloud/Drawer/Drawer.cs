@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.ColorPicker;
 using TagCloud.Data;
 
 namespace TagCloud.Drawer
@@ -11,7 +12,14 @@ namespace TagCloud.Drawer
         private const int SideShift = 10;
         private const int MaximumSize = 4000;
 
-        public Bitmap CreateImage(IEnumerable<WordImageInfo> infos, Brush wordsBrush, Brush backgroundBrush)
+        private readonly IColorPicker colorPicker;
+
+        public Drawer(IColorPicker colorPicker)
+        {
+            this.colorPicker = colorPicker;
+        }
+
+        public Bitmap CreateImage(IEnumerable<WordImageInfo> infos, Color wordsColor, Color backgroundColor)
         {
             var imageInfos = infos as WordImageInfo[] ?? infos.ToArray();
             var rectangles = imageInfos.Select(info => info.Rectangle).ToArray();
@@ -20,10 +28,10 @@ namespace TagCloud.Drawer
 
             using (var graphics = Graphics.FromImage(image))
             {
-                FillBitmap(backgroundBrush, graphics, image);
+                FillBitmap(new SolidBrush(backgroundColor), graphics, image);
                 MoveGraphicsToCenter(graphics, rectangles);
                 foreach (var info in imageInfos)
-                    graphics.DrawString(info.Word, info.Font, wordsBrush, info.Rectangle);
+                    graphics.DrawString(info.Word, info.Font, new SolidBrush(colorPicker.AdjustColor(wordsColor, info.Occurrences)), info.Rectangle);
             }
 
             return image;

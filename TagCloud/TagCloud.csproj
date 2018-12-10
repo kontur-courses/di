@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorPicker\ColorPicker.cs" />
+    <Compile Include="ColorPicker\IColorPicker.cs" />
     <Compile Include="Counter\IWordsCounter.cs" />
     <Compile Include="Counter\WordsCounter.cs" />
     <Compile Include="Data\Arguments.cs" />

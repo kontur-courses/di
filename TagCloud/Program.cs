@@ -19,11 +19,12 @@ namespace TagCloud
             $"USAGE: {AppDomain.CurrentDomain.FriendlyName} -w WordsFile -b BoringWordsFile -i ResultImageName " +
             "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily]\n";
 
-        private static readonly Dictionary<string, Brush> BrushesByName = typeof(Brushes)
+        private static readonly Dictionary<string, Color> BrushesByName = typeof(Color)
             .GetProperties()
+            .Where(color => color.PropertyType == typeof(Color))
             .ToDictionary(
                 propertyInfo => propertyInfo.Name,
-                propertyInfo => (Brush)propertyInfo.GetValue(null, null));
+                propertyInfo => (Color) propertyInfo.GetValue(null, null));
 
         public static void Main(string[] args)
         {
@@ -57,12 +58,12 @@ namespace TagCloud
             var result = parser.Parse(args);
 
             if (TryGetBrush(textBrushName, out var textBrush))
-                newArguments.WordsBrush = textBrush;
+                newArguments.WordsColor = textBrush;
             else
                 return false;
 
             if (TryGetBrush(backgroundBrushName, out var backgroundBrush))
-                newArguments.BackgroundBrush = backgroundBrush;
+                newArguments.BackgroundColor = backgroundBrush;
             else
                 return false;
 
@@ -77,9 +78,9 @@ namespace TagCloud
             return true;
         }
 
-        private static bool TryGetBrush(string textBrushName, out Brush brush)
+        private static bool TryGetBrush(string textBrushName, out Color brush)
         {
-            brush = null;
+            brush = new Color();
             if (BrushesByName.TryGetValue(textBrushName, out var backgroundBrush))
             {
                 brush = backgroundBrush;

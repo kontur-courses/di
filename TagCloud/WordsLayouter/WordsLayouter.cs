@@ -22,7 +22,7 @@ namespace TagCloud.WordsLayouter
                 var font = new Font(fontFamily, wordInfo.Occurrences * fontMultiplier);
                 var size = TextRenderer.MeasureText(wordInfo.Word, font);
                 var rectangle = rectangleLayouter.PutNextRectangle(size);
-                yield return new WordImageInfo(wordInfo.Word, font, rectangle);
+                yield return new WordImageInfo(wordInfo.Word, font, rectangle, wordInfo.Occurrences);
             }
         }
     }

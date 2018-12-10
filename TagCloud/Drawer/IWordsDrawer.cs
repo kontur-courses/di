@@ -6,6 +6,6 @@ namespace TagCloud.Drawer
 {
     public interface IWordsDrawer
     {
-        Bitmap CreateImage(IEnumerable<WordImageInfo> infos, Brush wordsBrush, Brush backgroundBrush);
+        Bitmap CreateImage(IEnumerable<WordImageInfo> infos, Color wordsColor, Color backgroundColor);
     }
 }

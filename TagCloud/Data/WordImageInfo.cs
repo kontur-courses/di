@@ -7,12 +7,14 @@ namespace TagCloud.Data
         public readonly string Word;
         public readonly Font Font;
         public readonly Rectangle Rectangle;
+        public readonly int Occurrences;
 
-        public WordImageInfo(string word, Font font, Rectangle rectangle)
+        public WordImageInfo(string word, Font font, Rectangle rectangle, int occurrences)
         {
             Word = word;
             Font = font;
             Rectangle = rectangle;
+            Occurrences = occurrences;
         }
     }
 }

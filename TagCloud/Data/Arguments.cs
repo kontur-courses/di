@@ -8,8 +8,8 @@ namespace TagCloud.Data
         public string BoringWordsFileName;
         public string ImageFileName;
         public int Multiplier = 10;
-        public Brush WordsBrush = Brushes.Black;
-        public Brush BackgroundBrush = Brushes.White;
+        public Color WordsColor = Color.Black;
+        public Color BackgroundColor = Color.White;
         public FontFamily FontFamily = FontFamily.GenericMonospace;
     }
 }

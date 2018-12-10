@@ -49,7 +49,7 @@ namespace TagCloud
 
             var wordInfos = counter.Count(validator.Validate(processor.Process(words), boringWords));
             var layout = wordsLayouter.GenerateLayout(wordInfos, arguments.FontFamily, arguments.Multiplier);
-            var image = wordsDrawer.CreateImage(layout, arguments.WordsBrush, arguments.BackgroundBrush);
+            var image = wordsDrawer.CreateImage(layout, arguments.WordsColor, arguments.BackgroundColor);
             saver.Save(image, arguments.ImageFileName);
         }
     }
