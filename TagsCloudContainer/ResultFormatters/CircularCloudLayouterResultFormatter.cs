@@ -1,29 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using TagsCloudContainer.DataProviders;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.ResultFormatters
 {
     public class CircularCloudLayouterResultFormatter : IResultFormatter
     {
-        public IReadOnlyDictionary<string, (Rectangle, int)> Rectangles { get; set; }
+        private readonly IDataProvider dataProvider;
+        private readonly ICloudSettings cloudSettings;
+        private readonly IFontSettings fontSettings;
 
-        public CircularCloudLayouterResultFormatter(IDataProvider dataProvider)
+        public CircularCloudLayouterResultFormatter(IDataProvider dataProvider, ICloudSettings cloudSettings,
+            IFontSettings fontSettings)
         {
-            Rectangles = dataProvider.GetData();
+            this.dataProvider = dataProvider;
+            this.cloudSettings = cloudSettings;
+            this.fontSettings = fontSettings;
         }
-        public void GenerateResult(Size size, FontFamily fontFamily, Brush brush, string outputFileName)
+        public void GenerateResult(string outputFileName)
         {
-            using (var bitmap = new Bitmap(size.Width, size.Height))
+            using (var bitmap = new Bitmap(cloudSettings.Size.Width, cloudSettings.Size.Height))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
-                    foreach (var entry in Rectangles)
+                    foreach (var entry in dataProvider.GetData())
                     {
-                        var font = new Font(fontFamily, 10);
+                        var font = new Font(fontSettings.FontFamily, 10);
                         var generatedFont = GetFont(graphics, entry.Key, entry.Value.Item1.Size, font);
 
-                        graphics.DrawString(entry.Key, generatedFont, brush, entry.Value.Item1);
+                        graphics.DrawString(entry.Key, generatedFont, fontSettings.Brush, entry.Value.Item1);
 
                     }
                     bitmap.Save(outputFileName);

@@ -36,6 +36,9 @@
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
       <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
     </Reference>
@@ -55,6 +58,7 @@
     <Compile Include="Algorithms\ISpiral.cs" />
     <Compile Include="DataProviders\DataProvider.cs" />
     <Compile Include="DataProviders\IDataProvider.cs" />
+    <Compile Include="Ioc.cs" />
     <Compile Include="ResultFormatters\CircularCloudLayouterResultFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +68,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResultFormatters\IResultFormatter.cs" />
+    <Compile Include="Settings\DefaultCloudSettings.cs" />
+    <Compile Include="Settings\DefaultSourceFileSettings.cs" />
+    <Compile Include="Settings\DefaultFontSettings.cs" />
+    <Compile Include="Settings\ICloudSettings.cs" />
+    <Compile Include="Settings\IFontSettings.cs" />
+    <Compile Include="Settings\ISourceFileSettings.cs" />
     <Compile Include="SourceTextReaders\ISourceTextReader.cs" />
     <Compile Include="SourceTextReaders\TxtSourceTextReader.cs" />
     <Compile Include="Algorithms\ArchimedeanSpiral.cs" />

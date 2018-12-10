@@ -1,19 +1,20 @@
 ﻿using System.IO;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.SourceTextReaders
 {
     public class TxtSourceTextReader : ISourceTextReader
     {
-        private readonly string filePath;
+        private readonly ISourceFileSettings settings;
 
-        public TxtSourceTextReader(string filePath)
+        public TxtSourceTextReader(ISourceFileSettings settings)
         {
-            this.filePath = filePath;
+            this.settings = settings;
         }
         
         public string[] ReadText()
         {
-            return File.ReadAllLines(filePath);
+            return File.ReadAllLines(settings.FilePath);
         }
     }
 }

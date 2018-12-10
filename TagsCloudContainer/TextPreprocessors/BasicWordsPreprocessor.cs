@@ -2,16 +2,17 @@
 using System.IO;
 using System.Linq;
 using NHunspell;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.TextPreprocessors
 {
     public class BasicWordsPreprocessor : IWordsPreprocessor
     {
-        private readonly IEnumerable<string> wordsToBeExcluded;
+        private readonly ICloudSettings settings;
 
-        public BasicWordsPreprocessor(IEnumerable<string> wordsToBeExcluded)
+        public BasicWordsPreprocessor(ICloudSettings settings)
         {
-            this.wordsToBeExcluded = wordsToBeExcluded;
+            this.settings = settings;
         }
         public IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words)
         {
@@ -49,8 +50,8 @@ namespace TagsCloudContainer.TextPreprocessors
                 result[word] = count + 1;
             }
             
-            if (wordsToBeExcluded != null)
-                foreach (var word in wordsToBeExcluded)
+            if (settings.WordsToBeExcluded!= null)
+                foreach (var word in settings.WordsToBeExcluded)
                     result.Remove(word);
 
             return result;

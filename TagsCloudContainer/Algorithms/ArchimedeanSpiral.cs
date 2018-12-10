@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Algorithms
 {
     public class ArchimedeanSpiral : ISpiral
     {
-        private readonly Point center;
+        private readonly ICloudSettings cloudSettings;
         private double spiralAngle;
 
-        public ArchimedeanSpiral(Point center)
+        public ArchimedeanSpiral(ICloudSettings cloudSettings)
         {
-            this.center = center;
+            this.cloudSettings = cloudSettings;
         }
 
         public Point GetNextPoint()
         {
-            var x = center.X + (int)(spiralAngle * Math.Cos(spiralAngle));
-            var y = center.Y + (int)(spiralAngle * Math.Sin(spiralAngle));
+            var x = cloudSettings.CenterPoint.X + (int)(spiralAngle * Math.Cos(spiralAngle));
+            var y = cloudSettings.CenterPoint.Y + (int)(spiralAngle * Math.Sin(spiralAngle));
 
             spiralAngle++;
 

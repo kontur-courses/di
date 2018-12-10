@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Algorithms
 {
     public class CircularCloudAlgorithm : IAlgorithm
     {
-        public Point Center { get; }
         private readonly List<Rectangle> rectangles;
+        private readonly ICloudSettings cloudSettings;
         private readonly ISpiral spiral;
 
-        public CircularCloudAlgorithm(Point center, ISpiral spiral)
+        public CircularCloudAlgorithm(ICloudSettings cloudSettings, ISpiral spiral)
         {
-            Center = center;
+            
             rectangles = new List<Rectangle>();
+            this.cloudSettings = cloudSettings;
             this.spiral = spiral;
         }
 
@@ -28,7 +30,7 @@ namespace TagsCloudContainer.Algorithms
             if (!rectangles.Any())
             {
                 var firstRectangleLocation
-                    = new Point(Center.X - rectangleSize.Width / 2, Center.Y - rectangleSize.Height / 2);
+                    = new Point(cloudSettings.CenterPoint.X - rectangleSize.Width / 2, cloudSettings.CenterPoint.Y - rectangleSize.Height / 2);
                 var firstRectangle = new Rectangle(firstRectangleLocation, rectangleSize);
                 rectangles.Add(firstRectangle);
                 return firstRectangle;
@@ -58,7 +60,7 @@ namespace TagsCloudContainer.Algorithms
 
             var relativeWeightsSum = wordsList.Sum(e => e.Value);
 
-            var relativeWeightUnit = (double)relativeWeightsSum / Center.X * 2;
+            var relativeWeightUnit = (double)relativeWeightsSum / cloudSettings.CenterPoint.X * 2;
 
             foreach (var word in wordsList)
             {
@@ -83,13 +85,13 @@ namespace TagsCloudContainer.Algorithms
             {
                 var result = rectangle;
 
-                if (GetRectangleCenter(rectangle).Y > Center.Y)
+                if (GetRectangleCenter(rectangle).Y > cloudSettings.CenterPoint.Y)
                     rectangle.Y--;
 
-                if (GetRectangleCenter(rectangle).Y < Center.Y)
+                if (GetRectangleCenter(rectangle).Y < cloudSettings.CenterPoint.Y)
                     rectangle.Y++;
 
-                if (GetRectangleCenter(rectangle).Y == Center.Y || rectangles.Any(e => e.IntersectsWith(rectangle)))
+                if (GetRectangleCenter(rectangle).Y == cloudSettings.CenterPoint.Y || rectangles.Any(e => e.IntersectsWith(rectangle)))
                     return result;
             }
         }
@@ -99,13 +101,13 @@ namespace TagsCloudContainer.Algorithms
             {
                 var result = rectangle;
 
-                if (GetRectangleCenter(rectangle).X > Center.X)
+                if (GetRectangleCenter(rectangle).X > cloudSettings.CenterPoint.X)
                     rectangle.X--;
 
-                if (GetRectangleCenter(rectangle).X < Center.X)
+                if (GetRectangleCenter(rectangle).X < cloudSettings.CenterPoint.X)
                     rectangle.X++;
 
-                if (GetRectangleCenter(rectangle).X == Center.X || rectangles.Any(e => e.IntersectsWith(rectangle)))
+                if (GetRectangleCenter(rectangle).X == cloudSettings.CenterPoint.X || rectangles.Any(e => e.IntersectsWith(rectangle)))
                     return result;
             }
         }
