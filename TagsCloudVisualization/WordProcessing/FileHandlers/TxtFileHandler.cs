@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudVisualization.WordProcessing.FileHandlers
 {
-    public class TxtFileHandler : FileHandler
+    public class TxtFileHandler : IFileHandler
     {
         public string PathToFile { get; }
         public static readonly Regex Regex = new Regex("^.*\\.(txt)$");

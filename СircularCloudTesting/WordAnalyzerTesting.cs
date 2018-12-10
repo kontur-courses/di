@@ -9,19 +9,41 @@ namespace СircularCloudTesting
     [TestFixture]
     public class WordAnalyzerTesting
     {
-        [Test]
-        public void MakeWordFrequencyDictionary_Should_CreateDictionaryCorrectly()
+        private Dictionary<string, int> expectedResult;
+
+        [SetUp]
+        public void Init()
         {
-            var expectedResult = new Dictionary<string, int>
+            expectedResult = expectedResult = new Dictionary<string, int>
             {
-                {"вырезать",1 },
-                {"ракета",1 },
-                {"картон",1 },
-                {"строгий",1 },
-                {"тон",1 },{"вези",1 },{"меня",1 },
-                {"сидней",3 }
+                {"вырезать",1 },{"ракета",1 }, {"картон",1 },{"строгий",1 },
+                {"тон",1 }, {"произнёс",1},{"вези",1 },{"меня",1 }, {"сидней",3 }
             };
-            var wordAnalyzer = new WordAnalyzer(new WordsSettings() { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/RuDictionary/DefaultTags.txt" });
+        }
+
+        [Test]
+        public void MakeWordFrequencyDictionary_Should_ProcessDocFileCorrectly()
+        {
+            var wordAnalyzer = new WordAnalyzer(new WordsSettings()
+                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testDocFile.doc" });
+            var result = wordAnalyzer.MakeWordFrequencyDictionary();
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Test]
+        public void MakeWordFrequencyDictionary_Should_ProcessDocxFileCorrectly()
+        {
+            var wordAnalyzer = new WordAnalyzer(new WordsSettings()
+                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testDocxFile.docx" });
+            var result = wordAnalyzer.MakeWordFrequencyDictionary();
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Test]
+        public void MakeWordFrequencyDictionary_Should_ProcessTxtFileCorrectly()
+        {
+            var wordAnalyzer = new WordAnalyzer(new WordsSettings()
+                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testTxtFile.txt" });
             var result = wordAnalyzer.MakeWordFrequencyDictionary();
             result.Should().BeEquivalentTo(expectedResult);
         }

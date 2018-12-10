@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Code7248.word_reader;
+using Spire.Doc;
 
 namespace TagsCloudVisualization.WordProcessing.FileHandlers
 {
-    public class DocFileHandler : FileHandler
+    public class DocFileHandler : IFileHandler
     {
         public string PathToFile { get; }
         public static readonly Regex Regex = new Regex("^.*\\.(doc|docx)$");
@@ -16,9 +16,10 @@ namespace TagsCloudVisualization.WordProcessing.FileHandlers
         }
         public IEnumerable<string> ReadFile()
         {
-            var extractor = new TextExtractor(PathToFile);
-            var text = extractor.ExtractText();
-            return text.Split(new[] { "\r\n\r\n" }, StringSplitOptions.None);
+            var doc = new Document();
+            doc.LoadFromFile(PathToFile);
+            var text = doc.GetText();
+            return text.Split(new[] { "\r\n" }, StringSplitOptions.None);
         }
     }
 }

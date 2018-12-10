@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace TagsCloudVisualization.WordProcessing.FileHandlers
 {
-    public class DefaultFileHandler : FileHandler
+    public class DefaultFileHandler : IFileHandler
     {
         public string PathToFile { get; }
 

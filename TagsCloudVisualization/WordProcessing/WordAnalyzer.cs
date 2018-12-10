@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using NHunspell;
-using Code7248.word_reader;
 using TagsCloudVisualization.WordProcessing.FileHandlers;
 
 
@@ -39,7 +35,7 @@ namespace TagsCloudVisualization.WordProcessing
             return dictionary;
         }
 
-        private FileHandler RecognizeFileType(string pathToFile)
+        private IFileHandler RecognizeFileType(string pathToFile)
         {
             switch (pathToFile)
             {

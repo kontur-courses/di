@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.WordProcessing.FileHandlers
 {
-    public interface FileHandler
+    public interface IFileHandler
     {
         string PathToFile { get; }
         IEnumerable<string> ReadFile();
