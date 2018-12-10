@@ -57,7 +57,6 @@ namespace TagsCloudContainer.Painter
                         wordInfo.Rect);
                 }
             }
-            holder.UpdateUi();
         }
 
         private int GetBitmapSize(IEnumerable<Rectangle> rectangles, Point rectanglesCenter)

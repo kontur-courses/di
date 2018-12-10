@@ -16,13 +16,15 @@ namespace TagsCloudContainer.UI.Actions
         private readonly IFilePathProvider filePath;
         private readonly TagCloudPainter painter;
         private readonly LayouterApplicator infoGetter;
+        private readonly PictureBoxImageHolder imageHolder;
 
         public CloudDrawAction(IFileReader reader,
             WordsPreprocessor preprocessor,
             WordsPreprocessorSettings preprocessorSettings,
             IFilePathProvider filePath,
             TagCloudPainter painter,
-            LayouterApplicator infoGetter)
+            LayouterApplicator infoGetter,
+            PictureBoxImageHolder imageHolder)
         {
             this.reader = reader;
             this.preprocessor = preprocessor;
@@ -30,6 +32,7 @@ namespace TagsCloudContainer.UI.Actions
             this.filePath = filePath;
             this.painter = painter;
             this.infoGetter = infoGetter;
+            this.imageHolder = imageHolder;
         }
 
         public MenuCategory Category => MenuCategory.TagCloud;
@@ -55,6 +58,7 @@ namespace TagsCloudContainer.UI.Actions
             var processed = preprocessor.CountWordFrequencies(words);
             var wordInfos = infoGetter.GetWordsAndRectangles(processed);
             painter.Paint(infoGetter.WordsCenter, wordInfos);
+            imageHolder.UpdateUi();
         }
     }
 }

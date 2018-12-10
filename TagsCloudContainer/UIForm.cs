@@ -6,9 +6,9 @@ using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
 {
-    public class MainForm : Form
+    public class UIForm : Form
     {
-        public MainForm(IUiAction[] actions, PictureBoxImageHolder pictureBox, ImageSettings settings)
+        public UIForm(IUiAction[] actions, PictureBoxImageHolder pictureBox, ImageSettings settings)
         {
             ClientSize = new Size(settings.Width, settings.Height);
             var mainMenu = new MenuStrip();
