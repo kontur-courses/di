@@ -32,7 +32,7 @@ namespace TagsCloudConsole
             {
                 app.Run();
             }
-            catch (ArgumentException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -49,8 +49,8 @@ namespace TagsCloudConsole
             };
 
             var builder = new ContainerBuilder();
-            builder.RegisterType<TextFileReader>()
-                .As<IFileReader>();
+            builder.RegisterType<TextFileReader>().As<IFileReader>();
+            builder.RegisterType<JsonFileReader>().As<IFileReader>();
             builder.RegisterType<FileReaderSelector>().AsSelf();
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
