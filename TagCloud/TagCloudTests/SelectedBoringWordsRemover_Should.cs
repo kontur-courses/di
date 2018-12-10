@@ -2,16 +2,15 @@
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloudApp;
 using TagCloudCreation;
 using TagCloudVisualization;
 
-namespace TagCloudApp
+namespace TagCloudTests
 {
     [TestFixture]
     public class SelectedBoringWordsRemover_Should
     {
-        private SelectedBoringWordsRemover remover;
-
         [SetUp]
         public void SetUp()
         {
@@ -19,11 +18,11 @@ namespace TagCloudApp
             IEnumerable<string> _;
             A.CallTo(() => fake.TryReadWords(A<string>.Ignored, out _))
              .Returns(true)
-             .AssignsOutAndRefParameters(new List<string>(){"a"});
+             .AssignsOutAndRefParameters(new List<string> {"a"});
             remover = new SelectedBoringWordsRemover(fake);
-
-
         }
+
+        private SelectedBoringWordsRemover remover;
 
         [Test]
         public void ReturnNull_IfWordIsBoring()
@@ -32,6 +31,7 @@ namespace TagCloudApp
                    .Should()
                    .BeNull();
         }
+
         [Test]
         public void ReturnWord_IfWordIsNotBoring()
         {

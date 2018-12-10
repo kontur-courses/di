@@ -21,8 +21,6 @@ namespace TagCloudVisualization
                 angle += AngleDelta;
                 yield return Center + PolarCoordinatesToCartesian(K * angle, angle);
             }
-
-            // ReSharper disable once IteratorNeverReturns
         }
 
         private static Point PolarCoordinatesToCartesian(double distance, double angle)

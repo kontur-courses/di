@@ -2,8 +2,10 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloudVisualization;
+using Point = TagCloudVisualization.Point;
 
-namespace TagCloudVisualization
+namespace TagCloudTests
 {
     [TestFixture]
     public class RoundSpiralGenerator_Should

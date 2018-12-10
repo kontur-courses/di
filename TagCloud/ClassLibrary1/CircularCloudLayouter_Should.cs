@@ -7,8 +7,10 @@ using FluentAssertions;
 using FluentAssertions.Specialized;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagCloudVisualization;
+using MyPoint = TagCloudVisualization.Point;
 
-namespace TagCloudVisualization
+namespace TagCloudTests
 {
     [TestFixture]
     public class CircularCloudLayouter_Should
@@ -16,7 +18,7 @@ namespace TagCloudVisualization
         [SetUp]
         public void SetUp()
         {
-            center = new Point(3, 4);
+            center = new MyPoint(3, 4);
             layouter = new CircularCloudLayouter(center, new RoundSpiralGenerator());
         }
 
@@ -32,7 +34,7 @@ namespace TagCloudVisualization
         }
 
         private CircularCloudLayouter layouter;
-        private Point center;
+        private MyPoint center;
 
         [TestCase(0, 1, TestName = "has zero as width")]
         [TestCase(1, 0, TestName = "has zero as height")]
@@ -96,7 +98,7 @@ namespace TagCloudVisualization
                                      .ToList();
             var summaryArea = rectangles.Sum(r => r.Area());
             var cloudSize = rectangles.GetUnitedSize();
-            var radius = Math.Min(cloudSize.Width, cloudSize.Height);
+            var radius = Math.Min((int) cloudSize.Width, (int) cloudSize.Height);
             var circleArea = Math.PI * radius * radius;
 
             summaryArea.Should()

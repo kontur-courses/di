@@ -28,10 +28,8 @@ namespace TagCloudApp
             if (!Readers.TryGetValue(extension, out var reader))
                 return false;
             foreach (var textReader in reader)
-            {
                 if (textReader.TryReadWords(path, out words))
                     return true;
-            }
             return false;
         }
     }

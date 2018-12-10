@@ -11,6 +11,6 @@ namespace TagCloudCreation
         }
 
         public ImageCreatingOptions ImageOptions { get; }
-        public string PathToBoringWords { get;}
+        public string PathToBoringWords { get; }
     }
 }

@@ -14,13 +14,19 @@ namespace TagCloudVisualization
             }
         }
 
-        public Font GetAdjustedFont(Graphics graphics, string word, Font originalFont, int width,
-                                    int maxFontSize,
-                                    int minFontSize)
+        public bool Check(WordInfo word) => true;
+
+        public Font GetAdjustedFont(
+            Graphics graphics,
+            string word,
+            Font originalFont,
+            int width,
+            int maxFontSize,
+            int minFontSize)
         {
             for (var adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
             {
-                var testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style); 
+                var testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style);
 
                 var adjustedSizeNew = graphics.MeasureString(word, testFont);
 
@@ -30,7 +36,5 @@ namespace TagCloudVisualization
 
             return originalFont;
         }
-
-        public bool Check(WordInfo word) => true;
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TagCloudVisualization")]
+[assembly: AssemblyTitle("TagCloudTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TagCloudVisualization")]
+[assembly: AssemblyProduct("TagCloudTests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
-[assembly: InternalsVisibleTo("TagCloudTests")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -21,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3618f36b-7d74-480c-9bef-0c9805f0d53a")]
+[assembly: Guid("88263f53-980b-4a9c-9b4d-69bc7eaf5cfc")]
 
 // Version information for an assembly consists of the following four values:
 //

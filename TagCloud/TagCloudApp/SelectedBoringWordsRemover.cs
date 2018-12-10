@@ -5,7 +5,7 @@ using TagCloudVisualization;
 
 namespace TagCloudApp
 {
-    public class SelectedBoringWordsRemover : IWordPreparer
+    internal class SelectedBoringWordsRemover : IWordPreparer
     {
         private static string path;
         private static ITextReader textReader;

@@ -16,19 +16,13 @@ namespace TagCloudVisualization
             Rectangle = rectangle;
         }
 
-        public WordInfo With(string changedWord)
-        {
-            return new WordInfo(changedWord, Count);
-        }
-
-        public WordInfo With(Func<string, string> wordChanger)
-        {
-            return With(wordChanger(Word));
-        }
-
         public string Word { get; }
         public int Count { get; }
-        public Rectangle Rectangle { get;  }
+        public Rectangle Rectangle { get; }
+
+        public WordInfo With(string changedWord) => new WordInfo(changedWord, Count);
+
+        public WordInfo With(Func<string, string> wordChanger) => With(wordChanger(Word));
 
         public void Deconstruct(out Rectangle rectangle, out string word)
         {
@@ -36,9 +30,6 @@ namespace TagCloudVisualization
             word = Word;
         }
 
-        public WordInfo With(Rectangle rectangle)
-        {
-            return new WordInfo(Word, Count, rectangle);
-        }
+        public WordInfo With(Rectangle rectangle) => new WordInfo(Word, Count, rectangle);
     }
 }

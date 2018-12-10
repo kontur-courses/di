@@ -14,6 +14,7 @@ namespace TagCloudCreation
             "an"
         };
 
-        public WordInfo PrepareWord(WordInfo stat, TagCloudCreationOptions _) => boringWords.Contains(stat.Word) ? null : stat;
+        public WordInfo PrepareWord(WordInfo stat, TagCloudCreationOptions _) =>
+            boringWords.Contains(stat.Word) ? null : stat;
     }
 }

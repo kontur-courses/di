@@ -9,6 +9,7 @@ namespace TagCloudCreation
 {
     public class TagCloudCreator
     {
+        private const int WordRectangleSizeCoefficient = 10;
         private readonly ITagCloudStatsGenerator generator;
         private readonly TagCloudImageCreator imageCreator;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
@@ -30,17 +31,26 @@ namespace TagCloudCreation
         {
             words = words.Where(w => w != "");
             var stats = generator.GenerateStats(words);
-            stats = preparers.Aggregate(stats, (current, wordPreparer) => current.Select(wi=>wordPreparer.PrepareWord(wi, options))
-                                                                                 .Where(wi => wi != null)
-                                                                                 .ToList());
+            stats = preparers.Aggregate(stats, (current, wordPreparer) => current
+                                                                          .Select(wi =>
+                                                                                      wordPreparer
+                                                                                          .PrepareWord(wi, options))
+                                                                          .Where(wi => wi != null)
+                                                                          .ToList());
 
             var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
 
             var wordPairs = stats.OrderByDescending(wi => wi.Count)
-                                 .Select(wordInfo => wordInfo.With(layouter.PutNextRectangle(generator.GetSizeOfWord(wordInfo)))
-                                             );
+                                 .Select(wordInfo =>
+                                             wordInfo.With(layouter.PutNextRectangle(GetSizeOfWord(wordInfo))));
 
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
+        }
+
+        private static Size GetSizeOfWord(WordInfo wordInfo)
+        {
+            var enlarger = wordInfo.Count * WordRectangleSizeCoefficient;
+            return new Size(wordInfo.Word.Length * enlarger, enlarger);
         }
     }
 }

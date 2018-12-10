@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloudVisualization;
 
-namespace TagCloudVisualization
+namespace TagCloudTests
 {
-    //TODO: move tests to another project
     [TestFixture]
     public class CircularCloudConstructor_Should
     {

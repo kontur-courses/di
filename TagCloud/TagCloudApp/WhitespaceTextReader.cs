@@ -22,5 +22,4 @@ namespace TagCloudApp
 
         public string Extension => ".txt";
     }
-
 }
