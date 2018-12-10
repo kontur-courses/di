@@ -1,8 +1,9 @@
-<?xml version="1.0"?>
-<AppSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ImagesDirectory>.</ImagesDirectory>
-  <ImageSettings>
-    <Width>800</Width>
-    <Height>600</Height>
-  </ImageSettings>
-</AppSettings>
+<?xml version='1.0' encoding='koi8-r'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FractalPainting.Solved.Step11" GeneratedClassName="app">
+  <Profiles />
+  <Settings>
+    <Setting Name="Setting" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
