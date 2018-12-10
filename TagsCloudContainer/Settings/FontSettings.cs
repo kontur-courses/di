@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Text;
 
 namespace TagsCloudContainer.Settings
 {

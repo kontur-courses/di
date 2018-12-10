@@ -63,6 +63,7 @@
     <Compile Include="Layouter\ITagCloudLayouter.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\FontSettings.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="UIForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -33,14 +33,14 @@ namespace TagsCloudContainer
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(type => type.GetInterfaces().Contains(typeof(IUiAction))).As<IUiAction>();
             builder.RegisterType<TagCloudPainter>().AsSelf().SingleInstance();
-            builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
             builder.RegisterType<GradientPainter>().As<ICloudColorPainter>().SingleInstance();
-            builder.RegisterType<AppSettings>().As<IFilePathProvider, IImageDirectoryProvider>().SingleInstance();
-            builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<Spiral>().As<IPositionGenerator>();
-            builder.RegisterType<SpiralSettings>().AsSelf().SingleInstance();
+            builder.RegisterTypes(typeof(Settings.Settings)
+                    .GetProperties()
+                    .Select(info => info.PropertyType)
+                    .ToArray())
+                .AsSelf().AsImplementedInterfaces().SingleInstance();
             builder.Register<Func<ITagCloudLayouter>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
@@ -48,7 +48,6 @@ namespace TagsCloudContainer
             });
             builder.RegisterType<LayouterApplicator>().AsSelf().SingleInstance();
             builder.RegisterType<WordsPreprocessor>().AsSelf().SingleInstance();
-            builder.RegisterType<WordsPreprocessorSettings>().AsSelf().SingleInstance();
         }
     }
 }
