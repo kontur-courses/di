@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloud.CloudLayouter
+namespace TagsCloud.CloudStructure
 {
     public class SpiralPointGenerator : IPointGenerator
     {

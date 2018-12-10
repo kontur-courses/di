@@ -5,37 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloud.CloudLayouter
+namespace TagsCloud.CloudStructure
 {
-    public class CloudLayouter
+    public class PointCloudLayouter: ICloudLayouter
     {
         public readonly Point Center;
 
-        public HashSet<Word> Words { get; private set; } = new HashSet<Word>();
+        public HashSet<Rectangle> Rectangles { get; private set; } = new HashSet<Rectangle>();
 
         private readonly IPointGenerator pointGenerator;
 
-        public CloudLayouter(Point center, IPointGenerator pointGenerator)
+        public PointCloudLayouter(Point center, IPointGenerator pointGenerator)
         {
             Center = center;
             this.pointGenerator = pointGenerator;
         }
 
-        public Word PutNextWord(string name, Size wordSize)
+        public Rectangle PutNextRectangle(Size wordSize)
         {
             ThrowExceptionOnWrongSize(wordSize);
 
-            var posRectangle = new Rectangle(ChooseWordLocation(wordSize), wordSize);
-            var word = new Word(posRectangle, name);
-            Words.Add(word);
-            return word;
+            var rectangle = new Rectangle(ChooseWordLocation(wordSize), wordSize);
+            Rectangles.Add(rectangle);
+            return rectangle;
         }
 
         private Point ChooseWordLocation(Size rectSize)
         {
             var resultCenter = new Point();
             foreach (var point in pointGenerator.GeneratePoints(Center))
-                if (!DefineRectangle(point, rectSize).IntersectsWithAny(Words))
+                if (!DefineRectangle(point, rectSize).IntersectsWithAny(Rectangles))
                 {
                     resultCenter = point;
                     break;

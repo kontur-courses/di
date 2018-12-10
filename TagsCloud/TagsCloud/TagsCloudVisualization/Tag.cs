@@ -5,18 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloud.CloudLayouter
+namespace TagsCloud.TagsCloudVisualization
 {
-    public class Word
+    public class Tag
     {
         public readonly Rectangle PosRectangle;
 
-        public readonly string Name;
+        public readonly string Word;
 
-        public Word(Rectangle posRectangle, string name)
+        public readonly int FontSize;
+
+        public Tag(Rectangle posRectangle, string word, int fontSize)
         {
             PosRectangle = posRectangle;
-            Name = name;
+            Word = word;
+            FontSize = fontSize;
         }
     }
 }
