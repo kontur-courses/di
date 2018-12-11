@@ -4,6 +4,6 @@ namespace TagsCloudContainer.TextParsers
 {
     public interface ITextParser
     {
-        List<MiniTag> Parse(string text);
+        List<WordFrequency> Parse(string text);
     }
 }

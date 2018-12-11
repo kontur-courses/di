@@ -8,14 +8,15 @@ namespace TagsCloudContainer.CloudLayouters.PointGenerators
 {
     public class ArchimedesSpiralPointGenerator : IEnumerable<Point>
     {
-        private double spiralAngle { get; set; }
-        private Point center { get; set; }
-        private double angleStep { get; set; }
+        private readonly double angleStep;
+        private readonly Point center;
+        private readonly double spiralAngle;
 
-        public ArchimedesSpiralPointGenerator(ImageSettings imageSettings, double angleStep = 0.1, double spiralAngle = 0.0 )
+        public ArchimedesSpiralPointGenerator(ImageSettings imageSettings, double angleStep = 0.1,
+            double spiralAngle = 0.0)
         {
             this.spiralAngle = spiralAngle;
-            this.center = imageSettings.Center;
+            center = imageSettings.Center;
             this.angleStep = angleStep;
         }
 
@@ -25,8 +26,8 @@ namespace TagsCloudContainer.CloudLayouters.PointGenerators
             while (true)
             {
                 yield return
-                    new Point(center.X + (int)(currentAngle * Math.Cos(currentAngle)),
-                        center.Y + (int)(currentAngle * Math.Sin(currentAngle)));
+                    new Point(center.X + (int) (currentAngle * Math.Cos(currentAngle)),
+                        center.Y + (int) (currentAngle * Math.Sin(currentAngle)));
                 currentAngle += angleStep;
             }
         }

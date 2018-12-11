@@ -1,40 +1,40 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using TagsCloudContainer.FileReaders;
 using TagsCloudContainer.Settings;
-using TagsCloudContainer.WordHandler;
 
 namespace TagsCloudContainer.TextParsers
 {
     public class TextParser : ITextParser
     {
-        private readonly IWordHandler wordHandler;
         private readonly TextSettings textSettings;
-        
-        public TextParser(IWordHandler wordHandler, TextSettings textSettings)
+
+        public TextParser(TextSettings textSettings)
         {
-            this.wordHandler = wordHandler;
             this.textSettings = textSettings;
         }
 
 
-        public List<MiniTag> Parse(string text)
+        public List<WordFrequency> Parse(string text)
         {
-            return text.Split('\n')
-                .Select(e => wordHandler.Transform(e))
-                .Where(word => !string.IsNullOrWhiteSpace(word) && !IsBoring(word))
+            var words = text.Split(Environment.NewLine.ToCharArray());
+            var convertedWords = new List<string>();
+            foreach (var word in words)
+            {
+                var convertedWord = word;
+                if (textSettings.WordFilters.Any(filter => !filter.Validate(word)))
+                    continue;
+                foreach (var converter in textSettings.WordConverters) convertedWord = converter.Convert(word);
+                convertedWords.Add(convertedWord);
+            }
+
+            return convertedWords
                 .GroupBy(word => word)
-                .Select(group => new MiniTag(group.Key, group.Count()))
-                .OrderByDescending(miniTag => miniTag.Count)
+                .Select(group => new WordFrequency(group.Key, group.Count()))
+                .OrderByDescending(miniTag => miniTag.Frequency)
                 .ThenBy(miniTag => miniTag.Word)
                 .Take(textSettings.CountWords)
                 .ToList();
-        }
-
-        private bool IsBoring(string word)
-        {
-            return word.Length < 2;
         }
     }
 }

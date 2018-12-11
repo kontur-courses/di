@@ -2,25 +2,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.CloudLayouters;
+using TagsCloudContainer.Settings;
 using TagsCloudContainer.Tags;
 using TagsCloudContainer.TextParsers;
-using TagsCloudContainer.Themes;
 
 namespace TagsCloudContainer.CloudBuilder
 {
     public class TagsCloudBuilder : ICloudBuilder
     {
         private readonly ICloudLayouter cloudLayouter;
-        private readonly ITheme theme;
+        private readonly ImageSettings imageSettings;
 
-        public TagsCloudBuilder(ICloudLayouter cloudLayouter, ITheme theme)
+        public TagsCloudBuilder(ICloudLayouter cloudLayouter, ImageSettings imageSettings)
         {
             this.cloudLayouter = cloudLayouter;
-            this.theme = theme;
+            this.imageSettings = imageSettings;
         }
 
 
-        public IEnumerable<Tag> BuildTagsCloud(List<MiniTag> miniTags)
+        public IEnumerable<Tag> BuildTagsCloud(List<WordFrequency> miniTags)
         {
             var tags = CreateTagsFromMiniTags(miniTags);
             foreach (var tag in tags)
@@ -31,23 +31,23 @@ namespace TagsCloudContainer.CloudBuilder
             }
         }
 
-        private IEnumerable<Tag> CreateTagsFromMiniTags(List<MiniTag> miniTags)
+        private IEnumerable<Tag> CreateTagsFromMiniTags(List<WordFrequency> miniTags)
         {
             var tags = new List<Tag>();
             var firstRange = (int) (miniTags.Count * 0.5);
             var secondRange = miniTags.Count - firstRange - 1;
 
-            tags.Add(new Tag(40, theme.FontFamily, miniTags.First().Word));
+            tags.Add(new Tag(40, imageSettings.Theme.FontFamily, miniTags.First().Word));
 
             tags.AddRange(miniTags
                 .Skip(1)
                 .Take(firstRange)
-                .Select(miniTag => new Tag(30, theme.FontFamily, miniTag.Word)));
+                .Select(miniTag => new Tag(30, imageSettings.Theme.FontFamily, miniTag.Word)));
 
             tags.AddRange(miniTags
                 .Skip(1 + firstRange)
                 .Take(secondRange)
-                .Select(miniTag => new Tag(20, theme.FontFamily, miniTag.Word)));
+                .Select(miniTag => new Tag(20, imageSettings.Theme.FontFamily, miniTag.Word)));
 
             return tags;
         }

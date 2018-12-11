@@ -21,9 +21,8 @@ namespace TagsCloudContainer.CloudLayouters
                 throw new ArgumentException("height and width should be positive");
 
             var currentRectangle = new Rectangle();
-            foreach(var point in generatorPoints)
+            foreach (var point in generatorPoints)
             {
-
                 var rectangleCenterPoint = new Point(
                     point.X - rectangleSize.Width / 2,
                     point.Y - rectangleSize.Height / 2);
@@ -35,8 +34,8 @@ namespace TagsCloudContainer.CloudLayouters
                     break;
                 }
             }
+
             return currentRectangle;
         }
- 
     }
 }

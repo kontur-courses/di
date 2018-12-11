@@ -23,12 +23,7 @@ namespace TagsCloudContainer.Settings
 
         private ITheme GetThemeByName(string theme)
         {
-            switch (theme)
-            {
-                case "classic": return new Classic();
-                case "black": return new Black();
-                default: return new Classic();
-            }
+            return Themes.Themes.ThemesDictionary[theme];
         }
     }
 }
