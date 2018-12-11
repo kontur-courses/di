@@ -33,7 +33,7 @@ namespace TagCloud
                 return;
 
             var builder = new ContainerBuilder();
-            SetUpContainer(builder);
+            SetUpContainer(builder, arguments.BoringWordsFileName);
             var container = builder.Build();
 
             container.Resolve<TagCloudGenerator>().Generate(arguments);  
@@ -91,7 +91,7 @@ namespace TagCloud
             return false;
         }
 
-        public static void SetUpContainer(ContainerBuilder builder)
+        public static void SetUpContainer(ContainerBuilder builder, string boringWordsFileName)
         {
             builder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
@@ -100,8 +100,12 @@ namespace TagCloud
             builder.Register(c => new Point()).As<Point>();
             builder.Register(c =>  new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
             builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
-            builder.RegisterType<RussianWordsProcessor>().As<IWordsProcessor>();
             builder.RegisterType<BrightnessColorPicker>().As<IColorPicker>();
+            builder
+                .Register(c => new RussianWordsProcessor(c
+                    .Resolve<IWordsFileReader>()
+                    .Read(boringWordsFileName)))
+                .As<IWordsProcessor>();
         }
     }
 }
