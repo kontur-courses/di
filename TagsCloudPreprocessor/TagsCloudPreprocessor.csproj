@@ -78,5 +78,15 @@
     <None Include="Hunspellx86.dll" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Resources\ExcludedWords\englishWords.xml" />
+    <Content Include="..\Resources\ExcludedWords\russianWords.xml" />
+    <Content Include="..\Resources\ExcludedWords\ru_RU.aff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\ExcludedWords\ru_RU.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
