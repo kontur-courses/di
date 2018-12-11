@@ -15,14 +15,7 @@ namespace TagsCloudContainer.ImageSavers
 
         public void SaveImage(Image image, string namePath)
         {
-            try
-            {
-                image.Save(namePath, imageSettings.Format);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Can not save image there ({namePath})");
-            }
+            image.Save(namePath, imageSettings.Format);
         }
     }
 }

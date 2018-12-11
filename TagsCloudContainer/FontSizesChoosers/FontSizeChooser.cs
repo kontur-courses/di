@@ -19,7 +19,7 @@ namespace TagsCloudContainer.FontSizesChoosers
 
         public IEnumerable<PrintedWordInfo> GetWordInfos(IEnumerable<WordInfo> words)
         {
-            var sortedWords = words.OrderBy(x => -x.Repetitions);
+            var sortedWords = words.OrderByDescending(x => x.Repetitions);
             var sizeColor = (double)baseFont;
 
             foreach (var wordInfo in sortedWords)

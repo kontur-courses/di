@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using Autofac;
 using TagsCloudContainer.BoringWordsGetters;
 using TagsCloudContainer.CircularCloudLayouters;
@@ -7,7 +8,6 @@ using TagsCloudContainer.Clients;
 using TagsCloudContainer.FontSizesChoosers;
 using TagsCloudContainer.ImageCreators;
 using TagsCloudContainer.ImageSavers;
-using TagsCloudContainer.Readers;
 using TagsCloudContainer.RectanglesFilters;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsFilters;
@@ -51,7 +51,7 @@ namespace TagsCloudContainer.ProjectSettings
             builder.Register<IEnumerable<string>>((c, p) =>
             {
                 var fileName = p.TypedAs<string>();
-                return new TextFileReader(fileName);
+                return File.ReadAllLines(fileName);
             });
             builder.RegisterType<ConsoleClient>().As<IClient>();
             return builder.Build();
