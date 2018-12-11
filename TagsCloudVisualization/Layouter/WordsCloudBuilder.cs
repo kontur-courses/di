@@ -25,8 +25,6 @@ namespace TagsCloudVisualization.Layouter
 
         private Word PutNextWord(SizedWord sizedWord)
         {
-            if (sizedWord.Word.Length == 0)
-                throw new ArgumentException("text length should be grater than zero");
             return new Word(sizedWord.Word, sizedWord.Font, layouter.PutNextRectangle(sizedWord.Size));
         }
 

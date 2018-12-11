@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -6,11 +7,11 @@ using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudVisualization.WordsProcessing
 {
-    public class SizeConverter : ISizeConverter
+    public class WordSizeConverter : ISizeConverter
     {
         private readonly FontSettings fontSettings;
         
-        public SizeConverter(FontSettings fontSettings)
+        public WordSizeConverter(FontSettings fontSettings)
         {
             this.fontSettings = fontSettings;
         }
@@ -23,18 +24,21 @@ namespace TagsCloudVisualization.WordsProcessing
             foreach (var word in weightedWords)
             {
                 var font = new Font(fontSettings.FontFamily, GetFontSize(word.Weight, minWeight, maxWeight), fontSettings.FontStyle);
-                yield return new SizedWord(word.Word, font, GetSize(word.Word, font));
+                var size = GetSize(word.Word, font);
+                yield return new SizedWord(word.Word, font, size);
             }
         }
 
         private float GetFontSize(float currentSize, float minWeight, float maxWeight)
         {
             return currentSize > minWeight 
-                ? (fontSettings.MaxFontSize * (currentSize - minWeight)) / (maxWeight - minWeight) : 1;
+                ? (fontSettings.MaxFontSize * (currentSize - minWeight)) / (maxWeight - minWeight) : minWeight;
         }
 
         private Size GetSize(string text, Font font)
         {
+            if (text.Length == 0)
+                    throw new ArgumentException("text length should be grater than zero");
             return TextRenderer.MeasureText(text, font);
         }
     }

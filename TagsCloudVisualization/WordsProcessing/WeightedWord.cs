@@ -19,7 +19,7 @@ namespace TagsCloudVisualization.WordsProcessing
             if (obj is WeightedWord otherWeightedWord) 
                 return Weight.CompareTo(otherWeightedWord.Weight);
             else
-                throw new ArgumentException("Object is not a Temperature");
+                throw new ArgumentException("Object is not a WeightedWord");
         }
     }
 }
