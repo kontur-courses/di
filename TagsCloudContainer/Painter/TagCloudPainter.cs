@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Layouter;
 using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Painter
@@ -10,19 +9,19 @@ namespace TagsCloudContainer.Painter
     public class TagCloudPainter
     {
         private readonly IImageHolder holder;
+        private readonly ImageSettings imageSettings;
         private readonly Palette palette;
         private readonly FontSettings fontSettings;
-        private readonly ICloudColorPainter painter;
 
         public TagCloudPainter(IImageHolder holder,
+            ImageSettings imageSettings,
             Palette palette,
-            FontSettings fontSettings,
-            ICloudColorPainter painter)
+            FontSettings fontSettings)
         {
             this.holder = holder;
+            this.imageSettings = imageSettings;
             this.palette = palette;
             this.fontSettings = fontSettings;
-            this.painter = painter;
         }
 
         public void Paint(Point center, IEnumerable<WordInfo> wordInfosEnum)
@@ -33,11 +32,9 @@ namespace TagsCloudContainer.Painter
             var imageSize = holder.GetImageSize();
             if (imageSize.Width < bitmapSize || imageSize.Height < bitmapSize)
             {
-                holder.RecreateImage(new ImageSettings
-                {
-                    Height = bitmapSize,
-                    Width = bitmapSize
-                });
+                imageSettings.Height = bitmapSize;
+                imageSettings.Width = bitmapSize;
+                holder.RecreateImage(imageSettings);
             }
 
             imageSize = holder.GetImageSize();
@@ -49,7 +46,7 @@ namespace TagsCloudContainer.Painter
                 graphics.TranslateTransform(deltaX, deltaY);
                 foreach (var wordInfo in wordInfos)
                 {
-                    var color = painter.GetRectangleColor(center, wordInfo.Rect, radius);
+                    var color = imageSettings.GetCloudPainterClass().GetRectangleColor(center, wordInfo.Rect, radius);
                     graphics.DrawString(
                         wordInfo.Word, 
                         new Font(fontSettings.Font.FontFamily, wordInfo.FontSize), 

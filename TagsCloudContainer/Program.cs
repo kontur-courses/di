@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FluentAssertions.Common;
 using TagsCloudContainer.FileReader;
 using TagsCloudContainer.Layouter;
 using TagsCloudContainer.Painter;
@@ -33,6 +34,10 @@ namespace TagsCloudContainer
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(type => type.GetInterfaces().Contains(typeof(IUiAction))).As<IUiAction>();
             builder.RegisterType<TagCloudPainter>().AsSelf().SingleInstance();
+            builder.RegisterTypes(Assembly.GetExecutingAssembly().GetTypes()
+                    .Where(type => type.Implements(typeof(ICloudColorPainter))).ToArray())
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder.RegisterType<GradientPainter>().As<ICloudColorPainter>().SingleInstance();
             builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<Spiral>().As<IPositionGenerator>();
