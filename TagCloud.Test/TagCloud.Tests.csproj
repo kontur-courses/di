@@ -73,6 +73,7 @@
     <Compile Include="ForTagCloud\PointExtensions_Should.cs" />
     <Compile Include="ForTagUtility\TagReader_Should.cs" />
     <Compile Include="ForTagUtility\TxtReader_Should.cs" />
+    <Compile Include="ForTagUtility\Utility_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ForTagCloud\Spiral_Should.cs" />
   </ItemGroup>
