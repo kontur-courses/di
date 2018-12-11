@@ -7,6 +7,5 @@ namespace TagsCloudContainer.Settings
         int WordsToDisplay { get; set; }
         Point CenterPoint { get; }
         Size Size { get; set; }
-        string[] WordsToBeExcluded { get; set; }
     }
 }

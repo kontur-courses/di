@@ -78,7 +78,10 @@
     <Compile Include="SourceTextReaders\TxtSourceTextReader.cs" />
     <Compile Include="Algorithms\ArchimedeanSpiral.cs" />
     <Compile Include="TextPreprocessors\BasicWordsPreprocessor.cs" />
-    <Compile Include="TextPreprocessors\IWordsPreprocessor.cs" />
+    <Compile Include="IWordsPreprocessor.cs" />
+    <Compile Include="TextPreprocessors\Filters\BoringWordFilter.cs" />
+    <Compile Include="TextPreprocessors\Filters\IWordFilter.cs" />
+    <Compile Include="TextPreprocessors\Filters\ShortWordFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -2,17 +2,17 @@
 using System.IO;
 using System.Linq;
 using NHunspell;
-using TagsCloudContainer.Settings;
+using TagsCloudContainer.TextPreprocessors.Filters;
 
 namespace TagsCloudContainer.TextPreprocessors
 {
     public class BasicWordsPreprocessor : IWordsPreprocessor
     {
-        private readonly ICloudSettings settings;
+        private readonly IEnumerable<IWordFilter> wordFilters;
 
-        public BasicWordsPreprocessor(ICloudSettings settings)
+        public BasicWordsPreprocessor(IEnumerable<IWordFilter> wordFilters)
         {
-            this.settings = settings;
+            this.wordFilters = wordFilters;
         }
         public IReadOnlyDictionary<string, int> PreprocessWords(IEnumerable<string> words)
         {
@@ -37,7 +37,7 @@ namespace TagsCloudContainer.TextPreprocessors
 
         private bool FilterWord(string lemma)
         {
-            return lemma.Length > 4;
+            return wordFilters.All(e => e.Filter(lemma));
         }
 
         private IReadOnlyDictionary<string, int> ProcessWords(IEnumerable<string> preprocessWords)
@@ -49,10 +49,6 @@ namespace TagsCloudContainer.TextPreprocessors
                 result.TryGetValue(word, out var count);
                 result[word] = count + 1;
             }
-            
-            if (settings.WordsToBeExcluded!= null)
-                foreach (var word in settings.WordsToBeExcluded)
-                    result.Remove(word);
 
             return result;
         }

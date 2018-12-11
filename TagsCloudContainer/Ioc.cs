@@ -1,11 +1,11 @@
 ﻿using Autofac;
-using Autofac.Core;
 using TagsCloudContainer.Algorithms;
 using TagsCloudContainer.DataProviders;
 using TagsCloudContainer.ResultFormatters;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.SourceTextReaders;
 using TagsCloudContainer.TextPreprocessors;
+using TagsCloudContainer.TextPreprocessors.Filters;
 
 namespace TagsCloudContainer
 {
@@ -24,6 +24,7 @@ namespace TagsCloudContainer
             builder.RegisterType<CircularCloudAlgorithm>().As<IAlgorithm>();
             builder.RegisterType<CircularCloudLayouterResultFormatter>().As<IResultFormatter>();
             builder.RegisterType<DataProvider>().As<IDataProvider>();
+            builder.RegisterTypes(typeof(BoringWordFilter), typeof(ShortWordFilter)).As<IWordFilter>();
 
             return builder.Build();
         }
