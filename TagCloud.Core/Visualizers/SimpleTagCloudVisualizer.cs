@@ -14,27 +14,27 @@ namespace TagCloud.Core.Visualizers
         private readonly ICloudLayouter layouter;
         private readonly IPainter painter;
 
-        private readonly Bitmap bitmap;
-        private readonly Graphics graphics;
+        private Bitmap bitmap;
+        private Graphics graphics;
 
         public SimpleTagCloudVisualizer(VisualizingSettings settings, ICloudLayouter layouter, IPainter painter)
         {
             this.settings = settings;
             this.layouter = layouter;
             this.painter = painter;
-
-            bitmap = new Bitmap(settings.Width, settings.Height);
-            graphics = Graphics.FromImage(bitmap);
         }
 
-        public void Render(IEnumerable<TagStat> tagStats)
+        public Bitmap Render(IEnumerable<TagStat> tagStats)
         {
+            bitmap = new Bitmap(settings.Width, settings.Height);
+            graphics = Graphics.FromImage(bitmap);
+
             layouter.RefreshWith(settings.CenterPoint);
             var resTags = GetResultTags(tagStats);
             painter.SetBackgroundColorFor(graphics);
             foreach (var tag in resTags)
                 graphics.DrawTag(tag);
-            bitmap.Save(settings.PathForResultImage, settings.ImageFormat);
+            return bitmap;
         }
 
         private (double fontSizeMultiplier, double averageRepeatsCount) GetFontSizeMultiplierAndAverageRepeatsCount(

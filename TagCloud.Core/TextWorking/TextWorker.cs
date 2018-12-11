@@ -19,12 +19,12 @@ namespace TagCloud.Core.TextWorking
             this.settings = settings;
         }
 
-        public IEnumerable<TagStat> GetTagStats()
+        public IEnumerable<TagStat> GetTagStats(string pathToWords, string pathToBoringWords = null)
         {
-            var words = wordsReader.ReadFrom(settings.PathToWords);
-            var boringWords = settings.PathToBoringWords == null
+            var words = wordsReader.ReadFrom(pathToWords);
+            var boringWords = pathToBoringWords == null
                 ? new HashSet<string>()
-                : new HashSet<string>(wordsReader.ReadFrom(settings.PathToBoringWords));
+                : new HashSet<string>(wordsReader.ReadFrom(pathToBoringWords));
             return wordsProcessor.Process(words, boringWords, settings.MaxUniqueWordsCount);
         }
     }

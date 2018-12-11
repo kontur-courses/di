@@ -11,13 +11,13 @@ namespace TagCloud.Core.Settings
         public string FontName { get; set; } = "arial";
         public float MinFontSize { get; set; } = 15;
         public float MaxFontSize { get; set; } = 35;
-        public string PathForResultImage { get; set; } = "result.png";
 
         public PointF CenterPoint => new PointF((float)Width / 2, (float)Height / 2);
         public Font DefaultFont => new Font(FontName, (MaxFontSize + MinFontSize) / 2);
 
-        public ImageFormat ImageFormat => ImageFormatResolver.TryResolveFromFileName(PathForResultImage, out var res)
-            ? ImageFormat.Png
-            : res;
+        public string GetSettingsName()
+        {
+            return "Visualizing settings";
+        }
     }
 }

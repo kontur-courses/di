@@ -50,6 +50,7 @@
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Settings\LayoutingSettings.cs" />
     <Compile Include="Settings\PaintingSettings.cs" />
+    <Compile Include="Settings\TagCloudSettings.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="TextWorking\WordsProcessing\IWordsProcessor.cs" />
     <Compile Include="TextWorking\WordsProcessing\ProcessingUtilities\IProcessingUtility.cs" />
