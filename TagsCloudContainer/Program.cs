@@ -7,7 +7,7 @@ namespace TagsCloudContainer
     {
         [Option("file", HelpText = "Text file", Required = true )]
         public string Filename { get; set; }
-        [Option("color", HelpText = "Words color", Default = "DarkRed")]
+        [Option("color", HelpText = "Words color", Default = "DarkGreen")]
         public string Color { get; set; }
         [Option("font", HelpText = "Font", Default = "Arial")]
         public string FontFamilyName { get; set; }
@@ -23,19 +23,17 @@ namespace TagsCloudContainer
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
-                var source = new PreparedFile(o.Filename);
+                var source = new TextSourceFile(o.Filename);
                 var cloudOptions = new CloudOptions(o.Color, o.FontFamilyName, o.Height, o.Width);
 
                 var builder = new ContainerBuilder();
-                //builder.RegisterType<ConsoleUI>().As<IUserInterface>();
                 builder.RegisterType<WordsPreprocessor>().As<IWordsPreprocessor>();
-                builder.RegisterType<SimpleConfigurator>().As<ICloudConfigurator>();
+                builder.RegisterType<SimpleCloudConfigurator>().As<ICloudConfigurator>();
                 builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
                 builder.RegisterInstance(source).As<ISource>();
                 builder.RegisterInstance(cloudOptions).As<CloudOptions>();
 
                 var container = builder.Build();
-                //var client = container.Resolve<IUserInterface>();
                 var client = container.Resolve<ICloudVisualizer>();
 
                 client.VisualizeCloud();

@@ -93,18 +93,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SimpleConfigurator.cs" />
+    <Compile Include="SimpleCloudConfigurator.cs" />
     <Compile Include="CloudOptions.cs" />
     <Compile Include="ConsoleUI.cs" />
-    <Compile Include="ICloudVisualizer.cs" />
-    <Compile Include="ICloudConfigurator.cs" />
-    <Compile Include="ISource.cs" />
-    <Compile Include="IUserInterface.cs" />
-    <Compile Include="IWordsPreprocessor.cs" />
+    <Compile Include="Interfaces\ICloudVisualizer.cs" />
+    <Compile Include="Interfaces\ICloudConfigurator.cs" />
+    <Compile Include="Interfaces\ISource.cs" />
+    <Compile Include="Interfaces\IUserInterface.cs" />
+    <Compile Include="Interfaces\IWordsPreprocessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PreparedFile.cs" />
+    <Compile Include="PreparedSourceFile.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="TextSourceFile.cs" />
     <Compile Include="WordsPreprocessor.cs" />
     <Compile Include="CloudVisualizer.cs" />
   </ItemGroup>

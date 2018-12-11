@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace TagsCloudContainer
@@ -11,10 +10,10 @@ namespace TagsCloudContainer
 
         public WordsPreprocessor(ISource source)
         {
-            words = source.Parse();
+            words = source.GetWords();
         }
 
-        public Dictionary<string, int> Prepare()
+        public Dictionary<string, int> PrepareWords()
         {
             return words.Select(word => word.ToLower())
                 .Distinct()

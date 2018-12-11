@@ -14,7 +14,7 @@ namespace TagsCloudContainer
         public CloudVisualizer(ICloudConfigurator configurator, CloudOptions options)
         {
             this.options = options;
-            wordsWithFontSize = configurator.ConfigureWords();
+            wordsWithFontSize = configurator.ConfigureCloud();
         }
 
         public void VisualizeCloud()

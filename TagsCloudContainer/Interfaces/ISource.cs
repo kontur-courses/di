@@ -2,6 +2,6 @@
 {
     public interface ISource
     {
-        string[] Parse();
+        string[] GetWords();
     }
 }

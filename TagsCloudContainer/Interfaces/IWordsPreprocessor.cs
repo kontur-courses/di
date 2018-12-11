@@ -4,6 +4,6 @@ namespace TagsCloudContainer
 {
     public interface IWordsPreprocessor
     {
-        Dictionary<string, int> Prepare();
+        Dictionary<string, int> PrepareWords();
     }
 }

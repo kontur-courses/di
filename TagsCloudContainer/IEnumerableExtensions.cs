@@ -13,8 +13,11 @@ namespace TagsCloudContainer
             {
                 boringWords.AddRange(File.ReadAllLines(file));
             }
-
-            return words.Except(boringWords).ToArray();
+            
+            return words
+                .Where(w => w.Length > 2)
+                .Except(boringWords)
+                .ToArray();
         }
     }
 }

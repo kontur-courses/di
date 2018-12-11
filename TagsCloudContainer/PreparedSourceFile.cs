@@ -2,16 +2,16 @@
 
 namespace TagsCloudContainer
 {
-    public class PreparedFile : ISource
+    public class PreparedSourceFile : ISource
     {
         private readonly string filename;
 
-        public PreparedFile(string filename)
+        public PreparedSourceFile(string filename)
         {
             this.filename = filename;
         }
 
-        public string[] Parse()
+        public string[] GetWords()
         {
             return File.ReadAllLines(filename);
         }
