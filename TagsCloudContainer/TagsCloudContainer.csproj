@@ -118,6 +118,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BoringWords\articles.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BoringWords\auxillary_verbs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="BoringWords\conjunctions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

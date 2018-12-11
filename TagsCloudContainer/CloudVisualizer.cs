@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Reflection;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer
@@ -20,7 +23,7 @@ namespace TagsCloudContainer
         public void VisualizeCloud()
         {
             var bitmap = RenderToBitmap();
-            var imageFormat = ImageFormat.Png;
+            var imageFormat = GetImageFormat(options.Format);
             var filename = $"wordsCloud.{imageFormat.ToString().ToLower()}";
 
             bitmap.Save(filename, imageFormat);
@@ -48,6 +51,17 @@ namespace TagsCloudContainer
             var intSize = new Size((int)size.Width + 1, (int)size.Height + 1);
             var rectangle = layouter.PutNextRectangle(intSize);
             graphics.DrawString(word, font, new SolidBrush(Color.FromName(options.Color)), rectangle);
+        }
+
+        private ImageFormat GetImageFormat(string format)
+        {
+            PropertyInfo propertyInfo = typeof(ImageFormat)
+                .GetProperties()
+                .FirstOrDefault(p => p.Name.Equals(format, StringComparison.InvariantCultureIgnoreCase));
+            if (propertyInfo != null)
+                return propertyInfo.GetValue(propertyInfo) as ImageFormat;
+
+            return ImageFormat.Png;
         }
     }
 }

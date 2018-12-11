@@ -15,6 +15,8 @@ namespace TagsCloudContainer
 
         public string[] GetWords()
         {
+            if (filename == null)
+                return new string[0];
             var text = File.ReadAllText(filename);
             var matches = Regex.Matches(text, @"\b[\w']+\b");
 
