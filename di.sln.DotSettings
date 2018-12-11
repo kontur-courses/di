@@ -81,4 +81,5 @@ public void SetUp()&#xD;
 	$END$&#xD;
 }&#xD;
 </s:String>
-	<s:Boolean x:Key="/Default/UserDictionary/Words/=Layouter/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Layouter/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Layouting/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

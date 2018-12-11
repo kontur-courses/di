@@ -1,7 +1,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Filters;
+using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Visualisation;
+using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
@@ -24,7 +28,7 @@ namespace TagsCloudContainer
 
         public ITagsCloud CreateCloud(List<string> words)
         {
-            words = words.Select(wordsFormatter.Format).ToList();
+            words = wordsFormatter.Format(words);
             words = wordsFilter.Filter(words).ToList();
             var wordsSizes = wordsWeighter.GetWordsSizes(words, minLetterSize);
 

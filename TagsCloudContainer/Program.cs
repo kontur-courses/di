@@ -5,6 +5,13 @@ using Autofac;
 using Autofac.Core;
 using FluentAssertions;
 using TagsCloudContainer.Visualisation;
+using NHunspell;
+using TagsCloudContainer.Filters;
+using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Layouting;
+using TagsCloudContainer.Reading;
+using TagsCloudContainer.UI;
+using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
@@ -21,7 +28,7 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<BlacklistWordsFilter>().As<IWordsFilter>().SingleInstance()
                 .UsingConstructor(typeof(BlackListFilterSettings));
 
-            containerBuilder.RegisterType<ToLowerCaseFormatter>().As<IWordsFormatter>();
+            containerBuilder.RegisterType<ToInitFormFormatter>().As<IWordsFormatter>();
             containerBuilder.RegisterType<FrequencyWordsWeighter>().As<IWordsWeighter>().SingleInstance();
 
             containerBuilder.RegisterType<TagsCloudGeneratorSettings>()

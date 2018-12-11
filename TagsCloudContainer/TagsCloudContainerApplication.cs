@@ -1,3 +1,5 @@
+using TagsCloudContainer.Reading;
+using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer

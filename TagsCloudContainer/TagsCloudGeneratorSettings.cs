@@ -1,5 +1,10 @@
 using System.Drawing;
+using TagsCloudContainer.Filters;
+using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Layouting;
+using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation;
+using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
