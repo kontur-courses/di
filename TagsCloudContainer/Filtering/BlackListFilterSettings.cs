@@ -12,5 +12,10 @@ namespace TagsCloudContainer.Filters
         {
             Blacklist = new HashSet<string>(new TxtWordsReader().ReadWords(ui.BlacklistPath));
         }
+        
+        public BlackListFilterSettings(HashSet<string> blacklist)
+        {
+            Blacklist = blacklist;
+        }
     }
 }

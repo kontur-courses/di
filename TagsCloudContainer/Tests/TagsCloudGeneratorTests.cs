@@ -6,7 +6,11 @@ using System.Linq.Expressions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using FluentAssertions;
-/*
+using TagsCloudContainer.Filters;
+using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Layouting;
+using TagsCloudContainer.Weighting;
+
 
 namespace TagsCloudContainer.Tests
 {
@@ -15,9 +19,11 @@ public class TagsCloudGeneratorTests
 {
     private Size minLetterSize = new Size(16, 20);
     private IWordsFormatter formatter = new ToLowerCaseFormatter();
+    private IWordsWeighter wordsWeighter = new FrequencyWordsWeighter();
     private Point center = new Point(300, 300);
     private ITagsCloudLayouter layouter;
     private static Random random = new Random();
+    private TagsCloudGenerator generator;
 
     public static string RandomString(int length)
     {
@@ -30,13 +36,14 @@ public class TagsCloudGeneratorTests
     public void SetUp()
     {
         layouter = new CircularCloudLayouter(center);
+        var wordsFilter = new BlacklistWordsFilter( new BlackListFilterSettings(new HashSet<string>()));
+        generator = new TagsCloudGenerator(new TagsCloudGeneratorSettings(minLetterSize,  formatter,wordsFilter, layouter, wordsWeighter));
+        
     }
 
     [Test]
     public void CreateCloud_CreatesWordsSizesPropotionalToFrequency()
     {
-        var wordsFilter = new BlacklistWordsFilter(new HashSet<string>());
-        var generator = new TagsCloudGenerator(minLetterSize, wordsFilter, formatter, layouter);
         var words = new List<string>() {"aaa", "aaa", "aaa", "bb", "bb", "c"};
         var cloud = generator.CreateCloud(words);
         var wordsSizes = new Dictionary<string, Size>();
@@ -53,8 +60,6 @@ public class TagsCloudGeneratorTests
     [Test]
     public void CreateCloud_CreatesCloudOfWordsInscribedInCircle()
     {
-        var wordsFilter = new BlacklistWordsFilter(new HashSet<string>());
-        var generator = new TagsCloudGenerator(minLetterSize, wordsFilter, formatter, layouter);
         var words = new List<string>();
         for (var i = 0; i < 100; i++)
         {
@@ -76,4 +81,3 @@ public class TagsCloudGeneratorTests
     }
 }
 }
-*/
