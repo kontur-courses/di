@@ -12,6 +12,7 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
         public List<Rectangle> Rectangles { get; set; }
         public CloudCompactor CloudCompactor { get; set; }
         public RectangleGenerator RectangleGenerator { get; set; }
+        public static bool IsCompressedCloud { get; set; }
 
         public CircularCloudLayouter(Point center, Size windowSize)
         {
@@ -29,7 +30,8 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
             if (size.Height < 0 || size.Width < 0)
                 throw new ArgumentException("Size should be positive");
             var resultRect = RectangleGenerator.GetNextRectangle(size);
-            resultRect = CloudCompactor.ShiftRectangleToTheNearest(resultRect);
+            if (IsCompressedCloud)
+                resultRect = CloudCompactor.ShiftRectangleToTheNearest(resultRect);
             Rectangles.Add(resultRect);
             return resultRect;
         }

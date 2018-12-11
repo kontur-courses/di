@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
+using TagsCloudVisualization.TagsCloud;
 using TagsCloudVisualization.TagsCloud.CircularCloud;
 
 namespace TagsCloudVisualization.App.Actions
 {
-    public class TagsCloudAction : IUiAction
+    public class CompressedTagsCloudAction : IUiAction
     {
-        public string Name => "Облако тэгов";
+        public string Name => "Сжатое облако тэгов";
         public string Category => "Изображение";
         private readonly TagsCloudVisualizer visualizer;
         private readonly PictureBoxImageHolder imageHolder;
 
-        public TagsCloudAction(TagsCloudVisualizer visualizer, PictureBoxImageHolder imageHolder)
+        public CompressedTagsCloudAction(TagsCloudVisualizer visualizer, PictureBoxImageHolder imageHolder)
         {
             this.imageHolder = imageHolder;
             this.visualizer = visualizer;
@@ -20,7 +21,7 @@ namespace TagsCloudVisualization.App.Actions
         {
             try
             {
-                CircularCloudLayouter.IsCompressedCloud = false;
+                CircularCloudLayouter.IsCompressedCloud = true;
                 var image = visualizer.DrawCircularCloud();
                 imageHolder.RecreateImage(image);
                 imageHolder.Refresh();

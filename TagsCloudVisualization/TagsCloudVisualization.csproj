@@ -93,6 +93,7 @@
     <Compile Include="App\Actions\ImageSettingsAction.cs" />
     <Compile Include="App\Actions\PaletteSettingsAction.cs" />
     <Compile Include="App\Actions\SaveImageAction.cs" />
+    <Compile Include="App\Actions\CompressedTagsCloudAction.cs" />
     <Compile Include="App\Actions\TagsCloudAction.cs" />
     <Compile Include="App\PictureBoxImageHolder.cs">
       <SubType>Component</SubType>
@@ -123,6 +124,9 @@
     <Compile Include="WordProcessing\WordsSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ProjectFiles\BoringWords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RuDictionary\affRU.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -135,7 +139,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RuDictionary\DefaultTags.txt">
+    <Content Include="ProjectFiles\DefaultTags.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

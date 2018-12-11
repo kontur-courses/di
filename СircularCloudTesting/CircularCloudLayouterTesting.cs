@@ -21,7 +21,7 @@ namespace СircularCloudTesting
             public void Should_NotThrowArgumentException_When(int x, int y)
             {
                 var center = new Point(x, y);
-                var cloud = new CircularCloudLayouter(center, new Size(2000,2000));
+                var cloud = new CircularCloudLayouter(center, new Size(2000, 2000));
                 Assert.AreEqual(new Point(x, y), cloud.Center);
             }
 
@@ -53,6 +53,7 @@ namespace СircularCloudTesting
             [SetUp]
             public void Init()
             {
+                CircularCloudLayouter.IsCompressedCloud = true;
                 stepAngle = PointGenerator.StepAngle;
                 cloud = new CircularCloudLayouter(new Point(1000, 1000), new Size(2000, 2000));
 

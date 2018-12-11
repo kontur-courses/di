@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,6 +8,7 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
     public class TagsCloudVisualizer
     {
         private readonly TagsCloudSettings cloudSettings;
+        private const double HeightStretchFactor = 1.5;
         public TagsCloudVisualizer(TagsCloudSettings cloudSettings)
         {
             this.cloudSettings = cloudSettings;
@@ -21,13 +21,13 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
             var processedWords = ProcessWords(cloudSettings.FrequenciesByWords);
             var wordsColor = cloudSettings.Palette.WordsColor;
             var font = imageSettings.Font;
-            const TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter;
+            const TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoClipping;
 
             graphics.Clear(cloudSettings.Palette.BackgroundColor);
             foreach (var processedWord in processedWords)
             {
-                var enlargedFont = new Font(font.Name, font.Size*processedWord.RepetitionsCount,
-                    font.Style,font.Unit,font.GdiCharSet,font.GdiVerticalFont);
+                var enlargedFont = new Font(font.Name, font.Size * processedWord.RepetitionsCount,
+                    font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
                 TextRenderer.DrawText(graphics, processedWord.word, enlargedFont, processedWord.Region, wordsColor, flags);
             }
             return bmp;
@@ -39,7 +39,8 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
             var imageSettings = cloudSettings.ImageSettings;
             var circularCloudLayouter = new CircularCloudLayouter(imageSettings.Center, imageSettings.ImageSize);
 
-            return frequenciesByWords.OrderByDescending(pair => pair.Value)
+            return frequenciesByWords.OrderByDescending(pair => pair.Key.Length)
+                .OrderByDescending(pair => pair.Value)
                 .Select(pair => (Word: pair.Key, Frequency: pair.Value))
                 .Select(tuple => (GetRectangle(tuple, circularCloudLayouter), tuple.Word, tuple.Frequency));
         }
@@ -47,11 +48,10 @@ namespace TagsCloudVisualization.TagsCloud.CircularCloud
         private Rectangle GetRectangle((string Word, int Frequency) tuple, CircularCloudLayouter circularCloudLayouter)
         {
             var fontSize = cloudSettings.ImageSettings.Font.Size;
-            var fontHeight = cloudSettings.ImageSettings.Font.Height;
 
             return circularCloudLayouter.PutNextRectangle
                                 (new Size((int)(tuple.Word.Length * fontSize * tuple.Frequency),
-                                fontHeight * tuple.Frequency));
+                                (int)(fontSize * HeightStretchFactor * tuple.Frequency)));
         }
     }
 }

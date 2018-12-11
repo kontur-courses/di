@@ -51,9 +51,9 @@ namespace TagsCloudVisualization.WordProcessing
         private IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
             return words
-                .Where(word => word.Length > 2 && hunspell.Spell(word))
+                .Where(word=> hunspell.Spell(word))              
                 .Select(word => LeadToInitialForm(word).ToLower())
-                .Where(word => word.Length != 0);
+                .Where(word => word.Length != 0 && !WordsSettings.BoringWords.Contains(word));
         }
 
 
