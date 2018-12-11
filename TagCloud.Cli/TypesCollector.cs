@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TagCloud;
 using TagCloud.Enums;
-using TagCloud.Layouter;
+using TagCloud.Layouter.Spirals;
 
 namespace TagCloudCreator
 {
@@ -12,7 +12,8 @@ namespace TagCloudCreator
         {
             return new Dictionary<CloudLayouterType, Type>
             {
-                {CloudLayouterType.ArithmeticSpiral, typeof(CircularCloudLayouter) }
+                {CloudLayouterType.ArithmeticSpiral, typeof(ArithmeticSpiral)},
+                {CloudLayouterType.SquareSpiral, typeof(SquareSpiral)}
             };
         }
 

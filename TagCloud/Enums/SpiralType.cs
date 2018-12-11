@@ -2,6 +2,7 @@
 {
     public enum CloudLayouterType
     {
-        ArithmeticSpiral
+        ArithmeticSpiral,
+        SquareSpiral
     }
 }

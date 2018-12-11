@@ -4,17 +4,19 @@ using TagCloud.Interfaces;
 
 namespace TagCloud.Layouter
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    public class SpiralCloudLayouter : ICloudLayouter
     {
         private const double SpiralAngleInterval = 0.1;
         private const double SpiralTurnsInterval = 0.1;
 
         private readonly Point origin;
         private readonly List<Rectangle> rectanglesList;
+        private readonly ISpiral spiral;
         private double currentSpiralAngle;
 
-        public CircularCloudLayouter(Point origin)
+        public SpiralCloudLayouter(ISpiral spiral, Point origin)
         {
+            this.spiral = spiral;
             this.origin = origin;
             rectanglesList = new List<Rectangle>();
         }
@@ -57,19 +59,11 @@ namespace TagCloud.Layouter
             while (newRectangle.IsIntersectsWithAnyRect(rectanglesList))
             {
                 currentSpiralAngle += SpiralAngleInterval;
-                var rectCenter = ArithmeticSpiral(currentSpiralAngle, SpiralTurnsInterval);
+                var rectCenter = spiral.Put(origin, currentSpiralAngle, SpiralTurnsInterval);
                 newRectangle.Center = rectCenter;
             }
 
             return newRectangle;
-        }
-
-        private Point ArithmeticSpiral(double angle, double turnsInterval)
-        {
-            var x = origin.X + turnsInterval * angle * Math.Cos(angle);
-            var y = origin.Y + turnsInterval * angle * Math.Sin(angle);
-
-            return new Point(x, y);
         }
     }
 }

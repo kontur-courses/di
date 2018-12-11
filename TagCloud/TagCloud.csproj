@@ -50,13 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArialFontScheme.cs" />
-    <Compile Include="Enums\CloudLayouterType.cs" />
+    <Compile Include="Enums\SpiralType.cs" />
     <Compile Include="Enums\ColorScheme.cs" />
     <Compile Include="Enums\FontScheme.cs" />
     <Compile Include="Enums\SizeScheme.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileReaderByLines.cs" />
     <Compile Include="InfinitiveCastProcessor.cs" />
+    <Compile Include="Interfaces\ISpiral.cs" />
     <Compile Include="Interfaces\IWordProcessor.cs" />
     <Compile Include="IntermediateClasses\FrequentedWord.cs" />
     <Compile Include="ImageSaver.cs" />
@@ -69,12 +70,14 @@
     <Compile Include="Interfaces\IStatisticsCollector.cs" />
     <Compile Include="Interfaces\IVisualizer.cs" />
     <Compile Include="Interfaces\IWordFilter.cs" />
-    <Compile Include="Layouter\CircularCloudLayouter.cs" />
+    <Compile Include="Layouter\SpiralCloudLayouter.cs" />
     <Compile Include="Layouter\CurcularCloudExtensions.cs" />
     <Compile Include="Layouter\Point.cs" />
     <Compile Include="Layouter\Rectangle.cs" />
     <Compile Include="Layouter\RectangleExtensions.cs" />
     <Compile Include="Layouter\Size.cs" />
+    <Compile Include="Layouter\Spirals\ArithmeticSpiral.cs" />
+    <Compile Include="Layouter\Spirals\SquareSpiral.cs" />
     <Compile Include="Layouter\Vector.cs" />
     <Compile Include="LinearSizeScheme.cs" />
     <Compile Include="IntermediateClasses\PositionedElement.cs" />
