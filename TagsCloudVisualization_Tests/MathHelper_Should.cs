@@ -1,5 +1,4 @@
-﻿using TagsCloudVisualization;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace TagsCloudVisualization_Tests
 {
