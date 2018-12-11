@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using NHunspell;
 
 namespace TagsCloudPreprocessor
 {
@@ -15,6 +19,7 @@ namespace TagsCloudPreprocessor
 
         public IEnumerable<string> GetValidWords(IEnumerable<string> words)
         {
+            words = GetWordsStem(words);
             var forbiddenWords = GetForbiddenWords();
             var frequencyDictionary = GetFrequencyDictionary(words.Where(w => !forbiddenWords.Contains(w)));
             var validWords = frequencyDictionary
@@ -22,7 +27,20 @@ namespace TagsCloudPreprocessor
                 .Reverse()
                 .Select(pair => pair.Key);
 
+            GetWordsStem(validWords.Take(5));
+
             return validWords;
+        }
+
+        private IEnumerable<string> GetWordsStem(IEnumerable<string> words)
+        {
+            var h = new Hunspell(@"ru_RU.aff", @"ru_RU.dic");
+            
+            return words
+                .Select(word => h.Stem(word))
+                .Select(stem => stem.FirstOrDefault())
+                .Where(wordStem => wordStem != null)
+                .ToList();
         }
 
         private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
