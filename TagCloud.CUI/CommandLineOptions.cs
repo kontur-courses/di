@@ -8,6 +8,17 @@ namespace TagCloud.CUI
 {
     public class CommandLineOptions
     {
+        #region TagCloudSettings
+        [Option('p', "pathtowords", Required = true)]
+        public string PathToWords { get; set; }
+
+        [Option('b', "pathtoboringwords")]
+        public string PathToBoringWords { get; set; }
+
+        [Option('i', "imagepath")]
+        public string PathForResultImage { get; set; }
+        #endregion
+
         #region PaintingSettings
         [Option('b', "backgroundcolor")]
         public string BackgroundColorName { get; set; }
@@ -17,12 +28,6 @@ namespace TagCloud.CUI
         #endregion
 
         #region TextWorkingSettings
-        [Option('p', "pathtowords", Required = true)]
-        public string PathToWords { get; set; }
-
-        [Option("pathtoboringwords")]
-        public string PathToBoringWords { get; set; }
-
         [Option('c', "maxtagscount")]
         public int? MaxTagsCount { get; set; }
         #endregion
@@ -33,9 +38,6 @@ namespace TagCloud.CUI
 
         [Option('h', "height")]
         public int? Height { get; set; }
-
-        [Option('i', "imagepath")]
-        public string PathForResultImage { get; set; }
 
         [Option('f', "font")]
         public string FontName { get; set; }
@@ -57,15 +59,12 @@ namespace TagCloud.CUI
             if (BackgroundColorName != null)
                 settings.BackgroundColor = Color.FromName(BackgroundColorName);
             if (TagBrushName != null)
-                settings.TagBrush = new SolidBrush(Color.FromName(TagBrushName));
+                settings.TagColor = Color.FromName(TagBrushName);
         }
 
         public void UpdateTextWorkingSettings(TextWorkingSettings settings)
         {
-            settings.PathToWords = PathToWords;
             settings.MaxUniqueWordsCount = MaxTagsCount;
-            if (PathToBoringWords != null)
-                settings.PathToBoringWords = PathToBoringWords;
         }
 
         public void UpdateVisualizingSettings(VisualizingSettings settings)
@@ -76,8 +75,6 @@ namespace TagCloud.CUI
                 settings.MinFontSize = MinFontSize.Value;
             if (FontName != null)
                 settings.FontName = FontName;
-            if (PathForResultImage != null)
-                settings.PathForResultImage = PathForResultImage;
             if (Width.HasValue)
                 settings.Width = Width.Value;
             if (Height.HasValue)
@@ -88,6 +85,15 @@ namespace TagCloud.CUI
         {
             if (SpiralStepMultiplier.HasValue)
                 settings.SpiralStepMultiplier = SpiralStepMultiplier.Value;
+        }
+
+        public void UpdateTagCloudSettings(TagCloudSettings settings)
+        {
+            settings.PathToWords = PathToWords;
+            if (PathToBoringWords != null)
+                settings.PathToBoringWords = PathToBoringWords;
+            if (PathForResultImage != null)
+                settings.PathForResultImage = PathForResultImage;
         }
     }
 }

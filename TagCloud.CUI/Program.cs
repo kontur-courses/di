@@ -22,6 +22,7 @@ namespace TagCloud.CUI
             var builder = new ContainerBuilder();
 
             builder.RegisterType<Core.TagCloud>().AsSelf();
+            builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
 
             builder.RegisterType<TextWorker>().AsSelf();
             builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
@@ -44,13 +45,14 @@ namespace TagCloud.CUI
                 {
                     @"-p", @"C:\Users\Михаил\Desktop\di\TagCloud.Tests\Resources\words_with_different_delimiters.txt",
                     @"-i", @"C:\Users\Михаил\Desktop\heh.png",
-                    @"--spiralstep", @"1e-4"
+                    @"--spiralstep", @"1"
                 };
 
             Parser.Default
                 .ParseArguments<CommandLineOptions>(args)
                 .WithParsed(options =>
                     {
+                        //TODO: work with it more attractive
                         var textWorkingSettings = container.Resolve<TextWorkingSettings>();
                         options.UpdateTextWorkingSettings(textWorkingSettings);
 
@@ -63,8 +65,11 @@ namespace TagCloud.CUI
                         var layoutingSettings = container.Resolve<LayoutingSettings>();
                         options.UpdateLayoutingSettings(layoutingSettings);
 
+                        var tagCloudSettings = container.Resolve<TagCloudSettings>();
+                        options.UpdateTagCloudSettings(tagCloudSettings);
+
                         var tagCloud = container.Resolve<Core.TagCloud>();
-                        tagCloud.MakeTagCloud();
+                        tagCloud.MakeTagCloudAndSave();
                     }
                 );
         }
