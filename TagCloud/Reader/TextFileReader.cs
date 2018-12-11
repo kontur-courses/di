@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TagCloud.Reader
 {
@@ -9,11 +9,10 @@ namespace TagCloud.Reader
     {
         public IEnumerable<string> Read(string fileName)
         {
-            var strings = File.ReadAllText(fileName, Encoding.Default)
-                .Split(' ', '.', ',', '?', '!', ':', ';', '-', '"', '\'', '\n', '\r', '\t', '(', ')', '<', '>');
-            return strings
-                .Where(word => !string.IsNullOrWhiteSpace(word))
-                .Where(word => word.All(char.IsLetter));
+            var regex = new Regex("\\p{L}+");
+            var matches = regex.Matches(File.ReadAllText(fileName, Encoding.Default));
+            foreach (Match match in matches)
+                yield return match.Value;
         }
     }
 }
