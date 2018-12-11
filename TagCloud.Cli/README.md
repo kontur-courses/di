@@ -32,6 +32,6 @@
 
 ## Примеры использования
  
- Команда: TagCloudCreator.exe --input d:\input.txt --output d:\output.png --stopwords d:\stopwords.txt --width 5000 --height 5000
+ Команда: TagCloudCreator.exe --input d:\input.txt --output d:\output.png --stopwords d:\stopwords.txt --width 5000 --height 5000 --colorscheme TransparentRed
  
- Результат (файл output.png): ![Результат](https://github.com/lamanoff/di/blob/master/TagCloud.Cli/output.jpg "Результат")
+ Результат (файл output.png): ![Результат](https://github.com/lamanoff/di/blob/master/TagCloud.Cli/output.png "Результат")

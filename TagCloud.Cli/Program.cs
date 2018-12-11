@@ -1,22 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using CommandLine;
-using TagCloud;
-using TagCloud.Enums;
-using TagCloud.Interfaces;
-using TagCloud.Layouter;
-using TagCloud.Visualizer;
-using Point = TagCloud.Layouter.Point;
-using Size = System.Drawing.Size;
-
-namespace TagCloudCreator
+﻿namespace TagCloudCreator
 {
     internal class Program
     {

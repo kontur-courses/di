@@ -2,6 +2,7 @@
 {
     public enum ColorScheme
     {
-        RandomColors
+        RandomColors,
+        TransparentRed
     }
 }

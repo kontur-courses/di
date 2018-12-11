@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using TagCloud.Enums;
 
 namespace TagCloudCreator
 {
@@ -23,15 +24,15 @@ namespace TagCloudCreator
         public string Background { get; set; } = "AliceBlue";
 
         [Option("layouter", Required = false, HelpText = "Set a layouter type")]
-        public string Layouter { get; set; } = "ArithmeticSpiral";
+        public CloudLayouterType Layouter { get; set; } = CloudLayouterType.ArithmeticSpiral;
 
         [Option("colorscheme", Required = false, HelpText = "Set a color scheme")]
-        public string ColorScheme { get; set; } = "RandomColors";
+        public ColorScheme ColorScheme { get; set; } = ColorScheme.RandomColors;
 
         [Option("fontscheme", Required = false, HelpText = "Set a font scheme")]
-        public string FontScheme { get; set; } = "Arial";
+        public FontScheme FontScheme { get; set; } = FontScheme.Arial;
 
         [Option("sizescheme", Required = false, HelpText = "Set a word size scheme")]
-        public string SizeScheme { get; set; } = "Linear";
+        public SizeScheme SizeScheme { get; set; } = SizeScheme.Linear;
     }
 }

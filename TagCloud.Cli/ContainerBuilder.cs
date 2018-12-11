@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using TagCloud;
-using TagCloud.Enums;
 using TagCloud.Interfaces;
 using TagCloud.Layouter;
 using TagCloud.Visualizer;
@@ -17,7 +15,10 @@ namespace TagCloudCreator
     {
         public static IWindsorContainer ConfigureContainer(Configuration configuration)
         {
-            var capabilities = CollectCapabilities();
+            var layouters = TypesCollector.CollectLayouters();
+            var colorSchemes = TypesCollector.CollectColorSchemes();
+            var fontSchemes = TypesCollector.CollectFontSchemes();
+            var sizeSchemes = TypesCollector.CollectSizeSchemes();
             var container = new WindsorContainer();
 
             container.Register(
@@ -36,10 +37,10 @@ namespace TagCloudCreator
                 GetRegistration<IFileReader, FileReader>(),
                 GetRegistration<Point, Point>(),
                 GetRegistration<Application, Application>(),
-                GetRegistration(typeof(ICloudLayouter), capabilities[configuration.LayouterType]),
-                GetRegistration(typeof(IColorScheme), capabilities[configuration.ColorScheme]),
-                GetRegistration(typeof(IFontScheme), capabilities[configuration.FontScheme]),
-                GetRegistration(typeof(ISizeScheme), capabilities[configuration.SizeScheme]));
+                GetRegistration(typeof(ICloudLayouter), layouters[configuration.LayouterType]),
+                GetRegistration(typeof(IColorScheme), colorSchemes[configuration.ColorScheme]),
+                GetRegistration(typeof(IFontScheme), fontSchemes[configuration.FontScheme]),
+                GetRegistration(typeof(ISizeScheme), sizeSchemes[configuration.SizeScheme]));
 
             return container;
         }
@@ -50,17 +51,6 @@ namespace TagCloudCreator
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             using (var reader = new StreamReader(stream))
                 return Encoding.ASCII.GetBytes(reader.ReadToEnd());
-        }
-
-        public static IDictionary<Enum, Type> CollectCapabilities()
-        {
-            return new Dictionary<Enum, Type>
-            {
-                {CloudLayouterType.ArithmeticSpiral, typeof(CircularCloudLayouter)},
-                {ColorScheme.RandomColors, typeof(RandomColorScheme)},
-                {FontScheme.Arial, typeof(ArialFontScheme)},
-                {SizeScheme.Linear, typeof(LinearSizeScheme)}
-            };
         }
 
         public static ComponentRegistration<object> GetRegistration(Type elementFor, Type by)

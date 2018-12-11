@@ -26,34 +26,10 @@ namespace TagCloudCreator
                 .WithParsed(o => configuration.StopWordsFile = o.Stopwords)
                 .WithParsed(o => configuration.BackgroundColor = Color.FromName(o.Background))
                 .WithParsed(o => configuration.ImageSize = new Size(o.Width, o.Height))
-                .WithParsed(o =>
-                {
-                    if (o.ColorScheme == "RandomColors")
-                        configuration.ColorScheme = ColorScheme.RandomColors;
-                    else
-                        throw new ArgumentException("Unknown color scheme");
-                })
-                .WithParsed(o =>
-                {
-                    if (o.FontScheme == "Arial")
-                        configuration.FontScheme = FontScheme.Arial;
-                    else
-                        throw new ArgumentException("Unknown font scheme");
-                })
-                .WithParsed(o =>
-                {
-                    if (o.Layouter == "ArithmeticSpiral")
-                        configuration.LayouterType = CloudLayouterType.ArithmeticSpiral;
-                    else
-                        throw new ArgumentException("Unknown layouter type");
-                })
-                .WithParsed(o =>
-                {
-                    if (o.SizeScheme == "Linear")
-                        configuration.SizeScheme = SizeScheme.Linear;
-                    else
-                        throw new ArgumentException("Unknown size scheme");
-                })
+                .WithParsed(o => configuration.ColorScheme = o.ColorScheme)
+                .WithParsed(o => configuration.FontScheme = o.FontScheme)
+                .WithParsed(o => configuration.LayouterType = o.Layouter)
+                .WithParsed(o => configuration.SizeScheme = o.SizeScheme)
                 .WithNotParsed(o => throw new ArgumentException("Wrong command line arguments"));
 
             return configuration;
