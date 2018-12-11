@@ -14,10 +14,10 @@ namespace TagCloud.Core
             this.visualizer = visualizer;
         }
 
-        public void MakeTagCloud(string pathToText, string pathForImage)
+        public void MakeTagCloud()
         {
             var tagStats = textWorker.GetTagStats();
-            visualizer.Render(tagStats, pathForImage);
+            visualizer.Render(tagStats);
         }
     }
 }

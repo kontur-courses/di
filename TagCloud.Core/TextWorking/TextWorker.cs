@@ -22,7 +22,9 @@ namespace TagCloud.Core.TextWorking
         public IEnumerable<TagStat> GetTagStats()
         {
             var words = wordsReader.ReadFrom(settings.PathToWords);
-            var boringWords = new HashSet<string>(wordsReader.ReadFrom(settings.PathToMutedWords));
+            var boringWords = settings.PathToBoringWords == null
+                ? new HashSet<string>()
+                : new HashSet<string>(wordsReader.ReadFrom(settings.PathToBoringWords));
             return wordsProcessor.Process(words, boringWords, settings.MaxUniqueWordsCount);
         }
     }

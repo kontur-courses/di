@@ -48,6 +48,7 @@
     <Compile Include="Painters\OneColorPainter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ISettings.cs" />
+    <Compile Include="Settings\LayoutingSettings.cs" />
     <Compile Include="Settings\PaintingSettings.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="TextWorking\WordsProcessing\IWordsProcessor.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="TextWorking\WordsReading\WordsReadersForFiles\TxtWordsReader.cs" />
     <Compile Include="Util\FontExtensions.cs" />
     <Compile Include="Util\GraphicsExtensions.cs" />
+    <Compile Include="Util\ImageFormatResolver.cs" />
     <Compile Include="Util\Tag.cs" />
     <Compile Include="Util\TagStat.cs" />
     <Compile Include="Visualizers\ITagCloudVisualizer.cs" />

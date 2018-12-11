@@ -5,6 +5,6 @@ namespace TagCloud.Core.Visualizers
 {
     public interface ITagCloudVisualizer
     {
-        void Render(IEnumerable<TagStat> tagStats, string pathForImage);
+        void Render(IEnumerable<TagStat> tagStats);
     }
 }

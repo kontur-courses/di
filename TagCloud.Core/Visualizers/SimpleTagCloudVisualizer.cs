@@ -5,7 +5,6 @@ using TagCloud.Core.Layouters;
 using TagCloud.Core.Painters;
 using TagCloud.Core.Settings;
 using TagCloud.Core.Util;
-using TagCloud.Util;
 
 namespace TagCloud.Core.Visualizers
 {
@@ -28,13 +27,14 @@ namespace TagCloud.Core.Visualizers
             graphics = Graphics.FromImage(bitmap);
         }
 
-        public void Render(IEnumerable<TagStat> tagStats, string pathForImage)
+        public void Render(IEnumerable<TagStat> tagStats)
         {
+            layouter.RefreshWith(settings.CenterPoint);
             var resTags = GetResultTags(tagStats);
             painter.SetBackgroundColorFor(graphics);
             foreach (var tag in resTags)
                 graphics.DrawTag(tag);
-            bitmap.Save(pathForImage, settings.Format);
+            bitmap.Save(settings.PathForResultImage, settings.ImageFormat);
         }
 
         private (double fontSizeMultiplier, double averageRepeatsCount) GetFontSizeMultiplierAndAverageRepeatsCount(

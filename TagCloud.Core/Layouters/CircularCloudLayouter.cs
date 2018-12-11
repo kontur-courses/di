@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Core.Settings;
 
 namespace TagCloud.Core.Layouters
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly PointF center;
+        private PointF center;
         private readonly List<RectangleF> usedRectangles;
         private float angle;
-        private readonly double spiralLengthMultiplier;
+        private readonly LayoutingSettings settings;
 
-        public CircularCloudLayouter(PointF center)
+        public CircularCloudLayouter(LayoutingSettings settings)
         {
-            this.center = center;
+            this.settings = settings;
+            center = new PointF(0, 0);
             angle = -1;
-            spiralLengthMultiplier = 1e-2;
             usedRectangles = new List<RectangleF>();
+        }
+
+        public void RefreshWith(PointF newCenterPoint)
+        {
+            center = newCenterPoint;
+            angle = -1;
+            usedRectangles.Clear();
         }
 
         public RectangleF PutNextRectangle(SizeF rectangleSize)
@@ -38,8 +46,8 @@ namespace TagCloud.Core.Layouters
         private PointF GetNextPoint()
         {
             angle++;
-            var dx = (float)(Math.Cos(angle) * angle * spiralLengthMultiplier);
-            var dy = (float)(Math.Sin(angle) * angle * spiralLengthMultiplier);
+            var dx = (float)(Math.Cos(angle) * angle * settings.SpiralStepMultiplier);
+            var dy = (float)(Math.Sin(angle) * angle * settings.SpiralStepMultiplier);
             return new PointF(center.X + dx, center.Y + dy);
         }
     }
