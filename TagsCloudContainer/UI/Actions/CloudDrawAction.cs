@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.FileReader;

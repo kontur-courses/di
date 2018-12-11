@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Layouter\ITagCloudLayouter.cs" />
-    <Compile Include="Painter\PainterManager.cs" />
     <Compile Include="Painter\RandomPainter.cs" />
     <Compile Include="Settings\PainterType.cs" />
     <Compile Include="Painter\SolidPainter.cs" />

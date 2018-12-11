@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TagsCloudContainer.Preprocessing
+﻿namespace TagsCloudContainer.Preprocessing
 {
     public class WordsPreprocessorSettings
     {
