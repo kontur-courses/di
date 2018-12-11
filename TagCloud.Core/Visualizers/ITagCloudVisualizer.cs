@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TagCloud.Util;
+using TagCloud.Core.Util;
 
 namespace TagCloud.Core.Visualizers
 {

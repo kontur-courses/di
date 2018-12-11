@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
-using TagCloud.Util;
+using TagCloud.Core.Util;
 
 namespace TagCloud.Core.TextWorking.WordsProcessing
 {

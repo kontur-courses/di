@@ -2,7 +2,7 @@
 using TagCloud.Core.Settings;
 using TagCloud.Core.TextWorking.WordsProcessing;
 using TagCloud.Core.TextWorking.WordsReading;
-using TagCloud.Util;
+using TagCloud.Core.Util;
 
 namespace TagCloud.Core.TextWorking
 {

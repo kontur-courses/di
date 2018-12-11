@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Core.Settings;
-using TagCloud.Util;
+using TagCloud.Core.Util;
 
 namespace TagCloud.Core.Painters
 {

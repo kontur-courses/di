@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Core.TextWorking.WordsProcessing;
 using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
-using TagCloud.Util;
+using TagCloud.Core.Util;
 
 namespace TagCloud.Tests.WordsProcessors
 {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.Util
+namespace TagCloud.Core.Util
 {
     public class Tag
     {

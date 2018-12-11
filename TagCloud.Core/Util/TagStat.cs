@@ -1,4 +1,4 @@
-﻿namespace TagCloud.Util
+﻿namespace TagCloud.Core.Util
 {
     public class TagStat
     {
