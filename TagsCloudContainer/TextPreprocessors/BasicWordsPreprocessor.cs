@@ -28,14 +28,14 @@ namespace TagsCloudContainer.TextPreprocessors
                 {
                     var lemma = hunspell.Stem(word).FirstOrDefault();
 
-                    if (lemma != null && FilterWord(lemma))
+                    if (lemma != null && WordMeetsAllRequirements(lemma))
                         preprocessedWords.Add(lemma.ToLower());
                 }
             }
             return ProcessWords(preprocessedWords);
         }
 
-        private bool FilterWord(string lemma)
+        private bool WordMeetsAllRequirements(string lemma)
         {
             return wordFilters.All(e => e.Filter(lemma));
         }
