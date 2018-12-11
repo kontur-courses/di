@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C3E70787-D7C0-4451-83D6-128C0B5D24F2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>TagsCloudVisualization</RootNamespace>
     <AssemblyName>TagsCloudVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -73,8 +76,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloudParametersParser.cs" />
+    <Compile Include="Interfaces\ICloudParametersParser.cs" />
     <Compile Include="Interfaces\IPointGeneratorDetector.cs" />
     <Compile Include="Interfaces\IWordsTransformer.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="PointGeneratorDetector.cs" />
     <Compile Include="Settings\IPointGeneratorSettings.cs" />
     <Compile Include="Settings\IWordsExtractorSettings.cs" />
@@ -86,17 +92,14 @@
     <Compile Include="CloudParameters.cs" />
     <Compile Include="CloudWordData.cs" />
     <Compile Include="Settings\WordsExtractorSettings.cs" />
-    <Compile Include="Interfaces\ICloudParametersParser.cs" />
     <Compile Include="Interfaces\IWordDataProvider.cs" />
     <Compile Include="Interfaces\IWordsExtractor.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="TagsCloudVisualizationRoot.cs" />
     <Compile Include="WordDataProvider.cs" />
     <Compile Include="PointGenerators\Astroid.cs" />
     <Compile Include="PointGenerators\Heart.cs" />
     <Compile Include="PointGenerators\IPointGenerator.cs" />
     <Compile Include="PointGenerators\Spiral.cs" />
-    <Compile Include="CloudParametersParser.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtesions.cs" />
     <Compile Include="TagsCloudVisualizer.cs" />

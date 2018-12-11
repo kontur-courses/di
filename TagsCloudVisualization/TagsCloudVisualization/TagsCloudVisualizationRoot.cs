@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Autofac;
 using TagsCloudVisualization.Interfaces;
@@ -7,21 +7,15 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
-    public class Program
+    public static class TagsCloudVisualizationRoot
     {
-        private static void Main(string[] args)
-        {
-            var container = CompositionRoot();
-            container.Resolve<TagsCloudApp>().Run(args, container);
-        }
-
-        private static IContainer CompositionRoot()
+        public static IContainer GetCompositionRoot()
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TagsCloudApp>();
-            builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
             builder.RegisterType<WordDataProvider>().As<IWordDataProvider>();
             builder.RegisterType<PointGeneratorDetector>().As<IPointGeneratorDetector>();
+            builder.RegisterType<CloudParametersParser>().As<ICloudParametersParser>();
             builder.Register(c => WordsExtractorSettingsProvider.GetDefaultSettings()).As<IWordsExtractorSettings>();
             builder.Register(c => PointGeneratorSettingsProvider.GetDefaultSettings()).As<IPointGeneratorSettings>();
             builder.RegisterType<WordsExtractor>().As<IWordsExtractor>();

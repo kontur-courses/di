@@ -2,6 +2,6 @@
 {
     public interface ICloudParametersParser
     {
-        CloudParameters Parse(Options options, CloudParameters parameters);
+        CloudParameters Parse(Options options);
     }
 }

@@ -7,13 +7,17 @@ namespace TagsCloudVisualization
 {
     public class CloudParametersParser : ICloudParametersParser
     {
-
-        public CloudParameters Parse(Options options, CloudParameters parameters)
+        public CloudParameters Parse(Options options)
         {
-            parameters.ColorFunc = GetColor(options.Color);
-            parameters.ImageSize = GetImageSize(options.ImageSize);
-            parameters.FontName = options.FontName;
-            parameters.OutFormat = GetImageFormat(options.OutFormat);
+            var parameters = new CloudParameters
+            {
+                ColorFunc = GetColor(options.Color),
+                ImageSize = GetImageSize(options.ImageSize),
+                FontName = options.FontName,
+                OutFormat = GetImageFormat(options.OutFormat),
+                PointGeneratorName = options.PointGenerator,
+                InputFilePath = options.FilePath
+            };
 
             return parameters;
         }

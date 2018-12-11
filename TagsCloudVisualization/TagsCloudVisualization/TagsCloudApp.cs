@@ -32,15 +32,9 @@ namespace TagsCloudVisualization
             this.wordsTransformer = wordsTransformer;
         }
 
-        public void Run(string[] args, IContainer container)
+        public void Run(Options options, IContainer container)
         {
-            var options = new Options();
-
-            if (!Parser.Default.ParseArguments(args, options))
-                return;
-
-            var parameters = new CloudParameters();
-            parameters = cloudParametersParser.Parse(options, parameters);
+            var parameters = cloudParametersParser.Parse(options);
             parameters.PointGenerator = pointGeneratorDetector.GetPointGenerator(options.PointGenerator);
             var cloud = new CircularCloudLayouter(parameters.PointGenerator, pointGeneratorSettings);
             var words = wordsExtractor.Extract(options.FilePath, wordsExtractorSettings);
