@@ -27,8 +27,6 @@ namespace TagsCloudPreprocessor
                 .Reverse()
                 .Select(pair => pair.Key);
 
-            GetWordsStem(validWords.Take(5));
-
             return validWords;
         }
 
