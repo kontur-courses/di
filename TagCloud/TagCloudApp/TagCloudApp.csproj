@@ -48,7 +48,6 @@
     <Compile Include="ConsoleUserInterface.cs" />
     <Compile Include="IPathValidator.cs" />
     <Compile Include="ITextReader.cs" />
-    <Compile Include="NewLineTextReader.cs" />
     <Compile Include="PathValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,7 +16,7 @@ namespace TagCloudApp
             container.RegisterType<CircularCloudLayouter>()
                      .AsSelf();
 
-            container.RegisterTypes(typeof(WhitespaceTextReader), typeof(NewLineTextReader))
+            container.RegisterTypes(typeof(WhitespaceTextReader))//etc.
                      .As<ITextReader>();
 
             container.RegisterTypes(typeof(BasicDrawer))
