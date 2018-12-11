@@ -8,8 +8,7 @@ namespace TagCloudVisualization
 {
     public class TagCloudImageCreator
     {
-        public const float MaxFontSize = 100;
-        public const float DefaultFontSize = 2;
+        public float MaxFontSize => 100;
         private readonly IEnumerable<IWordDrawer> drawers;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
 

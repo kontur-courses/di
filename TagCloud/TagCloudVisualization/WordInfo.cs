@@ -5,6 +5,8 @@ namespace TagCloudVisualization
 {
     public class WordInfo
     {
+        private float scale;
+
         public WordInfo(string word, int count)
         {
             Word = word;
@@ -17,20 +19,10 @@ namespace TagCloudVisualization
 
         public Rectangle Rectangle { get; private set; }
 
-        public float Scale { get; private set; }
+        public float Scale { get => scale; private set => scale = Math.Abs(value - 1) < 0.001 ? Word.Length : value; }
 
         public override string ToString() => $"{{{Word}, {Rectangle}, {Count}, {Scale}}}";
 
-        public WordInfo With(string changedWord) => new WordInfo(changedWord, Count);
-
-        public WordInfo With(Func<string, string> wordChanger) => With(wordChanger(Word));
-
-        public void Deconstruct(out Rectangle rectangle, out string word, out float scale)
-        {
-            rectangle = Rectangle;
-            word = Word;
-            scale = Scale;
-        }
 
         public WordInfo With(Rectangle rectangle) => new WordInfo(Word, Count) {Rectangle = rectangle, Scale = Scale};
 

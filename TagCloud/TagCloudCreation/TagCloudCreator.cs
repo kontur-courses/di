@@ -47,12 +47,12 @@ namespace TagCloudCreation
         public float GetScalingCoefficient(int count, int maxCount, int minCount)
         {
             if (maxCount == minCount)
-                return TagCloudImageCreator.DefaultFontSize;
+                return 1;
 
             if (count == minCount)
-                return TagCloudImageCreator.DefaultFontSize;
+                return 1;
 
-            return (float) Math.Ceiling((count - minCount) * TagCloudImageCreator.MaxFontSize / (maxCount - minCount));
+            return (float) Math.Ceiling((count - minCount) * imageCreator.MaxFontSize / (maxCount - minCount));
         }
     }
 }
