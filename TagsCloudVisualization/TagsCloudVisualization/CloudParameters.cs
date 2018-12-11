@@ -11,8 +11,6 @@ namespace TagsCloudVisualization
         public Func<float, Color> ColorFunc { get; set; }
         public string FontName { get; set; }
         public IPointGenerator PointGenerator { get; set; }
-        public string PointGeneratorName { get; set; }
         public ImageFormat OutFormat { get; set; }
-        public string InputFilePath { get; set; }
     }
 }

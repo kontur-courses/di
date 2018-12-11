@@ -14,9 +14,7 @@ namespace TagsCloudVisualization
                 ColorFunc = GetColor(options.Color),
                 ImageSize = GetImageSize(options.ImageSize),
                 FontName = options.FontName,
-                OutFormat = GetImageFormat(options.OutFormat),
-                PointGeneratorName = options.PointGenerator,
-                InputFilePath = options.FilePath
+                OutFormat = GetImageFormat(options.OutFormat)
             };
 
             return parameters;

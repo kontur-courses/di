@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualizationForm
+﻿using TagsCloudVisualization.PointGenerators;
+
+namespace TagsCloudVisualizationForm
 {
     partial class TagsCloudForm
     {
@@ -33,16 +35,22 @@
             this.colorLabel = new System.Windows.Forms.Label();
             this.colorTextBox = new System.Windows.Forms.TextBox();
             this.formPointGeneratorLabel = new System.Windows.Forms.Label();
-            this.formPointGeneratorTextBox = new System.Windows.Forms.TextBox();
             this.inputFilePathLabel = new System.Windows.Forms.Label();
-            this.inputFilePathTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.fontNameLabel = new System.Windows.Forms.Label();
+            this.fontNameTextBox = new System.Windows.Forms.TextBox();
+            this.formPointGeneratorComboBox = new System.Windows.Forms.ComboBox();
+            this.inputFilePathBtn = new System.Windows.Forms.Button();
+            this.imageSizeLabel = new System.Windows.Forms.Label();
+            this.imageSizeTextBox1 = new System.Windows.Forms.TextBox();
+            this.imageSizeTextBox2 = new System.Windows.Forms.TextBox();
+            this.imageSizeDelimeterLabel = new System.Windows.Forms.Label();
+            this.outFormatComboBox = new System.Windows.Forms.ComboBox();
+            this.outFormatLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // GenerateBtn
             // 
-            this.GenerateBtn.Location = new System.Drawing.Point(570, 402);
+            this.GenerateBtn.Location = new System.Drawing.Point(54, 216);
             this.GenerateBtn.Name = "GenerateBtn";
             this.GenerateBtn.Size = new System.Drawing.Size(89, 22);
             this.GenerateBtn.TabIndex = 1;
@@ -52,7 +60,7 @@
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(678, 402);
+            this.exitBtn.Location = new System.Drawing.Point(162, 216);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(89, 22);
             this.exitBtn.TabIndex = 2;
@@ -73,7 +81,7 @@
             // 
             this.colorTextBox.Location = new System.Drawing.Point(161, 27);
             this.colorTextBox.Name = "colorTextBox";
-            this.colorTextBox.Size = new System.Drawing.Size(137, 20);
+            this.colorTextBox.Size = new System.Drawing.Size(136, 20);
             this.colorTextBox.TabIndex = 0;
             this.colorTextBox.Text = "rainbow";
             // 
@@ -86,14 +94,6 @@
             this.formPointGeneratorLabel.TabIndex = 5;
             this.formPointGeneratorLabel.Text = "Форма генератора точек";
             // 
-            // formPointGeneratorTextBox
-            // 
-            this.formPointGeneratorTextBox.Location = new System.Drawing.Point(161, 53);
-            this.formPointGeneratorTextBox.Name = "formPointGeneratorTextBox";
-            this.formPointGeneratorTextBox.Size = new System.Drawing.Size(137, 20);
-            this.formPointGeneratorTextBox.TabIndex = 4;
-            this.formPointGeneratorTextBox.Text = "spiral";
-            // 
             // inputFilePathLabel
             // 
             this.inputFilePathLabel.AutoSize = true;
@@ -103,47 +103,125 @@
             this.inputFilePathLabel.TabIndex = 7;
             this.inputFilePathLabel.Text = "Путь до файла со словами";
             // 
-            // inputFilePathTextBox
+            // fontNameLabel
             // 
-            this.inputFilePathTextBox.Location = new System.Drawing.Point(161, 79);
-            this.inputFilePathTextBox.Name = "inputFilePathTextBox";
-            this.inputFilePathTextBox.Size = new System.Drawing.Size(137, 20);
-            this.inputFilePathTextBox.TabIndex = 6;
-            this.inputFilePathTextBox.Text = "input.txt";
+            this.fontNameLabel.AutoSize = true;
+            this.fontNameLabel.Location = new System.Drawing.Point(12, 105);
+            this.fontNameLabel.Name = "fontNameLabel";
+            this.fontNameLabel.Size = new System.Drawing.Size(99, 13);
+            this.fontNameLabel.TabIndex = 9;
+            this.fontNameLabel.Text = "Название шрифта";
             // 
-            // label4
+            // fontNameTextBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 105);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "label4";
+            this.fontNameTextBox.Location = new System.Drawing.Point(161, 105);
+            this.fontNameTextBox.Name = "fontNameTextBox";
+            this.fontNameTextBox.Size = new System.Drawing.Size(137, 20);
+            this.fontNameTextBox.TabIndex = 8;
+            this.fontNameTextBox.Text = "Arial";
             // 
-            // textBox4
+            // formPointGeneratorComboBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(161, 105);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(137, 20);
-            this.textBox4.TabIndex = 8;
+            this.formPointGeneratorComboBox.FormattingEnabled = true;
+            this.formPointGeneratorComboBox.Items.AddRange(new object[] {
+            "heart",
+            "spiral",
+            "astroid"});
+            this.formPointGeneratorComboBox.Location = new System.Drawing.Point(161, 53);
+            this.formPointGeneratorComboBox.Name = "formPointGeneratorComboBox";
+            this.formPointGeneratorComboBox.Size = new System.Drawing.Size(136, 21);
+            this.formPointGeneratorComboBox.TabIndex = 10;
+            this.formPointGeneratorComboBox.Text = "spiral";
+            // 
+            // inputFilePathBtn
+            // 
+            this.inputFilePathBtn.Location = new System.Drawing.Point(161, 79);
+            this.inputFilePathBtn.Name = "inputFilePathBtn";
+            this.inputFilePathBtn.Size = new System.Drawing.Size(137, 22);
+            this.inputFilePathBtn.TabIndex = 11;
+            this.inputFilePathBtn.Text = "Выбрать";
+            this.inputFilePathBtn.UseVisualStyleBackColor = true;
+            this.inputFilePathBtn.Click += new System.EventHandler(this.inputFilePathBtn_Click);
+            // 
+            // imageSizeLabel
+            // 
+            this.imageSizeLabel.AutoSize = true;
+            this.imageSizeLabel.Location = new System.Drawing.Point(12, 131);
+            this.imageSizeLabel.Name = "imageSizeLabel";
+            this.imageSizeLabel.Size = new System.Drawing.Size(96, 13);
+            this.imageSizeLabel.TabIndex = 13;
+            this.imageSizeLabel.Text = "Размер картинки";
+            // 
+            // imageSizeTextBox1
+            // 
+            this.imageSizeTextBox1.Location = new System.Drawing.Point(161, 131);
+            this.imageSizeTextBox1.Name = "imageSizeTextBox1";
+            this.imageSizeTextBox1.Size = new System.Drawing.Size(56, 20);
+            this.imageSizeTextBox1.TabIndex = 12;
+            this.imageSizeTextBox1.Text = "800";
+            // 
+            // imageSizeTextBox2
+            // 
+            this.imageSizeTextBox2.Location = new System.Drawing.Point(242, 131);
+            this.imageSizeTextBox2.Name = "imageSizeTextBox2";
+            this.imageSizeTextBox2.Size = new System.Drawing.Size(56, 20);
+            this.imageSizeTextBox2.TabIndex = 14;
+            this.imageSizeTextBox2.Text = "600";
+            // 
+            // imageSizeDelimeterLabel
+            // 
+            this.imageSizeDelimeterLabel.AutoSize = true;
+            this.imageSizeDelimeterLabel.Location = new System.Drawing.Point(223, 134);
+            this.imageSizeDelimeterLabel.Name = "imageSizeDelimeterLabel";
+            this.imageSizeDelimeterLabel.Size = new System.Drawing.Size(12, 13);
+            this.imageSizeDelimeterLabel.TabIndex = 15;
+            this.imageSizeDelimeterLabel.Text = "x";
+            // 
+            // outFormatComboBox
+            // 
+            this.outFormatComboBox.FormattingEnabled = true;
+            this.outFormatComboBox.Items.AddRange(new object[] {
+            "jpeg",
+            "tiff",
+            "png"});
+            this.outFormatComboBox.Location = new System.Drawing.Point(162, 157);
+            this.outFormatComboBox.Name = "outFormatComboBox";
+            this.outFormatComboBox.Size = new System.Drawing.Size(136, 21);
+            this.outFormatComboBox.TabIndex = 17;
+            this.outFormatComboBox.Text = "jpeg";
+            // 
+            // outFormatLabel
+            // 
+            this.outFormatLabel.AutoSize = true;
+            this.outFormatLabel.Location = new System.Drawing.Point(12, 160);
+            this.outFormatLabel.Name = "outFormatLabel";
+            this.outFormatLabel.Size = new System.Drawing.Size(120, 13);
+            this.outFormatLabel.TabIndex = 16;
+            this.outFormatLabel.Text = "Формат изображения";
             // 
             // TagsCloudForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox4);
+            this.ClientSize = new System.Drawing.Size(304, 267);
+            this.Controls.Add(this.outFormatComboBox);
+            this.Controls.Add(this.outFormatLabel);
+            this.Controls.Add(this.imageSizeDelimeterLabel);
+            this.Controls.Add(this.imageSizeTextBox2);
+            this.Controls.Add(this.imageSizeLabel);
+            this.Controls.Add(this.imageSizeTextBox1);
+            this.Controls.Add(this.inputFilePathBtn);
+            this.Controls.Add(this.formPointGeneratorComboBox);
+            this.Controls.Add(this.fontNameLabel);
+            this.Controls.Add(this.fontNameTextBox);
             this.Controls.Add(this.inputFilePathLabel);
-            this.Controls.Add(this.inputFilePathTextBox);
             this.Controls.Add(this.formPointGeneratorLabel);
-            this.Controls.Add(this.formPointGeneratorTextBox);
             this.Controls.Add(this.colorLabel);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.GenerateBtn);
             this.Controls.Add(this.colorTextBox);
             this.Name = "TagsCloudForm";
-            this.Text = "Form1";
+            this.Text = "CloudTagsVisualization";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,11 +234,17 @@
         private System.Windows.Forms.Button exitBtn;
         private System.Windows.Forms.Label colorLabel;
         private System.Windows.Forms.Label formPointGeneratorLabel;
-        private System.Windows.Forms.TextBox formPointGeneratorTextBox;
         private System.Windows.Forms.Label inputFilePathLabel;
-        private System.Windows.Forms.TextBox inputFilePathTextBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label fontNameLabel;
+        private System.Windows.Forms.TextBox fontNameTextBox;
+        private System.Windows.Forms.ComboBox formPointGeneratorComboBox;
+        private System.Windows.Forms.Button inputFilePathBtn;
+        private System.Windows.Forms.Label imageSizeLabel;
+        private System.Windows.Forms.TextBox imageSizeTextBox1;
+        private System.Windows.Forms.TextBox imageSizeTextBox2;
+        private System.Windows.Forms.Label imageSizeDelimeterLabel;
+        private System.Windows.Forms.ComboBox outFormatComboBox;
+        private System.Windows.Forms.Label outFormatLabel;
     }
 }
 

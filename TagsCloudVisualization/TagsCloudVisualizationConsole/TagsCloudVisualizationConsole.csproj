@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="NHunSpell\en_US.aff" />
+    <None Include="NHunSpell\en_US.dic" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

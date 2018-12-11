@@ -7,6 +7,8 @@ namespace TagsCloudVisualizationForm
 {
     public partial class TagsCloudForm : Form
     {
+        private string inputFilePath;
+
         public TagsCloudForm()
         {
             InitializeComponent();
@@ -17,20 +19,24 @@ namespace TagsCloudVisualizationForm
             var options = new Options
             {
                 Color = colorTextBox.Text,
-                PointGenerator = formPointGeneratorTextBox.Text,
-                FilePath = inputFilePathTextBox.Text,
-                FontName = "arial",
-                ImageSize = "800x800",
-                OutFormat = "Jpeg"
+                PointGenerator = formPointGeneratorComboBox.SelectedItem?.ToString() ?? formPointGeneratorComboBox.Text,
+                FilePath = inputFilePath,
+                FontName = fontNameTextBox.Text,
+                ImageSize = $"{imageSizeTextBox1.Text}x{imageSizeTextBox2.Text}",
+                OutFormat = outFormatComboBox.SelectedItem?.ToString() ?? formPointGeneratorComboBox.Text
             };
             var container = TagsCloudVisualizationRoot.GetCompositionRoot();
             container.Resolve<TagsCloudApp>().Run(options, container);
-            MessageBox.Show("Картинка сохранена", "Шапка", MessageBoxButtons.OK);
+            MessageBox.Show($"Картинка сохранена в {Application.StartupPath}\\CloudTags.{options.OutFormat}", "Сохранение", MessageBoxButtons.OK);
         }
 
-        private void exitBtn_Click(object sender, EventArgs e)
+        private void exitBtn_Click(object sender, EventArgs e) => Close();
+
+        private void inputFilePathBtn_Click(object sender, EventArgs e)
         {
-            Close();
+            using (var openFileDialog = new OpenFileDialog())
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    inputFilePath = openFileDialog.SafeFileName;
         }
     }
 }
