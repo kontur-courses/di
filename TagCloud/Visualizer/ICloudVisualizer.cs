@@ -1,10 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using TagCloud.Models;
 
 namespace TagCloud.Visualizer
 {
     public interface ICloudVisualizer
     {
-        Bitmap CreatePictureWithItems(CloudItem[] cloudItems);
+        Bitmap CreatePictureWithItems(IList<TagItem> items);
     }
 }

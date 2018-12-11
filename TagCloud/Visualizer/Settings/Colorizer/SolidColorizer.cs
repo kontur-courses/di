@@ -5,13 +5,13 @@ namespace TagCloud.Visualizer.Settings.Colorizer
 {
     public class SolidColorizer : IColorizer
     {
-        private Color color;
+        private readonly Color color;
 
         public SolidColorizer(Color color)
         {
             this.color = color;
         }
-        public Brush GetBrush(CloudItem item)
+        public SolidBrush GetBrush(CloudItem item)
         {
             return new SolidBrush(color);
         }

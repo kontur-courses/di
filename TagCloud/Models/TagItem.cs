@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Drawing;
 
 namespace TagCloud.Models
 {
     public struct TagItem
     {
         public string Word { get; }
-        public Size Size { get; }
+        public int FontSize { get; }
 
-        public TagItem(string word, Size size)
+        public TagItem(string word, int fontSize)
         {
-            if (size.Width <= 0 || size.Height <= 0)
-                throw new ArgumentException("Size can't be less or equal tp 0");
+            if (fontSize <= 0)
+                throw new ArgumentException("Font size can't be less or equal to 0");
             Word = word;
-            Size = size;
+            FontSize = fontSize;
         }
     }
 }

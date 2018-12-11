@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Drawing;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Extensions;
 using TagCloud.PointsSequence;
+using TagCloud.Utility.Container;
 
-namespace TagCloud.Tests
+namespace TagCloud.Tests.ForTagCloud
 {
     [TestFixture]
     public class Spiral_Should
     {
+        private readonly IContainer container = ContainerConfig.StandartContainer;
+
         [TestCase(0f, TestName = "Then step length is 0")]
         [TestCase(-0.00001f, TestName = "Then step length is small negative number")]
         [TestCase(-5f, TestName = "Then step length is negative")]
-        public void ConstructorThrowArgumentException(float stepLength)
+        public void SetStepLengthThrowArgumentException(float stepLength)
         {
-            Action constructor = () => new SpiralBuilder()
-                .WithStepLength(stepLength)
-                .Build();
+            var spiral = container.Resolve<Spiral>();
+            Action method = () =>
+                spiral.SetStepLength(stepLength);
 
-            constructor.Should().Throw<ArgumentException>();
+            method.Should().Throw<ArgumentException>();
         }
 
         [TestCase(0, 0)]
@@ -27,19 +31,19 @@ namespace TagCloud.Tests
         [TestCase(1, 1)]
         public void ReturnCenter_ThenGettingFirstPoint(int x, int y)
         {
-            var spiral = new SpiralBuilder()
-                .WithCenterIn(new Point(x, y))
-                .Build();
+            var center = new Point(x, y);
+            var spiral = container.Resolve<Spiral>();
+            spiral.SetCenter(center);
 
             var result = spiral.GetNextPoint();
 
-            result.Should().Be(new Point(x, y));
+            result.Should().Be(center);
         }
 
         [Test]
         public void ReturnPointsInAlmostCircleWay()
         {
-            var spiral = new Spiral();
+            var spiral = container.Resolve<Spiral>();
             var points = new Point[100];
 
             for (var i = 0; i < points.Length; i++)
@@ -53,9 +57,8 @@ namespace TagCloud.Tests
         [TestCase(100f, TestName = "If step equal to 100")]
         public void ReturnDifferentPoints(float stepLength)
         {
-            var spiral = new SpiralBuilder()
-                .WithStepLength(stepLength)
-                .Build();
+            var spiral = container.Resolve<Spiral>();
+            spiral.SetStepLength(stepLength);
 
             var first = spiral.GetNextPoint();
             var second = spiral.GetNextPoint();
@@ -68,7 +71,7 @@ namespace TagCloud.Tests
         [TestCase(1000, TestName = "After 1000 steps")]
         public void ResetEnumeration_ThenResetMethodCalled(int steps)
         {
-            var spiral = new Spiral();
+            var spiral = container.Resolve<Spiral>();
             var first = spiral.GetNextPoint();
 
             for (var i = 0; i < steps; i++)
