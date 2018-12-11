@@ -8,8 +8,8 @@ namespace TagCloudVisualization
 {
     public class TagCloudImageCreator
     {
-        public const float MaxFontSize = 35;
-        public const float DefaultFontSize = 5;
+        public const float MaxFontSize = 100;
+        public const float DefaultFontSize = 2;
         private readonly IEnumerable<IWordDrawer> drawers;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
 
@@ -23,16 +23,17 @@ namespace TagCloudVisualization
 
         public virtual Bitmap CreateTagCloudImage(IEnumerable<WordInfo> tagCloud, ImageCreatingOptions options)
         {
-            tagCloud = SetRectanglesToCloud(tagCloud, options).ToList();
+            tagCloud = SetRectanglesToCloud(tagCloud, options)
+                .ToList();
 
             var areaSize = tagCloud.Select(w => w.Rectangle)
                                    .GetUnitedSize();
+            areaSize = new Size(areaSize.Width * 2, areaSize.Height * 2);
 
-            var center = options.Center;
-
-            areaSize = new Size(areaSize.Width+center.X,areaSize.Height+center.Y);
             var width = areaSize.Width;
             var height = areaSize.Height;
+
+            var center = new Point(areaSize.Width / 2, areaSize.Height / 2);
 
             if (options.ImageSize != null)
             {
@@ -40,16 +41,18 @@ namespace TagCloudVisualization
                 height = options.ImageSize.Value.Height;
             }
 
-            var image = new Bitmap(areaSize.Width, areaSize.Height);
+            var image = new Bitmap(width, height);
 
             using (var graphics = Graphics.FromImage(image))
                 foreach (var wordInfo in tagCloud)
                 {
-                    var imageCenter = new Point(width / 2, height / 2) - center;
                     var rectangle = wordInfo.Rectangle;
-                    using (var font = new Font(options.FontName, wordInfo.Scale))
+
+                    var fontSize = wordInfo.Scale;
+
+                    using (var font = new Font(options.FontName, fontSize))
                     {
-                        rectangle.Offset(imageCenter);
+                        rectangle.Offset(center);
                         DrawSingleWord(graphics, options, wordInfo, font);
                     }
                 }
@@ -62,8 +65,10 @@ namespace TagCloudVisualization
             var layouter = layouterFactory.Invoke(options.Center);
             foreach (var wordInfo in tagCloud)
             {
-                var font = new Font(options.FontName, wordInfo.Scale);
-                var size = TextRenderer.MeasureText(wordInfo.Word, font);
+                Size size;
+                using (var font = new Font(options.FontName, wordInfo.Scale))
+                    size = TextRenderer.MeasureText(wordInfo.Word, font);
+
                 var rectangle = layouter.PutNextRectangle(size);
                 yield return wordInfo.With(rectangle);
             }

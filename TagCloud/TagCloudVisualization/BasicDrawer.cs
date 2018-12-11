@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagCloudVisualization
 {
@@ -11,7 +10,5 @@ namespace TagCloudVisualization
         }
 
         public bool Check(WordInfo word) => true;
-
-        
     }
 }

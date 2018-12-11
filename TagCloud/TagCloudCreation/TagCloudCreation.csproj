@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CaseChanger.cs" />
     <Compile Include="FixedBoringWordsRemover.cs" />
+    <Compile Include="Formatter.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
     <Compile Include="TagCloudStatsGenerator.cs" />
     <Compile Include="IWordPreparer.cs" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TagCloudCreation;
-using TagCloudVisualization;
 
 namespace TagCloudApp
 {
@@ -16,13 +15,13 @@ namespace TagCloudApp
             textReader = reader;
         }
 
-        public WordInfo PrepareWord(WordInfo stat, TagCloudCreationOptions options)
+        public string PrepareWord(string word, TagCloudCreationOptions options)
         {
             if (options.PathToBoringWords == null)
-                return stat;
+                return word;
             if (!boringWords.IsValueCreated)
                 path = options.PathToBoringWords;
-            return boringWords.Value.Contains(stat.Word) ? null : stat;
+            return boringWords.Value.Contains(word) ? null : word;
         }
 
         private static HashSet<string> ReadWords()

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TagCloudVisualization;
 
 namespace TagCloudCreation
 {
@@ -14,7 +13,6 @@ namespace TagCloudCreation
             "an"
         };
 
-        public WordInfo PrepareWord(WordInfo stat, TagCloudCreationOptions _) =>
-            boringWords.Contains(stat.Word) ? null : stat;
+        public string PrepareWord(string word, TagCloudCreationOptions _) => boringWords.Contains(word) ? null : word;
     }
 }

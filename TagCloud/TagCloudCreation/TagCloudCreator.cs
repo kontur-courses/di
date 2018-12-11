@@ -24,14 +24,15 @@ namespace TagCloudCreation
 
         public Bitmap CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
         {
-            words = words.Where(w => w != "");
-            var stats = generator.GenerateStats(words);
-            stats = preparers.Aggregate(stats, (current, wordPreparer) => current
-                                                                          .Select(wi =>
+            words = preparers.Aggregate(words, (current, wordPreparer) => current
+                                                                          .Select(w =>
                                                                                       wordPreparer
-                                                                                          .PrepareWord(wi, options))
+                                                                                          .PrepareWord(w, options))
                                                                           .Where(wi => wi != null)
                                                                           .ToList());
+            words = words.Where(w => w != "");
+
+            var stats = generator.GenerateStats(words);
 
             var maxCount = stats.Max(w => w.Count);
             var minCount = stats.Min(w => w.Count);
@@ -39,7 +40,6 @@ namespace TagCloudCreation
             var wordPairs = stats.OrderByDescending(wi => wi.Count)
                                  .Select(wordInfo =>
                                              wordInfo.With(GetScalingCoefficient(wordInfo.Count, maxCount, minCount)));
-            
 
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
         }

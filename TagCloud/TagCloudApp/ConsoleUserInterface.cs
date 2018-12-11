@@ -15,6 +15,8 @@ namespace TagCloudApp
     internal class ConsoleUserInterface : UserInterface
     {
         private const string DefaultFont = "Microsoft Sans Serif";
+        private const BrushesEnum DefaultBrush = BrushesEnum.Gradient;
+
         private readonly Dictionary<BrushesEnum, Brush> brushes = new Dictionary<BrushesEnum, Brush>
         {
             [BrushesEnum.Simple] = Brushes.Chartreuse, [BrushesEnum.Tough] = SystemBrushes.ControlDarkDark,
@@ -31,7 +33,6 @@ namespace TagCloudApp
         private string outputPath;
 
         private string wordsFile;
-        private const BrushesEnum DefaultBrush = BrushesEnum.Gradient;
 
         public ConsoleUserInterface(
             TagCloudCreator creator,
@@ -67,10 +68,7 @@ namespace TagCloudApp
                 return;
             }
 
-            using (var image = Creator.CreateImage(words, options))
-            {
-                image.Save(outputPath);
-            }
+            using (var image = Creator.CreateImage(words, options)) image.Save(outputPath);
 
             Console.Out.WriteLine($"Here you go{Environment.NewLine}\tFile is saved successfully into {outputPath}");
             End();
@@ -80,6 +78,7 @@ namespace TagCloudApp
         {
             Console.ReadLine();
         }
+
         private void SetupParser()
         {
             parser.Setup<string>('f', "words")
@@ -99,11 +98,13 @@ namespace TagCloudApp
                   .Callback(SetOutput)
                   .SetDefault($"..{Path.DirectorySeparatorChar}tag_cloud.png");
 
-            parser.Setup<string>("font").WithDescription($"Font name, default is {DefaultFont}")
+            parser.Setup<string>("font")
+                  .WithDescription($"Font name, default is {DefaultFont}")
                   .Callback(SetFontName)
                   .SetDefault(DefaultFont);
 
-            parser.Setup<BrushesEnum>("brush").WithDescription($"Brush to paint the words with, default is {DefaultBrush} one")
+            parser.Setup<BrushesEnum>("brush")
+                  .WithDescription($"Brush to paint the words with, default is {DefaultBrush} one")
                   .Callback(arg => brush = brushes[arg])
                   .SetDefault(DefaultBrush);
         }
