@@ -52,12 +52,16 @@ namespace TagCloudApp
         {
             parser.Parse(startupArgs);
             if (isHelpShown)
+            {
+                End();
                 return;
+            }
 
             var options = new TagCloudCreationOptions(new ImageCreatingOptions(brush, font, center));
             if (!TryRead(wordsFile, out var words))
             {
                 Console.Error.WriteLine("Can not read given file");
+                End();
                 return;
             }
 
@@ -65,8 +69,13 @@ namespace TagCloudApp
             image.Save(outputPath);
             image.Dispose();
             Console.Out.WriteLine($"Here you go{Environment.NewLine}\tFile is saved successfully");
+            End();
         }
 
+        private void End()
+        {
+            Console.ReadLine();
+        }
         private void SetupParser()
         {
             parser.Setup<string>('f', "words")
