@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.WordFormatters
 {
-    public class WordsWeighter
+    public class WordsWeighter : IWordsWeighter
     {
         public IDictionary<string, int> GetWordsWeight(IEnumerable<string> words)
         {

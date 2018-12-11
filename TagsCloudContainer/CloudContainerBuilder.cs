@@ -34,7 +34,7 @@ namespace TagsCloudContainer
                 .As<IWordsPreprocessor>();
 
             builder.RegisterType<WordsWeighter>()
-                .AsSelf();
+                .As<IWordsWeighter>();
 
             builder
                 .RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower), typeof(BoringWordsRemover))

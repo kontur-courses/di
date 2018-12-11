@@ -6,14 +6,14 @@ namespace TagsCloudContainer.WordFormatters
 {
     public class SimpleFormatter : IWordFormatter
     {
-        private readonly WordsWeighter wordsWeighter;
+        private readonly IWordsWeighter wordsWeighter;
         private readonly Font font;
         private readonly Color color;
         private readonly bool frequentWordsAsHuge;
         private readonly float fontMultiplier;
 
         public SimpleFormatter(
-            WordsWeighter wordsWeighter,
+            IWordsWeighter wordsWeighter,
             Font font,
             Color color,
             bool frequentWordsAsHuge = true,
