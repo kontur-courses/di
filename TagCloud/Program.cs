@@ -10,6 +10,7 @@ using TagCloud.Data;
 using TagCloud.Processor;
 using TagCloud.Reader;
 using TagCloud.RectanglesLayouter.PointsGenerator;
+using TagCloud.Saver;
 
 namespace TagCloud
 {
@@ -18,7 +19,7 @@ namespace TagCloud
         private static readonly string Help =
             "Program to generate tag cloud\n" +
             $"USAGE: {AppDomain.CurrentDomain.FriendlyName} -w WordsFile -b BoringWordsFile -i ResultImageName " +
-            "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily]\n";
+            "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily] [-s]\n\n-s\tsave to clipboard\n";
 
         private static readonly Dictionary<string, Color> BrushesByName = typeof(Color)
             .GetProperties()
@@ -27,13 +28,14 @@ namespace TagCloud
                 propertyInfo => propertyInfo.Name,
                 propertyInfo => (Color) propertyInfo.GetValue(null, null));
 
+        [STAThread]
         public static void Main(string[] args)
         {
             if (!TryGetArguments(args, out var arguments))
                 return;
 
             var builder = new ContainerBuilder();
-            SetUpContainer(builder, arguments.BoringWordsFileName);
+            SetUpContainer(builder, arguments);
             var container = builder.Build();
 
             container.Resolve<TagCloudGenerator>().Generate(arguments);  
@@ -55,6 +57,7 @@ namespace TagCloud
             parser.Setup<string>('g').Callback(color => backgroundBrushName = color);
             parser.Setup<string>('f').Callback(font => newArguments.FontFamily = new FontFamily(font));
             parser.Setup<int>('m').Callback(size => newArguments.Multiplier = size);
+            parser.Setup<bool>('s').Callback(save => newArguments.ToEnableClipboardSaver = save);
 
             var result = parser.Parse(args);
 
@@ -91,10 +94,11 @@ namespace TagCloud
             return false;
         }
 
-        public static void SetUpContainer(ContainerBuilder builder, string boringWordsFileName)
+        public static void SetUpContainer(ContainerBuilder builder, Arguments arguments)
         {
             builder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(type => type != typeof(ClipboardImageSaver) || arguments.ToEnableClipboardSaver)
                 .AsImplementedInterfaces()
                 .AsSelf();
             builder.Register(c => new Point()).As<Point>();
@@ -104,7 +108,7 @@ namespace TagCloud
             builder
                 .Register(c => new RussianWordsProcessor(c
                     .Resolve<IWordsFileReader>()
-                    .Read(boringWordsFileName)))
+                    .Read(arguments.BoringWordsFileName)))
                 .As<IWordsProcessor>();
         }
     }

@@ -11,5 +11,6 @@ namespace TagCloud.Data
         public Color WordsColor = Color.Black;
         public Color BackgroundColor = Color.White;
         public FontFamily FontFamily = FontFamily.GenericMonospace;
+        public bool ToEnableClipboardSaver = false;
     }
 }
