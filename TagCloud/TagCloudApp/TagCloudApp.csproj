@@ -51,6 +51,11 @@
     <Compile Include="PathValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SelectedBoringWordsRemover.cs" />
     <Compile Include="WhitespaceTextReader.cs" />
     <Compile Include="UserInterface.cs" />
@@ -58,6 +63,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\english-bidirectional-distsim.tagger" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagCloudCreation\TagCloudCreation.csproj">
@@ -68,6 +74,12 @@
       <Project>{3618f36b-7d74-480c-9bef-0c9805f0d53a}</Project>
       <Name>TagCloudVisualization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

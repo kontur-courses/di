@@ -8,7 +8,6 @@ namespace TagCloudVisualization
 {
     public class TagCloudImageCreator
     {
-        public float MaxFontSize => 100;
         private readonly IEnumerable<IWordDrawer> drawers;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
 
@@ -20,6 +19,8 @@ namespace TagCloudVisualization
             this.layouterFactory = layouterFactory;
         }
 
+        public float MaxFontSize => 100;
+
         public virtual Bitmap CreateTagCloudImage(IEnumerable<WordInfo> tagCloud, ImageCreatingOptions options)
         {
             tagCloud = SetRectanglesToCloud(tagCloud, options)
@@ -27,7 +28,7 @@ namespace TagCloudVisualization
 
             var areaSize = tagCloud.Select(w => w.Rectangle)
                                    .GetUnitedSize();
-            areaSize = new Size(areaSize.Width * 2, areaSize.Height * 2);
+            areaSize = new Size((int) (areaSize.Width * 1.2), (int) (areaSize.Height * 1.2));
 
             var width = areaSize.Width;
             var height = areaSize.Height;

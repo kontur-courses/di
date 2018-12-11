@@ -16,7 +16,7 @@ namespace TagCloudApp
             container.RegisterType<CircularCloudLayouter>()
                      .AsSelf();
 
-            container.RegisterTypes(typeof(WhitespaceTextReader))//etc.
+            container.RegisterTypes(typeof(WhitespaceTextReader)) //etc.
                      .As<ITextReader>();
 
             container.RegisterTypes(typeof(BasicDrawer))
@@ -26,7 +26,7 @@ namespace TagCloudApp
                      .As<AbstractSpiralGenerator>();
 
             container.RegisterTypes(typeof(FixedBoringWordsRemover), typeof(CaseChanger), typeof(Formatter),
-                                    typeof(SelectedBoringWordsRemover))
+                                    typeof(SelectedBoringWordsRemover), typeof(VerbRemover), typeof(PrepositionRemover))
                      .As<IWordPreparer>();
 
             container.RegisterType<TagCloudStatsGenerator>()
