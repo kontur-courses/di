@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using CommandLine;
 using TagCloud.Enums;
 
 namespace TagCloudCreator
@@ -14,5 +16,47 @@ namespace TagCloudCreator
         public ColorScheme ColorScheme { get; set; }
         public FontScheme FontScheme { get; set; }
         public SizeScheme SizeScheme { get; set; }
+
+        public static Configuration FromArguments(string[] args)
+        {
+            var configuration = new Configuration();
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(o => configuration.InputFile = o.Input)
+                .WithParsed(o => configuration.OutputFile = o.Output)
+                .WithParsed(o => configuration.StopWordsFile = o.Stopwords)
+                .WithParsed(o => configuration.BackgroundColor = Color.FromName(o.Background))
+                .WithParsed(o => configuration.ImageSize = new Size(o.Width, o.Height))
+                .WithParsed(o =>
+                {
+                    if (o.ColorScheme == "RandomColors")
+                        configuration.ColorScheme = ColorScheme.RandomColors;
+                    else
+                        throw new ArgumentException("Unknown color scheme");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.FontScheme == "Arial")
+                        configuration.FontScheme = FontScheme.Arial;
+                    else
+                        throw new ArgumentException("Unknown font scheme");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.Layouter == "ArithmeticSpiral")
+                        configuration.LayouterType = CloudLayouterType.ArithmeticSpiral;
+                    else
+                        throw new ArgumentException("Unknown layouter type");
+                })
+                .WithParsed(o =>
+                {
+                    if (o.SizeScheme == "Linear")
+                        configuration.SizeScheme = SizeScheme.Linear;
+                    else
+                        throw new ArgumentException("Unknown size scheme");
+                })
+                .WithNotParsed(o => throw new ArgumentException("Wrong command line arguments"));
+
+            return configuration;
+        }
     }
 }

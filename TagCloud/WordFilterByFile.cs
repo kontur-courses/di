@@ -9,7 +9,7 @@ namespace TagCloud
 
         public WordFilterByFile(IFileReader fileReader, string path)
         {
-            stopWords = fileReader.Read(path).ToArray();
+            stopWords = path == null ? new string[0] : fileReader.Read(path).ToArray();
         }
 
         public bool ToExclude(string word)

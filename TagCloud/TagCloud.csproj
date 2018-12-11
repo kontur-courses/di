@@ -80,6 +80,7 @@
     <Compile Include="IntermediateClasses\PositionedElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomColorScheme.cs" />
+    <Compile Include="RedColorScheme.cs" />
     <Compile Include="StatisticsCollector.cs" />
     <Compile Include="Visualizer\VisualElement.cs" />
     <Compile Include="Visualizer\VisualizerExtensions.cs" />

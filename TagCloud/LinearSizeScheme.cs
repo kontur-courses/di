@@ -8,8 +8,8 @@ namespace TagCloud
     {
         public Size GetSize(FrequentedWord word)
         {
-            var width = word.Word.Length * word.Frequency * 5 + 100;
-            var height = word.Frequency * 5 + 50;
+            var width = word.Word.Length * word.Frequency * 10 + 100;
+            var height = word.Frequency * 10 + 50;
             return new Size(width, height);
         }
     }

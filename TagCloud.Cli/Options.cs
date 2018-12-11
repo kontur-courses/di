@@ -16,7 +16,7 @@ namespace TagCloudCreator
         [Option("height", Required = true, HelpText = "Set an image height")]
         public int Height { get; set; }
 
-        [Option("stopwords", Required = true, HelpText = "File which contains words, that will be excluded of result")]
+        [Option("stopwords", Required = false, HelpText = "File which contains words, that will be excluded of result")]
         public string Stopwords { get; set; }
 
         [Option("background", Required = false, HelpText = "Set a background color")]
