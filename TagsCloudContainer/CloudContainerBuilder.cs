@@ -22,7 +22,7 @@ namespace TagsCloudContainer
                 .As<IWordsPreprocessor>();
 
             builder.Register(z => new SimpleFormatter(
-                    z.Resolve<WordsWeighter>(),
+                    z.Resolve<IWordsWeighter>(),
                     config.Font,
                     config.Color))
                 .As<IWordFormatter>();
