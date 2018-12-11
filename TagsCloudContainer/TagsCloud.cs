@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer
@@ -29,6 +30,16 @@ namespace TagsCloudContainer
             if (x < 0 || y < 0)
                 throw new ArgumentException("Center coordinates should not be negative");
             AddedRectangles = rectangles;
+        }
+
+        public TagsCloud(Point center, List<TagsCloudWord> words)
+        {
+            var x = center.X;
+            var y = center.Y;
+            if (x < 0 || y < 0)
+                throw new ArgumentException("Center coordinates should not be negative");
+            AddedRectangles = words.Select(w => w.Rectangle).ToList();
+            AddedWords = words;
         }
 
         public void AddRectangle(Rectangle rectangle)

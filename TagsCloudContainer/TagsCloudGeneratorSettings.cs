@@ -11,10 +11,10 @@ namespace TagsCloudContainer
     public class TagsCloudGeneratorSettings
     {
         public Size LetterSize;
-        public IWordsFormatter WordsFormatter;
-        public IWordsFilter WordsFilter;
-        public ITagsCloudLayouter TagsCloudLayouter;
-        public IWordsWeighter WordsWeighter;
+        public readonly IWordsFormatter WordsFormatter;
+        public readonly IWordsFilter WordsFilter;
+        public readonly ITagsCloudLayouter TagsCloudLayouter;
+        public readonly IWordsWeighter WordsWeighter;
 
         public TagsCloudGeneratorSettings
         (Size letterSize, IWordsFormatter wordsFormatter, IWordsFilter wordsFilter, ITagsCloudLayouter layouter,

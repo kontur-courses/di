@@ -19,32 +19,45 @@ namespace TagsCloudContainer.Visualisation
             fontFamily = imageSettings.FontFamily;
         }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud)
+        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, bool autosize = false)
         {
+            if (autosize)
+            {
+                RenderIntoFileAutosize(filePath, tagsCloud);
+                return;
+            }
+
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
             var obj = Graphics.FromImage(btm);
             foreach (var tagsCloudWord in tagsCloud.AddedWords)
             {
-                var rectangle = tagsCloudWord.Rectangle;
-                var fontSize = rectangle.Height;
-                obj.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
-                    new SolidBrush(textColor),
-                    new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
+                DrawWord(obj, tagsCloudWord);
             }
 
             btm.Save(filePath);
         }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, bool auto)
+        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord)
         {
+            var rectangle = tagsCloudWord.Rectangle;
+            var fontSize = rectangle.Height;
+            graphics.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
+                new SolidBrush(textColor),
+                new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
+        }
+
+        public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud)
+        {
+            var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles);
-            var tagCloudToDraw = new TagsCloud(tagsCloud.Center, shiftedRectangles);
+            var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
+            var tagCloudToDraw = new TagsCloud(tagsCloud.Center, tagsCloudWords);
             var pictureSize = GetPictureSize(tagCloudToDraw);
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
             var obj = Graphics.FromImage(btm);
-            foreach (var r in tagCloudToDraw.AddedRectangles)
+            foreach (var tagsCloudWord in tagCloudToDraw.AddedWords)
             {
-                obj.DrawRectangle(new Pen(Color.Brown), r);
+                DrawWord(obj, tagsCloudWord);
             }
 
             btm.Save(filePath);
@@ -53,7 +66,7 @@ namespace TagsCloudContainer.Visualisation
 
         private Size GetPictureSize(ITagsCloud tagsCloud)
         {
-            var rectangles = tagsCloud.AddedRectangles;
+            var rectangles = tagsCloud.AddedWords.Select(x => x.Rectangle);
             var maxX = rectangles.Max(x => x.Right);
             var minX = rectangles.Min(x => x.X);
             var maxY = rectangles.Max(x => x.Top);
@@ -77,6 +90,7 @@ namespace TagsCloudContainer.Visualisation
                 shiftX = minX * -1 + boundary.Width;
             if (minY < 0)
                 shiftY = minY * -1 + boundary.Height;
+
             return rectangles.Select(x => new Rectangle(x.X + shiftX, x.Y + shiftY, x.Width, x.Height)).ToList();
         }
     }
