@@ -57,7 +57,7 @@ namespace TagCloud
             parser.Setup<string>('g').Callback(color => backgroundBrushName = color);
             parser.Setup<string>('f').Callback(font => newArguments.FontFamily = new FontFamily(font));
             parser.Setup<int>('m').Callback(size => newArguments.Multiplier = size);
-            parser.Setup<bool>('s').Callback(save => newArguments.ToEnableClipboardSaver = save);
+            parser.Setup<bool>('s').Callback(save => newArguments.ToEnableClipboardSaver = true);
 
             var result = parser.Parse(args);
 
