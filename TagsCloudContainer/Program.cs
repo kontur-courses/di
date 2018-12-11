@@ -23,7 +23,7 @@ namespace TagsCloudContainer
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
-                var source = new TextSourceFile(o.Filename);
+                var source = new AdvancedSource(o.Filename);
                 var cloudOptions = new CloudOptions(o.Color, o.FontFamilyName, o.Height, o.Width);
 
                 var builder = new ContainerBuilder();
