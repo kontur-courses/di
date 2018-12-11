@@ -21,7 +21,7 @@ namespace TagsCloudContainer
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<CLI>().As<IUI>().WithParameter("args", args).SingleInstance();
-            containerBuilder.RegisterType<TxtWordsReader>().As<IWordsReader>().SingleInstance();
+            containerBuilder.RegisterType<DocWordsReader>().As<IWordsReader>().SingleInstance();
 
             containerBuilder.RegisterType<BlackListFilterSettings>().AsSelf();
 
