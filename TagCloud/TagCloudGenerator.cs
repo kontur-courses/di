@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using TagCloud.Counter;
 using TagCloud.Data;
 using TagCloud.Drawer;
@@ -37,10 +38,13 @@ namespace TagCloud
         public void Generate(Arguments arguments)
         {
             var words = wordsFileReader.Read(arguments.WordsFileName);
+            var wordsColor = Color.FromName(arguments.WordsColorName);
+            var backgroundColor = Color.FromName(arguments.BackgroundColorName);
+            var font = new FontFamily(arguments.FontFamilyName);
 
             var wordInfos = counter.GetWordsInfo(processor.Process(words));
-            var layout = wordsLayouter.GenerateLayout(wordInfos, arguments.FontFamily, arguments.Multiplier);
-            var image = wordsDrawer.CreateImage(layout, arguments.WordsColor, arguments.BackgroundColor);
+            var layout = wordsLayouter.GenerateLayout(wordInfos, font, arguments.Multiplier);
+            var image = wordsDrawer.CreateImage(layout, wordsColor, backgroundColor);
 
             foreach (var saver in savers)
                 saver.Save(image, arguments.ImageFileName);

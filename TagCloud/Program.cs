@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Autofac;
 using Fclp;
 using TagCloud.ColorPicker;
@@ -19,79 +21,89 @@ namespace TagCloud
         private static readonly string Help =
             "Program to generate tag cloud\n" +
             $"USAGE: {AppDomain.CurrentDomain.FriendlyName} -w WordsFile -b BoringWordsFile -i ResultImageName " +
-            "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily] [-s]\n\n-s\tsave to clipboard\n";
+            "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily] [-s]\n\n" +
+            "\t-s\tsave to clipboard\n";
 
-        private static readonly Dictionary<string, Color> BrushesByName = typeof(Color)
-            .GetProperties()
-            .Where(color => color.PropertyType == typeof(Color))
-            .ToDictionary(
-                propertyInfo => propertyInfo.Name,
-                propertyInfo => (Color) propertyInfo.GetValue(null, null));
+        private static readonly HashSet<string> Colors = new HashSet<string>(
+            typeof(Color)
+                .GetProperties()
+                .Where(color => color.PropertyType == typeof(Color))
+                .Select(color => color.Name));
+
+        private static readonly HashSet<string> Fonts =
+            new HashSet<string>(FontFamily.Families.Select(font => font.Name));
 
         [STAThread]
         public static void Main(string[] args)
         {
-            if (!TryGetArguments(args, out var arguments))
+            var exceptions = new StringBuilder();
+            var arguments = TryGetArguments(args, exceptions);
+
+            if (exceptions.Length > 0)
+            {
+                Console.WriteLine("One or more errors found:\n");
+                Console.WriteLine(exceptions);
+                Console.WriteLine(Help);
                 return;
+            }
 
             var builder = new ContainerBuilder();
             SetUpContainer(builder, arguments);
             var container = builder.Build();
-
-            container.Resolve<TagCloudGenerator>().Generate(arguments);  
+            container.Resolve<TagCloudGenerator>().Generate(arguments);
         }
 
-        private static bool TryGetArguments(string[] args, out Arguments arguments)
+        private static Arguments TryGetArguments(string[] args, StringBuilder exceptions)
         {
-            arguments = null;
-            var newArguments = new Arguments();
-
-            var textBrushName = "Black";
-            var backgroundBrushName = "White";
+            var arguments = new Arguments();
 
             var parser = new FluentCommandLineParser();
-            parser.Setup<string>('w').Callback(file => newArguments.WordsFileName = file).Required();
-            parser.Setup<string>('b').Callback(boring => newArguments.BoringWordsFileName = boring).Required();
-            parser.Setup<string>('i').Callback(name => newArguments.ImageFileName = name).Required();
-            parser.Setup<string>('c').Callback(color => textBrushName = color);
-            parser.Setup<string>('g').Callback(color => backgroundBrushName = color);
-            parser.Setup<string>('f').Callback(font => newArguments.FontFamily = new FontFamily(font));
-            parser.Setup<int>('m').Callback(size => newArguments.Multiplier = size);
-            parser.Setup<bool>('s').Callback(save => newArguments.ToEnableClipboardSaver = true);
+            parser.Setup<string>('w').Callback(file => arguments.WordsFileName = file).Required();
+            parser.Setup<string>('b').Callback(boring => arguments.BoringWordsFileName = boring).Required();
+            parser.Setup<string>('i').Callback(name => arguments.ImageFileName = name).Required();
+            parser.Setup<string>('c').Callback(color => arguments.WordsColorName = color);
+            parser.Setup<string>('g').Callback(color => arguments.BackgroundColorName = color);
+            parser.Setup<string>('f').Callback(font => arguments.FontFamilyName = font);
+            parser.Setup<int>('m').Callback(size => arguments.Multiplier = size);
+            parser.Setup<bool>('s').Callback(save => arguments.ToEnableClipboardSaver = true);
 
             var result = parser.Parse(args);
 
-            if (TryGetBrush(textBrushName, out var textBrush))
-                newArguments.WordsColor = textBrush;
-            else
-                return false;
+            CheckArguments(result, arguments, exceptions);
 
-            if (TryGetBrush(backgroundBrushName, out var backgroundBrush))
-                newArguments.BackgroundColor = backgroundBrush;
-            else
-                return false;
-
-            if (result.HasErrors)
-            {
-                Console.WriteLine("Wrong syntax\n");
-                Console.WriteLine(Help);
-                return false;
-            }
-
-            arguments = newArguments;
-            return true;
+            return arguments;
         }
 
-        private static bool TryGetBrush(string textBrushName, out Color brush)
+        private static void CheckArguments(ICommandLineParserResult result, Arguments arguments, StringBuilder exceptions)
         {
-            brush = new Color();
-            if (BrushesByName.TryGetValue(textBrushName, out var backgroundBrush))
+            if (result.HasErrors)
             {
-                brush = backgroundBrush;
-                return true;
+                var errors = result.ErrorText.Split(new[] {"\r\n"}, StringSplitOptions.None);
+                foreach (var error in errors)
+                    exceptions.AppendLine("\t" + error);
             }
-            Console.WriteLine($"Unknown Brush {textBrushName}");
-            return false;
+
+            CheckFile("Words", arguments.WordsFileName, exceptions);
+            CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
+
+            CheckArgument(Colors, "words color", arguments.WordsColorName, exceptions);
+            CheckArgument(Colors, "background color", arguments.BackgroundColorName, exceptions);
+            CheckArgument(Fonts, "font", arguments.FontFamilyName, exceptions);
+
+            if (arguments.Multiplier <= 0)
+                exceptions.AppendLine("\tFont size multiplier should be positive");
+        }
+
+        private static void CheckFile(string argumentName, string fileName, StringBuilder exceptions)
+        {
+            if (!File.Exists(fileName))
+                exceptions.AppendLine($"\t{argumentName} file not found {fileName}");
+        }
+
+        private static void CheckArgument<T>(HashSet<T> variants, string argumentName, T argument, StringBuilder exceptions)
+        {
+            if (!variants.Contains(argument))
+                exceptions.AppendLine($"\tUnknown {argumentName} {argument}");
         }
 
         public static void SetUpContainer(ContainerBuilder builder, Arguments arguments)
@@ -102,7 +114,7 @@ namespace TagCloud
                 .AsImplementedInterfaces()
                 .AsSelf();
             builder.Register(c => new Point()).As<Point>();
-            builder.Register(c =>  new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
+            builder.Register(c => new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
             builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
             builder.RegisterType<BrightnessColorPicker>().As<IColorPicker>();
             builder
