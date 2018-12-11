@@ -1,13 +1,16 @@
-﻿using System;
+﻿using NHunspell;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Painter;
 
 namespace TagsCloudContainer.Preprocessing
 {
     public class WordsPreprocessor
     {
         private readonly WordsPreprocessorSettings settings;
+
+        private readonly Hunspell hunspell =
+            new Hunspell(@"NHunspellDictionary\ru_RU.aff", @"NHunspellDictionary\ru_RU.dic");
 
         public WordsPreprocessor(WordsPreprocessorSettings settings)
         {
@@ -16,9 +19,20 @@ namespace TagsCloudContainer.Preprocessing
 
         private IEnumerable<string> ProcessWords(IEnumerable<string> words)
         {
-            return words.Select(word => word.ToLower()).Where(word => word.Length > settings.BoringWordsLength && !settings.ExcludedWords.Contains(word));
-                //.Where(word => settings.WordsWhich(word))
-                //.Select(word => settings.WordsSelector(word));
+            var filtered = words
+                .Select(word => word.ToLower())
+                .Where(word => word.Length > settings.BoringWordsLength && !settings.ExcludedWords.Contains(word));
+            if (!settings.BringInTheInitialForm)
+                return filtered;
+            filtered = filtered.Select(word => ToInitialForm(word));
+
+            return filtered;
+        }
+
+        private string ToInitialForm(string word)
+        {
+            var firstForm = hunspell.Stem(word).FirstOrDefault();
+            return firstForm ?? word;
         }
 
         private IEnumerable<WordInfo> OrderWordFrequencies(Dictionary<string, int> frequencies)
