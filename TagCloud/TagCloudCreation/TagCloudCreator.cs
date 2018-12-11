@@ -3,25 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloudVisualization;
-using Point = TagCloudVisualization.Point;
 
 namespace TagCloudCreation
 {
     public class TagCloudCreator
     {
-        private const int WordRectangleSizeCoefficient = 10;
         private readonly ITagCloudStatsGenerator generator;
         private readonly TagCloudImageCreator imageCreator;
-        private readonly Func<Point, CircularCloudLayouter> layouterFactory;
         private readonly IEnumerable<IWordPreparer> preparers;
 
         public TagCloudCreator(
-            Func<Point, CircularCloudLayouter> layouterFactory,
             IEnumerable<IWordPreparer> preparers,
             ITagCloudStatsGenerator generator,
             TagCloudImageCreator imageCreator)
         {
-            this.layouterFactory = layouterFactory;
             this.preparers = preparers;
             this.generator = generator;
             this.imageCreator = imageCreator;
@@ -38,19 +33,26 @@ namespace TagCloudCreation
                                                                           .Where(wi => wi != null)
                                                                           .ToList());
 
-            var layouter = layouterFactory.Invoke(options.ImageOptions.Center);
+            var maxCount = stats.Max(w => w.Count);
+            var minCount = stats.Min(w => w.Count);
 
             var wordPairs = stats.OrderByDescending(wi => wi.Count)
                                  .Select(wordInfo =>
-                                             wordInfo.With(layouter.PutNextRectangle(GetSizeOfWord(wordInfo))));
+                                             wordInfo.With(GetScalingCoefficient(wordInfo.Count, maxCount, minCount)));
+            
 
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
         }
 
-        private static Size GetSizeOfWord(WordInfo wordInfo)
+        public float GetScalingCoefficient(int count, int maxCount, int minCount)
         {
-            var enlarger = wordInfo.Count * WordRectangleSizeCoefficient;
-            return new Size(wordInfo.Word.Length * enlarger, enlarger);
+            if (maxCount == minCount)
+                return TagCloudImageCreator.DefaultFontSize;
+
+            if (count == minCount)
+                return TagCloudImageCreator.DefaultFontSize;
+
+            return (float) Math.Ceiling((count - minCount) * TagCloudImageCreator.MaxFontSize / (maxCount - minCount));
         }
     }
 }

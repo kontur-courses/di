@@ -14,6 +14,7 @@ namespace TagCloudApp
 {
     internal class ConsoleUserInterface : UserInterface
     {
+        private const string DefaultFont = "Microsoft Sans Serif";
         private readonly Dictionary<BrushesEnum, Brush> brushes = new Dictionary<BrushesEnum, Brush>
         {
             [BrushesEnum.Simple] = Brushes.Chartreuse, [BrushesEnum.Tough] = SystemBrushes.ControlDarkDark,
@@ -30,6 +31,7 @@ namespace TagCloudApp
         private string outputPath;
 
         private string wordsFile;
+        private const BrushesEnum DefaultBrush = BrushesEnum.Gradient;
 
         public ConsoleUserInterface(
             TagCloudCreator creator,
@@ -65,14 +67,16 @@ namespace TagCloudApp
                 return;
             }
 
-            var image = Creator.CreateImage(words, options);
-            image.Save(outputPath);
-            image.Dispose();
-            Console.Out.WriteLine($"Here you go{Environment.NewLine}\tFile is saved successfully");
+            using (var image = Creator.CreateImage(words, options))
+            {
+                image.Save(outputPath);
+            }
+
+            Console.Out.WriteLine($"Here you go{Environment.NewLine}\tFile is saved successfully into {outputPath}");
             End();
         }
 
-        private void End()
+        private static void End()
         {
             Console.ReadLine();
         }
@@ -89,19 +93,19 @@ namespace TagCloudApp
             parser.Setup<string>('c', "center")
                   .WithDescription("two integers separated by space: x y")
                   .Callback(SetCenter)
-                  .SetDefault("500 500");
+                  .SetDefault("250 250");
 
             parser.Setup<string>('o', "output")
                   .Callback(SetOutput)
                   .SetDefault($"..{Path.DirectorySeparatorChar}tag_cloud.png");
 
-            parser.Setup<string>("font")
+            parser.Setup<string>("font").WithDescription($"Font name, default is {DefaultFont}")
                   .Callback(SetFontName)
-                  .SetDefault("Microsoft Sans Serif");
+                  .SetDefault(DefaultFont);
 
-            parser.Setup<BrushesEnum>("brush")
+            parser.Setup<BrushesEnum>("brush").WithDescription($"Brush to paint the words with, default is {DefaultBrush} one")
                   .Callback(arg => brush = brushes[arg])
-                  .SetDefault(BrushesEnum.Gradient);
+                  .SetDefault(DefaultBrush);
         }
 
         private void ShowHelp(string t)
@@ -124,7 +128,6 @@ namespace TagCloudApp
                 wordsFile = path;
             else
                 throw new ArgumentException("Path is invalid");
-            ;
         }
 
         private void SetOutput(string path)
