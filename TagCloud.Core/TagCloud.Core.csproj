@@ -62,6 +62,7 @@
     <Compile Include="Settings\TextWorkingSettings.cs" />
     <Compile Include="TextWorking\WordsReading\WordsReadersForFiles\IWordsReaderForFile.cs" />
     <Compile Include="TextWorking\WordsReading\WordsReadersForFiles\TxtWordsReader.cs" />
+    <Compile Include="TextWorking\WordsReading\WordsReadersForFiles\XmlWordsReader.cs" />
     <Compile Include="Util\FontExtensions.cs" />
     <Compile Include="Util\GraphicsExtensions.cs" />
     <Compile Include="Util\ImageFormatResolver.cs" />
