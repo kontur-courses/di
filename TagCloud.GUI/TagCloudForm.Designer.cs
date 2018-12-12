@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.programmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,16 +52,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
             this.OutputPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
             // 
             // menuStrip1
             // 
@@ -107,7 +94,7 @@
             this.addStopwordsToolStripMenuItem.Name = "addStopwordsToolStripMenuItem";
             this.addStopwordsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.addStopwordsToolStripMenuItem.Text = "Set stop words file";
-            this.addStopwordsToolStripMenuItem.Click += new System.EventHandler(this.AddStopwordsToolStripMenuItem_Click);
+            this.addStopwordsToolStripMenuItem.Click += new System.EventHandler(this.SetStopwordsToolStripMenuItem_Click);
             // 
             // setTagsFileToolStripMenuItem
             // 
@@ -177,7 +164,7 @@
             // 
             this.ResolutionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ResolutionLabel.AutoSize = true;
-            this.ResolutionLabel.Location = new System.Drawing.Point(65, 172);
+            this.ResolutionLabel.Location = new System.Drawing.Point(66, 148);
             this.ResolutionLabel.Name = "ResolutionLabel";
             this.ResolutionLabel.Size = new System.Drawing.Size(57, 13);
             this.ResolutionLabel.TabIndex = 14;
@@ -187,7 +174,7 @@
             // 
             this.ResolutionXLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ResolutionXLabel.AutoSize = true;
-            this.ResolutionXLabel.Location = new System.Drawing.Point(86, 155);
+            this.ResolutionXLabel.Location = new System.Drawing.Point(89, 167);
             this.ResolutionXLabel.Name = "ResolutionXLabel";
             this.ResolutionXLabel.Size = new System.Drawing.Size(12, 13);
             this.ResolutionXLabel.TabIndex = 12;
@@ -196,7 +183,7 @@
             // YBox
             // 
             this.YBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.YBox.Location = new System.Drawing.Point(104, 152);
+            this.YBox.Location = new System.Drawing.Point(107, 164);
             this.YBox.Name = "YBox";
             this.YBox.Size = new System.Drawing.Size(43, 20);
             this.YBox.TabIndex = 11;
@@ -206,7 +193,7 @@
             // XBox
             // 
             this.XBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.XBox.Location = new System.Drawing.Point(37, 152);
+            this.XBox.Location = new System.Drawing.Point(40, 164);
             this.XBox.Name = "XBox";
             this.XBox.Size = new System.Drawing.Size(43, 20);
             this.XBox.TabIndex = 10;
@@ -263,6 +250,7 @@
             this.Output.Location = new System.Drawing.Point(527, 234);
             this.Output.Multiline = true;
             this.Output.Name = "Output";
+            this.Output.ReadOnly = true;
             this.Output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Output.Size = new System.Drawing.Size(185, 161);
             this.Output.TabIndex = 9;
@@ -295,9 +283,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem programmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
