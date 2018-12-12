@@ -19,7 +19,7 @@ namespace TagCloudApp
             container.RegisterTypes(typeof(WhitespaceTextReader)) //etc.
                      .As<ITextReader>();
 
-            container.RegisterTypes(typeof(BasicDrawer))
+            container.RegisterTypes(typeof(ShortWordDrawer), typeof(BasicDrawer))
                      .As<IWordDrawer>();
 
             container.RegisterType<CompositeDrawer>()

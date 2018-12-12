@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace TagCloudVisualization
 {
+    /// <summary>
+    /// Composes one or more drawers;
+    /// </summary>
     public class CompositeDrawer
     {
         private readonly List<IWordDrawer> drawers;
@@ -10,7 +13,7 @@ namespace TagCloudVisualization
         /// <summary>
         /// Aggregates drawers so that the earliest drawer is being used to draw word;
         /// </summary>
-        public CompositeDrawer(IEnumerable<IWordDrawer> drawers)
+        public CompositeDrawer(params IWordDrawer[] drawers)
         {
             this.drawers = drawers.ToList();
         }
