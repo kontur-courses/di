@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using Autofac;
 using Fclp;
 using TagCloud.ColorPicker;
@@ -85,6 +86,9 @@ namespace TagCloud
 
             CheckFile("Words", arguments.WordsFileName, exceptions);
             CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
+
+            var format = Regex.Match(arguments.ImageFileName, ".+\\.(.+)$").Groups[1].Value;
+            CheckArgument(FileImageSaver.ImageFormats, "image format", format, exceptions);
 
             CheckArgument(Colors, "words color", arguments.WordsColorName, exceptions);
             CheckArgument(Colors, "background color", arguments.BackgroundColorName, exceptions);
