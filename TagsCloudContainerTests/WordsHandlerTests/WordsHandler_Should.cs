@@ -16,7 +16,7 @@ namespace TagsCloudContainerTests.WordsHandlerTests
         private IFilter<string> wordsFilter;
         private IWordsTransformer wordsTransformer;
         private WordsHandler wordsHandler;
-        private List<string> words = new List<string> {"ab", "acd", "eded", "wwww", "ab"};
+        private readonly List<string> words = new List<string> {"ab", "acd", "eded", "wwww", "ab"};
 
         [SetUp]
         public void SetUp()
@@ -74,15 +74,15 @@ namespace TagsCloudContainerTests.WordsHandlerTests
         }
 
         [Test]
-        public void HandleWords_TransformsWords_WhereThereAreTransformers()
+        public void HandleWords_TransformsWords_WhenThereAreTransformers()
         {
-            var changedWords = words.First();
+            var changedWord = words.First();
             var newWord = "new_word";
-            A.CallTo(() => wordsTransformer.TransformWord(changedWords)).Returns(newWord);
+            A.CallTo(() => wordsTransformer.TransformWord(changedWord)).Returns(newWord);
 
             var wordsInfos = wordsHandler.HandleWords(words);
 
-            wordsInfos.Should().Contain(x => x.Word == newWord).And.NotContain(x => x.Word == changedWords);
+            wordsInfos.Should().Contain(x => x.Word == newWord).And.NotContain(x => x.Word == changedWord);
         }
 
         [Test]
@@ -100,6 +100,20 @@ namespace TagsCloudContainerTests.WordsHandlerTests
             wordInfos.Should().Contain(x => x.Word == lastForm).And
                 .NotContain(x => x.Word == firstWord || x.Word == intermediateForm);
         }
+
+        [Test]
+        public void HandleWords_TransformsWords_ThenFiltersThem()
+        {
+            var word = words.First();
+            var transformedWord = word + word;
+            A.CallTo(() => wordsTransformer.TransformWord(word)).Returns(transformedWord);
+            A.CallTo(() => wordsFilter.IsCorrect(transformedWord)).Returns(false);
+
+            var wordInfos = wordsHandler.HandleWords(words);
+
+            wordInfos.Should().NotContain(x => x.Word == transformedWord);
+        }
+        
 
         private IFilter<string> GetFilterWithExcludedWord(string word)
         {

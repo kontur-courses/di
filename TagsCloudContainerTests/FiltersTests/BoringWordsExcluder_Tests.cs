@@ -12,26 +12,26 @@ namespace TagsCloudContainerTests.FiltersTests
     {
         private IBoringWordsGetter boringWordsGetter;
         private IFilter<string> filter;
-        private readonly string[] baseWords = { "a", "an", "aQuiteLongWord" };
+        private readonly string[] baseBoringWords = { "a", "an", "aQuiteLongWord" };
 
         [SetUp]
         public void SetUp()
         {
-            boringWordsGetter = GetBoringWordsGetter(baseWords);
+            boringWordsGetter = GetBoringWordsGetter(baseBoringWords);
             filter = new BoringWordsExcluder(new[] { boringWordsGetter });
         }
 
         [TestCase("A", TestName = "given word is uppercase")]
-        [TestCase("a", TestName = "word are equals to one of base words")]
-        [TestCase("aN", TestName = "given word is not full uppercase")]
+        [TestCase("a", TestName = "word equals to one of boring words")]
+        [TestCase("aN", TestName = "given word has uppercase and lowercase letters")]
         public void IsCorrectWord_ReturnsFalse_WhenBoringWordsGetterContainGivenWord(string word)
         {
             filter.IsCorrect(word).Should().BeFalse();
         }
 
-        [TestCase("aQuiteLongWor", TestName = "given string is a substring of base word")]
-        [TestCase("aQuiteLongWordA", TestName = "base word is a substring of base word")]
-        [TestCase("aaaaaaaaa", TestName = "base words do not contain given word")]
+        [TestCase("aQuiteLongWor", TestName = "given string is a substring of a boring word")]
+        [TestCase("aQuiteLongWordA", TestName = "given word is a substring of a boring word")]
+        [TestCase("aaaaaaaaa", TestName = "boring words do not contain given word")]
         public void IsCorrectWord_ReturnsTrue_WhenBoringWordsGetterDoesNotContainGivenWord(string word)
         {
             filter.IsCorrect(word).Should().BeTrue();

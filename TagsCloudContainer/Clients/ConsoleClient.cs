@@ -64,7 +64,7 @@ namespace TagsCloudContainer.Clients
             {
                 return filesReaderFactory.Invoke(fileName);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 FailApplication($"Can not read given file: {fileName}");
             }
@@ -77,7 +77,7 @@ namespace TagsCloudContainer.Clients
             {
                 settings.TextSettings.Family = new FontFamily(font);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 FailApplication("Font is incorrect");
             }
@@ -94,7 +94,7 @@ namespace TagsCloudContainer.Clients
             {
                 imageSaver.SaveImage(image, destination);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 FailApplication($"Can't save picture of cloud at given file path: {destination}");
             }
