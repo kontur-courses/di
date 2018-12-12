@@ -28,7 +28,7 @@ namespace TagCloudApp
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();
 
-            container.RegisterTypes(typeof(FixedBoringWordsRemover), typeof(CaseChanger), typeof(Formatter),
+            container.RegisterTypes(typeof(FixedBoringWordsRemover), typeof(LowerCaseSetter), typeof(Formatter),
                                     typeof(SelectedBoringWordsRemover), typeof(VerbRemover), typeof(PrepositionRemover))
                      .As<IWordPreparer>();
 

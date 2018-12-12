@@ -1,8 +1,8 @@
 ﻿namespace TagCloudCreation
 {
-    public class PrepositionRemover : PosRemover
+    public class PrepositionRemover : PartOfSpeechPreparer
     {
         public override string PrepareWord(string word, TagCloudCreationOptions options) =>
-            PrepareWord(word, w => w.EndsWith("IN "));
+            ProcessWordByTag(word, (tag, w) => tag == PartOfSpeech.Preposition ? null : w);
     }
 }

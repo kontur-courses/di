@@ -1,6 +1,6 @@
 ﻿namespace TagCloudCreation
 {
-    public class CaseChanger : IWordPreparer
+    public class LowerCaseSetter : IWordPreparer
     {
         /// <inheritdoc cref="IWordPreparer" />
         public string PrepareWord(string word, TagCloudCreationOptions _)

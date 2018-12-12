@@ -27,7 +27,7 @@ namespace TagCloudTests
         [Test]
         public void ReturnNull_IfWordIsBoring()
         {
-            remover.PrepareWord(new WordInfo("a", 1), new TagCloudCreationOptions(null, "path"))
+            remover.PrepareWord("a", new TagCloudCreationOptions(null, "path"))
                    .Should()
                    .BeNull();
         }
@@ -36,9 +36,9 @@ namespace TagCloudTests
         public void ReturnWord_IfWordIsNotBoring()
         {
             var wordInfo = new WordInfo("b", 1);
-            remover.PrepareWord(wordInfo, new TagCloudCreationOptions(null, "path"))
+            remover.PrepareWord("b", new TagCloudCreationOptions(null, "path"))
                    .Should()
-                   .Be(wordInfo);
+                   .Be("b");
         }
     }
 }

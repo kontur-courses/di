@@ -2,11 +2,9 @@
 
 namespace TagCloudCreation
 {
-    public class VerbRemover : PosRemover
+    public class VerbRemover : PartOfSpeechPreparer
     {
         public override string PrepareWord(string word, TagCloudCreationOptions options) =>
-            PrepareWord(word, w => w.Split('_')
-                                    .Last()
-                                    .StartsWith("V"));
+            ProcessWordByTag(word, (tag, w) => tag == PartOfSpeech.Verb ? null : w);
     }
 }

@@ -126,7 +126,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaseChanger.cs" />
+    <Compile Include="LowerCaseSetter.cs" />
     <Compile Include="FixedBoringWordsRemover.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
@@ -141,7 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagCloudCreationOptions.cs" />
     <Compile Include="TagCloudCreator.cs" />
-    <Compile Include="PosRemover.cs" />
+    <Compile Include="PartOfSpeechPreparer.cs" />
     <Compile Include="VerbRemover.cs" />
   </ItemGroup>
   <ItemGroup>
