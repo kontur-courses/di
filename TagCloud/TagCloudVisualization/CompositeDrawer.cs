@@ -13,7 +13,7 @@ namespace TagCloudVisualization
         /// <summary>
         /// Aggregates drawers so that the earliest drawer is being used to draw word;
         /// </summary>
-        public CompositeDrawer(params IWordDrawer[] drawers)
+        public CompositeDrawer( IEnumerable<IWordDrawer> drawers)
         {
             this.drawers = drawers.ToList();
         }

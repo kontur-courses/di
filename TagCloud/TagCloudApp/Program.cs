@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using TagCloudCreation;
 using TagCloudVisualization;
 
@@ -19,11 +20,11 @@ namespace TagCloudApp
             container.RegisterTypes(typeof(WhitespaceTextReader)) //etc.
                      .As<ITextReader>();
 
-            container.RegisterTypes(typeof(ShortWordDrawer), typeof(BasicDrawer))
+            container.RegisterTypes(typeof(ShortWordDrawer), typeof(BasicDrawer)).WithOrder()
                      .As<IWordDrawer>();
 
             container.RegisterType<CompositeDrawer>()
-                     .AsSelf();
+                     .AsSelf().WithParameter(new ResolvedParameter((i,c)=>true, (i,c)=>c.ResolveOrdered<IWordDrawer>()));
 
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();

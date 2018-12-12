@@ -45,6 +45,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacExtensions.cs" />
     <Compile Include="ConsoleUserInterface.cs" />
     <Compile Include="IPathValidator.cs" />
     <Compile Include="ITextReader.cs" />
