@@ -19,7 +19,7 @@ namespace TagCloud.Tests.ForTagUtility
             var tagContainerReader = container.Resolve<TagContainerReader>();
             using (var file = File.CreateText("tmp.txt"))
             {
-                file.WriteLine("TestGroup 0.0-1.0 1;");
+                file.WriteLine("TestGroup 0-1 1;");
             }
 
             var result = tagContainerReader.ReadTagsContainer("tmp.txt");
