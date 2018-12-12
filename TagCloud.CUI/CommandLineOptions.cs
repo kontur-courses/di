@@ -54,7 +54,32 @@ namespace TagCloud.CUI
         public double? SpiralStepMultiplier { get; set; }
         #endregion
 
-        public void UpdatePaintingSettings(PaintingSettings settings)
+        public void UpdateSettings(params ISettings[] all_settings)
+        {
+            foreach (var settings in all_settings)
+            {
+                switch (settings)
+                {
+                    case LayoutingSettings layoutingSettings:
+                        UpdateLayoutingSettings(layoutingSettings);
+                        break;
+                    case PaintingSettings paintingSettings:
+                        UpdatePaintingSettings(paintingSettings);
+                        break;
+                    case TagCloudSettings tagCloudSettings:
+                        UpdateTagCloudSettings(tagCloudSettings);
+                        break;
+                    case TextWorkingSettings textWorkingSettings:
+                        UpdateTextWorkingSettings(textWorkingSettings);
+                        break;
+                    case VisualizingSettings visualizingSettings:
+                        UpdateVisualizingSettings(visualizingSettings);
+                        break;
+                }
+            }
+        }
+
+        private void UpdatePaintingSettings(PaintingSettings settings)
         {
             if (BackgroundColorName != null)
                 settings.BackgroundColor = Color.FromName(BackgroundColorName);
@@ -62,12 +87,12 @@ namespace TagCloud.CUI
                 settings.TagColor = Color.FromName(TagBrushName);
         }
 
-        public void UpdateTextWorkingSettings(TextWorkingSettings settings)
+        private void UpdateTextWorkingSettings(TextWorkingSettings settings)
         {
             settings.MaxUniqueWordsCount = MaxTagsCount;
         }
 
-        public void UpdateVisualizingSettings(VisualizingSettings settings)
+        private void UpdateVisualizingSettings(VisualizingSettings settings)
         {
             if (MaxFontSize.HasValue)
                 settings.MaxFontSize = MaxFontSize.Value;
@@ -81,13 +106,13 @@ namespace TagCloud.CUI
                 settings.Height = Height.Value;
         }
 
-        public void UpdateLayoutingSettings(LayoutingSettings settings)
+        private void UpdateLayoutingSettings(LayoutingSettings settings)
         {
             if (SpiralStepMultiplier.HasValue)
                 settings.SpiralStepMultiplier = SpiralStepMultiplier.Value;
         }
 
-        public void UpdateTagCloudSettings(TagCloudSettings settings)
+        private void UpdateTagCloudSettings(TagCloudSettings settings)
         {
             settings.PathToWords = PathToWords;
             if (PathToBoringWords != null)

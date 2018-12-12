@@ -20,7 +20,37 @@ namespace TagCloud.CUI
         static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
+            InjectDependencies(builder);
+            var container = builder.Build();
 
+            if (args.Length == 0)
+                args = new[]
+                {
+                    @"-p", @"test_words.txt",
+                    @"-i", @"result.bmp",
+                    //@"--spiralstep", @"1"
+                };
+
+            Parser.Default
+                .ParseArguments<CommandLineOptions>(args)
+                .WithParsed(options =>
+                    {
+                        var textWorkingSettings = container.Resolve<TextWorkingSettings>();
+                        var paintingSettings = container.Resolve<PaintingSettings>();
+                        var visualizingSettings = container.Resolve<VisualizingSettings>();
+                        var layoutingSettings = container.Resolve<LayoutingSettings>();
+                        var tagCloudSettings = container.Resolve<TagCloudSettings>();
+                        options.UpdateSettings(textWorkingSettings, paintingSettings, visualizingSettings,
+                            layoutingSettings, tagCloudSettings);
+
+                        var tagCloud = container.Resolve<Core.TagCloud>();
+                        tagCloud.MakeTagCloudAndSave();
+                    }
+                );
+        }
+
+        static void InjectDependencies(ContainerBuilder builder)
+        {
             builder.RegisterType<Core.TagCloud>().AsSelf();
             builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
 
@@ -37,41 +67,6 @@ namespace TagCloud.CUI
             builder.RegisterType<LayoutingSettings>().AsSelf().SingleInstance();
             builder.RegisterType<OneColorPainter>().As<IPainter>();
             builder.RegisterType<PaintingSettings>().AsSelf().SingleInstance();
-
-            var container = builder.Build();
-
-            if (args.Length == 0)
-                args = new[]
-                {
-                    @"-p", @"C:\Users\Михаил\Desktop\di\TagCloud.Tests\Resources\words_with_different_delimiters.txt",
-                    @"-i", @"C:\Users\Михаил\Desktop\heh.png",
-                    @"--spiralstep", @"1"
-                };
-
-            Parser.Default
-                .ParseArguments<CommandLineOptions>(args)
-                .WithParsed(options =>
-                    {
-                        //TODO: work with it more attractive
-                        var textWorkingSettings = container.Resolve<TextWorkingSettings>();
-                        options.UpdateTextWorkingSettings(textWorkingSettings);
-
-                        var paintingSettings = container.Resolve<PaintingSettings>();
-                        options.UpdatePaintingSettings(paintingSettings);
-
-                        var visualizingSettings = container.Resolve<VisualizingSettings>();
-                        options.UpdateVisualizingSettings(visualizingSettings);
-
-                        var layoutingSettings = container.Resolve<LayoutingSettings>();
-                        options.UpdateLayoutingSettings(layoutingSettings);
-
-                        var tagCloudSettings = container.Resolve<TagCloudSettings>();
-                        options.UpdateTagCloudSettings(tagCloudSettings);
-
-                        var tagCloud = container.Resolve<Core.TagCloud>();
-                        tagCloud.MakeTagCloudAndSave();
-                    }
-                );
         }
     }
 }

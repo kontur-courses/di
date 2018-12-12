@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Reflection;
 
 namespace TagCloud.Core.Util
 {
