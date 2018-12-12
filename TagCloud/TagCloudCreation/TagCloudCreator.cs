@@ -25,12 +25,10 @@ namespace TagCloudCreation
         public Bitmap CreateImage(IEnumerable<string> words, TagCloudCreationOptions options)
         {
             words = preparers.Aggregate(words, (current, wordPreparer) => current
-                                                                          .Select(w =>
-                                                                                      wordPreparer
-                                                                                          .PrepareWord(w, options))
+                                                                          .Select(w => wordPreparer.PrepareWord(w, options))
                                                                           .Where(wi => wi != null)
+                                                                          .Where(w => w != "")
                                                                           .ToList());
-            words = words.Where(w => w != "");
 
             var stats = generator.GenerateStats(words);
 
@@ -38,13 +36,12 @@ namespace TagCloudCreation
             var minCount = stats.Min(w => w.Count);
 
             var wordPairs = stats.OrderByDescending(wi => wi.Count)
-                                 .Select(wordInfo =>
-                                             wordInfo.With(GetScalingCoefficient(wordInfo.Count, maxCount, minCount)));
+                                 .Select(wordInfo => wordInfo.With(GetScale(wordInfo.Count, maxCount, minCount)));
 
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
         }
 
-        public float GetScalingCoefficient(int count, int maxCount, int minCount)
+        public float GetScale(int count, int maxCount, int minCount)
         {
             if (maxCount == minCount)
                 return 1;
