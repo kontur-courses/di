@@ -1,7 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagCloud.Utility.Models.Tag.Container
 {
@@ -11,23 +12,24 @@ namespace TagCloud.Utility.Models.Tag.Container
         {
             var text = File.ReadAllText(path);
             var tagContainer = new TagContainer();
-            var groups = text
-                .Split(';','\r','\n')
-                .Where(line => !string.IsNullOrEmpty(line));
 
-            foreach (var group in groups)
+            var regex = new Regex(@"\w+ \d.\d-\d.\d \d+");
+            var matches = regex.Matches(text);
+            if(matches.Count == 0)
+                throw new ArgumentException($@"Path {path} didn't contain any group matching regex \w+ \d.\d-\d.\d \d+");
+            foreach (Match match in matches)
             {
+                if (!match.Success)
+                    continue;
+                var group = match.Value;
                 var items = group.Split(' ');
                 var name = items[0];
                 var freq = items[1]
                     .Split('-')
                     .Select(n => double.Parse(n, CultureInfo.InvariantCulture))
                     .ToArray();
-                var size = items[2]
-                    .Split('x')
-                    .Select(int.Parse)
-                    .ToArray();
-                tagContainer.Add(name, new FrequencyGroup(freq[0], freq[1]), new Size(size[0], size[1]));
+                var size = int.Parse(items[2]);
+                tagContainer.Add(name, new FrequencyGroup(freq[0], freq[1]), size);
             }
 
             return tagContainer;
