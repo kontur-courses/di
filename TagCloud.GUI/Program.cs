@@ -39,6 +39,7 @@ namespace TagCloud.GUI
 
             builder.RegisterType<TextWorker>().AsSelf();
             builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
+            builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
             builder.RegisterType<GeneralWordsReader>().As<IWordsReader>();
             builder.RegisterType<LowerCaseUtility>().As<IProcessingUtility>();
             builder.RegisterType<SimpleWordsProcessor>().As<IWordsProcessor>();

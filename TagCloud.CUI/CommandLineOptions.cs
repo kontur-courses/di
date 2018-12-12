@@ -20,7 +20,7 @@ namespace TagCloud.CUI
         #endregion
 
         #region PaintingSettings
-        [Option('b', "backgroundcolor")]
+        [Option("backgroundcolor")]
         public string BackgroundColorName { get; set; }
 
         [Option("tagbrush")]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Core.Settings;
 using TagCloud.Core.Util;
@@ -7,7 +8,7 @@ namespace TagCloud.Core.Painters
 {
     public class OneColorPainter : IPainter
     {
-        private PaintingSettings settings;
+        private readonly PaintingSettings settings;
 
         public OneColorPainter(PaintingSettings settings)
         {
@@ -16,6 +17,8 @@ namespace TagCloud.Core.Painters
 
         public void PaintTags(IEnumerable<Tag> tags)
         {
+            if (tags == null)
+                throw new ArgumentNullException(nameof(tags));
             foreach (var tag in tags)
                 tag.Brush = settings.TagBrush;
         }

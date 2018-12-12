@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Autofac;
+﻿using Autofac;
 using CommandLine;
 using TagCloud.Core.Layouters;
 using TagCloud.Core.Painters;
@@ -10,7 +8,6 @@ using TagCloud.Core.TextWorking.WordsProcessing;
 using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
 using TagCloud.Core.TextWorking.WordsReading;
 using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
-using TagCloud.Core.Util;
 using TagCloud.Core.Visualizers;
 
 namespace TagCloud.CUI
@@ -27,8 +24,9 @@ namespace TagCloud.CUI
                 args = new[]
                 {
                     @"-p", @"test_words.txt",
+                    @"-b", @"boring_words.xml",
                     @"-i", @"result.bmp",
-                    //@"--spiralstep", @"1"
+                    @"--spiralstep", @"1"
                 };
 
             Parser.Default
@@ -56,6 +54,7 @@ namespace TagCloud.CUI
 
             builder.RegisterType<TextWorker>().AsSelf();
             builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
+            builder.RegisterType<XmlWordsReader>().As<IWordsReaderForFile>();
             builder.RegisterType<GeneralWordsReader>().As<IWordsReader>();
             builder.RegisterType<LowerCaseUtility>().As<IProcessingUtility>();
             builder.RegisterType<SimpleWordsProcessor>().As<IWordsProcessor>();
