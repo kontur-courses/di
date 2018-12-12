@@ -22,7 +22,10 @@ namespace TagsCloudContainer.CloudTagController
 
         public void Work()
         {
-            cloudDrawer.Draw(cloudBuilder.BuildTagsCloud(textParser.Parse(fileReader.Read())));
+            var text = fileReader.Read();
+            var parsedText = textParser.Parse(text);
+            var tagCloud = cloudBuilder.BuildTagsCloud(parsedText);
+            cloudDrawer.Draw(tagCloud);
         }
     }
 }

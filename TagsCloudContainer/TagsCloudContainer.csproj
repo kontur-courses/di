@@ -91,6 +91,7 @@
     <Compile Include="Themes\ITheme.cs" />
     <Compile Include="Themes\Themes.cs" />
     <Compile Include="WordConverter\Converters.cs" />
+    <Compile Include="WordFilter\BoringWordFilter.cs" />
     <Compile Include="WordFilter\Filters.cs" />
     <Compile Include="WordFilter\IFilter.cs" />
     <Compile Include="WordFilter\LengthWordFilter.cs" />

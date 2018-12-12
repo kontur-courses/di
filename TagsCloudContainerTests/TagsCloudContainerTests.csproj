@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextParserTests\TextParserTests.cs" />
     <Compile Include="WordConverterTests\InitialFormWordConverterTests.cs" />
+    <Compile Include="WordFilterTests\BoringWordFilterTests.cs" />
     <Compile Include="WordFilterTests\LengthWordFilterTests.cs" />
     <Compile Include="WordFilterTests\NotNullWordFilterTests.cs" />
   </ItemGroup>

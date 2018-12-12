@@ -25,11 +25,15 @@ namespace CUITagCloud
         public string Theme { get; set; }
 
         [Option('f', "filters", Separator = ',', Default = new[] {"simple"},
-            HelpText = "Фильтры, которые можно применить к тексту. [simple, length]")]
+            HelpText = "Фильтры, которые можно применить к тексту. [simple, length, boring]")]
         public IEnumerable<string> Filters { get; set; }
 
         [Option('v', "converters", Separator = ',', Default = new[] {"simple"},
             HelpText = "Преобразователи слов, которые можно применить к тексту. [simple]")]
         public IEnumerable<string> Converters { get; set; }
+        
+        [Option('b', "boringwords", Required = false, HelpText = "Список скучных слов, которые будут отсеяны.")]
+        public string BoringWordsFileName { get; set; }
+
     }
 }

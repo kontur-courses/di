@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TagsCloudContainer.WordConverter;
 using TagsCloudContainer.WordFilter;
@@ -7,9 +8,10 @@ namespace TagsCloudContainer.Settings
 {
     public class TextSettings
     {
-        public TextSettings(int countWords, IEnumerable<string> filters, IEnumerable<string> wordConverters)
+        public TextSettings(int countWords, IEnumerable<string> filters, IEnumerable<string> wordConverters, string boringWordFileName = null)
         {
             CountWords = countWords;
+            BoringWordFileName = boringWordFileName;
             WordConverters = GetConvertersByName(wordConverters);
             WordFilters = GetFiltersByName(filters);
         }
@@ -17,6 +19,7 @@ namespace TagsCloudContainer.Settings
         public IFilter[] WordFilters { get; }
         public int CountWords { get; }
         public IWordConverter[] WordConverters { get; }
+        private string BoringWordFileName { get; }
 
 
         private IWordConverter[] GetConvertersByName(IEnumerable<string> wordConverters)
@@ -26,7 +29,18 @@ namespace TagsCloudContainer.Settings
 
         private IFilter[] GetFiltersByName(IEnumerable<string> filters)
         {
-            return filters.Select(filter => Filters.FiltersDictionary[filter]).ToArray();
+            var resultFilters = new List<IFilter>();
+            foreach (var filter in filters)
+            {
+                if (filter == "boring")
+                {
+                    var boringWords = File.ReadLines(BoringWordFileName).ToList();
+                    resultFilters.Add(new BoringWordFilter(boringWords));
+                }
+                else 
+                    resultFilters.Add(Filters.FiltersDictionary[filter]);
+            }
+            return resultFilters.ToArray();
         }
     }
 }

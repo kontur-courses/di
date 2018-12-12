@@ -26,7 +26,7 @@ namespace CUITagCloud
             {
                 imageSettings = new ImageSettings(o.Height, o.Width, o.OutputFile, o.Theme);
                 fileSettings = new FileSettings(o.InputFileName);
-                textSettings = new TextSettings(o.CountWords, o.Filters, o.Converters);
+                textSettings = new TextSettings(o.CountWords, o.Filters, o.Converters, o.BoringWordsFileName);
                 var builder = new ContainerBuilder();
 
                 builder.RegisterInstance(fileSettings).As<FileSettings>();
