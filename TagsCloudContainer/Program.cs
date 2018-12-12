@@ -16,26 +16,31 @@ namespace TagsCloudContainer
     class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var builder = new ContainerBuilder();
-            RegisterTypes(builder);
+            var builder = RegisterTypes();
             var mainForm = builder.Build().ResolveOptional<UIForm>();
             Application.Run(mainForm);
 
         }
 
-        private static void RegisterTypes(ContainerBuilder builder)
+        private static ContainerBuilder RegisterTypes()
         {
+            var builder = new ContainerBuilder();
             builder.RegisterType<UIForm>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxImageHolder>().As<PictureBoxImageHolder, IImageHolder>().SingleInstance();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(type => type.GetInterfaces().Contains(typeof(IUiAction))).As<IUiAction>();
+                .Where(type => type.Implements(typeof(IUiAction)))
+                .AsImplementedInterfaces();
             builder.RegisterType<TagCloudPainter>().AsSelf().SingleInstance();
-            builder.RegisterTypes(Assembly.GetExecutingAssembly().GetTypes()
-                    .Where(type => type.Implements(typeof(ICloudColorPainter))).ToArray())
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(type => type.Implements(typeof(ICloudColorPainter)))
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(type => type.Implements(typeof(IWordsPreprocessor)))
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder.RegisterType<GradientPainter>().As<ICloudColorPainter>().SingleInstance();
@@ -52,7 +57,8 @@ namespace TagsCloudContainer
                 return () => new CircularCloudLayouter(context.Resolve<IPositionGenerator>());
             });
             builder.RegisterType<LayouterApplicator>().AsSelf().SingleInstance();
-            builder.RegisterType<WordsPreprocessor>().AsSelf().SingleInstance();
+            builder.RegisterType<FrequencyCounter>().AsSelf().SingleInstance();
+            return builder;
         }
     }
 }

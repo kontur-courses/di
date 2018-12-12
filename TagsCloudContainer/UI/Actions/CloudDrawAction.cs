@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.FileReader;
@@ -10,27 +11,30 @@ namespace TagsCloudContainer.UI.Actions
     public class CloudDrawAction : IUiAction
     {
         private readonly IFileReader reader;
-        private readonly WordsPreprocessor preprocessor;
+        private readonly IWordsPreprocessor[] preprocessors;
+        private readonly FrequencyCounter frequencyCounter;
         private readonly WordsPreprocessorSettings preprocessorSettings;
         private readonly IFilePathProvider filePath;
         private readonly TagCloudPainter painter;
-        private readonly LayouterApplicator infoGetter;
+        private readonly LayouterApplicator applicator;
         private readonly PictureBoxImageHolder imageHolder;
 
         public CloudDrawAction(IFileReader reader,
-            WordsPreprocessor preprocessor,
+            IWordsPreprocessor[] preprocessors,
+            FrequencyCounter frequencyCounter,
             WordsPreprocessorSettings preprocessorSettings,
             IFilePathProvider filePath,
             TagCloudPainter painter,
-            LayouterApplicator infoGetter,
+            LayouterApplicator applicator,
             PictureBoxImageHolder imageHolder)
         {
             this.reader = reader;
-            this.preprocessor = preprocessor;
+            this.preprocessors = preprocessors;
+            this.frequencyCounter = frequencyCounter;
             this.preprocessorSettings = preprocessorSettings;
             this.filePath = filePath;
             this.painter = painter;
-            this.infoGetter = infoGetter;
+            this.applicator = applicator;
             this.imageHolder = imageHolder;
         }
 
@@ -54,9 +58,10 @@ namespace TagsCloudContainer.UI.Actions
             res = SettingsForm.For(preprocessorSettings).ShowDialog();
             if (res != DialogResult.OK)
                 return;
-            var processed = preprocessor.CountWordFrequencies(words);
-            var wordInfos = infoGetter.GetWordsAndRectangles(processed);
-            painter.Paint(infoGetter.WordsCenter, wordInfos);
+            var preprocessed = preprocessors.Aggregate(words, (current, preprocessor) => preprocessor.Process(current));
+            var infos = frequencyCounter.CountWordFrequencies(preprocessed);
+            var wordInfos = applicator.GetWordsAndRectangles(infos);
+            painter.Paint(applicator.WordsCenter, wordInfos);
             imageHolder.UpdateUi();
         }
     }

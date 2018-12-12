@@ -65,11 +65,16 @@
   <ItemGroup>
     <Compile Include="Layouter\ITagCloudLayouter.cs" />
     <Compile Include="Painter\RandomPainter.cs" />
+    <Compile Include="Preprocessing\BoringWordsExcluder.cs" />
+    <Compile Include="Preprocessing\FrequencyCounter.cs" />
+    <Compile Include="Preprocessing\InitialFormSetter.cs" />
+    <Compile Include="Preprocessing\IWordsPreprocessor.cs" />
     <Compile Include="Settings\PainterType.cs" />
     <Compile Include="Painter\SolidPainter.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\FontSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Tests\FrequencyCounter_Should.cs" />
     <Compile Include="UIForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,7 +102,7 @@
     <Compile Include="Settings\SettingsForm.cs" />
     <Compile Include="Tests\LayoterApplicator_Should.cs" />
     <Compile Include="Tests\TagCloudLayouter_Should.cs" />
-    <Compile Include="Tests\WordPreprocessor_Should.cs" />
+    <Compile Include="Tests\BoringWordsExcluder_Should.cs" />
     <Compile Include="UI\Actions\FontSettingsAction.cs" />
     <Compile Include="UI\Actions\ImageSettingsAction.cs" />
     <Compile Include="UI\Actions\CloudDrawAction.cs" />
@@ -108,7 +113,6 @@
     <Compile Include="UI\IUiActionExtensions.cs" />
     <Compile Include="UI\MenuCategory.cs" />
     <Compile Include="WordInfo.cs" />
-    <Compile Include="Preprocessing\WordsPreprocessor.cs" />
     <Compile Include="Preprocessing\WordsPreprocessorSettings.cs" />
     <Compile Include="Preprocessing\LayouterApplicator.cs" />
   </ItemGroup>
