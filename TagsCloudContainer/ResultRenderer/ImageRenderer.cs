@@ -7,14 +7,13 @@ namespace TagsCloudContainer.ResultRenderer
 {
     public class ImageRenderer : IResultRenderer
     {
-        private readonly Image image;
-        private readonly Graphics graphics;
+        private readonly Size imageSize;
 
         public bool DrawRectangles { get; set; }
 
         public ImageRenderer(IResultRendererConfig config)
         {
-            var imageSize = config.ImageSize;
+            imageSize = config.ImageSize;
 
             if (imageSize.Width <= 0 || imageSize.Height <= 0)
             {
@@ -22,11 +21,6 @@ namespace TagsCloudContainer.ResultRenderer
                     "Width and height of image have to be > 0",
                     nameof(imageSize));
             }
-
-            image = new Bitmap(imageSize.Width, imageSize.Height);
-            graphics = Graphics.FromImage(image);
-            var background = new RectangleF(0, 0, image.Width, image.Height);
-            graphics.FillRectangle(new SolidBrush(Color.Black), background);
         }
 
         public Image Generate(IEnumerable<Word> words)
@@ -36,9 +30,46 @@ namespace TagsCloudContainer.ResultRenderer
                 throw new ArgumentException("Given words can't be null", nameof(words));
             }
 
-            var center = new PointF(image.Width / 2f, image.Height / 2f);
+            var center = new PointF(imageSize.Width / 2f, imageSize.Height / 2f);
 
-            var centeredWords = words
+            var centeredWords = CenterWords(center, words);
+
+            return GenerateImage(centeredWords);
+        }
+
+        private Image GenerateImage(IEnumerable<Word> words)
+        {
+            var image = new Bitmap(imageSize.Width, imageSize.Height);
+
+            using (var graphics = Graphics.FromImage(image))
+            {
+                var background = new RectangleF(0, 0, image.Width, image.Height);
+                graphics.FillRectangle(new SolidBrush(Color.Black), background);
+
+                foreach (var word in words)
+                {
+                    graphics.DrawString(
+                        word.Value,
+                        word.Font,
+                        new SolidBrush(word.Color),
+                        word.Position.Location);
+
+                    if (DrawRectangles)
+                    {
+                        graphics.DrawRectangle(
+                            new Pen(Color.Blue),
+                            word.Position.X, word.Position.Y,
+                            word.Position.Width, word.Position.Height);
+                    }
+                }
+            }
+
+            return image;
+        }
+
+        private IEnumerable<Word> CenterWords(PointF center, IEnumerable<Word> words)
+        {
+            return words
                 .Select(word =>
                 {
                     var result = new Word(word.Font, word.Color, word.Value);
@@ -49,40 +80,6 @@ namespace TagsCloudContainer.ResultRenderer
 
                     return result;
                 });
-
-            foreach (var word in centeredWords)
-            {
-                graphics.DrawString(
-                    word.Value,
-                    word.Font,
-                    new SolidBrush(word.Color),
-                    word.Position.Location);
-
-                if (DrawRectangles)
-                {
-                    graphics.DrawRectangle(
-                        new Pen(Color.Blue),
-                        word.Position.X, word.Position.Y,
-                        word.Position.Width, word.Position.Height);
-                }
-            }
-
-            return image;
-        }
-
-        public SizeF GetWordSize(Word word)
-        {
-            if (word == null)
-            {
-                throw new ArgumentException("Given word can't be null", nameof(word));
-            }
-
-            return graphics.MeasureString(word.Value, word.Font);
-        }
-
-        public void Dispose()
-        {
-            graphics?.Dispose();
         }
     }
 }

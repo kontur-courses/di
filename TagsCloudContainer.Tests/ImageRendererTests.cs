@@ -47,15 +47,5 @@ namespace TagsCloudContainer.Tests
                 .Size.Should()
                 .BeEquivalentTo(expectedSize);
         }
-
-        [Test]
-        public void GetWordSize_ThrowsArgumentException_OnNullWord()
-        {
-            Action action = () => new ImageRenderer(new Config { ImageSize = new Size(1024, 1024) }).GetWordSize(null);
-
-            action
-                .Should()
-                .Throw<ArgumentException>();
-        }
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="ResultRenderer\ImageRenderer.cs" />
     <Compile Include="ResultRenderer\IResultRenderer.cs" />
     <Compile Include="ResultRenderer\IResultRendererConfig.cs" />
+    <Compile Include="ResultRenderer\WordsSizer.cs" />
     <Compile Include="TagsCloudBuilder.cs" />
     <Compile Include="WordFormatters\IFormatterConfig.cs" />
     <Compile Include="WordFormatters\IWordFormatter.cs" />

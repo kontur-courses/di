@@ -21,6 +21,7 @@ namespace TagsCloudContainer.Tests
         private ILayouter layouter;
         private IResultRenderer renderer;
         private TagsCloudBuilder builder;
+        private WordsSizer wordsSizer;
 
         [OneTimeSetUp]
         public void DoBeforeAllTest()
@@ -30,9 +31,10 @@ namespace TagsCloudContainer.Tests
             formatter = A.Fake<IWordFormatter>();
             layouter = A.Fake<ILayouter>();
             renderer = A.Fake<IResultRenderer>();
+            wordsSizer = A.Fake<WordsSizer>();
             builder = new TagsCloudBuilder(
                 new[] {preprocessor1, preprocessor2},
-                formatter, layouter, renderer);
+                formatter, layouter, renderer, wordsSizer);
         }
 
         [Test]

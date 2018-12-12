@@ -14,17 +14,20 @@ namespace TagsCloudContainer
         private readonly IWordFormatter wordFormatter;
         private readonly ILayouter layouter;
         private readonly IResultRenderer resultRenderer;
+        private readonly WordsSizer wordsSizer;
 
         public TagsCloudBuilder(
             IEnumerable<IWordsPreprocessor> wordsPreprocessors,
             IWordFormatter wordFormatter,
             ILayouter layouter,
-            IResultRenderer resultRenderer)
+            IResultRenderer resultRenderer,
+            WordsSizer wordsSizer)
         {
             this.wordsPreprocessors = wordsPreprocessors;
             this.wordFormatter = wordFormatter;
             this.layouter = layouter;
             this.resultRenderer = resultRenderer;
+            this.wordsSizer = wordsSizer;
         }
 
         public Image Visualize(IEnumerable<string> rawWords)
@@ -36,7 +39,7 @@ namespace TagsCloudContainer
                 .Select(word => new Word(word.Font, word.Color, word.Value)
                 {
                     Position = layouter
-                        .GetNextPosition(resultRenderer.GetWordSize(word))
+                        .GetNextPosition(wordsSizer.GetWordSize(word))
                 });
 
             return resultRenderer.Generate(positionedWords);

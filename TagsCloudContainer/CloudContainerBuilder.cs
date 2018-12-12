@@ -47,6 +47,9 @@ namespace TagsCloudContainer
                 .As<IWordsPreprocessor>()
                 .SingleInstance();
 
+            builder.RegisterType<WordsSizer>()
+                .AsSelf();
+
             builder.RegisterType<TagsCloudBuilder>()
                 .AsSelf();
 

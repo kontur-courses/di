@@ -44,7 +44,6 @@ namespace TagsCloudContainer.Tests
                 var imageRenderer = new ImageRenderer(config) {DrawRectangles = true};
                 imageRenderer.Generate(words)
                     .Save(savePath, ImageFormat.Png);
-                imageRenderer.Dispose();
             }
         }
 
