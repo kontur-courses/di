@@ -23,7 +23,7 @@ namespace TagsCloudContainer.ProjectSettings
             var builder = new ContainerBuilder();
             builder.Register(c => new Size(600, 800));
             builder.Register(c => new FontFamily("Arial"));
-            builder.Register(c => new Palette(Color.Aqua, Color.Green, Color.White)).SingleInstance();
+            builder.Register(c => new Palette(Color.Aqua, Color.Green)).SingleInstance();
             builder.RegisterType<PrepositionAndPronounsGetter>().As<IBoringWordsGetter>();
             builder.RegisterType<FilterRectanglesWithNegativeCoordinates>().As<IFilter<Rectangle>>();
             builder.RegisterType<BoringWordsExcluder>().As<IFilter<string>>();

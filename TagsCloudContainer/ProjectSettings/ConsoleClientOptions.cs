@@ -7,7 +7,7 @@ namespace TagsCloudContainer.ProjectSettings
         [Option('h', "height", Required = true, HelpText = "Set height of image")]
         public int Height { get; set; }
 
-        [Option('w', "weight", Required = false, HelpText = "Set width of image")]
+        [Option('w', "width", Required = true, HelpText = "Set width of image")]
         public int Width { get; set; }
 
         [Option('f', "font", Required = true, HelpText = "Font of text")]

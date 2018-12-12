@@ -6,13 +6,11 @@ namespace TagsCloudContainer.ImageCreators
     {
         public Color FontColor;
         public Color BackGroundColor;
-        public Color SecondColor;
 
-        public Palette(Color fontColor, Color backGroundColor, Color secondColor)
+        public Palette(Color fontColor, Color backGroundColor)
         {
             FontColor = fontColor;
             BackGroundColor = backGroundColor;
-            SecondColor = secondColor;
         }
     }
 }

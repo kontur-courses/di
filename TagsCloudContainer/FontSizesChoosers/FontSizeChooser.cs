@@ -8,19 +8,19 @@ namespace TagsCloudContainer.FontSizesChoosers
 {
     public class FontSizeChooser : IFontSizeChooser
     {
-        private readonly int baseFont;
+        private readonly int baseFontSize;
         private readonly double minFontSize = 0.2;
         private readonly double reducingCoefficient = 0.9;
 
-        public FontSizeChooser(int fontSize)
+        public FontSizeChooser(int fontSizeSize)
         {
-            baseFont = fontSize;
+            baseFontSize = fontSizeSize;
         }
 
         public IEnumerable<PrintedWordInfo> GetWordInfos(IEnumerable<WordInfo> words)
         {
             var sortedWords = words.OrderByDescending(x => x.Repetitions);
-            var sizeColor = (double)baseFont;
+            var sizeColor = (double)baseFontSize;
 
             foreach (var wordInfo in sortedWords)
             {
@@ -30,6 +30,6 @@ namespace TagsCloudContainer.FontSizesChoosers
         }
 
         private double GetNewFontSize(double currentSize)
-            => Math.Max(baseFont * minFontSize, reducingCoefficient * currentSize);
+            => Math.Max(baseFontSize * minFontSize, reducingCoefficient * currentSize);
     }
 }
