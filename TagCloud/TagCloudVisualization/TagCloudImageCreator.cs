@@ -8,14 +8,12 @@ namespace TagCloudVisualization
 {
     public class TagCloudImageCreator
     {
-        private readonly IEnumerable<IWordDrawer> drawers;
+        private readonly CompositeDrawer compositeDrawer;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
 
-        public TagCloudImageCreator(
-            IEnumerable<IWordDrawer> drawers,
-            Func<Point, CircularCloudLayouter> layouterFactory)
+        public TagCloudImageCreator(CompositeDrawer drawer, Func<Point, CircularCloudLayouter> layouterFactory)
         {
-            this.drawers = drawers;
+            compositeDrawer = drawer;
             this.layouterFactory = layouterFactory;
         }
 
@@ -80,8 +78,10 @@ namespace TagCloudVisualization
             WordInfo wordInfo,
             Font font)
         {
-            drawers.Last(d => d.Check(wordInfo))
-                   .DrawWord(graphics, options, wordInfo, font);
+            if (compositeDrawer.TryGetDrawer(wordInfo, out var drawer))
+                drawer.DrawWord(graphics, options, wordInfo, font);
+            else
+                throw new ArgumentException($"There is no drawer that can draw given word: {wordInfo.Word}");
         }
     }
 }

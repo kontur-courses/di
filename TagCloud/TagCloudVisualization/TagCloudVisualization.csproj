@@ -44,6 +44,7 @@
     <Compile Include="BasicDrawer.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="AbstractSpiralGenerator.cs" />
+    <Compile Include="CompositeDrawer.cs" />
     <Compile Include="ImageCreatingOptions.cs" />
     <Compile Include="TagCloudImageCreator.cs" />
     <Compile Include="IWordDrawer.cs" />

@@ -22,6 +22,9 @@ namespace TagCloudApp
             container.RegisterTypes(typeof(BasicDrawer))
                      .As<IWordDrawer>();
 
+            container.RegisterType<CompositeDrawer>()
+                     .AsSelf();
+
             container.RegisterType<RoundSpiralGenerator>()
                      .As<AbstractSpiralGenerator>();
 
