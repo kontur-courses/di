@@ -8,15 +8,10 @@ namespace TagCloud.Utility.Models.TextReader
 {
     public class TxtReader : ITextReader
     {
-        /// <summary>
-        /// Read all words from path, splited by regular \W+.
-        /// </summary>
-        /// <param name="pathToWords"></param>
-        /// <returns></returns>
         public string[] ReadToEnd(string pathToWords)
         {
-            if (!pathToWords.EndsWith(".txt"))
-                throw new InvalidOperationException($"Wrong format of file {pathToWords}, {this} requires .txt format");
+            if (!pathToWords.EndsWith(".txt") && !pathToWords.EndsWith(".ini"))
+                throw new ArgumentException($"Wrong format of file {pathToWords}, {nameof(TxtReader)} requires .txt/.ini format");
             if (!File.Exists(pathToWords))
                 throw new ArgumentException($"{pathToWords} doesn't exist!");
 
