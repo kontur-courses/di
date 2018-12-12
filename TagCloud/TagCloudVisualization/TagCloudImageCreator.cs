@@ -8,6 +8,7 @@ namespace TagCloudVisualization
 {
     public class TagCloudImageCreator
     {
+        private const double Expander = 1.2;
         private readonly CompositeDrawer compositeDrawer;
         private readonly Func<Point, CircularCloudLayouter> layouterFactory;
 
@@ -21,17 +22,9 @@ namespace TagCloudVisualization
 
         public virtual Bitmap CreateTagCloudImage(IEnumerable<WordInfo> tagCloud, ImageCreatingOptions options)
         {
-            tagCloud = SetRectanglesToCloud(tagCloud, options)
-                .ToList();
+            tagCloud = SetRectanglesToCloud(tagCloud, options).ToList();
 
-            var areaSize = tagCloud.Select(w => w.Rectangle)
-                                   .GetUnitedSize();
-            areaSize = new Size((int) (areaSize.Width * 1.2), (int) (areaSize.Height * 1.2));
-
-            var width = areaSize.Width;
-            var height = areaSize.Height;
-
-            var center = new Point(areaSize.Width / 2, areaSize.Height / 2);
+            var (width, height, center) = GetTagCloudDimensions(tagCloud);
 
             if (options.ImageSize != null)
             {
@@ -46,9 +39,9 @@ namespace TagCloudVisualization
                 {
                     var rectangle = wordInfo.Rectangle;
 
-                    var fontSize = wordInfo.Scale;
+                    var fontScale = wordInfo.Scale;
 
-                    using (var font = new Font(options.FontName, fontSize))
+                    using (var font = new Font(options.FontName, fontScale))
                     {
                         rectangle.Offset(center);
                         DrawSingleWord(graphics, options, wordInfo, font);
@@ -58,9 +51,22 @@ namespace TagCloudVisualization
             return image;
         }
 
+        private static (int width, int height, Point center) GetTagCloudDimensions(IEnumerable<WordInfo> tagCloud)
+        {
+            var areaSize = tagCloud.Select(w => w.Rectangle)
+                                   .GetUnitedSize();
+
+            areaSize = new Size((int) (areaSize.Width * Expander), (int) (areaSize.Height * Expander));
+
+            var width = areaSize.Width;
+            var height = areaSize.Height;
+            var center = new Point(areaSize.Width / 2, areaSize.Height / 2);
+            return (width, height, center);
+        }
+
         private IEnumerable<WordInfo> SetRectanglesToCloud(IEnumerable<WordInfo> tagCloud, ImageCreatingOptions options)
         {
-            var layouter = layouterFactory.Invoke(options.Center);
+            var layouter = layouterFactory(options.Center);
             foreach (var wordInfo in tagCloud)
             {
                 Size size;

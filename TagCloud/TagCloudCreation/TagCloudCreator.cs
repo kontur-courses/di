@@ -41,7 +41,10 @@ namespace TagCloudCreation
             return imageCreator.CreateTagCloudImage(wordPairs, options.ImageOptions);
         }
 
-        public float GetScale(int count, int maxCount, int minCount)
+        /// <summary>
+        /// Gets relative scale for given count of words in tag cloud
+        /// </summary>
+        private float GetScale(int count, int maxCount, int minCount)
         {
             if (maxCount == minCount)
                 return 1;
