@@ -11,16 +11,16 @@ namespace TagsCloudContainer
     {
         private readonly Dictionary<string, ImageFormat> formats = new Dictionary<string, ImageFormat>
         {
-            ["bmp"] = ImageFormat.Bmp,
-            ["emf"] = ImageFormat.Emf,
-            ["exif"] = ImageFormat.Exif,
-            ["gif"] = ImageFormat.Gif,
-            ["ico"] = ImageFormat.Icon,
-            ["jpeg"] = ImageFormat.Jpeg,
-            ["jpg"] = ImageFormat.Jpeg,
-            ["png"] = ImageFormat.Png,
-            ["tiff"] = ImageFormat.Tiff,
-            ["wmf"] = ImageFormat.Wmf
+            [".bmp"] = ImageFormat.Bmp,
+            [".emf"] = ImageFormat.Emf,
+            [".exif"] = ImageFormat.Exif,
+            [".gif"] = ImageFormat.Gif,
+            [".ico"] = ImageFormat.Icon,
+            [".jpeg"] = ImageFormat.Jpeg,
+            [".jpg"] = ImageFormat.Jpeg,
+            [".png"] = ImageFormat.Png,
+            [".tiff"] = ImageFormat.Tiff,
+            [".wmf"] = ImageFormat.Wmf
         };
 
         public void Save(Bitmap bitmap, string filename)

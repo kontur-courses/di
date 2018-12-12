@@ -7,6 +7,9 @@ namespace TagCloudConsoleClient
         [Option('o', "output", Required = true, HelpText = "Path for output file")]
         public string OutputFilePath { get; set; }
 
+        [Option('i', "input", Required = true, HelpText = "Path for input file")]
+        public string InputFilePath { get; set; }
+
         [Option('b', "background-color", Default = "white")]
         public string BackgroundColor { get; set; }
 

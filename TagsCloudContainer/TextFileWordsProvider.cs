@@ -18,6 +18,6 @@ namespace TagsCloudContainer
             return words.ToArray();
         }
 
-        public string[] AcceptedExtensions => new[] {"txt"};
+        public string[] AcceptedExtensions => new[] {".txt"};
     }
 }

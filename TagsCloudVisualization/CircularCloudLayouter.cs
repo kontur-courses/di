@@ -14,6 +14,12 @@ namespace TagsCloudVisualization
 
         public List<Rectangle> Rectangles => rectangles.Select(r => new Rectangle(r.Location, r.Size)).ToList();
 
+        // ReSharper disable once UnusedMember.Global
+        public CircularCloudLayouter()
+        {
+            center = Point.Empty;
+        }
+
         public CircularCloudLayouter(Point center)
         {
             this.center = center;

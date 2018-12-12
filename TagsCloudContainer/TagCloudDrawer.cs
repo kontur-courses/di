@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization;
 
 namespace TagsCloudContainer
 {
@@ -10,8 +12,8 @@ namespace TagsCloudContainer
         {
             var wordBorders = wordLayouts.Select(l => l.RectangleBorder);
             var top = wordBorders.Min(b => b.Top);
-            var bottom = wordBorders.Min(b => b.Bottom);
-            var right = wordBorders.Min(b => b.Right);
+            var bottom = wordBorders.Max(b => b.Bottom);
+            var right = wordBorders.Max(b => b.Right);
             var left = wordBorders.Min(b => b.Left);
 
             var imageWidth = right - left;
@@ -27,7 +29,7 @@ namespace TagsCloudContainer
                         wordLayout.Word,
                         wordLayout.Font,
                         new SolidBrush(wordLayout.Color),
-                        wordLayout.RectangleBorder);
+                        wordLayout.RectangleBorder.Move(new Point(-left,-top)).Location);
                 }
             }
 
