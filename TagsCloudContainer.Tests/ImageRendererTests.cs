@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Tests
         [TestCase(-1, -1)]
         public void Constructor_ThrowsException_OnInvalidSize(int width, int height)
         {
-            Action action = () => new ImageRenderer(new Size(width, height));
+            Action action = () => new ImageRenderer(new Config{ImageSize = new Size(width, height)});
 
             action
                 .Should()
@@ -26,7 +26,7 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void Generate_ThrowsArgumentException_OnNullWords()
         {
-            Action action = () => new ImageRenderer(new Size(1024, 1024)).Generate(null);
+            Action action = () => new ImageRenderer(new Config { ImageSize = new Size(1024, 1024) }).Generate(null);
 
             action
                 .Should()
@@ -40,7 +40,7 @@ namespace TagsCloudContainer.Tests
         {
             var expectedSize = new Size(width, height);
 
-            var renderer = new ImageRenderer(expectedSize);
+            var renderer = new ImageRenderer(new Config { ImageSize = expectedSize });
 
             renderer
                 .Generate(Enumerable.Empty<Word>())
@@ -51,7 +51,7 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void GetWordSize_ThrowsArgumentException_OnNullWord()
         {
-            Action action = () => new ImageRenderer(new Size(1024, 1024)).GetWordSize(null);
+            Action action = () => new ImageRenderer(new Config { ImageSize = new Size(1024, 1024) }).GetWordSize(null);
 
             action
                 .Should()

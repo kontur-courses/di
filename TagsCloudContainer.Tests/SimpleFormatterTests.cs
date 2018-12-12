@@ -19,7 +19,8 @@ namespace TagsCloudContainer.Tests
         public void DoBeforeAnyTest()
         {
             wordsWeighter = A.Fake<IWordsWeighter>();
-            formatter = new SimpleFormatter(wordsWeighter, font, color);
+            var config = new Config {Font = font, Color = color};
+            formatter = new SimpleFormatter(wordsWeighter, config);
         }
 
         [Test]
