@@ -6,7 +6,7 @@ namespace TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles
 {
     public class TxtWordsReader : IWordsReaderForFile
     {
-        public string ReadingFileExtension { get; } = "txt";
+        public string ReadingFileExtension { get; } = ".txt";
 
         public IEnumerable<string> ReadFrom(string path)
         {
