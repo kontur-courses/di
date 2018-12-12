@@ -75,12 +75,18 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Hunspellx64.dll" />
-    <None Include="Hunspellx86.dll" />
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Resources\ExcludedWords\englishWords.xml" />
-    <Content Include="..\Resources\ExcludedWords\russianWords.xml" />
+    <Content Include="..\Resources\ExcludedWords\englishWords.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\ExcludedWords\russianWords.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Resources\ExcludedWords\ru_RU.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
