@@ -18,7 +18,7 @@ namespace TagCloudCreator
         public int Height { get; set; }
 
         [Option("stopwords", Required = false, HelpText = "File which contains words, that will be excluded of result")]
-        public string Stopwords { get; set; }
+        public string Stopwords { get; set; } = "";
 
         [Option("background", Required = false, HelpText = "Set a background color")]
         public string Background { get; set; } = "AliceBlue";
@@ -34,5 +34,9 @@ namespace TagCloudCreator
 
         [Option("sizescheme", Required = false, HelpText = "Set a word size scheme")]
         public SizeScheme SizeScheme { get; set; } = SizeScheme.Linear;
+
+        [Option("ignoreboring", Required = false,
+            HelpText = "Set true if you want to exclude words like prepositions etc.")]
+        public bool IgnoreBoring { get; set; } = true;
     }
 }

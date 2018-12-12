@@ -22,8 +22,9 @@ namespace TagCloudCreator
             var container = new WindsorContainer();
 
             container.Register(
-                GetRegistration<IWordFilter, WordFilterByFile>()
-                    .WithArgument("path", configuration.StopWordsFile),
+                GetRegistration<IWordFilter, WordFilter>()
+                    .WithArgument("path", configuration.StopWordsFile)
+                    .WithArgument("ignoreBoring", configuration.IgnoreBoring),
                 GetRegistration<IVisualizer, Visualizer>()
                     .WithArgument("backgroundColor", configuration.BackgroundColor)
                     .WithArgument("imageSize", configuration.ImageSize),
@@ -37,7 +38,7 @@ namespace TagCloudCreator
                 GetRegistration<IImageSaver, ImageSaver>(),
                 GetRegistration<IFileReader, FileReader>(),
                 GetRegistration<Point, Point>(),
-                GetRegistration<Application, Application>(), 
+                GetRegistration<Application, Application>(),
                 GetRegistration(typeof(ISpiral), layouters[configuration.LayouterType]),
                 GetRegistration(typeof(IColorScheme), colorSchemes[configuration.ColorScheme]),
                 GetRegistration(typeof(IFontScheme), fontSchemes[configuration.FontScheme]),
@@ -51,7 +52,9 @@ namespace TagCloudCreator
             var assembly = Assembly.GetExecutingAssembly();
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             using (var reader = new StreamReader(stream))
+            {
                 return Encoding.ASCII.GetBytes(reader.ReadToEnd());
+            }
         }
 
         public static ComponentRegistration<object> GetRegistration(Type elementFor, Type by)

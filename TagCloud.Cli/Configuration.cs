@@ -16,6 +16,7 @@ namespace TagCloudCreator
         public ColorScheme ColorScheme { get; set; }
         public FontScheme FontScheme { get; set; }
         public SizeScheme SizeScheme { get; set; }
+        public bool IgnoreBoring { get; set; }
 
         public static Configuration FromArguments(string[] args)
         {
@@ -30,6 +31,7 @@ namespace TagCloudCreator
                 .WithParsed(o => configuration.FontScheme = o.FontScheme)
                 .WithParsed(o => configuration.LayouterType = o.Layouter)
                 .WithParsed(o => configuration.SizeScheme = o.SizeScheme)
+                .WithParsed(o => configuration.IgnoreBoring = o.IgnoreBoring)
                 .WithNotParsed(o => throw new ArgumentException("Wrong command line arguments"));
 
             return configuration;

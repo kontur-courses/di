@@ -16,6 +16,8 @@ namespace TagCloud
 
         [CanBeNull]
         public string Process(string word)
-            => hunspell.Stem(word).FirstOrDefault();
+        {
+            return hunspell.Stem(word).FirstOrDefault();
+        }
     }
 }

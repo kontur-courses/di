@@ -28,9 +28,13 @@ namespace TagCloud.Layouter.Spirals
         }
 
         private double ToDegrees(double radians)
-            => radians * 180 / Math.PI;
+        {
+            return radians * 180 / Math.PI;
+        }
 
         private double ExcludeFullTurns(double degrees)
-            => degrees - ((int) degrees / 360) * 360;
+        {
+            return degrees - (int) degrees / 360 * 360;
+        }
     }
 }

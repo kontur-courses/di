@@ -30,7 +30,7 @@ namespace TagCloudCreator
         {
             return new Dictionary<FontScheme, Type>
             {
-                {FontScheme.Arial, typeof(ArialFontScheme) }
+                {FontScheme.Arial, typeof(ArialFontScheme)}
             };
         }
 
@@ -38,7 +38,7 @@ namespace TagCloudCreator
         {
             return new Dictionary<SizeScheme, Type>
             {
-                {SizeScheme.Linear, typeof(LinearSizeScheme) }
+                {SizeScheme.Linear, typeof(LinearSizeScheme)}
             };
         }
     }

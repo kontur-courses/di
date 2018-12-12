@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=2018.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.2018.2.1\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
       <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
@@ -81,6 +81,7 @@
     <Compile Include="Layouter\Vector.cs" />
     <Compile Include="LinearSizeScheme.cs" />
     <Compile Include="IntermediateClasses\PositionedElement.cs" />
+    <Compile Include="ProgramExecuter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomColorScheme.cs" />
     <Compile Include="RedColorScheme.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Visualizer\VisualElement.cs" />
     <Compile Include="Visualizer\VisualizerExtensions.cs" />
     <Compile Include="Visualizer\Visualizer.cs" />
-    <Compile Include="WordFilterByFile.cs" />
+    <Compile Include="WordFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -100,6 +101,11 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mystem.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

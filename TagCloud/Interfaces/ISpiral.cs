@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TagCloud.Layouter;
+﻿using TagCloud.Layouter;
 
 namespace TagCloud.Interfaces
 {
