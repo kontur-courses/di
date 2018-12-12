@@ -1,23 +1,29 @@
 ﻿using System;
+using System.Drawing;
 
 namespace TagCloud.Utility.Models.Tag
 {
-    public struct TagGroup : ITagGroup
+    public class TagGroup : ITagGroup
     {
-        public int FontSize { get; }
+        public Size Size { get; }
         public FrequencyGroup FrequencyGroup { get; }
 
-        public TagGroup(int fontSize, FrequencyGroup frequencyGroup)
+        public TagGroup(Size size, FrequencyGroup frequencyGroup)
         {
-            if (fontSize <= 0)
-                throw new ArgumentException($"Font size can't be negative or zero, but was {fontSize}");
-            FontSize = fontSize;
+            if (size.Width <= 0 || size.Height <= 0)
+                throw new ArgumentException($"Size can't be negative or zero, but was {Size.Height}x{Size.Width}");
+            Size = size;
             FrequencyGroup = frequencyGroup;
         }
 
         public bool Contains(double frequencyCoef)
         {
             return FrequencyGroup.Contains(frequencyCoef);
+        }
+
+        public Size GetSizeForWord(string word)
+        {
+            return new Size(word.Length * Size.Width, Size.Height);
         }
     }
 }

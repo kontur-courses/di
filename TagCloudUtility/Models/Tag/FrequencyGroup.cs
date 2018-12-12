@@ -2,18 +2,14 @@
 
 namespace TagCloud.Utility.Models.Tag
 {
-    public struct FrequencyGroup
+    public class FrequencyGroup
     {
         public double MinFrequencyCoef { get; }
         public double MaxFrequencyCoef { get; }
 
         public FrequencyGroup(double minFrequencyCoef, double maxFrequencyCoef)
         {
-            if (minFrequencyCoef < 0
-                || minFrequencyCoef > 1
-                || maxFrequencyCoef < 0
-                || maxFrequencyCoef > 1
-                || minFrequencyCoef > maxFrequencyCoef)
+            if (minFrequencyCoef < 0 || minFrequencyCoef > 1 || maxFrequencyCoef < 0 || maxFrequencyCoef > 1)
                 throw new ArgumentException($"Min and Max should be in 0..1 and min <= max but was {minFrequencyCoef} - {maxFrequencyCoef}");
             MinFrequencyCoef = minFrequencyCoef;
             MaxFrequencyCoef = maxFrequencyCoef;

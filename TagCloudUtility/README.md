@@ -16,7 +16,7 @@ Format:
 
   -c, --color           (Default: #FFFFFF) Color of background(in html color)
 
-  -s, --size            (Default: 1000x1000) Size of picture in format (width)x(height)
+  -s, --size            Size of picture in format (width)x(height)
 
   -f, --font            (Default: arial) Font family name
 
@@ -42,15 +42,15 @@ Only Rectangles == 2
 Rectangles With Numeration == 3  
 
 ## Tag groups:
-Format: [Name] [minVal(double with dot)]-[maxVal(double with dot)] [font size];  
+Format: [Name] [minVal]-[maxVal] [width per letter]x[height];  
 minVal-maxVal is segment in 0..1, which shows which words will be included.  
 To decide that, programm will count for each word how many times it has come up in the text.  
 Then it will take the maximum number(MaxFrequencyCount) and for each word determine a coefficient equal to wordFrequuencyCount /MaxFrequencyCount;  
-So the most frequent word will have coefficient = 1.0;  
+So the most frequent word will have coefficient = 1;  
 For example:  
-Big 0.9-1.0 35;Others 0.0-0.9 25;  
+Big 0.9-1 80x150;Others 0-0.9 50x100;  
 In result will be 2 groups: Big and Others  
-"Big" group will include words whose frequency coef >= MaxAppearanceCount * 0.9, so the most frequent word will be included in this group;  
+"Big" group will include words whose frequency coef >= MaxAppearanceCount * 0.9,so the most frequent word will be included in this group;  
 "Others" group will include words whose frequency coef < MaxAppearanceCount * 0.9;  
 
 # Result Examples:

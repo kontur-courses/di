@@ -42,6 +42,9 @@
     <Reference Include="CommandLine, Version=2.3.0.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.3.0\lib\net45\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Console">
@@ -79,9 +82,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container\ContainerConfig.cs" />
+    <Compile Include="ContainerConfig.cs" />
+    <Compile Include="Data\ILogger.cs" />
+    <Compile Include="Data\Logger.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="Runner\ITagCloudRunner.cs" />
     <Compile Include="Models\Tag\FrequencyGroup.cs" />
     <Compile Include="Models\Tag\Container\ITagContainer.cs" />
     <Compile Include="Models\Tag\Container\ITagContainerReader.cs" />
@@ -92,25 +96,35 @@
     <Compile Include="Models\TextReader\ITextReader.cs" />
     <Compile Include="Models\WordFilter\RusFilter.cs" />
     <Compile Include="Models\WordFilter\WordFilter.cs" />
-    <Compile Include="Container\Options.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Tag\TagGroup.cs" />
     <Compile Include="Models\Tag\Container\TagContainer.cs" />
     <Compile Include="Models\Tag\TagReader.cs" />
     <Compile Include="Models\TextReader\TxtReader.cs" />
-    <Compile Include="Runner\TagCloudRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TagCloud.Test\TagCloud.Tests.csproj">
+      <Project>{c62d29c6-65b6-4692-872a-5cc737af642c}</Project>
+      <Name>TagCloud.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagCloud\TagCloud.csproj">
       <Project>{35b28fef-2b66-4027-8dd3-49c1280af654}</Project>
       <Name>TagCloud</Name>
-      <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

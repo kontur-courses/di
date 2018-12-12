@@ -1,19 +1,10 @@
 ﻿using CommandLine;
 using TagCloud.Visualizer.Settings;
 
-namespace TagCloud.Utility.Container
+namespace TagCloud.Utility
 {
     public class Options
     {
-        public static Options Standart = new Options
-        {
-            DrawFormat = DrawFormat.WordsInRectangles,
-            Brush = "#000000",
-            Color = "#FFFFFF",
-            Size = "1000x1000",
-            Font = "arial"
-        };
-
         [Option('w', "words", Required = true,
             HelpText = "Path to words in format .../words.txt (type is required)")]
         public string PathToWords { get; set; }
@@ -43,7 +34,7 @@ namespace TagCloud.Utility.Container
         public string Color { get; set; }
 
         [Option('s', "size",
-            HelpText = "Size of picture in format (width)x(height)", Default = "1000x1000")]
+            HelpText = "Size of picture in format (width)x(height)")]
         public string Size { get; set; }
 
         [Option('f', "font",

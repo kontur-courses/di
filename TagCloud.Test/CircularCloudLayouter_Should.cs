@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Extensions;
 using TagCloud.Layouter;
 using TagCloud.Models;
-using TagCloud.Utility.Container;
+using TagCloud.PointsSequence;
 using TagCloud.Visualizer;
+using TagCloud.Visualizer.Settings;
+using TagCloud.Visualizer.Settings.Colorizer;
 
-namespace TagCloud.Tests.ForTagCloud
+namespace TagCloud.Tests
 {
     [TestFixture]
     public class CircularCloudLayouter_Should
     {
         private List<Rectangle> currentLayout;
-        private readonly IContainer container = ContainerConfig.StandartContainer;
 
         [SetUp]
         public void SetUp()
@@ -32,29 +32,40 @@ namespace TagCloud.Tests.ForTagCloud
             var context = TestContext.CurrentContext;
             if (context.Result.FailCount == 0) return;
 
-            var visualizer = container.Resolve<ICloudVisualizer>();
+            var visualizer =
+                new CloudVisualizer(
+                    new DrawSettings(
+                        DrawFormat.RectanglesWithNumeration,
+                        new Font("Arial", 15),
+                        Color.White,
+                        new SolidColorizer(Color.Black)));
 
             var testName = string.Join("_",
                 context.Test.FullName.Split(' '), StringSplitOptions.RemoveEmptyEntries);
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), $"{context.Test.MethodName}_{testName}.png");
-            var items = currentLayout.Select(r => new TagItem(null, 15));
+            var items = currentLayout.Select(r => new CloudItem(null, r));
             var picture = visualizer.CreatePictureWithItems(items.ToArray());
             picture.Save(path);
 
             TestContext.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 
-        [TestCase(100, 100, TestName = "For size 100x100")]
-        [TestCase(50, 50, TestName = "For size 50x50")]
-        [TestCase(250, 1, TestName = "For size 250x1")]
-        public void ReturnCorrectRectangle_AfterPuttingRectangleSize(int width, int height)
+        [TestCase(100, 100, 150, 150, TestName = "For size 100x100 then center is (150,150)")]
+        [TestCase(50, 50, 0, 0, TestName = "For size 50x50 then center is (0,0)")]
+        [TestCase(250, 1, -15, -56, TestName = "For size 250x1 then center is (-15,-56)")]
+        public void ReturnCorrectRectangle_AfterPuttingRectangleSize(int width, int height, int centerX, int centerY)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var center = new Point(centerX, centerY);
+            var spiral = new SpiralBuilder()
+                .WithCenterIn(center)
+                .Build();
+            var tagCloud = new CircularCloudLayouter(spiral);
 
-            currentLayout.Add(layouter.PutNextRectangle(new Size(width, height)));
+            var result = tagCloud.PutNextRectangle(new Size(width, height));
 
-            currentLayout.First().Should().BeEquivalentTo(new Rectangle(- width / 2,- height / 2, width, height));
+            result.Should().BeEquivalentTo(new Rectangle(center.X - width / 2, center.Y - height / 2,
+                width, height));
         }
 
         [TestCase(0, 0, TestName = "With empty Size")]
@@ -63,9 +74,9 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(-100, -20, TestName = "With negative size")]
         public void ThrowArgumentException_AfterPuttingRectangle(int width, int height)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
-
-            Action putting = () => layouter.PutNextRectangle(new Size(width, height));
+            var spiral = new Spiral();
+            var tagCloud = new CircularCloudLayouter(spiral);
+            Action putting = () => tagCloud.PutNextRectangle(new Size(width, height));
 
             putting.Should().Throw<ArgumentException>();
         }
@@ -75,12 +86,13 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(259, TestName = "259 times")]
         public void ReturnCorrectCountOfRectangles_AfterPuttingRectangles(int count)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var spiral = new Spiral();
+            var tagCloud = new CircularCloudLayouter(spiral);
 
             for (var i = 0; i < count; i++)
-                layouter.PutNextRectangle(new Size(1, 1));
+                tagCloud.PutNextRectangle(new Size(1, 1));
 
-            layouter.Count.Should().Be(count);
+            tagCloud.Count.Should().Be(count);
         }
 
         [TestCase(10, 10, 10, 10, TestName = "Then rectangles are similar")]
@@ -90,10 +102,11 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(1, 1, 1, 1, TestName = "Then both are points")]
         public void PutTwoRectanglesInDifferentLocation(int widthOfFirst, int heightOfFirst, int widthOfSecond, int heightOfSecond)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var spiral = new Spiral();
+            var tagCloud = new CircularCloudLayouter(spiral);
 
-            currentLayout.Add(layouter.PutNextRectangle(new Size(widthOfFirst, heightOfFirst)));
-            currentLayout.Add(layouter.PutNextRectangle(new Size(widthOfSecond, heightOfSecond)));
+            currentLayout.Add(tagCloud.PutNextRectangle(new Size(widthOfFirst, heightOfFirst)));
+            currentLayout.Add(tagCloud.PutNextRectangle(new Size(widthOfSecond, heightOfSecond)));
 
             currentLayout[0].IntersectsWith(currentLayout[1])
                 .Should().BeFalse();
@@ -103,20 +116,30 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(100, TestName = "Then 100 rectangles")]
         public void PutRectanglesInFreeSpace(int amountOfRectangles)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var spiral = new Spiral();
+            var tagCloud = new CircularCloudLayouter(spiral);
             var rnd = new Random();
 
             for (var i = 0; i < amountOfRectangles; i++)
-                currentLayout.Add(layouter.PutNextRectangle(new Size(rnd.Next(1, 1000), rnd.Next(1, 1000))));
+                currentLayout.Add(tagCloud.PutNextRectangle(new Size(rnd.Next(1, 1000), rnd.Next(1, 1000))));
 
             GetIntersectedRectanglesCount().Should().Be(0);
         }
 
         public int GetIntersectedRectanglesCount()
         {
-            return currentLayout
-                .Count(rectangle =>
-                    currentLayout.FindAll(r => r.IntersectsWith(rectangle)).Count > 1);
+            var count = 0;
+            foreach (var curRect in currentLayout)
+            {
+                var rectanglesWithoutCurRect = currentLayout
+                    .Where(r => r != curRect)
+                    .ToList();
+                count += rectanglesWithoutCurRect
+                    .FindAll(rect => rect.IntersectsWith(curRect))
+                    .Count;
+            }
+
+            return count;
         }
 
         [TestCase(1, TestName = "For 1 rectangle")]
@@ -124,10 +147,11 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(100, TestName = "For 100 rectangles")]
         public void PlaceRectanglesInCircle_WhenRectanglesAreAlmostSimilar(int amountOfRectangles)
         {
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var spiral = new Spiral();
+            var tagCloud = new CircularCloudLayouter(spiral);
 
             for (var i = amountOfRectangles; i > 0; i--)
-                currentLayout.Add(layouter.PutNextRectangle(new Size(100 + i, 100 + i)));
+                currentLayout.Add(tagCloud.PutNextRectangle(new Size(100 + i, 100 + i)));
             var size = currentLayout
                 .SelectMany(rectangle => new[] { rectangle.Location, new Point(rectangle.Right, rectangle.Bottom) })
                 .ToArray()

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using TagCloud.Layouter;
+using System.Linq;
+using TagCloud.Extensions;
 using TagCloud.Models;
-using TagCloud.Visualizer.Drawer;
 using TagCloud.Visualizer.Settings;
 
 namespace TagCloud.Visualizer
@@ -13,51 +11,77 @@ namespace TagCloud.Visualizer
     public class CloudVisualizer : ICloudVisualizer
     {
         public IDrawSettings Settings { get; set; }
-        private readonly ICloudDrawer cloudDrawer;
-        private readonly ICloudLayouter layouter;
-        private readonly Size pictureSize;
         private Graphics graphics;
 
-        public CloudVisualizer(IDrawSettings settings, ICloudLayouter layouter, ICloudDrawer cloudDrawer, Size pictureSize)
+        public CloudVisualizer(IDrawSettings settings)
         {
             Settings = settings;
-            this.layouter = layouter;
-            this.cloudDrawer = cloudDrawer;
-            this.pictureSize = pictureSize;
         }
 
-        public Bitmap CreatePictureWithItems(IList<TagItem> items)
+        public Bitmap CreatePictureWithItems(CloudItem[] cloudItems)
         {
-            if (items == null)
+            if (cloudItems == null)
                 throw new ArgumentException("Array can't be null");
-            if (items.Count == 0)
+            if (cloudItems.Length == 0)
                 throw new ArgumentException("Array can't be empty");
 
-            var picture = new Bitmap(pictureSize.Width, pictureSize.Height);
+            var bounds = cloudItems
+                .SelectMany(tag => new[] { tag.Bounds.Location, new Point(tag.Bounds.Right, tag.Bounds.Bottom) })
+                .ToArray()
+                .GetBounds();
+
+            var picture = new Bitmap(bounds.Width, bounds.Height);
 
             using (graphics = Graphics.FromImage(picture))
             {
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PageUnit = GraphicsUnit.Pixel;
-                graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
                 graphics.Clear(Settings.Color);
-                graphics.TranslateTransform(pictureSize.Width / 2, pictureSize.Height / 2);
-
-                var cloudItems = new List<CloudItem>();
-                foreach (var tagItem in items)
-                {
-                    var font = new Font(Settings.Font.FontFamily, tagItem.FontSize, Settings.Font.Style);
-                    var stringSize = Size.Round(graphics.MeasureString(tagItem.Word, font));
-                    cloudItems.Add(
-                        new CloudItem(
-                            tagItem.Word,
-                            layouter.PutNextRectangle(stringSize),
-                            font));
-                }
-
-                cloudDrawer.Draw(graphics, cloudItems, Settings);
+                graphics.TranslateTransform(-bounds.X, -bounds.Y);
+                Draw(cloudItems);
             }
             return picture;
+        }
+
+        private void Draw(CloudItem[] cloudItems)
+        {
+            var bounds = cloudItems.Select(t => t.Bounds).ToArray();
+            var words = cloudItems.Select(t => t.Word).ToArray();
+            if (Settings.DrawFormat != DrawFormat.OnlyWords)
+                graphics.DrawRectangles(Pens.Black, bounds);
+            if (Settings.DrawFormat == DrawFormat.OnlyWords || Settings.DrawFormat == DrawFormat.WordsInRectangles)
+                for (var i = 0; i < words.Length; i++)
+                    DrawAsString(words[i], bounds[i]);
+            if (Settings.DrawFormat == DrawFormat.RectanglesWithNumeration)
+                for (var i = 0; i < words.Length; i++)
+                {
+                    var word = i.ToString();
+                    DrawAsString(word, bounds[i]);
+                }
+        }
+
+        private Font GetSuitableFontFor(string word, Rectangle bounds)
+        {
+            var font = Settings.Font;
+            var stringSize = graphics.MeasureString(word, font);
+
+            while (stringSize.Height < bounds.Height && stringSize.Width < bounds.Width)
+            {
+                font = new Font(font.FontFamily, font.Size + 1);
+                stringSize = graphics.MeasureString(word, font);
+            }
+
+            return new Font(font.FontFamily, font.Size - 1);
+        }
+
+        private void DrawAsString(string str, Rectangle bounds)
+        {
+            var cloudItem = new CloudItem(str,bounds);
+            var font = GetSuitableFontFor(str, bounds);
+            graphics.DrawString(
+                str,
+                font,
+                Settings.Colorizer.GetBrush(cloudItem),
+                bounds);
         }
     }
 }

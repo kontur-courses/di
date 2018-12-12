@@ -22,7 +22,6 @@ namespace TagCloud.Layouter
                 throw new ArgumentException($"Wrong size: W:{size.Width} H:{size.Height}");
 
             var rectangle = GetNextRectangle(size);
-
             rectangles.Add(rectangle);
 
             return rectangle;

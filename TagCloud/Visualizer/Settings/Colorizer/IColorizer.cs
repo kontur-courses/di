@@ -5,6 +5,6 @@ namespace TagCloud.Visualizer.Settings.Colorizer
 {
     public interface IColorizer
     {
-        SolidBrush GetBrush(CloudItem item);
+        Brush GetBrush(CloudItem item);
     }
 }

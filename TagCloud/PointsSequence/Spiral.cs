@@ -20,18 +20,19 @@ namespace TagCloud.PointsSequence
             alpha = 0;
         }
 
-        public void SetStepLength(float newStepLength)
+        public void SetStepLength(float stepLength)
         {
-            if (newStepLength <= 0)
+            if (stepLength <= 0)
                 throw new ArgumentException("step can't be negative or zero");
-            stepLength = newStepLength;
+            this.stepLength = stepLength;
         }
 
         protected override IEnumerable<Point> Sequence()
         {
+            double ro;
             while (true)
             {
-                var ro = stepLength / (Math.PI * 2);
+                ro = stepLength / (Math.PI * 2);
                 yield return new Point
                 {
                     X = (int)(ro * alpha * Math.Cos(alpha.ToRadians())) + center.X,

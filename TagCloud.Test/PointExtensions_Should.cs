@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Extensions;
 
-namespace TagCloud.Tests.ForTagCloud
+namespace TagCloud.Tests
 {
     [TestFixture]
     class PointExtensions_Should

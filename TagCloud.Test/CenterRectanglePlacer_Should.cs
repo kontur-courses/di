@@ -1,29 +1,27 @@
 ﻿using System.Drawing;
-using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.Extensions;
 using TagCloud.RectanglePlacer;
-using TagCloud.Utility.Container;
 
-namespace TagCloud.Tests.ForTagCloud
+namespace TagCloud.Tests
 {
     [TestFixture]
     public class CenterRectanglePlacer_Should
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
-
         [TestCase(0, 0, TestName = "Then point is (0,0)")]
         [TestCase(10, 10, TestName = "Then point is (10,10)")]
         [TestCase(-10, -10, TestName = "Then point is (-10,-10)")]
         public void PlaceRectangleWithCenterInPoint(int x, int y)
         {
             var point = new Point(x, y);
-            var rectanglePlacer = container.Resolve<CenterRectanglePlacer>();
+            var rectanglePlacer = new CenterRectanglePlacer();
 
-            var rectangle = rectanglePlacer
-                .PlaceRectangle(new Size(10, 10), point);
+            var rectangleCenter = rectanglePlacer
+                .PlaceRectangle(new Size(10, 10), point)
+                .GetCenter();
 
-            rectangle.Location.Should().Be(new Point(point.X - 5, point.Y - 5));
+            rectangleCenter.Should().Be(point);
         }
     }
 }
