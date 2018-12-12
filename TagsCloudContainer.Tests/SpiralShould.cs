@@ -2,6 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Algorithms;
+using FakeItEasy;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Tests
 {
@@ -14,18 +16,11 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
+            var settings = A.Fake<ICloudSettings>();
             center = new Point(100, 100);
-            archimedeanSpiral = new ArchimedeanSpiral(center);
+            archimedeanSpiral = new ArchimedeanSpiral(settings);
         }
-
-        [Test]
-        public void ReturnCenterPoint_OnFirstInvocation()
-        {
-            var firstPoint = archimedeanSpiral.GetNextPoint();
-
-            firstPoint.Should().BeEquivalentTo(center);
-        }
-
+        
         [Test]
         public void IncreaseSpiralAngle_AfterGetNextPointInvocation()
         {
