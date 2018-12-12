@@ -4,10 +4,24 @@ namespace TagCloud.Core.Settings
 {
     public class PaintingSettings : ISettings
     {
-        public Color BackgroundColor { get; set; } = Color.White;
-        public Color TagColor { get; set; } = Color.Navy;
+        public PaintingSettings()
+        {
+            TagColor = Color.Navy;
+            BackgroundColor = Color.White;
+        }
 
-        public Brush TagBrush => new SolidBrush(TagColor);
+        public Color BackgroundColor { get; set; }
+        public Brush TagBrush { get; private set; }
+        private Color tagColor;
+        public Color TagColor
+        {
+            get => tagColor;
+            set
+            {
+                tagColor = value;
+                TagBrush = new SolidBrush(value);
+            }
+        }
 
         public string GetSettingsName()
         {
