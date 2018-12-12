@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using CommandLine;
 using TagCloud.Utility;
-using TagCloud.Utility.Data;
+using TagCloud.Utility.Container;
 
 namespace TagCloud.Console
 {
-    static class Program
+    public static class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            
             while (true)
             {
                 System.Console.Clear();
@@ -21,30 +19,22 @@ namespace TagCloud.Console
                 System.Console.WriteLine("Waiting for next command... ( write \"exit\" to exit)");
                 args = System.Console.ReadLine()?.Split(' ');
                 
-                if (args.Contains("exit"))
+                if (args != null && args.Contains("exit"))
                     break;
             }
         }
 
         private static void Run(Options options)
         {
-            var logger = new Logger();
-            TagCloudProgram.Start(options, logger);
-            if (logger.Exceptions.Any())
+            try
             {
-                PrintExceptions(logger.Exceptions);
-                logger.Exceptions.Clear();
+                TagCloudProgram.Execute(options);
+                System.Console.WriteLine($"Picture saved to {options.PathToPicture}");
             }
-            else
+            catch (Exception e)
             {
-                System.Console.WriteLine($"Picture saved to {logger.LastRunningOptions.PathToPicture}");
+                System.Console.WriteLine(e.Message);
             }
-        }
-
-        private static void PrintExceptions(IEnumerable<Exception> exceptions)
-        {
-            foreach (var exception in exceptions)
-                System.Console.WriteLine(exception.Message);
         }
     }
 }
