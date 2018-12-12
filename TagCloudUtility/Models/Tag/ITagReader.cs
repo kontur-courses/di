@@ -5,6 +5,6 @@ namespace TagCloud.Utility.Models.Tag
 {
     public interface ITagReader
     {
-        List<TagItem> ReadTags(string[] words);
+        List<TagItem> ReadTags(IEnumerable<string> words);
     }
 }
