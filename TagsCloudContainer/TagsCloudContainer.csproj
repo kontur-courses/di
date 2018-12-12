@@ -74,7 +74,7 @@
     <Compile Include="ImageCreators\SingleColorChooser.cs" />
     <Compile Include="ImageSavers\IImageSaver.cs" />
     <Compile Include="ImageSavers\ImageSaver.cs" />
-    <Compile Include="ProjectSettings\ProjectSettingsGetter.cs" />
+    <Compile Include="ProjectSettings\ProjectConfiguration.cs" />
     <Compile Include="Readers\IReader.cs" />
     <Compile Include="Readers\FilesReader.cs" />
     <Compile Include="RectanglesFilters\FilterRectanglesWithNegativeCoordinates.cs" />

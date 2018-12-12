@@ -17,9 +17,9 @@ using TagsCloudContainer.WordsTransformers;
 
 namespace TagsCloudContainer.ProjectSettings
 {
-    public static class ProjectSettingsGetter
+    public static class ProjectConfiguration
     {
-        public static IContainer GetSettings()
+        public static IContainer GetConfiguration()
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AsImplementedInterfaces().SingleInstance();

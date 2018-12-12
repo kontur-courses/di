@@ -10,7 +10,7 @@ namespace TagsCloudContainer
         
         private static void Main(string[] args)
         {
-            var builder = ProjectSettingsGetter.GetSettings();
+            var builder = ProjectConfiguration.GetConfiguration();
             var client = builder.Resolve<IClient>();
             client.Execute(args);
         }
