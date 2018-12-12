@@ -2,13 +2,13 @@
 
 namespace TagsCloudContainer.Settings
 {
-    public class SettingsManager
+    public class SettingsManager: ISettingsManager
     {
-        public readonly ImageSettings ImageSettings;
-        public readonly TextSettings TextSettings;
-        public readonly Palette Palette;
+        public IImageSettings ImageSettings { get; }
+        public ITextSettings TextSettings { get; }
+        public IPalette Palette { get; }
 
-        public SettingsManager(ImageSettings imageSettings, TextSettings textSettings, Palette palette)
+        public SettingsManager(IImageSettings imageSettings, ITextSettings textSettings, IPalette palette)
         {
             ImageSettings = imageSettings;
             TextSettings = textSettings;

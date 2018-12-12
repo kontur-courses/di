@@ -6,6 +6,7 @@ using CommandLine;
 using TagsCloudContainer.ImageCreators;
 using TagsCloudContainer.ImageSavers;
 using TagsCloudContainer.ProjectSettings;
+using TagsCloudContainer.Readers;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsHandlers;
 
@@ -13,19 +14,19 @@ namespace TagsCloudContainer.Clients
 {
     public class ConsoleClient : IClient
     {
-        private readonly ImageCreator imageCreator;
-        private readonly WordsHandler wordsHandler;
+        private readonly IImageCreator imageCreator;
+        private readonly IWordsHandler wordsHandler;
         private readonly IImageSaver imageSaver;
-        private readonly Func<string, IEnumerable<string>> filesReaderFactory;
-        private readonly SettingsManager settings;
+        private readonly IReader filesReader;
+        private readonly ISettingsManager settings;
 
-        public ConsoleClient(WordsHandler wordsHandler, ImageCreator imageCreator, Func<string, IEnumerable<string>> filesReaderFactory,
-            SettingsManager settings, IImageSaver imageSaver)
+        public ConsoleClient(IWordsHandler wordsHandler, IImageCreator imageCreator, IReader filesReader,
+            ISettingsManager settings, IImageSaver imageSaver)
         {
             this.wordsHandler = wordsHandler;
             this.imageCreator = imageCreator;
             this.imageSaver = imageSaver;
-            this.filesReaderFactory = filesReaderFactory;
+            this.filesReader = filesReader;
             this.settings = settings;
         }
 
@@ -62,7 +63,7 @@ namespace TagsCloudContainer.Clients
         {
             try
             {
-                return filesReaderFactory.Invoke(fileName);
+                return filesReader.Read(fileName);
             }
             catch (Exception)
             {

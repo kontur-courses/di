@@ -8,15 +8,15 @@ using TagsCloudContainer.WordsHandlers;
 
 namespace TagsCloudContainer.ImageCreators
 {
-    public class ImageCreator
+    public class ImageCreator : IImageCreator
     {
-        private readonly ImageSettings imageSettings;
-        private readonly TextSettings textSettings;
-        private readonly Palette palette;
+        private readonly IImageSettings imageSettings;
+        private readonly ITextSettings textSettings;
+        private readonly IPalette palette;
         private readonly Func<ICircularCloudLayouter> circularCloudLayouterFactory;
 
 
-        public ImageCreator(ImageSettings imageSettings, TextSettings textSettings, Func<ICircularCloudLayouter> circularCloudLayouterFactory, Palette palette)
+        public ImageCreator(IImageSettings imageSettings, ITextSettings textSettings, Func<ICircularCloudLayouter> circularCloudLayouterFactory, IPalette palette)
         {
             this.imageSettings = imageSettings;
             this.textSettings = textSettings;

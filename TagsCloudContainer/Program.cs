@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.ProjectSettings;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer
 {

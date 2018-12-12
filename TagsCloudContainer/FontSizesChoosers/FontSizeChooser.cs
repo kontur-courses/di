@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsHandlers;
 
 namespace TagsCloudContainer.FontSizesChoosers
@@ -12,9 +13,9 @@ namespace TagsCloudContainer.FontSizesChoosers
         private readonly double minFontSize = 0.2;
         private readonly double reducingCoefficient = 0.9;
 
-        public FontSizeChooser(int fontSizeSize)
+        public FontSizeChooser()
         {
-            baseFontSize = fontSizeSize;
+            baseFontSize = 30;
         }
 
         public IEnumerable<PrintedWordInfo> GetWordInfos(IEnumerable<WordInfo> words)

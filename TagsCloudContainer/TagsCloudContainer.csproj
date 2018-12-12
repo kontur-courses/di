@@ -63,6 +63,7 @@
     <Compile Include="CircularCloudLayouters\ICircularCloudLayouter.cs" />
     <Compile Include="Clients\ConsoleClient.cs" />
     <Compile Include="Clients\IClient.cs" />
+    <Compile Include="ImageCreators\IImageCreator.cs" />
     <Compile Include="ProjectSettings\ConsoleClientOptions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="FontSizesChoosers\FontSizeChooser.cs" />
@@ -70,19 +71,26 @@
     <Compile Include="FontSizesChoosers\PrintedWordInfo.cs" />
     <Compile Include="ImageCreators\IColorChooser.cs" />
     <Compile Include="ImageCreators\ImageCreator.cs" />
-    <Compile Include="ImageCreators\Palette.cs" />
     <Compile Include="ImageCreators\SingleColorChooser.cs" />
     <Compile Include="ImageSavers\IImageSaver.cs" />
     <Compile Include="ImageSavers\ImageSaver.cs" />
     <Compile Include="ProjectSettings\ProjectSettingsGetter.cs" />
+    <Compile Include="Readers\IReader.cs" />
+    <Compile Include="Readers\FilesReader.cs" />
     <Compile Include="RectanglesFilters\FilterRectanglesWithNegativeCoordinates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\IImageSettings.cs" />
     <Compile Include="Settings\ImageSettings.cs" />
+    <Compile Include="Settings\IPalette.cs" />
+    <Compile Include="Settings\ISettingsManager.cs" />
+    <Compile Include="Settings\ITextSettings.cs" />
+    <Compile Include="Settings\Palette.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Settings\TextSettings.cs" />
     <Compile Include="WordsFilters\BoringWordsExcluder.cs" />
     <Compile Include="WordsFilters\IFilter.cs" />
+    <Compile Include="WordsHandlers\IWordsHandler.cs" />
     <Compile Include="WordsHandlers\WordsHandler.cs" />
     <Compile Include="WordsTransformers\IWordsTransformer.cs" />
     <Compile Include="WordsHandlers\WordInfo.cs" />
@@ -99,7 +107,6 @@
     <Content Include="WordsExamples\WordsWithArticles.txt" />
     <Content Include="WordsExamples\WordsWithDifferentFrequencies.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

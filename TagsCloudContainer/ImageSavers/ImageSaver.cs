@@ -6,9 +6,9 @@ namespace TagsCloudContainer.ImageSavers
 {
     public class ImageSaver : IImageSaver
     {
-        private readonly ImageSettings imageSettings;
+        private readonly IImageSettings imageSettings;
 
-        public ImageSaver(ImageSettings settings)
+        public ImageSaver(IImageSettings settings)
         {
             imageSettings = settings;
         }

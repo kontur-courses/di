@@ -4,15 +4,16 @@ using TagsCloudContainer.ImageCreators;
 
 namespace TagsCloudContainer.Settings
 {
-    public class TextSettings
+    public class TextSettings : ITextSettings
     {
-        public FontFamily Family;
-        public IColorChooser ColorChooser;
-        public IFontSizeChooser FontSizeChooser;
-
-        public TextSettings(FontFamily fontFamily, IColorChooser colorChooser, IFontSizeChooser fontSizeChooser)
+        public FontFamily Family { get; set; }
+        public IColorChooser ColorChooser { get; set; }
+        public IFontSizeChooser FontSizeChooser { get; set; }
+        
+        
+        public TextSettings(IColorChooser colorChooser, IFontSizeChooser fontSizeChooser)
         {
-            Family = fontFamily;
+            Family = new FontFamily("Arial");
             ColorChooser = colorChooser;
             FontSizeChooser = fontSizeChooser;
         }

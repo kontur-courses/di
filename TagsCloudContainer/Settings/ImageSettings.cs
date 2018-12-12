@@ -3,14 +3,15 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudContainer.Settings
 {
-    public class ImageSettings
+    public class ImageSettings: IImageSettings
     {
-        public Size ImageSize;
-        public ImageFormat Format = ImageFormat.Png;
+        public Size ImageSize { get; set; }
+        public ImageFormat Format { get; set; }
 
-        public ImageSettings(Size imageSize)
+        public ImageSettings()
         {
-            ImageSize = imageSize;
+            ImageSize = new Size(600, 800);
+            Format = ImageFormat.Png;
         }
     }
 }

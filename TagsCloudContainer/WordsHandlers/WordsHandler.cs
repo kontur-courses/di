@@ -7,7 +7,7 @@ using TagsCloudContainer.WordsTransformers;
 
 namespace TagsCloudContainer.WordsHandlers
 {
-    public class WordsHandler
+    public class WordsHandler : IWordsHandler
     {
         private readonly IFilter<string>[] filters;
         private readonly IWordsTransformer[] wordsTransformers;

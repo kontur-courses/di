@@ -4,9 +4,9 @@ namespace TagsCloudContainer.ImageCreators
 {
     public class SingleColorChooser : IColorChooser
     {
-        private readonly Palette palette;
+        private readonly IPalette palette;
 
-        public SingleColorChooser(Palette palette)
+        public SingleColorChooser(IPalette palette)
         {
             this.palette = palette;
         }

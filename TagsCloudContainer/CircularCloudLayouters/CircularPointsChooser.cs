@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.Extensions;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.CircularCloudLayouters
 {
@@ -11,9 +12,10 @@ namespace TagsCloudContainer.CircularCloudLayouters
         private readonly Point centerPoint;
         private IEnumerator<Point> pointsOrder;
 
-        public CircularPointsChooser(Point centerPoint)
+        public CircularPointsChooser(IImageSettings imageSettings)
         {
-            this.centerPoint = centerPoint;
+            var size = imageSettings.ImageSize;
+            centerPoint = new Point(size.Width / 2, size.Height / 2);;
             ResetEnumerator();
         }
 

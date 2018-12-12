@@ -6,6 +6,7 @@ using System.Linq;
 using FluentAssertions;
 using TagsCloudContainer.CircularCloudLayouters;
 using TagsCloudContainer.Extensions;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
 {
@@ -18,8 +19,10 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
         [SetUp]
         public void SetUp()
         {
-            centerPoint = new Point(10, 8);
-            pointsChooser = new CircularPointsChooser(centerPoint);
+            var imageSettings = new ImageSettings();
+            var size = imageSettings.ImageSize;
+            centerPoint = new Point(size.Width / 2, size.Height / 2);
+            pointsChooser = new CircularPointsChooser(new ImageSettings());
         }
 
         [Test]
@@ -68,7 +71,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
             return points;
         }
 
-        private List<double> GetDistancesToCenter(List<Point> points)
+        private IEnumerable<double> GetDistancesToCenter(IEnumerable<Point> points)
         {
             return points.Select(x => x.DistanceTo(centerPoint)).ToList();
         }
@@ -80,9 +83,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
             public int Compare(double x, double y)
             {
                 var difference = Math.Abs(x - y);
-                if (difference <= DeltaDistance)
-                    return 0;
-                return x.CompareTo(y);
+                return difference <= DeltaDistance ? 0 : x.CompareTo(y);
             }
         }
 
