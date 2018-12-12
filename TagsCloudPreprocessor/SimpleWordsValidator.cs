@@ -21,13 +21,7 @@ namespace TagsCloudPreprocessor
         {
             words = GetWordsStem(words);
             var forbiddenWords = GetForbiddenWords();
-            var frequencyDictionary = GetFrequencyDictionary(words.Where(w => !forbiddenWords.Contains(w)));
-            var validWords = frequencyDictionary
-                .OrderBy(pair => pair.Value)
-                .Reverse()
-                .Select(pair => pair.Key);
-
-            return validWords;
+            return words.Where(w=>!forbiddenWords.Contains(w));
         }
 
         private IEnumerable<string> GetWordsStem(IEnumerable<string> words)
@@ -39,19 +33,6 @@ namespace TagsCloudPreprocessor
                 .Select(stem => stem.FirstOrDefault())
                 .Where(wordStem => wordStem != null)
                 .ToList();
-        }
-
-        private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
-        {
-            var frequencyDictionary = new Dictionary<string, int>();
-            foreach (var word in words)
-            {
-                if (!frequencyDictionary.ContainsKey(word))
-                    frequencyDictionary[word] = 1;
-                frequencyDictionary[word]++;
-            }
-
-            return frequencyDictionary;
         }
 
         private HashSet<string> GetForbiddenWords()

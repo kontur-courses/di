@@ -8,6 +8,7 @@ namespace TagsCloudVisualization
     {
         private readonly ICloudLayouter cloudLayouter;
         private readonly Font parentFont;
+        private const float Coefficient = 5;
 
         public WordsCloudFiller(ICloudLayouter cloudLayouter, Font font)
         {
@@ -15,21 +16,28 @@ namespace TagsCloudVisualization
             parentFont = font;
         }
 
-        public List<(string word, Rectangle rectangle, Font font)> GetRectanglesForWordsInCloud(Graphics g, List<string> words)
+        public List<(string word, Rectangle rectangle, Font font)> GetRectanglesForWordsInCloud(
+            Graphics g,
+            List<(string Word, int CountInText)> words)
         {
-            var font = parentFont;
-            var rectangles = new List<(string word, Rectangle rectangle, Font font)>();
+            var maxFrequency = words[0].Item2;
 
-            var delta = (font.SizeInPoints / 2) / words.Count;
+            var maxFontSize = parentFont.Size;
+            var minFontSize = maxFontSize / Coefficient;
+
+            var font = parentFont;
+
+            var rectangles = new List<(string word, Rectangle rectangle, Font font)>();
 
             foreach (var word in words)
             {
-                font = new Font(font.Name, (font.SizeInPoints - delta));
-                var size = g.MeasureString(word, font);
+                font = new Font(font.Name,
+                    (minFontSize + (maxFontSize - minFontSize) * ((float) word.CountInText / maxFrequency)));
+                var size = g.MeasureString(word.Word, font);
                 var rec = cloudLayouter.PutNextRectangle(
-                    new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height)));
+                    new Size((int) Math.Ceiling(size.Width), (int) Math.Ceiling(size.Height)));
 
-                rectangles.Add((word, rec, font));
+                rectangles.Add((word.Word, rec, font));
             }
 
             return rectangles;

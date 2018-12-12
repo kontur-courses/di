@@ -18,12 +18,31 @@ namespace TagsCloudPreprocessor
             this.fileReader = fileReader;
         }
 
-        public IEnumerable<string> GetValidWords(string path, int count)
+        public IEnumerable<(string Word, int CountInText)> GetValidWordsWithCount(string path, int count)
         {
-            return wordsValidator.GetValidWords(
+            var words = wordsValidator.GetValidWords(
                 parser.GetWords(
                     reader.GetTextFromRawFormat(
-                        fileReader.ReadFromFile(path)))).Take(count);
+                        fileReader.ReadFromFile(path))));
+            
+            return GetFrequencyDictionary(words)
+                .OrderBy(pair => pair.Value)
+                .Reverse()
+                .Select(pair => (pair.Key, pair.Value))
+                .Take(count);
+        }
+        
+        private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
+        {
+            var frequencyDictionary = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (!frequencyDictionary.ContainsKey(word))
+                    frequencyDictionary[word] = 1;
+                frequencyDictionary[word]++;
+            }
+
+            return frequencyDictionary;
         }
     }
 }

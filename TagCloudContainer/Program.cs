@@ -66,7 +66,7 @@ namespace TagCloudContainer
             InitPreprocessorContainer();
             InitLayouterContainer(config.Center);
             InitVisualisationContainer(config);
-            var validWords = preprocessorContainer.Resolve<IPreprocessor>().GetValidWords(config.InputFile, config.Count).ToList();
+            var validWords = preprocessorContainer.Resolve<IPreprocessor>().GetValidWordsWithCount(config.InputFile, config.Count).ToList();
             var vis = visualizationContainer.Resolve<ITagCloudVisualization>();
 
             vis.SaveTagCloud(

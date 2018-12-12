@@ -82,7 +82,7 @@ namespace TagsCloudVisualization
         public void SaveTagCloud(
             string bitmapName,
             string directory,
-            List<string> words)
+            List<(string, int)> words)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);

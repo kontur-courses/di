@@ -4,6 +4,6 @@ namespace TagsCloudPreprocessor
 {
     public interface IPreprocessor
     {
-        IEnumerable<string> GetValidWords(string path, int count);
+        IEnumerable<(string Word, int CountInText)> GetValidWordsWithCount(string path, int count);
     }
 }
