@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using Autofac;
 using Fclp;
-using TagsCloudContainer.WordLayouts;
 using TagsCloudContainer.WordsReaders;
 
 namespace TagsCloudContainer.Cmd
@@ -28,6 +29,63 @@ namespace TagsCloudContainer.Cmd
         static void Main(string[] args)
         {
             var parser = new FluentCommandLineParser<ParserArgs>();
+
+            var cmdArgs = ConfigureParser(parser);
+
+            var parserResult = parser.Parse(args);
+
+            if (parserResult.HasErrors)
+            {
+                Console.WriteLine(parserResult.ErrorText);
+
+                return;
+            }
+
+            if (parserResult.HelpCalled)
+            {
+                return;
+            }
+
+            var containerBuilder = new CloudContainerBuilder();
+
+            var tagsCloudContainer = containerBuilder.BuildTagsCloudContainer();
+            var reader = tagsCloudContainer
+                .Resolve<IWordsReader>();
+
+            var font = new Font(parser.Object.FontFamily, (float)parser.Object.FontSize);
+
+            var boringWords = Enumerable.Empty<string>();
+
+            if (parser.Object.ExcludeFilename != null)
+            {
+                boringWords = reader
+                    .GetWords(parser.Object.ExcludeFilename);
+            }
+
+            var words = reader
+                .GetWords(parser.Object.InputFilename);
+
+            using (var scope = tagsCloudContainer.BeginLifetimeScope())
+            {
+                var config = scope.Resolve<Config>();
+                config.Color = cmdArgs.Color;
+                config.Font = font;
+                config.CustomBoringWords = boringWords;
+                config.ImageSize = cmdArgs.ImageSize;
+                config.CenterPoint = cmdArgs.SpiralOffset;
+                config.AngleDelta = parser.Object.SpiralAngleStep;
+
+                scope.Resolve<TagsCloudBuilder>()
+                    .Visualize(words)
+                    .Save(parser.Object.OutputFilename, ImageFormat.Png);
+            }
+        }
+
+        private static CmdArguments ConfigureParser(FluentCommandLineParser<ParserArgs> parser)
+        {
+            var callbacks = new CmdCallbacks();
+            ;
+
             parser.Setup(arg => arg.InputFilename)
                 .As("input")
                 .Required();
@@ -47,65 +105,19 @@ namespace TagsCloudContainer.Cmd
             parser.Setup(arg => arg.SpiralAngleStep)
                 .As("spiralAngleStep");
 
-            var callbacks = new CmdCallbacks();
-
             parser.Parser.SetupHelp("?", "help")
                 .Callback(text => Console.WriteLine(callbacks.GetHelpInformation()));
 
             parser.Parser.Setup<string>("imageSize")
-                .Callback(imageSize => callbacks.SetImageSize(imageSize));
+                .Callback(callbacks.SetImageSize);
 
             parser.Parser.Setup<string>("color")
-                .Callback(color => callbacks.SetColor(color));
+                .Callback(callbacks.SetColor);
 
             parser.Parser.Setup<string>("spiralOffset")
-                .Callback(spiralOffset => callbacks.SetSpiralOffset(spiralOffset));
+                .Callback(callbacks.SetSpiralOffset);
 
-            var parserResult = parser.Parse(args);
-
-            if (parserResult.HasErrors)
-            {
-                Console.WriteLine(parserResult.ErrorText);
-
-                return;
-            }
-
-            if (parserResult.HelpCalled)
-            {
-                return;
-            }
-
-            var cmdArgs = callbacks.CmdArgs;
-            var config = new Config(cmdArgs.ImageSize,
-                new Font(parser.Object.FontFamily, (float)parser.Object.FontSize),
-                cmdArgs.Color);
-            var circularCloudLayoutConfig =
-                new CircularCloudLayoutConfig(cmdArgs.SpiralOffset, parser.Object.SpiralAngleStep);
-
-            var containerBuilder = new CloudContainerBuilder();
-
-            var tagsCloudContainer = containerBuilder.BuildTagsCloudContainer(config, circularCloudLayoutConfig);
-            var reader = containerBuilder
-                .BuildReaderContainer()
-                .Resolve<IWordsReader>();
-
-            if (parser.Object.ExcludeFilename != null)
-            {
-                var boringWords = reader
-                    .GetWords(parser.Object.ExcludeFilename);
-                config.BoringWords = boringWords;
-            }
-
-            var words = reader
-                .GetWords(parser.Object.InputFilename);
-
-            using (var scope = tagsCloudContainer.BeginLifetimeScope())
-            {
-                scope
-                    .Resolve<TagsCloudBuilder>()
-                    .Visualize(words)
-                    .Save(parser.Object.OutputFilename, ImageFormat.Png);
-            }
+            return callbacks.CmdArgs;
         }
     }
 }

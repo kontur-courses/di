@@ -16,7 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
-                scope.Dispose();
+                resultImage.Dispose();
             }
             base.Dispose(disposing);
         }

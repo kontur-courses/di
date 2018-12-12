@@ -12,8 +12,10 @@ namespace TagsCloudContainer.ResultRenderer
 
         public bool DrawRectangles { get; set; }
 
-        public ImageRenderer(Size imageSize)
+        public ImageRenderer(IResultRendererConfig config)
         {
+            var imageSize = config.ImageSize;
+
             if (imageSize.Width <= 0 || imageSize.Height <= 0)
             {
                 throw new ArgumentException(
@@ -80,7 +82,6 @@ namespace TagsCloudContainer.ResultRenderer
 
         public void Dispose()
         {
-            image?.Dispose();
             graphics?.Dispose();
         }
     }

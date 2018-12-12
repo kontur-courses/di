@@ -29,9 +29,6 @@ namespace TagsCloudContainer.Tests
             preprocessor2 = A.Fake<IWordsPreprocessor>();
             formatter = A.Fake<IWordFormatter>();
             layouter = A.Fake<ILayouter>();
-            //renderer = A.Fake<ImageRenderer>(z =>
-            //    z.WithArgumentsForConstructor(new object[] {new Size(1024, 1024)})
-            //        .Implements<IResultRenderer>());
             renderer = A.Fake<IResultRenderer>();
             builder = new TagsCloudBuilder(
                 new[] {preprocessor1, preprocessor2},

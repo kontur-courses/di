@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using Autofac;
 using TagsCloudContainer.ResultRenderer;
 using TagsCloudContainer.WordFormatters;
 using TagsCloudContainer.WordLayouts;
@@ -9,49 +11,44 @@ namespace TagsCloudContainer
 {
     public class CloudContainerBuilder
     {
-        public IContainer BuildTagsCloudContainer(
-            Config config,
-            CircularCloudLayoutConfig circularCloudLayoutConfig)
+        public IContainer BuildTagsCloudContainer()
         {
             var builder = new ContainerBuilder();
 
-            builder.Register(z => new ImageRenderer(config.ImageSize))
+            builder.RegisterType<Config>()
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .SingleInstance();
+
+            builder.RegisterType<ImageRenderer>()
                 .As<IResultRenderer>();
 
-            builder.Register(z => new CustomBoringWordsRemover(config.BoringWords))
+            builder.RegisterType<CustomBoringWordsRemover>()
                 .As<IWordsPreprocessor>();
+
+            builder.RegisterType<TxtReader>()
+                .As<IWordsReader>()
+                .SingleInstance();
 
             builder.Register(z => new SimpleFormatter(
                     z.Resolve<IWordsWeighter>(),
-                    config.Font,
-                    config.Color))
+                    z.Resolve<Config>()))
                 .As<IWordFormatter>();
 
-            builder.Register(z => new CircularCloudLayouter(circularCloudLayoutConfig))
+            builder.RegisterType<CircularCloudLayouter>()
                 .As<ILayouter>();
 
-            builder.RegisterTypes(typeof(BoringWordsRemover), typeof(WordsLower))
-                .As<IWordsPreprocessor>();
-
             builder.RegisterType<WordsWeighter>()
-                .As<IWordsWeighter>();
+                .As<IWordsWeighter>()
+                .SingleInstance();
 
             builder
-                .RegisterTypes(typeof(CustomBoringWordsRemover), typeof(WordsLower), typeof(BoringWordsRemover))
-                .As<IWordsPreprocessor>();
+                .RegisterTypes(typeof(WordsLower), typeof(BoringWordsRemover))
+                .As<IWordsPreprocessor>()
+                .SingleInstance();
 
-            builder
-                .RegisterType<TagsCloudBuilder>()
+            builder.RegisterType<TagsCloudBuilder>()
                 .AsSelf();
-
-            return builder.Build();
-        }
-
-        public IContainer BuildReaderContainer()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<TxtReader>()
-                .As<IWordsReader>();
 
             return builder.Build();
         }

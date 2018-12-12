@@ -1,24 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.ResultRenderer;
+using TagsCloudContainer.WordFormatters;
+using TagsCloudContainer.WordLayouts;
+using TagsCloudContainer.WordsPreprocessors;
 
 namespace TagsCloudContainer
 {
-    public class Config
+    public class Config : ICustomWordsRemoverConfig, IResultRendererConfig, IFormatterConfig, ILayouterConfig
     {
-        public Size ImageSize { get; }
+        public Size ImageSize { get; set; }
+        public IEnumerable<string> CustomBoringWords { get; set; } = Enumerable.Empty<string>();
 
-        public Font Font { get; }
+        public Font Font { get; set; }
 
-        public Color Color { get; }
+        public Color Color { get; set; }
 
-        public IEnumerable<string> BoringWords { get; set; } = Enumerable.Empty<string>();
+        public bool FrequentWordsAsHuge { get; set; } = true;
 
-        public Config(Size imageSize, Font font, Color color)
-        {
-            ImageSize = imageSize;
-            Font = font;
-            Color = color;
-        }
+        public float FontMultiplier { get; set; } = 7;
+
+        public PointF CenterPoint { get; set; } = PointF.Empty;
+
+        public double AngleDelta { get; set; } = 10;
     }
 }

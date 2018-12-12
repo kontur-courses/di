@@ -11,7 +11,7 @@ namespace TagsCloudContainer.WordLayouts
         private readonly double angleDelta;
         private double angle;
 
-        public CircularCloudLayouter(CircularCloudLayoutConfig config)
+        public CircularCloudLayouter(ILayouterConfig config)
         {
             rectangles = new List<RectangleF>();
             centerPoint = config.CenterPoint;

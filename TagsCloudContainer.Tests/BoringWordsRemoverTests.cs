@@ -19,13 +19,13 @@ namespace TagsCloudContainer.Tests
         public void Preprocess_RemovesBoringWords()
         {
             var data = "Заходи в дом. Иди на ту сторону".ToLower();
-            var expected = "Заходи дом иди сторону".ToLower().Split();
+            var expected = "Заходи дом иди сторону".ToLower()
+                .Split();
 
             var actual = boringWordsRemover.Preprocess(data.Split());
 
             actual.Should()
                 .BeEquivalentTo(expected);
-
         }
     }
 }

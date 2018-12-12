@@ -10,13 +10,13 @@ namespace TagsCloudContainer
 {
     public class TagsCloudBuilder
     {
-        private readonly IWordsPreprocessor[] wordsPreprocessors;
+        private readonly IEnumerable<IWordsPreprocessor> wordsPreprocessors;
         private readonly IWordFormatter wordFormatter;
         private readonly ILayouter layouter;
         private readonly IResultRenderer resultRenderer;
 
         public TagsCloudBuilder(
-            IWordsPreprocessor[] wordsPreprocessors,
+            IEnumerable<IWordsPreprocessor> wordsPreprocessors,
             IWordFormatter wordFormatter,
             ILayouter layouter,
             IResultRenderer resultRenderer)

@@ -14,15 +14,12 @@ namespace TagsCloudContainer.WordFormatters
 
         public SimpleFormatter(
             IWordsWeighter wordsWeighter,
-            Font font,
-            Color color,
-            bool frequentWordsAsHuge = true,
-            float fontMultiplier = 7f)
+            IFormatterConfig config)
         {
-            this.font = font;
-            this.color = color;
-            this.frequentWordsAsHuge = frequentWordsAsHuge;
-            this.fontMultiplier = fontMultiplier;
+            font = config.Font;
+            color = config.Color;
+            frequentWordsAsHuge = config.FrequentWordsAsHuge;
+            fontMultiplier = config.FontMultiplier;
             this.wordsWeighter = wordsWeighter;
         }
 

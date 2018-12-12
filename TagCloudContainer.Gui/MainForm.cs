@@ -1,22 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudContainer;
+using TagsCloudContainer.ResultRenderer;
+using TagsCloudContainer.WordFormatters;
 using TagsCloudContainer.WordLayouts;
+using TagsCloudContainer.WordsPreprocessors;
 using TagsCloudContainer.WordsReaders;
 
 namespace TagCloudContainer.Gui
 {
     public partial class MainForm : Form
     {
-        private ILifetimeScope scope;
+        private IContainer container;
         private Color chooseColor = Color.BlueViolet;
+        private Image resultImage; // диспозится в "partial class MainForm" и при каждой генерации картинки
 
         public MainForm()
         {
             InitializeComponent();
+            container = new CloudContainerBuilder().BuildTagsCloudContainer();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -31,8 +38,7 @@ namespace TagCloudContainer.Gui
             {
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var reader = new CloudContainerBuilder()
-                        .BuildReaderContainer()
+                    var reader = container
                         .Resolve<IWordsReader>();
                     wordsTextBox.Text = string.Join(Environment.NewLine,
                         reader.GetWords(openFileDialog.FileName));
@@ -61,15 +67,22 @@ namespace TagCloudContainer.Gui
         private void GenerateButton_Click(object sender, EventArgs e)
         {
             var size = new Size(int.Parse(resultWidthTextBox.Text), int.Parse(resultHeightTextBox.Text));
-            var config = new Config(size, new Font(FontFamily.GenericMonospace, 12), chooseColor);
-            var layoutConfig = new CircularCloudLayoutConfig(PointF.Empty, 10);
+            var font = new Font(FontFamily.GenericMonospace, 12);
 
-            scope = new CloudContainerBuilder()
-                .BuildTagsCloudContainer(config, layoutConfig)
-                .BeginLifetimeScope();
+            resultImage?.Dispose();
 
-            var tagCloud = scope.Resolve<TagsCloudBuilder>();
-            resultPictureBox.Image = tagCloud.Visualize(wordsTextBox.Lines);
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var config = scope.Resolve<Config>();
+                config.Color = chooseColor;
+                config.Font = font;
+                config.ImageSize = size;
+
+                resultImage = scope.Resolve<TagsCloudBuilder>()
+                    .Visualize(wordsTextBox.Lines);
+            }
+
+            resultPictureBox.Image = resultImage;
         }
     }
 }

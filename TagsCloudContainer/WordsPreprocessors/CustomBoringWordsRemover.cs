@@ -7,9 +7,9 @@ namespace TagsCloudContainer.WordsPreprocessors
     {
         private readonly HashSet<string> customBoringWords;
 
-        public CustomBoringWordsRemover(IEnumerable<string> customBoringWords)
+        public CustomBoringWordsRemover(ICustomWordsRemoverConfig config)
         {
-            this.customBoringWords = new HashSet<string>(customBoringWords);
+            customBoringWords = new HashSet<string>(config.CustomBoringWords);
         }
 
         public IEnumerable<string> Preprocess(IEnumerable<string> words)
