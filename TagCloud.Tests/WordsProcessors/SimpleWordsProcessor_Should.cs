@@ -56,5 +56,18 @@ namespace TagCloud.Tests.WordsProcessors
             Action action = () => wordsProcessor.Process(null);
             action.Should().Throw<ArgumentException>();
         }
+
+        [Test]
+        public void ExcludeBoringWords_WhenTheyGiven()
+        {
+            const string boringWord = "boring_word";
+            const string interestingWord = "interesting_word";
+            var unhandledWords = new List<string> { interestingWord, boringWord };
+            var expectedWords = new List<TagStat> { new TagStat(interestingWord, 1) };
+
+            var res = wordsProcessor.Process(unhandledWords, new HashSet<string>{boringWord});
+
+            res.Should().BeEquivalentTo(expectedWords);
+        }
     }
 }

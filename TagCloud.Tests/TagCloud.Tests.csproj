@@ -54,6 +54,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.4.9.1\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.5.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.5.3\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -62,6 +65,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,8 +74,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PointExtensions.cs" />
+    <Compile Include="Layouters\CircularCloudLayouter_Should.cs" />
+    <Compile Include="Layouters\RectangleVisualizer.cs" />
+    <Compile Include="Painters\OneColorPainterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextReaders\TxtTextReader_Should.cs" />
+    <Compile Include="TextReaders\AbstractWordsReader_Should.cs" />
+    <Compile Include="TextReaders\GeneralWordsReader_Should.cs" />
+    <Compile Include="TextReaders\TxtWordsReader_Should.cs" />
+    <Compile Include="TextReaders\XmlWordsReader_Should.cs" />
     <Compile Include="WordsProcessors\SimpleWordsProcessor_Should.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,12 +96,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\few_words.txt" />
-    <Content Include="Resources\one_word.txt">
+    <Content Include="Resources\txt\few_words.txt" />
+    <Content Include="Resources\xml\few_words.xml" />
+    <Content Include="Resources\txt\one_word.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\one_word_without_escape_char_in_the_end.txt" />
-    <Content Include="Resources\words_with_different_delimiters.txt" />
+    <Content Include="Resources\xml\one_word.xml" />
+    <Content Include="Resources\txt\one_word_without_escape_char_in_the_end.txt" />
+    <Content Include="Resources\txt\words_with_different_delimiters.txt" />
+    <Content Include="Resources\xml\zero_words.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
