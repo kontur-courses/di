@@ -4,14 +4,14 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    public class SpiralCloudLayouter : ICloudLayouter
     {
         private Point center;
-        private int radius;
+        private double angle;
         private ISizeDefiner sizeDefiner;
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
-        public CircularCloudLayouter(ISizeDefiner sizeDefiner)
+        public SpiralCloudLayouter(ISizeDefiner sizeDefiner)
         {
             this.sizeDefiner = sizeDefiner;
         }
@@ -19,7 +19,7 @@ namespace TagsCloudVisualization
         public void Clear()
         {
             rectangles.Clear();
-            radius = 0;
+            angle = 0;
         }
 
         public void Process(IEnumerable<GraphicWord> graphicWords, ISizeDefiner sizeDefiner, Point center)
@@ -36,7 +36,7 @@ namespace TagsCloudVisualization
 
         private void PutNextWord(GraphicWord graphicWord)
         {
-            var angle = 0.0;
+            var radius = 0;
             var size = sizeDefiner.GetSize(graphicWord);
             Rectangle rectangle;
             do
@@ -46,13 +46,10 @@ namespace TagsCloudVisualization
                     center.Y - (size.Height / 2) + (int)(radius * Math.Sin(angle)),
                     size.Width, size.Height);
 
-                angle += Math.PI / 18;
-                if (angle < Math.PI * 2)
-                    continue;
-
-                angle = 0;
                 radius++;
             } while (CheckCollisionWithAll(rectangle));
+
+            angle += 0.4;
 
             if (rectangles.Count > 0)
                 rectangle = MoveRectangleToCenter(rectangle);

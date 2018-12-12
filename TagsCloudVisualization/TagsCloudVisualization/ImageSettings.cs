@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
-    public interface IWordPalette
+    public class ImageSettings
     {
-        Image GetBackground(Size size);
-        void ColorWords(IEnumerable<GraphicWord> words);
+        public Point Center { get; set; }
+        public Size Size { get; set; }
     }
 }

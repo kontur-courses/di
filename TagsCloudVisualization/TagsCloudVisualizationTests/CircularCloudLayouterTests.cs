@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Common;
 using NUnit.Framework;
@@ -36,10 +35,11 @@ namespace TagsCloudVisualizationTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
-
-            var path = $"C:\\Users\\{Environment.UserName}\\Desktop\\{TestContext.CurrentContext.Test.Name}.png";
-            var visualizer = new Visualizer(new MonochromePalette(new Font("Arial", 10), Color.Black, Color.White));
-            var image = visualizer.Render(countedWords, 800, 800);
+            var path = System.Reflection.Assembly.GetExecutingAssembly().Location +
+                       TestContext.CurrentContext.Test.Name + ".png";
+//var path = $"C:\\Users\\{Environment.UserName}\\Desktop\\{TestContext.CurrentContext.Test.Name}.png";
+            var visualizer = new Visualizer();
+            var image = visualizer.Render(countedWords, 800, 800, new MonochromePalette(Color.Black, Color.White));
             ImageSaver.WriteToFile(path, image);
             Console.WriteLine("Tag cloud visualization saved to file {0}.png", path);
         }
@@ -49,9 +49,10 @@ namespace TagsCloudVisualizationTests
         [TestCase(2, 2, 7, 3, Description = "Odd width and height")]
         public void PutFirstRectangle_InCenter(int x, int y, int width, int height)
         {
+            Assert.Fail();
             var layouter = new CircularCloudLayouter(new LinearSizer(), new Point());
             var word = new GraphicWord("word");
-            layouter.PutNextWord(word);
+            //layouter.PutNextWord(word);
             word.Rectangle.Location
                 .IsSameOrEqualTo(new Point(x - width / 2, y - height / 2));
         }
@@ -113,12 +114,7 @@ namespace TagsCloudVisualizationTests
             }
 
             countedWords = counter.Count(rawString.ToString());
-
-            foreach (var word in countedWords)
-            {
-                layouter.PutNextWord(word);
-            }
-
+            layouter.Process(countedWords, new LinearSizer());
             return countedWords;
         }
     }

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autofac;
 
@@ -20,11 +15,12 @@ namespace TagsCloudVisualization
                 var builder = new ContainerBuilder();
                 builder.Register(p => new Point(300, 300)).AsSelf();
                 builder.RegisterType<TxtReader>().As<IFileReader>();
-                builder.RegisterType<LinearSizer>().As<ISizeDefiner>();
+                builder.RegisterType<NWordSizer>().As<ISizeDefiner>();
                 builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
                 builder.RegisterType<Visualizer>().As<IVisualizer>();
                 builder.RegisterType<MainForm>().AsSelf();
-                builder.Register(p => new MonochromePalette(new Font("Arial", 10), Color.Aquamarine, Color.Black)).As<IWordPalette>();
+                builder.Register(p => new ImageSettings {Center = new Point(500, 500), Size = new Size(1000, 1000)}).AsSelf();
+                builder.Register(p => new MonochromePalette(Color.Black, Color.White)).As<IWordPalette>();
                 var container = builder.Build();
                 Application.Run(container.Resolve<MainForm>());
             }

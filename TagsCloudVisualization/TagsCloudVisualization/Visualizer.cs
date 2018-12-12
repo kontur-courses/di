@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
     public class Visualizer : IVisualizer
     {
-        public IWordPalette Palette { get; set; }
-
-        public Visualizer(IWordPalette palette)
+        public Image Render(IEnumerable<GraphicWord> words, int width, int height, IWordPalette palette)
         {
-            Palette = palette;
-        }
-
-        public Image Render(IEnumerable<GraphicWord> words, int width, int height)
-        {
-            Palette.ColorWords(words);
+            palette.ColorWords(words);
             var image = new Bitmap(width, height);
             var stringFormat = new StringFormat
             {
@@ -27,7 +15,7 @@ namespace TagsCloudVisualization
             };
             var graphics = Graphics.FromImage(image);
 
-            graphics.DrawImage(Palette.GetBackground(new Size(width, height)), new Point());
+            graphics.DrawImage(palette.GetBackground(new Size(width, height)), new Point());
             foreach (var word in words)
             {
                 graphics.DrawString(word.Value, word.Font,

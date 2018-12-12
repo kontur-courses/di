@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Text.RegularExpressions;
+using NHunspell;
 
 namespace TagsCloudVisualization
 {
@@ -26,9 +24,9 @@ namespace TagsCloudVisualization
             boringWords.AddRange(words);
         }
 
-        public void SetBoringWords(IEnumerable<string> words)
+        public void SetBoringWords(List<string> words)
         {
-            boringWords = words.ToList();
+            boringWords = words;
         }
 
         public void RemoveBoringWords(IEnumerable<string> words)
@@ -37,21 +35,43 @@ namespace TagsCloudVisualization
                 boringWords.Remove(word);
         }
 
-        public List<GraphicWord> Count(string rawFile)
+        public List<GraphicWord> Count(params string[] row)
         {
-            var words = Regex.Split(rawFile.ToLower(), @"\W+");
-            var dict = new Dictionary<string, GraphicWord>();
-            foreach (var word in words)
+            var words = new List<string>();
+            foreach (var s in row)
             {
-                if (!dict.ContainsKey(word))
-                    dict[word] = new GraphicWord(word);
+                words.AddRange(Regex.Split(s.ToLower(), @"\W+"));
+            }
+            var checkedWords = new List<string>();
+            using (Hunspell hunspell = new Hunspell("ru.aff", "ru.dic"))
+            {
+                foreach (var word in words)
+                {
+                    var variants = hunspell.Stem(word);
+                    if (variants.Count == 0)
+                        checkedWords.Add(word);
+                    else
+                        checkedWords.Add(variants?.First());
+
+                }
+            }
+            var countedWords = new Dictionary<string, GraphicWord>();
+            foreach (var word in checkedWords)
+            {
+                if (!countedWords.ContainsKey(word))
+                    countedWords[word] = new GraphicWord(word);
                 else
-                    dict[word].Rate++;
+                    countedWords[word].Rate++;
             }
 
-            return dict
+            foreach (var dictValue in countedWords.Values)
+            {
+                dictValue.Font = new Font("Consolas", dictValue.Rate + 8);
+            }
+
+            return countedWords
                 .Values
-                .Where(w => w.Rate > 1 && w.Value.Length > 2 && !boringWords.Contains(w.Value))
+                .Where(w => w.Rate > 1 && !boringWords.Contains(w.Value))
                 .OrderByDescending(w => w.Rate).ToList();
         }
     }

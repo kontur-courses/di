@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Autofac;
 
 namespace TagsCloudVisualization
 {
@@ -16,31 +9,132 @@ namespace TagsCloudVisualization
     {
         private Image image;
         private IFileReader fileReader;
-        private ICloudLayouter cloudLayouter;
         private IVisualizer visualizer;
+        private IWordPalette wordPalette;
+        private ISizeDefiner sizeDefiner;
+        private ICloudLayouter layouter;
         private List<GraphicWord> words;
         private WordCounter counter = new WordCounter();
+        private ImageSettings imageSettings;
 
-        public MainForm(IFileReader fileReader, ICloudLayouter cloudLayouter, IVisualizer visualizer)
+        public MainForm(IFileReader fileReader, IVisualizer visualizer, IWordPalette wordPalette, ISizeDefiner sizeDefiner, ImageSettings imageSettings, ICloudLayouter cloudLayouter)
         {
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Size = new Size(616, 664);
             this.fileReader = fileReader;
-            this.cloudLayouter = cloudLayouter;
             this.visualizer = visualizer;
+            this.wordPalette = wordPalette;
+            this.sizeDefiner = sizeDefiner;
+            this.imageSettings = imageSettings;
+            layouter = cloudLayouter;
 
-            var openButton = new Button {Text = "Open file", Size = new Size(200, 32)};
+            var mainMenu = new MenuStrip();
+            mainMenu.Dock = DockStyle.Top;
+            Controls.Add(mainMenu);
+
+            var fileItem = new ToolStripMenuItem("Файл");
+            var openButton = new ToolStripMenuItem("Открыть файл");
             openButton.Click += OpenFile;
-            Controls.Add(openButton);
+            fileItem.DropDownItems.Add(openButton);
 
-            var generateButton = new Button {Text = "Generate", Location = new Point(200, 0), Size = new Size(200, 32) };
-            generateButton.Click += GenerateImage;
-            Controls.Add(generateButton);
-
-            var saveButton = new Button {Text = "Save to file", Location = new Point(400, 0), Size = new Size(200, 32) };
+            var saveButton = new ToolStripMenuItem("Сохранить файл");
             saveButton.Click += SaveFile;
-            Controls.Add(saveButton);
+            fileItem.DropDownItems.Add(saveButton);
+
+            var algorithmItem = new ToolStripMenuItem("Алгоритм");
+            var circularAlgorithm = new ToolStripMenuItem("Круговой");
+            circularAlgorithm.Click += (sender, args) =>
+            {
+                layouter = new CircularCloudLayouter(sizeDefiner);
+                CheckOneItem(circularAlgorithm, algorithmItem);
+                if (image != null)
+                    GenerateImage(sender, args);
+            };
+            algorithmItem.DropDownItems.Add(circularAlgorithm);
+
+            var spiralAlgorithm = new ToolStripMenuItem("Спиральный");
+            spiralAlgorithm.Click += (sender, args) =>
+            {
+                layouter = new SpiralCloudLayouter(sizeDefiner);
+                CheckOneItem(spiralAlgorithm, algorithmItem);
+                if (image != null)
+                    GenerateImage(sender, args);
+            };
+            algorithmItem.DropDownItems.Add(spiralAlgorithm);
+
+            var settingItem = new ToolStripMenuItem("Расцевтка");
+            var paletteButton = new ToolStripMenuItem("Палитра");
+            paletteButton.Click += SetMonochromePalette;
+            settingItem.DropDownItems.Add(paletteButton);
+
+            var gradPaletteButton = new ToolStripMenuItem("Градиентная палитра");
+            gradPaletteButton.Click += SetGradientPalette;
+            settingItem.DropDownItems.Add(gradPaletteButton);
+
+            var sizerItem = new ToolStripMenuItem("Размер слова");
+            var linearSizer = new ToolStripMenuItem("Линейный");
+            linearSizer.Click += (sender, args) => {
+                this.sizeDefiner = new LinearSizer();
+                CheckOneItem(linearSizer, sizerItem);
+                if (image != null)
+                    GenerateImage(sender, args);
+            };
+            sizerItem.DropDownItems.Add(linearSizer);
+
+            var nSizer = new ToolStripMenuItem(".Net");
+            nSizer.Click += (sender, args) => {
+                this.sizeDefiner = new NWordSizer();
+                CheckOneItem(nSizer, sizerItem);
+                if (image != null)
+                    GenerateImage(sender, args);
+            };
+            sizerItem.DropDownItems.Add(nSizer);
+
+            var imageSettingsItems = new ToolStripMenuItem("Настройки");
+            imageSettingsItems.Click += (sender, args) =>
+            {
+                new SettingsForm<ImageSettings>(imageSettings).ShowDialog();
+                if (image != null)
+                    GenerateImage(sender, args);
+            };
+
+
+            mainMenu.Items.Add(fileItem);
+            mainMenu.Items.Add(algorithmItem);
+            mainMenu.Items.Add(settingItem);
+            mainMenu.Items.Add(sizerItem);
+            mainMenu.Items.Add(imageSettingsItems);
+        }
+
+        private void CheckOneItem(ToolStripMenuItem item, ToolStripMenuItem parent)
+        {
+            foreach (var parentDropDownItem in parent.DropDownItems)
+            {
+                ((ToolStripMenuItem) parentDropDownItem).Checked = false;
+            }
+
+            item.Checked = true;
+        }
+
+        private void SetMonochromePalette(object sender, EventArgs args)
+        {
+            if (!(wordPalette is MonochromePalette))
+                wordPalette = new MonochromePalette(Color.Black, Color.White);
+
+            new SettingsForm<IWordPalette>(wordPalette).ShowDialog();
+            if (image != null)
+                GenerateImage(sender, args);
+        }
+
+        private void SetGradientPalette(object sender, EventArgs args)
+        {
+            if (!(wordPalette is GradientPalette))
+                wordPalette = new GradientPalette(Color.Red, Color.Blue, Color.Black);
+
+            new SettingsForm<IWordPalette>(wordPalette).ShowDialog();
+            if (image != null)
+                GenerateImage(sender, args);
         }
 
         private void OpenFile(object sender, EventArgs args)
@@ -51,31 +145,22 @@ namespace TagsCloudVisualization
                 return;
             var path = dialog.FileName;
             words = counter.Count(fileReader.Read(path));
+
+            GenerateImage(sender, args);
         }
 
         private void GenerateImage(object sender, EventArgs args)
         {
-            if (words == null)
-            {
-                MessageBox.Show("No word file");
-                return;
-            }
-
-            cloudLayouter.Clear();
-            foreach (var word in words)
-                cloudLayouter.PutNextWord(word);
-
-            image = visualizer.Render(words, 600, 600);
+            layouter.Process(words, sizeDefiner, imageSettings.Center);
+            image = visualizer.Render(words, imageSettings.Size.Width, imageSettings.Size.Height, wordPalette);
+            Size = imageSettings.Size;
             Invalidate();
         }
 
         private void SaveFile(object sender, EventArgs args)
         {
             if (image == null)
-            {
-                MessageBox.Show("Generate image first");
                 return;
-            }
 
             var dialog = new SaveFileDialog();
             dialog.Filter = "BMP | *.bmp| PNG | *.png;";
@@ -88,7 +173,7 @@ namespace TagsCloudVisualization
         protected override void OnPaint(PaintEventArgs e)
         {
             if (image != null)
-                e.Graphics.DrawImage(image, new Point(0, 32));
+                e.Graphics.DrawImage(image, new Point(0, 0));
         }
     }
 }

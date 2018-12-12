@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace TagsCloudVisualization
@@ -17,10 +15,10 @@ namespace TagsCloudVisualization
 
         public static double GetMaxDistanceToRectangle(Point point, Rectangle rectangle)
         {
-            return GetVetexes(rectangle).Max(v => GetDistanceBetweenPoints(point, v));
+            return GetVertices(rectangle).Max(v => GetDistanceBetweenPoints(point, v));
         }
 
-        public static IEnumerable<Point> GetVetexes(Rectangle rectangle)
+        public static IEnumerable<Point> GetVertices(Rectangle rectangle)
         {
             yield return new Point(rectangle.Right, rectangle.Top);
             yield return new Point(rectangle.Right, rectangle.Bottom);
