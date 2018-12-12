@@ -9,31 +9,28 @@ namespace TagCloudContainer
     {
         private class Options
         {
-            [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
-            public bool Verbose { get; set; }
-
-            [Option('c', "count", Default = 20, HelpText = "Input count of tags in cloud.")]
+            [Option('c', "count", Default = 70, HelpText = "Count of tags in cloud.")]
             public int Count { get; set; }
 
-            [Option("font-name", Default = "Times New Roman", HelpText = "Input font name.")]
+            [Option("font-name", Default = "Times New Roman", HelpText = "Font name.")]
             public string FontName { get; set; }
 
-            [Option("font-size", Default = 40.0f, HelpText = "Input font size.")]
+            [Option("font-size", Default = 40.0f, HelpText = "Font size in pt.")]
             public float FontSize { get; set; }
 
-            [Option('n', "name", Default = "Cloud", HelpText = "Input file name.")]
+            [Option('n', "name", Default = "Cloud", HelpText = "File name.")]
             public string FileName { get; set; }
 
-            [Option("color", Default = "Black", HelpText = "Input color.")]
+            [Option("color", Default = "Black", HelpText = "Name of color.")]
             public string Color { get; set; }
 
-            [Option("back-color", Default = "White", HelpText = "Input background color.")]
+            [Option("back-color", Default = "White", HelpText = "Name of background color.")]
             public string BackgroundColor { get; set; }
 
-            [Option("out-path", HelpText = "Input path to directory to save image.")]
+            [Option("out-path", HelpText = "Path to output directory.")]
             public string OutPath { get; set; }
 
-            [Value(0, Required = true, HelpText = "Path to directory to save.")]
+            [Value(0, Required = true, HelpText = "Path to input file.")]
             public string PathToSave { get; set; }
             //ToDo Сделать вызов help с ключем -h
             //ToDo Сделать режимы работы (сохранение картинки, добавление слов в исключенные)
