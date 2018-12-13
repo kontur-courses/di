@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-
 namespace Extensions
 {
     public static class IEnumerableExtensions
@@ -20,22 +19,20 @@ namespace Extensions
             }
             return tmp;
         }
+
+        public static IEnumerable<TOut> ForAllPairs<TIn, TOut>(this IList<TIn> list, Func<TIn, TIn, TOut> func) =>
+            list.AllPairs().Select(x => func(x.Item1, x.Item2));
         
-        public static IEnumerable<TOut> ForAllPairs<TIn,TOut>(this IList<TIn> list, Func<TIn,TIn,TOut> func)
+        public static void ForAllPairs<TIn>(this IList<TIn> list, Action<TIn,TIn> func)=>
+            list.AllPairs().Foreach(x => func(x.Item1, x.Item2));
+        
+        public static IEnumerable<(TIn,TIn)> AllPairs<TIn>(this IList<TIn> list)
         {
             for (int i = 0; i < list.Count; i++)
             for (int j = 0; j < i; j++)
-                yield return func(list[i], list[j]);
+                yield return ValueTuple.Create(list[i], list[j]);
         }
-        
-        public static void ForAllPairs<TIn>(this IList<TIn> list, Action<TIn,TIn> func)
-        {
-            for (int i = 0; i < list.Count; i++)
-            for (int j = 0; j < i; j++)
-                func(list[i], list[j]);
-        }
-        
-        
+                
         public static void ForAllPairs<TIn>(this IEnumerable<TIn> enumerable, Action<TIn,TIn> func)
         {
             using (var enumerator = enumerable.GetEnumerator())

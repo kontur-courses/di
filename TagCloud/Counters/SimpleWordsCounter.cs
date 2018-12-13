@@ -15,8 +15,7 @@ namespace TagCloud
         {
             var words = text
                 .ToLower() //TODO get punctuation string
-                .Split(" \t\n\r.,?!:;".ToCharArray(),StringSplitOptions.RemoveEmptyEntries)
-                .ToArray();
+                .Split(" \t\n\r.,?!:;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in words)
                 if (countedWords.ContainsKey(word))
                     countedWords[word] += 1; //TODO make better
