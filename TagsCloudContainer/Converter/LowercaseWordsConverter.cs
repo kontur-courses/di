@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.Converter
 {
-    public class LowercaseConverter : IConverter
+    public class LowercaseWordsConverter : IWordsConverter
     {
         public IEnumerable<string> Convert(IEnumerable<string> words)
         {

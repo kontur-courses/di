@@ -115,8 +115,8 @@
     <Compile Include="Configuration\SimpleConfiguration.cs" />
     <Compile Include="Controller\ITagsCloudController.cs" />
     <Compile Include="Controller\TagsCloudController.cs" />
-    <Compile Include="Converter\IConverter.cs" />
-    <Compile Include="Converter\LowercaseConverter.cs" />
+    <Compile Include="Converter\IWordsConverter.cs" />
+    <Compile Include="Converter\LowercaseWordsConverter.cs" />
     <Compile Include="DataReader\IDataReader.cs" />
     <Compile Include="DataReader\FileReader.cs" />
     <Compile Include="Filter\BoringWordsFilter.cs" />

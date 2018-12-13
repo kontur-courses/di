@@ -6,7 +6,7 @@ namespace TagsCloudContainer.Preprocessor
 {
     public interface IPreprocessor
     {
-        IEnumerable<string> Process(IEnumerable<string> words,
-            IEnumerable<IConverter> converters, IEnumerable<IFilter> filters);
+        IEnumerable<string> PrepareWords(IEnumerable<string> words,
+            IEnumerable<IWordsConverter> converters, IEnumerable<IFilter> filters);
     }
 }

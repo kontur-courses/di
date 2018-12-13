@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Filter
             BoringWords = new HashSet<string>(fileReader.Read(configuration.BoringWordsFileName));
         }
 
-        public IEnumerable<string> Filtrate(IEnumerable<string> words)
+        public IEnumerable<string> FilterOut(IEnumerable<string> words)
         {
             return words.GroupBy(word => word)
                 .Where(group => !BoringWords.Contains(group.Key))

@@ -7,12 +7,12 @@ namespace TagsCloudContainer.Preprocessor
 {
     public class SimplePreprocessor : IPreprocessor
     {
-        public IEnumerable<string> Process(IEnumerable<string> words,
-            IEnumerable<IConverter> converters, IEnumerable<IFilter> filters)
+        public IEnumerable<string> PrepareWords(IEnumerable<string> words,
+            IEnumerable<IWordsConverter> converters, IEnumerable<IFilter> filters)
         {
             words = converters.Aggregate(words, (current, converter) => converter.Convert(current));
 
-            return filters.Aggregate(words, (current, filter) => filter.Filtrate(current));
+            return filters.Aggregate(words, (current, filter) => filter.FilterOut(current));
         }
     }
 }
