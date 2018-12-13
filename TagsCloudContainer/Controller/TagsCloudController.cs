@@ -43,7 +43,7 @@ namespace TagsCloudContainer.Controller
             var wordsFrequency = wordsCounter.GetWordsFrequency(preparedWords);
             var tags = tagsGenerator.GenerateTags(wordsFrequency);
             var image = visualizer.Visualize(tags);
-            imageWriter.Write(image, configuration.OutFileName, "png", configuration.DirectoryToSave);
+            imageWriter.Write(image, configuration.OutFileName, configuration.ImageFormat.ToString(), configuration.DirectoryToSave);
         }
     }
 }

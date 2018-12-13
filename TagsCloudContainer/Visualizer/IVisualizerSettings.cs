@@ -1,9 +1,13 @@
+using System.Drawing;
+using System.Drawing.Imaging;
+
 namespace TagsCloudContainer.Visualizer
 {
     public interface IVisualizerSettings
     {
-        string Color { get; }
+        Color Color { get; }
         int ImageWidth { get; }
         int ImageHeight { get; }
+        ImageFormat ImageFormat { get; }
     }
 }

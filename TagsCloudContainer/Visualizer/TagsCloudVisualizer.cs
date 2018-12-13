@@ -19,8 +19,7 @@ namespace TagsCloudContainer.Visualizer
 
         public byte[] Visualize(IEnumerable<ITag> tags)
         {
-            var color = Color.FromName(settings.Color);
-            var brush = new SolidBrush(color);
+            var brush = new SolidBrush(settings.Color);
 
             using (var bmp = new Bitmap(settings.ImageWidth, settings.ImageHeight))
             using (var g = Graphics.FromImage(bmp))
@@ -35,7 +34,7 @@ namespace TagsCloudContainer.Visualizer
                     g.DrawString(word.Value, word.Font, brush, wordPosition);
                 }
 
-                return bmp.ToByteArray();
+                return bmp.ToByteArray(settings.ImageFormat);
             }
         }
     }

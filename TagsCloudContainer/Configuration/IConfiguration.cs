@@ -1,3 +1,6 @@
+using System.Drawing;
+using System.Drawing.Imaging;
+
 namespace TagsCloudContainer.Configuration
 {
     public interface IConfiguration
@@ -5,12 +8,13 @@ namespace TagsCloudContainer.Configuration
         string PathToWordsFile { get; }
         string DirectoryToSave { get; }
         string OutFileName { get; }
-        string FontFamily { get; }
-        string Color { get; }
+        FontFamily FontFamily { get; }
+        Color Color { get; }
         int MinFontSize { get; }
         int MaxFontSize { get; }
         int ImageWidth { get; }
         int ImageHeight { get; }
+        ImageFormat ImageFormat { get; }
         int RotationAngle { get; }
         int CenterX { get; }
         int CenterY { get; }

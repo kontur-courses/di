@@ -6,11 +6,11 @@ namespace TagsCloudContainer.Visualizer
 {
     public static class TagsCloudVisualizerExtensions
     {
-        public static byte[] ToByteArray(this Bitmap image)
+        public static byte[] ToByteArray(this Bitmap image, ImageFormat imageFormat)
         {
             using (var memoryStream = new MemoryStream())
             {
-                image.Save(memoryStream, ImageFormat.Png);
+                image.Save(memoryStream, imageFormat);
 
                 return memoryStream.ToArray();
             }
