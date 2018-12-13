@@ -35,7 +35,7 @@ namespace ConsoleTagClouder
 
         private static void MakeCloud(AppSettings settings)
         {
-            var clouder = Clouder.Create(settings.BuildClouderSettings());
+            var clouder = CloudMaker.Create(settings.BuildClouderSettings());
             clouder.UpdateWith(File.ReadAllText(settings.SourcePath));
             using (var map = clouder.DrawCloud())
                 map.Save(settings.TargetPath,ImageFormat.Png);

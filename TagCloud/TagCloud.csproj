@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="ClouderSettings.cs" />
     <Compile Include="CloudDrawer.cs" />
-    <Compile Include="Clouder.cs" />
+    <Compile Include="CloudMaker.cs" />
     <Compile Include="Counters\IWordsCounter.cs" />
     <Compile Include="Counters\SimpleWordsCounter.cs" />
     <Compile Include="DrawingSettings.cs" />

@@ -7,7 +7,7 @@ using TagCloud.Layouters;
 namespace Tests
 {
     [TestFixture]
-    public class GuiParserShould_Should
+    public class GuiParser_Should
     {
         [TestCase("CircularCloudLayouter", typeof(CircularCloudLayouter))]
         [TestCase("CircularCloud", typeof(CircularCloudLayouter))]

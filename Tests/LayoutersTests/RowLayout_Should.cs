@@ -8,6 +8,9 @@ using TagsCloudVisualization.Extensions;
 
 namespace Tests.LayoutersTests
 {
+    
+    //Layouter Code
+    
     public class RowLayout_Should : LayouterTestsBase
     {
         private RowLayout layout;
