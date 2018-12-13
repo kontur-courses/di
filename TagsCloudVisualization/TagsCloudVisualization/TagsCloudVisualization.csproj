@@ -59,37 +59,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Infrastructure\Cloud\GradientPalette.cs" />
-    <Compile Include="App\Infrastructure\GraphicWord.cs" />
-    <Compile Include="App\Infrastructure\Cloud\ICloudLayouter.cs" />
-    <Compile Include="App\Infrastructure\Cloud\IFileReader.cs" />
-    <Compile Include="App\ImageSaver.cs" />
-    <Compile Include="App\Infrastructure\Cloud\CircularCloudLayouter.cs" />
-    <Compile Include="App\Infrastructure\Geometry.cs" />
-    <Compile Include="App\Infrastructure\Cloud\ImageSettings.cs" />
-    <Compile Include="App\Infrastructure\Cloud\ISizeDefiner.cs" />
-    <Compile Include="App\Infrastructure\Cloud\IVisualizer.cs" />
-    <Compile Include="App\Infrastructure\Cloud\IWordPalette.cs" />
+    <Compile Include="App\Cloud\Palette\GradientPalette.cs" />
+    <Compile Include="App\Cloud\Words\GraphicWord.cs" />
+    <Compile Include="App\Cloud\Layouters\ICloudLayouter.cs" />
+    <Compile Include="App\File workers\IFileReader.cs" />
+    <Compile Include="App\File workers\ImageSaver.cs" />
+    <Compile Include="App\Cloud\Layouters\CircularCloudLayouter.cs" />
+    <Compile Include="App\Common\Geometry.cs" />
+    <Compile Include="App\Cloud\Image\ImageSettings.cs" />
+    <Compile Include="App\Cloud\Words\ISizeDefiner.cs" />
+    <Compile Include="App\Cloud\Image\IVisualizer.cs" />
+    <Compile Include="App\Cloud\Palette\IWordPalette.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="App\Infrastructure\Cloud\NWordSizer.cs" />
+    <Compile Include="App\Cloud\Words\NWordSizer.cs" />
     <Compile Include="App\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="App\Infrastructure\Cloud\LinearSizer.cs" />
-    <Compile Include="App\Infrastructure\Cloud\MonochromePalette.cs" />
-    <Compile Include="App\Infrastructure\SettingsForm.cs">
+    <Compile Include="App\Cloud\Words\LinearSizer.cs" />
+    <Compile Include="App\Cloud\Palette\MonochromePalette.cs" />
+    <Compile Include="App\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="App\Infrastructure\Cloud\SpiralCloudLayouter.cs" />
-    <Compile Include="App\TxtReader.cs" />
-    <Compile Include="App\Visualizer.cs" />
-    <Compile Include="App\Infrastructure\Cloud\WordCounter.cs" />
+    <Compile Include="App\Cloud\Layouters\SpiralCloudLayouter.cs" />
+    <Compile Include="App\File workers\TxtReader.cs" />
+    <Compile Include="App\Cloud\Image\Visualizer.cs" />
+    <Compile Include="App\Cloud\Words\WordCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="ru.aff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ru.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Stopwords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
