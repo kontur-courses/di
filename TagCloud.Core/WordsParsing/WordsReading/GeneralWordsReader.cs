@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
+using System.Text.RegularExpressions;
 
-namespace TagCloud.Core.TextWorking.WordsReading
+namespace TagCloud.Core.WordsParsing.WordsReading
 {
     public class GeneralWordsReader : IWordsReader
     {
-        private readonly IWordsReaderForFile[] wordsReaders;
+        private readonly IWordsReader[] wordsReaders;
 
-        public GeneralWordsReader(IWordsReaderForFile[] wordsReaders)
+        public GeneralWordsReader(IWordsReader[] wordsReaders)
         {
             this.wordsReaders = wordsReaders;
+            AllowedFileExtension = new Regex(@".*$");
         }
 
         public IEnumerable<string> ReadFrom(string path)
         {
-            var suitedReader = wordsReaders.FirstOrDefault(
-                r => path.EndsWith(r.ReadingFileExtension, StringComparison.OrdinalIgnoreCase));
+            var suitedReader = wordsReaders.FirstOrDefault(r => r.AllowedFileExtension.Match(path).Success);
             if (suitedReader is null)
                 throw new ArgumentException($"Can't find WordsReader for file \"{path}\". Wrong extension");
             return suitedReader.ReadFrom(path);
         }
+
+        public Regex AllowedFileExtension { get; }
     }
 }

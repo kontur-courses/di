@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
-using TagCloud.Core.Util;
+using TagCloud.Core.Settings.Interfaces;
 
-namespace TagCloud.Core.Settings
+namespace TagCloud.Core.Settings.DefaultImplementations
 {
-    public class VisualizingSettings : ISettings
+    public class VisualizingSettings : IVisualizingSettings
     {
         public int Width { get; set; } = 800;
         public int Height { get; set; } = 600;
@@ -14,10 +13,5 @@ namespace TagCloud.Core.Settings
 
         public PointF CenterPoint => new PointF((float)Width / 2, (float)Height / 2);
         public Font DefaultFont => new Font(FontName, (MaxFontSize + MinFontSize) / 2);
-
-        public string GetSettingsName()
-        {
-            return "Visualizing settings";
-        }
     }
 }

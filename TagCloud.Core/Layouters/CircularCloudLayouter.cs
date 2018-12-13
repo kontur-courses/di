@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.Core.Settings;
+using TagCloud.Core.Settings.Interfaces;
 
 namespace TagCloud.Core.Layouters
 {
@@ -11,9 +11,9 @@ namespace TagCloud.Core.Layouters
         private PointF center;
         private readonly List<RectangleF> usedRectangles;
         private float angle;
-        private readonly LayoutingSettings settings;
+        private readonly ILayoutingSettings settings;
 
-        public CircularCloudLayouter(LayoutingSettings settings)
+        public CircularCloudLayouter(ILayoutingSettings settings)
         {
             this.settings = settings;
             center = new PointF(0, 0);

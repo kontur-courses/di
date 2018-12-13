@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Core.TextWorking.WordsProcessing;
-using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
 using TagCloud.Core.Util;
+using TagCloud.Core.WordsParsing.WordsProcessing;
+using TagCloud.Core.WordsParsing.WordsProcessing.WordsProcessingUtilities;
 
 namespace TagCloud.Tests.WordsProcessors
 {
@@ -17,7 +17,7 @@ namespace TagCloud.Tests.WordsProcessors
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            wordsProcessor = new SimpleWordsProcessor(new IProcessingUtility[0]);
+            wordsProcessor = new SimpleWordsProcessor(new IWordsProcessingUtility[0]);
         }
 
         [Test]

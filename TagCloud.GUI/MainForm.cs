@@ -2,16 +2,20 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TagCloud.Core.Settings;
+using TagCloud.Core.Settings.DefaultImplementations;
+using TagCloud.Core.Settings.Interfaces;
+using TagCloud.GUI.Extensions;
+using TagCloud.GUI.Settings;
 
 namespace TagCloud.GUI
 {
-    public partial class MainForm : Form
+    public class MainForm : Form
     {
         private readonly Core.TagCloud tagCloud;
-        private readonly TagCloudSettings tagCloudSettings;
+        private readonly ITagCloudSettings tagCloudSettings;
         private readonly PictureBox pictureBox;
 
-        public MainForm(ISettings[] settings, TagCloudSettings tagCloudSettings, Core.TagCloud tagCloud)
+        public MainForm(ISettings[] settings, ITagCloudSettings tagCloudSettings, Core.TagCloud tagCloud)
         {
             this.tagCloud = tagCloud;
             this.tagCloudSettings = tagCloudSettings;

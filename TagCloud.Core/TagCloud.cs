@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using TagCloud.Core.Settings;
-using TagCloud.Core.TextWorking;
+using TagCloud.Core.Settings.DefaultImplementations;
+using TagCloud.Core.Settings.Interfaces;
+using TagCloud.Core.TextParsing;
 using TagCloud.Core.Util;
 using TagCloud.Core.Visualizers;
 
@@ -9,13 +11,13 @@ namespace TagCloud.Core
 {
     public class TagCloud
     {
-        private readonly TextWorker textWorker;
+        private readonly WordsParser wordsParser;
         private readonly ITagCloudVisualizer visualizer;
-        private readonly TagCloudSettings settings;
+        private readonly ITagCloudSettings settings;
 
-        public TagCloud(TextWorker textWorker, ITagCloudVisualizer visualizer, TagCloudSettings settings)
+        public TagCloud(WordsParser wordsParser, ITagCloudVisualizer visualizer, ITagCloudSettings settings)
         {
-            this.textWorker = textWorker;
+            this.wordsParser = wordsParser;
             this.visualizer = visualizer;
             this.settings = settings;
         }
@@ -28,7 +30,7 @@ namespace TagCloud.Core
 
         public Bitmap MakeTagCloud()
         {
-            var tagStats = textWorker.GetTagStats(settings.PathToWords, settings.PathToBoringWords);
+            var tagStats = wordsParser.Parse(settings.PathToWords, settings.PathToBoringWords);
             return visualizer.Render(tagStats);
         }
 

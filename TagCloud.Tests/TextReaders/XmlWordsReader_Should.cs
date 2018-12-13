@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
+using TagCloud.Core.WordsParsing.WordsReading;
 
 namespace TagCloud.Tests.TextReaders
 {

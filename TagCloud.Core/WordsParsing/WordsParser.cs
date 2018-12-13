@@ -1,25 +1,25 @@
 ﻿using System.Collections.Generic;
-using TagCloud.Core.Settings;
-using TagCloud.Core.TextWorking.WordsProcessing;
-using TagCloud.Core.TextWorking.WordsReading;
+using TagCloud.Core.Settings.Interfaces;
 using TagCloud.Core.Util;
+using TagCloud.Core.WordsParsing.WordsProcessing;
+using TagCloud.Core.WordsParsing.WordsReading;
 
-namespace TagCloud.Core.TextWorking
+namespace TagCloud.Core.TextParsing
 {
-    public class TextWorker
+    public class WordsParser
     {
         private readonly IWordsReader wordsReader;
         private readonly IWordsProcessor wordsProcessor;
-        private readonly TextWorkingSettings settings;
+        private readonly ITextParsingSettings settings;
 
-        public TextWorker(IWordsReader wordsReader, IWordsProcessor wordsProcessor, TextWorkingSettings settings)
+        public WordsParser(IWordsReader wordsReader, IWordsProcessor wordsProcessor, ITextParsingSettings settings)
         {
             this.wordsReader = wordsReader;
             this.wordsProcessor = wordsProcessor;
             this.settings = settings;
         }
 
-        public IEnumerable<TagStat> GetTagStats(string pathToWords, string pathToBoringWords = null)
+        public IEnumerable<TagStat> Parse(string pathToWords, string pathToBoringWords = null)
         {
             var words = wordsReader.ReadFrom(pathToWords);
             var boringWords = pathToBoringWords == null

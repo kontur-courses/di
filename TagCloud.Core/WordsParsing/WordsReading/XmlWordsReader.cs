@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-namespace TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles
+namespace TagCloud.Core.WordsParsing.WordsReading
 {
-    public class XmlWordsReader : IWordsReaderForFile
+    public class XmlWordsReader : IWordsReader
     {
-        public string ReadingFileExtension { get; }
+        public Regex AllowedFileExtension { get; }
         private readonly XmlSerializer serializer;
 
         public XmlWordsReader()
         {
-            ReadingFileExtension = ".xml";
+            AllowedFileExtension = new Regex(@"\.xml$", RegexOptions.IgnoreCase);
             serializer = new XmlSerializer(typeof(string[]));
         }
 

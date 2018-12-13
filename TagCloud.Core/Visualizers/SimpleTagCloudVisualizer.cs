@@ -3,21 +3,21 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Core.Layouters;
 using TagCloud.Core.Painters;
-using TagCloud.Core.Settings;
+using TagCloud.Core.Settings.Interfaces;
 using TagCloud.Core.Util;
 
 namespace TagCloud.Core.Visualizers
 {
     public class SimpleTagCloudVisualizer : ITagCloudVisualizer
     {
-        private readonly VisualizingSettings settings;
+        private readonly IVisualizingSettings settings;
         private readonly ICloudLayouter layouter;
         private readonly IPainter painter;
 
         private Bitmap bitmap;
         private Graphics graphics;
 
-        public SimpleTagCloudVisualizer(VisualizingSettings settings, ICloudLayouter layouter, IPainter painter)
+        public SimpleTagCloudVisualizer(IVisualizingSettings settings, ICloudLayouter layouter, IPainter painter)
         {
             this.settings = settings;
             this.layouter = layouter;

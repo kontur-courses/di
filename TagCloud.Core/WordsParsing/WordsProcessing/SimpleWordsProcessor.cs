@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
 using TagCloud.Core.Util;
+using TagCloud.Core.WordsParsing.WordsProcessing.WordsProcessingUtilities;
 
-namespace TagCloud.Core.TextWorking.WordsProcessing
+namespace TagCloud.Core.WordsParsing.WordsProcessing
 {
     public class SimpleWordsProcessor : IWordsProcessor
     {
-        private readonly IProcessingUtility[] utilities;
+        private readonly IWordsProcessingUtility[] utilities;
 
-        public SimpleWordsProcessor(IProcessingUtility[] utilities)
+        public SimpleWordsProcessor(IWordsProcessingUtility[] utilities)
         {
             this.utilities = utilities;
         }
@@ -21,7 +21,7 @@ namespace TagCloud.Core.TextWorking.WordsProcessing
                 throw new ArgumentNullException(nameof(words));
 
             var wordsCounter = new Dictionary<string, int>();
-            var resWords = utilities.Aggregate(words, (current, processingUtility) => processingUtility.Handle(current));
+            var resWords = utilities.Aggregate(words, (current, processingUtility) => processingUtility.Process(current));
             foreach (var resWord in resWords)
             {
                 if (boringWords != null && boringWords.Contains(resWord))

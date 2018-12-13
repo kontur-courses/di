@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using TagCloud.Core.Settings;
+using TagCloud.GUI.Settings;
 
-namespace TagCloud.GUI
+namespace TagCloud.GUI.Extensions
 {
     public static class SettingsExtensions
     {

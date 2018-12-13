@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Autofac;
+using Autofac.Core;
+using System;
 using System.Windows.Forms;
-using Autofac;
 using TagCloud.Core.Layouters;
 using TagCloud.Core.Painters;
-using TagCloud.Core.Settings;
-using TagCloud.Core.TextWorking;
-using TagCloud.Core.TextWorking.WordsProcessing;
-using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
-using TagCloud.Core.TextWorking.WordsReading;
-using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
+using TagCloud.Core.Settings.Interfaces;
+using TagCloud.Core.TextParsing;
 using TagCloud.Core.Visualizers;
+using TagCloud.Core.WordsParsing.WordsProcessing;
+using TagCloud.Core.WordsParsing.WordsProcessing.WordsProcessingUtilities;
+using TagCloud.Core.WordsParsing.WordsReading;
+using TagCloud.GUI.Extensions;
+using TagCloud.GUI.Settings;
 
 namespace TagCloud.GUI
 {
@@ -35,22 +37,26 @@ namespace TagCloud.GUI
             builder.RegisterType<MainForm>().AsSelf();
 
             builder.RegisterType<Core.TagCloud>().AsSelf();
-            builder.RegisterSettings<TagCloudSettings>();
-
-            builder.RegisterType<TextWorker>().AsSelf();
-            builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
-            builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
-            builder.RegisterType<GeneralWordsReader>().As<IWordsReader>();
-            builder.RegisterType<LowerCaseUtility>().As<IProcessingUtility>();
+            builder.RegisterSettings<GuiTagCloudSettings>().As<ITagCloudSettings>();
+            
+            builder.RegisterType<TxtWordsReader>().As<IWordsReader>();
+            builder.RegisterType<XmlWordsReader>().As<IWordsReader>();
+            builder.RegisterType<GeneralWordsReader>();
+            builder.RegisterType<LowerCaseUtility>().As<IWordsProcessingUtility>();
             builder.RegisterType<SimpleWordsProcessor>().As<IWordsProcessor>();
-            builder.RegisterSettings<TextWorkingSettings>();
+            builder.RegisterSettings<GuiTextParsingSettings>().As<ITextParsingSettings>();
+            builder.RegisterType<WordsParser>()
+                   .WithParameter(new ResolvedParameter(
+                       (pi, ctx) => pi.ParameterType == typeof(IWordsReader),
+                       (pi, ctx) => ctx.Resolve<GeneralWordsReader>()))
+                   .AsSelf();
 
             builder.RegisterType<SimpleTagCloudVisualizer>().As<ITagCloudVisualizer>();
-            builder.RegisterSettings<VisualizingSettings>();
+            builder.RegisterSettings<GuiVisualizingSettings>().As<IVisualizingSettings>();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterSettings<LayoutingSettings>();
+            builder.RegisterSettings<GuiLayoutingSettings>().As<ILayoutingSettings>();
             builder.RegisterType<OneColorPainter>().As<IPainter>();
-            builder.RegisterSettings<PaintingSettings>();
+            builder.RegisterSettings<GuiPaintingSettings>().As<IPaintingSettings>();
         }
     }
 }

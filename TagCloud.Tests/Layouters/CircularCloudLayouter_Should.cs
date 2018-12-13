@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using TagCloud.Core.Layouters;
-using TagCloud.Core.Settings;
+using TagCloud.Core.Settings.DefaultImplementations;
 using TagCloud.Tests.Extensions;
 
 namespace TagCloud.Tests.Layouters

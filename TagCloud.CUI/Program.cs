@@ -1,14 +1,15 @@
 ﻿using Autofac;
+using Autofac.Core;
 using CommandLine;
 using TagCloud.Core.Layouters;
 using TagCloud.Core.Painters;
-using TagCloud.Core.Settings;
-using TagCloud.Core.TextWorking;
-using TagCloud.Core.TextWorking.WordsProcessing;
-using TagCloud.Core.TextWorking.WordsProcessing.ProcessingUtilities;
-using TagCloud.Core.TextWorking.WordsReading;
-using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
+using TagCloud.Core.Settings.DefaultImplementations;
+using TagCloud.Core.Settings.Interfaces;
+using TagCloud.Core.TextParsing;
 using TagCloud.Core.Visualizers;
+using TagCloud.Core.WordsParsing.WordsProcessing;
+using TagCloud.Core.WordsParsing.WordsProcessing.WordsProcessingUtilities;
+using TagCloud.Core.WordsParsing.WordsReading;
 
 namespace TagCloud.CUI
 {
@@ -18,54 +19,50 @@ namespace TagCloud.CUI
         {
             var builder = new ContainerBuilder();
             InjectDependencies(builder);
-            var container = builder.Build();
 
             if (args.Length == 0)
                 args = new[]
                 {
                     @"-p", @"test_words.txt",
-                    @"-b", @"boring_words.xml",
                     @"-i", @"result.bmp",
-                    @"--spiralstep", @"1"
+                    @"maxtagscount", @"10"
                 };
 
             Parser.Default
-                .ParseArguments<CommandLineOptions>(args)
-                .WithParsed(options =>
-                    {
-                        var textWorkingSettings = container.Resolve<TextWorkingSettings>();
-                        var paintingSettings = container.Resolve<PaintingSettings>();
-                        var visualizingSettings = container.Resolve<VisualizingSettings>();
-                        var layoutingSettings = container.Resolve<LayoutingSettings>();
-                        var tagCloudSettings = container.Resolve<TagCloudSettings>();
-                        options.UpdateSettings(textWorkingSettings, paintingSettings, visualizingSettings,
-                            layoutingSettings, tagCloudSettings);
-
-                        var tagCloud = container.Resolve<Core.TagCloud>();
-                        tagCloud.MakeTagCloudAndSave();
-                    }
+                .ParseArguments<Options>(args)
+                .WithParsed(options => builder.RegisterInstance(options)
+                    .As<IPaintingSettings>()
+                    .As<IVisualizingSettings>()
+                    .As<ITagCloudSettings>()
+                    .As<ITextParsingSettings>()
+                    .As<ILayoutingSettings>()
                 );
+
+
+            var container = builder.Build();
+            var tagCloud = container.Resolve<Core.TagCloud>();
+            tagCloud.MakeTagCloudAndSave();
         }
 
         static void InjectDependencies(ContainerBuilder builder)
         {
             builder.RegisterType<Core.TagCloud>().AsSelf();
-            builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
 
-            builder.RegisterType<TextWorker>().AsSelf();
-            builder.RegisterType<TxtWordsReader>().As<IWordsReaderForFile>();
-            builder.RegisterType<XmlWordsReader>().As<IWordsReaderForFile>();
-            builder.RegisterType<GeneralWordsReader>().As<IWordsReader>();
-            builder.RegisterType<LowerCaseUtility>().As<IProcessingUtility>();
+            builder.RegisterType<TxtWordsReader>().As<IWordsReader>();
+            builder.RegisterType<XmlWordsReader>().As<IWordsReader>();
+            builder.RegisterType<GeneralWordsReader>().AsSelf();
+            builder.RegisterType<LowerCaseUtility>().As<IWordsProcessingUtility>();
             builder.RegisterType<SimpleWordsProcessor>().As<IWordsProcessor>();
-            builder.RegisterType<TextWorkingSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<TextParsingSettings>().As<ITextParsingSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<WordsParser>()
+                .WithParameter(new ResolvedParameter(
+                    (pi, ctx) => pi.ParameterType == typeof(IWordsReader),
+                    (pi, ctx) => ctx.Resolve<GeneralWordsReader>()))
+                .AsSelf();
 
             builder.RegisterType<SimpleTagCloudVisualizer>().As<ITagCloudVisualizer>();
-            builder.RegisterType<VisualizingSettings>().AsSelf().SingleInstance();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterType<LayoutingSettings>().AsSelf().SingleInstance();
             builder.RegisterType<OneColorPainter>().As<IPainter>();
-            builder.RegisterType<PaintingSettings>().AsSelf().SingleInstance();
         }
     }
 }

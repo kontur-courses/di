@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
-namespace TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles
+namespace TagCloud.Core.WordsParsing.WordsReading
 {
-    public class TxtWordsReader : IWordsReaderForFile
+    public class TxtWordsReader : IWordsReader
     {
-        public string ReadingFileExtension { get; } = ".txt";
+        public Regex AllowedFileExtension { get; } = new Regex(@"\.txt$", RegexOptions.IgnoreCase);
 
         public IEnumerable<string> ReadFrom(string path)
         {

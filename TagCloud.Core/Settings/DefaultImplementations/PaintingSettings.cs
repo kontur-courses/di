@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using TagCloud.Core.Settings.Interfaces;
 
-namespace TagCloud.Core.Settings
+namespace TagCloud.Core.Settings.DefaultImplementations
 {
-    public class PaintingSettings : ISettings
+    public class PaintingSettings : IPaintingSettings
     {
         public PaintingSettings()
         {
@@ -21,11 +22,6 @@ namespace TagCloud.Core.Settings
                 tagColor = value;
                 TagBrush = new SolidBrush(value);
             }
-        }
-
-        public string GetSettingsName()
-        {
-            return "Painting settings";
         }
     }
 }

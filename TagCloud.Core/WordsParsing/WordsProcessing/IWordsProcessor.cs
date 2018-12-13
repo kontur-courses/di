@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagCloud.Core.Util;
 
-namespace TagCloud.Core.TextWorking.WordsProcessing
+namespace TagCloud.Core.WordsParsing.WordsProcessing
 {
     public interface IWordsProcessor
     {

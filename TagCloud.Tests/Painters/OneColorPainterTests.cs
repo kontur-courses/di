@@ -1,11 +1,10 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Drawing;
 using System.Linq;
-using NUnit.Framework;
-using FluentAssertions;
-using NUnit.Framework.Internal;
 using TagCloud.Core.Painters;
-using TagCloud.Core.Settings;
+using TagCloud.Core.Settings.DefaultImplementations;
 using TagCloud.Core.Util;
 
 namespace TagCloud.Tests.Painters

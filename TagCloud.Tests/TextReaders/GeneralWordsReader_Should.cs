@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using FakeItEasy;
 using NUnit.Framework;
-using TagCloud.Core.TextWorking.WordsReading;
-using TagCloud.Core.TextWorking.WordsReading.WordsReadersForFiles;
+using TagCloud.Core.WordsParsing.WordsReading;
 
 namespace TagCloud.Tests.TextReaders
 {
@@ -11,17 +11,17 @@ namespace TagCloud.Tests.TextReaders
     public class GeneralWordsReader_Should : AbstractWordsReader_Should<GeneralWordsReader>
     {
         private GeneralWordsReader generalWordsReader;
-        private IWordsReaderForFile ext1WordsReader;
-        private IWordsReaderForFile ext2WordsReader;
+        private IWordsReader ext1WordsReader;
+        private IWordsReader ext2WordsReader;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            ext1WordsReader = A.Fake<IWordsReaderForFile>();
-            A.CallTo(() => ext1WordsReader.ReadingFileExtension).Returns(".ext1");
+            ext1WordsReader = A.Fake<IWordsReader>();
+            A.CallTo(() => ext1WordsReader.AllowedFileExtension).Returns(new Regex(@"\.ext1$"));
 
-            ext2WordsReader = A.Fake<IWordsReaderForFile>();
-            A.CallTo(() => ext2WordsReader.ReadingFileExtension).Returns(".ext2");
+            ext2WordsReader = A.Fake<IWordsReader>();
+            A.CallTo(() => ext2WordsReader.AllowedFileExtension).Returns(new Regex(@".ext2$"));
 
             reader = new GeneralWordsReader(new[] {ext1WordsReader, ext2WordsReader});
             generalWordsReader = reader;

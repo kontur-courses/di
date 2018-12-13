@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using TagCloud.Core.TextWorking.WordsReading;
+using TagCloud.Core.WordsParsing.WordsReading;
 
 namespace TagCloud.Tests.TextReaders
 {
