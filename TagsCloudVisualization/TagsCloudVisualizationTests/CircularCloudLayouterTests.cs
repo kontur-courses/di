@@ -7,7 +7,6 @@ using FluentAssertions;
 using FluentAssertions.Common;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTests
@@ -26,7 +25,7 @@ namespace TagsCloudVisualizationTests
         {
             countedWords = new List<GraphicWord>();
             center = new Point(400, 400);
-            layouter = new CircularCloudLayouter(new LinearSizer(), center);
+            layouter = new CircularCloudLayouter(new LinearSizer());
             random = new Random(1);
         }
 
@@ -35,13 +34,10 @@ namespace TagsCloudVisualizationTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
-            var path = System.Reflection.Assembly.GetExecutingAssembly().Location +
-                       TestContext.CurrentContext.Test.Name + ".png";
-//var path = $"C:\\Users\\{Environment.UserName}\\Desktop\\{TestContext.CurrentContext.Test.Name}.png";
+
             var visualizer = new Visualizer();
             var image = visualizer.Render(countedWords, 800, 800, new MonochromePalette(Color.Black, Color.White));
-            ImageSaver.WriteToFile(path, image);
-            Console.WriteLine("Tag cloud visualization saved to file {0}.png", path);
+            ImageSaver.WriteToFile(TestContext.CurrentContext.Test.Name, image);
         }
 
         [TestCase(0, 0, 10, 6, Description = "Zero center")]
@@ -49,10 +45,9 @@ namespace TagsCloudVisualizationTests
         [TestCase(2, 2, 7, 3, Description = "Odd width and height")]
         public void PutFirstRectangle_InCenter(int x, int y, int width, int height)
         {
-            Assert.Fail();
-            var layouter = new CircularCloudLayouter(new LinearSizer(), new Point());
             var word = new GraphicWord("word");
-            //layouter.PutNextWord(word);
+            word.Rectangle = new Rectangle(x, y, width, height);
+            layouter.Process(new[] {word}, new LinearSizer(), center);
             word.Rectangle.Location
                 .IsSameOrEqualTo(new Point(x - width / 2, y - height / 2));
         }
@@ -113,8 +108,8 @@ namespace TagsCloudVisualizationTests
                 rawString.Append(" " + new string(chars[random.Next(chars.Length)], random.Next(minLength, maxLength)));
             }
 
-            countedWords = counter.Count(rawString.ToString());
-            layouter.Process(countedWords, new LinearSizer());
+            countedWords = counter.Count(false, rawString.ToString());
+            layouter.Process(countedWords, new LinearSizer(), center);
             return countedWords;
         }
     }

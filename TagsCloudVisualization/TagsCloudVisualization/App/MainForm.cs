@@ -16,6 +16,7 @@ namespace TagsCloudVisualization
         private List<GraphicWord> words;
         private WordCounter counter = new WordCounter();
         private ImageSettings imageSettings;
+        private string rawFile;
 
         public MainForm(IFileReader fileReader, IVisualizer visualizer, IWordPalette wordPalette, ISizeDefiner sizeDefiner, ImageSettings imageSettings, ICloudLayouter cloudLayouter)
         {
@@ -91,20 +92,34 @@ namespace TagsCloudVisualization
             };
             sizerItem.DropDownItems.Add(nSizer);
 
-            var imageSettingsItems = new ToolStripMenuItem("Настройки");
-            imageSettingsItems.Click += (sender, args) =>
+            var settingsItems = new ToolStripMenuItem("Настройки");
+            var imageSettingsButton = new ToolStripMenuItem("Размеры изображения");
+            imageSettingsButton.Click += (sender, args) =>
             {
                 new SettingsForm<ImageSettings>(imageSettings).ShowDialog();
                 if (image != null)
                     GenerateImage(sender, args);
             };
+            settingsItems.DropDownItems.Add(imageSettingsButton);
+
+            var fontSettingsButton = new ToolStripMenuItem("Шрифт");
+            fontSettingsButton.Click += (sender, args) =>
+            {
+                new SettingsForm<WordCounter>(counter).ShowDialog();
+                if (rawFile != null)
+                {
+                    words = counter.Count(true, rawFile);
+                    GenerateImage(sender, args);
+                }
+            };
+            settingsItems.DropDownItems.Add(fontSettingsButton);
 
 
             mainMenu.Items.Add(fileItem);
             mainMenu.Items.Add(algorithmItem);
             mainMenu.Items.Add(settingItem);
             mainMenu.Items.Add(sizerItem);
-            mainMenu.Items.Add(imageSettingsItems);
+            mainMenu.Items.Add(settingsItems);
         }
 
         private void CheckOneItem(ToolStripMenuItem item, ToolStripMenuItem parent)
@@ -144,7 +159,8 @@ namespace TagsCloudVisualization
             if (dialog.ShowDialog() == DialogResult.Cancel)
                 return;
             var path = dialog.FileName;
-            words = counter.Count(fileReader.Read(path));
+            rawFile = fileReader.Read(path);
+            words = counter.Count(true, rawFile);
 
             GenerateImage(sender, args);
         }
