@@ -37,14 +37,12 @@ namespace TagCloud
         [STAThread]
         public static void Main(string[] args)
         {
-            var exceptions = new StringBuilder();
-            var arguments = TryGetArguments(args, exceptions);
+            var output = new StringBuilder();
+            var arguments = TryGetArguments(args, output);
 
-            if (exceptions.Length > 0)
+            if (output.Length > 0)
             {
-                Console.WriteLine("One or more errors found:\n");
-                Console.WriteLine(exceptions);
-                Console.WriteLine(Help);
+                Console.WriteLine(output);
                 return;
             }
 
@@ -54,36 +52,57 @@ namespace TagCloud
             container.Resolve<TagCloudGenerator>().Generate(arguments);
         }
 
-        private static Arguments TryGetArguments(string[] args, StringBuilder exceptions)
+        private static Arguments TryGetArguments(string[] args, StringBuilder output)
         {
             var arguments = new Arguments();
 
             var parser = new FluentCommandLineParser();
-            parser.Setup<string>('w').Callback(file => arguments.WordsFileName = file).Required();
-            parser.Setup<string>('b').Callback(boring => arguments.BoringWordsFileName = boring).Required();
-            parser.Setup<string>('i').Callback(name => arguments.ImageFileName = name).Required();
-            parser.Setup<string>('c').Callback(color => arguments.WordsColorName = color);
-            parser.Setup<string>('g').Callback(color => arguments.BackgroundColorName = color);
-            parser.Setup<string>('f').Callback(font => arguments.FontFamilyName = font);
-            parser.Setup<int>('m').Callback(size => arguments.Multiplier = size);
-            parser.Setup<bool>('s').Callback(save => arguments.ToEnableClipboardSaver = true);
+            parser
+                .SetupHelp("h", "?", "help")
+                .Callback(str => output.Append(str))
+                .WithHeader("Program to create tag cloud. Options:");
+            parser
+                .Setup<string>('w')
+                .Callback(file => arguments.WordsFileName = file)
+                .WithDescription("Name of file with words");
+            parser
+                .Setup<string>('b')
+                .Callback(boring => arguments.BoringWordsFileName = boring)
+                .WithDescription("Name of file with boring words");
+            parser
+                .Setup<string>('i')
+                .Callback(name => arguments.ImageFileName = name)
+                .WithDescription("Name of result image (png, jpg, bmp)");
+            parser
+                .Setup<string>('c')
+                .Callback(color => arguments.WordsColorName = color)
+                .WithDescription("Words color");
+            parser
+                .Setup<string>('g')
+                .Callback(color => arguments.BackgroundColorName = color)
+                .WithDescription("Background color");
+            parser
+                .Setup<string>('f')
+                .Callback(font => arguments.FontFamilyName = font)
+                .WithDescription("Words font family");
+            parser
+                .Setup<int>('m')
+                .Callback(size => arguments.Multiplier = size)
+                .WithDescription("Words font size multiplier");
+            parser
+                .Setup<bool>('s')
+                .Callback(save => arguments.ToEnableClipboardSaver = true)
+                .WithDescription("Save image to clipboard");
 
-            var result = parser.Parse(args);
+            parser.Parse(args);
 
-            CheckArguments(result, arguments, exceptions);
+            CheckArguments(arguments, output);
 
             return arguments;
         }
 
-        private static void CheckArguments(ICommandLineParserResult result, Arguments arguments, StringBuilder exceptions)
+        private static void CheckArguments(Arguments arguments, StringBuilder exceptions)
         {
-            if (result.HasErrors)
-            {
-                var errors = result.ErrorText.Split(new[] {"\r\n"}, StringSplitOptions.None);
-                foreach (var error in errors)
-                    exceptions.AppendLine("\t" + error);
-            }
-
             CheckFile("Words", arguments.WordsFileName, exceptions);
             CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
 
@@ -96,25 +115,25 @@ namespace TagCloud
             CheckArgument(Fonts, "font", arguments.FontFamilyName, exceptions);
 
             if (arguments.Multiplier <= 0)
-                exceptions.AppendLine("\tFont size multiplier should be positive");
+                exceptions.AppendLine("Font size multiplier should be positive");
         }
 
-        private static void CheckFileExtension(ICollection<string> variants, string fileName, string formatName, StringBuilder exceptions)
+        private static void CheckFileExtension(ICollection<string> variants, string fileName, string formatName, StringBuilder output)
         {
             var format = Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
-            CheckArgument(variants, $"{formatName} format", format, exceptions);
+            CheckArgument(variants, $"{formatName} format", format, output);
         }
 
-        private static void CheckFile(string argumentName, string fileName, StringBuilder exceptions)
+        private static void CheckFile(string argumentName, string fileName, StringBuilder output)
         {
             if (!File.Exists(fileName))
-                exceptions.AppendLine($"\t{argumentName} file not found {fileName}");
+                output.AppendLine($"{argumentName} file not found {fileName}");
         }
 
-        private static void CheckArgument<T>(ICollection<T> variants, string argumentName, T argument, StringBuilder exceptions)
+        private static void CheckArgument<T>(ICollection<T> variants, string argumentName, T argument, StringBuilder output)
         {
             if (!variants.Contains(argument))
-                exceptions.AppendLine($"\tUnknown {argumentName} {argument}");
+                output.AppendLine($"Unknown {argumentName} {argument}");
         }
 
         public static void SetUpContainer(ContainerBuilder builder, Arguments arguments)

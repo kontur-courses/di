@@ -18,7 +18,8 @@ namespace TagCloud.Reader
         public IEnumerable<string> Read(string fileName)
         {
             var regex = new Regex("\\p{L}+");
-            var matches = regex.Matches(FormatReaders[fileName.Split('.')[1]](fileName));
+            var format = Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
+            var matches = regex.Matches(FormatReaders[format](fileName));
             foreach (Match match in matches)
                 yield return match.Value;
         }
