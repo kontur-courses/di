@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Cloud\Image\IImageSettings.cs" />
     <Compile Include="App\Cloud\Palette\GradientPalette.cs" />
     <Compile Include="App\Cloud\Words\GraphicWord.cs" />
     <Compile Include="App\Cloud\Layouters\ICloudLayouter.cs" />

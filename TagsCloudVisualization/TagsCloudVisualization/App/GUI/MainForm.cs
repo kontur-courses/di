@@ -15,10 +15,10 @@ namespace TagsCloudVisualization
         private ICloudLayouter layouter;
         private List<GraphicWord> words;
         private WordCounter counter = new WordCounter();
-        private ImageSettings imageSettings;
+        private IImageSettings imageSettings;
         private string rawFile;
 
-        public MainForm(IFileReader fileReader, IVisualizer visualizer, IWordPalette wordPalette, ISizeDefiner sizeDefiner, ImageSettings imageSettings, ICloudLayouter cloudLayouter)
+        public MainForm(IFileReader fileReader, IVisualizer visualizer, IWordPalette wordPalette, ISizeDefiner sizeDefiner, IImageSettings imageSettings, ICloudLayouter cloudLayouter)
         {
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -96,7 +96,7 @@ namespace TagsCloudVisualization
             var imageSettingsButton = new ToolStripMenuItem("Размеры изображения");
             imageSettingsButton.Click += (sender, args) =>
             {
-                new SettingsForm<ImageSettings>(imageSettings).ShowDialog();
+                new SettingsForm<IImageSettings>(imageSettings).ShowDialog();
                 if (image != null)
                     GenerateImage(sender, args);
             };
