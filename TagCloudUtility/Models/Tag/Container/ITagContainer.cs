@@ -6,5 +6,7 @@ namespace TagCloud.Utility.Models.Tag.Container
     {
         void Add(string name, FrequencyGroup frequencyGroup, int fontSize);
         void Remove(string groupName);
+
+        ITagGroup GetTagGroupFor(double frequencyCoef);
     }
 }

@@ -35,6 +35,13 @@ namespace TagCloud.Utility.Models.Tag.Container
                 tags.Remove(groupName);
         }
 
+        public ITagGroup GetTagGroupFor(double frequencyCoef)
+        {
+            return tags
+                .Values
+                .FirstOrDefault(group => group.Contains(frequencyCoef));
+        }
+
         public IEnumerator<(string, ITagGroup)> GetEnumerator()
         {
             return tags
