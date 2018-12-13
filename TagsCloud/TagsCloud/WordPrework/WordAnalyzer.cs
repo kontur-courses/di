@@ -38,12 +38,13 @@ namespace TagsCloud.WordPrework
         private readonly IEnumerable<string> words;
         private readonly Dictionary<string, int> WordsFrequency = new Dictionary<string, int>();
         private MyStem stemmer = new MyStem();
+        private char[] delimiters = new char[] {',','.',' ',':',';','(',')', '—', '–'};
 
         public WordAnalyzer(IWordsGetter wordsGetter,bool useInfinitiveForm = false)
         {
             stemmer.PathToMyStem = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "mystem.exe");
             stemmer.Parameters = "-i --format json";
-            words = wordsGetter.GetWords();
+            words = wordsGetter.GetWords(delimiters);
             foreach (var word in words)
             {
                 var wordForm = useInfinitiveForm ? GetInfinitiveForm(word) : word.ToLower();

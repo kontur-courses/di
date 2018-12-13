@@ -2,7 +2,7 @@
 
 namespace TagsCloud.TagsCloudVisualization
 {
-    interface ITagCloudLayouter
+    public interface ITagCloudLayouter
     {
         List<Tag> GetTags(Dictionary<string, int> wordFrequency);
     }

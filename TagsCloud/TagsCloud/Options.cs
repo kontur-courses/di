@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using CommandLine;
+using TagsCloud.TagsCloudVisualization;
+using TagsCloud.TagsCloudVisualization.ColorSchemes;
 using TagsCloud.WordPrework;
 
 namespace TagsCloud
@@ -15,7 +14,8 @@ namespace TagsCloud
         {
             Options result = new Options();
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(o => result = o);
+                .WithParsed(o => result = o)
+                .WithNotParsed(e => throw new ArgumentException("Wrong command line arguments"));
             return result;
         }
 
@@ -34,8 +34,8 @@ namespace TagsCloud
         [Option("bgcolor", Required = false, Default = "LightGray", HelpText = "Defines color of the background.")]
         public String BackgroundColor { get; set; }
 
-        [Option("fontcolor", Required = false, Default = "Blue", HelpText = "Defines color of the font.")]
-        public String FontColor { get; set; }
+        [Option("colorScheme", Required = false, Default = ColorScheme.Red, HelpText = "Defines color scheme of the font.")]
+        public ColorScheme ColorScheme { get; set; }
 
 
         [Option("boring", Required = false, Default = null, HelpText = "Defines boring parts of speech that will not be listed in result. " +
@@ -62,5 +62,9 @@ namespace TagsCloud
 
         [Option("maxFontSize", Required = false, Default = 100, HelpText = "Defines maximum font size.")]
         public int MaxFontSize { get; set; }
+
+        [Option("sizeDefiner", Required = false, Default = SizeDefiner.Frequency, HelpText = "Defines type of the size definer." +
+                                                                                             "Possible types are: Random, Frequency")]
+        public SizeDefiner SizeDefinerType { get; set; }
     }
 }

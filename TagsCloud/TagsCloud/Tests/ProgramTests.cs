@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using CommandLine;
 using FluentAssertions;
 using NUnit.Framework;
@@ -23,8 +24,9 @@ namespace TagsCloud.Tests
         private static List<Tag> GetTags(string[] args)
         {
             var options = Options.Parse(args);
-            var container = Program.BuildContainer(options);
-            return Program.GetTags(options, container);
+            var container = Ioc.Configure(options);
+            var app = container.Resolve<Application>();
+            return app.GetTags(options);
         }
 
         [Test]

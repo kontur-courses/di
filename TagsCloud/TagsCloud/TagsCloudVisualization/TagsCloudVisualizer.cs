@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using TagsCloud.CloudStructure;
+using TagsCloud.TagsCloudVisualization.ColorSchemes;
 
 namespace TagsCloud.TagsCloudVisualization
 {
@@ -13,20 +14,19 @@ namespace TagsCloud.TagsCloudVisualization
         public readonly Size PictureSize;
         public readonly string FontName;
         public readonly Color BackgroundColor;
-        public readonly Color FontColor;
+        public readonly IColorScheme ColorScheme;
 
-        public TagsCloudVisualizer(Size pictureSize, string fontName, Color backgroundColor, Color fontColor)
+        public TagsCloudVisualizer(Size pictureSize, string fontName, Color backgroundColor, IColorScheme colorScheme)
         {
             PictureSize = pictureSize;
             FontName = fontName;
             BackgroundColor = backgroundColor;
-            FontColor = fontColor;
+            ColorScheme = colorScheme;
         }
 
         public Bitmap GetCloudVisualization(List<Tag> tags)
         {
             var pictureRectangle = GetPictureRectangle(tags);
-            Brush brush = new SolidBrush(FontColor);
             var bitmap = new Bitmap(pictureRectangle.Width, pictureRectangle.Height);
             using (var graphics = Graphics.FromImage(bitmap))
             {
@@ -34,6 +34,7 @@ namespace TagsCloud.TagsCloudVisualization
                 graphics.TranslateTransform(-pictureRectangle.X, -pictureRectangle.Y);
                 foreach (var tag in tags)
                 {
+                    Brush brush = new SolidBrush(ColorScheme.DefineColor(tag.Frequency));
                     graphics.DrawString(tag.Word, new Font(FontName, tag.FontSize), brush, tag.PosRectangle.Location);
                     graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                 }

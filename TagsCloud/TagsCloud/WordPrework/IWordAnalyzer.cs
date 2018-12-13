@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloud.WordPrework
 {
-    interface IWordAnalyzer
+    public interface IWordAnalyzer
     {
         Dictionary<string, int> GetWordFrequency(HashSet<PartOfSpeech> boringPartsOfSpeech);
 

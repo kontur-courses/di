@@ -29,7 +29,7 @@ namespace TagsCloud.WordPrework
                     if (delimiters.Length == 0)
                         yield return line;
                     else
-                        foreach (var word in line.Split(delimiters))
+                        foreach (var word in line.Split(delimiters).Where(w => w!="" && w!=" "))
                             yield return word;
                 }
             }

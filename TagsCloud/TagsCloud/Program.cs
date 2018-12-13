@@ -17,60 +17,10 @@ namespace TagsCloud
     {
         public static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(RunOptions);
-        }
-
-        public static void RunOptions(Options options)
-        {
-            var container = BuildContainer(options);
-            var tags = GetTags(options, container);
-            DrawTagCloudAndSave(options, container, tags);
-        }
-
-        public static IContainer BuildContainer(Options options)
-        {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<FileReader>().As<IWordsGetter>().WithParameter("fileName", options.File);
-            builder.RegisterType<WordAnalyzer>().As<IWordAnalyzer>().WithParameter("useInfinitiveForm", options.Infinitive);
-
-            builder.RegisterType<SpiralPointGenerator>().As<IPointGenerator>().WithParameter("dAngle", options.DAngle);
-            builder.RegisterType<PointCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point()).SingleInstance(); ;
-
-            builder.RegisterType<TagCloudLayouter>().As<ITagCloudLayouter>().WithParameters(new List<Parameter>
-            {
-                new NamedParameter("fontFamily", new FontFamily(options.Font)),
-                new NamedParameter("minFontSize",options.MinFontSize),
-                new NamedParameter("maxFontSize", options.MaxFontSize)
-            });
-            builder.RegisterType<TagsCloudVisualizer>().As<ITagsCloudVisualizer>().WithParameters(new List<Parameter>
-            {
-                new NamedParameter("pictureSize", new Size(options.Width, options.Height)),
-                new NamedParameter("fontName", options.Font),
-                new NamedParameter("backgroundColor", Color.FromName(options.BackgroundColor)),
-                new NamedParameter("fontColor", Color.FromName(options.FontColor))
-            });
-            return builder.Build();
-        }
-
-        public static List<Tag> GetTags(Options options, IContainer container)
-        {
-            var wordAnalyzer = container.Resolve<IWordAnalyzer>();
-
-            var frequency = options.PartsToUse.Any()
-                ? wordAnalyzer.GetSpecificWordFrequency(options.PartsToUse)
-                : wordAnalyzer.GetWordFrequency(new HashSet<PartOfSpeech>(options.BoringParts));
-            return container.Resolve<ITagCloudLayouter>().GetTags(frequency);
-        }
-
-        public static void DrawTagCloudAndSave(Options options, IContainer container, List<Tag> tags)
-        {
-            var visualizer = container.Resolve<ITagsCloudVisualizer>();
-            var bitmap = visualizer.GetCloudVisualization(tags);
-            var name = Path.GetFileName(options.File);
-            var newName = Path.ChangeExtension(name, "jpg");
-            bitmap.Save(newName, ImageFormat.Jpeg);
+            var options = Options.Parse(args);
+            var container = Ioc.Configure(options);
+            var app = container.Resolve<Application>();
+            app.Run(options);
         }
     }
 }
