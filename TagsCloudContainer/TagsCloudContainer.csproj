@@ -127,7 +127,6 @@
     <Compile Include="Preprocessor\SimplePreprocessor.cs" />
     <Compile Include="TagFontSizeCalculator\ITagFontSizeCalculator.cs" />
     <Compile Include="TagFontSizeCalculator\LinearTagFontSizeCalculator.cs" />
-    <Compile Include="TagsCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visualizer\IVisualizer.cs" />
     <Compile Include="Visualizer\TagsCloudVisualizer.cs" />
