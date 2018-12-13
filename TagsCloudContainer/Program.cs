@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Reflection;
 using Autofac;
-using Autofac.Core;
-using FluentAssertions;
 using TagsCloudContainer.Visualisation;
-using NHunspell;
 using TagsCloudContainer.Filtering;
 using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
@@ -22,10 +19,13 @@ namespace TagsCloudContainer
         public static void Main(string[] args)
         {
             var containerBuilder = new ContainerBuilder();
+
+            var dataAccess = Assembly.GetExecutingAssembly();
+            containerBuilder.RegisterAssemblyTypes(dataAccess).AsImplementedInterfaces();
+
             containerBuilder.RegisterType<CLI>().As<IUI>().WithParameter("args", args).SingleInstance();
             containerBuilder.RegisterType<DocWordsReader>().As<IWordsReader>().SingleInstance();
 
-            containerBuilder.RegisterType<FormattersFactory>().As<IFormattersFactory>().SingleInstance();
             containerBuilder.RegisterType<FormattingSettings>().AsSelf()
                 .UsingConstructor(typeof(IUI), typeof(IFormattersFactory));
             containerBuilder.RegisterType<FormattingComponent>().AsSelf().SingleInstance()
@@ -33,13 +33,9 @@ namespace TagsCloudContainer
 
             containerBuilder.RegisterType<FilteringComponent>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(FilteringSettings));
-            containerBuilder.RegisterType<FiltersFactory>().As<IFiltersFactory>().SingleInstance();
             containerBuilder.RegisterType<FilteringSettings>().AsSelf()
                 .UsingConstructor(typeof(IUI), typeof(IFiltersFactory));
 
-
-            containerBuilder.RegisterType<ToInitFormFormatter>().As<IWordsFormatter>();
-            containerBuilder.RegisterType<FrequencyWordsSizer>().As<IWordsSizer>().SingleInstance();
 
             containerBuilder.RegisterType<TagsCloudGeneratorSettings>()
                 .UsingConstructor
@@ -49,7 +45,6 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(TagsCloudGeneratorSettings)).SingleInstance();
 
             containerBuilder.RegisterType<TagsCloudLayouterSettings>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<TagsCloudFactory>().As<ITagsCloudFactory>().SingleInstance();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>()
                 .UsingConstructor(typeof(TagsCloudLayouterSettings), typeof(ITagsCloudFactory)).SingleInstance();
 
@@ -58,6 +53,8 @@ namespace TagsCloudContainer
 
             containerBuilder.RegisterType<PngTagsCloudRenderer>().As<ITagsCloudRenderer>()
                 .UsingConstructor(typeof(ImageSettings)).SingleInstance();
+
+
             containerBuilder.RegisterType<TagsCloudContainerApplication>().AsSelf().SingleInstance();
             var containerApplication = containerBuilder.Build();
             var app = containerApplication.Resolve<TagsCloudContainerApplication>();

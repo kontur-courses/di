@@ -35,7 +35,6 @@ namespace TagsCloudContainer
             var words = reader.ReadWords(ui.InputPath);
             words = formattingComponent.FormatWords(words);
             words = filteringComponent.FilterWords(words);
-
             var cloud = generator.CreateCloud(words);
             renderer.RenderIntoFile(ui.OutputPath, cloud, true);
         }
