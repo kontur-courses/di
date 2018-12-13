@@ -130,6 +130,7 @@
     <Compile Include="FixedBoringWordsRemover.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="ITagCloudStatsGenerator.cs" />
+    <Compile Include="PartOfSpeech.cs" />
     <Compile Include="PrepositionRemover.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

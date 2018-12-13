@@ -37,18 +37,21 @@ namespace TagCloudVisualization
             width *= expandPercent / 100;
             height *= expandPercent / 100;
 
-            var image = new Bitmap(width, height);
-            var graphics = Graphics.FromImage(image);
-
-            foreach (var rectangle in rectangleList)
+            using (var image = new Bitmap(width, height))
             {
-                var imageCenter = new Point(width / 2, height / 2) - center;
-                rectangle.Offset(imageCenter);
-                graphics.DrawRectangle(new Pen(Color.LimeGreen, 5), rectangle);
-                graphics.FillRectangle(Brushes.White, rectangle);
-            }
+                using (var graphics = Graphics.FromImage(image))
+                {
+                    foreach (var rectangle in rectangleList)
+                    {
+                        var imageCenter = new Point(width / 2, height / 2) - center;
+                        rectangle.Offset(imageCenter);
+                        graphics.DrawRectangle(new Pen(Color.LimeGreen, 5), rectangle);
+                        graphics.FillRectangle(Brushes.White, rectangle);
+                    }
+                }
 
-            image.Save(path);
+                image.Save(path);
+            }
         }
     }
 }

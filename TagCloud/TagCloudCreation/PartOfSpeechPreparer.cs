@@ -8,17 +8,6 @@ namespace TagCloudCreation
 {
     public abstract class PartOfSpeechPreparer : IWordPreparer
     {
-        public enum PartOfSpeech
-        {
-            Verb,
-            Noun,
-            Adjective,
-            Modal,
-            Untagged,
-            Interjection,
-            Preposition
-        }
-
         private protected readonly MaxentTagger Tagger;
 
         private protected readonly Dictionary<string, PartOfSpeech> TagMapping = new Dictionary<string, PartOfSpeech>
