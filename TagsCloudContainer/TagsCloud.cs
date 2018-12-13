@@ -1,52 +1,54 @@
-﻿using System;
-using System.IO;
-using Autofac;
-using TagsCloudContainer.Interfaces;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Reflection;
+//using Autofac;
+//using TagsCloudContainer.CommandLineParser;
+//using TagsCloudContainer.Configuration;
+//using TagsCloudContainer.Converter;
+//using TagsCloudContainer.DataReader;
+//using TagsCloudContainer.Filter;
+//using TagsCloudContainer.ImageWriter;
+//using TagsCloudContainer.Preprocessor;
+//using TagsCloudContainer.TagsGenerator;
+//using TagsCloudContainer.Visualizer;
+//using TagsCloudContainer.WordsCounter;
+//
+//namespace TagsCloudContainer
+//{
+//    internal class TagsCloud
+//    {
+//        public static void Main(string[] args)
+//        {
+//            var configuration = new SimpleCommandLineParser().Parse(args);
+//
 
-namespace TagsCloudContainer
-{
-    internal class TagsCloud
-    {
-        public static void Main(string[] args)
-        {
-            var configuration = new SimpleCommandLineParser().Parse(args);
-
-            if (string.IsNullOrEmpty(configuration.PathToWordsFile)
-                || string.IsNullOrEmpty(configuration.DirectoryToSave)
-                || string.IsNullOrEmpty(configuration.OutFileName))
-                return;
-
-            var container = BuildContainer(configuration);
-
-            var visualizer = container.Resolve<IVisualizer>();
-
-            visualizer.Visualize();
-
-            Console.WriteLine("Visualization has been saved to " +
-                              Path.Combine(configuration.DirectoryToSave, configuration.OutFileName));
-
-            Console.ReadKey();
-        }
-
-        private static IContainer BuildContainer(SimpleConfiguration configuration)
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(configuration)
-                .As<IConfiguration>();
-            builder.RegisterType<SimpleWordsReader>()
-                .As<IWordsReader>();
-            builder.RegisterType<SimplePreprocessor>()
-                .As<IPreprocessor>();
-            builder.RegisterType<SimpleWordCounter>()
-                .As<IWordCounter>();
-            builder.RegisterType<WordsGenerator>()
-                .As<IWordsGenerator>();
-            builder.RegisterType<CircularCloudLayouter>()
-                .As<ICloudLayouter>();
-            builder.RegisterType<TagsCloudVisualizer>()
-                .As<IVisualizer>();
-
-            return builder.Build();
-        }
-    }
-}
+//
+//            var container = BuildContainer(configuration);
+//
+//            var wordReader = container.Resolve<IDataReader>();
+//            var words = wordReader.Read(configuration.PathToWordsFile);
+//
+//            var preprocessor = container.Resolve<IPreprocessor>();
+//            var converter = container.Resolve<IConverter>();
+//            var filter = new BoringWordsFilter(new HashSet<string> {"as", "the"});
+//            var preprocessedWords = preprocessor.Process(words,
+//                new[] {converter}, new[] {filter});
+//
+//            var wordsCounter = container.Resolve<IWordCounter>();
+//            var wordsFrequency = wordsCounter.GetWordsFrequency(preprocessedWords);
+//
+//            var tagsGenerator = container.Resolve<ITagsGenerator>();
+//            var tags = tagsGenerator.GenerateTags(wordsFrequency);
+//
+//            var visualizer = container.Resolve<IVisualizer>();
+//            var image = visualizer.Visualize(tags);
+//
+//            var imageWriter = container.Resolve<IImageWriter>();
+//            imageWriter.Write(image, configuration.OutFileName, "png", configuration.DirectoryToSave);
+//
+//
+//        }
+//
+//    }
+//}

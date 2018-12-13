@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using TagsCloudContainer.Configuration;
 
-namespace TagsCloudContainer.Interfaces
+namespace TagsCloudContainer.CommandLineParser
 {
     public interface ICommandLineParser<out TConfiguration> where TConfiguration : IConfiguration
     {

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CBF3D195-6D14-43AE-84DB-A75448B6F5F4}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TagsCloudContainer</RootNamespace>
     <AssemblyName>TagsCloudContainer</AssemblyName>
@@ -107,25 +107,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="Interfaces\ICloudLayouter.cs" />
-    <Compile Include="Interfaces\ICommandLineParser.cs" />
-    <Compile Include="Interfaces\IConfiguration.cs" />
-    <Compile Include="Interfaces\IPreprocessor.cs" />
-    <Compile Include="Interfaces\IVisualizer.cs" />
-    <Compile Include="Interfaces\IWord.cs" />
-    <Compile Include="Interfaces\IWordCounter.cs" />
-    <Compile Include="Interfaces\IWordsGenerator.cs" />
-    <Compile Include="Interfaces\IWordsReader.cs" />
-    <Compile Include="SimplePreprocessor.cs" />
-    <Compile Include="SimpleCommandLineParser.cs" />
-    <Compile Include="SimpleWordsReader.cs" />
+    <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouter\ICloudLayouter.cs" />
+    <Compile Include="CommandLineParser\ICommandLineParser.cs" />
+    <Compile Include="CommandLineParser\SimpleCommandLineParser.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\SimpleConfiguration.cs" />
+    <Compile Include="Controller\ITagsCloudController.cs" />
+    <Compile Include="Controller\TagsCloudController.cs" />
+    <Compile Include="Converter\IConverter.cs" />
+    <Compile Include="Converter\LowercaseConverter.cs" />
+    <Compile Include="DataReader\IDataReader.cs" />
+    <Compile Include="DataReader\FileReader.cs" />
+    <Compile Include="Filter\BoringWordsFilter.cs" />
+    <Compile Include="Filter\IFilter.cs" />
+    <Compile Include="ImageWriter\FileWriter.cs" />
+    <Compile Include="ImageWriter\IImageWriter.cs" />
+    <Compile Include="Preprocessor\IPreprocessor.cs" />
+    <Compile Include="Preprocessor\SimplePreprocessor.cs" />
+    <Compile Include="TagFontSizeCalculator\ITagFontSizeCalculator.cs" />
+    <Compile Include="TagFontSizeCalculator\LinearTagFontSizeCalculator.cs" />
     <Compile Include="TagsCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagsCloudVisualizer.cs" />
-    <Compile Include="WordsGenerator.cs" />
-    <Compile Include="Word.cs" />
-    <Compile Include="SimpleWordCounter.cs" />
+    <Compile Include="Visualizer\IVisualizer.cs" />
+    <Compile Include="Visualizer\TagsCloudVisualizer.cs" />
+    <Compile Include="TagsGenerator\ITagsGenerator.cs" />
+    <Compile Include="TagsGenerator\SimpleTagsGenerator.cs" />
+    <Compile Include="WordsCounter\IWordsCounter.cs" />
+    <Compile Include="WordsCounter\SimpleWordsCounter.cs" />
+    <Compile Include="Tag\ITag.cs" />
+    <Compile Include="Tag\SimpleTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,8 +1,8 @@
 using System.Drawing;
 
-namespace TagsCloudContainer.Interfaces
+namespace TagsCloudContainer.Tag
 {
-    public interface IWord
+    public interface ITag
     {
         string Value { get; }
         Font Font { get; }

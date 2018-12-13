@@ -1,4 +1,4 @@
-namespace TagsCloudContainer.Interfaces
+namespace TagsCloudContainer.Configuration
 {
     public interface IConfiguration
     {
@@ -7,11 +7,13 @@ namespace TagsCloudContainer.Interfaces
         string OutFileName { get; }
         string FontFamily { get; }
         string Color { get; }
-        int FontSize { get; }
+        int MinFontSize { get; }
+        int MaxFontSize { get; }
         int ImageWidth { get; }
         int ImageHeight { get; }
         int RotationAngle { get; }
         int CenterX { get; }
         int CenterY { get; }
+        string BoringWordsFileName { get; }
     }
 }

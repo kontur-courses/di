@@ -1,14 +1,13 @@
 using System.Drawing;
-using TagsCloudContainer.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Tag
 {
-    public class Word : IWord
+    public class SimpleTag : ITag
     {
         public string Value { get; }
         public Font Font { get; }
 
-        public Word(string value, Font font)
+        public SimpleTag(string value, Font font)
         {
             Value = value;
             Font = font;

@@ -2,22 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Configuration;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private PointF Center { get; set; }
+        private IConfiguration Configuration { get; }
+        private PointF? center;
+        private PointF Center => center ?? (PointF) (center = GetCenter(Configuration));
         private readonly List<RectangleF> placedRectangles = new List<RectangleF>();
         private const double ShiftOnSpiral = 0.01;
         private int rotationAngle;
-        private readonly int rotationAngleStep;
+        private int? rotationAngleStep;
+
+        private int RotationAngleStep =>
+            rotationAngleStep ?? (int) (rotationAngleStep = GetRotationAngleStep(Configuration));
 
         public CircularCloudLayouter(IConfiguration configuration)
         {
-            rotationAngleStep = configuration.RotationAngle < 1 ? 1 : configuration.RotationAngle;
-            Center = GetCenter(configuration);
+            Configuration = configuration;
         }
 
         private PointF GetCenter(IConfiguration configuration)
@@ -30,6 +34,11 @@ namespace TagsCloudContainer
 
             return new PointF(imageCenterByAbscissa + userCenterByAbscissa,
                 imageCenterByOrdinate + userCenterByOrdinate);
+        }
+
+        private int GetRotationAngleStep(IConfiguration configuration)
+        {
+            return configuration.RotationAngle < 1 ? 1 : configuration.RotationAngle;
         }
 
         public RectangleF PutNextRectangleF(SizeF rectangleSize)
@@ -56,7 +65,7 @@ namespace TagsCloudContainer
             var dx = Math.Cos(rotationAngle) * rotationAngle * ShiftOnSpiral;
             var dy = Math.Sin(rotationAngle) * rotationAngle * ShiftOnSpiral;
 
-            rotationAngle += rotationAngleStep;
+            rotationAngle += RotationAngleStep;
 
             var nextX = Center.X + (float) dx;
             var nextY = Center.Y + (float) dy;
