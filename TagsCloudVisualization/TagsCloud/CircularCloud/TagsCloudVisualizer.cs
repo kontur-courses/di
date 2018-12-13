@@ -1,24 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudVisualization.InterfacesForSettings;
 
 namespace TagsCloudVisualization.TagsCloud.CircularCloud
 {
     public class TagsCloudVisualizer
     {
-        private readonly TagsCloudSettings cloudSettings;
+        private readonly ITagsCloudSettings cloudSettings;
         private const double HeightStretchFactor = 1.5;
-        public TagsCloudVisualizer(TagsCloudSettings cloudSettings)
+        public TagsCloudVisualizer(ITagsCloudSettings cloudSettings)
         {
             this.cloudSettings = cloudSettings;
         }
         public Bitmap DrawCircularCloud()
         {
+            if (cloudSettings.WordsSettings.PathToFile == null)
+                throw new ArgumentException("No file with words specified.");
             var imageSettings = cloudSettings.ImageSettings;
             var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             var graphics = Graphics.FromImage(bmp);
-            var processedWords = ProcessWords(cloudSettings.FrequenciesByWords);
+            var wordFrequency = cloudSettings.WordsSettings.WordAnalyzer.MakeWordFrequencyDictionary();
+            var processedWords = ProcessWords(wordFrequency);
             var wordsColor = cloudSettings.Palette.WordsColor;
             var font = imageSettings.Font;
             const TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoClipping;

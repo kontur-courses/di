@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using TagsCloudVisualization.InterfacesForSettings;
 using TagsCloudVisualization.WordProcessing;
 
 namespace TagsCloudVisualization.TagsCloud
 {
-    public class TagsCloudSettings
+    public class TagsCloudSettings : ITagsCloudSettings
     {
-        public WordsSettings WordsSettings { get; set; }
-        public Dictionary<string, int> FrequenciesByWords { get; set; }
+        public IWordsSettings WordsSettings { get; set; }
         public Palette Palette { get; set; }
-        public ImageSettings ImageSettings { get; set; }
+        public IImageSettings ImageSettings { get; set; }
 
-        public TagsCloudSettings(WordsSettings wordsSettings, Palette palette, ImageSettings imageSettings)
+        public TagsCloudSettings(IWordsSettings wordsSettings, Palette palette, IImageSettings imageSettings)
         {
-            FrequenciesByWords = wordsSettings.WordAnalyzer.MakeWordFrequencyDictionary();
             WordsSettings = wordsSettings;
             Palette = palette;
             ImageSettings = imageSettings;

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloudVisualization.TagsCloud;
+using TagsCloudVisualization.InterfacesForSettings;
 
 namespace TagsCloudVisualization.App
 {
@@ -16,7 +16,7 @@ namespace TagsCloudVisualization.App
                 throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
         }
 
-        public void RecreateImage(TagsCloudSettings tagCloudSettings)
+        public void RecreateImage(ITagsCloudSettings tagCloudSettings)
         {
             var imageSize = tagCloudSettings.ImageSettings.ImageSize;
             Image = new Bitmap(imageSize.Width, imageSize.Height, PixelFormat.Format32bppArgb);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NHunspell;
+using TagsCloudVisualization.InterfacesForSettings;
 using TagsCloudVisualization.WordProcessing.FileHandlers;
 
 
@@ -9,10 +10,10 @@ namespace TagsCloudVisualization.WordProcessing
 {
     public class WordAnalyzer
     {
-        public WordsSettings WordsSettings { get; set; }
+        public IWordsSettings WordsSettings { get; set; }
         private readonly Hunspell hunspell;
 
-        public WordAnalyzer(WordsSettings wordsSettings)
+        public WordAnalyzer(IWordsSettings wordsSettings)
         {
             WordsSettings = wordsSettings;
             hunspell = new Hunspell($"{AppDomain.CurrentDomain.BaseDirectory}/RuDictionary/affRu.aff",

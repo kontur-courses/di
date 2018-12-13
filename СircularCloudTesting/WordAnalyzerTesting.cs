@@ -21,29 +21,13 @@ namespace СircularCloudTesting
             };
         }
 
-        [Test]
-        public void MakeWordFrequencyDictionary_Should_ProcessDocFileCorrectly()
+        [TestCase("testDocFile.doc", TestName = "File has an extension doc")]
+        [TestCase("testDocxFile.docx", TestName = "File has an extension docx")]
+        [TestCase("testTxtFile.txt", TestName = "File has an extension txt")]
+        public void MakeWordFrequencyDictionary_Should_ProcessFileCorrectly_When(string fileName)
         {
             var wordAnalyzer = new WordAnalyzer(new WordsSettings()
-                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testDocFile.doc" });
-            var result = wordAnalyzer.MakeWordFrequencyDictionary();
-            result.Should().BeEquivalentTo(expectedResult);
-        }
-
-        [Test]
-        public void MakeWordFrequencyDictionary_Should_ProcessDocxFileCorrectly()
-        {
-            var wordAnalyzer = new WordAnalyzer(new WordsSettings()
-                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testDocxFile.docx" });
-            var result = wordAnalyzer.MakeWordFrequencyDictionary();
-            result.Should().BeEquivalentTo(expectedResult);
-        }
-
-        [Test]
-        public void MakeWordFrequencyDictionary_Should_ProcessTxtFileCorrectly()
-        {
-            var wordAnalyzer = new WordAnalyzer(new WordsSettings()
-                { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testTxtFile.txt" });
+            { PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/" + fileName });
             var result = wordAnalyzer.MakeWordFrequencyDictionary();
             result.Should().BeEquivalentTo(expectedResult);
         }

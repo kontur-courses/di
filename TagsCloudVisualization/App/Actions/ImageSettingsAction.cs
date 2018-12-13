@@ -1,4 +1,5 @@
-﻿using TagsCloudVisualization.TagsCloud;
+﻿using TagsCloudVisualization.InterfacesForSettings;
+using TagsCloudVisualization.TagsCloud;
 
 namespace TagsCloudVisualization.App.Actions
 {
@@ -6,9 +7,9 @@ namespace TagsCloudVisualization.App.Actions
     {
         public string Name => "Настройки изображения";
         public string Category => "Настройки";
-        private readonly ImageSettings imageSettings;
+        private readonly IImageSettings imageSettings;
 
-        public ImageSettingsAction(ImageSettings imageSettings)
+        public ImageSettingsAction(IImageSettings imageSettings)
         {
             this.imageSettings = imageSettings;
         }

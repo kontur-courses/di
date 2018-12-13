@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using TagsCloudVisualization.InterfacesForSettings;
 using TagsCloudVisualization.TagsCloud;
 
 namespace TagsCloudVisualization.App.Actions
@@ -8,9 +9,9 @@ namespace TagsCloudVisualization.App.Actions
         public string Name => "Открыть";
 
         public string Category => "Файл";
-        private readonly TagsCloudSettings tagCloudSettings;
+        private readonly ITagsCloudSettings tagCloudSettings;
 
-        public OpenFileAction(TagsCloudSettings tagCloudSettings)
+        public OpenFileAction(ITagsCloudSettings tagCloudSettings)
         {
             this.tagCloudSettings = tagCloudSettings;
         }
@@ -25,8 +26,6 @@ namespace TagsCloudVisualization.App.Actions
             try
             {
                 tagCloudSettings.WordsSettings.PathToFile = dialog.FileName;
-                var dict = tagCloudSettings.WordsSettings.WordAnalyzer.MakeWordFrequencyDictionary();
-                tagCloudSettings.FrequenciesByWords = dict;
             }
             catch
             {

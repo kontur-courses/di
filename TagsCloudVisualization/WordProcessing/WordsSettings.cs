@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagsCloudVisualization.InterfacesForSettings;
 using TagsCloudVisualization.WordProcessing.FileHandlers;
 
 namespace TagsCloudVisualization.WordProcessing
 {
-    public class WordsSettings
+    public class WordsSettings : IWordsSettings
     {
         public string PathToFile { get; set; }
         public WordAnalyzer WordAnalyzer { get; set; }
@@ -15,7 +16,6 @@ namespace TagsCloudVisualization.WordProcessing
             var txtHandler =
                 new TxtFileHandler($"{AppDomain.CurrentDomain.BaseDirectory}/ProjectFiles/BoringWords.txt");
             BoringWords = new HashSet<string>(txtHandler.ReadFile());
-            PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/ProjectFiles/DefaultTags.txt";
             WordAnalyzer = new WordAnalyzer(this);
         }
     }

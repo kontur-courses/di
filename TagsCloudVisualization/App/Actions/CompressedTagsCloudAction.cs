@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using TagsCloudVisualization.TagsCloud;
 using TagsCloudVisualization.TagsCloud.CircularCloud;
 
 namespace TagsCloudVisualization.App.Actions

@@ -4,9 +4,9 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
+using TagsCloudVisualization.InterfacesForSettings;
 using TagsCloudVisualization.TagsCloud;
 using TagsCloudVisualization.TagsCloud.CircularCloud;
-using TagsCloudVisualization.WordProcessing;
 
 namespace СircularCloudTesting
 {
@@ -16,22 +16,22 @@ namespace СircularCloudTesting
 
         private IContainer container;
         private Palette palette;
-        private ImageSettings imageSettings;
-        private WordsSettings wordsSettings;
+        private IImageSettings imageSettings;
+        private IWordsSettings wordsSettings;
         private TagsCloudVisualizer visualizer;
 
         [SetUp]
         public void Init()
         {
-            container = Program.ContainerCreation().Build();
+            container = new DependencyBuilder().CreateContainer().Build();
             palette = container.Resolve<Palette>();
             palette.BackgroundColor = Color.White;
             palette.WordsColor = Color.Black;
-            imageSettings = container.Resolve<ImageSettings>();
+            imageSettings = container.Resolve<IImageSettings>();
             imageSettings.Center = new Point(100, 100);
             imageSettings.ImageSize = new Size(200, 200);
             imageSettings.Font = new Font("Times New Roman", 5, FontStyle.Regular, GraphicsUnit.Pixel);
-            wordsSettings = container.Resolve<WordsSettings>();
+            wordsSettings = container.Resolve<IWordsSettings>();
             wordsSettings.PathToFile = $"{AppDomain.CurrentDomain.BaseDirectory}/TestingFiles/testText.txt";
             visualizer = container.Resolve<TagsCloudVisualizer>();
 
@@ -60,7 +60,5 @@ namespace СircularCloudTesting
 
             result.Should().BeEquivalentTo(expectedResult);
         }
-
-
     }
 }
