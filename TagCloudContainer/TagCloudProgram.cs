@@ -43,7 +43,11 @@ namespace TagCloudContainer
             tagCloudVisualization.SaveTagCloud(
                 config.FileName,
                 config.OutPath,
-                GetFrequencyDictionary(words));
+                GetFrequencyDictionary(words)
+                    .OrderBy(x => x.Value)
+                    .Reverse()
+                    .Take(config.Count)
+                    .ToDictionary(x => x.Key, x => x.Value));
         }
 
         private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)

@@ -87,7 +87,8 @@ namespace TagsCloudVisualization
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
             //ToDo вынести из этого класса и убрать ICloudLayouter из конструктора
-            var wordsInCloud = new WordsCloudFiller(cloudLayouter, font).GetRectanglesForWordsInCloud(g, words);
+            var wordsInCloud = new WordsCloudFiller(cloudLayouter, font)
+                .GetRectanglesForWordsInCloud(g, words);
 
             g.FillRectangle(Brushes.White, 0, 0, bitmapWidth, bitmapHeight);
             DrawBackgroundEllipses(g, wordsInCloud.Select(w => w.Value.rectangle));

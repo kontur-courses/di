@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Authentication.ExtendedProtection;
 using Autofac;
 using Autofac.Core;
 using TagsCloudPreprocessor;
@@ -9,10 +10,11 @@ namespace TagCloudContainer
 {
     class Program
     {
-        private static IContainer container;
-
-        private static void InitContainer(Config config)
+        static void Main(string[] args)
         {
+            
+            var toExit = false;
+
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
@@ -24,7 +26,10 @@ namespace TagCloudContainer
             builder.RegisterType<WordsStemer>().Named<IPreprocessor>("WordsStemer");
 
             builder.RegisterType<ArchimedesSpiral>()
-                .WithParameter("center", config.Center)
+                .WithParameter(
+                    new ResolvedParameter(
+                        (pi, ctx) => pi.Name == "center",
+                        (pi, ctx) => ctx.Resolve<IUserInterface>().GetConfig(args, out toExit).Center))
                 .As<ISpiral>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
 
@@ -32,9 +37,15 @@ namespace TagCloudContainer
                 .WithParameters(
                     new[]
                     {
-                        new NamedParameter("font", config.Font),
-                        new NamedParameter("color", config.Color),
-                        new NamedParameter("backgroundColor", config.BackgroundColor),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "font",
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().GetConfig(args, out toExit).Font),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "color",
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().GetConfig(args, out toExit).Color),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "backgroundColor",
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().GetConfig(args, out toExit).BackgroundColor)
                     })
                 .As<ITagCloudVisualization>();
 
@@ -42,7 +53,9 @@ namespace TagCloudContainer
                 .WithParameters(
                     new Parameter[]
                     {
-                        new NamedParameter("config", config),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "config",
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().GetConfig(args, out toExit)),
                         new ResolvedParameter(
                             (pi, ctx) => pi.Name == "wordsExcluder",
                             (pi, ctx) => ctx.ResolveNamed<IPreprocessor>("WordsExcluder")),
@@ -51,19 +64,12 @@ namespace TagCloudContainer
                             (pi, ctx) => ctx.ResolveNamed<IPreprocessor>("WordsStemer")),
                     })
                 .AsSelf();
-
-            container = builder.Build();
-        }
-
-        static void Main(string[] args)
-        {
-            var client = new ConsoleClient();
-            var config = client.GetConfig(args, out var toExit);
+            
             if (toExit)
                 Environment.Exit(0);
-
-            InitContainer(config);
-
+            
+            var container = builder.Build();
+            
             container.Resolve<TagCloudProgram>().SaveTagCloud();
         }
     }
