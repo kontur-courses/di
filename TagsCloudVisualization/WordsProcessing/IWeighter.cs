@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.WordsProcessing
 {
     public interface IWeighter
     {
-        IEnumerable<WeightedWord> WeightWords();
+        IEnumerable<WeightedWord> WeightWords(IEnumerable<string> words);
     }
 }

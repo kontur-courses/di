@@ -1,9 +1,7 @@
-using System.Drawing;
-
 namespace TagsCloudVisualization.Visualizer
 {
-    public interface IVisualizer
+    public interface IVisualizer<out T>
     {
-        Bitmap Draw();
+        T Draw();
     }
 }

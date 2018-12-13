@@ -4,7 +4,6 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using TagsCloudVisualization.Layouter;
-using TagsCloudVisualization.Visualizer;
 using TagsCloudVisualization.WordsProcessing;
 
 namespace TagsCloudVisualization.Infrastructure
@@ -31,15 +30,21 @@ namespace TagsCloudVisualization.Infrastructure
         private IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-            
+
             builder.RegisterType<TxtReader>().Named<IWordsProvider>("wordsFile")
                 .WithParameter("filename", options.WordsFilename);
             builder.RegisterType<TxtReader>().Named<IWordsProvider>("boringWords")
-                .WithParameter("filename", "examples/boring_words.txt");
+                .WithParameter("filename", options.BoringWordsFile);
             builder.RegisterType<TextPreprocessor>().As<IWordsProvider>()
                 .WithParameter(ResolvedParameter.ForNamed<IWordsProvider>("wordsFile"));
             builder.RegisterType<BoringWordsFilter>().As<IFilter>()
                 .WithParameter(ResolvedParameter.ForNamed<IWordsProvider>("boringWords"));
+            builder.RegisterType<BaseFormConverter>().As<IWordsChanger>()
+                .WithParameters(new[]
+                {
+                    new NamedParameter("affFileName", options.DictFileNames.ElementAt(0)),
+                    new NamedParameter("dicFileName", options.DictFileNames.ElementAt(1)), 
+                });
 
             builder.RegisterType<Spiral>().As<Spiral>()
                 .WithParameters(new[]
@@ -58,6 +63,7 @@ namespace TagsCloudVisualization.Infrastructure
                 .Except<TxtReader>()
                 .Except<BoringWordsFilter>()
                 .Except<Spiral>()
+                .Except<BaseFormConverter>()
                 .AsImplementedInterfaces();
             return builder.Build();
         }

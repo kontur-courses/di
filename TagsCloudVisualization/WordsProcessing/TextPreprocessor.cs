@@ -6,20 +6,23 @@ namespace TagsCloudVisualization.WordsProcessing
     public class TextPreprocessor : IWordsProvider
     {
         private readonly IEnumerable<string> words;
-        private readonly IFilter wordsFilter;
-        private readonly IWordsChanger wordsChanger;
+        private readonly IFilter[] wordsFilters;
+        private readonly IWordsChanger[] wordsChangers;
 
 
-        public TextPreprocessor(IWordsProvider wordsProvider, IFilter wordsFilter, IWordsChanger wordsChanger)
+        public TextPreprocessor(IWordsProvider wordsProvider, IFilter[] wordsFilters, IWordsChanger[] wordsChangers)
         {
             words = wordsProvider.Provide();
-            this.wordsFilter = wordsFilter;
-            this.wordsChanger = wordsChanger;
+            this.wordsFilters = wordsFilters;
+            this.wordsChangers = wordsChangers;
         }
 
         public IEnumerable<string> Provide()
         {
-            return wordsFilter.FilterWords(words.Select(word => wordsChanger.ChangeWord(word)));
+            var filteredWords = wordsFilters.Aggregate(words, (curWords, filter) => filter.FilterWords(curWords));
+            var changedWords = wordsChangers
+                .Aggregate(filteredWords, (curWords, changer) => changer.ChangeWords(curWords));
+            return changedWords;
         }
     }
 }

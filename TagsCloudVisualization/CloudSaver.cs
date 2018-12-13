@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization
@@ -12,7 +7,7 @@ namespace TagsCloudVisualization
     {
         private readonly Bitmap bitmapFile;
 
-        public CloudSaver(IVisualizer visualizer)
+        public CloudSaver(IVisualizer<Bitmap> visualizer)
         {
             this.bitmapFile = visualizer.Draw();
         }

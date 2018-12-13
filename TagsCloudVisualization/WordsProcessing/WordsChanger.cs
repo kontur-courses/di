@@ -1,10 +1,13 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace TagsCloudVisualization.WordsProcessing
 {
     public class WordsChanger : IWordsChanger
     {
-        public string ChangeWord(string word)
+        public IEnumerable<string> ChangeWords(IEnumerable<string> words)
         {
-            return word.ToLower();
+            return words.Select(w => w.ToLower());
         }
     }
 }

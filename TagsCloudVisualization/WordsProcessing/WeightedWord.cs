@@ -2,7 +2,7 @@ using System;
 
 namespace TagsCloudVisualization.WordsProcessing
 {
-    public class WeightedWord : IComparable
+    public class WeightedWord : IComparable<WeightedWord>
     {
         public string Word { get; }
         public int Weight { get; }
@@ -13,13 +13,9 @@ namespace TagsCloudVisualization.WordsProcessing
             Weight = weight;
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(WeightedWord otherWeightedWord)
         {
-            if (obj == null) return 1;
-            if (obj is WeightedWord otherWeightedWord) 
-                return Weight.CompareTo(otherWeightedWord.Weight);
-            else
-                throw new ArgumentException("Object is not a WeightedWord");
+            return otherWeightedWord == null ? 1 : Weight.CompareTo(otherWeightedWord.Weight);
         }
     }
 }

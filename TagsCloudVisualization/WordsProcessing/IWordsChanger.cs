@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace TagsCloudVisualization.WordsProcessing
 {
     public interface IWordsChanger
     {
-        string ChangeWord(string word);
+        IEnumerable<string> ChangeWords(IEnumerable<string> words);
     }
 }

@@ -5,15 +5,9 @@ namespace TagsCloudVisualization.WordsProcessing
 {
     public class FrequencyWeighter : IWeighter
     {
-        private readonly IWordsProvider wordsProvider;
-        public FrequencyWeighter(IWordsProvider wordsProvider)
+        public IEnumerable<WeightedWord> WeightWords(IEnumerable<string> words)
         {
-            this.wordsProvider = wordsProvider;
-        }
-
-        public IEnumerable<WeightedWord> WeightWords()
-        {
-            return wordsProvider.Provide()
+            return words
                 .GroupBy(s => s)
                 .OrderByDescending(s => s.Count())
                 .Select(g => new WeightedWord(g.Key, g.Count()));
