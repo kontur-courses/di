@@ -111,8 +111,6 @@
     <Compile Include="CloudLayouter\CloudLayouterSettings.cs" />
     <Compile Include="CloudLayouter\ICloudLayouterSettings.cs" />
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
-    <Compile Include="CommandLineParser\ICommandLineParser.cs" />
-    <Compile Include="CommandLineParser\SimpleCommandLineParser.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\SimpleConfiguration.cs" />
     <Compile Include="Controller\ITagsCloudController.cs" />

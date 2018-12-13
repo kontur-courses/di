@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using CommandLine;
 using TagsCloudContainer.Configuration;
 
-namespace TagsCloudContainer.CommandLineParser
+namespace TagsCloudContainerCLI.CommandLineParser
 {
     public class SimpleCommandLineParser : ICommandLineParser<SimpleConfiguration>
     {

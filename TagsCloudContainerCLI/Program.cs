@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using Autofac;
-using TagsCloudContainer.CommandLineParser;
 using TagsCloudContainer.Configuration;
 using TagsCloudContainer.Controller;
 using TagsCloudContainer.DataReader;
+using TagsCloudContainerCLI.CommandLineParser;
 
 namespace TagsCloudContainerCLI
 {
