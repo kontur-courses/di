@@ -1,6 +1,6 @@
 # Tag cloud
 ## Available Parameters:
- -f, --file       Required. File with words to build tag cloud from.
+ *-f*, *--file*       Required. File with words to build tag cloud from.
 
  -w, --width      (Default: 1024) Defines width of the picture.
 
