@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using TagsCloudContainer.Filtering;
-using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Sizing;
+using TagsCloudContainer.TagsClouds;
 using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudGenerating
 {
     public class TagsCloudGenerator
     {

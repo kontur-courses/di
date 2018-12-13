@@ -1,6 +1,7 @@
 using TagsCloudContainer.Filtering;
 using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Reading;
+using TagsCloudContainer.TagsCloudGenerating;
 using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation;
 

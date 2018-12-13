@@ -11,6 +11,8 @@ using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Reading;
 using TagsCloudContainer.Sizing;
+using TagsCloudContainer.TagsCloudGenerating;
+using TagsCloudContainer.TagsClouds;
 using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
@@ -54,7 +56,7 @@ namespace TagsCloudContainer
 
             containerBuilder.RegisterType<ImageSettings>().AsSelf().UsingConstructor(typeof(IUI)).SingleInstance();
 
-            containerBuilder.RegisterType<PNGTagsCloudRenderer>().As<ITagsCloudRenderer>()
+            containerBuilder.RegisterType<PngTagsCloudRenderer>().As<ITagsCloudRenderer>()
                 .UsingConstructor(typeof(ImageSettings)).SingleInstance();
             containerBuilder.RegisterType<TagsCloudContainerApplication>().AsSelf().SingleInstance();
             var containerApplication = containerBuilder.Build();

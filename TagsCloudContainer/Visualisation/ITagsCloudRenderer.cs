@@ -1,3 +1,5 @@
+using TagsCloudContainer.TagsClouds;
+
 namespace TagsCloudContainer.Visualisation
 {
     public interface ITagsCloudRenderer

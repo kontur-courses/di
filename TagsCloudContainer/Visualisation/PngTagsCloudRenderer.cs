@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.TagsClouds;
 
 namespace TagsCloudContainer.Visualisation
 {
-    public class PNGTagsCloudRenderer : ITagsCloudRenderer
+    public class PngTagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly Size boundary = new Size(100, 100);
         private readonly FontFamily fontFamily;
         private readonly Color textColor;
         private readonly Size pictureSize;
 
-        public PNGTagsCloudRenderer(ImageSettings imageSettings)
+        public PngTagsCloudRenderer(ImageSettings imageSettings)
         {
             pictureSize = imageSettings.ImageSize;
             textColor = imageSettings.TextColor;
@@ -51,7 +52,8 @@ namespace TagsCloudContainer.Visualisation
         public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
-            var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles.ToList());
+            var shiftedRectangles =
+                ShiftRectanglesToMainQuarter(tagsCloud.AddedWords.Select(x => x.Rectangle).ToList());
             var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
             var tagCloudToDraw = new TagsCloud(tagsCloudWords);
             var pictureSize = GetPictureSize(tagCloudToDraw);

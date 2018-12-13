@@ -1,6 +1,4 @@
-using System.Drawing;
-
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsClouds
 {
     public interface ITagsCloudFactory
     {

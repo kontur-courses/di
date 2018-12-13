@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
+﻿using System.Collections.ObjectModel;
 using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsClouds
 {
     public interface ITagsCloud
     {
-        ReadOnlyCollection<Rectangle> AddedRectangles { get; }
         ReadOnlyCollection<TagsCloudWord> AddedWords { get; }
 
         void AddWord(TagsCloudWord word);
