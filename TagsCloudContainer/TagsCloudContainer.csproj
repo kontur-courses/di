@@ -132,6 +132,7 @@
     <Compile Include="Visualizer\TagsCloudVisualizer.cs" />
     <Compile Include="TagsGenerator\ITagsGenerator.cs" />
     <Compile Include="TagsGenerator\SimpleTagsGenerator.cs" />
+    <Compile Include="Visualizer\TagsCloudVisualizerExtensions.cs" />
     <Compile Include="WordsCounter\IWordsCounter.cs" />
     <Compile Include="WordsCounter\SimpleWordsCounter.cs" />
     <Compile Include="Tag\ITag.cs" />
