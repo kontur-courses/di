@@ -1,4 +1,5 @@
 using TagsCloudContainer.TagsClouds;
+using TagsCloudContainer.Visualisation.Coloring;
 
 namespace TagsCloudContainer.Visualisation
 {

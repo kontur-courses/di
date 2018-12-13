@@ -1,5 +1,6 @@
 using System.Drawing;
 using TagsCloudContainer.UI;
+using TagsCloudContainer.Visualisation.Coloring;
 
 namespace TagsCloudContainer.Visualisation
 {

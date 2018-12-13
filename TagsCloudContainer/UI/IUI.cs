@@ -13,6 +13,5 @@ namespace TagsCloudContainer.UI
         Size LetterSize { get; }
         Size ImageSize { get; }
         Color TextColor { get; }
-        List<Color> PartsOfSpeechColors { get; }
     }
 }

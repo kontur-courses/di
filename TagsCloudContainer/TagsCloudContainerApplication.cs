@@ -5,6 +5,7 @@ using TagsCloudContainer.Reading;
 using TagsCloudContainer.TagsCloudGenerating;
 using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation;
+using TagsCloudContainer.Visualisation.Coloring;
 
 namespace TagsCloudContainer
 {

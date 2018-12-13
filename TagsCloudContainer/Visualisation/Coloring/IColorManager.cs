@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.Visualisation
+namespace TagsCloudContainer.Visualisation.Coloring
 {
     public interface IColorManager
     {
