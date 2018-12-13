@@ -2,43 +2,42 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Configuration;
 
 namespace TagsCloudContainer.CloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private IConfiguration Configuration { get; }
+        private ICloudLayouterSettings Settings { get; }
         private PointF? center;
-        private PointF Center => center ?? (PointF) (center = GetCenter(Configuration));
+        private PointF Center => center ?? (PointF) (center = GetCenter(Settings));
         private readonly List<RectangleF> placedRectangles = new List<RectangleF>();
         private const double ShiftOnSpiral = 0.01;
         private int rotationAngle;
         private int? rotationAngleStep;
 
         private int RotationAngleStep =>
-            rotationAngleStep ?? (int) (rotationAngleStep = GetRotationAngleStep(Configuration));
+            rotationAngleStep ?? (int) (rotationAngleStep = GetRotationAngleStep(Settings));
 
-        public CircularCloudLayouter(IConfiguration configuration)
+        public CircularCloudLayouter(ICloudLayouterSettings settings)
         {
-            Configuration = configuration;
+            Settings = settings;
         }
 
-        private PointF GetCenter(IConfiguration configuration)
+        private PointF GetCenter(ICloudLayouterSettings settings)
         {
-            var imageCenterByAbscissa = configuration.ImageWidth / 2;
-            var imageCenterByOrdinate = configuration.ImageHeight / 2;
+            var imageCenterByAbscissa = settings.ImageWidth / 2;
+            var imageCenterByOrdinate = settings.ImageHeight / 2;
 
-            var userCenterByAbscissa = configuration.CenterX;
-            var userCenterByOrdinate = configuration.CenterY;
+            var userCenterByAbscissa = settings.CenterX;
+            var userCenterByOrdinate = settings.CenterY;
 
             return new PointF(imageCenterByAbscissa + userCenterByAbscissa,
                 imageCenterByOrdinate + userCenterByOrdinate);
         }
 
-        private int GetRotationAngleStep(IConfiguration configuration)
+        private int GetRotationAngleStep(ICloudLayouterSettings settings)
         {
-            return configuration.RotationAngle < 1 ? 1 : configuration.RotationAngle;
+            return settings.RotationAngle < 1 ? 1 : settings.RotationAngle;
         }
 
         public RectangleF PutNextRectangleF(SizeF rectangleSize)

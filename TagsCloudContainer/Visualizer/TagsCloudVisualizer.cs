@@ -1,31 +1,28 @@
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Text;
-using System.IO;
 using TagsCloudContainer.CloudLayouter;
-using TagsCloudContainer.Configuration;
 using TagsCloudContainer.Tag;
 
 namespace TagsCloudContainer.Visualizer
 {
     public class TagsCloudVisualizer : IVisualizer
     {
-        private IConfiguration Configuration { get; }
+        private IVisualizerSettings Settings { get; }
         private ICloudLayouter Layouter { get; }
 
-        public TagsCloudVisualizer(IConfiguration configuration, ICloudLayouter layouter)
+        public TagsCloudVisualizer(IVisualizerSettings settings, ICloudLayouter layouter)
         {
-            Configuration = configuration;
+            Settings = settings;
             Layouter = layouter;
         }
 
         public byte[] Visualize(IEnumerable<ITag> tags)
         {
-            var color = Color.FromName(Configuration.Color);
+            var color = Color.FromName(Settings.Color);
             var brush = new SolidBrush(color);
 
-            using (var bmp = new Bitmap(Configuration.ImageWidth, Configuration.ImageHeight))
+            using (var bmp = new Bitmap(Settings.ImageWidth, Settings.ImageHeight))
             using (var g = Graphics.FromImage(bmp))
             {
                 g.TextRenderingHint = TextRenderingHint.AntiAlias;

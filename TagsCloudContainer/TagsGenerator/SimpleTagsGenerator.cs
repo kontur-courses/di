@@ -9,12 +9,12 @@ namespace TagsCloudContainer.TagsGenerator
 {
     public class SimpleTagsGenerator : ITagsGenerator
     {
-        private IConfiguration Configuration { get; }
+        private ITagsGeneratorSettings Settings { get; }
         private ITagFontSizeCalculator FontSizeCalculator { get; }
 
-        public SimpleTagsGenerator(IConfiguration configuration, ITagFontSizeCalculator fontSizeCalculator)
+        public SimpleTagsGenerator(ITagsGeneratorSettings settings, ITagFontSizeCalculator fontSizeCalculator)
         {
-            Configuration = configuration;
+            Settings = settings;
             FontSizeCalculator = fontSizeCalculator;
         }
 
@@ -27,7 +27,7 @@ namespace TagsCloudContainer.TagsGenerator
 
         private Font GetFont(IDictionary<string, int> wordsFrequency, string word)
         {
-            var fontFamily = Configuration.FontFamily;
+            var fontFamily = Settings.FontFamily;
 
             var maxCount = wordsFrequency.Values.Max();
             var fontSize = FontSizeCalculator.Calculate(wordsFrequency[word], maxCount);

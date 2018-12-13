@@ -9,9 +9,9 @@ namespace TagsCloudContainer.Filter
     {
         private HashSet<string> BoringWords { get; }
 
-        public BoringWordsFilter(IConfiguration configuration, IDataReader fileReader)
+        public BoringWordsFilter(IBoringWordsFilterSettings settings, IDataReader fileReader)
         {
-            BoringWords = new HashSet<string>(fileReader.Read(configuration.BoringWordsFileName));
+            BoringWords = new HashSet<string>(fileReader.Read(settings.BoringWordsFileName));
         }
 
         public IEnumerable<string> FilterOut(IEnumerable<string> words)
