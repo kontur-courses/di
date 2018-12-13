@@ -6,14 +6,12 @@ namespace TagsCloudPreprocessor
     public class Preprocessor:IPreprocessor
     {
         private readonly IWordsValidator wordsValidator;
-        private readonly IReader reader;
         private readonly ITextParser parser;
         private readonly IFileReader fileReader;
 
-        public Preprocessor(IWordsValidator wordsValidator, IReader reader, ITextParser parser, IFileReader fileReader)
+        public Preprocessor(IWordsValidator wordsValidator, ITextParser parser, IFileReader fileReader)
         {
             this.wordsValidator = wordsValidator;
-            this.reader = reader;
             this.parser = parser;
             this.fileReader = fileReader;
         }
@@ -22,8 +20,7 @@ namespace TagsCloudPreprocessor
         {
             var words = wordsValidator.GetValidWords(
                 parser.GetWords(
-                    reader.GetTextFromRawFormat(
-                        fileReader.ReadFromFile(path))));
+                        fileReader.ReadFromFile(path)));
             
             return GetFrequencyDictionary(words)
                 .OrderBy(pair => pair.Value)
