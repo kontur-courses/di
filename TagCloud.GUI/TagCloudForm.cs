@@ -22,11 +22,11 @@ namespace TagCloud.GUI
 
         private void SetUp()
         {
-            CollectInfo();
             XBox.Text = options.Size.Split('x').First();
             YBox.Text = options.Size.Split('x').Last();
             Format.Items.AddRange(Enum.GetNames(typeof(DrawFormat)));
-            Format.SetSelected((int) options.DrawFormat, true);
+            Format.SetSelected((int)options.DrawFormat, true);
+            CollectInfo();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -52,42 +52,45 @@ namespace TagCloud.GUI
 
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fileDialog = new SaveFileDialog
+            using (var fileDialog = new SaveFileDialog
             {
                 Filter = @"Images|*.jpg;*.bmp;*.gif;*.png",
                 Title = Resources.TagCloudForm_SaveImage
-            };
-            if (fileDialog.ShowDialog() != DialogResult.OK)
-                return;
-            options.PathToPicture = fileDialog.FileName;
+            })
+            {
+                if (fileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+                options.PathToPicture = fileDialog.FileName;
+            }
+
             CollectInfo();
         }
 
         private void ChangeFontColorButton_Click(object sender, EventArgs e)
         {
-            var colorDialog = new ColorDialog
+            using (var colorDialog = new ColorDialog
             {
                 AllowFullOpen = false,
                 ShowHelp = true,
                 SolidColorOnly = true,
                 FullOpen = false,
                 Color = ColorTranslator.FromHtml(options.Brush)
-            };
+            })
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                    options.Brush = ColorTranslator.ToHtml(colorDialog.Color);
 
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-                options.Brush = ColorTranslator.ToHtml(colorDialog.Color);
             CollectInfo();
         }
 
         private void Format_SelectedIndexChanged(object sender, EventArgs e)
         {
-            options.DrawFormat = (DrawFormat)Format.SelectedIndex;   
+            options.DrawFormat = (DrawFormat)Format.SelectedIndex;
         }
 
         private void ChangeFontButton_Click(object sender, EventArgs e)
         {
             var converter = new FontConverter();
-            var fontDialog = new FontDialog
+            using (var fontDialog = new FontDialog
             {
                 ShowHelp = true,
                 MaxSize = 1,
@@ -96,10 +99,10 @@ namespace TagCloud.GUI
                 ShowEffects = false,
                 ShowApply = false,
                 Font = converter.ConvertFrom(options.Font) as Font
-            };
+            })
+                if (fontDialog.ShowDialog() == DialogResult.OK)
+                    options.Font = converter.ConvertToString(fontDialog.Font);
 
-            if (fontDialog.ShowDialog() == DialogResult.OK)
-                options.Font = converter.ConvertToString(fontDialog.Font);
             CollectInfo();
         }
 
@@ -141,7 +144,7 @@ namespace TagCloud.GUI
                 while (exception.InnerException != null)
                     exception = exception.InnerException;
                 Output.Text = "ERROR: " + exception.Message;
-            }          
+            }
         }
 
         private void CollectInfo()
@@ -160,7 +163,8 @@ namespace TagCloud.GUI
 
         private string GetLine(string name, string value)
         {
-            if (value == null) return null;
+            if (value == null)
+                return null;
             return $"{name.ToUpper()}:" + Environment.NewLine
                    + value + Environment.NewLine
                    + Environment.NewLine;
@@ -173,11 +177,10 @@ namespace TagCloud.GUI
                 Filter = @"Text|*.txt;*.ini",
                 Title = Resources.TagCloudForm_AddStopwords
             })
-            {
                 options.PathToStopWords = selectFileDialog.ShowDialog() == DialogResult.OK
-                    ? selectFileDialog.FileName 
+                    ? selectFileDialog.FileName
                     : null;
-            }
+
             CollectInfo();
         }
 
@@ -188,27 +191,26 @@ namespace TagCloud.GUI
                 Filter = @"Text|*.txt;*.ini",
                 Title = Resources.TagCloudForm_SetTagsFile
             })
-            {
-                options.PathToTags = selectFileDialog.ShowDialog() != DialogResult.OK 
-                    ? selectFileDialog.FileName 
+                options.PathToTags = selectFileDialog.ShowDialog() == DialogResult.OK
+                    ? selectFileDialog.FileName
                     : null;
-            }
+
             CollectInfo();
         }
 
         private void ChangeBackgroundColorButton_Click(object sender, EventArgs e)
         {
-            var colorDialog = new ColorDialog
+            using (var colorDialog = new ColorDialog
             {
                 AllowFullOpen = false,
                 ShowHelp = true,
                 SolidColorOnly = true,
                 FullOpen = false,
                 Color = ColorTranslator.FromHtml(options.Color)
-            };
+            })
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                    options.Color = ColorTranslator.ToHtml(colorDialog.Color);
 
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-                options.Color = ColorTranslator.ToHtml(colorDialog.Color);
             CollectInfo();
         }
     }
