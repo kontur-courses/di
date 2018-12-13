@@ -43,5 +43,13 @@ namespace TagsCloudVisualization_Tests.WordProcessing
             var expected = Array.Empty<string>();
             filter.FilterWords(words).Should().BeEquivalentTo(expected);
         }
+
+        [Test]
+        public void FilterWordsCorrectly_WhenMultipleBoringWords()
+        {
+            var words = new[] { "a", "a", "a", "d" };
+            var expected = new[] {"d"};
+            filter.FilterWords(words).Should().BeEquivalentTo(expected);
+        }
     }
 }

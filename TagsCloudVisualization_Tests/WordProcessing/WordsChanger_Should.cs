@@ -22,25 +22,25 @@ namespace TagsCloudVisualization_Tests.WordProcessing
         [Test]
         public void ChangeWord_WhenLowerCase()
         {
-            changer.ChangeWord("a").Should().Be("a");
+            changer.ChangeWords(new []{"a"}).Should().BeEquivalentTo("a");
         }
     
         [Test]
         public void ChangeWord_WhenUpperCase()
         {
-            changer.ChangeWord("A").Should().Be("a");
+            changer.ChangeWords(new []{"A"}).Should().BeEquivalentTo("a");
         }
 
         [Test]
         public void ChangeWord_WhenUpperAndLowerCase()
         {
-            changer.ChangeWord("Aa").Should().Be("aa");
+            changer.ChangeWords(new []{"Aa"}).Should().BeEquivalentTo("aa");
         }
 
         [Test]
         public void ChangeWord_WhenSeveralUpperCase()
         {
-            changer.ChangeWord("AA").Should().Be("aa");
+            changer.ChangeWords(new []{"AA"}).Should().BeEquivalentTo("aa");
         }
     }
 }

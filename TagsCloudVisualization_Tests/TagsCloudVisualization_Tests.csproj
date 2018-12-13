@@ -78,17 +78,22 @@
     <Compile Include="Layouter\Spiral_Should.cs" />
     <Compile Include="Layouter\WordsCloudBuilder_Should.cs" />
     <Compile Include="Visualizer\WordsCloudVisualizer_Should.cs" />
+    <Compile Include="WordProcessing\BaseFormConverter_Should.cs" />
     <Compile Include="WordProcessing\BoringWordsFilter_Should.cs" />
     <Compile Include="WordProcessing\FrequencyWeighter_Should.cs" />
     <Compile Include="WordProcessing\TextPreprocessor_Should.cs" />
-    <Compile Include="WordProcessing\TxtReader_Should.cs" />
     <Compile Include="WordProcessing\WeightedWord_Should.cs" />
     <Compile Include="WordProcessing\WordsChanger_Should.cs" />
     <Compile Include="WordProcessing\WordSizeConverter_Should.cs" />
-    <Compile Include="Layouter\Word_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Dictionaries\ru.aff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Dictionaries\ru.dic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

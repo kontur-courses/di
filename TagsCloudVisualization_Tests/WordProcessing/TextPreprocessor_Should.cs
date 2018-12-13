@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -23,14 +24,18 @@ namespace TagsCloudVisualization_Tests.WordProcessing
             wordsChanger = Substitute.For<IWordsChanger>();
             words = new []{"A", "aa", "b"};
             wordsProvider.Provide().ReturnsForAnyArgs(words);
-            preprocessor = new TextPreprocessor(wordsProvider, filter, wordsChanger);
+            filter.FilterWords(Arg.Any<IEnumerable<string>>()).ReturnsForAnyArgs(callInfo => callInfo.Arg<IEnumerable<string>>());
+            wordsChanger.ChangeWords(Arg.Any<IEnumerable<string>>())
+                .ReturnsForAnyArgs(callInfo => callInfo.Arg<IEnumerable<string>>().Select(w => w.ToUpper()));
+            preprocessor = new TextPreprocessor(wordsProvider, new []{filter}, new []{wordsChanger});
         }
 
         [Test]
         public void ProvidePreprocessedWords_WhenFiltering()
         {
             var expected = new[] { "aa" };
-            filter.FilterWords(Arg.Any<IEnumerable<string>>()).Returns(expected);
+            filter.FilterWords(words).Returns(expected);
+            wordsChanger.ChangeWords(expected).Returns(callInfo => callInfo.Arg<IEnumerable<string>>());
             preprocessor.Provide().Should().BeEquivalentTo(expected);
         }
 
@@ -38,8 +43,6 @@ namespace TagsCloudVisualization_Tests.WordProcessing
         public void ProvidePreprocessedWords_WhenChanging()
         {
             var expected = new[] { "A", "AA", "B"};
-            wordsChanger.ChangeWord(Arg.Any<string>()).Returns(callInfo => callInfo.Arg<string>().ToUpper());
-            filter.FilterWords(Arg.Any<IEnumerable<string>>()).Returns(callInfo => callInfo.Arg<IEnumerable<string>>());
             preprocessor.Provide().Should().BeEquivalentTo(expected);
         }
 
@@ -47,7 +50,6 @@ namespace TagsCloudVisualization_Tests.WordProcessing
         public void ProvidePreprocessedWords_WhenFilteringAndChanging()
         {
             var expected = new[] { "A", "B"};
-            wordsChanger.ChangeWord(Arg.Any<string>()).Returns(callInfo => callInfo.Arg<string>().ToUpper());
             filter.FilterWords(Arg.Any<IEnumerable<string>>()).Returns(expected);
             preprocessor.Provide().Should().BeEquivalentTo(expected);
         }
