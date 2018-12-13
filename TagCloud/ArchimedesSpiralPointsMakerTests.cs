@@ -9,14 +9,14 @@ namespace TagCloud
 {
     class Tests
     {
-        private CircularCloudLayouter cloud;
+        private CloudLayouter cloud;
         private TestContext currentContext;
         private const string FilePath = "DebugFile.bmp";
 
         [SetUp]
         public void SetUp()
         {
-            cloud = new CircularCloudLayouter(new Point(0, 0), 0.5);
+            cloud = new CloudLayouter(new Point(0, 0), 0.5, new ArchimedesSpiralPointsMaker());
             currentContext = TestContext.CurrentContext;
         }
 
@@ -25,7 +25,7 @@ namespace TagCloud
         {
             if (currentContext.Result.FailCount != 0)
             {
-                var visualizer = new Visualizer(new Size(600, 600));
+                var visualizer = new Visualizer(new Size(600, 600), "#FFFFFF", "#000000");
                 visualizer.RenderCurrentConfig(cloud, FilePath);
                 Console.WriteLine("Tag cloud visualization saved to file " + FilePath);
             }
@@ -63,7 +63,7 @@ namespace TagCloud
         [Test]
         public void ArchimedesSpiralPointsMaker_ShouldReturnCenterAtFirst()
         {
-            var value = ArchimedesSpiralPointsMaker
+            var value = new ArchimedesSpiralPointsMaker()
                 .GenerateNextPoint(new Point(0, 0), 2).First();
             value.Should().Be(new Point(0, 0));
         }
