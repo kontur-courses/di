@@ -119,6 +119,7 @@
     <Compile Include="Visualisation\Coloring\IColorManager.cs" />
     <Compile Include="Visualisation\Coloring\MonoColorManager.cs" />
     <Compile Include="Visualisation\Coloring\MonoColorManagerSettings.cs" />
+    <Compile Include="Visualisation\Coloring\RandomColorManager.cs" />
     <Compile Include="Visualisation\ImageSettings.cs" />
     <Compile Include="Visualisation\ITagsCloudRenderer.cs" />
     <Compile Include="Visualisation\PngTagsCloudRenderer.cs" />

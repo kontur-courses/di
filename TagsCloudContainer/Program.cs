@@ -53,9 +53,8 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<PngTagsCloudRenderer>().As<ITagsCloudRenderer>()
                 .UsingConstructor(typeof(ImageSettings)).SingleInstance();
 
-            containerBuilder.RegisterType<MonoColorManager>().As<IColorManager>()
-                .UsingConstructor(typeof(MonoColorManagerSettings));
-            containerBuilder.RegisterType<MonoColorManagerSettings>().AsSelf();
+            containerBuilder.RegisterType<RandomColorManager>().As<IColorManager>();
+                
                 
             containerBuilder.RegisterType<TagsCloudContainerApplication>().AsSelf().SingleInstance();
             var containerApplication = containerBuilder.Build();
