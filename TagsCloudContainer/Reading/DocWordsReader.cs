@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Office.Interop.Word;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.Reading
@@ -12,21 +8,16 @@ namespace TagsCloudContainer.Reading
     {
         public List<string> ReadWords(string path)
         {
-            Application application = new Application();
-            Document document = application.Documents.Open(path);
-
-            var result = new List<string>();
-            var rx = new Regex("(\\w+)(' '+)?");
-
-            for (var i = 1; i <= document.Words.Count; i++)
+            Xceed.Words.NET.DocX doc = Xceed.Words.NET.DocX.Load(path);
+            var regex = new Regex("\\W?(\\w+)\\W");
+            var matches = regex.Matches(doc.Text);
+            var res = new List<string>();
+            foreach (Match match in matches)
             {
-                var word = rx.Match(document.Words[i].Text).Groups[0].Value;
-                if (word != "")
-                    result.Add(word);
+                res.Add(match.Groups[1].Value);
             }
 
-            application.Quit();
-            return result;
+            return res;
         }
     }
 }
