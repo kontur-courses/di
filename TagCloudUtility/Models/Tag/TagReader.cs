@@ -25,15 +25,15 @@ namespace TagCloud.Utility.Models.Tag
         {
             var maxRepeats = frequencyDictionary.Values.Max();
 
-            var items = from pair in frequencyDictionary
-                        let wordGroup = tagContainer
-                            .First(gr => gr.Item2.Contains((double)pair.Value / maxRepeats))
-                            .Item2
-                        select new TagItem(pair.Key, wordGroup.FontSize);
-
-            return items
-                .OrderByDescending(item => item.FontSize)
+            return frequencyDictionary
+                .Select(pair => GetTagItem(pair, maxRepeats))
                 .ToList();
+        }
+
+        private TagItem GetTagItem(KeyValuePair<string, int> pair,double maxRepeats)
+        {
+            var tagGroup = tagContainer.GetTagGroupFor(pair.Value / maxRepeats);
+            return new TagItem(pair.Key, tagGroup.FontSize);
         }
 
         private static Dictionary<string, int> GetFrequencyOfWords(IEnumerable<string> words)

@@ -1,5 +1,6 @@
 ﻿using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using TagCloud.Utility.Models.Tag;
 using TagCloud.Utility.Models.TextReader;
 using TagCloud.Utility.Models.WordFilter;
@@ -34,7 +35,9 @@ namespace TagCloud.Utility.Runner
             var filteredWords = wordFilter
                 .FilterWords(words);
             var tags = tagReader
-                .ReadTags(filteredWords);
+                .ReadTags(filteredWords)
+                .OrderByDescending(item => item.FontSize)
+                .ToList();
             using (var picture = visualizer.CreatePictureWithItems(tags))
             {
                 if (File.Exists(pathToPicture))
