@@ -88,7 +88,7 @@ namespace TagCloud
             CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
 
             var format = Regex.Match(arguments.ImageFileName, ".+\\.(.+)$").Groups[1].Value;
-            CheckArgument(FileImageSaver.ImageFormats, "image format", format, exceptions);
+            CheckArgument(FileImageSaver.Formats.Keys, "image format", format, exceptions);
 
             CheckArgument(Colors, "words color", arguments.WordsColorName, exceptions);
             CheckArgument(Colors, "background color", arguments.BackgroundColorName, exceptions);
@@ -104,7 +104,7 @@ namespace TagCloud
                 exceptions.AppendLine($"\t{argumentName} file not found {fileName}");
         }
 
-        private static void CheckArgument<T>(HashSet<T> variants, string argumentName, T argument, StringBuilder exceptions)
+        private static void CheckArgument<T>(ICollection<T> variants, string argumentName, T argument, StringBuilder exceptions)
         {
             if (!variants.Contains(argument))
                 exceptions.AppendLine($"\tUnknown {argumentName} {argument}");
