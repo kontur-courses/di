@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NSubstitute;
@@ -11,6 +12,7 @@ namespace TagsCloudVisualization_Tests
     [TestFixture]
     public class WordsCloudBuilder_Should
     {
+        private IWordsProvider wordsProvider;
         private IWeighter weighter;
         private ISizeConverter sizeConverter;
         private ICloudLayouter cloudLayouter;
@@ -22,14 +24,18 @@ namespace TagsCloudVisualization_Tests
         [SetUp]
         public void SetUp()
         {
+            wordsProvider = Substitute.For<IWordsProvider>();
             weighter = Substitute.For<IWeighter>();
             sizeConverter = Substitute.For<ISizeConverter>();
             cloudLayouter = Substitute.For<ICloudLayouter>();
-            wordsCloudBuilder = new WordsCloudBuilder(cloudLayouter, sizeConverter, weighter);
+            wordsCloudBuilder = new WordsCloudBuilder(wordsProvider, cloudLayouter, sizeConverter, weighter);
             rectangle = new Rectangle(new Point(0, 0), defaultSize);
             cloudLayouter.PutNextRectangle(defaultSize).Returns(rectangle);
-            weighter.WeightWords().Returns(new[] {new WeightedWord("a", 6), new WeightedWord("b", 3)});
-            sizeConverter.Convert(weighter.WeightWords()).Returns(new[]{new SizedWord("a", defaultFont, defaultSize), new SizedWord("b", defaultFont, defaultSize)});
+            var words = new[] {"a", "a", "b", "b", "b"};
+            wordsProvider.Provide().Returns(words);
+            var weighted = new[] {new WeightedWord("a", 2), new WeightedWord("b", 3)};
+            weighter.WeightWords(words).Returns(weighted);
+            sizeConverter.Convert(weighted).Returns(new[]{new SizedWord("a", defaultFont, defaultSize), new SizedWord("b", defaultFont, defaultSize)});
         }
 
         [Test]
@@ -42,7 +48,7 @@ namespace TagsCloudVisualization_Tests
         [Test]
         public void BuildCloud_ReturnEmptySequence_OnEmptyInput()
         {
-            sizeConverter.Convert(weighter.WeightWords()).Returns(Enumerable.Empty<SizedWord>());
+            wordsProvider.Provide().Returns(Array.Empty<string>());
             wordsCloudBuilder.Build().Should().BeEmpty();
         }
     }
