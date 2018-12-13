@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Configuration;
 using TagsCloudContainer.DataReader;
 
 namespace TagsCloudContainer.Filter

@@ -28,11 +28,11 @@ namespace TagsCloudContainer.Configuration
             HelpText = "Tags font color")]
         public string Color { get; set; }
 
-        [Option("minFontSize", Default = 64,
+        [Option("minFontSize", Default = 24,
             HelpText = "Minimum font size")]
         public int MinFontSize { get; set; }
 
-        [Option("maxFontSize", Default = 128,
+        [Option("maxFontSize", Default = 256,
             HelpText = "Maximum font size")]
         public int MaxFontSize { get; set; }
 

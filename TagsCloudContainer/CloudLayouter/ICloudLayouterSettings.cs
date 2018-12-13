@@ -1,5 +1,3 @@
-using TagsCloudContainer.Configuration;
-
 namespace TagsCloudContainer.CloudLayouter
 {
     public interface ICloudLayouterSettings

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Configuration;
 using TagsCloudContainer.Tag;
 using TagsCloudContainer.TagFontSizeCalculator;
 

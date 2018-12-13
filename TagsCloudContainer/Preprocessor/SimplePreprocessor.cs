@@ -7,8 +7,16 @@ namespace TagsCloudContainer.Preprocessor
 {
     public class SimplePreprocessor : IPreprocessor
     {
-        public IEnumerable<string> PrepareWords(IEnumerable<string> words,
-            IEnumerable<IWordsConverter> converters, IEnumerable<IFilter> filters)
+        private readonly IEnumerable<IWordsConverter> converters;
+        private readonly IEnumerable<IFilter> filters;
+
+        public SimplePreprocessor(IEnumerable<IWordsConverter> converters, IEnumerable<IFilter> filters)
+        {
+            this.converters = converters;
+            this.filters = filters;
+        }
+
+        public IEnumerable<string> PrepareWords(IEnumerable<string> words)
         {
             words = converters.Aggregate(words, (current, converter) => converter.Convert(current));
 

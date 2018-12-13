@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using TagsCloudContainer.Configuration;
 using TagsCloudContainer.DataReader;
 using TagsCloudContainer.ImageWriter;
-using TagsCloudContainer.Tag;
+using TagsCloudContainer.Preprocessor;
 using TagsCloudContainer.TagsGenerator;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.WordsCounter;
@@ -11,44 +10,40 @@ namespace TagsCloudContainer.Controller
 {
     public class TagsCloudController : ITagsCloudController
     {
-        private IConfiguration Configuration { get; }
-        private IDataReader Reader { get; }
-        private IWordsCounter WordsCounter { get; }
-        private ITagsGenerator TagsGenerator { get; }
-        private IVisualizer Visualizer { get; }
-        private IImageWriter ImageWriter { get; }
+        private readonly IConfiguration configuration;
+        private readonly IDataReader reader;
+        private readonly IPreprocessor preprocessor;
+        private readonly IWordsCounter wordsCounter;
+        private readonly ITagsGenerator tagsGenerator;
+        private readonly IVisualizer visualizer;
+        private readonly IImageWriter imageWriter;
 
-        private IEnumerable<string> words;
-        private IEnumerable<string> Words =>
-            words ?? (words = Reader.Read(Configuration.PathToWordsFile));
-
-        private IDictionary<string, int> wordsFrequency;
-        private IDictionary<string, int> WordsFrequency =>
-            wordsFrequency ?? (wordsFrequency = WordsCounter.GetWordsFrequency(Words));
-
-        private IEnumerable<ITag> tags;
-        private IEnumerable<ITag> Tags =>
-            tags ?? (tags = TagsGenerator.GenerateTags(WordsFrequency));
-
-        public TagsCloudController(IConfiguration configuration, IDataReader reader, IWordsCounter wordsCounter, ITagsGenerator tagsGenerator, IVisualizer visualizer, IImageWriter imageWriter)
+        public TagsCloudController(
+            IConfiguration configuration,
+            IDataReader reader,
+            IPreprocessor preprocessor,
+            IWordsCounter wordsCounter,
+            ITagsGenerator tagsGenerator,
+            IVisualizer visualizer,
+            IImageWriter imageWriter)
         {
-            Configuration = configuration;
-            Reader = reader;
-            WordsCounter = wordsCounter;
-            TagsGenerator = tagsGenerator;
-            Visualizer = visualizer;
-            ImageWriter = imageWriter;
-        }
-
-        public byte[] Visualize()
-        {
-            return Visualizer.Visualize(Tags);
+            this.configuration = configuration;
+            this.reader = reader;
+            this.preprocessor = preprocessor;
+            this.wordsCounter = wordsCounter;
+            this.tagsGenerator = tagsGenerator;
+            this.visualizer = visualizer;
+            this.imageWriter = imageWriter;
         }
 
         public void Save()
         {
-            var image = Visualize();
-            ImageWriter.Write(image, Configuration.OutFileName, "png", Configuration.DirectoryToSave);
+            var words = reader.Read(configuration.PathToWordsFile);
+            var preparedWords = preprocessor.PrepareWords(words);
+            var wordsFrequency = wordsCounter.GetWordsFrequency(preparedWords);
+            var tags = tagsGenerator.GenerateTags(wordsFrequency);
+            var image = visualizer.Visualize(tags);
+            imageWriter.Write(image, configuration.OutFileName, "png", configuration.DirectoryToSave);
         }
     }
 }
