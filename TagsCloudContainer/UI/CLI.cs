@@ -22,7 +22,7 @@ namespace TagsCloudContainer.UI
 
         public CLI(string[] args)
         {
-            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\hello.docx";
+            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\cloud.docx";
             OutputPath = "output.png";
             BlacklistPath = "blacklist.txt";
             TagsCloudCenter = new Point(500, 500);
