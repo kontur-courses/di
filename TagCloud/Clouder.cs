@@ -14,19 +14,19 @@ namespace TagCloud
 {
     public class Clouder
     {
-        public static Clouder Create(AppSettings settings)
+        public static Clouder Create(ClouderSettings settings)
         {
             var container = new ContainerBuilder();
-            container.RegisterType<DrawingSettings>().AsSelf();
-            container.RegisterType<IWordsCounter>().As(settings.TCounter);
-            container.RegisterType<ICloudLayouter>().As(settings.TLayouter);            
+            container.Register(c=>settings.DrawingSettings).AsSelf();
+            container.RegisterType(settings.TCounter).As<IWordsCounter>();
+            container.RegisterType(settings.TLayouter).As<ICloudLayouter>();            
             container.RegisterType<CloudDrawer>().AsSelf();
             container.RegisterType<Clouder>().AsSelf();
             return (Clouder) container.Build().Resolve(typeof(Clouder));
         }
 
         public static Clouder CreateDefault() =>
-            Clouder.Create(AppSettings.Default());
+            Clouder.Create(ClouderSettings.Default());
         
         private readonly IWordsCounter counter;
         private readonly IWeightScaler scaler;
@@ -44,7 +44,7 @@ namespace TagCloud
             counter.UpdateWith(text);
 
         public void UpdateFrom(Stream stream)
-        {    //TODO make bufferization 
+        {   //TODO make bufferization 
             using (var reader = new StreamReader(stream,Encoding.UTF8))
                 UpdateWith(reader.ReadToEnd());
         }

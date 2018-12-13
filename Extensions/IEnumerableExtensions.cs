@@ -7,6 +7,19 @@ namespace Extensions
 {
     public static class IEnumerableExtensions
     {
+        public static T TakeOnlyOne<T>(this IEnumerable<T> enumerable, string emptyErrorMessage = null, string owerflowErrorMessage = null)
+        {
+            T tmp;
+            using (var enumerator = enumerable.GetEnumerator())
+            {
+                if(!enumerator.MoveNext())
+                    throw new ArgumentException(emptyErrorMessage ?? "Enumeration was empty");
+                tmp = enumerator.Current;
+                if(enumerator.MoveNext())
+                    throw new ArgumentException(owerflowErrorMessage ?? "Enumeration contains more than one element.");   
+            }
+            return tmp;
+        }
         
         public static IEnumerable<TOut> ForAllPairs<TIn,TOut>(this IList<TIn> list, Func<TIn,TIn,TOut> func)
         {
@@ -59,6 +72,12 @@ namespace Extensions
         {
             for (int i = 0; i < count; i++)
                 yield return act();
+        }
+
+        public static void Foreach<T>(this IEnumerable<T> enumerable, Action<T> act)
+        {
+            foreach (var el in enumerable)
+                act(el);
         }
 
         public static IEnumerable<T[]> SplitBy<T>(this IEnumerable<T> enumerable,Func<T,bool> predicate, bool removeEmpty = true)

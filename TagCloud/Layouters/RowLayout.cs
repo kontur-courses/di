@@ -5,6 +5,7 @@ using Extensions;
 
 namespace TagCloud.Layouters
 {
+    //Layouter Code
     public class RowLayout
     {
         private Point center;

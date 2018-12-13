@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
+      <HintPath>..\packages\FakeItEasy.5.0.0-alpha.1\lib\net45\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.5.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.5.3\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -78,8 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clouder_Should.cs" />
+    <Compile Include="Common\CircularCloudLayouter.cs" />
     <Compile Include="CountersTests\SimpleWordCounter_Should.cs" />
-    <Compile Include="Gui_Should.cs" />
+    <Compile Include="GuiParserShould_Should.cs" />
     <Compile Include="LayoutersTests\CircularCloudLayouter_Should.cs" />
     <Compile Include="LayoutersTests\LayouterTestsBase.cs" />
     <Compile Include="LayoutersTests\RowLayout_Should.cs" />
@@ -89,6 +94,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleTagClouder\ConsoleTagClouder.csproj">
+      <Project>{2e49da3c-74eb-4d08-a53a-65a992019d71}</Project>
+      <Name>ConsoleTagClouder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Extensions\Extensions.csproj">
       <Project>{88aa653d-2565-4312-86de-f829e827ca19}</Project>
       <Name>Extensions</Name>

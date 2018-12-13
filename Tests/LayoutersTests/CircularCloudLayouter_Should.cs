@@ -8,21 +8,21 @@ using FluentAssertions;
 using MoreLinq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
+using TagCloud.Layouters;
 
 namespace Tests.LayoutersTests
 {
     [TestFixture]
-    internal class CircularCloudLayouter_Should : global::Tests.LayoutersTests.LayouterTestsBase
+    internal class CircularCloudLayouter_Should : LayouterTestsBase
     {
-        private CircularCloudLayouter layouter;
+        private RowiseCloudLayouter layouter;
         private Point center;
         
         [SetUp]
         public void SetUp()
         {
             center = new Point(120,150);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new RowiseCloudLayouter(center);
         }
 
         [TearDown]

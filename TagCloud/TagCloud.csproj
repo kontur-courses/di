@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="ClouderSettings.cs" />
     <Compile Include="CloudDrawer.cs" />
     <Compile Include="Clouder.cs" />
     <Compile Include="Counters\IWordsCounter.cs" />

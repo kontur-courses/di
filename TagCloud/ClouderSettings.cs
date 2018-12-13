@@ -6,13 +6,15 @@ using TagsCloudVisualization;
 
 namespace TagCloud
 { 
-    public class AppSettings
+    public class ClouderSettings
     {
-        public readonly DrawingSettings DrawingSettings;
-        public Type TLayouter { get; }
-        public Type TCounter { get; }
+        public DrawingSettings DrawingSettings{ get; set; }
+        public Type TLayouter { get; set; }
+        public Type TCounter { get; set; }
+        
+        public ClouderSettings(Type tLayouter = null, Type tCounter= null ){}
 
-        public AppSettings(DrawingSettings drawingSettings, Type tLayouter, Type tCounter)
+        public ClouderSettings(DrawingSettings drawingSettings, Type tLayouter, Type tCounter)
         {
             this.DrawingSettings = drawingSettings; //TODO make this error compilation time
             if(!tLayouter.GetInterfaces().Contains(typeof(ICloudLayouter)) ||
@@ -21,8 +23,8 @@ namespace TagCloud
             TCounter = tCounter;
         }
 
-        public static AppSettings Default() =>
-            new AppSettings(new DrawingSettings()
+        public static ClouderSettings Default() =>
+            new ClouderSettings(new DrawingSettings()
             {
                 Size = new Size(3000, 3000),
                 FontType = "NewTimesRoman",
