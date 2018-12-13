@@ -62,7 +62,7 @@ namespace TagCloudCreator
 
         private IEnumerable<string> ExcludeWords(IEnumerable<string> words, IWordFilter filter)
         {
-            return words.Where(w => !filter.ToExclude(w));
+            return words.Where(w => !filter.ToExclude(w)).ToArray();
         }
 
         private IEnumerable<PositionedElement> FillCloud(

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagCloud;
 using TagCloud.Enums;
 using TagCloud.Layouter.Spirals;
 
-namespace TagCloudCreator
+namespace TagCloud
 {
     public static class TypesCollector
     {

@@ -3,7 +3,7 @@ using System.Drawing;
 using CommandLine;
 using TagCloud.Enums;
 
-namespace TagCloudCreator
+namespace TagCloud
 {
     public class Configuration
     {

@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using TagCloud.Enums;
 
-namespace TagCloudCreator
+namespace TagCloud
 {
     public class Options
     {

@@ -1,4 +1,6 @@
-﻿namespace TagCloudCreator
+﻿using TagCloudCreator;
+
+namespace TagCloud
 {
     internal class Program
     {

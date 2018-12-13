@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagClo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Cli", "TagCloud.Cli\TagCloud.Cli.csproj", "{1AB817EF-F034-46CF-8F57-C13616AA338C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Tests", "TagCloud.Tests\TagCloud.Tests.csproj", "{C8284613-A969-4CCF-B7A1-F1F08EDF0080}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB817EF-F034-46CF-8F57-C13616AA338C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8284613-A969-4CCF-B7A1-F1F08EDF0080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8284613-A969-4CCF-B7A1-F1F08EDF0080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8284613-A969-4CCF-B7A1-F1F08EDF0080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8284613-A969-4CCF-B7A1-F1F08EDF0080}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

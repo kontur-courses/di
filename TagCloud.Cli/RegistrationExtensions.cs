@@ -1,6 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 
-namespace TagCloudCreator
+namespace TagCloud
 {
     public static class RegistrationExtensions
     {
