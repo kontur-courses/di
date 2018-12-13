@@ -4,10 +4,7 @@ using System.Linq;
 using Autofac;
 using TagsCloudContainer.Configuration;
 using TagsCloudContainer.Controller;
-using TagsCloudContainer.Converter;
 using TagsCloudContainer.DataReader;
-using TagsCloudContainer.Filter;
-using TagsCloudContainer.Preprocessor;
 using TagsCloudContainerCLI.CommandLineParser;
 
 namespace TagsCloudContainerCLI

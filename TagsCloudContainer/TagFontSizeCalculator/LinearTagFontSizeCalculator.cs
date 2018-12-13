@@ -2,15 +2,15 @@ namespace TagsCloudContainer.TagFontSizeCalculator
 {
     public class LinearTagFontSizeCalculator : ITagFontSizeCalculator
     {
-        private ITagFontSizeCalculatorSettings Settings { get; }
+        private readonly ITagFontSizeCalculatorSettings settings;
         private int? minFontSize;
-        private int MinFontSize => minFontSize ?? (int) (minFontSize = Settings.MinFontSize);
+        private int MinFontSize => minFontSize ?? (int) (minFontSize = settings.MinFontSize);
         private int? maxFontSize;
-        private int MaxFontSize => maxFontSize ?? (int) (maxFontSize = Settings.MaxFontSize);
+        private int MaxFontSize => maxFontSize ?? (int) (maxFontSize = settings.MaxFontSize);
 
         public LinearTagFontSizeCalculator(ITagFontSizeCalculatorSettings settings)
         {
-            Settings = settings;
+            this.settings = settings;
         }
 
         public float Calculate(int count, int maxCount)

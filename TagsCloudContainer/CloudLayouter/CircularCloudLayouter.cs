@@ -7,23 +7,23 @@ namespace TagsCloudContainer.CloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private ICloudLayouterSettings Settings { get; }
+        private readonly ICloudLayouterSettings settings;
         private PointF? center;
-        private PointF Center => center ?? (PointF) (center = GetCenter(Settings));
+        private PointF Center => center ?? (PointF) (center = GetCenter());
         private readonly List<RectangleF> placedRectangles = new List<RectangleF>();
         private const double ShiftOnSpiral = 0.01;
         private int rotationAngle;
         private int? rotationAngleStep;
 
         private int RotationAngleStep =>
-            rotationAngleStep ?? (int) (rotationAngleStep = GetRotationAngleStep(Settings));
+            rotationAngleStep ?? (int) (rotationAngleStep = GetRotationAngleStep());
 
         public CircularCloudLayouter(ICloudLayouterSettings settings)
         {
-            Settings = settings;
+            this.settings = settings;
         }
 
-        private PointF GetCenter(ICloudLayouterSettings settings)
+        private PointF GetCenter()
         {
             var imageCenterByAbscissa = settings.ImageWidth / 2;
             var imageCenterByOrdinate = settings.ImageHeight / 2;
@@ -35,7 +35,7 @@ namespace TagsCloudContainer.CloudLayouter
                 imageCenterByOrdinate + userCenterByOrdinate);
         }
 
-        private int GetRotationAngleStep(ICloudLayouterSettings settings)
+        private int GetRotationAngleStep()
         {
             return settings.RotationAngle < 1 ? 1 : settings.RotationAngle;
         }

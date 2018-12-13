@@ -8,13 +8,13 @@ namespace TagsCloudContainer.TagsGenerator
 {
     public class SimpleTagsGenerator : ITagsGenerator
     {
-        private ITagsGeneratorSettings Settings { get; }
-        private ITagFontSizeCalculator FontSizeCalculator { get; }
+        private readonly ITagsGeneratorSettings settings;
+        private readonly ITagFontSizeCalculator fontSizeCalculator;
 
         public SimpleTagsGenerator(ITagsGeneratorSettings settings, ITagFontSizeCalculator fontSizeCalculator)
         {
-            Settings = settings;
-            FontSizeCalculator = fontSizeCalculator;
+            this.settings = settings;
+            this.fontSizeCalculator = fontSizeCalculator;
         }
 
         public IEnumerable<ITag> GenerateTags(IDictionary<string, int> wordsFrequency)
@@ -26,10 +26,10 @@ namespace TagsCloudContainer.TagsGenerator
 
         private Font GetFont(IDictionary<string, int> wordsFrequency, string word)
         {
-            var fontFamily = Settings.FontFamily;
+            var fontFamily = settings.FontFamily;
 
             var maxCount = wordsFrequency.Values.Max();
-            var fontSize = FontSizeCalculator.Calculate(wordsFrequency[word], maxCount);
+            var fontSize = fontSizeCalculator.Calculate(wordsFrequency[word], maxCount);
 
             return new Font(fontFamily, fontSize);
         }

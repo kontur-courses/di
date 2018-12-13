@@ -8,21 +8,21 @@ namespace TagsCloudContainer.Visualizer
 {
     public class TagsCloudVisualizer : IVisualizer
     {
-        private IVisualizerSettings Settings { get; }
-        private ICloudLayouter Layouter { get; }
+        private readonly IVisualizerSettings settings;
+        private readonly ICloudLayouter layouter;
 
         public TagsCloudVisualizer(IVisualizerSettings settings, ICloudLayouter layouter)
         {
-            Settings = settings;
-            Layouter = layouter;
+            this.settings = settings;
+            this.layouter = layouter;
         }
 
         public byte[] Visualize(IEnumerable<ITag> tags)
         {
-            var color = Color.FromName(Settings.Color);
+            var color = Color.FromName(settings.Color);
             var brush = new SolidBrush(color);
 
-            using (var bmp = new Bitmap(Settings.ImageWidth, Settings.ImageHeight))
+            using (var bmp = new Bitmap(settings.ImageWidth, settings.ImageHeight))
             using (var g = Graphics.FromImage(bmp))
             {
                 g.TextRenderingHint = TextRenderingHint.AntiAlias;
@@ -30,7 +30,7 @@ namespace TagsCloudContainer.Visualizer
                 foreach (var word in tags)
                 {
                     var wordSize = g.MeasureString(word.Value, word.Font);
-                    var wordPosition = Layouter.PutNextRectangleF(wordSize);
+                    var wordPosition = layouter.PutNextRectangleF(wordSize);
 
                     g.DrawString(word.Value, word.Font, brush, wordPosition);
                 }
