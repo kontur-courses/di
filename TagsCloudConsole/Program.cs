@@ -4,7 +4,7 @@ using System.Drawing;
 using Autofac;
 using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
-using TagsCloudVisualization.Preprocessors;
+using TagsCloudVisualization.Preprocessing;
 using TagsCloudVisualization.Visualizing;
 using TagsCloudVisualization.WordsFileReading;
 
@@ -30,7 +30,7 @@ namespace TagsCloudConsole
             var app = container.Resolve<App>();
             try
             {
-                app.Run();
+                app.Run(arguments.ImageFileName, arguments.WordsFileName);
             }
             catch (Exception e)
             {
@@ -71,19 +71,11 @@ namespace TagsCloudConsole
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
             builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
-            builder.RegisterType<CloudBuilder>().AsSelf();
+            builder.RegisterType<Preprocessor>().AsSelf();
             builder.RegisterType<CustomPainter>().As<ITagPainter>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
             builder.RegisterType<StandardImageSaver>().As<IImageSaver>();
-            builder.RegisterType<App>()
-                .AsSelf()
-                .WithParameters(new[]
-                {
-                    new NamedParameter("imageFileName", arguments.OutputFileName),
-                    new NamedParameter("imageFileExtension", arguments.ImageExtension),
-                    new NamedParameter("wordsFileName", arguments.WordsFile),
-                    new NamedParameter("wordsFileExtension", arguments.WordsFileExtension) 
-                });
+            builder.RegisterType<App>().AsSelf();
             builder.RegisterType<ImageSaverSelector>().AsSelf();
             return builder.Build();
         }

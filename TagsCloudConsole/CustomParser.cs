@@ -1,30 +1,25 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using CommandLine;
 
 namespace TagsCloudConsole
 {
     class CustomArgs
     {
-        public readonly string WordsFile;
-        public readonly string WordsFileExtension;
+        public readonly string WordsFileName;
         public readonly Size ImageSize;
         public readonly Color BackgroundColor;
         public readonly Color TextColor;
-        public readonly string OutputFileName;
-        public readonly string ImageExtension;
+        public readonly string ImageFileName;
         public readonly string FontName;
 
         public CustomArgs(CmdOptions options)
         {
-            WordsFile = options.WordsFile;
-            WordsFileExtension = ExtractExtension(WordsFile);
+            WordsFileName = options.WordsFileName;
             ImageSize = ParseImageSize(options.RawImageSize);
             BackgroundColor = ParseKnownColor(options.BackgroundColorName);
             TextColor = ParseKnownColor(options.TextColorName);
-            OutputFileName = options.OutputFileName;
-            ImageExtension = ExtractExtension(OutputFileName);
+            ImageFileName = options.ImageFileName;
             FontName = options.FontName;
         }
 
@@ -34,13 +29,6 @@ namespace TagsCloudConsole
             if (color.IsKnownColor)
                 return color;
             throw new ArgumentException("Color is invalid");
-        }
-
-        private string ExtractExtension(string fileName)
-        {
-            if (!fileName.Contains('.'))
-                throw new ArgumentException($"File {fileName} has no extension");
-            return fileName.Split('.').LastOrDefault();
         }
 
         private Size ParseImageSize(string imageSizeString)
@@ -62,7 +50,7 @@ namespace TagsCloudConsole
     class CmdOptions
     {
         [Option("filename", Required = true)]
-        public string WordsFile { get; set; }
+        public string WordsFileName { get; set; }
 
         [Option("size", Required = false, Default = "600x600")]
         public string RawImageSize { get; set; }
@@ -77,7 +65,7 @@ namespace TagsCloudConsole
         public string TextColorName { get; set; }
 
         [Option("output", Required = true)]
-        public string OutputFileName { get; set; }
+        public string ImageFileName { get; set; }
     }
 
     class CustomParser

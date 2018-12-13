@@ -1,43 +1,47 @@
 ﻿using TagsCloudVisualization;
+using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
+using TagsCloudVisualization.Preprocessing;
+using TagsCloudVisualization.Utils;
 using TagsCloudVisualization.Visualizing;
 using TagsCloudVisualization.WordsFileReading;
 
 namespace TagsCloudConsole
 {
     class App
-    { 
-        private readonly CloudBuilder cloudBuilder;
+    {
+        private readonly Preprocessor preprocessor;
+        private readonly ITagsCloudGenerator tagsCloudGenerator;
         private readonly TagsCloudVisualizer cloudVisualizer;
-        private readonly string imageFileName;
-        private readonly string imageFileExtension;
-        private readonly string wordsFileName;
-        private readonly string wordsFileExtension;
         private readonly FileReaderSelector fileReaderSelector;
         private readonly ImageSaverSelector imageSaverSelector;
 
-        public App(FileReaderSelector fileReaderSelector, CloudBuilder cloudBuilder, TagsCloudVisualizer cloudVisualizer,
-            ImageSaverSelector imageSaverSelector, string imageFileName, 
-            string imageFileExtension, string wordsFileName, string wordsFileExtension)
+        public App(
+            FileReaderSelector fileReaderSelector, 
+            Preprocessor preprocessor,
+            ITagsCloudGenerator tagsCloudGenerator,
+            TagsCloudVisualizer cloudVisualizer,
+            ImageSaverSelector imageSaverSelector)
         {
             this.fileReaderSelector = fileReaderSelector;
-            this.cloudBuilder = cloudBuilder;
+            this.preprocessor = preprocessor;
+            this.tagsCloudGenerator = tagsCloudGenerator;
             this.cloudVisualizer = cloudVisualizer;
-            this.imageFileName = imageFileName;
-            this.wordsFileName = wordsFileName;
-            this.wordsFileExtension = wordsFileExtension;
-            this.imageFileExtension = imageFileExtension;
             this.imageSaverSelector = imageSaverSelector;
         }
 
-        public void Run()
+        public void Run(string imageFileName, string wordsFileName)
         {
-            var reader = fileReaderSelector.SelectFileReader(wordsFileExtension);
-            var imageSaver = imageSaverSelector.SelectImageSaver(imageFileExtension);
-            var words = reader.ReadAllWords(wordsFileName, wordsFileExtension);
-            var tagCloud = cloudBuilder.BuildTagCloud(words);
+            var reader = fileReaderSelector.SelectFileReader(wordsFileName);
+            var imageSaver = imageSaverSelector.SelectImageSaver(imageFileName);
+
+            var words = reader.ReadAllWords(wordsFileName);
+            var wordsStatistics = new StatisticsCalculator()
+                .CalculateStatistics(preprocessor.Preprocess(words));
+            var tagCloud = tagsCloudGenerator.GenerateTagsCloud(wordsStatistics);
+
             var picture = cloudVisualizer.GetPictureOfRectangles(tagCloud);
-            imageSaver.SaveImage(picture, imageFileExtension, imageFileName);
+            imageSaver.SaveImage(picture, imageFileName);
         }
     }
 }

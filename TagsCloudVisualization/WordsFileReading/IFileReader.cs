@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.WordsFileReading
 {
     public interface IFileReader
     {
-        IEnumerable<string> ReadAllWords(string fileName, string extension);
+        IEnumerable<string> ReadAllWords(string fileName);
         string[] SupportedTypes();
     }
 }

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace TagsCloudVisualization.Preprocessors
+namespace TagsCloudVisualization.Preprocessing
 {
     public class DullWordsFilter : IFilter
     {

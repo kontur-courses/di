@@ -8,7 +8,7 @@ namespace TagsCloudVisualization.WordsFileReading
 {
     public class TextFileReader : IFileReader
     {
-        public IEnumerable<string> ReadAllWords(string fileName, string extension)
+        public IEnumerable<string> ReadAllWords(string fileName)
         {
             using (var reader = new StreamReader(fileName, Encoding.UTF8))
             {

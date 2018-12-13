@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TagsCloudVisualization.WordsFileReading
 {
     public class FileReaderSelector
     {
-        private readonly IEnumerable<IFileReader> fileReaders;
+        private readonly IDictionary<string, IFileReader> fileReaderByExtension;
 
         public FileReaderSelector(IEnumerable<IFileReader> fileReaders)
         {
-            this.fileReaders = fileReaders;
+            fileReaderByExtension = new Dictionary<string, IFileReader>();
+
+            foreach (var reader in fileReaders)
+                foreach (var extension in reader.SupportedTypes())
+                    fileReaderByExtension[extension] = reader;
         }
 
-        public IFileReader SelectFileReader(string extension)
+        public IFileReader SelectFileReader(string fileName)
         {
-            foreach (var fileReader in fileReaders)
-                if (fileReader.SupportedTypes().Contains(extension))
-                    return fileReader;
-            
-            throw new ArgumentException("Input file extension is not supported");
+            var extension = fileName.ExtractFileExtension();
+            if (extension != null && fileReaderByExtension.ContainsKey(extension))
+                return fileReaderByExtension[extension];
+
+            throw new ArgumentException("Input file is not supported");
         }
     }
 }

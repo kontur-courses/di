@@ -19,10 +19,9 @@ namespace TagsCloudVisualization.ImageSaving
             { "icon", ImageFormat.Icon }
         };
 
-        public void SaveImage(Image image, string extension, string path)
+        public void SaveImage(Image image, string path)
         {
-            if (!ImageFormats.ContainsKey(extension))
-                throw new ArgumentException("Not supported image type");
+            var extension = path.ExtractFileExtension();
             image.Save(path, ImageFormats[extension]);
         }
 
