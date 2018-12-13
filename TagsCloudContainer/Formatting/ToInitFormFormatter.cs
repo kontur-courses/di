@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NHunspell;
 
-namespace TagsCloudContainer.Formatters
+namespace TagsCloudContainer.Formatting
 {
     public class ToInitFormFormatter : IWordsFormatter
     {
         
-        public List<string> Format(List<string> words)
+        public List<string> Format(IEnumerable<string> words)
         {
             var result = new List<string>();
-            string path = Path.GetDirectoryName
+            var path = Path.GetDirectoryName
                               (Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())) + "\\nhunspell";
             var r = new Regex("st:(\\w+[#]?)");
-            using (Hunspell hunspell = new Hunspell($"{path}\\ru.aff", $"{path}\\ru.dic"))
+            using (var hunspell = new Hunspell($"{path}\\ru.aff", $"{path}\\ru.dic"))
             {
                 foreach (var word in words)
                 {

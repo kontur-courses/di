@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.Weighting
+namespace TagsCloudContainer.Sizing
 {
-    public class FrequencyWordsWeighter : IWordsWeighter
+    public class FrequencyWordsSizer : IWordsSizer
     {
         public Dictionary<string, Size> GetWordsSizes(List<string> words, Size minLetterSize)
         {
@@ -37,4 +37,3 @@ namespace TagsCloudContainer.Weighting
         }
     }
 }
-

@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Filters
+namespace TagsCloudContainer.Filtering
 {
     public class BlacklistWordsFilter : IWordsFilter
     {
         public HashSet<string> Blacklist { get; set; }
 
-        public BlacklistWordsFilter(BlackListFilterSettings settings)
+       
+
+        public BlacklistWordsFilter(HashSet<string> blacklist)
         {
-            Blacklist = settings.Blacklist;
+            Blacklist = blacklist;
         }
 
 
-        public List<string> Filter(List<string> words)
+        public List<string> Filter(IEnumerable<string> words)
         {
             return words.Where(x => !Blacklist.Contains(x)).ToList();
         }

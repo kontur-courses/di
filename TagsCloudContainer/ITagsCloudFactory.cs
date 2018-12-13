@@ -4,6 +4,6 @@ namespace TagsCloudContainer
 {
     public interface ITagsCloudFactory
     {
-        ITagsCloud CreateTagsCloud(Point center);
+        ITagsCloud CreateTagsCloud();
     }
 }

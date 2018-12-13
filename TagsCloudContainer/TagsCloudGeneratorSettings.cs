@@ -1,40 +1,33 @@
 using System.Drawing;
-using TagsCloudContainer.Filters;
-using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Filtering;
+using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
+using TagsCloudContainer.Sizing;
 using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation;
-using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
     public class TagsCloudGeneratorSettings
     {
         public Size LetterSize;
-        public readonly IWordsFormatter WordsFormatter;
-        public readonly IWordsFilter WordsFilter;
         public readonly ITagsCloudLayouter TagsCloudLayouter;
-        public readonly IWordsWeighter WordsWeighter;
+        public readonly IWordsSizer WordsSizer;
 
         public TagsCloudGeneratorSettings
-        (Size letterSize, IWordsFormatter wordsFormatter, IWordsFilter wordsFilter, ITagsCloudLayouter layouter,
-            IWordsWeighter weighter)
+            (Size letterSize, ITagsCloudLayouter layouter, IWordsSizer sizer)
         {
             LetterSize = letterSize;
-            WordsFormatter = wordsFormatter;
-            WordsFilter = wordsFilter;
             TagsCloudLayouter = layouter;
-            WordsWeighter = weighter;
+            WordsSizer = sizer;
         }
 
         public TagsCloudGeneratorSettings
-            (IUI ui, IWordsFormatter wordsFormatter, IWordsFilter wordsFilter, ITagsCloudLayouter layouter,IWordsWeighter weighter)
+            (IUI ui, ITagsCloudLayouter layouter, IWordsSizer sizer)
         {
             LetterSize = ui.LetterSize;
-            WordsFormatter = wordsFormatter;
-            WordsFilter = wordsFilter;
             TagsCloudLayouter = layouter;
-            WordsWeighter = weighter;
+            WordsSizer = sizer;
         }
     }
 }

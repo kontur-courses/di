@@ -7,22 +7,26 @@ namespace TagsCloudContainer.Layouting
 {
     public class CircularCloudLayouter : ITagsCloudLayouter
     {
-        public ITagsCloud TagsCloud { get; set; }
+        public ITagsCloud TagsCloud { get; private set; }
+        public Point Center { get; }
+        private readonly List<Rectangle> addedRectangles = new List<Rectangle>();
 
         private readonly IEnumerator<Point> geometryEnumerator;
 
         public CircularCloudLayouter(TagsCloudLayouterSettings settings, ITagsCloudFactory tagsCloudFactory)
         {
-            TagsCloud = tagsCloudFactory.CreateTagsCloud(settings.Center);
+            Center = settings.Center;
+            TagsCloud = tagsCloudFactory.CreateTagsCloud();
             const double coefficients = 0.5;
             const double spiralStep = 0.05;
             var geometryObject = new ArchimedeanSpiral(settings.Center, coefficients, spiralStep);
             geometryEnumerator = geometryObject.GetEnumerator();
         }
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point center, ITagsCloudFactory tagsCloudFactory)
         {
-            TagsCloud = new TagsCloud(center);
+            Center = center;
+            TagsCloud = tagsCloudFactory.CreateTagsCloud();
             const double coefficients = 0.5;
             const double spiralStep = 0.05;
             var geometryObject = new ArchimedeanSpiral(center, coefficients, spiralStep);
@@ -32,7 +36,7 @@ namespace TagsCloudContainer.Layouting
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             var currentRectangle = new Rectangle
-                (TagsCloud.Center.X, TagsCloud.Center.Y, rectangleSize.Width, rectangleSize.Height);
+                (Center.X, Center.Y, rectangleSize.Width, rectangleSize.Height);
 
             while (RectanglesAreIntersecting(currentRectangle))
             {
@@ -41,7 +45,7 @@ namespace TagsCloudContainer.Layouting
                     (currentPoint.X, currentPoint.Y, rectangleSize.Width, rectangleSize.Height);
             }
 
-            TagsCloud.AddRectangle(currentRectangle);
+            addedRectangles.Add(currentRectangle);
             return currentRectangle;
         }
 
@@ -54,7 +58,7 @@ namespace TagsCloudContainer.Layouting
 
         private bool RectanglesAreIntersecting(Rectangle rectangle)
         {
-            return TagsCloud.AddedRectangles.Any(rect => rect.IntersectsWith(rectangle));
+            return addedRectangles.Any(rect => rect.IntersectsWith(rectangle));
         }
     }
 }

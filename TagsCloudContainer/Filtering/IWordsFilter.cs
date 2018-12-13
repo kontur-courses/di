@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 
-namespace TagsCloudContainer.Filters
+namespace TagsCloudContainer.Filtering
 {
     public interface IWordsFilter
     {
-        List<string> Filter(List<string> words);
+        List<string> Filter(IEnumerable<string> words);
     }
 }

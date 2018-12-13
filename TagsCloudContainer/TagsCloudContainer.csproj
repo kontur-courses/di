@@ -79,9 +79,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filtering\BlackListFilterSettings.cs" />
     <Compile Include="Filtering\BlacklistWordsFilter.cs" />
+    <Compile Include="Filtering\FilteringComponent.cs" />
+    <Compile Include="Filtering\FilteringSettings.cs" />
+    <Compile Include="Filtering\FiltersFactory.cs" />
+    <Compile Include="Filtering\IFiltersFactory.cs" />
     <Compile Include="Filtering\IWordsFilter.cs" />
+    <Compile Include="Formatting\FormattersFactory.cs" />
+    <Compile Include="Formatting\FormattingComponent.cs" />
+    <Compile Include="Formatting\FormattingSettings.cs" />
+    <Compile Include="Formatting\IFormattersFactory.cs" />
     <Compile Include="Formatting\IWordsFormatter.cs" />
     <Compile Include="Formatting\ToInitFormFormatter.cs" />
     <Compile Include="Formatting\ToLowerCaseFormatter.cs" />
@@ -108,8 +115,8 @@
     <Compile Include="Visualisation\ITagsCloudRenderer.cs" />
     <Compile Include="Visualisation\PNGTagsCloudRenderer.cs" />
     <Compile Include="Visualisation\TagsCloudWord.cs" />
-    <Compile Include="Weighting\FrequencyWordsWeighter.cs" />
-    <Compile Include="Weighting\IWordsWeighter.cs" />
+    <Compile Include="Sizing\FrequencyWordsSizer.cs" />
+    <Compile Include="Sizing\IWordsSizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

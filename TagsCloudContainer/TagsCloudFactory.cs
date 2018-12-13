@@ -4,9 +4,9 @@ namespace TagsCloudContainer
 {
     public class TagsCloudFactory : ITagsCloudFactory
     {
-        public ITagsCloud CreateTagsCloud(Point center)
+        public ITagsCloud CreateTagsCloud()
         {
-            return new TagsCloud(center);
+            return new TagsCloud();
         }
     }
 }

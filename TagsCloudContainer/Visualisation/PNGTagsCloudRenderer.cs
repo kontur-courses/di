@@ -28,13 +28,15 @@ namespace TagsCloudContainer.Visualisation
             }
 
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
-            var obj = Graphics.FromImage(btm);
-            foreach (var tagsCloudWord in tagsCloud.AddedWords)
+            using (Graphics obj = Graphics.FromImage(btm))
             {
-                DrawWord(obj, tagsCloudWord);
-            }
+                foreach (var tagsCloudWord in tagsCloud.AddedWords)
+                {
+                    DrawWord(obj, tagsCloudWord);
+                }
 
-            btm.Save(filePath);
+                btm.Save(filePath);
+            }
         }
 
         private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord)
@@ -51,16 +53,19 @@ namespace TagsCloudContainer.Visualisation
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles.ToList());
             var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
-            var tagCloudToDraw = new TagsCloud(tagsCloud.Center, tagsCloudWords);
+            var tagCloudToDraw = new TagsCloud(tagsCloudWords);
             var pictureSize = GetPictureSize(tagCloudToDraw);
-            var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
-            var obj = Graphics.FromImage(btm);
-            foreach (var tagsCloudWord in tagCloudToDraw.AddedWords)
-            {
-                DrawWord(obj, tagsCloudWord);
-            }
 
-            btm.Save(filePath);
+            var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
+            using (Graphics obj = Graphics.FromImage(btm))
+            {
+                foreach (var tagsCloudWord in tagCloudToDraw.AddedWords)
+                {
+                    DrawWord(obj, tagsCloudWord);
+                }
+
+                btm.Save(filePath);
+            }
         }
 
 

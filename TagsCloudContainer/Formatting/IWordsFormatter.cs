@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 
-namespace TagsCloudContainer.Formatters
+namespace TagsCloudContainer.Formatting
 {
     public interface IWordsFormatter
     {
-        List<string> Format(List<string> words);
+        List<string> Format(IEnumerable<string> words);
     }
 }

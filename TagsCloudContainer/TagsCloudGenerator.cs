@@ -1,36 +1,30 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Filters;
-using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Filtering;
+using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
+using TagsCloudContainer.Sizing;
 using TagsCloudContainer.Visualisation;
-using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
     public class TagsCloudGenerator
     {
         private readonly Size minLetterSize;
-        private readonly IWordsFormatter wordsFormatter;
-        private readonly IWordsFilter wordsFilter;
         private readonly ITagsCloudLayouter layouter;
-        private readonly IWordsWeighter wordsWeighter;
+        private readonly IWordsSizer wordsSizer;
 
         public TagsCloudGenerator(TagsCloudGeneratorSettings settings)
         {
             minLetterSize = settings.LetterSize;
-            wordsFilter = settings.WordsFilter;
-            wordsFormatter = settings.WordsFormatter;
             layouter = settings.TagsCloudLayouter;
-            wordsWeighter = settings.WordsWeighter;
+            wordsSizer = settings.WordsSizer;
         }
 
         public ITagsCloud CreateCloud(List<string> words)
         {
-            words = wordsFormatter.Format(words);
-            words = wordsFilter.Filter(words).ToList();
-            var wordsSizes = wordsWeighter.GetWordsSizes(words, minLetterSize);
+            var wordsSizes = wordsSizer.GetWordsSizes(words, minLetterSize);
 
             foreach (var pair in wordsSizes)
             {

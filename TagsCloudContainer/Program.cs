@@ -6,12 +6,12 @@ using Autofac.Core;
 using FluentAssertions;
 using TagsCloudContainer.Visualisation;
 using NHunspell;
-using TagsCloudContainer.Filters;
-using TagsCloudContainer.Formatters;
+using TagsCloudContainer.Filtering;
+using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Reading;
+using TagsCloudContainer.Sizing;
 using TagsCloudContainer.UI;
-using TagsCloudContainer.Weighting;
 
 namespace TagsCloudContainer
 {
@@ -23,18 +23,25 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<CLI>().As<IUI>().WithParameter("args", args).SingleInstance();
             containerBuilder.RegisterType<DocWordsReader>().As<IWordsReader>().SingleInstance();
 
-            containerBuilder.RegisterType<BlackListFilterSettings>().AsSelf();
+            containerBuilder.RegisterType<FormattersFactory>().As<IFormattersFactory>().SingleInstance();
+            containerBuilder.RegisterType<FormattingSettings>().AsSelf()
+                .UsingConstructor(typeof(IUI), typeof(IFormattersFactory));
+            containerBuilder.RegisterType<FormattingComponent>().AsSelf().SingleInstance()
+                .UsingConstructor(typeof(FormattingSettings));
 
-            containerBuilder.RegisterType<BlacklistWordsFilter>().As<IWordsFilter>().SingleInstance()
-                .UsingConstructor(typeof(BlackListFilterSettings));
+            containerBuilder.RegisterType<FilteringComponent>().AsSelf().SingleInstance()
+                .UsingConstructor(typeof(FilteringSettings));
+            containerBuilder.RegisterType<FiltersFactory>().As<IFiltersFactory>().SingleInstance();
+            containerBuilder.RegisterType<FilteringSettings>().AsSelf()
+                .UsingConstructor(typeof(IUI), typeof(IFiltersFactory));
+
 
             containerBuilder.RegisterType<ToInitFormFormatter>().As<IWordsFormatter>();
-            containerBuilder.RegisterType<FrequencyWordsWeighter>().As<IWordsWeighter>().SingleInstance();
+            containerBuilder.RegisterType<FrequencyWordsSizer>().As<IWordsSizer>().SingleInstance();
 
             containerBuilder.RegisterType<TagsCloudGeneratorSettings>()
                 .UsingConstructor
-                (typeof(IUI), typeof(IWordsFormatter), typeof(IWordsFilter), typeof(ITagsCloudLayouter),
-                    typeof(IWordsWeighter))
+                    (typeof(IUI), typeof(ITagsCloudLayouter), typeof(IWordsSizer))
                 .SingleInstance();
             containerBuilder.RegisterType<TagsCloudGenerator>().AsSelf()
                 .UsingConstructor(typeof(TagsCloudGeneratorSettings)).SingleInstance();
@@ -42,7 +49,7 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<TagsCloudLayouterSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<TagsCloudFactory>().As<ITagsCloudFactory>().SingleInstance();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>()
-                .UsingConstructor(typeof(TagsCloudLayouterSettings),typeof(ITagsCloudFactory)).SingleInstance();
+                .UsingConstructor(typeof(TagsCloudLayouterSettings), typeof(ITagsCloudFactory)).SingleInstance();
 
 
             containerBuilder.RegisterType<ImageSettings>().AsSelf().UsingConstructor(typeof(IUI)).SingleInstance();
