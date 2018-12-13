@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NHunspell;
@@ -17,11 +18,12 @@ namespace TagsCloudVisualization
 
         public WordCounter()
         {
+            var path = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
             try
             {
-                stopWords = Regex.Split(new TxtReader().Read("Stopwords.txt").ToLower(), @"\W+").ToList();
+                stopWords = Regex.Split(new TxtReader().Read(path + "\\Stopwords.txt").ToLower(), @"\W+").ToList();
             }
-            catch (Exception e)
+            catch
             {
                 stopWords = new List<string>();
             }
