@@ -11,9 +11,9 @@ namespace TagsCloudContainer.Layouting
 
         private readonly IEnumerator<Point> geometryEnumerator;
 
-        public CircularCloudLayouter(TagsCloudLayouterSettings settings)
+        public CircularCloudLayouter(TagsCloudLayouterSettings settings, ITagsCloudFactory tagsCloudFactory)
         {
-            TagsCloud = new TagsCloud(settings.Center);
+            TagsCloud = tagsCloudFactory.CreateTagsCloud(settings.Center);
             const double coefficients = 0.5;
             const double spiralStep = 0.05;
             var geometryObject = new ArchimedeanSpiral(settings.Center, coefficients, spiralStep);
@@ -45,8 +45,6 @@ namespace TagsCloudContainer.Layouting
             return currentRectangle;
         }
 
-       
-
 
         private Point GetNextPoint()
         {
@@ -59,7 +57,4 @@ namespace TagsCloudContainer.Layouting
             return TagsCloud.AddedRectangles.Any(rect => rect.IntersectsWith(rectangle));
         }
     }
-    
-
-   
 }

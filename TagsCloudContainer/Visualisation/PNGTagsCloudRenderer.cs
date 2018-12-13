@@ -49,7 +49,7 @@ namespace TagsCloudContainer.Visualisation
         public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
-            var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles);
+            var shiftedRectangles = ShiftRectanglesToMainQuarter(tagsCloud.AddedRectangles.ToList());
             var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
             var tagCloudToDraw = new TagsCloud(tagsCloud.Center, tagsCloudWords);
             var pictureSize = GetPictureSize(tagCloudToDraw);

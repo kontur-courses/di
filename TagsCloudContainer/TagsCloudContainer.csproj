@@ -86,6 +86,7 @@
     <Compile Include="Formatting\ToInitFormFormatter.cs" />
     <Compile Include="Formatting\ToLowerCaseFormatter.cs" />
     <Compile Include="ITagsCloud.cs" />
+    <Compile Include="ITagsCloudFactory.cs" />
     <Compile Include="Layouting\CircularCloudLayouter.cs" />
     <Compile Include="Layouting\ITagsCloudLayouter.cs" />
     <Compile Include="Layouting\TagsCloudLayouterSettings.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Reading\IWordsReader.cs" />
     <Compile Include="Reading\TxtWordsReader.cs" />
     <Compile Include="TagsCloud.cs" />
+    <Compile Include="TagsCloudFactory.cs" />
     <Compile Include="TagsCloudGeneratorSettings.cs" />
     <Compile Include="TagsCloudContainerApplication.cs" />
     <Compile Include="Tests\TagsCloudGeneratorTests.cs" />

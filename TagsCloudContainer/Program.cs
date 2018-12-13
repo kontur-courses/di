@@ -40,8 +40,9 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(TagsCloudGeneratorSettings)).SingleInstance();
 
             containerBuilder.RegisterType<TagsCloudLayouterSettings>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<TagsCloudFactory>().As<ITagsCloudFactory>().SingleInstance();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ITagsCloudLayouter>()
-                .UsingConstructor(typeof(TagsCloudLayouterSettings)).SingleInstance();
+                .UsingConstructor(typeof(TagsCloudLayouterSettings),typeof(ITagsCloudFactory)).SingleInstance();
 
 
             containerBuilder.RegisterType<ImageSettings>().AsSelf().UsingConstructor(typeof(IUI)).SingleInstance();

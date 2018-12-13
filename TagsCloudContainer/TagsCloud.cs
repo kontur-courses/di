@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Visualisation;
@@ -9,8 +10,11 @@ namespace TagsCloudContainer
     public class TagsCloud : ITagsCloud
     {
         public Point Center { get; }
-        public List<Rectangle> AddedRectangles { get; } = new List<Rectangle>();
-        public List<TagsCloudWord> AddedWords { get; } = new List<TagsCloudWord>();
+
+        public ReadOnlyCollection<Rectangle> AddedRectangles => new ReadOnlyCollection<Rectangle>(addedRectangles);
+        public ReadOnlyCollection<TagsCloudWord> AddedWords => new ReadOnlyCollection<TagsCloudWord>(addedWords);
+        private List<Rectangle> addedRectangles { get; } = new List<Rectangle>();
+        private List<TagsCloudWord> addedWords { get; } = new List<TagsCloudWord>();
 
 
         public TagsCloud(Point center)
@@ -29,7 +33,7 @@ namespace TagsCloudContainer
             var y = center.Y;
             if (x < 0 || y < 0)
                 throw new ArgumentException("Center coordinates should not be negative");
-            AddedRectangles = rectangles;
+            addedRectangles = rectangles;
         }
 
         public TagsCloud(Point center, List<TagsCloudWord> words)
@@ -38,18 +42,18 @@ namespace TagsCloudContainer
             var y = center.Y;
             if (x < 0 || y < 0)
                 throw new ArgumentException("Center coordinates should not be negative");
-            AddedRectangles = words.Select(w => w.Rectangle).ToList();
-            AddedWords = words;
+            addedRectangles = words.Select(w => w.Rectangle).ToList();
+            addedWords = words;
         }
 
         public void AddRectangle(Rectangle rectangle)
         {
-            AddedRectangles.Add(rectangle);
+            addedRectangles.Add(rectangle);
         }
 
         public void AddWord(TagsCloudWord word)
         {
-            AddedWords.Add(word);
+            addedWords.Add(word);
         }
     }
 }

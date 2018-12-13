@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Office.Interop.Word;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.Reading
 
@@ -15,9 +16,13 @@ namespace TagsCloudContainer.Reading
             Document document = application.Documents.Open(path);
 
             var result = new List<string>();
+            var rx = new Regex("(\\w+)(' '+)?");
+
             for (var i = 1; i <= document.Words.Count; i++)
             {
-                result.Add(document.Words[i].Text);
+                var word = rx.Match(document.Words[i].Text).Groups[0].Value;
+                if (word != "")
+                    result.Add(word);
             }
 
             application.Quit();

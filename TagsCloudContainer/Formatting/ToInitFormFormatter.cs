@@ -8,6 +8,7 @@ namespace TagsCloudContainer.Formatters
 {
     public class ToInitFormFormatter : IWordsFormatter
     {
+        
         public List<string> Format(List<string> words)
         {
             var result = new List<string>();
