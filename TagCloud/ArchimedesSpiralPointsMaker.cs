@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagCloud;
 
 
 namespace TagsCloudVisualization
 {
-    static class ArchimedesSpiralPointsMaker
+    class ArchimedesSpiralPointsMaker : IPointsMaker
     {
 
-        public static IEnumerable<Point> GenerateNextPoint(Point center, double spiralStep)
+        public IEnumerable<Point> GenerateNextPoint(Point center, double spiralStep)
         {
             yield return center;
             var angle = 0.0;
