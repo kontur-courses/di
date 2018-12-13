@@ -87,8 +87,9 @@ namespace TagCloud
             CheckFile("Words", arguments.WordsFileName, exceptions);
             CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
 
-            var format = Regex.Match(arguments.ImageFileName, ".+\\.(.+)$").Groups[1].Value;
-            CheckArgument(FileImageSaver.Formats.Keys, "image format", format, exceptions);
+            CheckFileExtension(TextFileReader.FormatReaders.Keys, arguments.WordsFileName, "text", exceptions);
+            CheckFileExtension(TextFileReader.FormatReaders.Keys, arguments.BoringWordsFileName, "text", exceptions);
+            CheckFileExtension(FileImageSaver.Formats.Keys, arguments.ImageFileName, "image", exceptions);
 
             CheckArgument(Colors, "words color", arguments.WordsColorName, exceptions);
             CheckArgument(Colors, "background color", arguments.BackgroundColorName, exceptions);
@@ -96,6 +97,12 @@ namespace TagCloud
 
             if (arguments.Multiplier <= 0)
                 exceptions.AppendLine("\tFont size multiplier should be positive");
+        }
+
+        private static void CheckFileExtension(ICollection<string> variants, string fileName, string formatName, StringBuilder exceptions)
+        {
+            var format = Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
+            CheckArgument(variants, $"{formatName} format", format, exceptions);
         }
 
         private static void CheckFile(string argumentName, string fileName, StringBuilder exceptions)
