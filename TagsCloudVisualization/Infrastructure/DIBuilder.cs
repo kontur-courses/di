@@ -4,6 +4,7 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using TagsCloudVisualization.Layouter;
+using TagsCloudVisualization.Visualizer;
 using TagsCloudVisualization.WordsProcessing;
 
 namespace TagsCloudVisualization.Infrastructure
@@ -19,11 +20,11 @@ namespace TagsCloudVisualization.Infrastructure
             container = BuildContainer();
         }
 
-        public ISaver<Bitmap> Resolve()
+        public ISaver<IVisualizer<IWordsCloudBuilder>> Resolve()
         {
             using (var scope = container.BeginLifetimeScope())
             {
-               return scope.Resolve<ISaver<Bitmap>>();
+               return scope.Resolve<ISaver<IVisualizer<IWordsCloudBuilder>>>();
             }
         }
 

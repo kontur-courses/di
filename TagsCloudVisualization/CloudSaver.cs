@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization
 {
-    public class CloudSaver : ISaver<Bitmap>
+    public class CloudSaver : ISaver<IVisualizer<IWordsCloudBuilder>>
     {
         private readonly Bitmap bitmapFile;
 
-        public CloudSaver(IVisualizer<Bitmap> visualizer)
+        public CloudSaver(IVisualizer<IWordsCloudBuilder> visualizer)
         {
             this.bitmapFile = visualizer.Draw();
         }

@@ -4,7 +4,7 @@ using TagsCloudVisualization.Layouter;
 
 namespace TagsCloudVisualization.Visualizer
 {
-    public class WordsCloudVisualizer : IVisualizer<Bitmap>
+    public class WordsCloudVisualizer : IVisualizer<IWordsCloudBuilder>
     {
         private readonly Color backgroundColor;
         private readonly Brush wordsColor;
