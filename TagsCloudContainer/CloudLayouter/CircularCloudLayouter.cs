@@ -25,8 +25,8 @@ namespace TagsCloudContainer.CloudLayouter
 
         private PointF GetCenter()
         {
-            var imageCenterByAbscissa = settings.ImageWidth / 2;
-            var imageCenterByOrdinate = settings.ImageHeight / 2;
+            var imageCenterByAbscissa = settings.ImageWidth / 2f;
+            var imageCenterByOrdinate = settings.ImageHeight / 2f;
 
             var userCenterByAbscissa = settings.CenterX;
             var userCenterByOrdinate = settings.CenterY;

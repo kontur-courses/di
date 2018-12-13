@@ -15,7 +15,7 @@ namespace TagsCloudContainer.TagFontSizeCalculator
 
         public float Calculate(int count, int maxCount)
         {
-            return (count / (float) maxCount) * (MaxFontSize - MinFontSize) + MinFontSize;
+            return (count / (float) (maxCount == 0 ? 1 : maxCount)) * (MaxFontSize - MinFontSize) + MinFontSize;
         }
     }
 }

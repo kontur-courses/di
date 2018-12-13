@@ -1,0 +1,1 @@
+﻿library:3 uncle:2 attitude:1 moment:1 shopping:1
