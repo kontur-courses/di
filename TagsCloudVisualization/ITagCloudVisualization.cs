@@ -14,6 +14,6 @@ namespace TagsCloudVisualization
         void SaveTagCloud(
             string bitmapName,
             string directory,
-            List<(string, int)> words);
+            Dictionary<string, int> words);
     }
 }

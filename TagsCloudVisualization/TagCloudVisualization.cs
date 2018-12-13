@@ -82,7 +82,7 @@ namespace TagsCloudVisualization
         public void SaveTagCloud(
             string bitmapName,
             string directory,
-            List<(string, int)> words)
+            Dictionary<string, int> words)
         {
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
@@ -90,7 +90,7 @@ namespace TagsCloudVisualization
             var wordsInCloud = new WordsCloudFiller(cloudLayouter, font).GetRectanglesForWordsInCloud(g, words);
 
             g.FillRectangle(Brushes.White, 0, 0, bitmapWidth, bitmapHeight);
-            DrawBackgroundEllipses(g, wordsInCloud.Select(w => w.rectangle));
+            DrawBackgroundEllipses(g, wordsInCloud.Select(w => w.Value.rectangle));
             DrawWordsOfCloud(g, wordsInCloud);
 
             bitmap.Save($"{directory}\\{bitmapName}.png", ImageFormat.Png);
@@ -132,16 +132,16 @@ namespace TagsCloudVisualization
 
         private void DrawWordsOfCloud(
             Graphics g,
-            List<(string word, Rectangle rectangle, Font font)> wordsInCloud)
+            Dictionary<string, (Rectangle rectangle, Font font)> wordsInCloud)
         {
             var num = 0;
             foreach (var pair in wordsInCloud)
             {
-                var rectangle = pair.rectangle;
-                var word = pair.word;
+                var rectangle = pair.Value.rectangle;
+                var word = pair.Key;
                 var brush = new SolidBrush(GetColorOfWord(num, wordsInCloud.Count));
 
-                g.DrawString(word, pair.font, brush, rectangle);
+                g.DrawString(word, pair.Value.font, brush, rectangle);
                 num++;
             }
         }

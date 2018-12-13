@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using TagsCloudPreprocessor;
+using TagsCloudPreprocessor.Preprocessors;
 using TagsCloudVisualization;
 
 namespace TagCloudContainer
@@ -7,28 +9,54 @@ namespace TagCloudContainer
     public class TagCloudProgram
     {
         private readonly Config config;
-        private readonly IPreprocessor preprocessor;
+        private readonly ITextParser parser;
+        private readonly IPreprocessor wordsExcluder;
+        private readonly IPreprocessor wordsStemer;
+        private readonly IFileReader fileReader;
         private readonly ITagCloudVisualization tagCloudVisualization;
-        
+
         public TagCloudProgram(
-            IPreprocessor preprocessor, 
-            ITagCloudVisualization tagCloudVisualization, 
+            ITagCloudVisualization tagCloudVisualization,
+            ITextParser parser,
+            IFileReader fileReader,
+            IPreprocessor wordsExcluder,
+            IPreprocessor wordsStemer,
             Config config)
         {
-            this.preprocessor = preprocessor;
             this.tagCloudVisualization = tagCloudVisualization;
             this.config = config;
+            this.wordsExcluder = wordsExcluder;
+            this.wordsStemer = wordsStemer;
+            this.fileReader = fileReader;
+            this.parser = parser;
         }
-        
+
         public void SaveTagCloud()
         {
-            var validWords = preprocessor
-                .GetValidWordsWithCount(config.InputFile, config.Count).ToList();
+            var words = parser
+                .GetWords(fileReader.ReadFromFile(config.InputFile))
+                .ToList();
+
+            words = wordsExcluder.PreprocessWords(words);
+            words = wordsStemer.PreprocessWords(words);
             
             tagCloudVisualization.SaveTagCloud(
                 config.FileName,
                 config.OutPath,
-                validWords);
+                GetFrequencyDictionary(words));
+        }
+
+        private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
+        {
+            var frequencyDictionary = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (!frequencyDictionary.ContainsKey(word))
+                    frequencyDictionary[word] = 1;
+                frequencyDictionary[word]++;
+            }
+
+            return frequencyDictionary;
         }
     }
 }

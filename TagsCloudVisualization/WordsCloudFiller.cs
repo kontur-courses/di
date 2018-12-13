@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
@@ -16,28 +17,28 @@ namespace TagsCloudVisualization
             parentFont = font;
         }
 
-        public List<(string word, Rectangle rectangle, Font font)> GetRectanglesForWordsInCloud(
+        public Dictionary<string, (Rectangle rectangle, Font font)> GetRectanglesForWordsInCloud(
             Graphics g,
-            List<(string Word, int CountInText)> words)
+            Dictionary<string, int> words)
         {
-            var maxFrequency = words[0].Item2;
+            var maxFrequency = words.First().Value;
 
             var maxFontSize = parentFont.Size;
             var minFontSize = maxFontSize / Coefficient;
 
             var font = parentFont;
 
-            var rectangles = new List<(string word, Rectangle rectangle, Font font)>();
+            var rectangles = new Dictionary<string, (Rectangle rectangle, Font font)>();
 
             foreach (var word in words)
             {
                 font = new Font(font.Name,
-                    (minFontSize + (maxFontSize - minFontSize) * ((float) word.CountInText / maxFrequency)));
-                var size = g.MeasureString(word.Word, font);
+                    (minFontSize + (maxFontSize - minFontSize) * ((float) word.Value / maxFrequency)));
+                var size = g.MeasureString(word.Key, font);
                 var rec = cloudLayouter.PutNextRectangle(
                     new Size((int) Math.Ceiling(size.Width), (int) Math.Ceiling(size.Height)));
 
-                rectangles.Add((word.Word, rec, font));
+                rectangles[word.Key] = (rec, font);
             }
 
             return rectangles;

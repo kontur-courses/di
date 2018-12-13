@@ -1,6 +1,8 @@
 ﻿using System;
 using Autofac;
+using Autofac.Core;
 using TagsCloudPreprocessor;
+using TagsCloudPreprocessor.Preprocessors;
 using TagsCloudVisualization;
 
 namespace TagCloudContainer
@@ -15,13 +17,11 @@ namespace TagCloudContainer
 
             builder.RegisterType<ConsoleClient>().As<IUserInterface>();
 
-            builder.RegisterType<Config>().AsSelf().SingleInstance();
-
             builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<TextParser>().As<ITextParser>();
-            builder.RegisterType<SimpleWordsValidator>().As<IWordsValidator>();
-            builder.RegisterType<Preprocessor>().As<IPreprocessor>();
+            builder.RegisterType<WordsExcluder>().Named<IPreprocessor>("WordsExcluder");
+            builder.RegisterType<WordsStemer>().Named<IPreprocessor>("WordsStemer");
 
             builder.RegisterType<ArchimedesSpiral>()
                 .WithParameter("center", config.Center)
@@ -39,7 +39,17 @@ namespace TagCloudContainer
                 .As<ITagCloudVisualization>();
 
             builder.RegisterType<TagCloudProgram>()
-                .WithParameter("config", config)
+                .WithParameters(
+                    new Parameter[]
+                    {
+                        new NamedParameter("config", config),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "wordsExcluder",
+                            (pi, ctx) => ctx.ResolveNamed<IPreprocessor>("WordsExcluder")),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "wordsStemer",
+                            (pi, ctx) => ctx.ResolveNamed<IPreprocessor>("WordsStemer")),
+                    })
                 .AsSelf();
 
             container = builder.Build();
@@ -53,7 +63,7 @@ namespace TagCloudContainer
                 Environment.Exit(0);
 
             InitContainer(config);
-            
+
             container.Resolve<TagCloudProgram>().SaveTagCloud();
         }
     }
