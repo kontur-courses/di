@@ -18,7 +18,7 @@ namespace TagCloud.Processor
             var validatedWords = words
                 .Select(word => word.ToLower())
                 .Where(word => !boringWords.Contains(word));
-            using (var hunspell = new Hunspell(@"..\..\ru.aff", @"..\..\ru.dic"))
+            using (var hunspell = new Hunspell(@"..\..\Dictionaries\ru.aff", @"..\..\Dictionaries\ru.dic"))
             {
                 foreach (var word in validatedWords)
                 {
