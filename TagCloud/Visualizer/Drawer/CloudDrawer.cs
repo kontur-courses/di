@@ -8,8 +8,6 @@ namespace TagCloud.Visualizer.Drawer
 {
     public class CloudDrawer : ICloudDrawer
     {
-        private Graphics graphics;
-
         private readonly StringFormat format = new StringFormat(StringFormat.GenericTypographic)
         {
             Alignment = StringAlignment.Center,
@@ -19,19 +17,17 @@ namespace TagCloud.Visualizer.Drawer
 
         public void Draw(Graphics graphics, IList<CloudItem> cloudItems, IDrawSettings settings)
         {
-            this.graphics = graphics;
-
             if (settings.DrawFormat != DrawFormat.OnlyWords)
                 graphics.DrawRectangles(Pens.Black, cloudItems.Select(t => t.Bounds).ToArray());
 
             if (settings.DrawFormat == DrawFormat.OnlyWords || settings.DrawFormat == DrawFormat.WordsInRectangles)
-                DrawAsString(cloudItems, settings);
+                DrawAsString(graphics, cloudItems, settings);
 
             if (settings.DrawFormat == DrawFormat.RectanglesWithNumeration)
-                DrawNumeration(cloudItems, settings);
+                DrawNumeration(graphics, cloudItems, settings);
         }
 
-        private void DrawAsString(IEnumerable<CloudItem> cloudItems, IDrawSettings settings)
+        private void DrawAsString(Graphics graphics, IEnumerable<CloudItem> cloudItems, IDrawSettings settings)
         {
             foreach (var cloudItem in cloudItems)
             {
@@ -44,7 +40,7 @@ namespace TagCloud.Visualizer.Drawer
             }
         }
 
-        private void DrawNumeration(IList<CloudItem> cloudItems, IDrawSettings settings)
+        private void DrawNumeration(Graphics graphics, IList<CloudItem> cloudItems, IDrawSettings settings)
         {
             for (var i = 0; i < cloudItems.Count; i++)
             {
