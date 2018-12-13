@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagCloud.Data
+﻿namespace TagCloud.Data
 {
     public class Arguments
     {

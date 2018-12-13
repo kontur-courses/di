@@ -19,12 +19,6 @@ namespace TagCloud
 {
     public class Program
     {
-        private static readonly string Help =
-            "Program to generate tag cloud\n" +
-            $"USAGE: {AppDomain.CurrentDomain.FriendlyName} -w WordsFile -b BoringWordsFile -i ResultImageName " +
-            "[-m FontSizeMultiplier] [-c WordsColor] [-g BackgroundColor] [-f FontFamily] [-s]\n\n" +
-            "\t-s\tsave to clipboard\n";
-
         private static readonly HashSet<string> Colors = new HashSet<string>(
             typeof(Color)
                 .GetProperties()

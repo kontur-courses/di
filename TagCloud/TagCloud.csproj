@@ -70,10 +70,8 @@
     <Compile Include="Drawer\IRectanglesDrawer.cs" />
     <Compile Include="Processor\IWordsProcessor.cs" />
     <Compile Include="Processor\RussianWordsProcessor.cs" />
-    <Compile Include="Processor\WordsProcessor.cs" />
     <Compile Include="Reader\IWordsFileReader.cs" />
     <Compile Include="Reader\TextFileReader.cs" />
-    <Compile Include="Reader\TxtWordsFileReader.cs" />
     <Compile Include="RectanglesLayouter\CircularCloudLayouter.cs" />
     <Compile Include="RectanglesLayouter\IRectangleLayouter.cs" />
     <Compile Include="RectanglesLayouter\PointsGenerator\IPointsGenerator.cs" />
