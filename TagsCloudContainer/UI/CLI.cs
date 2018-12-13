@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using CommandLine;
+using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer.UI
 {
@@ -15,18 +16,20 @@ namespace TagsCloudContainer.UI
         public Point TagsCloudCenter { get; private set; }
         public Size LetterSize { get; private set; }
         public Color TextColor { get; private set; }
+        public List<Color> PartsOfSpeechColors { get; }
         public Size ImageSize { get; private set; }
 
 
         public CLI(string[] args)
         {
-            InputPath = AppDomain.CurrentDomain.BaseDirectory+ "\\hello.docx";
+            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\hello.docx";
             OutputPath = "output.png";
             BlacklistPath = "blacklist.txt";
             TagsCloudCenter = new Point(500, 500);
             ImageSize = new Size(1920, 1280);
             TextColor = Color.DarkBlue;
             LetterSize = new Size(16, 20);
+            PartsOfSpeechColors = new List<Color>() {Color.DarkBlue, Color.DarkSlateGray, Color.Firebrick, Color.Black};
 
 
             ParseArguments(args);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using TagsCloudContainer.Visualisation;
 using TagsCloudContainer.Filtering;
@@ -11,6 +9,7 @@ using TagsCloudContainer.Sizing;
 using TagsCloudContainer.TagsCloudGenerating;
 using TagsCloudContainer.TagsClouds;
 using TagsCloudContainer.UI;
+using TagsCloudContainer.Visualisation.Coloring;
 
 namespace TagsCloudContainer
 {
@@ -54,7 +53,10 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<PngTagsCloudRenderer>().As<ITagsCloudRenderer>()
                 .UsingConstructor(typeof(ImageSettings)).SingleInstance();
 
-
+            containerBuilder.RegisterType<MonoColorManager>().As<IColorManager>()
+                .UsingConstructor(typeof(MonoColorManagerSettings));
+            containerBuilder.RegisterType<MonoColorManagerSettings>().AsSelf();
+                
             containerBuilder.RegisterType<TagsCloudContainerApplication>().AsSelf().SingleInstance();
             var containerApplication = containerBuilder.Build();
             var app = containerApplication.Resolve<TagsCloudContainerApplication>();

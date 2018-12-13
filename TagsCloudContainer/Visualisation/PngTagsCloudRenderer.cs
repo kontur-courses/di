@@ -11,7 +11,9 @@ namespace TagsCloudContainer.Visualisation
         private readonly Size boundary = new Size(100, 100);
         private readonly FontFamily fontFamily;
         private readonly Color textColor;
+        private readonly IColorManager colorManager;
         private readonly Size pictureSize;
+        private readonly Dictionary<TagsCloudWord, Color> wordsColors;
 
         public PngTagsCloudRenderer(ImageSettings imageSettings)
         {
@@ -20,50 +22,57 @@ namespace TagsCloudContainer.Visualisation
             fontFamily = imageSettings.FontFamily;
         }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, bool autosize = false)
+        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, IColorManager colorManager,
+            bool autosize = false)
         {
+            var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             if (autosize)
             {
-                RenderIntoFileAutosize(filePath, tagsCloud);
+                RenderIntoFileAutosize(filePath, tagsCloud, colorManager);
                 return;
             }
+
+            var wordsColors = colorManager.GetWordsColors(tagsCloud.AddedWords.ToList());
+
 
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
             using (Graphics obj = Graphics.FromImage(btm))
             {
                 foreach (var tagsCloudWord in tagsCloud.AddedWords)
                 {
-                    DrawWord(obj, tagsCloudWord);
+                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord]);
                 }
 
                 btm.Save(filePath);
             }
         }
 
-        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord)
+        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord, Color color)
         {
             var rectangle = tagsCloudWord.Rectangle;
             var fontSize = rectangle.Height;
             graphics.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
-                new SolidBrush(textColor),
+                new SolidBrush(color),
                 new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
         }
 
-        public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud)
+        public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud, IColorManager colorManager)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles =
                 ShiftRectanglesToMainQuarter(tagsCloud.AddedWords.Select(x => x.Rectangle).ToList());
             var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
-            var tagCloudToDraw = new TagsCloud(tagsCloudWords);
-            var pictureSize = GetPictureSize(tagCloudToDraw);
+            var tagsCloudToDraw = new TagsCloud(tagsCloudWords);
+            var wordsColors = colorManager.GetWordsColors(tagsCloudToDraw.AddedWords.ToList());
+
+            var pictureSize = GetPictureSize(tagsCloudToDraw);
 
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
             using (Graphics obj = Graphics.FromImage(btm))
             {
-                foreach (var tagsCloudWord in tagCloudToDraw.AddedWords)
+                foreach (var tagsCloudWord in tagsCloudToDraw.AddedWords)
                 {
-                    DrawWord(obj, tagsCloudWord);
+                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord]);
                 }
 
                 btm.Save(filePath);

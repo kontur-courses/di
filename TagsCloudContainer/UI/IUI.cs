@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer.UI
 {
@@ -11,5 +13,6 @@ namespace TagsCloudContainer.UI
         Size LetterSize { get; }
         Size ImageSize { get; }
         Color TextColor { get; }
+        List<Color> PartsOfSpeechColors { get; }
     }
 }

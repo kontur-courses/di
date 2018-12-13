@@ -116,6 +116,9 @@
     <Compile Include="UI\CLI.cs" />
     <Compile Include="UI\IUI.cs" />
     <Compile Include="Visualisation\ArchimedeanSpiral.cs" />
+    <Compile Include="Visualisation\Coloring\MonoColorManager.cs" />
+    <Compile Include="Visualisation\Coloring\MonoColorManagerSettings.cs" />
+    <Compile Include="Visualisation\IColorManager.cs" />
     <Compile Include="Visualisation\ImageSettings.cs" />
     <Compile Include="Visualisation\ITagsCloudRenderer.cs" />
     <Compile Include="Visualisation\PngTagsCloudRenderer.cs" />
