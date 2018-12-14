@@ -7,14 +7,14 @@ using TagCloud.Data;
 
 namespace TagCloud.Drawer
 {
-    public class Drawer : IWordsDrawer, IRectanglesDrawer
+    public class CloudDrawer : IWordsDrawer, IRectanglesDrawer
     {
         private const int SideShift = 10;
         private const int MaximumSize = 4000;
 
         private readonly IColorPicker colorPicker;
 
-        public Drawer(IColorPicker colorPicker)
+        public CloudDrawer(IColorPicker colorPicker)
         {
             this.colorPicker = colorPicker;
         }

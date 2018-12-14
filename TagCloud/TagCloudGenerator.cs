@@ -13,7 +13,7 @@ namespace TagCloud
     public class TagCloudGenerator
     {
         private readonly IWordsFileReader wordsFileReader;
-        private readonly IWordsProcessor processor;
+        private readonly IEnumerable<IWordsProcessor> processors;
         private readonly IWordsCounter counter;
         private readonly IWordsLayouter wordsLayouter;
         private readonly IWordsDrawer wordsDrawer;
@@ -23,14 +23,14 @@ namespace TagCloud
             IWordsLayouter wordsLayouter,
             IWordsDrawer wordsDrawer,
             IWordsFileReader wordsFileReader,
-            IWordsProcessor processor, 
+            IEnumerable<IWordsProcessor> processors, 
             IWordsCounter counter,
             IEnumerable<IImageSaver> savers)
         {
             this.wordsLayouter = wordsLayouter;
             this.wordsDrawer = wordsDrawer;
             this.wordsFileReader = wordsFileReader;
-            this.processor = processor;
+            this.processors = processors;
             this.counter = counter;
             this.savers = savers;
         }
@@ -42,7 +42,10 @@ namespace TagCloud
             var backgroundColor = Color.FromName(arguments.BackgroundColorName);
             var font = new FontFamily(arguments.FontFamilyName);
 
-            var wordInfos = counter.GetWordsInfo(processor.Process(words));
+            foreach (var wordsProcessor in processors)
+                words = wordsProcessor.Process(words);
+
+            var wordInfos = counter.GetWordsInfo(words);
             var layout = wordsLayouter.GenerateLayout(wordInfos, font, arguments.Multiplier);
             var image = wordsDrawer.CreateImage(layout, wordsColor, backgroundColor);
 

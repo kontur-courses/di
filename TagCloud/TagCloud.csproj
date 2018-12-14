@@ -68,8 +68,10 @@
     <Compile Include="Counter\WordsCounter.cs" />
     <Compile Include="Data\Arguments.cs" />
     <Compile Include="Drawer\IRectanglesDrawer.cs" />
+    <Compile Include="Processor\BoringWordsProcessor.cs" />
     <Compile Include="Processor\IWordsProcessor.cs" />
-    <Compile Include="Processor\RussianWordsProcessor.cs" />
+    <Compile Include="Processor\StemWordsProcessor.cs" />
+    <Compile Include="Processor\WordsToLowerProcessor.cs" />
     <Compile Include="Reader\IWordsFileReader.cs" />
     <Compile Include="Reader\TextFileReader.cs" />
     <Compile Include="RectanglesLayouter\CircularCloudLayouter.cs" />
@@ -87,8 +89,8 @@
     <Compile Include="TagCloudGenerator.cs" />
     <Compile Include="Data\WordImageInfo.cs" />
     <Compile Include="Data\WordInfo.cs" />
-    <Compile Include="Drawer\Drawer.cs" />
-    <Compile Include="WordsLayouter\WordsLayouter.cs" />
+    <Compile Include="Drawer\CloudDrawer.cs" />
+    <Compile Include="WordsLayouter\CloudWordsLayouter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

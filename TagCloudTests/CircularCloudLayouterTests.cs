@@ -43,7 +43,7 @@ namespace TagCloudTests
                 return;
             var fileName = $"{TestContext.CurrentContext.Test.Name}TestLayout.png";
             var path = $"{TestContext.CurrentContext.WorkDirectory}/{fileName}";
-            new Drawer(new ColorPicker()).CreateImage(layouter.Rectangles).Save(fileName);
+            new CloudDrawer(new ColorPicker()).CreateImage(layouter.Rectangles).Save(fileName);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 

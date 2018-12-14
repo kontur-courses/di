@@ -6,11 +6,11 @@ using TagCloud.RectanglesLayouter;
 
 namespace TagCloud.WordsLayouter
 {
-    public class WordsLayouter : IWordsLayouter
+    public class CloudWordsLayouter : IWordsLayouter
     {
         private readonly IRectangleLayouter rectangleLayouter;
 
-        public WordsLayouter(IRectangleLayouter rectangleLayouter)
+        public CloudWordsLayouter(IRectangleLayouter rectangleLayouter)
         {
             this.rectangleLayouter = rectangleLayouter;
         }

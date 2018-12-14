@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Autofac;
 using Fclp;
 using TagCloud.ColorPicker;
+using TagCloud.Counter;
 using TagCloud.Data;
+using TagCloud.Drawer;
 using TagCloud.Processor;
 using TagCloud.Reader;
+using TagCloud.RectanglesLayouter;
 using TagCloud.RectanglesLayouter.PointsGenerator;
 using TagCloud.Saver;
+using TagCloud.WordsLayouter;
 
 namespace TagCloud
 {
@@ -132,20 +135,28 @@ namespace TagCloud
 
         public static void SetUpContainer(ContainerBuilder builder, Arguments arguments)
         {
-            builder
-                .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(type => type != typeof(ClipboardImageSaver) || arguments.ToEnableClipboardSaver)
-                .AsImplementedInterfaces()
-                .AsSelf();
+            builder.RegisterType<TagCloudGenerator>().AsSelf();
+
+            builder.RegisterType<CloudWordsLayouter>().As<IWordsLayouter>();
+            builder.RegisterType<CloudDrawer>().As<IWordsDrawer>();
+            builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
+            builder.RegisterType<WordsCounter>().As<IWordsCounter>();
+            builder.RegisterType<FileImageSaver>().As<IImageSaver>();
+            builder.RegisterType<ClipboardImageSaver>().As<IImageSaver>();
+
+            builder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             builder.Register(c => new Point()).As<Point>();
             builder.Register(c => new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
-            builder.RegisterType<TextFileReader>().As<IWordsFileReader>();
+
             builder.RegisterType<BrightnessColorPicker>().As<IColorPicker>();
+
+            builder.RegisterType<WordsToLowerProcessor>().As<IWordsProcessor>();
             builder
-                .Register(c => new RussianWordsProcessor(c
+                .Register(c => new BoringWordsProcessor(c
                     .Resolve<IWordsFileReader>()
                     .Read(arguments.BoringWordsFileName)))
                 .As<IWordsProcessor>();
+            builder.RegisterType<StemWordsProcessor>().As<IWordsProcessor>();
         }
     }
 }
