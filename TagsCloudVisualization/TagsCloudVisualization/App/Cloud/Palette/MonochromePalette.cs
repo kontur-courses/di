@@ -5,8 +5,13 @@ namespace TagsCloudVisualization
 {
     public class MonochromePalette : IWordPalette
     {
-        public Color BackColor { get; set; }
-        public Color WordColor { get; set; }
+        public Color BackColor { get; set; } = Color.White;
+        public Color WordColor { get; set; } = Color.Black;
+
+        public MonochromePalette()
+        {
+
+        }
 
         public MonochromePalette(Color wordColor, Color backColor)
         {

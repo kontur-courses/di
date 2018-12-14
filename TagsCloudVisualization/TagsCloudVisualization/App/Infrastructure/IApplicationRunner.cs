@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
-    public interface ICloudGenerator
+    public interface IApplicationRunner
     {
+        void Run(IApplication application, string[] args);
     }
 }

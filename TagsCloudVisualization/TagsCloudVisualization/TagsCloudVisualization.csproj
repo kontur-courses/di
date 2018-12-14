@@ -62,11 +62,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Infrastructure\ConsoleApplicationRunner.cs" />
+    <Compile Include="App\Infrastructure\FormApplicationRunner.cs" />
     <Compile Include="App\Cloud\Image\IImageSettings.cs" />
     <Compile Include="App\Cloud\Palette\GradientPalette.cs" />
     <Compile Include="App\Cloud\Words\GraphicWord.cs" />
     <Compile Include="App\Cloud\Layouters\ICloudLayouter.cs" />
-    <Compile Include="App\ConsoleCloudGenerator.cs" />
+    <Compile Include="App\ConsoleApplication.cs" />
     <Compile Include="App\FileWorkers\IFileReader.cs" />
     <Compile Include="App\FileWorkers\ImageSaver.cs" />
     <Compile Include="App\Cloud\Layouters\CircularCloudLayouter.cs" />
@@ -79,7 +81,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="App\Cloud\Words\NWordSizer.cs" />
-    <Compile Include="App\ICloudGenerator.cs" />
+    <Compile Include="App\Infrastructure\IApplicationRunner.cs" />
+    <Compile Include="App\Infrastructure\IApplication.cs" />
     <Compile Include="App\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App\Cloud\Words\LinearSizer.cs" />

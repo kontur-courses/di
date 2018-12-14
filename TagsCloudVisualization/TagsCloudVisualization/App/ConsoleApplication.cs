@@ -8,7 +8,7 @@ using Fclp;
 
 namespace TagsCloudVisualization
 {
-    public class ConsoleCloudGenerator : ICloudGenerator
+    public class ConsoleApplication : IApplication
     {
         private IFileReader fileReader;
         private IVisualizer visualizer;
@@ -19,9 +19,9 @@ namespace TagsCloudVisualization
         private IImageSettings imageSettings;
         private string path;
 
-        public ConsoleCloudGenerator(IFileReader fileReader, IVisualizer visualizer, 
+        public ConsoleApplication(IFileReader fileReader, IVisualizer visualizer, 
             IWordPalette wordPalette, ISizeDefiner sizeDefiner, 
-            IImageSettings imageSettings, ICloudLayouter cloudLayouter, string[] args)
+            IImageSettings imageSettings, ICloudLayouter cloudLayouter)
         {
             this.fileReader = fileReader;
             this.visualizer = visualizer;
@@ -29,9 +29,6 @@ namespace TagsCloudVisualization
             this.sizeDefiner = sizeDefiner;
             this.cloudLayouter = cloudLayouter;
             this.imageSettings = imageSettings;
-
-            ParseArguments(args);
-            GenerateImage();
         }
 
         private void ParseArguments(string[] args)
@@ -52,8 +49,10 @@ namespace TagsCloudVisualization
 
         }
 
-        private void GenerateImage()
+        public void GenerateImage(string[] args)
         {
+            ParseArguments(args);
+
             var file = fileReader.Read(path);
             var words = counter.Count(true, file);
             cloudLayouter.Process(words, sizeDefiner, imageSettings.Center);
