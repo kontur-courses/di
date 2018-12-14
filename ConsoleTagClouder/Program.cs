@@ -27,7 +27,7 @@ namespace ConsoleTagClouder
             }
             catch (Exception e)
             {                
-                Console.WriteLine("Making cloud failed because  following errors occured:");
+                Console.WriteLine("Making cloud failed because following errors occured:");
                 Console.WriteLine(e);
                 throw;
             }
@@ -35,7 +35,7 @@ namespace ConsoleTagClouder
 
         private static void MakeCloud(AppSettings settings)
         {
-            var clouder = CloudMaker.Create(settings.BuildClouderSettings());
+            var clouder = Cloud.CreateMaker(settings.BuildClouderSettings());
             clouder.UpdateWith(File.ReadAllText(settings.SourcePath));
             using (var map = clouder.DrawCloud())
                 map.Save(settings.TargetPath,ImageFormat.Png);

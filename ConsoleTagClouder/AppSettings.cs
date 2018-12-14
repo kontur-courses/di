@@ -52,9 +52,6 @@ namespace ConsoleTagClouder
         public ClouderSettings BuildClouderSettings()
         {
             var settings = ClouderSettings.Default();
-            var settingsOptions = GetType().GetProperties()
-                .Where(p => Attribute.IsDefined(p, typeof(AppSettingsOption)))
-                .Where(p=>p.GetValue(this) != null);
 
             //TODO make it pretty 
             if (TLayouter != null)

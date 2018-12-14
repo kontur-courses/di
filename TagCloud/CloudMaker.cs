@@ -14,24 +14,10 @@ namespace TagCloud
 {
     public class CloudMaker
     {
-        public static CloudMaker Create(ClouderSettings settings)
-        {
-            var container = new ContainerBuilder();
-            container.Register(c=>settings.DrawingSettings).AsSelf();
-            container.RegisterType(settings.TCounter).As<IWordsCounter>();
-            container.RegisterType(settings.TLayouter).As<ICloudLayouter>();            
-            container.RegisterType<CloudDrawer>().AsSelf();
-            container.RegisterType<CloudMaker>().AsSelf();
-            return (CloudMaker) container.Build().Resolve(typeof(CloudMaker));
-        }
-
-        public static CloudMaker CreateDefault() =>
-            CloudMaker.Create(ClouderSettings.Default());
         
         private readonly IWordsCounter counter;
         private readonly IWeightScaler scaler;
         private readonly CloudDrawer drawer;
-
 
         public CloudMaker(IWordsCounter counter, IWeightScaler scaler, CloudDrawer drawer)
         {

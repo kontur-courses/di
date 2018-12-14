@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cloud.cs" />
     <Compile Include="ClouderSettings.cs" />
     <Compile Include="CloudDrawer.cs" />
     <Compile Include="CloudMaker.cs" />
