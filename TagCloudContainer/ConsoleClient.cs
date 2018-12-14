@@ -45,8 +45,12 @@ namespace TagCloudContainer
             [Option("out-path", HelpText = "Path to output directory.")]
             public string OutPath { get; set; }
 
+            [Option("img-ext", Default = "png", HelpText = "Extension of image to save.")]
+            public string ImageExtension{ get; set; }
+
             [Value(0, Required = true, HelpText = "Path to input file.")]
             public string PathToSave { get; set; }
+            
 
             //ToDo Выбор разрешения сохраняемого файла
         }
@@ -60,31 +64,17 @@ namespace TagCloudContainer
             //ToDo Выбор разрешения сохраняемого файла
         }
 
-        private Config GetConfig(SaveOptions opts)
-        {
-            var center = new Point(500, 500);
-            
-            var fontName = opts.FontName;
-            var fontSize = opts.FontSize;
-            var count = opts.Count;
-            var inputFile = opts.PathToSave;
-            var fileName = opts.FileName;
-            var outPath = opts.OutPath ?? Environment.CurrentDirectory;
-            var font = new Font(fontName, fontSize);
-            var color = Color.FromName(opts.Color);
-            var backgroundColor = Color.FromName(opts.BackgroundColor);
-            
-            return new Config(
-                center,
-                inputFile,
-                count,
-                font,
-                fileName,
-                outPath,
-                color,
-                backgroundColor);
-        }
-        
+        private Config GetConfig(SaveOptions opts) => new Config(
+            new Point(500, 500),
+            opts.PathToSave,
+            opts.Count,
+            new Font(opts.FontName, opts.FontSize),
+            opts.FileName,
+            opts.OutPath ?? Environment.CurrentDirectory,
+            Color.FromName(opts.Color),
+            Color.FromName(opts.BackgroundColor),
+            opts.ImageExtension);
+
         private void HandleArgs()
         {
             var saveOptions = typeof(SaveOptions);

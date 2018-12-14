@@ -44,7 +44,10 @@ namespace TagCloudContainer
                             (pi, ctx) => ctx.Resolve<IUserInterface>().Config.Color),
                         new ResolvedParameter(
                             (pi, ctx) => pi.Name == "backgroundColor",
-                            (pi, ctx) => ctx.Resolve<IUserInterface>().Config.BackgroundColor)
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().Config.BackgroundColor),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "imageExtension",
+                            (pi, ctx) => ctx.Resolve<IUserInterface>().Config.ImageExtension)
                     })
                 .As<ITagCloudVisualization>();
 

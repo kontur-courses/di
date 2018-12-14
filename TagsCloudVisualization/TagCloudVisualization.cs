@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Reflection;
 
 namespace TagsCloudVisualization
 {
@@ -12,8 +13,10 @@ namespace TagsCloudVisualization
             ICloudLayouter cloudLayouter,
             Font font,
             Color color,
-            Color backgroundColor)
+            Color backgroundColor,
+            string imageExtension)
         {
+            this.imageExtension = imageExtension;
             this.font = font;
             this.color = color;
             this.backgroundColor = backgroundColor;
@@ -56,6 +59,7 @@ namespace TagsCloudVisualization
         private readonly Color color;
         private readonly Color backgroundColor;
         private readonly ICloudLayouter cloudLayouter;
+        private readonly string imageExtension;
         
         private readonly int bitmapWidth;
         private readonly int bitmapHeight;
@@ -73,7 +77,7 @@ namespace TagsCloudVisualization
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             var g = Graphics.FromImage(bitmap);
             DrawBackgroundRectangles(g, rectangles, center);
-            var path = $"{directory}\\{bitmapName}-{rectangles.Count}.png";
+            var path = $"{directory}\\{bitmapName}-{rectangles.Count}.{imageExtension}";
 
             bitmap.Save(path, ImageFormat.Png);
         }
@@ -94,7 +98,20 @@ namespace TagsCloudVisualization
             DrawBackgroundEllipses(g, wordsInCloud.Select(w => w.Value.rectangle));
             DrawWordsOfCloud(g, wordsInCloud);
 
-            bitmap.Save($"{directory}\\{bitmapName}.png", ImageFormat.Png);
+            var imageFormat = ParseImageFormat(imageExtension);
+            if (imageFormat == null)
+            {
+                Console.WriteLine("Invalid image format. Tag cloud was save in .png");
+                imageFormat = ImageFormat.Png;
+            }
+            bitmap.Save($"{directory}\\{bitmapName}.{imageExtension}", imageFormat);
+        }
+
+        private static ImageFormat ParseImageFormat(string str)
+        {
+            return (ImageFormat)typeof(ImageFormat)
+                .GetProperty(str, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase)
+                ?.GetValue(null);
         }
 
         private void DrawBackgroundEllipses(
