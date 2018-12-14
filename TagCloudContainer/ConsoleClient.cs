@@ -1,13 +1,28 @@
 ﻿using System;
 using System.Drawing;
 using CommandLine;
-using CommandLine.Text;
+using TagsCloudPreprocessor;
 
 namespace TagCloudContainer
 {
     public class ConsoleClient : IUserInterface
     {
-        private class Options
+        private readonly string[] args;
+        private readonly IWordExcluder wordExcluder;
+        private bool toExit = true;
+        public Config Config { get; private set; }
+        
+        public ConsoleClient(string[] args, IWordExcluder wordExcluder)
+        {
+            this.args = args;
+            this.wordExcluder = wordExcluder;
+            HandleArgs();
+            if (toExit)
+                Environment.Exit(0);
+        }
+
+        [Verb("save", HelpText = "Save tag cloud.")]
+        private class SaveOptions
         {
             [Option('c', "count", Default = 70, HelpText = "Count of tags in cloud.")]
             public int Count { get; set; }
@@ -32,41 +47,32 @@ namespace TagCloudContainer
 
             [Value(0, Required = true, HelpText = "Path to input file.")]
             public string PathToSave { get; set; }
-            //ToDo Сделать вызов help с ключем -h
-            //ToDo Сделать режимы работы (сохранение картинки, добавление слов в исключенные)
-            //ToDo Сделать выбор языка
+
             //ToDo Выбор разрешения сохраняемого файла
-            //ToDo Пофиксить баг, что после запуска программы с --help -- version начинается создание облака тегов 
+        }
+        
+        [Verb("exclude", HelpText = "Exclude word from drawing.")]
+        private class ExcludeOptions
+        {
+            [Value(0, Required = true, HelpText = "Word to exclude.")]
+            public string Word{ get; set; }
+
+            //ToDo Выбор разрешения сохраняемого файла
         }
 
-        public Config GetConfig(string[] args, out bool toExit)
+        private Config GetConfig(SaveOptions opts)
         {
-            toExit = false;
             var center = new Point(500, 500);
-            string inputFile = null;
-            var count = 20;
-            var fileName = "SimpleCloud";
-            var outPath = "";
-            var font = new Font("Times New Roman", 40.0f);
-            var color = Color.Black;
-            var backgroundColor = Color.FromArgb(0, Color.White);
-
-            Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(o =>
-                {
-                    var fontName = o.FontName;
-                    var fontSize = o.FontSize;
-                    count = o.Count;
-                    inputFile = o.PathToSave;
-                    fileName = o.FileName;
-                    outPath = o.OutPath ?? Environment.CurrentDirectory;
-                    font = new Font(fontName, fontSize);
-                    color = Color.FromName(o.Color);
-                    backgroundColor = Color.FromName(o.BackgroundColor);
-                });
-
-            if (inputFile == null)
-                toExit = true;
+            
+            var fontName = opts.FontName;
+            var fontSize = opts.FontSize;
+            var count = opts.Count;
+            var inputFile = opts.PathToSave;
+            var fileName = opts.FileName;
+            var outPath = opts.OutPath ?? Environment.CurrentDirectory;
+            var font = new Font(fontName, fontSize);
+            var color = Color.FromName(opts.Color);
+            var backgroundColor = Color.FromName(opts.BackgroundColor);
             
             return new Config(
                 center,
@@ -77,6 +83,31 @@ namespace TagCloudContainer
                 outPath,
                 color,
                 backgroundColor);
+        }
+        
+        private void HandleArgs()
+        {
+            var saveOptions = typeof(SaveOptions);
+            var excludeOptions = typeof(ExcludeOptions);
+            
+            Parser.Default.ParseArguments(args, saveOptions, excludeOptions).WithParsed(
+                (opts) =>
+                {
+                    if (opts.GetType() == typeof(SaveOptions))
+                    {
+                        Config = GetConfig((SaveOptions)opts);
+                        toExit = false;
+                    }
+                    else if (opts.GetType() == typeof(ExcludeOptions))
+                    {
+                        AddExcludingWord(((ExcludeOptions)opts).Word);
+                    }
+                });
+        }
+
+        private void AddExcludingWord(string word)
+        {
+            wordExcluder.SetExcludedWord(word);
         }
     }
 }

@@ -9,12 +9,11 @@ namespace TagsCloudPreprocessor
     {
         public XmlWordExcluder()
         {
-            var filename = "russianWords.xml";
-            file = new FileStream(filename, FileMode.OpenOrCreate);
+            filename = "russianWords.xml";
         }
 
         private readonly XmlSerializer hashSetSerializer = new XmlSerializer(typeof(HashSet<string>));
-        private readonly Stream file;
+        private readonly string filename;
 
         public HashSet<string> GetExcludedWords()
         {
@@ -30,12 +29,18 @@ namespace TagsCloudPreprocessor
 
         private HashSet<string> ReadForbiddenWords()
         {
-            return (HashSet<string>)hashSetSerializer.Deserialize(file);
+            using (var file = new FileStream(filename, FileMode.OpenOrCreate))
+            {
+                return (HashSet<string>)hashSetSerializer.Deserialize(file);   
+            }
         }
 
         private void WriteForbiddenWords(HashSet<string> forbiddenWords)
         {
-            hashSetSerializer.Serialize(file, forbiddenWords);
+            using (var file = new FileStream(filename, FileMode.Create))
+            {
+                hashSetSerializer.Serialize(file, forbiddenWords);
+            }
         }
     }
 }
