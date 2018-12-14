@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
-    public class MainForm : Form
+    public class MainForm : Form, ICloudGenerator
     {
         private Image image;
         private IFileReader fileReader;
