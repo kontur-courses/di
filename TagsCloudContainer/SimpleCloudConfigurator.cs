@@ -10,7 +10,7 @@ namespace TagsCloudContainer
 
         public SimpleCloudConfigurator(IWordsPreprocessor preprocessor)
         {
-            wordsWithFrequency = preprocessor.PrepareWords();
+            wordsWithFrequency = preprocessor.GetWordsFrequency();
         }
 
         public IEnumerable<KeyValuePair<string, int>> ConfigureCloud()

@@ -27,8 +27,8 @@ namespace TagsCloudContainer
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
-                var source = new AdvancedSource(o.Filename);
-                var excludedWordsSource = new TextSourceFile(o.Exclude);
+                var source = new DocumentReader(o.Filename);
+                var excludedWordsSource = new TextFileReader(o.Exclude);
                 var cloudOptions = new CloudOptions(o.Color, o.FontFamilyName, o.Format, o.Height, o.Width);
 
                 var builder = new ContainerBuilder();
@@ -36,7 +36,7 @@ namespace TagsCloudContainer
                 builder.RegisterType<SimpleCloudConfigurator>().As<ICloudConfigurator>();
                 builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
                 builder.RegisterInstance(source).As<ISource>();
-                builder.RegisterInstance(excludedWordsSource).As<TextSourceFile>();
+                builder.RegisterInstance(excludedWordsSource).As<TextFileReader>();
                 builder.RegisterInstance(cloudOptions).As<CloudOptions>();
 
                 var container = builder.Build();

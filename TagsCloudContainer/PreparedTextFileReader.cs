@@ -2,11 +2,11 @@
 
 namespace TagsCloudContainer
 {
-    public class PreparedSourceFile : ISource
+    public class PreparedTextFileReader : ISource
     {
         private readonly string filename;
 
-        public PreparedSourceFile(string filename)
+        public PreparedTextFileReader(string filename)
         {
             this.filename = filename;
         }

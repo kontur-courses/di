@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer
 {
-    public class TextSourceFile : ISource
+    public class TextFileReader : ISource
     {
         private readonly string filename;
 
-        public TextSourceFile(string filename)
+        public TextFileReader(string filename)
         {
             this.filename = filename;
         }

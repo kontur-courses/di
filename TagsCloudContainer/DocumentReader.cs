@@ -5,11 +5,11 @@ using SautinSoft.Document;
 
 namespace TagsCloudContainer
 {
-    public class AdvancedSource : ISource
+    public class DocumentReader : ISource
     {
         private readonly string filename;
 
-        public AdvancedSource(string filename)
+        public DocumentReader(string filename)
         {
             this.filename = filename;
         }

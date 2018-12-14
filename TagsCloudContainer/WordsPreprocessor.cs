@@ -9,13 +9,13 @@ namespace TagsCloudContainer
         private readonly string[] words;
         private readonly string[] excludedWords;
 
-        public WordsPreprocessor(ISource source, TextSourceFile excludedWordsSource)
+        public WordsPreprocessor(ISource source, TextFileReader excludedWordsSource)
         {
             words = source.GetWords();
             excludedWords = excludedWordsSource.GetWords();
         }
 
-        public Dictionary<string, int> PrepareWords()
+        public Dictionary<string, int> GetWordsFrequency()
         {
             return words.Select(word => word.ToLower())
                 .Distinct()
