@@ -16,10 +16,12 @@ namespace TagCloudContainer
 
             builder.RegisterType<ConsoleClient>()
                 .As<IUserInterface>()
-                .WithParameter("args", args);
+                .WithParameter("args", args)
+                .SingleInstance();
 
             builder.RegisterType<XmlWordExcluder>().As<IWordExcluder>();
-            builder.RegisterType<TxtFileReader>().As<IFileReader>();
+            builder.RegisterType<DocFileReader>().Keyed<IFileReader>("DocFileReader");
+            builder.RegisterType<TxtFileReader>().Keyed<IFileReader>("TxtFileReader");
             builder.RegisterType<TextParser>().As<ITextParser>();
             builder.RegisterType<WordsExcluder>().Named<IPreprocessor>("WordsExcluder");
             builder.RegisterType<WordsStemer>().Named<IPreprocessor>("WordsStemer");
@@ -64,6 +66,16 @@ namespace TagCloudContainer
                         new ResolvedParameter(
                             (pi, ctx) => pi.Name == "wordsStemer",
                             (pi, ctx) => ctx.ResolveNamed<IPreprocessor>("WordsStemer")),
+                        new ResolvedParameter(
+                            (pi, ctx) => pi.Name == "fileReader",
+                            (pi, ctx) =>
+                            {
+                                if (ctx.Resolve<IUserInterface>().Config.InputExtension == "txt")
+                                    return ctx.ResolveKeyed<IFileReader>("TxtFileReader");
+                                if (ctx.Resolve<IUserInterface>().Config.InputExtension == "docx")
+                                    return ctx.ResolveKeyed<IFileReader>("DocFileReader");
+                                return ctx.ResolveKeyed<IFileReader>("TxtFileReader");
+                            }),
                     })
                 .AsSelf();
             

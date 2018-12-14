@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudVisualization
 {
@@ -11,7 +10,6 @@ namespace TagsCloudVisualization
         }
 
         public Point Center { get; }
-        private double angle = 0;
 
         private static int l = 10;
         private static int t = 10;
@@ -34,19 +32,24 @@ namespace TagsCloudVisualization
         private Point GetCurrentPositionOnTheSpiral()
         {
             num++;
-            switch (num % 4)
+            var point = Center;
+            switch (num - num % 4)
             {
                 case 0:
-                    return new Point(x0 - t * num, y0 - t * num);
+                    point.Offset(new Point(x0 - t * num, y0 - t * num));
+                    break;
                 case 1:
-                    return new Point(x1 + t * num, y1 - t * num);
+                    point.Offset(new Point(x1 + t * num, y1 - t * num));
+                    break;
                 case 2:
-                    return new Point(x2 + t * num, y2 + t * num);
+                    point.Offset(new Point(x2 + t * num, y2 + t * num));
+                    break;
                 case 3:
-                    return new Point(x3 - t * num, y3 + t * num);
+                    point.Offset(new Point(x3 - t * num, y3 + t * num));
+                    break;
             }
-            
-            throw new InvalidOperationException();
+
+            return point;
         }
 
         public Rectangle GetRectangleInNextLocation(Size rectangleSize)

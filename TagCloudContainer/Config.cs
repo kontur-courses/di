@@ -13,7 +13,7 @@ namespace TagCloudContainer
             string outPath, 
             Color color, 
             Color backgroundColor, 
-            string imageExtension)
+            string imageExtension, string inputExtension)
         {
             Center = center;
             InputFile = inputFile;
@@ -24,6 +24,7 @@ namespace TagCloudContainer
             Color = color;
             BackgroundColor = backgroundColor;
             ImageExtension = imageExtension;
+            InputExtension = inputExtension;
         }
         
         public string ImageExtension { get; }
@@ -35,5 +36,6 @@ namespace TagCloudContainer
         public string OutPath { get; }
         public Color Color { get; }
         public Color BackgroundColor { get; }
+        public string InputExtension { get; }
     }
 }

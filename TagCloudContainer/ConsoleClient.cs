@@ -47,6 +47,9 @@ namespace TagCloudContainer
 
             [Option("img-ext", Default = "png", HelpText = "Extension of image to save.")]
             public string ImageExtension{ get; set; }
+            
+            [Option("input-ext", Default = "txt", HelpText = "Extension of input file with text (txt or docx).")]
+            public string InputExtension{ get; set; }
 
             [Value(0, Required = true, HelpText = "Path to input file.")]
             public string PathToSave { get; set; }
@@ -73,7 +76,8 @@ namespace TagCloudContainer
             opts.OutPath ?? Environment.CurrentDirectory,
             Color.FromName(opts.Color),
             Color.FromName(opts.BackgroundColor),
-            opts.ImageExtension);
+            opts.ImageExtension,
+            opts.InputExtension);
 
         private void HandleArgs()
         {

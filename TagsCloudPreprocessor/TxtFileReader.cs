@@ -1,4 +1,5 @@
 using System.IO;
+using Xceed.Words.NET;
 
 namespace TagsCloudPreprocessor
 {
