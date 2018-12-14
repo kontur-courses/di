@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCloud", "WordCloud\WordCloud.csproj", "{C58B1F71-43B0-498C-891C-E1B2D335155E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{86EA34F0-A64B-4B3E-878D-3409522CF2CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C58B1F71-43B0-498C-891C-E1B2D335155E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C58B1F71-43B0-498C-891C-E1B2D335155E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C58B1F71-43B0-498C-891C-E1B2D335155E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

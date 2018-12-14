@@ -10,7 +10,7 @@ namespace WordCloud.LayoutGeneration.Layoter
     {
         private readonly Point center;
         private readonly SpiralGenerator spiralGenerator;
-        private IRectangleCloud rectangleCloud;
+        public IRectangleCloud rectangleCloud;
 
         public CircularCloudLayouter(Point center)
         {
