@@ -25,7 +25,7 @@ namespace TagsCloudVisualizationForm
                 ImageSize = $"{imageSizeTextBox1.Text}x{imageSizeTextBox2.Text}",
                 OutFormat = outFormatComboBox.SelectedItem?.ToString() ?? formPointGeneratorComboBox.Text
             };
-            var container = TagsCloudVisualizationRoot.GetCompositionRoot();
+            var container = TagsCloudVisualizationContainerConfig.GetCompositionRoot();
             container.Resolve<TagsCloudApp>().Run(options, container);
             MessageBox.Show($"Картинка сохранена в {Application.StartupPath}\\CloudTags.{options.OutFormat}", "Сохранение", MessageBoxButtons.OK);
         }

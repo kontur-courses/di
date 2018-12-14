@@ -94,7 +94,7 @@
     <Compile Include="Settings\WordsExtractorSettings.cs" />
     <Compile Include="Interfaces\IWordDataProvider.cs" />
     <Compile Include="Interfaces\IWordsExtractor.cs" />
-    <Compile Include="TagsCloudVisualizationRoot.cs" />
+    <Compile Include="TagsCloudVisualizationContainerConfig.cs" />
     <Compile Include="WordDataProvider.cs" />
     <Compile Include="PointGenerators\Astroid.cs" />
     <Compile Include="PointGenerators\Heart.cs" />

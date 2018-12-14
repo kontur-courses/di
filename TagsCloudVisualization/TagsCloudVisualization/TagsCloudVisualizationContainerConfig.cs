@@ -7,7 +7,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
-    public static class TagsCloudVisualizationRoot
+    public static class TagsCloudVisualizationContainerConfig
     {
         public static IContainer GetCompositionRoot()
         {

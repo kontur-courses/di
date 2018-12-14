@@ -45,7 +45,7 @@ namespace TagsCloudVisualization
 
         public static void SavePicture(Bitmap picture, ImageFormat format)
         {
-            var path = $"{Application.StartupPath}";
+            var path = Application.StartupPath;
             picture.Save($"{path}\\CloudTags.{format}", format);
             Console.WriteLine($"Pictures saved in {path}\\CloudTags.{format}");
         }
