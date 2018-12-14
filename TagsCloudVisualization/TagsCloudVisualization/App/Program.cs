@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloudVisualization.App;
 
 namespace TagsCloudVisualization
 {
@@ -14,7 +12,7 @@ namespace TagsCloudVisualization
             try
             {
                 var builder = new ContainerBuilder();
-                builder.RegisterType<ConsoleApplication>().As<IApplication>();
+                builder.RegisterType<ConsoleApplication>().AsSelf();
                 builder.RegisterType<ConsoleApplicationRunner>().As<IApplicationRunner>();
                 builder.RegisterType<TxtReader>().As<IFileReader>();
                 builder.RegisterType<NWordSizer>().As<ISizeDefiner>();
@@ -23,11 +21,10 @@ namespace TagsCloudVisualization
                 builder.RegisterType<ImageSettings>().As<IImageSettings>();
                 builder.RegisterType<MonochromePalette>().As<IWordPalette>();
                 var container = builder.Build();
-
-                var generator = container.Resolve<IApplication>();
+                
                 var runner = container.Resolve<IApplicationRunner>();
 
-                runner.Run(generator, args);
+                runner.Run(args);
             }
             catch (Exception e)
             {

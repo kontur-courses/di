@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudVisualization.App
+﻿namespace TagsCloudVisualization
 {
     public class ConsoleApplicationRunner : IApplicationRunner
     {
-        public void Run(IApplication application, string[] args)
+        private ConsoleApplication app;
+
+        public ConsoleApplicationRunner(ConsoleApplication application)
         {
-            var app = application as ConsoleApplication;
+            app = application;
+        }
+
+        public void Run(string[] args)
+        {
             app.GenerateImage(args);
         }
     }

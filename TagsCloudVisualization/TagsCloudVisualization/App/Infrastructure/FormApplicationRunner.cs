@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TagsCloudVisualization
 {
     public class FormApplicationRunner : IApplicationRunner
     {
-        public void Run(IApplication application, string[] args)
+        private MainForm form;
+
+        public FormApplicationRunner(MainForm form)
         {
-            Application.Run(application as Form);
+            this.form = form;
+        }
+
+        public void Run(string[] args)
+        {
+            Application.Run(form);
         }
     }
 }
