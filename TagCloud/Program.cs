@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Autofac;
@@ -22,15 +21,6 @@ namespace TagCloud
 {
     public class Program
     {
-        private static readonly HashSet<string> Colors = new HashSet<string>(
-            typeof(Color)
-                .GetProperties()
-                .Where(color => color.PropertyType == typeof(Color))
-                .Select(color => color.Name));
-
-        private static readonly HashSet<string> Fonts =
-            new HashSet<string>(FontFamily.Families.Select(font => font.Name));
-
         [STAThread]
         public static void Main(string[] args)
         {
@@ -107,9 +97,9 @@ namespace TagCloud
             CheckFileExtension(TextFileReader.FormatReaders.Keys, arguments.BoringWordsFileName, "text", exceptions);
             CheckFileExtension(FileImageSaver.Formats.Keys, arguments.ImageFileName, "image", exceptions);
 
-            CheckArgument(Colors, "words color", arguments.WordsColorName, exceptions);
-            CheckArgument(Colors, "background color", arguments.BackgroundColorName, exceptions);
-            CheckArgument(Fonts, "font", arguments.FontFamilyName, exceptions);
+            CheckArgument(CloudDrawer.Colors, "words color", arguments.WordsColorName, exceptions);
+            CheckArgument(CloudDrawer.Colors, "background color", arguments.BackgroundColorName, exceptions);
+            CheckArgument(CloudWordsLayouter.Fonts, "font", arguments.FontFamilyName, exceptions);
 
             if (arguments.Multiplier <= 0)
                 exceptions.AppendLine("Font size multiplier should be positive");

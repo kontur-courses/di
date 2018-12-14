@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using TagCloud.Data;
 using TagCloud.RectanglesLayouter;
@@ -9,6 +10,9 @@ namespace TagCloud.WordsLayouter
     public class CloudWordsLayouter : IWordsLayouter
     {
         private readonly IRectangleLayouter rectangleLayouter;
+
+        public static readonly HashSet<string> Fonts =
+            new HashSet<string>(FontFamily.Families.Select(font => font.Name));
 
         public CloudWordsLayouter(IRectangleLayouter rectangleLayouter)
         {

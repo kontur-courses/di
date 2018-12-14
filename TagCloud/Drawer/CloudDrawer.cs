@@ -14,6 +14,12 @@ namespace TagCloud.Drawer
 
         private readonly IColorPicker colorPicker;
 
+        public static readonly HashSet<string> Colors = new HashSet<string>(
+            typeof(Color)
+                .GetProperties()
+                .Where(color => color.PropertyType == typeof(Color))
+                .Select(color => color.Name));
+
         public CloudDrawer(IColorPicker colorPicker)
         {
             this.colorPicker = colorPicker;
