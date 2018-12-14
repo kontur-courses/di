@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagCloud.Counter;
 using TagCloud.Data;
 using TagCloud.Drawer;
@@ -49,7 +50,10 @@ namespace TagCloud
             var layout = wordsLayouter.GenerateLayout(wordInfos, font, arguments.Multiplier);
             var image = wordsDrawer.CreateImage(layout, wordsColor, backgroundColor);
 
-            foreach (var saver in savers)
+            var imageSavers = savers
+                .Where(saver => saver.GetType() != typeof(ClipboardImageSaver) ||
+                                arguments.ToEnableClipboardSaver);
+            foreach (var saver in imageSavers)
                 saver.Save(image, arguments.ImageFileName);
         }
     }
