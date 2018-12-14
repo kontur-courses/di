@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Xceed.Words.NET;
+using TagCloud.Reader.FormatReader;
 
 namespace TagCloud.Reader
 {
     public class TextFileReader : IWordsFileReader
     {
-        public static readonly Dictionary<string, Func<string, string>> FormatReaders = new Dictionary<string, Func<string, string>>
-        {
-            ["txt"] = ReadTxt,
-            ["docx"] = ReadDocx
-        };
+        private readonly Dictionary<string, IFormatReader> formatReaders;
 
-        public IEnumerable<string> Read(string fileName)
+        public TextFileReader(IEnumerable<IFormatReader> readers)
         {
-            var regex = new Regex("\\p{L}+");
-            var format = Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
-            var matches = regex.Matches(FormatReaders[format](fileName));
+            formatReaders = readers.ToDictionary(reader => reader.Format);
+        }
+
+        public static string GetFormat(string fileName) => Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
+
+        public IEnumerable<string> ReadWords(string fileName)
+        {
+            var format = GetFormat(fileName);
+            var text = formatReaders.TryGetValue(format, out var reader) 
+                ? reader.Read(fileName) 
+                : File.ReadAllText(fileName, Encoding.Default);
+            var matches = new Regex("\\p{L}+").Matches(text);
             foreach (Match match in matches)
                 yield return match.Value;
         }
-
-        private static string ReadTxt(string fileName) => File.ReadAllText(fileName, Encoding.Default);
-
-        private static string ReadDocx(string fileName) => DocX.Load(fileName).Text;
     }
 }

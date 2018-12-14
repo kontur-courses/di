@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using Autofac;
 using Fclp;
 using TagCloud.ColorPicker;
@@ -12,6 +11,7 @@ using TagCloud.Data;
 using TagCloud.Drawer;
 using TagCloud.Processor;
 using TagCloud.Reader;
+using TagCloud.Reader.FormatReader;
 using TagCloud.RectanglesLayouter;
 using TagCloud.RectanglesLayouter.PointsGenerator;
 using TagCloud.Saver;
@@ -93,9 +93,8 @@ namespace TagCloud
             CheckFile("Words", arguments.WordsFileName, exceptions);
             CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
 
-            CheckFileExtension(TextFileReader.FormatReaders.Keys, arguments.WordsFileName, "text", exceptions);
-            CheckFileExtension(TextFileReader.FormatReaders.Keys, arguments.BoringWordsFileName, "text", exceptions);
-            CheckFileExtension(FileImageSaver.Formats.Keys, arguments.ImageFileName, "image", exceptions);
+            var format = TextFileReader.GetFormat(arguments.ImageFileName);
+            CheckArgument(FileImageSaver.Formats.Keys, "image format", format, exceptions);
 
             CheckArgument(CloudDrawer.Colors, "words color", arguments.WordsColorName, exceptions);
             CheckArgument(CloudDrawer.Colors, "background color", arguments.BackgroundColorName, exceptions);
@@ -103,12 +102,6 @@ namespace TagCloud
 
             if (arguments.Multiplier <= 0)
                 exceptions.AppendLine("Font size multiplier should be positive");
-        }
-
-        private static void CheckFileExtension(ICollection<string> variants, string fileName, string formatName, StringBuilder output)
-        {
-            var format = Regex.Match(fileName, ".+\\.(.+)$").Groups[1].Value;
-            CheckArgument(variants, $"{formatName} format", format, output);
         }
 
         private static void CheckFile(string argumentName, string fileName, StringBuilder output)
@@ -138,13 +131,14 @@ namespace TagCloud
             builder.Register(c => new Point()).As<Point>();
             builder.Register(c => new SpiralPointsGenerator(1, 0.01)).As<IPointsGenerator>();
 
+            builder.RegisterType<DocxReader>().As<IFormatReader>();
             builder.RegisterType<BrightnessColorPicker>().As<IColorPicker>();
 
             builder.RegisterType<WordsToLowerProcessor>().As<IWordsProcessor>();
             builder
                 .Register(c => new BoringWordsProcessor(c
                     .Resolve<IWordsFileReader>()
-                    .Read(arguments.BoringWordsFileName)))
+                    .ReadWords(arguments.BoringWordsFileName)))
                 .As<IWordsProcessor>();
             builder.RegisterType<StemWordsProcessor>().As<IWordsProcessor>();
         }

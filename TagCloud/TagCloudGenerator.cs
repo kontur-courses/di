@@ -37,7 +37,7 @@ namespace TagCloud
 
         public void Generate(Arguments arguments)
         {
-            var words = wordsFileReader.Read(arguments.WordsFileName);
+            var words = wordsFileReader.ReadWords(arguments.WordsFileName);
             var wordsColor = Color.FromName(arguments.WordsColorName);
             var backgroundColor = Color.FromName(arguments.BackgroundColorName);
             var font = new FontFamily(arguments.FontFamilyName);

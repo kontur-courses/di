@@ -4,6 +4,6 @@ namespace TagCloud.Reader
 {
     public interface IWordsFileReader
     {
-        IEnumerable<string> Read(string fileName);
+        IEnumerable<string> ReadWords(string fileName);
     }
 }

@@ -72,6 +72,8 @@
     <Compile Include="Processor\IWordsProcessor.cs" />
     <Compile Include="Processor\StemWordsProcessor.cs" />
     <Compile Include="Processor\WordsToLowerProcessor.cs" />
+    <Compile Include="Reader\FormatReader\DocxReader.cs" />
+    <Compile Include="Reader\FormatReader\IFormatReader.cs" />
     <Compile Include="Reader\IWordsFileReader.cs" />
     <Compile Include="Reader\TextFileReader.cs" />
     <Compile Include="RectanglesLayouter\CircularCloudLayouter.cs" />
