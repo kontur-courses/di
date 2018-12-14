@@ -119,6 +119,13 @@
     <Compile Include="Infrastructure\Common\SettingsForm.cs" />
     <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
     <Compile Include="Infrastructure\Common\XmlObjectSerializer.cs" />
+    <Compile Include="LayoutGeneration\CircularCloudLayouter.cs" />
+    <Compile Include="LayoutGeneration\ICloudLayouter.cs" />
+    <Compile Include="LayoutGeneration\ITagsCloud.cs" />
+    <Compile Include="LayoutGeneration\RectangleExtensions.cs" />
+    <Compile Include="LayoutGeneration\SpiralGenerator.cs" />
+    <Compile Include="LayoutGeneration\TagCloud.cs" />
+    <Compile Include="LayoutGeneration\TestingCircularLayoutGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
