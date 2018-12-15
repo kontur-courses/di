@@ -9,5 +9,6 @@ namespace TagsCloudContainer.Settings
         FontFamily Family { get; set; }
         IColorChooser ColorChooser { get; set; }
         IFontSizeChooser FontSizeChooser { get; set; }
+        string DictionaryLocale { get; set; }
     }
 }

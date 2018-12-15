@@ -65,9 +65,9 @@ namespace TagsCloudContainer.Clients
             {
                 return filesReader.Read(fileName);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                FailApplication($"Can not read given file: {fileName}");
+                FailApplication($"Can not read given file: {fileName}. {exception.Message}. ");
             }
             return Enumerable.Empty<string>();
         }
