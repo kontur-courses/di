@@ -9,11 +9,27 @@ using TagCloud.Utility.Models.TextReader;
 namespace TagCloud.Tests.ForTagUtility
 {
     [TestFixture]
-    public class TxtReader_Should
+    public class TxtReader_Should 
     {
         private readonly IContainer container = ContainerConfig.StandartContainer;
+        private const string TestFileName = "tmp.txt";
 
-        [TestCase("wrongFormat.bmp",TestName = "When wrong format")]
+        [SetUp]
+        public void SetUp()
+        {
+            if (File.Exists(TestFileName))
+                File.Delete(TestFileName);
+            using (var file = File.CreateText(TestFileName))
+                file.WriteLine("text 123 words");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            File.Delete(TestFileName);
+        }
+
+        [TestCase("wrongFormat.bmp", TestName = "When wrong format")]
         [TestCase("NotExist.txt", TestName = "When file doesn't exists")]
         public void ThrowArgumentException(string path)
         {
@@ -27,14 +43,11 @@ namespace TagCloud.Tests.ForTagUtility
         [Test]
         public void ReadWordsFromFile()
         {
-            using (var file = File.CreateText("tmp.txt"))
-                file.WriteLine("text 123 words");
             var reader = container.Resolve<TxtReader>();
 
-            var result = reader.ReadToEnd("tmp.txt");
+            var result = reader.ReadToEnd(TestFileName);
 
-            result.Should().BeEquivalentTo("text", "words","123");
-            File.Delete("tmp.txt");
+            result.Should().BeEquivalentTo("text", "words", "123");
         }
     }
 }
