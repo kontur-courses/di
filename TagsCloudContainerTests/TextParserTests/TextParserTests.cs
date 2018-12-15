@@ -4,6 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.TextParsers;
+using FakeItEasy;
 
 namespace TagsCloudContainerTests.TextParserTests
 {
@@ -13,7 +14,8 @@ namespace TagsCloudContainerTests.TextParserTests
         [Test]
         public void Parse_Should_ReturnWordFrequency()
         {
-            var textSettings =new TextSettings(2, new []{"simple"},new string[]{});
+            var filterSettings = A.Fake<FilterSettings>();
+            var textSettings =new TextSettings(2, new string[]{}, new string[]{}, filterSettings);
             var parser = new TextParser(textSettings);
             var expectation = new List<WordFrequency>
             {
@@ -22,7 +24,6 @@ namespace TagsCloudContainerTests.TextParserTests
             };
 
             var result = parser.Parse($"simple{Environment.NewLine}text");
-
             result.ShouldBeEquivalentTo(expectation);
         }
     }

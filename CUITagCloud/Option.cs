@@ -24,8 +24,8 @@ namespace CUITagCloud
             HelpText = "Тема, по которой будет отрисовываться. [classic, black]")]
         public string Theme { get; set; }
 
-        [Option('f', "filters", Separator = ',', Default = new[] {"simple"},
-            HelpText = "Фильтры, которые можно применить к тексту. [simple, length, boring]")]
+        [Option('f', "filters", Separator = ',', Default = new string[0],
+            HelpText = "Фильтры, которые можно применить к тексту. [length, boring]")]
         public IEnumerable<string> Filters { get; set; }
 
         [Option('v', "converters", Separator = ',', Default = new[] {"simple"},
@@ -34,6 +34,9 @@ namespace CUITagCloud
         
         [Option('b', "boringwords", Required = false, HelpText = "Список скучных слов, которые будут отсеяны.")]
         public string BoringWordsFileName { get; set; }
-
+    
+        [Option('l', "lengthsmallestword", Default = 4, HelpText = "Длина самого короткого слова в тексте")]
+        public int SmallestLength { get; set; }
+        
     }
 }

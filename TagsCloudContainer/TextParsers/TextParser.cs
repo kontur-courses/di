@@ -17,7 +17,10 @@ namespace TagsCloudContainer.TextParsers
 
         public List<WordFrequency> Parse(string text)
         {
-            var words = text.Split(Environment.NewLine.ToCharArray());
+            var words = text.Split(Environment.NewLine.ToCharArray())
+                .Select(word => word.Trim())
+                .Where(word => !string.IsNullOrEmpty(word));
+            
             var convertedWords = new List<string>();
             foreach (var word in words)
             {

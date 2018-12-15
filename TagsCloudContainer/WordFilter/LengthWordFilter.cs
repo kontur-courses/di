@@ -1,16 +1,18 @@
+using TagsCloudContainer.Settings;
+
 namespace TagsCloudContainer.WordFilter
 {
     public class LengthWordFilter : IFilter
     {
-        public LengthWordFilter(int length)
+        public LengthWordFilter(FilterSettings filterSettings)
         {
-            this.length = length;
+            this.filterSettings = filterSettings;
         }
 
-        private readonly int length;
+        private readonly FilterSettings filterSettings;
         public bool Validate(string word)
         {
-            return word.Length > length;
+            return word.Length > filterSettings.LengthForBoringWord;
         }
     }
 }

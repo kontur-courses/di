@@ -18,35 +18,41 @@ namespace CUITagCloud
     {
         public static void Main(string[] args)
         {
-            ImageSettings imageSettings;
-            FileSettings fileSettings;
-            TextSettings textSettings;
+            Parser.Default.ParseArguments<Option>(args).WithParsed(DrawCloud);
+        }
 
-            Parser.Default.ParseArguments<Option>(args).WithParsed(o =>
-            {
-                imageSettings = new ImageSettings(o.Height, o.Width, o.OutputFile, o.Theme);
-                fileSettings = new FileSettings(o.InputFileName);
-                textSettings = new TextSettings(o.CountWords, o.Filters, o.Converters, o.BoringWordsFileName);
-                var builder = new ContainerBuilder();
-
-                builder.RegisterInstance(fileSettings).As<FileSettings>();
-                builder.RegisterInstance(imageSettings).As<ImageSettings>();
-                builder.RegisterInstance(textSettings).As<TextSettings>();
-
-                builder.RegisterType<TextFileReader>().As<IFileReader>();
-                builder.RegisterType<InitialFormWordConverter>().As<IWordConverter>();
-                builder.RegisterType<TextParser>().As<ITextParser>();
-                builder.RegisterType<TagsCloudBuilder>().As<ICloudBuilder>();
-                builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-                builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
-                builder.RegisterType<ArchimedesSpiralPointGenerator>().As<IEnumerable<Point>>();
-                builder.RegisterType<CloudTagController>().As<ICloudTagController>();
+        private static void DrawCloud(Option options)
+        {
+            var container = BuildContainer(options);
+            var cloudTagController = container.Resolve<ICloudTagController>();
                 
-                var container = builder.Build();
-                var cloudTagController = container.Resolve<ICloudTagController>();
+            cloudTagController.Work();
+        }
+
+        private static IContainer BuildContainer(Option options)
+        {
+            
+            var imageSettings = new ImageSettings(options.Height, options.Width, options.OutputFile, options.Theme);
+            var fileSettings = new FileSettings(options.InputFileName);
+            var filterSettings = new FilterSettings(options.BoringWordsFileName, options.SmallestLength);
+            var textSettings = new TextSettings(options.CountWords, options.Filters, options.Converters, filterSettings);
+            
+            var builder = new ContainerBuilder();
+
+            builder.RegisterInstance(fileSettings).As<FileSettings>();
+            builder.RegisterInstance(imageSettings).As<ImageSettings>();
+            builder.RegisterInstance(textSettings).As<TextSettings>();
+
+            builder.RegisterType<TextFileReader>().As<IFileReader>();
+            builder.RegisterType<InitialFormWordConverter>().As<IWordConverter>();
+            builder.RegisterType<TextParser>().As<ITextParser>();
+            builder.RegisterType<TagsCloudBuilder>().As<ICloudBuilder>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
+            builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
+            builder.RegisterType<ArchimedesSpiralPointGenerator>().As<IEnumerable<Point>>();
+            builder.RegisterType<CloudTagController>().As<ICloudTagController>();
                 
-                cloudTagController.Work();
-            });
+            return builder.Build();
         }
     }
 }

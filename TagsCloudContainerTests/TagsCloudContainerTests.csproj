@@ -68,7 +68,6 @@
     <Compile Include="WordConverterTests\InitialFormWordConverterTests.cs" />
     <Compile Include="WordFilterTests\BoringWordFilterTests.cs" />
     <Compile Include="WordFilterTests\LengthWordFilterTests.cs" />
-    <Compile Include="WordFilterTests\NotNullWordFilterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
