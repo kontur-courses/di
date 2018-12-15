@@ -40,7 +40,7 @@ namespace TagsCloudContainer
             words = formattingComponent.FormatWords(words);
             words = filteringComponent.FilterWords(words);
             var cloud = generator.CreateCloud(words);
-            renderer.RenderIntoFile(appSettings.ImageSettings, colorManager, cloud, true);
+            renderer.RenderIntoFile(appSettings.ImageSettings, colorManager, cloud, appSettings.ImageSettings.AutoSize);
         }
     }
 }

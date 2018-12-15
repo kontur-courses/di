@@ -1,21 +1,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using NHunspell;
+using TagsCloudContainer.Properties;
 
 namespace TagsCloudContainer.Formatting
 {
     public class ToInitFormFormatter : IWordsFormatter
     {
-        
         public List<string> Format(IEnumerable<string> words)
         {
             var result = new List<string>();
-            var path = Path.GetDirectoryName
-                              (Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())) + "\\nhunspell";
+
             var r = new Regex("st:(\\w+[#]?)");
-            using (var hunspell = new Hunspell($"{path}\\ru.aff", $"{path}\\ru.dic"))
+            var affFileData = Resources.ru_aff;
+            var dicFileData = Encoding.UTF8.GetBytes(Resources.ru_dic);
+            using (var hunspell = new Hunspell(dictionaryFileData: dicFileData, affixFileData: affFileData))
             {
                 foreach (var word in words)
                 {
@@ -30,6 +33,7 @@ namespace TagsCloudContainer.Formatting
                     result.Add(w);
                 }
             }
+
 
             return result;
         }

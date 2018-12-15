@@ -14,7 +14,7 @@ namespace TagsCloudContainer.UI
     {
         public ApplicationSettings ApplicationSettings => new ApplicationSettings
         (new ReadingSettings(InputPath), new FilterSettings(BlacklistPath), TagsCloudCenter,
-            new ImageSettings(fontFamily, ImageSize, LetterSize, OutputPath, TextColor));
+            new ImageSettings(FontFamily, ImageSize, LetterSize, OutputPath, TextColor, AutoSize));
 
 
         private string InputPath { get; set; }
@@ -24,18 +24,22 @@ namespace TagsCloudContainer.UI
         private Size LetterSize { get; set; }
         private Color TextColor { get; set; }
         private Size ImageSize { get; set; }
-        private FontFamily fontFamily = FontFamily.GenericMonospace;
+        private FontFamily FontFamily { get; }
+
+        private bool AutoSize { get; set; }
 
 
         public CLI(string[] args)
         {
-            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\cloudfull.docx";
+            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\cloud.docx";
             OutputPath = "output.png";
             BlacklistPath = "blacklist.txt";
-            TagsCloudCenter = new Point(500, 500);
-            ImageSize = new Size(4000, 4000);
+            ImageSize = new Size(1920, 1080);
+            TagsCloudCenter = new Point(ImageSize.Width, ImageSize.Height);
             TextColor = Color.DarkBlue;
             LetterSize = new Size(16, 20);
+            FontFamily = FontFamily.GenericMonospace;
+            AutoSize = true;
 
 
             ParseArguments(args);
@@ -63,8 +67,12 @@ namespace TagsCloudContainer.UI
             public IEnumerable<string> ImageSize { get; set; }
 
             [Option('t', "textcolor", Required = false,
-                HelpText = "Set text color. Possible colors are: red, green, blue, black")]
+                HelpText = "Set text color.")]
             public string TextColor { get; set; }
+
+            [Option('a', "autosize", Required = false,
+                HelpText = "Disable auto sizing")]
+            public bool AutoSize { get; set; }
         }
 
         private void ParseArguments(string[] args)
@@ -87,15 +95,7 @@ namespace TagsCloudContainer.UI
 
                     if (o.OutputPath != null)
                     {
-                        if (File.Exists(o.OutputPath))
-                        {
-                            OutputPath = o.OutputPath;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"output file {o.OutputPath} not found");
-                            Environment.Exit(0);
-                        }
+                        OutputPath = o.OutputPath;
                     }
 
                     if (o.BlackListPath != null)
@@ -168,12 +168,18 @@ namespace TagsCloudContainer.UI
                             int.TryParse(o.ImageSize.ToList()[1], out var y))
                         {
                             ImageSize = new Size(x, y);
+                            TagsCloudCenter = new Point(ImageSize.Width / 2, ImageSize.Height / 2);
                         }
                         else
                         {
                             Console.WriteLine("To set image size input two numbers");
                             Environment.Exit(0);
                         }
+                    }
+
+                    if (o.AutoSize)
+                    {
+                        AutoSize = false;
                     }
                 });
         }

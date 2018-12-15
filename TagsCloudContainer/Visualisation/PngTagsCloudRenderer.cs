@@ -10,9 +10,6 @@ namespace TagsCloudContainer.Visualisation
     public class PngTagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly Size boundary = new Size(100, 100);
-        private readonly IColorManager colorManager;
-        private readonly Size pictureSize;
-        private readonly Dictionary<TagsCloudWord, Color> wordsColors;
 
 
         public void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud,
@@ -28,7 +25,7 @@ namespace TagsCloudContainer.Visualisation
             var wordsColors = colorManager.GetWordsColors(tagsCloud.AddedWords.ToList());
 
 
-            var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
+            var btm = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             using (Graphics obj = Graphics.FromImage(btm))
             {
                 foreach (var tagsCloudWord in tagsCloud.AddedWords)
@@ -40,22 +37,13 @@ namespace TagsCloudContainer.Visualisation
             }
         }
 
-        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord, Color color, FontFamily fontFamily)
-        {
-            var rectangle = tagsCloudWord.Rectangle;
-            var fontSize = rectangle.Height;
-            graphics.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
-                new SolidBrush(color),
-                new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
-        }
-
         public void RenderIntoFileAutosize(ImageSettings imageSettings, IColorManager colorManager,
             ITagsCloud tagsCloud)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles =
                 ShiftRectanglesToMainQuarter(tagsCloud.AddedWords.Select(x => x.Rectangle).ToList());
-            var tagsCloudWords = words.Zip(shiftedRectangles, (a, b) => (new TagsCloudWord(a, b))).ToList();
+            var tagsCloudWords = words.Zip(shiftedRectangles, (word, rectangle) => (new TagsCloudWord(word, rectangle))).ToList();
             var tagsCloudToDraw = new TagsCloud(tagsCloudWords);
             var wordsColors = colorManager.GetWordsColors(tagsCloudToDraw.AddedWords.ToList());
 
@@ -71,6 +59,15 @@ namespace TagsCloudContainer.Visualisation
 
                 btm.Save(imageSettings.OutputPath);
             }
+        }
+
+        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord, Color color, FontFamily fontFamily)
+        {
+            var rectangle = tagsCloudWord.Rectangle;
+            var fontSize = rectangle.Height;
+            graphics.DrawString(tagsCloudWord.Word, new Font(fontFamily, fontSize),
+                new SolidBrush(color),
+                new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
         }
 
 
