@@ -88,20 +88,20 @@ namespace TagCloud
             return arguments;
         }
 
-        private static void CheckArguments(Arguments arguments, StringBuilder exceptions)
+        private static void CheckArguments(Arguments arguments, StringBuilder output)
         {
-            CheckFile("Words", arguments.WordsFileName, exceptions);
-            CheckFile("Boring words", arguments.BoringWordsFileName, exceptions);
+            CheckFile("Words", arguments.WordsFileName, output);
+            CheckFile("Boring words", arguments.BoringWordsFileName, output);
 
             var format = TextFileReader.GetFormat(arguments.ImageFileName);
-            CheckArgument(FileImageSaver.Formats.Keys, "image format", format, exceptions);
+            CheckArgument(FileImageSaver.Formats.Keys, "image format", format, output);
 
-            CheckArgument(CloudDrawer.Colors, "words color", arguments.WordsColorName, exceptions);
-            CheckArgument(CloudDrawer.Colors, "background color", arguments.BackgroundColorName, exceptions);
-            CheckArgument(CloudWordsLayouter.Fonts, "font", arguments.FontFamilyName, exceptions);
+            CheckArgument(CloudDrawer.Colors, "words color", arguments.WordsColorName, output);
+            CheckArgument(CloudDrawer.Colors, "background color", arguments.BackgroundColorName, output);
+            CheckArgument(CloudWordsLayouter.Fonts, "font", arguments.FontFamilyName, output);
 
             if (arguments.Multiplier <= 0)
-                exceptions.AppendLine("Font size multiplier should be positive");
+                output.AppendLine("Font size multiplier should be positive");
         }
 
         private static void CheckFile(string argumentName, string fileName, StringBuilder output)
