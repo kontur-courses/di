@@ -125,7 +125,7 @@ namespace TagCloud.Utility.Container
             if (options.PathToStopWords != null)
             {
                 builder
-                    .RegisterType<RusFilter>()
+                    .RegisterType<WordFilter>()
                     .WithParameter(
                         (pi, c) => pi.ParameterType == typeof(IEnumerable<string>),
                         (pi, c) => c
@@ -137,7 +137,7 @@ namespace TagCloud.Utility.Container
             else
             {
                 builder
-                    .RegisterType<RusFilter>()
+                    .RegisterType<WordFilter>()
                     .As<IWordFilter>()
                     .AsSelf();
             }

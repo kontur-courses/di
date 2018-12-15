@@ -90,7 +90,6 @@
     <Compile Include="Models\Tag\Container\TagContainerReader.cs" />
     <Compile Include="Models\WordFilter\IWordFilter.cs" />
     <Compile Include="Models\TextReader\ITextReader.cs" />
-    <Compile Include="Models\WordFilter\RusFilter.cs" />
     <Compile Include="Models\WordFilter\WordFilter.cs" />
     <Compile Include="Container\Options.cs" />
     <Compile Include="Program.cs" />
