@@ -1,12 +1,9 @@
 using System.Drawing;
-using TagsCloudContainer.Filtering;
-using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Sizing;
 using TagsCloudContainer.UI;
-using TagsCloudContainer.Visualisation;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudGenerating
 {
     public class TagsCloudGeneratorSettings
     {
@@ -14,18 +11,11 @@ namespace TagsCloudContainer
         public readonly ITagsCloudLayouter TagsCloudLayouter;
         public readonly IWordsSizer WordsSizer;
 
-        public TagsCloudGeneratorSettings
-            (Size letterSize, ITagsCloudLayouter layouter, IWordsSizer sizer)
-        {
-            LetterSize = letterSize;
-            TagsCloudLayouter = layouter;
-            WordsSizer = sizer;
-        }
 
         public TagsCloudGeneratorSettings
             (IUI ui, ITagsCloudLayouter layouter, IWordsSizer sizer)
         {
-            LetterSize = ui.LetterSize;
+            LetterSize = ui.ApplicationSettings.ImageSettings.LetterSize;
             TagsCloudLayouter = layouter;
             WordsSizer = sizer;
         }

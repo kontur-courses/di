@@ -1,4 +1,3 @@
-using System.Drawing;
 using TagsCloudContainer.Filtering;
 using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Reading;
@@ -16,12 +15,11 @@ namespace TagsCloudContainer
         private readonly FilteringComponent filteringComponent;
         private readonly TagsCloudGenerator generator;
         private readonly ITagsCloudRenderer renderer;
-        private readonly IUI ui;
         private readonly IColorManager colorManager;
 
 
         public TagsCloudContainerApplication
-        (IUI ui, IWordsReader reader, FormattingComponent formattingComponent,
+        (IWordsReader reader, FormattingComponent formattingComponent,
             FilteringComponent filteringComponent, TagsCloudGenerator generator, ITagsCloudRenderer renderer,
             IColorManager colorManager)
         {
@@ -30,18 +28,19 @@ namespace TagsCloudContainer
             this.filteringComponent = filteringComponent;
             this.generator = generator;
             this.renderer = renderer;
-            this.ui = ui;
             this.colorManager = colorManager;
         }
 
 
-        public void Run()
+        public void Run(string[] args)
         {
-            var words = reader.ReadWords(ui.InputPath);
+            var ui = new CLI(args);
+            var appSettings = ui.ApplicationSettings;
+            var words = reader.ReadWords(appSettings.ReadingSettings);
             words = formattingComponent.FormatWords(words);
             words = filteringComponent.FilterWords(words);
             var cloud = generator.CreateCloud(words);
-            renderer.RenderIntoFile(ui.OutputPath, cloud, colorManager, true);
+            renderer.RenderIntoFile(appSettings.ImageSettings, colorManager, cloud, true);
         }
     }
 }

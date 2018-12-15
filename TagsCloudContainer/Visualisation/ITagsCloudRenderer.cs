@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Visualisation
 {
     public interface ITagsCloudRenderer
     {
-        void RenderIntoFile(string path, ITagsCloud tagsCloud, IColorManager colorManager, bool autosize);
+        void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud, bool autosize);
     }
 }

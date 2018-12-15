@@ -4,32 +4,38 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using CommandLine;
+using TagsCloudContainer.Filtering;
+using TagsCloudContainer.Reading;
 using TagsCloudContainer.Visualisation;
 
 namespace TagsCloudContainer.UI
 {
     public class CLI : IUI
     {
-        public string InputPath { get; private set; }
-        public string OutputPath { get; private set; }
-        public string BlacklistPath { get; private set; }
-        public Point TagsCloudCenter { get; private set; }
-        public Size LetterSize { get; private set; }
-        public Color TextColor { get; private set; }
-        public List<Color> PartsOfSpeechColors { get; }
-        public Size ImageSize { get; private set; }
+        public ApplicationSettings ApplicationSettings => new ApplicationSettings
+        (new ReadingSettings(InputPath), new FilterSettings(BlacklistPath), TagsCloudCenter,
+            new ImageSettings(fontFamily, ImageSize, LetterSize, OutputPath, TextColor));
+
+
+        private string InputPath { get; set; }
+        private string OutputPath { get; set; }
+        private string BlacklistPath { get; set; }
+        private Point TagsCloudCenter { get; set; }
+        private Size LetterSize { get; set; }
+        private Color TextColor { get; set; }
+        private Size ImageSize { get; set; }
+        private FontFamily fontFamily = FontFamily.GenericMonospace;
 
 
         public CLI(string[] args)
         {
-            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\cloud.docx";
+            InputPath = AppDomain.CurrentDomain.BaseDirectory + "\\cloudfull.docx";
             OutputPath = "output.png";
             BlacklistPath = "blacklist.txt";
             TagsCloudCenter = new Point(500, 500);
-            ImageSize = new Size(1920, 1280);
+            ImageSize = new Size(4000, 4000);
             TextColor = Color.DarkBlue;
             LetterSize = new Size(16, 20);
-            PartsOfSpeechColors = new List<Color>() {Color.DarkBlue, Color.DarkSlateGray, Color.Firebrick, Color.Black};
 
 
             ParseArguments(args);

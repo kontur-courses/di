@@ -9,7 +9,7 @@ namespace TagsCloudContainer.Visualisation.Coloring
 
         public MonoColorManagerSettings(IUI ui)
         {
-            Color = ui.TextColor;
+            Color = ui.ApplicationSettings.ImageSettings.TextColor;
         }
     }
 }

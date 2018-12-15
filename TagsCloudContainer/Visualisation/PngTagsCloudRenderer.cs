@@ -10,26 +10,18 @@ namespace TagsCloudContainer.Visualisation
     public class PngTagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly Size boundary = new Size(100, 100);
-        private readonly FontFamily fontFamily;
-        private readonly Color textColor;
         private readonly IColorManager colorManager;
         private readonly Size pictureSize;
         private readonly Dictionary<TagsCloudWord, Color> wordsColors;
 
-        public PngTagsCloudRenderer(ImageSettings imageSettings)
-        {
-            pictureSize = imageSettings.ImageSize;
-            textColor = imageSettings.TextColor;
-            fontFamily = imageSettings.FontFamily;
-        }
 
-        public void RenderIntoFile(string filePath, ITagsCloud tagsCloud, IColorManager colorManager,
+        public void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud,
             bool autosize = false)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             if (autosize)
             {
-                RenderIntoFileAutosize(filePath, tagsCloud, colorManager);
+                RenderIntoFileAutosize(imageSettings, colorManager, tagsCloud);
                 return;
             }
 
@@ -41,14 +33,14 @@ namespace TagsCloudContainer.Visualisation
             {
                 foreach (var tagsCloudWord in tagsCloud.AddedWords)
                 {
-                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord]);
+                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord], FontFamily.GenericMonospace);
                 }
 
-                btm.Save(filePath);
+                btm.Save(imageSettings.OutputPath);
             }
         }
 
-        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord, Color color)
+        private void DrawWord(Graphics graphics, TagsCloudWord tagsCloudWord, Color color, FontFamily fontFamily)
         {
             var rectangle = tagsCloudWord.Rectangle;
             var fontSize = rectangle.Height;
@@ -57,7 +49,8 @@ namespace TagsCloudContainer.Visualisation
                 new PointF(rectangle.X - fontSize / 4, rectangle.Y - fontSize / 4));
         }
 
-        public void RenderIntoFileAutosize(string filePath, ITagsCloud tagsCloud, IColorManager colorManager)
+        public void RenderIntoFileAutosize(ImageSettings imageSettings, IColorManager colorManager,
+            ITagsCloud tagsCloud)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles =
@@ -73,10 +66,10 @@ namespace TagsCloudContainer.Visualisation
             {
                 foreach (var tagsCloudWord in tagsCloudToDraw.AddedWords)
                 {
-                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord]);
+                    DrawWord(obj, tagsCloudWord, wordsColors[tagsCloudWord], FontFamily.GenericMonospace);
                 }
 
-                btm.Save(filePath);
+                btm.Save(imageSettings.OutputPath);
             }
         }
 

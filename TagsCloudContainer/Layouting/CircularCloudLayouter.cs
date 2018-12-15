@@ -8,8 +8,8 @@ namespace TagsCloudContainer.Layouting
 {
     public class CircularCloudLayouter : ITagsCloudLayouter
     {
-        public ITagsCloud TagsCloud { get; private set; }
-        public Point Center { get; }
+        public ITagsCloud TagsCloud { get; }
+        private Point Center { get; }
         private readonly List<Rectangle> addedRectangles = new List<Rectangle>();
 
         private readonly IEnumerator<Point> geometryEnumerator;
@@ -24,15 +24,7 @@ namespace TagsCloudContainer.Layouting
             geometryEnumerator = geometryObject.GetEnumerator();
         }
 
-        public CircularCloudLayouter(Point center, ITagsCloudFactory tagsCloudFactory)
-        {
-            Center = center;
-            TagsCloud = tagsCloudFactory.CreateTagsCloud();
-            const double coefficients = 0.5;
-            const double spiralStep = 0.05;
-            var geometryObject = new ArchimedeanSpiral(center, coefficients, spiralStep);
-            geometryEnumerator = geometryObject.GetEnumerator();
-        }
+        
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {

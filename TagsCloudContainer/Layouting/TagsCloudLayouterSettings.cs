@@ -9,7 +9,7 @@ namespace TagsCloudContainer.Layouting
 
         public TagsCloudLayouterSettings(IUI ui)
         {
-            Center = ui.TagsCloudCenter;
+            Center = ui.ApplicationSettings.TagsCloudCenter;
         }
     }
 }

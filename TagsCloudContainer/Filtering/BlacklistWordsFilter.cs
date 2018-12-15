@@ -5,19 +5,18 @@ namespace TagsCloudContainer.Filtering
 {
     public class BlacklistWordsFilter : IWordsFilter
     {
-        public HashSet<string> Blacklist { get; set; }
+        public IBoringWordsRepository BoringWordsRepository { get; set; }
 
-       
 
-        public BlacklistWordsFilter(HashSet<string> blacklist)
+        public BlacklistWordsFilter(BlacklistSettings blacklistSettings)
         {
-            Blacklist = blacklist;
+            BoringWordsRepository = blacklistSettings.BoringWordsRepository;
         }
 
 
         public List<string> Filter(IEnumerable<string> words)
         {
-            return words.Where(x => !Blacklist.Contains(x)).ToList();
+            return words.Where(x => !BoringWordsRepository.Words.Contains(x)).ToList();
         }
     }
 }

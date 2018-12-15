@@ -8,28 +8,18 @@ namespace TagsCloudContainer.Visualisation
     {
         public FontFamily FontFamily { get; }
         public Size ImageSize { get; }
+        public string OutputPath { get; }
+        public Size LetterSize { get; }
         public Color TextColor { get; }
-        public IColorManager ColorManager { get; }
 
-        public ImageSettings(FontFamily fontFamily, Size imageSize, Color textColor)
+
+        public ImageSettings(FontFamily fontFamily, Size imageSize, Size letterSize, string outputPath, Color textColor)
         {
             FontFamily = fontFamily;
             ImageSize = imageSize;
+            OutputPath = outputPath;
+            LetterSize = letterSize;
             TextColor = textColor;
-        }
-
-        public ImageSettings(FontFamily fontFamily, Size imageSize, IColorManager colorManager)
-        {
-            FontFamily = fontFamily;
-            ImageSize = imageSize;
-            ColorManager = colorManager;
-        }
-
-        public ImageSettings(IUI ui)
-        {
-            FontFamily = FontFamily.GenericMonospace;
-            ImageSize = ui.ImageSize;
-            TextColor = ui.TextColor;
         }
     }
 }

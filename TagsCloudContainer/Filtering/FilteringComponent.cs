@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudContainer.Filtering
 {
@@ -6,14 +7,9 @@ namespace TagsCloudContainer.Filtering
     {
         private readonly List<IWordsFilter> filters;
 
-        public FilteringComponent(List<IWordsFilter> filters)
+        public FilteringComponent(IWordsFilter[] filters)
         {
-            this.filters = filters;
-        }
-
-        public FilteringComponent(FilteringSettings settings)
-        {
-            this.filters = settings.Filters;
+            this.filters = filters.ToList();
         }
 
         public List<string> FilterWords(List<string> words)

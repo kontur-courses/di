@@ -11,7 +11,7 @@ using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Sizing;
 using TagsCloudContainer.TagsCloudGenerating;
 
-
+/*
 namespace TagsCloudContainer.Tests
 {
     [TestFixture]
@@ -78,3 +78,4 @@ namespace TagsCloudContainer.Tests
         }
     }
 }
+*/

@@ -7,9 +7,9 @@ namespace TagsCloudContainer.Reading
 {
     public class TxtWordsReader : IWordsReader
     {
-        public List<string> ReadWords(string path)
+        public List<string> ReadWords(ReadingSettings readingSettings)
         {
-            using (var fileStream = File.OpenRead(path))
+            using (var fileStream = File.OpenRead(readingSettings.InputPath))
             {
                 var array = new byte[fileStream.Length];
                 fileStream.Read(array, 0, array.Length);

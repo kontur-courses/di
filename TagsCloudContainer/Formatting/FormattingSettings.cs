@@ -12,9 +12,6 @@ namespace TagsCloudContainer.Formatting
             Formatters = formattersFactory.CreateFormatters(ui);
         }
 
-        public FormattingSettings(List<IWordsFormatter> formatters)
-        {
-            Formatters = formatters;
-        }
+       
     }
 }

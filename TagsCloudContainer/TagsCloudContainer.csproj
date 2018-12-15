@@ -84,13 +84,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Filtering\BlacklistSettings.cs" />
     <Compile Include="Filtering\BlacklistWordsFilter.cs" />
+    <Compile Include="Filtering\BoringWordsRepository.cs" />
     <Compile Include="Filtering\FilteringComponent.cs" />
-    <Compile Include="Filtering\FilteringSettings.cs" />
-    <Compile Include="Filtering\FiltersFactory.cs" />
+    <Compile Include="Filtering\FilterSettings.cs" />
+    <Compile Include="Filtering\IBoringWordsRepository.cs" />
     <Compile Include="Filtering\IFiltersFactory.cs" />
     <Compile Include="Filtering\IWordsFilter.cs" />
-    <Compile Include="Formatting\FormattersFactory.cs" />
     <Compile Include="Formatting\FormattingComponent.cs" />
     <Compile Include="Formatting\FormattingSettings.cs" />
     <Compile Include="Formatting\IFormattersFactory.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Layouting\TagsCloudLayouterSettings.cs" />
     <Compile Include="Reading\DocWordsReader.cs" />
     <Compile Include="Reading\IWordsReader.cs" />
+    <Compile Include="Reading\ReadingSettings.cs" />
     <Compile Include="Reading\TxtWordsReader.cs" />
     <Compile Include="TagsCloudGenerating\TagsCloudGenerator.cs" />
     <Compile Include="TagsCloudContainerApplication.cs" />

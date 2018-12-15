@@ -7,15 +7,11 @@ namespace TagsCloudContainer.Formatting
     {
         private readonly List<IWordsFormatter> formatters;
 
-        public FormattingComponent(IEnumerable<IWordsFormatter> formatters)
+        public FormattingComponent(IWordsFormatter[] formatters)
         {
-            this.formatters = this.formatters.ToList();
+            this.formatters = formatters.ToList();
         }
 
-        public FormattingComponent(FormattingSettings settings)
-        {
-            this.formatters = settings.Formatters.ToList();
-        }
 
         public List<string> FormatWords(List<string> words)
         {
