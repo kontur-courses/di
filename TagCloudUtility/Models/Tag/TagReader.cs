@@ -30,7 +30,7 @@ namespace TagCloud.Utility.Models.Tag
                 .ToList();
         }
 
-        private TagItem GetTagItem(KeyValuePair<string, int> pair,double maxRepeats)
+        private TagItem GetTagItem(KeyValuePair<string, int> pair, double maxRepeats)
         {
             var tagGroup = tagContainer.GetTagGroupFor(pair.Value / maxRepeats);
             return new TagItem(pair.Key, tagGroup.FontSize);
