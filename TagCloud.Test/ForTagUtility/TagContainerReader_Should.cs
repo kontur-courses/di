@@ -9,20 +9,38 @@ using TagCloud.Utility.Models.Tag.Container;
 namespace TagCloud.Tests.ForTagUtility
 {
     [TestFixture]
-    class TagContainerReader_Should
+    class TagContainerReader_Should 
     {
         private readonly IContainer container = ContainerConfig.StandartContainer;
+        private TagContainerReader sut;
+        private const string TestFileName = "tmp.txt";
+
+        [SetUp]
+        public void SetUp()
+        {
+            sut = container.Resolve<TagContainerReader>();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            File.Delete(TestFileName);
+        }
+
+        private void CreateTestText(string text)
+        {
+            if (File.Exists(TestFileName))
+                File.Delete(TestFileName);
+            using (var file = File.CreateText(TestFileName))
+                file.WriteLine(text);
+        }
 
         [Test]
         public void ReadTagContainer()
         {
-            var tagContainerReader = container.Resolve<TagContainerReader>();
-            using (var file = File.CreateText("tmp.txt"))
-            {
-                file.WriteLine("TestGroup 0.0-1.0 1;");
-            }
+            CreateTestText("TestGroup 0.0-1.0 1");
 
-            var result = tagContainerReader.ReadTagsContainer("tmp.txt");
+            var result = sut.ReadTagsContainer(TestFileName);
 
             result.Should().Contain(group => group.Item1 == "TestGroup"
                                              && group.Item2.FontSize == 1
@@ -33,16 +51,11 @@ namespace TagCloud.Tests.ForTagUtility
         [Test]
         public void ThrowArgumentException_WhenInputIncorrect()
         {
-            var tagContainerReader = container.Resolve<TagContainerReader>();
-            using (var file = File.CreateText("tmp.txt"))
-            {
-                file.WriteLine("1 wrongFormat-1 1;");
-            }
+            CreateTestText("1 wrongFormat-1 1");
 
-            Action read = () => tagContainerReader.ReadTagsContainer("tmp.txt");
+            Action read = () => sut.ReadTagsContainer(TestFileName);
 
             read.Should().Throw<ArgumentException>();
-            File.Delete("tmp.txt");
         }
     }
 }
