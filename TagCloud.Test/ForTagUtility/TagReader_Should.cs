@@ -1,25 +1,22 @@
 ﻿using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Utility.Container;
 using TagCloud.Utility.Models.Tag;
 using TagCloud.Utility.Models.Tag.Container;
 
 namespace TagCloud.Tests.ForTagUtility
 {
     [TestFixture]
-    public class TagReader_Should 
+    public class TagReader_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
-
         [Test]
         public void ReadTags()
         {
             var tagContainer = container.Resolve<TagContainer>();
             var reader = container.Resolve<TagReader>();
-            var expectBigSize = tagContainer.GetTagGroupFor(10 / 17d).FontSize;
-            var expectSizeOfAverage = tagContainer.GetTagGroupFor(6 / 17d).FontSize;
-            var expectSizOfSmall = tagContainer.GetTagGroupFor(1 / 17d).FontSize;
+            var expectBigSize = tagContainer.GetTagGroupFor(10 / 10d).FontSize;
+            var expectSizeOfAverage = tagContainer.GetTagGroupFor(6 / 10d).FontSize;
+            var expectSizOfSmall = tagContainer.GetTagGroupFor(1 / 10d).FontSize;
 
             var tags = reader.ReadTags(new[]
             {

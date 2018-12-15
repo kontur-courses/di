@@ -5,16 +5,13 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Models;
-using TagCloud.Utility.Container;
 using TagCloud.Visualizer.Settings.Colorizer;
 
 namespace TagCloud.Tests.ForTagCloud
 {
     [TestFixture]
-    class SolidColorizer_Should
+    class SolidColorizer_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
-
         [TestCase(1)]
         [TestCase(100)]
         public void ReturnSameColor(int repeats)

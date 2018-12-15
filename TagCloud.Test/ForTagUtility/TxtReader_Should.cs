@@ -3,16 +3,15 @@ using System.IO;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Utility.Container;
 using TagCloud.Utility.Models.TextReader;
 
 namespace TagCloud.Tests.ForTagUtility
 {
     [TestFixture]
-    public class TxtReader_Should 
+    public class TxtReader_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
         private const string TestFileName = "tmp.txt";
+        private TxtReader sut;
 
         [SetUp]
         public void SetUp()
@@ -21,6 +20,7 @@ namespace TagCloud.Tests.ForTagUtility
                 File.Delete(TestFileName);
             using (var file = File.CreateText(TestFileName))
                 file.WriteLine("text 123 words");
+            sut = container.Resolve<TxtReader>();
         }
 
         [TearDown]
@@ -33,9 +33,7 @@ namespace TagCloud.Tests.ForTagUtility
         [TestCase("NotExist.txt", TestName = "When file doesn't exists")]
         public void ThrowArgumentException(string path)
         {
-            var reader = container.Resolve<TxtReader>();
-
-            Action reading = () => reader.ReadToEnd(path);
+            Action reading = () => sut.ReadToEnd(path);
 
             reading.Should().Throw<ArgumentException>();
         }
@@ -43,9 +41,7 @@ namespace TagCloud.Tests.ForTagUtility
         [Test]
         public void ReadWordsFromFile()
         {
-            var reader = container.Resolve<TxtReader>();
-
-            var result = reader.ReadToEnd(TestFileName);
+            var result = sut.ReadToEnd(TestFileName);
 
             result.Should().BeEquivalentTo("text", "words", "123");
         }

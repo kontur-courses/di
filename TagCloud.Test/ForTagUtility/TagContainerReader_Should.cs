@@ -3,15 +3,13 @@ using System.IO;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Utility.Container;
 using TagCloud.Utility.Models.Tag.Container;
 
 namespace TagCloud.Tests.ForTagUtility
 {
     [TestFixture]
-    class TagContainerReader_Should 
+    class TagContainerReader_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
         private TagContainerReader sut;
         private const string TestFileName = "tmp.txt";
 

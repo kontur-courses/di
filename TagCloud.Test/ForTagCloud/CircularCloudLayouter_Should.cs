@@ -9,16 +9,14 @@ using NUnit.Framework;
 using TagCloud.Extensions;
 using TagCloud.Layouter;
 using TagCloud.Models;
-using TagCloud.Utility.Container;
 using TagCloud.Visualizer;
 
 namespace TagCloud.Tests.ForTagCloud
 {
     [TestFixture]
-    public class CircularCloudLayouter_Should
+    public class CircularCloudLayouter_Should : TestBase
     {
         private List<Rectangle> currentLayout;
-        private readonly IContainer container = ContainerConfig.StandartContainer;
 
         [SetUp]
         public void SetUp()
@@ -54,7 +52,7 @@ namespace TagCloud.Tests.ForTagCloud
 
             currentLayout.Add(layouter.PutNextRectangle(new Size(width, height)));
 
-            currentLayout.First().Should().BeEquivalentTo(new Rectangle(- width / 2,- height / 2, width, height));
+            currentLayout.First().Should().BeEquivalentTo(new Rectangle(-width / 2, -height / 2, width, height));
         }
 
         [TestCase(0, 0, TestName = "With empty Size")]

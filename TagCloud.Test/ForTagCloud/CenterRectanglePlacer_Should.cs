@@ -3,15 +3,12 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.RectanglePlacer;
-using TagCloud.Utility.Container;
 
 namespace TagCloud.Tests.ForTagCloud
 {
     [TestFixture]
-    public class CenterRectanglePlacer_Should
+    public class CenterRectanglePlacer_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
-
         [TestCase(0, 0, TestName = "Then point is (0,0)")]
         [TestCase(10, 10, TestName = "Then point is (10,10)")]
         [TestCase(-10, -10, TestName = "Then point is (-10,-10)")]

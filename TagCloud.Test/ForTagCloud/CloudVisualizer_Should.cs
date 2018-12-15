@@ -4,26 +4,30 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Models;
-using TagCloud.Utility.Container;
 using TagCloud.Visualizer;
 
 namespace TagCloud.Tests.ForTagCloud
 {
     [TestFixture]
-    public class CloudVisualizer_Should
+    public class CloudVisualizer_Should : TestBase
     {
-        private readonly IContainer container = ContainerConfig.StandartContainer;
+        private CloudVisualizer sut;
+
+        [SetUp]
+        public void SetUp()
+        {
+            sut = container.Resolve<CloudVisualizer>();
+        }
 
         [TestCase(1, TestName = "For 1 rectangle")]
         [TestCase(5, TestName = "For 5 rectangles")]
         public void CreatePictureWithRectangles(int amountOfRectangles)
         {
-            var visualizer = container.Resolve<CloudVisualizer>();
             var items = new TagItem[amountOfRectangles];
             for (var i = 0; i < amountOfRectangles; i++)
                 items[i] = new TagItem("1", 1);
 
-            var picture = visualizer.CreatePictureWithItems(items);
+            var picture = sut.CreatePictureWithItems(items);
 
             IsPictureContainsAllLocationPoints(items, picture)
                 .Should().BeTrue();
@@ -50,9 +54,8 @@ namespace TagCloud.Tests.ForTagCloud
         [TestCase(true, TestName = "Then items list is empty")]
         public void ThrowArgumentException(bool isArrayInitialized)
         {
-            var visualizer = container.Resolve<CloudVisualizer>();
             Action creation = ()
-                => visualizer.CreatePictureWithItems(
+                => sut.CreatePictureWithItems(
                     isArrayInitialized
                         ? new TagItem[0]
                         : null);

@@ -63,7 +63,6 @@
     <Compile Include="ForTagCloud\CircularCloudLayouter_Should.cs" />
     <Compile Include="ForTagCloud\FrequencyGroup_Should.cs" />
     <Compile Include="ForTagCloud\SolidColorizer_Should.cs" />
-    <Compile Include="ForTagUtility\RusFilter_Should.cs" />
     <Compile Include="ForTagUtility\TagContainerReader_Should.cs" />
     <Compile Include="ForTagUtility\TagContainer_Should.cs" />
     <Compile Include="ForTagUtility\TagGroup_Should.cs" />
@@ -76,6 +75,7 @@
     <Compile Include="ForTagUtility\TagCloudProgram_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ForTagCloud\Spiral_Should.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
