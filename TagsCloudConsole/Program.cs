@@ -30,7 +30,7 @@ namespace TagsCloudConsole
             var app = container.Resolve<App>();
             try
             {
-                app.Run(arguments.ImageFileName, arguments.WordsFileName);
+                app.Run(arguments.ImageFileName, arguments.WordsFileName, arguments.Mode);
             }
             catch (Exception e)
             {
@@ -49,9 +49,13 @@ namespace TagsCloudConsole
             };
 
             var builder = new ContainerBuilder();
-            builder.RegisterType<TextFileReader>().As<IFileReader>();
-            builder.RegisterType<JsonFileReader>().As<IFileReader>();
+            builder.RegisterType<SimpleFormatsReader>().As<IFileReader>();
             builder.RegisterType<FileReaderSelector>().AsSelf();
+
+            builder.RegisterType<LinesParser>().As<IParser>();
+            builder.RegisterType<LiteratureTextParser>().As<IParser>();
+            builder.RegisterType<JsonParser>().As<IParser>();
+            builder.RegisterType<ParserSelector>().AsSelf();
 
             builder.RegisterInstance(imageSettings).As<ImageSettings>();
             builder.RegisterType<ArchimedeanSpiralGeneratorFactory>()
@@ -69,7 +73,7 @@ namespace TagsCloudConsole
             builder.RegisterType<ArchimedeanSpiralGenerator>().As<ISpiralGenerator>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
-            builder.RegisterType<BasicTransformer>().As<IWordTransformer>();
+            builder.RegisterType<ToLowerTransformer>().As<IWordTransformer>();
             builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
             builder.RegisterType<Preprocessor>().AsSelf();
             builder.RegisterType<CustomPainter>().As<ITagPainter>();

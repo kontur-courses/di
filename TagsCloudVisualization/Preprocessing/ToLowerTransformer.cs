@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization.Preprocessing
 {
-    public class BasicTransformer : IWordTransformer
+    public class ToLowerTransformer : IWordTransformer
     {
         public string TransformWord(string word)
         {

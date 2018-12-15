@@ -40,6 +40,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -62,13 +65,14 @@
     <Compile Include="ImageSaving\ImageSaverSelector.cs" />
     <Compile Include="ImageSaving\StandardImageSaver.cs" />
     <Compile Include="Preprocessing\Preprocessor.cs" />
+    <Compile Include="Preprocessing\StemmingTransformer.cs" />
     <Compile Include="StringExtension.cs" />
     <Compile Include="Visualizing\BasicTagPainter.cs" />
     <Compile Include="CloudGenerating\ArchimedeanSpiralGenerator.cs" />
     <Compile Include="Visualizing\CustomPainter.cs" />
     <Compile Include="ImageSettings.cs" />
     <Compile Include="Visualizing\ITagPainter.cs" />
-    <Compile Include="Preprocessing\BasicTransformer.cs" />
+    <Compile Include="Preprocessing\ToLowerTransformer.cs" />
     <Compile Include="CloudGenerating\CircularCloudLayouter.cs" />
     <Compile Include="Preprocessing\DullWordsFilter.cs" />
     <Compile Include="Preprocessing\IFilter.cs" />
@@ -78,8 +82,12 @@
     <Compile Include="Preprocessing\IWordTransformer.cs" />
     <Compile Include="Utils\RectangleExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordsFileReading\JsonFileReader.cs" />
-    <Compile Include="WordsFileReading\TextFileReader.cs" />
+    <Compile Include="WordsFileReading\IParser.cs" />
+    <Compile Include="WordsFileReading\JsonParser.cs" />
+    <Compile Include="WordsFileReading\LiteratureTextParser.cs" />
+    <Compile Include="WordsFileReading\ParserSelector.cs" />
+    <Compile Include="WordsFileReading\SimpleFormatsReader.cs" />
+    <Compile Include="WordsFileReading\LinesParser.cs" />
     <Compile Include="Utils\Statistics.cs" />
     <Compile Include="Utils\StatisticsCalculator.cs" />
     <Compile Include="Tag.cs" />
@@ -96,6 +104,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Resources\dull_words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

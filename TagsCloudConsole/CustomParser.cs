@@ -7,6 +7,7 @@ namespace TagsCloudConsole
     class CustomArgs
     {
         public readonly string WordsFileName;
+        public readonly string Mode;
         public readonly Size ImageSize;
         public readonly Color BackgroundColor;
         public readonly Color TextColor;
@@ -16,6 +17,7 @@ namespace TagsCloudConsole
         public CustomArgs(CmdOptions options)
         {
             WordsFileName = options.WordsFileName;
+            Mode = options.Mode;
             ImageSize = ParseImageSize(options.RawImageSize);
             BackgroundColor = ParseKnownColor(options.BackgroundColorName);
             TextColor = ParseKnownColor(options.TextColorName);
@@ -51,6 +53,9 @@ namespace TagsCloudConsole
     {
         [Option("filename", Required = true)]
         public string WordsFileName { get; set; }
+
+        [Option("mode", Required = false, Default = "lines")]
+        public string Mode { get; set; }
 
         [Option("size", Required = false, Default = "600x600")]
         public string RawImageSize { get; set; }

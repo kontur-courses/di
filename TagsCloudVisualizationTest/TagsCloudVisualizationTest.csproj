@@ -68,6 +68,7 @@
     <Compile Include="CircularCloudLayouter_Should.cs" />
     <Compile Include="RectangleExtension_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringExtensionTest.cs" />
     <Compile Include="TextFileReaderTest.cs" />
     <Compile Include="StatisticsCalculator_Should.cs" />
   </ItemGroup>
