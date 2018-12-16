@@ -20,7 +20,6 @@ namespace ConsoleTagClouder
         public string TargetPath { get; set; }
 
         [Option('s', Separator = ';')]
-        [AppSettingsOption]
         private (int x, int y) Size
         {
             get => size;
@@ -33,47 +32,54 @@ namespace ConsoleTagClouder
         }
 
         [Option('t')]
-        [AppSettingsOption]
         private string FontType { get; set; }
         [Option('b')]
-        [AppSettingsOption]
         private string FontBrush { get; set; }
         [Option('g')]
-        [AppSettingsOption]
         private string BackgroundBrush { get; set; }
                 
         [Option('l')]
-        [AppSettingsOption]
         private string TLayouter { get; set;  }
         [Option('c')]
-        [AppSettingsOption]
         private string TCounter { get; set;  }
+        [Option('m')]
+        private string TScaler { get; set;  }
 
-        public ClouderSettings BuildClouderSettings()
+        public CloudSettings BuildCloudSettings()
         {
-            var settings = ClouderSettings.Default();
+            var settings = CloudSettings.Default();
 
-            //TODO make it pretty 
             if (TLayouter != null)
-                settings.TLayouter = FindInterfacesWithPrefix<ICloudLayouter>(TLayouter).TakeOnlyOne();
+                settings.TLayouter = TLayouter;// FindInterfacesWithPrefix<ICloudLayouter>(TLayouter).TakeOnlyOne();
             if (TCounter != null)
-                settings.TCounter = FindInterfacesWithPrefix<IWordsCounter>(TCounter).TakeOnlyOne();
+                settings.TCounter = TCounter;//FindInterfacesWithPrefix<IWordsCounter>(TCounter).TakeOnlyOne();
+            if (TScaler != null)
+                settings.TScaler = TScaler;//FindInterfacesWithPrefix<IWordsCounter>(TCounter).TakeOnlyOne();
+            
+            return settings;
+        }
+        
+        public DrawingSettings BuildDrawingSettings()
+        {
+            var settings = DrawingSettings.Default();
+
             if (size.x > 0 && size.y > 0)
-                settings.DrawingSettings.Size = new Size(Size.x, Size.y);
+                settings.Size = new Size(Size.x, Size.y);
             if (BackgroundBrush != null)
-                settings.DrawingSettings.BackgroundBrush = new SolidBrush(Color.FromName(BackgroundBrush));
+                settings.BackgroundBrush = new SolidBrush(Color.FromName(BackgroundBrush));
             if (FontBrush != null)
-                settings.DrawingSettings.FontBrush = new SolidBrush(Color.FromName(FontBrush));
+                settings.FontBrush = new SolidBrush(Color.FromName(FontBrush));
             if (FontType != null)
-                settings.DrawingSettings.FontType = FontType;
+                settings.FontType = FontType;
             
             return settings;
         }
 
-        private IEnumerable<Type> FindInterfacesWithPrefix<TInterface>(string prefix)=>
-            AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-                .Where(t => typeof(TInterface).IsAssignableFrom(t))
-                .Where(n=>n.Name.ToLower().StartsWith(prefix.ToLower()));
+        //TODO remove comments
+//        private IEnumerable<Type> FindInterfacesWithPrefix<TInterface>(string prefix)=>
+//            AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+//                .Where(t => typeof(TInterface).IsAssignableFrom(t))
+//                .Where(n=>n.Name.ToLower().StartsWith(prefix.ToLower()));
            
     }
 }

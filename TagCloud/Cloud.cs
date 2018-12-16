@@ -1,21 +1,34 @@
+using System.Linq;
+using System.Reflection;
 using Autofac;
 
 namespace TagCloud
 {
     public static class Cloud
     {
-        public static CloudMaker CreateMaker(ClouderSettings settings)
+        public static CloudMaker CreateMaker(CloudSettings cloudSettings,DrawingSettings drawingSettings)
         {
             var container = new ContainerBuilder();
-            container.Register(c=>settings.DrawingSettings).AsSelf();
-            container.RegisterType(settings.TCounter).As<IWordsCounter>();
-            container.RegisterType(settings.TLayouter).As<ICloudLayouter>();            
+            container.RegisterTypeByPrefixAs<ICloudLayouter>(cloudSettings.TLayouter);
+            container.RegisterTypeByPrefixAs<IWordsCounter>(cloudSettings.TCounter);
+            container.RegisterTypeByPrefixAs<IWeightScaler>(cloudSettings.TScaler);
+            container.Register(c=>cloudSettings).AsSelf();     
+            container.Register(c=>drawingSettings).AsSelf();          
             container.RegisterType<CloudDrawer>().AsSelf();
             container.RegisterType<CloudMaker>().AsSelf();
             return (CloudMaker) container.Build().Resolve(typeof(CloudMaker));
         }
 
+        private static void //IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle>
+            RegisterTypeByPrefixAs<T>(this ContainerBuilder container, string prefix)
+        {//TODO make doesNotFoundException
+            var asm = Assembly.GetExecutingAssembly();
+            container.RegisterAssemblyTypes(asm)
+                .Where(x => x.GetInterfaces().Contains(typeof(T)) && x.Name.StartsWith(prefix))
+                .As<T>();
+        }
+
         public static CloudMaker DefaultMaker() =>
-            CreateMaker(ClouderSettings.Default());
+            CreateMaker(CloudSettings.Default(),DrawingSettings.Default());
     }
 }

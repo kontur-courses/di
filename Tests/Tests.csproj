@@ -81,10 +81,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clouder_Should.cs" />
+    <Compile Include="Cloud_Should.cs" />
     <Compile Include="Common\CircularCloudLayouter.cs" />
     <Compile Include="CountersTests\SimpleWordCounter_Should.cs" />
-    <Compile Include="GuiParserShould_Should.cs" />
     <Compile Include="LayoutersTests\CircularCloudLayouter_Should.cs" />
     <Compile Include="LayoutersTests\LayouterTestsBase.cs" />
     <Compile Include="LayoutersTests\RowLayout_Should.cs" />

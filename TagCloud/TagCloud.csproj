@@ -55,19 +55,19 @@
       <HintPath>..\..\..\..\..\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\GUITagClouder\bin\Debug\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cloud.cs" />
-    <Compile Include="ClouderSettings.cs" />
+    <Compile Include="CloudSettings.cs" />
     <Compile Include="CloudDrawer.cs" />
     <Compile Include="CloudMaker.cs" />
     <Compile Include="Counters\IWordsCounter.cs" />
     <Compile Include="Counters\SimpleWordsCounter.cs" />
     <Compile Include="DrawingSettings.cs" />
-    <Compile Include="Layouters\RowiseCloudLayouter.cs" />
+    <Compile Include="Layouters\RowwiseCloudLayouter.cs" />
     <Compile Include="Layouters\ICloudLayouter.cs" />
     <Compile Include="Layouters\RowLayout.cs" />
     <Compile Include="Program.cs" />

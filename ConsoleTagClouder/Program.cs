@@ -13,35 +13,39 @@ namespace ConsoleTagClouder
 {
     public static class Program
     {
-        private static bool isParsingContinues;
+        private static bool isParsingContinues = true;
         
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             var settings = ParseSettings(args);
             if (!isParsingContinues)
-                return;
+                return -1;
 
             try
             {
                 MakeCloud(settings);
             }
-            catch (Exception e)
+            catch (Exception e)//TODO specify error
             {                
                 Console.WriteLine("Making cloud failed because following errors occured:");
                 Console.WriteLine(e);
-                throw;
+                return -1;
             }
+            
+            Console.WriteLine("Cloud saved into " + settings.TargetPath);
+            Console.ReadLine();
+            return 0;
         }
 
         private static void MakeCloud(AppSettings settings)
         {
-            var clouder = Cloud.CreateMaker(settings.BuildClouderSettings());
+            var clouder = Cloud.CreateMaker(settings.BuildCloudSettings(),settings.BuildDrawingSettings());
             clouder.UpdateWith(File.ReadAllText(settings.SourcePath));
             using (var map = clouder.DrawCloud())
                 map.Save(settings.TargetPath,ImageFormat.Png);
         }
 
-        public static AppSettings ParseSettings(string[] args)
+        private static AppSettings ParseSettings(string[] args)
         {
             AppSettings settings = null;
             Parser.Default.ParseArguments<AppSettings>(args)

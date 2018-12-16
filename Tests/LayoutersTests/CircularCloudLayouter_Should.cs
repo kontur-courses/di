@@ -17,14 +17,14 @@ namespace Tests.LayoutersTests
     [TestFixture]
     internal class CircularCloudLayouter_Should : LayouterTestsBase
     {
-        private RowiseCloudLayouter layouter;
+        private RowwiseCloudLayouter layouter;
         private Point center;
         
         [SetUp]
         public void SetUp()
         {
             center = new Point(120,150);
-            layouter = new RowiseCloudLayouter(center);
+            layouter = new RowwiseCloudLayouter(center);
         }
 
         [TearDown]

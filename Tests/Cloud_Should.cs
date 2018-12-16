@@ -4,7 +4,7 @@ using Xunit.Sdk;
 namespace Tests
 {
     [TestFixture]
-    public class Clouder_Should
+    public class Cloud_Should
     {
         //Mocks here
     }

@@ -7,19 +7,24 @@ using MoreLinq;
 
 namespace TagCloud.Layouters
 {
-   //Layouter Code
+//Layouter Code
     
-    public class RowiseCloudLayouter : ICloudLayouter
+    public class RowwiseCloudLayouter : ICloudLayouter
     {
         private readonly List<RowLayout> rowLayouts = new List<RowLayout>();
         private int firstIndex;
+
+        public RowwiseCloudLayouter(DrawingSettings settings)
+        {
+            Center = new Point(settings.Size.Divide(2));
+        }
         
-        public RowiseCloudLayouter(Point center)
+        public RowwiseCloudLayouter(Point center)
         {
             Center = center;
         }
 
-        public RowiseCloudLayouter(int x, int y)
+        public RowwiseCloudLayouter(int x, int y)
         {
             Center = new Point(x, y);
         }
