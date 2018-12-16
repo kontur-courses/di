@@ -43,6 +43,7 @@ can't
 cause
 could
 couldn't
+d
 despite
 did
 didn't
@@ -77,7 +78,7 @@ himself
 his
 how
 however
-I
+i
 if
 in
 inside
@@ -138,6 +139,7 @@ past
 perhaps
 quite
 rather
+s
 seldom
 several
 shall
@@ -150,6 +152,7 @@ so
 some
 sometimes
 soon
+t
 than
 that
 the
@@ -183,6 +186,7 @@ usedn't
 usen't
 usually
 very
+ve
 was 
 wasn't
 we

@@ -1,6 +1,8 @@
 ﻿using System;
 using TagsCloudVisualization;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using Autofac;
 using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
@@ -48,6 +50,9 @@ namespace TagsCloudConsole
                 ImageSize = arguments.ImageSize
             };
 
+            var pathToAssemblyDirectory = Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().Location);
+
             var builder = new ContainerBuilder();
             builder.RegisterType<SimpleFormatsReader>().As<IFileReader>();
             builder.RegisterType<FileReaderSelector>().AsSelf();
@@ -74,6 +79,17 @@ namespace TagsCloudConsole
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<DullWordsFilter>().As<IFilter>();
             builder.RegisterType<ToLowerTransformer>().As<IWordTransformer>();
+
+            builder.RegisterType<StemmingTransformer>()
+                .As<IWordTransformer>()
+                .WithParameters(new[]
+                {
+                    new NamedParameter("dicFile", Path.Combine(
+                            pathToAssemblyDirectory, "Resources", "en_US.dic")),
+                    new NamedParameter("affFile", Path.Combine(
+                            pathToAssemblyDirectory, "Resources", "en_US.aff")),
+                });
+
             builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
             builder.RegisterType<Preprocessor>().AsSelf();
             builder.RegisterType<CustomPainter>().As<ITagPainter>();

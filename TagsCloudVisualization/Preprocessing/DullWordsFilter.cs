@@ -28,7 +28,7 @@ namespace TagsCloudVisualization.Preprocessing
                     var line = reader.ReadLine();
                     if (line == null)
                         break;
-                    dullWords.Add(line.Trim());
+                    dullWords.Add(line.Trim().ToLower());
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace TagsCloudVisualization.Preprocessing
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
             foreach (var word in words)
-                if (!dullWords.Contains(word))
+                if (!dullWords.Contains(word.ToLower()))
                     yield return word;
         }
     }
