@@ -53,8 +53,6 @@ namespace TagsCloudContainer.CircularCloudLayouters
             Func<int, bool> intersectionFunction =
                 x => !rectangleFunction(x).IntersectsWithPreviousRectangles(rectangles);
             var lengthToCenter = BinarySearch(0, MaxLength, intersectionFunction);
-            if (lengthToCenter == null)
-                throw new InvalidOperationException("Can not add more rectangles");
             return rectangleFunction(lengthToCenter.Value);
         }
 
