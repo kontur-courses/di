@@ -38,7 +38,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
             var secondAngleChooser = new RandomAngleChooser(random);
 
             var angles = randomAngleChooser.GetAngles(10);
-            var secondAngles = randomAngleChooser.GetAngles(10);
+            var secondAngles = secondAngleChooser.GetAngles(10);
 
             angles.Should().NotBeEquivalentTo(secondAngles);
         }
