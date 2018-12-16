@@ -19,7 +19,9 @@ namespace TagsCloudVisualization.WordsFileReading
         {
             if (parserByMode.ContainsKey(mode))
                 return parserByMode[mode];
-            throw new ArgumentException("Parsing mode is not supported");
+            throw new ArgumentException(
+                $"Parsing mode is not supported. Supported modes are: {string.Join(", ", parserByMode.Keys)}");
+
         }
     }
 }
