@@ -49,8 +49,9 @@ namespace TagsCloudContainer.Clients
             var size = new Size(consoleClientOptions.Width, consoleClientOptions.Height);
             RaiseIfSizeIsHasNonPositiveCoordinates(size);
             settings.ImageSettings.ImageSize = size;
-            UpdateFont(consoleClientOptions.Font);
+            UpdateFontFamily(consoleClientOptions.FontFamily);
             UpdateColor(consoleClientOptions.Color);
+            UpdateFontSize(consoleClientOptions.BaseFontSize);
         }
 
         private void RaiseIfSizeIsHasNonPositiveCoordinates(Size size)
@@ -72,7 +73,7 @@ namespace TagsCloudContainer.Clients
             return Enumerable.Empty<string>();
         }
 
-        private void UpdateFont(string font)
+        private void UpdateFontFamily(string font)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace TagsCloudContainer.Clients
             }
             catch (Exception)
             {
-                FailApplication("Font is incorrect");
+                FailApplication("FontFamily is incorrect");
             }
         }
 
@@ -101,11 +102,18 @@ namespace TagsCloudContainer.Clients
             }
         }
 
+        private void UpdateFontSize(int font)
+        {
+            if (font < 10 || font > 100)
+                FailApplication("Base font size should be in range from 10 to 100");
+            settings.ImageSettings.BaseFontSize = font;
+        }
+
         private Color ExtractColorFromName(string colorName)
         {
             var color = Color.FromName(colorName);
             if (!color.IsKnownColor)
-                FailApplication($"Font color ({colorName}) is unknown");
+                FailApplication($"FontFamily color ({colorName}) is unknown");
             return color;
         }
 

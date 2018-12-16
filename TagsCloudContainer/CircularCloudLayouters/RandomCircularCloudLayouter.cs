@@ -12,20 +12,29 @@ namespace TagsCloudContainer.CircularCloudLayouters
         private const int MaxLength = 10000;
         private readonly Point centerPoint;
         private readonly IAngleChooser angleChooser;
+        private readonly Rectangle imageRectangle;
+        private const int MaxDirectionChoosingIterationsForOneRectangle = 20;
 
         public RandomCircularCloudLayouter(IImageSettings settings, IAngleChooser angleChooser)
         {
             this.angleChooser = angleChooser;
             var imageSize = settings.ImageSize;
+            imageRectangle = new Rectangle(Point.Empty, imageSize);
             centerPoint = new Point(imageSize.Width / 2, imageSize.Height / 2);
         }
 
         public Rectangle PutNextRectangle(Size size)
         {
-            var angle = GetNextAngle();
-            var rectangle = GetRectangle(size, angle);
-            rectangles.Add(rectangle);
-            return rectangle;
+            for (var i = 0; i < MaxDirectionChoosingIterationsForOneRectangle; i++)
+            {
+                var angle = GetNextAngle();
+                var rectangle = GetRectangle(size, angle);
+                if (!imageRectangle.Contains(rectangle))
+                    continue;
+                rectangles.Add(rectangle);
+                return rectangle;
+            }
+            throw new InvalidOperationException("Can not add next word: there is no more free space!");
         }
 
         private double GetNextAngle()
@@ -33,6 +42,8 @@ namespace TagsCloudContainer.CircularCloudLayouters
             angleChooser.MoveNext();
             return angleChooser.Current;
         }
+        
+        
 
         private Rectangle GetRectangle(Size size, double angle)
         {

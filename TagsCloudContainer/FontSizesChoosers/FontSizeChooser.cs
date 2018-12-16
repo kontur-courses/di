@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsHandlers;
 
 namespace TagsCloudContainer.FontSizesChoosers
 {
     public class FontSizeChooser : IFontSizeChooser
     {
-        private readonly int baseFontSize;
+        private readonly IImageSettings imageSettings;
         private readonly double minFontSize = 0.2;
         private readonly double reducingCoefficient = 0.9;
 
-        public FontSizeChooser()
+        public FontSizeChooser(IImageSettings imageSettings)
         {
-            baseFontSize = 30;
+            this.imageSettings = imageSettings;
         }
 
         public IEnumerable<PrintedWordInfo> GetWordInfos(IEnumerable<WordInfo> words)
         {
             var sortedWords = words.OrderByDescending(x => x.Repetitions);
-            var sizeColor = (double)baseFontSize;
+            var sizeColor = (double)BaseFontSize;
 
             foreach (var wordInfo in sortedWords)
             {
@@ -29,6 +30,9 @@ namespace TagsCloudContainer.FontSizesChoosers
         }
 
         private double GetNewFontSize(double currentSize)
-            => Math.Max(baseFontSize * minFontSize, reducingCoefficient * currentSize);
+            => Math.Max(BaseFontSize * minFontSize, reducingCoefficient * currentSize);
+
+        private int BaseFontSize 
+            => imageSettings.BaseFontSize;
     }
 }

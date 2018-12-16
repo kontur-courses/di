@@ -7,11 +7,13 @@ namespace TagsCloudContainer.Settings
     {
         public Size ImageSize { get; set; }
         public ImageFormat Format { get; set; }
+        public int BaseFontSize { get; set; }
 
         public ImageSettings()
         {
             ImageSize = new Size(1024, 1280);
             Format = ImageFormat.Png;
+            BaseFontSize = 30;
         }
     }
 }
