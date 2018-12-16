@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CommandLine;
+using OpenNLP.Tools.Ling;
 using TagsCloudContainer.ImageCreators;
 using TagsCloudContainer.ImageSavers;
 using TagsCloudContainer.ProjectSettings;
@@ -38,7 +39,7 @@ namespace TagsCloudContainer.Clients
                     UpdateSettings(o);
                     var words = ReadFile(o.Source);
                     var transformedWord = wordsHandler.HandleWords(words);
-                    var image = imageCreator.GetImage(transformedWord);
+                    var image = CreateImage(transformedWord);
                     SaveImage(image, o.Destination);
                     Console.WriteLine("Image successfully created");
                 });
@@ -73,6 +74,20 @@ namespace TagsCloudContainer.Clients
             return Enumerable.Empty<string>();
         }
 
+        private Image CreateImage(IEnumerable<WordInfo> wordInfos)
+        {
+            try
+            {
+                return imageCreator.GetImage(wordInfos);
+            }
+            catch (Exception exception)
+            {
+                FailApplication($"Can not create image. {exception.Message}");
+                return null;
+            }
+            
+        }
+
         private void UpdateFontFamily(string font)
         {
             try
@@ -96,9 +111,9 @@ namespace TagsCloudContainer.Clients
             {
                 imageSaver.SaveImage(image, destination);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                FailApplication($"Can't save picture of cloud at given file path: {destination}");
+                FailApplication($"Can't save picture of cloud at given file path: {destination}. {exception.Message}");
             }
         }
 
