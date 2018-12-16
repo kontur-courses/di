@@ -19,5 +19,13 @@ namespace TagsCloudContainer.TagsCloudGenerating
             TagsCloudLayouter = layouter;
             WordsSizer = sizer;
         }
+
+        public TagsCloudGeneratorSettings
+            (Size letterSize, ITagsCloudLayouter layouter, IWordsSizer sizer)
+        {
+            LetterSize = letterSize;
+            TagsCloudLayouter = layouter;
+            WordsSizer = sizer;
+        }
     }
 }

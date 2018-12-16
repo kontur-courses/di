@@ -91,7 +91,6 @@
     <Compile Include="Filtering\FilteringComponent.cs" />
     <Compile Include="Filtering\FilterSettings.cs" />
     <Compile Include="Filtering\IBoringWordsRepository.cs" />
-    <Compile Include="Filtering\IFiltersFactory.cs" />
     <Compile Include="Filtering\IWordsFilter.cs" />
     <Compile Include="Formatting\FormattingComponent.cs" />
     <Compile Include="Formatting\FormattingSettings.cs" />

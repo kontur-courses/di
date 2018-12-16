@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Linq.Expressions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using FluentAssertions;
-using TagsCloudContainer.Filtering;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Sizing;
 using TagsCloudContainer.TagsCloudGenerating;
+using TagsCloudContainer.TagsClouds;
 
-/*
+
 namespace TagsCloudContainer.Tests
 {
     [TestFixture]
@@ -34,7 +32,9 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            layouter = new CircularCloudLayouter(center, new TagsCloudFactory());
+            var
+                layouter = new CircularCloudLayouter(new TagsCloudLayouterSettings(new Point(300, 300)),
+                    new TagsCloudFactory());
             generator = new TagsCloudGenerator(new TagsCloudGeneratorSettings(minLetterSize, layouter, wordsSizer));
         }
 
@@ -78,4 +78,3 @@ namespace TagsCloudContainer.Tests
         }
     }
 }
-*/

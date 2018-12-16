@@ -4,8 +4,8 @@ namespace TagsCloudContainer.Visualisation
 {
     public class TagsCloudWord
     {
-        public string Word { get; set; }
-        public Rectangle Rectangle { get; set; }
+        public string Word { get; private set; }
+        public Rectangle Rectangle { get; private set; }
 
         public TagsCloudWord(string word, Rectangle rectangle)
         {

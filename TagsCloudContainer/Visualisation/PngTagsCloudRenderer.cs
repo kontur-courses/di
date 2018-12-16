@@ -13,12 +13,11 @@ namespace TagsCloudContainer.Visualisation
 
 
         public void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud,
-            bool autosize = false)
+            bool autoSize = false)
         {
-            var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
-            if (autosize)
+            if (autoSize)
             {
-                RenderIntoFileAutosize(imageSettings, colorManager, tagsCloud);
+                RenderIntoFileAutoSize(imageSettings, colorManager, tagsCloud);
                 return;
             }
 
@@ -26,7 +25,7 @@ namespace TagsCloudContainer.Visualisation
 
 
             var btm = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
-            using (Graphics obj = Graphics.FromImage(btm))
+            using (var obj = Graphics.FromImage(btm))
             {
                 foreach (var tagsCloudWord in tagsCloud.AddedWords)
                 {
@@ -37,13 +36,14 @@ namespace TagsCloudContainer.Visualisation
             }
         }
 
-        public void RenderIntoFileAutosize(ImageSettings imageSettings, IColorManager colorManager,
+        private void RenderIntoFileAutoSize(ImageSettings imageSettings, IColorManager colorManager,
             ITagsCloud tagsCloud)
         {
             var words = tagsCloud.AddedWords.Select(x => x.Word).ToList();
             var shiftedRectangles =
                 ShiftRectanglesToMainQuarter(tagsCloud.AddedWords.Select(x => x.Rectangle).ToList());
-            var tagsCloudWords = words.Zip(shiftedRectangles, (word, rectangle) => (new TagsCloudWord(word, rectangle))).ToList();
+            var tagsCloudWords = words.Zip(shiftedRectangles, (word, rectangle) => (new TagsCloudWord(word, rectangle)))
+                .ToList();
             var tagsCloudToDraw = new TagsCloud(tagsCloudWords);
             var wordsColors = colorManager.GetWordsColors(tagsCloudToDraw.AddedWords.ToList());
 
@@ -73,7 +73,7 @@ namespace TagsCloudContainer.Visualisation
 
         private Size GetPictureSize(ITagsCloud tagsCloud)
         {
-            var rectangles = tagsCloud.AddedWords.Select(x => x.Rectangle);
+            var rectangles = tagsCloud.AddedWords.Select(x => x.Rectangle).ToList();
             var maxX = rectangles.Max(x => x.Right);
             var minX = rectangles.Min(x => x.X);
             var maxY = rectangles.Max(x => x.Top);
@@ -87,7 +87,7 @@ namespace TagsCloudContainer.Visualisation
                 maxY - minY + Math.Abs(minY * 2));
         }
 
-        private List<Rectangle> ShiftRectanglesToMainQuarter(List<Rectangle> rectangles)
+        private IEnumerable<Rectangle> ShiftRectanglesToMainQuarter(IReadOnlyCollection<Rectangle> rectangles)
         {
             var minX = rectangles.Min(x => x.X);
             var minY = rectangles.Min(x => x.Bottom);

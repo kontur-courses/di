@@ -11,5 +11,10 @@ namespace TagsCloudContainer.Layouting
         {
             Center = ui.ApplicationSettings.TagsCloudCenter;
         }
+        
+        public TagsCloudLayouterSettings(Point center)
+        {
+            Center = center;
+        }
     }
 }

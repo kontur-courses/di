@@ -5,6 +5,7 @@ using TagsCloudContainer.Filtering;
 using TagsCloudContainer.Formatting;
 using TagsCloudContainer.Layouting;
 using TagsCloudContainer.Reading;
+using TagsCloudContainer.Sizing;
 using TagsCloudContainer.TagsCloudGenerating;
 using TagsCloudContainer.UI;
 using TagsCloudContainer.Visualisation.Coloring;
@@ -24,6 +25,9 @@ namespace TagsCloudContainer
             containerBuilder.RegisterType<FormattingSettings>();
             containerBuilder.RegisterType<FormattingComponent>();
             containerBuilder.RegisterType<FilteringComponent>();
+            containerBuilder.RegisterType<TagsCloudLayouterSettings>().UsingConstructor(typeof(IUI));
+            containerBuilder.RegisterType<TagsCloudGeneratorSettings>()
+                .UsingConstructor(typeof(IUI), typeof(ITagsCloudLayouter), typeof(IWordsSizer));
             containerBuilder.RegisterType<TagsCloudGeneratorSettings>();
             containerBuilder.RegisterType<TagsCloudGenerator>();
             containerBuilder.RegisterType<TagsCloudLayouterSettings>();

@@ -5,7 +5,7 @@ namespace TagsCloudContainer.Filtering
 {
     public class BlacklistWordsFilter : IWordsFilter
     {
-        public IBoringWordsRepository BoringWordsRepository { get; set; }
+        private IBoringWordsRepository BoringWordsRepository { get; set; }
 
 
         public BlacklistWordsFilter(BlacklistSettings blacklistSettings)
