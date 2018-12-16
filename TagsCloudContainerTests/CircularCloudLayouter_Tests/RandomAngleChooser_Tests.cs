@@ -33,7 +33,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
         }
 
         [Test]
-        public void Current_ReturnsDifferentAngles_OnDifferentAnglesChosers()
+        public void Current_ReturnsDifferentAngles_OnDifferentAnglesChoosers()
         {
             var secondAngleChooser = new RandomAngleChooser(random);
 
