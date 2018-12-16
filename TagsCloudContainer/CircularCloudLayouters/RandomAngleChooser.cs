@@ -7,7 +7,7 @@ namespace TagsCloudContainer.CircularCloudLayouters
 {
     public class RandomAngleChooser : IAngleChooser
     {
-        private readonly Stack<double> angles = new Stack<double>();
+        private readonly Queue<double> angles = new Queue<double>();
         private readonly Random random;
         private readonly double deltaAngleStep;
         private const double PI = Math.PI;
@@ -28,7 +28,7 @@ namespace TagsCloudContainer.CircularCloudLayouters
         {
             if (!angles.Any())
                AddNewAngles();
-            Current = angles.Pop();
+            Current = angles.Dequeue();
             return true;
         }
 
@@ -46,7 +46,7 @@ namespace TagsCloudContainer.CircularCloudLayouters
             var angle = GetRandomAngle();
             var countSteps = (int)(2 * PI / deltaAngleStep);
             for (var indexStep = 0; indexStep < countSteps; indexStep++)
-                angles.Push(angle + deltaAngleStep * indexStep);
+                angles.Enqueue(angle + deltaAngleStep * indexStep);
         }
 
         private double GetRandomAngle()

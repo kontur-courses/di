@@ -57,6 +57,7 @@
     <Compile Include="CircularCloudLayouter_Tests\RandomAngleChooser_Tests.cs" />
     <Compile Include="CircularCloudLayouter_Tests\RandomCircularCloudLayouter_Tests.cs" />
     <Compile Include="Extensions\CircularCloudLayouterExtensions.cs" />
+    <Compile Include="Extensions\RandomAngleChooserExtensions.cs" />
     <Compile Include="FiltersTests\BoringWordsExcluder_Tests.cs" />
     <Compile Include="FiltersTests\UnknownWordsExcluder_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
