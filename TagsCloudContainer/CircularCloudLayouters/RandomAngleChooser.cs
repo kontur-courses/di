@@ -9,12 +9,13 @@ namespace TagsCloudContainer.CircularCloudLayouters
     {
         private readonly Stack<double> angles = new Stack<double>();
         private readonly Random random;
+        private readonly int countCreatedAnglesByOneAngle;
         private const double PI = Math.PI;
-        private const int CountRepetitions = 5;
-
+        
 
         public RandomAngleChooser(Random random)
         {
+            countCreatedAnglesByOneAngle = 5;
             this.random = random;
         }
 
@@ -43,8 +44,8 @@ namespace TagsCloudContainer.CircularCloudLayouters
         private void AddNewAngles()
         {
             var angle = GetRandomAngle();
-            for (var index = 0; index < CountRepetitions; index++)
-                angles.Push(angle + index * PI * 2 / CountRepetitions);
+            for (var index = 0; index < countCreatedAnglesByOneAngle; index++)
+                angles.Push(angle + index * PI * 2 / countCreatedAnglesByOneAngle);
         }
 
         private double GetRandomAngle()
