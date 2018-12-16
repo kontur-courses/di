@@ -3,7 +3,6 @@ using System.Linq;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using TagsCloudContainer.Dictionaries;
 using TagsCloudContainer.WordsTransformers;
 

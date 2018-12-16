@@ -90,7 +90,9 @@
     <Compile Include="BoringWordsGetters\PrepositionAndPronounsGetter.cs" />
     <Compile Include="CircularCloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouters\CircularPointsChooser.cs" />
+    <Compile Include="CircularCloudLayouters\IAngleChooser.cs" />
     <Compile Include="CircularCloudLayouters\ICircularCloudLayouter.cs" />
+    <Compile Include="CircularCloudLayouters\RandomAngleChooser.cs" />
     <Compile Include="CircularCloudLayouters\RandomCircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouters\Vector.cs" />
     <Compile Include="Clients\ConsoleClient.cs" />

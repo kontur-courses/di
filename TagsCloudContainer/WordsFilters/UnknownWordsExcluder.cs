@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Forms.PropertyGridInternal;
-using NHunspell;
-using TagsCloudContainer.Dictionaries;
+﻿using TagsCloudContainer.Dictionaries;
 
 namespace TagsCloudContainer.WordsFilters
 {

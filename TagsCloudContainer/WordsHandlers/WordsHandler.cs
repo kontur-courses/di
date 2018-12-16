@@ -14,7 +14,7 @@ namespace TagsCloudContainer.WordsHandlers
 
         public WordsHandler(IEnumerable<IFilter<string>> wordsFilters, IEnumerable<IWordsTransformer> wordsTransformers)
         {
-            this.filters = wordsFilters.ToArray();
+            filters = wordsFilters.ToArray();
             this.wordsTransformers = wordsTransformers.ToArray();
         }
 

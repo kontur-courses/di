@@ -4,7 +4,6 @@ using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Dictionaries;
-using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsFilters;
 
 namespace TagsCloudContainerTests.FiltersTests
@@ -32,7 +31,7 @@ namespace TagsCloudContainerTests.FiltersTests
         }
 
         [Test]
-        public void IsCorrectWords_ReturnFalse_OnIncorrectWord()
+        public void IsCorrectWords_ReturnFalse_OnUnknownWord()
         {
             unknownWordsExcluder.IsCorrect("incorrectWord").Should().BeFalse();
         }

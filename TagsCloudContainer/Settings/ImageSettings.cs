@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Settings
 
         public ImageSettings()
         {
-            ImageSize = new Size(600, 800);
+            ImageSize = new Size(1024, 1280);
             Format = ImageFormat.Png;
         }
     }

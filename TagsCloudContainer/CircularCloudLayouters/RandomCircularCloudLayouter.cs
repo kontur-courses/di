@@ -9,29 +9,36 @@ namespace TagsCloudContainer.CircularCloudLayouters
     public class RandomCircularCloudLayouter:ICircularCloudLayouter
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
-        private readonly Random random;
         private const int MaxLength = 10000;
         private readonly Point centerPoint;
+        private readonly IAngleChooser angleChooser;
 
-        public RandomCircularCloudLayouter(IImageSettings settings, Random random)
+        public RandomCircularCloudLayouter(IImageSettings settings, IAngleChooser angleChooser)
         {
-            this.random = random;
+            this.angleChooser = angleChooser;
             var imageSize = settings.ImageSize;
             centerPoint = new Point(imageSize.Width / 2, imageSize.Height / 2);
         }
 
         public Rectangle PutNextRectangle(Size size)
         {
-            var angle = GenerateRandomAngle();
+            var angle = GetNextAngle();
             var rectangle = GetRectangle(size, angle);
             rectangles.Add(rectangle);
-            Console.WriteLine($"{rectangle.X} {rectangle.Y}");
             return rectangle;
+        }
+
+        private double GetNextAngle()
+        {
+            angleChooser.MoveNext();
+            return angleChooser.Current;
         }
 
         private Rectangle GetRectangle(Size size, double angle)
         {
-            Func<int, Rectangle> rectangleFunction = x => new Rectangle(centerPoint.Sum(new Vector(x, angle)), size);
+            Func<int, Point> leftTopPointFunction =
+                x => centerPoint.Sum(new Vector(x, angle)).Shift(-size.Width / 2, -size.Height / 2);
+            Func<int, Rectangle> rectangleFunction = x => new Rectangle(leftTopPointFunction(x), size);
             Func<int, bool> intersectionFunction =
                 x => !rectangleFunction(x).IntersectsWithPreviousRectangles(rectangles);
             var lengthToCenter = BinarySearch(0, MaxLength, intersectionFunction);
@@ -39,12 +46,6 @@ namespace TagsCloudContainer.CircularCloudLayouters
                 throw new InvalidOperationException("Can not add more rectangles");
             return rectangleFunction(lengthToCenter.Value);
         }
-
-        private double GenerateRandomAngle()
-        {
-            return 2 * Math.PI * random.NextDouble();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ;
-        }
-
 
         private int? BinarySearch(int minValue, int maxValue, Func<int, bool> checkingFunction)
         {

@@ -22,7 +22,6 @@ namespace TagsCloudContainer.Dictionaries
         {
             return hunspell.Spell(word);
         }
-        
 
         public bool TryGetCorrectForm(string word, out string correctForm)
         {

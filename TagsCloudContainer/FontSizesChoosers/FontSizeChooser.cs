@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using TagsCloudContainer.Settings;
 using TagsCloudContainer.WordsHandlers;
 
 namespace TagsCloudContainer.FontSizesChoosers

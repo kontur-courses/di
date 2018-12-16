@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.ImageCreators
 {

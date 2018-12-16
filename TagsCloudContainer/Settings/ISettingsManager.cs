@@ -1,6 +1,4 @@
-﻿using TagsCloudContainer.ImageCreators;
-
-namespace TagsCloudContainer.Settings
+﻿namespace TagsCloudContainer.Settings
 {
     public interface ISettingsManager
     {

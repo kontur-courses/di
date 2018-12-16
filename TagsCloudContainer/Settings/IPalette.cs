@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.ImageCreators
+namespace TagsCloudContainer.Settings
 {
     public interface IPalette
     {

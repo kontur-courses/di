@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using TagsCloudContainer.CircularCloudLayouters;
 using TagsCloudContainer.Settings;
 using TagsCloudContainerTests.Extensions;
