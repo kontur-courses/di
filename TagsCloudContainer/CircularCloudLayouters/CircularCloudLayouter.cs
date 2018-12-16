@@ -31,7 +31,7 @@ namespace TagsCloudContainer.CircularCloudLayouters
             while (true)
             {
                 var nextRectangle = GetRectangleAtCurrentPoint(size);
-                if (rectanglesFilter.IsCorrect(nextRectangle) && !IntersectsWithPreviousRectangles(nextRectangle))
+                if (rectanglesFilter.IsCorrect(nextRectangle) && !nextRectangle.IntersectsWithPreviousRectangles(addedRectangles))
                     return nextRectangle;
                 pointsOrder.MoveNext();
             }
@@ -43,16 +43,5 @@ namespace TagsCloudContainer.CircularCloudLayouters
             var leftTopPoint = centerPoint.Shift(-size.Width / 2, -size.Height / 2);
             return new Rectangle(leftTopPoint, size);
         }
-
-        private bool IntersectsWithPreviousRectangles(Rectangle rectangle)
-        {
-            for (var index = addedRectangles.Count - 1; index >= 0; index--)
-            {
-                if (addedRectangles[index].IntersectsWith(rectangle))
-                       return true;
-            }
-            return false;
-        }
-
     }
 }

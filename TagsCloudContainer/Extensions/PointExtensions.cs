@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Drawing;
+using TagsCloudContainer.CircularCloudLayouters;
+using Point = System.Drawing.Point;
 
 namespace TagsCloudContainer.Extensions
 {
@@ -13,6 +14,11 @@ namespace TagsCloudContainer.Extensions
             var differenceX = secondPoint.X - point.X;
             var differenceY = secondPoint.Y - point.Y;
             return Math.Sqrt(differenceY * differenceY + differenceX * differenceX);
+        }
+
+        public static Point Sum(this Point point, Vector vector)
+        {
+            return point.Shift(vector.X, vector.Y);
         }
     }
 }

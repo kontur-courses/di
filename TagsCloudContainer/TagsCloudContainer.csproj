@@ -91,12 +91,15 @@
     <Compile Include="CircularCloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouters\CircularPointsChooser.cs" />
     <Compile Include="CircularCloudLayouters\ICircularCloudLayouter.cs" />
+    <Compile Include="CircularCloudLayouters\RandomCircularCloudLayouter.cs" />
+    <Compile Include="CircularCloudLayouters\Vector.cs" />
     <Compile Include="Clients\ConsoleClient.cs" />
     <Compile Include="Clients\IClient.cs" />
     <Compile Include="Dictionaries\HunspellDictionary.cs" />
     <Compile Include="Dictionaries\IGrammarDictionary.cs" />
     <Compile Include="Dictionaries\IReaderResources.cs" />
     <Compile Include="Dictionaries\ResourcesReader.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="ImageCreators\IImageCreator.cs" />
     <Compile Include="ProjectSettings\ConsoleClientOptions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
@@ -125,7 +128,7 @@
     <Compile Include="Settings\TextSettings.cs" />
     <Compile Include="WordsFilters\BoringWordsExcluder.cs" />
     <Compile Include="WordsFilters\IFilter.cs" />
-    <Compile Include="WordsFilters\NounsExcluder.cs" />
+    <Compile Include="WordsFilters\UnknownWordsExcluder.cs" />
     <Compile Include="WordsHandlers\IWordsHandler.cs" />
     <Compile Include="WordsHandlers\WordsHandler.cs" />
     <Compile Include="WordsTransformers\IWordsTransformer.cs" />
@@ -138,6 +141,7 @@
     <EmbeddedResource Include="DictionaryFiles\en_US.aff" />
     <EmbeddedResource Include="DictionaryFiles\en_US.dic" />
     <None Include="packages.config" />
+    <None Include="WordsExamples\RussianWords.docx" />
     <None Include="WordsExamples\WordsWithMistakes.docx" />
     <None Include="WordsExamples\ManyWords.docx" />
   </ItemGroup>

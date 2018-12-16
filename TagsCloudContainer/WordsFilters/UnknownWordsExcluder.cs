@@ -9,11 +9,11 @@ using TagsCloudContainer.Dictionaries;
 
 namespace TagsCloudContainer.WordsFilters
 {
-    public class NounsExcluder : IFilter<string>
+    public class UnknownWordsExcluder : IFilter<string>
     {
         private readonly IGrammarDictionary grammarDictionary;
 
-        public NounsExcluder(IGrammarDictionary grammarDictionary)
+        public UnknownWordsExcluder(IGrammarDictionary grammarDictionary)
         {
             this.grammarDictionary = grammarDictionary;
         }

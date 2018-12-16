@@ -20,9 +20,9 @@ namespace TagsCloudContainer.Dictionaries
 
         public bool ContainsWord(string word)
         {
-            Console.WriteLine(word);
             return hunspell.Spell(word);
         }
+        
 
         public bool TryGetCorrectForm(string word, out string correctForm)
         {
