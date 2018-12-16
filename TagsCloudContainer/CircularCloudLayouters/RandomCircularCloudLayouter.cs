@@ -9,12 +9,13 @@ namespace TagsCloudContainer.CircularCloudLayouters
     public class RandomCircularCloudLayouter:ICircularCloudLayouter
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
-        private readonly Random random = new Random();
+        private readonly Random random;
         private const int MaxLength = 10000;
         private readonly Point centerPoint;
 
-        public RandomCircularCloudLayouter(IImageSettings settings)
+        public RandomCircularCloudLayouter(IImageSettings settings, Random random)
         {
+            this.random = random;
             var imageSize = settings.ImageSize;
             centerPoint = new Point(imageSize.Width / 2, imageSize.Height / 2);
         }

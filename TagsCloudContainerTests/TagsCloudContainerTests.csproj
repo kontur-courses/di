@@ -54,10 +54,13 @@
   <ItemGroup>
     <Compile Include="CircularCloudLayouter_Tests\CircularCloudLayouter_Tests.cs" />
     <Compile Include="CircularCloudLayouter_Tests\CircularPointsChooser_Tests.cs" />
+    <Compile Include="CircularCloudLayouter_Tests\RandomCircularCloudLayouter_Tests.cs" />
     <Compile Include="Extensions\CircularCloudLayouterExtensions.cs" />
     <Compile Include="FiltersTests\BoringWordsExcluder_Tests.cs" />
+    <Compile Include="FiltersTests\UnknownWordsExcluder_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsHandlerTests\WordsHandler_Should.cs" />
+    <Compile Include="WordsTransformerTests\WordsMistakesCorrector_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
