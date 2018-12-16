@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="CircularCloudLayouter_Tests\CircularCloudLayouter_Tests.cs" />
     <Compile Include="CircularCloudLayouter_Tests\CircularPointsChooser_Tests.cs" />
+    <Compile Include="CircularCloudLayouter_Tests\RandomAngleChooser_Tests.cs" />
     <Compile Include="CircularCloudLayouter_Tests\RandomCircularCloudLayouter_Tests.cs" />
     <Compile Include="Extensions\CircularCloudLayouterExtensions.cs" />
     <Compile Include="FiltersTests\BoringWordsExcluder_Tests.cs" />

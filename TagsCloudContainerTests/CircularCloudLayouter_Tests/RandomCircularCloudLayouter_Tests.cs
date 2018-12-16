@@ -18,6 +18,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
         private RandomCircularCloudLayouter cloudLayouter;
         private Point centerPoint;
         private readonly Random random = new Random();
+        private RandomAngleChooser randomAngleChooser;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +26,8 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
             var imageSettings = new ImageSettings();
             var size = imageSettings.ImageSize;
             centerPoint = new Point(size.Width / 2, size.Height / 2);
-            cloudLayouter = new RandomCircularCloudLayouter(new ImageSettings(), random);
+            randomAngleChooser = new RandomAngleChooser(random);
+            cloudLayouter = new RandomCircularCloudLayouter(new ImageSettings(), randomAngleChooser);
         }
 
         [Test]
@@ -49,7 +51,7 @@ namespace TagsCloudContainerTests.CircularCloudLayouter_Tests
         public void PutNextRectangles_ReturnsDifferentRectangles_OnSameLayouterWithSameSizes_AtDifferentExecution()
         {
             var sizes = CreateSizes(50).ToList();
-            var secondCloudLayouter = new RandomCircularCloudLayouter(new ImageSettings(), random);
+            var secondCloudLayouter = new RandomCircularCloudLayouter(new ImageSettings(), randomAngleChooser);
 
             var firstRectangles = cloudLayouter.PutNextRectangles(sizes).ToList();
             var secondRectangles = secondCloudLayouter.PutNextRectangles(sizes).ToList();
