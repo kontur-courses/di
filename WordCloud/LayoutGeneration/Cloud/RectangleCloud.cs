@@ -5,7 +5,7 @@ namespace WordCloud.LayoutGeneration.Cloud
 {
     public class RectangleCloud : IRectangleCloud
     {
-        public List<Rectangle> Rectangles { get; set; }
+        public List<Rectangle> Rectangles { get; private set; }
 
         public RectangleCloud(List<Rectangle> rectangles)
         {

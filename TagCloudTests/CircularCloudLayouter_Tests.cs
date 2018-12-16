@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using WordCloud.LayoutGeneration.Layoter;
+using WordCloud.LayoutGeneration.Layoter.Circular;
 
 namespace TagCloudTests
 {
@@ -65,17 +65,29 @@ namespace TagCloudTests
             var rectangles = new[] { new Rectangle(0, 0, 10, 10), new Rectangle(20, 20, 100, 50) };
             return rectangle.IntersectsWithRectangles(rectangles);
         }
-        
+
+        [Test]
+        public void Reset_TagCloudEmpty()
+        {
+            layouter.PutNextRectangle(new Size(25, 25));
+            layouter.PutNextRectangle(new Size(25, 25));
+            layouter.PutNextRectangle(new Size(25, 25));
+
+            layouter.Reset();
+            layouter.rectangleCloud.Rectangles.Should().BeEmpty();
+
+        }
+
         [TearDown]
         public void CreateImade_IfTestFails()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                /*var path = Path.Combine(TestContext.CurrentContext.TestDirectory, TestContext.CurrentContext.Test.Name + ".bmp");
-                var vizualizer = new Vizualizer();
-                var layout = vizualizer.GetLayoutImage(layouter.TagsCloud.Rectangles);
-                vizualizer.SaveImage(path, layout);
-                Console.WriteLine($"Tag cloud visualization saved to file {path}");*/
+                //var path = Path.Combine(TestContext.CurrentContext.TestDirectory, TestContext.CurrentContext.Test.Name + ".bmp");
+                //var vizualizer = new Vizualizer();
+                //var layout = vizualizer.GetLayoutImage(layouter.TagsCloud.Rectangles);
+                //vizualizer.SaveImage(path, layout);
+                //Console.WriteLine($"Tag cloud visualization saved to file {path}");
             }
         }
     }

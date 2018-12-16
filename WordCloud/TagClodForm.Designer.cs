@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Core.Lifetime;
 using WordCloud.Properties;
+using WordCloud.WordCloudRenedering;
 
 namespace WordCloud
 {
@@ -43,6 +44,9 @@ namespace WordCloud
             this.minFont = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.cloudControl = new CloudControl.CloudControl();
+            this.orthogonalLayoutRadioButton = new System.Windows.Forms.RadioButton();
+            this.spiralLayoutRadioButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.maxFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cloudControl)).BeginInit();
@@ -51,7 +55,7 @@ namespace WordCloud
             // GoBtn
             // 
             this.GoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.GoBtn.Location = new System.Drawing.Point(627, 256);
+            this.GoBtn.Location = new System.Drawing.Point(627, 288);
             this.GoBtn.Name = "GoBtn";
             this.GoBtn.Size = new System.Drawing.Size(323, 23);
             this.GoBtn.TabIndex = 1;
@@ -105,19 +109,19 @@ namespace WordCloud
             // 
             // openTextFileDialog
             // 
-            this.openTextFileDialog.FileName = "openFileDialog1";
+            this.openTextFileDialog.FileName = "Выберите файл";
             this.openTextFileDialog.Filter = global::WordCloud.Properties.Resources.TxtFilter;
             // 
             // maxFont
             // 
             this.maxFont.Location = new System.Drawing.Point(627, 205);
             this.maxFont.Maximum = new decimal(new int[] {
-            20,
+            40,
             0,
             0,
             0});
             this.maxFont.Minimum = new decimal(new int[] {
-            8,
+            20,
             0,
             0,
             0});
@@ -125,7 +129,7 @@ namespace WordCloud
             this.maxFont.Size = new System.Drawing.Size(120, 20);
             this.maxFont.TabIndex = 9;
             this.maxFont.Value = new decimal(new int[] {
-            8,
+            20,
             0,
             0,
             0});
@@ -134,8 +138,13 @@ namespace WordCloud
             // minFont
             // 
             this.minFont.Location = new System.Drawing.Point(831, 205);
-            this.minFont.Minimum = new decimal(new int[] {
+            this.minFont.Maximum = new decimal(new int[] {
             20,
+            0,
+            0,
+            0});
+            this.minFont.Minimum = new decimal(new int[] {
+            8,
             0,
             0,
             0});
@@ -143,7 +152,7 @@ namespace WordCloud
             this.minFont.Size = new System.Drawing.Size(120, 20);
             this.minFont.TabIndex = 10;
             this.minFont.Value = new decimal(new int[] {
-            20,
+            8,
             0,
             0,
             0});
@@ -152,7 +161,7 @@ namespace WordCloud
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(624, 189);
+            this.label2.Location = new System.Drawing.Point(828, 189);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 13);
             this.label2.TabIndex = 11;
@@ -161,26 +170,53 @@ namespace WordCloud
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(828, 189);
+            this.label3.Location = new System.Drawing.Point(624, 189);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Максимальный шрифт";
             // 
-            // cloudControl1
+            // cloudControl
             // 
-            this.cloudControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cloudControl.layouter = null;
             this.cloudControl.Location = new System.Drawing.Point(12, 13);
-            this.cloudControl.Name = "cloudControl1";
+            this.cloudControl.MaxFontSize = 0;
+            this.cloudControl.MinFontSize = 0;
+            this.cloudControl.Name = "cloudControl";
             this.cloudControl.Size = new System.Drawing.Size(606, 479);
             this.cloudControl.TabIndex = 13;
             this.cloudControl.TabStop = false;
+            this.cloudControl.vizualizer = null;
+            // 
+            // orthogonalLayoutRadioButton
+            // 
+            this.orthogonalLayoutRadioButton.AutoSize = true;
+            this.orthogonalLayoutRadioButton.Location = new System.Drawing.Point(630, 248);
+            this.orthogonalLayoutRadioButton.Name = "orthogonalLayoutRadioButton";
+            this.orthogonalLayoutRadioButton.Size = new System.Drawing.Size(108, 17);
+            this.orthogonalLayoutRadioButton.TabIndex = 14;
+            this.orthogonalLayoutRadioButton.Text = "Orthogonal layout";
+            this.orthogonalLayoutRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // spiralLayoutRadioButton
+            // 
+            this.spiralLayoutRadioButton.AutoSize = true;
+            this.spiralLayoutRadioButton.Checked = true;
+            this.spiralLayoutRadioButton.Location = new System.Drawing.Point(831, 248);
+            this.spiralLayoutRadioButton.Name = "spiralLayoutRadioButton";
+            this.spiralLayoutRadioButton.Size = new System.Drawing.Size(86, 17);
+            this.spiralLayoutRadioButton.TabIndex = 15;
+            this.spiralLayoutRadioButton.TabStop = true;
+            this.spiralLayoutRadioButton.Text = "Spiral Layout";
+            this.spiralLayoutRadioButton.UseVisualStyleBackColor = true;
             // 
             // TagClodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 560);
+            this.Controls.Add(this.spiralLayoutRadioButton);
+            this.Controls.Add(this.orthogonalLayoutRadioButton);
             this.Controls.Add(this.cloudControl);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -196,6 +232,7 @@ namespace WordCloud
             this.Text = "Word cloud";
             ((System.ComponentModel.ISupportInitialize)(this.maxFont)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minFont)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cloudControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,7 +250,9 @@ namespace WordCloud
         private System.Windows.Forms.NumericUpDown minFont;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private CloudControl cloudControl;
+        private CloudControl.CloudControl cloudControl;
+        private System.Windows.Forms.RadioButton orthogonalLayoutRadioButton;
+        private System.Windows.Forms.RadioButton spiralLayoutRadioButton;
     }
 }
 

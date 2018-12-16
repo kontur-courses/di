@@ -6,14 +6,12 @@ namespace WordCloud.TextAnalyze.Words
 {
     public static class WordExtensions
     {
-        public static IOrderedEnumerable<T> SortByOccurences<T>(this IEnumerable<T> words) where T : IWord
+        public static IOrderedEnumerable<T> SortByEntries<T>(this IEnumerable<T> words) where T : IWord
         {
-            return
-                words.OrderByDescending(
-                    word => word.Entries);
+            return words.OrderByDescending(word => word.Entries);
         }
 
-        public static IEnumerable<IWord> CountOccurences(this IEnumerable<string> terms)
+        public static IEnumerable<IWord> CountEntries(this IEnumerable<string> terms)
         {
             return
                 terms.GroupBy(
@@ -24,9 +22,7 @@ namespace WordCloud.TextAnalyze.Words
 
         public static IEnumerable<string> Filter(this IEnumerable<string> terms, IBlackList blacklist)
         {
-            return
-                terms.Where(
-                    term => !blacklist.Countains(term));
+            return terms.Where(term => !blacklist.Countains(term));
         }
     }
 }

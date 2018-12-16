@@ -22,10 +22,6 @@ namespace WordCloud.TextAnalyze.Words
         {
             return Entries - other.Entries;
         }
-
-        public string GetCaption()
-        {
-            return $"{Entries} - entries";
-        }
+       
     }
 }

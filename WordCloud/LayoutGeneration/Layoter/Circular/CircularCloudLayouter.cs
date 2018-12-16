@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using WordCloud.LayoutGeneration.Cloud;
 
-namespace WordCloud.LayoutGeneration.Layoter
+namespace WordCloud.LayoutGeneration.Layoter.Circular
 {
     public class CircularCloudLayouter : ICloudLayouter
     {

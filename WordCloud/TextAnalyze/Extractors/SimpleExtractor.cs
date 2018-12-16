@@ -15,10 +15,8 @@ namespace WordCloud.TextAnalyze.Extractors
             StringBuilder word = new StringBuilder();
             foreach (char ch in text)
             {
-                if (char.IsLetterOrDigit(ch))
-                {
+                if (char.IsLetter(ch))
                     word.Append(ch);
-                }
                 else
                 {
                     if (word.Length > 1)
@@ -26,7 +24,9 @@ namespace WordCloud.TextAnalyze.Extractors
                     word.Clear();
                 }
             }
-
+            if (word.Length > 1)
+                words.Add(word.ToString());
+            word.Clear();
             return words;
         }
     }

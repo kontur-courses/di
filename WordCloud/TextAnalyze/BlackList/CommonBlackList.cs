@@ -11,7 +11,8 @@ namespace WordCloud.TextAnalyze.BlackList
             : this(excludedWords, StringComparer.InvariantCultureIgnoreCase)
         {
         }
-
+        
+        
         public CommonBlacklist(IEnumerable<string> excludedWords, StringComparer comparer)
         {
             excludedWordsHashSet = new HashSet<string>(excludedWords, comparer);

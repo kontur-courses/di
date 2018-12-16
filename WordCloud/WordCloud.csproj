@@ -49,17 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LayoutGeneration\Layoter\LinearLayout\LinearLayouter.cs" />
     <Compile Include="TextAnalyze\Extractors\IWordExtractor.cs" />
     <Compile Include="TextAnalyze\Extractors\SimpleExtractor.cs" />
-    <Compile Include="WordCloudRenedering\CloudControl.cs">
+    <Compile Include="CloudControl\CloudControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LayoutGeneration\Cloud\IRectangleCloud.cs" />
-    <Compile Include="LayoutGeneration\Layoter\CircularCloudLayouter.cs" />
+    <Compile Include="LayoutGeneration\Layoter\Circular\CircularCloudLayouter.cs" />
     <Compile Include="LayoutGeneration\Layoter\ICloudLayouter.cs" />
     <Compile Include="LayoutGeneration\Layoter\RectangleExtensions.cs" />
     <Compile Include="LayoutGeneration\Cloud\RectangleCloud.cs" />
-    <Compile Include="LayoutGeneration\Layoter\SpiralGenerator.cs" />
+    <Compile Include="LayoutGeneration\Layoter\Circular\SpiralGenerator.cs" />
     <Compile Include="TagClodForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,10 +72,13 @@
     <Compile Include="TextAnalyze\BlackList\CommonBlackList.cs" />
     <Compile Include="TextAnalyze\BlackList\CommonWords.cs" />
     <Compile Include="TextAnalyze\BlackList\IBlackList.cs" />
-    <Compile Include="WordCloudRenedering\CloudControlItem.cs" />
+    <Compile Include="CloudControl\CloudItem.cs" />
     <Compile Include="TextAnalyze\Words\IWord.cs" />
     <Compile Include="TextAnalyze\Words\Word.cs" />
     <Compile Include="TextAnalyze\Words\WordExtensions.cs" />
+    <Compile Include="LayoutGeneration\Layoter\LayoutTypes.cs" />
+    <Compile Include="CloudControl\Vizualizer.cs" />
+    <Compile Include="CloudControl\WordCloudOptions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

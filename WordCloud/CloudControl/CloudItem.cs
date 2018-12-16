@@ -1,16 +1,18 @@
 ﻿using System.Drawing;
 using WordCloud.TextAnalyze.Words;
 
-namespace WordCloud.WordCloudRenedering
+namespace WordCloud.CloudControl
 {
-    public class CloudControlItem
+    public class CloudItem
     {
-        public CloudControlItem(Rectangle rectangle, IWord word)
+        public CloudItem(Rectangle rectangle, IWord word, Font font)
         {
             Rectangle = rectangle;
             Word = word;
+            Font = font;
         }
         public Rectangle Rectangle { get; set; }
         public IWord Word { get; set; }
+        public Font Font { get; set; }
     }
 }
