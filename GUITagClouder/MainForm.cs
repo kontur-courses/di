@@ -7,7 +7,6 @@ namespace GUITagClouder
 {
     public class MainForm : Form
     {
-        public MainForm(DrawingSettings settings, CloudImageHolder cloud, IGuiAction[] actions)
         public MainForm(DrawingSettings settings, CloudHolder cloud, IGuiAction[] actions)
         {
             ClientSize = settings.Size;
