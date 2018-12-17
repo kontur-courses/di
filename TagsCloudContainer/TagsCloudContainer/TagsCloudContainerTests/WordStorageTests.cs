@@ -28,7 +28,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         [TestCase]
         public void Simple_TMP_test1()
         {
-            _wordStorage.Add(new List<string>() {"one", "Two", "two", "two2", "two2"});
+            _wordStorage.AddRange(new List<string>() {"one", "Two", "two", "two2", "two2"});
             var lst = _wordStorage.ToList();
             lst[0].Value.Should().Be("two");
             lst[0].Count.Should().Be(2);

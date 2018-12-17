@@ -7,23 +7,24 @@ namespace TagsCloudContainer
 {
     internal class WordLayouter
     {
+        private readonly IWordStorage _wordStorage;
         private readonly Func<Word, Size> _getWordSize;
         private readonly IRectangleLayout _layout;
-        private IWordStorage _wordStorage;
-        private List<Word> _resultWords;
+        private List<Word> _wordsToDraw;
         private List<Rectangle> _coordinates;
 
-        public WordLayouter(Func<Word, Size> getWordSize, IRectangleLayout layout)
+        public WordLayouter(IWordStorage wordStorage, Func<Word, Size> getWordSize, IRectangleLayout layout)
         {
+            _wordStorage = wordStorage;
             _getWordSize = getWordSize;
             _layout = layout;
         }
 
-        public IEnumerable<ItemToDraw<Word>> GetItemsToDraws(IWordStorage wordStorage)
+        public IEnumerable<ItemToDraw<Word>> GetItemsToDraws()
         {
-            PlaceWords(wordStorage);
+            PlaceWords();
 
-            return _resultWords
+            return _wordsToDraw
                 .Select((word, i) => new ItemToDraw<Word>(
                     word, _coordinates[i].X, 
                     _coordinates[i].Y, 
@@ -32,18 +33,17 @@ namespace TagsCloudContainer
                 .ToList();
         }
 
-        private void PlaceWords(IWordStorage wordStorage)
+        private void PlaceWords()
         {
-            _wordStorage = wordStorage;
+            _wordsToDraw = _wordStorage.ToList();
 
-            var wordSizes = _wordStorage.ToList()
+            var wordSizes = _wordsToDraw
                 .Select(w => _getWordSize(w))
                 .ToList();
 
             foreach (var size in wordSizes)
                 _layout.PutNextRectangle(size);
 
-            _resultWords = _wordStorage.ToList();
             _coordinates = _layout.GetCoordinatesToDraw().ToList();
         }
     }

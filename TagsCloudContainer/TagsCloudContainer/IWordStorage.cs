@@ -6,7 +6,7 @@ namespace TagsCloudContainer
     public interface IWordStorage
     {
         void Add(string word);
-        void Add(IEnumerable<string> words);
+        void AddRange(IEnumerable<string> words);
         List<Word> ToList();
     }
 }

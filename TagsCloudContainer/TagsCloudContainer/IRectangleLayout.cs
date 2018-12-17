@@ -7,6 +7,6 @@ namespace TagsCloudContainer
     public interface IRectangleLayout
     {
         Rectangle PutNextRectangle(Size size);
-        IEnumerable<Rectangle> GetCoordinatesToDraw();
+        List<Rectangle> GetCoordinatesToDraw();
     }
 }

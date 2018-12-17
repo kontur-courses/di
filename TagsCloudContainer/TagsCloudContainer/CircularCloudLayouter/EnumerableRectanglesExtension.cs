@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudContainer.CircularCloudLayouter
 {
@@ -33,52 +34,27 @@ namespace TagsCloudContainer.CircularCloudLayouter
         
         public static int GetMinX(this IEnumerable<Rectangle> rectangles)
         {
-            var minX = 0;
-            foreach (var rectangle in rectangles)
-                if (rectangle.X <= minX)
-                    minX = rectangle.X;
-
-            return minX;
+            return rectangles.Select(r => r.X).Min();
         }
 
         public static int GetMaxX(this IEnumerable<Rectangle> rectangles)
         {
-            var maxX = 0;
-            foreach (var rectangle in rectangles)
-                if (rectangle.X + rectangle.Width >= maxX)
-                    maxX = rectangle.X + rectangle.Width;
-
-            return maxX;
+            return rectangles.Select(r => r.X).Max();
         }
 
         public static int GetMinY(this IEnumerable<Rectangle> rectangles)
         {
-            var minY = 0;
-            foreach (var rectangle in rectangles)
-                if (rectangle.Y - rectangle.Height <= minY)
-                    minY = rectangle.Y - rectangle.Height;
-
-            return minY;
+            return rectangles.Select(r => r.Y).Min();
         }
 
         public static int GetMaxY(this IEnumerable<Rectangle> rectangles)
         {
-            var maxY = 0;
-            foreach (var rectangle in rectangles)
-                if (rectangle.Y >= maxY)
-                    maxY = rectangle.Y;
-
-            return maxY;
+            return rectangles.Select(r => r.Y).Max();
         }
 
         public static int GetYHeight(this IEnumerable<Rectangle> rectangles)
         {
-            var yHeight = 0;
-            foreach (var rectangle in rectangles)
-                if (rectangle.Y - rectangle.Height <= yHeight)
-                    yHeight = rectangle.Y - rectangle.Height;
-
-            return yHeight;
+            return rectangles.Select(r => r.Y - r.Height).Min();
         }
     }
 }

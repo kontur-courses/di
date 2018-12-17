@@ -25,11 +25,14 @@ namespace TagsCloudContainer
                 g.DrawString(
                     item.Body.Value,
                     font,
-                    new SolidBrush(_drawSettings.GetItemPainter()(item)),
+                    _drawSettings.GetBrush(item),
                     item.X, item.Y);
             }
 
             bitmap.Save(_drawSettings.GetFileFullName());
+
+            g.Dispose();
+            bitmap.Dispose();
         }
     }
 }

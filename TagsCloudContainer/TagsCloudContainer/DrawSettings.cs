@@ -72,9 +72,9 @@ namespace TagsCloudContainer
             return _fontName;
         }
 
-        public Func<IItemToDraw<T>, Color> GetItemPainter()
+        public SolidBrush GetBrush(IItemToDraw<T> item)
         {
-            return _itemPainter;
+            return new SolidBrush(_itemPainter(item));
         }
 
         public string GetFilePath()

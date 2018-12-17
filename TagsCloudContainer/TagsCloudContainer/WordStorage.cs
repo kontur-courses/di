@@ -6,12 +6,12 @@ namespace TagsCloudContainer
 {
     class WordStorage: IWordStorage
     {
-        private readonly Dictionary<string, int> _words;
+        private readonly Dictionary<string, int> _wordsRegister;
         private readonly WordsCustomizer _wordsCustomizer;
 
         public WordStorage(WordsCustomizer customizer)
         {
-            _words = new Dictionary<string, int>();
+            _wordsRegister = new Dictionary<string, int>();
             _wordsCustomizer = customizer;
         }
 
@@ -22,13 +22,13 @@ namespace TagsCloudContainer
             if (word == null)
                 return;
             
-            if (!_words.ContainsKey(word))
-                _words.Add(word, 1);
+            if (!_wordsRegister.ContainsKey(word))
+                _wordsRegister.Add(word, 1);
             else
-                _words[word]++;
+                _wordsRegister[word]++;
         }
 
-        public void Add(IEnumerable<string> words)
+        public void AddRange(IEnumerable<string> words)
         {
             foreach (var word in words)
                 Add(word);
@@ -36,8 +36,8 @@ namespace TagsCloudContainer
 
         public List<Word> ToList()
         {
-            return _words.
-                OrderByDescending(e => e.Value)
+            return _wordsRegister
+                .OrderByDescending(e => e.Value)
                 .Select(e => new Word(e.Key, e.Value))
                 .ToList();
         }

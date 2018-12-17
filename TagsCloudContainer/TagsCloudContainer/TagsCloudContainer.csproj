@@ -77,7 +77,6 @@
     <Compile Include="IItemToDraw.cs" />
     <Compile Include="ItemToDraw.cs" />
     <Compile Include="IWord.cs" />
-    <Compile Include="IWordsReader.cs" />
     <Compile Include="IWordStorage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Drawer.cs" />
     <Compile Include="Word.cs" />
     <Compile Include="WordsCustomizer.cs" />
-    <Compile Include="WordsReader.cs" />
     <Compile Include="WordStorage.cs" />
   </ItemGroup>
   <ItemGroup>

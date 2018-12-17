@@ -27,7 +27,7 @@ namespace TagsCloudContainer.CircularCloudLayouter
             return _rectangles;
         }
 
-        public IEnumerable<Rectangle> GetCoordinatesToDraw()
+        public List<Rectangle> GetCoordinatesToDraw()
         {
             var result = new List<Rectangle>();
             var minX = _rectangles.GetMinX();
