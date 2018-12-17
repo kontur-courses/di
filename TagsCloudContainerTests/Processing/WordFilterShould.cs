@@ -35,10 +35,10 @@ namespace TagsCloudContainerTests.Processing
         {
             var words = new[]
             {
-                "он", "второй", "и", "пример", "Павел", "не", "агрегатор", "идти", "пре"
+                "он", "второй", "и", "пример", "Павел", "не", "агрегатор", "идти", "пре", "Павел"
             };
 
-            new CommonWordsFilter().Filter(words).Should().BeEquivalentTo("Павел", "пример", "агрегатор", "идти");
+            new CommonWordsFilter().Filter(words).Should().BeEquivalentTo("Павел", "пример", "агрегатор", "идти", "Павел");
         }
 
         [Test]

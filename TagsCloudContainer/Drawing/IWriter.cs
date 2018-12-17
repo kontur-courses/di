@@ -5,7 +5,6 @@ namespace TagsCloudContainer.Drawing
 {
     public interface IWriter
     {
-        Graphics Graphics { get; }
-        void WriteToFile(string filename, ImageFormat format);
+        void WriteToFile(Bitmap bitmap, string filename, ImageFormat format);
     }
 }

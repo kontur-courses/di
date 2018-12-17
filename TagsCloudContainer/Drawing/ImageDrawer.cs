@@ -6,17 +6,11 @@ namespace TagsCloudContainer.Drawing
 {
     public class ImageDrawer : IDrawer
     {
-        private readonly WordLayout layout;
-        public readonly ImageSettings settings;
-
-        public ImageDrawer(WordLayout layout, ImageSettings settings)
+        public Bitmap Draw(WordLayout layout, ImageSettings settings, out Graphics graphics)
         {
-            this.layout = layout;
-            this.settings = settings;
-        }
+            var bitmap = new Bitmap(settings.Size.Width, settings.Size.Height);
+            graphics = Graphics.FromImage(bitmap);
 
-        public void Draw(Graphics graphics)
-        {
             graphics.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(new Point(0, 0), settings.Size));
 
             foreach (var pair in layout.WordRectangles)
@@ -27,6 +21,8 @@ namespace TagsCloudContainer.Drawing
                 graphics.DrawRectangle(Pens.Blue, rectangle);
                 graphics.DrawString(pair.Key, font, new SolidBrush(settings.TextColor), rectangle);
             }
+
+            return bitmap;
         }
     }
 }

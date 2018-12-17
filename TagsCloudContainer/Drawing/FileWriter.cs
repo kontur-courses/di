@@ -5,25 +5,9 @@ namespace TagsCloudContainer.Drawing
 {
     public class FileWriter : IWriter
     {
-        public Graphics Graphics { get; }
-
-        private readonly Bitmap bitmap;
-        private readonly IDrawer drawer;
-        private readonly ImageSettings imageSettings;
-
-        public FileWriter(IDrawer drawer, ImageSettings imageSettings)
+        public void WriteToFile(Bitmap bitmap, string filename, ImageFormat format)
         {
-            this.drawer = drawer;
-            this.imageSettings = imageSettings;
-            bitmap = new Bitmap(imageSettings.Size.Width, imageSettings.Size.Height);
-            Graphics =  Graphics.FromImage(bitmap);
-        }
-
-
-        public void WriteToFile(string filename, ImageFormat format)
-        {
-                drawer.Draw(Graphics);
-                bitmap.Save(filename, format);
+            bitmap.Save(filename, format);
         }
     }
 }

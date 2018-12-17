@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Drawing
 {
     public interface IDrawer
     {
-        void Draw(Graphics graphics);
+        Bitmap Draw(WordLayout layout, ImageSettings settings, out Graphics graphics);
     }
 }

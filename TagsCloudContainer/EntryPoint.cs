@@ -1,10 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
-using CommandLine;
 using TagsCloudContainer.Drawing;
 using TagsCloudContainer.Input;
 using TagsCloudContainer.Layout;
@@ -18,31 +15,36 @@ namespace TagsCloudContainer
     {
         private static void Main(string[] args)
         {
-            var imageSettings = new ImageSettings(
-                size: new Size(1024, 1024),
-                textFont: new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular),
-                maxFontSize: 100,
-                minFontSize: 10,
-                backgroundColor: Color.White,
-                textColor: Color.Red);
-
-
-            var circularCloudLayout = new CircularCloudLayout(new Point(512, 512), new Size(1024, 1024));
-
             var container = new WindsorContainer();
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
 
-            container.Register(Component.For<IUI>().ImplementedBy(typeof(ConsoleUI)));
-            container.Register(Component.For<IFileReader>().ImplementedBy(typeof(TxtReader)));
-            container.Register(Component.For<IWordFilter>().ImplementedBy(typeof(CommonWordsFilter))); 
-            container.Register(Component.For<IWordConverter>().ImplementedBy(typeof(EmptyConverter)));
-            container.Register(Component.For<WordParser>());
-            container.Register(Component.For<ImageSettings>().Instance(imageSettings));
-            container.Register(Component.For<IRectangleLayout>().Instance(circularCloudLayout));
-            container.Register(Component.For<WordLayout>());
-            container.Register(Component.For<IDrawer>().ImplementedBy(typeof(ImageDrawer)));
-            container.Register(Component.For<IWriter>().ImplementedBy(typeof(FileWriter)));
-            container.Register(Component.For<WriterProvider>().Instance(new WriterProvider(null)));
+            container.Register(
+                Component.For<IUI>().ImplementedBy<ConsoleUI>(),
+                Component.For<IFileReader>().ImplementedBy<TxtReader>(),
+
+                Component.For<IWordFilter>().ImplementedBy<DefaultFilter>(),
+                Component.For<IWordFilter>().ImplementedBy<CommonWordsFilter>(),
+                Component.For<IWordFilter>().ImplementedBy<BlackListFilter>(),
+
+                Component.For<IWordConverter>().ImplementedBy<EmptyConverter>(),
+
+                Component.For<WordParser>(),
+                Component.For<ImageSettings>().DependsOn(
+                    Dependency.OnValue("size", new Size(1024, 1024)),
+                    Dependency.OnValue("textFont", new Font(FontFamily.GenericMonospace, 10, FontStyle.Regular)),
+                    Dependency.OnValue("maxFontSize", 100),
+                    Dependency.OnValue("minFontSize", 10),
+                    Dependency.OnValue("backgroundColor", Color.White),
+                    Dependency.OnValue("textColor", Color.Red)),
+
+                Component.For<IRectangleLayout>().ImplementedBy<CircularCloudLayout>().DependsOn(
+                    Dependency.OnValue("center", new Point(512, 512)),
+                    Dependency.OnValue("size", new Size(1024, 1024))),
+
+                Component.For<WordLayout>(),
+                Component.For<IDrawer>().ImplementedBy<ImageDrawer>(),
+                Component.For<IWriter>().ImplementedBy<FileWriter>()
+            );
 
 
             var ui = container.Resolve<IUI>();
@@ -52,19 +54,7 @@ namespace TagsCloudContainer
 
             (textFile, imageFile) = ui.RetrievePaths(args);
 
-            Console.WriteLine($"Reading from: {textFile}");
-            Console.WriteLine($"Writing to: {imageFile}");
-
-            var text = container.Resolve<IFileReader>().Read("Resources\\sample.txt");  // CommonFilter очень плохо оптимизирован, поэтому на бОльших текстах его пока нет смысла запускать
-            var parsedWords = container.Resolve<WordParser>().ParseWords(text);
-
-            var wordLayout = container.Resolve<WordLayout>();
-            var fileWriter = container.Resolve<IWriter>();
-            var writerProvider = container.Resolve<WriterProvider>();
-            writerProvider.Writer = fileWriter;
-
-            wordLayout.PlaceWords(parsedWords);
-            fileWriter.WriteToFile("test.png", ImageFormat.Png);
+            //.TransformWords(textFile, imageFile);
         }
     }
 }

@@ -86,8 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\IWriter.cs" />
-    <Compile Include="Drawing\WriterProvider.cs" />
     <Compile Include="Extensions\FontExtensions.cs" />
+    <Compile Include="Transformer.cs" />
     <Compile Include="Layout\IRectangleLayout.cs" />
     <Compile Include="Layout\WordLayout.cs" />
     <Compile Include="Drawing\FileWriter.cs" />

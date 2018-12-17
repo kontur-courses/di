@@ -13,7 +13,7 @@ namespace TagsCloudContainer.Input
         private readonly IWordFilter[] filters;
         private readonly IWordConverter[] converters;
 
-        public WordParser(IWordFilter[] filters, params IWordConverter[] converters)
+        public WordParser(IWordFilter[] filters, IWordConverter[] converters)
         {
             this.filters = filters;
             this.converters = converters;

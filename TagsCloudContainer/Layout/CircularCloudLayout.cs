@@ -45,38 +45,8 @@ namespace TagsCloudContainer.Layout
 
             } while (rectangles.Any(rectangle.IntersectsWith));
 
-            if (rectangle.Location != Center)
-                rectangle = ShiftToTheCenter(rectangle);
-
             rectangles.Add(rectangle);
             return rectangle;
-        }
-
-        private Rectangle ShiftToTheCenter(Rectangle rectangle)
-        {
-            var currentShiftedRectangle = rectangle;
-            Rectangle previousShiftedRectangle;
-
-            do
-            {
-                previousShiftedRectangle = currentShiftedRectangle;
-
-                var newLocation = MoveLocationToCenter(Center, currentShiftedRectangle.Location);
-                currentShiftedRectangle = new Rectangle(newLocation, rectangle.Size);
-
-            } while (!rectangles.Any(currentShiftedRectangle.IntersectsWith));
-
-            return previousShiftedRectangle;
-        }
-
-        private static Point MoveLocationToCenter(Point center, Point location)
-        {
-            var result = location;
-
-            result.X -= result.X.CompareTo(center.X);
-            result.Y -= result.Y.CompareTo(center.Y);
-
-            return result;
         }
     }
 }

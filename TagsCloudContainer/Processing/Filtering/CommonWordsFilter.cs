@@ -5,9 +5,9 @@ namespace TagsCloudContainer.Processing.Filtering
 {
     public class CommonWordsFilter : IWordFilter
     {
-        private const int MinimumWordLength = 4;
+        private const int MinWordLength = 4;
 
-        private static readonly PartOfSpeech[] commonPartsOfSpeech = {
+        private static readonly PartOfSpeech[] CommonPartsOfSpeech = {
             PartOfSpeech.Numeral,
             PartOfSpeech.Union,
             PartOfSpeech.Interjection,
@@ -18,13 +18,11 @@ namespace TagsCloudContainer.Processing.Filtering
 
         public IEnumerable<string> Filter(IEnumerable<string> words)
         {
-            return words.Where(word => word.Length >= MinimumWordLength && !IsCommonPartOfSpeech(word));
-        }
+            var partsOfSpeech = PartOfSpeechDetector.Detect(words);
 
-        public bool IsCommonPartOfSpeech(string word)
-        {
-            var partOfSpeech = PartOfSpeechDetector.Detect(word);
-            return commonPartsOfSpeech.Contains(partOfSpeech);
+            return words
+                .Where(w => w.Length >= MinWordLength)
+                .Where(w => partsOfSpeech.TryGetValue(w, out var part) && !CommonPartsOfSpeech.Contains(part));
         }
     }
 }

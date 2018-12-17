@@ -28,28 +28,30 @@ namespace TagsCloudContainerTests.Input
         }
 
         [Test, TestCaseSource(nameof(InDefaultStateTestCases))]
-        public void InDefaultState(string input, IEnumerable<(string, int)> expected)
+        public void InDefaultState(string input, Dictionary<string, int> expected)
         {
             var parser = new WordParser(new IWordFilter[0], new IWordConverter[0]);
 
-            parser.ParseWords(input).Should().BeEquivalentTo(expected);
+            var actual = parser.ParseWords(input);
+                
+            actual.Should().BeEquivalentTo(expected);
         }
 
         private static IEnumerable InDefaultStateTestCases()
         {
-            yield return new TestCaseData("hello world ha ha", new[]
+            yield return new TestCaseData("hello world ha ha", new Dictionary<string, int>
             {
-                ("hello", 1), ("world", 1), ("ha", 2)
+                {"hello", 1}, { "world", 1}, { "ha", 2}
             }).SetName("parse simple text");
 
-            yield return new TestCaseData("hello\r\r\nworld\t\t     \t\r\n\nnew", new[]
+            yield return new TestCaseData("hello\r\r\nworld\t\t     \t\r\n\nnew", new Dictionary<string, int>
             {
-                ("hello", 1), ("world", 1), ("new", 1)
+                {"hello", 1}, { "world", 1}, { "new", 1}
             }).SetName("parse text with whitespaces");
 
-            yield return new TestCaseData("hello, world. That's new me!!", new[]
+            yield return new TestCaseData("hello, world. That's new me!!", new Dictionary<string, int>
             {
-                ("hello", 1), ("world", 1), ("new", 1), ("thats", 1), ("me", 1)
+                { "hello", 1}, {"world", 1}, {"new", 1}, {"thats", 1}, {"me", 1}
             }).SetName("parse text with punctuation marks");
         }
 
@@ -62,9 +64,9 @@ namespace TagsCloudContainerTests.Input
                 new CommonWordsFilter()
             };
             var parser = new WordParser(filters, new IWordConverter[0]);
-            var expected = new[]
+            var expected = new Dictionary<string, int>
             {
-                ("миша", 1), ("живется", 1), ("агрегатор", 1)
+                { "миша", 1}, {"живется", 1}, {"агрегатор", 1}
             };
 
             parser.ParseWords("Привет, Миша. Здорово ли тебе живется? Ну ладно, агрегатор!").Should()

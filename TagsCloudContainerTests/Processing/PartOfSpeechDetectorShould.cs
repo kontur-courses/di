@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using NUnit.Framework;
@@ -23,43 +26,52 @@ namespace TagsCloudContainerTests.Processing
                 throw new NullReferenceException("Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) returns null");
         }
 
-        [TestCase(null, Description = "Null word")]
-        [TestCase("", Description = "Empty word")]
-        public void ThrowExceptionOnInvalidWords(string word)
+        [Test, TestCaseSource(nameof(DetectTestCases))]
+        public void Detect(IEnumerable<string> words, Dictionary<string, PartOfSpeech> expected)
         {
-            Action action = () => PartOfSpeechDetector.Detect(word);
-
-            action.Should().Throw<ArgumentException>().WithMessage("Слово не должно быть пустым или null");
+            PartOfSpeechDetector.Detect(words).Should().BeEquivalentTo(expected);
         }
 
-
-        [TestCase("замечательный")]
-        [TestCase("благоустроенный")]
-        public void DetectAdjective(string word)
+        private static IEnumerable DetectTestCases()
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
-            PartOfSpeechDetector.Detect(word).Should().Be(PartOfSpeech.Adjective);
+            var adjectives = new[] { "замечательный", "благоустроенный" };
+            yield return new TestCaseData(adjectives, adjectives.ToDictionary(w => w, w => PartOfSpeech.Adjective))
+                .SetName("adjectives");
+
+            var adverbs = new[] { "весело", "по-приятельски" };
+            yield return new TestCaseData(adverbs, adverbs.ToDictionary(w => w, w => PartOfSpeech.Adverb))
+                .SetName("adverbs");
+
+            var pronouns = new[] { "он", "ему" };
+            yield return new TestCaseData(pronouns, pronouns.ToDictionary(w => w, w => PartOfSpeech.Pronoun))
+                .SetName("pronouns");
+
+            var numerals = new[] { "первый", "второго" };
+            yield return new TestCaseData(numerals, numerals.ToDictionary(w => w, w => PartOfSpeech.Numeral))
+                .SetName("numerals");
+
+            var unions = new[] { "и", "а" };
+            yield return new TestCaseData(unions, unions.ToDictionary(w => w, w => PartOfSpeech.Union))
+                .SetName("unions");
+
+            var interjections = new[] { "ура", "ох" };
+            yield return new TestCaseData(interjections, interjections.ToDictionary(w => w, w => PartOfSpeech.Interjection))
+                .SetName("interjections");
+
+            var nouns = new[] {"конституций", "работа"};
+            yield return new TestCaseData(nouns, nouns.ToDictionary(w => w, w => PartOfSpeech.Noun))
+                .SetName("nouns");
+
+            var verbs = new[] {"убежать", "благоухал"};
+            yield return new TestCaseData(verbs, verbs.ToDictionary(w => w, w => PartOfSpeech.Verb))
+                .SetName("verbs");
         }
 
-        [TestCase("весело")]
-        [TestCase("по-приятельски")]
-        public void DetectAdverb(string word)
+        [Test]
+        public void SkipInvalidWords()
         {
-            PartOfSpeechDetector.Detect(word).Should().Be(PartOfSpeech.Adverb);
-        }
-
-        [TestCase("конституций")]
-        [TestCase("работа")]
-        public void DetectNoun(string word)
-        {
-            PartOfSpeechDetector.Detect(word).Should().Be(PartOfSpeech.Noun);
-        }
-
-        [TestCase("убежать")]
-        [TestCase("благоухал")]
-        public void DetectVerb(string word)
-        {
-            PartOfSpeechDetector.Detect(word).Should().Be(PartOfSpeech.Verb);
+            var words = new[] {"", null, "привет пока"};
+            PartOfSpeechDetector.Detect(words).Should().BeEmpty();
         }
     }
 }

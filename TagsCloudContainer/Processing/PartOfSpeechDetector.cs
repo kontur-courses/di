@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using MyStemWrapper;
 
@@ -7,18 +7,19 @@ namespace TagsCloudContainer.Processing
 {
     public static class PartOfSpeechDetector
     {
-        private static readonly MyStem analyzer;
-        private static readonly Dictionary<string, PartOfSpeech> abbreviations;
+        private static readonly MyStem Analyzer;
+        private static readonly Dictionary<string, PartOfSpeech> Abbreviations;
+        private static readonly Regex WordRegex;
 
         static PartOfSpeechDetector()
         {
-            analyzer = new MyStem
+            Analyzer = new MyStem
             {
-                Parameters = "-i",
+                Parameters = "-in",
                 PathToMyStem = @"Resources\mystem.exe"
             };
 
-            abbreviations = new Dictionary<string, PartOfSpeech>
+            Abbreviations = new Dictionary<string, PartOfSpeech>
             {
                 {"A", PartOfSpeech.Adjective},
                 {"ADV", PartOfSpeech.Adverb},
@@ -35,26 +36,26 @@ namespace TagsCloudContainer.Processing
                 {"SPRO", PartOfSpeech.Pronoun},
                 {"V", PartOfSpeech.Verb}
             };
+
+            WordRegex = new Regex(@"^([\w-]+?){[\w-]+?=(\w+)", RegexOptions.Multiline | RegexOptions.Compiled);
         }
 
-        public static PartOfSpeech Detect(string word)
+        public static Dictionary<string, PartOfSpeech> Detect(IEnumerable<string> words)
         {
-            if (string.IsNullOrEmpty(word))
-                throw new ArgumentException("Слово не должно быть пустым или null");
+            var validWords = words.Distinct().Where(w => !string.IsNullOrEmpty(w) && !w.Contains(" "));
 
-            if (word.Contains(" "))
-                throw new ArgumentException("Слово не должно содержать пробелов");
+            var analysis = Analyzer.Analysis(string.Join(" ", validWords));
+            var result = validWords.ToDictionary(w => w, _ => PartOfSpeech.Unknown);  // надо ли?
 
-            var analysis = analyzer.Analysis(word);
-            if (string.IsNullOrEmpty(analysis))
-                return PartOfSpeech.Unknown;
+            var matches = WordRegex.Matches(analysis);
+            foreach (Match match in matches)
+            {
+                var word = match.Groups[1].Value;
+                var partOfSpeech = Abbreviations[match.Groups[2].Value];
+                result[word] = partOfSpeech;
+            }
 
-            var match = Regex.Match(analysis, $@"^{word}{{[\w-]+=(\w+)");
-            if (!match.Success)
-                return PartOfSpeech.Unknown;
-
-            var abbr = match.Groups[1].Value;
-            return abbreviations.ContainsKey(abbr) ? abbreviations[abbr] : PartOfSpeech.Unknown;
+            return result;
         }
     }
 }
