@@ -24,7 +24,7 @@ namespace GUITagClouder
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = "РќР°СЃС‚СЂРѕР№РєРё";
+            Text = "Настройки";
         }
     }
 }

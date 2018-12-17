@@ -50,11 +50,11 @@ namespace ConsoleTagClouder
             var settings = CloudSettings.Default();
 
             if (TLayouter != null)
-                settings.TLayouter = TLayouter;// FindInterfacesWithPrefix<ICloudLayouter>(TLayouter).TakeOnlyOne();
+                settings.TLayouter = TLayouter;
             if (TCounter != null)
-                settings.TCounter = TCounter;//FindInterfacesWithPrefix<IWordsCounter>(TCounter).TakeOnlyOne();
+                settings.TCounter = TCounter;
             if (TScaler != null)
-                settings.TScaler = TScaler;//FindInterfacesWithPrefix<IWordsCounter>(TCounter).TakeOnlyOne();
+                settings.TScaler = TScaler;
             
             return settings;
         }
@@ -74,12 +74,5 @@ namespace ConsoleTagClouder
             
             return settings;
         }
-
-        //TODO remove comments
-//        private IEnumerable<Type> FindInterfacesWithPrefix<TInterface>(string prefix)=>
-//            AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-//                .Where(t => typeof(TInterface).IsAssignableFrom(t))
-//                .Where(n=>n.Name.ToLower().StartsWith(prefix.ToLower()));
-           
     }
 }

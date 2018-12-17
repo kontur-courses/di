@@ -7,13 +7,13 @@ using TagCloud.Layouters;
 
 namespace GUITagClouder
 {
-    public class CloudImageHolder : PictureBox, IImageHolder
+    public class CloudHolder : PictureBox
     {
         private CloudSettings cloudSettings;
         private DrawingSettings drawingSettings;
         private IPathProvider appPathProvider;
 
-        public CloudImageHolder(CloudSettings initialCloudSettings, DrawingSettings initialDrawingSettings,
+        public CloudHolder(CloudSettings initialCloudSettings, DrawingSettings initialDrawingSettings,
             IPathProvider appPathProvider)
         {
             cloudSettings = initialCloudSettings;
@@ -31,7 +31,7 @@ namespace GUITagClouder
         {
             Refresh();
             Application.DoEvents();
-        }
+        }    
         
         //TODO Remove overloads somehow
         public void RecreateImage() =>
@@ -47,9 +47,9 @@ namespace GUITagClouder
         {
             if(appPathProvider.SourcePath == null)
                 return;
+            //Combobox will solve this problem. 
             var maker = Cloud.CreateMaker(cloudSettings, drawingSettings);
             maker.UpdateFrom(File.OpenRead(appPathProvider.SourcePath));
-            //TODO change draw cloud signature.
             Image = maker.DrawCloud();
             
             //This objects is different only first time. I hope its normal.

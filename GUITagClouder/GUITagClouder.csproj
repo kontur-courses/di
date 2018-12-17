@@ -45,21 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewFileAction.cs" />
+    <Compile Include="GuiActions\ClouderSettingsAction.cs" />
+    <Compile Include="GuiActions\DrawingSettingsAction.cs" />
+    <Compile Include="GuiActions\IGuiAction.cs" />
+    <Compile Include="GuiActions\NewFileAction.cs" />
+    <Compile Include="GuiActions\SaveImageAction.cs" />
+    <Compile Include="GuiActions\UiActionExtentions.cs" />
     <Compile Include="PathProvider.cs" />
-    <Compile Include="ClouderSettingsAction.cs" />
-    <Compile Include="CloudSettingsForm.cs" />
-    <Compile Include="IGuiAction.cs" />
-    <Compile Include="IImageHolder.cs" />
-    <Compile Include="DrawingSettingsAction.cs" />
     <Compile Include="IPathProvider.cs" />
     <Compile Include="MainForm.cs" />
-    <Compile Include="CloudImageHolder.cs" />
+    <Compile Include="CloudHolder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveImageAction.cs" />
-    <Compile Include="DrawingSettingsForm.cs" />
-    <Compile Include="UiActionExtentions.cs" />
+    <Compile Include="SettingsForms\CloudSettingsForm.cs" />
+    <Compile Include="SettingsForms\DrawingSettingsForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="System.Windows.Forms.dll" />

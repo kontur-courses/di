@@ -6,17 +6,17 @@ namespace GUITagClouder
     public class SaveImageAction : IGuiAction
     {
         
-        public SaveImageAction(IImageHolder imageHolder, IPathProvider provider)
+        public SaveImageAction(CloudHolder imageHolder, IPathProvider provider)
         {
             this.imageHolder = imageHolder;
             this.provider = provider;
         }
-        private readonly IImageHolder imageHolder;
+        private readonly CloudHolder imageHolder;
         private readonly IPathProvider provider;
 
-        public string Category => "Р¤Р°Р№Р»";
-        public string Name => "РЎРѕС…СЂР°РЅРёС‚СЊ...";
-        public string Description => "РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ С„Р°Р№Р»";
+        public string Category => "Файл";
+        public string Name => "Сохранить...";
+        public string Description => "Сохранить изображение в файл";
 
         public void Perform()
         {

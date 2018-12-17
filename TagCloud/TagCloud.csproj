@@ -64,6 +64,7 @@
     <Compile Include="CloudSettings.cs" />
     <Compile Include="CloudDrawer.cs" />
     <Compile Include="CloudMaker.cs" />
+    <Compile Include="Counters\GoodWordsCounter.cs" />
     <Compile Include="Counters\IWordsCounter.cs" />
     <Compile Include="Counters\SimpleWordsCounter.cs" />
     <Compile Include="DrawingSettings.cs" />

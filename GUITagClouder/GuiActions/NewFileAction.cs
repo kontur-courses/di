@@ -5,12 +5,12 @@ namespace GUITagClouder
 {
     public class NewFileAction : IGuiAction
     {
-        public NewFileAction(IImageHolder imageHolder, IPathProvider provider)
+        public NewFileAction(CloudHolder imageHolder, IPathProvider provider)
         {
             this.imageHolder = imageHolder;
             this.provider = provider;
         }
-        private readonly IImageHolder imageHolder;
+        private readonly CloudHolder imageHolder;
         private readonly IPathProvider provider;
 
         public string Category => "Файл";

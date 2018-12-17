@@ -8,6 +8,7 @@ namespace GUITagClouder
     public class MainForm : Form
     {
         public MainForm(DrawingSettings settings, CloudImageHolder cloud, IGuiAction[] actions)
+        public MainForm(DrawingSettings settings, CloudHolder cloud, IGuiAction[] actions)
         {
             ClientSize = settings.Size;
 
@@ -15,7 +16,7 @@ namespace GUITagClouder
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
 
-            cloud.RecreateImage(settings);
+            //cloud.RecreateImage(settings);
             cloud.Dock = DockStyle.Fill;
             Controls.Add(cloud);
         }
@@ -23,7 +24,7 @@ namespace GUITagClouder
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Text = "Fractal Painter";
+            Text = "Tag Cloud";
         }
     }
 }
