@@ -19,9 +19,8 @@ namespace TagCloud
             return (CloudMaker) container.Build().Resolve(typeof(CloudMaker));
         }
 
-        private static void //IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle>
-            RegisterTypeByPrefixAs<T>(this ContainerBuilder container, string prefix)
-        {//TODO make doesNotFoundException
+        private static void RegisterTypeByPrefixAs<T>(this ContainerBuilder container, string prefix)
+        {//TODO make doesNotFoundException (fixed in gui)
             var asm = Assembly.GetExecutingAssembly();
             container.RegisterAssemblyTypes(asm)
                 .Where(x => x.GetInterfaces().Contains(typeof(T)) && x.Name.StartsWith(prefix))

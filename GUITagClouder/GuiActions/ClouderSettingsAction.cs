@@ -15,7 +15,7 @@ namespace GUITagClouder
         private readonly CloudHolder imageHolder;
         public string Category => "Настройки";
         public string Name => "Облако";
-        public string Description => "Размеры изображения";
+        public string Description => "Типы обработчиков";
 
         public void Perform()
         {
