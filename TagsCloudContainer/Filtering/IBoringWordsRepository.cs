@@ -5,5 +5,7 @@ namespace TagsCloudContainer.Filtering
     public interface IBoringWordsRepository
     {
         IEnumerable<string> Words { get; }
+        void LoadWords(string inputPath);
+        
     }
 }

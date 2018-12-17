@@ -32,17 +32,15 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            var
-                layouter = new CircularCloudLayouter(new TagsCloudLayouterSettings(new Point(300, 300)),
-                    new TagsCloudFactory());
-            generator = new TagsCloudGenerator(new TagsCloudGeneratorSettings(minLetterSize, layouter, wordsSizer));
+            var layouter = new CircularCloudLayouter(new Point(300, 300), new TagsCloudFactory());
+            generator = new TagsCloudGenerator(new FrequencyWordsSizer(), layouter);
         }
 
         [Test]
         public void CreateCloud_CreatesWordsSizesProportionalToFrequency()
         {
             var words = new List<string>() {"aaa", "aaa", "aaa", "bb", "bb", "c"};
-            var cloud = generator.CreateCloud(words);
+            var cloud = generator.CreateCloud(words, minLetterSize);
             var wordsSizes = new Dictionary<string, Size>();
             foreach (var tCWord in cloud.AddedWords)
             {
@@ -66,7 +64,7 @@ namespace TagsCloudContainer.Tests
                 words.Add(RandomString(4));
             }
 
-            var cloud = generator.CreateCloud(words);
+            var cloud = generator.CreateCloud(words, minLetterSize);
             var totalSquare = cloud.AddedWords.Sum(x => x.Rectangle.Height * x.Rectangle.Width);
             foreach (var TCWord in cloud.AddedWords)
             {

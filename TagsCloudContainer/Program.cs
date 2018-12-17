@@ -21,17 +21,11 @@ namespace TagsCloudContainer
             containerBuilder.RegisterAssemblyTypes(dataAccess).AsImplementedInterfaces();
             containerBuilder.RegisterType<CLI>().As<IUI>().SingleInstance();
             containerBuilder.RegisterType<DocWordsReader>().As<IWordsReader>();
-            containerBuilder.RegisterType<BlacklistSettings>();
-            containerBuilder.RegisterType<FormattingSettings>();
             containerBuilder.RegisterType<FormattingComponent>();
             containerBuilder.RegisterType<FilteringComponent>();
-            containerBuilder.RegisterType<TagsCloudLayouterSettings>().UsingConstructor(typeof(IUI));
-            containerBuilder.RegisterType<TagsCloudGeneratorSettings>()
-                .UsingConstructor(typeof(IUI), typeof(ITagsCloudLayouter), typeof(IWordsSizer));
-            containerBuilder.RegisterType<TagsCloudGeneratorSettings>();
             containerBuilder.RegisterType<TagsCloudGenerator>();
-            containerBuilder.RegisterType<TagsCloudLayouterSettings>();
             containerBuilder.RegisterType<RandomColorManager>().As<IColorManager>();
+            containerBuilder.RegisterType<BoringWordsRepository>().As<IBoringWordsRepository>().SingleInstance();
             containerBuilder.RegisterType<TagsCloudContainerApplication>();
             var containerApplication = containerBuilder.Build();
             var app = containerApplication.Resolve<TagsCloudContainerApplication>();

@@ -5,11 +5,12 @@ namespace TagsCloudContainer.Filtering
 {
     public class BoringWordsRepository : IBoringWordsRepository
     {
-        public IEnumerable<string> Words { get; }
+        public IEnumerable<string> Words { get; private set; }
 
-        public BoringWordsRepository(string inputPath)
+
+        public void LoadWords(string inputPath)
         {
-            Words = new TxtWordsReader().ReadWords(new ReadingSettings(inputPath));
+            Words = new TxtWordsReader().ReadWords(inputPath);
         }
     }
 }

@@ -11,18 +11,16 @@ namespace TagsCloudContainer.TagsCloudGenerating
 {
     public class TagsCloudGenerator
     {
-        private readonly Size minLetterSize;
         private readonly ITagsCloudLayouter layouter;
         private readonly IWordsSizer wordsSizer;
 
-        public TagsCloudGenerator(TagsCloudGeneratorSettings settings)
+        public TagsCloudGenerator(IWordsSizer wordsSizer, ITagsCloudLayouter layouter)
         {
-            minLetterSize = settings.LetterSize;
-            layouter = settings.TagsCloudLayouter;
-            wordsSizer = settings.WordsSizer;
+            this.layouter = layouter;
+            this.wordsSizer = wordsSizer;
         }
 
-        public ITagsCloud CreateCloud(List<string> words)
+        public ITagsCloud CreateCloud(List<string> words, Size minLetterSize)
         {
             var wordsSizes = wordsSizer.GetWordsSizes(words, minLetterSize);
 

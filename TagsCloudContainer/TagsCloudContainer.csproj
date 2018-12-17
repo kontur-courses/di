@@ -85,22 +85,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
-    <Compile Include="Filtering\BlacklistSettings.cs" />
     <Compile Include="Filtering\BlacklistWordsFilter.cs" />
     <Compile Include="Filtering\BoringWordsRepository.cs" />
     <Compile Include="Filtering\FilteringComponent.cs" />
-    <Compile Include="Filtering\FilterSettings.cs" />
     <Compile Include="Filtering\IBoringWordsRepository.cs" />
     <Compile Include="Filtering\IWordsFilter.cs" />
     <Compile Include="Formatting\FormattingComponent.cs" />
-    <Compile Include="Formatting\FormattingSettings.cs" />
-    <Compile Include="Formatting\IFormattersFactory.cs" />
     <Compile Include="Formatting\IWordsFormatter.cs" />
     <Compile Include="Formatting\ToInitFormFormatter.cs" />
     <Compile Include="Formatting\ToLowerCaseFormatter.cs" />
     <Compile Include="Layouting\CircularCloudLayouter.cs" />
     <Compile Include="Layouting\ITagsCloudLayouter.cs" />
-    <Compile Include="Layouting\TagsCloudLayouterSettings.cs" />
+    <Compile Include="Layouting\ITagsCloudLayouterFactory.cs" />
+    <Compile Include="Layouting\TagsCloudLayouterFactory.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,11 +105,9 @@
     </Compile>
     <Compile Include="Reading\DocWordsReader.cs" />
     <Compile Include="Reading\IWordsReader.cs" />
-    <Compile Include="Reading\ReadingSettings.cs" />
     <Compile Include="Reading\TxtWordsReader.cs" />
     <Compile Include="TagsCloudGenerating\TagsCloudGenerator.cs" />
     <Compile Include="TagsCloudContainerApplication.cs" />
-    <Compile Include="TagsCloudGenerating\TagsCloudGeneratorSettings.cs" />
     <Compile Include="TagsClouds\ITagsCloud.cs" />
     <Compile Include="TagsClouds\ITagsCloudFactory.cs" />
     <Compile Include="TagsClouds\TagsCloud.cs" />
@@ -125,7 +120,6 @@
     <Compile Include="Visualisation\ArchimedeanSpiral.cs" />
     <Compile Include="Visualisation\Coloring\IColorManager.cs" />
     <Compile Include="Visualisation\Coloring\MonoColorManager.cs" />
-    <Compile Include="Visualisation\Coloring\MonoColorManagerSettings.cs" />
     <Compile Include="Visualisation\Coloring\RandomColorManager.cs" />
     <Compile Include="Visualisation\ImageSettings.cs" />
     <Compile Include="Visualisation\ITagsCloudRenderer.cs" />

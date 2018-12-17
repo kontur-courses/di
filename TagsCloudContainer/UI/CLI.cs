@@ -13,7 +13,7 @@ namespace TagsCloudContainer.UI
     public class CLI : IUI
     {
         public ApplicationSettings ApplicationSettings => new ApplicationSettings
-        (new ReadingSettings(InputPath), new FilterSettings(BlacklistPath), TagsCloudCenter,
+        (InputPath, BlacklistPath, TagsCloudCenter,
             new ImageSettings(FontFamily, ImageSize, LetterSize, OutputPath, TextColor, AutoSize));
 
 

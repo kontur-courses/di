@@ -12,10 +12,9 @@ namespace TagsCloudContainer.Visualisation
         private readonly Size boundary = new Size(100, 100);
 
 
-        public void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud,
-            bool autoSize = false)
+        public void RenderIntoFile(ImageSettings imageSettings, IColorManager colorManager, ITagsCloud tagsCloud)
         {
-            if (autoSize)
+            if (imageSettings.AutoSize)
             {
                 RenderIntoFileAutoSize(imageSettings, colorManager, tagsCloud);
                 return;
@@ -50,7 +49,7 @@ namespace TagsCloudContainer.Visualisation
             var pictureSize = GetPictureSize(tagsCloudToDraw);
 
             var btm = new Bitmap(pictureSize.Width, pictureSize.Height);
-            using (Graphics obj = Graphics.FromImage(btm))
+            using (var obj = Graphics.FromImage(btm))
             {
                 foreach (var tagsCloudWord in tagsCloudToDraw.AddedWords)
                 {

@@ -7,20 +7,18 @@ namespace TagsCloudContainer
 {
     public class ApplicationSettings
     {
-        public ReadingSettings ReadingSettings { get; }
-        public FilterSettings FilterSettings { get; }
         public ImageSettings ImageSettings { get; }
-
+        public string InputPath { get; }
+        public string BlackListPath { get; }
         public Point TagsCloudCenter { get; }
 
         public ApplicationSettings
-        (ReadingSettings readingSettings, FilterSettings filterSettings, Point tagsCloudCenter,
-            ImageSettings imageSettings)
+            (string inputPath, string blackListPath, Point tagsCloudCenter, ImageSettings imageSettings)
         {
-            ReadingSettings = readingSettings;
-            FilterSettings = filterSettings;
             TagsCloudCenter = tagsCloudCenter;
             ImageSettings = imageSettings;
+            InputPath = inputPath;
+            BlackListPath = blackListPath;
         }
     }
 }

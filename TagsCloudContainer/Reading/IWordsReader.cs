@@ -4,6 +4,6 @@ namespace TagsCloudContainer.Reading
 {
     public interface IWordsReader
     {
-        List<string> ReadWords(ReadingSettings readingSettings);
+        List<string> ReadWords(string inputPath);
     }
 }
