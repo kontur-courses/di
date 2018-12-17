@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Extensions;
+using NHunspell;
 
 namespace TagCloud
 {
-    public class SimpleWordsCounter: IWordsCounter
+    public class StemWordsCounter: IWordsCounter
     {
         private readonly Dictionary<string, int> countedWords = new Dictionary<string, int>();
 
@@ -14,10 +14,11 @@ namespace TagCloud
         public void UpdateWith(string text)
         {
             var words = text
-                .ToLower() 
+                .ToLower()
                 .Split(" \t\n\r.,?!:;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
-                IncOrAddToCounter(word);
+            using (var hsl = new Hunspell("en_us.aff", "en_us.dic"))
+                foreach (var word in words)
+                    IncOrAddToCounter(hsl.Stem(hsl.Suggest(word).First()).First());
         }
 
         private void IncOrAddToCounter(string word)
