@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using NHunspell;
 
 
 namespace TagsCloudContainer
@@ -9,14 +11,17 @@ namespace TagsCloudContainer
     {
         private List<string> _wordsToIgnore;
         private Func<string, bool> _shouldIgnoreWord;
-        private readonly Func<string, string> _toBaseForm;
+        private readonly string _enUsAffPath;
+        private readonly string _enUsDicPath;
  
-        public WordsCustomizer(List<string> wordsToIgnore = null, Func<string, bool> shouldIgnoreWord = null,
-            Func<string, string> toBaseForm = null)
+        public WordsCustomizer(List<string> wordsToIgnore = null, Func<string, bool> shouldIgnoreWord = null)
         {
             _wordsToIgnore = wordsToIgnore ?? StandardWordsToIgnorePack();
             _shouldIgnoreWord = shouldIgnoreWord ?? (x => false);
-            _toBaseForm = toBaseForm ?? (x => x);
+
+            var dirPath = AppDomain.CurrentDomain.BaseDirectory;
+            _enUsAffPath = Path.Combine(dirPath, "..", "..", "EnglishDictionaries", "en_us.aff");
+            _enUsDicPath = Path.Combine(dirPath, "..", "..", "EnglishDictionaries", "en_us.dic");
         }
 
         public string CustomizeWord(string word)
@@ -34,7 +39,13 @@ namespace TagsCloudContainer
 
         private string ToBaseForm(string word)
         {
-            return _toBaseForm(word);
+            string result;
+            using (var hunspell = new Hunspell(_enUsAffPath, _enUsDicPath))
+            {
+                result = hunspell.Stem(word).FirstOrDefault();
+            }
+
+            return result ?? word;
         }
 
         private static List<string> StandardWordsToIgnorePack()

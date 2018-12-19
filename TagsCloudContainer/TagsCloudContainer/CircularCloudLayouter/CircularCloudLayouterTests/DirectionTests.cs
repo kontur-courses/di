@@ -12,7 +12,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
             return new Direction().GetNextDirection();
         }
 
-        [TestCase(ExpectedResult = 0.01, TestName = "BeOneOnSecondStep")]
+        [TestCase(ExpectedResult = 1, TestName = "BeOneOnSecondStep")]
         public double AlphaShould()
         {
             var direction = new Direction();
