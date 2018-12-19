@@ -1,6 +1,4 @@
-﻿using System;
-using TagsCloudVisualization;
-using TagsCloudVisualization.CloudGenerating;
+﻿using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
 using TagsCloudVisualization.Preprocessing;
 using TagsCloudVisualization.Utils;
@@ -17,6 +15,7 @@ namespace TagsCloudConsole
         private readonly FileReaderSelector fileReaderSelector;
         private readonly ParserSelector parserSelector;
         private readonly ImageSaverSelector imageSaverSelector;
+        private readonly StatisticsCalculator calculator;
 
         public App(
             FileReaderSelector fileReaderSelector, 
@@ -24,7 +23,8 @@ namespace TagsCloudConsole
             Preprocessor preprocessor,
             ITagsCloudGenerator tagsCloudGenerator,
             TagsCloudVisualizer cloudVisualizer,
-            ImageSaverSelector imageSaverSelector)
+            ImageSaverSelector imageSaverSelector,
+            StatisticsCalculator calculator)
         {
             this.fileReaderSelector = fileReaderSelector;
             this.parserSelector = parserSelector;
@@ -32,6 +32,7 @@ namespace TagsCloudConsole
             this.tagsCloudGenerator = tagsCloudGenerator;
             this.cloudVisualizer = cloudVisualizer;
             this.imageSaverSelector = imageSaverSelector;
+            this.calculator = calculator;
         }
 
         public void Run(string imageFileName, string wordsFileName, string mode)
@@ -42,13 +43,13 @@ namespace TagsCloudConsole
 
             var words = parser.ParseText(
                 reader.ReadText(wordsFileName));
-            var wordsStatistics = new StatisticsCalculator()
+            var wordsStatistics = calculator
                 .CalculateStatistics(preprocessor.Preprocess(words));
             
             var tagCloud = tagsCloudGenerator.GenerateTagsCloud(wordsStatistics);
 
-            var picture = cloudVisualizer.GetPictureOfRectangles(tagCloud);
-            imageSaver.SaveImage(picture, imageFileName);
+            using (var picture = cloudVisualizer.GetPictureOfRectangles(tagCloud))
+                imageSaver.SaveImage(picture, imageFileName);
         }
     }
 }

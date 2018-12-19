@@ -7,6 +7,7 @@ using Autofac;
 using TagsCloudVisualization.CloudGenerating;
 using TagsCloudVisualization.ImageSaving;
 using TagsCloudVisualization.Preprocessing;
+using TagsCloudVisualization.Utils;
 using TagsCloudVisualization.Visualizing;
 using TagsCloudVisualization.WordsFileReading;
 
@@ -95,6 +96,7 @@ namespace TagsCloudConsole
             builder.RegisterType<CustomPainter>().As<ITagPainter>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
             builder.RegisterType<StandardImageSaver>().As<IImageSaver>();
+            builder.RegisterType<StatisticsCalculator>().AsSelf();
             builder.RegisterType<App>().AsSelf();
             builder.RegisterType<ImageSaverSelector>().AsSelf();
             return builder.Build();
