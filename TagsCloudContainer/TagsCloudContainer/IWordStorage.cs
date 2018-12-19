@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 
 namespace TagsCloudContainer
@@ -7,6 +8,6 @@ namespace TagsCloudContainer
     {
         void Add(string word);
         void AddRange(IEnumerable<string> words);
-        List<Word> ToList();
+        IOrderedEnumerable<Word> ToIOrderedEnumerable();
     }
 }

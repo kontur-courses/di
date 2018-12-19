@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace TagsCloudContainer
 {
     internal class WordsCustomizer
     {
-        private readonly List<string> _wordsToIgnore;
-        private readonly Func<string, bool> _shouldIgnoreWord;
+        private List<string> _wordsToIgnore;
+        private Func<string, bool> _shouldIgnoreWord;
         private readonly Func<string, string> _toBaseForm;
  
         public WordsCustomizer(List<string> wordsToIgnore = null, Func<string, bool> shouldIgnoreWord = null,
@@ -20,6 +21,9 @@ namespace TagsCloudContainer
 
         public string CustomizeWord(string word)
         {
+            if (word == null)
+                throw new NullReferenceException();
+
             return IgnoreWord(word) ? null : ToBaseForm(word.ToLower());
         }
 
@@ -38,7 +42,7 @@ namespace TagsCloudContainer
             return Prepositions();
         }
 
-        private static List<string> Prepositions()
+        public static List<string> Prepositions()
         {
             return new List<string>
             {
@@ -46,6 +50,26 @@ namespace TagsCloudContainer
                 "under", "among", "between", "behind", "in front of", "next to",
                 "about", "after", "at", "during", "for", "in", "on", "till", "within"
             };
+        }
+
+        public void SetIgnoreFunc(Func<string, bool> ignoreFunc)
+        {
+            _shouldIgnoreWord = ignoreFunc;
+        }
+
+        public void SetWordsToIgnore(IEnumerable<string> wordsToIgnore)
+        {
+            _wordsToIgnore = wordsToIgnore.ToList();
+        }
+
+        public void AddWordsToIgnore(IEnumerable<string> newWordsToIgnore)
+        {
+            _wordsToIgnore.AddRange(newWordsToIgnore);
+        }
+
+        public List<string> GetWordsToIgnore()
+        {
+            return _wordsToIgnore;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TagsCloudContainer
             var filePath = @"..\..\tmpTextFile";
             var words = File.ReadAllLines(filePath + ".txt");
             Func<Word, Size> wordSizeFunc = w => new Size(w.Count * 20 * w.Value.Length, w.Count * 20);
-             
+
             var builder = new ContainerBuilder();
             builder.RegisterType<Drawer>().As<IDrawer<Word>>();
             builder.RegisterType<ItemToDraw<Rectangle>>().As<IItemToDraw<Rectangle>>();

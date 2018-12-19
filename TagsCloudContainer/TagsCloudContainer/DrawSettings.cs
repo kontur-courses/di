@@ -33,13 +33,16 @@ namespace TagsCloudContainer
             _imageFileFormat = ImageFileFormat.Png;
         }
 
-        public string GetFileFullName()
+        public string GetFullFileName()
         {
             return _filePath + "." + _imageFileFormat.ToString().ToLower();
         }
 
         public void SetImageSize(Size imageSize)
         {
+            if (imageSize.Width <= 0 || imageSize.Height <= 0)
+                throw new ArgumentException("both image size parameters should be positive");
+
             _imageSize = imageSize;
         }
 

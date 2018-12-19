@@ -35,12 +35,11 @@ namespace TagsCloudContainer
                 Add(word);
         }
 
-        public List<Word> ToList()
+        public IOrderedEnumerable<Word> ToIOrderedEnumerable()
         {
             return _wordsRegister
-                .OrderByDescending(e => e.Value)
                 .Select(e => new Word(e.Key, e.Value))
-                .ToList();
+                .OrderByDescending(e => e.Count);
         }
     }
 }

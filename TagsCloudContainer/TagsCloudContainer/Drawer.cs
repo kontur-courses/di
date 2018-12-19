@@ -31,7 +31,7 @@ namespace TagsCloudContainer
                     item.X, item.Y);
             }
 
-            bitmap.Save(_drawSettings.GetFileFullName());
+            bitmap.Save(_drawSettings.GetFullFileName());
 
             g.Dispose();
             bitmap.Dispose();

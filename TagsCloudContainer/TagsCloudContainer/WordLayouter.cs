@@ -14,7 +14,7 @@ namespace TagsCloudContainer
 
         public WordLayouter(IWordStorage wordStorage, Func<Word, Size> getWordSize, IRectangleLayout layout)
         {
-            _wordsToDraw = wordStorage.ToList();
+            _wordsToDraw = wordStorage.ToIOrderedEnumerable().ToList();
             _getWordSize = getWordSize;
             _layout = layout;
         }
