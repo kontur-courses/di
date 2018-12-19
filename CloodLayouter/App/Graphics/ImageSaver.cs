@@ -1,17 +1,18 @@
 using System;
+using System.Drawing;
 using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
 {
     public class ImageSaver : IImageSaver
     {
-        private readonly ISaveDirectoryProvider directoryProvider;
+        private readonly IProvider<string> directoryProvider;
 
-        private readonly IImageHolder imageHolder;
+        private readonly IProvider<Bitmap> imageHolder;
         //TODO  add SaveSettings(file format .png, .bpm, e.t.c.)
 
 
-        public ImageSaver(IImageHolder imageHolder, ISaveDirectoryProvider directoryProvider)
+        public ImageSaver(IProvider<Bitmap> imageHolder, IProvider<string> directoryProvider)
         {
             this.imageHolder = imageHolder;
             this.directoryProvider = directoryProvider;
@@ -19,8 +20,8 @@ namespace CloodLayouter.App
 
         public void Save()
         {
-            imageHolder.Image.Save(directoryProvider.DirectoryToSave);
-            Console.WriteLine("saved to: " + directoryProvider.DirectoryToSave);
+            imageHolder.Get().Save(directoryProvider.Get());
+            Console.WriteLine("saved to: " + directoryProvider.Get());
         }
     }
 }

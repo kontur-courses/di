@@ -12,9 +12,9 @@ namespace CloudLayouter.App
         private readonly Point center;
         private readonly HashSet<Rectangle> rectangles;
 
-        public CircularCloudLayouter(IImageHolder imageHolder)
+        public CircularCloudLayouter(IProvider<Bitmap> imageHolder)
         {
-            center = new Point(imageHolder.Image.Width / 2, imageHolder.Image.Height / 2);
+            center = new Point(imageHolder.Get().Width / 2, imageHolder.Get().Height / 2);
             anchorpoints = new SortedSet<Point>(new PointDistanceComparer(center));
             rectangles = new HashSet<Rectangle>();
 
@@ -71,7 +71,7 @@ namespace CloudLayouter.App
 
     public static class PointExtensions
     {
-        public static double GetDistance(Point a, Point b)
+        public static double GetDistance(this Point a, Point b)
         {
             return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
@@ -96,7 +96,7 @@ namespace CloudLayouter.App
 
         public int Compare(Point x, Point y)
         {
-            if (PointExtensions.GetDistance(x, anchorPoint) > PointExtensions.GetDistance(y, anchorPoint))
+            if (x.GetDistance(anchorPoint) > y.GetDistance(anchorPoint))
                 return 1;
             return -1;
         }

@@ -6,7 +6,7 @@ namespace CloodLayouter.App
     {
         private readonly IDrawer drawer;
         private readonly IImageSaver saver;
-        
+
         public ImagePerfomer(IDrawer drawer, IImageSaver saver)
         {
             this.drawer = drawer;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -5,12 +6,12 @@ using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
 {
-    public class Converter : IConverter, ITagProvider
+    public class Converter : IConverter, IProvider<IEnumerable<Tag>>
     {
-        private readonly IImageHolder imageHolder;
-        private readonly IWordProvider wordProvider;
+        private readonly IProvider<Bitmap> imageHolder;
+        private readonly IProvider<IEnumerable<string>> wordProvider;
 
-        public Converter(IWordProvider wordProvider, IImageHolder imageHolder)
+        public Converter(IProvider<IEnumerable<string>> wordProvider, IProvider<Bitmap> imageHolder)
         {
             this.wordProvider = wordProvider;
             this.imageHolder = imageHolder;
@@ -19,7 +20,7 @@ namespace CloodLayouter.App
         public List<Tag> Convert()
         {
             var dict = new Dictionary<string, int>();
-            foreach (var word in wordProvider.GetWords())
+            foreach (var word in wordProvider.Get())
             {
                 if (!dict.ContainsKey(word))
                     dict[word] = 0;
@@ -35,13 +36,13 @@ namespace CloodLayouter.App
                 return new Tag
                 {
                     Font = font,
-                    Size = Graphics.FromImage(imageHolder.Image).MeasureString(kvp.Key, font).ToSizeI(),
+                    Size = Graphics.FromImage(imageHolder.Get()).MeasureString(kvp.Key, font).ToSizeI(),
                     Word = kvp.Key
                 };
             }).ToList();
         }
 
-        public List<Tag> GetTags()
+        public IEnumerable<Tag> Get()
         {
             return Convert();
         }
