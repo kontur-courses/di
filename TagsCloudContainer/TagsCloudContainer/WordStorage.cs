@@ -9,10 +9,11 @@ namespace TagsCloudContainer
         private readonly Dictionary<string, int> _wordsRegister;
         private readonly WordsCustomizer _wordsCustomizer;
 
-        public WordStorage(WordsCustomizer customizer)
+        public WordStorage(WordsCustomizer customizer, IEnumerable<string> wordsToHandle)
         {
             _wordsRegister = new Dictionary<string, int>();
             _wordsCustomizer = customizer;
+            AddRange(wordsToHandle);
         }
 
         public void Add(string word)

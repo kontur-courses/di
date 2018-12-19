@@ -1,60 +1,41 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
+using System.IO;
 using TagsCloudContainer.CircularCloudLayouter;
+using Autofac;
 
 
 namespace TagsCloudContainer
 {
-    class Program
+    internal class Program
     {
+        private static IContainer Container { get; set; }
 
-        // Временный пример с некоторыми настройками
         static void Main(string[] args)
         {
-            var wordsReader = new WordsReader();
-            var filePath = "..\\..\\tmpTextFile";
-            var wordStorage = wordsReader.ReadWords(filePath + ".txt", new WordStorage(new WordsCustomizer()));
+            var filePath = @"..\..\tmpTextFile";
+            var words = File.ReadAllLines(filePath + ".txt");
+            Func<Word, Size> wordSizeFunc = w => new Size(w.Count * 20 * w.Value.Length, w.Count * 20);
+             
+            var builder = new ContainerBuilder();
+            builder.RegisterType<Drawer>().As<IDrawer<Word>>();
+            builder.RegisterType<ItemToDraw<Rectangle>>().As<IItemToDraw<Rectangle>>();
+            builder.RegisterType<Word>().As<IWord>();
+            builder.RegisterType<WordStorage>().As<IWordStorage>().WithParameter("wordsToHandle", words);
+            builder.RegisterType<WordsCustomizer>().AsSelf().SingleInstance();
+            builder.RegisterType<RectangleStorage>().AsSelf().SingleInstance();
+            builder.RegisterType<Direction>().As<IDirection<double>>();
+            builder.RegisterType<WordLayouter>().WithParameter("getWordSize", wordSizeFunc).AsSelf().SingleInstance();
+            builder.RegisterType<DrawSettings<Word>>().WithParameter("filePath", filePath);
+            builder.RegisterType<CircularCloudLayout>().As<IRectangleLayout>();
+            builder.Register(p => new Point()).As<Point>();
 
-            var layout = new WordLayouter(
-                w => new Size(w.Count * 20 * w.Value.Length, w.Count * 20),
-                new CircularCloudLayout(new RectangleStorage(new Point(), new Direction(1))));
+            Container = builder.Build();
 
-            var settings = new DrawSettings<Word>(filePath);
-            settings.SetImageSize(new Size(1000, 500));
-            settings.SetItemPainter(i => TakeRandomColor());
+            var drawer = Container.Resolve<IDrawer<Word>>();
+            drawer.DrawItems();
 
-            var itemsToDraw = layout.GetItemsToDraws(wordStorage);
-            var drawer = new Drawer(settings);
-            drawer.DrawItems(itemsToDraw);
-        }
-
-        private static Color TakeRandomColor()
-        {
-            var rnd = new Random();
-            Thread.Sleep(20);
-            var color = Color.FromArgb(rnd.Next());
-
-            switch (rnd.Next() % 4)
-            {
-                case 0:
-                    color = Color.Green;
-                    break;
-                case 1:
-                    color = Color.Red;
-                    break;
-                case 2:
-                    color = Color.Gold;
-                    break;
-                case 3:
-                    color = Color.Aqua;
-                    break;
-                default:
-                    color = Color.BlueViolet;
-                    break;
-            }
-
-            return color;
+            Container.Dispose();
         }
     }
 }

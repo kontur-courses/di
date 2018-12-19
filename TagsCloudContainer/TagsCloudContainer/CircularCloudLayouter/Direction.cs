@@ -5,7 +5,7 @@
         private readonly double _angleShift;
         private double _currentAlpha;
 
-        public Direction(double angleShift = 0.01)
+        public Direction(double angleShift = 1)
         {
             _angleShift = angleShift;
         }

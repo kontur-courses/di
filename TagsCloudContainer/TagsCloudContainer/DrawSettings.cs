@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 
 
 namespace TagsCloudContainer
@@ -25,9 +26,9 @@ namespace TagsCloudContainer
 
         private void InitDefaultSettings()
         {
-            _imageSize = new Size(1000, 1000);
+            _imageSize = new Size(1000, 500);
             _fontName = "Times new Roman";
-            _itemPainter = i => Color.Gold;
+            _itemPainter = i => TakeRandomColor();
             _filePath = "result";
             _imageFileFormat = ImageFileFormat.Png;
         }
@@ -85,6 +86,34 @@ namespace TagsCloudContainer
         public ImageFileFormat GetImageFileFormat()
         {
             return _imageFileFormat;
+        }
+
+        private static Color TakeRandomColor()
+        {
+            var rnd = new Random();
+            Thread.Sleep(20);
+            var color = Color.FromArgb(rnd.Next());
+
+            switch (rnd.Next() % 4)
+            {
+                case 0:
+                    color = Color.Green;
+                    break;
+                case 1:
+                    color = Color.Red;
+                    break;
+                case 2:
+                    color = Color.Gold;
+                    break;
+                case 3:
+                    color = Color.Aqua;
+                    break;
+                default:
+                    color = Color.BlueViolet;
+                    break;
+            }
+
+            return color;
         }
     }
 }

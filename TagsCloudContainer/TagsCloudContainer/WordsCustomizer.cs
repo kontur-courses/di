@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace TagsCloudContainer
 {
     internal class WordsCustomizer
     {
         private readonly List<string> _wordsToIgnore;
         private readonly Func<string, bool> _shouldIgnoreWord;
+        private readonly Func<string, string> _toBaseForm;
  
-        public WordsCustomizer(List<string> wordsToIgnore = null, Func<string, bool> shouldIgnoreWord = null)
+        public WordsCustomizer(List<string> wordsToIgnore = null, Func<string, bool> shouldIgnoreWord = null,
+            Func<string, string> toBaseForm = null)
         {
             _wordsToIgnore = wordsToIgnore ?? StandardWordsToIgnorePack();
             _shouldIgnoreWord = shouldIgnoreWord ?? (x => false);
+            _toBaseForm = toBaseForm ?? (x => x);
         }
 
         public string CustomizeWord(string word)
@@ -26,8 +30,7 @@ namespace TagsCloudContainer
 
         private string ToBaseForm(string word)
         {
-            // Место для потенциального приведения слов к начальной форме
-            return word;
+            return _toBaseForm(word);
         }
 
         private static List<string> StandardWordsToIgnorePack()

@@ -12,7 +12,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            _wordStorage = new WordStorage(new WordsCustomizer());
+            _wordStorage = new WordStorage(new WordsCustomizer(), new List<string>());
         }
 
 

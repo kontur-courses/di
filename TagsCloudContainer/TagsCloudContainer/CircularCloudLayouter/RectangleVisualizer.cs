@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 
@@ -52,7 +51,7 @@ namespace TagsCloudContainer.CircularCloudLayouter
             _bitmap = new Bitmap(imageSize.Width, imageSize.Height);
         }
 
-        public void DrawItems(IEnumerable<ItemToDraw<Rectangle>> itemsToDraws)
+        public void DrawItems()
         {
             throw new NotImplementedException();
         }
