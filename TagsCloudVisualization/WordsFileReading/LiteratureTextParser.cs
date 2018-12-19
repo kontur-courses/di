@@ -14,7 +14,8 @@ namespace TagsCloudVisualization.WordsFileReading
                 var wordStartPos = text.SkipUntil(currentIndex, IsWordSymbol);
                 var afterWordPos = text.SkipUntil(wordStartPos, ch => !IsWordSymbol(ch));
 
-                yield return text.Substring(wordStartPos, afterWordPos - wordStartPos);
+                if (wordStartPos < afterWordPos)
+                    yield return text.Substring(wordStartPos, afterWordPos - wordStartPos);
                 currentIndex = afterWordPos;
             }
         }

@@ -9,7 +9,6 @@ namespace TagsCloudVisualization.WordsFileReading
         {
             var words = JsonConvert.DeserializeObject<string[]>(text);
             return words;
-            
         }
 
         public string GetModeName()
