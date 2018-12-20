@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using TagsCloudVisualization.CloudLayouter;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly SpiralInfo spiralInfo;
         private readonly List<Rectangle> rectangles;
