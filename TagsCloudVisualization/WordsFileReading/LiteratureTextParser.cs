@@ -1,21 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TagsCloudVisualization.WordsFileReading
 {
     public class LiteratureTextParser : IParser
     {
-        public IEnumerable<string> ParseText(string text)
-        { 
+        public IEnumerable<string> ParseText(TextReader textReader)
+        {
+            var nextLine = textReader.ReadLine();
+            while (nextLine != null)
+            {
+                foreach (var word in ParseLine(nextLine))
+                    yield return word;
+                nextLine = textReader.ReadLine();
+            }
+        }
+
+        private IEnumerable<string> ParseLine(string line)
+        {
             var currentIndex = 0;
 
-            while (currentIndex < text.Length)
+            while (currentIndex < line.Length)
             {
-                var wordStartPos = text.SkipUntil(currentIndex, IsWordSymbol);
-                var afterWordPos = text.SkipUntil(wordStartPos, ch => !IsWordSymbol(ch));
+                var wordStartPos = line.SkipUntil(currentIndex, IsWordSymbol);
+                var afterWordPos = line.SkipUntil(wordStartPos, ch => !IsWordSymbol(ch));
 
                 if (wordStartPos < afterWordPos)
-                    yield return text.Substring(wordStartPos, afterWordPos - wordStartPos);
+                    yield return line.Substring(wordStartPos, afterWordPos - wordStartPos);
                 currentIndex = afterWordPos;
             }
         }

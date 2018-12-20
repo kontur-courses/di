@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
 
 namespace TagsCloudVisualization.WordsFileReading
 {
     public interface IFileReader
     {
-        string ReadText(string fileName);
+        TextReader ReadText(string fileName);
         string[] SupportedTypes();
     }
 }

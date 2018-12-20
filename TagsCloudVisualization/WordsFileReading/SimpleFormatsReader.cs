@@ -5,10 +5,9 @@ namespace TagsCloudVisualization.WordsFileReading
 {
     public class SimpleFormatsReader : IFileReader
     { 
-        public string ReadText(string fileName)
+        public TextReader ReadText(string fileName)
         {
-            using (var reader = new StreamReader(fileName, Encoding.UTF8))
-                return reader.ReadToEnd();
+            return new StreamReader(fileName, Encoding.UTF8);
         }
 
         public string[] SupportedTypes()

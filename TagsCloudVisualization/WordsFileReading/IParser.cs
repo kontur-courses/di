@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.WordsFileReading
 {
     public interface IParser
     {
-        IEnumerable<string> ParseText(string text);
+        IEnumerable<string> ParseText(TextReader textReader);
         string GetModeName();
     }
 }

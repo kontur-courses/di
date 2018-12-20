@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.IO;
 
 
 namespace TagsCloudVisualization.WordsFileReading
 {
     public class LinesParser : IParser
     {
-        public IEnumerable<string> ParseText(string text)
+        public IEnumerable<string> ParseText(TextReader textReader)
         {
-            return Regex.Split(text, Environment.NewLine)
-                .Where(w => w != "")
-                .Select(w => w.Trim());
+            using (textReader)
+            {
+                var nextLine = textReader.ReadLine();
+                while (nextLine != null)
+                {
+                    var trimmedLine = nextLine.Trim();
+                    if (trimmedLine != "")
+                        yield return trimmedLine;
+                    nextLine = textReader.ReadLine();
+                }
+            }
         }
 
         public string GetModeName()
