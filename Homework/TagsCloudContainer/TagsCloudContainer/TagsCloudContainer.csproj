@@ -33,19 +33,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContainerFormatter.cs" />
+    <Compile Include="ContainersCreator.cs" />
     <Compile Include="ContainerInfo.cs" />
+    <Compile Include="IContainersCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsFilter\BannedWords\BannedWords.cs" />
+    <Compile Include="WordsFilter\BannedWords\IBannedWords.cs" />
+    <Compile Include="WordsFilter\IWordsFilters.cs" />
+    <Compile Include="WordsFilter\WordsFilters.cs" />
+    <Compile Include="WordsFilter\WordsFiltersExtensions.cs" />
+    <Compile Include="WordsPreparer\IWordsPreparer.cs" />
+    <Compile Include="WordsPreparer\TxtWordsPreparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\TagsCloudVisualization\TagsCloudVisualization\TagsCloudVisualization.csproj">
