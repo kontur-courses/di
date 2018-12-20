@@ -12,56 +12,55 @@ using Extensions;
 namespace ConsoleTagClouder
 {
     public static class Program
-    {
-        private static bool isParsingContinues = true;
-        
-        public static int Main(string[] args)
+    {public static void Main(string[] args)
         {
-            var settings = ParseSettings(args);
-            if (!isParsingContinues)
-                return -1;
-
-            try
-            {
-                MakeCloud(settings);
-            }
-            catch (Exception e)//TODO specify error
-            {                
-                Console.WriteLine("Making cloud failed because following errors occured:");
-                Console.WriteLine(e);
-                return -1;
-            }
-            
-            Console.WriteLine("Cloud saved into " + settings.TargetPath);
-            Console.ReadLine();
-            return 0;
-        }
-
-        private static void MakeCloud(AppSettings settings)
-        {
-            var clouder = Cloud.CreateMaker(settings.BuildCloudSettings(),settings.BuildDrawingSettings());
-            clouder.UpdateWith(File.ReadAllText(settings.SourcePath));
-            using (var map = clouder.DrawCloud())
-                map.Save(settings.TargetPath,ImageFormat.Png);
-        }
-
-        private static AppSettings ParseSettings(string[] args)
-        {
-            AppSettings settings = null;
             Parser.Default.ParseArguments<AppSettings>(args)
-                .WithParsed(s => settings = s)
+                .WithParsed(MakeCloud)
                 .WithNotParsed(HandleErrors);
-            return settings;
+            
+//            var settings = ParseSettings(args);
+//            if (!isParsingContinues)
+//            {
+//                Environment.ExitCode = -1;
+//                return;
+//            }
         }
+
+        private static void MakeCloud(AppSettings settings)=>
+            Result.Of(() => Cloud.CreateMaker(settings.BuildCloudSettings(), settings.BuildDrawingSettings()))
+                .ThenAct(clouder => clouder.UpdateWith(File.ReadAllText(settings.SourcePath)))
+                .Then(clouder => clouder.DrawCloud())
+                .Then(map => map.Save(settings.TargetPath, ImageFormat.Png))
+                .ThenAct(n=>Console.WriteLine("Cloud saved into " + settings.TargetPath))
+                .RefineError("Making cloud failed because following errors occured: ")
+                .OnFail(Console.WriteLine)
+                .OnFail(e => Environment.ExitCode = -1);
+//            var clouder = Cloud.CreateMaker(settings.BuildCloudSettings(), settings.BuildDrawingSettings());
+//            clouder.UpdateWith(File.ReadAllText(settings.SourcePath));
+//            using (var map = clouder.DrawCloud())
+//                map.Save(settings.TargetPath,ImageFormat.Png);
+
+//        private static Result<AppSettings> ParseSettings(string[] args)
+//        {
+//            AppSettings settings = null;
+//            Parser.Default.ParseArguments<AppSettings>(args)
+//                .WithParsed(s=>MakeCloud(s))
+//                .WithNotParsed(HandleErrors);
+//            return settings;
+//        }
 
         private static void HandleErrors(IEnumerable<Error> errors)
         {    //Alot of code to avoid multiple enumeration.
             var sb = new StringBuilder();
+            var isParsingContinues = true;
             foreach (var error in errors)
             {
                 sb.Append(error);
                 isParsingContinues &= !error.StopsProcessing;
             }
+            
+            if(!isParsingContinues)
+                Environment.ExitCode = -1;                
 
             var message = isParsingContinues
                 ? "Following errors occured while parsing command:"

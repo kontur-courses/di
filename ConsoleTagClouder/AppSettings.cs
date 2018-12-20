@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using CommandLine;
 using TagCloud;
@@ -45,34 +46,10 @@ namespace ConsoleTagClouder
         [Option('m')]
         private string TScaler { get; set;  }
 
-        public CloudSettings BuildCloudSettings()
-        {
-            var settings = CloudSettings.Default();
-
-            if (TLayouter != null)
-                settings.TLayouter = TLayouter;
-            if (TCounter != null)
-                settings.TCounter = TCounter;
-            if (TScaler != null)
-                settings.TScaler = TScaler;
-            
-            return settings;
-        }
+        public CloudSettings BuildCloudSettings() =>
+            CloudSettings.BuildValid(TLayouter, TCounter, TScaler);
         
-        public DrawingSettings BuildDrawingSettings()
-        {
-            var settings = DrawingSettings.Default();
-
-            if (size.x > 0 && size.y > 0)
-                settings.Size = new Size(Size.x, Size.y);
-            if (BackgroundBrush != null)
-                settings.BackgroundBrush = new SolidBrush(Color.FromName(BackgroundBrush));
-            if (FontBrush != null)
-                settings.FontBrush = new SolidBrush(Color.FromName(FontBrush));
-            if (FontType != null)
-                settings.FontType = FontType;
-            
-            return settings;
-        }
+        public DrawingSettings BuildDrawingSettings()=>
+            DrawingSettings.BuildValid(Size,FontType,FontBrush,BackgroundBrush);
     }
 }

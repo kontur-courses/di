@@ -54,7 +54,7 @@
     <Compile Include="PathProvider.cs" />
     <Compile Include="IPathProvider.cs" />
     <Compile Include="MainForm.cs" />
-    <Compile Include="CloudHolder.cs" />
+    <Compile Include="CloudProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsForms\CloudSettingsForm.cs" />

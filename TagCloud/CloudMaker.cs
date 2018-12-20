@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudVisualization;
 using Autofac;
+using Extensions;
 
 namespace TagCloud
 {
@@ -25,21 +26,26 @@ namespace TagCloud
             this.scaler = scaler;
             this.drawer = drawer;
         }
+
+        public Result<None> UpdateWith(string text) =>
+            Result.OfAction(() => counter.UpdateWith(text))
+                .RefineError("Counter throw error: ");
+
+        public Result<None> UpdateFrom(Stream stream)
+        {   //TODO should make bufferization 
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+                return UpdateWith(reader.ReadToEnd());
+        }
+
+        public Result<Bitmap> DrawCloud()=>
+            Result.Of(() => counter.CountedWords.Select(x => (x.Key, x.Value)))
+                .Then(p => counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(p), ValueTuple.Create))
+                .RefineError("Counter throw error: ")
+                .Then(drawer.Draw);
         
-        public void UpdateWith(string text)=>
-            counter.UpdateWith(text);
-
-        public void UpdateFrom(Stream stream)
-        {   //TODO make bufferization 
-            using (var reader = new StreamReader(stream,Encoding.UTF8))
-                UpdateWith(reader.ReadToEnd());
-        }
-
-        public Bitmap DrawCloud()
-        {
-            var pairs = counter.CountedWords.Select(x => (x.Key, x.Value));
-            pairs = counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(pairs), ValueTuple.Create);
-            return drawer.Draw(pairs);
-        }
+//            var pairs = counter.CountedWords.Select(x => (x.Key, x.Value));
+//            pairs = counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(pairs), ValueTuple.Create);
+//            return drawer.Draw(pairs);
+        
     }
 }

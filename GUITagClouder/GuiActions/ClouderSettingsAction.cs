@@ -5,14 +5,14 @@ namespace GUITagClouder
 {
     public class ClouderSettingsAction : IGuiAction
     {
-        public ClouderSettingsAction(CloudSettings settings, CloudHolder imageHolder)
+        public ClouderSettingsAction(CloudSettings settings, CloudProcessor imageProcessor)
         {
             this.settings = settings;
-            this.imageHolder = imageHolder;
+            this.imageProcessor = imageProcessor;
         }
 
         private readonly CloudSettings settings;
-        private readonly CloudHolder imageHolder;
+        private readonly CloudProcessor imageProcessor;
         public string Category => "Настройки";
         public string Name => "Облако";
         public string Description => "Типы обработчиков";
@@ -20,7 +20,7 @@ namespace GUITagClouder
         public void Perform()
         {
             new CloudSettingsForm(settings).ShowDialog();
-            imageHolder.RecreateImage(settings);
+            imageProcessor.RecreateImage(settings);
         }
     }
 }

@@ -6,13 +6,11 @@ namespace GUITagClouder
     public class SaveImageAction : IGuiAction
     {
         
-        public SaveImageAction(CloudHolder imageHolder, IPathProvider provider)
+        public SaveImageAction(CloudProcessor imageProcessor)
         {
-            this.imageHolder = imageHolder;
-            this.provider = provider;
+            this.imageProcessor = imageProcessor;
         }
-        private readonly CloudHolder imageHolder;
-        private readonly IPathProvider provider;
+        private readonly CloudProcessor imageProcessor;
 
         public string Category => "Файл";
         public string Name => "Сохранить...";
@@ -27,8 +25,7 @@ namespace GUITagClouder
             };
             var res = dialog.ShowDialog();
             if (res != DialogResult.OK) return;
-            provider.TargetPath = dialog.FileName;
-            imageHolder.SaveImage();
+            imageProcessor.SaveImage(dialog.FileName);
         }
     }
 }

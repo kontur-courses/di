@@ -5,13 +5,11 @@ namespace GUITagClouder
 {
     public class NewFileAction : IGuiAction
     {
-        public NewFileAction(CloudHolder imageHolder, IPathProvider provider)
+        public NewFileAction(CloudProcessor imageProcessor)
         {
-            this.imageHolder = imageHolder;
-            this.provider = provider;
+            this.imageProcessor = imageProcessor;
         }
-        private readonly CloudHolder imageHolder;
-        private readonly IPathProvider provider;
+        private readonly CloudProcessor imageProcessor;
 
         public string Category => "Файл";
         public string Name => "Открыть";
@@ -26,9 +24,9 @@ namespace GUITagClouder
             };
             var res = dialog.ShowDialog();
             if (res != DialogResult.OK) return;
-            provider.SourcePath = dialog.FileName;
-            imageHolder.RecreateImage();
-
+            
+            imageProcessor.SourcePath = dialog.FileName;
+            imageProcessor.RecreateImage();
         }
     }
 }

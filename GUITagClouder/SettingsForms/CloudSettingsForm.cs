@@ -24,17 +24,20 @@ namespace GUITagClouder
             var layouterBox = CreateTypeComboBox<ICloudLayouter>();
             layouterBox.Location = new Point(40,40);
             Controls.Add(layouterBox);
-            layouterBox.SelectedValueChanged += (s, a) => settings.TLayouter = layouterBox.SelectedText;
+            layouterBox.SelectedValueChanged += (s, a) => 
+                settings = settings.WithLayouter(layouterBox.SelectedText);
             
             var counterBox = CreateTypeComboBox<IWordsCounter>();
-            counterBox.Location = new Point(40,80); //TODO use layouters 
+            counterBox.Location = new Point(40,80); //TODO should use layouters 
             Controls.Add(counterBox);
-            counterBox.SelectedValueChanged += (s, a) => settings.TCounter = counterBox.SelectedText;
+            counterBox.SelectedValueChanged += (s, a) => 
+                settings = settings.WithCounter(counterBox.SelectedText);
             
             var weightBox = CreateTypeComboBox<IWeightScaler>();
             weightBox.Location = new Point(40,120);
             Controls.Add(weightBox);
-            weightBox.SelectedValueChanged += (s, a) => settings.TScaler = weightBox.SelectedText;
+            weightBox.SelectedValueChanged += (s, a) => 
+                settings = settings.WithScaler(weightBox.SelectedText);
         }
 
         private ComboBox CreateTypeComboBox<T>()
