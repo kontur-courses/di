@@ -6,21 +6,20 @@ using CloodLayouter.Infrastructer;
 
 namespace CloodLayouter.App
 {
-    public class Converter : IConverter, IProvider<IEnumerable<Tag>>
+    public class FromWordToTagConverter : IConverter<IEnumerable<string>,IEnumerable<Tag>>
     {
-        private readonly IProvider<Bitmap> imageHolder;
-        private readonly IProvider<IEnumerable<string>> wordProvider;
-
-        public Converter(IProvider<IEnumerable<string>> wordProvider, IProvider<Bitmap> imageHolder)
+        private ImageSettings imageSettings;
+        
+        public FromWordToTagConverter(ImageSettings imageSettings)
         {
-            this.wordProvider = wordProvider;
-            this.imageHolder = imageHolder;
+            this.imageSettings = imageSettings;
         }
-
-        public List<Tag> Convert()
+        
+        
+        public IEnumerable<Tag> Convert(IEnumerable<string> Data)
         {
             var dict = new Dictionary<string, int>();
-            foreach (var word in wordProvider.Get())
+            foreach (var word in Data)
             {
                 if (!dict.ContainsKey(word))
                     dict[word] = 0;
@@ -36,15 +35,12 @@ namespace CloodLayouter.App
                 return new Tag
                 {
                     Font = font,
-                    Size = Graphics.FromImage(imageHolder.Get()).MeasureString(kvp.Key, font).ToSizeI(),
+                    Size = Graphics.FromImage(new Bitmap(imageSettings.Width,imageSettings.Height)).MeasureString(kvp.Key, font).ToSizeI(),
                     Word = kvp.Key
                 };
             }).ToList();
         }
 
-        public IEnumerable<Tag> Get()
-        {
-            return Convert();
-        }
+       
     }
 }

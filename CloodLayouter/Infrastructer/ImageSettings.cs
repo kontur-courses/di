@@ -2,7 +2,13 @@ namespace CloodLayouter.Infrastructer
 {
     public class ImageSettings
     {
-        public int Width { get; set; } = 500;
-        public int Height { get; set; } = 500;
+        public ImageSettings(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
+        
+        public int Width { get;  } 
+        public int Height { get; } 
     }
 }

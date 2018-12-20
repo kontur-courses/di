@@ -1,7 +1,7 @@
 namespace CloodLayouter.Infrastructer
 {
-    public interface IProvider<Type>
+    public interface IProvider<T>
     {
-        Type Get();
+        T Get();
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms.VisualStyles;
+﻿using System.Collections.Generic;
 using Autofac;
 using CloodLayouter.App;
+using CloodLayouter.Infrastructer;
 using CommandLine;
 
 namespace CloodLayouter
@@ -10,11 +10,11 @@ namespace CloodLayouter
     {
         public static void Main(string[] args)
         {
-        var parserResult = CommandLine.Parser.Default.ParseArguments<Options>(args);
+            var parserResult = Parser.Default.ParseArguments<Options>(args);
             var builder = new Bilder();
             var container = builder.Bild(parserResult);
-            var perfomer = container.Resolve<ImagePerfomer>();
-            perfomer.DrawAndSave();
+            var perfomer = container.Resolve<IImageSaver>();
+            perfomer.Save();
         }
     }
 }

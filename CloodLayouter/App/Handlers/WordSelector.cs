@@ -2,25 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using CloodLayouter.Infrastructer;
 
-namespace CloodLayouter.App
+namespace CloodLayouter.App.Handlers
 {
-    public class WordSelector : IWordSlector, IProvider<IEnumerable<string>>
+    public class WordSelector : IConverter<IEnumerable<string>,IEnumerable<string>>
     {
-        private readonly IProvider<IEnumerable<string>> wordProvider;
-
-        public WordSelector(IProvider<IEnumerable<string>> wordProvider)
+        public IEnumerable<string> Convert(IEnumerable<string> Data)
         {
-            this.wordProvider = wordProvider;
-        }
-
-        public List<string> Select()
-        {
-            return wordProvider.Get().Where(x => x.Length >= 4).ToList();
-        }
-
-        public IEnumerable<string> Get()
-        {
-            return Select();
+            return Data.Where(x => x.Length > 4).ToList();
         }
     }
 }

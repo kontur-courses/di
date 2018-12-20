@@ -6,31 +6,32 @@ namespace CloodLayouter.App
 {
     public class FileWordProvider : IProvider<IEnumerable<string>>
     {
-        private readonly IProvider<StreamReader>[] fileProviders;
+        private readonly string[] fileNames;
 
-        public FileWordProvider(IProvider<StreamReader>[] fileProviders)
+        public FileWordProvider(string[] fileNames)
         {
-            this.fileProviders = fileProviders;
-        }
-
-        public List<string> Read()
-        {
-            var wordList = new List<string>();
-            foreach (var file in fileProviders)
-            {
-                var line = file.Get().ReadLine();
-                while (line != null)
-                {
-                    wordList.Add(line.ToLower());
-                    line = file.Get().ReadLine();
-                }
-            }
-            return wordList;
+            this.fileNames = fileNames;
         }
 
         public IEnumerable<string> Get()
         {
             return Read();
+        }
+
+        public List<string> Read()
+        {
+            var wordList = new List<string>();
+            foreach (var fileName in this.fileNames)
+            {
+                var stream = new StreamReader(fileName);
+                var line = stream.ReadLine();
+                while (line != null)
+                {
+                    wordList.Add(line.ToLower());
+                    line = stream.ReadLine();
+                }
+            }
+            return wordList;
         }
     }
 }

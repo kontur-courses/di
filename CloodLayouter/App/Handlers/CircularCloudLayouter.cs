@@ -12,9 +12,9 @@ namespace CloudLayouter.App
         private readonly Point center;
         private readonly HashSet<Rectangle> rectangles;
 
-        public CircularCloudLayouter(IProvider<Bitmap> imageHolder)
+        public CircularCloudLayouter(ImageSettings imageSettings)
         {
-            center = new Point(imageHolder.Get().Width / 2, imageHolder.Get().Height / 2);
+            center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
             anchorpoints = new SortedSet<Point>(new PointDistanceComparer(center));
             rectangles = new HashSet<Rectangle>();
 

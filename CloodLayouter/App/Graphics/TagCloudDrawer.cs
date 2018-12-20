@@ -7,20 +7,21 @@ namespace CloodLayouter.App
     public class TagCloudDrawer : IDrawer
     {
         private readonly ICloudLayouter cloudLayouter;
-
-        private readonly IProvider<Bitmap> imageHolder;
+        private readonly ImageSettings imageSettings;
         private readonly IProvider<IEnumerable<Tag>> tagProvider;
 
-        public TagCloudDrawer(ICloudLayouter cloudLayouter, IProvider<Bitmap> imageHolder, IProvider<IEnumerable<Tag>> tagProvider)
+        public TagCloudDrawer(ICloudLayouter cloudLayouter,
+            IProvider<IEnumerable<Tag>> tagProvider, ImageSettings imageSettings)
         {
             this.cloudLayouter = cloudLayouter;
-            this.imageHolder = imageHolder;
+            this.imageSettings = imageSettings;
             this.tagProvider = tagProvider;
         }
 
         public Bitmap Draw()
         {
-            using (var grapghic = Graphics.FromImage(imageHolder.Get()))
+            var bitmap = new Bitmap(imageSettings.Width, imageSettings.Height);
+            using (var grapghic = Graphics.FromImage(bitmap))
             {
                 foreach (var tag in tagProvider.Get())
                 {
@@ -29,7 +30,7 @@ namespace CloodLayouter.App
                 }
             }
 
-            return imageHolder.Get();
+            return bitmap;
         }
     }
 }

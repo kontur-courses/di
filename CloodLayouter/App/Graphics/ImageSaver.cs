@@ -6,22 +6,21 @@ namespace CloodLayouter.App
 {
     public class ImageSaver : IImageSaver
     {
-        private readonly IProvider<string> directoryProvider;
-
-        private readonly IProvider<Bitmap> imageHolder;
+        private readonly IDrawer drawer;
+        private string filePathToSave;
         //TODO  add SaveSettings(file format .png, .bpm, e.t.c.)
 
 
-        public ImageSaver(IProvider<Bitmap> imageHolder, IProvider<string> directoryProvider)
+        public ImageSaver(IDrawer drawer, string filePathToSave)
         {
-            this.imageHolder = imageHolder;
-            this.directoryProvider = directoryProvider;
+            this.drawer = drawer;
+            this.filePathToSave = filePathToSave;
         }
 
         public void Save()
         {
-            imageHolder.Get().Save(directoryProvider.Get());
-            Console.WriteLine("saved to: " + directoryProvider.Get());
+            drawer.Draw().Save(filePathToSave);
+            Console.WriteLine("saved to: " + filePathToSave);
         }
     }
 }

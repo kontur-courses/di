@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace CloodLayouter.Infrastructer
 {
-    public interface IConverter
+    public interface IConverter<TypeInput,TypeOutput>
     {
-        List<Tag> Convert();
+        TypeOutput Convert(TypeInput Data);
     }
 }

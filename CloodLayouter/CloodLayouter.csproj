@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Builder.cs" />
-    <Compile Include="App\Graphics\ImageHolder.cs" />
+    <Compile Include="App\ConvertPerfomer.cs" />
     <Compile Include="App\Graphics\ImagePerfomer.cs" />
     <Compile Include="App\Graphics\ImageSaver.cs" />
     <Compile Include="App\Graphics\TagCloudDrawer.cs" />
@@ -60,17 +60,13 @@
     <Compile Include="App\Handlers\Converter.cs" />
     <Compile Include="App\Handlers\WordSelector.cs" />
     <Compile Include="App\Providers\FileWordProvider.cs" />
-    <Compile Include="App\Providers\ImageSettingsProvider.cs" />
-    <Compile Include="App\Providers\SaveDirectoryProvider.cs" />
     <Compile Include="App\Option.cs" />
-    <Compile Include="App\Providers\StreamProvider.cs" />
     <Compile Include="Infrastructer\ICloudLayouter.cs" />
     <Compile Include="Infrastructer\IConverter.cs" />
     <Compile Include="Infrastructer\IDrawer.cs" />
     <Compile Include="Infrastructer\IImageSaver.cs" />
     <Compile Include="Infrastructer\ImageSettings.cs" />
     <Compile Include="Infrastructer\IProvider.cs" />
-    <Compile Include="Infrastructer\IWordSlector.cs" />
     <Compile Include="Infrastructer\SizeFExtenstions.cs" />
     <Compile Include="Infrastructer\Tag.cs" />
     <Compile Include="Program.cs" />
