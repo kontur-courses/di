@@ -49,18 +49,12 @@ namespace GUITagClouder
         {
             if(SourcePath == null)
                 return;
-            //Combobox will solve this problem. 
-            //TODO must dispose cloud
+            Image.Dispose();
             Result.Of(() => Cloud.CreateMaker(cloudSettings, drawingSettings))
                 .ThenAct(maker => maker.UpdateFrom(File.OpenRead(SourcePath)))
                 .Then(maker => maker.DrawCloud())
                 .Then(image => Image = image)
                 .OnFail(e => MessageBox.Show(e));
-            
-//            var maker = Cloud.CreateMaker(cloudSettings, drawingSettings);
-//            maker.UpdateFrom(File.OpenRead(appPathProvider.SourcePath));
-//            Image = maker.DrawCloud();
-            
         }
 
         public void SaveImage(string targetPath)=>

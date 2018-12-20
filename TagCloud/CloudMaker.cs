@@ -42,10 +42,5 @@ namespace TagCloud
                 .Then(p => counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(p), ValueTuple.Create))
                 .RefineError("Counter throw error: ")
                 .Then(drawer.Draw);
-        
-//            var pairs = counter.CountedWords.Select(x => (x.Key, x.Value));
-//            pairs = counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(pairs), ValueTuple.Create);
-//            return drawer.Draw(pairs);
-        
     }
 }

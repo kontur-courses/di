@@ -20,7 +20,7 @@ namespace TagCloud
         }
 
         private static void RegisterTypeByPrefixAs<T>(this ContainerBuilder container, string prefix)
-        {//TODO make doesNotFoundException (fixed in gui)
+        {
             var asm = Assembly.GetExecutingAssembly();
             container.RegisterAssemblyTypes(asm)
                 .Where(x => x.GetInterfaces().Contains(typeof(T)) && x.Name.StartsWith(prefix))

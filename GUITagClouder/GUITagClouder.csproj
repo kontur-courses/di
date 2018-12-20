@@ -51,8 +51,6 @@
     <Compile Include="GuiActions\NewFileAction.cs" />
     <Compile Include="GuiActions\SaveImageAction.cs" />
     <Compile Include="GuiActions\UiActionExtentions.cs" />
-    <Compile Include="PathProvider.cs" />
-    <Compile Include="IPathProvider.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="CloudProcessor.cs" />
     <Compile Include="Program.cs" />

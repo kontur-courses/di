@@ -15,7 +15,6 @@ namespace GUITagClouder
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
 
-            //cloud.RecreateImage(settings);
             cloud.Dock = DockStyle.Fill;
             Controls.Add(cloud);
         }
