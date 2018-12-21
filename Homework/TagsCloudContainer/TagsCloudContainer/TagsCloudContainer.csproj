@@ -52,8 +52,8 @@
     <Compile Include="IContainersCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordsFilter\BannedWords\BoringWords.cs" />
-    <Compile Include="WordsFilter\BannedWords\IBoringWords.cs" />
+    <Compile Include="WordsFilter\BoringWords\BoringWords.cs" />
+    <Compile Include="WordsFilter\BoringWords\IBoringWords.cs" />
     <Compile Include="WordsFilter\IFilteredWords.cs" />
     <Compile Include="WordsFilter\FilteredWords.cs" />
     <Compile Include="WordsFilter\FilteredWordsExtensions.cs" />

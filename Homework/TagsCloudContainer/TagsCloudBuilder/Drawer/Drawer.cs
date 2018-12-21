@@ -49,7 +49,7 @@ namespace TagsCloudBuilder.Drawer
 
                     try
                     {
-                        bitmap.Save($"{fileName}", imageFormat);
+                        bitmap.Save(fileName, imageFormat);
                     }
                     catch (ExternalException e)
                     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.WordsFilter.BannedWords
+namespace TagsCloudContainer.WordsFilter.BoringWords
 {
     public interface IBoringWords
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace TagsCloudContainer.WordsFilter.BannedWords
+namespace TagsCloudContainer.WordsFilter.BoringWords
 {
     public class BoringWords : IBoringWords
     {
@@ -17,7 +17,7 @@ namespace TagsCloudContainer.WordsFilter.BannedWords
         {
             get
             {
-                if (fileName == "")
+                if (!File.Exists(fileName))
                     return new HashSet<string>();
 
                 var words = File.ReadAllLines(fileName);

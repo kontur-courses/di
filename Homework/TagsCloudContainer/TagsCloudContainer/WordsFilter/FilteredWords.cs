@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TagsCloudBuilder;
-using TagsCloudContainer.WordsFilter.BannedWords;
+using TagsCloudContainer.WordsFilter.BoringWords;
 
 namespace TagsCloudContainer.WordsFilter
 {
