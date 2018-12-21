@@ -6,9 +6,9 @@ namespace CloodLayouter.App.Handlers
 {
     public class WordSelector : IConverter<IEnumerable<string>,IEnumerable<string>>
     {
-        public IEnumerable<string> Convert(IEnumerable<string> Data)
+        public IEnumerable<string> Convert(IEnumerable<string> data)
         {
-            return Data.Where(x => x.Length > 4).ToList();
+            return data.Where(x => x.Length > 4);
         }
     }
 }

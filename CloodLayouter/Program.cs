@@ -11,10 +11,10 @@ namespace CloodLayouter
         public static void Main(string[] args)
         {
             var parserResult = Parser.Default.ParseArguments<Options>(args);
-            var builder = new Bilder();
+            var builder = new DIBilder();
             var container = builder.Bild(parserResult);
-            var perfomer = container.Resolve<IImageSaver>();
-            perfomer.Save();
+            var saver = container.Resolve<IImageSaver>();
+            parserResult.WithParsed(opt => saver.Save(opt.OutputFile));
         }
     }
 }

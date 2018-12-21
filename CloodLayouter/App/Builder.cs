@@ -12,7 +12,7 @@ using CommandLine;
 
 namespace CloodLayouter.App
 {
-    public class Bilder
+    public class DIBilder
     {
         public IContainer Bild(ParserResult<Options> parserResult)
         {
@@ -33,13 +33,7 @@ namespace CloodLayouter.App
                 logicBuilder.Register(x => new ImageSettings(opt.Width, opt.Heigth)).AsSelf().SingleInstance());
 
             logicBuilder.RegisterType<TagCloudDrawer>().As<IDrawer>();
-
-            parserResult.WithParsed(opt =>
-                logicBuilder.RegisterType<ImageSaver>().WithParameter("filePathToSave", opt.OutputFile)
-                    .As<IImageSaver>());
-
-
-         
+            logicBuilder.RegisterType<ImageSaver>().As<IImageSaver>(); 
       
             return logicBuilder.Build();
         }

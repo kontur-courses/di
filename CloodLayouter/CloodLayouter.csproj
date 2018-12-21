@@ -53,7 +53,6 @@
   <ItemGroup>
     <Compile Include="App\Builder.cs" />
     <Compile Include="App\ConvertPerfomer.cs" />
-    <Compile Include="App\Graphics\ImagePerfomer.cs" />
     <Compile Include="App\Graphics\ImageSaver.cs" />
     <Compile Include="App\Graphics\TagCloudDrawer.cs" />
     <Compile Include="App\Handlers\CircularCloudLayouter.cs" />

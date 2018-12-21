@@ -2,6 +2,6 @@ namespace CloodLayouter.Infrastructer
 {
     public interface IImageSaver
     {
-        void Save();
+        void Save(string filePathToSave);
     }
 }

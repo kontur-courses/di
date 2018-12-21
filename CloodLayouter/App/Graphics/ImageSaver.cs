@@ -11,13 +11,12 @@ namespace CloodLayouter.App
         //TODO  add SaveSettings(file format .png, .bpm, e.t.c.)
 
 
-        public ImageSaver(IDrawer drawer, string filePathToSave)
+        public ImageSaver(IDrawer drawer)
         {
             this.drawer = drawer;
-            this.filePathToSave = filePathToSave;
         }
 
-        public void Save()
+        public void Save(string filePathToSave)
         {
             drawer.Draw().Save(filePathToSave);
             Console.WriteLine("saved to: " + filePathToSave);

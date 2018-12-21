@@ -18,20 +18,18 @@ namespace CloodLayouter.App
             return Read();
         }
 
-        public List<string> Read()
+        private IEnumerable<string> Read()
         {
-            var wordList = new List<string>();
             foreach (var fileName in this.fileNames)
             {
                 var stream = new StreamReader(fileName);
                 var line = stream.ReadLine();
                 while (line != null)
                 {
-                    wordList.Add(line.ToLower());
+                    yield return line.ToLower();
                     line = stream.ReadLine();
                 }
             }
-            return wordList;
         }
     }
 }
