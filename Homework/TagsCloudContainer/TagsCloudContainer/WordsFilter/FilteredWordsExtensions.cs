@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.WordsFilter
 {
-    public static class WordsFiltersExtensions
+    public static class FilteredWordsExtensions
     {
 
         public static Dictionary<string, int> RemoveWord(this Dictionary<string, int> words, string boringWord)

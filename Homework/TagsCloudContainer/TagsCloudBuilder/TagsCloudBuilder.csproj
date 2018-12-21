@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="Drawer\Drawer.cs" />
     <Compile Include="Drawer\DebugDrawer.cs" />
-    <Compile Include="Drawer\IDebugDrawer.cs" />
     <Compile Include="Drawer\IDrawer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

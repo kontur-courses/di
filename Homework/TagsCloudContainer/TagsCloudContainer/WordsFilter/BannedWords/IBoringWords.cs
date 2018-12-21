@@ -2,8 +2,8 @@
 
 namespace TagsCloudContainer.WordsFilter.BannedWords
 {
-    public interface IBannedWords
+    public interface IBoringWords
     {
-        HashSet<string> GetBannedWords { get; }
+        HashSet<string> GetBoringWords { get; }
     }
 }

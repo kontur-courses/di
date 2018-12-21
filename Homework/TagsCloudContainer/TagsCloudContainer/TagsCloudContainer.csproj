@@ -43,16 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorAlgorithm\FrequencyColorAlgorithm.cs" />
+    <Compile Include="ColorAlgorithm\IColorAlgorithm.cs" />
+    <Compile Include="ColorAlgorithm\RandomColorAlgorithm.cs" />
+    <Compile Include="ColorAlgorithm\StaticColorAlgorithm.cs" />
     <Compile Include="ContainersCreator.cs" />
     <Compile Include="ContainerInfo.cs" />
     <Compile Include="IContainersCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordsFilter\BannedWords\BannedWords.cs" />
-    <Compile Include="WordsFilter\BannedWords\IBannedWords.cs" />
-    <Compile Include="WordsFilter\IWordsFilters.cs" />
-    <Compile Include="WordsFilter\WordsFilters.cs" />
-    <Compile Include="WordsFilter\WordsFiltersExtensions.cs" />
+    <Compile Include="WordsFilter\BannedWords\BoringWords.cs" />
+    <Compile Include="WordsFilter\BannedWords\IBoringWords.cs" />
+    <Compile Include="WordsFilter\IFilteredWords.cs" />
+    <Compile Include="WordsFilter\FilteredWords.cs" />
+    <Compile Include="WordsFilter\FilteredWordsExtensions.cs" />
     <Compile Include="WordsPreparer\IWordsPreparer.cs" />
     <Compile Include="WordsPreparer\TxtWordsPreparer.cs" />
   </ItemGroup>

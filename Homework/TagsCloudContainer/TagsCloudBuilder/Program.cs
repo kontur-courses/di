@@ -5,6 +5,7 @@ using Autofac;
 using CommandLine;
 using TagsCloudBuilder.Drawer;
 using TagsCloudContainer;
+using TagsCloudContainer.ColorAlgorithm;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsFilter.BannedWords;
 using TagsCloudVisualization;
@@ -20,6 +21,14 @@ namespace TagsCloudBuilder
             {"jpeg", ImageFormat.Jpeg },
             { "bmp", ImageFormat.Bmp}
         };
+
+        private static Dictionary<string, IColorAlgorithm> colorAlgorithmComparer =
+            new Dictionary<string, IColorAlgorithm>()
+            {
+                { "random", new RandomColorAlgorithm() },
+                { "static", new StaticColorAlgorithm() },
+                { "frequency", new FrequencyColorAlgorithm() }
+            };
 
         private class Options
         {
@@ -39,8 +48,8 @@ namespace TagsCloudBuilder
                 HelpText = "Set the font for text.")]
             public string FontFamily { get; set; }
 
-            [Option('b', "banned words", Default = "",
-                HelpText = "Filename with words ignored words.")]
+            [Option('b', "boring words", Default = "boring.txt",
+                HelpText = "Filename with ignored words.")]
             public string BannedWordsFilename { get; set; }
 
             [Option('s', "canvas size", Default = new[] { 2000, 2000 },
@@ -51,7 +60,7 @@ namespace TagsCloudBuilder
                 HelpText = "Set the output file name.")]
             public string OutputFilename { get; set; }
 
-            [Option('c', "center point", Default = new[] { 1000, 1000 },
+            [Option('c', "center point", Default = new[] { 750, 1000 },
                 HelpText = "Set the center of clouds.")]
             public int[] CenterPoint { get; set; }
 
@@ -63,12 +72,15 @@ namespace TagsCloudBuilder
                 HelpText = "Set the angle step.")]
             public double AngleStep { get; set; }
 
-            [Option('l', "words length", Default = new[] { 4, int.MaxValue },
+            [Option('l', "words length", Default = new[] { 5, int.MaxValue },
                 HelpText = "Set the bounds of words length")]
             public int[] WordsLength { get; set; }
 
             [Option('e', "output file extension", Default = "png", HelpText = "Set the output file extension.")]
-            public string OutpiutFileExtension { get; set; }
+            public string OutputFileExtension { get; set; }
+
+            [Option('a', "color algorithm", Default = "frequency", HelpText = "Set the color algorithm chooser.")]
+            public string ColorAlgorithmName { get; set; }
         }
 
         public static void Main(string[] args)
@@ -81,16 +93,7 @@ namespace TagsCloudBuilder
         {
             using (var container = BuildContainer(options))
             {
-                var wordsFilters = container.Resolve<IWordsFilters>();
-                wordsFilters.RemoveIgnoredWords();
-                if (options.WordsLength.Length == 1)
-                    wordsFilters.RemoveWordsOutOfLengthRange(options.WordsLength[0]);
-                else
-                    wordsFilters.RemoveWordsOutOfLengthRange(options.WordsLength[0], options.WordsLength[1]);
-                container.Resolve<ICloudLayouter>();
-                var containersFormatter = container.Resolve<IContainersCreator>();
-                containersFormatter.InitializeContainers();
-                var drawer = container.Resolve<Drawer.Drawer>();
+                var drawer = container.Resolve<IDrawer>();
                 drawer.DrawAndSaveWords();
             }
         }
@@ -98,31 +101,49 @@ namespace TagsCloudBuilder
         private static IContainer BuildContainer(Options options)
         {
             var builder = new ContainerBuilder();
-            var imageFormat = GetImageFormat(options.OutpiutFileExtension);
+            var imageFormat = GetImageFormat(options.OutputFileExtension);
+
             builder.RegisterType<TxtWordsPreparer>()
                 .As<IWordsPreparer>()
                 .WithParameter("fileName", options.InputFilename);
-            builder.RegisterType<BannedWords>()
-                .As<IBannedWords>()
+
+            builder.RegisterType<BoringWords>()
+                .As<IBoringWords>()
                 .WithParameter("fileName", options.BannedWordsFilename);
+
             builder.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>()
                 .WithParameter("center", new Point(options.CenterPoint[0], options.CenterPoint[1]))
                 .WithParameter("radiusStep", options.RadiusStep)
                 .WithParameter("angleStep", options.AngleStep);
+
             builder.RegisterType<ContainersCreator>()
                 .As<IContainersCreator>()
                 .WithParameter("fontName", options.FontFamily)
-                .WithParameter("maxFontSize", options.MaxFontSize);
-            builder.RegisterType<Drawer.Drawer>()
-                .As<IDrawer>()
-                .WithParameter("canvasSize", options.CanvasSize)
-                .WithParameter("fileName", options.OutputFilename)
-                .WithParameter("imageFormat", imageFormat);
-            builder.RegisterType<WordsFilters>()
-                .As<IWordsFilters>();
+                .WithParameter("maxFontSize", options.MaxFontSize)
+                .WithParameter("colorAlgorithm", GetColorAlgorithm(options.ColorAlgorithmName));
+
+            if (options.Debug)
+                builder.RegisterType<DebugDrawer>()
+                    .As<IDrawer>()
+                    .WithParameter("canvasSize", new Size(options.CanvasSize[0], options.CanvasSize[1]))
+                    .WithParameter("fileName", options.OutputFilename)
+                    .WithParameter("imageFormat", imageFormat);
+            else
+                builder.RegisterType<Drawer.Drawer>()
+                    .As<IDrawer>()
+                    .WithParameter("canvasSize", new Size(options.CanvasSize[0], options.CanvasSize[1]))
+                    .WithParameter("fileName", options.OutputFilename)
+                    .WithParameter("imageFormat", imageFormat);
+
+            builder.RegisterType<FilteredWords>()
+                .As<IFilteredWords>()
+                .WithParameter("leftBound", options.WordsLength[0])
+                .WithParameter("rightBound", options.WordsLength[1]);
+
             builder.RegisterType<SpiralInfo>()
                 .AsSelf();
+
             return builder.Build();
         }
 
@@ -133,6 +154,14 @@ namespace TagsCloudBuilder
                 return ImageFormat.Png;
 
             return imageFormatsComparer[lowerFormatName];
+        }
+
+        private static IColorAlgorithm GetColorAlgorithm(string colorAlgorithmName)
+        {
+            if (colorAlgorithmComparer.ContainsKey(colorAlgorithmName.ToLower()))
+                return colorAlgorithmComparer[colorAlgorithmName];
+
+            return colorAlgorithmComparer["random"];
         }
     }
 }

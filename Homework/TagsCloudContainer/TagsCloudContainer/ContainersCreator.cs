@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.ColorAlgorithm;
 using TagsCloudContainer.WordsFilter;
-using TagsCloudVisualization;
 using TagsCloudVisualization.CloudLayouter;
 
 namespace TagsCloudContainer
@@ -13,45 +13,43 @@ namespace TagsCloudContainer
         public List<ContainerInfo> ContainersInfo => new List<ContainerInfo>(containersInfo);
         private readonly List<ContainerInfo> containersInfo;
         private readonly ICloudLayouter circularLayouter;
-        private readonly int maxWordRepeatCount;
-        private readonly Dictionary<string, int> wordsWithFrequency;
+        private readonly IColorAlgorithm colorAlgorithm;
+        private readonly Dictionary<string, int> filteredWords;
         private readonly int maxFontSize;
         private readonly string fontName;
 
-        public ContainersCreator(IWordsFilters wordsFilters,
+        public ContainersCreator(IFilteredWords filteredWords,
             ICloudLayouter circularLayouter,
-            string fontName = "Tahoma",
+            IColorAlgorithm colorAlgorithm,
+            string fontName = "Arial",
             int maxFontSize = 50)
         {
             this.circularLayouter = circularLayouter;
+            this.colorAlgorithm = colorAlgorithm;
             containersInfo = new List<ContainerInfo>();
-            maxWordRepeatCount = wordsFilters
-                .FilteredWords
-                .Max(word => word.Value);
-            wordsWithFrequency = wordsFilters.FilteredWords;
+            this.filteredWords = filteredWords.FilteredWordsList;
             this.maxFontSize = maxFontSize;
             this.fontName = fontName;
+
+            InitializeContainers();
         }
 
-        public void InitializeContainers()
+        private void InitializeContainers()
         {
-            foreach (var word in wordsWithFrequency)
+            var maxWordRepeatCount = filteredWords
+                .Max(word => word.Value);
+            foreach (var word in filteredWords)
             {
-                var fontSize = Math.Max(10, maxFontSize * (maxWordRepeatCount - wordsWithFrequency[word.Key]) / maxWordRepeatCount);
+                var fontSize = Math.Max(10, (int)(maxFontSize * filteredWords[word.Key] / maxWordRepeatCount));
                 var containerSize = new Size((int)(word.Key.Length * fontSize / 1.1), (int)(fontSize * 1.5));
 
                 containersInfo.Add(new ContainerInfo(
                     text: word.Key,
                     textFont: new Font(fontName, fontSize),
                     rectangle: circularLayouter.PutNextRectangle(containerSize),
-                    textColor: GetAppropriateColor()
+                    textColor: colorAlgorithm.GetColor(filteredWords, word.Key)
                     ));
             }
-        }
-
-        private Color GetAppropriateColor()
-        {
-            return Color.Black;
         }
     }
 }

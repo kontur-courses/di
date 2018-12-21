@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace TagsCloudContainer.WordsFilter.BannedWords
 {
-    public class BannedWords : IBannedWords
+    public class BoringWords : IBoringWords
     {
         private readonly string fileName;
 
-        public BannedWords(string fileName)
+        public BoringWords(string fileName)
         {
             this.fileName = fileName;
         }
 
-        public HashSet<string> GetBannedWords
+        public HashSet<string> GetBoringWords
         {
             get
             {

@@ -7,7 +7,7 @@ using TagsCloudContainer;
 
 namespace TagsCloudBuilder.Drawer
 {
-    public class DebugDrawer: IDebugDrawer
+    public class DebugDrawer: IDrawer
     {
         private readonly Size canvasSize;
         private readonly List<ContainerInfo> containers;

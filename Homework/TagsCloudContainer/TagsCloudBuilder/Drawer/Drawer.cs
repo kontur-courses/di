@@ -10,7 +10,7 @@ namespace TagsCloudBuilder.Drawer
     public class Drawer : IDrawer
     {
         private readonly Size canvasSize;
-        private readonly List<ContainerInfo> containers;
+        private readonly List<ContainerInfo> containersCreator;
         private readonly string fileName;
         private readonly ImageFormat imageFormat;
 
@@ -21,7 +21,7 @@ namespace TagsCloudBuilder.Drawer
         {
             this.canvasSize = canvasSize;
             this.fileName = fileName;
-            containers = containersCreator.ContainersInfo;
+            this.containersCreator = containersCreator.ContainersInfo;
             this.imageFormat = imageFormat;
         }
 
@@ -37,7 +37,7 @@ namespace TagsCloudBuilder.Drawer
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.FillRectangle(Brushes.White, 0, 0, canvasSize.Height, canvasSize.Width);
-                    foreach (var container in containers)
+                    foreach (var container in containersCreator)
                     {
                         graphics.DrawString(
                             container.Text,
