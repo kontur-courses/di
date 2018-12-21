@@ -33,6 +33,11 @@ namespace Extensions
 
     public static class Result
     {
+        public static Result<T> ThrowIf<T>(this Result<T> input, Func<T, bool> failCondition, string error) =>
+            (input.IsSuccess && failCondition(input.Value))
+                ? Fail<T>(error)
+                : input;
+        
         public static Result<None> PureResult<T>(this Result<T> input) => 
             input.Then(x => { });
         

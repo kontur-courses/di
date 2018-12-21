@@ -35,6 +35,7 @@ namespace TagCloud
             .Then(x => (x.Item1, x.Item2,
                     layouter.PutNextRectangle(g.MeasureString(x.Item1, x.Item2).ToSize())),
                 "Layouter thrown error: ")
+            .ThrowIf(x=>!x.Item3.IntersectsWith(new Rectangle(Point.Empty, settings.Size)), "Text exceeded image border")
             .Then(x => g.DrawString(x.Item1, x.Item2, settings.FontBrush, x.Item3));
     }
 }
