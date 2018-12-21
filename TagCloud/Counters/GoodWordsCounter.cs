@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using com.sun.imageio.plugins.common;
 using com.sun.xml.@internal.messaging.saaj.util;
+using Extensions;
 using ikvm.extensions;
 using java.io;
 using javax.annotation;
@@ -17,7 +18,7 @@ namespace TagCloud
     public class GoodWordsCounter : IWordsCounter
     {
         private readonly Dictionary<string, int> countedWords = new Dictionary<string, int>();
-        private readonly Func<string, bool> posChecker;
+        private Func<string, bool> posChecker;
 
         private readonly string[] allowedPos = {
             "noun",
@@ -29,35 +30,47 @@ namespace TagCloud
 
         public IReadOnlyDictionary<string, int> CountedWords => countedWords;
 
-        public GoodWordsCounter()
+//        public GoodWordsCounter()
+//        {//It becomes too ugly, if functionalize it 
+//         //But constructor should not errors throw anyway
+        
+//            var tokenizer = WhitespaceTokenizer.INSTANCE; 
+//            var tagger = new POSTaggerME(new POSModel(new FileInputStream(".\\en-pos-maxent.bin")));
+//            posChecker = s => tagger.tag(tokenizer.tokenize(s))
+//                .Select(x => x.ToLower())
+//                .Intersect(allowedPos).Any();
+//        }
+
+        private Result<None> BuildChecker()=>
+            Result.Of(() => (
+                    WhitespaceTokenizer.INSTANCE,
+                    new POSTaggerME(new POSModel(new FileInputStream(".\\en-pos-maxent.bin")))))
+                .ThenAct<(WhitespaceTokenizer tokenizer, POSTaggerME tagger)>(t =>
+                    posChecker = s => t.tagger.tag(t.tokenizer.tokenize(s))
+                        .Select(x => x.ToLower())//Lambda cannot return func
+                        .Intersect(allowedPos).Any())
+                .PureResult();
+
+        private bool CheckWord(string word)
         {
-            var tokenizer = WhitespaceTokenizer.INSTANCE; 
-            var tagger = new POSTaggerME(new POSModel(new FileInputStream(".\\en-pos-maxent.bin")));
-            posChecker = s => tagger.tag(tokenizer.tokenize(s))
-                .Select(x => x.ToLower())
-                .Intersect(allowedPos).Any();
+            if (posChecker == null)
+                BuildChecker();
+            return posChecker(word);
         }
 
-        public void UpdateWith(string text)
-        {
-            var words = text
-                .ToLower() 
+        public Result<None> UpdateWith(string text) =>
+            Split(text).Select(IncOrAddToCounter).FirstOrDefault(x => x.IsSuccess);
+
+        private string[] Split(string text)=>
+            text.ToLower()
                 .Split(" \t\n\r.,?!:;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            
-            foreach (var word in words)
-                IncOrAddToCounter(word);
-        }
         
-        private void IncOrAddToCounter(string word)
-        {
-            if (countedWords.TryGetValue(word, out var count))
-            {
-                if (count < 0)
-                    return;
-                countedWords[word] = count + 1;
-            }
-            else
-                countedWords[word] = posChecker(word) ? 1 : -1;
-        }
+        private Result<None> IncOrAddToCounter(string word)=>
+            Result.Of(() => countedWords.TryGetValue(word, out var count) 
+                                        ? (count >= 0 ? count + 1 : -1) 
+                                        : (CheckWord(word) ? 1 : -1))
+                .RefineError("Opennlp thrown error:")
+                .ThenAct(i => countedWords[word] = i + 1)
+                .PureResult();
     }
 }

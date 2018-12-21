@@ -19,19 +19,7 @@ namespace GUITagClouder
             drawingSettings = initialDrawingSettings;
         }
         
-        public string SourcePath { private get; set; }
-
-        public Size GetImageSize() =>
-            Image.Size;
-
-        public Graphics StartDrawing()=>
-            Graphics.FromImage(Image);
-
-        public void UpdateUi()
-        {
-            Refresh();
-            Application.DoEvents();
-        }  
+        public string SourcePath {private get; set; }
         
         public void RecreateImage(DrawingSettings newSettings)
         {
@@ -49,7 +37,7 @@ namespace GUITagClouder
         {
             if(SourcePath == null)
                 return;
-            Image.Dispose();
+            Image?.Dispose();
             Result.Of(() => Cloud.CreateMaker(cloudSettings, drawingSettings))
                 .ThenAct(maker => maker.UpdateFrom(File.OpenRead(SourcePath)))
                 .Then(maker => maker.DrawCloud())

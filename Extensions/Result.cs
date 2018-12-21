@@ -33,6 +33,10 @@ namespace Extensions
 
     public static class Result
     {
+        public static Result<None> PureResult<T>(this Result<T> input) => 
+            input.Then(x => { });
+        
+        
         public static Result<T> ThenAct<T>(this Result<T> input, Action<T> continuation)
         {
             input.Then(continuation);

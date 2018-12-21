@@ -16,7 +16,6 @@ namespace GUITagClouder
             container.RegisterType<SaveImageAction>().As<IGuiAction>();
             container.RegisterType<DrawingSettingsAction>().As<IGuiAction>();
             container.RegisterType<ClouderSettingsAction>().As<IGuiAction>();
-            //container.RegisterType<PathProvider>().As<IPathProvider>().SingleInstance();
             container.RegisterType<CloudProcessor>().AsSelf().SingleInstance();
             container.Register(c=>CloudSettings.Default()).AsSelf();
             container.Register(c=>DrawingSettings.Default()).AsSelf();

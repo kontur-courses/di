@@ -4,6 +4,6 @@ namespace TagCloud
 {
     public interface IWeightScaler
     {
-        IEnumerable<int> Scale(IEnumerable<(string word, int count)> pairs);
+        IEnumerable<int> Scale(ICollection<(string word, int count)> pairs);
     }
 }

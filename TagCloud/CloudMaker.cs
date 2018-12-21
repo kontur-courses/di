@@ -39,7 +39,7 @@ namespace TagCloud
 
         public Result<Bitmap> DrawCloud()=>
             Result.Of(() => counter.CountedWords.Select(x => (x.Key, x.Value)))
-                .Then(p => counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(p), ValueTuple.Create))
+                .Then(p => counter.CountedWords.Select(x => x.Key).Zip(scaler.Scale(p.ToArray()), ValueTuple.Create))
                 .RefineError("Counter throw error: ")
                 .Then(drawer.Draw);
     }

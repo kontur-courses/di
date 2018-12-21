@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using Extensions;
 
 namespace TagCloud
 {
     public interface IWordsCounter
     {
         IReadOnlyDictionary<string, int> CountedWords { get; }
-        void UpdateWith(string text);
+        Result<None> UpdateWith(string text);
     }
 }

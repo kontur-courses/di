@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using NHunspell;
 
 namespace TagCloud
@@ -11,22 +12,24 @@ namespace TagCloud
 
         public IReadOnlyDictionary<string, int> CountedWords => countedWords;
 
-        public void UpdateWith(string text)
-        {
-            var words = text
-                .ToLower()
-                .Split(" \t\n\r.,?!:;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            using (var hsl = new Hunspell("en_us.aff", "en_us.dic"))
-                foreach (var word in words)
-                    IncOrAddToCounter(hsl.Stem(hsl.Suggest(word).First()).First());
-        }
+        public Result<None> UpdateWith(string text)=>
+            Result.Of(() => new Hunspell("en_us.aff", "en_us.dic"))
+                .RefineError("Hunspell library occured: ")
+                .Then(hsl =>
+                    Split(text).Foreach(word => IncOrAddToCounter(hsl.Stem(hsl.Suggest(word).First()).First())));
+            
+//            using (var hsl = new Hunspell("en_us.aff", "en_us.dic"))
+//                foreach (var word in words)
+//                    IncOrAddToCounter(hsl.Stem(hsl.Suggest(word).First()).First());
+        
 
-        private void IncOrAddToCounter(string word)
-        {
-            if (countedWords.ContainsKey(word))
-                countedWords[word] += 1; 
-            else
-                countedWords[word] = 1;
-        }
+        private string[] Split(string text)=>
+            text.ToLower()
+                .Split(" \t\n\r.,?!:;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+
+        private void IncOrAddToCounter(string word) =>
+            Result.Of(() => countedWords.TryGetValue(word, out var count) ? count : 0)
+                .Then(i => countedWords[word] = i + 1);
     }
 }
