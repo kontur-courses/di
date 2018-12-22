@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using WordCloud.CloudControl;
-using WordCloud.TextAnalyze.Words;
-using WordCloud.WordCloudRenedering;
+using WordCloudImageGenerator;
+using WordCloudImageGenerator.Parsing.Word;
 
 namespace TagCloudTests
 {

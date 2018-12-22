@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autofac;
 using WordCloud.CloudControl;
-using WordCloud.LayoutGeneration.Layoter;
-using WordCloud.LayoutGeneration.Layoter.Circular;
-using WordCloud.TextAnalyze;
-using WordCloud.TextAnalyze.Extractors;
-using WordCloud.WordCloudRenedering;
+using WordCloudImageGenerator;
+using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
+using WordCloudImageGenerator.Parsing.BlackList;
+using WordCloudImageGenerator.Parsing.Extractors;
 
 namespace WordCloud
 {
@@ -42,7 +39,7 @@ namespace WordCloud
             builder.RegisterType<SimpleExtractor>().As<IWordExtractor>();
             builder.RegisterType<Vizualizer>().AsSelf();
 
-            builder.RegisterType<WordCloudOptions>().AsSelf();
+            builder.RegisterType<WordCloudConfig>().AsSelf();
             builder.RegisterType<TagClodForm>().AsSelf();
             builder.Register(_=>LayoutTypes.Circular).As<LayoutTypes>();
 
@@ -57,7 +54,7 @@ namespace WordCloud
 
             builder.RegisterInstance(palette).As<IEnumerable<Brush>>();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterType<CloudControl.CloudControl>().AsSelf();
+            builder.RegisterType<Vizualizer>().As<ITagCloudVizualizer>();
             builder.Register(_ => new Point(0, 0)).As<Point>();
             Container = builder.Build();
         }

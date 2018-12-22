@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudItem.cs" />
+    <Compile Include="ITagCloudVizualizer.cs" />
     <Compile Include="Layouting\Cloud\IRectangleCloud.cs" />
     <Compile Include="Layouting\Cloud\RectangleCloud.cs" />
     <Compile Include="Layouting\Layouters\Circular\CircularCloudLayouter.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Parsing\Word\Word.cs" />
     <Compile Include="Parsing\Word\WordExtensions.cs" />
     <Compile Include="Vizualizer.cs" />
-    <Compile Include="WordCloud.cs" />
+    <Compile Include="TagCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordCloudConfig.cs" />
   </ItemGroup>

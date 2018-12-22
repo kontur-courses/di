@@ -6,7 +6,7 @@ using WordCloudImageGenerator;
 
 namespace WordCloud.CloudControl
 {
-    public class Vizualizer
+    public class Vizualizer: ITagCloudVizualizer
     {
         private IEnumerable<Brush> palette;
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using WordCloud.TextAnalyze.Extractors;
+using WordCloudImageGenerator.Parsing.Extractors;
 
 namespace TagCloudTests
 {

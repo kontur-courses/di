@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core.Lifetime;
 using WordCloud.Properties;
-using WordCloud.WordCloudRenedering;
 
 namespace WordCloud
 {
@@ -44,12 +43,12 @@ namespace WordCloud
             this.minFont = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cloudControl = new CloudControl.CloudControl();
             this.orthogonalLayoutRadioButton = new System.Windows.Forms.RadioButton();
             this.spiralLayoutRadioButton = new System.Windows.Forms.RadioButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.maxFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minFont)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cloudControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // GoBtn
@@ -74,7 +73,7 @@ namespace WordCloud
             // savedImgTxt
             // 
             this.savedImgTxt.Enabled = false;
-            this.savedImgTxt.Location = new System.Drawing.Point(12, 511);
+            this.savedImgTxt.Location = new System.Drawing.Point(12, 462);
             this.savedImgTxt.Name = "savedImgTxt";
             this.savedImgTxt.Size = new System.Drawing.Size(609, 20);
             this.savedImgTxt.TabIndex = 5;
@@ -82,7 +81,7 @@ namespace WordCloud
             // saveImgLabel
             // 
             this.saveImgLabel.AutoSize = true;
-            this.saveImgLabel.Location = new System.Drawing.Point(12, 495);
+            this.saveImgLabel.Location = new System.Drawing.Point(12, 434);
             this.saveImgLabel.Name = "saveImgLabel";
             this.saveImgLabel.Size = new System.Drawing.Size(136, 13);
             this.saveImgLabel.TabIndex = 6;
@@ -133,7 +132,6 @@ namespace WordCloud
             0,
             0,
             0});
-            this.maxFont.ValueChanged += new System.EventHandler(this.maxFont_ValueChanged);
             // 
             // minFont
             // 
@@ -156,7 +154,6 @@ namespace WordCloud
             0,
             0,
             0});
-            this.minFont.ValueChanged += new System.EventHandler(this.minFont_ValueChanged);
             // 
             // label2
             // 
@@ -175,18 +172,6 @@ namespace WordCloud
             this.label3.Size = new System.Drawing.Size(122, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Максимальный шрифт";
-            // 
-            // cloudControl
-            // 
-            this.cloudControl.layouter = null;
-            this.cloudControl.Location = new System.Drawing.Point(12, 13);
-            this.cloudControl.MaxFontSize = 0;
-            this.cloudControl.MinFontSize = 0;
-            this.cloudControl.Name = "cloudControl";
-            this.cloudControl.Size = new System.Drawing.Size(606, 479);
-            this.cloudControl.TabIndex = 13;
-            this.cloudControl.TabStop = false;
-            this.cloudControl.vizualizer = null;
             // 
             // orthogonalLayoutRadioButton
             // 
@@ -210,14 +195,22 @@ namespace WordCloud
             this.spiralLayoutRadioButton.Text = "Spiral Layout";
             this.spiralLayoutRadioButton.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(12, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(606, 403);
+            this.pictureBox1.TabIndex = 16;
+            this.pictureBox1.TabStop = false;
+            // 
             // TagClodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 560);
+            this.ClientSize = new System.Drawing.Size(962, 494);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.spiralLayoutRadioButton);
             this.Controls.Add(this.orthogonalLayoutRadioButton);
-            this.Controls.Add(this.cloudControl);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.minFont);
@@ -232,7 +225,7 @@ namespace WordCloud
             this.Text = "Word cloud";
             ((System.ComponentModel.ISupportInitialize)(this.maxFont)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minFont)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cloudControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,9 +243,9 @@ namespace WordCloud
         private System.Windows.Forms.NumericUpDown minFont;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private CloudControl.CloudControl cloudControl;
         private System.Windows.Forms.RadioButton orthogonalLayoutRadioButton;
         private System.Windows.Forms.RadioButton spiralLayoutRadioButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

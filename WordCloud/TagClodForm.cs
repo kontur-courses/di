@@ -2,46 +2,35 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using WordCloud.CloudControl;
-using WordCloud.LayoutGeneration.Layoter;
-using WordCloud.TextAnalyze;
-using WordCloud.TextAnalyze.Extractors;
-using WordCloud.TextAnalyze.Words;
-using WordCloud.WordCloudRenedering;
+using WordCloudImageGenerator;
+using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.Parsing.BlackList;
+using WordCloudImageGenerator.Parsing.Extractors;
+using WordCloudImageGenerator.Parsing.Word;
 
 namespace WordCloud
 {
     public partial class TagClodForm : Form
     {
-        private IBlackList blackList;
-        private IWordExtractor wordExtractor;
-        private WordCloudOptions wordCloudOptions;
+        private TagCloud tagCloud;
+        private readonly IBlackList blackList;
+        private readonly IWordExtractor wordExtractor;
+        private readonly ITagCloudVizualizer vizualizer;
+        private WordCloudConfig wordCloudConfig;
 
-        public TagClodForm(IWordExtractor wordExtractor, IBlackList blackList, WordCloudOptions wordCloudOptions)
+        public TagClodForm(IWordExtractor wordExtractor, IBlackList blackList, ITagCloudVizualizer vizualizer, WordCloudConfig wordCloudConfig)
         {
             this.wordExtractor = wordExtractor;
             this.blackList = blackList;
-            this.wordCloudOptions = wordCloudOptions;
+            this.vizualizer = vizualizer;
             InitializeComponent();
-
-            ApplyWordCloudOptions();
+            this.wordCloudConfig = wordCloudConfig;
+            this.pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void ApplyWordCloudOptions()
-        {
-            wordCloudOptions.LayoutType =
-                this.spiralLayoutRadioButton.Checked ? LayoutTypes.Circular : LayoutTypes.Orthogonal;
-
-            this.cloudControl.vizualizer = wordCloudOptions.Vizualizer;
-            this.cloudControl.MaxFontSize = (int) maxFont.Value;
-            this.cloudControl.MinFontSize = (int) minFont.Value;
-            this.cloudControl.LayoutType = wordCloudOptions.LayoutType;
-
-        }
-       
         private void BuildLayout()
         {
-            ApplyWordCloudOptions();
+            CollectTagCloudOptions();
             var text = analyzedText.Text;
 
             var weightedWords = wordExtractor.GetWords(text)
@@ -49,20 +38,26 @@ namespace WordCloud
                 .CountEntries()
                 .SortByEntries();
 
-            this.cloudControl.ArrangeLayout(weightedWords);
-            SaveLayout();
+
+            this.tagCloud = new TagCloud(this.wordCloudConfig, vizualizer);
+            pictureBox1.Image = null;
+            var imagePath = tagCloud.ArrangeLayout(weightedWords);
+            savedImgTxt.Text = imagePath;
+            SetImageToPictureBox(imagePath);
         }
 
-        private void SaveLayout()
+        private void CollectTagCloudOptions()
         {
-            if (cloudControl.Image != null)
-            {
-                var fileName = "cloud.png";
-                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-                cloudControl.Image.Save(fullPath);
-                savedImgTxt.Text = fullPath;
-                savedImgTxt.Enabled = true;
-            }
+            wordCloudConfig.LayoutType = orthogonalLayoutRadioButton.Checked ? LayoutTypes.Orthogonal: LayoutTypes.Circular;
+            wordCloudConfig.MinFontSize = (int) minFont.Value;
+            wordCloudConfig.MaxFontSize = (int)maxFont.Value;
+        }
+
+        private void SetImageToPictureBox(string imagePath)
+        {
+            using (FileStream tmpStrm = new FileStream(imagePath, FileMode.Open))
+                pictureBox1.Image = Image.FromStream(tmpStrm);
+            
         }
 
         private void GoBtn_Click(object sender, EventArgs e)
@@ -78,16 +73,5 @@ namespace WordCloud
             string fileText = File.ReadAllText(filename);
             analyzedText.Text = fileText;
         }
-
-        private void minFont_ValueChanged(object sender, EventArgs e)
-        {
-            this.cloudControl.MinFontSize = ((int) minFont.Value);
-        }
-
-        private void maxFont_ValueChanged(object sender, EventArgs e)
-        {
-            this.cloudControl.MaxFontSize = ((int) minFont.Value);
-        }
-
     }
 }

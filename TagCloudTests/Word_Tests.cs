@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using WordCloud.TextAnalyze.Words;
+using WordCloudImageGenerator.Parsing.Word;
 
 namespace TagCloudTests
 {

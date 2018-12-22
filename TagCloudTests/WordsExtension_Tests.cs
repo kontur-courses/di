@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using WordCloud.TextAnalyze;
-using WordCloud.TextAnalyze.Words;
+using WordCloudImageGenerator.Parsing.BlackList;
+using WordCloudImageGenerator.Parsing.Word;
 
 namespace TagCloudTests
 {
@@ -56,18 +56,18 @@ namespace TagCloudTests
             {
                 "wordOne",
                 "wordOne",
-                "а",
+                "пїЅ",
                 "wordTwo",
-                "с",
-                "для",
-                "на",
+                "пїЅ",
+                "пїЅпїЅпїЅ",
+                "пїЅпїЅ",
             };
            var filteredStrings = strings.Filter(new CommonWords());
 
-            filteredStrings.Should().NotContain("а")
+            filteredStrings.Should().NotContain("пїЅ")
                 .And.NotContain("c")
-                .And.NotContain("для")
-                .And.NotContain("на");
+                .And.NotContain("пїЅпїЅпїЅ")
+                .And.NotContain("пїЅпїЅ");
 
         }
     }

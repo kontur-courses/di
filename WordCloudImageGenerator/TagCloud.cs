@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Windows.Forms;
@@ -12,41 +14,49 @@ using WordCloudImageGenerator.Parsing.Word;
 
 namespace WordCloudImageGenerator
 {
-    public class WordCloud
+    public class TagCloud
     {
-        public ICloudLayouter layouter { get; set; }
-        public Vizualizer vizualizer { get; set; }
+        private ICloudLayouter layouter { get; set; }
+        public ITagCloudVizualizer vizualizer { get; set; }
         public int MinFontSize { get; set; }
         public int MaxFontSize { get; set; }
         private Bitmap resultImage;
         
-        public LayoutTypes LayoutType { get; set; } = LayoutTypes.Circular;
+        public LayoutTypes LayoutType { get; set; }
         private int maxWeight;
         private int minWight;
 
-        public WordCloud(WordCloudConfig config)
+        public TagCloud(WordCloudConfig config, ITagCloudVizualizer vizualizer)
         {
             this.LayoutType = config.LayoutType;
-            this.vizualizer = config.Vizualizer;
+            this.vizualizer = vizualizer;
             this.MaxFontSize = config.MaxFontSize;
             this.MinFontSize = config.MinFontSize;
         }
-        
-        public void ArrangeLayout(IEnumerable<IWord> words)
+        public string ArrangeLayout(IEnumerable<IWord> words)
         {
             var wordList = words.ToList();
-            if (!wordList.Any())
-            {
-                return;
-                throw new ArgumentException("No any words to arrange!");
-            }
-
             var items = CreateItems(wordList);
             this.resultImage = vizualizer.DrawItems(items);
+            return SaveImage();
         }
 
+        private string SaveImage()
+        {
+            var fileName = "cloud.png";
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+            using (resultImage)
+                resultImage.Save(fullPath, ImageFormat.Png);
+
+            return fullPath;
+        }
         private void SetMinMaxWeight(IEnumerable<IWord> words)
         {
+            if (!words.Any())
+                return;
             maxWeight = words.Select(w => w.Entries).Max();
             minWight = words.Select(w => w.Entries).Min();
         }
