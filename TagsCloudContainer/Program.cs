@@ -101,7 +101,8 @@ namespace TagsCloudContainer
             return new TagsCloudSettings
             (
                 new Font(FontFamily.GenericSansSerif, options.FontSize),
-                new Size(options.Size, options.Size)
+                new Size(options.Size, options.Size),
+                textColor: Color.Blue
             );
         }
     }
