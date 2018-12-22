@@ -9,9 +9,9 @@ namespace TagsCloudContainer.GettingTokens
 {
     public class Tokenizer : ITokenizer
     {
-        public IEnumerable<Token> GetTokens(string text)
+        public IEnumerable<Token> GetTokens(string text, string pathToMystem = null)
         {
-            var mystem = new MyStem(new TemporaryFileManager());
+            var mystem = new MyStem(new TemporaryFileManager(), pathToMystem);
             var jsonTextAnalyze = mystem
                 .Analyze(text.ToLower())
                 .Split(new []{"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries)
@@ -21,5 +21,8 @@ namespace TagsCloudContainer.GettingTokens
             foreach (var wordAnalyze in jsonTextAnalyze)
                 yield return Token.FromJson(wordAnalyze);
         }
+
+        public IEnumerable<Token> GetTokens(string text) =>
+            GetTokens(text, null);
     }
 }

@@ -9,10 +9,14 @@ namespace TagsCloudContainer.GettingTokens
     public class MyStem
     {
         private readonly IFileManager fileManager;
+        private readonly string pathToMyStem;
 
-        public MyStem(IFileManager fileManager) =>
+        public MyStem(IFileManager fileManager, string pathToMyStem = null)
+        {
             this.fileManager = fileManager;
-        
+            this.pathToMyStem = pathToMyStem;
+        }
+
         public string Analyze(string text)
         {
             var inputFilePath = fileManager.MakeFile();
@@ -27,9 +31,9 @@ namespace TagsCloudContainer.GettingTokens
         private void RunMyStem(string inputFilePath, string outputFilePath)
         {
             var startupPath = Application.StartupPath;
-            var pathToMyStem = Path.Combine(startupPath, "mystem.exe");
+            var myStemPath = pathToMyStem ?? Path.Combine(startupPath, "mystem.exe");
             
-            if (!File.Exists(pathToMyStem))   
+            if (!File.Exists(myStemPath))   
                 throw new FileNotFoundException($"mystem.exe not found in {startupPath}");
             
             var options = $"--format json -ni";
