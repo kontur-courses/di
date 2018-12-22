@@ -1,4 +1,4 @@
-﻿namespace WordCloud.TextAnalyze
+namespace WordCloudImageGenerator.Parsing.BlackList
 {
     public interface IBlackList
     {

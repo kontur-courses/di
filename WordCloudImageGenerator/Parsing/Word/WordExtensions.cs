@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WordCloudImageGenerator.Parsing.BlackList;
 
-namespace WordCloud.TextAnalyze.Words
+namespace WordCloudImageGenerator.Parsing.Word
 {
     public static class WordExtensions
     {

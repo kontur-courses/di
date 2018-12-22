@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCloud", "WordCloud\Word
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{86EA34F0-A64B-4B3E-878D-3409522CF2CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCloudImageGenerator", "WordCloudImageGenerator\WordCloudImageGenerator.csproj", "{363C635D-3184-4DB4-86DE-3F6A19261819}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86EA34F0-A64B-4B3E-878D-3409522CF2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{363C635D-3184-4DB4-86DE-3F6A19261819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{363C635D-3184-4DB4-86DE-3F6A19261819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{363C635D-3184-4DB4-86DE-3F6A19261819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{363C635D-3184-4DB4-86DE-3F6A19261819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

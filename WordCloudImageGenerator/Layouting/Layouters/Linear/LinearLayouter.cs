@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using WordCloud.LayoutGeneration.Cloud;
+using System.Drawing;
+using WordCloudImageGenerator.LayoutCraetion.Cloud;
 
-namespace WordCloud.LayoutGeneration.Layoter.LinearLayout
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Linear
 {
     class LinearLayouter:ICloudLayouter
     {

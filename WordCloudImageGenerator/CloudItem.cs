@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using WordCloud.TextAnalyze.Words;
+using WordCloudImageGenerator.Parsing.Word;
 
-namespace WordCloud.CloudControl
+namespace WordCloudImageGenerator
 {
     public class CloudItem
     {

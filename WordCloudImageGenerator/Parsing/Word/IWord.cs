@@ -1,6 +1,6 @@
 using System;
 
-namespace WordCloud.TextAnalyze.Words
+namespace WordCloudImageGenerator.Parsing.Word
 {
     public interface IWord : IComparable<IWord>
     {

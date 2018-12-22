@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace WordCloud.LayoutGeneration.Layoter.Circular
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
 {
     public class SpiralGenerator : IEnumerable<Point>
     {

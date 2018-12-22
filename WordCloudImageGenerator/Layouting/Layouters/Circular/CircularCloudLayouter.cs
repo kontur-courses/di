@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using WordCloud.LayoutGeneration.Cloud;
+using WordCloudImageGenerator.LayoutCraetion.Cloud;
 
-namespace WordCloud.LayoutGeneration.Layoter.Circular
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
 {
     public class CircularCloudLayouter : ICloudLayouter
     {

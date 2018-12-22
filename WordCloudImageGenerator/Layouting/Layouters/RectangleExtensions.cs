@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace WordCloud.LayoutGeneration.Layoter
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters
 {
     public static class RectangleExtensions
     {

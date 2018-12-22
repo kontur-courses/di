@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WordCloud.TextAnalyze.Words
+namespace WordCloudImageGenerator.Parsing.Word
 {
     public class Word : IWord
     {

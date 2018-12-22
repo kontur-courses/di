@@ -1,11 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using WordCloud.TextAnalyze.Words;
 
-namespace WordCloud.TextAnalyze.Extractors
+namespace WordCloudImageGenerator.Parsing.Extractors
 {
     public class SimpleExtractor:IWordExtractor
     {

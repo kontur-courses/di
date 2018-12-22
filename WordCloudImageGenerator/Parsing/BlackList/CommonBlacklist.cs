@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace WordCloud.TextAnalyze.BlackList
+namespace WordCloudImageGenerator.Parsing.BlackList
 {
     public class CommonBlacklist : IBlackList
     {
@@ -10,8 +10,8 @@ namespace WordCloud.TextAnalyze.BlackList
         public CommonBlacklist(IEnumerable<string> excludedWords)
             : this(excludedWords, StringComparer.InvariantCultureIgnoreCase)
         {
+            
         }
-        
         
         public CommonBlacklist(IEnumerable<string> excludedWords, StringComparer comparer)
         {

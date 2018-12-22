@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
 
-namespace WordCloud.LayoutGeneration.Cloud
+namespace WordCloudImageGenerator.LayoutCraetion.Cloud
 {
     public interface IRectangleCloud
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using WordCloudImageGenerator;
 
 namespace WordCloud.CloudControl
 {
@@ -14,7 +15,7 @@ namespace WordCloud.CloudControl
             this.palette = palette;
         }
 
-        public Image DrawItems(List<CloudItem> items)
+        public Bitmap DrawItems(List<CloudItem> items)
         {
             var backgroundSize = GetBackgroundSize(items.Select(item => item.Rectangle).ToList());
             var mainFrame = new Rectangle(new Point(0, 0), backgroundSize);

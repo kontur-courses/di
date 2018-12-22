@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+using System.Drawing;
 
-namespace WordCloud.LayoutGeneration.Layoter
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters
 {
     public interface ICloudLayouter
     {

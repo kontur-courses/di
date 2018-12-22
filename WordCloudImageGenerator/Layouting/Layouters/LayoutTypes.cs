@@ -1,4 +1,4 @@
-﻿namespace WordCloud.WordCloudRenedering
+namespace WordCloudImageGenerator.LayoutCraetion.Layouters
 {
     public enum LayoutTypes
     {
