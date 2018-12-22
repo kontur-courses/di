@@ -4,7 +4,8 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using WordCloudImageGenerator.LayoutCraetion.Layouters;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
+using WordCloudImageGenerator.Layouting.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters.Circular;
 
 namespace TagCloudTests
 {
@@ -23,7 +24,7 @@ namespace TagCloudTests
         [Test]
         public void LayouterIsEmpty_AfterCreation()
         {
-            layouter.rectangleCloud.Rectangles.Should().BeEmpty();
+            layouter.RectangleCloud.Rectangles.Should().BeEmpty();
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace TagCloudTests
             layouter.PutNextRectangle(new Size(25, 25));
 
             layouter.Reset();
-            layouter.rectangleCloud.Rectangles.Should().BeEmpty();
+            layouter.RectangleCloud.Rectangles.Should().BeEmpty();
 
         }
 

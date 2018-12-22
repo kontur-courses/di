@@ -7,13 +7,12 @@ namespace WordCloudImageGenerator.Parsing.BlackList
     {
         private readonly HashSet<string> excludedWordsHashSet;
 
-        public CommonBlacklist(IEnumerable<string> excludedWords)
+        protected CommonBlacklist(IEnumerable<string> excludedWords)
             : this(excludedWords, StringComparer.InvariantCultureIgnoreCase)
         {
-            
         }
-        
-        public CommonBlacklist(IEnumerable<string> excludedWords, StringComparer comparer)
+
+        private CommonBlacklist(IEnumerable<string> excludedWords, StringComparer comparer)
         {
             excludedWordsHashSet = new HashSet<string>(excludedWords, comparer);
         }
@@ -23,9 +22,6 @@ namespace WordCloudImageGenerator.Parsing.BlackList
             return excludedWordsHashSet.Contains(word);
         }
 
-        public int Count
-        {
-            get { return excludedWordsHashSet.Count; }
-        }
+        public int Count => excludedWordsHashSet.Count;
     }
 }

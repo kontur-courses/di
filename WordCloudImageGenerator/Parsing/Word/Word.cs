@@ -4,8 +4,8 @@ namespace WordCloudImageGenerator.Parsing.Word
 {
     public class Word : IWord
     {
-        public string Text { get; private set; }
-        public int Entries { get; private set; }
+        public string Text { get; }
+        public int Entries { get; }
 
         public Word(KeyValuePair<string, int> textOccurrencesPair)
             : this(textOccurrencesPair.Key, textOccurrencesPair.Value)
@@ -17,11 +17,10 @@ namespace WordCloudImageGenerator.Parsing.Word
             Text = text;
             Entries = entries;
         }
-        
+
         public int CompareTo(IWord other)
         {
             return Entries - other.Entries;
         }
-       
     }
 }

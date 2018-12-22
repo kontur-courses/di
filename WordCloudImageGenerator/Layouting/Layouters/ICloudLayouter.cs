@@ -5,6 +5,5 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters
     public interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
-        void Reset();
     }
 }

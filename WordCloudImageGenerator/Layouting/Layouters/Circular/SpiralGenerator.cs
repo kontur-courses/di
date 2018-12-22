@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
+namespace WordCloudImageGenerator.Layouting.Layouters.Circular
 {
     public class SpiralGenerator : IEnumerable<Point>
     {

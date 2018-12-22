@@ -7,10 +7,10 @@ using System.Linq;
 using System.Net.Mime;
 using Autofac;
 using Newtonsoft.Json;
-using WordCloud.CloudControl;
 using WordCloudImageGenerator;
 using WordCloudImageGenerator.LayoutCraetion.Layouters;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
+using WordCloudImageGenerator.Layouting.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters.Circular;
 using WordCloudImageGenerator.Parsing.BlackList;
 using WordCloudImageGenerator.Parsing.Extractors;
 
@@ -19,8 +19,7 @@ namespace WordCloudConsole
     class Program
     {
         private static IContainer Container { get; set; }
-
-        private static WordCloudConfig config;
+        private static WordCloudConfig _config;
 
         static void Main(string[] args)
         {
@@ -69,11 +68,11 @@ namespace WordCloudConsole
                 configPath = args[0];
 
             var configJson = File.ReadAllText(configPath);
-            config = JsonConvert.DeserializeObject<WordCloudConfig>(configJson);
-            Console.WriteLine("Curernt configuration is:");
-            Console.WriteLine($"Layout type:{config.LayoutType.ToString()}");
-            Console.WriteLine($"Min font size:{config.MinFontSize}");
-            Console.WriteLine($"Max font size:{config.MaxFontSize}");
+            _config = JsonConvert.DeserializeObject<WordCloudConfig>(configJson);
+            Console.WriteLine("Current configuration is:");
+            Console.WriteLine($"Layout type:{_config.LayoutType.ToString()}");
+            Console.WriteLine($"Min font size:{_config.MinFontSize}");
+            Console.WriteLine($"Max font size:{_config.MaxFontSize}");
         }
 
         private static void SetDefaultTagCloudConfig()

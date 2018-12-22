@@ -1,20 +1,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace WordCloudImageGenerator.LayoutCraetion.Cloud
+namespace WordCloudImageGenerator.Layouting.Cloud
 {
     public class RectangleCloud : IRectangleCloud
     {
-        public List<Rectangle> Rectangles { get; private set; }
+        public List<Rectangle> Rectangles { get; }
 
-        public RectangleCloud(List<Rectangle> rectangles)
-        {
-            Rectangles = rectangles;
-        }
+        public RectangleCloud(List<Rectangle> rectangles) => Rectangles = rectangles;
 
-        public RectangleCloud()
-        {
-            this.Rectangles = new List<Rectangle>();
-        }
+        public RectangleCloud() => Rectangles = new List<Rectangle>();
     }
 }

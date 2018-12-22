@@ -1,8 +1,8 @@
-namespace WordCloudImageGenerator.LayoutCraetion.Layouters
+namespace WordCloudImageGenerator.Layouting.Layouters
 {
     public enum LayoutTypes
     {
         Circular, 
-        Orthogonal
+        Linear
     }
 }

@@ -38,10 +38,8 @@ namespace WordCloudImageGenerator.Parsing.BlackList
             };
 
         public CommonWords()
-            :base(TopCommonWords)
+            : base(TopCommonWords)
         {
-            
         }
-
     }
 }

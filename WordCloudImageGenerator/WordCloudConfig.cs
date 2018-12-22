@@ -1,5 +1,5 @@
-﻿using WordCloud.CloudControl;
-using WordCloudImageGenerator.LayoutCraetion.Layouters;
+﻿using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters;
 
 namespace WordCloudImageGenerator
 {

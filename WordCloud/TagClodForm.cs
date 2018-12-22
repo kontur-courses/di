@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using WordCloudImageGenerator;
 using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters;
 using WordCloudImageGenerator.Parsing.BlackList;
 using WordCloudImageGenerator.Parsing.Extractors;
 using WordCloudImageGenerator.Parsing.Word;
@@ -16,7 +17,7 @@ namespace WordCloud
         private readonly IBlackList blackList;
         private readonly IWordExtractor wordExtractor;
         private readonly ITagCloudVizualizer vizualizer;
-        private WordCloudConfig wordCloudConfig;
+        private readonly WordCloudConfig wordCloudConfig;
 
         public TagClodForm(IWordExtractor wordExtractor, IBlackList blackList, ITagCloudVizualizer vizualizer, WordCloudConfig wordCloudConfig)
         {
@@ -25,7 +26,7 @@ namespace WordCloud
             this.vizualizer = vizualizer;
             InitializeComponent();
             this.wordCloudConfig = wordCloudConfig;
-            this.pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void BuildLayout()
@@ -38,8 +39,7 @@ namespace WordCloud
                 .CountEntries()
                 .SortByEntries();
 
-
-            this.tagCloud = new TagCloud(this.wordCloudConfig, vizualizer);
+            this.tagCloud = new TagCloud(wordCloudConfig, vizualizer);
             pictureBox1.Image = null;
             var imagePath = tagCloud.ArrangeLayout(weightedWords);
             savedImgTxt.Text = imagePath;
@@ -48,16 +48,16 @@ namespace WordCloud
 
         private void CollectTagCloudOptions()
         {
-            wordCloudConfig.LayoutType = orthogonalLayoutRadioButton.Checked ? LayoutTypes.Orthogonal: LayoutTypes.Circular;
+            wordCloudConfig.LayoutType = orthogonalLayoutRadioButton.Checked ? LayoutTypes.Linear: LayoutTypes.Circular;
             wordCloudConfig.MinFontSize = (int) minFont.Value;
             wordCloudConfig.MaxFontSize = (int)maxFont.Value;
         }
 
         private void SetImageToPictureBox(string imagePath)
         {
-            using (FileStream tmpStrm = new FileStream(imagePath, FileMode.Open))
-                pictureBox1.Image = Image.FromStream(tmpStrm);
-            
+            FileStream fileStream = new FileStream(imagePath, FileMode.Open);
+            using (fileStream)
+                pictureBox1.Image = Image.FromStream(fileStream);
         }
 
         private void GoBtn_Click(object sender, EventArgs e)
@@ -69,8 +69,8 @@ namespace WordCloud
         {
             if (openTextFileDialog.ShowDialog() == DialogResult.Cancel)
                 return;
-            string filename = openTextFileDialog.FileName;
-            string fileText = File.ReadAllText(filename);
+            var filename = openTextFileDialog.FileName;
+            var fileText = File.ReadAllText(filename);
             analyzedText.Text = fileText;
         }
     }

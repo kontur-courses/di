@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
+using WordCloudImageGenerator.Layouting.Layouters.Circular;
 
 namespace TagCloudTests
 {

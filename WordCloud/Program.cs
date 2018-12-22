@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
-using WordCloud.CloudControl;
 using WordCloudImageGenerator;
 using WordCloudImageGenerator.LayoutCraetion.Layouters;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
+using WordCloudImageGenerator.Layouting.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters.Circular;
 using WordCloudImageGenerator.Parsing.BlackList;
 using WordCloudImageGenerator.Parsing.Extractors;
 

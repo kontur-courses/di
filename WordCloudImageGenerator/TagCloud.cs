@@ -6,44 +6,43 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Windows.Forms;
-using WordCloud.CloudControl;
 using WordCloudImageGenerator.LayoutCraetion.Layouters;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Circular;
-using WordCloudImageGenerator.LayoutCraetion.Layouters.Linear;
+using WordCloudImageGenerator.Layouting.Layouters;
+using WordCloudImageGenerator.Layouting.Layouters.Circular;
+using WordCloudImageGenerator.Layouting.Layouters.Linear;
 using WordCloudImageGenerator.Parsing.Word;
 
 namespace WordCloudImageGenerator
 {
     public class TagCloud
     {
-        private ICloudLayouter layouter { get; set; }
-        public ITagCloudVizualizer vizualizer { get; set; }
-        public int MinFontSize { get; set; }
-        public int MaxFontSize { get; set; }
-        private Bitmap resultImage;
-        
-        public LayoutTypes LayoutType { get; set; }
+        private ICloudLayouter Layouter { get; set; }
+        private ITagCloudVizualizer Vizualizer { get; }
+        private int MinFontSize { get; }
+        private int MaxFontSize { get; }
+        private LayoutTypes LayoutType { get; }
         private int maxWeight;
         private int minWight;
+        private Bitmap resultImage;
 
         public TagCloud(WordCloudConfig config, ITagCloudVizualizer vizualizer)
         {
-            this.LayoutType = config.LayoutType;
-            this.vizualizer = vizualizer;
-            this.MaxFontSize = config.MaxFontSize;
-            this.MinFontSize = config.MinFontSize;
+            LayoutType = config.LayoutType;
+            Vizualizer = vizualizer;
+            MaxFontSize = config.MaxFontSize;
+            MinFontSize = config.MinFontSize;
         }
         public string ArrangeLayout(IEnumerable<IWord> words)
         {
             var wordList = words.ToList();
             var items = CreateItems(wordList);
-            this.resultImage = vizualizer.DrawItems(items);
+            resultImage = Vizualizer.DrawItems(items);
             return SaveImage();
         }
 
         private string SaveImage()
         {
-            var fileName = "cloud.png";
+            const string fileName = "cloud.png";
             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
 
             if (File.Exists(fullPath))
@@ -55,21 +54,22 @@ namespace WordCloudImageGenerator
         }
         private void SetMinMaxWeight(IEnumerable<IWord> words)
         {
-            if (!words.Any())
+            IEnumerable<IWord> wordArray = words as IWord[] ?? words.ToArray();
+            if (!wordArray.Any())
                 return;
-            maxWeight = words.Select(w => w.Entries).Max();
-            minWight = words.Select(w => w.Entries).Min();
+            maxWeight = wordArray.Select(w => w.Entries).Max();
+            minWight = wordArray.Select(w => w.Entries).Min();
         }
 
         private Size Measure(string text, int weight)
         {
-            Font font = GetFont(weight);
+            var font = GetFont(weight);
             return TextRenderer.MeasureText(text, font);
         }
 
         private Font GetFont(int weight)
         {
-            float fontSize =
+            var fontSize =
                 (float) (weight - minWight) / (maxWeight - minWight) * (MaxFontSize - MinFontSize) + MinFontSize;
             if (double.IsNaN(fontSize))
                 fontSize = MinFontSize;
@@ -85,7 +85,7 @@ namespace WordCloudImageGenerator
             foreach (var word in wordList)
             {
                 var rectSize = Measure(word.Text, word.Entries);
-                var rectangle = layouter.PutNextRectangle(rectSize);
+                var rectangle = Layouter.PutNextRectangle(rectSize);
                 rectsToScale.Add(rectangle);
             }
 
@@ -98,7 +98,7 @@ namespace WordCloudImageGenerator
             var scaledRectangles = new List<Rectangle>();
             foreach (var tempRectangle in rectsToScale)
             {
-                var rect = layouter.PutNextRectangle(tempRectangle.Size);
+                var rect = Layouter.PutNextRectangle(tempRectangle.Size);
                 scaledRectangles.Add(rect);
             }
 
@@ -110,13 +110,13 @@ namespace WordCloudImageGenerator
 
         private void SetUpLayouter(Point center)
         {
-            switch (this.LayoutType)
+            switch (LayoutType)
             {
                 case LayoutTypes.Circular:
-                    this.layouter = new CircularCloudLayouter(center);
+                    this.Layouter = new CircularCloudLayouter(center);
                     break;
-                case LayoutTypes.Orthogonal:
-                    this.layouter = new LinearLayouter();
+                case LayoutTypes.Linear:
+                    this.Layouter = new LinearLayouter();
                     break;
                 default:
                     throw new ArgumentException($"Cannot resolve {LayoutType}.");

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using WordCloudImageGenerator;
 
-namespace WordCloud.CloudControl
+namespace WordCloudImageGenerator
 {
     public class Vizualizer: ITagCloudVizualizer
     {

@@ -1,20 +1,21 @@
 using System.Drawing;
-using WordCloudImageGenerator.LayoutCraetion.Cloud;
+using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.Layouting.Cloud;
 
-namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Linear
+namespace WordCloudImageGenerator.Layouting.Layouters.Linear
 {
     class LinearLayouter:ICloudLayouter
     {
         private Rectangle surface;
         private Point position;
         private int lineHeight;
-        public IRectangleCloud RectangleCloud;
-        private const int surfaceLengthFactor = 10;
-        private const int surfaceHeightFactor = 20;
+        private IRectangleCloud rectangleCloud;
+        private const int SurfaceLengthFactor = 10;
+        private const int SurfaceHeightFactor = 20;
         public LinearLayouter()
         {
             position = new Point(0,0);
-            this.RectangleCloud = new RectangleCloud();
+            this.rectangleCloud = new RectangleCloud();
         }
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
@@ -26,16 +27,16 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Linear
                 foundRectangle = LineFeed(foundRectangle);
             position = new Point(foundRectangle.Right, foundRectangle.Y);
 
-            RectangleCloud.Rectangles.Add(foundRectangle);
+            rectangleCloud.Rectangles.Add(foundRectangle);
             return foundRectangle;
         }
 
         private Size AdjustGeneration(Size rectangleSize)
         {
             lineHeight = rectangleSize.Height;
-            surface.Width = rectangleSize.Width * surfaceLengthFactor;
+            surface.Width = rectangleSize.Width * SurfaceLengthFactor;
             position = new Point(0, surface.Location.Y);
-            surface.Height = rectangleSize.Height * surfaceHeightFactor;
+            surface.Height = rectangleSize.Height * SurfaceHeightFactor;
             return rectangleSize;
         }
 
@@ -48,6 +49,6 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Linear
 
         private bool HorizontalOverflow(Rectangle rectangle) => rectangle.Right > surface.Right;
 
-        public void Reset() => this.RectangleCloud = new RectangleCloud();
+        public void Reset() => rectangleCloud = new RectangleCloud();
     }
 }

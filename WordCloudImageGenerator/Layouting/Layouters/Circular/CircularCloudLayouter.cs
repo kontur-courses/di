@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using WordCloudImageGenerator.LayoutCraetion.Cloud;
+using WordCloudImageGenerator.LayoutCraetion.Layouters;
+using WordCloudImageGenerator.Layouting.Cloud;
 
-namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
+namespace WordCloudImageGenerator.Layouting.Layouters.Circular
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly Point center;
         private readonly SpiralGenerator spiralGenerator;
-        public IRectangleCloud rectangleCloud;
+        public IRectangleCloud RectangleCloud;
 
         public CircularCloudLayouter(Point center)
         {
@@ -18,7 +19,7 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
                 throw new ArgumentException("Coordinates of the center must be positive numbers");
             this.center = center;
             spiralGenerator = new SpiralGenerator(this.center);
-            rectangleCloud = new RectangleCloud();
+            RectangleCloud = new RectangleCloud();
         }
 
         public CircularCloudLayouter(IRectangleCloud rectangleCloud)
@@ -33,24 +34,21 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
             if (firstRectangleCenter.X < 0 || firstRectangleCenter.Y < 0)
                 throw new ArgumentException("Coordinates of the center must be positive numbers");
             this.center = firstRectangleCenter;
-            this.rectangleCloud = rectangleCloud;
+            this.RectangleCloud = rectangleCloud;
             spiralGenerator = new SpiralGenerator(this.center);
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             var nextRectangle = new Rectangle(spiralGenerator.GetNextPositionOnSpiral(), rectangleSize);
-            while (nextRectangle.IntersectsWithRectangles(this.rectangleCloud.Rectangles))
+            while (nextRectangle.IntersectsWithRectangles(this.RectangleCloud.Rectangles))
                 nextRectangle = new Rectangle(spiralGenerator.GetNextPositionOnSpiral(), rectangleSize);
             nextRectangle = MoveToCenter(nextRectangle);
-            this.rectangleCloud.Rectangles.Add(nextRectangle);
+            this.RectangleCloud.Rectangles.Add(nextRectangle);
             return nextRectangle;
         }
 
-        public void Reset()
-        {
-            this.rectangleCloud = new RectangleCloud(new List<Rectangle>());
-        }
+        public void Reset() => RectangleCloud = new RectangleCloud(new List<Rectangle>());
 
         private Rectangle MoveToCenter(Rectangle rectangle)
         {
@@ -73,9 +71,7 @@ namespace WordCloudImageGenerator.LayoutCraetion.Layouters.Circular
         private Rectangle MoveRectangleByOnePoint(Rectangle rectangle, Point offset)
         {
             var offsetRectangle = new Rectangle(rectangle.Location + new Size(offset), rectangle.Size);
-            if (offsetRectangle.IntersectsWithRectangles(this.rectangleCloud.Rectangles))
-                return rectangle;
-            return offsetRectangle;
+            return offsetRectangle.IntersectsWithRectangles(RectangleCloud.Rectangles) ? rectangle : offsetRectangle;
         }
     }
 }

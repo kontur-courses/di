@@ -16,9 +16,10 @@ namespace WordCloudConsole
         private readonly IBlackList blackList;
         private readonly IWordExtractor wordExtractor;
         private readonly ITagCloudVizualizer vizualizer;
-        private WordCloudConfig wordCloudConfig;
+        private readonly WordCloudConfig wordCloudConfig;
 
-        public TagCloudRenderer(IWordExtractor wordExtractor, IBlackList blackList, ITagCloudVizualizer vizualizer, WordCloudConfig wordCloudConfig)
+        public TagCloudRenderer(IWordExtractor wordExtractor, IBlackList blackList, ITagCloudVizualizer vizualizer,
+            WordCloudConfig wordCloudConfig)
         {
             this.wordExtractor = wordExtractor;
             this.blackList = blackList;
@@ -29,15 +30,13 @@ namespace WordCloudConsole
         public string GetLayout(string words)
         {
             var weightedWords = wordExtractor.GetWords(words)
-                                             .Filter(blackList)
-                                             .CountEntries()
-                                             .SortByEntries();
+                .Filter(blackList)
+                .CountEntries()
+                .SortByEntries();
 
-
-            this.tagCloud = new TagCloud(this.wordCloudConfig, vizualizer);
+            tagCloud = new TagCloud(wordCloudConfig, vizualizer);
             var imagePath = tagCloud.ArrangeLayout(weightedWords);
             return imagePath;
         }
-
     }
 }

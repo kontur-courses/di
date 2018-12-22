@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace WordCloudImageGenerator.LayoutCraetion.Layouters
+namespace WordCloudImageGenerator.Layouting.Layouters
 {
     public static class RectangleExtensions
     {

@@ -11,8 +11,8 @@ namespace WordCloudImageGenerator
             Word = word;
             Font = font;
         }
-        public Rectangle Rectangle { get; set; }
-        public IWord Word { get; set; }
-        public Font Font { get; set; }
+        public Rectangle Rectangle { get; }
+        public IWord Word { get; }
+        public Font Font { get; }
     }
 }
