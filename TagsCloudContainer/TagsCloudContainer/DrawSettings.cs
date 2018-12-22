@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace TagsCloudContainer
 {
-    public class DrawSettings<T>
+    public class DrawSettings<T>: IDrawSettings<T>
     {
         private Size _imageSize;
         private string _fontName;

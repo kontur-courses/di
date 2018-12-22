@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.CircularCloudLayouter;
@@ -53,10 +54,18 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         private static WordLayouter GetCustomizedLayouter(Func<Word, Size> getWordSize,
             IEnumerable<string> wordsToHandle, double directionValue = 1, Point center = new Point())
         {
-            return new WordLayouter(
-                new WordStorage(new WordsCustomizer(), wordsToHandle),
-                getWordSize,
-                new CircularCloudLayout(new RectangleStorage(center, new Direction(directionValue))));
+            var builder = new ContainerBuilder();
+            builder.RegisterType<WordsCustomizer>().AsSelf().SingleInstance();
+            builder.RegisterType<WordStorage>().As<IWordStorage>().WithParameter("wordsToHandle", wordsToHandle);
+            builder.RegisterType<RectangleStorage>().As<IRectangleStorage>().WithParameter("center", center);
+            builder.RegisterType<Direction>().As<IDirection<double>>().WithParameter("angleShift", directionValue);
+            builder.RegisterType<CircularCloudLayout>().As<IRectangleLayout>();
+            builder.RegisterType<WordLayouter>().AsSelf().WithParameter("getWordSize", getWordSize);
+
+            using (var container = builder.Build())
+            {
+                return container.Resolve<WordLayouter>();
+            }
         }
     }
 }

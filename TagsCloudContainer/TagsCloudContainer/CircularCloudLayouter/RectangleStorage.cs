@@ -4,12 +4,12 @@ using System.Drawing;
 
 namespace TagsCloudContainer.CircularCloudLayouter
 {
-    public class RectangleStorage
+    public class RectangleStorage: IRectangleStorage
     {
         private readonly IDirection<double> _direction;
         private readonly List<Sector> _sectors;
 
-        public RectangleStorage(Point center, IDirection<double> direction)
+        public RectangleStorage(IDirection<double> direction, Point center = new Point())
         {
             if (center.X < 0 || center.Y < 0)
                 throw new ArgumentException("both center coordinates should be non-negative");

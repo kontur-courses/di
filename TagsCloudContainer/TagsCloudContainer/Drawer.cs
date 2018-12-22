@@ -4,11 +4,12 @@ using System.Drawing;
 
 namespace TagsCloudContainer
 {
-    internal class Drawer: IDrawer<Word>
+    internal class Drawer : IDrawer
     {
-        private readonly DrawSettings<Word> _drawSettings;
+        private readonly IDrawSettings<Word> _drawSettings;
         private readonly IEnumerable<ItemToDraw<Word>> _itemsToDraws;
-        public Drawer(DrawSettings<Word> drawSettings, WordLayouter wordLayouter)
+
+        public Drawer(IDrawSettings<Word> drawSettings, ILayouter<Word> wordLayouter)
         {
             _drawSettings = drawSettings;
             _itemsToDraws = wordLayouter.GetItemsToDraws();
@@ -16,25 +17,23 @@ namespace TagsCloudContainer
 
         public void DrawItems()
         {
-            var bitmap = new Bitmap(_drawSettings.GetImageSize().Width, _drawSettings.GetImageSize().Height);
-            var g = Graphics.FromImage(bitmap);
-
-            foreach (var item in _itemsToDraws)
+            using (var bitmap = new Bitmap(_drawSettings.GetImageSize().Width, _drawSettings.GetImageSize().Height))
+            using (var g = Graphics.FromImage(bitmap))
             {
-                var size = item.Height;
-                var font = new Font(new FontFamily(_drawSettings.GetFontName()), size);
+                foreach (var item in _itemsToDraws)
+                {
+                    var size = item.Height;
+                    var font = new Font(new FontFamily(_drawSettings.GetFontName()), size);
 
-                g.DrawString(
-                    item.Body.Value,
-                    font,
-                    _drawSettings.GetBrush(item),
-                    item.X, item.Y);
+                    g.DrawString(
+                        item.Body.Value,
+                        font,
+                        _drawSettings.GetBrush(item),
+                        item.X, item.Y);
+                }
+
+                bitmap.Save(_drawSettings.GetFullFileName());
             }
-
-            bitmap.Save(_drawSettings.GetFullFileName());
-
-            g.Dispose();
-            bitmap.Dispose();
         }
     }
 }

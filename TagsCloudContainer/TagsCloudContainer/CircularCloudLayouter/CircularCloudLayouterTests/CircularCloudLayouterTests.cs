@@ -46,7 +46,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
 
         public static CircularCloudLayout GetIncorrectRectanglePlacement()
         {
-            var layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
+            var layout = new CircularCloudLayout(new RectangleStorage(new Direction()));
             var rect1 = new Rectangle(new Point(0, 10), new Size(20, 10));
             var rect2 = new Rectangle(new Point(-10, 10), new Size(20, 10));
 
@@ -58,7 +58,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(ExpectedResult = false)]
         public bool PutNextRectangle_CorrectInputShouldNotIntersect()
         {
-            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Direction()));
             _layout.PutNextRectangle(new Size(69, 39));
             _layout.PutNextRectangle(new Size(68, 44));
             _layout.PutNextRectangle(new Size(85, 53));
@@ -70,7 +70,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(ExpectedResult = false)]
         public bool PutNextRectangle_RandomAmountOfRectanglesShouldNotIntersect()
         {
-            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Direction()));
 
             var rnd = new Random();
             for (var i = 0; i < rnd.Next(1, 30); i++)
@@ -89,7 +89,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         [TestCase(10, 4)]
         public void PutNextRectangle(int width, int height)
         {
-            _layout = new CircularCloudLayout(new RectangleStorage(new Point(0, 0), new Direction()));
+            _layout = new CircularCloudLayout(new RectangleStorage(new Direction()));
             var rectangle = _layout.PutNextRectangle(new Size(width, height));
 
             rectangle.ShouldBeEquivalentTo(new Rectangle(0, height, width, height));
@@ -100,7 +100,7 @@ namespace TagsCloudContainer.CircularCloudLayouter.CircularCloudLayouterTests
         public void ConstructorIncorrectInput(int centerX, int centerY, string msg)
         {
             Action act = () =>
-                new CircularCloudLayout(new RectangleStorage(new Point(centerX, centerY), new Direction()));
+                new CircularCloudLayout(new RectangleStorage(new Direction(), new Point(centerX, centerY)));
 
             act.ShouldThrow<ArgumentException>()
                 .WithMessage(msg);

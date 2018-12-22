@@ -5,10 +5,10 @@ namespace TagsCloudContainer.CircularCloudLayouter
 {
     public class CircularCloudLayout: IRectangleLayout
     {
-        private readonly RectangleStorage _rectangleStorage;
+        private readonly IRectangleStorage _rectangleStorage;
         private readonly List<Rectangle> _rectangles;
 
-        public CircularCloudLayout(RectangleStorage rectangleStorage)
+        public CircularCloudLayout(IRectangleStorage rectangleStorage)
         {
             _rectangleStorage = rectangleStorage;
             _rectangles = new List<Rectangle>();

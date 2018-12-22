@@ -19,7 +19,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         [Test]
         public void IgnorePrepositions()
         {
-            foreach (var word in WordsCustomizer.Prepositions())
+            foreach (var word in WordsCustomizer.Prepositions)
                 _wordsCustomizer.CustomizeWord(word).Should().BeNull();
         }
 
@@ -53,7 +53,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
             _wordsCustomizer.AddWordsToIgnore(newWordsToIgnore);
 
             var expected = new List<string>();
-            expected.AddRange(WordsCustomizer.Prepositions());
+            expected.AddRange(WordsCustomizer.Prepositions);
             expected.AddRange(newWordsToIgnore);
 
             _wordsCustomizer.GetWordsToIgnore().ShouldBeEquivalentTo(expected);

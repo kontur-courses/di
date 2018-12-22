@@ -34,27 +34,27 @@ namespace TagsCloudContainer.CircularCloudLayouter
         
         public static int GetMinX(this IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Select(r => r.X).Min();
+            return rectangles.Min(r => r.X);
         }
 
         public static int GetMaxX(this IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Select(r => r.X).Max();
+            return rectangles.Max(r => r.X);
         }
 
         public static int GetMinY(this IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Select(r => r.Y).Min();
+            return rectangles.Min(r => r.Y);
         }
 
         public static int GetMaxY(this IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Select(r => r.Y).Max();
+            return rectangles.Max(r => r.Y);
         }
 
         public static int GetYHeight(this IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Select(r => r.Y - r.Height).Min();
+            return rectangles.Min(r => r.Y - r.Height);
         }
     }
 }

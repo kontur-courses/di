@@ -70,6 +70,7 @@
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterTests\SectorTests.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterTests\ToolsTests.cs" />
     <Compile Include="CircularCloudLayouter\EnumerableRectanglesExtension.cs" />
+    <Compile Include="CircularCloudLayouter\IRectangleStorage.cs" />
     <Compile Include="DrawSettings.cs" />
     <Compile Include="IDrawer.cs" />
     <Compile Include="CircularCloudLayouter\Quadrant.cs" />
@@ -78,9 +79,19 @@
     <Compile Include="CircularCloudLayouter\Direction.cs" />
     <Compile Include="CircularCloudLayouter\DoubleExtension.cs" />
     <Compile Include="CircularCloudLayouter\IDirection.cs" />
+    <Compile Include="IDrawSettings.cs" />
+    <Compile Include="ILayouter.cs" />
     <Compile Include="ImageFileFormat.cs" />
+    <Compile Include="IReader.cs" />
     <Compile Include="IRectangleLayout.cs" />
     <Compile Include="CircularCloudLayouter\RectangleVisualizer.cs" />
+    <Compile Include="IWordsCustomizer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reader.cs" />
     <Compile Include="TagsCloudContainerTests\DrawSettingsShould.cs" />
     <Compile Include="TagsCloudContainerTests\ImageFileFormatShould.cs" />
     <Compile Include="TagsCloudContainerTests\WordLayouterShould.cs" />
@@ -88,7 +99,6 @@
     <Compile Include="WordLayouter.cs" />
     <Compile Include="IItemToDraw.cs" />
     <Compile Include="ItemToDraw.cs" />
-    <Compile Include="IWord.cs" />
     <Compile Include="IWordStorage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,7 +110,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="EnglishDictionaries\en_US.aff" />
+    <None Include="EnglishDictionaries\en_US.dic" />
     <None Include="packages.config" />
+    <None Include="Resources\EnglishDictionaries\en_US.aff" />
+    <None Include="Resources\EnglishDictionaries\en_US.dic" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">
@@ -109,6 +123,18 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings\listOfPrepositions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\listOfPrepositions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

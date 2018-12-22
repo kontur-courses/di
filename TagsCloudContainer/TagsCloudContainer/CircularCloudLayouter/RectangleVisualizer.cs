@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TagsCloudContainer.CircularCloudLayouter
 {
-    internal class RectangleVisualizer: IDrawer<Rectangle>
+    internal class RectangleVisualizer: IDrawer
     {
         private readonly CircularCloudLayout _layout;
         private Bitmap _bitmap;

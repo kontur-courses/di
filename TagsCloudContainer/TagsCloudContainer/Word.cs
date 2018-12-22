@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer
 {
-    public class Word: IWord
+    public class Word
     {
         public string Value { get; }
         public int Count { get; }

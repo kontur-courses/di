@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    internal class WordLayouter
+    internal class WordLayouter: ILayouter<Word>
     {
         private readonly Func<Word, Size> _getWordSize;
         private readonly IRectangleLayout _layout;
@@ -14,7 +14,7 @@ namespace TagsCloudContainer
 
         public WordLayouter(IWordStorage wordStorage, Func<Word, Size> getWordSize, IRectangleLayout layout)
         {
-            _wordsToDraw = wordStorage.ToIOrderedEnumerable().ToList();
+            _wordsToDraw = wordStorage.GetOrderedByWordsFrequency().ToList();
             _getWordSize = getWordSize;
             _layout = layout;
         }

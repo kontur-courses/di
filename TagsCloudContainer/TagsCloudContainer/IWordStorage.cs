@@ -8,6 +8,6 @@ namespace TagsCloudContainer
     {
         void Add(string word);
         void AddRange(IEnumerable<string> words);
-        IOrderedEnumerable<Word> ToIOrderedEnumerable();
+        IOrderedEnumerable<Word> GetOrderedByWordsFrequency();
     }
 }

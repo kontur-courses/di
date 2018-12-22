@@ -20,7 +20,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void AddWordCorrectly(string str, int count)
         {
             _wordStorage.Add(str);
-            var result = _wordStorage.ToIOrderedEnumerable().ToList();
+            var result = _wordStorage.GetOrderedByWordsFrequency().ToList();
             result[0].Value.Should().Be(str);
             result[0].Count.Should().Be(count);
         }
@@ -29,21 +29,21 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void AddAllElementsFromRange()
         {
             _wordStorage.AddRange(new List<string> {"one", "two", "three", "four", "five"});
-            _wordStorage.ToIOrderedEnumerable().ToList().Count.Should().Be(5);
+            _wordStorage.GetOrderedByWordsFrequency().ToList().Count.Should().Be(5);
         }
 
         [Test]
         public void AddEmptyRangeCorrectly()
         {
             _wordStorage.AddRange(new List<string>());
-            _wordStorage.ToIOrderedEnumerable().ToList().Count.Should().Be(0);
+            _wordStorage.GetOrderedByWordsFrequency().ToList().Count.Should().Be(0);
         }
 
         [Test]
         public void IgnoreLetterCase()
         {
             _wordStorage.AddRange(new List<string> { "Two", "two"});
-            var result = _wordStorage.ToIOrderedEnumerable().ToList();
+            var result = _wordStorage.GetOrderedByWordsFrequency().ToList();
             result[0].Value.Should().Be("two");
             result[0].Count.Should().Be(2);
         }
@@ -52,7 +52,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void SaveIncomingWordsOrderWhenEqualCounts()
         {
             _wordStorage.AddRange(new List<string> {"two", "two", "two2", "two2"});
-            var result = _wordStorage.ToIOrderedEnumerable().ToList();
+            var result = _wordStorage.GetOrderedByWordsFrequency().ToList();
             result[0].Value.Should().Be("two");
 
             result[1].Value.Should().Be("two2");
@@ -62,7 +62,7 @@ namespace TagsCloudContainer.TagsCloudContainerTests
         public void SortWordsByItsAmount()
         {
             _wordStorage.AddRange(new List<string> { "four", "four", "four", "four", "two", "two", "one", "three", "three", "three" });
-            var result = _wordStorage.ToIOrderedEnumerable().ToList();
+            var result = _wordStorage.GetOrderedByWordsFrequency().ToList();
 
             for (var i = 0; i < result.Count; i++)
                 result[i].Count.Should().Be(4 - i);

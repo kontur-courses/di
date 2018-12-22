@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer
 {
-    public interface IDrawer<T>
+    public interface IDrawer
     {
         void DrawItems();
     }
