@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloudContainer.Generation;
 using TagsCloudContainer.Infrastructure.PointTracks;
 
 namespace TagsCloudContainer.Visualization
 {
-    public class TagsCloudVisualizer
+    public class TagsCloudVisualizer : IVisualizer
     {
         public Bitmap Visualize(
             IEnumerable<string> tags,

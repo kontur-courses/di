@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using Autofac;
+using TagsCloudContainer.Generation;
+using TagsCloudContainer.GettingTokens;
 using TagsCloudContainer.Infrastructure.FileManaging;
+using TagsCloudContainer.Infrastructure.PointTracks;
+using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer
 {
@@ -18,13 +23,27 @@ namespace TagsCloudContainer
                 Console.WriteLine(helpMessage);
             }
             else
-                GenerateCloud(options);
+            {
+                GenerateCloud(options, BuildContainer());
+            }
         }
 
-        private static void GenerateCloud(Options options)
+        private static IContainer BuildContainer()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<Tokenizer>().As<ITokenizer>();
+            builder.RegisterType<TagsCloudVisualizer>().As<IVisualizer>();
+            builder.RegisterType<SpiralTrack>().As<IPointsTrack>();
+            builder.RegisterType<TagsCloudGenerator>().AsSelf();
+ 
+            return builder.Build();
+        }
+
+        private static void GenerateCloud(Options options, IContainer container)
         {
             if (TryGetText(out var text, options)
-            && TryGenerateTagCloud(out var tagsCloud, text, options))
+            && TryGenerateTagCloud(out var tagsCloud, text, options, container))
             {
                 TrySaveImage(tagsCloud, options);
             }
@@ -43,11 +62,11 @@ namespace TagsCloudContainer
         }
 
         private static bool TryGenerateTagCloud(out Bitmap tagsCloud, string text, 
-            Options options)
+            Options options, IContainer container)
         {
             try
             {
-                tagsCloud = new TagsCloudGenerator()
+                tagsCloud = container.Resolve<TagsCloudGenerator>()
                     .GenerateTagsCloud(text, OptionsToSettings(options));
 
                 return true;
