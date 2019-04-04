@@ -14,6 +14,11 @@ namespace FractalPainting.App
         {
             try
             {
+                var container = new StandardKernel();
+
+                // start here
+                // container.Bind<TService>().To<TImplementation>();
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
