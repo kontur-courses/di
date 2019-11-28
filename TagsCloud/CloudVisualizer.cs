@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
 	public static class CloudVisualizer
 	{

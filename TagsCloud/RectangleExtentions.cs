@@ -1,7 +1,7 @@
 ﻿﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
 	public static class RectangleExtensions
 	{

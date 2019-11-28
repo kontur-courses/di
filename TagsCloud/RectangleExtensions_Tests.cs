@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
 	[TestFixture]
 	public class RectangleExtensions_Tests

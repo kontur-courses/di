@@ -2,8 +2,9 @@
 using System.Drawing;
 using NUnit.Framework;
 using FluentAssertions;
+using TagsCloud;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
 	[TestFixture]
 	public class CloudVisualizer_Tests

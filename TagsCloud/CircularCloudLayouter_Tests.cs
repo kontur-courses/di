@@ -5,8 +5,9 @@ using NUnit.Framework;
 using FluentAssertions;
 using System.Collections.Generic;
 using NUnit.Framework.Interfaces;
+using TagsCloud;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
 	[TestFixture]
 	public class CircularCloudLayouter_Tests
