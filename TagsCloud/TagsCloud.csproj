@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -56,8 +60,6 @@
     <Compile Include="CircularCloudLayouter_Tests.cs" />
     <Compile Include="CloudVisualizer.cs" />
     <Compile Include="CloudVisualizer_Tests.cs" />
-    <Compile Include="ExMath.cs" />
-    <Compile Include="ExMath_Tests.cs" />
     <Compile Include="RectangleExtensions_Tests.cs" />
     <Compile Include="RectanglesGenerator.cs" />
     <Compile Include="Program.cs" />
