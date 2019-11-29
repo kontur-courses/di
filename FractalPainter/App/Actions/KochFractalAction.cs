@@ -1,14 +1,13 @@
 ﻿using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.UiActions;
-using System;
 
 namespace FractalPainting.App.Actions
 {
     public class KochFractalAction : IUiAction
     {
-        private Lazy<KochPainter> kochPainter;
+        private KochPainter kochPainter;
 
-        public KochFractalAction(Lazy<KochPainter> kochPainter)
+        public KochFractalAction(KochPainter kochPainter)
         {
             this.kochPainter = kochPainter;
         }
@@ -19,7 +18,7 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            kochPainter.Value.Paint();
+            kochPainter.Paint();
         }
     }
 }

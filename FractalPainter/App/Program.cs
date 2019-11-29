@@ -22,7 +22,6 @@ namespace FractalPainting.App
 
                 container.Bind<IImageHolder, PictureBoxImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
                 container.Bind<Palette>().To<Palette>().InSingletonScope();
-                container.Bind<KochPainter>().ToSelf();
                 container.Bind<IUiAction>().To<SaveImageAction>();
                 container.Bind<IUiAction>().To<DragonFractalAction>();
                 container.Bind<IUiAction>().To<KochFractalAction>();
