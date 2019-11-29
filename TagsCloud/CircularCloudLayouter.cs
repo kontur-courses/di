@@ -10,18 +10,11 @@ namespace TagsCloud
 		private const double Density = 1;
 		private const double AngleStep = Math.PI / 180 * 1;
 
-		private readonly Point _center;
 		private readonly Spiral _spiral;
 
 		public List<Rectangle> Rectangles { get; } = new List<Rectangle>();
 
-		public CircularCloudLayouter(Point center)
-		{
-			_center = center;
-			_spiral = new Spiral(AngleStep, Density, _center);
-		}
-
-		public CircularCloudLayouter() => _spiral = new Spiral(AngleStep, Density, _center);
+		public CircularCloudLayouter() => _spiral = new Spiral(AngleStep, Density);
 
 		public Rectangle PutNextRectangle(Size rectangleSize)
 		{
