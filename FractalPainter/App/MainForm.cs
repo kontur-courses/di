@@ -11,20 +11,8 @@ namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm()
-            : this(
-                new IUiAction[]
-                {
-                    new SaveImageAction(),
-                    new DragonFractalAction(),
-                    new KochFractalAction(),
-                    new ImageSettingsAction(),
-                    new PaletteSettingsAction()
-                })
-        {
-        }
 
-        public MainForm(IUiAction[] actions)
+        public MainForm(IUiAction[] actions, IImageHolder imageHolder)
         {
             var imageSettings = CreateSettingsManager().Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);

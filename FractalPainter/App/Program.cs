@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using FractalPainting.App.Actions;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Infrastructure.UiActions;
 using Ninject;
+using Ninject.Extensions.Conventions;
 
 namespace FractalPainting.App
 {
@@ -14,14 +18,20 @@ namespace FractalPainting.App
         {
             try
             {
-                var container = new StandardKernel();
-
                 // start here
                 // container.Bind<TService>().To<TImplementation>();
+                var container = new StandardKernel();
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+                container.Bind<IUiAction>().To<SaveImageAction>();
+                container.Bind<IUiAction>().To<DragonFractalAction>();
+                container.Bind<IUiAction>().To<KochFractalAction>();
+                container.Bind<IUiAction>().To<ImageSettingsAction>();
+                container.Bind<IUiAction>().To<PaletteSettingsAction>();
+                container.Bind<IImageHolder>().To<PictureBoxImageHolder>();
+                container.Bind<Palette>().To<Palette>();
+
+                var mainForm = container.Get<MainForm>();
+                Application.Run(mainForm);
             }
             catch (Exception e)
             {
