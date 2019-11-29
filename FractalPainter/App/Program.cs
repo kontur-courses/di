@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
+using FractalPainting.App.Fractals;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
@@ -18,8 +20,9 @@ namespace FractalPainting.App
             {
                 var container = new StandardKernel();
 
-                // start here
-                // container.Bind<TService>().To<TImplementation>();
+                container.Bind<IImageHolder, PictureBoxImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
+                container.Bind<Palette>().To<Palette>().InSingletonScope();
+                container.Bind<KochPainter>().ToSelf();
                 container.Bind<IUiAction>().To<SaveImageAction>();
                 container.Bind<IUiAction>().To<DragonFractalAction>();
                 container.Bind<IUiAction>().To<KochFractalAction>();
