@@ -109,7 +109,6 @@
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
-    <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
     <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
