@@ -27,8 +27,8 @@ namespace FractalPainting.App
                 container.Bind<IUiAction>().To<KochFractalAction>();
                 container.Bind<IUiAction>().To<ImageSettingsAction>();
                 container.Bind<IUiAction>().To<PaletteSettingsAction>();
-                container.Bind<IImageHolder>().To<PictureBoxImageHolder>();
-                container.Bind<Palette>().To<Palette>();
+                container.Bind<IImageHolder, PictureBoxImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
+                container.Bind<Palette>().To<Palette>().InSingletonScope();
 
                 var mainForm = container.Get<MainForm>();
                 Application.Run(mainForm);
