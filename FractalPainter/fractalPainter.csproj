@@ -96,6 +96,7 @@
     <Compile Include="App\Fractals\DragonPainter.cs" />
     <Compile Include="App\Fractals\DragonSettings.cs" />
     <Compile Include="App\Fractals\DragonSettingsGenerator.cs" />
+    <Compile Include="App\Fractals\IDragonPainterFactory.cs" />
     <Compile Include="App\Fractals\KochPainter.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
