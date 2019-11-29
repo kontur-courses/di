@@ -106,13 +106,11 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
     <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
-    <Compile Include="Infrastructure\Injection\INeed.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
     <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />

@@ -1,18 +1,16 @@
-﻿using System;
+﻿using FractalPainting.Infrastructure.Common;
+using FractalPainting.Infrastructure.UiActions;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.App.Actions;
-using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
-using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, PictureBoxImageHolder pictureBox, Palette palette, ImageSettings imageSettings,
-            IImageDirectoryProvider imageDirectoryProvider)
+        public MainForm(IUiAction[] actions,
+            PictureBoxImageHolder pictureBox,
+            ImageSettings imageSettings)
         {
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
@@ -23,11 +21,6 @@ namespace FractalPainting.App
             pictureBox.RecreateImage(imageSettings);
             pictureBox.Dock = DockStyle.Fill;
             Controls.Add(pictureBox);
-
-            DependencyInjector.Inject<IImageHolder>(actions, pictureBox);
-            DependencyInjector.Inject<IImageDirectoryProvider>(actions, imageDirectoryProvider);
-            //DependencyInjector.Inject<IImageSettingsProvider>(actions, CreateSettingsManager().Load());
-            DependencyInjector.Inject(actions, palette);
         }
 
         protected override void OnShown(EventArgs e)
