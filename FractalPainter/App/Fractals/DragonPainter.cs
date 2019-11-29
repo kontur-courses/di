@@ -38,7 +38,7 @@ namespace FractalPainting.App.Fractals
                 var p = new PointF(0, 0);
                 foreach (var i in Enumerable.Range(0, settings.IterationsCount))
                 {
-                    graphics.FillRectangle(Brushes.Yellow, imageSize.Width/3f + p.X, imageSize.Height/2f + p.Y, 1, 1);
+                    graphics.FillRectangle(new SolidBrush(palette.PrimaryColor), imageSize.Width/3f + p.X, imageSize.Height/2f + p.Y, 1, 1);
                     if (r.Next(0, 2) == 0)
                         p = new PointF(scale*(p.X*cosa - p.Y*sina), scale*(p.X*sina + p.Y*cosa));
                     else
