@@ -8,7 +8,7 @@
         public CloudWord(string word)
         {
             Word = word;
-            Count = 0;
+            Count = 1;
         }
 
         public void AddCount()
