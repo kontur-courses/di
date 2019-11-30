@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FractalPainting</RootNamespace>
     <AssemblyName>FractalPainter</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -96,6 +96,7 @@
     <Compile Include="App\Fractals\DragonPainter.cs" />
     <Compile Include="App\Fractals\DragonSettings.cs" />
     <Compile Include="App\Fractals\DragonSettingsGenerator.cs" />
+    <Compile Include="App\Fractals\IDragonPainterFactory.cs" />
     <Compile Include="App\Fractals\KochPainter.cs" />
     <Compile Include="App\MainForm.cs">
       <SubType>Form</SubType>
@@ -105,14 +106,12 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
     <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
-    <Compile Include="Infrastructure\Injection\INeed.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
     <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />
@@ -153,7 +152,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Infrastructure\Injection" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
