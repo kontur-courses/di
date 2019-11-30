@@ -14,7 +14,7 @@ namespace TagsCloudContainer.CircularCloudLayouter
 
         public CircularCloudLayouter(Point center)
         {
-            this.Center = center;
+            Center = center;
             archimedesSpiral = new ArchimedesSpiral(center, 0.1);
             Rectangles = new List<Rectangle>();
         }
@@ -43,38 +43,18 @@ namespace TagsCloudContainer.CircularCloudLayouter
 
         private Rectangle GetRectanglePushedCloserToCenter(Rectangle rectangle)
         {
-            var shouldPushByX = true;
-            var shouldPushByY = true;
-            var lastNonZeroXOffset = 0;
-            var lastNonZeroYOffset = 0;
-            while (shouldPushByX || shouldPushByY)
+            while (true)
             {
-                var dx = 0;
-                var dy = 0;
+                var dx = GetRelativeRectangleOffsetDeltaX(rectangle);
+                var dy = GetRelativeRectangleOffsetDeltaY(rectangle);
+                if(dx == 0 && dy == 0)
+                    break;
                 
-                dx = GetRelativeRectangleOffsetDeltaX(rectangle);
-                if (dx != 0)
-                {
-                    lastNonZeroXOffset = dx;
-                    shouldPushByX = true;
-                }
-                else
-                    shouldPushByX = false;
-
-                dy = GetRelativeRectangleOffsetDeltaY(rectangle);
-                if (dy != 0)
-                {
-                    lastNonZeroYOffset = dy;
-                    shouldPushByY = true;
-                }
-                else
-                    shouldPushByY = false;
-
-                rectangle.Offset(dx, dy);
+                var movedRectangle = new Rectangle(
+                    rectangle.X + dx, rectangle.Y + dy, rectangle.Width, rectangle.Height);
                 
-                if (!rectangle.IntersectsWithAny(Rectangles)) continue;
-                rectangle.Offset(-lastNonZeroXOffset, -lastNonZeroYOffset);
-                break;
+                if (movedRectangle.IntersectsWithAny(Rectangles)) break;
+                rectangle = movedRectangle;
             }
             return rectangle;
         }
