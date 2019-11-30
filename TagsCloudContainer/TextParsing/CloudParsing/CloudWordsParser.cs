@@ -10,7 +10,8 @@ namespace TagsCloudContainer.TextParsing.CloudParsing
         {
             words = new Dictionary<string, CloudWord>();
         }
-        IEnumerable<CloudWord> ParseFrom(IFileWordsParser fileWordsParser, string path, ICloudWordParsingRule rule)
+
+        public IEnumerable<CloudWord> ParseFrom(IFileWordsParser fileWordsParser, string path, ICloudWordParsingRule rule)
         {
             foreach (var word in fileWordsParser.ParseFrom(path))
             {
