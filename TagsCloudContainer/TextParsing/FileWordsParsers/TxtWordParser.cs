@@ -7,10 +7,12 @@ namespace TagsCloudContainer.TextParsing.FileWordsParsers
     {
         public IEnumerable<string> ParseFrom(string path)
         {
-            var file = new StreamReader(path);
-            var line = "";
-            while ((line = file.ReadLine()) != null)
-                yield return line;
+            using (var file = new StreamReader(path))
+            {
+                var line = "";
+                while ((line = file.ReadLine()) != null)
+                    yield return line;
+            }
         }
     }
 }
