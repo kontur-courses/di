@@ -14,6 +14,9 @@ namespace TagsCloudVisualization
             var painter = new Painter(new Size(500, 500));
             var image = painter.GetSingleColorCloud(Color.Coral, rectangles);
             ImageSaver.SaveImageToDefaultDirectory("example", image);
+            
+            var words = new TextReader("2.txt").GetWords();
+            var preprocessedWords = words.GetLowerCaseWords().GetFilteredWords(new ShortWordsFilter(3));
         }
     }
 }
