@@ -67,7 +67,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CloudLayoutersTests\CircularCloudLayouter_Test.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWord.cs" />
-    <Compile Include="TextParsing\CloudParsing\ICloudWordsParser.cs" />
+    <Compile Include="TextParsing\CloudParsing\ICloudWordParsingRule.cs" />
+    <Compile Include="TextParsing\CloudParsing\CloudWordsParser.cs" />
+    <Compile Include="TextParsing\FileWordsParsers\TxtWordParser.cs" />
     <Compile Include="TextParsing\IFileWordsParser.cs" />
   </ItemGroup>
   <ItemGroup>
