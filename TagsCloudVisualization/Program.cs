@@ -15,6 +15,9 @@ namespace TagsCloudVisualization
             var preprocessedWords = words.GetLowerCaseWords().GetFilteredWords(new ShortWordsFilter(3));
             var rectangles = preprocessedWords
                 .Select(word => layouter.PutNextRectangle(word.GetSize(font, pictureSize))).ToList();
+            var painter = new Painter(pictureSize);
+            var image = painter.GetMulticolorTagCloud(preprocessedWords, rectangles, font);
+            ImageSaver.SaveImageToDefaultDirectory("example", image);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TagsCloudVisualization
         private readonly Bitmap field;
         private readonly Graphics image;
         private Brush brush;
-        
+
         public Painter(Size size)
         {
             field = new Bitmap(size.Width, size.Height);
@@ -17,7 +17,7 @@ namespace TagsCloudVisualization
             image.Clear(Color.White);
             brush = new SolidBrush(Color.Black);
         }
-        
+
         public Bitmap GetSingleColorCloud(Color color, IEnumerable<Rectangle> rectangles)
         {
             foreach (var rectangle in rectangles)
@@ -25,10 +25,10 @@ namespace TagsCloudVisualization
                 brush = new SolidBrush(color);
                 image.FillRectangle(brush, rectangle);
             }
-            
+
             return field;
         }
-        
+
         public Bitmap GetMultiColorCloud(IEnumerable<Rectangle> rectangles)
         {
             foreach (var rectangle in rectangles)
@@ -39,12 +39,25 @@ namespace TagsCloudVisualization
 
             return field;
         }
-        
+
         private Color GetRandomColor()
         {
             var random = new Random();
             return Color.FromArgb(random.Next(256),
                 random.Next(256), random.Next(256));
+        }
+
+        public Bitmap GetMulticolorTagCloud(IEnumerable<string> words, IEnumerable<Rectangle> rectangles, Font font)
+        {
+            var rectangle = rectangles.GetEnumerator();
+            foreach (var word in words)
+            {
+                rectangle.MoveNext();
+                brush = new SolidBrush(GetRandomColor());
+                image.DrawString(word, font, brush, rectangle.Current.Location);
+            }
+
+            return field;
         }
     }
 }
