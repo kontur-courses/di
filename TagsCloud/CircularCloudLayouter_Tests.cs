@@ -4,8 +4,9 @@ using System.Drawing;
 using NUnit.Framework;
 using FluentAssertions;
 using System.Collections.Generic;
+using Autofac;
 using NUnit.Framework.Interfaces;
-using TagsCloud;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
@@ -13,31 +14,28 @@ namespace TagsCloud
 	public class CircularCloudLayouter_Tests
 	{
 		private CircularCloudLayouter _circularCloudLayouter;
+		private IContainer _container;
 
-		[SetUp]
-		public void StartUp() => _circularCloudLayouter = new CircularCloudLayouter();
-
-		[TearDown]
-		public void TearDown()
+		[OneTimeSetUp]
+		public void FirstSetUp()
 		{
-			if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
-				return;
-			var test = TestContext.CurrentContext.Test;
-			var layoutImage = CloudVisualizer.Visualize(_circularCloudLayouter.Rectangles.ToArray(), true);
-			
-			var pathToImage = $@"FallenTests\{test.MethodName}.{test.Name}.png";
-			var pathToDirectory = TestContext.CurrentContext.TestDirectory + @"\..\..\";
-			layoutImage.Save(pathToDirectory + pathToImage);
-			TestContext.Write($"Layout saved to {pathToImage}");
+			var builder = new ContainerBuilder();
+			builder.RegisterType<CircularCloudLayouter>().AsSelf();
+			builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
+			builder.RegisterType<SpiralSettings>().AsSelf();
+			_container = builder.Build();
 		}
 		
+		[SetUp]
+		public void SetUp() => _circularCloudLayouter = _container.Resolve<CircularCloudLayouter>();
+
 		[Test]
 		public void PutNextRectangle_SavesPutRectangles()
 		{
 			const int expectedRectanglesCount = 5;
 
 			for (var i = 0; i < expectedRectanglesCount; i++)
-				_circularCloudLayouter.PutNextRectangle(new Size());
+				_circularCloudLayouter.PlaceNextRectangle(new Size());
 			var actualRectangles = _circularCloudLayouter.Rectangles;
 			actualRectangles.Count.Should().Be(expectedRectanglesCount);
 		}
@@ -48,7 +46,7 @@ namespace TagsCloud
 		public void PutNextRectangle_ThrowsExceptionOnNegativeSizeValues(int width, int height)
 		{
 			var firstRectangleSize = new Size(width, height);
-			Action action = () => _circularCloudLayouter.PutNextRectangle(firstRectangleSize);
+			Action action = () => _circularCloudLayouter.PlaceNextRectangle(firstRectangleSize);
 			action.Should().Throw<ArgumentException>();
 		}
 
@@ -59,7 +57,7 @@ namespace TagsCloud
 		{
 			var rectangleSize = new Size(width, height);
 			for (var i = 0; i < 20; i++)
-				_circularCloudLayouter.PutNextRectangle(rectangleSize);
+				_circularCloudLayouter.PlaceNextRectangle(rectangleSize);
 			
 			CheckIntersection();
 		}
@@ -71,7 +69,7 @@ namespace TagsCloud
 			var minSize = new Size(40, 20);
 			var sizes = GenerateSizes(10, maxSize, minSize);
 			foreach (var size in sizes)
-				_circularCloudLayouter.PutNextRectangle(size);
+				_circularCloudLayouter.PlaceNextRectangle(size);
 			
 			CheckIntersection();
 		}
@@ -93,7 +91,7 @@ namespace TagsCloud
 			const double minimumAreaRatio = 0.5;
 			var rectangleSize = new Size(20, 20);
 			for (var i = 0; i < 100; i++)
-				_circularCloudLayouter.PutNextRectangle(rectangleSize);
+				_circularCloudLayouter.PlaceNextRectangle(rectangleSize);
 			var maxDistance = _circularCloudLayouter.Rectangles.Select(CalculateDistanceFromCenter).Max();
 			var maxArea = Math.PI * maxDistance * maxDistance;
 			

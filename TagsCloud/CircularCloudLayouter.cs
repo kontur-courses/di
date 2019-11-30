@@ -2,21 +2,19 @@
 using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-	public class CircularCloudLayouter
+	public class CircularCloudLayouter: ICloudLayouter
 	{
-		private const double Density = 1;
-		private const double AngleStep = Math.PI / 180 * 1;
-
-		private readonly Spiral _spiral;
+		private readonly ISpiral _spiral;
 
 		public List<Rectangle> Rectangles { get; } = new List<Rectangle>();
 
-		public CircularCloudLayouter() => _spiral = new Spiral(AngleStep, Density);
+		public CircularCloudLayouter(ISpiral spiral) => _spiral = spiral;
 
-		public Rectangle PutNextRectangle(Size rectangleSize)
+		public Rectangle PlaceNextRectangle(Size rectangleSize)
 		{
 			if (rectangleSize.Width < 0 || rectangleSize.Height < 0)
 				throw new ArgumentException("Size values must be non-negative");

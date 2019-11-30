@@ -1,18 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
+using Autofac;
+using Autofac.Builder;
+using NUnit.Framework.Internal.Execution;
+using TagsCloud.Interfaces;
+using TagsCloud.MenuActions;
 
-namespace TagsCloudVisualization
+namespace TagsCloud
 {
     internal class Program
     {
         public static void Main(string[] args)
         {
-            var maxSize = new Size(80, 40);
-            var minSize = new Size(40, 20);
-            var rectangles = RectanglesGenerator.GenerateRectangles(400, maxSize, minSize);
-            var image = CloudVisualizer.Visualize(rectangles.ToArray());
-            image.Save("../../layout4.png");
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MainForm>().AsSelf();
+            builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>();
+            builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<Palette>().AsSelf().SingleInstance();
+            builder.RegisterType<SaveImageAction>().As<IMenuAction>();
+            builder.RegisterType<CircularLayouterAction>().As<IMenuAction>();
+            builder.RegisterType<SpiralSettings>().AsSelf();
+            builder.RegisterType<ImageSettingsAction>().As<IMenuAction>();
+            builder.RegisterType<FontSettingsAction>().As<IMenuAction>();
+            builder.RegisterType<PaletteSettingsAction>().As<IMenuAction>();
+            builder.RegisterType<LayoutPainter>().AsSelf();
+            builder.RegisterType<ColorRandomizer>().AsSelf();
+            builder.Register(c => new Random()).As<Random>();
+            builder.RegisterType<LayoutConstructor>().As<ILayoutConstructor>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
+            builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
+            builder.RegisterType<TagsProcessor>().AsSelf();
+            builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
+            builder.RegisterType<WordsFilter>().AsSelf();
+            builder
+                .Register(c => WordsFilter.GetDefaultFilter())
+                .As<Func<string, bool>>();
+            builder.RegisterType<TxtReader>().As<ITextReader>();
+            builder.Register(c => "text.txt").As<string>();
+            var container = builder.Build();
+            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(container.Resolve<MainForm>());
         }
     }
 }

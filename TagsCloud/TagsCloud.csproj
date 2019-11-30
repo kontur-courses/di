@@ -52,20 +52,48 @@
     <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter_Tests.cs" />
-    <Compile Include="CloudVisualizer.cs" />
-    <Compile Include="CloudVisualizer_Tests.cs" />
+    <Compile Include="ColorRandomizer.cs" />
+    <Compile Include="Interfaces\ILayoutConstructor.cs" />
+    <Compile Include="Interfaces\IWordsProcessor.cs" />
+    <Compile Include="LayoutPainter.cs" />
+    <Compile Include="FontSettings.cs" />
+    <Compile Include="ImageSettings.cs" />
+    <Compile Include="Interfaces\ICloudLayouter.cs" />
+    <Compile Include="Interfaces\IImageHolder.cs" />
+    <Compile Include="Interfaces\IMenuAction.cs" />
+    <Compile Include="Interfaces\ISpiral.cs" />
+    <Compile Include="Interfaces\ITextReader.cs" />
+    <Compile Include="Layout.cs" />
+    <Compile Include="LayoutConstructor.cs" />
+    <Compile Include="MainForm.cs" />
+    <Compile Include="MenuActions\CircularLayouterAction.cs" />
+    <Compile Include="MenuActions\FontSettingsAction.cs" />
+    <Compile Include="MenuActions\ImageSettingsAction.cs" />
+    <Compile Include="MenuActions\MenuActionExtensions.cs" />
+    <Compile Include="MenuActions\PaletteSettingsAction.cs" />
+    <Compile Include="MenuActions\SaveImageAction.cs" />
+    <Compile Include="Palette.cs" />
+    <Compile Include="PictureBoxImageHolder.cs" />
     <Compile Include="RectangleExtensions_Tests.cs" />
-    <Compile Include="RectanglesGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtentions.cs" />
+    <Compile Include="SettingsForm.cs" />
     <Compile Include="Spiral.cs" />
+    <Compile Include="SpiralSettings.cs" />
+    <Compile Include="TagsProcessor.cs" />
+    <Compile Include="TxtReader.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="Word.cs" />
+    <Compile Include="WordsFilter.cs" />
+    <Compile Include="WordsProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
