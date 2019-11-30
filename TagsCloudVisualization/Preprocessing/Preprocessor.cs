@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudVisualization.Core;
 
 namespace TagsCloudVisualization.Preprocessing
 {

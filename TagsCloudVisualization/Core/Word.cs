@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Core
 {
     public class Word
     {
