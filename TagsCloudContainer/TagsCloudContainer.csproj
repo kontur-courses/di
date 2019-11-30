@@ -69,6 +69,7 @@
     <Compile Include="TextParsing\CloudParsing\CloudWord.cs" />
     <Compile Include="TextParsing\CloudParsing\ICloudWordParsingRule.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWordsParser.cs" />
+    <Compile Include="TextParsing\CloudParsing\ParsingRules\DefaultParsingRule.cs" />
     <Compile Include="TextParsing\FileWordsParsers\TxtWordParser.cs" />
     <Compile Include="TextParsing\IFileWordsParser.cs" />
   </ItemGroup>
@@ -80,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\TextParsingTests" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
