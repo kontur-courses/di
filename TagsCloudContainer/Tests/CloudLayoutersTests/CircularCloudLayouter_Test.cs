@@ -5,19 +5,20 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudContainer.CloudLayouters.CircularCloudLayouter;
 using TagsCloudContainer.Extensions;
 
-namespace TagsCloudContainer.CircularCloudLayouter
+namespace TagsCloudContainer.Tests.CloudLayoutersTests
 {
     [TestFixture]
     public class CircularCloudLayouter_Test
     {
-        private CircularCloudLayouter circularCloudLayouter;
+        private CloudLayouters.CircularCloudLayouter.CircularCloudLayouter circularCloudLayouter;
 
         [SetUp]
         public void SetUp()
         {
-            circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0));
+            circularCloudLayouter = new CloudLayouters.CircularCloudLayouter.CircularCloudLayouter(new Point(0, 0));
         }
 
         [Test]

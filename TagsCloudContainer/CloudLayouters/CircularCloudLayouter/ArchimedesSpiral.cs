@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.CircularCloudLayouter
+namespace TagsCloudContainer.CloudLayouters.CircularCloudLayouter
 {
     public class ArchimedesSpiral
     {
