@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{8C7D787E-7A77-4EC4-955F-9140194C3538}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualization_Tests", "TagCloudVisualization_Tests\TagCloudVisualization_Tests.csproj", "{3044650D-A7C0-4CFE-B2F9-4D22570D8356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C7D787E-7A77-4EC4-955F-9140194C3538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C7D787E-7A77-4EC4-955F-9140194C3538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C7D787E-7A77-4EC4-955F-9140194C3538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C7D787E-7A77-4EC4-955F-9140194C3538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3044650D-A7C0-4CFE-B2F9-4D22570D8356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3044650D-A7C0-4CFE-B2F9-4D22570D8356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3044650D-A7C0-4CFE-B2F9-4D22570D8356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3044650D-A7C0-4CFE-B2F9-4D22570D8356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
