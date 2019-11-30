@@ -7,7 +7,7 @@ namespace TagsCloudContainer
 {
     public class TagsCloud
     {
-        public void ParseWords(ICloudWordsParser wordsParser, string wordsPath)
+        public void ParseWords(CloudWordsParser wordsParser, string wordsPath)
         {
             throw new NotImplementedException();
         }
