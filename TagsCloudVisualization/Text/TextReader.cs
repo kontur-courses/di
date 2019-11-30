@@ -1,16 +1,23 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TagsCloudVisualization.Text
 {
-    public abstract class TextReader
+    public abstract class TextReader : IEnumerable<string>
     {
-        private Stream input { get; }
+        protected Stream input;
 
         public TextReader(Stream stream)
         {
             input = stream;
         }
 
-        public abstract string GetNextWord();
+        public abstract IEnumerator<string> GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

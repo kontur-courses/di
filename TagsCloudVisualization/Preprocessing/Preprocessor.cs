@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudVisualization.Preprocessing
 {
     public class Preprocessor
     {
+        private readonly IPreprocessAction[] actions;
+
         public Preprocessor(IPreprocessAction[] preprocessActions)
         {
-            throw new NotImplementedException();
+            actions = preprocessActions;
         }
 
         public Word[] PreprocessWords(IEnumerable<Word> words)
         {
-            throw new NotImplementedException();
+            return actions
+                .Aggregate(words, (current, action) => action.ProcessWords(current))
+                .ToArray();
         }
     }
 }
