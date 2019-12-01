@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ILayouter
     {
         public Point Center => spiral.Center;
 
@@ -13,15 +13,11 @@ namespace TagsCloudVisualization
 
         private readonly List<Rectangle> taggedRectangles;
 
-        public CircularCloudLayouter(Point center)
+
+        public CircularCloudLayouter(ImageSettings settings)
         {
             taggedRectangles = new List<Rectangle>();
-            spiral = new ArchimedeanSpiral(center);
-        }
-
-        public IEnumerable<Rectangle> GetRectangles()
-        {
-            return taggedRectangles;
+            spiral = new ArchimedeanSpiral(settings.CloudCenter);
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -52,7 +48,7 @@ namespace TagsCloudVisualization
         private void AlignSpiralDirection(Rectangle rectangle)
         {
             spiral.DistanceFromCenter -= Math.Max(spiral.DistanceFromCenter / 2,
-                Geometry.GetLengthFromRectangleCenterToBorderOnVector(rectangle, Center));
+                Geometry.GetLengthFromRectangleCenterToBorderOnVector(rectangle, spiral.Center));
         }
     }
 }

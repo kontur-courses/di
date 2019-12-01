@@ -1,0 +1,15 @@
+﻿Dog
+Cat
+Monkey
+Monkey
+Butterfly
+Elephant
+Tiger
+Wolf
+Bee
+Lion
+Crocodile
+Ape
+Ant
+Cow
+Sheep

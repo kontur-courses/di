@@ -1,40 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace TagsCloudVisualization
 {
     [TestFixture]
-    public class TagsCloudTests
+    public class CircularCloudLayouterTests
     {
         private CircularCloudLayouter layouter;
+        private ImageSettings settings;
 
         [SetUp]
         public void SetUp()
         {
-            layouter = new CircularCloudLayouter(new Point(500, 500));
-        }
-
-        [TearDown]
-        public void CreateImageOnFail()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
-                return;
-
-            var path = Path.Combine(
-                    Directory.GetCurrentDirectory(), 
-                    "TestOutput", 
-                    $"{TestContext.CurrentContext.Test.Name}.png"
-                );
-            var bmp = TagCloudVisualizer.Visualize(layouter, new Size(1000, 1000));
-            bmp.Save(path, ImageFormat.Png);
-            TestContext.WriteLine($"Tag cloud visualization saved to file {path}");
+            settings = ImageSettings.InitializeDefaultSettings();
+            layouter = new CircularCloudLayouter(settings);
         }
 
         [TestCase(0, 1, TestName = "Width is zero")]
@@ -75,7 +58,13 @@ namespace TagsCloudVisualization
         public void PutNextRectangle_FirstRectangleIsOnCenter(int x, int y)
         {
             var center = new Point(x, y);
-            var customLayouter = new CircularCloudLayouter(center);
+            var customSettings = new ImageSettings(
+                settings.Font,
+                settings.FontColor,
+                settings.ImageSize,
+                center
+                );
+            var customLayouter = new CircularCloudLayouter(customSettings);
             var rectangle = customLayouter.PutNextRectangle(new Size(10, 10));
 
             rectangle.X.Should().Be(center.X - rectangle.Width / 2);

@@ -1,23 +1,58 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public static class TagCloudVisualizer
+    public class TagCloudVisualizer
     {
-        public static Bitmap Visualize(CircularCloudLayouter layouter, Size imageSize)
+        private readonly ILayouter layouter;
+        private readonly ImageSettings imageSettings;
+        private readonly IParser textParser;
+
+        public TagCloudVisualizer(IParser textParser, ILayouter layouter, ImageSettings imageSettings)
         {
-            var bmp = new Bitmap(imageSize.Width, imageSize.Height);
+            this.textParser = textParser;
+            this.layouter = layouter;
+            this.imageSettings = imageSettings;
+        }
+
+        public Bitmap VisualizeTextFromFile(string fileName)
+        {
+            var text = TextRetriever.RetrieveTextFromFile(fileName);
+            var wordTokens = textParser.ParseToTokens(text);
+
+            var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             var graphics = Graphics.FromImage(bmp);
-            var random = new Random();
-            foreach (var rectangle in layouter.GetRectangles())
-                graphics.FillRectangle(new SolidBrush(GetRandomColor(random)), rectangle);
+
+            foreach (var word in wordTokens)
+                DrawWord(graphics, word);
+
             return bmp;
         }
 
-        private static Color GetRandomColor(Random rnd)
+        private static Size CalculateWordSize(WordToken wordToken, Font font, Graphics graphics)
         {
-            return Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+            var size = graphics.MeasureString(wordToken.Tag, font);
+            return size.ToSize();
+        }
+
+        private void DrawWord(Graphics graphics, WordToken word)
+        {
+            var wordFont = new Font(
+                imageSettings.Font.FontFamily,
+                CalculateWordSize(word),
+                imageSettings.Font.Style
+                );
+
+            var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(word, wordFont, graphics));
+            graphics.DrawRectangle(new Pen(Color.Salmon), wordRectangle);
+            graphics.DrawString(word.Tag, wordFont, new SolidBrush(imageSettings.FontColor), wordRectangle.Location);
+        }
+
+        private float CalculateWordSize(WordToken word)
+        {
+            return imageSettings.Font.Size + word.TextCount * 3;
         }
     }
 }
