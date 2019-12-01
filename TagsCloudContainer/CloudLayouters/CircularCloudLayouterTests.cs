@@ -5,7 +5,7 @@ using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CloudLayouters
 {
     [TestFixture]
     class CircularCloudLayouterTests

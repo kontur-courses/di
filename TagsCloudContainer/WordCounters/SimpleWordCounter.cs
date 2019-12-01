@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.WordCounters
 {
     class SimpleWordCounter : IWordCounter
     {
-        public List<Tuple<string, int>> CountWords(List<string> words)
+        public List<WordToken> CountWords(List<string> words)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using TagsCloudContainer.CloudLayouters;
+using TagsCloudContainer.WordCounters;
 
 namespace TagsCloudContainer
 {

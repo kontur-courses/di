@@ -58,17 +58,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouters\CircularCloudLayouterTests.cs" />
     <Compile Include="Converter.cs" />
-    <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="IWordCounter.cs" />
+    <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="WordCounters\IWordCounter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleWordCounter.cs" />
-    <Compile Include="SimpleWordCounterTests.cs" />
+    <Compile Include="WordCounters\SimpleWordCounter.cs" />
+    <Compile Include="WordCounters\SimpleWordCounterTests.cs" />
     <Compile Include="TagCloudGeneratorTests.cs" />
     <Compile Include="TagsCloudGenerator.cs" />
+    <Compile Include="WordToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

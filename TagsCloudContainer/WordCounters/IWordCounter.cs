@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.WordCounters
 {
     interface IWordCounter
     {
-        List<Tuple<string, int>> CountWords(List<string> words);
+        List<WordToken> CountWords(List<string> words);
     }
 }
