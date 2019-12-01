@@ -26,7 +26,7 @@ namespace TagsCloudContainer.WordCounters
 
             var result = counter.CountWords(words);
 
-            result.Should().Equal(expect);
+            result.Should().BeEquivalentTo(expect);
         }
     }
 }

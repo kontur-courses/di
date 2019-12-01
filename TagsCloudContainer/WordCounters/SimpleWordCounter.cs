@@ -10,7 +10,19 @@ namespace TagsCloudContainer.WordCounters
     {
         public List<WordToken> CountWords(List<string> words)
         {
+            var dict = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (!dict.ContainsKey(word))
+                    dict[word] = 0;
+                dict[word]++;
+            }
 
+            return dict
+                .ToList()
+                .Select(keyValuePair => new WordToken(keyValuePair.Key, keyValuePair.Value))
+                .OrderByDescending(tuple => tuple.Count)
+                .ToList();
         }
     }
 }
