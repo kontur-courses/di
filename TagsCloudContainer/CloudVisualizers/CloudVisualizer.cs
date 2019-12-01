@@ -13,7 +13,7 @@ namespace TagsCloudContainer.CloudVisualizers
 
         public Bitmap GetBitmap(IEnumerable<CloudVisualizationWord> words)
         {
-            return settings.BitmapMaker.MakeBitmap(words, settings.Palette);
+            return settings.BitmapMaker.MakeBitmap(words, settings);
         }
     }
 }
