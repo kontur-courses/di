@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace TagCloudContainer
+﻿namespace TagCloudContainer
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            LayouterVisualizer.CreateCloudWithWordsFromFile("words.txt", "words.bmp");
         }
     }
 }
