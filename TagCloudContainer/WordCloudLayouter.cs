@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace TagCloudContainer
 {
-    public class WordCloudLayouter
+    public class WordCloudLayouter : IWordCloudLayouter
     {
-        public CircularCloudLayouter RectangleLayouter;
+        public ICircularCloudLayouter RectangleLayouter;
         public Font LayouterFont;
 
-        public WordCloudLayouter(CircularCloudLayouter rectangleLayouter, Font layouterFont)
+        public WordCloudLayouter(ICircularCloudLayouter rectangleLayouter, Font layouterFont)
         {
             RectangleLayouter = rectangleLayouter;
             LayouterFont = layouterFont;

@@ -8,8 +8,6 @@ namespace TagCloudContainer
     public interface IWordCloudLayouter
     {
         IEnumerable<(string word, Rectangle wordRectangle)> AddWords(
-            IEnumerable<(string word, int occurrenceCount)> words,
-            ICircularCloudLayouter rectangleLayouter,
-            Font layouterFont);
+            IEnumerable<(string word, int occurrenceCount)> words);
     }
 }

@@ -10,8 +10,8 @@ namespace TagCloudContainer
     {
         static void Main(string[] args)
         {
-            var wordsSource = "";
-            var outputFile = "";
+            var wordsSource = "words.txt";
+            var outputFile = "wordCloud.bmp";
             var builder = new ContainerBuilder();
             builder.Register(c => File.ReadLines(wordsSource)).As<IEnumerable<string>>();
             builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>().SingleInstance();

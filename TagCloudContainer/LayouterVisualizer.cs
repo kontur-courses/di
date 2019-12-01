@@ -74,7 +74,7 @@ namespace TagCloudContainer
             Font font)
         {
             var wordsAndCounts = WordProcessor.CountWordOccurrences(words);
-            var wordsAndRectangles = layouter.AddWords(wordsAndCounts, rectangleLayouter, font);
+            var wordsAndRectangles = layouter.AddWords(wordsAndCounts).ToList();
 
             var bmp = CreateSizedBitmapForLayouter(rectangleLayouter);
             var graphics = Graphics.FromImage(bmp);

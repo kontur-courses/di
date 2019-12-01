@@ -6,9 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="4.9.4" />
-      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
-      <PackageReference Include="System.Drawing.Common" Version="4.7.0-preview3.19551.4" />
+        <PackageReference Include="Autofac" Version="4.9.4" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+        <PackageReference Include="System.Drawing.Common" Version="4.7.0-preview3.19551.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Resource Include="words.txt" />
     </ItemGroup>
 
 </Project>
