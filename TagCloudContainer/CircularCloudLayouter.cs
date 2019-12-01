@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagCloudContainer
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICircularCloudLayouter
     {
         private float spiralCounter = 0;
 

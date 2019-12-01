@@ -9,7 +9,7 @@ using TagCloudContainer;
 namespace TagCloudContainer_Tests
 {
     [TestFixture]
-    public class Layouter_Should
+    public class CircularLayouter_Should
     {
         private CircularCloudLayouter layouter;
 
@@ -25,8 +25,10 @@ namespace TagCloudContainer_Tests
             if (TestContext.CurrentContext.Result.Outcome.Status.Equals(TestStatus.Failed))
             {
                 string fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
-
-                LayouterVisualizer.SaveBitmapWithRectanglesFromLayout(layouter, fileName);
+                var bmp = LayouterVisualizer.CreateSizedBitmapForLayouter(layouter);
+                var brush = new SolidBrush(Color.White);
+                var pen = new Pen(Color.Blue);
+                LayouterVisualizer.SaveBitmapWithRectanglesFromLayout(layouter, fileName, brush, pen);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }
         }
@@ -51,7 +53,7 @@ namespace TagCloudContainer_Tests
         public void TestPlacesFirstRectInCentre()
         {
             var size = new Size(200, 200);
-            var expected = new Rectangle(400, 400, 200, 200);
+            var expected = new Rectangle(-100, -100, 200, 200);
             var rect = layouter.PutNextRectangle(size);
 
             rect.Should().BeEquivalentTo(expected);
