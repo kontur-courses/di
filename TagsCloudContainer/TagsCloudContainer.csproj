@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +44,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\ILayoutAlgorithm.cs" />
+    <Compile Include="Algorithm\IWordLayouter.cs" />
+    <Compile Include="Algorithm\IWordOrganizer.cs" />
+    <Compile Include="Algorithm\IWordSizeProvider.cs" />
+    <Compile Include="Algorithm\IWordWeightSetter.cs" />
+    <Compile Include="Algorithm\Word.cs" />
+    <Compile Include="Core\ITagCloudVisualizer.cs" />
+    <Compile Include="Core\Parameters.cs" />
+    <Compile Include="Core\TagCloudVisualizer.cs" />
+    <Compile Include="FileReading\IFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultProcessing\IImageSaver.cs" />
+    <Compile Include="ResultProcessing\IResultProcessor.cs" />
+    <Compile Include="UserInterface\IParametersProvider.cs" />
+    <Compile Include="UserInterface\IResultDisplay.cs" />
+    <Compile Include="Visualizing\IColorHandler.cs" />
+    <Compile Include="Visualizing\IVisualizer.cs" />
+    <Compile Include="WordProcessing\IWordConverter.cs" />
+    <Compile Include="WordProcessing\IWordFilter.cs" />
+    <Compile Include="WordProcessing\IWordProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
