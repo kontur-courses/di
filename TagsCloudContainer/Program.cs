@@ -5,8 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Core;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.WordCounters;
+using TagsCloudContainer.Palettes;
+using TagsCloudContainer.Visualizers;
 
 namespace TagsCloudContainer
 {
@@ -14,10 +17,7 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterType<ICloudLayouter>().As<CircularCloudLayouter>().WithParameter("center", new Point());
-            containerBuilder.RegisterType<IWordCounter>().As<SimpleWordCounter>();
         }
     }
 }
