@@ -27,9 +27,12 @@ namespace TagsCloudContainer
             this.reader = reader;
         }
 
-        public Bitmap CreateTagCloud(string path)
+        public Bitmap CreateTagCloud()
         {
-            throw new NotImplementedException();
+            var words = reader.ReadAllLines();
+            var wordTokens = wordCounter.CountWords(words);
+            var bitmap = visualizer.VisualizeCloud(wordTokens);
+            return bitmap;
         }
     }
 }

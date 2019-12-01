@@ -36,7 +36,7 @@ namespace TagsCloudContainer
                 }
                 );
             containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
-            containerBuilder.RegisterType<SimpleReader>().As<IReader>();
+            containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", "path");
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
 
             var container = containerBuilder.Build();

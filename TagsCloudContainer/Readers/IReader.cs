@@ -8,6 +8,6 @@ namespace TagsCloudContainer.Readers
 {
     interface IReader
     {
-        string[] ReadAllLines(string path);
+        string[] ReadAllLines();
     }
 }

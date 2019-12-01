@@ -8,7 +8,7 @@ namespace TagsCloudContainer.WordCounters
 {
     class SimpleWordCounter : IWordCounter
     {
-        public List<WordToken> CountWords(List<string> words)
+        public List<WordToken> CountWords(IEnumerable<string> words)
         {
             var dict = new Dictionary<string, int>();
             foreach (var word in words)

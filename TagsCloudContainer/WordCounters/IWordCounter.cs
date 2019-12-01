@@ -8,6 +8,6 @@ namespace TagsCloudContainer.WordCounters
 {
     interface IWordCounter
     {
-        List<WordToken> CountWords(List<string> words);
+        List<WordToken> CountWords(IEnumerable<string> words);
     }
 }
