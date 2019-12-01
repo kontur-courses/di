@@ -77,6 +77,8 @@
     <Compile Include="WordCounters\SimpleWordCounterTests.cs" />
     <Compile Include="TagCloudGeneratorTests.cs" />
     <Compile Include="TagsCloudGenerator.cs" />
+    <Compile Include="WordPreprocessors\IWordPreprocessor.cs" />
+    <Compile Include="WordPreprocessors\SimpleWordPreprocessor.cs" />
     <Compile Include="WordToken.cs" />
   </ItemGroup>
   <ItemGroup>

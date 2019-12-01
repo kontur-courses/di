@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloudContainer.WordCounters
+namespace TagsCloudContainer.WordPreprocessors
 {
-    interface IWordCounter
+    interface IWordPreprocessor
     {
-        List<WordToken> CountWords(string[] words);
+        List<string> WordPreprocessing(string[] words);
     }
 }

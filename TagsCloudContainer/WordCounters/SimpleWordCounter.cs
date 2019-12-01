@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.WordPreprocessors;
 
 namespace TagsCloudContainer.WordCounters
 {
     class SimpleWordCounter : IWordCounter
     {
-        public List<WordToken> CountWords(IEnumerable<string> words)
+        private IWordPreprocessor wordPreprocessor;
+
+        public SimpleWordCounter(IWordPreprocessor wordPreprocessor)
         {
+            this.wordPreprocessor = wordPreprocessor;
+        }
+
+        public List<WordToken> CountWords(string[] words)
+        {
+            var processedWords = wordPreprocessor.WordPreprocessing(words);
+
             var dict = new Dictionary<string, int>();
-            foreach (var word in words)
+            foreach (var word in processedWords)
             {
                 if (!dict.ContainsKey(word))
                     dict[word] = 0;

@@ -14,6 +14,7 @@ using TagsCloudContainer.WordCounters;
 using TagsCloudContainer.Palettes;
 using TagsCloudContainer.Visualizers;
 using TagsCloudContainer.Readers;
+using TagsCloudContainer.WordPreprocessors;
 
 namespace TagsCloudContainer
 {
@@ -26,6 +27,7 @@ namespace TagsCloudContainer
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point());
+            containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
             containerBuilder.RegisterType<SimpleWordCounter>().As<IWordCounter>();
             containerBuilder.RegisterType<SimplePalette>().As<IPalette>()
                 .WithParameters(
@@ -49,6 +51,7 @@ namespace TagsCloudContainer
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point());
+            containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
             containerBuilder.RegisterType<SimpleWordCounter>().As<IWordCounter>();
             containerBuilder.RegisterType<SimplePalette>().As<IPalette>()
                 .WithParameters(
