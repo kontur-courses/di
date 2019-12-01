@@ -62,6 +62,9 @@
     <Compile Include="CloudLayouters\CircularCloudLayouterTests.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="TagToken.cs" />
+    <Compile Include="Visualizers\IVisualizer.cs" />
+    <Compile Include="Visualizers\SimpleVsualizer.cs" />
     <Compile Include="WordCounters\IWordCounter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
