@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    class SimpleWordCounter
+    class SimpleWordCounter : IWordCounter
     {
+        public List<Tuple<string, int>> CountWords(List<string> words)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

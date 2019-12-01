@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
+using Autofac;
 
 namespace TagsCloudContainer
 {

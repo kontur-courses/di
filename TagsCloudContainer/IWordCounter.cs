@@ -8,5 +8,6 @@ namespace TagsCloudContainer
 {
     interface IWordCounter
     {
+        List<Tuple<string, int>> CountWords(List<string> words);
     }
 }
