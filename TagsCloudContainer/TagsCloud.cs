@@ -1,30 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.CloudVisualizers;
+using TagsCloudContainer.CloudVisualizers.ImageSaving;
 using TagsCloudContainer.TextParsing.CloudParsing;
 
 namespace TagsCloudContainer
 {
     public class TagsCloud
     {
-        public void ParseWords(CloudWordsParser wordsParser, string wordsPath)
+        private List<CloudWord> parsedWords;
+        private List<CloudVisualizationWord> visualizationWords;
+        private Bitmap visualizedBitmap;
+        public void ParseWords(CloudWordsParser wordsParser)
         {
-            throw new NotImplementedException();
+            parsedWords = wordsParser.Parse().ToList();
         }
         
-        public void GenerateTagCloud(ICloudLayouter cloudLayouter)
+        public void GenerateTagCloud(CloudLayouter cloudLayouter)
         {
-            throw new NotImplementedException();
+            visualizationWords = cloudLayouter.GetWords(parsedWords).ToList();
         }
 
-        public void VisualizeCloud(ICloudVisualizer cloudVisualizer)
+        public void VisualizeCloud(CloudVisualizer visualizer)
         {
-            throw new NotImplementedException();
+            visualizedBitmap = visualizer.GetBitmap(visualizationWords);
         }
 
-        public void SaveVisualized(ImageFileFormats fileFormat, string pathToSave)
+        public void SaveVisualized(ImageSaver saver)
         {
-            throw new NotImplementedException();
+            saver.Save(visualizedBitmap);
         }
     }
 }
