@@ -60,6 +60,8 @@
     <Compile Include="Converter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagCloudGeneratorTests.cs" />
+    <Compile Include="TagsCloudGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
