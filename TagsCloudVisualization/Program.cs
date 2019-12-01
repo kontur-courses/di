@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using Autofac;
 
 namespace TagsCloudVisualization
 {
@@ -8,16 +9,37 @@ namespace TagsCloudVisualization
     {
         public static void Main()
         {
+            var backGroundColor = Color.Black;
+            var textColor = Color.Pink;
             var font = new Font("Arial", 10, FontStyle.Bold);
-            var pictureSize = new Size(500, 500);
-            var layouter = new CircularCloudLayouter(new Point(250, 250));
-            var words = new TextReader("2.txt").GetWords();
-            var preprocessedWords = words.GetLowerCaseWords().GetFilteredWords(new ShortWordsFilter(3));
-            var rectangles = preprocessedWords
-                .Select(word => layouter.PutNextRectangle(word.GetSize(font, pictureSize))).ToList();
-            var painter = new Painter(pictureSize);
-            var image = painter.GetMulticolorTagCloud(preprocessedWords, rectangles, font);
-            ImageSaver.SaveImageToDefaultDirectory("example", image);
+            var imageSize = new Size(600, 600);
+            //var painter = new MultiColorPainter(imageSize);
+            var painter = new SingleColorPainter(imageSize);
+            var filters = new List<ITextFilter> {new ShortWordsFilter(3)};
+            var textName = "2.txt";
+            var imageName = "exampleSingleColor";
+            var words = new TextReader(textName).GetWords();
+            var preprocessedWords = new WordPreprocessor(words).GetPreprocessedWords(filters);
+            var container = GetContainer(font, imageSize, filters, backGroundColor, textColor);
+            var visualizer = container.Resolve<TagCloudVisualizer>();
+            var image = visualizer.GetVisualization(preprocessedWords, container.Resolve<ILayouter>(), painter);
+            ImageSaver.SaveImageToDefaultDirectory(imageName, image);
+        }
+
+        private static IContainer GetContainer(Font font, Size imageSize, IEnumerable<ITextFilter> filters,
+            Color backgroundColor, Color textColor)
+        {
+            var center = new Point(imageSize.Width / 2, imageSize.Height / 2);
+            var builder = new ContainerBuilder();
+            builder.Register(f => font).As<Font>();
+            builder.Register(s => imageSize).As<Size>();
+            builder.Register(f => filters).As<IEnumerable<ITextFilter>>();
+            builder.Register(p => center).As<Point>();
+            builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
+            builder.RegisterType<Options>().AsSelf().WithParameter("backgroundColor", backgroundColor)
+                .WithParameter("textColor", textColor);
+            builder.RegisterType<TagCloudVisualizer>().AsSelf();
+            return builder.Build();
         }
     }
 }

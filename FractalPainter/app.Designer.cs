@@ -8,14 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.CodeDom.Compiler;
+using System.Configuration;
+using System.Runtime.CompilerServices;
+
 namespace FractalPainting {
     
     
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
-    internal sealed partial class app : global::System.Configuration.ApplicationSettingsBase {
+    [CompilerGenerated()]
+    [GeneratedCode("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    internal sealed partial class app : ApplicationSettingsBase {
         
-        private static app defaultInstance = ((app)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new app())));
+        private static app defaultInstance = ((app)(Synchronized(new app())));
         
         public static app Default {
             get {

@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TextReader = TagsCloudVisualization.TextReader;
+using TagsCloudVisualization;
 
 namespace TagCloudVisualization_Tests
 {
