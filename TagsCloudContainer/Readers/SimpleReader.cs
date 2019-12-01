@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace TagsCloudContainer.Readers
 {
@@ -10,7 +11,8 @@ namespace TagsCloudContainer.Readers
     {
         public string[] ReadAllLines(string path)
         {
-            throw new NotImplementedException();
+            var stream = new StreamReader(path);
+            return stream.ReadToEnd().Split('\n');
         }
     }
 }
