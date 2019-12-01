@@ -1,1 +1,0 @@
-this is output folder for testing. all test failes will be visualized and stored there.
