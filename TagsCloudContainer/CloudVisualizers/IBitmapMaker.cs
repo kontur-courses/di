@@ -5,6 +5,6 @@ namespace TagsCloudContainer.CloudVisualizers
 {
     public interface IBitmapMaker
     {
-        Bitmap MakeBitmap(IEnumerable<CloudVisualizationWord> words, Palette palette);
+        Bitmap MakeBitmap(IEnumerable<CloudVisualizationWord> words, CloudVisualizerSettings settings);
     }
 }
