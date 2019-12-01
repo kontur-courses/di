@@ -12,28 +12,29 @@ namespace TagsCloudContainer.Tests.TextParsingTests
     public class CloudWordsParser_Test
     {
         private CloudWordsParser parser;
-        private ICloudWordParsingRule rule;
-        private string path;
+        private CloudWordsParserSettings settings;
         [SetUp]
         public void SetUp()
         {
-            parser = new CloudWordsParser();
-            rule = new DefaultParsingRule();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
+            var txtParser = new TxtWordParser();
+            var rule = new DefaultParsingRule();
+            settings = new CloudWordsParserSettings {FileWordsParser = txtParser, Rule = rule, Path = path};
+            parser = new CloudWordsParser(settings);
         }
 
         [TearDown]
         public void TearDown()
         {
-            if(File.Exists(path))
-                File.Delete(path);
+            if(File.Exists(settings.Path))
+                File.Delete(settings.Path);
         }
 
 
         [Test]
         public void ParseFrom_Should_ParseFromTxt()
         {
-            path = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(settings.Path))
             {
                 writer.WriteLine("i");
                 writer.WriteLine("sandwich");
@@ -41,16 +42,14 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
-            var txtParser = new TxtWordParser();
-            var result = parser.ParseFrom(txtParser, path, rule);
+            var result = parser.Parse();
             result.Select(w => w.Word).Should().Contain("sandwich");
         }
         
         [Test]
         public void ParseFrom_Should_CountWordsRight()
         {
-            path = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(settings.Path))
             {
                 writer.WriteLine("i");
                 writer.WriteLine("sandwich");
@@ -58,31 +57,27 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
-            var txtParser = new TxtWordParser();
-            var result = parser.ParseFrom(txtParser, path, rule);
+            var result = parser.Parse();
             result.First(w => w.Word == "apple").Count.Should().Be(2);
         }
         
         [Test]
         public void ParseFrom_Should_ParseToLowercase_When_DefaultRule()
         {
-            path = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(settings.Path))
             {
                 writer.WriteLine("Apple");
                 writer.WriteLine("aPPLe");
                 writer.WriteLine("apple");
             }
-            var txtParser = new TxtWordParser();
-            var result = parser.ParseFrom(txtParser, path, rule);
+            var result = parser.Parse();
             result.Count().Should().Be(1);
         }
         
         [Test]
         public void ParseFrom_Should_IgnoreExceptedWords_When_DefaultRule()
         {
-            path = Path.Combine(Directory.GetCurrentDirectory(), "test.txt");
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(settings.Path))
             {
                 writer.WriteLine("i");
                 writer.WriteLine("sandwich");
@@ -90,8 +85,7 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
-            var txtParser = new TxtWordParser();
-            var result = parser.ParseFrom(txtParser, path, rule);
+            var result = parser.Parse();
             result.Count().Should().Be(2);
         }
 
