@@ -9,12 +9,10 @@ namespace TagCloudContainer
     {
         private float spiralCounter = 0;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter()
         {
-            CenterPosition = center;
         }
 
-        public Point CenterPosition { get; }
         public List<Rectangle> Layout { get; } = new List<Rectangle>();
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -36,8 +34,8 @@ namespace TagCloudContainer
             while (true)
             {
                 float distanceFromCenter = MathF.Sqrt(spiralCounter);
-                int x = (int) (distanceFromCenter * MathF.Cos(spiralCounter)) + CenterPosition.X;
-                int y = (int) (distanceFromCenter * MathF.Sin(spiralCounter++)) + CenterPosition.Y;
+                int x = (int) (distanceFromCenter * MathF.Cos(spiralCounter));
+                int y = (int) (distanceFromCenter * MathF.Sin(spiralCounter++));
                 yield return new Point(x, y);
             }
         }

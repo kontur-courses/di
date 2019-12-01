@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            LayouterVisualizer.CreateCloudWithWordsFromFile("words.txt", "words.bmp");
+            LayouterVisualizer.CreateCloudWithWordsFromFile("words.txt", 8, "words.bmp");
         }
     }
 }

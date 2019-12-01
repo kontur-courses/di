@@ -11,10 +11,12 @@ namespace TagCloudContainer_Tests
     [TestFixture]
     public class Layouter_Should
     {
+        private CircularCloudLayouter layouter;
+
         [SetUp]
         public void SetUp()
         {
-            layouter = new CircularCloudLayouter(new Point(500, 500));
+            layouter = new CircularCloudLayouter();
         }
 
         [TearDown]
@@ -24,12 +26,10 @@ namespace TagCloudContainer_Tests
             {
                 string fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
 
-                LayouterVisualizer.SaveLayoutBitmap(fileName, layouter);
+                LayouterVisualizer.SaveBitmapWithRectanglesFromLayout(layouter, fileName);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }
         }
-
-        private CircularCloudLayouter layouter;
 
         [TestCase(100, 8, 40, 4, 20, TestName = "RectanglesDoNotIntersectEachOther_OnHundredShortRectangles")]
         [TestCase(100, 30, 200, 12, 32, TestName = "RectanglesDoNotIntersectEachOther_OnHundredLongRectangles")]
