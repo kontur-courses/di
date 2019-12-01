@@ -1,15 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace TagCloudContainer
 {
-    public class WordProcessor
+    public static class WordProcessor
     {
-        public IEnumerable<(string word, int occurrenceCount)> CountWordOccurrences(IEnumerable<string> words)
+        public static IEnumerable<(string word, int occurrenceCount)> CountWordOccurrences(IEnumerable<string> words)
         {
-            //todo use dictionary<word, wordOccurrenceCount> to count
-            //todo words and then process it to list of tuples
-            return null;
+            var wordsCounter = new Dictionary<string, int>();
+            //todo skip boring words
+            //todo add word filter
+            foreach (var word in words)
+            {
+                var lowerWord = word.ToLower();
+                if (!wordsCounter.ContainsKey(lowerWord))
+                {
+                    wordsCounter[lowerWord] = 0;
+                }
+
+                wordsCounter[lowerWord] += 1;
+            }
+
+            return wordsCounter.Select(e => (e.Key, e.Value));
         }
     }
 }
