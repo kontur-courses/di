@@ -42,5 +42,31 @@ namespace TagsCloudContainer
             var container = containerBuilder.Build();
             var tagsCloudGenerator = container.Resolve<TagsCloudGenerator>();
         }
+
+        [Test]
+        public void CreateWithContainer_CreateTagCloud()
+        {
+            var containerBuilder = new ContainerBuilder();
+
+            containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point());
+            containerBuilder.RegisterType<SimpleWordCounter>().As<IWordCounter>();
+            containerBuilder.RegisterType<SimplePalette>().As<IPalette>()
+                .WithParameters(
+                new Parameter[]
+                {
+                    new NamedParameter("font", new Font("Arial", 20)),
+                    new NamedParameter("brush", Brushes.Red)
+                }
+                );
+            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
+            containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", @"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
+            containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
+
+            var container = containerBuilder.Build();
+            var tagsCloudGenerator = container.Resolve<TagsCloudGenerator>();
+
+            var bitmap = tagsCloudGenerator.CreateTagCloud();
+            bitmap.Save("image.png");
+        }
     }
 }
