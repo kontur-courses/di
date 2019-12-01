@@ -9,10 +9,10 @@ namespace TagsCloudVisualization
         public static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<TagCloudVisualizer>().As<TagCloudVisualizer>();
-            builder.Register(context => ImageSettings.InitializeDefaultSettings()).As<ImageSettings>();
-            builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
-            builder.RegisterType<TextParser>().As<IParser>();
+            builder.RegisterType<TagCloudVisualizer>().SingleInstance().As<TagCloudVisualizer>();
+            builder.Register(context => ImageSettings.InitializeDefaultSettings()).SingleInstance().As<ImageSettings>();
+            builder.RegisterType<CircularCloudLayouter>().SingleInstance().As<ILayouter>();
+            builder.RegisterType<TextParser>().SingleInstance().As<IParser>();
             var container = builder.Build();
 
             var image = container.Resolve<TagCloudVisualizer>().VisualizeTextFromFile("InputData/Input1.txt");
