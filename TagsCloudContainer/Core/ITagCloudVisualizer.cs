@@ -4,6 +4,6 @@ namespace TagsCloudContainer.Core
 {
     public interface ITagCloudVisualizer
     {
-        Bitmap GetTagCloudBitmap(Parameters parameters);
+        Bitmap GetTagCloudBitmap(string textFileName);
     }
 }

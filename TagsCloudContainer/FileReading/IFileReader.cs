@@ -4,6 +4,6 @@ namespace TagsCloudContainer.FileReading
 {
     public interface IFileReader
     {
-        IEnumerable<string> ReadWords(string filename);
+        IEnumerable<string> ReadWords(string textFileName);
     }
 }

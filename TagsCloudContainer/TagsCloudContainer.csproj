@@ -54,6 +54,7 @@
     <Compile Include="Core\Parameters.cs" />
     <Compile Include="Core\TagCloudVisualizer.cs" />
     <Compile Include="FileReading\IFileReader.cs" />
+    <Compile Include="FileReading\OneWordInLineFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultProcessing\IImageSaver.cs" />

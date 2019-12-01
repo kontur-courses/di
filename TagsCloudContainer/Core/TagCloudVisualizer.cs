@@ -22,9 +22,9 @@ namespace TagsCloudContainer.Core
             this.visualizer = visualizer;
         }
 
-        public Bitmap GetTagCloudBitmap(Parameters parameters)
+        public Bitmap GetTagCloudBitmap(string textFileName)
         {
-            var words = fileReader.ReadWords(parameters.Filename);
+            var words = fileReader.ReadWords(textFileName);
             var processedWords = wordProcessor.ProcessWords(words);
             var layout = layoutAlgorithm.GetLayout(processedWords);
             return visualizer.GetLayoutBitmap(layout);
