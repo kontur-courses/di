@@ -10,7 +10,7 @@ namespace TagsCloudContainer.WordPreprocessors
     {
         public List<string> WordPreprocessing(string[] words)
         {
-            return words.ToList();
+            return words.Select(word => word.ToLower()).ToList();
         }
     }
 }
