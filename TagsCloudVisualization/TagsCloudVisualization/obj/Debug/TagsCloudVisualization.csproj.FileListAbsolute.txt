@@ -1,0 +1,13 @@
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\TagsCloudVisualization.exe.config
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\TagsCloudVisualization.exe
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\TagsCloudVisualization.pdb
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\FluentAssertions.dll
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\nunit.framework.dll
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\FluentAssertions.pdb
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\FluentAssertions.xml
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\nunit.framework.pdb
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\nunit.framework.xml
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\obj\Debug\TagsCloudVisualization.csprojAssemblyReference.cache
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\obj\Debug\TagsCloudVisualization.csproj.CopyComplete
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\obj\Debug\TagsCloudVisualization.exe
+C:\Users\tf2ge\Documents\GitHub\tdd\TagsCloudVisualization\TagsCloudVisualization\obj\Debug\TagsCloudVisualization.pdb
