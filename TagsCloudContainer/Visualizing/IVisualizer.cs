@@ -5,6 +5,7 @@ namespace TagsCloudContainer.Visualizing
 {
     public interface IVisualizer
     {
-        Bitmap GetLayoutBitmap(Dictionary<string, Rectangle> wordsInRectangles);
+        Bitmap GetLayoutBitmap(Dictionary<string, Rectangle> wordsInRectangles, List<Color> colors, Font font,
+            Size imageSize);
     }
 }

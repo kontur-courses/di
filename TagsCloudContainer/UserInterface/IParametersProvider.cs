@@ -4,6 +4,6 @@ namespace TagsCloudContainer.UserInterface
 {
     public interface IParametersProvider
     {
-        Parameters GetParameters();
+        bool TryGetParameters(string[] programArgs, out Parameters parameters);
     }
 }
