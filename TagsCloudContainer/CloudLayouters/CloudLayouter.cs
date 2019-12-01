@@ -26,8 +26,8 @@ namespace TagsCloudContainer.CloudLayouters
             {
                 var length = word.Word.Length;
                 var ratio = word.Count * sizeMultiplier / length;
-                var width = (int)ratio;
-                var height = (int)(word.Count * sizeMultiplier - ratio);
+                var width = (int)(word.Count * sizeMultiplier - ratio);
+                var height = (int)ratio;
                 var size = new Size(width, height);
                 var rect = settings.Algorithm.PutNextRectangle(size);
                 yield return new CloudVisualizationWord(rect, word.Word);
