@@ -29,7 +29,7 @@ namespace TagsCloudContainer.Visualizers
                     new NamedParameter("brush", Brushes.Red)
                 }
                 );
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
+            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(640, 640));
 
             var conteiner = containerBuilder.Build();
 

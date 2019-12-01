@@ -13,11 +13,13 @@ namespace TagsCloudContainer.Visualizers
     {
         private IPalette palette;
         private ICloudLayouter cloudLayouter;
+        private ImageSettings imageSettings;
 
-        public SimpleVsualizer(IPalette palette, ICloudLayouter cloudLayouter)
+        public SimpleVsualizer(IPalette palette, ICloudLayouter cloudLayouter, ImageSettings imageSettings)
         {
             this.palette = palette;
             this.cloudLayouter = cloudLayouter;
+            this.imageSettings = imageSettings;
         }
 
         public Bitmap VisualizeCloud(List<WordToken> wordTokens)
@@ -32,6 +34,11 @@ namespace TagsCloudContainer.Visualizers
                 .ToList();
 
             var size = GetSizeBitmapFromTagTokens(tags);
+
+            var scaleHeight = (float)imageSettings.Heigth / size.Height;
+            var scaleWidth = (float)imageSettings.Heigth / size.Width;
+            var scale = Math.Min(scaleHeight, scaleWidth);
+
             var bitmap = new Bitmap(size.Width, size.Height);
             var graphics = Graphics.FromImage(bitmap);
 
@@ -47,7 +54,7 @@ namespace TagsCloudContainer.Visualizers
                     tag.Rectangle.Y - size.Y);
             }
 
-            return bitmap;
+            return new Bitmap(bitmap, (int)(size.Width * scale), (int)(size.Height * scale));
         }
 
         private static Rectangle GetSizeBitmapFromTagTokens(List<TagToken> tags)

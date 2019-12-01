@@ -37,7 +37,7 @@ namespace TagsCloudContainer
                     new NamedParameter("brush", Brushes.Red)
                 }
                 );
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
+            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(640, 640)); ;
             containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", "path");
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
 
@@ -61,7 +61,7 @@ namespace TagsCloudContainer
                     new NamedParameter("brush", Brushes.Red)
                 }
                 );
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
+            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(40, 640)); ;
             containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", @"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
 
