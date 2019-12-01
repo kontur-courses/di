@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
-    class CircularCloudLayouter
+    class CircularCloudLayouter : ICloudLayouter
     {
         private Point center_cloud;
         public List<Rectangle> rectangles { get; }

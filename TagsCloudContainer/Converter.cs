@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     static class Converter
     {
