@@ -9,6 +9,6 @@ namespace TagsCloudContainer.Visualizers
 {
     interface IVisualizer
     {
-        Bitmap VisualizeCloud(List<TagToken> tags);
+        Bitmap VisualizeCloud(List<WordToken> wordTokens);
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="Readers\SimpleReader.cs" />
     <Compile Include="TagToken.cs" />
     <Compile Include="Visualizers\IVisualizer.cs" />
+    <Compile Include="Visualizers\SimpleVisualizerTests.cs" />
     <Compile Include="Visualizers\SimpleVsualizer.cs" />
     <Compile Include="WordCounters\IWordCounter.cs" />
     <Compile Include="Program.cs" />

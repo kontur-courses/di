@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    class TagToken
+    class TagToken : WordToken
     {
-        public string Word { get; }
         public Rectangle Rectangle { get; }
 
-        public TagToken(string word, Rectangle rectangle)
+        public TagToken(WordToken wordToken, Rectangle rectangle) : base(wordToken.Word, wordToken.Count)
         {
-            Word = word;
             Rectangle = rectangle;
         }
     }

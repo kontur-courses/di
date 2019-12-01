@@ -13,18 +13,15 @@ namespace TagsCloudContainer
 {
     class TagsCloudGenerator
     {
-        private ICloudLayouter cloudLayouter;
         private IWordCounter wordCounter;
         private IVisualizer visualizer;
         private IReader reader;
 
         public TagsCloudGenerator(
-            ICloudLayouter cloudLayouter,
             IWordCounter wordCounter,
             IVisualizer visualizer,
             IReader reader)
         {
-            this.cloudLayouter = cloudLayouter;
             this.wordCounter = wordCounter;
             this.visualizer = visualizer;
             this.reader = reader;
