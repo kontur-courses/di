@@ -95,7 +95,7 @@ namespace TagsCloudVisualization.Tests
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
             var testName = TestContext.CurrentContext.Test.Name;
-            var painter = new Painter(new Size(1000, 1000));
+            var painter = new MultiColorPainter(new Size(1000, 1000));
             var image = painter.GetMultiColorCloud(rectangles);
             var fileName = new StringBuilder(testName).Append("FAILED").ToString();
             var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image);
