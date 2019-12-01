@@ -66,6 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleWordCounter.cs" />
+    <Compile Include="SimpleWordCounterTests.cs" />
     <Compile Include="TagCloudGeneratorTests.cs" />
     <Compile Include="TagsCloudGenerator.cs" />
   </ItemGroup>

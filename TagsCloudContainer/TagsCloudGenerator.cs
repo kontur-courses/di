@@ -8,5 +8,9 @@ namespace TagsCloudContainer
 {
     class TagsCloudGenerator
     {
+        public TagsCloudGenerator(ICloudLayouter cloudLayouter, IWordCounter wordCounter)
+        {
+
+        }
     }
 }
