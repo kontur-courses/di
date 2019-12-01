@@ -5,18 +5,21 @@ namespace TagsCloudContainer.TextParsing.CloudParsing
     public class CloudWordsParser
     {
         private Dictionary<string, CloudWord> words;
+        private CloudWordsParserSettings settings;
+       
 
-        public CloudWordsParser()
+        public CloudWordsParser(CloudWordsParserSettings settings)
         {
             words = new Dictionary<string, CloudWord>();
+            this.settings = settings;
         }
 
-        public IEnumerable<CloudWord> ParseFrom(IFileWordsParser fileWordsParser, string path, ICloudWordParsingRule rule)
+        public IEnumerable<CloudWord> Parse()
         {
-            foreach (var word in fileWordsParser.ParseFrom(path))
+            foreach (var word in settings.FileWordsParser.ParseFrom(settings.Path))
             {
-                if (!rule.Check(word)) continue;
-                var appliedRule = rule.Apply(word);
+                if (!settings.Rule.Check(word)) continue;
+                var appliedRule = settings.Rule.Apply(word);
                 if (words.ContainsKey(appliedRule))
                     words[appliedRule].AddCount();
                 else
