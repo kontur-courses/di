@@ -5,7 +5,7 @@ using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainer.CloudLayouters.CircularCloudLayouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayoutingAlgorithm
     {
         private readonly ArchimedesSpiral archimedesSpiral;
 
