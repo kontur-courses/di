@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "-r alice.txt -w alice.png"
+    }
+  }
+}
