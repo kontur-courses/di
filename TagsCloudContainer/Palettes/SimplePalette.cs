@@ -9,8 +9,13 @@ namespace TagsCloudContainer.Palettes
 {
     class SimplePalette : IPalette
     {
-        public Font Font => throw new NotImplementedException();
+        public Font Font { get; }
+        public Brush Brush { get; }
 
-        public Brush Brush => throw new NotImplementedException();
+        public SimplePalette(Font font, Brush brush)
+        {
+            Font = font;
+            Brush = brush;
+        }
     }
 }
