@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHunspell;
 
 namespace TagsCloudContainer.WordPreprocessors
 {
     class SimpleWordPreprocessor : IWordPreprocessor
     {
-        public List<string> WordPreprocessing(string[] words)
+        public string WordPreprocessing(string word)
         {
-            return words.Select(word => word.ToLower()).ToList();
+            return word.ToLower();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.WordPreprocessors;
 
 namespace TagsCloudContainer.WordCounters
@@ -19,6 +20,7 @@ namespace TagsCloudContainer.WordCounters
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<SimpleWordCounter>().As<IWordCounter>();
+            containerBuilder.RegisterType<SimpleWordFilter>().As<IWordFilter>();
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
 
             var container = containerBuilder.Build();

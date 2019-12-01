@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagsCloudContainer.WordPreprocessors
+namespace TagsCloudContainer.WordFilters
 {
-    interface IWordPreprocessor
+    interface IWordFilter
     {
-        string WordPreprocessing(string word);
+        bool IsCorrect(string word);
     }
 }
