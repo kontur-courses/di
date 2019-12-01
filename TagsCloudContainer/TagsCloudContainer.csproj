@@ -64,6 +64,8 @@
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="Palettes\IPalette.cs" />
     <Compile Include="Palettes\SimplePalette.cs" />
+    <Compile Include="Readers\IReader.cs" />
+    <Compile Include="Readers\SimpleReader.cs" />
     <Compile Include="TagToken.cs" />
     <Compile Include="Visualizers\IVisualizer.cs" />
     <Compile Include="Visualizers\SimpleVsualizer.cs" />

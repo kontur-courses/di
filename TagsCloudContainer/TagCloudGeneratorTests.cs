@@ -13,6 +13,7 @@ using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.WordCounters;
 using TagsCloudContainer.Palettes;
 using TagsCloudContainer.Visualizers;
+using TagsCloudContainer.Readers;
 
 namespace TagsCloudContainer
 {
@@ -35,6 +36,7 @@ namespace TagsCloudContainer
                 }
                 );
             containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>();
+            containerBuilder.RegisterType<SimpleReader>().As<IReader>();
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
 
             var container = containerBuilder.Build();
