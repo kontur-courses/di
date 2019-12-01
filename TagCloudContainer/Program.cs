@@ -1,10 +1,12 @@
-﻿namespace TagCloudContainer
+﻿using System.Drawing;
+
+namespace TagCloudContainer
 {
     class Program
     {
         static void Main(string[] args)
         {
-            LayouterVisualizer.CreateCloudWithWordsFromFile("words.txt", 8, "words.bmp");
+            LayouterVisualizer.CreateCloudWithWordsFromFile("words.txt", new Font("ComicSans", 8), "words.bmp");
         }
     }
 }

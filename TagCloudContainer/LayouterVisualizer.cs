@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -8,10 +9,10 @@ namespace TagCloudContainer
 {
     public static class LayouterVisualizer
     {
-        public static void CreateCloudWithWordsFromFile(string wordSourceFile, int baseFontSize, string outputFile)
+        public static void CreateCloudWithWordsFromFile(string wordSourceFile, Font font, string outputFile)
         {
             var words = File.ReadLines(wordSourceFile);
-            var bitmap = CreateBitmapOfCloudWithWords(words, baseFontSize);
+            var bitmap = CreateBitmapOfCloudWithWords(words, font);
             bitmap.Save(outputFile);
         }
 
@@ -30,6 +31,20 @@ namespace TagCloudContainer
 
         private static Bitmap CreateSizedBitmapForLayouter(CircularCloudLayouter layouter)
         {
+            int maxX = layouter.Layout.Select(r => r.Right).Max();
+            int minX = layouter.Layout.Select(r => r.Left).Min();
+            int maxY = layouter.Layout.Select(r => r.Bottom).Max();
+            int minY = layouter.Layout.Select(r => r.Top).Min();
+
+            int bmpWidth = maxX - minX;
+            int bmpHeight = maxY - minY;
+
+            return new Bitmap(bmpWidth, bmpHeight);
+        }
+
+        private static Bitmap CreateSizedBitmapForWordLayouter(WordCloudLayouter wordLayouter)
+        {
+            var layouter = wordLayouter.RectangleLayouter;
             int maxX = layouter.Layout.Select(r => r.Right).Max();
             int minX = layouter.Layout.Select(r => r.Left).Min();
             int maxY = layouter.Layout.Select(r => r.Bottom).Max();
@@ -60,24 +75,24 @@ namespace TagCloudContainer
             }
         }
 
-
-        private static Bitmap CreateBitmapOfCloudWithWords(IEnumerable<string> words, int baseFontSize)
+        private static Bitmap CreateBitmapOfCloudWithWords(IEnumerable<string> words, Font font)
         {
-            var layouter = new CircularCloudLayouter();
-            var pairs = AddRectanglesToLayouter(layouter, words, baseFontSize);
+            var layouter = new WordCloudLayouter(font);
+            var wordsAndCounts = WordProcessor.CountWordOccurrences(words);
+            var wordsAndRectangles = layouter.AddWords(wordsAndCounts);
 
-            var bmp = CreateSizedBitmapForLayouter(layouter);
+            var bmp = CreateSizedBitmapForWordLayouter(layouter);
             var graphics = Graphics.FromImage(bmp);
 
             FillBackground(graphics, bmp, Color.White);
-            WriteWordsAtBitmap(pairs, layouter, bmp, graphics);
+            WriteWordsAtBitmap(wordsAndRectangles, font, bmp, graphics);
 
             graphics.Flush();
             return bmp;
         }
 
-        private static void WriteWordsAtBitmap(List<Tuple<string, Rectangle>> pairs,
-            CircularCloudLayouter layouter,
+        private static void WriteWordsAtBitmap(IEnumerable<(string word, Rectangle rectangle)> pairs,
+            Font font,
             Bitmap bmp,
             Graphics graphics)
         {
@@ -85,9 +100,7 @@ namespace TagCloudContainer
             foreach (var (word, rect) in pairs)
             {
                 rect.Offset(+bmp.Width / 2, +bmp.Height / 2);
-                var font = new Font("Helvetica", (float) rect.Width * 3 / word.Length / 2);
-                graphics.DrawString(word, font, new SolidBrush(GetRandomColor(random)),
-                    rect.X, rect.Y);
+                graphics.DrawString(word, font, new SolidBrush(GetRandomColor(random)), rect.X, rect.Y);
             }
         }
 
@@ -97,23 +110,6 @@ namespace TagCloudContainer
                 random.Next(255),
                 random.Next(255),
                 random.Next(255));
-        }
-
-        private static List<Tuple<string, Rectangle>> AddRectanglesToLayouter(
-            CircularCloudLayouter layouter,
-            IEnumerable<string> words,
-            int baseFontSize)
-        {
-            var graphicsBase = Graphics.FromImage(new Bitmap(1, 1));
-            var random = new Random();
-            var fontBase = new Font("Helvetica", baseFontSize);
-            return words.Select(s =>
-                {
-                    var variation = random.Next(16);
-                    return Tuple.Create(s, graphicsBase.MeasureString(s, fontBase) * variation);
-                }).OrderBy(r => Tuple.Create(r.Item1, -r.Item2.Height))
-                .Select(s => Tuple.Create(s.Item1, layouter.PutNextRectangle(s.Item2.ToSize())))
-                .ToList();
         }
     }
 }

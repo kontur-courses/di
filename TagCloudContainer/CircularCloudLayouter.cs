@@ -9,10 +9,6 @@ namespace TagCloudContainer
     {
         private float spiralCounter = 0;
 
-        public CircularCloudLayouter()
-        {
-        }
-
         public List<Rectangle> Layout { get; } = new List<Rectangle>();
 
         public Rectangle PutNextRectangle(Size rectangleSize)
