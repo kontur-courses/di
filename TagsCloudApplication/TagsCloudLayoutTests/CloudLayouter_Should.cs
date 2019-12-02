@@ -4,10 +4,12 @@ using System.Linq;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudLayout;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Interfaces;
 using System.IO;
+using TagsCloudLayout;
+using TagsCloudLayout.CloudLayouters;
+using TagsCloudLayout.PointLayouters;
 
 namespace TagsCloudLayoutTests
 {
@@ -28,7 +30,7 @@ namespace TagsCloudLayoutTests
         public void SetUp()
         {
             center = new Point(0, 0);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center));
             rectangles = new List<Rectangle>();
             size = CloudLayouterUtilities.GetRandomSize(5, 100, 5, 100);
         }
@@ -58,7 +60,7 @@ namespace TagsCloudLayoutTests
         public void PutFirstRectangle_NearCenter(int x, int y)
         {
             center = new Point(x, y);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center));
             var rectangle = layouter.PutNextRectangle(size);
             rectangles.Add(rectangle);
 
@@ -83,7 +85,7 @@ namespace TagsCloudLayoutTests
         public void PutRectangles_DenselyAroundCenter(int x, int y)
         {
             center = new Point(x, y);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center));
 
             rectangles = CloudLayouterUtilities.GenerateRandomLayout(
                     center, rnd.Next(25, 50), minWidth, maxWidth, minHeight, maxHeight);

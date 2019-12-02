@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudLayout.PointLayouters;
 
-namespace TagsCloudLayout
+namespace TagsCloudLayout.CloudLayouters
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter: ICloudLayouter
     {
         private readonly Point center;
-        private readonly ArchimedeanSpiral spiral;
+        private readonly ICircularPointLayouter pointLayouter;
         private readonly List<Rectangle> rectangles;
 
-        public CircularCloudLayouter(Point center, 
-            double stepLength=0.1, double angleShiftForEachPoint = 2 * Math.PI / 1000)
+        public CircularCloudLayouter(ICircularPointLayouter pointLayouter)
         {
-            this.center = center;
-            spiral = new ArchimedeanSpiral(center, stepLength, angleShiftForEachPoint);
+            center = pointLayouter.Center;
+            this.pointLayouter = pointLayouter;
             rectangles = new List<Rectangle>();
         }
 
@@ -35,7 +35,7 @@ namespace TagsCloudLayout
             var resultRectangle = new Rectangle(center, rectangleSize)
                 .OffsetByMassCenter();
             while (IsIntersectingWithLayout(resultRectangle))
-                resultRectangle = new Rectangle(spiral.CalculateNextPoint(), rectangleSize)
+                resultRectangle = new Rectangle(pointLayouter.CalculateNextPoint(), rectangleSize)
                     .OffsetByMassCenter();
 
             return resultRectangle;

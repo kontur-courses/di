@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudLayout.PointLayouters;
 
-namespace TagsCloudLayout
+namespace TagsCloudLayout.CloudLayouters
 {
     public static class CloudLayouterUtilities
     {
@@ -11,7 +12,7 @@ namespace TagsCloudLayout
 
         public static List<Rectangle> LayoutRectangles(Point center, IEnumerable<Size> sizes)
         {
-            var layouter = new CircularCloudLayouter(center);
+            var layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center));
             return sizes.Select(size => layouter.PutNextRectangle(size)).ToList();
         }
 

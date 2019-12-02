@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8B34D40A-8013-4C69-AFF0-F4F9B9E50C8B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TagsCloudVisualization</RootNamespace>
-    <AssemblyName>TagsCloudVisualization</AssemblyName>
+    <RootNamespace>TagsCloudLayout</RootNamespace>
+    <AssemblyName>TagsCloudLayout</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
@@ -44,10 +44,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchimedeanSpiral.cs" />
-    <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="PointLayouters\ArchimedeanSpiral.cs" />
+    <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="PointExtensions.cs" />
-    <Compile Include="CloudLayouterUtilities.cs" />
+    <Compile Include="CloudLayouters\CloudLayouterUtilities.cs" />
+    <Compile Include="PointLayouters\ICircularPointLayouter.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RectangleVisualizator.cs" />

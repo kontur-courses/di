@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TagsCloudVisualizationTests</RootNamespace>
-    <AssemblyName>TagsCloudVisualizationTests</AssemblyName>
+    <RootNamespace>TagsCloudLayoutTests</RootNamespace>
+    <AssemblyName>TagsCloudLayoutTests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
