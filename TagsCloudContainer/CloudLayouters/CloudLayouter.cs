@@ -18,20 +18,30 @@ namespace TagsCloudContainer.CloudLayouters
         public IEnumerable<CloudVisualizationWord> GetWords(IEnumerable<CloudWord> cloudWords)
         {
             var ordered = cloudWords.OrderByDescending(w => w.Count);
-            double maxCount = ordered.First().Count;
-            double minCount = ordered.Last().Count;
-            var countDifference = maxCount - minCount == 0 ? 1 : maxCount - minCount;
-            var sizeMultiplier = settings.RectangleSquareMultiplier/countDifference;
+            var sizeMultiplier = GetSizeMultiplier(ordered);
             foreach (var word in ordered)
             {
-                var length = word.Word.Length;
-                var ratio = word.Count * sizeMultiplier / length;
-                var width = (int)(word.Count * sizeMultiplier - ratio);
-                var height = (int)ratio;
-                var size = new Size(width, height);
+                var size = GetSize(word, sizeMultiplier);
                 var rect = settings.Algorithm.PutNextRectangle(size);
                 yield return new CloudVisualizationWord(rect, word.Word);
             }
+        }
+
+        private static Size GetSize(CloudWord word, double sizeMultiplier)
+        {
+            var length = word.Word.Length;
+            var ratio = word.Count * sizeMultiplier / length;
+            var width = (int) (word.Count * sizeMultiplier - ratio);
+            var height = (int) ratio;
+            return new Size(width, height);
+        }
+
+        private double GetSizeMultiplier(IOrderedEnumerable<CloudWord> ordered)
+        {
+            var maxCount = (double)ordered.First().Count;
+            var minCount = (double)ordered.Last().Count;
+            var countDifference = maxCount - minCount == 0 ? 1 : maxCount - minCount;
+            return settings.RectangleSquareMultiplier / countDifference;
         }
     }
 }
