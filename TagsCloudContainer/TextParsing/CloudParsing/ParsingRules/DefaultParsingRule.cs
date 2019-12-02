@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TagsCloudContainer.TextParsing.CloudParsing.ParsingRules
 {
@@ -18,12 +19,14 @@ namespace TagsCloudContainer.TextParsing.CloudParsing.ParsingRules
         }
         public bool Check(string word)
         {
+            if (string.IsNullOrWhiteSpace(word)) return false;
             var lower = word.ToLower();
             return !wordsExceptions.Contains(lower);
         }
 
         public string Apply(string word)
         {
+            if (word == null) throw new ArgumentNullException(nameof(word));
             return word.ToLower();
         }
     }
