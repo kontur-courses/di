@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{ACD36824-54F7-4A2E-A0DD-83452B43CBB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3ACF0E-1D07-4A1A-8320-F99DC2DE791F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD36824-54F7-4A2E-A0DD-83452B43CBB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD36824-54F7-4A2E-A0DD-83452B43CBB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD36824-54F7-4A2E-A0DD-83452B43CBB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD36824-54F7-4A2E-A0DD-83452B43CBB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32E3F49E-9675-4265-9B10-F20A3918C881}
 	EndGlobalSection
 EndGlobal

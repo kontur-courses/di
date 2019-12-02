@@ -11,7 +11,7 @@ namespace FractalPainting.App.Fractals
         private readonly DragonSettings settings;
         private readonly float size;
         private Size imageSize;
-        private Palette palette;
+        private readonly Palette palette;
         public DragonPainter(IImageHolder imageHolder, DragonSettings settings,Palette palette)
         {
             this.imageHolder = imageHolder;

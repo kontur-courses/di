@@ -7,10 +7,10 @@ namespace FractalPainting.App.Actions
 {
     public class KochFractalAction : IUiAction
     {
-        private KochPainter painter { get; }
+        private KochPainter Painter { get; }
         public KochFractalAction(KochPainter painter)
         {
-            this.painter = painter;
+            this.Painter = painter;
         }
         //public void SetDependency(IImageHolder dependency)
         //{
@@ -28,7 +28,7 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            painter.Paint();
+            Painter.Paint();
         }
     }
 }

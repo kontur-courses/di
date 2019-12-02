@@ -12,8 +12,8 @@ namespace FractalPainting.App.Actions
     }
     public class DragonFractalAction : IUiAction
     {
-        private IDragonPainterFactory factory;
-        private Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator;
+        private readonly IDragonPainterFactory factory;
+        private readonly Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator;
 
         public DragonFractalAction(IDragonPainterFactory factory, 
             Func<Random,DragonSettingsGenerator> createDragonSettingsGenerator)

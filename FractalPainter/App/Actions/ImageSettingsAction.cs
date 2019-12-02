@@ -5,8 +5,8 @@ namespace FractalPainting.App.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
-        private IImageHolder imageHolder;
-        private ImageSettings imageSettings;
+        private readonly IImageHolder imageHolder;
+        private readonly ImageSettings imageSettings;
         public ImageSettingsAction(IImageHolder imageHolder, ImageSettings imageSettings)
         {
             this.imageHolder = imageHolder;
