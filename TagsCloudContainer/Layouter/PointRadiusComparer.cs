@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer.Layouter
 {
     public class PointRadiusComparer : IComparer<Point>
     {

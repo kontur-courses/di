@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using TagsCloudVisualization;
+using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer
 {
