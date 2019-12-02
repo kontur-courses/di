@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.CloudVisualizers
 {
-    public class CloudVisualizer
+    public class CloudVisualizer : ICloudVisualizer
     {
         private CloudVisualizerSettings settings;
         public CloudVisualizer(CloudVisualizerSettings settings)

@@ -1,9 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using TagsCloudContainer.CloudVisualizers;
+using TagsCloudContainer.TextParsing.CloudParsing;
 
 namespace TagsCloudContainer.CloudLayouters
 {
     public interface ICloudLayouter
     {
-        Rectangle PutNextRectangle(Size rectangleSize);
+        IEnumerable<CloudVisualizationWord> GetWords(IEnumerable<CloudWord> cloudWords);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.CloudVisualizers.ImageSaving
 {
-    public class ImageSaver
+    public class ImageSaver : IImageSaver
     {
         private ImageSaverSettings settings;
         public ImageSaver(ImageSaverSettings settings)

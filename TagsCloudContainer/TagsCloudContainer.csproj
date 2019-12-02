@@ -63,12 +63,15 @@
     <Compile Include="CloudLayouters\CircularCloudLayouter\CircularCloudLayouterVisualizer.cs" />
     <Compile Include="CloudLayouters\CloudLayouter.cs" />
     <Compile Include="CloudLayouters\CloudLayouterSettings.cs" />
+    <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="CloudLayouters\ICloudLayoutingAlgorithm.cs" />
     <Compile Include="CloudVisualizers\BitmapMakers\DefaultBitmapMaker.cs" />
     <Compile Include="CloudVisualizers\CloudVisualizationWord.cs" />
     <Compile Include="CloudVisualizers\CloudVisualizer.cs" />
     <Compile Include="CloudVisualizers\CloudVisualizerSettings.cs" />
     <Compile Include="CloudVisualizers\IBitmapMaker.cs" />
+    <Compile Include="CloudVisualizers\ICloudVisualizer.cs" />
+    <Compile Include="CloudVisualizers\ImageSaving\IImageSaver.cs" />
     <Compile Include="CloudVisualizers\ImageSaving\ImageSaver.cs" />
     <Compile Include="CloudVisualizers\ImageSaving\ImageSaverSettings.cs" />
     <Compile Include="CloudVisualizers\Palette.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="TextParsing\CloudParsing\CloudWordsParserSettings.cs" />
     <Compile Include="TextParsing\CloudParsing\ICloudWordParsingRule.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWordsParser.cs" />
+    <Compile Include="TextParsing\CloudParsing\ICloudWordsParser.cs" />
     <Compile Include="TextParsing\CloudParsing\ParsingRules\DefaultParsingRule.cs" />
     <Compile Include="TextParsing\FileWordsParsers\TxtWordParser.cs" />
     <Compile Include="TextParsing\IFileWordsParser.cs" />

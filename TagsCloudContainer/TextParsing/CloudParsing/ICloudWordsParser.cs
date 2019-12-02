@@ -4,6 +4,6 @@ namespace TagsCloudContainer.TextParsing.CloudParsing
 {
     public interface ICloudWordsParser
     {
-        IEnumerable<CloudWord> ParseFrom(IFileWordsParser fileWordsParser, string path);
+        IEnumerable<CloudWord> Parse();
     }
 }

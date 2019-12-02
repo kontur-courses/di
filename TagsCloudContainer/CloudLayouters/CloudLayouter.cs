@@ -6,7 +6,7 @@ using TagsCloudContainer.TextParsing.CloudParsing;
 
 namespace TagsCloudContainer.CloudLayouters
 {
-    public class CloudLayouter
+    public class CloudLayouter : ICloudLayouter
     {
         private CloudLayouterSettings settings;
         

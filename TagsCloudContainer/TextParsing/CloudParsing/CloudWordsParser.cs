@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.TextParsing.CloudParsing
 {
-    public class CloudWordsParser
+    public class CloudWordsParser : ICloudWordsParser
     {
         private Dictionary<string, CloudWord> words;
         private CloudWordsParserSettings settings;
