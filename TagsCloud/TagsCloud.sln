@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTextPreparation", "TagsCloudTextPreparation\TagsCloudTextPreparation.csproj", "{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
