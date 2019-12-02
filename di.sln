@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud", "TagsCloud\TagsCloud.csproj", "{0A4BBA84-B783-4A44-9159-DCF9AB0E1629}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTests", "TagsCloudTests\TagsCloudTests.csproj", "{EFD27B82-F300-4392-9E43-DF94ECF9DCD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0A4BBA84-B783-4A44-9159-DCF9AB0E1629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A4BBA84-B783-4A44-9159-DCF9AB0E1629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A4BBA84-B783-4A44-9159-DCF9AB0E1629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFD27B82-F300-4392-9E43-DF94ECF9DCD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD27B82-F300-4392-9E43-DF94ECF9DCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD27B82-F300-4392-9E43-DF94ECF9DCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD27B82-F300-4392-9E43-DF94ECF9DCD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
