@@ -15,6 +15,7 @@ namespace TagsCloud
     {
         public static void Main(string[] args)
         {
+            var sourceTextFilePath = @"../../text.txt";
             var builder = new ContainerBuilder();
             builder.RegisterType<MainForm>().AsSelf();
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>();
@@ -39,10 +40,9 @@ namespace TagsCloud
             builder
                 .Register(c => WordsFilter.GetDefaultFilter())
                 .As<Func<string, bool>>();
-            builder.RegisterType<TxtReader>().As<ITextReader>();
-            builder.Register(c => "text.txt").As<string>();
+            builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>();
             var container = builder.Build();
-            
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container.Resolve<MainForm>());
