@@ -19,7 +19,10 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
         {
             settings = new CloudLayouterSettings();
             settings.Center = new Point(0, 0);
-            settings.Algorithm = new CircularCloudLayouter(settings.Center);
+            settings.Algorithm = new CircularCloudLayouter(
+                settings.Center, 
+                settings.RectangleStep, 
+                settings.RectangleBroadness);
             settings.RectangleSquareMultiplier = 100;
             layouter = new CloudLayouter(settings);
         }

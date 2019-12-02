@@ -13,12 +13,12 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
     [TestFixture]
     public class CircularCloudLayouter_Test
     {
-        private CloudLayouters.CircularCloudLayouter.CircularCloudLayouter circularCloudLayouter;
+        private CircularCloudLayouter circularCloudLayouter;
 
         [SetUp]
         public void SetUp()
         {
-            circularCloudLayouter = new CloudLayouters.CircularCloudLayouter.CircularCloudLayouter(new Point(0, 0));
+            circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 0.1,1);
         }
 
         [Test]
