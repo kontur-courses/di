@@ -17,8 +17,10 @@ namespace TagsCloudForm
             builder.RegisterType<RectangleForWordsCreator>().As<IRectangleForWordsCreator>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>();
+            builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>();
             builder.RegisterType<CloudForm>().As<CloudForm>();
             builder.RegisterType<CloudPainterFactory>().As<CloudPainterFactory>();
+            builder.RegisterType<CloudWithWordsPainterFactory>().As<CloudWithWordsPainterFactory>();
             builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
 
@@ -40,18 +42,19 @@ namespace TagsCloudForm
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
 
 
+            var words = new Dictionary<string, int>
+            {
+                {"hello", 6 },
+                {"first", 4 },
+                {"hell", 2 },
+                {"bingo", 4 },
+                {"POLIOMIELIT", 5 }
+            };
 
-
-
+            builder.Register(x=>words).As<Dictionary<string, int>>().SingleInstance();
 
             var container = builder.Build();
 
-            var words = new Dictionary<string, int>
-            {
-                {"hello", 3 },
-                {"first", 2 },
-                {"hell", 1 }
-            };
             //var rects = container.Resolve<RectangleForWordsCreator>().CreateRectanglesForWords(words);
             var form = container.Resolve<CloudForm>(
                 new TypedParameter(typeof(IContainer), container),
