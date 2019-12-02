@@ -64,10 +64,6 @@
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
     <Compile Include="Actions\CloudPainter.cs" />
     <Compile Include="Actions\CloudPainterFactory.cs" />
-    <Compile Include="Actions\DragonFractalAction.cs" />
-    <Compile Include="Actions\DragonPainter.cs" />
-    <Compile Include="Actions\DragonSettingsGenerator.cs" />
-    <Compile Include="Actions\IDragonPainterFactory.cs" />
     <Compile Include="app.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -85,7 +81,6 @@
     <Compile Include="Common\IObjectSerializer.cs" />
     <Compile Include="Common\Palette.cs" />
     <Compile Include="Common\SettingsForm.cs" />
-    <Compile Include="DragonSettings.cs" />
     <Compile Include="PictureBoxImageHolder.cs">
       <SubType>Component</SubType>
     </Compile>

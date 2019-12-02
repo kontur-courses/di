@@ -14,21 +14,17 @@ namespace TagsCloudForm
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            //builder.RegisterType<CircularCloudLayouter>().As<CircularCloudLayouter>();
             builder.RegisterType<RectangleForWordsCreator>().As<IRectangleForWordsCreator>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
-            builder.RegisterType<DragonFractalAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>();
             builder.RegisterType<CloudForm>().As<CloudForm>();
             builder.RegisterType<CloudPainterFactory>().As<CloudPainterFactory>();
             builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            //builder.RegisterType<CircularCloudLayouter>();
 
-            builder.RegisterType<CircularCloudLayouter>(); // not a singleton
+            builder.RegisterType<CircularCloudLayouter>();
 
 
-            //builder.Register(x=>new CircularCloudLayouter(new Point(50,50))).As<ICircularCloudLayouter>();
 
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
 
@@ -45,13 +41,11 @@ namespace TagsCloudForm
 
 
 
-            //builder.Register(x => new Point(30, 30)).As<Point>();
 
 
 
             var container = builder.Build();
 
-            //var layouter = container.Resolve<ICircularCloudLayouter>(new TypedParameter(typeof(Point), new Point(40, 40)));
             var words = new Dictionary<string, int>
             {
                 {"hello", 3 },
