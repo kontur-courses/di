@@ -37,12 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -57,19 +61,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="Actions\CircularCloudLayouterAction.cs" />
+    <Compile Include="Actions\CloudPainter.cs" />
+    <Compile Include="Actions\CloudPainterFactory.cs" />
+    <Compile Include="Actions\DragonFractalAction.cs" />
+    <Compile Include="Actions\DragonPainter.cs" />
+    <Compile Include="Actions\DragonSettingsGenerator.cs" />
+    <Compile Include="Actions\IDragonPainterFactory.cs" />
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
+    <Compile Include="Common\FileBlobStorage.cs" />
+    <Compile Include="Common\IBlobStorage.cs" />
+    <Compile Include="Common\IImageDirectoryProvider.cs" />
+    <Compile Include="Common\IImageHolder.cs" />
+    <Compile Include="Common\IImageSettingsProvider.cs" />
+    <Compile Include="Common\ImageSettings.cs" />
+    <Compile Include="Common\IObjectSerializer.cs" />
+    <Compile Include="Common\Palette.cs" />
+    <Compile Include="Common\SettingsForm.cs" />
+    <Compile Include="DragonSettings.cs" />
+    <Compile Include="PictureBoxImageHolder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SettingsManager.cs" />
+    <Compile Include="UiActions\EnumExtensions.cs" />
+    <Compile Include="Actions\PaletteSettingsAction.cs" />
+    <Compile Include="Actions\SaveImageAction.cs" />
+    <Compile Include="UiActions\IUiAction.cs" />
+    <Compile Include="UiActions\MenuCategory.cs" />
+    <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="CloudForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ICircularCloudLayouter.cs" />
-    <Compile Include="PointExtension.cs" />
-    <Compile Include="PositionSearchResult.cs" />
+    <Compile Include="CircularCloudLayouter\ICircularCloudLayouter.cs" />
+    <Compile Include="CircularCloudLayouter\IRectangleForWordsCreator.cs" />
+    <Compile Include="CircularCloudLayouter\IWordsFrequencyParser.cs" />
+    <Compile Include="CircularCloudLayouter\PointExtension.cs" />
+    <Compile Include="CircularCloudLayouter\PositionSearchResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleExtension.cs" />
-    <Compile Include="Segment.cs" />
-    <Compile Include="SegmentStacker.cs" />
+    <Compile Include="CircularCloudLayouter\RectangleExtension.cs" />
+    <Compile Include="CircularCloudLayouter\RectangleForWordsCreator.cs" />
+    <Compile Include="CircularCloudLayouter\Segment.cs" />
+    <Compile Include="CircularCloudLayouter\SegmentStacker.cs" />
+    <Compile Include="Tests\RectangleForWordsCreatorTests.cs" />
+    <Compile Include="UiActions\UiActionExtensions.cs" />
+    <Compile Include="CircularCloudLayouter\WordsFrequencyParser.cs" />
+    <Compile Include="Common\XmlObjectSerializer.cs" />
     <EmbeddedResource Include="CloudForm.resx">
       <DependentUpon>CloudForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +121,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="app.settings" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -96,6 +136,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

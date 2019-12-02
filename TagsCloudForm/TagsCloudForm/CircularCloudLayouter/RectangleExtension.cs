@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
     public static class RectangleExtension
     {

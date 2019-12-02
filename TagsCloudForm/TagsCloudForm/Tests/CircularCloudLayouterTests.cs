@@ -8,7 +8,7 @@ using System.Drawing.Imaging;
 using NUnit.Framework.Interfaces;
 using System.IO;
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
     [TestFixture]
     public class CircularCloudLayouterTests

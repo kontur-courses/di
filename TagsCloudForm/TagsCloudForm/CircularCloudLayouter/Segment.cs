@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
     public class Segment
     {

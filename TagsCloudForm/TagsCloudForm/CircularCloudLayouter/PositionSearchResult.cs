@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
     public class PositionSearchResult
     {

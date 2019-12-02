@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
 
     public class CircularCloudLayouter : ICircularCloudLayouter
     {
+        public delegate CircularCloudLayouter Factory(Point center);
+
         private readonly Point CloudCenter;
         private readonly HashSet<Segment> BorderSegments;
         private readonly HashSet<Segment> ProbablyBuggedSegments;
@@ -16,6 +18,15 @@ namespace TagsCloudVisualization
         public CircularCloudLayouter(Point center)
         {
             CloudCenter = center;
+            BorderSegments = new HashSet<Segment>();
+            ProbablyBuggedSegments = new HashSet<Segment>();
+            isFirstRectangle = true;
+            AddedRectangles = new List<Rectangle>();
+        }
+
+        public CircularCloudLayouter()
+        {
+            CloudCenter = new Point(100, 100);
             BorderSegments = new HashSet<Segment>();
             ProbablyBuggedSegments = new HashSet<Segment>();
             isFirstRectangle = true;

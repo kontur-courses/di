@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudForm
 {
     public static class SegmentStacker
     {
