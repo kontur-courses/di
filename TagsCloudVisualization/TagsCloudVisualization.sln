@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{B069C294-E055-4A7E-B054-811C7569733F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualizationTests", "TagCloudVisualizationTests\TagCloudVisualizationTests.csproj", "{6E8B2C0C-E721-48B0-970D-D6C26C68302A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YandexStem", "YandexStem", "{3B8EEB03-561D-41CD-B0AB-67C3EC538768}"
+	ProjectSection(SolutionItems) = preProject
+		TagsCloudVisualization\bin\Debug\YandexStem\input.txt = TagsCloudVisualization\bin\Debug\YandexStem\input.txt
+		TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe = TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe
+		TagsCloudVisualization\bin\Debug\YandexStem\output.txt = TagsCloudVisualization\bin\Debug\YandexStem\output.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B069C294-E055-4A7E-B054-811C7569733F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B069C294-E055-4A7E-B054-811C7569733F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B069C294-E055-4A7E-B054-811C7569733F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B069C294-E055-4A7E-B054-811C7569733F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8B2C0C-E721-48B0-970D-D6C26C68302A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8B2C0C-E721-48B0-970D-D6C26C68302A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8B2C0C-E721-48B0-970D-D6C26C68302A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8B2C0C-E721-48B0-970D-D6C26C68302A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9444E6A-0EF8-4A15-A67F-C7C3BA6E9817}
+	EndGlobalSection
+EndGlobal
