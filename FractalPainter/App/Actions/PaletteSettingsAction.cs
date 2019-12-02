@@ -1,15 +1,16 @@
 ﻿using FractalPainting.Infrastructure.Common;
+using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    public class PaletteSettingsAction : IUiAction
+    public class PaletteSettingsAction : IUiAction, INeed<Palette>
     {
         private Palette palette;
 
-        public PaletteSettingsAction(Palette palette)
+        public void SetDependency(Palette dependency)
         {
-            this.palette = palette;
+            palette = dependency;
         }
 
         public string Category => "Настройки";
