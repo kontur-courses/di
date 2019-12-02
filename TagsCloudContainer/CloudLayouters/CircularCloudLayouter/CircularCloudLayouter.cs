@@ -12,11 +12,14 @@ namespace TagsCloudContainer.CloudLayouters.CircularCloudLayouter
         public List<Rectangle> Rectangles { get; }
         public Point Center { get; }
 
-        public CircularCloudLayouter(Point center)
+        private readonly int broadness;
+
+        public CircularCloudLayouter(Point center, double step, int broadness)
         {
             Center = center;
-            archimedesSpiral = new ArchimedesSpiral(center, 0.1);
+            archimedesSpiral = new ArchimedesSpiral(center, step);
             Rectangles = new List<Rectangle>();
+            this.broadness = broadness;
         }
         
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -64,7 +67,7 @@ namespace TagsCloudContainer.CloudLayouters.CircularCloudLayouter
             var rectangleCenter = rectangle.GetCenter();
             var xDirection = rectangleCenter.X >= Center.X ? rectangleCenter.X == Center.X ? 0 : -1 : 1;
             var shouldPushByX = ShouldPushRectangleByX(rectangle, xDirection);
-            return shouldPushByX ? xDirection : 0;
+            return shouldPushByX ? broadness * xDirection : 0;
         }
         
         private int GetRelativeRectangleOffsetDeltaY(Rectangle rectangle)
@@ -72,7 +75,7 @@ namespace TagsCloudContainer.CloudLayouters.CircularCloudLayouter
             var rectangleCenter = rectangle.GetCenter();
             var yDirection = rectangleCenter.Y >= Center.Y ? rectangleCenter.Y == Center.Y ? 0 : -1 : 1;
             var shouldPushByY = ShouldPushRectangleByY(rectangle, yDirection);
-            return shouldPushByY ? yDirection : 0;
+            return shouldPushByY ? broadness * yDirection : 0;
         }
 
         private bool ShouldPushRectangleByX(Rectangle rectangle, int dx)
