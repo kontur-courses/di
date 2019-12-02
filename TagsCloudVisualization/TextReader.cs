@@ -29,6 +29,11 @@ namespace TagsCloudVisualization
             return text.Split("\n");
         }
 
+        public string GetText()
+        {
+            return text;
+        }
+
         private string GetTextsPath(string name)
         {
             var directoryName =
