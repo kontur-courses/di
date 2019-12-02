@@ -36,6 +36,7 @@ namespace TagsCloudForm
 
             builder.RegisterType<SettingsManager>().As<SettingsManager>();
 
+
             builder.Register(x => x.Resolve<SettingsManager>().Load()).As<AppSettings, IImageDirectoryProvider>().SingleInstance();
 
             builder.RegisterType<FileBlobStorage>().As<IBlobStorage>();

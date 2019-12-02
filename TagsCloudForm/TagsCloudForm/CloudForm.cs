@@ -15,27 +15,15 @@ namespace TagsCloudForm
         public CloudForm(IUiAction[] actions, PictureBoxImageHolder pictureBox,
             ImageSettings imageSettings)
         {
+            ClientSize = new Size(imageSettings.Width, imageSettings.Height);
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
             Controls.Add(mainMenu);
-            InitializeComponent();
             pictureBox.RecreateImage(imageSettings);
             pictureBox.Dock = DockStyle.Fill;
+            //pictureBox.Size = new Size(600, 600);
             Controls.Add(pictureBox);
-        }
-
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            // 
-            // CloudForm
-            // 
-            ClientSize = new Size(584, 561);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Name = "CloudForm";
-            ResumeLayout(false);
-
         }
     }
 }
