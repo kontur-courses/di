@@ -28,11 +28,12 @@ namespace FractalPainting.App
                     Save(defaultSettings);
                     return defaultSettings;
                 }
+
                 return serializer.Deserialize<AppSettings>(data);
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Не удалось загрузить настройки");
+                MessageBox.Show(e.Message, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё");
                 return CreateDefaultSettings();
             }
         }

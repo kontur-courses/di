@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.UiActions;
+using TagCloudForm.Holder;
+using TagCloudForm.Settings;
 
-namespace FractalPainting.App.Actions
+namespace TagCloudForm.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private IImageDirectoryProvider imageDirectoryProvider;
-        private IImageHolder imageHolder;
+        private readonly IImageDirectoryProvider imageDirectoryProvider;
+        private readonly IImageHolder imageHolder;
 
         public SaveImageAction(IImageDirectoryProvider imageDirectoryProvider, IImageHolder imageHolder)
         {
@@ -26,9 +26,9 @@ namespace FractalPainting.App.Actions
             {
                 CheckFileExists = false,
                 InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
-                DefaultExt = "bmp",
-                FileName = "image.bmp",
-                Filter = "Изображения (*.bmp)|*.bmp"
+                DefaultExt = "png",
+                FileName = "image",
+                Filter = "Изображения (*.png)|*.png"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

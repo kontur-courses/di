@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Infrastructure.UiActions;
 using Ninject;
+using Ninject.Extensions.Conventions;
+using Ninject.Extensions.Factory;
 
 namespace FractalPainting.App
 {
@@ -14,14 +18,36 @@ namespace FractalPainting.App
         {
             try
             {
-                var container = new StandardKernel();
-
-                // start here
-                // container.Bind<TService>().To<TImplementation>();
-
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+
+                var container = new StandardKernel();
+                container.Bind(kernel => kernel
+                    .FromThisAssembly()
+                    .SelectAllClasses()
+                    .InheritedFrom<IUiAction>()
+                    .BindAllInterfaces());
+                container.Bind<Palette>().ToSelf()
+                    .InSingletonScope();
+                container.Bind<IImageHolder, PictureBoxImageHolder>()
+                    .To<PictureBoxImageHolder>()
+                    .InSingletonScope();
+
+                container.Bind<IObjectSerializer>().To<XmlObjectSerializer>()
+                    .WhenInjectedInto<SettingsManager>();
+                container.Bind<IBlobStorage>().To<FileBlobStorage>()
+                    .WhenInjectedInto<SettingsManager>();
+                container.Bind<AppSettings, IImageDirectoryProvider>()
+                    .ToMethod(context => context.Kernel.Get<SettingsManager>().Load())
+                    .InSingletonScope();
+                container.Bind<ImageSettings>()
+                    .ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings)
+                    .InSingletonScope();
+
+                container.Bind<IDragonPainterFactory>().ToFactory();
+
+                var mainForm = container.Get<MainForm>();
+                Application.Run(mainForm);
             }
             catch (Exception e)
             {
