@@ -1,19 +1,25 @@
 ﻿using System;
 using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class DragonFractalAction : IUiAction, INeed<IImageHolder>
+    public interface IDragonPainterFactory
     {
-        private IImageHolder imageHolder;
+        DragonPainter Create(DragonSettings dragonSettings);
+    }
+    public class DragonFractalAction : IUiAction
+    {
+        private IDragonPainterFactory factory;
+        private Func<Random, DragonSettingsGenerator> createDragonSettingsGenerator;
 
-        public void SetDependency(IImageHolder dependency)
+        public DragonFractalAction(IDragonPainterFactory factory, 
+            Func<Random,DragonSettingsGenerator> createDragonSettingsGenerator)
         {
-            imageHolder = dependency;
+            this.factory = factory;
+            this.createDragonSettingsGenerator = createDragonSettingsGenerator;
         }
 
         public string Category => "Фракталы";
@@ -26,15 +32,16 @@ namespace FractalPainting.App.Actions
             // редактируем настройки:
             SettingsForm.For(dragonSettings).ShowDialog();
             // создаём painter с такими настройками
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<DragonSettings>().ToConstant(dragonSettings);
-            container.Get<DragonPainter>().Paint();
+            //var container = new StandardKernel();
+            //container.Bind<IImageHolder>().ToConstant(imageHolder);
+            //container.Bind<DragonSettings>().ToConstant(dragonSettings);
+            //container.Get<DragonPainter>().Paint();
+            factory.Create(dragonSettings).Paint();
         }
 
-        private static DragonSettings CreateRandomSettings()
+        private DragonSettings CreateRandomSettings()
         {
-            return new DragonSettingsGenerator(new Random()).Generate();
+            return createDragonSettingsGenerator(new Random()).Generate();
         }
     }
 }

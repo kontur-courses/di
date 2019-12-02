@@ -14,7 +14,6 @@ namespace FractalPainting.App.Fractals
         {
             this.imageHolder = imageHolder;
             this.palette = palette;
-            imageSize = imageHolder.GetImageSize();
         }
 
         public void Paint()
@@ -25,6 +24,7 @@ namespace FractalPainting.App.Fractals
                 DrawSegment(graphics, 0, imageSize.Height*0.9f, imageSize.Width, imageSize.Height*0.9f, true);
             }
             imageHolder.UpdateUi();
+            imageSize = imageHolder.GetImageSize();
         }
 
         private void DrawSegment(Graphics graphics, float x0, float y0, float x1, float y1, bool primaryColor)
