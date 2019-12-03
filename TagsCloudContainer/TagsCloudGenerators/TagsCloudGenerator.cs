@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagsCloudContainer.CloudLayouters;
-using TagsCloudContainer.WordCounters;
+﻿using TagsCloudContainer.WordCounters;
 using TagsCloudContainer.Visualizers;
 using TagsCloudContainer.Readers;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudGenerators
 {
     class TagsCloudGenerator
     {

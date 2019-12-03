@@ -1,11 +1,7 @@
 ﻿using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.WordPreprocessors;
 

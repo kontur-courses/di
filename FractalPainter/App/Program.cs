@@ -4,7 +4,6 @@ using Ninject;
 using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure.UiActions;
 using FractalPainting.Infrastructure.Common;
-
 using Ninject.Extensions.Conventions;
 using Ninject.Extensions.Factory;
 

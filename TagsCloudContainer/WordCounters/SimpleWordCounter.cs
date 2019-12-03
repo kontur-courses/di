@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagsCloudContainer.WordPreprocessors;
 using TagsCloudContainer.WordFilters;
+using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.WordCounters
 {

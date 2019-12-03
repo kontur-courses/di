@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Drawing;
-using FluentAssertions;
-using NUnit.Framework.Interfaces;
 using Autofac;
 using Autofac.Core;
 using TagsCloudContainer.CloudLayouters;
@@ -16,8 +9,9 @@ using TagsCloudContainer.Visualizers;
 using TagsCloudContainer.Readers;
 using TagsCloudContainer.WordPreprocessors;
 using TagsCloudContainer.WordFilters;
+using TagsCloudContainer.TokensAndSettings;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudGenerators
 {
     [TestFixture]
     class TagCloudGeneratorTests

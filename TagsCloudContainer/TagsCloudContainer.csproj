@@ -65,12 +65,12 @@
     <Compile Include="CloudLayouters\CircularCloudLayouterTests.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
-    <Compile Include="ImageSettings.cs" />
+    <Compile Include="TokensAndSettings\ImageSettings.cs" />
     <Compile Include="Palettes\IPalette.cs" />
     <Compile Include="Palettes\SimplePalette.cs" />
     <Compile Include="Readers\IReader.cs" />
     <Compile Include="Readers\SimpleReader.cs" />
-    <Compile Include="TagToken.cs" />
+    <Compile Include="TokensAndSettings\TagToken.cs" />
     <Compile Include="Visualizers\IVisualizer.cs" />
     <Compile Include="Visualizers\SimpleVisualizerTests.cs" />
     <Compile Include="Visualizers\SimpleVsualizer.cs" />
@@ -79,13 +79,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordCounters\SimpleWordCounter.cs" />
     <Compile Include="WordCounters\SimpleWordCounterTests.cs" />
-    <Compile Include="TagCloudGeneratorTests.cs" />
-    <Compile Include="TagsCloudGenerator.cs" />
+    <Compile Include="TagsCloudGenerators\TagCloudGeneratorTests.cs" />
+    <Compile Include="TagsCloudGenerators\TagsCloudGenerator.cs" />
     <Compile Include="WordFilters\IWordFilter.cs" />
     <Compile Include="WordFilters\SimpleWordFilter.cs" />
     <Compile Include="WordPreprocessors\IWordPreprocessor.cs" />
     <Compile Include="WordPreprocessors\SimpleWordPreprocessor.cs" />
-    <Compile Include="WordToken.cs" />
+    <Compile Include="TokensAndSettings\WordToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

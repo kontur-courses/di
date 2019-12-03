@@ -1,14 +1,11 @@
 ﻿using Autofac;
 using Autofac.Core;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.Palettes;
+using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.Visualizers
 {
