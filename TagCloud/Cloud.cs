@@ -12,14 +12,16 @@ namespace TagCloud
             {
                 var result = new List<TagRectangle>();
                 foreach (var tag in config.TagCollection)
-                    result.Add(new TagRectangle(tag.Text, layouter.PutNextRectangle(tag.Size)));
+                    result.Add(new TagRectangle(tag.Text, layouter.PutNextRectangle(tag.Size,Center)));
                 return result;
             } }
-
+        public ClientData Data { get; }
+        private Point Center { get { return new Point(Data.Width / 2, Data.Height / 2); } }
         private readonly ITagsConfig config;
         private readonly ICircularCloudLayouter layouter;
-        public Cloud (ICircularCloudLayouter layouter, ITagsConfig config)
+        public Cloud (ICircularCloudLayouter layouter, ITagsConfig config, IClientDataFactory factory)
         {
+            Data = factory.CreateData();
             this.config = config;
             this.layouter = layouter;
         }

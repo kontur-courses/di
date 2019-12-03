@@ -11,7 +11,7 @@ namespace TagCloud
     {
         public List<Tag> GetTagsRectangles(Dictionary<string, int> words)
         {
-            throw new NotImplementedException();
+            return new List<Tag>();
         }
     }
 }

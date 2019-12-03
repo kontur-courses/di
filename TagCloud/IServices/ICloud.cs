@@ -7,5 +7,6 @@ namespace TagCloud
     public interface ICloud
     {
         List<TagRectangle> Rectangles { get; }
+        ClientData Data { get; }
     }
 }

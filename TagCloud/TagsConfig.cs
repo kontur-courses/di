@@ -9,7 +9,7 @@ namespace TagCloud
         
         public TagsConfig(IWordsHandler wordsHandler,IWordsToTagsParser wordsToTagsParser)
         {
-            PrimaryWordsCollection = wordsHandler.GetWordsAndCount(Settings.PathToFileWithWords);
+            PrimaryWordsCollection = wordsHandler.GetWordsAndCount("somepath");
             WordsCollectionAfterConvertion = wordsHandler.Conversion(PrimaryWordsCollection);
             TagCollection = wordsToTagsParser.GetTagsRectangles(WordsCollectionAfterConvertion);
         }

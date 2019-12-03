@@ -49,6 +49,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientData.cs" />
+    <Compile Include="ClientDataFactory.cs" />
+    <Compile Include="IServices\IClientDataFactory.cs" />
     <Compile Include="IServices\ITagsConfig.cs" />
     <Compile Include="IServices\IWordsToTagsParser.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />

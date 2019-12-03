@@ -10,12 +10,12 @@ namespace TagCloud
     {
         public  Dictionary<string, int> Conversion(Dictionary<string, int> wordsAndCount)
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, int>();
         }
 
         public  Dictionary<string, int> GetWordsAndCount(string path)
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, int>();
         }
     }
 }
