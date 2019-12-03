@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagsCloudContainer.CloudVisualizers
 {
     public class CloudVisualizer : ICloudVisualizer
     {
-        private CloudVisualizerSettings settings;
-        public CloudVisualizer(CloudVisualizerSettings settings)
+        private Func<CloudVisualizerSettings> settingsFactory;
+        public CloudVisualizer(Func<CloudVisualizerSettings> settingsFactory)
         {
-            this.settings = settings;
+            this.settingsFactory = settingsFactory;
         }
 
         public Bitmap GetBitmap(IEnumerable<CloudVisualizationWord> words)
         {
+            var settings = settingsFactory();
             return settings.BitmapMaker.MakeBitmap(words, settings);
         }
     }

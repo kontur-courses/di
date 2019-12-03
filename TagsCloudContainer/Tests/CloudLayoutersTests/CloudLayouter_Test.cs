@@ -24,7 +24,7 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
                 settings.RectangleStep, 
                 settings.RectangleBroadness);
             settings.RectangleSquareMultiplier = 100;
-            layouter = new CloudLayouter(settings);
+            layouter = new CloudLayouter(() => settings);
         }
 
         [Test]

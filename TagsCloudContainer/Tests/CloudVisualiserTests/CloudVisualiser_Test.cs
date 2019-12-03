@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Tests.CloudVisualiserTests
             {
                 Width = 1280, Height = 720, Palette = new Palette(), BitmapMaker = new DefaultBitmapMaker()
             };
-            visualizer = new CloudVisualizer(settings);
+            visualizer = new CloudVisualizer(() => settings);
         }
 
         [Test]

@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Tests.TextParsingTests
             var txtParser = new TxtWordParser();
             var rule = new DefaultParsingRule();
             settings = new CloudWordsParserSettings {FileWordsParser = txtParser, Rule = rule, Path = path};
-            parser = new CloudWordsParser(settings);
+            parser = new CloudWordsParser(() => settings);
         }
 
         [TearDown]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.CloudVisualizers;
@@ -8,17 +9,18 @@ namespace TagsCloudContainer.CloudLayouters
 {
     public class CloudLayouter : ICloudLayouter
     {
-        private CloudLayouterSettings settings;
+        private Func<CloudLayouterSettings> settingsFactory;
         
-        public CloudLayouter(CloudLayouterSettings settings)
+        public CloudLayouter(Func<CloudLayouterSettings> settingsFactory)
         {
-            this.settings = settings;
+            this.settingsFactory = settingsFactory;
         }
 
         public IEnumerable<CloudVisualizationWord> GetWords(IEnumerable<CloudWord> cloudWords)
         {
+            var settings = settingsFactory();
             var ordered = cloudWords.OrderByDescending(w => w.Count);
-            var sizeMultiplier = GetSizeMultiplier(ordered);
+            var sizeMultiplier = GetSizeMultiplier(ordered, settings);
             foreach (var word in ordered)
             {
                 var size = GetSize(word, sizeMultiplier);
@@ -36,7 +38,7 @@ namespace TagsCloudContainer.CloudLayouters
             return new Size(width, height);
         }
 
-        private double GetSizeMultiplier(IOrderedEnumerable<CloudWord> ordered)
+        private double GetSizeMultiplier(IOrderedEnumerable<CloudWord> ordered, CloudLayouterSettings settings)
         {
             var maxCount = (double)ordered.First().Count;
             var minCount = (double)ordered.Last().Count;

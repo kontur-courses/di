@@ -1,17 +1,19 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudContainer.CloudVisualizers.ImageSaving
 {
     public class ImageSaver : IImageSaver
     {
-        private ImageSaverSettings settings;
-        public ImageSaver(ImageSaverSettings settings)
+        private Func<ImageSaverSettings> settingsFactory;
+        public ImageSaver(Func<ImageSaverSettings> settingsFactory)
         {
-            this.settings = settings;
+            this.settingsFactory = settingsFactory;
         }
 
         public void Save(Bitmap bitmap)
         {
+            var settings = settingsFactory();
             bitmap.Save(settings.Path, settings.Format);
         }
     }

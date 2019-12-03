@@ -1,21 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using TagsCloudContainer.ApplicationRunning;
 
 namespace TagsCloudContainer.TextParsing.CloudParsing
 {
     public class CloudWordsParser : ICloudWordsParser
     {
         private Dictionary<string, CloudWord> words;
-        private CloudWordsParserSettings settings;
+        private Func<CloudWordsParserSettings> settingsFactory;
        
 
-        public CloudWordsParser(CloudWordsParserSettings settings)
+        public CloudWordsParser(Func<CloudWordsParserSettings> settingsFactory)
         {
             words = new Dictionary<string, CloudWord>();
-            this.settings = settings;
+            this.settingsFactory = settingsFactory;
         }
 
         public IEnumerable<CloudWord> Parse()
         {
+            var settings = settingsFactory();
             foreach (var word in settings.FileWordsParser.ParseFrom(settings.Path))
             {
                 if (!settings.Rule.Check(word)) continue;
