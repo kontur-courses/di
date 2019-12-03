@@ -1,81 +1,75 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Core.Layouters;
+using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Visualization
 {
     public class CircularCloudVisualizer
     {
-        public Color BackgroundColor { get; set; } = Color.Transparent;
-        public Pen RectangleBorderPen { get; set; } = Pens.Black;
-        public Brush RectangleFillBrush { get; set; } = Brushes.SlateBlue;
-        public Brush TextBrush { get; set; } = Brushes.Gold;
+        private readonly Size? imageSize;
 
-        public Bitmap Visualize(CircularCloudLayouter layouter, IEnumerable<Tag> tags)
+        public Color BackgroundColor { get; set; } = Color.Transparent;
+
+        public CircularCloudVisualizer(Size? imageSize = null)
+        {
+            this.imageSize = imageSize;
+        }
+
+        public Bitmap Visualize(CircularCloudLayouter layouter, IPainter painter, Tag[] tags)
         {
             var rectangles = tags.Select(tag => layouter.PutNextRectangle(tag.Size)).ToArray();
             var viewport = GetViewport(rectangles);
-            var bitmap = CreateBitmap(viewport);
-            var graphics = CreateGraphics(bitmap, viewport);
+            var schemes = painter.Colorize(rectangles.Length);
+            var border = GetBorder(schemes);
+            var bitmap = CreateBitmap(viewport, border);
+            var graphics = CreateGraphics(bitmap, viewport, border);
 
-            foreach (var (rectangle, tag) in rectangles.Zip(tags, (r, t) => (r, t)))
-            {
-                DrawTag(graphics, rectangle, tag);
-            }
+            for (var i = 0; i < tags.Length; i++)
+                DrawTag(graphics, schemes[i], rectangles[i], tags[i]);
 
             return bitmap;
         }
 
-        public Bitmap Visualize(CircularCloudLayouter layouter, IEnumerable<Size> sizes)
+        public Bitmap Visualize(CircularCloudLayouter layouter, IPainter painter, IEnumerable<Size> sizes)
         {
             var rectangles = sizes.Select(layouter.PutNextRectangle).ToArray();
-            return Visualize(rectangles);
+            return Visualize(painter, rectangles);
         }
 
-        public Bitmap Visualize(IEnumerable<Rectangle> rectangles)
+        public Bitmap Visualize(IPainter painter, Rectangle[] rectangles)
         {
             var viewport = GetViewport(rectangles);
-            var bitmap = CreateBitmap(viewport);
-            var graphics = CreateGraphics(bitmap, viewport);
+            var schemes = painter.Colorize(rectangles.Length);
+            var border = GetBorder(schemes);
+            var bitmap = CreateBitmap(viewport, border);
+            var graphics = CreateGraphics(bitmap, viewport, border);
 
-            foreach (var rectangle in rectangles)
-            {
-                DrawRectangle(graphics, rectangle);
-            }
+            for (var i = 0; i < rectangles.Length; i++)
+                DrawRectangle(graphics, schemes[i], rectangles[i]);
 
             return bitmap;
         }
 
-        private Bitmap CreateBitmap(Rectangle viewport)
+        private Graphics CreateGraphics(Image image, Rectangle viewport, int border)
         {
-            var border = (int) RectangleBorderPen.Width * 2;
-            return new Bitmap(viewport.Width + border, viewport.Height + border);
-        }
-
-        private Graphics CreateGraphics(Image image, Rectangle viewport)
-        {
-            var border = (int) RectangleBorderPen.Width;
             var graphics = Graphics.FromImage(image);
             graphics.TranslateTransform(border - viewport.X, border - viewport.Y);
             graphics.Clear(BackgroundColor);
             return graphics;
         }
 
-        private void DrawTag(Graphics graphics, Rectangle rectangle, Tag tag)
+        private Rectangle GetViewport(IEnumerable<Rectangle> rectangles)
         {
-            DrawRectangle(graphics, rectangle);
-            graphics.DrawString(tag.Text, tag.Font, TextBrush, rectangle);
+            var viewport = CalculateViewport(rectangles);
+            if (imageSize != null)
+                viewport.Size = imageSize.Value;
+            return viewport;
         }
 
-        private void DrawRectangle(Graphics graphics, Rectangle rectangle)
-        {
-            graphics.FillRectangle(RectangleFillBrush, rectangle);
-            graphics.DrawRectangle(RectangleBorderPen, rectangle);
-        }
-
-        private static Rectangle GetViewport(IEnumerable<Rectangle> rectangles)
+        private static Rectangle CalculateViewport(IEnumerable<Rectangle> rectangles)
         {
             var minX = int.MaxValue;
             var minY = int.MaxValue;
@@ -90,6 +84,29 @@ namespace TagsCloudContainer.Visualization
             }
 
             return new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
+        }
+
+        private static int GetBorder(IReadOnlyList<ColoringScheme> schemes)
+        {
+            return (int) schemes[0].RectangleBorderPen.Width;
+        }
+
+        private static Bitmap CreateBitmap(Rectangle viewport, int border)
+        {
+            border *= 2;
+            return new Bitmap(viewport.Width + border, viewport.Height + border);
+        }
+
+        private static void DrawTag(Graphics graphics, ColoringScheme scheme, Rectangle rectangle, Tag tag)
+        {
+            DrawRectangle(graphics, scheme, rectangle);
+            graphics.DrawString(tag.Text, tag.Font, scheme.TextBrush, rectangle);
+        }
+
+        private static void DrawRectangle(Graphics graphics, ColoringScheme scheme, Rectangle rectangle)
+        {
+            graphics.FillRectangle(scheme.RectangleFillBrush, rectangle);
+            graphics.DrawRectangle(scheme.RectangleBorderPen, rectangle);
         }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,6 +9,7 @@ using NUnit.Framework.Internal;
 using TagsCloudContainer.Core.Generators;
 using TagsCloudContainer.Core.Layouters;
 using TagsCloudContainer.Visualization;
+using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Tests
 {
@@ -18,6 +19,9 @@ namespace TagsCloudContainer.Tests
         private const int X = 200;
         private const int Y = 200;
         private const string LayouterKey = "layouter";
+
+        private static readonly IPainter Painter =
+            new ConstantColorsPainter(Color.Gold, Color.SlateBlue, Color.Black);
 
         private static readonly Point Center = new Point(X, Y);
 
@@ -83,9 +87,10 @@ namespace TagsCloudContainer.Tests
             var file = Path.ChangeExtension(context.Test.Name, "png");
             var path = Path.Combine(dir, file);
 
-            var layouter = GetTestProperty<CircularCloudLayouter>(LayouterKey);
             var visualizer = new CircularCloudVisualizer();
-            using (var bitmap = visualizer.Visualize(layouter.Rectangles))
+            var layouter = GetTestProperty<CircularCloudLayouter>(LayouterKey);
+            var rectangles = layouter.Rectangles.ToArray();
+            using (var bitmap = visualizer.Visualize(Painter, rectangles))
             {
                 bitmap.Save(path);
             }

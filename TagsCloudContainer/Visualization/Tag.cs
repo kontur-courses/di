@@ -1,18 +1,18 @@
-﻿﻿using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudContainer.Visualization
 {
     public class Tag
     {
-        public readonly Size Size;
         public readonly string Text;
         public readonly Font Font;
+        public readonly Size Size;
 
-        public Tag(Size size, string text, Font font)
+        public Tag(string text, Font font, Size size)
         {
-            Size = size;
             Text = text;
             Font = font;
+            Size = size;
         }
     }
 }
