@@ -18,9 +18,8 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
         public void SetUp()
         {
             settings = new CloudLayouterSettings();
-            settings.Center = new Point(0, 0);
             settings.Algorithm = new CircularCloudLayouter(
-                settings.Center, 
+                new Point(0, 0),
                 settings.RectangleStep, 
                 settings.RectangleBroadness);
             settings.RectangleSquareMultiplier = 100;
