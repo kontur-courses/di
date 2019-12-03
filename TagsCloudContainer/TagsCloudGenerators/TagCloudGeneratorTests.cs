@@ -18,35 +18,12 @@ namespace TagsCloudContainer.TagsCloudGenerators
     [TestFixture]
     class TagCloudGeneratorTests
     {
-        [Test]
-        public void CreateWithContainer_NotThrow()
+        private ContainerBuilder containerBuilder;
+
+        [SetUp]
+        public void SetUp()
         {
-            var containerBuilder = new ContainerBuilder();
-
-            containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point());
-            containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
-            containerBuilder.RegisterType<SimpleWordFilter>().As<IWordFilter>();
-            containerBuilder.RegisterType<SimpleWordCounter>().As<IWordCounter>();
-            containerBuilder.RegisterType<SimplePalette>().As<IPalette>()
-                .WithParameters(
-                new Parameter[]
-                {
-                    new NamedParameter("font", new Font("Arial", 20)),
-                    new NamedParameter("brush", Brushes.Red)
-                }
-                );
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(640, 640)); ;
-            containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", "path");
-            containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
-
-            var container = containerBuilder.Build();
-            var tagsCloudGenerator = container.Resolve<TagsCloudGenerator>();
-        }
-
-        [Test]
-        public void CreateWithContainer_CreateTagCloud()
-        {
-            var containerBuilder = new ContainerBuilder();
+            containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter("center", new Point());
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
@@ -66,7 +43,11 @@ namespace TagsCloudContainer.TagsCloudGenerators
                 "path",
                 Path.Combine(Environment.CurrentDirectory, @"TagsCloudContainer\Words.txt"));
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
+        }
 
+        [Test]
+        public void CreateWithContainer_CreateTagCloud()
+        {
             var container = containerBuilder.Build();
             var tagsCloudGenerator = container.Resolve<TagsCloudGenerator>();
 
