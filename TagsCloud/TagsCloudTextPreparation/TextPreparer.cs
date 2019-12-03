@@ -14,7 +14,7 @@ namespace TagsCloudTextPreparation
                 textPreparerConfig ?? throw new ArgumentException("Text prepare config can't be null");
         }
 
-        public List<FrequencyWord> GetPreparedText(IEnumerable<string> words)
+        public List<FrequencyWord> GetWordsByFrequency(IEnumerable<string> words)
         {
             words = ApplyConfiguration(words);
             return ConvertWordsToTagCloudWords(words);

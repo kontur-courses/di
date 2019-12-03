@@ -19,8 +19,7 @@ namespace TagsCloudTextPreparation
                     excludedWords.Add(word);
             return this;
         }
-
-
+        
         public bool IsWordExcluded(string word) => excludedWords.Contains(word);
     }
 }

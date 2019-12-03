@@ -23,7 +23,7 @@ namespace TagsCloudTextPreparation.Tests
             
             var textPreparerConfig = new TextPreparerConfig().Excluding(excludedWords);
             var textPreparer = new TextPreparer(textPreparerConfig);
-            var frequencyWords = textPreparer.GetPreparedText(new[] {"exclude", "tag", "this", "words", "cloud"});
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"exclude", "tag", "this", "words", "cloud"});
             
             frequencyWords.Select(f => f.Word).Should().NotContain(excludedWords);
         }
@@ -35,7 +35,7 @@ namespace TagsCloudTextPreparation.Tests
             
             var textPreparerConfig = new TextPreparerConfig().Excluding(excludedWords);
             var textPreparer = new TextPreparer(textPreparerConfig);
-            var frequencyWords = textPreparer.GetPreparedText(new[] {"a", "b", "c", "d", "e","f"});
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"a", "b", "c", "d", "e","f"});
             
             frequencyWords.Select(f => f.Word).Should().BeEquivalentTo("d","e","f");
         }
@@ -44,7 +44,7 @@ namespace TagsCloudTextPreparation.Tests
         public void GetPreparedText_Should_ChangeWordsCaseToLower()
         {
             var textPreparer = new TextPreparer(new TextPreparerConfig());
-            var frequencyWords = textPreparer.GetPreparedText(new[] {"CHANGE","Case","ToLower"});
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"CHANGE","Case","ToLower"});
 
             frequencyWords.Select(f => f.Word).Should().BeEquivalentTo("change", "case", "tolower");
         }
@@ -53,7 +53,7 @@ namespace TagsCloudTextPreparation.Tests
         public void GetPreparedText_Should_Not_ContainRepeatedWords()
         {
             var textPreparer = new TextPreparer(new TextPreparerConfig());
-            var frequencyWords = textPreparer.GetPreparedText(new[] {"words","words","words"});
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"words","words","words"});
 
             frequencyWords.Select(f => f.Word).Should().BeEquivalentTo("words");
         }
@@ -62,7 +62,7 @@ namespace TagsCloudTextPreparation.Tests
         public void GetPreparedText_Should_CountWordsOccurrences()
         {
             var textPreparer = new TextPreparer(new TextPreparerConfig());
-            var frequencyWords = textPreparer.GetPreparedText(new[] {"cat","cat","dog","dog","dog"});
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"cat","cat","dog","dog","dog"});
 
             frequencyWords
                 .Should()

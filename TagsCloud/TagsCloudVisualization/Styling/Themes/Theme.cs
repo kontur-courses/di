@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Themes
+namespace TagsCloudVisualization.Styling.Themes
 {
     public abstract class Theme
     {
@@ -9,6 +9,7 @@ namespace TagsCloudVisualization.Themes
 
         public abstract Brush BackgroundBrush { get; }
 
+        public abstract Brush GetTagBrush(Tag tag);
         internal static SolidBrush GetSolidBrush(string hexColor) => new SolidBrush(ColorTranslator.FromHtml(hexColor));
     }
 }

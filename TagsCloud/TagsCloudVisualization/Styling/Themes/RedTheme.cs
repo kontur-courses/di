@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Themes
+namespace TagsCloudVisualization.Styling.Themes
 {
     public class RedTheme : Theme
     {
@@ -14,5 +14,6 @@ namespace TagsCloudVisualization.Themes
         public override ImmutableArray<Brush> RectangleBrushes => rectangleBrushes;
 
         public override Brush BackgroundBrush => GetSolidBrush("#FFCDD2");
+        public override Brush GetTagBrush(Tag tag) => Brushes.White;
     }
 }
