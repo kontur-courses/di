@@ -35,8 +35,11 @@ namespace TagsCloud
             [Option('f', "font", Default = "Comic Sans MS", HelpText = "Font name.")]
             public string fontName { get; set; }
 
-            [Option('s', "splitter", Default = "Line", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
+            [Option('s', "splitter", Default = "WhiteSpace", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
             public string splitType { get; set; }
+
+            [Option('a', "angel", Default = 3.14, HelpText = "Delta radius between tusrn spiral.")]
+            public double angel{ get; set; }
 
             // Omitting long name, defaults to name of property, ie "--verbose"
         }
@@ -49,6 +52,7 @@ namespace TagsCloud
             var backgroundColor = Color.Empty;
             var fontName = "";
             var splitType = "";
+            var deltaRadiusBetweenTurns = 1.0;
             Parser.Default.ParseArguments<Options>(args)
               .WithParsed<Options>(opts =>
               {
@@ -58,6 +62,7 @@ namespace TagsCloud
                   backgroundColor = Color.FromName(opts.backgroundColor);
                   fontName = opts.fontName;
                   splitType = opts.splitType;
+                  deltaRadiusBetweenTurns = opts.angel;
               });
             if (string.IsNullOrEmpty(inputPath) || string.IsNullOrEmpty(outputPath))
                 return;
@@ -75,6 +80,12 @@ namespace TagsCloud
             {
                 throw new ArgumentException($"Unsupported split format {splitType}.");
             }
+
+            if (deltaRadiusBetweenTurns < 1 || deltaRadiusBetweenTurns > 10)
+                throw new ArgumentException("Delta radius between turns spiral must be more than 1 but less than 10.");
+
+            container.RegisterType<RoundSpiralPositionGenerator>().As<IPositionGenerator>()
+                .WithParameter(new TypedParameter(typeof(double), deltaRadiusBetweenTurns));
 
             container.RegisterType<DefaultFontGenerator>().As<IFontSettingsGenerator>()
                 .WithParameter(new TypedParameter(typeof(string), fontName)).SingleInstance();

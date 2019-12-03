@@ -2,7 +2,7 @@
   "profiles": {
     "TagsCloud": {
       "commandName": "Project",
-      "commandLineArgs": "D:\\проекты\\SHPORA2019\\di\\ВойнаИМир.txt result1.png -b Black -s WhiteSpace"
+      "commandLineArgs": "D:\\\\проекты\\\\SHPORA2019\\\\di\\\\ВойнаИМир.txt result1.png -a 0"
     }
   }
 }
