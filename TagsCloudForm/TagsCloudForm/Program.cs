@@ -14,7 +14,6 @@ namespace TagsCloudForm
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<RectangleForWordsCreator>().As<IRectangleForWordsCreator>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>();
@@ -41,6 +40,8 @@ namespace TagsCloudForm
 
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
 
+            builder.RegisterType<WordsFrequencyParser>().As<IWordsFrequencyParser>().SingleInstance();
+
 
             var words = new Dictionary<string, int>
             {
@@ -48,14 +49,16 @@ namespace TagsCloudForm
                 {"first", 4 },
                 {"hell", 2 },
                 {"bingo", 4 },
-                {"POLIOMIELIT", 5 }
+                {"POLIOMIELIT", 5 },
+                {"a", 4 },
+                {"b", 10 },
+                {"da", 8 }
             };
 
             builder.Register(x=>words).As<Dictionary<string, int>>().SingleInstance();
 
             var container = builder.Build();
 
-            //var rects = container.Resolve<RectangleForWordsCreator>().CreateRectanglesForWords(words);
             var form = container.Resolve<CloudForm>(
                 new TypedParameter(typeof(IContainer), container),
                 new NamedParameter("rectanglesNum", 30),
@@ -63,10 +66,6 @@ namespace TagsCloudForm
                 new NamedParameter("maxRectSize", 30)
             );
 
-            //var form = new CloudForm(container, 30, 10, 30)
-            //{
-            //    Size = new Size(600, 600)
-            //};
 
             Application.Run(form);
         }

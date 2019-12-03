@@ -8,6 +8,6 @@ namespace TagsCloudForm
 {
     public interface IWordsFrequencyParser
     {
-        Dictionary<string, int> GetWordsFrequency(string filename);
+        Dictionary<string, int> GetWordsFrequency(string[] lines);
     }
 }

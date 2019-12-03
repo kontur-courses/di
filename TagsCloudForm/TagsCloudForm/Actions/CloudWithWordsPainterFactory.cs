@@ -9,9 +9,9 @@ namespace TagsCloudForm.Actions
     public class CloudWithWordsPainterFactory
     {
         public CloudWithWordsPainter Create(IImageHolder imageHolder,
-            CircularCloudLayouterSettings settings, Palette palette, ICircularCloudLayouter layouter, Dictionary<string, int> words)
+            CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter, Dictionary<string, int> words, IWordsFrequencyParser parser)
         {
-            return new CloudWithWordsPainter(imageHolder, settings, palette, layouter, words);
+            return new CloudWithWordsPainter(imageHolder, settings, palette, layouter, words, parser);
         }
     }
 }

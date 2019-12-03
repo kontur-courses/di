@@ -9,10 +9,9 @@ namespace TagsCloudForm
 {
     public class WordsFrequencyParser :IWordsFrequencyParser
     {
-        public Dictionary<string, int> GetWordsFrequency(string filename)
+        public Dictionary<string, int> GetWordsFrequency(string[] lines)
         {
             var frequencies = new Dictionary<string, int>();
-            string[] lines = File.ReadAllLines(filename);
             lines.ToList().ForEach(line =>
             {
                 if (frequencies.ContainsKey(line))

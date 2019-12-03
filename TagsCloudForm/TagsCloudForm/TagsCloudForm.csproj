@@ -75,6 +75,7 @@
     <Compile Include="AppSettings.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
+    <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />
     <Compile Include="Common\FileBlobStorage.cs" />
     <Compile Include="Common\IBlobStorage.cs" />
     <Compile Include="Common\IImageDirectoryProvider.cs" />
@@ -98,14 +99,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CircularCloudLayouter\ICircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudLayouter\IRectangleForWordsCreator.cs" />
     <Compile Include="CircularCloudLayouter\IWordsFrequencyParser.cs" />
     <Compile Include="CircularCloudLayouter\PointExtension.cs" />
     <Compile Include="CircularCloudLayouter\PositionSearchResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CircularCloudLayouter\RectangleExtension.cs" />
-    <Compile Include="CircularCloudLayouter\RectangleForWordsCreator.cs" />
     <Compile Include="CircularCloudLayouter\Segment.cs" />
     <Compile Include="CircularCloudLayouter\SegmentStacker.cs" />
     <Compile Include="Tests\RectangleForWordsCreatorTests.cs" />

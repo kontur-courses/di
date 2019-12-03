@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace TagsCloudForm
 {
-    public class CircularCloudLayouterSettings
+    public class CircularCloudLayouterWithWordsSettings
     {
         public int CenterX { get; set; } = 200;
 
         public int CenterY { get; set; } = 200;
 
-        public int MinSize { get; set; } = 10;
+        public int Scale { get; set; } = 5;
 
-        public int MaxSize { get; set; } = 30;
+        public string WordsSource { get; set; } = "words.txt";
 
-        public int IterationsCount { get; set; } = 5;
     }
 }
