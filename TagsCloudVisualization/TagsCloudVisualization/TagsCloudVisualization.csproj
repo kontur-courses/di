@@ -64,6 +64,7 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="ICirclePointLocator.cs" />
     <Compile Include="IVisualizer.cs" />
+    <Compile Include="TagCloud.cs" />
     <Compile Include="Tests\GeometryTests.cs" />
     <Compile Include="ILayouter.cs" />
     <Compile Include="ImageSettings.cs" />
