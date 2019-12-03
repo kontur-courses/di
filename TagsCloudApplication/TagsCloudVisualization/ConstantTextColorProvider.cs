@@ -11,7 +11,7 @@ namespace TagsCloudVisualization
             this.color = color;
         }
 
-        public Color GenerateTextColor(string text, Rectangle rectangle)
+        public Color GetTextColor(string text, Rectangle rectangle)
         {
             return color;
         }

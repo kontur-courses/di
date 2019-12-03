@@ -37,8 +37,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloudTag.cs" />
+    <Compile Include="CloudTagProperties.cs" />
     <Compile Include="ITextColorProvider.cs" />
-    <Compile Include="TagCloudProvider.cs" />
+    <Compile Include="CloudTagProvider.cs" />
     <Compile Include="VisualizatorProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ConstantTextColorProvider.cs" />

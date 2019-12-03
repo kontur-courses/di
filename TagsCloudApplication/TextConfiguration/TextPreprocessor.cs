@@ -16,14 +16,13 @@ namespace TextConfiguration
             this.wordProcessor = wordProcessor;
         }
 
-        public Dictionary<string, int> PreprocessText(string text)
+        public List<string> PreprocessText(string text)
         {
-            var words = text
+            return text
                 .Split()
                 .Where(wrd => !filters.Any(fltr => fltr.ShouldFilter(wrd)))
-                .Select(wrd => wordProcessor.ProcessWord(wrd));
-
-            return words.CountWords();
+                .Select(wrd => wordProcessor.ProcessWord(wrd))
+                .ToList();
         }
     }
 }

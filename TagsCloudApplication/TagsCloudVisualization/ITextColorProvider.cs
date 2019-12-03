@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface ITextColorProvider
     {
-        Color GenerateTextColor(string text, Rectangle rectangle);
+        Color GetTextColor(string text, Rectangle rectangle);
     }
 }

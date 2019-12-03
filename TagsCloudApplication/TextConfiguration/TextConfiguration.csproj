@@ -39,6 +39,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WordsProvider.cs" />
     <Compile Include="WordProcessors\IWordProcessor.cs" />
     <Compile Include="WordProcessors\ToLowerCaseProcessor.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
