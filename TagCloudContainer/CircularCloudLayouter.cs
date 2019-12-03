@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloudContainer.Api;
 
 namespace TagCloudContainer
 {
-    public class CircularCloudLayouter : ICircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private float spiralCounter = 0;
 

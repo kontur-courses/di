@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Autofac;
+using TagCloudContainer.Api;
 
 namespace TagCloudContainer
 {
@@ -12,27 +12,37 @@ namespace TagCloudContainer
         {
             var wordsSource = "words.txt";
             var outputFile = "wordCloud.bmp";
-            var builder = new ContainerBuilder();
-            builder.Register(c => File.ReadLines(wordsSource)).As<IEnumerable<string>>();
-            builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>().SingleInstance();
-            builder.RegisterType<WordCloudLayouter>().As<IWordCloudLayouter>().SingleInstance();
-            builder.Register(c => new SolidBrush(Color.White)).As<Brush>().Named("backgroundBrush", typeof(Brush))
-                .SingleInstance();
-            builder.Register(c => new SolidBrush(Color.DarkOrange)).As<Brush>().Named("wordBrush", typeof(Brush))
-                .SingleInstance();
 
-            builder.Register(c => new Font("ComicSans", 14)).As<Font>().SingleInstance();
-            builder.Register(c => LayouterVisualizer.CreateCloudWithWordsFromFile(c.Resolve<IEnumerable<string>>(),
-                c.Resolve<ICircularCloudLayouter>(),
-                c.Resolve<IWordCloudLayouter>(),
-                c.ResolveNamed<Brush>("backgroundBrush"),
-                c.ResolveNamed<Brush>("wordBrush"),
-                c.Resolve<Font>())
-            ).As<TagCloudBitmapContainer>();
-            var container = builder.Build();
+            var container = PrepareContainer(File.ReadLines(wordsSource));
 
-            var bitmap = container.Resolve<TagCloudBitmapContainer>();
+            var bitmap = container.ResolveNamed<Image>("wordCloud");
             bitmap.Save(outputFile);
+        }
+
+        private static IContainer PrepareContainer(IEnumerable<string> wordsSource)
+        {
+            var builder = new ContainerBuilder();
+            builder.Register(c => wordsSource).As<IEnumerable<string>>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().SingleInstance();
+            builder.RegisterType<WordCloudLayouter>().As<IWordCloudLayouter>().SingleInstance();
+            builder.RegisterType<SqrtStringSizeProvider>().As<IStringSizeProvider>();
+
+            builder.Register(c => new SolidBrush(Color.White)).As<Brush>().Named<Brush>("backgroundBrush")
+                .SingleInstance();
+            builder.Register(c => new SolidBrush(Color.Indigo)).As<Brush>().Named<Brush>("wordBrush")
+                .SingleInstance();
+            builder.Register(c => new Pen(Color.Blue)).As<Pen>().SingleInstance();
+            builder.Register(c => new Font("ComicSans", 14)).As<Font>().SingleInstance();
+
+            builder.Register(c => new DrawingOptions()).AsSelf().SingleInstance();
+
+            builder.RegisterType<TagCloudVisualizer>().As<IWordVisualizer>();
+            
+            builder.Register(c => c.Resolve<IWordVisualizer>().CreateImageWithWords(
+                c.Resolve<IEnumerable<string>>(),
+                c.Resolve<DrawingOptions>())
+            ).As<Image>().Named<Image>("wordCloud");
+            return builder.Build();
         }
     }
 }

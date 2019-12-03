@@ -1,35 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloudContainer.Api;
 
 namespace TagCloudContainer
 {
     public class WordCloudLayouter : IWordCloudLayouter
     {
-        public ICircularCloudLayouter RectangleLayouter;
-        public Font LayouterFont;
+        private ICloudLayouter RectangleLayouter;
+        private IStringSizeProvider SizeProvider;
 
-        public WordCloudLayouter(ICircularCloudLayouter rectangleLayouter, Font layouterFont)
+        public WordCloudLayouter(ICloudLayouter rectangleLayouter, IStringSizeProvider sizeProvider)
         {
             RectangleLayouter = rectangleLayouter;
-            LayouterFont = layouterFont;
+            SizeProvider = sizeProvider;
         }
 
-        public IEnumerable<(string word, Rectangle wordRectangle)> AddWords(
-            IEnumerable<(string word, int occurrenceCount)> words)
+        public IReadOnlyDictionary<string, Rectangle> AddWords(
+            IReadOnlyDictionary<string, int> words)
         {
-            return words.ToImmutableSortedSet()
-                .Select(pair => (pair.word, rect: GetWordSize(pair.word, pair.occurrenceCount)))
-                .Select(pair => (pair.word, RectangleLayouter.PutNextRectangle(pair.rect)));
+            return words.OrderByDescending(pair => pair.Value)
+                .Select(pair => CreateBoundingRectangle(pair.Key, pair.Value))
+                .ToDictionary(p => p.word, p => p.rect);
         }
 
-        public static Graphics GraphicsBase = Graphics.FromImage(new Bitmap(1, 1));
-
-        public Size GetWordSize(string word, int occurrenceCount)
+        private (string word, Rectangle rect) CreateBoundingRectangle(string word, int occurrenceCount)
         {
-            return (GraphicsBase.MeasureString(word, LayouterFont) * (MathF.Log(occurrenceCount) + 1f)).ToSize();
+            var stringSize = SizeProvider.GetStringSize(word, occurrenceCount);
+            var rectangle = RectangleLayouter.PutNextRectangle(stringSize);
+            return (word, rectangle);
         }
+
+        public List<Rectangle> Layout => RectangleLayouter.Layout;
     }
 }

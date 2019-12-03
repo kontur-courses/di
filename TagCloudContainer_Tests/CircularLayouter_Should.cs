@@ -13,6 +13,8 @@ namespace TagCloudContainer_Tests
     {
         private CircularCloudLayouter layouter;
 
+        private DrawingOptions drawingOptions = new DrawingOptions();
+
         [SetUp]
         public void SetUp()
         {
@@ -24,11 +26,9 @@ namespace TagCloudContainer_Tests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status.Equals(TestStatus.Failed))
             {
-                string fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
-                var bmp = LayouterVisualizer.CreateSizedBitmapForLayouter(layouter);
-                var brush = new SolidBrush(Color.White);
-                var pen = new Pen(Color.Blue);
-                LayouterVisualizer.SaveBitmapWithRectanglesFromLayout(layouter, fileName, brush, pen);
+                var fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
+                var img = new LayoutVisualizer(layouter).CreateImageWithRectangles(drawingOptions);
+                img.Save(fileName);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }
         }
