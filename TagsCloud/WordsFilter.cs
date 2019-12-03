@@ -5,7 +5,7 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-	public class WordsFilter
+	public class WordsFilter: IWordsFilter
 	{
 		private readonly Func<string, bool> _filter;
 		private readonly IEnumerable<string> _sourceWords;
@@ -17,7 +17,5 @@ namespace TagsCloud
 		}
 
 		public IEnumerable<string> GetWords() => _sourceWords.Where(_filter).Select(w => w.ToLower());
-
-		public static Func<string, bool> GetDefaultFilter() => word => word.Length >= 3;
 	}
 }

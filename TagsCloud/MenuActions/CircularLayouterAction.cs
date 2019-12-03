@@ -4,9 +4,9 @@ namespace TagsCloud.MenuActions
 {
 	public class CircularLayouterAction: IMenuAction
 	{
-		private readonly LayoutPainter painter;
-		private readonly ILayoutConstructor layoutConstructor;
-		private readonly SpiralSettings settings;
+		private readonly LayoutPainter _painter;
+		private readonly ILayoutConstructor _layoutConstructor;
+		private readonly SpiralSettings _settings;
 		public string Category { get; } = "Создать облако тегов";
 		public string Name { get; } = "Circular layouter";
 		public string Description { get; } = "Располагает слова вокруг центра";
@@ -14,16 +14,16 @@ namespace TagsCloud.MenuActions
 		public CircularLayouterAction(LayoutPainter painter, ILayoutConstructor layoutConstructor,
 			SpiralSettings settings)
 		{
-			this.painter = painter;
-			this.layoutConstructor = layoutConstructor;
-			this.settings = settings;
+			_painter = painter;
+			_layoutConstructor = layoutConstructor;
+			_settings = settings;
 		}
 		
 		public void Perform()
 		{
-			SettingsForm.For(settings).ShowDialog();
-			var newLayout = layoutConstructor.GetLayout();
-			painter.PaintTags(newLayout);
+			SettingsForm.For(_settings).ShowDialog();
+			var newLayout = _layoutConstructor.GetLayout();
+			_painter.PaintTags(newLayout);
 		}
 	}
 }

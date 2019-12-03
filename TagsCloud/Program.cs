@@ -29,16 +29,15 @@ namespace TagsCloud
             builder.RegisterType<FontSettingsAction>().As<IMenuAction>();
             builder.RegisterType<PaletteSettingsAction>().As<IMenuAction>();
             builder.RegisterType<LayoutPainter>().AsSelf();
-            builder.RegisterType<ColorRandomizer>().AsSelf();
             builder.Register(c => new Random()).As<Random>();
             builder.RegisterType<LayoutConstructor>().As<ILayoutConstructor>();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
-            builder.RegisterType<TagsProcessor>().AsSelf();
+            builder.RegisterType<TagsProcessor>().As<ITagsProcessor>();
             builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
             builder.RegisterType<WordsFilter>().AsSelf();
             builder
-                .Register(c => WordsFilter.GetDefaultFilter())
+                .Register<Func<string, bool>>(c => word => word.Length >= 3)
                 .As<Func<string, bool>>();
             builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>();
             var container = builder.Build();

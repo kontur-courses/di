@@ -7,19 +7,20 @@ namespace TagsCloud
 {
 	public class LayoutConstructor: ILayoutConstructor
 	{
-		private readonly IEnumerable<Tag> _sourceTags;
+		private readonly ITagsProcessor _tagsProcessor;
 		private readonly ICloudLayouter _layouter;
-		private readonly List<Tag> _layoutTags = new List<Tag>();
+		private readonly List<Tag> _layoutTags;
 
-		public LayoutConstructor(TagsProcessor tagsProcessor, ICloudLayouter layouter)
+		public LayoutConstructor(ITagsProcessor tagsProcessor, ICloudLayouter layouter)
 		{
-			_sourceTags = tagsProcessor.GetTags();
+			_tagsProcessor = tagsProcessor;
 			_layouter = layouter;
+			_layoutTags = new List<Tag>();
 		}
 
 		public Layout GetLayout()
 		{
-			foreach (var tag in _sourceTags)
+			foreach (var tag in _tagsProcessor.GetTags())
 			{
 				var tagArea = _layouter.PlaceNextRectangle(tag.Area.Size);
 				_layoutTags.Add(new Tag(tag.Text, tag.TextSize, tagArea));

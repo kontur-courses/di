@@ -6,18 +6,18 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-	public class TagsProcessor
+	public class TagsProcessor: ITagsProcessor
 	{
-		private readonly IEnumerable<Word> _words;
+		private readonly IWordsProcessor _wordsProcessor;
 		private const int MaxFontSize = 30;
 
-		public TagsProcessor(IWordsProcessor wordsProcessor) => 
-			_words = wordsProcessor.GetSortedWordsWithFrequencies();
+		public TagsProcessor(IWordsProcessor wordsProcessor) => _wordsProcessor = wordsProcessor;
 
 		public IEnumerable<Tag> GetTags()
 		{
 			// Not implemented
-			return _words.Select(w => new Tag(w.Text, w.Frequency, new Rectangle()));
+			return _wordsProcessor.GetSortedWordsWithFrequencies()
+				.Select(w => new Tag(w.Text, w.Frequency, new Rectangle()));
 		}
 
 		public static int CalculateFontSize(Word word)

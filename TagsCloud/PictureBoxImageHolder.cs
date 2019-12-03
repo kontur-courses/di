@@ -14,7 +14,7 @@ namespace TagsCloud
 			return Image.Size;
 		}
 
-		public Graphics StartDrawing()
+		public Graphics GetGraphics()
 		{
 			FailIfNotInitialized();
 			return Graphics.FromImage(Image);

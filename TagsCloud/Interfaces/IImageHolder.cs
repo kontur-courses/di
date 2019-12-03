@@ -5,7 +5,7 @@ namespace TagsCloud.Interfaces
 	public interface IImageHolder
 	{
 		Size GetImageSize();
-		Graphics StartDrawing();
+		Graphics GetGraphics();
 		void UpdateUi();
 		void RecreateImage(ImageSettings settings);
 		void SaveImage(string fileName);

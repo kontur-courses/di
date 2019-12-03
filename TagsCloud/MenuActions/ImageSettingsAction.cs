@@ -4,13 +4,13 @@ namespace TagsCloud.MenuActions
 {
 	public class ImageSettingsAction : IMenuAction
 	{
-		private IImageHolder imageHolder;
-		private ImageSettings imageSettings;
+		private IImageHolder _imageHolder;
+		private ImageSettings _imageSettings;
 
 		public ImageSettingsAction(IImageHolder imageHolder, ImageSettings imageSettings)
 		{
-			this.imageHolder = imageHolder;
-			this.imageSettings = imageSettings;
+			_imageHolder = imageHolder;
+			_imageSettings = imageSettings;
 		}
 
 		public string Category => "Настройки";
@@ -19,8 +19,8 @@ namespace TagsCloud.MenuActions
 
 		public void Perform()
 		{
-			SettingsForm.For(imageSettings).ShowDialog();
-			imageHolder.RecreateImage(imageSettings);
+			SettingsForm.For(_imageSettings).ShowDialog();
+			_imageHolder.RecreateImage(_imageSettings);
 		}
 	}
 }

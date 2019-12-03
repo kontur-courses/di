@@ -7,22 +7,20 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-	public class LayoutPainter
+	public class LayoutPainter: ILayoutPainter
 	{
 		private readonly ImageSettings _imageSettings;
 		private readonly IImageHolder _imageHolder;
 		private readonly Palette _palette;
 		private readonly FontSettings _fontSettings;
-		private readonly ColorRandomizer _colorRandomizer;
 
 		public LayoutPainter(ImageSettings imageSettings, IImageHolder imageHolder, 
-			Palette palette, FontSettings fontSettings, ColorRandomizer colorRandomizer)
+							Palette palette, FontSettings fontSettings)
 		{
 			_imageSettings = imageSettings;
 			_imageHolder = imageHolder;
 			_palette = palette;
 			_fontSettings = fontSettings;
-			_colorRandomizer = colorRandomizer;
 		}
 
 		public void PaintTags(Layout layout)
@@ -32,7 +30,7 @@ namespace TagsCloud
 				.Select(t => new Tag(t.Text, t.TextSize, 
 					ToComputerCoordinates(t.Area, _imageHolder.GetImageSize())));
 			
-			var graphics = _imageHolder.StartDrawing();
+			var graphics = _imageHolder.GetGraphics();
 			var backgroundColor = new SolidBrush(_palette.BackgroundColor);
 			graphics.FillRectangle(backgroundColor, 0, 0, _imageSettings.Width, _imageSettings.Height);
 			DrawTags(graphics, correctTags);
@@ -51,7 +49,7 @@ namespace TagsCloud
 		{
 			foreach (var tag in tags)
 			{
-				var color = _palette.RandomizeColors ? _colorRandomizer.GenerateColor() : _palette.TextColor;
+				var color = _palette.RandomizeColors ? _palette.GenerateColor() : _palette.TextColor;
 				graphics.DrawString(tag.Text, _fontSettings.Font, new SolidBrush(color), tag.Area);
 			}
 		}

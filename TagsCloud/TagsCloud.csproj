@@ -58,8 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="ColorRandomizer.cs" />
     <Compile Include="Interfaces\ILayoutConstructor.cs" />
+    <Compile Include="Interfaces\ILayoutPainter.cs" />
+    <Compile Include="Interfaces\ITagsProcessor.cs" />
+    <Compile Include="Interfaces\IWordsFilter.cs" />
     <Compile Include="Interfaces\IWordsProcessor.cs" />
     <Compile Include="LayoutPainter.cs" />
     <Compile Include="FontSettings.cs" />
