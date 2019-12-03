@@ -38,10 +38,15 @@ namespace TagsCloudContainer.Visualizers
             var scaleWidth = (float)imageSettings.Heigth / size.Width;
             var scale = Math.Min(scaleHeight, scaleWidth);
 
+            return new Bitmap(TagTokensToBitmap(tags, size), (int)(size.Width * scale), (int)(size.Height * scale));
+        }
+
+        private Bitmap TagTokensToBitmap(List<TagToken> tagTokens, Rectangle size)
+        {
             var bitmap = new Bitmap(size.Width, size.Height);
             var graphics = Graphics.FromImage(bitmap);
 
-            foreach (var tag in tags)
+            foreach (var tag in tagTokens)
             {
                 graphics.DrawString(
                     tag.Word,
@@ -52,8 +57,7 @@ namespace TagsCloudContainer.Visualizers
                     tag.Rectangle.X - size.X,
                     tag.Rectangle.Y - size.Y);
             }
-
-            return new Bitmap(bitmap, (int)(size.Width * scale), (int)(size.Height * scale));
+            return bitmap;
         }
 
         private static Rectangle GetSizeBitmapFromTagTokens(List<TagToken> tags)
