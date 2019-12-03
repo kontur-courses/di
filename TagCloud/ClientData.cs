@@ -10,11 +10,12 @@ namespace TagCloud
     {
         public int Width { get; set; } = 1000;
         public int Height { get; set; } = 1000;
-
+        public string Path { get; set; } = "defaultPath";
         public ClientData(int width,int height)
         {
             Width = width;
             Height = height;
         }
+        public ClientData() { }
     }
 }

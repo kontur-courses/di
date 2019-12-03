@@ -52,13 +52,14 @@
     <Compile Include="ClientData.cs" />
     <Compile Include="ClientDataFactory.cs" />
     <Compile Include="IServices\IClientDataFactory.cs" />
-    <Compile Include="IServices\ITagsConfig.cs" />
+    <Compile Include="IServices\ITagCollectionFactory.cs" />
     <Compile Include="IServices\IWordsToTagsParser.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\ShowImageAction.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagRectangle.cs" />
-    <Compile Include="TagsConfig.cs" />
+    <Compile Include="TagCollection.cs" />
+    <Compile Include="TagCollectionFactory.cs" />
     <Compile Include="WordsHandler.cs" />
     <Compile Include="ArchemedianSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
