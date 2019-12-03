@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YandexStem", "YandexStem", 
 	ProjectSection(SolutionItems) = preProject
 		TagsCloudVisualization\bin\Debug\YandexStem\input.txt = TagsCloudVisualization\bin\Debug\YandexStem\input.txt
 		TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe = TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe
-		TagsCloudVisualization\bin\Debug\YandexStem\output.txt = TagsCloudVisualization\bin\Debug\YandexStem\output.txt
 	EndProjectSection
 EndProject
 Global

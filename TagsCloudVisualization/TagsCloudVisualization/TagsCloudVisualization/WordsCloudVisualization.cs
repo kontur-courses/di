@@ -1,29 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using System.Windows.Forms;
+using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.TagCloudLayouters;
 
 
 namespace TagsCloudVisualization.TagsCloudVisualization
 {
     class WordsCloudVisualization : ITagsCloudVisualization<Rectangle>
     {
-        private Dictionary<string, Font> words;
-        public WordsCloudVisualization(Dictionary<string, Font> words)
+        private readonly Dictionary<string, int> words;
+        private readonly ImageSettings imageSettings;
+        private readonly CircularCloudLayouter circularCloudLayouter;
+
+        public WordsCloudVisualization(Dictionary<string, int> words, ImageSettings imageSettings, CircularCloudLayouter circularCloudLayouter)
         {
             this.words = words;
+            this.imageSettings = imageSettings;
+            this.circularCloudLayouter = circularCloudLayouter;
         }
 
-        public Bitmap Draw(IEnumerable<Rectangle> figuresToDraw, int imageWidth, int imageHeight)
+        public void Draw()
         {
-            var image = new Bitmap(imageWidth, imageHeight);
-            var rectangles = figuresToDraw.ToList();
+            var image = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             var stringFormat = new StringFormat {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center};
             using (var drawPlace = Graphics.FromImage(image))
             {
-                foreach (var (rectangle, wordInfo) in rectangles.Zip(words, (place, wordInfo) => (place, wordInfo)))
-                    drawPlace.DrawString(wordInfo.Key, wordInfo.Value, new SolidBrush(Color.Black), rectangle, stringFormat);
+                foreach (var wordInfo in words)
+                {
+                    var font = new Font("Consolas", imageSettings.MinimalTextSize * wordInfo.Value);
+                    var rectangleSize = TextRenderer.MeasureText(wordInfo.Key, font);
+                    var rectangle = circularCloudLayouter.PutNextRectangle(rectangleSize);
+                    drawPlace.DrawString(wordInfo.Key, font, new SolidBrush(Color.Black), rectangle, stringFormat);
+                }
             }
-            return image;
+            image.Save(imageSettings.ImageName + imageSettings.ImageExtention);
         }
     }
 }

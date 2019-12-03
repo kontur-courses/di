@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Exceptions;
 using TagsCloudVisualization.Geometry;
+using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.TagCloudLayouters;
 using TagsCloudVisualization.TagsCloudVisualization;
 
@@ -43,7 +44,7 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
         public void SetUp()
         {
             center = new Point(300, 300);
-            circularCloudLayouter = new CircularCloudLayouter(center, 1000);
+            circularCloudLayouter = new CircularCloudLayouter(new CloudSettings(center, 10000));
         }
 
         [Test]
@@ -156,10 +157,8 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
         [TestCase(100, 200, 1000, TestName = "OnHugeRectangles")]
         public void PutNextRectangle_WithoutIntersectionWithAdded(int count, int min, int max)
         {
-            rectangles = sizesForTesting
-                .Select(size => circularCloudLayouter.PutNextRectangle(size))
-                .ToList();
-
+            var random = new Random();
+            rectangles = Enumerable.Range(0, count).Select(b => circularCloudLayouter.PutNextRectangle(new Size(random.Next(min, max), random.Next(min, max)))).ToList();
 
             rectangles
                 .ForEach(rec1 => rectangles
@@ -185,7 +184,7 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
             {
                 var pathToTestNameDir = Path.Combine(TestContext.CurrentContext.TestDirectory,  TestContext.CurrentContext.Test.Name);
                 var pathToCurrentTestNumberDir = GetPathToDirectoryForSaving(pathToTestNameDir);
-                SaveFiles(pathToCurrentTestNumberDir, new DebugVisualization().Draw(rectangles, 900, 900));
+                SaveFiles(pathToCurrentTestNumberDir);
                 Console.WriteLine($"Tag cloud visualization saved to file {pathToCurrentTestNumberDir}");
             }
             rectangles.Clear();
@@ -206,10 +205,13 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
                 Directory.CreateDirectory(path);
         }
 
-        private void SaveFiles(string path, Bitmap image)
+        private void SaveFiles(string path)
         {
+            var pathToFile = Path.Combine(path, "Rectangles");
+            var imageSettings = new ImageSettings(new Size(1800, 1800), pathToFile, ".png", 0);
+            var debugVisualization = new DebugVisualization(imageSettings, rectangles);
+            debugVisualization.Draw();
             File.WriteAllText(Path.Combine(path, "Rectangles.json"), JsonConvert.SerializeObject(rectangles));
-            image.Save(Path.Combine(path, "Image.png"));
         }
     }
 }

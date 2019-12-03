@@ -4,21 +4,20 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Exceptions;
 using TagsCloudVisualization.Geometry;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.TagCloudLayouters
 {
     public class CircularCloudLayouter
     {
-        private readonly Point center;
-        private readonly int maxCloudRadius;
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly SortedList<double, HashSet<Point>> corners = new SortedList<double, HashSet<Point>>();
+        private readonly CloudSettings cloudSettings;
 
-        public CircularCloudLayouter(Point center, int cloudRadius)
+        public CircularCloudLayouter(CloudSettings cloudSettings)
         {
-            this.center = center;
-            maxCloudRadius = cloudRadius;
-            corners.Add(0, new HashSet<Point> { center });
+            this.cloudSettings = cloudSettings;
+            corners.Add(0, new HashSet<Point> { cloudSettings.Center });
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -33,7 +32,7 @@ namespace TagsCloudVisualization.TagCloudLayouters
                 {
                     if (rectangles.Any(rec => rec.IntersectsWith(rectangle)))
                         continue;
-                    if (rectangle.AnyRectanglePointOutOfRange(center, maxCloudRadius))
+                    if (rectangle.AnyRectanglePointOutOfRange(cloudSettings.Center, cloudSettings.Radius))
                         continue;
                     rectangles.Add(rectangle);
                     AddPointsIntoList(rectangle.GetCorners());
@@ -51,7 +50,7 @@ namespace TagsCloudVisualization.TagCloudLayouters
         {
             foreach (var point in points)
             {
-                var distance = point.DistanceTo(center);
+                var distance = point.DistanceTo(cloudSettings.Center);
                 if (corners.ContainsKey(distance))
                     corners[distance].Add(point);
                 else

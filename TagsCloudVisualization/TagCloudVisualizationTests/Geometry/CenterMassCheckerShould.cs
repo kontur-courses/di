@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Geometry;
+using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.TagCloudLayouters;
 
 namespace TagCloudVisualizationTests.Geometry
@@ -11,21 +12,25 @@ namespace TagCloudVisualizationTests.Geometry
     [TestFixture]
     class CenterMassCheckerShould
     {
+        private CircularCloudLayouter circularCloudLayouter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            circularCloudLayouter = new CircularCloudLayouter(new CloudSettings(new Point(0, 0), 200));
+        }
+
         [Test]
         public void ReturnRectangleCenter_When_OneRectangleAdded()
         {
-            var centre = new Point(0, 0);
-            var tagCloud = new CircularCloudLayouter(centre, 200);
-            var rectangles = new List<Rectangle>() { tagCloud.PutNextRectangle(new Size(2, 2)) };
+            var rectangles = new List<Rectangle>() { circularCloudLayouter.PutNextRectangle(new Size(2, 2)) };
             CenterMassChecker.FindCenterMass(rectangles).Should().Be(new PointF(0, 0));
         }
 
         [Test]
         public void ReturnCenter_When_FourSameRectanglesAdded()
         {
-            var centre = new Point(0, 0);
-            var tagCloud = new CircularCloudLayouter(centre, 200);
-            var rectangles = Enumerable.Range(0, 9).Select(b => tagCloud.PutNextRectangle(new Size(2, 2))).ToList();
+            var rectangles = Enumerable.Range(0, 9).Select(b => circularCloudLayouter.PutNextRectangle(new Size(2, 2))).ToList();
             CenterMassChecker.FindCenterMass(rectangles).Should().Be(new PointF(0, 0));
         } 
     }
