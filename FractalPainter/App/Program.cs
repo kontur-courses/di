@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
 namespace FractalPainting.App
@@ -18,7 +19,6 @@ namespace FractalPainting.App
 
                 // start here
                 // container.Bind<TService>().To<TImplementation>();
-
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
