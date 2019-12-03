@@ -1,9 +1,9 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Generators;
+using TagsCloudContainer.Core.Generators;
 
-namespace TagsCloudContainer.Layouters
+namespace TagsCloudContainer.Core.Layouters
 {
     public class CircularCloudLayouter
     {

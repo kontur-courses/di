@@ -1,8 +1,8 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Layouters;
+using TagsCloudContainer.Core.Layouters;
 
 namespace TagsCloudContainer.Visualization
 {

@@ -1,7 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.Drawing;
 
-namespace TagsCloudContainer.Generators
+namespace TagsCloudContainer.Core.Generators
 {
     internal class ArchimedeanSpiral : IPointGenerator
     {

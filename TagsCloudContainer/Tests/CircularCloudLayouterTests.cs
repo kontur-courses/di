@@ -1,4 +1,4 @@
-﻿﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -6,8 +6,8 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
-using TagsCloudContainer.Generators;
-using TagsCloudContainer.Layouters;
+using TagsCloudContainer.Core.Generators;
+using TagsCloudContainer.Core.Layouters;
 using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer.Tests

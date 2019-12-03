@@ -1,9 +1,9 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.Generators;
+using TagsCloudContainer.Core.Generators;
 
 namespace TagsCloudContainer.Tests
 {
