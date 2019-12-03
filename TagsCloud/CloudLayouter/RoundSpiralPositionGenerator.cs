@@ -8,7 +8,7 @@ namespace TagsCloud.CloudLayouter
     {
         private Point center = new Point(0, 0);
         private double angle = 0;
-        public readonly double DeltaRadiusBetweenTurns = Math.PI;
+        public readonly double DeltaRadiusBetweenTurns = new Random().NextDouble() * Math.PI;
         public readonly double DeltaAngle = 0.5;
 
         public Point GetNextPosition()
