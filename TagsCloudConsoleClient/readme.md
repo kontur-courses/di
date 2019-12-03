@@ -10,6 +10,8 @@
   -f, --font          (Default: Comic Sans MS) Font name.
 
   -s, --splitter      (Default: Line) Split by line or white space. (Line || WhiteSpace)
+  
+  -a, --angel         (Default: 3,14) Delta radius between turns spiral.
 
   --help              Display this help screen.
 
