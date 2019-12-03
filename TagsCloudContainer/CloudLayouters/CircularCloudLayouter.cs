@@ -7,7 +7,7 @@ namespace TagsCloudContainer.CloudLayouters
 {
     class CircularCloudLayouter : ICloudLayouter
     {
-        private Point center_cloud;
+        private Point centerCloud;
         public List<Rectangle> rectangles { get; }
         private const double radiusStep = 1;
         private const double angleStep = 1;
@@ -15,7 +15,7 @@ namespace TagsCloudContainer.CloudLayouters
 
         public CircularCloudLayouter(Point center)
         {
-            center_cloud = center;
+            centerCloud = center;
             rectangles = new List<Rectangle>();
         }
 
@@ -50,8 +50,8 @@ namespace TagsCloudContainer.CloudLayouters
 
         private Point GetNextPoint()
         {
-            var x = (int)(Math.Cos(angle) * radiusStep * angle + center_cloud.X);
-            var y = (int)(Math.Sin(angle) * radiusStep * angle + center_cloud.Y);
+            var x = (int)(Math.Cos(angle) * radiusStep * angle + centerCloud.X);
+            var y = (int)(Math.Sin(angle) * radiusStep * angle + centerCloud.Y);
             angle += angleStep / angle;
             return new Point(x, y);
         }
