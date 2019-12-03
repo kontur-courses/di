@@ -8,6 +8,7 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(args);
             var builder = new ContainerBuilder();
             builder.RegisterType<BasicWordSelector>().As<IWordSelector>();
             builder.RegisterType<WordReader>().As<IWordReader>();

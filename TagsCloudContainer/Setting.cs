@@ -5,8 +5,19 @@ namespace TagsCloudContainer
 {
     public class Setting
     {
-        public Font Font { get; } = new Font("Arial", 8);
-        public Brush Brush { get; } = Brushes.Black;
-        public string Path { get; } = "timeSolution.txt";
+        public Font Font { get; }
+        public Brush Brush { get; }
+        public string Path { get; }
+        public int Height { get; }
+        public int Width { get; }
+
+        public Setting(string path, string fontName, int size, int width, int height, string color)
+        {
+            Width = width;
+            Height = height;
+            Path = path;
+            Font = new Font(fontName, size);
+            Brush = new SolidBrush(Color.FromName(color));
+        }
     }
 }

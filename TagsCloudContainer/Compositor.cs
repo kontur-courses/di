@@ -30,7 +30,6 @@ namespace TagsCloudContainer
             }
 
             var leftCornerPoint = new Point();
-            var rightCornerPoint = new Point();
             foreach (var (rectangle, word) in words)
             {
                 if (rectangle.Top < leftCornerPoint.Y)
@@ -38,16 +37,9 @@ namespace TagsCloudContainer
 
                 if (rectangle.Left < leftCornerPoint.X)
                     leftCornerPoint.X = rectangle.Left;
-
-                if (rectangle.Bottom > rightCornerPoint.Y)
-                    rightCornerPoint.Y = rectangle.Bottom;
-
-                if (rectangle.Right > rightCornerPoint.X)
-                    rightCornerPoint.X = rectangle.Right;
             }
 
-            using (var bitmap = new Bitmap(rightCornerPoint.X - leftCornerPoint.X,
-                rightCornerPoint.Y - leftCornerPoint.Y))
+            using (var bitmap = new Bitmap(setting.Width, setting.Height))
             {
                 var graphic = Graphics.FromImage(bitmap);
                 foreach (var (rectangle, word) in words)

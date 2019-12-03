@@ -4,7 +4,7 @@ namespace TagsCloudContainer
     {
         public string Select(string word)
         {
-            return word.Length < 4 ? null : word;
+            return word.Length < 4 ? null : word.ToLower();
         }
     }
 }
