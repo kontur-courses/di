@@ -65,6 +65,7 @@
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Filters\BoringFilter.cs" />
     <Compile Include="Tests\Tests.cs" />
     <Compile Include="Tests\TokenGenerator\TokensParser_Should.cs" />
     <Compile Include="Token.cs" />
