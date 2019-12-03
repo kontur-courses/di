@@ -13,7 +13,6 @@ namespace TagsCloudVisualization
 
         private readonly List<Rectangle> taggedRectangles;
 
-
         public CircularCloudLayouter(ICirclePointLocator pointLocator)
         {
             taggedRectangles = new List<Rectangle>();

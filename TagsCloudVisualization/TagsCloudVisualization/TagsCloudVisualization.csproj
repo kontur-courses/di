@@ -64,6 +64,9 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="ICirclePointLocator.cs" />
     <Compile Include="IVisualizer.cs" />
+    <Compile Include="PointExtensions.cs" />
+    <Compile Include="TagCloudVisualizer.cs" />
+    <Compile Include="Tag.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="Tests\GeometryTests.cs" />
     <Compile Include="ILayouter.cs" />
@@ -72,7 +75,6 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geometry.cs" />
-    <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="TextParser.cs" />
     <Compile Include="TextRetriever.cs" />

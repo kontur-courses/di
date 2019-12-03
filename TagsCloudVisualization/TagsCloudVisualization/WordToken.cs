@@ -2,12 +2,12 @@
 {
     public class WordToken
     {
-        public readonly string Tag;
+        public readonly string Word;
         public readonly int TextCount;
 
-        public WordToken(string tag, int textCount)
+        public WordToken(string word, int textCount)
         {
-            Tag = tag;
+            Word = word;
             TextCount = textCount;
         }
     }

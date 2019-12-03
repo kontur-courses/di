@@ -18,8 +18,6 @@ namespace TagsCloudVisualization
             this.spiralRatio = spiralRatio;
         }
 
-
-
         public Point GetNextPoint()
         {
             angle += spiralRatio;

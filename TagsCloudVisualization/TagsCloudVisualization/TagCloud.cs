@@ -13,11 +13,11 @@ namespace TagsCloudVisualization
             Image = image;
         }
 
-        public bool TrySaveTo(string path)
+        public bool TrySaveTo(string path, ImageFormat format)
         {
             try
             {
-                Image.Save(path, ImageFormat.Png);
+                Image.Save(path, format);
             }
             catch
             {

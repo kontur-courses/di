@@ -18,7 +18,7 @@ namespace TagsCloudVisualization
         [OneTimeSetUp]
         public void InitializeContainer()
         {
-            defaultContainer = Program.InitializeContainer();
+            defaultContainer = EntryPoint.InitializeContainer();
         }
 
         [SetUp]

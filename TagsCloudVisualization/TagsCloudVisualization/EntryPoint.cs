@@ -12,8 +12,8 @@ namespace TagsCloudVisualization
 
             container
                 .Resolve<IVisualizer>()
-                .VisualizeTextFromFile("InputData/Input1.txt")
-                .TrySaveTo("result.jpg", ImageFormat.Jpeg);
+                .VisualizeTextFromFile("InputData/Input2.txt")
+                .TrySaveTo("result.png", ImageFormat.Png);
 
             Process.Start("result.png");
         }
