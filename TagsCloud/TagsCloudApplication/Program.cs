@@ -18,16 +18,16 @@ namespace TagsCloudApplication
         {
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             var wordsToExclude = File.ReadAllLines(Path.Combine( projectDirectory,"Example", "wordsToExclude.txt"));
-            var wordsInput = File.ReadAllLines(Path.Combine( projectDirectory,"Example", "wordsInput.txt"));
+            var textInput = File.ReadAllText(Path.Combine( projectDirectory,"Example", "wordsInput.txt"));
             var textPreparer = new TextPreparer(new TextPreparerConfig().Excluding(wordsToExclude));
-            var words = textPreparer.GetWordsByFrequency(wordsInput);
-            var fontProperties = new FontProperties("Arial Black", 32);
+            var words = textPreparer.GetWordsByFrequency(textInput);
+            var fontProperties = new FontProperties("Arial", 36);
             var style = new Style(new GrayTheme(), fontProperties, new WordSizeCalculatorLogarithmic());
             var visualizer = new TextNoRectanglesVisualizer();
-            var layouter = new SpiralCloudLayouter(new Spiral(new Point(350, 300), 0.1f, 0.1f));
+            var layouter = new SpiralCloudLayouter(new Spiral(new Point(600, 700), 0.1f, 0.1f));
             var cloud = new Cloud(words, style, visualizer, layouter);
 
-            cloud.Visualize(900, 600).Save(Path.Combine(projectDirectory,"Example","result.png"));
+            cloud.Visualize(1500, 1500).Save(Path.Combine(projectDirectory,"Example","result.png"));
         }
     }
 }

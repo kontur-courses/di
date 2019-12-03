@@ -108,5 +108,27 @@ namespace TagsCloudTextPreparation.Tests
                 .Should()
                 .BeEquivalentTo(new FrequencyWord("cat", 4));
         }
+        
+        [Test]
+        public void GetPreparedText_Should_SplitTextWithDefaultConfig()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig());
+            var frequencyWords = textPreparer.GetWordsByFrequency("cat. \"cat?\" %cat!@");
+
+            frequencyWords
+                .Should()
+                .BeEquivalentTo(new FrequencyWord("cat", 3));
+        }
+        
+        [Test]
+        public void GetPreparedText_Should_SplitTextWithCustomConfig()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig().UsingWordsSplitPattern("[0-9]"));
+            var frequencyWords = textPreparer.GetWordsByFrequency("29cat2342cat34cat");
+
+            frequencyWords
+                .Should()
+                .BeEquivalentTo(new FrequencyWord("cat", 3));
+        }
     }
 }

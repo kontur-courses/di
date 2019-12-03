@@ -14,7 +14,6 @@ namespace TagsCloudVisualization.Styling.WordSizeCalculators
             {
                 using (var graphics = Graphics.FromImage(image))
                 {
-                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
                     using (var path = new GraphicsPath())
                     {
                         path.AddString(word.Word, font.FontFamily, (int) font.Style,

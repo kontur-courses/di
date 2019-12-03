@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudTextPreparation
 {
@@ -14,10 +15,20 @@ namespace TagsCloudTextPreparation
                 textPreparerConfig ?? throw new ArgumentException("Text prepare config can't be null");
         }
 
+        public List<FrequencyWord> GetWordsByFrequency(string text)
+        {
+            return GetWordsByFrequency(SplitText(text));
+        }
+        
         public List<FrequencyWord> GetWordsByFrequency(IEnumerable<string> words)
         {
             words = ApplyConfiguration(words);
             return ConvertWordsToTagCloudWords(words);
+        }
+
+        private IEnumerable<string> SplitText(string text)
+        {
+            return Regex.Split(text, textPreparerConfig.SplitPattern);
         }
 
         private IEnumerable<string> ApplyConfiguration(IEnumerable<string> words)

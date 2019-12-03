@@ -7,6 +7,8 @@ namespace TagsCloudTextPreparation
     {
         private readonly HashSet<string> excludedWords = new HashSet<string>();
 
+        public string SplitPattern { get; set; } = @"\W";
+
         //todo - Excluding parts of speech
         //todo UsingWordsCase - (lower, upper or title)
 
@@ -17,6 +19,12 @@ namespace TagsCloudTextPreparation
             foreach (var word in words)
                 if (!excludedWords.Contains(word))
                     excludedWords.Add(word);
+            return this;
+        }
+
+        public TextPreparerConfig UsingWordsSplitPattern(string pattern)
+        {
+            SplitPattern = pattern;
             return this;
         }
         
