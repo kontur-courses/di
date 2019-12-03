@@ -97,32 +97,25 @@
     <Compile Include="App\Fractals\DragonSettings.cs" />
     <Compile Include="App\Fractals\DragonSettingsGenerator.cs" />
     <Compile Include="App\Fractals\KochPainter.cs" />
-    <Compile Include="App\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="App\PictureBoxImageHolder.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="App\MainForm.cs" />
+    <Compile Include="App\PictureBoxImageHolder.cs" />
     <Compile Include="App\Program.cs" />
     <Compile Include="App\SettingsManager.cs" />
-    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
     <Compile Include="Infrastructure\Common\FileBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IBlobStorage.cs" />
     <Compile Include="Infrastructure\Common\IImageDirectoryProvider.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\IImageSettingsProvider.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
-    <Compile Include="Infrastructure\Injection\INeed.cs" />
     <Compile Include="Infrastructure\Common\IObjectSerializer.cs" />
-    <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />
     <Compile Include="Infrastructure\Common\SettingsForm.cs" />
-    <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
     <Compile Include="Infrastructure\Common\XmlObjectSerializer.cs" />
+    <Compile Include="Infrastructure\Injection\DependencyInjector.cs" />
+    <Compile Include="Infrastructure\Injection\INeed.cs" />
+    <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
+    <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="App\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -153,7 +146,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="App\MainForm.resx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

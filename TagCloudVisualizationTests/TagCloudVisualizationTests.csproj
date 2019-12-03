@@ -35,8 +35,13 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiralTests.cs" />
     <Compile Include="SpiralCloudLayouterTests.cs" />
+    <Compile Include="TagCloudTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
       <Private>True</Private>

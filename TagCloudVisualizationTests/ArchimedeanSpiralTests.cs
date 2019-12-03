@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Core;
+using TagsCloudVisualization.Core.Spirals;
 using TagsCloudVisualization.Infrastructure;
 
 namespace TagCloudVisualizationTests

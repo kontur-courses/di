@@ -5,8 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudVisualization.Core;
+using TagsCloudVisualization.Core.Drawers;
+using TagsCloudVisualization.Core.Layouters;
+using TagsCloudVisualization.Core.Spirals;
 using TagsCloudVisualization.Infrastructure;
-using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization
 {
