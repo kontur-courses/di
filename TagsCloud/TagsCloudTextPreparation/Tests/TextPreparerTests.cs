@@ -29,7 +29,25 @@ namespace TagsCloudTextPreparation.Tests
         }
         
         [Test]
-        public void GetPreparedText_Should_ExcludeWordsOnlySpecifiedWords()
+        public void GetPreparedText_Should_SkipEmptyLines()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig());
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"cat","","dog"});
+
+            frequencyWords.Select(w=>w.Word).Should().NotContain("");
+        }
+        
+        [Test]
+        public void GetPreparedText_Should_SkipLinesWithOnlySpaces()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig());
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {" ","  "});
+
+            frequencyWords.Select(w=>w.Word).Should().NotContain(" ","  ");
+        }
+        
+        [Test]
+        public void GetPreparedText_Should_ExcludeOnlySpecifiedWords()
         {
             var excludedWords = new[] {"a", "b", "c"};
             
@@ -67,6 +85,28 @@ namespace TagsCloudTextPreparation.Tests
             frequencyWords
                 .Should()
                 .BeEquivalentTo(new FrequencyWord("cat", 2), new FrequencyWord("dog", 3));
+        }
+        
+        [Test]
+        public void GetPreparedText_Should_TreatWordInDifferentCasesAsSameWord()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig());
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"cat","Cat","CAT","cAt"});
+
+            frequencyWords
+                .Should()
+                .BeEquivalentTo(new FrequencyWord("cat", 4));
+        }
+        
+        [Test]
+        public void GetPreparedText_Should_TreatWordWithSpacesAsSameWord()
+        {
+            var textPreparer = new TextPreparer(new TextPreparerConfig());
+            var frequencyWords = textPreparer.GetWordsByFrequency(new[] {"cat","cat "," cat"," cat "});
+
+            frequencyWords
+                .Should()
+                .BeEquivalentTo(new FrequencyWord("cat", 4));
         }
     }
 }

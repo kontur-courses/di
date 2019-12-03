@@ -37,10 +37,15 @@ namespace TagsCloudTextPreparation
             var frequencyDictionary = new Dictionary<string, int>();
             foreach (var word in words)
             {
-                if (frequencyDictionary.ContainsKey(word))
-                    frequencyDictionary[word]++;
+                var tempWord = word.Trim();
+
+                if (tempWord == string.Empty)
+                    continue;
+
+                if (frequencyDictionary.ContainsKey(tempWord))
+                    frequencyDictionary[tempWord]++;
                 else
-                    frequencyDictionary.Add(word, 1);
+                    frequencyDictionary.Add(tempWord, 1);
             }
 
             return frequencyDictionary.Select(v => new FrequencyWord(v.Key, v.Value)).ToList();
