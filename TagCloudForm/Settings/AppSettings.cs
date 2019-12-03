@@ -6,5 +6,6 @@ namespace TagCloudForm.Settings
     {
         public string ImagesDirectory { get; set; } = ".";
         public ImageSettings ImageSettings { get; set; }
+        public const string FormName = "Tag cloud";
     }
 }

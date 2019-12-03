@@ -12,11 +12,6 @@ namespace TagCloudForm.Holder
             RecreateImage(imageSettings);
         }
 
-        public Size GetImageSize()
-        {
-            return Image.Size;
-        }
-
         public Graphics StartDrawing()
         {
             return Graphics.FromImage(Image);
@@ -31,7 +26,6 @@ namespace TagCloudForm.Holder
         public void RecreateImage(ImageSettings imageSettings)
         {
             Image = new Bitmap(imageSettings.Width, imageSettings.Height);
-            BackColor = Color.Black;
         }
 
         public void SaveImage(string fileName)

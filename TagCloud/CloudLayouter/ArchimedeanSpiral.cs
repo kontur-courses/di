@@ -7,30 +7,32 @@ namespace TagCloud.CloudLayouter
     public class ArchimedeanSpiral
     {
         private readonly Random random = new Random(42);
-        private double delta;
-        private double parameter;
-        private double angle;
+        private readonly SpiralSettings settings;
+        private double angleChange;
+        private double densityParameter;
+        public double angle;
 
         public ArchimedeanSpiral(SpiralSettings settings)
         {
-            SetStartPoint(settings);
+            this.settings = settings;
+            SetNewStartPoint();
         }
 
-        public void SetStartPoint(SpiralSettings settings)
+        public void SetNewStartPoint()
         {
             angle = 0;
-            parameter = settings.Parameter;
-            delta = settings.Delta;
+            densityParameter = settings.DensityParameter;
+            angleChange = settings.AngleChange;
         }
 
         public IEnumerable<Point> GetNewPointLazy()
         {
             while (true)
             {
-                angle += delta;
+                angle += angleChange;
                 var result = new Point(
-                    (int) Math.Round(parameter * angle * Math.Sin(angle)) + random.Next(2, 10),
-                    (int) Math.Round(0.5 * parameter * angle * Math.Cos(angle)) + random.Next(2, 10));
+                    (int) Math.Round(densityParameter * angle * Math.Sin(angle)) + random.Next(2, 10),
+                    (int) Math.Round(0.5 * densityParameter * angle * Math.Cos(angle)) + random.Next(2, 10));
                 yield return result;
             }
         }

@@ -6,11 +6,12 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{EBA7532B-A2F5-4BF5-9CE9-4F52D9E574BD}</ProjectGuid>
+        <ProjectGuid>{A78076F4-FB3E-4795-BF70-67AF3A9491C2}</ProjectGuid>
+        <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>TagCloud</RootNamespace>
-        <AssemblyName>TagCloud</AssemblyName>
+        <RootNamespace>TagCloud_Should</RootNamespace>
+        <AssemblyName>TagCloud_Should</AssemblyName>
         <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -34,55 +35,46 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
-            <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+        <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
+            <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
             <Private>True</Private>
         </Reference>
-        <Reference Include="FluentAssertions, Version=4.15.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
-            <HintPath>..\packages\FluentAssertions.4.15.0\lib\net45\FluentAssertions.dll</HintPath>
+        <Reference
+            Include="FluentAssertions.Extensions, Version=1.0.18.0, Culture=neutral, PublicKeyToken=951c63ca832f7094">
+            <HintPath>..\packages\FluentAssertions.Extensions.1.0.18\lib\net45\FluentAssertions.Extensions.dll</HintPath>
             <Private>True</Private>
         </Reference>
-        <Reference Include="FluentAssertions.Core, Version=4.15.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
-            <HintPath>..\packages\FluentAssertions.4.15.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+        <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+            <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
             <Private>True</Private>
-        </Reference>
-        <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
-            <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Drawing" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Windows.Forms.DataVisualization" />
-        <Reference Include="System.Windows.Forms.DataVisualization.Design" />
+        <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+            <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
+        <Reference Include="System.Xml.Serialization" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
-        <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
-        <Compile Include="CloudLayouter\ICloudLayouter.cs" />
-        <Compile Include="CloudLayouter\RectangleSettings.cs" />
-        <Compile Include="CloudLayouter\SpiralSettings.cs" />
-        <Compile Include="ImageSettings.cs" />
+        <Compile Include="ArchimedeanSpiral_Should.cs" />
+        <Compile Include="CircularCloudLayouter_Should.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="StringExtension.cs" />
-        <Compile Include="TextFilter\BlacklistMaker.cs" />
-        <Compile Include="TextFilter\BlacklistSettings.cs" />
-        <Compile Include="TextFilter\TextFileReader.cs" />
-        <Compile Include="TextFilter\TextFilter.cs" />
-        <Compile Include="TextFilter\TextFilterSettings.cs" />
-        <Compile Include="Visualization\ViewSettings.cs" />
+        <Compile Include="TextFilter_Should.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\TagCloud\TagCloud.csproj">
+            <Project>{eba7532b-a2f5-4bf5-9ce9-4f52d9e574bd}</Project>
+            <Name>TagCloud</Name>
+        </ProjectReference>
     </ItemGroup>
     <ItemGroup>
         <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\CloudTextPreparer\CloudTextPreparer.csproj">
-            <Project>{36b54e05-de3e-445e-a904-d3df5d95c888}</Project>
-            <Name>CloudTextPreparer</Name>
-        </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

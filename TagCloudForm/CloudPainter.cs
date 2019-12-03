@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using TagCloud;
 using TagCloud.CloudLayouter;
+using TagCloud.TextFilter;
 using TagCloud.Visualization;
 using TagCloudForm.Holder;
 
@@ -13,29 +14,22 @@ namespace TagCloudForm
     {
         private readonly IImageHolder imageHolder;
         private readonly RectangleSettings rectangleSettings;
-        private readonly CircularCloudLayouter layouter;
-        private readonly VisualizationSettings visualizationSettings;
+        private readonly ICloudLayouter layouter;
+        private readonly ViewSettings viewSettings;
         private readonly ImageSettings imageSettings;
         private readonly Dictionary<string, int> words;
         private readonly Random random = new Random();
 
-        private readonly Brush[] colors =
-        {
-            Brushes.Aqua, Brushes.Lime, Brushes.Blue, Brushes.Brown, Brushes.Chartreuse,
-            Brushes.Chocolate, Brushes.Coral, Brushes.Crimson, Brushes.MediumSlateBlue,
-            Brushes.Gold, Brushes.Green, Brushes.Fuchsia, Brushes.BlueViolet
-        };
-
         public CloudPainter(IImageHolder imageHolder, RectangleSettings rectangleSettings,
-            CircularCloudLayouter layouter, VisualizationSettings visualizationSettings, TextPreparer textPreparer,
-            ImageSettings imageSettings)
+            ICloudLayouter layouter, ViewSettings viewSettings, TextFilter textFilter,
+            ImageSettings imageSettings, TextFileReader textFileReader)
         {
             this.imageHolder = imageHolder;
             this.rectangleSettings = rectangleSettings;
             this.layouter = layouter;
-            this.visualizationSettings = visualizationSettings;
+            this.viewSettings = viewSettings;
             this.imageSettings = imageSettings;
-            words = textPreparer.GetParsedTextDictionary();
+            words = textFilter.FilterWords(textFileReader.ParseFile());
         }
 
         public void Paint()
@@ -44,29 +38,37 @@ namespace TagCloudForm
             using (var graphics = imageHolder.StartDrawing())
             {
                 layouter.RefreshLayouter();
-                graphics.TranslateTransform(imageSettings.Width / 2, imageSettings.Height / 2);
-                foreach (var word in words.OrderByDescending(w => w.Value).Take(100))
+                graphics.FillRectangle(new SolidBrush(viewSettings.BackgroundColor), 0, 0, imageSettings.Width,
+                    imageSettings.Height);
+                var centerPoint = GetCenterPoint();
+                graphics.TranslateTransform(centerPoint.X, centerPoint.Y);
+                foreach (var word in words.OrderByDescending(w => w.Value).Take(viewSettings.WordsCount))
                     PaintRectangleOnCanvas(word.Key, word.Value, graphics);
             }
 
             imageHolder.UpdateUi();
         }
 
+        private Point GetCenterPoint()
+        {
+            return new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+        }
+
         private void PaintRectangleOnCanvas(string word, int frequency, Graphics graphics)
         {
             SetNewRectangleSize(frequency, word.Length);
-            SetNewFont(word.Length);
             var rectangle = layouter.PutNextRectangle(
-                rectangleSettings.RectangleSize, word, frequency);
-            graphics.FillRectangle(colors[random.Next(0, colors.Length)], rectangle);
-            graphics.DrawString(word, visualizationSettings.VisualizationFont,
-                Brushes.Black, rectangle);
+                rectangleSettings.RectangleSize);
+            if (viewSettings.EnableWordRectangles)
+                graphics.FillRectangle(viewSettings.colors.ElementAt(random.Next(0, viewSettings.colors.Count)),
+                    rectangle);
+            graphics.DrawString(word, new Font(viewSettings.FontName, GetFontSize(word)),
+                new SolidBrush(viewSettings.TextColor), rectangle);
         }
 
-        private void SetNewFont(int wordLength)
+        private float GetFontSize(string word)
         {
-            visualizationSettings.FontName = "Arial";
-            visualizationSettings.FontSize = rectangleSettings.Width / wordLength;
+            return rectangleSettings.Width / word.Length;
         }
 
         private void SetNewRectangleSize(int frequency, int wordLength)

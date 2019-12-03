@@ -3,20 +3,20 @@ using TagCloudForm.Settings;
 
 namespace TagCloudForm.Actions
 {
-    public class SpiralParametersAction : IUiAction
+    public class PaintCloudAction : IUiAction
     {
         private readonly SpiralSettings spiralSettings;
         private readonly CloudPainter painter;
 
-        public SpiralParametersAction(CloudPainter painter, SpiralSettings spiralSettings)
+        public PaintCloudAction(CloudPainter painter, SpiralSettings spiralSettings)
         {
             this.spiralSettings = spiralSettings;
             this.painter = painter;
         }
 
-        public string Category { get; } = "Спираль";
-        public string Name { get; } = "Настроить";
-        public string Description { get; } = "Настроить параметры спирали";
+        public string Category => "Нарисовать";
+        public string Name => "Облако";
+        public string Description => "Нарисовать облако тегов";
 
         public void Perform()
         {

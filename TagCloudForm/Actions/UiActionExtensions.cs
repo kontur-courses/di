@@ -6,7 +6,7 @@ namespace TagCloudForm.Actions
 {
     public static class UiActionExtensions
     {
-        public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
+        public static ToolStripItem[] ToMenuItems(this IEnumerable<IUiAction> actions)
         {
             var items = actions.GroupBy(a => a.Category)
                 .Select(g => CreateToplevelMenuItem(g.Key, g.ToList()))
@@ -15,13 +15,7 @@ namespace TagCloudForm.Actions
             return items;
         }
 
-        private static ToolStripMenuItem CreateToplevelMenuItem(string name, IList<IUiAction> items)
-        {
-            var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
-            return new ToolStripMenuItem(name, null, menuItems);
-        }
-
-        public static ToolStripItem ToMenuItem(this IUiAction action)
+        private static ToolStripItem ToMenuItem(this IUiAction action)
         {
             return
                 new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())
@@ -29,6 +23,12 @@ namespace TagCloudForm.Actions
                     ToolTipText = action.Description,
                     Tag = action
                 };
+        }
+
+        private static ToolStripMenuItem CreateToplevelMenuItem(string name, IList<IUiAction> items)
+        {
+            var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
+            return new ToolStripMenuItem(name, null, menuItems);
         }
     }
 }

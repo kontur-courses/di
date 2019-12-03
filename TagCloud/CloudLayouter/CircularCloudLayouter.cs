@@ -5,70 +5,63 @@ using System.Linq;
 
 namespace TagCloud.CloudLayouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly ArchimedeanSpiral spiral;
-        public HashSet<Rectangle> Rectangles;
-        private readonly ImageSettings screenSize;
-        private readonly SpiralSettings spiralSettings;
+        public HashSet<Rectangle> Rectangles { get; set; }
+        public ImageSettings LayouterSize { get; }
 
-        public CircularCloudLayouter(ArchimedeanSpiral spiral, SpiralSettings spiralSettings,
-            ImageSettings screenSize)
+        public CircularCloudLayouter(ArchimedeanSpiral spiral,
+            ImageSettings layouterSize)
         {
-            this.screenSize = screenSize;
+            LayouterSize = layouterSize;
             this.spiral = spiral;
-            this.spiralSettings = spiralSettings;
-            CheckCorrectScreenSize(screenSize);
+            IsCorrectSize(layouterSize);
             Rectangles = new HashSet<Rectangle>();
         }
 
         public void RefreshLayouter()
         {
-            spiral.SetStartPoint(spiralSettings);
+            spiral.SetNewStartPoint();
             Rectangles = new HashSet<Rectangle>();
         }
 
-        private void CheckCorrectScreenSize(ImageSettings screenSize)
+        public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            if (screenSize.Width <= 0
-                || screenSize.Width > this.screenSize.Width
-                || screenSize.Height <= 0
-                || screenSize.Height > this.screenSize.Height)
-                throw new ArgumentException("Incorrect size of screen " + "w:" + screenSize.Width + "h:" +
-                                            screenSize.Height);
-        }
-
-        public Rectangle PutNextRectangle(Size rectangleSize, string word, int frequency)
-        {
-            CheckCorrectSize(rectangleSize);
+            IsCorrectSize(rectangleSize);
             foreach (var point in spiral.GetNewPointLazy())
             {
                 var rect = new Rectangle(point, rectangleSize);
-                if (!CheckCorrectRectanglePosition(rect)) return new Rectangle(point, Size.Empty);
+                if (!IsCorrectRectanglePosition(rect)) continue;
                 if (!RectangleDoesNotIntersect(rect)) continue;
                 Rectangles.Add(rect);
                 return rect;
             }
 
-            throw new Exception("Rectangle should be added anyway");
+            throw new InvalidOperationException("Rectangle should be added after foreach block");
         }
 
-        private void CheckCorrectSize(Size rectangleSize)
+        private void IsCorrectSize(ImageSettings settings)
+        {
+            IsCorrectSize(new Size(settings.Width, settings.Height));
+        }
+
+        private void IsCorrectSize(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0
-                || rectangleSize.Width > screenSize.Width
+                || rectangleSize.Width > LayouterSize.Width
                 || rectangleSize.Height <= 0
-                || rectangleSize.Height > screenSize.Height)
-                throw new ArgumentException("Incorrect size of rectangle " + "w:" + rectangleSize.Width + "h:" +
-                                            rectangleSize.Height);
+                || rectangleSize.Height > LayouterSize.Height)
+                throw new ArgumentException(
+                    $"Incorrect size of rectangle. Width: {rectangleSize.Width}, Height: {rectangleSize.Height}");
         }
 
-        private bool CheckCorrectRectanglePosition(Rectangle rect)
+        private bool IsCorrectRectanglePosition(Rectangle rect)
         {
-            return rect.Location.X + rect.Size.Width <= screenSize.Width / 2 &&
-                   rect.Location.X >= -screenSize.Width / 2 &&
-                   rect.Location.Y + rect.Size.Height <= screenSize.Height / 2 &&
-                   rect.Location.Y >= -screenSize.Height / 2;
+            return rect.Location.X + rect.Size.Width <= LayouterSize.Width / 2 &&
+                   rect.Location.X >= -LayouterSize.Width / 2 &&
+                   rect.Location.Y + rect.Size.Height <= LayouterSize.Height / 2 &&
+                   rect.Location.Y >= -LayouterSize.Height / 2;
         }
 
         private bool RectangleDoesNotIntersect(Rectangle rectToAdd)
