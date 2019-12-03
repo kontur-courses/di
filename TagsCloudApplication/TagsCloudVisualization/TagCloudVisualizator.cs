@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using TagsCloudLayout.CloudLayouters;
 using TextConfiguration.TextReaders;
 using TextConfiguration;
@@ -11,17 +7,17 @@ namespace TagsCloudVisualization
 {
     public class TagCloudVisualizator
     {
-        private readonly ImageProperties properties;
+        private readonly VisualizatorProperties properties;
         private readonly ITextReader textReader;
         private readonly TextPreprocessor textPreprocessor;
-        private readonly IColorGenerator colorGenerator;
+        private readonly ITextColorProvider colorGenerator;
         private readonly ICloudLayouter layouter;
 
         public TagCloudVisualizator(
-            ImageProperties properties,
+            VisualizatorProperties properties,
             ITextReader textReader,
             TextPreprocessor textPreprocessor,
-            IColorGenerator colorGenerator,
+            ITextColorProvider colorGenerator,
             ICloudLayouter layouter)
         {
             this.properties = properties;
@@ -31,7 +27,7 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Bitmap GetTagCloud(string filePath)
+        public Bitmap VisualizeText(string filePath)
         {
             var text = textReader.ReadText(filePath);
             var words = textPreprocessor.PreprocessText(text);

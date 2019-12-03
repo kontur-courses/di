@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    public interface IColorGenerator
+    public interface ITextColorProvider
     {
         Color GenerateTextColor(string text, Rectangle rectangle);
     }

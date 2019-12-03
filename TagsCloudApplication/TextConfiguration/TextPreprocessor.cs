@@ -1,31 +1,29 @@
 ﻿using System.Collections.Generic;
+using TextConfiguration.WordFilters;
+using TextConfiguration.WordProcessors;
 using System.Linq;
 
 namespace TextConfiguration
 {
     public class TextPreprocessor
     {
-        private readonly ITextPreprocessingSettings settings;
+        private readonly IWordFilter[] filters;
+        private readonly IWordProcessor wordProcessor;
 
-        public TextPreprocessor(ITextPreprocessingSettings settings)
+        public TextPreprocessor(IWordFilter[] filters, IWordProcessor wordProcessor)
         {
-            this.settings = settings;
+            this.filters = filters;
+            this.wordProcessor = wordProcessor;
         }
 
         public Dictionary<string, int> PreprocessText(string text)
         {
-            var preprocessedWords = new Dictionary<string, int>();
+            var words = text
+                .Split()
+                .Where(wrd => !filters.Any(fltr => fltr.ShouldFilter(wrd)))
+                .Select(wrd => wordProcessor.ProcessWord(wrd));
 
-            var words = text.Split();
-            foreach (var word in words)
-                if (word.Length != 0 && settings.TryPreprocessWord(word, out var preprocessedWord))
-                {
-                    if (!preprocessedWords.ContainsKey(preprocessedWord))
-                        preprocessedWords[preprocessedWord] = 0;
-                    preprocessedWords[preprocessedWord]++;
-                }
-
-            return preprocessedWords;
+            return words.CountWords();
         }
     }
 }

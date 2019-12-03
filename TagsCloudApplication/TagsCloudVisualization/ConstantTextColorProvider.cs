@@ -2,11 +2,11 @@
 
 namespace TagsCloudVisualization
 {
-    public class SimpleColorGenerator : IColorGenerator
+    public class ConstantTextColorProvider : ITextColorProvider
     {
         private readonly Color color;
 
-        public SimpleColorGenerator(Color color)
+        public ConstantTextColorProvider(Color color)
         {
             this.color = color;
         }

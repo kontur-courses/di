@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization
 {
-    public class ImageProperties
+    public class VisualizatorProperties
     {
         public readonly Size ImageSize;
         public readonly FontFamily TextFont;
 
-        public ImageProperties(Size imageSize, FontFamily textFont)
+        public VisualizatorProperties(Size imageSize, FontFamily textFont)
         {
             ImageSize = imageSize;
             TextFont = textFont;

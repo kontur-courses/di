@@ -39,9 +39,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITextPreprocessingSettings.cs" />
+    <Compile Include="WordProcessors\IWordProcessor.cs" />
+    <Compile Include="WordProcessors\ToLowerCaseProcessor.cs" />
+    <Compile Include="WordFilters\BoringWordsFilter.cs" />
+    <Compile Include="WordFilters\EmptyWordFilter.cs" />
+    <Compile Include="WordFilters\IWordFilter.cs" />
     <Compile Include="TextPreprocessor.cs" />
-    <Compile Include="DefaultTextPreprocessingSettings.cs" />
     <Compile Include="TextReaders\ITextReader.cs" />
     <Compile Include="TextReaders\RawTextReader.cs" />
     <Compile Include="TextUtilities.cs" />

@@ -7,6 +7,8 @@ using Autofac;
 using TextConfiguration;
 using TextConfiguration.TextReaders;
 using TagsCloudLayout.PointLayouters;
+using TextConfiguration.WordFilters;
+using TextConfiguration.WordProcessors;
 
 namespace TagsCloudVisualization
 {
@@ -17,16 +19,20 @@ namespace TagsCloudVisualization
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.Register(c => 
-                new ImageProperties(new Size(800, 600), FontFamily.GenericMonospace))
-                .As<ImageProperties>();
+                new VisualizatorProperties(new Size(800, 600), FontFamily.GenericMonospace))
+                .As<VisualizatorProperties>();
             containerBuilder.RegisterType<RawTextReader>()
                 .As<ITextReader>();
             containerBuilder.RegisterType<TextPreprocessor>()
                 .As<TextPreprocessor>();
-            containerBuilder.RegisterType<DefaultTextPreprocessingSettings>()
-                .As<ITextPreprocessingSettings>();
-            containerBuilder.RegisterType<SimpleColorGenerator>()
-                .As<IColorGenerator>();
+            containerBuilder.RegisterType<BoringWordsFilter>()
+                .As<IWordFilter>();
+            containerBuilder.RegisterType<EmptyWordFilter>()
+                .As<IWordFilter>();
+            containerBuilder.RegisterType<ToLowerCaseProcessor>()
+                .As<IWordProcessor>();
+            containerBuilder.RegisterType<ConstantTextColorProvider>()
+                .As<ITextColorProvider>();
             containerBuilder.Register(c => Color.FromArgb(127, 0, 0))
                 .As<Color>();
             containerBuilder.RegisterType<CircularCloudLayouter>()
@@ -41,7 +47,7 @@ namespace TagsCloudVisualization
             var builder = containerBuilder.Build();
 
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Words.txt");
-            var image = builder.Resolve<TagCloudVisualizator>().GetTagCloud(filePath);
+            var image = builder.Resolve<TagCloudVisualizator>().VisualizeText(filePath);
             image.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
                 "Cloud.png"), ImageFormat.Png);
         }

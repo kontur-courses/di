@@ -22,8 +22,8 @@ namespace TagsCloudLayout
 
             foreach (var rect in rectangles)
             {
-                var brush = new SolidBrush(
-                    Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+                var randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                var brush = new SolidBrush(randomColor);
                 graphics.FillRectangle(brush, rect.GetShiftedToNewCenter(center, imageCenter));
             }
 
