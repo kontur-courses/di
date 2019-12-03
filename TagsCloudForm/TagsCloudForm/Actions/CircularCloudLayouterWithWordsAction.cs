@@ -9,20 +9,24 @@ namespace TagsCloudForm.Actions
 {
     class CircularCloudLayouterWithWordsAction : IUiAction
     {
-        private CloudWithWordsPainterFactory PainterFactory;
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
         private readonly Func<Point, CircularCloudLayouter> CircularCloudLayouterFactory;
-        private readonly Dictionary<string, int> words;
         private readonly IWordsFrequencyParser parser;
-        public CircularCloudLayouterWithWordsAction(CloudWithWordsPainterFactory cloudPainterFactory, IImageHolder imageHolder,
-             Palette palette, Func<Point, CircularCloudLayouter> circularCloudLayouterFactory, Dictionary<string, int> words, IWordsFrequencyParser parser)
+
+        private readonly Func<IImageHolder,
+            CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter,
+            IWordsFrequencyParser, CloudWithWordsPainter> PainterFactory;
+        public CircularCloudLayouterWithWordsAction(IImageHolder imageHolder,
+             Palette palette, Func<Point, CircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
+             Func<IImageHolder,
+             CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter,
+             IWordsFrequencyParser, CloudWithWordsPainter> painterFactory)
         {
-            this.PainterFactory = cloudPainterFactory;
+            this.PainterFactory = painterFactory;
             this.imageHolder = imageHolder;
             this.palette = palette;
             this.CircularCloudLayouterFactory = circularCloudLayouterFactory;
-            this.words = words;
             this.parser = parser;
         }
         public string Category => "CircularCloud";
@@ -33,7 +37,7 @@ namespace TagsCloudForm.Actions
         {
             var settings = new CircularCloudLayouterWithWordsSettings();
             SettingsForm.For(settings).ShowDialog();
-            PainterFactory.Create(imageHolder, settings, palette, CircularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY)), words, parser).Paint();
+            PainterFactory.Invoke(imageHolder, settings, palette, CircularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY)), parser).Paint();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace TagsCloudForm
             this.palette = palette;
             this.layouter = layouter;
             imageSize = imageHolder.GetImageSize();
-            //size = Math.Min(imageSize.Width, imageSize.Height) / 2.1f;
         }
 
         public void Paint()

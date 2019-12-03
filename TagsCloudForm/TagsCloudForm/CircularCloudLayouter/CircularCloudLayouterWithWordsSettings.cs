@@ -16,5 +16,7 @@ namespace TagsCloudForm
 
         public string WordsSource { get; set; } = "words.txt";
 
+        public bool Ordered { get; set; } = false;
+
     }
 }

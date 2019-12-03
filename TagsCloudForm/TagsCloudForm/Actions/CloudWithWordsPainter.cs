@@ -16,18 +16,20 @@ namespace TagsCloudForm.Actions
         private readonly Palette palette;
         private Size imageSize;
         private ICircularCloudLayouter layouter;
-        private Dictionary<string, int> words;
         private IWordsFrequencyParser parser;
+
+        public delegate CloudWithWordsPainter Factory(IImageHolder imageHolder,
+            CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter,
+            IWordsFrequencyParser parser);
 
         public CloudWithWordsPainter(IImageHolder imageHolder,
             CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter,
-            Dictionary<string, int> words, IWordsFrequencyParser parser)
+            IWordsFrequencyParser parser)
         {
             this.imageHolder = imageHolder;
             this.settings = settings;
             this.palette = palette;
             this.layouter = layouter;
-            this.words = words;
             this.parser = parser;
             imageSize = imageHolder.GetImageSize();
         }
@@ -39,11 +41,10 @@ namespace TagsCloudForm.Actions
             {
                 var lines = File.ReadLines(settings.WordsSource);
                 wordsWithFrequency = parser.GetWordsFrequency(lines.ToArray());
-
             }
             catch (Exception e)
             {
-                wordsWithFrequency = words;
+                wordsWithFrequency = new Dictionary<string, int> { { "no_file", 10 } };
                 MessageBox.Show(e.Message, "Не удалось загрузить файл");
             }
             using (var graphics = imageHolder.StartDrawing())
@@ -53,7 +54,11 @@ namespace TagsCloudForm.Actions
                 var backgroundBrush = new SolidBrush(palette.SecondaryColor);
                 var rectBrush = new Pen(palette.PrimaryColor);
                 var rng = new Random();
-                var shuffledWords = wordsWithFrequency.OrderBy(a => rng.Next());
+                IOrderedEnumerable<KeyValuePair<string, int>> shuffledWords;
+                if (settings.Ordered)
+                    shuffledWords = wordsWithFrequency.OrderByDescending(x => x.Value);
+                else
+                    shuffledWords = wordsWithFrequency.OrderBy(a => rng.Next());
                 foreach (var word in shuffledWords)
                 {
                     var font = new Font("Arial", Math.Min(72, word.Value * settings.Scale));

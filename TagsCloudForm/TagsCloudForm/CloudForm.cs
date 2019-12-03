@@ -9,7 +9,7 @@ using Autofac;
 
 namespace TagsCloudForm
 {
-    class CloudForm : Form
+    public class CloudForm : Form
     {
 
         public CloudForm(IUiAction[] actions, PictureBoxImageHolder pictureBox,
@@ -19,10 +19,8 @@ namespace TagsCloudForm
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
-            Controls.Add(mainMenu);
             pictureBox.RecreateImage(imageSettings);
             pictureBox.Dock = DockStyle.Fill;
-            //pictureBox.Size = new Size(600, 600);
             Controls.Add(pictureBox);
         }
     }

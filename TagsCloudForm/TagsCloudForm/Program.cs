@@ -17,13 +17,15 @@ namespace TagsCloudForm
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>();
+            builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
             builder.RegisterType<CloudForm>().As<CloudForm>();
             builder.RegisterType<CloudPainterFactory>().As<CloudPainterFactory>();
-            builder.RegisterType<CloudWithWordsPainterFactory>().As<CloudWithWordsPainterFactory>();
             builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
 
             builder.RegisterType<CircularCloudLayouter>();
+
+            builder.RegisterType<CloudWithWordsPainter>();
 
 
 
@@ -42,29 +44,9 @@ namespace TagsCloudForm
 
             builder.RegisterType<WordsFrequencyParser>().As<IWordsFrequencyParser>().SingleInstance();
 
-
-            var words = new Dictionary<string, int>
-            {
-                {"hello", 6 },
-                {"first", 4 },
-                {"hell", 2 },
-                {"bingo", 4 },
-                {"POLIOMIELIT", 5 },
-                {"a", 4 },
-                {"b", 10 },
-                {"da", 8 }
-            };
-
-            builder.Register(x=>words).As<Dictionary<string, int>>().SingleInstance();
-
             var container = builder.Build();
 
-            var form = container.Resolve<CloudForm>(
-                new TypedParameter(typeof(IContainer), container),
-                new NamedParameter("rectanglesNum", 30),
-                new NamedParameter("minRectSize", 10),
-                new NamedParameter("maxRectSize", 30)
-            );
+            var form = container.Resolve<CloudForm>();
 
 
             Application.Run(form);

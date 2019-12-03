@@ -27,9 +27,6 @@ namespace TagsCloudForm
                     Save(defaultSettings);
                     return defaultSettings;
                 }
-
-                var hello = serializer.Deserialize<AppSettings>(data);
-
                 return serializer.Deserialize<AppSettings>(data);
             }
             catch (Exception e)

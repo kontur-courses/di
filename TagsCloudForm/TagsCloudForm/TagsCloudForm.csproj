@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterWithWordsAction.cs" />
-    <Compile Include="Actions\CloudWithWordsPainterFactory.cs" />
     <Compile Include="Actions\CloudPainter.cs" />
     <Compile Include="Actions\CloudPainterFactory.cs" />
     <Compile Include="Actions\CloudWithWordsPainter.cs" />
