@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class TagCloudVisualizer
+    public class TagCloudVisualizer : IVisualizer
     {
         private readonly ILayouter layouter;
         private readonly ImageSettings imageSettings;

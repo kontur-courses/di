@@ -2,9 +2,9 @@
 
 namespace TagsCloudVisualization
 {
-    public class ArchimedeanSpiral
+    public class ArchimedeanSpiral : ICirclePointLocator
     {
-        public readonly Point Center;
+        public Point Center { get; }
 
         public double DistanceFromCenter { get; set; }
 
@@ -12,11 +12,13 @@ namespace TagsCloudVisualization
 
         private double angle;
 
-        public ArchimedeanSpiral(Point center, double spiralRatio = 0.1)
+        public ArchimedeanSpiral(ImageSettings settings, double spiralRatio = 0.1)
         {
-            Center = center;
+            Center = settings.CloudCenter;
             this.spiralRatio = spiralRatio;
         }
+
+
 
         public Point GetNextPoint()
         {

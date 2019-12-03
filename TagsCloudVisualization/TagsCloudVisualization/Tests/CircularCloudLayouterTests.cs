@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Autofac;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -11,13 +12,19 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouterTests
     {
         private CircularCloudLayouter layouter;
-        private ImageSettings settings;
+        private IContainer defaultContainer;
+
+
+        [OneTimeSetUp]
+        public void InitializeContainer()
+        {
+            defaultContainer = Program.InitializeContainer();
+        }
 
         [SetUp]
         public void SetUp()
         {
-            settings = ImageSettings.InitializeDefaultSettings();
-            layouter = new CircularCloudLayouter(settings);
+            layouter = defaultContainer.Resolve<ILayouter>() as CircularCloudLayouter;
         }
 
         [TestCase(0, 1, TestName = "Width is zero")]
@@ -58,13 +65,14 @@ namespace TagsCloudVisualization
         public void PutNextRectangle_FirstRectangleIsOnCenter(int x, int y)
         {
             var center = new Point(x, y);
+            var defaultSettings = defaultContainer.Resolve<ImageSettings>();
             var customSettings = new ImageSettings(
-                settings.Font,
-                settings.FontColor,
-                settings.ImageSize,
+                defaultSettings.Font,
+                defaultSettings.FontColor,
+                defaultSettings.ImageSize,
                 center
                 );
-            var customLayouter = new CircularCloudLayouter(customSettings);
+            var customLayouter = new CircularCloudLayouter(new ArchimedeanSpiral(customSettings));
             var rectangle = customLayouter.PutNextRectangle(new Size(10, 10));
 
             rectangle.X.Should().Be(center.X - rectangle.Width / 2);

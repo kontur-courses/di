@@ -7,17 +7,17 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ILayouter
     {
-        public Point Center => spiral.Center;
+        public Point Center => pointLocator.Center;
 
-        private readonly ArchimedeanSpiral spiral;
+        private readonly ICirclePointLocator pointLocator;
 
         private readonly List<Rectangle> taggedRectangles;
 
 
-        public CircularCloudLayouter(ImageSettings settings)
+        public CircularCloudLayouter(ICirclePointLocator pointLocator)
         {
             taggedRectangles = new List<Rectangle>();
-            spiral = new ArchimedeanSpiral(settings.CloudCenter);
+            this.pointLocator = pointLocator;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -31,12 +31,12 @@ namespace TagsCloudVisualization
 
         private Rectangle CreateRectangleOnSpiral(Size rectangleSize)
         {
-            var shiftedCenter = Geometry.ShiftPointBySizeOffsets(spiral.Center, rectangleSize);
+            var shiftedCenter = Geometry.ShiftPointBySizeOffsets(pointLocator.Center, rectangleSize);
             var rectangle = new Rectangle(shiftedCenter, rectangleSize);
 
             while (taggedRectangles.Any(otherRectangle => rectangle.IntersectsWith(otherRectangle)))
             {
-                var spiralPoint = spiral.GetNextPoint();
+                var spiralPoint = pointLocator.GetNextPoint();
                 rectangle.X = shiftedCenter.X + spiralPoint.X;
                 rectangle.Y = shiftedCenter.Y + spiralPoint.Y;
             }
@@ -47,8 +47,8 @@ namespace TagsCloudVisualization
 
         private void AlignSpiralDirection(Rectangle rectangle)
         {
-            spiral.DistanceFromCenter -= Math.Max(spiral.DistanceFromCenter / 2,
-                Geometry.GetLengthFromRectangleCenterToBorderOnVector(rectangle, spiral.Center));
+            pointLocator.DistanceFromCenter -= Math.Max(pointLocator.DistanceFromCenter / 2,
+                Geometry.GetLengthFromRectangleCenterToBorderOnVector(rectangle, pointLocator.Center));
         }
     }
 }
