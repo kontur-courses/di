@@ -52,14 +52,15 @@ namespace TagsCloudForm.Actions
                     imageSize.Height);
                 var backgroundBrush = new SolidBrush(palette.SecondaryColor);
                 var rectBrush = new Pen(palette.PrimaryColor);
-                foreach (var word in wordsWithFrequency)
+                var rng = new Random();
+                var shuffledWords = wordsWithFrequency.OrderBy(a => rng.Next());
+                foreach (var word in shuffledWords)
                 {
-                    var font = new Font("Arial", Math.Min(72, word.Value * 5));
+                    var font = new Font("Arial", Math.Min(72, word.Value * settings.Scale));
                     var size = new Size(TextRenderer.MeasureText(word.Key, font).Width, TextRenderer.MeasureText(word.Key, font).Height);
                     var rect = layouter.PutNextRectangle(size);
                     graphics.FillRectangle(backgroundBrush, rect);
                     graphics.DrawRectangle(rectBrush, rect);
-
                     graphics.DrawString(word.Key, font, new SolidBrush(palette.PrimaryColor), new PointF(rect.X, rect.Y));
                 }
             }
