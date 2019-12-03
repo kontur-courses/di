@@ -10,6 +10,8 @@ using TagsCloudContainer.Readers;
 using TagsCloudContainer.WordPreprocessors;
 using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.TokensAndSettings;
+using System;
+using System.IO;
 
 namespace TagsCloudContainer.TagsCloudGenerators
 {
@@ -59,7 +61,10 @@ namespace TagsCloudContainer.TagsCloudGenerators
                 }
                 );
             containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(40, 640)); ;
-            containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", @"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
+            containerBuilder.RegisterType<SimpleReader>().As<IReader>()
+                .WithParameter(
+                "path",
+                Path.Combine(Environment.CurrentDirectory, @"TagsCloudContainer\Words.txt"));
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
 
             var container = containerBuilder.Build();
