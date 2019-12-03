@@ -7,15 +7,15 @@ namespace TagsCloud
 {
 	public class WordsFilter: IWordsFilter
 	{
+		private readonly ITextReader _reader;
 		private readonly Func<string, bool> _filter;
-		private readonly IEnumerable<string> _sourceWords;
 
 		public WordsFilter(ITextReader reader, Func<string, bool> filter)
 		{
+			_reader = reader;
 			_filter = filter;
-			_sourceWords = reader.Read();
 		}
 
-		public IEnumerable<string> GetWords() => _sourceWords.Where(_filter).Select(w => w.ToLower());
+		public IEnumerable<string> GetWords() => _reader.Read().Where(_filter).Select(w => w.ToLower());
 	}
 }
