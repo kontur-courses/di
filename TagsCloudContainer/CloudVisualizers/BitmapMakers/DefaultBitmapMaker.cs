@@ -26,7 +26,6 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
                     var textSize = g.MeasureString(word.Word, font);
                     var brush = new SolidBrush(settings.Palette.PrimaryColor);
                     WriteWordToRectangle(g, word, textSize, font, brush);
-                    g.DrawRectangle(new Pen(settings.Palette.SecondaryColor), word.Rectangle);
                 }
             }
             return bitmap;
