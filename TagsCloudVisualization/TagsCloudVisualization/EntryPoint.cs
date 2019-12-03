@@ -4,15 +4,17 @@ using Autofac;
 
 namespace TagsCloudVisualization
 {
-    public class Program
+    public class EntryPoint
     {
         public static void Main(string[] args)
         {
             var container = InitializeContainer();
 
-            var image = container.Resolve<IVisualizer>().VisualizeTextFromFile("InputData/Input1.txt");
+            container
+                .Resolve<IVisualizer>()
+                .VisualizeTextFromFile("InputData/Input1.txt")
+                .TrySaveTo("result.jpg", ImageFormat.Jpeg);
 
-            image.Save("result.png", ImageFormat.Png);
             Process.Start("result.png");
         }
 

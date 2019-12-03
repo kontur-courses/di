@@ -1,11 +1,29 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization
 {
     public class TagCloud
     {
-        private Bitmap Image;
-        
-        public bool TrySaveTo(string path, Imag)
+        public readonly Bitmap Image;
+
+        public TagCloud(Bitmap image)
+        {
+            Image = image;
+        }
+
+        public bool TrySaveTo(string path)
+        {
+            try
+            {
+                Image.Save(path, ImageFormat.Png);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace TagsCloudVisualization
             this.imageSettings = imageSettings;
         }
 
-        public Bitmap VisualizeTextFromFile(string fileName)
+        public TagCloud VisualizeTextFromFile(string fileName)
         {
             var text = TextRetriever.RetrieveTextFromFile(fileName);
             var wordTokens = textParser.ParseToTokens(text);
@@ -28,7 +28,7 @@ namespace TagsCloudVisualization
             foreach (var word in wordTokens)
                 DrawWord(graphics, word);
 
-            return bmp;
+            return new TagCloud(bmp);
         }
 
         private static Size CalculateWordSize(WordToken wordToken, Font font, Graphics graphics)
