@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud
+namespace TagsCloud.Interfaces
 {
-    interface IPositionGenerator
+    public interface IPositionGenerator
     {
         Point GetNextPosition();
     }

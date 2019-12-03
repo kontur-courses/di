@@ -1,9 +1,9 @@
 ﻿using System.IO;
 
-namespace TagsCloud
+namespace TagsCloud.Interfaces
 {
-    interface IFileReader
+    public interface IFileReader
     {
-        FileStream ReadFile(string path);
+        string ReadFile(string path);
     }
 }

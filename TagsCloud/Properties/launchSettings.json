@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloud": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\проекты\\SHPORA2019\\di\\ВойнаИМир.txt result.png -b Black -s WhiteSpace"
+    }
+  }
+}

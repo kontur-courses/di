@@ -3,7 +3,7 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud.FileReader
 {
-    class DefaultPathValidator : IPathValidator
+    public class DefaultPathValidator : IPathValidator
     {
         public bool ValidatePath(string path)
         {

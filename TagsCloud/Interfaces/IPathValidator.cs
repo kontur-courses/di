@@ -2,7 +2,7 @@
 
 namespace TagsCloud.Interfaces
 {
-    interface IPathValidator
+    public interface IPathValidator
     {
         bool ValidatePath(string path);
     }

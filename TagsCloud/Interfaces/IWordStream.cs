@@ -1,7 +1,9 @@
-﻿namespace TagsCloud
+﻿using System.Collections.Generic;
+
+namespace TagsCloud.Interfaces
 {
-    interface IWordStream
+    public interface IWordStream
     {
-        string GetNextWord();
+        IEnumerable<string> GetWords(string path);
     }
 }
