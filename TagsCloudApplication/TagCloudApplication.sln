@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudLayout", "TagsClou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudLayoutTests", "TagsCloudLayoutTests\TagsCloudLayoutTests.csproj", "{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextConfiguration", "TextConfiguration\TextConfiguration.csproj", "{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{8068CA09-8E81-4508-86C7-D8187CA86570}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8068CA09-8E81-4508-86C7-D8187CA86570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8068CA09-8E81-4508-86C7-D8187CA86570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8068CA09-8E81-4508-86C7-D8187CA86570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8068CA09-8E81-4508-86C7-D8187CA86570}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

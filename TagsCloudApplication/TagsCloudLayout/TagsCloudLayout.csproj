@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8B34D40A-8013-4C69-AFF0-F4F9B9E50C8B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>TagsCloudLayout</RootNamespace>
     <AssemblyName>TagsCloudLayout</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -51,10 +51,12 @@
     <Compile Include="CloudLayouters\CloudLayouterUtilities.cs" />
     <Compile Include="PointLayouters\ICircularPointLayouter.cs" />
     <Compile Include="RectangleExtensions.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="RectangleVisualizator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
