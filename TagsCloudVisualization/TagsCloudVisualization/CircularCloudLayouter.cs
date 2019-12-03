@@ -35,16 +35,16 @@ namespace TagsCloudVisualization
 
             while (taggedRectangles.Any(otherRectangle => rectangle.IntersectsWith(otherRectangle)))
             {
-                var spiralPoint = pointLocator.GetNextPoint();
-                rectangle.X = shiftedCenter.X + spiralPoint.X;
-                rectangle.Y = shiftedCenter.Y + spiralPoint.Y;
+                var locatedPoint = pointLocator.GetNextPoint();
+                rectangle.X = shiftedCenter.X + locatedPoint.X;
+                rectangle.Y = shiftedCenter.Y + locatedPoint.Y;
             }
 
-            AlignSpiralDirection(rectangle);
+            AlignLocatorDirection(rectangle);
             return rectangle;
         }
 
-        private void AlignSpiralDirection(Rectangle rectangle)
+        private void AlignLocatorDirection(Rectangle rectangle)
         {
             pointLocator.DistanceFromCenter -= Math.Max(pointLocator.DistanceFromCenter / 2,
                 Geometry.GetLengthFromRectangleCenterToBorderOnVector(rectangle, pointLocator.Center));

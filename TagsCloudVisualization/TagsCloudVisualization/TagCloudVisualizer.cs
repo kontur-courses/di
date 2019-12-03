@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 
 namespace TagsCloudVisualization
 {
@@ -39,44 +38,44 @@ namespace TagsCloudVisualization
             }
 
             foreach (var tag in tags)
-                DrawTag(graphics,tag, cloudScale);
+                DrawTag(graphics, tag, cloudScale);
 
             return new TagCloud(bmp);
         }
 
         private float CalculateCloudScale(Tag tag)
         {
-            var realFigureCenter = 
+            var realFigureCenter =
                 new Point(
-                    tag.TagBox.X + tag.TagBox.Width / 2, 
+                    tag.TagBox.X + tag.TagBox.Width / 2,
                     tag.TagBox.Y + tag.TagBox.Height / 2
-                    );
+                );
 
             var posMinusCenter = new Point(
-                realFigureCenter.X - imageSettings.CloudCenter.X, 
+                realFigureCenter.X - imageSettings.CloudCenter.X,
                 realFigureCenter.Y - imageSettings.CloudCenter.Y
-                );
-            
+            );
+
             var cloudBorderSize = new Size(
                 Math.Min(
-                    imageSettings.CloudCenter.X, 
+                    imageSettings.CloudCenter.X,
                     imageSettings.ImageSize.Width - imageSettings.CloudCenter.X
-                    ) * 2,
+                ) * 2,
                 Math.Min(
-                    imageSettings.CloudCenter.Y, 
+                    imageSettings.CloudCenter.Y,
                     imageSettings.ImageSize.Height - imageSettings.CloudCenter.Y
-                    ) * 2
-                );
+                ) * 2
+            );
 
             var distanceToImageBorder = Geometry
                 .GetLengthFromRectangleCenterToBorderOnVector(
                     new Rectangle(Point.Empty, cloudBorderSize),
                     posMinusCenter
-                    );
+                );
 
-            return distanceToImageBorder == 0 ? 1 : (float)(distanceToImageBorder / posMinusCenter.GetLength());
+            return distanceToImageBorder == 0 ? 1 : (float) (distanceToImageBorder / posMinusCenter.GetLength());
         }
-        
+
         private static Size CalculateWordSize(WordToken wordToken, Font font, Graphics graphics)
         {
             var size = graphics.MeasureString(wordToken.Word, font);
@@ -102,11 +101,16 @@ namespace TagsCloudVisualization
                 imageSettings.Font.Style
             );
 
-            var posMinusCenter = new Point(tag.TagBox.Location.X - imageSettings.CloudCenter.X, tag.TagBox.Location.Y - imageSettings.CloudCenter.Y);
+            var positionMinusCenter = new Point(
+                tag.TagBox.Location.X - imageSettings.CloudCenter.X,
+                tag.TagBox.Location.Y - imageSettings.CloudCenter.Y
+            );
 
-            var newPointLocation = new Point(imageSettings.CloudCenter.X + (int)(posMinusCenter.X * cloudScale), 
-                imageSettings.CloudCenter.Y + (int)(posMinusCenter.Y * cloudScale));
-            
+            var newPointLocation = new Point(
+                imageSettings.CloudCenter.X + (int) (positionMinusCenter.X * cloudScale),
+                imageSettings.CloudCenter.Y + (int) (positionMinusCenter.Y * cloudScale)
+            );
+
             graphics.DrawString(tag.Word, scaledFont, new SolidBrush(imageSettings.FontColor), newPointLocation);
         }
 

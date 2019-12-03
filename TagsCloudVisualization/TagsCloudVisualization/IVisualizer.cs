@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization
 {
     public interface IVisualizer
     {

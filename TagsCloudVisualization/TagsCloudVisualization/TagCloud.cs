@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization
@@ -23,6 +22,7 @@ namespace TagsCloudVisualization
             {
                 return false;
             }
+
             return true;
         }
     }
