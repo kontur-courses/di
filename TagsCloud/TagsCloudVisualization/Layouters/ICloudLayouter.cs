@@ -1,8 +1,7 @@
 using System.Drawing;
 using TagsCloudTextPreparation;
-using TagsCloudVisualization.Styling.WordSizeCalculators;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouters
 {
     public interface ICloudLayouter
     { 

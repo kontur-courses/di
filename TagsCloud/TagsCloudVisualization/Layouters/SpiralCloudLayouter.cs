@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudTextPreparation;
-using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Styling.WordSizeCalculators;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouters
 {
     public class SpiralCloudLayouter : ICloudLayouter
     {

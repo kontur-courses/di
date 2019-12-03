@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
@@ -59,7 +60,9 @@ namespace TagsCloudVisualization.Tests
                 var testName = testContext.Test.Name;
                 var time = DateTime.Now.ToString("yy-MM-dd hh-mm-ss");
                 var filename = Path.Combine(directory, $"{testName} {time}.png");
-                new TextNoRectanglesVisualizer().Visualize(new RedTheme(), layouterRectangles,1000,1000).Save(filename);
+                new TextNoRectanglesVisualizer()
+                    .Visualize(new RedTheme(), layouterRectangles)
+                    .Save(filename, ImageFormat.Png);
                 Console.WriteLine($"Tag cloud visualization saved to file {filename}");
             }
         }
@@ -148,7 +151,8 @@ namespace TagsCloudVisualization.Tests
             var acceptableRatio = 50;
             var random = new Random(randomSeed);
 
-            layouterRectangles = RectangleGenerator.GenerateRandomRectangles(cloudLayouter, count, minSize, maxSize, random);
+            layouterRectangles =
+                RectangleGenerator.GenerateRandomRectangles(cloudLayouter, count, minSize, maxSize, random);
 
             var furthestDistance = layouterRectangles
                 .Select(r => GetDistanceBetweenRectangleAndPoint(r, layouterCenter))

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudTextPreparation;
+using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
 using TagsCloudVisualization.Visualizers;
 
