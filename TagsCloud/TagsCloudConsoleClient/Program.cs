@@ -38,8 +38,8 @@ namespace TagsCloud
             [Option('s', "splitter", Default = "WhiteSpace", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
             public string splitType { get; set; }
 
-            [Option('a', "angel", Default = 3.14, HelpText = "Delta radius between tusrn spiral.")]
-            public double angel{ get; set; }
+            [Option('d', "delta", Default = 3.14, HelpText = "Delta radius between tusrn spiral.")]
+            public double delta{ get; set; }
 
             // Omitting long name, defaults to name of property, ie "--verbose"
         }
@@ -62,7 +62,7 @@ namespace TagsCloud
                   backgroundColor = Color.FromName(opts.backgroundColor);
                   fontName = opts.fontName;
                   splitType = opts.splitType;
-                  deltaRadiusBetweenTurns = opts.angel;
+                  deltaRadiusBetweenTurns = opts.delta;
               });
             if (string.IsNullOrEmpty(inputPath) || string.IsNullOrEmpty(outputPath))
                 return;
