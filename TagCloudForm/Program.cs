@@ -4,6 +4,7 @@ using Autofac;
 using TagCloud;
 using TagCloud.CloudLayouter;
 using TagCloud.TextFilter;
+using TagCloud.TextProvider;
 using TagCloud.Visualization;
 using TagCloudForm.Actions;
 using TagCloudForm.Holder;
@@ -43,7 +44,7 @@ namespace TagCloudForm
             builder.RegisterType<ArchimedeanSpiral>().AsSelf().SingleInstance();
             builder.RegisterType<TextFilterSettings>().AsSelf().SingleInstance();
             builder.RegisterType<BlacklistSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<TextFileReader>().AsSelf().SingleInstance();
+            builder.RegisterType<TextFileReader>().As<ITextProvider>().SingleInstance();
 
             var container = builder.Build();
             Application.Run(container.Resolve<TagCloudForm>());

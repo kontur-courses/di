@@ -2,15 +2,15 @@
 using System.IO;
 using System.Linq;
 
-namespace TagCloud.TextFilter
+namespace TagCloud.TextProvider
 {
-    public class TextFileReader
+    public class TextFileReader : ITextProvider
     {
         private string FilePath { get; set; } = @"..\..\Input\input.txt";
 
         private readonly char[] separators = {' ', '"', '(', ')', '.', '!', '?', '\'', ','};
 
-        public Dictionary<string, int> ParseFile()
+        public Dictionary<string, int> GetParsedText()
         {
             var wordsFrequencyDictionary = new Dictionary<string, int>();
             using (var sr = new StreamReader(FilePath, System.Text.Encoding.UTF8))

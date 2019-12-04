@@ -5,6 +5,7 @@ using System.Linq;
 using TagCloud;
 using TagCloud.CloudLayouter;
 using TagCloud.TextFilter;
+using TagCloud.TextProvider;
 using TagCloud.Visualization;
 using TagCloudForm.Holder;
 
@@ -22,14 +23,14 @@ namespace TagCloudForm
 
         public CloudPainter(IImageHolder imageHolder, RectangleSettings rectangleSettings,
             ICloudLayouter layouter, ViewSettings viewSettings, TextFilter textFilter,
-            ImageSettings imageSettings, TextFileReader textFileReader)
+            ImageSettings imageSettings, ITextProvider textProvider)
         {
             this.imageHolder = imageHolder;
             this.rectangleSettings = rectangleSettings;
             this.layouter = layouter;
             this.viewSettings = viewSettings;
             this.imageSettings = imageSettings;
-            words = textFilter.FilterWords(textFileReader.ParseFile());
+            words = textFilter.FilterWords(textProvider.GetParsedText());
         }
 
         public void Paint()
