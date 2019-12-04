@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Visualizing
+namespace TagsCloudContainer.Visualizing.ColorHandling
 {
     public interface IColorHandler
     {
         Color GetColorFor(string word, Rectangle rectangle);
+
+        Color BackgroundColor { get; }
     }
 }

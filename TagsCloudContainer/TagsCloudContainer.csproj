@@ -82,8 +82,10 @@
     <Compile Include="UserInterface\ConsoleUserInterface.cs" />
     <Compile Include="UserInterface\IParametersProvider.cs" />
     <Compile Include="UserInterface\IResultDisplay.cs" />
-    <Compile Include="Visualizing\IColorHandler.cs" />
+    <Compile Include="Visualizing\ColorHandling\AlternateColorHandler.cs" />
+    <Compile Include="Visualizing\ColorHandling\IColorHandler.cs" />
     <Compile Include="Visualizing\IVisualizer.cs" />
+    <Compile Include="Visualizing\Visualizer.cs" />
     <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\CommandsExecuting\CmdCommandExecutor.cs" />
     <Compile Include="WordProcessing\Filtering\ExcludingBoringWordsFilter.cs" />
     <Compile Include="WordProcessing\Converting\IWordConverter.cs" />
