@@ -4,15 +4,24 @@ namespace TagsCloudVisualization
 {
     public class Tag
     {
-        public string Word;
-        public Rectangle TagBox;
-        public float FontSize;
+        public static readonly Color DefaultColor =  Color.Black;
+        public WordToken WordToken { get; }
+        public Rectangle TagBox { get; }
+        public float FontSize { get; set; }
 
-        public Tag(string word, Rectangle tagBox, float fontSize)
+        public Color Color { get; set; }
+
+        public Tag(WordToken wordToken, Rectangle tagBox, float fontSize)
         {
-            Word = word;
+            WordToken = wordToken;
             TagBox = tagBox;
             FontSize = fontSize;
+            Color = DefaultColor;
+        }
+
+        public Tag(WordToken wordToken, Rectangle tagBox, float fontSize, Color color) : this(wordToken, tagBox, fontSize)
+        {
+            Color = color;
         }
     }
 }

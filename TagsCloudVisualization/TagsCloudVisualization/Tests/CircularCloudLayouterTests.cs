@@ -68,7 +68,7 @@ namespace TagsCloudVisualization
             var defaultSettings = defaultContainer.Resolve<ImageSettings>();
             var customSettings = new ImageSettings(
                 defaultSettings.Font,
-                defaultSettings.FontColor,
+                defaultSettings.Painter,
                 defaultSettings.ImageSize,
                 center
                 );

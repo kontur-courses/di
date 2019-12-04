@@ -37,6 +37,8 @@ namespace TagsCloudVisualization
                 tags.Add(tag);
             }
 
+            imageSettings.Painter.SetColorsForTagCollection(tags);
+
             foreach (var tag in tags)
                 DrawTag(graphics, tag, cloudScale);
 
@@ -88,7 +90,7 @@ namespace TagsCloudVisualization
             var wordFont = new Font(imageSettings.Font.FontFamily, fontSize, imageSettings.Font.Style);
             var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(wordToken, wordFont, graphics));
 
-            return new Tag(wordToken.Word, wordRectangle, fontSize);
+            return new Tag(wordToken, wordRectangle, fontSize);
         }
 
         private void DrawTag(Graphics graphics, Tag tag, float cloudScale)
@@ -111,7 +113,7 @@ namespace TagsCloudVisualization
                 imageSettings.CloudCenter.Y + (int) (positionMinusCenter.Y * cloudScale)
             );
 
-            graphics.DrawString(tag.Word, scaledFont, new SolidBrush(imageSettings.FontColor), newPointLocation);
+            graphics.DrawString(tag.WordToken.Word, scaledFont, new SolidBrush(tag.Color), newPointLocation);
         }
 
         private float CalculateFontSize(WordToken word)

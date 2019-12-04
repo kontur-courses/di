@@ -62,9 +62,13 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="Painter\GradientPainter.cs" />
     <Compile Include="ICirclePointLocator.cs" />
+    <Compile Include="Painter\ITagPainter.cs" />
     <Compile Include="IVisualizer.cs" />
     <Compile Include="PointExtensions.cs" />
+    <Compile Include="Painter\RandomPainter.cs" />
+    <Compile Include="Painter\SingleColorPainter.cs" />
     <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="TagCloud.cs" />

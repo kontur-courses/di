@@ -4,14 +4,14 @@ namespace TagsCloudVisualization
     public class ImageSettings
     {
         public readonly Font Font;
-        public readonly Color FontColor;
+        public readonly ITagPainter Painter;
         public readonly Size ImageSize;
         public readonly Point CloudCenter;
 
-        public ImageSettings(Font font, Color fontColor, Size imageSize, Point cloudCenter)
+        public ImageSettings(Font font, ITagPainter painter, Size imageSize, Point cloudCenter)
         {
             Font = font;
-            FontColor = fontColor;
+            Painter = painter;
             ImageSize = imageSize;
             CloudCenter = cloudCenter;
         }
@@ -19,7 +19,7 @@ namespace TagsCloudVisualization
         public static ImageSettings InitializeDefaultSettings()
         {
             var font = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-            return new ImageSettings(font , Color.Black, new Size(2000, 2000), new Point(500,500));
+            return new ImageSettings(font , new RandomTagPainter(), new Size(2000, 2000), new Point(500,500));
         }
     }
 }
