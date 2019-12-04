@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.ResultProcessing
+namespace TagsCloudContainer.ResultProcessing.ImageSaving
 {
     public interface IImageSaver
     {

@@ -75,8 +75,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResultProcessing\IImageSaver.cs" />
+    <Compile Include="ResultProcessing\ImageSaving\IImageSaver.cs" />
+    <Compile Include="ResultProcessing\ImageSaving\ImageSaver.cs" />
     <Compile Include="ResultProcessing\IResultProcessor.cs" />
+    <Compile Include="ResultProcessing\ResultProcessor.cs" />
     <Compile Include="UserInterface\ConsoleUserInterface.cs" />
     <Compile Include="UserInterface\IParametersProvider.cs" />
     <Compile Include="UserInterface\IResultDisplay.cs" />
@@ -114,5 +116,6 @@
       <Name>TagsCloudVisualization</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
