@@ -9,7 +9,7 @@ namespace TagsCloud
 		private readonly IEnumerable<string> _words;
 		private readonly Dictionary<string, int> _frequencies = new Dictionary<string, int>();
 
-		public WordsProcessor(WordsFilter wordsFilter) => _words = wordsFilter.GetWords();
+		public WordsProcessor(IWordFiltersApplyer wordFiltersApplyer) => _words = wordFiltersApplyer.GetWords();
 
 		public IEnumerable<Word> GetSortedWordsWithFrequencies()
 		{

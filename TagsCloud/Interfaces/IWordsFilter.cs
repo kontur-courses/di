@@ -2,7 +2,7 @@
 
 namespace TagsCloud.Interfaces
 {
-	public interface IWordsFilter
+	public interface IWordFiltersApplyer
 	{
 		IEnumerable<string> GetWords();
 	}

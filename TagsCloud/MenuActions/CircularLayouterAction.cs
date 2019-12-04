@@ -4,14 +4,14 @@ namespace TagsCloud.MenuActions
 {
 	public class CircularLayouterAction: IMenuAction
 	{
-		private readonly LayoutPainter _painter;
+		private readonly ILayoutPainter _painter;
 		private readonly ILayoutConstructor _layoutConstructor;
 		private readonly SpiralSettings _settings;
 		public string Category { get; } = "Создать облако тегов";
 		public string Name { get; } = "Circular layouter";
 		public string Description { get; } = "Располагает слова вокруг центра";
 
-		public CircularLayouterAction(LayoutPainter painter, ILayoutConstructor layoutConstructor,
+		public CircularLayouterAction(ILayoutPainter painter, ILayoutConstructor layoutConstructor,
 			SpiralSettings settings)
 		{
 			_painter = painter;

@@ -5,17 +5,20 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-	public class WordsFilter: IWordsFilter
+	public class WordFiltersApplyer: IWordFiltersApplyer
 	{
 		private readonly ITextReader _reader;
-		private readonly Func<string, bool> _filter;
+		private readonly IEnumerable<Func<string, bool>> _filters;
 
-		public WordsFilter(ITextReader reader, Func<string, bool> filter)
+		public WordFiltersApplyer(ITextReader reader, IEnumerable<Func<string, bool>> filters)
 		{
 			_reader = reader;
-			_filter = filter;
+			_filters = filters;
 		}
 
-		public IEnumerable<string> GetWords() => _reader.Read().Where(_filter).Select(w => w.ToLower());
+		public IEnumerable<string> GetWords() =>
+			_reader.Read()
+				.Where(word => _filters.All(filter => filter(word)))
+				.Select(w => w.ToLower());
 	}
 }
