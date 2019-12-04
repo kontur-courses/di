@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 using TagsCloudLayout.CloudLayouters;
 using Autofac;
 using TextConfiguration;
@@ -9,21 +6,32 @@ using TextConfiguration.TextReaders;
 using TagsCloudLayout.PointLayouters;
 using TextConfiguration.WordFilters;
 using TextConfiguration.WordProcessors;
+using CommandLine;
+using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization
 {
     public static class Program
     {
-        public static void Main()
+        private static IContainer ConfigureContainer(Options opts)
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.Register(c => 
-                new CloudTagProperties(FontFamily.GenericMonospace, 20))
+            containerBuilder.RegisterInstance(opts)
+                .As<Options>();
+            containerBuilder.RegisterInstance(
+                new CloudTagProperties(new FontFamily(opts.FontFamilyName), opts.FontSize))
                 .As<CloudTagProperties>();
-            containerBuilder.Register(c => 
-                new VisualizatorProperties(new Size(800, 600)))
+            containerBuilder.RegisterInstance(
+                new VisualizatorProperties(new Size(opts.ImageSize[0], opts.ImageSize[1])))
                 .As<VisualizatorProperties>();
+            containerBuilder.RegisterInstance(
+                new ConstantTextColorProvider(Color.FromName(opts.FontColorName)))
+                .As<ITextColorProvider>();
+            containerBuilder.RegisterInstance(new ImageSaver(ImageFormat.Png))
+                .As<ImageSaver>();
+            containerBuilder.Register(c => new Point(opts.CentralPoint[0], opts.CentralPoint[1]))
+                .As<Point>();
 
             containerBuilder.RegisterType<RawTextReader>()
                 .As<ITextReader>();
@@ -33,33 +41,32 @@ namespace TagsCloudVisualization
                 .As<IWordFilter>();
             containerBuilder.RegisterType<ToLowerCaseProcessor>()
                 .As<IWordProcessor>();
-            containerBuilder.RegisterType<TextPreprocessor>()
-                .As<TextPreprocessor>();
-            containerBuilder.RegisterType<WordsProvider>()
-                .As<WordsProvider>();
-            containerBuilder.RegisterType<CloudTagProvider>()
-                .As<CloudTagProvider>();
+            containerBuilder.RegisterType<TextPreprocessor>();
+            containerBuilder.RegisterType<WordsProvider>();
+            containerBuilder.RegisterType<CloudTagProvider>();
 
-            containerBuilder.Register(c => new Point(400, 300))
-                .As<Point>();
             containerBuilder.RegisterType<ArchimedeanSpiral>()
                 .As<ICircularPointLayouter>();
             containerBuilder.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>();
-            containerBuilder.Register(c => 
-                    new ConstantTextColorProvider(Color.FromArgb(127, 127, 0)))
-                .As<ITextColorProvider>();
 
-            containerBuilder.RegisterType<TagCloudVisualizator>()
-                .As<TagCloudVisualizator>();
+            containerBuilder.RegisterType<TagCloudVisualizator>();
 
-            var builder = containerBuilder.Build();
+            containerBuilder.RegisterType<ConsoleTagCloudBuilder>();
 
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Words.txt");
-            var image = builder.Resolve<TagCloudVisualizator>()
-                .VisualizeCloudTags(builder.Resolve<CloudTagProvider>().ReadCloudTags(filePath));
-            image.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
-                "Cloud.png"), ImageFormat.Png);
+            return containerBuilder.Build();
+        }
+
+        private static void RunWithParsedOptions(Options opts)
+        {
+            var container = ConfigureContainer(opts);
+            container.Resolve<ConsoleTagCloudBuilder>().Run();
+        }
+
+        public static void Main(string[] args)
+        {
+            Parser.Default.ParseArguments<Options>(args)
+            .WithParsed(opts => RunWithParsedOptions(opts));
         }
     }
 }

@@ -39,8 +39,11 @@
   <ItemGroup>
     <Compile Include="CloudTag.cs" />
     <Compile Include="CloudTagProperties.cs" />
+    <Compile Include="ConsoleTagCloudBuilder.cs" />
+    <Compile Include="ImageSaver.cs" />
     <Compile Include="ITextColorProvider.cs" />
     <Compile Include="CloudTagProvider.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="VisualizatorProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ConstantTextColorProvider.cs" />
@@ -49,6 +52,9 @@
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
   </ItemGroup>
