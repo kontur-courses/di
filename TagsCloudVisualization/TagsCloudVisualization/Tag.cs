@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudVisualization
 {
@@ -7,7 +8,11 @@ namespace TagsCloudVisualization
         public static readonly Color DefaultColor =  Color.Black;
         public WordToken WordToken { get; }
         public Rectangle TagBox { get; }
-        public float FontSize { get; set; }
+        public float FontSize
+        {
+            get => FontSize;
+            set => FontSize = value >= 0 ? value : throw new ArgumentException();
+        }
 
         public Color Color { get; set; }
 
