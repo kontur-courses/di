@@ -24,18 +24,15 @@ namespace TagsCloudContainer.Algorithm
             this.layouter = layouter;
         }
 
-        public IEnumerable<(string, Rectangle)> GetLayout(IEnumerable<string> words)
+        public IEnumerable<(string, Rectangle)> GetLayout(IEnumerable<string> words, Size pictureSize)
         {
             var convertedWords = words.Select(w => new Word {Value = w});
             var weightedWords = wordWeightSetter.SetWordsWeights(convertedWords);
-            var wordsWithSize = wordSizeProvider.SetWordsSizes(weightedWords);
-            var orderedWords = wordOrganizer.GetSortedWords(wordsWithSize);
+            var wordsWithSize = wordSizeProvider.SetWordsSizes(weightedWords, pictureSize);
+            var wordsWithoutDuplicates = wordsWithSize.GroupBy(w => w.Value).Select(g => g.First());
+            var orderedWords = wordOrganizer.GetSortedWords(wordsWithoutDuplicates);
 
-            foreach (var word in orderedWords)
-            {
-                var rectangleForWord = layouter.PutNextRectangle(word.Size);
-                yield return (word.Value, rectangleForWord);
-            }
+            return layouter.GetWordsRectangles(orderedWords, pictureSize);
         }
     }
 }

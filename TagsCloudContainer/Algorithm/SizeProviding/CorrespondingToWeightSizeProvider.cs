@@ -8,15 +8,9 @@ namespace TagsCloudContainer.Algorithm.SizeProviding
 {
     public class CorrespondingToWeightSizeProvider : IWordSizeProvider
     {
-        private readonly Size pictureSize;
-        private const int Error = 2;
+        private const int Error = 4;
 
-        public CorrespondingToWeightSizeProvider(Size pictureSize)
-        {
-            this.pictureSize = pictureSize;
-        }
-
-        public IEnumerable<Word> SetWordsSizes(IEnumerable<Word> words)
+        public IEnumerable<Word> SetWordsSizes(IEnumerable<Word> words, Size pictureSize)
         {
             var lastWordSize = Size.Empty;
             var lastWordWeight = 0;
@@ -24,8 +18,8 @@ namespace TagsCloudContainer.Algorithm.SizeProviding
             foreach (var word in wordsList.OrderBy(w => w.Weight))
             {
                 var area = lastWordSize == Size.Empty
-                    ? GetFirstWordSizeArea(wordsList.Count)
-                    : GetNextWordSizeArea(word.Weight, pictureSize.GetArea(), lastWordWeight);
+                    ? GetFirstWordSizeArea(wordsList.Count, pictureSize)
+                    : GetNextWordSizeArea(word.Weight, lastWordSize.GetArea(), lastWordWeight);
 
                 word.Size = GetWordSizeByArea(area);
                 yield return word;
@@ -34,7 +28,7 @@ namespace TagsCloudContainer.Algorithm.SizeProviding
             }
         }
 
-        private int GetFirstWordSizeArea(int wordsCount)
+        private int GetFirstWordSizeArea(int wordsCount, Size pictureSize)
         {
             return pictureSize.GetArea() / (wordsCount * Error);
         }

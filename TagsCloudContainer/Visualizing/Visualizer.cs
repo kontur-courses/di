@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.Visualizing.ColorHandling;
 
@@ -20,11 +21,24 @@ namespace TagsCloudContainer.Visualizing
             graphics.Clear(colorHandler.BackgroundColor);
             foreach (var (word, rectangle) in wordsInRectangles)
             {
+                var suitableFontSize = GetSuitableFontSize(graphics, word, rectangle.Size, font);
+                var suitableFont = new Font(font.FontFamily, suitableFontSize);
                 var color = colorHandler.GetColorFor(word, rectangle);
-                graphics.DrawString(word, font, new SolidBrush(color), rectangle);
+                graphics.DrawString(word, suitableFont, new SolidBrush(color), rectangle);
             }
 
             return bitmap;
+        }
+
+        private float GetSuitableFontSize(Graphics graphics, string word, Size rectangleSize, Font font)
+        {
+            var realSize = graphics.MeasureString(word, font);
+            var heightScaleRatio = rectangleSize.Height / realSize.Height;
+            var widthScaleRatio = rectangleSize.Width / realSize.Width;
+            var scaleRatio = Math.Min(heightScaleRatio, widthScaleRatio);
+            var scaleFontSize = font.Size * scaleRatio;
+
+            return scaleFontSize;
         }
     }
 }

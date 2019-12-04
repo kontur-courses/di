@@ -1,21 +1,49 @@
-﻿using System.Linq;
-using TagsCloudContainer.WordProcessing;
-using TagsCloudContainer.WordProcessing.Converting;
-using TagsCloudContainer.WordProcessing.Filtering;
-using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying;
-using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying.CommandsExecuting;
-using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying.MyStem;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
+using Autofac;
+using TagsCloudContainer.Core;
+using TagsCloudContainer.ResultProcessing;
+using TagsCloudContainer.UserInterface;
 
 namespace TagsCloudContainer
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var ps = new WordProcessor(new ToLowerWordConverter(),
-                new ExcludingBoringWordsFilter(new MyStemPartOfSpeechQualifier(new CmdCommandExecutor(),
-                    new MyStemResultParser())));
-            var result = ps.ProcessWords(new[] {"мои", "слова", "сейчас", "к", "месту"}).ToArray();
+            var containerBuilder = GetDependencyInjectionContainerBuilder();
+            var parametersProvider = containerBuilder.Build().Resolve<IParametersProvider>();
+            if (parametersProvider.TryGetParameters(args, out var parameters))
+            {
+                var newContainerBuilder = GetDependencyInjectionContainerBuilder();
+                var container = UpdateContainerBuilderWithParameters(newContainerBuilder, parameters);
+                var tagCloudVisualizer = container.Resolve<ITagCloudVisualizer>();
+                var bitmap = tagCloudVisualizer.GetTagCloudBitmap(parameters);
+                var resultProcessor = container.Resolve<IResultProcessor>();
+                resultProcessor.ProcessResult(bitmap, parameters.OutputFilePath);
+            }
+        }
+
+        private static ContainerBuilder GetDependencyInjectionContainerBuilder()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AsImplementedInterfaces()
+                .AsSelf();
+
+            return builder;
+        }
+
+        private static IContainer UpdateContainerBuilderWithParameters(ContainerBuilder builder, Parameters parameters)
+        {
+            builder.RegisterInstance(parameters)
+                .As<Parameters>();
+            builder.Register(c => c.Resolve<Parameters>().Colors)
+                .As<List<Color>>();
+
+            return builder.Build();
         }
     }
 }

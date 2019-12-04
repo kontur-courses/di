@@ -17,7 +17,8 @@ namespace TagsCloudContainer.WordProcessing.Filtering
         {
             var partsOfSpeech = partOfSpeechQualifier.QualifyPartsOfSpeech(words);
             return partsOfSpeech
-                .Where(p => p.Item2 != PartOfSpeech.Pretext && p.Item2 != PartOfSpeech.Pronoun)
+                .Where(p => p.Item2 != PartOfSpeech.Pretext && p.Item2 != PartOfSpeech.Pronoun &&
+                            p.Item2 != PartOfSpeech.Conjunction && p.Item2 != PartOfSpeech.Particle)
                 .Select(p => p.Item1);
         }
     }

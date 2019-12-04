@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudContainer.Algorithm.Layouting
 {
     public interface ILayouter
     {
-        Rectangle PutNextRectangle(Size rectangleSize);
+        IEnumerable<(string, Rectangle)> GetWordsRectangles(IEnumerable<Word> words, Size pictureSize);
     }
 }

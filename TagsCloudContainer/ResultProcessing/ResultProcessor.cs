@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using TagsCloudContainer.ResultProcessing.ImageSaving;
 using TagsCloudContainer.UserInterface;
 
@@ -15,9 +16,9 @@ namespace TagsCloudContainer.ResultProcessing
             this.resultDisplay = resultDisplay;
         }
 
-        public void ProcessResult(Bitmap bitmap)
+        public void ProcessResult(Bitmap bitmap, string filePath)
         {
-            imageSaver.SaveBitmap(bitmap);
+            imageSaver.SaveBitmap(bitmap, filePath, ImageFormat.Png);
             resultDisplay.ShowResult(bitmap);
         }
     }

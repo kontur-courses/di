@@ -4,6 +4,6 @@ namespace TagsCloudContainer.ResultProcessing
 {
     public interface IResultProcessor
     {
-        void ProcessResult(Bitmap bitmap);
+        void ProcessResult(Bitmap bitmap, string filePath);
     }
 }
