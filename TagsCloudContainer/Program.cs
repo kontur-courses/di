@@ -1,5 +1,10 @@
-﻿using System;
-using TagsCloudContainer.UserInterface;
+﻿using System.Linq;
+using TagsCloudContainer.WordProcessing;
+using TagsCloudContainer.WordProcessing.Converting;
+using TagsCloudContainer.WordProcessing.Filtering;
+using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying;
+using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying.CommandsExecuting;
+using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying.MyStem;
 
 namespace TagsCloudContainer
 {
@@ -7,11 +12,10 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var ui = new ConsoleUserInterface();
-            if (ui.TryGetParameters(args, out var parameters))
-            {
-                Console.WriteLine(parameters);
-            }
+            var ps = new WordProcessor(new ToLowerWordConverter(),
+                new ExcludingBoringWordsFilter(new MyStemPartOfSpeechQualifier(new CmdCommandExecutor(),
+                    new MyStemResultParser())));
+            var result = ps.ProcessWords(new[] {"мои", "слова", "сейчас", "к", "месту"}).ToArray();
         }
     }
 }

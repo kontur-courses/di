@@ -33,12 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CliWrap, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CliWrap.2.5.0\lib\net45\CliWrap.dll</HintPath>
+    </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +64,11 @@
     <Compile Include="FileReading\OneWordInLineFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResultProcessing\IImageSaver.cs" />
     <Compile Include="ResultProcessing\IResultProcessor.cs" />
     <Compile Include="UserInterface\ConsoleUserInterface.cs" />
@@ -67,14 +76,32 @@
     <Compile Include="UserInterface\IResultDisplay.cs" />
     <Compile Include="Visualizing\IColorHandler.cs" />
     <Compile Include="Visualizing\IVisualizer.cs" />
-    <Compile Include="WordProcessing\IWordConverter.cs" />
-    <Compile Include="WordProcessing\IWordFilter.cs" />
+    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\CommandsExecuting\CmdCommandExecutor.cs" />
+    <Compile Include="WordProcessing\Filtering\ExcludingBoringWordsFilter.cs" />
+    <Compile Include="WordProcessing\Converting\IWordConverter.cs" />
+    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\IPartOfSpeechQualifier.cs" />
+    <Compile Include="WordProcessing\Filtering\IWordFilter.cs" />
+    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStem\MyStemResultParser.cs" />
+    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStemPartOfSpeechQualifier.cs" />
+    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\PartOfSpeech.cs" />
     <Compile Include="WordProcessing\IWordProcessor.cs" />
+    <Compile Include="WordProcessing\Converting\ToLowerWordConverter.cs" />
+    <Compile Include="WordProcessing\WordProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStem\mystem.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
