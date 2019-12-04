@@ -1,6 +1,9 @@
-﻿namespace TagCloudContainer.Api
+﻿using System.Drawing;
+
+namespace TagCloudContainer.Api
 {
-    public interface ICloudLayouter : ILayoutProvider, IRectangleReceiver
+    public interface ICloudLayouter : ILayoutProvider
     {
+        Rectangle PutNextRectangle(Size rectangleSize);
     }
 }
