@@ -1,3 +1,5 @@
+using TagsCloudForm.Common;
+
 namespace TagsCloudForm
 {
     public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider

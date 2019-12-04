@@ -1,7 +1,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Common
 {
     public class XmlObjectSerializer : IObjectSerializer
     {

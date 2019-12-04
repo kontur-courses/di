@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using System.Windows.Forms;
+using TagsCloudForm.Common;
+using TagsCloudForm.UiActions;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Actions
 {
     public class SaveImageAction : IUiAction
     {

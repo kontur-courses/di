@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.Common;
+using TagsCloudForm.UiActions;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Actions
 {
     public class CircularCloudLayouterAction : IUiAction
     {
@@ -10,11 +13,11 @@ namespace TagsCloudForm
             Palette, ICircularCloudLayouter, CloudPainter> painterFactory;
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
-        private readonly Func<Point, CircularCloudLayouter> circularCloudLayouterFactory;
+        private readonly Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory;
         public CircularCloudLayouterAction(Func<IImageHolder,
                 CircularCloudLayouterSettings,
                 Palette, ICircularCloudLayouter, CloudPainter> painterFactory, IImageHolder imageHolder,
-            Palette palette, Func<Point, CircularCloudLayouter> circularCloudLayouterFactory)
+            Palette palette, Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory)
         {
             this.painterFactory = painterFactory;
             this.imageHolder = imageHolder;

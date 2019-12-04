@@ -92,11 +92,9 @@
     <Compile Include="SettingsManager.cs" />
     <Compile Include="SpellCheckerFilter.cs" />
     <Compile Include="Tests\SpellCheckerTests.cs" />
-    <Compile Include="UiActions\EnumExtensions.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="UiActions\IUiAction.cs" />
-    <Compile Include="UiActions\MenuCategory.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="CloudForm.cs">
       <SubType>Form</SubType>

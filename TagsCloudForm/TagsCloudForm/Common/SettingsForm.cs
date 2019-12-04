@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Common
 {
     public static class SettingsForm
     {

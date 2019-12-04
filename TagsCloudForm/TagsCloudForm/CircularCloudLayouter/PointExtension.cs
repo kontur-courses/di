@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
-namespace TagsCloudForm
+
+namespace TagsCloudForm.CircularCloudLayouter
 {
     public static class PointExtension
     {

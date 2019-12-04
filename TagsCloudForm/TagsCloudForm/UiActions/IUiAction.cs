@@ -1,4 +1,4 @@
-namespace TagsCloudForm
+namespace TagsCloudForm.UiActions
 {
     public interface IUiAction
     {

@@ -1,4 +1,4 @@
-namespace TagsCloudForm
+namespace TagsCloudForm.Common
 {
     public interface IImageDirectoryProvider
     {

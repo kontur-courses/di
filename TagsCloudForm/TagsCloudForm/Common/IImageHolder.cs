@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Common
 {
     public interface IImageHolder
     {

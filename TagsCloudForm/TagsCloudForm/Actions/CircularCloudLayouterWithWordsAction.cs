@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.Common;
+using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
@@ -7,14 +10,14 @@ namespace TagsCloudForm.Actions
     {
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
-        private readonly Func<Point, CircularCloudLayouter> circularCloudLayouterFactory;
+        private readonly Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory;
         private readonly IWordsFrequencyParser parser;
 
         private readonly Func<IImageHolder,
             CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter,
             IWordsFrequencyParser, CloudWithWordsPainter> painterFactory;
         public CircularCloudLayouterWithWordsAction(IImageHolder imageHolder,
-             Palette palette, Func<Point, CircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
+             Palette palette, Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
              Func<IImageHolder,
              CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter,
              IWordsFrequencyParser, CloudWithWordsPainter> painterFactory)

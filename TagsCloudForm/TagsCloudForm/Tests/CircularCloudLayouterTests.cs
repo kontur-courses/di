@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Drawing;
-using System.Linq;
-using System.Drawing.Imaging;
 using NUnit.Framework.Interfaces;
-using System.IO;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Tests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
     {
         private Point CloudCenter;
-        private CircularCloudLayouter Layouter;
+        private CircularCloudLayouter.CircularCloudLayouter Layouter;
 
         private double GetDistance(Rectangle rectangle, Point center)
         {
@@ -73,7 +73,7 @@ namespace TagsCloudForm
         public void SetUp()
         {
             CloudCenter = new Point(0, 0);
-            Layouter = new CircularCloudLayouter(CloudCenter);
+            Layouter = new CircularCloudLayouter.CircularCloudLayouter(CloudCenter);
         }
 
         [TearDown]

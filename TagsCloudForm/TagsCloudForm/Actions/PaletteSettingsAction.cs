@@ -1,4 +1,7 @@
-﻿namespace TagsCloudForm
+﻿using TagsCloudForm.Common;
+using TagsCloudForm.UiActions;
+
+namespace TagsCloudForm.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.CircularCloudLayouter
 {
     public static class SegmentStacker
     {

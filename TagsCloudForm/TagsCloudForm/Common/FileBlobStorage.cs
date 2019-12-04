@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Common
 {
     public class FileBlobStorage : IBlobStorage
     {

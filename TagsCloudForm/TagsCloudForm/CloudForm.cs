@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Threading;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using Autofac;
+using TagsCloudForm.Common;
+using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm
 {

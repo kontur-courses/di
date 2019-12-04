@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.Common;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.Actions
 {
     public class CloudPainter
     {

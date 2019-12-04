@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.CircularCloudLayouter
 {
     public class Segment
     {
