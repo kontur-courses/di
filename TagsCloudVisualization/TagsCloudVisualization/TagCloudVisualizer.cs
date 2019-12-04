@@ -17,7 +17,7 @@ namespace TagsCloudVisualization
             this.imageSettings = imageSettings;
         }
 
-        public TagCloud VisualizeTextFromFile(string fileName)
+        public Bitmap VisualizeTextFromFile(string fileName)
         {
             var text = TextRetriever.RetrieveTextFromFile(fileName);
             var wordTokens = textParser.ParseToTokens(text);
@@ -42,7 +42,7 @@ namespace TagsCloudVisualization
             foreach (var tag in tags)
                 DrawTag(graphics, tag, cloudScale);
 
-            return new TagCloud(bmp);
+            return bmp;
         }
 
         private float CalculateCloudScale(Tag tag)

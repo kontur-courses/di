@@ -19,7 +19,7 @@ namespace TagsCloudVisualization
         public static ImageSettings InitializeDefaultSettings()
         {
             var font = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-            return new ImageSettings(font , new RandomTagPainter(), new Size(2000, 2000), new Point(500,500));
+            return new ImageSettings(font , new RandomTagPainter(), new Size(2000, 2000), new Point(1000,1000));
         }
     }
 }

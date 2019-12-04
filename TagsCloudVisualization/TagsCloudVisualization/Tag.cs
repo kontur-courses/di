@@ -8,11 +8,7 @@ namespace TagsCloudVisualization
         public static readonly Color DefaultColor =  Color.Black;
         public WordToken WordToken { get; }
         public Rectangle TagBox { get; }
-        public float FontSize
-        {
-            get => FontSize;
-            set => FontSize = value >= 0 ? value : throw new ArgumentException();
-        }
+        public float FontSize { get; set; }
 
         public Color Color { get; set; }
 

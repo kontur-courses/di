@@ -71,7 +71,6 @@
     <Compile Include="Painter\SingleColorPainter.cs" />
     <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Tag.cs" />
-    <Compile Include="TagCloud.cs" />
     <Compile Include="Tests\GeometryTests.cs" />
     <Compile Include="ILayouter.cs" />
     <Compile Include="ImageSettings.cs" />
@@ -97,6 +96,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="InputData\Input2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="InputData\Input3.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

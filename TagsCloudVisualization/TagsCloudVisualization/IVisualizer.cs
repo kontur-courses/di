@@ -1,7 +1,9 @@
-﻿namespace TagsCloudVisualization
+﻿using System.Drawing;
+
+namespace TagsCloudVisualization
 {
     public interface IVisualizer
     {
-        TagCloud VisualizeTextFromFile(string fileName);
+        Bitmap VisualizeTextFromFile(string fileName);
     }
 }
