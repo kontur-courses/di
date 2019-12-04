@@ -15,6 +15,6 @@ namespace TagsCloudVisualization
             image.Clear(Color.White);
         }
 
-        internal abstract Bitmap GetImage(IEnumerable<string> words, IEnumerable<Rectangle> rectangles, Options options);
+        internal abstract Bitmap GetImage(IEnumerable<string> words, IEnumerable<Rectangle> rectangles, VisualisingOptions visualisingOptions);
     }
 }

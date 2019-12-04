@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -97,8 +97,8 @@ namespace TagsCloudVisualization.Tests
             var testName = TestContext.CurrentContext.Test.Name;
             var painter = new MultiColorPainter(new Size(1000, 1000));
             var image = painter.GetMultiColorCloud(rectangles);
-            var fileName = new StringBuilder(testName).Append("FAILED").ToString();
-            var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image);
+            var fileName = $"{testName}Failed";
+            var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
     }

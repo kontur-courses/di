@@ -16,8 +16,8 @@ namespace TagsCloudVisualization
         public IEnumerable<string> GetWords()
         {
             var words = Regex.Split(text, @"[ \n]");
-            return words.Select(word => Regex.Replace(word, @"[\W]", ""))
-                .Where(preparedWord => preparedWord != "");
+            return words.Select(word => Regex.Replace(word, @"[^\w-]", string.Empty))
+                .Where(preparedWord => preparedWord != string.Empty && preparedWord != "-");
         }
     }
 }

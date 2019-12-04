@@ -21,8 +21,7 @@ namespace TagsCloudVisualization
             var previousRadius = spiral.Radius;
             spiral.GetNextPoint();
             var currentRadius = spiral.Radius;
-            var difference = currentRadius - previousRadius;
-            difference.Should().BePositive();
+            currentRadius.Should().BeGreaterThan(previousRadius);
         }
 
         [Test]

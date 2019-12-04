@@ -8,9 +8,9 @@ namespace TagCloudVisualization_Tests
     public class TextReader_Tests
     {
         [Test]
-        public void TextReaderCtor_FileNotFound_ShouldThrowException()
+        public void TextReaderCtor_FileNotFound_ShouldThrowArgumentException()
         {
-            Action act = () => new TextReader("nonexistentName");
+            Action act = () => new TxtReader("nonexistentName");
             act.Should().Throw<ArgumentException>();
         }
     }

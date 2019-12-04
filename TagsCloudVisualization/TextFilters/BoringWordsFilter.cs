@@ -5,11 +5,11 @@ namespace TagsCloudVisualization
 {
     public class BoringWordsFilter : ITextFilter
     {
-        private readonly IEnumerable<string> boringWords;
+        private readonly HashSet<string> boringWords;
 
         public BoringWordsFilter(IEnumerable<string> boringWords)
         {
-            this.boringWords = boringWords;
+            this.boringWords = boringWords.ToHashSet();
         }
         
         public BoringWordsFilter()
