@@ -4,7 +4,6 @@ namespace TagCloud
 {
     public interface ICloudVisualization
     {
-        Bitmap Image { get; }
-        Bitmap ReDrawRectangles(ICloud cloud);
+        Bitmap GetAndDrawRectangles(int width,int height,string path);
     }
 }

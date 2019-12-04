@@ -6,7 +6,6 @@ namespace TagCloud
 {
     public interface ICloud
     {
-        List<TagRectangle> Rectangles { get; }
-        ClientData Data { get; }
+        List<TagRectangle> GetRectangles(int width, int height, string path = null);
     }
 }

@@ -11,6 +11,21 @@ namespace TagCloud
     {
         public static void Main()
         {
+            var container = GetContainer();
+            var visaulization = container.Resolve<ICloudVisualization>();
+            var saveAction = container.Resolve<ISaveImageAction>();
+            while (true)
+            {
+                var width = int.Parse(Console.ReadLine() ?? throw new ArgumentException());
+                var height = int.Parse(Console.ReadLine() ?? throw new ArgumentException());
+                var pathToRead = Console.ReadLine();
+                var pathToSave = Console.ReadLine();
+                saveAction.Perform(pathToSave,visaulization.GetAndDrawRectangles(width,height,pathToRead));
+            }
+        }
+
+        private static WindsorContainer GetContainer()
+        {
             var container = new WindsorContainer();
             container.AddFacility<TypedFactoryFacility>();
             container.Register(Component.For<IWordsToTagsParser>().ImplementedBy<WordsToTagsParser>());
@@ -21,13 +36,10 @@ namespace TagCloud
             container.Register(Component.For<ICircularCloudLayouter>().ImplementedBy<CircularCloudLayouter>());
             container.Register(Component.For<ICloud>().ImplementedBy<Cloud>());
             container.Register(Component.For<ICloudVisualization>().ImplementedBy<CloudVisualization>());
-            container.Register(Component.For<IAction>().ImplementedBy<SaveImageAction>());
+            container.Register(Component.For<ISaveImageAction>().ImplementedBy<SaveImageAction>());
             container.Register(Component.For<IAction>().ImplementedBy<ShowImageAction>());
-            container.Register(Component.For<IClientDataFactory>().ImplementedBy<ClientDataFactory>()
-                .LifestyleSingleton());
-            var settings = new Settings(500, 500);
-            settings.Load(container.Resolve<IClientDataFactory>());
-            var Cloud = container.Resolve<ICloud>();
+
+            return container;
         }
     }
 }

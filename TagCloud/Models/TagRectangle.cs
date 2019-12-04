@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Web.UI.WebControls;
 
 namespace TagCloud.Models
 {
@@ -6,8 +7,10 @@ namespace TagCloud.Models
     {
         public Rectangle Area {get;}
         public string Text { get; }
-        public TagRectangle(string text,Rectangle area)
+        public FontSize FSize { get; }
+        public TagRectangle(string text,Rectangle area,FontSize fSize)
         {
+            FSize = fSize;
             Area = area;
             Text = text;
         }

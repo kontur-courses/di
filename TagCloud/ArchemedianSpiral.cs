@@ -5,16 +5,16 @@ namespace TagCloud
 {
     public class ArchimedianSprial : IAlgorithm
     {
-        public double Alpha { get; private set; } = Math.PI / 40;
-        public double Step { get; } = Math.PI / 40;
-        public double DensityCoefficient { get; } = 0.2;
-        private double RadiusVector { get; set; }
+        private  double alpha;
+        private const double Step = Math.PI / 40;
+        private const double DensityCoefficient = 0.2;
+
         public Point GetNextCoordinate()
         {
-            Alpha += Step;
-            RadiusVector = Alpha * DensityCoefficient;
-            var x = (int) (RadiusVector * Math.Cos(Alpha));
-            var y = (int) (RadiusVector * Math.Sin(Alpha));
+            alpha += Step;
+            var radiusVector = alpha * DensityCoefficient;
+            var x = (int) (radiusVector * Math.Cos(alpha));
+            var y = (int) (radiusVector * Math.Sin(alpha));
             return new Point(x, y);
         }
     }

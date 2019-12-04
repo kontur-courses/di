@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagCloud.Actions
 {
-    public class SaveImageAction : IAction
+    public class SaveImageAction : ISaveImageAction
     {
-        private ICloudVisualization Visualization { get;}
-
         public string CommandName => "- SaveImage";
 
-        public SaveImageAction(ICloudVisualization visualization)
+        public void Perform(string path, Bitmap image)
         {
-            this.Visualization = visualization;
-        }
-        public void Perform()
-        {
-            throw new NotImplementedException();
+            image.Save(path, ImageFormat.Png);
         }
     }
 }

@@ -49,9 +49,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientData.cs" />
-    <Compile Include="ClientDataFactory.cs" />
-    <Compile Include="IServices\IClientDataFactory.cs" />
+    <Compile Include="IServices\ISaveImageAction.cs" />
     <Compile Include="IServices\ITagCollectionFactory.cs" />
     <Compile Include="IServices\IWordsToTagsParser.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
@@ -72,7 +70,6 @@
     <Compile Include="IServices\ICloudVisualization.cs" />
     <Compile Include="IServices\IWordsHandler.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="WordsToTagsParser.cs" />
   </ItemGroup>
   <ItemGroup />
