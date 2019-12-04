@@ -1,16 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace TagsCloudVisualization.Stemmers
 {
     class YandexStemmer: IStemmer
     {
-
-        private readonly  Regex regExForStandardWordForm = new Regex("\"lex\":\"(\\w+)\"", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private readonly Regex regExForPartOfSpeech = new Regex("\"gr\":\"(\\w+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public IEnumerable<(string value, string valueForFilter)> GetStemmedString()
+        public IEnumerable<string> GetStemmedString()
         {
             var cmd = new Process
             {
@@ -31,10 +27,8 @@ namespace TagsCloudVisualization.Stemmers
             while (stemmedString != string.Empty || uselessLinesCounter < skippedLineCount)
             {
                 stemmedString = cmd.StandardOutput.ReadLine();
-                var standardForm = regExForStandardWordForm.Match(stemmedString).Groups[1].Value.ToLower();
-                var partOfSpeech = regExForPartOfSpeech.Match(stemmedString).Groups[1].Value;
                 uselessLinesCounter++;
-                yield return (standardForm, partOfSpeech);
+                yield return stemmedString;
             }
         }
     }

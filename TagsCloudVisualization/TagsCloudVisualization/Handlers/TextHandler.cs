@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Spire.Doc;
+    using Spire.Doc;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Stemmers;
 
@@ -16,9 +16,7 @@ namespace TagsCloudVisualization.Handlers
             {".txt", name =>
                 {
                     using (var file = new StreamReader(name, Encoding.Default))
-                    {
                         File.WriteAllText(@"YandexStem/input.txt",file.ReadToEnd());
-                    }
                 }
             },
             {".doc", name =>
@@ -48,13 +46,14 @@ namespace TagsCloudVisualization.Handlers
         {
             var result = new Dictionary<string, int>();
             rewriteIntoTxtFile[textSettings.FileExtention ?? throw new InvalidOperationException()](textSettings.PathToFile);
-            foreach (var (value, valueForFilter) in stemmer.GetStemmedString())
+            foreach (var stemmedString in stemmer.GetStemmedString())
             {
-                if (!textSettings.Filter.IsValidValue(value, valueForFilter))
+                var filteredValue = textSettings.Filter.Filter(stemmedString);
+                if (!filteredValue.isValid)
                     continue;
-                if (!result.ContainsKey(value))
-                    result.Add(value, 0);
-                result[value]++;
+                if (!result.ContainsKey(filteredValue.value))
+                    result.Add(filteredValue.value, 0);
+                result[filteredValue.value]++;
             }
             return result.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, y => y.Value);
         }

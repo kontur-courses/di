@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.Stemmers
 {
     interface IStemmer
     {
-        IEnumerable<(string value, string valueForFilter)> GetStemmedString();
+        IEnumerable<string> GetStemmedString();
     }
 }

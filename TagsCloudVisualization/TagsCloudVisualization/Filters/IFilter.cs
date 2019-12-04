@@ -2,6 +2,6 @@
 {
     interface  IFilter
     {
-        bool IsValidValue(string value, string valueForFilte);
+        (bool isValid, string value) Filter(string stemmedString);
     }
 }
