@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudContainer.Algorithm.Layouting
 {
-    public interface IWordLayouter
+    public interface ILayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
     }

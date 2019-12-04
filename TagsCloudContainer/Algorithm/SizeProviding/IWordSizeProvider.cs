@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudContainer.Algorithm.SizeProviding
 {
     public interface IWordSizeProvider
     {

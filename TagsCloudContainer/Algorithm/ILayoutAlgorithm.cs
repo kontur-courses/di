@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Algorithm
 {
     public interface ILayoutAlgorithm
     {
-        Dictionary<string, Rectangle> GetLayout(IEnumerable<string> words);
+        IEnumerable<(string, Rectangle)> GetLayout(IEnumerable<string> words);
     }
 }

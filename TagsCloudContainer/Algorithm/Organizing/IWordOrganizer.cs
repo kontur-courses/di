@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudContainer.Algorithm.Organizing
 {
     public interface IWordOrganizer
     {

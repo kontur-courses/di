@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudContainer.Algorithm.WeightSetting
 {
     public interface IWordWeightSetter
     {

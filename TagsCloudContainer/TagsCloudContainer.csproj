@@ -52,14 +52,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\ILayoutAlgorithm.cs" />
-    <Compile Include="Algorithm\IWordLayouter.cs" />
-    <Compile Include="Algorithm\IWordOrganizer.cs" />
-    <Compile Include="Algorithm\IWordSizeProvider.cs" />
-    <Compile Include="Algorithm\IWordWeightSetter.cs" />
+    <Compile Include="Algorithm\Layouting\CircularLayouter.cs" />
+    <Compile Include="Algorithm\Layouting\ILayouter.cs" />
+    <Compile Include="Algorithm\Organizing\IWordOrganizer.cs" />
+    <Compile Include="Algorithm\Organizing\WordOrganizerBySize.cs" />
+    <Compile Include="Algorithm\SizeProviding\CorrespondingToWeightSizeProvider.cs" />
+    <Compile Include="Algorithm\SizeProviding\IWordSizeProvider.cs" />
+    <Compile Include="Algorithm\WeightSetting\FrequencyWeightSetter.cs" />
+    <Compile Include="Algorithm\WeightSetting\IWordWeightSetter.cs" />
+    <Compile Include="Algorithm\LayoutAlgorithm.cs" />
     <Compile Include="Algorithm\Word.cs" />
     <Compile Include="Core\ITagCloudVisualizer.cs" />
     <Compile Include="Core\Parameters.cs" />
     <Compile Include="Core\TagCloudVisualizer.cs" />
+    <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="FileReading\IFileReader.cs" />
     <Compile Include="FileReading\OneWordInLineFileReader.cs" />
     <Compile Include="Program.cs" />
@@ -99,9 +105,14 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStem\mystem.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
+      <Project>{c3427168-412d-499b-b4ba-f2c0352426e0}</Project>
+      <Name>TagsCloudVisualization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
