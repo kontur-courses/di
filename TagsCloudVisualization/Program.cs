@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using Autofac;
 using TagsCloudVisualization.Core;
+using TagsCloudVisualization.Core.Drawers;
 using TagsCloudVisualization.Core.Translators;
 
 namespace TagsCloudVisualization
@@ -25,7 +28,10 @@ namespace TagsCloudVisualization
             var tags = new TextToTagsTranslator().TranslateTextToTags(
                 File.ReadLines("exampleText.txt"), new HashSet<string>());
             
-            // ToDo нарисовать теги
+            var cloudDrawer = new RectangleCloudDrawer(Color.Teal, Brushes.Peru);
+            cloudDrawer.DrawCloud(
+                tags.ToList(),
+                Environment.CurrentDirectory + $"\\test.png");
         }
     }
 }

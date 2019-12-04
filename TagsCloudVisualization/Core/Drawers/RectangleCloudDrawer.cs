@@ -20,8 +20,14 @@ namespace TagsCloudVisualization.Core.Drawers
             pen = new Pen(rectBrush);
             stringFormat = new StringFormat()
             {
-                LineAlignment = StringAlignment.Center,
+                FormatFlags = StringFormatFlags.NoWrap,
+                Trimming = StringTrimming.None
             };
+        }
+
+        public RectangleCloudDrawer(Color backgroundColor, Brush tagBrush)
+            : this(backgroundColor, tagBrush, Brushes.Black)
+        {
         }
 
         public void DrawRectangles(IEnumerable<Rectangle> rectangles, string filename)

@@ -46,8 +46,11 @@ namespace TagsCloudVisualization
 
         private static void GenerateTagCloud(IEnumerable<TagInfo> tags, string filename)
         {
-            var cloudDrawer = new RectangleCloudDrawer(Color.Teal, Brushes.Peru, Brushes.Black);
-            cloudDrawer.DrawCloud(tags.ToList(), Environment.CurrentDirectory + $"\\Examples\\{filename}.png");
+            var cloudDrawer = new RectangleCloudDrawer(Color.Teal, Brushes.Peru);
+            cloudDrawer.DrawCloud(
+                tags.ToList(),
+                Environment.CurrentDirectory + $"\\Examples\\{filename}.png",
+                true);
         }
 
         private static IEnumerable<TagInfo> GetTags(

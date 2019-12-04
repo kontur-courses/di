@@ -59,7 +59,7 @@
     <Content Include="README.md" />
     <Content Include="ru.aff" />
     <Content Include="ru.dic" />
-    <Content Include="temp.txt" />
+    <Content Include="test.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
