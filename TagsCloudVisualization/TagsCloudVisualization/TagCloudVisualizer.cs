@@ -7,7 +7,9 @@ namespace TagsCloudVisualization
     public class TagCloudVisualizer : IVisualizer
     {
         private readonly ILayouter layouter;
+
         private readonly IParser textParser;
+
         private readonly ITagPainter painter;
 
         public TagCloudVisualizer(IParser textParser, ILayouter layouter, ITagPainter painter)

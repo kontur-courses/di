@@ -4,8 +4,6 @@ namespace TagsCloudVisualization
 {
     public class ArchimedeanSpiral : ICirclePointLocator
     {
-        public Point Center { get; }
-
         public double DistanceFromCenter { get; set; }
 
         private  const double spiralRatio = 0.1;

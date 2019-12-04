@@ -1,13 +1,16 @@
 ﻿using System.Drawing;
+
 namespace TagsCloudVisualization
 {
     public class ImageSettings
     {
-        public readonly Font Font;
-        public readonly Size ImageSize;
-        public readonly Point CloudCenter;
+        public static readonly ImageSettings DefaultSettings = InitializeDefaultSettings();
 
-        public static ImageSettings DefaultSettings = InitializeDefaultSettings();
+        public readonly Font Font;
+
+        public readonly Size ImageSize;
+
+        public readonly Point CloudCenter;
 
         public ImageSettings(Font font, Size imageSize, Point cloudCenter)
         {

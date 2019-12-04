@@ -7,7 +7,6 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ILayouter
     {
-
         private readonly ICirclePointLocator pointLocator;
 
         private readonly List<Rectangle> taggedRectangles;
