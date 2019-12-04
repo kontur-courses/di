@@ -8,15 +8,9 @@ namespace TagsCloudVisualization
 
         public double DistanceFromCenter { get; set; }
 
-        private readonly double spiralRatio;
+        private  const double spiralRatio = 0.1;
 
         private double angle;
-
-        public ArchimedeanSpiral(ImageSettings settings, double spiralRatio = 0.1)
-        {
-            Center = settings.CloudCenter;
-            this.spiralRatio = spiralRatio;
-        }
 
         public Point GetNextPoint()
         {

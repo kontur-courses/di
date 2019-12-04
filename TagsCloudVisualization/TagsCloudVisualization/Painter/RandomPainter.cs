@@ -13,15 +13,7 @@ namespace TagsCloudVisualization
             random = new Random();
         }
 
-        public void SetColorsForTagCollection(IEnumerable<Tag> tagCollection)
-        {
-            foreach (var tag in tagCollection)
-            {
-                tag.Color = GetRandomColor();
-            }
-        }
-
-        private Color GetRandomColor()
+        public Color GetTagColor()
         {
             return Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
         }

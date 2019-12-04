@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudVisualization
 {
     public interface ITagPainter
     {
-        void SetColorsForTagCollection(IEnumerable<Tag> tagCollection);
+        Color GetTagColor();
     }
 }

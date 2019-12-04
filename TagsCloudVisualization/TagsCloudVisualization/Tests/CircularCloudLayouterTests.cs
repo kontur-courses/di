@@ -43,7 +43,7 @@ namespace TagsCloudVisualization
         {
             var recSize = new Size(10, 10);
             var expectedShiftedCenter =
-                new Point(layouter.Center.X - recSize.Width / 2, layouter.Center.Y - recSize.Height / 2);
+                new Point(- recSize.Width / 2, - recSize.Height / 2);
             var rectangle = layouter.PutNextRectangle(recSize);
 
             new Point(rectangle.X, rectangle.Y).Should().Be(expectedShiftedCenter);
@@ -59,25 +59,6 @@ namespace TagsCloudVisualization
             layouter.PutNextRectangle(rectSize).Size.Should().Be(rectSize);
         }
 
-        [TestCase(0, 0, TestName = "Center is null point")]
-        [TestCase(42, 38, TestName = "Center is point with positive X and Y")]
-        [TestCase(-10000, -500, TestName = "Center is point with negative X and Y")]
-        public void PutNextRectangle_FirstRectangleIsOnCenter(int x, int y)
-        {
-            var center = new Point(x, y);
-            var defaultSettings = defaultContainer.Resolve<ImageSettings>();
-            var customSettings = new ImageSettings(
-                defaultSettings.Font,
-                defaultSettings.Painter,
-                defaultSettings.ImageSize,
-                center
-                );
-            var customLayouter = new CircularCloudLayouter(new ArchimedeanSpiral(customSettings));
-            var rectangle = customLayouter.PutNextRectangle(new Size(10, 10));
-
-            rectangle.X.Should().Be(center.X - rectangle.Width / 2);
-            rectangle.Y.Should().Be(center.Y - rectangle.Height / 2);
-        }
 
         [TestCase(2, TestName = "2 rectangles created")]
         [TestCase(10, TestName = "10 rectangles created")]

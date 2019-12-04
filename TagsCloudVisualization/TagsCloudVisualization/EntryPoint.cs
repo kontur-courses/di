@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Drawing.Imaging;
 using Autofac;
 
 namespace TagsCloudVisualization
@@ -10,9 +9,11 @@ namespace TagsCloudVisualization
         {
             var container = InitializeContainer();
 
+            var imageSettings = ImageSettings.DefaultSettings;
+
             container
                 .Resolve<IVisualizer>()
-                .VisualizeTextFromFile("InputData/Input3.txt")
+                .VisualizeTextFromFile("InputData/Input3.txt", imageSettings)
                 .Save("result.png");
 
             Process.Start("result.png");
@@ -22,10 +23,10 @@ namespace TagsCloudVisualization
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TagCloudVisualizer>().SingleInstance().As<IVisualizer>();
-            builder.Register(context => ImageSettings.InitializeDefaultSettings()).SingleInstance().As<ImageSettings>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<ArchimedeanSpiral>().As<ICirclePointLocator>();
             builder.RegisterType<TextParser>().SingleInstance().As<IParser>();
+            builder.RegisterType<RandomTagPainter>().SingleInstance().As<ITagPainter>();
             return builder.Build();
         }
     }

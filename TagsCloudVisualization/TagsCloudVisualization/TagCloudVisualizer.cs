@@ -7,17 +7,17 @@ namespace TagsCloudVisualization
     public class TagCloudVisualizer : IVisualizer
     {
         private readonly ILayouter layouter;
-        private readonly ImageSettings imageSettings;
         private readonly IParser textParser;
+        private readonly ITagPainter painter;
 
-        public TagCloudVisualizer(IParser textParser, ILayouter layouter, ImageSettings imageSettings)
+        public TagCloudVisualizer(IParser textParser, ILayouter layouter, ITagPainter painter)
         {
             this.textParser = textParser;
             this.layouter = layouter;
-            this.imageSettings = imageSettings;
+            this.painter = painter;
         }
 
-        public Bitmap VisualizeTextFromFile(string fileName)
+        public Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings)
         {
             var text = TextRetriever.RetrieveTextFromFile(fileName);
             var wordTokens = textParser.ParseToTokens(text);
@@ -28,8 +28,8 @@ namespace TagsCloudVisualization
             var cloudScale = 1f;
             foreach (var word in wordTokens)
             {
-                var tag = CreateTag(graphics, word);
-                var currentCloudScale = CalculateCloudScale(tag);
+                var tag = CreateTag(graphics, word, imageSettings);
+                var currentCloudScale = CalculateCloudScale(tag, imageSettings);
 
                 if (currentCloudScale < cloudScale)
                     cloudScale = currentCloudScale;
@@ -37,15 +37,14 @@ namespace TagsCloudVisualization
                 tags.Add(tag);
             }
 
-            imageSettings.Painter.SetColorsForTagCollection(tags);
 
             foreach (var tag in tags)
-                DrawTag(graphics, tag, cloudScale);
+                DrawTag(graphics, tag, cloudScale, imageSettings);
 
             return bmp;
         }
 
-        private float CalculateCloudScale(Tag tag)
+        private float CalculateCloudScale(Tag tag, ImageSettings imageSettings)
         {
             var realFigureCenter =
                 new Point(
@@ -84,16 +83,24 @@ namespace TagsCloudVisualization
             return size.ToSize();
         }
 
-        private Tag CreateTag(Graphics graphics, WordToken wordToken)
+        private Tag CreateTag(Graphics graphics, WordToken wordToken, ImageSettings imageSettings)
         {
-            var fontSize = CalculateFontSize(wordToken);
+            var fontSize = CalculateFontSize(wordToken, imageSettings);
             var wordFont = new Font(imageSettings.Font.FontFamily, fontSize, imageSettings.Font.Style);
             var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(wordToken, wordFont, graphics));
 
-            return new Tag(wordToken, wordRectangle, fontSize);
+            wordRectangle.Location = new Point(
+                wordRectangle.X + imageSettings.CloudCenter.X, 
+                wordRectangle.Y + imageSettings.CloudCenter.Y
+                );
+
+            var color = painter.GetTagColor();
+
+            return new Tag(wordToken, wordRectangle, fontSize, color);
         }
 
-        private void DrawTag(Graphics graphics, Tag tag, float cloudScale)
+
+        private void DrawTag(Graphics graphics, Tag tag, float cloudScale, ImageSettings imageSettings)
         {
             var scaledFontSize = tag.FontSize * cloudScale;
 
@@ -116,7 +123,7 @@ namespace TagsCloudVisualization
             graphics.DrawString(tag.WordToken.Word, scaledFont, new SolidBrush(tag.Color), newPointLocation);
         }
 
-        private float CalculateFontSize(WordToken word)
+        private float CalculateFontSize(WordToken word, ImageSettings imageSettings)
         {
             return imageSettings.Font.Size + word.TextCount * 3;
         }

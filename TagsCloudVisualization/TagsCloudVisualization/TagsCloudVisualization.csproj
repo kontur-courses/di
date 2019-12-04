@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="Painter\GradientPainter.cs" />
     <Compile Include="ICirclePointLocator.cs" />
     <Compile Include="Painter\ITagPainter.cs" />
     <Compile Include="IVisualizer.cs" />

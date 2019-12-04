@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface IVisualizer
     {
-        Bitmap VisualizeTextFromFile(string fileName);
+        Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings);
     }
 }
