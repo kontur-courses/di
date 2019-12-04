@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.Data
 {
-    internal class Word
+    public class Word
     {
         internal readonly string Value;
         internal readonly int Occurrences;

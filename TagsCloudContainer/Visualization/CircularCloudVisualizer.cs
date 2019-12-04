@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Core.Layouters;
+using TagsCloudContainer.Visualization.Layouts;
 using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Visualization
 {
     public class CircularCloudVisualizer
     {
+        private static readonly StringFormat StringFormat = new StringFormat
+        {
+            LineAlignment = StringAlignment.Center,
+            Alignment = StringAlignment.Center,
+            FormatFlags = StringFormatFlags.NoWrap,
+            Trimming = StringTrimming.None
+        };
+        
         private readonly Size? imageSize;
 
         public Color BackgroundColor { get; set; } = Color.Transparent;
@@ -18,25 +26,18 @@ namespace TagsCloudContainer.Visualization
             this.imageSize = imageSize;
         }
 
-        public Bitmap Visualize(CircularCloudLayouter layouter, IPainter painter, Tag[] tags)
+        public Bitmap Visualize(IPainter painter, Tag[] tags)
         {
-            var rectangles = tags.Select(tag => layouter.PutNextRectangle(tag.Size)).ToArray();
-            var viewport = GetViewport(rectangles);
-            var schemes = painter.Colorize(rectangles.Length);
+            var viewport = GetViewport(tags.Select(tag => tag.Rectangle));
+            var schemes = painter.Colorize(tags.Length);
             var border = GetBorder(schemes);
             var bitmap = CreateBitmap(viewport, border);
             var graphics = CreateGraphics(bitmap, viewport, border);
 
             for (var i = 0; i < tags.Length; i++)
-                DrawTag(graphics, schemes[i], rectangles[i], tags[i]);
+                DrawTag(graphics, schemes[i], tags[i]);
 
             return bitmap;
-        }
-
-        public Bitmap Visualize(CircularCloudLayouter layouter, IPainter painter, IEnumerable<Size> sizes)
-        {
-            var rectangles = sizes.Select(layouter.PutNextRectangle).ToArray();
-            return Visualize(painter, rectangles);
         }
 
         public Bitmap Visualize(IPainter painter, Rectangle[] rectangles)
@@ -97,10 +98,10 @@ namespace TagsCloudContainer.Visualization
             return new Bitmap(viewport.Width + border, viewport.Height + border);
         }
 
-        private static void DrawTag(Graphics graphics, ColoringScheme scheme, Rectangle rectangle, Tag tag)
+        private static void DrawTag(Graphics graphics, ColoringScheme scheme, Tag tag)
         {
-            DrawRectangle(graphics, scheme, rectangle);
-            graphics.DrawString(tag.Text, tag.Font, scheme.TextBrush, rectangle);
+            DrawRectangle(graphics, scheme, tag.Rectangle);
+            graphics.DrawString(tag.Text, tag.Font, scheme.TextBrush, tag.Rectangle, StringFormat);
         }
 
         private static void DrawRectangle(Graphics graphics, ColoringScheme scheme, Rectangle rectangle)

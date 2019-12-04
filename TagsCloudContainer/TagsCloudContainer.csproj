@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -63,10 +64,12 @@
     <Compile Include="Tests\ArchimedeanSpiralTests.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="Visualization\CircularCloudVisualizer.cs" />
+    <Compile Include="Visualization\Layouts\CentricWordsLayout.cs" />
+    <Compile Include="Visualization\Layouts\IWordsLayout.cs" />
+    <Compile Include="Visualization\Layouts\Tag.cs" />
     <Compile Include="Visualization\Painters\ColoringScheme.cs" />
     <Compile Include="Visualization\Painters\ConstantColorsPainter.cs" />
     <Compile Include="Visualization\Painters\IPainter.cs" />
-    <Compile Include="Visualization\Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
