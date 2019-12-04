@@ -55,15 +55,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\HelperMethods.cs" />
+    <Compile Include="Infrastructure\Settings\FileSettings.cs" />
+    <Compile Include="Infrastructure\Filters\DefaultFilter.cs" />
+    <Compile Include="Infrastructure\Settings\FilterSettings.cs" />
+    <Compile Include="Infrastructure\Interfaces\IFilter.cs" />
     <Compile Include="Infrastructure\Settings\FontSettings.cs" />
     <Compile Include="Infrastructure\Visualizers\DefaultVisualizer.cs" />
     <Compile Include="Infrastructure\Readers\DefaultTxtReader.cs" />
-    <Compile Include="Infrastructure\WordExtracters\ExtracterHelper.cs" />
     <Compile Include="Infrastructure\Parsers\DefaultParser.cs" />
     <Compile Include="Infrastructure\Settings\ImageSettings.cs" />
     <Compile Include="Infrastructure\Layouters\ArchimedeanSpiralLayouter.cs" />
     <Compile Include="Infrastructure\Interfaces\ILayouter.cs" />
-    <Compile Include="Infrastructure\Interfaces\IExtracter.cs" />
+    <Compile Include="Infrastructure\Interfaces\IExtractor.cs" />
     <Compile Include="Infrastructure\Interfaces\IReader.cs" />
     <Compile Include="Infrastructure\Interfaces\IParser.cs" />
     <Compile Include="Infrastructure\Interfaces\IVisualizer.cs" />
@@ -76,8 +80,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\WordExtracters\DefaultExtracter.cs" />
-    <Compile Include="Infrastructure\WordToken.cs" />
+    <Compile Include="Infrastructure\WordExtracters\DefaultExtractor.cs" />
+    <Compile Include="Infrastructure\WordToken\WordToken.cs" />
+    <Compile Include="Infrastructure\Enums\SpeechPart.cs" />
+    <Compile Include="Infrastructure\WordToken\WordTokenizer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

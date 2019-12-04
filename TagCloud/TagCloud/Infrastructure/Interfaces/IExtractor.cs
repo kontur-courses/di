@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     public interface IExtractor
     {
