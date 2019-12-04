@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TagsCloudForm.Actions
@@ -17,20 +15,22 @@ namespace TagsCloudForm.Actions
         private Size imageSize;
         private ICircularCloudLayouter layouter;
         private IWordsFrequencyParser parser;
+        private SpellCheckerFilter filter;
 
         public delegate CloudWithWordsPainter Factory(IImageHolder imageHolder,
             CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter,
-            IWordsFrequencyParser parser);
+            IWordsFrequencyParser parser, SpellCheckerFilter filter);
 
         public CloudWithWordsPainter(IImageHolder imageHolder,
             CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter,
-            IWordsFrequencyParser parser)
+            IWordsFrequencyParser parser, SpellCheckerFilter filter)
         {
             this.imageHolder = imageHolder;
             this.settings = settings;
             this.palette = palette;
             this.layouter = layouter;
             this.parser = parser;
+            this.filter = filter;
             imageSize = imageHolder.GetImageSize();
         }
 
@@ -40,7 +40,7 @@ namespace TagsCloudForm.Actions
             try
             {
                 var lines = File.ReadLines(settings.WordsSource);
-                wordsWithFrequency = parser.GetWordsFrequency(lines.ToArray());
+                wordsWithFrequency = parser.GetWordsFrequency(lines.ToArray(), filter, settings.Language);
             }
             catch (Exception e)
             {

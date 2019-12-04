@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudForm
+﻿namespace TagsCloudForm
 {
     public class CircularCloudLayouterSettings
     {
@@ -17,5 +11,9 @@ namespace TagsCloudForm
         public int MaxSize { get; set; } = 30;
 
         public int IterationsCount { get; set; } = 5;
+
+        public int XCompression { get; set; } = 1;
+
+        public int YCompression { get; set; } = 1;
     }
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
 using Autofac.Builder;
+using Autofac.Core;
 using TagsCloudForm.Actions;
 
 namespace TagsCloudForm
@@ -19,15 +20,15 @@ namespace TagsCloudForm
             builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>();
             builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
             builder.RegisterType<CloudForm>().As<CloudForm>();
-            builder.RegisterType<CloudPainterFactory>().As<CloudPainterFactory>();
             builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
+            builder.RegisterType<SpellCheckerFilter>();
 
             builder.RegisterType<CircularCloudLayouter>();
 
+            builder.RegisterType<CloudPainter>();
+
             builder.RegisterType<CloudWithWordsPainter>();
-
-
 
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
 

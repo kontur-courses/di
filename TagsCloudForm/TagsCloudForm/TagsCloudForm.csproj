@@ -43,6 +43,9 @@
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -64,7 +67,6 @@
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterWithWordsAction.cs" />
     <Compile Include="Actions\CloudPainter.cs" />
-    <Compile Include="Actions\CloudPainterFactory.cs" />
     <Compile Include="Actions\CloudWithWordsPainter.cs" />
     <Compile Include="app.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -88,6 +90,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsManager.cs" />
+    <Compile Include="SpellCheckerFilter.cs" />
+    <Compile Include="Tests\SpellCheckerTests.cs" />
     <Compile Include="UiActions\EnumExtensions.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
@@ -98,7 +102,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CircularCloudLayouter\ICircularCloudLayouter.cs" />
-    <Compile Include="CircularCloudLayouter\IWordsFrequencyParser.cs" />
+    <Compile Include="IWordsFrequencyParser.cs" />
     <Compile Include="CircularCloudLayouter\PointExtension.cs" />
     <Compile Include="CircularCloudLayouter\PositionSearchResult.cs" />
     <Compile Include="Program.cs" />
@@ -108,7 +112,7 @@
     <Compile Include="CircularCloudLayouter\SegmentStacker.cs" />
     <Compile Include="Tests\RectangleForWordsCreatorTests.cs" />
     <Compile Include="UiActions\UiActionExtensions.cs" />
-    <Compile Include="CircularCloudLayouter\WordsFrequencyParser.cs" />
+    <Compile Include="WordsFrequencyParser.cs" />
     <Compile Include="Common\XmlObjectSerializer.cs" />
     <EmbeddedResource Include="CloudForm.resx">
       <DependentUpon>CloudForm.cs</DependentUpon>
@@ -140,7 +144,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

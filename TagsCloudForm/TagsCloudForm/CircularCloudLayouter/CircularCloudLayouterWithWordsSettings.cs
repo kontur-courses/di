@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudForm
+﻿namespace TagsCloudForm
 {
     public class CircularCloudLayouterWithWordsSettings
     {
@@ -18,5 +12,13 @@ namespace TagsCloudForm
 
         public bool Ordered { get; set; } = false;
 
+        public LanguageEnum Language { get; set; } = LanguageEnum.English;
+
+    }
+
+    public enum LanguageEnum
+    {
+        Russian,
+        English
     }
 }

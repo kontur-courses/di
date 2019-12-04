@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TagsCloudForm.Actions
+namespace TagsCloudForm
 {
     public class CircularCloudLayouterAction : IUiAction
     {
-        private CloudPainterFactory PainterFactory;
+        private readonly Func<IImageHolder,
+            CircularCloudLayouterSettings, 
+            Palette, ICircularCloudLayouter, CloudPainter> painterFactory;
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
-        private readonly Func<Point, CircularCloudLayouter> CircularCloudLayouterFactory;
-        public CircularCloudLayouterAction(CloudPainterFactory cloudPainterFactory, IImageHolder imageHolder,
+        private readonly Func<Point, CircularCloudLayouter> circularCloudLayouterFactory;
+        public CircularCloudLayouterAction(Func<IImageHolder,
+                CircularCloudLayouterSettings,
+                Palette, ICircularCloudLayouter, CloudPainter> painterFactory, IImageHolder imageHolder,
             Palette palette, Func<Point, CircularCloudLayouter> circularCloudLayouterFactory)
         {
-            this.PainterFactory = cloudPainterFactory;
+            this.painterFactory = painterFactory;
             this.imageHolder = imageHolder;
             this.palette = palette;
-            this.CircularCloudLayouterFactory = circularCloudLayouterFactory;
+            this.circularCloudLayouterFactory = circularCloudLayouterFactory;
         }
         public string Category => "CircularCloud";
         public string Name => "Layouter";
@@ -29,7 +29,9 @@ namespace TagsCloudForm.Actions
         {
             var settings = new CircularCloudLayouterSettings();
             SettingsForm.For(settings).ShowDialog();
-            PainterFactory.Create(imageHolder, settings, palette, CircularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY))).Paint();
+            var layouter = circularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY));
+            layouter.SetCompression(settings.XCompression, settings.YCompression);
+            painterFactory.Invoke(imageHolder, settings, palette, layouter).Paint();
         }
     }
 }

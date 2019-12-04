@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudForm
 {
@@ -14,6 +10,9 @@ namespace TagsCloudForm
         private readonly Palette palette;
         private Size imageSize;
         private ICircularCloudLayouter layouter;
+
+        public delegate CloudPainter Factory(IImageHolder imageHolder,
+            CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter);
 
         public CloudPainter(IImageHolder imageHolder,
             CircularCloudLayouterSettings settings, Palette palette, ICircularCloudLayouter layouter)
@@ -33,13 +32,13 @@ namespace TagsCloudForm
                 var rnd = new Random();
                 var backgroundBrush = new SolidBrush(palette.SecondaryColor);
                 var rectBrush = new Pen(palette.PrimaryColor);
-                for (int i = 0; i < settings.IterationsCount; i++)
+                for (var i = 0; i < settings.IterationsCount; i++)
                 {
-                    var size = new Size(rnd.Next(settings.MinSize, settings.MaxSize),
+                    var rectangleSize = new Size(rnd.Next(settings.MinSize, settings.MaxSize),
                         rnd.Next(settings.MinSize, settings.MaxSize));
-                    var rect = layouter.PutNextRectangle(size);
-                    graphics.FillRectangle(backgroundBrush, rect);
-                    graphics.DrawRectangle(rectBrush, rect);
+                    var rectangle = layouter.PutNextRectangle(rectangleSize);
+                    graphics.FillRectangle(backgroundBrush, rectangle);
+                    graphics.DrawRectangle(rectBrush, rectangle);
                 }
             }
             imageHolder.UpdateUi();

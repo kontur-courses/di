@@ -8,29 +8,43 @@ namespace TagsCloudForm
 
     public class CircularCloudLayouter : ICircularCloudLayouter
     {
+
         public delegate CircularCloudLayouter Factory(Point center);
 
         private readonly Point CloudCenter;
         private readonly HashSet<Segment> BorderSegments;
-        private readonly HashSet<Segment> ProbablyBuggedSegments;
         private bool isFirstRectangle;
         private readonly List<Rectangle> AddedRectangles;
+        private int xCompression;
+        private int yCompression;
         public CircularCloudLayouter(Point center)
         {
             CloudCenter = center;
             BorderSegments = new HashSet<Segment>();
-            ProbablyBuggedSegments = new HashSet<Segment>();
             isFirstRectangle = true;
             AddedRectangles = new List<Rectangle>();
+            xCompression = 1;
+            yCompression = 1;
         }
 
         public CircularCloudLayouter()
         {
             CloudCenter = new Point(100, 100);
             BorderSegments = new HashSet<Segment>();
-            ProbablyBuggedSegments = new HashSet<Segment>();
             isFirstRectangle = true;
             AddedRectangles = new List<Rectangle>();
+            xCompression = 1;
+            yCompression = 1;
+        }
+
+        public CircularCloudLayouter(Point center, int xCompression, int yCompression)
+        {
+            CloudCenter = center;
+            BorderSegments = new HashSet<Segment>();
+            isFirstRectangle = true;
+            AddedRectangles = new List<Rectangle>();
+            this.xCompression = xCompression;
+            this.yCompression = yCompression;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -43,7 +57,7 @@ namespace TagsCloudForm
                 return firstRect;
             }
             var searchResult = new PositionSearchResult(double.MaxValue, null, new Point());
-            foreach (var segment in BorderSegments.Except(ProbablyBuggedSegments))
+            foreach (var segment in BorderSegments)
             {
                 if (segment.Horizontal())
                 {
@@ -84,7 +98,7 @@ namespace TagsCloudForm
                         midRectCoordinates = new Point(CloudCenter.X - (int)Math.Truncate(rectangleSize.Width / (double)2), extendedSegment.Start.Y - rectangleSize.Height);
                     else
                         midRectCoordinates = new Point(CloudCenter.X - (int)Math.Truncate(rectangleSize.Width / (double)2), extendedSegment.Start.Y);
-                    if (CheckOppositeBorder(midRectCoordinates, rectangleSize, segment.SegmentType))
+                    if (CheckOppositeBorder(midRectCoordinates, rectangleSize))
                         searchResult = CheckDistance(searchResult, segment, midRectCoordinates, rectangleSize);
                 }
                 Point leftMostRectCoordinates;
@@ -99,9 +113,9 @@ namespace TagsCloudForm
                     leftMostRectCoordinates = new Point(extendedSegment.Start.X, extendedSegment.Start.Y);
                     rightMostRectCoordinates = new Point(extendedSegment.End.X - rectangleSize.Width, extendedSegment.Start.Y);
                 }
-                if (CheckOppositeBorder(leftMostRectCoordinates, rectangleSize, segment.SegmentType))
+                if (CheckOppositeBorder(leftMostRectCoordinates, rectangleSize))
                     searchResult = CheckDistance(searchResult, segment, leftMostRectCoordinates, rectangleSize);
-                if (CheckOppositeBorder(rightMostRectCoordinates, rectangleSize, segment.SegmentType))
+                if (CheckOppositeBorder(rightMostRectCoordinates, rectangleSize))
                     searchResult = CheckDistance(searchResult, segment, rightMostRectCoordinates, rectangleSize);
             }
             else
@@ -119,38 +133,36 @@ namespace TagsCloudForm
                         midRectCoordinates = new Point(extendedSegment.Start.X - rectangleSize.Width, CloudCenter.Y - (int)Math.Truncate(rectangleSize.Height / (double)2));
                     else
                         midRectCoordinates = new Point(extendedSegment.Start.X, CloudCenter.Y - (int)Math.Truncate(rectangleSize.Height / (double)2));
-                    if (CheckOppositeBorder(midRectCoordinates, rectangleSize, segment.SegmentType))
+                    if (CheckOppositeBorder(midRectCoordinates, rectangleSize))
                         searchResult = CheckDistance(searchResult, segment, midRectCoordinates, rectangleSize);
                 }
                 Point topMostRectCoordinates;
-                Point botMostRectcoordinates;
+                Point botMostRectCoordinates;
                 if (segment.SegmentType == Segment.Type.Left)
                 {
                     topMostRectCoordinates = new Point(extendedSegment.Start.X - rectangleSize.Width, extendedSegment.Start.Y);
-                    botMostRectcoordinates = new Point(extendedSegment.End.X - rectangleSize.Width, extendedSegment.End.Y - rectangleSize.Height);
+                    botMostRectCoordinates = new Point(extendedSegment.End.X - rectangleSize.Width, extendedSegment.End.Y - rectangleSize.Height);
                 }
                 else
                 {
                     topMostRectCoordinates = new Point(extendedSegment.Start.X, extendedSegment.Start.Y);
-                    botMostRectcoordinates = new Point(extendedSegment.End.X, extendedSegment.End.Y - rectangleSize.Height);
+                    botMostRectCoordinates = new Point(extendedSegment.End.X, extendedSegment.End.Y - rectangleSize.Height);
                 }
-                if (CheckOppositeBorder(topMostRectCoordinates, rectangleSize, segment.SegmentType))
+                if (CheckOppositeBorder(topMostRectCoordinates, rectangleSize))
                     searchResult = CheckDistance(searchResult, segment, topMostRectCoordinates, rectangleSize);
-                if (CheckOppositeBorder(botMostRectcoordinates, rectangleSize, segment.SegmentType))
-                    searchResult = CheckDistance(searchResult, segment, botMostRectcoordinates, rectangleSize);
+                if (CheckOppositeBorder(botMostRectCoordinates, rectangleSize))
+                    searchResult = CheckDistance(searchResult, segment, botMostRectCoordinates, rectangleSize);
             }
             return searchResult;
 
         }
 
 
-        private bool CheckOppositeBorder(Point rectanglePos, Size rectangleSize, Segment.Type segmentType)
+        private bool CheckOppositeBorder(Point rectanglePos, Size rectangleSize)
         {
             var rectangle = new Rectangle(rectanglePos, rectangleSize);
             var intersects = BorderSegments.Where(x => rectangle.IsIntersected(x));
-            if (intersects.Count() == 0)
-                return true;
-            return false;
+            return !intersects.Any();
         }
 
 
@@ -158,8 +170,8 @@ namespace TagsCloudForm
         {
             if (!Segment.Horizontal(borderType))
             {
-                int topRectSide = segment.SegmentType == Segment.Type.Top ? segment.End.Y - rectangleSize.Height : segment.End.Y;
-                int bottomRectSide = topRectSide + rectangleSize.Height;
+                var topRectSide = segment.SegmentType == Segment.Type.Top ? segment.End.Y - rectangleSize.Height : segment.End.Y;
+                var bottomRectSide = topRectSide + rectangleSize.Height;
                 var side = new Segment(0, topRectSide, 0, bottomRectSide, borderType);
                 Segment border;
                 if (borderType == Segment.Type.Left)
@@ -210,7 +222,7 @@ namespace TagsCloudForm
         private PositionSearchResult CheckDistance(PositionSearchResult currentSearchRes, Segment segment, Point rectangleCoord, Size rectangleSize)
         {
             var rectangle = new Rectangle(rectangleCoord, rectangleSize);
-            var dist = rectangle.GetRectangleCenter().Distance(CloudCenter);
+            var dist = rectangle.GetRectangleCenter().DistanceWithCompression(CloudCenter, xCompression, yCompression);
             if (dist < currentSearchRes.MinDistance)
                 return currentSearchRes.Update(dist, segment, rectangleCoord);
 
@@ -220,10 +232,10 @@ namespace TagsCloudForm
 
         private void InitializeFirstRectangle(Size rectangleSize)
         {
-            var firstRectCoord = new Point(
+            var firstRectCoordinate = new Point(
                     CloudCenter.X - (int)Math.Floor(rectangleSize.Width / (double)2)
                     , CloudCenter.Y - (int)Math.Floor(rectangleSize.Height / (double)2));
-            var firstRect = new Rectangle(firstRectCoord, rectangleSize);
+            var firstRect = new Rectangle(firstRectCoordinate, rectangleSize);
             BorderSegments.UnionWith(Segment.GetSegmentsFromRectangle(firstRect));
             AddedRectangles.Add(firstRect);
         }
@@ -231,6 +243,12 @@ namespace TagsCloudForm
         public List<Rectangle> GetRectangles()
         {
             return AddedRectangles;
+        }
+
+        public void SetCompression(int xCompression, int yCompression)
+        {
+            this.xCompression = xCompression;
+            this.yCompression = yCompression;
         }
     }
 
