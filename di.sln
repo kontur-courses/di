@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualizationTests", "TagCloudVisualizationTests\TagCloudVisualizationTests.csproj", "{5E7E4139-D740-4E53-9CAC-C401DBA7326B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Step11", "FractalPainter\Solved\Step11\Step11.csproj", "{EC139EB8-6E2E-4690-95E8-E1853F725C84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5E7E4139-D740-4E53-9CAC-C401DBA7326B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E7E4139-D740-4E53-9CAC-C401DBA7326B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E7E4139-D740-4E53-9CAC-C401DBA7326B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC139EB8-6E2E-4690-95E8-E1853F725C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC139EB8-6E2E-4690-95E8-E1853F725C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC139EB8-6E2E-4690-95E8-E1853F725C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC139EB8-6E2E-4690-95E8-E1853F725C84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

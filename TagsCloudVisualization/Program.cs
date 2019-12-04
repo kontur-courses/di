@@ -26,7 +26,7 @@ namespace TagsCloudVisualization
 //            UsageExamples.GenerateFourthTagCloud();
 
             var tags = new TextToTagsTranslator().TranslateTextToTags(
-                File.ReadLines("exampleText.txt"), new HashSet<string>());
+                File.ReadLines(@"Examples\texts\exampleText.txt"), new HashSet<string>());
             
             var cloudDrawer = new RectangleCloudDrawer(Color.Teal, Brushes.Peru);
             cloudDrawer.DrawCloud(

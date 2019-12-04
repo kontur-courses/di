@@ -41,19 +41,20 @@
     <Compile Include="Core\Spirals\ArchimedeanSpiral.cs" />
     <Compile Include="Core\Spirals\ISpiral.cs" />
     <Compile Include="Core\Translators\TextToTagsTranslator.cs" />
+    <Compile Include="Examples\UsageExamples.cs" />
     <Compile Include="Infrastructure\PointFComparer.cs" />
     <Compile Include="Infrastructure\PointUtils.cs" />
     <Compile Include="Infrastructure\RectangleUtils.cs" />
     <Compile Include="Infrastructure\TagInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="UsageExamples.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Examples\first.png" />
-    <Content Include="Examples\fourth.png" />
-    <Content Include="Examples\second.png" />
-    <Content Include="Examples\third.png" />
-    <Content Include="exampleText.txt" />
+    <Content Include="bin\Debug\Hunspellx86.dll" />
+    <Content Include="Examples\images\first.png" />
+    <Content Include="Examples\images\fourth.png" />
+    <Content Include="Examples\images\second.png" />
+    <Content Include="Examples\images\third.png" />
+    <Content Include="Examples\texts\exampleText.txt" />
     <Content Include="mystem.exe" />
     <Content Include="packages.config" />
     <Content Include="README.md" />
@@ -75,10 +76,6 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Hunspellx64.dll" />
-    <None Include="Hunspellx86.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
