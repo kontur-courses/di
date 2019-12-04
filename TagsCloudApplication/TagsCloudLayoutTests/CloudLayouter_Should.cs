@@ -11,7 +11,7 @@ using TagsCloudLayout;
 using TagsCloudLayout.CloudLayouters;
 using TagsCloudLayout.PointLayouters;
 
-namespace TagsCloudLayoutTests
+namespace TagsCloudApplicationTests
 {
     [TestFixture]
     public class CloudLayouter_Should

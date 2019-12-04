@@ -6,7 +6,7 @@ using TagsCloudLayout;
 using TagsCloudLayout.PointLayouters;
 
 
-namespace TagsCloudLayoutTests
+namespace TagsCloudApplicationTests
 {
     [TestFixture]
     public class ArchimedeanSpiral_Should

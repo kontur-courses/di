@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TagsCloudLayoutTests</RootNamespace>
-    <AssemblyName>TagsCloudLayoutTests</AssemblyName>
+    <RootNamespace>TagsCloudApplicationTests</RootNamespace>
+    <AssemblyName>TagsCloudApplicationTests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -44,11 +44,16 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral_Should.cs" />
     <Compile Include="CloudLayouter_Should.cs" />
+    <Compile Include="WordsProvider_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudLayout\TagsCloudLayout.csproj">
       <Project>{8b34d40a-8013-4c69-aff0-f4f9b9e50c8b}</Project>
       <Name>TagsCloudLayout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextConfiguration\TextConfiguration.csproj">
+      <Project>{ab1a0f6a-67e7-482f-9f87-2b0c2b2c7d46}</Project>
+      <Name>TextConfiguration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -57,12 +62,24 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.9.4</Version>
+    </PackageReference>
     <PackageReference Include="FluentAssertions">
       <Version>5.9.0</Version>
     </PackageReference>
     <PackageReference Include="NUnit">
       <Version>3.12.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="WordsProviderTestFiles\EmptyFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WordsProviderTestFiles\WhitespaceFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

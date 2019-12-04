@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudLayout", "TagsCloudLayout\TagsCloudLayout.csproj", "{8B34D40A-8013-4C69-AFF0-F4F9B9E50C8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudLayoutTests", "TagsCloudLayoutTests\TagsCloudLayoutTests.csproj", "{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudApplicationTests", "TagsCloudLayoutTests\TagsCloudApplicationTests.csproj", "{A7B9309A-799F-4C2C-B89F-50CC7FFEA01E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextConfiguration", "TextConfiguration\TextConfiguration.csproj", "{AB1A0F6A-67E7-482F-9F87-2B0C2B2C7D46}"
 EndProject
