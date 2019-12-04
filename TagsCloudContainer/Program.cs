@@ -1,25 +1,34 @@
-﻿using System;
+﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer
 {
-    static class Program
+    internal static class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(args);
-            var builder = new ContainerBuilder();
-            builder.RegisterType<BasicWordSelector>().As<IWordSelector>();
-            builder.RegisterType<WordReader>().As<IWordReader>();
-            builder.RegisterType<WordsTransformer>().As<IWordsTransformer>();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterType<ArgumentParser>().As<IArgumentParser>();
-            builder.Register(c => c.Resolve<IArgumentParser>().ParseArgument(args)).As<Setting>();
-            builder.RegisterType<Compositor>().As<Compositor>();
-            var container = builder.Build();
+            var container = Register(args);
             var compositor = container.Resolve<Compositor>();
             compositor.Composite();
+        }
+
+        private static IContainer Register(string[] args)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<BasicWordsSelector>().As<IWordsSelector>();
+            builder.RegisterType<WordReaderFromFile>().As<IWordReader>();
+            builder.RegisterType<ConsoleArgumentParser>().As<IArgumentParser>();
+            builder.Register(c => c.Resolve<IArgumentParser>().GetWordSetting(args)).As<WordSetting>();
+            builder.Register(c => c.Resolve<IArgumentParser>().GetImageSetting(args)).As<ImageSetting>();
+            builder.Register(c => c.Resolve<IArgumentParser>().GetPath(args)).As<string>();
+            builder.Register(c =>
+            {
+                var setting = c.Resolve<ImageSetting>();
+                return new CircularCloudLayouter(new Point(setting.Width / 2, setting.Height / 2));
+            }).As<ICloudLayouter>();
+            builder.RegisterType<Compositor>().As<Compositor>();
+            return builder.Build();
         }
     }
 }

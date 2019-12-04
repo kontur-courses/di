@@ -1,8 +1,9 @@
+using System;
 using CommandLine;
 
 namespace TagsCloudContainer
 {
-    public class ArgumentParser : IArgumentParser
+    public class ConsoleArgumentParser : IArgumentParser
     {
         class Options
         {
@@ -24,16 +25,39 @@ namespace TagsCloudContainer
             [Option('c', "color", Required = false, HelpText = "Color of word", Default = "Black")]
             public string Color { get; set; }
         }
-        public Setting ParseArgument(string[] args)
+        public WordSetting GetWordSetting(string[] args)
         {
-            var setting = default(Setting);
+            var setting = default(WordSetting);
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
-                   setting = new Setting(o.Filename, o.Font, o.Size, o.Width, o.Height, o.Color);
+                   setting = new WordSetting(o.Font, o.Size, o.Color);
                    
                 });
             return setting;
+        }
+
+        public ImageSetting GetImageSetting(string[] args)
+        {
+            var setting = default(ImageSetting);
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed<Options>(o =>
+                {
+                    setting = new ImageSetting(o.Height, o.Width);
+                   
+                });
+            return setting;
+        }
+
+        public string GetPath(string[] args)
+        {
+            var path = default(string);
+            Parser.Default.ParseArguments<Options>(args).WithNotParsed<Options>(errors => throw new ArgumentException())
+                .WithParsed<Options>(o =>
+                {
+                    path = o.Filename;
+                });
+            return path;
         }
     }
 }

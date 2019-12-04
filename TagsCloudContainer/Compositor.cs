@@ -9,43 +9,34 @@ namespace TagsCloudContainer
 {
     public class Compositor
     {
-        private Setting setting;
-        private IWordsTransformer transformer;
+        private ImageSetting imageSetting;
+        private IWordsSelector wordSelector;
         private ICloudLayouter layouter;
 
-        public Compositor(IWordsTransformer transformer, ICloudLayouter layouter, Setting setting)
+        public Compositor(IWordsSelector wordSelector, ICloudLayouter layouter, ImageSetting imageSetting)
         {
-            this.transformer = transformer;
-            this.setting = setting;
+            this.wordSelector = wordSelector;
+            this.imageSetting = imageSetting;
             this.layouter = layouter;
         }
 
         public void Composite()
         {
-            var words = new HashSet<(Rectangle, string)>();
-            foreach (var (sizeOfWord, word) in transformer.Transform())
+            var words = new HashSet<(Rectangle, LayoutWord)>();
+            foreach (var layoutWord in wordSelector.Select())
             {
-                var rectangle = layouter.PutNextRectangle(sizeOfWord);
-                words.Add((rectangle, word));
+                var size = new Size(layoutWord.Word.Length * layoutWord.Count,
+                    layoutWord.Font.Height * layoutWord.Count);
+                var rectangle = layouter.PutNextRectangle(size);
+                words.Add((rectangle, layoutWord));
             }
 
-            var leftCornerPoint = new Point();
-            foreach (var (rectangle, word) in words)
-            {
-                if (rectangle.Top < leftCornerPoint.Y)
-                    leftCornerPoint.Y = rectangle.Top;
-
-                if (rectangle.Left < leftCornerPoint.X)
-                    leftCornerPoint.X = rectangle.Left;
-            }
-
-            using (var bitmap = new Bitmap(setting.Width, setting.Height))
+            using (var bitmap = new Bitmap(imageSetting.Width, imageSetting.Height))
             {
                 var graphic = Graphics.FromImage(bitmap);
-                foreach (var (rectangle, word) in words)
+                foreach (var (rectangle, layoutWord) in words)
                 {
-                    var rectangleWithStep = new Rectangle(rectangle.Location - (Size) leftCornerPoint, rectangle.Size);
-                    graphic.DrawString(word, setting.Font, setting.Brush, rectangleWithStep);                 
+                    graphic.DrawString(layoutWord.Word, layoutWord.Font, layoutWord.Brush, rectangle);                 
                 }
 
                 bitmap.Save("WordsCloud.png",System.Drawing.Imaging.ImageFormat.Png);

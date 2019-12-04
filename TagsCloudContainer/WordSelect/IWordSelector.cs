@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace TagsCloudContainer
 {
-    public interface IWordSelector
+    public interface IWordsSelector
     {
-        string Select(string word);
+        IEnumerable<LayoutWord> Select();
     }
 }

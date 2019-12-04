@@ -2,6 +2,8 @@ namespace TagsCloudContainer
 {
     public interface IArgumentParser
     {
-        Setting ParseArgument(string[] args);
+        WordSetting GetWordSetting(string[] args);
+        ImageSetting GetImageSetting(string[] args);
+        string GetPath(string[] args);
     }
 }

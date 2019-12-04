@@ -2,13 +2,13 @@ using System.IO;
 
 namespace TagsCloudContainer
 {
-    public class WordReader : IWordReader
+    public class WordReaderFromFile : IWordReader
     {
         private readonly string text;
 
-        public WordReader(Setting setting)
+        public WordReaderFromFile(string path)
         {
-            using (var fileStream = File.Open(setting.Path, FileMode.Open))
+            using (var fileStream = File.Open(path, FileMode.Open))
             {
                 var array = new byte[fileStream.Length];
                 fileStream.Read(array, 0, array.Length);
