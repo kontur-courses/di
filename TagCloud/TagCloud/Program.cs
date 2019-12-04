@@ -17,11 +17,14 @@ namespace TagCloud
         private static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<DefaultExtracter>().SingleInstance().As<IExtracter>();
+            builder.RegisterType<DefaultExtractor>().SingleInstance().As<IExtractor>();
+            builder.RegisterType<DefaultFilter>().SingleInstance().As<IFilter>();
             builder.RegisterType<ArchimedeanSpiralLayouter>().As<ILayouter>();
             builder.RegisterType<DefaultParser>().SingleInstance().As<IParser>();
             builder.RegisterType<DefaultTxtReader>().SingleInstance().As<IReader>();
             builder.RegisterType<DefaultVisualizer>().SingleInstance().As<IVisualizer>();
+            builder.Register(context => FileSettings.GetDefaultSettings()).SingleInstance().As<FileSettings>();
+            builder.Register(context => FilterSettings.GetDefaultSettings()).SingleInstance().As<FilterSettings>();
             builder.Register(context => ImageSettings.GetDefaultSettings()).SingleInstance().As<ImageSettings>();
             builder.Register(context => FontSettings.GetDefaultSettings()).SingleInstance().As<FontSettings>();
             builder.Register(context => LayouterSettings.GetDefaultSettings()).SingleInstance().As<LayouterSettings>();
