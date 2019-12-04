@@ -1,0 +1,44 @@
+﻿<Window x:Class="TagsCloud_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TagsCloud_wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" FontSize="16" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" HorizontalAlignment="Stretch" Height="22" VerticalAlignment="Top">
+            <MenuItem Name="MenuItemOpenFile" Header="Open text..." Click="MenuItemOpenFile_Click" />
+            <MenuItem Name="MenuItemGenerate" Header="Generate cloud" Click="MenuItemGenerate_Click" />
+            <MenuItem Name="MenuItemSaveToFile" Header="Save image..." Click="MenuItemSaveToFile_Click" />
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Name="FiltersSettingsGroupBox" Header="Filters:" />
+            <GroupBox Grid.Column="1" Name="LayouterSettingsGroupBox" Header="Layouter:">
+                <StackPanel>
+                    <ComboBox Name="ComboBoxLayouters"/>
+                    <StackPanel Name="LayouterSettingsPanel"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="2" Name="DecoratorSettingsGroupBox" Header="Decorator:">
+                <StackPanel>
+                    <ComboBox Name="ComboBoxDecorators"/>
+                    <StackPanel Name="DecoratorSettingsPanel"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="3" Header="Tags cloud image">
+                <Image Name="TagsCloudImage"/>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>
