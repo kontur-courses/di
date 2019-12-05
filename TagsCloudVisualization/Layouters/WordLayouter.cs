@@ -12,7 +12,7 @@ namespace TagsCloudVisualization.Layouters
         private readonly ICloudLayouter layouter;
         private readonly Dictionary<Word, Size> wordSizes;
 
-        public WordLayouter(Word[] words, ICloudLayouter cloudLayouter, int wordHeight = 1, float letterToWidthRatio = 1f)
+        public WordLayouter(Word[] words, ICloudLayouter cloudLayouter, int wordHeight = 12, float letterToWidthRatio = 12f) //TODO: Add resizing to fit screen size
         {
             layouter = cloudLayouter;
             wordSizes = DefineWordSizes(words, wordHeight, letterToWidthRatio);
@@ -22,7 +22,7 @@ namespace TagsCloudVisualization.Layouters
         {
             var sizes = new Dictionary<Word, Size>();
             foreach (var word in words)
-                sizes[word] = new Size((int) (word.Value.Length * letterToWidthRatio), wordHeight);
+                sizes[word] = new Size((int) (word.Value.Length * letterToWidthRatio * word.Amount), wordHeight * word.Amount);
             return sizes;
         }
 

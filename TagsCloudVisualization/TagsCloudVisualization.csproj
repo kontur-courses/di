@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E70A9734-24AB-4C40-8B45-83F9510D1B6D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>TagsCloudVisualization</RootNamespace>
     <AssemblyName>TagsCloudVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
@@ -57,6 +60,7 @@
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,21 +69,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleInterface\ConsoleVisualizer.cs" />
     <Compile Include="Core\LayoutedWord.cs" />
+    <Compile Include="GUI\GuiActionExtensions.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\RemoveBoringWords.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\ToLowercase.cs" />
+    <Compile Include="Tests\WordLayouterTests.cs" />
+    <Compile Include="Text\IPosTagger.cs" />
+    <Compile Include="Text\PosTagger.cs" />
+    <Compile Include="VisualizerActions\GuiActions\FontSettingsAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\IGuiAction.cs" />
+    <Compile Include="GUI\MenuCategory.cs" />
+    <Compile Include="GUI\PictureBoxImageHolder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\SettingsForm.cs" />
     <Compile Include="Layouters\CloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="Layouters\CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="Layouters\Spirals\ArchimedesSpiral.cs" />
     <Compile Include="Layouters\Spirals\ISpiral.cs" />
     <Compile Include="Layouters\WordLayouter.cs" />
-    <Compile Include="Painters\Colors.cs" />
+    <Compile Include="GUI\GraphicalVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Painters\DefaultWordLayoutPainter.cs" />
     <Compile Include="Painters\ImageFormat.cs" />
     <Compile Include="Painters\WordLayoutPainter.cs" />
     <Compile Include="Painters\Palette.cs" />
-    <Compile Include="Preprocessing\IPreprocessAction.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\IPreprocessAction.cs" />
     <Compile Include="Preprocessing\Preprocessor.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\ImageSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +109,10 @@
     <Compile Include="Text\WordReader.cs" />
     <Compile Include="Utils\PointExtensions.cs" />
     <Compile Include="Utils\PointUtilities.cs" />
+    <Compile Include="VisualizerActions\GuiActions\ImageSettingsAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\PaletteSettingsAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\SaveImageAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\TextFileAction.cs" />
     <Compile Include="VisualizerActions\IVisualizerAction.cs" />
     <Compile Include="Core\Word.cs" />
   </ItemGroup>

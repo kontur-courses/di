@@ -135,7 +135,7 @@ namespace TagsCloudVisualization.Tests.Layouters
             {
                 var path = Path.Combine(
                     Directory.CreateDirectory($"{AppDomain.CurrentDomain.BaseDirectory}\\TestFailurePictures").FullName, Guid.NewGuid() + ".png");
-                new Visualizer().DrawRectangles(generatedRectangles).Save(path);
+                //new Visualizer().DrawRectangles(generatedRectangles).Save(path);
                 Console.WriteLine($"Tag cloud visualization saved to file {path}");
             }
         }

@@ -5,6 +5,7 @@ namespace TagsCloudVisualization.Painters
 {
     public class Palette
     {
-        public Dictionary<Colors, Color> Colors = new Dictionary<Colors, Color>();
+        public Color BackgroundColor { get; set; } = Color.Black;
+        public Color FontColor { get; set; } = Color.Coral;
     }
 }

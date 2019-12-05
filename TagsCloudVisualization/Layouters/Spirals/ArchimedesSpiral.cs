@@ -14,6 +14,13 @@ namespace TagsCloudVisualization.Layouters.Spirals
         private readonly float deltaAngle;
         private readonly PointF center;
 
+        public ArchimedesSpiral()
+        {
+            thickness = Thickness;
+            deltaAngle = DeltaAngle;
+            center = new PointF(0, 0);
+        }
+
         public ArchimedesSpiral(PointF center)
         {
             thickness = Thickness;

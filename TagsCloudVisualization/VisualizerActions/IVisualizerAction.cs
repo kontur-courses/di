@@ -4,6 +4,8 @@
     {
         string GetActionDescription();
 
+        string GetActionName();
+
         void Perform();
     }
 }
