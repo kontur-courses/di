@@ -37,6 +37,10 @@
     <Reference Include="Autofac, Version=4.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.2.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
       <HintPath>..\packages\FakeItEasy.5.5.0\lib\net45\FakeItEasy.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +56,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,21 +66,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentParser.cs" />
+    <Compile Include="FileManager\FileManager.cs" />
+    <Compile Include="FileManager\IFileManager.cs" />
     <Compile Include="Filters\BoringFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RectangleGenerator\CircularCloudLayouter.cs" />
+    <Compile Include="RectangleGenerator\IRectangleGenerator.cs" />
+    <Compile Include="RectangleGenerator\PointGenerator\IPointGenerator.cs" />
+    <Compile Include="RectangleGenerator\PointGenerator\SpiralGenerator.cs" />
+    <Compile Include="RectangleGenerator\RectangleExtension.cs" />
+    <Compile Include="TagCloudVisualizator.cs" />
+    <Compile Include="TagRectangle.cs" />
     <Compile Include="Tests\Filters\BoringFilter.cs" />
+    <Compile Include="Tests\RectangleGenerator\CircularCloudLayouter_should.cs" />
+    <Compile Include="Tests\RectangleGenerator\RectangleExtension_should.cs" />
+    <Compile Include="Tests\RectangleGenerator\SpiralGenerator_should.cs" />
     <Compile Include="Tests\Tests.cs" />
     <Compile Include="Tests\TokenGenerator\TokensParser_Should.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="TokensGenerator\ITokensParser.cs" />
     <Compile Include="TokensGenerator\MyStem.cs" />
     <Compile Include="TokensGenerator\TokensParser.cs" />
+    <Compile Include="Visualization\ICloudSetting.cs" />
+    <Compile Include="Visualization\TagsCloudSetting.cs" />
+    <Compile Include="Visualization\Visualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\FileManager" />
+    <Folder Include="Tests\Visualization" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
