@@ -76,10 +76,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="exampleText.txt" />
-    <Content Include="HunspellDictionaries\ru.aff" />
-    <Content Include="HunspellDictionaries\ru.dic" />
-    <Content Include="Infrastructure\mystem.exe" />
+    <Content Include="bin\Debug\exampleText.txt" />
+    <Content Include="bin\Debug\HunspellDictionaries\ru.aff" />
+    <Content Include="bin\Debug\HunspellDictionaries\ru.dic" />
+    <Content Include="bin\Debug\mystem.exe" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Hunspellx64.dll" />

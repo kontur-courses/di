@@ -32,7 +32,7 @@ namespace TagsCloudGenerator.Core.Filters
             using (var myStemProcess = new Process())
             {
                 myStemProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-                myStemProcess.StartInfo.FileName = @"Infrastructure\mystem.exe";
+                myStemProcess.StartInfo.FileName = "mystem.exe";
                 myStemProcess.StartInfo.Arguments = "-ni temp.txt";
                 myStemProcess.StartInfo.CreateNoWindow = true;
                 myStemProcess.StartInfo.UseShellExecute = false;
