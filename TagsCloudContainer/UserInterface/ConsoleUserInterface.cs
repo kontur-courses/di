@@ -14,7 +14,7 @@ namespace TagsCloudContainer.UserInterface
             var parser = SetupParser();
 
             var parseResult = parser.Parse(programArgs);
-            if (!parseResult.HasErrors)
+            if (!parseResult.HasErrors && !parseResult.HelpCalled)
             {
                 try
                 {
@@ -36,19 +36,28 @@ namespace TagsCloudContainer.UserInterface
 
         public void ShowResult(Bitmap bitmap)
         {
-            Console.WriteLine("Successfully created tag cloud");
+            Console.WriteLine(@"Successfully created tag cloud");
         }
 
         private FluentCommandLineParser<ConsoleUserInterfaceArguments> SetupParser()
         {
             var parser = new FluentCommandLineParser<ConsoleUserInterfaceArguments>();
 
-            parser.Setup(arg => arg.InputFilePath).As('i', "input").Required();
-            parser.Setup(arg => arg.OutputFilePath).As('o', "output").Required();
-            parser.Setup(arg => arg.Width).As('w', "width").Required();
-            parser.Setup(arg => arg.Height).As('h', "height").Required();
-            parser.Setup(arg => arg.Font).As('f', "font").Required();
-            parser.Setup(arg => arg.Colors).As("colors").Required();
+            parser.Setup(arg => arg.InputFilePath).As('i', "input").Required()
+                .WithDescription("input file path (required)");
+            parser.Setup(arg => arg.OutputFilePath).As('o', "output").SetDefault("test.png")
+                .WithDescription("output file path, default is test.png");
+            parser.Setup(arg => arg.Width).As('w', "width").SetDefault(800)
+                .WithDescription("width of image, default is 800");
+            parser.Setup(arg => arg.Height).As('h', "height").SetDefault(600)
+                .WithDescription("height of image, default is 600");
+            parser.Setup(arg => arg.Font).As('f', "font").SetDefault("Arial")
+                .WithDescription("name of font, default is Arial");
+            parser.Setup(arg => arg.Colors).As("colors").SetDefault(new List<string> {"Aqua", "Black"})
+                .WithDescription("names of colors to use, default: Aqua Black");
+
+            parser.SetupHelp("?", "help").UseForEmptyArgs().Callback(text => Console.WriteLine(text))
+                .WithHeader("Arguments to use:");
 
             return parser;
         }
