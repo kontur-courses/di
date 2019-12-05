@@ -2,9 +2,9 @@
 {
     public class CircularCloudLayouterWithWordsSettings
     {
-        public int CenterX { get; set; } = 200;
+        public int CenterX { get; set; } = 300;
 
-        public int CenterY { get; set; } = 200;
+        public int CenterY { get; set; } = 300;
 
         public int Scale { get; set; } = 5;
 

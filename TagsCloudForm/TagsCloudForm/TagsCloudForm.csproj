@@ -74,6 +74,7 @@
       <DependentUpon>app.settings</DependentUpon>
     </Compile>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />

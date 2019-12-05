@@ -9,7 +9,7 @@ namespace TagsCloudForm
 {
     public class SpellCheckerFilter
     {
-        public IEnumerable<string> Filter(string[] words, LanguageEnum language)
+        public IEnumerable<string> Filter(IEnumerable<string> words, LanguageEnum language)
         {
             Hunspell checker;
             if (language == LanguageEnum.English)

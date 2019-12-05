@@ -5,6 +5,6 @@ namespace TagsCloudForm
 {
     public interface IWordsFrequencyParser
     {
-        Dictionary<string, int> GetWordsFrequency(string[] lines, SpellCheckerFilter filter, LanguageEnum language);
+        Dictionary<string, int> GetWordsFrequency(IEnumerable<string> lines, LanguageEnum language);
     }
 }
