@@ -18,27 +18,26 @@ namespace TagsCloudVisualization
         private readonly ITextReader textReader;
         private readonly WordsProvider wordsProvider;
         private readonly WordPreprocessor wordPreprocessor;
-        private readonly TagCloudVisualizer cloudVisualizer;
         private readonly CloudPainter cloudPainter;
-        private readonly ILayouter cloudLayouter;
-            
+
         public CloudCreator(ITextReader textReader, WordsProvider wordsProvider, WordPreprocessor wordPreprocessor,
-            TagCloudVisualizer cloudVisualizer, CloudPainter cloudPainter, ILayouter cloudLayouter)
+            CloudPainter cloudPainter)
         {
             this.textReader = textReader;
             this.wordsProvider = wordsProvider;
             this.wordPreprocessor = wordPreprocessor;
-            this.cloudVisualizer = cloudVisualizer;
             this.cloudPainter = cloudPainter;
-            this.cloudLayouter = cloudLayouter;
         }
-        
-        public Bitmap GetCloud(Color backgroundColor, Color textColor, Font font, Size imageSize, string textName)
+
+        public Bitmap GetCloud(VisualisingOptions visualisingOptions, string textName)
         {
+            var cloudVisualizer = new TagCloudVisualizer(visualisingOptions);
+            var center = new Point(visualisingOptions.ImageSize.Width / 2, visualisingOptions.ImageSize.Height / 2);
+            var layouter = new CircularCloudLayouter(new Spiral(center));
             var text = textReader.ReadText(PathFinder.GetTextsPath(textName));
             var words = wordsProvider.GetWords(text);
             var preprocessedWords = wordPreprocessor.GetPreprocessedWords(words);
-            var image = cloudVisualizer.GetVisualization(preprocessedWords, cloudLayouter, cloudPainter);
+            var image = cloudVisualizer.GetVisualization(preprocessedWords, layouter, cloudPainter);
             return image;
         }
     }
