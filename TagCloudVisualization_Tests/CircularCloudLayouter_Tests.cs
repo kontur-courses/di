@@ -7,6 +7,10 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using static TagsCloudVisualization.Tests.CircularCloudLayouter_Tests_AuxiliaryTools;
+using TagsCloudVisualization.CloudPainters;
+using TagsCloudVisualization.PointExtensions;
+using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -21,7 +25,7 @@ namespace TagsCloudVisualization.Tests
         public void SetUp()
         {
             center = new Point(500, 500);
-            cloud = new CircularCloudLayouter(center);
+            cloud = new CircularCloudLayouter(new Spiral(center));
             rectangles = new List<Rectangle>();
         }
 
@@ -95,8 +99,8 @@ namespace TagsCloudVisualization.Tests
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
             var testName = TestContext.CurrentContext.Test.Name;
-            var painter = new MultiColorPainter(new Size(1000, 1000));
-            var image = painter.GetMultiColorCloud(rectangles);
+            var painter = new MultiColorCloudPainter();
+            var image = painter.GetMultiColorCloud(rectangles, new Size(1000, 1000));
             var fileName = $"{testName}Failed";
             var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");

@@ -2,20 +2,13 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.TextPreprocessing
 {
-    public class TextPreparer
+    public class WordsProvider
     {
-        private readonly string text;
-
-        public TextPreparer(string text)
+        public IEnumerable<string> GetWords(string text)
         {
-            this.text = text;
-        }
-
-        public IEnumerable<string> GetWords()
-        {
-            var words = Regex.Split(text, @"[ \n]");
+            var words = Regex.Split(text, @"[^\w-]");
             return words.Select(word => Regex.Replace(word, @"[^\w-]", string.Empty))
                 .Where(preparedWord => preparedWord != string.Empty && preparedWord != "-");
         }

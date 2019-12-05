@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -33,7 +34,8 @@ namespace TagsCloudVisualization.Tests
         
         public static List<Rectangle> GetCloudWithEqualRectangles(int rectanglesCount, int width = 15, int height = 15)
         {
-            var cloud = new CircularCloudLayouter(new Point(500, 500));
+            var center = new Point(500, 500);
+            var cloud = new CircularCloudLayouter(new Spiral(center));
             var rectangles = new List<Rectangle>();
             for (var i = 0; i < rectanglesCount; i++)
             {
@@ -46,7 +48,8 @@ namespace TagsCloudVisualization.Tests
         public static List<Rectangle> GetCloudWithDifferentRectangles(int rectanglesCount, int minWidth, int maxWidth,
             int minHeight, int maxHeight)
         {
-            var cloud = new CircularCloudLayouter(new Point(500, 500));
+            var center = new Point(500, 500);
+            var cloud = new CircularCloudLayouter(new Spiral(center));
             var rectangles = new List<Rectangle>();
             for (var i = 0; i < rectanglesCount; i++)
             {

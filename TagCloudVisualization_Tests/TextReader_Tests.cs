@@ -1,16 +1,17 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagsCloudVisualization.PathFinders;
+using TagsCloudVisualization.TextReaders;
 
-namespace TagCloudVisualization_Tests
+namespace TagsCloudVisualization.Tests
 {
     public class TextReader_Tests
     {
         [Test]
-        public void TextReaderCtor_FileNotFound_ShouldThrowArgumentException()
+        public void TxtReaderGetText_FileNotFound_ShouldThrowArgumentException()
         {
-            Action act = () => new TxtReader("nonexistentName");
+            Action act = () => new TxtReader().ReadText("nonexistentName");
             act.Should().Throw<ArgumentException>();
         }
     }

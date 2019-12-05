@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization.texts
+namespace TagsCloudVisualization.TextFilters
 {
     public class RepeatingWordsFilter : ITextFilter
     {

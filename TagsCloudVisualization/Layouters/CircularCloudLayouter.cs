@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.PointExtensions;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouters
 {
     public class CircularCloudLayouter : ILayouter
     {
@@ -11,11 +12,11 @@ namespace TagsCloudVisualization
         private readonly List<Rectangle> rectangles;
         private readonly Spiral spiral;
 
-        public CircularCloudLayouter(Point center, double densityCoefficient = 1, double densityShift = 0.01)
+        public CircularCloudLayouter(Spiral spiral)
         {
-            centerCoordinates = center;
+            centerCoordinates = spiral.Center;
             rectangles = new List<Rectangle>();
-            spiral = new Spiral(center, densityCoefficient, densityShift);
+            this.spiral = spiral;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

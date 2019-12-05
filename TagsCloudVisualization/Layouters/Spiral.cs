@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouters
 {
     public class Spiral
     {
@@ -9,14 +9,14 @@ namespace TagsCloudVisualization
         public double Angle { get; private set; }
         private double densityCoefficient;
         private readonly double densityShift;
-        private readonly Point center;
+        public readonly Point Center;
         private readonly double angleShift;
         private readonly double radiusShift;
         
         public Spiral(Point center, double densityCoefficient = 1, double densityShift = 0.01, double angleShift = 0.2,
             double radiusShift = 0.5)
         {
-            this.center = center;
+            Center = center;
             this.angleShift = angleShift;
             this.radiusShift = radiusShift;
             this.densityCoefficient = densityCoefficient;
@@ -29,8 +29,8 @@ namespace TagsCloudVisualization
             Angle += angleShift;
             densityCoefficient += densityShift;
 
-            return new Point((int) (center.X + Radius * Math.Cos(Angle)),
-                (int) (center.Y + Radius * Math.Sin(Angle)));
+            return new Point((int) (Center.X + Radius * Math.Cos(Angle)),
+                (int) (Center.Y + Radius * Math.Sin(Angle)));
         }
     }
 }

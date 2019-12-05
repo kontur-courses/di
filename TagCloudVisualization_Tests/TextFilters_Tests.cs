@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
-using TagsCloudVisualization.texts;
+using TagsCloudVisualization.TextFilters;
 
-namespace TagCloudVisualization_Tests
+namespace TagsCloudVisualization.Tests
 {
     public class TextFilters_Tests
     {
@@ -16,18 +15,18 @@ namespace TagCloudVisualization_Tests
         [SetUp]
         public void SetUp()
         {
-            boringWords = new List<string>() {"ну", "а", "э"};
+            boringWords = new List<string> {"ну", "а", "э"};
             boringWordsFilter = new BoringWordsFilter(boringWords);
             repeatingWordsFilter = new RepeatingWordsFilter();
             shortWordsFilter = new ShortWordsFilter(3);
         }
-        
+
         [Test]
         public void BoringWordsFilter_WithUsersBoringWords_ShouldReturnRightResult()
         {
             var words = new List<string>
                 {"ну", "слова", "попадут", "в", "результат", "э", "не", "попадут", "в", "фильтр"};
-            var expectedWords = new List<string>{"слова", "попадут", "в", "результат", "не", "попадут", "в", "фильтр"};
+            var expectedWords = new List<string> {"слова", "попадут", "в", "результат", "не", "попадут", "в", "фильтр"};
             boringWordsFilter.FilterWords(words).Should().BeEquivalentTo(expectedWords);
         }
 
@@ -35,7 +34,7 @@ namespace TagCloudVisualization_Tests
         public void BoringWordsFilter_WithUsersBoringWordsAndAllWordsBoring_ShouldEmptyCollection()
         {
             var words = new List<string> {"ну", "э", "э", "а", "а", "э"};
-            boringWordsFilter.FilterWords(words).Should().BeEquivalentTo(new List<string>());
+            boringWordsFilter.FilterWords(words).Should().BeEmpty();
         }
 
         [Test]
@@ -44,7 +43,7 @@ namespace TagCloudVisualization_Tests
             var words = new List<string> {"а", "б", "в", "г", "д", "е"};
             repeatingWordsFilter.FilterWords(words).Should().BeEquivalentTo(words);
         }
-        
+
         [Test]
         public void RepeatingWordsFilter_WithRepeatingWords_ShouldReturnUniqueWords()
         {
@@ -60,7 +59,7 @@ namespace TagCloudVisualization_Tests
             var expectedResult = new List<string> {"боль", "время", "стоп"};
             shortWordsFilter.FilterWords(words).Should().BeEquivalentTo(expectedResult);
         }
-        
+
         [Test]
         public void ShortWordsFilter_WithoutShortWords_ShouldReturnUnchangedWords()
         {

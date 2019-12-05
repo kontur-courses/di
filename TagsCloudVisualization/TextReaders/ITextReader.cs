@@ -1,7 +1,7 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.TextReaders
 {
     public interface ITextReader
     {
-        string GetText();
+        string ReadText(string filePath);
     }
 }

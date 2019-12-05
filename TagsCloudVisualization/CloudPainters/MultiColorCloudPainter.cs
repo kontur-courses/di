@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.Visualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudPainters
 {
-    public class MultiColorPainter : Painter
+    public class MultiColorCloudPainter : CloudPainter
     {
-        private readonly Bitmap field;
-        private Brush brush;
-
-        public MultiColorPainter(Size size) : base(size)
+        public Bitmap GetMultiColorCloud(IEnumerable<Rectangle> rectangles, Size imageSize)
         {
-            field = new Bitmap(size.Width, size.Height);
-        }
-
-        public Bitmap GetMultiColorCloud(IEnumerable<Rectangle> rectangles)
-        {
+            var field = new Bitmap(imageSize.Width, imageSize.Height);
+            var brush = new SolidBrush(GetRandomColor());
             using (var graphics = Graphics.FromImage(field))
             {
                 foreach (var rectangle in rectangles)
@@ -31,6 +26,8 @@ namespace TagsCloudVisualization
         internal override Bitmap GetImage(IEnumerable<string> words, IEnumerable<Rectangle> rectangles,
             VisualisingOptions visualisingOptions)
         {
+            var field = new Bitmap(visualisingOptions.ImageSize.Width, visualisingOptions.ImageSize.Height);
+            var brush = new SolidBrush(GetRandomColor());
             using (var graphics = Graphics.FromImage(field))
             {
                 graphics.Clear(visualisingOptions.BackgroundColor);

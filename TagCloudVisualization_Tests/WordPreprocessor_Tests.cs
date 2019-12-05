@@ -2,9 +2,11 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagsCloudVisualization.TextFilters;
+using TagsCloudVisualization.TextPreprocessing;
+using TagsCloudVisualization.WordConverters;
 
-namespace TagCloudVisualization_Tests
+namespace TagsCloudVisualization.Tests
 {
     public class WordPreprocessor_Tests
     {
@@ -12,8 +14,9 @@ namespace TagCloudVisualization_Tests
         public void TextPreparer_DifferentRegistry_ShouldReturnLowerCaseWords()
         {
             var words = new List<string>{"У", "РЖД",  "можно", "ареНдовать", "вагонЫ", "разного", "Класса"};
-            var preprocessedWords = new WordPreprocessor(words, new List<ITextFilter>()).GetPreprocessedWords();
-            var preprocessedText = string.Join("", preprocessedWords);
+            var preprocessedWords = new WordPreprocessor(new List<ITextFilter>(),
+                new List<IWordConverter>() {new LowerCaseWordConverter()}).GetPreprocessedWords(words);
+            var preprocessedText = string.Join(string.Empty, preprocessedWords);
             var upperSymbolsCount = preprocessedText.Count(char.IsUpper);
             upperSymbolsCount.Should().Be(0);
         }

@@ -1,8 +1,8 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.TextReaders
 {
     public class DocReader : ITextReader
     {
-        public string GetText()
+        public string ReadText(string filePath)
         {
             throw new System.NotImplementedException();
         }
