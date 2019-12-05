@@ -37,7 +37,8 @@ namespace TagCloud.CloudLayouter
                 rectangle = new Rectangle(figurePath.GetNextPoint() + center, rectangleSize);
             }
 
-            rectangle = SnuggleRectangle(rectangle);
+            if (configuration.NeedSnuggle)
+                rectangle = SnuggleRectangle(rectangle);
 
             rectangles.Add(rectangle);
 

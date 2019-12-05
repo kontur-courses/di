@@ -17,6 +17,8 @@ namespace TagCloud.Interfaces.GUI
         private ApplicationSettings appSettings;
         private PictureBox pictureBox;
 
+        public Image Image { get; private set; }
+
         public MainForm(CloudVisualizer.CloudVisualizer visualizer, CloudViewConfiguration cloudConfiguration,
             IDocumentParser[] parsers, ITextAnalyzer textAnalyzer, IUIAction[] actions, ApplicationSettings settings, PictureBox pictureBox)
         {
@@ -39,10 +41,11 @@ namespace TagCloud.Interfaces.GUI
             var format = $".{appSettings.FilePath.Split('.').Last()}";
             var parser = parsers.First(p => p.AllowedTypes.Contains(format));
             var words = textAnalyzer.GetWords(parser.GetWords(appSettings), cloudConfiguration.WordsCount);
-            var image = visualizer.GetCloud(words);
-            image.Save("test.bmp");
-            pictureBox.Image = image;
+            Image = visualizer.GetCloud(words);
+            Image.Save("test.bmp");
+            pictureBox.Image = Image;
             Controls.Add(pictureBox);
+            ClientSize = Image.Size;
             Refresh();
         }
 

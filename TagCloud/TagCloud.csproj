@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Interfaces\GUI\UIActions\IUIAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\OpenAction.cs" />
+    <Compile Include="Interfaces\GUI\UIActions\SaveAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\SettingsAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\UIActionsExtensions.cs" />
     <Compile Include="Program.cs" />
