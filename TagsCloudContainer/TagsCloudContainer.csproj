@@ -83,20 +83,19 @@
     <Compile Include="ResultProcessing\IResultProcessor.cs" />
     <Compile Include="ResultProcessing\ResultProcessor.cs" />
     <Compile Include="UserInterface\ConsoleUserInterface.cs" />
+    <Compile Include="UserInterface\ConsoleUserInterfaceArguments.cs" />
     <Compile Include="UserInterface\IParametersProvider.cs" />
     <Compile Include="UserInterface\IResultDisplay.cs" />
+    <Compile Include="UserInterface\IUserInterface.cs" />
     <Compile Include="Visualizing\ColorHandling\AlternateColorHandler.cs" />
     <Compile Include="Visualizing\ColorHandling\IColorHandler.cs" />
     <Compile Include="Visualizing\IVisualizer.cs" />
     <Compile Include="Visualizing\Visualizer.cs" />
-    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\CommandsExecuting\CmdCommandExecutor.cs" />
+    <Compile Include="WordProcessing\Filtering\CommandsExecuting\CmdCommandExecutor.cs" />
     <Compile Include="WordProcessing\Filtering\ExcludingBoringWordsFilter.cs" />
     <Compile Include="WordProcessing\Converting\IWordConverter.cs" />
-    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\IPartOfSpeechQualifier.cs" />
     <Compile Include="WordProcessing\Filtering\IWordFilter.cs" />
-    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStem\MyStemResultParser.cs" />
-    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStemPartOfSpeechQualifier.cs" />
-    <Compile Include="WordProcessing\Filtering\PartsOfSpeechQualifying\PartOfSpeech.cs" />
+    <Compile Include="WordProcessing\Filtering\MyStem\MyStemResultParser.cs" />
     <Compile Include="WordProcessing\IWordProcessor.cs" />
     <Compile Include="WordProcessing\Converting\ToLowerWordConverter.cs" />
     <Compile Include="WordProcessing\WordProcessor.cs" />
@@ -113,7 +112,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WordProcessing\Filtering\PartsOfSpeechQualifying\MyStem\mystem.exe" />
+    <None Include="WordProcessing\Filtering\MyStem\mystem.exe" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">

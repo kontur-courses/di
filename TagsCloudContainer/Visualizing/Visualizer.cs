@@ -22,7 +22,7 @@ namespace TagsCloudContainer.Visualizing
             foreach (var (word, rectangle) in wordsInRectangles)
             {
                 var suitableFontSize = GetSuitableFontSize(graphics, word, rectangle.Size, font);
-                var suitableFont = new Font(font.FontFamily, suitableFontSize);
+                var suitableFont = new Font(font.FontFamily, suitableFontSize, GraphicsUnit.Pixel);
                 var color = colorHandler.GetColorFor(word, rectangle);
                 graphics.DrawString(word, suitableFont, new SolidBrush(color), rectangle);
             }

@@ -7,7 +7,7 @@ using TagsCloudContainer.Core;
 
 namespace TagsCloudContainer.UserInterface
 {
-    public class ConsoleUserInterface : IParametersProvider, IResultDisplay
+    public class ConsoleUserInterface : IUserInterface
     {
         public bool TryGetParameters(string[] programArgs, out Parameters parameters)
         {
@@ -16,17 +16,8 @@ namespace TagsCloudContainer.UserInterface
             var parseResult = parser.Parse(programArgs);
             if (!parseResult.HasErrors && !parseResult.HelpCalled)
             {
-                try
-                {
-                    parameters = ParseArgumentsToParameters(parser.Object);
-                    return true;
-                }
-                catch (NotSupportedException notSupportedException)
-                {
-                    Console.WriteLine(notSupportedException);
-                    parameters = null;
-                    return false;
-                }
+                parameters = ParseArgumentsToParameters(parser.Object);
+                return true;
             }
 
             Console.WriteLine(parseResult.ErrorText);
@@ -71,20 +62,5 @@ namespace TagsCloudContainer.UserInterface
             var colors = arguments.Colors.Select(name => colorConverter.ConvertFromString(name)).Cast<Color>().ToList();
             return new Parameters(arguments.InputFilePath, arguments.OutputFilePath, colors, font, imageSize);
         }
-    }
-
-    public class ConsoleUserInterfaceArguments
-    {
-        public string InputFilePath { get; set; }
-
-        public string OutputFilePath { get; set; }
-
-        public int Width { get; set; }
-
-        public int Height { get; set; }
-
-        public string Font { get; set; }
-
-        public List<string> Colors { get; set; }
     }
 }

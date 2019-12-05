@@ -10,16 +10,14 @@ using TagsCloudContainer.UserInterface;
 
 namespace TagsCloudContainer
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            var containerBuilder = GetDependencyInjectionContainerBuilder();
-            var parametersProvider = containerBuilder.Build().Resolve<IParametersProvider>();
-            if (parametersProvider.TryGetParameters(args, out var parameters))
+            var userInterface = new ConsoleUserInterface();
+            if (userInterface.TryGetParameters(args, out var parameters))
             {
-                var newContainerBuilder = GetDependencyInjectionContainerBuilder();
-                var container = UpdateContainerBuilderWithParameters(newContainerBuilder, parameters);
+                var container = GetDependencyInjectionContainer(parameters, userInterface);
                 var tagCloudVisualizer = container.Resolve<ITagCloudVisualizer>();
                 var bitmap = tagCloudVisualizer.GetTagCloudBitmap(parameters);
                 var resultProcessor = container.Resolve<IResultProcessor>();
@@ -27,22 +25,20 @@ namespace TagsCloudContainer
             }
         }
 
-        private static ContainerBuilder GetDependencyInjectionContainerBuilder()
+        private static IContainer GetDependencyInjectionContainer(Parameters parameters, IUserInterface userInterface)
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces()
                 .AsSelf();
+            builder.RegisterInstance(userInterface)
+                .As<IResultDisplay>();
 
-            builder.RegisterInstance(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName,
-                "WordProcessing", "Filtering", "PartsOfSpeechQualifying", "MyStem")).As<string>();
+            var pathToMyStemDirectory = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName,
+                "WordProcessing", "Filtering", "MyStem");
+            builder.RegisterInstance(pathToMyStemDirectory).As<string>();
 
-            return builder;
-        }
-
-        private static IContainer UpdateContainerBuilderWithParameters(ContainerBuilder builder, Parameters parameters)
-        {
             builder.RegisterInstance(parameters)
                 .As<Parameters>();
             builder.Register(c => c.Resolve<Parameters>().Colors)

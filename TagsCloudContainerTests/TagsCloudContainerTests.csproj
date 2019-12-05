@@ -55,8 +55,8 @@
   <ItemGroup>
     <Compile Include="AlternateColorHandlerTests.cs" />
     <Compile Include="CorrespondingToWeightSizeProviderTests.cs" />
+    <Compile Include="ExcludingBoringWordsFilterTests.cs" />
     <Compile Include="LayoutAlgorithmTests.cs" />
-    <Compile Include="MyStemPartOfSpeechQualifierTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">

@@ -1,25 +1,44 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using TagsCloudContainer.WordProcessing.Filtering.PartsOfSpeechQualifying;
+using TagsCloudContainer.WordProcessing.Filtering.CommandsExecuting;
+using TagsCloudContainer.WordProcessing.Filtering.MyStem;
 
 namespace TagsCloudContainer.WordProcessing.Filtering
 {
     public class ExcludingBoringWordsFilter : IWordFilter
     {
-        private readonly IPartOfSpeechQualifier partOfSpeechQualifier;
+        private readonly CmdCommandExecutor commandExecutor;
+        private readonly MyStemResultParser myStemResultParser;
+        private readonly string pathToMyStemDirectory;
 
-        public ExcludingBoringWordsFilter(IPartOfSpeechQualifier partOfSpeechQualifier)
+        private const string NameOfTempFile = "temp.txt";
+        private const string NameOfMyStemFile = "mystem.exe";
+
+        public ExcludingBoringWordsFilter(CmdCommandExecutor commandExecutor, MyStemResultParser myStemResultParser,
+            string pathToMyStemDirectory)
         {
-            this.partOfSpeechQualifier = partOfSpeechQualifier;
+            this.commandExecutor = commandExecutor;
+            this.myStemResultParser = myStemResultParser;
+            this.pathToMyStemDirectory = pathToMyStemDirectory;
         }
 
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
-            var partsOfSpeech = partOfSpeechQualifier.QualifyPartsOfSpeech(words);
-            return partsOfSpeech
-                .Where(p => p.Item2 != PartOfSpeech.Pretext && p.Item2 != PartOfSpeech.Pronoun &&
-                            p.Item2 != PartOfSpeech.Conjunction && p.Item2 != PartOfSpeech.Particle)
+            var pathToTempFile = Path.Combine(pathToMyStemDirectory, NameOfTempFile);
+            File.WriteAllLines(pathToTempFile, words);
+            var pathToMyStem = Path.Combine(pathToMyStemDirectory, NameOfMyStemFile);
+            var myStemResult = commandExecutor.ExecuteCommand($"{pathToMyStem} -ni {pathToTempFile}");
+
+            return myStemResultParser.GetPartsOfSpeechByResultOfNiCommand(myStemResult, words)
+                .Where(p => !IsPartOfSpeechBoring(p.Item2))
                 .Select(p => p.Item1);
+        }
+
+        private bool IsPartOfSpeechBoring(string myStemPartOfSpeech)
+        {
+            return myStemPartOfSpeech == "PR" || myStemPartOfSpeech.EndsWith("PRO") || myStemPartOfSpeech == "CONJ" ||
+                   myStemPartOfSpeech == "PART";
         }
     }
 }
