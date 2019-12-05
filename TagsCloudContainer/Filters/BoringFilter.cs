@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Filters
 
         public IEnumerable<string> Filtering(IEnumerable<string> tokens)
         {
-            return tokens.Where(token => !boringWords.Contains(token.ToLower())).ToList();
+            return tokens.Where(token => !boringWords.Contains(token.ToLower())).Where(token => token.Length > 3);
         }
     }
 }
