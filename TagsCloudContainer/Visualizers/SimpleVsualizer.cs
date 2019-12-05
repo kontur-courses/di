@@ -34,8 +34,8 @@ namespace TagsCloudContainer.Visualizers
 
             var size = GetSizeBitmapFromTagTokens(tags);
 
-            var scaleHeight = (float)imageSettings.Heigth / size.Height;
-            var scaleWidth = (float)imageSettings.Heigth / size.Width;
+            var scaleHeight = (float)imageSettings.Height / size.Height;
+            var scaleWidth = (float)imageSettings.Width / size.Width;
             var scale = Math.Min(scaleHeight, scaleWidth);
 
             return new Bitmap(TagTokensToBitmap(tags, size), (int)(size.Width * scale), (int)(size.Height * scale));

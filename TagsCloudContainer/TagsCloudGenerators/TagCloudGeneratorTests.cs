@@ -35,8 +35,7 @@ namespace TagsCloudContainer.TagsCloudGenerators
                 {
                     new NamedParameter("font", new Font("Arial", 20)),
                     new NamedParameter("brush", Brushes.Red)
-                }
-                );
+                });
             containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(40, 640)); ;
             containerBuilder.RegisterType<SimpleReader>().As<IReader>()
                 .WithParameter(

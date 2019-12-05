@@ -2,12 +2,12 @@
 {
     class ImageSettings
     {
-        public int Heigth { get; }
+        public int Height { get; }
         public int Width { get; }
 
-        public ImageSettings(int heigth, int width)
+        public ImageSettings(int height, int width)
         {
-            Heigth = heigth;
+            Height = height;
             Width = width;
         }
     }
