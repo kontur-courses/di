@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms.VisualStyles;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
@@ -19,11 +18,8 @@ namespace TagsCloudContainer.Tests.TokenGenerator
         [SetUp]
         public void SetUp()
         {
-            var filter = A.Fake<IFilter>();
             word = "aba";
-            tokenParser = new TokensParser(filter);
-            A.CallTo(() => filter.Filtering(A<IEnumerable<string>>.Ignored))
-                .ReturnsLazily((IEnumerable<string> a) => a);
+            tokenParser = new TokensParser();
         }
 
         [Test]
@@ -42,29 +38,29 @@ namespace TagsCloudContainer.Tests.TokenGenerator
         [Test]
         public void GetTokens_WhenWord_ReturnWord()
         {
-            tokenParser.GetTokens(word).First().Value.Should().Be(word);
+            tokenParser.GetTokens(word).First().Should().Be(word);
         }
 
-        [Test]
-        public void GetTokens_WhenOneWord_ContainOneTokenWithCountIsOne()
-        {
-            var token = tokenParser.GetTokens(word);
-            token.Should().HaveCount(1);
-            token.First().Count.Should().Be(1);
-        }
+//        [Test]
+//        public void GetTokens_WhenOneWord_ContainOneTokenWithCountIsOne()
+//        {
+//            var token = tokenParser.GetTokens(word);
+//            token.Should().HaveCount(1);
+//            token.First().Count.Should().Be(1);
+//        }
 
         [Test]
         public void GetTokens_WhenDuplicate_ContainOneToken()
         {
-            tokenParser.GetTokens(word + Environment.NewLine + word).Should().HaveCount(1);
+            tokenParser.GetTokens(word + Environment.NewLine + word).Should().HaveCount(2);
         }
 
-        [Test]
-        public void GetTokens_WhenDuplicate_TokenCountIsTwo()
-        {
-            var token = tokenParser.GetTokens(word + Environment.NewLine + word);
-            token.Should().HaveCount(1);
-            token.First().Count.Should().Be(2);
-        }
+//        [Test]
+//        public void GetTokens_WhenDuplicate_TokenCountIsTwo()
+//        {
+//            var token = tokenParser.GetTokens(word + Environment.NewLine + word);
+//            token.Should().HaveCount(1);
+//            token.First().Count.Should().Be(2);
+//        }
     }
 }
