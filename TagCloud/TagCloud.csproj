@@ -92,6 +92,7 @@
     <Compile Include="WordsPreprocessing\SpeechPart.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\DefaultAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\ITextAnalyzer.cs" />
+    <Compile Include="WordsPreprocessing\TextAnalyzers\SimpleAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\Word.cs" />
   </ItemGroup>
   <ItemGroup>

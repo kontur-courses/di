@@ -8,6 +8,7 @@ using GroboContainer.Impl;
 using TagCloud.CloudLayouter;
 using TagCloud.CloudVisualizer.CloudViewConfiguration;
 using TagCloud.FigurePaths;
+using TagCloud.WordsPreprocessing.TextAnalyzers;
 
 namespace TagCloud
 {
@@ -18,6 +19,7 @@ namespace TagCloud
         {
             var container = new Container(new ContainerConfiguration(Assembly.GetEntryAssembly()));
             container.Configurator.ForAbstraction<ICloudLayouter>().UseType<CircularCloudLayouter>();
+            container.Configurator.ForAbstraction<ITextAnalyzer>().UseType<SimpleAnalyzer>();
 
             try
             { 
