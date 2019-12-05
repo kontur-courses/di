@@ -8,7 +8,14 @@ namespace TagsCloudContainer.Algorithm.SizeProviding
 {
     public class CorrespondingToWeightSizeProvider : IWordSizeProvider
     {
-        private const int Error = 4;
+        private readonly int error;
+
+        public CorrespondingToWeightSizeProvider(int error)
+        {
+            this.error = error;
+        }
+
+        public CorrespondingToWeightSizeProvider() : this(4) { }
 
         public IEnumerable<Word> SetWordsSizes(IEnumerable<Word> words, Size pictureSize)
         {
@@ -30,7 +37,7 @@ namespace TagsCloudContainer.Algorithm.SizeProviding
 
         private int GetFirstWordSizeArea(int wordsCount, Size pictureSize)
         {
-            return pictureSize.GetArea() / (wordsCount * Error);
+            return pictureSize.GetArea() / (wordsCount * error);
         }
 
         private int GetNextWordSizeArea(int weight, int lastWordSizeArea, int lastWordWeight)

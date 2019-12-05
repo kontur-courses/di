@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using Autofac;
 using TagsCloudContainer.Core;
@@ -32,6 +34,9 @@ namespace TagsCloudContainer
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces()
                 .AsSelf();
+
+            builder.RegisterInstance(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName,
+                "WordProcessing", "Filtering", "PartsOfSpeechQualifying", "MyStem")).As<string>();
 
             return builder;
         }
