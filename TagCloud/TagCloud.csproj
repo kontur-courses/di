@@ -68,28 +68,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
-    <Compile Include="CloudLayouter\CircularCloudLayouterTests.cs" />
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
     <Compile Include="CloudLayouter\FigurePaths\IFigurePath.cs" />
     <Compile Include="CloudLayouter\FigurePaths\Spiral.cs" />
+    <Compile Include="CloudVisualizer\CloudViewConfiguration\DefaultColorPicker.cs" />
+    <Compile Include="CloudVisualizer\CloudViewConfiguration\IColorWordPicker.cs" />
     <Compile Include="CloudVisualizer\CloudVisualizer.cs" />
     <Compile Include="CloudVisualizer\CloudViewConfiguration\CloudViewConfiguration.cs" />
+    <Compile Include="Factories\SpiralFactory.cs" />
+    <Compile Include="Interfaces\ApplicationSettings.cs" />
+    <Compile Include="Interfaces\GUI\Forms\SettingsForm.cs" />
     <Compile Include="Interfaces\GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\GUI\UIActions\CloudSettings.cs" />
-    <Compile Include="Interfaces\GUI\UIActions\ColorSettings.cs" />
     <Compile Include="Interfaces\GUI\UIActions\IUIAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\OpenAction.cs" />
+    <Compile Include="Interfaces\GUI\UIActions\SettingsAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\UIActionsExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsPreprocessing\DocumentParsers\IDocumentParser.cs" />
     <Compile Include="WordsPreprocessing\DocumentParsers\TxtParser.cs" />
     <Compile Include="WordsPreprocessing\SpeechPart.cs" />
+    <Compile Include="WordsPreprocessing\TextAnalyzers\DefaultAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\ITextAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\Word.cs" />
-    <Compile Include="WordsPreprocessing\WordsAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -103,9 +106,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -14,7 +14,7 @@ namespace TagCloud.FigurePaths
         /// </summary>
         /// <param name="turnsDistance">distance between different turns</param>
         /// <param name="deltaAngle">Angle between next and previous point in degrees</param>
-        public Spiral(double turnsDistance, double deltaAngle)
+        public Spiral(double turnsDistance = 1, double deltaAngle = 2)
         {
             this.turnsDistance = turnsDistance / 2 / Math.PI;
             this.deltaAngle = deltaAngle * Math.PI / 180;

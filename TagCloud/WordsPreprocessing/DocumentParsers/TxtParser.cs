@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using TagCloud.Interfaces;
 
 namespace TagCloud.WordsPreprocessing.DocumentParsers
 {
@@ -12,9 +8,13 @@ namespace TagCloud.WordsPreprocessing.DocumentParsers
     /// </summary>
     class TxtParser : IDocumentParser
     {
-        public IEnumerable<string> GetWords(StreamReader stream)
+        public HashSet<string> AllowedTypes => new HashSet<string>{".txt"};
+
+
+        public IEnumerable<string> GetWords(ApplicationSettings settings)
         {
-            yield return stream.ReadToEnd();
+            
+            return settings.GetDocumentStream().ReadToEnd().Split(' ');
         }
     }
 }

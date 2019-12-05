@@ -3,12 +3,10 @@ using System.Drawing;
 
 namespace TagCloud.CloudLayouter
 {
-    interface ICloudLayouter
+    public interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
 
         IEnumerable<Rectangle> Rectangles { get; }
-
-        Rectangle CloudRectangle { get; }
     }
 }

@@ -1,27 +1,36 @@
 ﻿using System.Drawing;
-using TagCloud.CloudLayouter;
 using TagCloud.WordsPreprocessing;
+using System.Windows.Forms;
 
 namespace TagCloud.CloudVisualizer
 {
-    class CloudVisualizer
+    public class CloudVisualizer
     {
-        private WordsAnalyzer wordsAnalyzer;
-        private ICloudLayouter cloudLayouter;
         private CloudViewConfiguration.CloudViewConfiguration cloudViewConfiguration; 
 
-        public CloudVisualizer(WordsAnalyzer wordsAnalyzer,
-            ICloudLayouter cloudLayouter,
-            CloudViewConfiguration.CloudViewConfiguration cloudViewConfiguration)
+        public CloudVisualizer(CloudViewConfiguration.CloudViewConfiguration configuration)
         {
-            this.wordsAnalyzer = wordsAnalyzer;
-            this.cloudViewConfiguration = cloudViewConfiguration;
-            this.cloudLayouter = cloudLayouter;
+            cloudViewConfiguration = configuration;
         }
 
-        public Bitmap GetCloud(Word[] words, int count)
+        public Bitmap GetCloud(Word[] words)
         {
-            return null;
+            var cloudLayouter = cloudViewConfiguration.CloudLayouter();
+            var image = new Bitmap(cloudViewConfiguration.ImageSize.Width, cloudViewConfiguration.ImageSize.Height);
+            var graphics = Graphics.FromImage(image);
+            graphics.Clear(cloudViewConfiguration.BackgroundColor);
+            foreach (var word in words)
+            {
+                var font = new Font(cloudViewConfiguration.FontFamily,
+                    (float)(word.Frequency * cloudViewConfiguration.ScaleCoefficient));
+                var size = TextRenderer.MeasureText(word.Value, font);
+                var rectangle = cloudLayouter.PutNextRectangle(size);
+                graphics.DrawString(word.Value, font, cloudViewConfiguration.GetBrush(word), rectangle.Location);
+            }
+
+            graphics.Dispose();
+
+            return image;
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+using TagCloud.Interfaces;
 
 namespace TagCloud.WordsPreprocessing.DocumentParsers
 {
     public interface IDocumentParser
     {
-        IEnumerable<string> GetWords(StreamReader stream);
+        HashSet<string> AllowedTypes { get; }
+        IEnumerable<string> GetWords(ApplicationSettings settings);
     }
 }

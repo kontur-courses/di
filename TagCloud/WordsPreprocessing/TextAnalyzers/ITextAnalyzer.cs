@@ -1,7 +1,10 @@
-﻿namespace TagCloud.WordsPreprocessing.TextAnalyzers
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace TagCloud.WordsPreprocessing.TextAnalyzers
 {
     public interface ITextAnalyzer
     {
-        Word[] GetWords();
+        Word[] GetWords(IEnumerable<string> words, int count);
     }
 }
