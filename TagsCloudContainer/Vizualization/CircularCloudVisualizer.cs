@@ -1,19 +1,35 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudVisualizer
+    public class CircularCloudVisualizer : IVisualizer
     {
-        private readonly Pen rectangleBorderPen = new Pen(Color.Black);
-        private readonly Brush rectangleFillBrush = new SolidBrush(Color.Gray);
-        private readonly Brush backgroundFillBrush = new SolidBrush(Color.White);
-        private readonly Brush textBrush = new SolidBrush(Color.Blue);
+        private readonly Pen rectangleBorderPen;
+        private readonly Brush rectangleFillBrush;
+        private readonly Brush backgroundFillBrush;
+        private readonly Brush textBrush;
 
-        public Bitmap VisualizeLayout(CircularCloudLayouter layouter)
+        public CircularCloudVisualizer(
+            Brush rectangleFillBrush,
+            Brush backgroundFillBrush,
+            Pen rectangleBorderPen,
+            Brush textBrush)
         {
-            var rectangles = layouter.GetRectangles();
+            this.rectangleFillBrush = rectangleFillBrush;
+            this.backgroundFillBrush = backgroundFillBrush;
+            this.rectangleBorderPen = rectangleBorderPen;
+            this.textBrush = textBrush;
+        }
+
+        public void Visualize(IEnumerable<Rectangle> rectangles)
+        {
+        }
+
+        private Bitmap VisualizeLayout(IEnumerable<Rectangle> rectangles)
+        {
             var imageSize = GetImageSize(rectangles);
             if (imageSize.Width == 0 && imageSize.Height == 0)
             {
@@ -23,7 +39,7 @@ namespace TagsCloudContainer
             return GetImage(imageSize, rectangles);
         }
 
-        private static Size GetImageSize(List<Rectangle> rectangles)
+        private static Size GetImageSize(IEnumerable<Rectangle> rectangles)
         {
             var cloudRightBorder = rectangles.Max(rect => rect.Right);
             var cloudBottomBorder = rectangles.Max(rect => rect.Bottom);
@@ -32,7 +48,7 @@ namespace TagsCloudContainer
             return new Size(cloudRightBorder + cloudLeftBorder, cloudBottomBorder + cloudTopBorder);
         }
 
-        private Bitmap GetImage(Size imageSize, List<Rectangle> rectangles)
+        private Bitmap GetImage(Size imageSize, IEnumerable<Rectangle> rectangles)
         {
             var image = new Bitmap(imageSize.Width, imageSize.Height);
 

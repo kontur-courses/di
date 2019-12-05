@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -54,19 +57,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloudLayouter.cs" />
+    <Compile Include="ICloudLayouter.cs" />
+    <Compile Include="Parsing\IFileParser.cs" />
+    <Compile Include="Parsing\TxtParser.cs" />
+    <Compile Include="RectangleTranslation\IRectangleTranslator.cs" />
+    <Compile Include="RectangleTranslation\RectangleTranslator.cs" />
     <Compile Include="Vizualization\ArchimedeanSpiral.cs" />
+    <Compile Include="Vizualization\ColoringOptions.cs" />
+    <Compile Include="Vizualization\IVisualizer.cs" />
     <Compile Include="Vizualization\Tests\ArchimedeanSpiral_Should.cs" />
     <Compile Include="Vizualization\CircularCloudLayouter.cs" />
     <Compile Include="Vizualization\Tests\CircularCloudLayouter_Should.cs" />
     <Compile Include="Vizualization\CircularCloudVisualizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Word Counting\IWordCounter.cs" />
+    <Compile Include="Word Counting\IWordFilter.cs" />
+    <Compile Include="Word Counting\IWordNormalizer.cs" />
+    <Compile Include="Word Counting\WordCounter.cs" />
+    <Compile Include="Word Counting\WordFilter.cs" />
+    <Compile Include="Word Counting\WordNormalizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="example.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
