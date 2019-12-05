@@ -12,7 +12,7 @@ namespace TagsCloudContainer.Core.Generators
         private double azimuth;
         private double radius;
 
-        internal ArchimedeanSpiral(double distance = 1, double delta = Math.PI / 180)
+        public ArchimedeanSpiral(double distance = 1, double delta = Math.PI / 180)
         {
             this.distance = distance;
             this.delta = delta;
