@@ -13,9 +13,10 @@ namespace TagsCloudContainer.Layouter
     {
         public Point Center { get; internal set; }
 
-        public ReadOnlyCollection<Rectangle> RectanglesList
+        public List<Rectangle> RectanglesList
         {
-            get { return layout.AsReadOnly(); }
+            get { return layout; }
+            private set { }
         }
         private List<Rectangle> layout = new List<Rectangle>();
         

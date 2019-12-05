@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudContainer.Layouter
 {
@@ -13,5 +14,6 @@ namespace TagsCloudContainer.Layouter
     public interface ICircularCloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
+        List<Rectangle> RectanglesList { get; }
     }
 }
