@@ -14,12 +14,12 @@ namespace TagsCloudVisualization.CloudPainters
             var brush = new SolidBrush(visualisingOptions.TextColor);
             using (var graphics = Graphics.FromImage(field))
             {
+                var indexedRectangles = rectangles as Rectangle[];
+                var indexedWords = words as string[];
                 graphics.Clear(visualisingOptions.BackgroundColor);
-                var rectangle = rectangles.GetEnumerator();
-                foreach (var word in words)
+                for (var i = 0; i < indexedRectangles.Length; i++)
                 {
-                    rectangle.MoveNext();
-                    graphics.DrawString(word, visualisingOptions.Font, brush, rectangle.Current.Location);
+                    graphics.DrawString(indexedWords[i], visualisingOptions.Font, brush, indexedRectangles[i].Location);
                 }
             }
 
