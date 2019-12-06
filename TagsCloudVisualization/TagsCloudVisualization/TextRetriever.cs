@@ -10,10 +10,8 @@ namespace TagsCloudVisualization
         {
             if (path == null)
                 throw new ArgumentNullException();
-
             if (!File.Exists(path))
                 throw new ArgumentException();
-
             string text = File.ReadAllText(path, Encoding.UTF8);
             return text;
         }

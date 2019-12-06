@@ -5,16 +5,12 @@ namespace TagsCloudVisualization
     public class ImageSettings
     {
         public static readonly ImageSettings DefaultSettings = InitializeDefaultSettings();
-
         public readonly Font Font;
-
         public readonly Size ImageSize;
-
         public readonly Point CloudCenter;
 
         public ImageSettings(Font font, Size imageSize, Point cloudCenter)
         {
-            
             Font = font ?? DefaultSettings.Font;
             ImageSize = imageSize;
             CloudCenter = cloudCenter;

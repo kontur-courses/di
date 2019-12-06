@@ -16,7 +16,6 @@ namespace TagsCloudVisualization
         {
             var wordCountDictionary = new Dictionary<string, int>();
             var splittedText = text.Split('\n').Select(word => word.ToLower());
-
             foreach (var lineWord in splittedText)
             {
                 if (boringWords.Contains(lineWord) || string.IsNullOrEmpty(lineWord))
@@ -27,7 +26,6 @@ namespace TagsCloudVisualization
                 else
                     wordCountDictionary[lineWord] += 1;
             }
-
             foreach (var kvp in wordCountDictionary)
                 yield return new WordToken(kvp.Key, kvp.Value);
         }

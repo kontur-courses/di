@@ -14,7 +14,6 @@ namespace TagsCloudVisualization
         private CircularCloudLayouter layouter;
         private IContainer defaultContainer;
 
-
         [OneTimeSetUp]
         public void InitializeContainer()
         {
@@ -34,7 +33,6 @@ namespace TagsCloudVisualization
         public void PutNextRectangle_ThrowsArgumentException(int width, int height)
         {
             Func<Rectangle> act = () => layouter.PutNextRectangle(new Size(width, height));
-
             act.Should().Throw<ArgumentException>();
         }
 

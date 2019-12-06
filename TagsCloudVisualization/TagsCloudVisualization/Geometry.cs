@@ -14,23 +14,18 @@ namespace TagsCloudVisualization
         {
             if (rect.Width < 0 || rect.Height < 0) 
                 throw new ArgumentException();
-
             double dx = Math.Abs(rect.X - vector.X);
             double dy = Math.Abs(rect.Y - vector.Y);
-
             var xOffset = rect.Width / 2;
-            var yOffset = rect.Height / 2;  
-
+            var yOffset = rect.Height / 2;
             if (dx <= xOffset && dy <= yOffset) 
                 return 0;
-
             if (dx > xOffset && dy > yOffset)
             {
                 var k = xOffset / dx;
                 dx = k * dx;
                 dy = k * dy;
             }
-
             var hypotenuse = Math.Sqrt(dx * dx + dy * dy);
             return dx <= xOffset ? hypotenuse * yOffset / dy : hypotenuse * xOffset / dx;
         }
