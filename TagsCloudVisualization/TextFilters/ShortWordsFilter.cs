@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.TextFilters
     {
         private readonly int minLength;
         
-        public ShortWordsFilter(int minLength)
+        public ShortWordsFilter(int minLength = 3)
         {
             this.minLength = minLength;
         }

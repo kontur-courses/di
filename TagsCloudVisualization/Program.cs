@@ -29,11 +29,9 @@ namespace TagsCloudVisualization
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<MultiColorCloudPainter>().As<CloudPainter>();
-            builder.RegisterType<ITextFilter>().AsImplementedInterfaces();
-            builder.RegisterType<LowerCaseWordConverter>().AsSelf();
-            builder.Register(f => new List<IWordConverter> {new LowerCaseWordConverter()});
-            builder.Register(f => new List<ITextFilter> {new ShortWordsFilter(3)})
-                .As<IEnumerable<ITextFilter>>();
+            builder.RegisterType<LowerCaseWordConverter>().As<IWordConverter>();
+            builder.RegisterType<ShortWordsFilter>().As<ITextFilter>();    
+            builder.RegisterType<BoringWordsFilter>().As<ITextFilter>();
             builder.RegisterType<TxtReader>().As<ITextReader>();
             builder.RegisterType<WordsProvider>().AsSelf();
             builder.RegisterType<WordPreprocessor>().AsSelf();
