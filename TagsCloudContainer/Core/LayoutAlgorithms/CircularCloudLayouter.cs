@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Extensions;
 
-namespace TagsCloudContainer.Core
+namespace TagsCloudContainer.Core.LayoutAlgorithms
 {
-    class CircularCloudLayouter
+    class CircularCloudLayouter : ILayoutAlgorithm
     {
         private readonly Point center;
         private readonly List<Rectangle> rectangles;
@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Core
             spiral = new ArchimedeanSpiral(this.center);
         }
 
-        public int GetMaxValueAlongAxis(Axis axis)
+        private int GetMaxValueAlongAxis(Axis axis)
         {
             return axis == Axis.X
                 ? rectangles.Select(rectangle => rectangle.Right).Max()
