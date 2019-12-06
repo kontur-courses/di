@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CloudLayouters\CircularCloudLayouterTests.cs" />
-    <Compile Include="Converter.cs" />
+    <Compile Include="CloudLayouters\Converter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -95,6 +95,7 @@
     <Compile Include="WordPreprocessors\IWordPreprocessor.cs" />
     <Compile Include="WordPreprocessors\SimpleWordPreprocessor.cs" />
     <Compile Include="TokensAndSettings\WordToken.cs" />
+    <Compile Include="WordPreprocessors\SimpleWordPreprocessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

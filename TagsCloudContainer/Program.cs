@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.WordCounters;
@@ -30,7 +28,7 @@ namespace TagsCloudContainer
             public string Font { get; set; }
             [Option('s', "size", Default = 20, HelpText = "Font size.")]
             public int Size { get; set; }
-            [Option('c', "color", Default = "Red", HelpText = "Font color.")]
+            [Option('c', "color", Default = "Red", HelpText = "Font color. (Does not work)")]
             public string Color { get; set; }
         }
 
