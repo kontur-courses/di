@@ -8,9 +8,11 @@ namespace TagsCloudVisualization
         public readonly Font Font;
         public readonly Size ImageSize;
         public readonly Point CloudCenter;
+        public readonly Color BackgroundColor;
 
-        public ImageSettings(Font font, Size imageSize, Point cloudCenter)
+        public ImageSettings(Font font, Size imageSize, Point cloudCenter, Color backgroundColor)
         {
+            BackgroundColor = backgroundColor;
             Font = font ?? DefaultSettings.Font;
             ImageSize = imageSize;
             CloudCenter = cloudCenter;
@@ -19,7 +21,7 @@ namespace TagsCloudVisualization
         private static ImageSettings InitializeDefaultSettings()
         {
             var font = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-            return new ImageSettings(font, new Size(1000, 1000), new Point(500,500));
+            return new ImageSettings(font, new Size(1000, 1000), new Point(500,500), Color.AntiqueWhite);
         }
     }
 }

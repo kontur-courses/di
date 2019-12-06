@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Actions\CreateCloudFromFileAction.cs" />
     <Compile Include="Actions\IUiAction.cs" />
+    <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="MainForm.cs">

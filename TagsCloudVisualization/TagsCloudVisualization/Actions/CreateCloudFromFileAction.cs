@@ -10,6 +10,8 @@ namespace TagsCloudVisualization.Actions
         private readonly IVisualizer visualizer;
         private readonly PictureBox imageHolder;
 
+        public string Name { get; }
+
         public CreateCloudFromFileAction(IVisualizer visualizer, PictureBox imageHolder)
         {
             this.imageHolder = imageHolder;
@@ -17,7 +19,6 @@ namespace TagsCloudVisualization.Actions
             Name = "Create From File";
         }
 
-        public string Name { get; }
         public void Perform()
         {
             var FD = new OpenFileDialog();
