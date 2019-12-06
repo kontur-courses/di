@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -32,7 +33,9 @@ namespace TagsCloudGenerator.Core.Filters
             using (var myStemProcess = new Process())
             {
                 myStemProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-                myStemProcess.StartInfo.FileName = "mystem.exe";
+                myStemProcess.StartInfo.FileName = Environment.Is64BitProcess
+                    ? "mystem64.exe"
+                    : "mystem32.exe";
                 myStemProcess.StartInfo.Arguments = "-ni temp.txt";
                 myStemProcess.StartInfo.CreateNoWindow = true;
                 myStemProcess.StartInfo.UseShellExecute = false;

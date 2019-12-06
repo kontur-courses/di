@@ -79,7 +79,8 @@
     <Content Include="bin\Debug\exampleText.txt" />
     <Content Include="bin\Debug\HunspellDictionaries\ru.aff" />
     <Content Include="bin\Debug\HunspellDictionaries\ru.dic" />
-    <Content Include="bin\Debug\mystem.exe" />
+    <Content Include="bin\Debug\mystem32.exe" />
+    <Content Include="bin\Debug\mystem64.exe" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Hunspellx64.dll" />
