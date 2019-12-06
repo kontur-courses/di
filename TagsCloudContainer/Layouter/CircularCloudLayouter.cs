@@ -11,8 +11,8 @@ namespace TagsCloudContainer.Layouter
 {
     public class CircularCloudLayouter : MustInitialize<Point>, ICircularCloudLayouter
     {
-        public Point Center { get; internal set; }
-
+        public Point Center { get; set; }
+    
         public List<Rectangle> RectanglesList
         {
             get { return layout; }

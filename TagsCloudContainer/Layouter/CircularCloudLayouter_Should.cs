@@ -23,19 +23,19 @@ namespace TagsCloudContainer.Layouter
             ccl = new CircularCloudLayouter(new Point(0, 0));
         }
         
-        [TearDown]
-        public void TearDown()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                var bitmap = Visualiser.DrawRectangles(ccl, 1000, 1000);
-                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
-                    "TearDown.png");
-                bitmap.Save(path, ImageFormat.Png);
-                TestContext.WriteLine("Tag cloud visualization saved to file {0}", path);
-                return;
-            }
-        }
+//        [TearDown]
+//        public void TearDown()
+//        {
+//            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+//            {
+//                var bitmap = Visualiser.DrawRectangles(ccl, 1000, 1000);
+//                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
+//                    "TearDown.png");
+//                bitmap.Save(path, ImageFormat.Png);
+//                TestContext.WriteLine("Tag cloud visualization saved to file {0}", path);
+//                return;
+//            }
+//        }
 
         [TestCase(1000, 1000)]
         [TestCase(300, 300)]

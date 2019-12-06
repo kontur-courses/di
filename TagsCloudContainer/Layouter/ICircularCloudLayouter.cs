@@ -15,5 +15,6 @@ namespace TagsCloudContainer.Layouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
         List<Rectangle> RectanglesList { get; }
+        Point Center { get; set; }
     }
 }

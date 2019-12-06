@@ -5,7 +5,6 @@ namespace TagsCloudContainer
 {
     public interface IVisualiser
     {
-        Bitmap DrawRectangles(ICircularCloudLayouter ccl, (string, Size)[] arr, int bitmapWidth = 2000,
-            int bitmapHeight = 2000);
+        Bitmap DrawRectangles(ICircularCloudLayouter ccl, (string, Size)[] arr);
     }
 }

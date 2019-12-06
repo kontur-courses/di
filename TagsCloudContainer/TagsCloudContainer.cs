@@ -13,10 +13,12 @@ namespace TagsCloudContainer
         private IWordsToSizesConverter WordsToSizesConverter;
         private ICircularCloudLayouter CCL;
         private IVisualiser Visualiser;
+        private string OutputFile;
         
         public TagsCloudContainer(ITextReader textReader, IWordsFilter wordsFilter, IWordsCounter wordsCounter,
             IWordsToSizesConverter wordsToSizesConverter,
-            ICircularCloudLayouter ccl, IVisualiser visualiser
+            ICircularCloudLayouter ccl, IVisualiser visualiser,
+            string output
         )
         {
             TextReader = textReader;
@@ -25,6 +27,7 @@ namespace TagsCloudContainer
             WordsToSizesConverter = wordsToSizesConverter;
             CCL = ccl;
             Visualiser = visualiser;
+            OutputFile = output;
         }
 
         public void Perform()
@@ -38,13 +41,14 @@ namespace TagsCloudContainer
             var sizes = WordsToSizesConverter.GetSizesOf().ToArray();
             sizes = sizes.OrderBy(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
            // var oneSizedCcl = new CircularCloudLayouter(new Point(1000, 1000));
+           CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
             for (var i = 0; i < sizes.Length; i++)
             {
                 CCL.PutNextRectangle(sizes[i].Item2);
             }
 
             var bitmap = Visualiser.DrawRectangles(CCL, sizes);
-            bitmap.Save("test.png", ImageFormat.Png);
+            bitmap.Save(OutputFile, ImageFormat.Png);
         }
     }
 }

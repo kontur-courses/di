@@ -10,7 +10,7 @@ namespace TagsCloudContainer
         public int MaxHeight { get; set; }
         public int MaxWidth { get; set; }
         private readonly  IDictionary<string, int> dict;
-        
+
         public SimpleWordsToSizesConverter(Size sizeOfLayout, Dictionary<string, int> dictionary, int maxHeight = 0, int maxWidth = 0)
         {
             SizeOfLayout = sizeOfLayout;
@@ -28,8 +28,10 @@ namespace TagsCloudContainer
 
         public Size GetSizeOf(string word)
         {
-            double width = SizeOfLayout.Height * ((double)dict[word] / dict.Count);
-            double height = SizeOfLayout.Width * ((double)dict[word] / dict.Count);
+            var heightL = SizeOfLayout.Height;
+            var widthL = SizeOfLayout.Width;
+            double width = Math.Sqrt((heightL - heightL/3) * (widthL - widthL/3) * ((double)dict[word] / dict.Count));
+            double height = Math.Sqrt((heightL - heightL/3) * (widthL - widthL/3) * ((double)dict[word] / dict.Count));
             return new Size(Math.Min((int)width, MaxWidth), 
                 Math.Min((int)height, MaxHeight));
         }
@@ -42,7 +44,6 @@ namespace TagsCloudContainer
                 var tup = (key, GetSizeOf(key));
                 res.Add(tup);
             }
-
             return res;
         }
     }

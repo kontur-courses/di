@@ -7,8 +7,18 @@ namespace TagsCloudContainer
 {
     public class SimpleRectanglesVisualiser : IVisualiser
     {
-        public Bitmap DrawRectangles(ICircularCloudLayouter ccl, (string, Size)[] arr, int bitmapWidth = 2000, int bitmapHeight = 2000)
+        private Size SizeOfBitmap;
+        
+        public SimpleRectanglesVisualiser(Size size)
         {
+            SizeOfBitmap = size;
+        }
+
+        public Bitmap DrawRectangles(ICircularCloudLayouter ccl, (string, Size)[] arr)
+        {
+            var bitmapWidth = SizeOfBitmap.Width;
+            var bitmapHeight = SizeOfBitmap.Height;
+            
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             Graphics g = Graphics.FromImage(bitmap);
 
@@ -17,7 +27,7 @@ namespace TagsCloudContainer
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             var brush = new SolidBrush(Color.White);
-            var pen = new Pen(Color.Red, 10);
+            var pen = new Pen(Color.Black, 4);
             g.Clear(Color.White);
             for (var i = 0; i < ccl.RectanglesList.Count; i++)
             {
