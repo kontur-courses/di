@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using TagsCloudContainer.RectangleTranslation;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Vizualization.Interfaces
 {
     public interface IVisualizer
     {

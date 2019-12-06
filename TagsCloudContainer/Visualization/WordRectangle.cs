@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.RectangleTranslation;
 
-namespace TagsCloudContainer.RectangleTranslation
+namespace TagsCloudContainer.Vizualization
 {
     public class WordRectangle
     {

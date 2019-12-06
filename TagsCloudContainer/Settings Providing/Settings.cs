@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.Parameters_Providing
+﻿using TagsCloudContainer.Vizualization;
+
+namespace TagsCloudContainer.Settings_Providing
 {
     public class Settings
     {

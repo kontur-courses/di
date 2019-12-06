@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Parameters_Providing
+﻿namespace TagsCloudContainer.Settings_Providing
 {
     public interface ISettingsProvider
     {

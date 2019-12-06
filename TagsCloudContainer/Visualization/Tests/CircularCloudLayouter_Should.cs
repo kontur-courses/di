@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudContainer.Parameters_Providing;
 using TagsCloudContainer.RectangleTranslation;
-using TagsCloudContainer.Vizualization;
+using TagsCloudContainer.Settings_Providing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Vizualization.Tests
 {
     [TestFixture]
     public class CircularCloudLayouter_Should
@@ -19,8 +17,7 @@ namespace TagsCloudContainer
 
         private CircularCloudLayouter layouter;
 
-        //private static string TestDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), @"\visualization\");
-        private static string TestDirectoryPath => @"C:\Users\DanKor\Desktop\test";
+        private static string TestDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), @"\visualization\");
 
         [SetUp]
         public void Initialize()
@@ -32,10 +29,10 @@ namespace TagsCloudContainer
         [TearDown]
         public void TearDown()
         {
-            //if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
-            //{
-            //    return;
-            //}
+            if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
+            {
+                return;
+            }
 
             var fullPath = Path.Combine(TestDirectoryPath, TestContext.CurrentContext.Test.FullName + ".png");
             var image = visualizer.GetVisualization(layouter.GetWordsRectangles());

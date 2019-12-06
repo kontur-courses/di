@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.Vizualization.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Vizualization
 {
     public class ArchimedeanSpiral : ILayoutAlgorithm
     {
@@ -12,7 +13,7 @@ namespace TagsCloudContainer
         private double phi;
         private double Radius => a + b * phi;
 
-        public ArchimedeanSpiral(Point center, double angleStep = Math.PI / 180, double a = 0, double b = 0.5)
+        public ArchimedeanSpiral(Point center, double angleStep = Math.PI / 180, double a = 0, double b = 2)
         {
             phi = -angleStep;
             this.center = center;

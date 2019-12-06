@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.RectangleTranslation;
-using TagsCloudContainer.Vizualization;
+using TagsCloudContainer.Vizualization.Interfaces;
 
-
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Vizualization
 {
     public class CircularCloudLayouter : IWordLayouter
     {
@@ -79,7 +78,7 @@ namespace TagsCloudContainer
         {
             var stepSize = rectangle.X < center.X ? 1 : -1;
             var checkedRectangle = new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-            while (IsCorrectToPlace(checkedRectangle) && checkedRectangle.X != center.X)
+            while (IsCorrectToPlace(checkedRectangle) && Math.Abs(checkedRectangle.X - center.X) > 0.5)
             {
                 checkedRectangle.X += stepSize;
             }
@@ -96,7 +95,7 @@ namespace TagsCloudContainer
         {
             var stepSize = rectangle.Y < center.Y ? 1 : -1;
             var checkedRectangle = new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-            while (IsCorrectToPlace(checkedRectangle) && checkedRectangle.Y != center.Y)
+            while (IsCorrectToPlace(checkedRectangle) && Math.Abs(checkedRectangle.Y - center.Y) > 0.5)
             {
                 checkedRectangle.Y += stepSize;
             }

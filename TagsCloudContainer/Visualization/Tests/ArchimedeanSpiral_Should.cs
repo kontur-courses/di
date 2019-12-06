@@ -3,7 +3,7 @@ using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Vizualization.Tests
 {
     [TestFixture]
     public class ArchimedeanSpiral_Should

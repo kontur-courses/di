@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Vizualization
+namespace TagsCloudContainer.Vizualization.Interfaces
 {
     public interface ISaver
     {

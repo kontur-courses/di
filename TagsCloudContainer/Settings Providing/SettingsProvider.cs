@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Vizualization;
 
-namespace TagsCloudContainer.Parameters_Providing
+namespace TagsCloudContainer.Settings_Providing
 {
     public class SettingsProvider : ISettingsProvider
     {
@@ -13,7 +14,7 @@ namespace TagsCloudContainer.Parameters_Providing
         {
             return new Settings("", "",
                 new ColoringOptions(new SolidBrush(Color.Transparent),
-                    new SolidBrush(Color.White), new Pen(Color.Black), new SolidBrush(Color.Blue)));
+                    new SolidBrush(Color.White), new Pen(Color.Transparent), new SolidBrush(Color.Blue)));
         }
     }
 }

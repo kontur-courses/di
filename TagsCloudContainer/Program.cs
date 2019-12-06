@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using Autofac;
 using NHunspell;
-using TagsCloudContainer.Parameters_Providing;
 using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
+using TagsCloudContainer.Settings_Providing;
 using TagsCloudContainer.Vizualization;
+using TagsCloudContainer.Vizualization.Interfaces;
 using TagsCloudContainer.Word_Counting;
 
 namespace TagsCloudContainer
@@ -20,13 +21,6 @@ namespace TagsCloudContainer
             {
                 var layouter = scope.Resolve<ICloudLayouter>();
                 layouter.Layout(Path.Combine("..","..","example.txt"), Path.Combine("..","..","example.png"));
-                //var parser = new TxtParser();
-                //var parsedWords = parser.ParseFile(Path.Combine("..", "..", "example.txt"));
-                //var wordCounter = scope.Resolve<IWordCounter>();
-                //var countedWords = wordCounter.CountWords(parsedWords);
-                //var rectangleTranslator = scope.Resolve<ISizeTranslator>();
-                //var rectangles = rectangleTranslator.TranslateWordsToSizedWords(countedWords);
-                //var a = 0;
             }
         }
 

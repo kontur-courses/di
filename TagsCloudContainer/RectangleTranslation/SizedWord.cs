@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Vizualization;
 
 namespace TagsCloudContainer.RectangleTranslation
 {
