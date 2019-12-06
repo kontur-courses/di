@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace TagsCloud.FileParsers
 {
@@ -10,7 +9,14 @@ namespace TagsCloud.FileParsers
 
         public List<string> Parse(string filename)
         {
-            return File.ReadAllLines(filename).Where(l => !string.IsNullOrWhiteSpace(l)).ToList();
+            var res = new List<string>();
+            var separators = new char[] { ' ', ',', '.', '!', '?', '(', ')', '{', '}', '[', ']' };
+            foreach (var line in File.ReadAllLines(filename))
+            {
+                foreach (var word in line.Split(separators, System.StringSplitOptions.RemoveEmptyEntries))
+                    res.Add(word);
+            }
+            return res;
         }
     }
 }
