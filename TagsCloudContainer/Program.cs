@@ -18,6 +18,7 @@ namespace TagsCloudContainer
             {
                 help.AdditionalNewLineAfterOption = true;
                 help.AddPreOptionsLine("Usage: TagsCloudContainer -f/--file words.txt -s/--size width height -o/--output dest.png");
+                help.AddPreOptionsLine("Default language: russian");
                 return help;
             }, e => e);
             Console.WriteLine(helpText);
