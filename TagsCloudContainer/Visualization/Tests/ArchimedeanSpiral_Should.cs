@@ -3,7 +3,7 @@ using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudContainer.Vizualization.Tests
+namespace TagsCloudContainer.Visualization.Tests
 {
     [TestFixture]
     public class ArchimedeanSpiral_Should
@@ -20,7 +20,8 @@ namespace TagsCloudContainer.Vizualization.Tests
         [TestCase(5000, 5000, 2, 4, Math.PI / 6, 5, TestName = "On 5 steps")]
         [TestCase(5000, 5000, 2, 4, Math.PI / 6, 100, TestName = "On 100 steps")]
         [TestCase(5000, 5000, 2, 4, Math.PI / 180, 720, TestName = "On 720 steps")]
-        public void ReturnCorrectPoints_OnNextSteps(int centerX, int centerY, double a, double b, double step, int stepsNumber)
+        public void ReturnCorrectPoints_OnNextSteps(int centerX, int centerY, double a, double b, double step,
+            int stepsNumber)
         {
             var center = new Point(centerX, centerY);
             var archimedeanSpiral = new ArchimedeanSpiral(center, step, a, b);

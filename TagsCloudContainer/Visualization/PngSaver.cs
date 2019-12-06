@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization.Interfaces;
 
-namespace TagsCloudContainer.Vizualization
+namespace TagsCloudContainer.Visualization
 {
     public class PngSaver : ISaver
     {

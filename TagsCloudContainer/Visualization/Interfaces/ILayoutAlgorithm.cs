@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Vizualization.Interfaces
+namespace TagsCloudContainer.Visualization.Interfaces
 {
     public interface ILayoutAlgorithm
     {

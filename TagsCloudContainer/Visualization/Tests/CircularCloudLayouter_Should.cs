@@ -8,7 +8,7 @@ using NUnit.Framework.Interfaces;
 using TagsCloudContainer.RectangleTranslation;
 using TagsCloudContainer.Settings_Providing;
 
-namespace TagsCloudContainer.Vizualization.Tests
+namespace TagsCloudContainer.Visualization.Tests
 {
     [TestFixture]
     public class CircularCloudLayouter_Should

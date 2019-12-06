@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Vizualization;
+using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer.RectangleTranslation
 {
@@ -13,7 +13,7 @@ namespace TagsCloudContainer.RectangleTranslation
         {
             Word = word;
             FontSize = fontSize;
-            
+
             WordSize = StringMeasurer.MeasureString(word, fontSize);
         }
     }

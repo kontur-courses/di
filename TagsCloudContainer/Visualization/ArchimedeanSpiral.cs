@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization.Interfaces;
 
-namespace TagsCloudContainer.Vizualization
+namespace TagsCloudContainer.Visualization
 {
     public class ArchimedeanSpiral : ILayoutAlgorithm
     {

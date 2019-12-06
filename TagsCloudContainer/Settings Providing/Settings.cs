@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.Vizualization;
+﻿using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer.Settings_Providing
 {

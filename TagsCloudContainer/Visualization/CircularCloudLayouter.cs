@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.RectangleTranslation;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization.Interfaces;
 
-namespace TagsCloudContainer.Vizualization
+namespace TagsCloudContainer.Visualization
 {
     public class CircularCloudLayouter : IWordLayouter
     {
-        private  List<WordRectangle> wordRectangles = new List<WordRectangle>();
+        private List<WordRectangle> wordRectangles = new List<WordRectangle>();
         private readonly Point center = new Point(0, 0);
         private readonly ILayoutAlgorithm layoutAlgorithm;
 

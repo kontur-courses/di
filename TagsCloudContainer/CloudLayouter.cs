@@ -1,7 +1,6 @@
 ﻿using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
-using TagsCloudContainer.Vizualization;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization.Interfaces;
 using TagsCloudContainer.Word_Counting;
 
 namespace TagsCloudContainer

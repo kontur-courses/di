@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloudContainer.RectangleTranslation;
 
-namespace TagsCloudContainer.Vizualization.Interfaces
+namespace TagsCloudContainer.Visualization.Interfaces
 {
     public interface IWordLayouter
     {

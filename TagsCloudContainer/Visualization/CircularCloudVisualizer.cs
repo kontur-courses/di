@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization.Interfaces;
 
-namespace TagsCloudContainer.Vizualization
+namespace TagsCloudContainer.Visualization
 {
     public class CircularCloudVisualizer : IVisualizer
     {

@@ -4,8 +4,8 @@ using NHunspell;
 using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
 using TagsCloudContainer.Settings_Providing;
-using TagsCloudContainer.Vizualization;
-using TagsCloudContainer.Vizualization.Interfaces;
+using TagsCloudContainer.Visualization;
+using TagsCloudContainer.Visualization.Interfaces;
 using TagsCloudContainer.Word_Counting;
 
 namespace TagsCloudContainer
@@ -20,7 +20,7 @@ namespace TagsCloudContainer
             using (var scope = container.BeginLifetimeScope())
             {
                 var layouter = scope.Resolve<ICloudLayouter>();
-                layouter.Layout(Path.Combine("..","..","example.txt"), Path.Combine("..","..","example.png"));
+                layouter.Layout(Path.Combine("..", "..", "example.txt"), Path.Combine("..", "..", "example.png"));
             }
         }
 
@@ -47,7 +47,7 @@ namespace TagsCloudContainer
 
         private static string GetDictionaryDirectoryPath(string filename)
         {
-            return Path.Combine("..","..", "Dictionaries", filename);
+            return Path.Combine("..", "..", "Dictionaries", filename);
         }
     }
 }

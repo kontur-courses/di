@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.Vizualization.Interfaces
+namespace TagsCloudContainer.Visualization.Interfaces
 {
     public interface IVisualizer
     {

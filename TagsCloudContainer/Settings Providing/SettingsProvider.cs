@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Vizualization;
+using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer.Settings_Providing
 {
@@ -18,4 +18,3 @@ namespace TagsCloudContainer.Settings_Providing
         }
     }
 }
-
