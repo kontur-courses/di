@@ -7,16 +7,16 @@ namespace TagsCloudVisualization.Text
 {
     public static class WordReader
     {
-        public static Word[] GetAllWords(TextReader textReader)
+        public static Word[] GetAllWords(ITextReader textReader, string filepath)
         {
-            var frequency = new Dictionary<string, int>();
-            foreach (var word in textReader)
+            var wordCount = new Dictionary<string, int>();
+            foreach (var word in textReader.GetAllWords(filepath))
             {
-                if (!frequency.ContainsKey(word))
-                    frequency[word] = 0;
-                frequency[word]++;
+                if (!wordCount.ContainsKey(word))
+                    wordCount[word] = 0;
+                wordCount[word]++;
             }
-            return frequency.Select(x => new Word(x.Key, x.Value)).ToArray();
+            return wordCount.Select(x => new Word(x.Key, x.Value)).ToArray();
         }
     }
 }

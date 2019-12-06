@@ -71,9 +71,12 @@
   <ItemGroup>
     <Compile Include="Core\LayoutedWord.cs" />
     <Compile Include="GUI\GuiActionExtensions.cs" />
+    <Compile Include="Layouters\IWordSizeChooser.cs" />
+    <Compile Include="Layouters\WordCountSizeChooser.cs" />
     <Compile Include="Preprocessing\PreprocessActions\RemoveBoringWords.cs" />
     <Compile Include="Preprocessing\PreprocessActions\ToLowercase.cs" />
-    <Compile Include="Tests\WordLayouterTests.cs" />
+    <Compile Include="Tests\Layouters\WordLayouterTests.cs" />
+    <Compile Include="Tests\TagCloudVisualizerTests.cs" />
     <Compile Include="Text\IPosTagger.cs" />
     <Compile Include="Text\PosTagger.cs" />
     <Compile Include="VisualizerActions\GuiActions\FontSettingsAction.cs" />
@@ -104,8 +107,8 @@
     <Compile Include="Tests\Layouters\CircularCloudLayouterTests.cs" />
     <Compile Include="Tests\Layouters\Spirals\ArchimedesSpiralTests.cs" />
     <Compile Include="Tests\Utils\PointConverterTests.cs" />
-    <Compile Include="Text\TextReader.cs" />
-    <Compile Include="Text\TextReaders\TxtReader.cs" />
+    <Compile Include="Text\ITextReader.cs" />
+    <Compile Include="Text\TextReaders\TxtFileReader.cs" />
     <Compile Include="Text\WordReader.cs" />
     <Compile Include="Utils\PointExtensions.cs" />
     <Compile Include="Utils\PointUtilities.cs" />
