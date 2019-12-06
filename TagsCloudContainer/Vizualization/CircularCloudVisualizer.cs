@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
+using TagsCloudContainer.RectangleTranslation;
+using TagsCloudContainer.Vizualization;
 
 namespace TagsCloudContainer
 {
@@ -11,24 +13,25 @@ namespace TagsCloudContainer
         private readonly Brush rectangleFillBrush;
         private readonly Brush backgroundFillBrush;
         private readonly Brush textBrush;
+        private readonly ISaver saver;
 
         public CircularCloudVisualizer(
-            Brush rectangleFillBrush,
-            Brush backgroundFillBrush,
-            Pen rectangleBorderPen,
-            Brush textBrush)
+            ColoringOptions options, ISaver saver)
         {
-            this.rectangleFillBrush = rectangleFillBrush;
-            this.backgroundFillBrush = backgroundFillBrush;
-            this.rectangleBorderPen = rectangleBorderPen;
-            this.textBrush = textBrush;
+            rectangleFillBrush = options.rectangleFillBrush;
+            backgroundFillBrush = options.backgroundFillBrush;
+            rectangleBorderPen = options.rectangleBorderPen;
+            textBrush = options.textBrush;
+            this.saver = saver;
         }
 
-        public void Visualize(IEnumerable<Rectangle> rectangles)
+        public void Visualize(IEnumerable<WordRectangle> wordRectangles, string path)
         {
+            var visualization = GetVisualization(wordRectangles);
+            saver.SaveImage(path, visualization);
         }
 
-        private Bitmap VisualizeLayout(IEnumerable<Rectangle> rectangles)
+        public Bitmap GetVisualization(IEnumerable<WordRectangle> rectangles)
         {
             var imageSize = GetImageSize(rectangles);
             if (imageSize.Width == 0 && imageSize.Height == 0)
@@ -39,16 +42,17 @@ namespace TagsCloudContainer
             return GetImage(imageSize, rectangles);
         }
 
-        private static Size GetImageSize(IEnumerable<Rectangle> rectangles)
+        private static Size GetImageSize(IEnumerable<WordRectangle> rectangles)
         {
-            var cloudRightBorder = rectangles.Max(rect => rect.Right);
-            var cloudBottomBorder = rectangles.Max(rect => rect.Bottom);
-            var cloudLeftBorder = rectangles.Min(rect => rect.Left);
-            var cloudTopBorder = rectangles.Min(rect => rect.Top);
-            return new Size(cloudRightBorder + cloudLeftBorder, cloudBottomBorder + cloudTopBorder);
+            var cloudRightBorder = rectangles.Max(rect => rect.Rectangle.Right);
+            var cloudBottomBorder = rectangles.Max(rect => rect.Rectangle.Bottom);
+            var cloudLeftBorder = rectangles.Min(rect => rect.Rectangle.Left);
+            var cloudTopBorder = rectangles.Min(rect => rect.Rectangle.Top);
+            return new Size((int) Math.Ceiling(cloudRightBorder + cloudLeftBorder),
+                (int) Math.Ceiling(cloudBottomBorder + cloudTopBorder));
         }
 
-        private Bitmap GetImage(Size imageSize, IEnumerable<Rectangle> rectangles)
+        private Bitmap GetImage(Size imageSize, IEnumerable<WordRectangle> wordRectangles)
         {
             var image = new Bitmap(imageSize.Width, imageSize.Height);
 
@@ -56,15 +60,14 @@ namespace TagsCloudContainer
             {
                 FillBackground(graphics, imageSize, backgroundFillBrush);
 
-                var rectangleNumber = 0;
-                foreach (var rectangle in rectangles)
+                foreach (var wordRectangle in wordRectangles)
                 {
-                    rectangleNumber++;
+                    var rectangle = Rectangle.Round(wordRectangle.Rectangle);
                     graphics.FillRectangle(rectangleFillBrush, rectangle);
                     graphics.DrawRectangle(rectangleBorderPen, rectangle);
                     graphics.DrawString(
-                        rectangleNumber.ToString(),
-                        new Font(FontFamily.GenericSansSerif, rectangle.Height / 3),
+                        wordRectangle.SizedWord.Word,
+                        new Font(FontFamily.GenericSansSerif, wordRectangle.SizedWord.FontSize),
                         textBrush,
                         rectangle);
                 }

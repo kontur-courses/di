@@ -1,59 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudContainer.Parameters_Providing;
+using TagsCloudContainer.RectangleTranslation;
+using TagsCloudContainer.Vizualization;
 
 namespace TagsCloudContainer
 {
     [TestFixture]
     public class CircularCloudLayouter_Should
     {
-        private readonly CircularCloudVisualizer visualizer = new CircularCloudVisualizer();
+        private CircularCloudVisualizer visualizer;
+
         private CircularCloudLayouter layouter;
-        private static string TestDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), @"\visualization\");
+
+        //private static string TestDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), @"\visualization\");
+        private static string TestDirectoryPath => @"C:\Users\DanKor\Desktop\test";
+
+        [SetUp]
+        public void Initialize()
+        {
+            var settingsProvider = new SettingsProvider();
+            visualizer = new CircularCloudVisualizer(settingsProvider.GetSettings().ColoringOptions, new PngSaver());
+        }
 
         [TearDown]
         public void TearDown()
         {
-            if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
-            {
-                return;
-            }
+            //if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
+            //{
+            //    return;
+            //}
 
             var fullPath = Path.Combine(TestDirectoryPath, TestContext.CurrentContext.Test.FullName + ".png");
-            var image = visualizer.VisualizeLayout(layouter);
+            var image = visualizer.GetVisualization(layouter.GetWordsRectangles());
             image.Save(fullPath, ImageFormat.Png);
             TestContext.WriteLine($"Tag cloud visualization saved to file {fullPath}");
         }
 
-        [Test]
-        public void PutInCenter_OnSingleRectangle()
-        {
-            layouter = new CircularCloudLayouter(new Point(500, 500));
-            layouter.PutNextRectangle(new Size(200, 100)).Should().Be(new Rectangle(500, 500, 200, 100));
-        }
 
-        [TestCase(1000, 1000, 10, 30, 30, 10, TestName = "onIncreasingRectangles")]
-        [TestCase(1000, 1000, 10, 200, 150, -10, TestName = "onDecreasingRectangles")]
-        [TestCase(1000, 1000, 10, 30, 30, 0, TestName = "onSameSquares")]
-        [TestCase(0, 0, 10, 30, 30, 0, TestName = "onZeroCenter")]
-        [TestCase(1000, 1000, 10, 60, 30, 0, TestName = "onSameHorizontalRectangles")]
-        [TestCase(1000, 1000, 10, 30, 60, 0, TestName = "onSameVerticalRectangles")]
-        public void PutRectanglesCorrectly(int centerX, int centerY, int count, int startWidth, int startHeight,
-            int step)
+        [TestCase(10, 1, 1, TestName = "onIncreasingRectangles")]
+        [TestCase(10, 20, -1, TestName = "onDecreasingRectangles")]
+        [TestCase(10, 30, 0, TestName = "onZeroCenter")]
+        [TestCase(10, 20, 0, TestName = "onSameRectangles")]
+        public void PutRectanglesCorrectly(int count, int startFontSize,
+            double step)
         {
-            var center = new Point(centerX, centerY);
-            layouter = new CircularCloudLayouter(center);
-            var sizes = CreateSizeList(count, startWidth, startHeight, step);
-            foreach (var size in sizes)
-            {
-                layouter.PutNextRectangle(size);
-            }
+            layouter = new CircularCloudLayouter();
+            var sizedWords = CreateSizedWordsList(count, startFontSize, step);
+            layouter.LayoutWords(sizedWords);
 
-            layouter.GetRectangles().Count.Should().Be(sizes.Count);
+            layouter.GetWordsRectangles().Count.Should().Be(sizedWords.Count);
             ContainsIntersectedRectangles(layouter).Should().Be(false);
         }
 
@@ -63,38 +65,39 @@ namespace TagsCloudContainer
         [TestCase(1000, TestName = "on 1000 rectangles")]
         public void HaveCorrectTime_OnManyRectangles(int count)
         {
-            layouter = new CircularCloudLayouter(new Point(500, 500));
+            layouter = new CircularCloudLayouter();
+            var wordsToAdd = new List<SizedWord>();
             for (var i = 0; i < count; i++)
             {
-                layouter.PutNextRectangle(new Size(40, 20));
+                wordsToAdd.Add(new SizedWord(i.ToString(), 10));
             }
 
-            layouter.GetRectangles().Count.Should().Be(count);
+            layouter.LayoutWords(wordsToAdd);
+            layouter.GetWordsRectangles().Count.Should().Be(count);
         }
 
-        private static List<Size> CreateSizeList(int count, int startWidth, int startHeight, int step)
+        private static List<SizedWord> CreateSizedWordsList(int count, int startFontSize, double step)
         {
-            var sizeList = new List<Size>();
-            var width = startWidth;
-            var height = startHeight;
+            var sizedWords = new List<SizedWord>();
+            var fontSize = startFontSize;
             for (var i = 0; i < count; i++)
             {
-                width += step;
-                height += step;
-                sizeList.Add(new Size(width, height));
+                fontSize = (int) Math.Round(fontSize + step);
+                sizedWords.Add(new SizedWord("word" + i, fontSize));
             }
 
-            return sizeList;
+            return sizedWords;
         }
 
         private static bool ContainsIntersectedRectangles(CircularCloudLayouter layouter)
         {
-            var rectangles = layouter.GetRectangles();
+            var rectangles = layouter.GetWordsRectangles();
             foreach (var firstRectangle in rectangles)
             {
                 foreach (var secondRectangle in rectangles)
                 {
-                    if (firstRectangle != secondRectangle && firstRectangle.IntersectsWith(secondRectangle))
+                    if (firstRectangle != secondRectangle &&
+                        firstRectangle.Rectangle.IntersectsWith(secondRectangle.Rectangle))
                     {
                         return true;
                     }

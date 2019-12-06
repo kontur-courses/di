@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer
 {
-    public class ArchimedeanSpiral
+    public class ArchimedeanSpiral : ILayoutAlgorithm
     {
         private readonly double a;
         private readonly double b;

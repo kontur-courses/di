@@ -1,5 +1,6 @@
 ﻿using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
+using TagsCloudContainer.Vizualization;
 using TagsCloudContainer.Word_Counting;
 
 namespace TagsCloudContainer
@@ -8,23 +9,27 @@ namespace TagsCloudContainer
     {
         private readonly IFileParser parser;
         private readonly IWordCounter wordCounter;
-        private readonly IRectangleTranslator translator;
+        private readonly ISizeTranslator translator;
         private readonly IVisualizer visualizer;
+        private readonly IWordLayouter layouter;
 
-        public CloudLayouter(IFileParser parser, IWordCounter wordCounter, IRectangleTranslator translator, IVisualizer visualizer)
+
+        public CloudLayouter(IFileParser parser, IWordCounter wordCounter, ISizeTranslator translator,
+            IVisualizer visualizer, IWordLayouter layouter)
         {
             this.parser = parser;
             this.wordCounter = wordCounter;
             this.translator = translator;
             this.visualizer = visualizer;
+            this.layouter = layouter;
         }
 
-        public void Layout(string filePath)
+        public void Layout(string inputPath, string outputPath)
         {
-            var parsed = parser.ParseFile(filePath);
+            var parsed = parser.ParseFile(inputPath);
             var wordCount = wordCounter.CountWords(parsed);
-            var rectangles = translator.TranslateWordsToRectangles(wordCount);
-            visualizer.Visualize(rectangles);
+            var rectangles = layouter.LayoutWords(translator.TranslateWordsToSizedWords(wordCount));
+            visualizer.Visualize(rectangles, outputPath);
         }
     }
 }

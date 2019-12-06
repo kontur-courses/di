@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace TagsCloudContainer.Parsing
@@ -10,7 +9,11 @@ namespace TagsCloudContainer.Parsing
         {
             using (var reader = new StreamReader(filePath))
             {
-                yield return reader.ReadLine();
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    yield return line;
+                }
             }
         }
     }

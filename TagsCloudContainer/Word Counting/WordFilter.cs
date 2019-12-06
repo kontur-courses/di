@@ -4,7 +4,7 @@
     {
         public bool IsExcluded(string word)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
     }
 }

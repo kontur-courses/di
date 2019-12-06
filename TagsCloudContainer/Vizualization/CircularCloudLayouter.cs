@@ -2,55 +2,83 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.RectangleTranslation;
+using TagsCloudContainer.Vizualization;
 
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : IWordLayouter
     {
-        private readonly List<Rectangle> rectangles = new List<Rectangle>();
-        private readonly Point center;
-        private readonly ArchimedeanSpiral archimedeanSpiral;
+        private  List<WordRectangle> wordRectangles = new List<WordRectangle>();
+        private readonly Point center = new Point(0, 0);
+        private readonly ILayoutAlgorithm layoutAlgorithm;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter()
         {
-            this.center = center;
-            archimedeanSpiral = new ArchimedeanSpiral(center);
+            layoutAlgorithm = new ArchimedeanSpiral(center);
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public List<WordRectangle> LayoutWords(IEnumerable<SizedWord> sizedWords)
         {
-            var point = archimedeanSpiral.GetNextPoint();
-            var checkedRectangle = new Rectangle(point, rectangleSize);
-            while (!IsCorrectToPlace(checkedRectangle))
-            {
-                point = archimedeanSpiral.GetNextPoint();
-                checkedRectangle = new Rectangle(point, rectangleSize);
-            }
-
-            var adjustedRectangle = AdjustRectangle(checkedRectangle);
-            rectangles.Add(adjustedRectangle);
-            return adjustedRectangle;
+            var layout = sizedWords.Select(PutNextWord).ToList();
+            var rectanglesWithOffset = OffsetCenter(layout);
+            wordRectangles = rectanglesWithOffset;
+            return rectanglesWithOffset;
         }
 
-        public List<Rectangle> GetRectangles()
+        public List<WordRectangle> GetWordsRectangles()
         {
-            return rectangles
-                .Select(rectangle => new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height))
+            return wordRectangles
+                .Select(rectangle => new WordRectangle(
+                    new SizedWord(rectangle.SizedWord.Word, rectangle.SizedWord.FontSize),
+                    new RectangleF(rectangle.Rectangle.X,
+                        rectangle.Rectangle.Y,
+                        rectangle.Rectangle.Width,
+                        rectangle.Rectangle.Height)))
                 .ToList();
         }
 
-        private Rectangle AdjustRectangle(Rectangle rectangle)
+        private List<WordRectangle> OffsetCenter(List<WordRectangle> rectangles)
+        {
+            var minX = rectangles.Min(wordRectangle => wordRectangle.Rectangle.Left);
+            var xOffset = minX < 0 ? -minX + 10 : 0;
+            var minY = rectangles.Min(wordRectangle => wordRectangle.Rectangle.Top);
+            var yOffset = minY < 0 ? -minY + 10 : 0;
+            var rectanglesWithOffset = rectangles.Select(wordRectangle => new WordRectangle(wordRectangle.SizedWord,
+                new RectangleF(wordRectangle.Rectangle.X + xOffset, wordRectangle.Rectangle.Y + yOffset,
+                    wordRectangle.Rectangle.Width, wordRectangle.Rectangle.Height))).ToList();
+            return rectanglesWithOffset;
+        }
+
+        private WordRectangle PutNextWord(SizedWord sizedWord)
+        {
+            var rectangleSize = sizedWord.WordSize;
+            var point = layoutAlgorithm.GetNextPoint();
+            var checkedRectangle = new RectangleF(point, rectangleSize);
+            while (!IsCorrectToPlace(checkedRectangle))
+            {
+                point = layoutAlgorithm.GetNextPoint();
+                checkedRectangle = new RectangleF(point, rectangleSize);
+            }
+
+            var adjustedRectangle = AdjustRectangle(checkedRectangle);
+            var wordRectangle = new WordRectangle(sizedWord, adjustedRectangle);
+            wordRectangles.Add(wordRectangle);
+            return wordRectangle;
+        }
+
+        private RectangleF AdjustRectangle(RectangleF rectangle)
         {
             rectangle = MoveRectangleHorizontally(rectangle);
             rectangle = MoveRectangleVertically(rectangle);
             return rectangle;
         }
 
-        private Rectangle MoveRectangleHorizontally(Rectangle rectangle)
+        private RectangleF MoveRectangleHorizontally(RectangleF rectangle)
         {
             var stepSize = rectangle.X < center.X ? 1 : -1;
-            var checkedRectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            var checkedRectangle = new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             while (IsCorrectToPlace(checkedRectangle) && checkedRectangle.X != center.X)
             {
                 checkedRectangle.X += stepSize;
@@ -64,10 +92,10 @@ namespace TagsCloudContainer
             return checkedRectangle;
         }
 
-        private Rectangle MoveRectangleVertically(Rectangle rectangle)
+        private RectangleF MoveRectangleVertically(RectangleF rectangle)
         {
             var stepSize = rectangle.Y < center.Y ? 1 : -1;
-            var checkedRectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            var checkedRectangle = new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             while (IsCorrectToPlace(checkedRectangle) && checkedRectangle.Y != center.Y)
             {
                 checkedRectangle.Y += stepSize;
@@ -81,14 +109,9 @@ namespace TagsCloudContainer
             return checkedRectangle;
         }
 
-        private bool IsCorrectToPlace(Rectangle checkedRectangle)
+        private bool IsCorrectToPlace(RectangleF checkedRectangle)
         {
-            if (checkedRectangle.X < 0 || checkedRectangle.Y < 0)
-            {
-                return false;
-            }
-
-            return rectangles.All(rectangle => !rectangle.IntersectsWith(checkedRectangle));
+            return wordRectangles.All(rectangle => !rectangle.Rectangle.IntersectsWith(checkedRectangle));
         }
     }
 }

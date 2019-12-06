@@ -42,6 +42,9 @@
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -59,13 +62,23 @@
   <ItemGroup>
     <Compile Include="CloudLayouter.cs" />
     <Compile Include="ICloudLayouter.cs" />
+    <Compile Include="RectangleTranslation\SizedWord.cs" />
+    <Compile Include="Settings Providing\SettingsProvider.cs" />
+    <Compile Include="Vizualization\Interfaces\ISaver.cs" />
+    <Compile Include="Vizualization\Interfaces\IWordLayouter.cs" />
+    <Compile Include="Vizualization\PngSaver.cs" />
+    <Compile Include="Vizualization\WordRectangle.cs" />
+    <Compile Include="Settings Providing\ISettingsProvider.cs" />
     <Compile Include="Parsing\IFileParser.cs" />
     <Compile Include="Parsing\TxtParser.cs" />
-    <Compile Include="RectangleTranslation\IRectangleTranslator.cs" />
-    <Compile Include="RectangleTranslation\RectangleTranslator.cs" />
+    <Compile Include="RectangleTranslation\ISizeTranslator.cs" />
+    <Compile Include="RectangleTranslation\SizeTranslator.cs" />
+    <Compile Include="Settings Providing\Settings.cs" />
     <Compile Include="Vizualization\ArchimedeanSpiral.cs" />
     <Compile Include="Vizualization\ColoringOptions.cs" />
-    <Compile Include="Vizualization\IVisualizer.cs" />
+    <Compile Include="Vizualization\Interfaces\ILayoutAlgorithm.cs" />
+    <Compile Include="Vizualization\Interfaces\IVisualizer.cs" />
+    <Compile Include="Vizualization\StringMeasurer.cs" />
     <Compile Include="Vizualization\Tests\ArchimedeanSpiral_Should.cs" />
     <Compile Include="Vizualization\CircularCloudLayouter.cs" />
     <Compile Include="Vizualization\Tests\CircularCloudLayouter_Should.cs" />
@@ -81,11 +94,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Dictionaries\index.aff" />
+    <None Include="Dictionaries\index.dic" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="example.txt" />
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -2,6 +2,6 @@
 {
     public interface ICloudLayouter
     {
-        void Layout(string filePath);
+        void Layout(string inputPath, string outputPath);
     }
 }
