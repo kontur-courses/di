@@ -74,7 +74,8 @@
       <DependentUpon>app.settings</DependentUpon>
     </Compile>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="BoringWordsFilter.cs" />
+    <Compile Include="Tests\BoringWordsTests.cs" />
+    <Compile Include="WordFilters\BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />
@@ -91,7 +92,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsManager.cs" />
-    <Compile Include="SpellCheckerFilter.cs" />
+    <Compile Include="WordFilters\SpellCheckerFilter.cs" />
     <Compile Include="Tests\SpellCheckerTests.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
@@ -151,6 +152,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

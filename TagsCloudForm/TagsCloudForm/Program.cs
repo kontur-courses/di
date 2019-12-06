@@ -5,6 +5,7 @@ using TagsCloudForm.Actions;
 using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
+using TagsCloudForm.WordFilters;
 
 namespace TagsCloudForm
 {
@@ -28,6 +29,8 @@ namespace TagsCloudForm
             builder.RegisterType<CloudPainter>();
 
             builder.RegisterType<CloudWithWordsPainter>();
+
+            builder.RegisterType<BoringWordsFilter>();
 
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
 

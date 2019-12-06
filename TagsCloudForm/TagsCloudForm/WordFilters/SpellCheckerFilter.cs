@@ -5,7 +5,7 @@ using System.Linq;
 using NHunspell;
 using TagsCloudForm.CircularCloudLayouter;
 
-namespace TagsCloudForm
+namespace TagsCloudForm.WordFilters
 {
     public class SpellCheckerFilter
     {
@@ -18,7 +18,7 @@ namespace TagsCloudForm
                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "en_us.dic"));
             else
                 throw new NotImplementedException();
-            return words.Where(x=>checker.Spell(x));
+            return words.Where(x=>checker.Spell(x.ToLower()));
         }
     }
 }

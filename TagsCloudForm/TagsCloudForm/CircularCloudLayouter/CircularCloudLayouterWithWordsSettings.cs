@@ -8,9 +8,13 @@
 
         public int Scale { get; set; } = 5;
 
-        public string WordsSource { get; set; } = "words.txt";
+        public string WordsSource { get; set; } = "UserData/words.txt";
+
+        public string BoringWordsFile { get; set; } = "UserData/boring.txt";
 
         public bool Ordered { get; set; } = false;
+        public bool UpperCase { get; set; } = true;
+
 
         public LanguageEnum Language { get; set; } = LanguageEnum.English;
 
