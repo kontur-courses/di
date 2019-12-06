@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Solved.Step11.App.Fractals;

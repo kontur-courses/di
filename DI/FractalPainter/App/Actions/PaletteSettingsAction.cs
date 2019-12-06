@@ -17,9 +17,8 @@ namespace FractalPainting.App.Actions
         public string Name => "Палитра...";
         public string Description => "Цвета для рисования фракталов";
 
-        public void Perform()
-        {
-            SettingsForm.For(palette).ShowDialog();
+        public void Perform(
+        SettingsForm.For(palette).ShowDialog();
         }
     }
 }

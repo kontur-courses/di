@@ -19,7 +19,7 @@ namespace TagsCloudVisualization
         private static ImageSettings InitializeDefaultSettings()
         {
             var font = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-            return new ImageSettings(font, new Size(2000, 2000), new Point(1000,1000));
+            return new ImageSettings(font, new Size(1000, 1000), new Point(500,500));
         }
     }
 }

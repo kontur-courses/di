@@ -25,6 +25,7 @@ namespace TagsCloudVisualization
             var wordTokens = textParser.ParseToTokens(text);
             var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             var graphics = Graphics.FromImage(bmp);
+            graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, bmp.Width, bmp.Height);
             var tags = new List<Tag>();
             var cloudScale = 1f;
             foreach (var word in wordTokens)
