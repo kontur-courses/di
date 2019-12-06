@@ -10,13 +10,14 @@ namespace TagsCloudVisualization.Tests
     {
         public static double GetCloudRadius(IEnumerable<Rectangle> rectangles)
         {
-            var cloudWidth = GetCloudWidth(rectangles);
-            var cloudHeight = GetCloudHeight(rectangles);
+            var cashedRectangles = rectangles.ToList();
+            var cloudWidth = GetCloudWidth(cashedRectangles);
+            var cloudHeight = GetCloudHeight(cashedRectangles);
 
             return Math.Min(cloudWidth / 2, cloudHeight / 2);
         }
 
-        public static double GetCloudWidth(IEnumerable<Rectangle> rectangles)
+        public static double GetCloudWidth(List<Rectangle> rectangles)
         {
             var leftBorder = rectangles.Min(value => value.Left);
             var rightBorder = rectangles.Max(value => value.Right);
@@ -24,14 +25,14 @@ namespace TagsCloudVisualization.Tests
             return rightBorder - leftBorder;
         }
 
-        public static double GetCloudHeight(IEnumerable<Rectangle> rectangles)
+        public static double GetCloudHeight(List<Rectangle> rectangles)
         {
             var topBorder = rectangles.Min(value => value.Top);
             var bottomBorder = rectangles.Max(value => value.Bottom);
 
             return bottomBorder - topBorder;
         }
-        
+
         public static List<Rectangle> GetCloudWithEqualRectangles(int rectanglesCount, int width = 15, int height = 15)
         {
             var center = new Point(500, 500);
