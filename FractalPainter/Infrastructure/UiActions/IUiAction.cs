@@ -1,4 +1,4 @@
-namespace FractalPainting.Infrastructure.UiActions
+﻿namespace FractalPainting.Infrastructure.UiActions
 {
     public interface IUiAction
     {

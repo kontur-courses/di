@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizer
 {
-    public class FermaSpiral
+    public class FermaSpiral : ISpiral
     {
-        private readonly float coefficient;
         private readonly Point center;
+        private readonly float coefficient;
         private int spiralCounter;
 
-        public FermaSpiral(float coefficient, Point center)
+        public FermaSpiral(Point center, float coefficient = 1)
         {
             this.coefficient = coefficient;
             this.center = center;

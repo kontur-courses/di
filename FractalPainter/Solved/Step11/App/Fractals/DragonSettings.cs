@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace FractalPainting.Solved.Step11.App.Fractals
 {

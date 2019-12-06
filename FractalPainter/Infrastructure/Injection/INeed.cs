@@ -1,4 +1,4 @@
-namespace FractalPainting.Infrastructure.Injection
+﻿namespace FractalPainting.Infrastructure.Injection
 {
     public interface INeed<in T>
     {

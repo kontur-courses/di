@@ -1,4 +1,4 @@
-namespace FractalPainting.Solved.Step07.Infrastructure.UiActions
+﻿namespace FractalPainting.Solved.Step07.Infrastructure.UiActions
 {
     public interface IUiAction
     {

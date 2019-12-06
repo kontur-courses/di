@@ -1,4 +1,4 @@
-using FractalPainting.Infrastructure.Common;
+﻿using FractalPainting.Infrastructure.Common;
 
 namespace FractalPainting.Solved.Step07.App
 {

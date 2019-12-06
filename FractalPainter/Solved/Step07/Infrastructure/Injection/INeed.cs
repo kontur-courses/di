@@ -1,4 +1,4 @@
-namespace FractalPainting.Solved.Step07.Infrastructure.Injection
+﻿namespace FractalPainting.Solved.Step07.Infrastructure.Injection
 {
     public interface INeed<in T>
     {

@@ -1,16 +1,16 @@
-using System.ComponentModel;
+п»їusing System.ComponentModel;
 
 namespace FractalPainting.Solved.Step11.Infrastructure.UiActions
 {
     public enum MenuCategory
     {
-        [Description("Файл")]
+        [Description("пїЅпїЅпїЅпїЅ")]
         File = 0,
 
-        [Description("Фракталы")]
+        [Description("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
         Fractals = 1,
 
-        [Description("Настройки")]
+        [Description("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
         Settings = 2,
     }
 }

@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
 
@@ -32,7 +32,7 @@ namespace FractalPainting.Solved.Step08.App
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Не удалось загрузить настройки");
+                MessageBox.Show(e.Message, "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
                 return CreateDefaultSettings();
             }
         }

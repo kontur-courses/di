@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Windows.Forms;
 
 namespace FractalPainting.Infrastructure.Common
@@ -33,7 +33,7 @@ namespace FractalPainting.Infrastructure.Common
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = "Настройки";
+            Text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
         }
     }
 }

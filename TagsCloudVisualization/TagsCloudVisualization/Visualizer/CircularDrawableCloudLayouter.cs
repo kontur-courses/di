@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualizer
 {
-    public class CircularCloudLayouter
+    public class CircularDrawableCloudLayouter : IDrawableProvider<string>
     {
-        private readonly FermaSpiral spiralPointer;
-        public readonly List<Rectangle> Rectangles;
         private readonly Point center;
+        public readonly List<Rectangle> Rectangles;
+        private readonly ISpiral spiralPointer;
 
-        public Size SizeOfCloud =>
-            new Size(RightUpperPointOfCloud.X - LeftDownPointOfCloud.X,
-                RightUpperPointOfCloud.Y - LeftDownPointOfCloud.Y);
+        public CircularDrawableCloudLayouter(Point center, ISpiral spiral, IEnumerable<Sizable<string>> sizableSource)
+        {
+            Rectangles = new List<Rectangle>();
+            spiralPointer = new FermaSpiral(center);
+            this.center = center;
+            DrawableObjects = GetDrawableObjects(sizableSource).ToArray();
+        }
 
-        public Point LeftDownPointOfCloud
+
+        private Point LeftDownPointOfCloud
         {
             get
             {
@@ -28,7 +34,7 @@ namespace TagsCloudVisualization
             }
         }
 
-        public Point RightUpperPointOfCloud
+        private Point RightUpperPointOfCloud
         {
             get
             {
@@ -41,14 +47,18 @@ namespace TagsCloudVisualization
             }
         }
 
-        public CircularCloudLayouter(Point center)
+        public IEnumerable<Drawable<string>> DrawableObjects { get; }
+
+        public Size SizeOfCloud =>
+            new Size(RightUpperPointOfCloud.X - LeftDownPointOfCloud.X,
+                RightUpperPointOfCloud.Y - LeftDownPointOfCloud.Y);
+
+        private IEnumerable<Drawable<string>> GetDrawableObjects(IEnumerable<Sizable<string>> objects)
         {
-            Rectangles = new List<Rectangle>();
-            spiralPointer = new FermaSpiral(1, center);
-            this.center = center;
+            return objects.Select(sizable => new Drawable<string>(sizable.Value, PutNextRectangle(sizable.DrawSize)));
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        private Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.IsEmpty || rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("Rectangle does not exist");

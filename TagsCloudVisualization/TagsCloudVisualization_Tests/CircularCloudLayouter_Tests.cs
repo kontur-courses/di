@@ -6,6 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Visualizer;
 
 namespace TagsCloudVisualization_Tests
 {

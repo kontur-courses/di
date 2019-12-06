@@ -1,4 +1,4 @@
-namespace FractalPainting.Solved.Step05.App.Fractals
+﻿namespace FractalPainting.Solved.Step05.App.Fractals
 {
     public interface IDragonPainterFactory
     {
