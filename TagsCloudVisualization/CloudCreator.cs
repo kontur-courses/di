@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Autofac;
+﻿using System.Drawing;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.PathFinders;
-using TagsCloudVisualization.TextFilters;
 using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.TextReaders;
 using TagsCloudVisualization.Visualization;
-using TagsCloudVisualization.WordConverters;
-using TagsCloudVisualization.PathFinders;
 
 namespace TagsCloudVisualization
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.CloudPainters
