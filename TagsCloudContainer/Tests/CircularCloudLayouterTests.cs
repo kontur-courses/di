@@ -7,6 +7,9 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Core;
+using TagsCloudContainer.Core.ImageBuilder;
+using TagsCloudContainer.Core.ImageSavers;
+using TagsCloudContainer.Core.LayoutAlgorithms;
 
 namespace TagsCloudContainer.Tests
 {
@@ -28,10 +31,16 @@ namespace TagsCloudContainer.Tests
             if (!Directory.Exists($@"C:\\TagCloudTests"))
                 Directory.CreateDirectory($@"C:\\TagCloudTests");
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure) return;
-            var tagCloudImageCreator = new TagCloudImageCreator(circularCloudLayouter);
+            var tags = new List<Tag>();
+            foreach (var rectangle in circularCloudLayouter.Rectangles)
+            {
+                tags.Add(new Tag("a", rectangle, 1));
+            }
+            var tagCloudImageCreator = new TagCloudImageCreator(new SolidBrush(Color.Empty));
             var testName = TestContext.CurrentContext.Test.FullName;
             var path = $@"C:\\TagCloudTests\{testName}.jpg";
-            tagCloudImageCreator.Save(path);
+            var bitmap = tagCloudImageCreator.Build("Arial", tags, new Size(1000, 1000));
+            new PngSaver().Save(path, bitmap);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 
@@ -73,7 +82,7 @@ namespace TagsCloudContainer.Tests
 
         [TestCase(1, Description = "it is expected that after adding the rectangle the maximum values along the X and Y axes will be relatively close to the center",
             TestName = "Added1Rectangle")]
-        [TestCase(50,  Description = "It is expected that after adding fifty rectangles the maximum values along the X and Y axes will be relatively close to the center",
+        [TestCase(50, Description = "It is expected that after adding fifty rectangles the maximum values along the X and Y axes will be relatively close to the center",
             TestName = "Added50Rectangle")]
         public void PutNextRectangle_RectanglesShouldBeTightlyCentered(int countRectangles)
         {
@@ -88,9 +97,9 @@ namespace TagsCloudContainer.Tests
         private IEnumerable<(Rectangle, Rectangle)> IntersectionOfAnyTwo(Rectangle[] source)
         {
             for (var i = 0; i < source.Length; i++)
-            for (var j = i + 1; j < source.Length; j++)
-                if (source[i].IntersectsWith(source[j]))
-                    yield return (source[i], source[j]);
+                for (var j = i + 1; j < source.Length; j++)
+                    if (source[i].IntersectsWith(source[j]))
+                        yield return (source[i], source[j]);
         }
 
         private void AddSameRectangles(int countRectangles, int size)
