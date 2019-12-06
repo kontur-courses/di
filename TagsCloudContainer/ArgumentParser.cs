@@ -27,9 +27,9 @@ namespace TagsCloudContainer
                 HelpText = "Set size for image.")]
             public int Size { get; set; }
 
-            [Option('h', "help", Required = false,
-                HelpText = "Help <command> prints help for command.")]
-            public bool Help { get; set; }
+//            [Option('h', "help", Required = false,
+//                HelpText = "Help <command> prints help for command.")]
+//            public bool Help { get; set; }
         }
 
         public static Options ParseArguments(string[] args)

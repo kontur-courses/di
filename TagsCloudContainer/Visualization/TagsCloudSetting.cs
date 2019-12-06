@@ -20,6 +20,15 @@ namespace TagsCloudContainer.Visualization
             TextColor = textColor;
             BackgroundColor = backgroundColor;
         }
+        
+        public TagsCloudSetting(ArgumentParser.Options argument)
+        {
+            Font = new Font(FontFamily.GenericMonospace,argument.FontSize);
+            ImageSize = new Size(argument.Size,argument.Size);
+            TextColor = Color.Red;
+            BackgroundColor = Color.Black ;
+        }
+
 
         public static TagsCloudSetting GetDefault()
         {

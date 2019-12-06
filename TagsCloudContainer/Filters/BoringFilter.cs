@@ -5,7 +5,7 @@ namespace TagsCloudContainer.Filters
 {
     public class BoringFilter : IFilter
     {
-        private HashSet<string> boringWords;
+        private readonly HashSet<string> boringWords;
 
         public BoringFilter(IEnumerable<string> boringWords)
         {
