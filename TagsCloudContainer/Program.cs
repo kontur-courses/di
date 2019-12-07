@@ -1,6 +1,8 @@
 ﻿
 using Autofac;
 using TagsCloudContainer.ApplicationRunning;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.CloudVisualizers;
 using TagsCloudContainer.CloudVisualizers.BitmapMakers;
@@ -17,9 +19,9 @@ namespace TagsCloudContainer
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<TagsCloudMaker>().AsSelf();
+            builder.RegisterType<TagsCloudMaker>().AsSelf().SingleInstance();
             builder.RegisterType<ConsoleAppRunner>().As<IAppRunner>();
-            builder.RegisterType<TagsCloud>().AsSelf();
+            builder.RegisterType<TagsCloud>().AsSelf().SingleInstance();
             builder.RegisterType<CloudWordsParser>().As<ICloudWordsParser>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
@@ -28,6 +30,8 @@ namespace TagsCloudContainer
             builder.RegisterType<DefaultParsingRule>().As<ICloudWordParsingRule>();
             builder.RegisterType<DefaultBitmapMaker>().As<IBitmapMaker>();
             builder.RegisterType<SettingsManager>().AsSelf().SingleInstance();
+            builder.RegisterType<CommandsExecutor>().AsSelf().SingleInstance();
+            builder.RegisterType<ParseCommand>().As<IConsoleCommand>();
             builder
                 .Register(c => c.Resolve<SettingsManager>().GetLayouterSettings())
                 .As<CloudLayouterSettings>();
