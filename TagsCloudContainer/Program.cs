@@ -32,6 +32,7 @@ namespace TagsCloudContainer
             builder.RegisterType<SettingsManager>().AsSelf().SingleInstance();
             builder.RegisterType<CommandsExecutor>().AsSelf().SingleInstance();
             builder.RegisterType<ParseCommand>().As<IConsoleCommand>();
+            builder.RegisterType<GenerateCloudCommand>().As<IConsoleCommand>();
             builder
                 .Register(c => c.Resolve<SettingsManager>().GetLayouterSettings())
                 .As<CloudLayouterSettings>();

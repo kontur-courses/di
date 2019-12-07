@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleAppRunner.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\CommandsExecutor.cs" />
+    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\GenerateCloudCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\IConsoleCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\ParseCommand.cs" />
     <Compile Include="ApplicationRunning\IAppRunner.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="CloudLayouters\CircularCloudLayouter\CircularCloudLayouterVisualizer.cs" />
     <Compile Include="CloudLayouters\CloudLayouter.cs" />
     <Compile Include="CloudLayouters\CloudLayouterSettings.cs" />
+    <Compile Include="CloudLayouters\CloudLayoutingAlgorithms.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="CloudLayouters\ICloudLayoutingAlgorithm.cs" />
     <Compile Include="CloudVisualizers\BitmapMakers\DefaultBitmapMaker.cs" />
