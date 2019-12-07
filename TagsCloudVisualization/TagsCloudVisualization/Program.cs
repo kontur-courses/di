@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using Autofac;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizer;
@@ -12,8 +13,16 @@ namespace TagsCloudVisualization
         internal static void Main()
         {
             var workingDirectory = Environment.CurrentDirectory;
+            var pathToResources = workingDirectory;
             var fullPath = workingDirectory + "\\cloud.bmp";
-            var textDirectory = Environment.CurrentDirectory + "\\HarryPotter.txt";
+            for (var i = 0; i < 3; i++)
+            {
+                pathToResources = Directory.GetParent(pathToResources).FullName;
+            }
+
+            pathToResources += "\\Resources";
+            var textDirectory = pathToResources + "\\HarryPotter.txt";
+
             var container = PrepareContainer(new Point(0, 0), textDirectory, 100);
             container.Resolve<Bitmap>().Save(fullPath);
             Console.WriteLine("rectangle saved to: " + fullPath);
