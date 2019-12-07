@@ -26,6 +26,12 @@ namespace TagsCloudVisualization
             layouter = defaultContainer.Resolve<ILayouter>() as CircularCloudLayouter;
         }
 
+        [TearDown]
+        public void ResetLayouter()
+        {
+            layouter.Reset();
+        }
+
         [TestCase(0, 1, TestName = "Width is zero")]
         [TestCase(1, 0, TestName = "Height is zero")]
         [TestCase(-1, 1, TestName = "Width is negative number")]

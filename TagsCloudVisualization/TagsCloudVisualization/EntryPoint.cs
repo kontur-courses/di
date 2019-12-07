@@ -20,7 +20,6 @@ namespace TagsCloudVisualization
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => typeof(IUiAction).IsAssignableFrom(t)).As<IUiAction>();
-
             builder.RegisterType<TagCloudVisualizer>().SingleInstance().As<IVisualizer>();
             builder.RegisterType<CircularCloudLayouter>().SingleInstance().As<ILayouter>();
             builder.RegisterType<ArchimedeanSpiral>().SingleInstance().As<ICirclePointLocator>();
@@ -28,6 +27,7 @@ namespace TagsCloudVisualization
             builder.RegisterType<RandomTagPainter>().SingleInstance().As<ITagPainter>();
             builder.RegisterType<MainForm>().SingleInstance().As<MainForm>();
             builder.RegisterType<PictureBox>().SingleInstance().As<PictureBox>();
+            builder.RegisterType<AppSettings>().SingleInstance().As<ImageSettingsProvider>();
             return builder.Build();
         }
     }

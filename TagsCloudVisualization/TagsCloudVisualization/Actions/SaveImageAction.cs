@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace TagsCloudVisualization.Actions
@@ -14,23 +13,16 @@ namespace TagsCloudVisualization.Actions
             this.imageHolder = imageHolder;
             Name = "Save";
         }
+
         public void Perform()
         {
             var saveDialog = new SaveFileDialog {Filter = "Images|*.png"};
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 if (imageHolder.Image != null)
-                {
                     imageHolder.Image.Save(saveDialog.FileName, ImageFormat.Png);
-                }
                 else
-                {
-                    MessageBox.Show(
-                        "No tag cloud to save",  
-                        "Warning", 
-                        MessageBoxButtons.OK, 
-                        MessageBoxIcon.Error);
-                }
+                    MessageBox.Show("No tag cloud to save", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouter : ILayouter
     {
         private readonly ICirclePointLocator pointLocator;
-        private readonly List<Rectangle> taggedRectangles;
+        private List<Rectangle> taggedRectangles;
 
         public CircularCloudLayouter(ICirclePointLocator pointLocator)
         {
@@ -23,6 +23,13 @@ namespace TagsCloudVisualization
             var rectangle = CreateRectangleOnSpiral(rectangleSize);
             taggedRectangles.Add(rectangle);
             return rectangle;
+        }
+
+        public void Reset()
+        {
+            taggedRectangles = new List<Rectangle>();
+            pointLocator.DistanceFromCenter = 0;
+            pointLocator.Angle = 0;
         }
 
         private Rectangle CreateRectangleOnSpiral(Size rectangleSize)

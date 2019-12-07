@@ -7,9 +7,7 @@ namespace TagsCloudVisualization
     public class TagCloudVisualizer : IVisualizer
     {
         private readonly ILayouter layouter;
-
         private readonly IParser textParser;
-
         private readonly ITagPainter painter;
 
         public TagCloudVisualizer(IParser textParser, ILayouter layouter, ITagPainter painter)
@@ -17,7 +15,7 @@ namespace TagsCloudVisualization
             this.textParser = textParser;
             this.layouter = layouter;
             this.painter = painter;
-        }
+        } 
 
         public Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings)
         {
@@ -40,6 +38,7 @@ namespace TagsCloudVisualization
             }
             foreach (var tag in tags)
                 DrawTag(graphics, tag, cloudScale, imageSettings);
+            layouter.Reset();
             return bmp;
         }
 

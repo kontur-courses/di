@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TagsCloudVisualization.Actions
 {
@@ -9,23 +6,25 @@ namespace TagsCloudVisualization.Actions
     {
         private readonly IVisualizer visualizer;
         private readonly PictureBox imageHolder;
-
+        private readonly ImageSettingsProvider imageSettingsProvider;
         public string Name { get; }
 
-        public CreateCloudFromFileAction(IVisualizer visualizer, PictureBox imageHolder)
+        public CreateCloudFromFileAction(
+            IVisualizer visualizer, PictureBox imageHolder, ImageSettingsProvider imageSettingsProvider)
         {
             this.imageHolder = imageHolder;
             this.visualizer = visualizer;
+            this.imageSettingsProvider = imageSettingsProvider;
             Name = "Create From File";
         }
 
         public void Perform()
         {
-            var FD = new OpenFileDialog();
-            if (FD.ShowDialog() == DialogResult.OK)
+            var fileDialog = new OpenFileDialog {Filter = "txt files (*.txt)|*.txt"};
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileToOpen = FD.FileName;
-                var image = visualizer.VisualizeTextFromFile(fileToOpen, ImageSettings.DefaultSettings);
+                var fileToOpen = fileDialog.FileName;
+                var image = visualizer.VisualizeTextFromFile(fileToOpen, imageSettingsProvider.ImageSettings);
                 imageHolder.Image = image;
             }
         }

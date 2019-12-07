@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
-using Autofac;
 using TagsCloudVisualization.Actions;
 
 namespace TagsCloudVisualization
@@ -10,12 +8,14 @@ namespace TagsCloudVisualization
     {
         public MainForm(IUiAction[] menuActions, PictureBox imageHolder)
         {
+            WindowState = FormWindowState.Maximized;
             var menuStrip = new MenuStrip();
             foreach (var action in menuActions)
             {
                 var button = new ToolStripButton(action.Name, null, (sender, args) => action.Perform());
                 menuStrip.Items.Add(button);
             }
+
             imageHolder.Dock = DockStyle.Fill;
             imageHolder.SizeMode = PictureBoxSizeMode.AutoSize;
             var panel = new FlowLayoutPanel {AutoScroll = true};

@@ -67,8 +67,11 @@
     <Compile Include="Actions\CreateCloudFromFileAction.cs" />
     <Compile Include="Actions\IUiAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
+    <Compile Include="Actions\SettingsAction.cs" />
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="ImageSettingsProvider.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +84,9 @@
     <Compile Include="PointExtensions.cs" />
     <Compile Include="Painter\RandomPainter.cs" />
     <Compile Include="Painter\SingleColorPainter.cs" />
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Tests\GeometryTests.cs" />

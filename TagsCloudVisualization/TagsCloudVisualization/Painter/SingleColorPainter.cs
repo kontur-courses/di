@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 
 namespace TagsCloudVisualization
 {
     public class SingleColorTagPainter : ITagPainter
     {
-        public Color GetTagColor()
+        private readonly Color paintColor;
+
+        public SingleColorTagPainter(Color paintColor)
         {
-            throw new System.NotImplementedException();
+            this.paintColor = paintColor;
         }
+
+        public Color GetTagColor() => paintColor;
     }
 }
