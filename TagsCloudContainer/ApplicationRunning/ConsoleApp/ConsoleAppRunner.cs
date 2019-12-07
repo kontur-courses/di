@@ -7,21 +7,15 @@ namespace TagsCloudContainer.ApplicationRunning.ConsoleApp
 {
     public class ConsoleAppRunner : IAppRunner
     {
-        private TagsCloud cloud;
-        private SettingsManager settingsManager;
         private CommandsExecutor executor;
-        public ConsoleAppRunner(
-            TagsCloud cloud, 
-            SettingsManager settingsManager,
-            CommandsExecutor executor)
+        public ConsoleAppRunner(CommandsExecutor executor)
         {
-            this.cloud = cloud;
-            this.settingsManager = settingsManager;
             this.executor = executor;
         }
         
         public void Run()
         {
+            Console.WriteLine("Welcome to cloud visualizer. Use 'help' to see commands list.");
             while (true)
             {
                 var args = Console.ReadLine()?.Split().ToArray();
