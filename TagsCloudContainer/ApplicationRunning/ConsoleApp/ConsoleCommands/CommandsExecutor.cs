@@ -40,7 +40,18 @@ namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
             if(command is null)
                 Console.WriteLine($"No command '{commandName}' found. Try 'help' for help on commands.");
             else
-                command.Act(args.Skip(1).ToArray());
+            {
+                try
+                {
+                    command.Act(args.Skip(1).ToArray());
+                }
+                catch (Exception e)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(e.Message);
+                    Console.ResetColor();
+                }
+            }
         }
     }
 }
