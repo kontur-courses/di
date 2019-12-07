@@ -98,6 +98,7 @@
     <Compile Include="TextParsing\CloudParsing\ICloudWordsParser.cs" />
     <Compile Include="TextParsing\CloudParsing\ParsingRules\DefaultParsingRule.cs" />
     <Compile Include="TextParsing\FileWordsParsers\TxtWordParser.cs" />
+    <Compile Include="TextParsing\FileWordsParsers\WordsParser.cs" />
     <Compile Include="TextParsing\IFileWordsParser.cs" />
   </ItemGroup>
   <ItemGroup>
