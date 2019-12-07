@@ -1,0 +1,26 @@
+{
+  "name": "dictionary-ru",
+  "version": "1.2.2",
+  "description": "Russian spelling dictionary in UTF-8",
+  "license": "BSD-2-Clause",
+  "keywords": [
+    "spelling",
+    "myspell",
+    "hunspell",
+    "dictionary",
+    "ru",
+    "russian"
+  ],
+  "repository": "https://github.com/wooorm/dictionaries/tree/master/dictionaries/ru",
+  "bugs": "https://github.com/wooorm/dictionaries/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+    "Thomas Beverley <tom.beverley101@gmail.com>"
+  ],
+  "files": [
+    "index.js",
+    "index.aff",
+    "index.dic"
+  ]
+}
