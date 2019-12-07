@@ -62,6 +62,7 @@
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\CommandsExecutor.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\GenerateCloudCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\IConsoleCommand.cs" />
+    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\SaveCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\VisualizeCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\ParseCommand.cs" />
     <Compile Include="ApplicationRunning\IAppRunner.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="CloudVisualizers\ImageSaving\IImageSaver.cs" />
     <Compile Include="CloudVisualizers\ImageSaving\ImageSaver.cs" />
     <Compile Include="CloudVisualizers\ImageSaving\ImageSaverSettings.cs" />
+    <Compile Include="CloudVisualizers\ImageSaving\SupportedImageFormats.cs" />
     <Compile Include="CloudVisualizers\Palette.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />

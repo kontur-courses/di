@@ -34,6 +34,7 @@ namespace TagsCloudContainer
             builder.RegisterType<ParseCommand>().As<IConsoleCommand>();
             builder.RegisterType<GenerateCloudCommand>().As<IConsoleCommand>();
             builder.RegisterType<VisualizeCommand>().As<IConsoleCommand>();
+            builder.RegisterType<SaveCommand>().As<IConsoleCommand>();
             builder
                 .Register(c => c.Resolve<SettingsManager>().GetLayouterSettings())
                 .As<CloudLayouterSettings>();
