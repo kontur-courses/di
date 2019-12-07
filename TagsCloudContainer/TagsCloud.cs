@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.CloudLayouters;
@@ -36,16 +37,21 @@ namespace TagsCloudContainer
         
         public void GenerateTagCloud()
         {
+            if (parsedWords is null) throw new InvalidOperationException("You should parse your words first!");
             visualizationWords = cloudLayouter.GetWords(parsedWords).ToList();
         }
 
         public void VisualizeCloud()
         {
+            if (visualizationWords is null)
+                GenerateTagCloud();
             visualizedBitmap = cloudVisualizer.GetBitmap(visualizationWords);
         }
 
         public void SaveVisualized()
         {
+            if(visualizedBitmap is null)
+                VisualizeCloud();
             imageSaver.Save(visualizedBitmap);
         }
     }
