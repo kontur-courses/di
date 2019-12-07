@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using TagsCloudContainer.WordProcessor;
 
 namespace TagsCloudContainer.WordsToSizesConverter
 {
     public interface IWordFrequenciesToSizesConverter
     {
-        IList<Size> ConvertToSizes(IDictionary<string, int> wordFrequencies);
+        IEnumerable<Size> ConvertToSizes(IEnumerable<WordWithCount> wordsWithCount);
     }
 }

@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Visualizer
 {
-    class WordRectangle
+    public class WordRectangle
     {
         public string Word { get; }
         public Rectangle Rectangle { get; }

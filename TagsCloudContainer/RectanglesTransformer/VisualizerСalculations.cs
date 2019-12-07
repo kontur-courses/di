@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudContainer.RectanglesShifter
+namespace TagsCloudContainer.RectanglesTransformer
 {
     static class VisualizerСalculations
     {
-        public static Size GetOptimalSizeForImage(IList<Rectangle> rectangles, int indent)
+        public static Size GetOptimalSizeForImage(ICollection<Rectangle> rectangles, int indent)
         {
             if (rectangles.Count == 0)
                 throw new ArgumentException("Empty rectangles list");
@@ -25,7 +25,7 @@ namespace TagsCloudContainer.RectanglesShifter
             return new Point(size.Width / 2, size.Height / 2);
         }
 
-        public static List<Rectangle> GetRectanglesWithOptimalLocation(IList<Rectangle> rectangles, Size offset)
+        public static List<Rectangle> GetRectanglesWithOptimalLocation(IEnumerable<Rectangle> rectangles, Size offset)
         {
             return rectangles
                 .Select(rectangle => new Rectangle(rectangle.Location + offset, rectangle.Size))

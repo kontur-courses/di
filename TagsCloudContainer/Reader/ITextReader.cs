@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TagsCloudContainer.Reader
 {
-    public interface IFileReader
+    public interface ITextReader
     {
-        IList<string> ReadWords(string filename);
+        IEnumerable<string> ReadWords();
     }
 }

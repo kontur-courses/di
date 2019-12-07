@@ -15,6 +15,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,23 +82,30 @@
     <Compile Include="ImageSaver\IImageSaver.cs" />
     <Compile Include="ImageSaver\Saver.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
+    <Compile Include="Layouter\DefaultLayouterSettings.cs" />
     <Compile Include="Layouter\ILayouter.cs" />
+    <Compile Include="Layouter\ILayouterSettings.cs" />
     <Compile Include="Layouter\PointExtensions.cs" />
     <Compile Include="Layouter\PointsRadiusComparer.cs" />
     <Compile Include="Layouter\RectanglesExtensions.cs" />
+    <Compile Include="NewTests\BasicWordProcessorTests.cs" />
+    <Compile Include="NewTests\WordFrequenciesToSizesConverterTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reader\IFileReader.cs" />
-    <Compile Include="Reader\TextReader.cs" />
-    <Compile Include="RectanglesShifter\CenterRectanglesShifter.cs" />
-    <Compile Include="RectanglesShifter\IRectanglesShifter.cs" />
-    <Compile Include="RectanglesShifter\VisualizerСalculations.cs" />
-    <Compile Include="Tests\CircularCloudLayouterTests.cs" />
-    <Compile Include="Tests\Generator.cs" />
-    <Compile Include="Tests\PointExtensionsTests.cs" />
-    <Compile Include="Tests\PointsRadiusComparerTests.cs" />
-    <Compile Include="Tests\RectanglesExtensionsTests.cs" />
-    <Compile Include="Tests\RectanglesVisualizerCalculationsTests.cs" />
+    <Compile Include="Reader\ITextReader.cs" />
+    <Compile Include="Reader\FileReader.cs" />
+    <Compile Include="RectanglesTransformer\CenterRectanglesShifter.cs" />
+    <Compile Include="RectanglesTransformer\ShifterSettings.cs" />
+    <Compile Include="RectanglesTransformer\IRectanglesTransformer.cs" />
+    <Compile Include="RectanglesTransformer\IShifterSettings.cs" />
+    <Compile Include="RectanglesTransformer\VisualizerСalculations.cs" />
+    <Compile Include="TagsCloudCreator.cs" />
+    <Compile Include="OldTests\CircularCloudLayouterTests.cs" />
+    <Compile Include="OldTests\Generator.cs" />
+    <Compile Include="OldTests\PointExtensionsTests.cs" />
+    <Compile Include="OldTests\PointsRadiusComparerTests.cs" />
+    <Compile Include="OldTests\RectanglesExtensionsTests.cs" />
+    <Compile Include="OldTests\RectanglesVisualizerCalculationsTests.cs" />
     <Compile Include="Visualizer\DefaultVisualizerSettings.cs" />
     <Compile Include="Visualizer\IVisualizer.cs" />
     <Compile Include="Visualizer\IVisualizerSettings.cs" />
@@ -91,6 +113,7 @@
     <Compile Include="Visualizer\WordRectangle.cs" />
     <Compile Include="WordProcessor\BasicWordProcessor.cs" />
     <Compile Include="WordProcessor\IWordProcessor.cs" />
+    <Compile Include="WordProcessor\WordWithCount.cs" />
     <Compile Include="WordsToSizesConverter\IWordFrequenciesToSizesConverter.cs" />
     <Compile Include="WordsToSizesConverter\WordFrequenciesToSizesConverter.cs" />
   </ItemGroup>
@@ -107,6 +130,19 @@
     </None>
     <Content Include="Texts\words.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

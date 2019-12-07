@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Layouter;
 
-namespace TagsCloudContainer.Tests
+namespace TagsCloudContainer.OldTests
 {
     public class PointsRadiusComparerTests
     {

@@ -6,6 +6,6 @@ namespace TagsCloudContainer.WordProcessor
 {
     public interface IWordProcessor
     {
-        IDictionary<string, int> ProcessWords(IList<string> words);
+        IEnumerable<WordWithCount> ProcessWords(IEnumerable<string> words);
     }
 }

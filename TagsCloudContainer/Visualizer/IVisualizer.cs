@@ -5,8 +5,8 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Visualizer
 {
-    interface IVisualizer
-    {
-        Bitmap GetImage(IList<WordRectangle> wordRectangles);
+    public interface IVisualizer
+    { 
+        Image DrawImage(IList<WordRectangle> wordRectangles);
     }
 }

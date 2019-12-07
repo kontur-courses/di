@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Layouter;
-using TagsCloudContainer.Tests;
 
-namespace TagsCloudContainer.Tests
+namespace TagsCloudContainer.OldTests
 {
     class CircularCloudLayouterTests
     {
@@ -19,16 +16,16 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void CreateCircularCloudLayouter()
         {
-            layouter = new CircularCloudLayouter(defaultCenter);
+            layouter = new CircularCloudLayouter(new DefaultLayouterSettings());
         }
 
         [Test]
         public void PutNextRectangle_ShouldPutRectangleWithSameSizeAsInArgument_IfFirstRectangle()
         {
             var rectangleSize = new Size(10, 10);
+            var sizes = new List<Size> { rectangleSize };
 
-            layouter.PutNextRectangle(rectangleSize);
-            var rectangle = layouter.Rectangles[0];
+            var rectangle = layouter.GetRectangles(sizes)[0];
             var size = rectangle.Size;
 
             size.Should().Be(rectangleSize);
@@ -37,11 +34,11 @@ namespace TagsCloudContainer.Tests
         [Test]
         [TestCase(10, 10)]
         [TestCase(9, 9)]
-        public void PutNextRectangle_ShouldPutRectangleInCenter_IfFirstRectangle(int width, int height)
+        public void GetRectangles_ShouldPutRectangleInCenter_IfFirstRectangle(int width, int height)
         {
-            var rectangleSize = new Size(width, height);
+            var sizes = new List<Size> { new Size(width, height) };
 
-            var rectangle = layouter.PutNextRectangle(rectangleSize);
+            var rectangle = layouter.GetRectangles(sizes)[0];
             var location = rectangle.Location;
 
             var expectedLocation = new Point(-width / 2, -height / 2);
@@ -53,20 +50,16 @@ namespace TagsCloudContainer.Tests
         [TestCase(300)]
         [TestCase(400)]
         [TestCase(500)]
-        public void PutNextRectangle_RectanglesShouldBeArrangedAsCircle(int seed)
+        public void GetRectangles_RectanglesShouldBeArrangedAsCircle(int seed)
         {
             var sizes = Generator.GetRandomSizesList(10, 100, 10, 100, 500, new Random(seed));
-            var rectangelsArea = 0;
 
-            foreach (var size in sizes)
-            {
-                var rectangle = layouter.PutNextRectangle(size);
-                rectangelsArea += rectangle.Width * rectangle.Height;
-            }
+            var rectangles = layouter.GetRectangles(sizes);
+            var rectanglesArea = rectangles.Sum(rectangle => rectangle.Width * rectangle.Height);
 
-            var squaredMaxRadius = (int)Math.Ceiling(rectangelsArea / Math.PI);
+            var squaredMaxRadius = (int)Math.Ceiling(rectanglesArea / Math.PI);
             squaredMaxRadius += squaredMaxRadius / 3;
-            var corners = layouter.Rectangles
+            var corners = rectangles
                 .SelectMany(rectangle => rectangle.GetCorners()).ToList();
             foreach (var corner in corners)
                 corner.SquaredDistanceTo(layouter.Center).Should().BeLessThan(squaredMaxRadius);
@@ -77,14 +70,11 @@ namespace TagsCloudContainer.Tests
         [TestCase(300)]
         [TestCase(400)]
         [TestCase(500)]
-        public void PutNextRectangle_RectanglesShouldNotIntersect(int seed)
+        public void GetRectangles_RectanglesShouldNotIntersect(int seed)
         {
             var sizes = Generator.GetRandomSizesList(10, 100, 10, 100, 100, new Random(seed));
 
-            foreach (var size in sizes)
-                layouter.PutNextRectangle(size);
-
-            var rectangles = layouter.Rectangles;
+            var rectangles = layouter.GetRectangles(sizes);
             for (var i = 0; i < rectangles.Count; i++)
             {
                 for (var j = 0; j < rectangles.Count; j++)

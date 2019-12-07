@@ -5,8 +5,8 @@ using System.Text;
 
 namespace TagsCloudContainer.ImageSaver
 {
-    interface IImageSaver
+    public interface IImageSaver
     {
-        void SaveImage(Bitmap bitmap, string directoryName, string filename);
+        void SaveImage(Image image, string path);
     }
 }

@@ -8,11 +8,9 @@ namespace TagsCloudContainer.ImageSaver
 {
     class Saver : IImageSaver
     {
-        public void SaveImage(Bitmap bitmap, string directoryName, string filename)
+        public void SaveImage(Image image, string path)
         {
-            var directoryInfo = DirectoryMethods.GetProjectDirectoryInfo();
-            Directory.CreateDirectory(directoryInfo.FullName + @"\" + directoryName);
-            bitmap.Save(directoryInfo.FullName + $@"\{directoryName}\{filename}");
+            image.Save(path);
         }
     }
 }

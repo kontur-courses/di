@@ -6,41 +6,33 @@ using System.Linq;
 
 namespace TagsCloudContainer.Visualizer
 {
-    class TagCloudVisualizer : IVisualizer, IDisposable
+    class TagCloudVisualizer : IVisualizer
     {
         private readonly IVisualizerSettings settings;
-        private readonly Bitmap bitmap;
-        private readonly Graphics graphics;
 
         public TagCloudVisualizer(IVisualizerSettings settings)
         {
             this.settings = settings;
-            bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(settings.BackgroundColor);
         }
 
-        private void DrawWords(IList<WordRectangle> wordRectangles)
+        private void DrawWords(IList<WordRectangle> wordRectangles, Graphics graphics)
         {
             foreach (var wordRectangle in wordRectangles)
             {
-                var size = wordRectangle.Rectangle.Height;
-                var font = new Font(settings.FontFamily, size, settings.FontStyle, GraphicsUnit.Pixel);
-                var brush = new SolidBrush(settings.TextColor);
+                var font = settings.GetFont(wordRectangle);
+                var brush = settings.GetBrush(wordRectangle);
                 graphics.DrawString(wordRectangle.Word, font, brush, wordRectangle.Rectangle);
             }
         }
 
-        public Bitmap GetImage(IList<WordRectangle> wordRectangles)
+        public Image DrawImage(IList<WordRectangle> wordRectangles)
         {
-            DrawWords(wordRectangles);
-            return bitmap;
-        }
-
-        public void Dispose()
-        {
-            bitmap?.Dispose();
-            graphics?.Dispose();
+            var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            var graphics = Graphics.FromImage(image);
+            graphics.FillRectangle(settings.BackgroundBrush, 0, 0,
+                settings.ImageSize.Width, settings.ImageSize.Height);
+            DrawWords(wordRectangles, graphics);
+            return image;
         }
     }
 }

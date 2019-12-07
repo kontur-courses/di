@@ -8,7 +8,7 @@ namespace TagsCloudContainer.WordProcessor
 {
     public class BasicWordProcessor : IWordProcessor
     {
-        public IDictionary<string, int> ProcessWords(IList<string> words)
+        public IEnumerable<WordWithCount> ProcessWords(IEnumerable<string> words)
         {
             var lowerWords = words.Select(w => w.ToLower());
             var directoryInfo = DirectoryMethods.GetProjectDirectoryInfo();
@@ -21,10 +21,10 @@ namespace TagsCloudContainer.WordProcessor
                 var stemResult = hunspell.Stem(word);
                 processedWords.Add(stemResult.Count > 0 ? stemResult[0] : word);
             }
-            return GetFrequencyDictionary(processedWords);
+            return GetWordsWithCount(processedWords);
         }
 
-        private Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> words)
+        private IEnumerable<WordWithCount> GetWordsWithCount(IEnumerable<string> words)
         {
             var frequencyDictionary = new Dictionary<string, int>();
             foreach (var word in words)
@@ -34,7 +34,9 @@ namespace TagsCloudContainer.WordProcessor
                 frequencyDictionary[word]++;
             }
 
-            return frequencyDictionary.OrderByDescending(p => p.Value).ToDictionary(p => p.Key, p => p.Value);
+            return frequencyDictionary
+                .OrderByDescending(p => p.Value)
+                .Select(p => new WordWithCount(p.Key, p.Value));
         }
     }
 }

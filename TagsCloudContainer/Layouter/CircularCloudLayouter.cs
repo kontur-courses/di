@@ -9,17 +9,15 @@ namespace TagsCloudContainer.Layouter
     public class CircularCloudLayouter : ILayouter
     {
         public Point Center { get; }
-        public List<Rectangle> Rectangles { get; }
-        private SortedSet<Point> corners;
+        private ILayouterSettings settings;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(ILayouterSettings settings)
         {
-            Center = center;
-            Rectangles = new List<Rectangle>();
-            corners = new SortedSet<Point>(new PointsRadiusComparer(center));
+            this.settings = settings;
+            Center = settings.Center;
         }
 
-        private void AddCorners(Rectangle rectangle)
+        private void AddCorners(Rectangle rectangle, SortedSet<Point> corners)
         {
             foreach (var corner in rectangle.GetCorners())
                 corners.Add(corner);
@@ -36,9 +34,9 @@ namespace TagsCloudContainer.Layouter
             };
         }
 
-        private bool IsRectangleIntersectsWithOtherRectangles(Rectangle rectangle)
+        private bool IsRectangleIntersectsWithOtherRectangles(Rectangle rectangle, List<Rectangle> rectangles)
         {
-            return Rectangles.Any(rectangle.IntersectsWith);
+            return rectangles.Any(rectangle.IntersectsWith);
         }
 
         private int GetSuitabilityCoefficient(Rectangle rectangle)
@@ -63,13 +61,13 @@ namespace TagsCloudContainer.Layouter
             return mostSuitableRectangle;
         }
 
-        private Rectangle GetRectangle(Size size)
+        private Rectangle GetRectangle(Size size, List<Rectangle> rectangles, SortedSet<Point> corners)
         {
             foreach (var corner in corners)
             {
-                var rectangles = GetRectanglesNearThePoint(corner, size);
-                var matchingRectangles = rectangles
-                    .Where(rect => !IsRectangleIntersectsWithOtherRectangles(rect))
+                var nearRectangles = GetRectanglesNearThePoint(corner, size);
+                var matchingRectangles = nearRectangles
+                    .Where(rect => !IsRectangleIntersectsWithOtherRectangles(rect, rectangles))
                     .ToList();
                 if (matchingRectangles.Count == 0)
                     continue;
@@ -78,27 +76,29 @@ namespace TagsCloudContainer.Layouter
             throw new Exception("There was no suitable place for the rectangle");
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        private Rectangle PutNextRectangle(Size rectangleSize, List<Rectangle> rectangles, SortedSet<Point> corners)
         {
             Rectangle rectangle;
-            if (Rectangles.Count == 0)
+            if (rectangles.Count == 0)
             {
                 var location = Center - new Size(rectangleSize.Width / 2, rectangleSize.Height / 2);
                 rectangle = new Rectangle(location, rectangleSize);
             }
             else
-                rectangle = GetRectangle(rectangleSize);
+                rectangle = GetRectangle(rectangleSize, rectangles, corners);
 
-            Rectangles.Add(rectangle);
-            AddCorners(rectangle);
+            rectangles.Add(rectangle);
+            AddCorners(rectangle, corners);
             return rectangle;
         }
 
-        public IList<Rectangle> GetRectangles(IList<Size> sizes)
+        public IList<Rectangle> GetRectangles(IEnumerable<Size> sizes)
         {
+            var rectangles = new List<Rectangle>();
+            var corners = new SortedSet<Point>(new PointsRadiusComparer(Center));
             foreach (var size in sizes)
-                PutNextRectangle(size);
-            return Rectangles;
+                PutNextRectangle(size, rectangles, corners);
+            return rectangles;
         }
     }
 }

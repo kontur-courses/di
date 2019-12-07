@@ -7,6 +7,6 @@ namespace TagsCloudContainer.Layouter
 {
     public interface ILayouter
     {
-        IList<Rectangle> GetRectangles(IList<Size> sizes);
+        IList<Rectangle> GetRectangles(IEnumerable<Size> sizes);
     }
 }

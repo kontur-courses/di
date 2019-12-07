@@ -4,9 +4,9 @@ using System.Text;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.RectanglesShifter;
+using TagsCloudContainer.RectanglesTransformer;
 
-namespace TagsCloudContainer.Tests
+namespace TagsCloudContainer.OldTests
 {
     class RectanglesVisualizerСalculationsTests
     {

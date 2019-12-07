@@ -8,9 +8,9 @@ namespace TagsCloudContainer.Visualizer
     public interface IVisualizerSettings
     {
         Size ImageSize { get; }
-        Color BackgroundColor { get; }
-        Color TextColor { get; }
-        FontFamily FontFamily { get; }
-        FontStyle FontStyle { get; }
+        Brush BackgroundBrush { get; }
+
+        Font GetFont(WordRectangle wordRectangle);
+        Brush GetBrush(WordRectangle wordRectangle);
     }
 }

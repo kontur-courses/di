@@ -9,14 +9,22 @@ namespace TagsCloudContainer.Visualizer
     class DefaultVisualizerSettings : IVisualizerSettings
     {
         public Size ImageSize { get; }
-        public Color BackgroundColor { get; } = Color.White;
-        public Color TextColor { get; } = Color.Black;
-        public FontFamily FontFamily { get; } = FontFamily.GenericMonospace;
-        public FontStyle FontStyle { get; } = FontStyle.Regular;
+        public Brush BackgroundBrush { get; } = Brushes.White;
 
         public DefaultVisualizerSettings(Size imageSize)
         {
             ImageSize = imageSize;
+        }
+
+        public Font GetFont(WordRectangle wordRectangle)
+        {
+            var size = wordRectangle.Rectangle.Height;
+            return new Font(FontFamily.GenericMonospace, size, FontStyle.Regular, GraphicsUnit.Pixel);
+        }
+
+        public Brush GetBrush(WordRectangle wordRectangle)
+        {
+            return Brushes.Black;
         }
     }
 }
