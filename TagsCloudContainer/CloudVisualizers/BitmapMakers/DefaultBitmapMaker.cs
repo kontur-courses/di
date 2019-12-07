@@ -64,6 +64,8 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
 
             if (xDifference < yDifference)
                 (xRatio, yRatio) = GetVerticalLayoutRatio(settings, maxX, xDifference, yDifference);
+            if (settings.Width == settings.Height)
+                (xRatio, yRatio) = (settings.Width / xDifference, settings.Height / yDifference);
 
             return (xRatio, yRatio);
         }
