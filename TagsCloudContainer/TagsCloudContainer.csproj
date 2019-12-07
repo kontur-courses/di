@@ -62,6 +62,7 @@
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\CommandsExecutor.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\GenerateCloudCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\IConsoleCommand.cs" />
+    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\VisualizeCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\ParseCommand.cs" />
     <Compile Include="ApplicationRunning\IAppRunner.cs" />
     <Compile Include="ApplicationRunning\SettingsManager.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="CloudLayouters\CloudLayoutingAlgorithms.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="CloudLayouters\ICloudLayoutingAlgorithm.cs" />
+    <Compile Include="CloudVisualizers\BitmapMakers\BitmapMakers.cs" />
     <Compile Include="CloudVisualizers\BitmapMakers\DefaultBitmapMaker.cs" />
     <Compile Include="CloudVisualizers\CloudVisualizationWord.cs" />
     <Compile Include="CloudVisualizers\CloudVisualizer.cs" />
