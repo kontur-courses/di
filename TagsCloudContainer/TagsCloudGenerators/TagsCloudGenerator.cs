@@ -27,7 +27,7 @@ namespace TagsCloudContainer.TagsCloudGenerators
 
         public Bitmap CreateTagCloud()
         {
-            var text = reader.ReadAll();
+            var text = reader.ReadAllLines();
             var preprocessedWords = wordPreprocessor.WordPreprocessing(text);
             var wordTokens = wordCounter.CountWords(preprocessedWords);
             var bitmap = visualizer.VisualizeCloud(wordTokens);

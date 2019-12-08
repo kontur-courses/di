@@ -1,10 +1,7 @@
 ﻿using Autofac;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TagsCloudContainer.Readers;
 
 namespace TagsCloudContainer.WordPreprocessors
 {
@@ -21,17 +18,39 @@ namespace TagsCloudContainer.WordPreprocessors
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
         }
 
-        [TestCase("aaa", ExpectedResult = new[] { "aaa" })]
-        [TestCase("aaA", ExpectedResult = new[] { "aaa" })]
-        [TestCase("AAA", ExpectedResult = new[] { "aaa" })]
-        public string[] CountWords(string word)
+        [TestCase("Олень", ExpectedResult = new[] { "олень" })]
+        [TestCase("лЕС", ExpectedResult = new[] { "лес" })]
+        [TestCase("ДОРОГА", ExpectedResult = new[] { "дорога" })]
+        public string[] CountWords_ToLower(string word)
         {
             var container = containerBuilder.Build();
             var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();
 
-            var result = simpleWordPreprocessor.WordPreprocessing(word);
+            var result = simpleWordPreprocessor.WordPreprocessing(new[] { word });
 
             return result;
+        }
+
+        [TestCase("бегают", ExpectedResult = new[] { "бегать" })]
+        [TestCase("прыгают машут", ExpectedResult = new[] { "прыгать", "махать" })]
+        public string[] CountWords_InitialForm(string word)
+        {
+            var container = containerBuilder.Build();
+            var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();
+
+            var result = simpleWordPreprocessor.WordPreprocessing(new[] { word });
+
+            return result;
+        }
+
+        [Test]
+        public void CountWords_FromTxt()
+        {
+            var container = containerBuilder.Build();
+            var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();
+            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
+
+            var result = simpleWordPreprocessor.WordPreprocessing(simpleReader.ReadAllLines());
         }
     }
 }

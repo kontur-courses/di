@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace TagsCloudContainer.Readers
@@ -10,13 +9,13 @@ namespace TagsCloudContainer.Readers
     class SimpleReader : IReader
     {
         private string path { get; }
-        private Dictionary<string, Func<string, string>> readers;
+        private Dictionary<string, Func<string, string[]>> readers;
 
         public SimpleReader(string path)
         {
             this.path = path;
 
-            readers = new Dictionary<string, Func<string, string>>
+            readers = new Dictionary<string, Func<string, string[]>>
             {
                 { "txt", pathToText => ReadOther(pathToText) },
                 { "doc", pathToText => ReadDoc(pathToText) },
@@ -24,33 +23,33 @@ namespace TagsCloudContainer.Readers
             };
         }
 
-        public string ReadAll()
+        public string[] ReadAllLines()
         {
             var splitPath = path.Split('.');
             return readers[splitPath[splitPath.Length - 1]](path);
         }
 
-        private string ReadOther(string path)
+        private string[] ReadOther(string path)
         {
             var stream = new StreamReader(path);
-            return stream.ReadToEnd();
+            var stringSeparators = new[] { "\r\n" };
+            return stream.ReadToEnd().Split(stringSeparators, StringSplitOptions.None);
         }
 
-        private string ReadDoc(string path)
+        private string[] ReadDoc(string path)
         {
+            var text = new List<string>();
             Word.Application app = new Word.Application();
             app.Documents.Open(path);
             Word.Document doc = app.ActiveDocument;
-            var text = new StringBuilder();
             for (int i = 1; i < doc.Paragraphs.Count; i++)
             {
                 var word = doc.Paragraphs[i].Range.Text;
-                text.Append(word.Substring(0, word.Length - 1));
-                text.Append("\n");
+                text.Add(word.Substring(0, word.Length - 1));
             }
             doc.Close();
             app.Quit();
-            return text.ToString();
+            return text.ToArray();
         }
     }
 }
