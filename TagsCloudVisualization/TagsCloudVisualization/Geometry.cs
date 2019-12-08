@@ -27,7 +27,12 @@ namespace TagsCloudVisualization
                 dy = k * dy;
             }
             var hypotenuse = Math.Sqrt(dx * dx + dy * dy);
-            return dx <= xOffset ? hypotenuse * yOffset / dy : hypotenuse * xOffset / dx;
+            var epsilon = 0.00001;
+            if (dx - epsilon > xOffset)
+                return hypotenuse * xOffset / dx;
+            if (dy - epsilon > yOffset)
+                return hypotenuse * yOffset / dy;
+            return hypotenuse;
         }
 
         public static Point ShiftPointBySizeOffsets(Point point, Size size)

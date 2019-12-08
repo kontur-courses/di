@@ -15,7 +15,7 @@ namespace TagsCloudVisualization
             this.textParser = textParser;
             this.layouter = layouter;
             this.painter = painter;
-        } 
+        }
 
         public Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings)
         {
@@ -44,18 +44,34 @@ namespace TagsCloudVisualization
 
         private float CalculateCloudScale(Tag tag, ImageSettings imageSettings)
         {
-            var realFigureCenter = new Point(tag.TagBox.X + tag.TagBox.Width / 2, tag.TagBox.Y + tag.TagBox.Height / 2);
-            var posMinusCenter = new Point(
-                realFigureCenter.X - imageSettings.CloudCenter.X,
-                realFigureCenter.Y - imageSettings.CloudCenter.Y
-            );
+            var furthestRectanglePoint = GetFurthestRectanglePoint(imageSettings.CloudCenter, tag.TagBox);
             var cloudBorderSize = GetCloudBorderSize(imageSettings);
             var distanceToImageBorder = Geometry
                 .GetLengthFromRectangleCenterToBorderOnVector(
                     new Rectangle(Point.Empty, cloudBorderSize),
-                    posMinusCenter
+                    furthestRectanglePoint
                 );
-            return distanceToImageBorder == 0 ? 1 : (float) (distanceToImageBorder / posMinusCenter.GetLength());
+            return distanceToImageBorder == 0 ? 1 : (float) (distanceToImageBorder / furthestRectanglePoint.GetLength());
+        }
+
+        private Point GetFurthestRectanglePoint(Point from, Rectangle rectangle)
+        {
+            var realFigureCenter = new Point(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
+            var posMinusFrom = new Point(realFigureCenter.X - from.X, realFigureCenter.Y - from.Y);
+            var distanceToBorder = Geometry
+                .GetLengthFromRectangleCenterToBorderOnVector(
+                    new Rectangle(Point.Empty, rectangle.Size),
+                    posMinusFrom
+                );
+            var posMinusFromLength = posMinusFrom.GetLength();
+            if (posMinusFromLength == 0) 
+                return posMinusFrom;
+            var borderScale = (distanceToBorder + posMinusFromLength) / posMinusFromLength;
+            var posMinusCenterWithTagBorder = new Point(
+                (int) (posMinusFrom.X * borderScale),
+                (int) (posMinusFrom.Y * borderScale)
+            );
+            return posMinusCenterWithTagBorder;
         }
 
         private Size GetCloudBorderSize(ImageSettings imageSettings)
