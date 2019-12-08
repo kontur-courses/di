@@ -19,7 +19,7 @@ namespace TagCloudContainer
             var wordsAndCounts = WordCounter.CreateWordOccurrencesDictionary(words);
             var wordsAndRectangles = Layouter.AddWords(wordsAndCounts);
 
-            var bmp = CreateSizedBitmapForLayouter(Layouter);
+            var bmp = CreateSizedBitmap();
             var graphics = Graphics.FromImage(bmp);
 
             FillBackground(graphics, bmp, options);
@@ -39,12 +39,12 @@ namespace TagCloudContainer
             }
         }
 
-        private static Bitmap CreateSizedBitmapForLayouter(ILayoutProvider layouter)
+        private Bitmap CreateSizedBitmap()
         {
-            int maxX = layouter.Layout.Select(r => r.Right).Max();
-            int minX = layouter.Layout.Select(r => r.Left).Min();
-            int maxY = layouter.Layout.Select(r => r.Bottom).Max();
-            int minY = layouter.Layout.Select(r => r.Top).Min();
+            int maxX = Layouter.Layout.Select(r => r.Right).Max();
+            int minX = Layouter.Layout.Select(r => r.Left).Min();
+            int maxY = Layouter.Layout.Select(r => r.Bottom).Max();
+            int minY = Layouter.Layout.Select(r => r.Top).Min();
 
             int bmpWidth = maxX - minX;
             int bmpHeight = maxY - minY;

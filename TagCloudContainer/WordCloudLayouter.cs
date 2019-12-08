@@ -7,13 +7,13 @@ namespace TagCloudContainer
 {
     public class WordCloudLayouter : IWordCloudLayouter
     {
-        private ICloudLayouter RectangleLayouter;
-        private IStringSizeProvider SizeProvider;
+        private readonly ICloudLayouter rectangleLayouter;
+        private readonly IStringSizeProvider sizeProvider;
 
         public WordCloudLayouter(ICloudLayouter rectangleLayouter, IStringSizeProvider sizeProvider)
         {
-            RectangleLayouter = rectangleLayouter;
-            SizeProvider = sizeProvider;
+            this.rectangleLayouter = rectangleLayouter;
+            this.sizeProvider = sizeProvider;
         }
 
         public IReadOnlyDictionary<string, Rectangle> AddWords(
@@ -26,11 +26,11 @@ namespace TagCloudContainer
 
         private (string word, Rectangle rect) CreateBoundingRectangle(string word, int occurrenceCount)
         {
-            var stringSize = SizeProvider.GetStringSize(word, occurrenceCount);
-            var rectangle = RectangleLayouter.PutNextRectangle(stringSize);
+            var stringSize = sizeProvider.GetStringSize(word, occurrenceCount);
+            var rectangle = rectangleLayouter.PutNextRectangle(stringSize);
             return (word, rectangle);
         }
 
-        public List<Rectangle> Layout => RectangleLayouter.Layout;
+        public List<Rectangle> Layout => rectangleLayouter.Layout;
     }
 }

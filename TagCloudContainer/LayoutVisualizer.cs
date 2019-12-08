@@ -6,7 +6,7 @@ namespace TagCloudContainer
 {
     public class LayoutVisualizer : IRectangleVisualizer
     {
-        public ICloudLayouter Layouter;
+        private ICloudLayouter Layouter;
 
         public LayoutVisualizer(ICloudLayouter layouter)
         {
@@ -15,32 +15,32 @@ namespace TagCloudContainer
 
         public Image CreateImageWithRectangles(DrawingOptions options)
         {
-            var bmp = CreateSizedBitmapForLayouter(Layouter);
+            var bmp = CreateSizedBitmap();
             var graphics = Graphics.FromImage(bmp);
             FillBackground(graphics, bmp, options);
 
-            DrawRectanglesOnImage(Layouter, options, graphics, bmp);
+            DrawRectanglesOnImage(options, graphics, bmp);
 
             graphics.Flush();
             return bmp;
         }
 
-        private static void DrawRectanglesOnImage(ICloudLayouter layouter, DrawingOptions options,
+        private void DrawRectanglesOnImage(DrawingOptions options,
             Graphics graphics, Image img)
         {
-            foreach (var rect in layouter.Layout)
+            foreach (var rect in Layouter.Layout)
             {
                 rect.Offset(new Point(img.Width / 2, img.Height / 2));
                 graphics.DrawRectangle(options.Pen, rect);
             }
         }
 
-        public Bitmap CreateSizedBitmapForLayouter(ILayoutProvider layouter)
+        private Bitmap CreateSizedBitmap()
         {
-            int maxX = layouter.Layout.Select(r => r.Right).Max();
-            int minX = layouter.Layout.Select(r => r.Left).Min();
-            int maxY = layouter.Layout.Select(r => r.Bottom).Max();
-            int minY = layouter.Layout.Select(r => r.Top).Min();
+            int maxX = Layouter.Layout.Select(r => r.Right).Max();
+            int minX = Layouter.Layout.Select(r => r.Left).Min();
+            int maxY = Layouter.Layout.Select(r => r.Bottom).Max();
+            int minY = Layouter.Layout.Select(r => r.Top).Min();
 
             int bmpWidth = maxX - minX;
             int bmpHeight = maxY - minY;
@@ -48,7 +48,8 @@ namespace TagCloudContainer
             return new Bitmap(bmpWidth, bmpHeight);
         }
 
-        private void FillBackground(Graphics graphics, Image img, DrawingOptions options)
+
+        private static void FillBackground(Graphics graphics, Image img, DrawingOptions options)
         {
             graphics.FillRegion(options.BackgroundBrush, new Region(new Rectangle(0, 0, img.Width, img.Width)));
         }
