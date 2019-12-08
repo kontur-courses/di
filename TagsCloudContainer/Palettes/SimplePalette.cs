@@ -1,16 +1,17 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer.Palettes
 {
     class SimplePalette : IPalette
     {
         public Font Font { get; }
-        public Brush Brush { get; }
+        public IPainterWords PainterWords { get; }
 
-        public SimplePalette(Font font, Brush brush)
+        public SimplePalette(Font font, IPainterWords painterWords)
         {
             Font = font;
-            Brush = brush;
+            PainterWords = painterWords;
         }
     }
 }

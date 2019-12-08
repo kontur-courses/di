@@ -12,6 +12,7 @@ using TagsCloudContainer.Readers;
 using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.TagsCloudGenerators;
 using System;
+using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer
 {
@@ -52,10 +53,10 @@ namespace TagsCloudContainer
                            new Parameter[]
                            {
                                new NamedParameter("font", new Font(o.Font, o.Size)),
-                               new NamedParameter("brush", Brushes.Red)
+                               new NamedParameter("painterWords", new EvenPainterWords())
                            }
                            );
-                       containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(o.Height, o.Width));
+                       containerBuilder.RegisterType<SimpleVisualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(o.Height, o.Width));
                        containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", o.File);
 
                        containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();

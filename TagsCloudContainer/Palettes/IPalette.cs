@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer.Palettes
 {
     interface IPalette
     {
         Font Font { get; }
-        Brush Brush { get; }
+        IPainterWords PainterWords { get; }
     }
 }

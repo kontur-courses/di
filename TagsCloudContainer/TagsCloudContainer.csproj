@@ -69,6 +69,10 @@
     <Compile Include="CloudLayouters\CircularCloudLayouterTests.cs" />
     <Compile Include="CloudLayouters\Converter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="PaintersWords\EvenPainterWords.cs" />
+    <Compile Include="PaintersWords\IPainterWords.cs" />
+    <Compile Include="PaintersWords\SimplePainterWords.cs" />
+    <Compile Include="PaintersWords\SimplePainterWordsTests.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -82,7 +86,7 @@
     <Compile Include="TokensAndSettings\TagToken.cs" />
     <Compile Include="Visualizers\IVisualizer.cs" />
     <Compile Include="Visualizers\SimpleVisualizerTests.cs" />
-    <Compile Include="Visualizers\SimpleVsualizer.cs" />
+    <Compile Include="Visualizers\SimpleVisualizer.cs" />
     <Compile Include="WordCounters\IWordCounter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

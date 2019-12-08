@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.CloudLayouters;
+using TagsCloudContainer.PaintersWords;
 using TagsCloudContainer.Palettes;
 using TagsCloudContainer.TokensAndSettings;
 
@@ -23,10 +24,10 @@ namespace TagsCloudContainer.Visualizers
                 new Parameter[]
                 {
                     new NamedParameter("font", new Font("Arial", 20)),
-                    new NamedParameter("brush", Brushes.Red)
+                    new NamedParameter("painterWords", new SimplePainterWords(Brushes.Red))
                 }
                 );
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(640, 640));
+            containerBuilder.RegisterType<SimpleVisualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(640, 640));
 
             var conteiner = containerBuilder.Build();
 

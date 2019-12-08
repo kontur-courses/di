@@ -8,13 +8,13 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.Visualizers
 {
-    class SimpleVsualizer : IVisualizer
+    class SimpleVisualizer : IVisualizer
     {
         private IPalette palette;
         private ICloudLayouter cloudLayouter;
         private ImageSettings imageSettings;
 
-        public SimpleVsualizer(IPalette palette, ICloudLayouter cloudLayouter, ImageSettings imageSettings)
+        public SimpleVisualizer(IPalette palette, ICloudLayouter cloudLayouter, ImageSettings imageSettings)
         {
             this.palette = palette;
             this.cloudLayouter = cloudLayouter;
@@ -53,7 +53,7 @@ namespace TagsCloudContainer.Visualizers
                     new Font(
                         palette.Font.Name,
                         palette.Font.Size * tag.Count),
-                    palette.Brush,
+                    palette.PainterWords.GetNextBrush(tag),
                     tag.Rectangle.X - size.X,
                     tag.Rectangle.Y - size.Y);
             }

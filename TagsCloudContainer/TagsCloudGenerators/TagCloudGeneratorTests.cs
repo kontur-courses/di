@@ -12,6 +12,7 @@ using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.TokensAndSettings;
 using System;
 using System.IO;
+using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer.TagsCloudGenerators
 {
@@ -34,9 +35,9 @@ namespace TagsCloudContainer.TagsCloudGenerators
                 new Parameter[]
                 {
                     new NamedParameter("font", new Font("Arial", 20)),
-                    new NamedParameter("brush", Brushes.Red)
+                    new NamedParameter("painterWords", new SimplePainterWords(Brushes.Red))
                 });
-            containerBuilder.RegisterType<SimpleVsualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(40, 640)); ;
+            containerBuilder.RegisterType<SimpleVisualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(40, 640)); ;
             containerBuilder.RegisterType<SimpleReader>().As<IReader>().WithParameter("path", Path.Combine(Environment.CurrentDirectory, @"TagsCloudContainer\Words.txt"));
             containerBuilder.RegisterType<TagsCloudGenerator>().As<TagsCloudGenerator>();
         }
