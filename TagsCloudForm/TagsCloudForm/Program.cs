@@ -32,6 +32,8 @@ namespace TagsCloudForm
 
             builder.RegisterType<BoringWordsFilter>();
 
+            builder.RegisterType<PartOfSpeechFilter>();
+
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
 
             builder.Register(x => x.Resolve<AppSettings>().ImageSettings).As<ImageSettings>().SingleInstance();

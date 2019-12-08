@@ -12,6 +12,8 @@
 
         public string BoringWordsFile { get; set; } = "UserData/boring.txt";
 
+        public string filterPOSfile { get; set; } = "UserData/filterPOS.txt";
+
         public bool Ordered { get; set; } = false;
         public bool UpperCase { get; set; } = true;
 

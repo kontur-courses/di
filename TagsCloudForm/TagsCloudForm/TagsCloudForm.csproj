@@ -49,10 +49,17 @@
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="OpenNLP, Version=1.0.7182.26901, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenNLP.1.3.5\lib\net45\OpenNLP.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharpEntropy, Version=1.0.7182.26900, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenNLP.1.3.5\lib\net45\SharpEntropy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,6 +99,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsManager.cs" />
+    <Compile Include="WordFilters\PartOfSpeechFilter.cs" />
     <Compile Include="WordFilters\SpellCheckerFilter.cs" />
     <Compile Include="Tests\SpellCheckerTests.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />

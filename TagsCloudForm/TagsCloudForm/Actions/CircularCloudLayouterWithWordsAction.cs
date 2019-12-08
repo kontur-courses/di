@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Annotations;
 using System.Windows.Forms;
 using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
@@ -20,16 +19,17 @@ namespace TagsCloudForm.Actions
         private readonly IWordsFrequencyParser parser;
         private readonly SpellCheckerFilter spellFilter;
         private readonly BoringWordsFilter boringWordsFilter;
-        private readonly AppSettings appSettings;
         private readonly Func<IImageHolder,
             CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter
             , Dictionary<string, int>, CloudWithWordsPainter> painterFactory;
+        private readonly PartOfSpeechFilter partOfSpeechFilter;
 
         public CircularCloudLayouterWithWordsAction(IImageHolder imageHolder,
              Palette palette, Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
              Func<IImageHolder,
              CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter, Dictionary<string, int>,
-             CloudWithWordsPainter> painterFactory, SpellCheckerFilter spellFilter, BoringWordsFilter boringWordsFilter)
+             CloudWithWordsPainter> painterFactory, SpellCheckerFilter spellFilter
+             , BoringWordsFilter boringWordsFilter, PartOfSpeechFilter partOfSpeechFilter)
         {
             this.painterFactory = painterFactory;
             this.imageHolder = imageHolder;
@@ -38,7 +38,7 @@ namespace TagsCloudForm.Actions
             this.parser = parser;
             this.spellFilter = spellFilter;
             this.boringWordsFilter = boringWordsFilter;
-            this.appSettings = appSettings;
+            this.partOfSpeechFilter = partOfSpeechFilter;
         }
         public string Category => "CircularCloud";
         public string Name => "LayouterWithWords";
@@ -71,6 +71,17 @@ namespace TagsCloudForm.Actions
                 boringWords = new HashSet<string>();
                 MessageBox.Show(e.Message, "Не удалось загрузить файл с boring words");
             }
+            HashSet<string> POStoFilter;
+            try
+            {
+                var settingsFilename = settings.filterPOSfile;
+                POStoFilter = File.ReadAllLines(settingsFilename).ToHashSet(StringComparer.OrdinalIgnoreCase);
+            }
+            catch (Exception e)
+            {
+                POStoFilter = new HashSet<string>();
+                MessageBox.Show(e.Message, "Не удалось загрузить файл с POS to Filter");
+            }
 
             if (settings.UpperCase)
                 lines = lines.Select(x => x.ToUpper());
@@ -78,6 +89,7 @@ namespace TagsCloudForm.Actions
                 lines = lines.Select(x => x.ToLower());
             var filteredWords = spellFilter.Filter(lines, settings.Language);
             filteredWords = boringWordsFilter.Filter(boringWords, filteredWords);
+            filteredWords = partOfSpeechFilter.Filter(POStoFilter, filteredWords);
             var wordsWithFrequency = parser.GetWordsFrequency(filteredWords, settings.Language);
 
             painterFactory.Invoke(imageHolder, settings, palette, layouter, wordsWithFrequency).Paint();

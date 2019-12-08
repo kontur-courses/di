@@ -6,7 +6,7 @@ using TagsCloudForm.WordFilters;
 namespace TagsCloudForm.Tests
 {
     [TestFixture]
-    class BoringWordsTests
+    public class BoringWordsTests
     {
         [Test]
         public void BoringWordsFilter_NoBoringWords_ShouldNotChangeInput()
