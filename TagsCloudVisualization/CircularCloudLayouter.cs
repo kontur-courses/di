@@ -4,18 +4,18 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    internal class CircularCloudLayouter
+    public class CircularCloudLayouter
     {
         public readonly Point Center;
-        List<Rectangle> rectangles;
-        ISpiral spiral;
-        IEnumerator<Point> spiralPoints;
+        private readonly List<Rectangle> rectangles;
+        private readonly ISpiral spiral;
+        private readonly IEnumerator<Point> spiralPoints;
 
         public CircularCloudLayouter(Point center)
         {
             Center = center;
             rectangles = new List<Rectangle>();
-            this.spiral = new ArchimedeanSpiral();
+            spiral = new ArchimedeanSpiral();
             spiralPoints = spiral.GetPoints().GetEnumerator();
         }
 
@@ -43,11 +43,11 @@ namespace TagsCloudVisualization
                 var rectangle = new Rectangle(curentPosition, rectangleSize);
 
                 if (TryAddRectangle(rectangle)) return rectangle;
-                else spiralPoints.MoveNext();
+                spiralPoints.MoveNext();
             }
         }
 
-        bool TryAddRectangle(Rectangle rectangle)
+        private bool TryAddRectangle(Rectangle rectangle)
         {
             if (rectangles.Exists(rec => rec.IntersectsWith(rectangle))) 
                 return false;
@@ -56,6 +56,6 @@ namespace TagsCloudVisualization
             return true;
         }
 
-        public IEnumerable<Rectangle> GetAllRectangles() => rectangles;
+        internal IEnumerable<Rectangle> GetAllRectangles() => rectangles;
     }
 }

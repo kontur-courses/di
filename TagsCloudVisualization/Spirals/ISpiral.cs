@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    interface ISpiral
+    public interface ISpiral
     {
         IEnumerable<Point> GetPoints();
     }

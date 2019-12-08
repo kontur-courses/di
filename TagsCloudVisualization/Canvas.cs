@@ -4,11 +4,11 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    class Canvas
+    public class Canvas
     {
-        Random random;
-        Bitmap bitmap;
-        Graphics graphics;
+        private readonly Random random;
+        private readonly Bitmap bitmap;
+        private readonly Graphics graphics;
 
         public Canvas(int width, int height)
         {
@@ -22,15 +22,18 @@ namespace TagsCloudVisualization
 
         public void Draw(Rectangle rectangle, Brush brush = null)
         {
-            if (brush == null) graphics.FillRectangle(RandomBrush(), rectangle);
-            else graphics.FillRectangle(brush, rectangle);
-
+            graphics.FillRectangle(brush ?? RandomBrush(), rectangle);
             graphics.DrawRectangle(new Pen(Color.White), rectangle);
         }
 
-        Brush RandomBrush()
+        public void Draw(string word, Font font, RectangleF rectangleF, Brush brush = null)
         {
-            List<Brush> brushes = new List<Brush>()
+            graphics.DrawString(word, font, brush ?? RandomBrush(), rectangleF);
+        }
+
+        private Brush RandomBrush()
+        {
+            var brushes = new List<Brush>()
             {
                 new SolidBrush(Color.Green),
                 new SolidBrush(Color.Blue),
