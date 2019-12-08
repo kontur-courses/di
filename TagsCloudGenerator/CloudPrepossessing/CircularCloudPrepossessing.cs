@@ -24,7 +24,6 @@ namespace TagsCloudGenerator.CloudPrepossessing
             this(center, new ArchimedeanShape(center, 0.5 / (2 * Math.PI)))
         { }
 
-
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if(rectangleSize.Width <= 0 || rectangleSize.Height <= 0)

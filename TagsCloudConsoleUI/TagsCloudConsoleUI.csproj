@@ -47,13 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudContainerBuilder.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ConsoleProgram.cs" />
+    <Compile Include="DIModules\CircularCloudBasedOnArchimedean.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SyntaxTextParser\SyntaxTextParser.csproj">
+      <Project>{f7667bbc-e072-4271-9a86-dca9fe572bce}</Project>
+      <Name>SyntaxTextParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TagsCloudGenerator\TagsCloudGenerator.csproj">
+      <Project>{633e9e73-d433-4aea-b35e-215a0bca178a}</Project>
+      <Name>TagsCloudGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

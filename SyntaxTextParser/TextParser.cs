@@ -16,6 +16,8 @@ namespace SyntaxTextParser
             this.fileReader = fileReader;
         }
 
+        /// <exception cref="ArgumentException">Thrown parser can't read that type file</exception>
+        /// <exception cref="FileNotFoundException">Thrown parser can't found file</exception>
         public List<CountedTextElement> ParseElementsFromFile(string path, string fileName, string type)
         {
             if(!fileReader.CanReadThatType(type))
@@ -23,7 +25,7 @@ namespace SyntaxTextParser
 
             var fullPath = Path.Combine(path, fileName + '.' + type);
             if(!Directory.Exists(fullPath))
-                throw new ArgumentException($"Path {path} isn't valid");
+                throw new FileNotFoundException($"Path {path} isn't valid");
 
             return fileReader.TryReadText(fullPath, out var text)
                 ? elementParser.ParseElementsFromText(text)

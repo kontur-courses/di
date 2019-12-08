@@ -18,11 +18,11 @@ namespace TagsCloudGenerator
 
             foreach (var element in elements)
             {
-                var width = (int)(element.Word.Length * element.Count * HeightToWidthIndexMultiplier);
+                var width = (int)(element.Element.Length * element.Count * HeightToWidthIndexMultiplier);
                 var height = element.Count;
                 var rect = tagPlacer.PutNextRectangle(new Size(width, height));
 
-                result.Add(new CloudTag(rect, element.Word,
+                result.Add(new CloudTag(rect, element.Element,
                     cloudFormat.TagTextFormat, cloudFormat.TagTextFont));
             }
 

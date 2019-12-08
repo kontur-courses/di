@@ -5,16 +5,16 @@ namespace SyntaxTextParser.Architecture
 {
     public abstract class TextElementParser
     {
-        protected readonly IEnumerable<IElementValidator> ElementValidators;
+        protected readonly IEnumerable<IElementValidator> elementValidators;
 
         protected TextElementParser(IEnumerable<IElementValidator> elementValidators)
         {
-            ElementValidators = elementValidators;
+            this.elementValidators = elementValidators;
         }
 
         protected bool IsCorrectElement(string element)
         {
-            return element != null && ElementValidators.ToList()
+            return element != null && elementValidators.ToList()
                 .TrueForAll(x => x.IsValidElement(element));
         }
 
