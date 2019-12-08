@@ -1,32 +1,48 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TagCloud.TextProvider
 {
     public class TextFileReader : ITextProvider
     {
-        private string FilePath { get; set; } = @"..\..\Input\input.txt";
-
-        private readonly char[] separators = {' ', '"', '(', ')', '.', '!', '?', '\'', ','};
-
-        public Dictionary<string, int> GetParsedText()
+        private HashSet<string> FilesPaths { get; set; } = new HashSet<string>
         {
-            var wordsFrequencyDictionary = new Dictionary<string, int>();
-            using (var sr = new StreamReader(FilePath, System.Text.Encoding.UTF8))
+            @"..\..\Input\input.txt",
+            @"..\..\Input\song.txt"
+        };
+
+        public Encoding TextEncoding { get; set; } = Encoding.UTF8;
+
+        private const string RegexPattern = @"[!, ?._'@\[\] ]+";
+
+        public List<string> GetAllWords()
+        {
+            var allWordsList = new List<string>();
+            foreach (var path in FilesPaths)
+                GetAllWordsInOneText(path, allWordsList);
+            return allWordsList;
+        }
+
+        public List<string> GetAllWords(IEnumerable<string> paths)
+        {
+            var allWordsList = new List<string>();
+            foreach (var path in paths)
+                GetAllWordsInOneText(path, allWordsList);
+            return allWordsList;
+        }
+
+        private void GetAllWordsInOneText(string path, List<string> allWordsList)
+        {
+            using (var sr = new StreamReader(path, TextEncoding))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
-                {
-                    var words = line.Split(separators);
-                    foreach (var word in words.Select(s => s.MakeFirstLetterLowerCase()))
-                        if (wordsFrequencyDictionary.ContainsKey(word))
-                            wordsFrequencyDictionary[word]++;
-                        else wordsFrequencyDictionary[word] = 1;
-                }
+                    allWordsList.AddRange(Regex.Split(line, RegexPattern, RegexOptions.IgnoreCase)
+                        .Select(s => s.MakeFirstLetterLowerCase()));
             }
-
-            return wordsFrequencyDictionary;
         }
     }
 }

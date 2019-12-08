@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagCloud.TextProvider;
 
 namespace TagCloud.TextFilter
 {
     public class TextFilter
     {
         private readonly BlacklistMaker blacklistMaker;
-        private readonly TextFilterSettings textFilterSettings;
-        private Dictionary<string, int> filteredWords;
+        private readonly ITextProvider textProvider;
 
-        public TextFilter(BlacklistMaker blacklistMaker, TextFilterSettings textFilterSettings)
+        public TextFilter(ITextProvider textProvider, BlacklistMaker blacklistMaker)
         {
             this.blacklistMaker = blacklistMaker;
-            this.textFilterSettings = textFilterSettings;
+            this.textProvider = textProvider;
         }
 
-        public Dictionary<string, int> FilterWords(Dictionary<string, int> words)
+        public List<string> FilterWords()
         {
-            filteredWords = new Dictionary<string, int>();
-            foreach (var word in words.Where(word =>
-                !blacklistMaker.BlackList.Contains(word.Key)
-                && word.Key.Length >= textFilterSettings.WordMinLength))
-                filteredWords[word.Key] = word.Value;
-            return filteredWords;
+            var allWords = textProvider.GetAllWords();
+            return allWords.Where(word => word.Length >= blacklistMaker.WordMinLength
+                                          && !blacklistMaker.BlackList.Contains(word)).ToList();
         }
     }
 }

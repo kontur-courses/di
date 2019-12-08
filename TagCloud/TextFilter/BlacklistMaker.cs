@@ -1,44 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
+using TagCloud.TextProvider;
 
 namespace TagCloud.TextFilter
 {
     public class BlacklistMaker
     {
-        private readonly TextFilterSettings filterSettings;
+        private readonly ITextProvider textProvider;
         private readonly BlacklistSettings blacklistSettings;
-        public readonly HashSet<string> BlackList = new HashSet<string>();
+        public HashSet<string> BlackList { get; } = new HashSet<string>();
+        public int WordMinLength { get; set; } = 3;
 
-        public BlacklistMaker(TextFilterSettings filterSettings, BlacklistSettings blacklistSettings)
+        private string newBlacklistWord;
+
+        public string NewBlacklistWord
         {
-            this.filterSettings = filterSettings;
+            get => newBlacklistWord;
+            set => BlackList.Add(value.MakeFirstLetterLowerCase());
+        }
+
+        public BlacklistMaker(BlacklistSettings blacklistSettings, ITextProvider textProvider)
+        {
+            this.textProvider = textProvider;
             this.blacklistSettings = blacklistSettings;
             CreateBlackList();
         }
 
         private void CreateBlackList()
         {
-            foreach (var filePath in blacklistSettings.FilesWithBannedWords)
-                FillBlackListFromFile(filePath);
-        }
-
-        private void FillBlackListFromFile(string filePath)
-        {
-            using (var sr = new StreamReader(filePath, System.Text.Encoding.UTF8))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    var words = line.Split(filterSettings.Separators);
-                    foreach (var word in words.Select(s => s.MakeFirstLetterLowerCase()))
-                    {
-                        BlackList.Add(word);
-                        Console.WriteLine(word);
-                    }
-                }
-            }
+            foreach (var word in textProvider.GetAllWords(blacklistSettings.FilesWithBannedWords))
+                BlackList.Add(word);
         }
     }
 }
