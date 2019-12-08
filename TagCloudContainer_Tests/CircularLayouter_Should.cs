@@ -14,13 +14,15 @@ namespace TagCloudContainer_Tests
     public class CircularLayouter_Should
     {
         private CircularCloudLayouter layouter;
-        private IRectanglePenProvider penProvider = new OneColorPenProvider();
-        private DrawingOptions drawingOptions = new DrawingOptions();
+        private IRectanglePenProvider penProvider;
+        private DrawingOptions drawingOptions;
 
         [SetUp]
         public void SetUp()
         {
             layouter = new CircularCloudLayouter();
+            drawingOptions = new DrawingOptions();
+            penProvider = new OneColorPenProvider(drawingOptions);
         }
 
         [TearDown]

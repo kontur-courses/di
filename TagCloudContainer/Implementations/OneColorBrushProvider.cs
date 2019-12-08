@@ -5,9 +5,15 @@ namespace TagCloudContainer.Implementations
 {
     public class OneColorBrushProvider : IWordBrushProvider
     {
+        private readonly DrawingOptions options;
+
+        public OneColorBrushProvider(DrawingOptions options)
+        {
+            this.options = options;
+        }
         public Brush CreateBrushForWord(string word, int occurrenceCount)
         {
-            return new SolidBrush(Color.Orange);
+            return options.WordBrush;
         }
     }
 }

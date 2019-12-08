@@ -39,11 +39,12 @@ namespace TagCloudContainer.fluent
         public TagCloudConfig(string inputFile)
         {
             this.inputFile = inputFile;
+            imageFormat = ImageFormat.Png;
             options = new DrawingOptions();
             wordsProvider = new TxtFileReader(inputFile);
             wordProcessor = typeof(LowercaseWordProcessor);
             cloudLayouter = typeof(CircularCloudLayouter);
-            sizeProvider = typeof(SqrtStringSizeProvider);
+            sizeProvider = typeof(StringSizeProvider);
             brushProvider = typeof(OneColorBrushProvider);
             penProvider = typeof(OneColorPenProvider);
             wordCloudLayouter = typeof(WordCloudLayouter);
@@ -95,14 +96,24 @@ namespace TagCloudContainer.fluent
             return new TagCloudConfig(this) {imageFormat = imageFormat};
         }
 
-        public TagCloudConfig UsingWordBrush(Brush brush)
+        public TagCloudConfig UsingBackgroundBrush(Brush brush)
         {
-            return new TagCloudConfig(this) {options = options.WithBackgoundBrush(brush)};
+            return new TagCloudConfig(this) {options = options.WithBackgroundBrush(brush)};
         }
 
         public TagCloudConfig UsingFont(Font font)
         {
             return new TagCloudConfig(this) {options = options.WithFont(font)};
+        }
+
+        public TagCloudConfig UsingWordBrush(Brush brush)
+        {
+            return new TagCloudConfig(this) {options = options.WithWordBrush(brush)};
+        }
+
+        public TagCloudConfig UsingPen(Pen pen)
+        {
+            return new TagCloudConfig(this) {options = options.WithPen(pen)};
         }
 
         public void SaveToFile(string file)
@@ -131,6 +142,7 @@ namespace TagCloudContainer.fluent
             builder.RegisterType(penProvider).As<IRectanglePenProvider>().SingleInstance();
 
             builder.Register(c => options).As<DrawingOptions>().SingleInstance();
+            builder.Register(c => c.Resolve<DrawingOptions>().Font).As<Font>().SingleInstance();
 
             builder.RegisterType(wordVisualizer).As<IWordVisualizer>();
 

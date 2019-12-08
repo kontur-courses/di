@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
@@ -26,7 +27,7 @@ namespace TagCloudContainer.Implementations
 
         private (string word, Rectangle rect) CreateBoundingRectangle(string word, int occurrenceCount)
         {
-            var stringSize = sizeProvider.GetStringSize(word, occurrenceCount);
+            var stringSize = sizeProvider.GetStringSize(word, occurrenceCount) * occurrenceCount;
             var rectangle = rectangleLayouter.PutNextRectangle(stringSize);
             return (word, rectangle);
         }

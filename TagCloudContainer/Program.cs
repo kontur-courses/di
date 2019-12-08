@@ -9,7 +9,7 @@ namespace TagCloudContainer
             var inputFile = "words.txt";
             var outputFile = "wordCloud.bmp";
 
-            CreateTagCloud.FromFile(inputFile);
+            CreateTagCloud.FromFile(inputFile).SaveToFile(outputFile);
         }
     }
 }

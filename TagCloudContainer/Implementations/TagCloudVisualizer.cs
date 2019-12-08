@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -37,15 +38,20 @@ namespace TagCloudContainer.Implementations
         {
             foreach (var (word, rect) in rectangles)
             {
+                rect.Offset(+bmp.Width / 2, +bmp.Height / 2);
+                graphics.TranslateTransform(rect.X, rect.Y);
                 var count = counts[word];
                 var brush = wordBrushProvider.CreateBrushForWord(word, count);
-                rect.Offset(+bmp.Width / 2, +bmp.Height / 2);
-                graphics.DrawString(word, options.Font, brush, rect.X, rect.Y);
+                graphics.ScaleTransform(count, count);
+                graphics.DrawString(word, options.Font, brush, 0, 0);
+                graphics.ScaleTransform(1f / count, 1f / count);
+                graphics.TranslateTransform(-rect.X, -rect.Y);
             }
         }
 
         private Bitmap CreateSizedBitmap()
         {
+            Console.WriteLine(layouter.Layout.Count);
             int maxX = layouter.Layout.Select(r => r.Right).Max();
             int minX = layouter.Layout.Select(r => r.Left).Min();
             int maxY = layouter.Layout.Select(r => r.Bottom).Max();
