@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Autofac;
 using TagsCloudContainer.FileManager;
 using TagsCloudContainer.Filters;
@@ -9,30 +10,35 @@ using TagsCloudContainer.Visualization;
 
 namespace TagsCloudContainer
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var options = ArgumentParser.ParseArguments(args);
             var setting = new TagsCloudSetting(options);
+//          var setting = TagsCloudSetting.GetDefault();
+
             var container = BuildContainer(setting);
             var tagCloudVisualizator = container.Resolve<TagCloudVisualizator>();
             tagCloudVisualizator.DrawTagCloud(options.InputFile, options.OutputFile, setting);
+            Console.WriteLine($"Image save in {options.OutputFile}");
         }
-        
+
 
         private static IContainer BuildContainer(TagsCloudSetting setting)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<TokensParser>().As<ITokensParser>();
+            builder.RegisterType<FileManager.FileManager>().As<IFileManager>();
+            builder.RegisterType<MyStem>().As<ITokensParser>().As<IFilter>()
+                .SingleInstance()
+                .WithParameter("excludedWorldType",
+                    new[] {WordType.Conjunction, WordType.Pronoun, WordType.Preposition});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
             builder.Register(c => setting.GetCenterImage()).As<Point>().SingleInstance();
-            builder.RegisterType<BoringFilter>().As<IFilter>().WithParameter("boringWords",new string[0]);
             builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();
-            builder.RegisterType<FileManager.FileManager>().As<IFileManager>();
             builder.RegisterType<CircularCloudLayouter>().As<IRectangleGenerator>();
             builder.RegisterType<TagCloudVisualizator>().AsSelf();
-            
+
             return builder.Build();
         }
     }

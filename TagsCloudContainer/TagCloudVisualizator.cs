@@ -18,7 +18,8 @@ namespace TagsCloudContainer
         private readonly IFilter filter;
         private readonly IRectangleGenerator rectangleGenerator;
 
-        public TagCloudVisualizator(IFileManager fileManager, ITokensParser tokensParser, IFilter filter, IRectangleGenerator rectangleGenerator)
+        public TagCloudVisualizator(IFileManager fileManager, ITokensParser tokensParser, IFilter filter,
+            IRectangleGenerator rectangleGenerator)
         {
             this.fileManager = fileManager;
             this.tokensParser = tokensParser;
@@ -34,7 +35,7 @@ namespace TagsCloudContainer
             strTokens = filter.Filtering(strTokens);
 
             var tokens = CreateTokens(strTokens).OrderBy(token => token.Count).Reverse();
-            
+
             var visualizer = new Visualizer(setting);
             var font = setting.Font;
             foreach (var token in tokens)
@@ -44,6 +45,7 @@ namespace TagsCloudContainer
                 if (font.Size >= 9)
                     font = new Font(font.FontFamily, font.Size - 4);
             }
+
             Console.WriteLine();
             visualizer.Save(outputFile);
         }
@@ -64,6 +66,18 @@ namespace TagsCloudContainer
             }
 
             return countToken.Select(token => new Token(token.Key, (uint) token.Value));
+        }
+
+        private class Token
+        {
+            public string Value { get; }
+            public uint Count { get; }
+
+            public Token(string value, uint count)
+            {
+                Value = value;
+                Count = count;
+            }
         }
     }
 }
