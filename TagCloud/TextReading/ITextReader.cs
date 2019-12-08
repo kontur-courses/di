@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloud.TextReading
 {
     public interface ITextReader
     {

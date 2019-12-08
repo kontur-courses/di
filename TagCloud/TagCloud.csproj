@@ -34,12 +34,30 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WordProcessing\IWordProcessor.cs" />
+    <Compile Include="WordProcessing\IWordSelector.cs" />
+    <Compile Include="WordProcessing\IWordClassIdentifier.cs" />
+    <Compile Include="WordProcessing\MyStemBasedWordClassIdentifier.cs" />
+    <Compile Include="WordProcessing\WordProcessor.cs" />
     <Compile Include="TextReading\ITextReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TextReading\TxtTextReader.cs" />
+    <Compile Include="WordProcessing\WordClass.cs" />
+    <Compile Include="WordProcessing\WordClassBasedSelector.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="CliWrap, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CliWrap.2.5.0\lib\net45\CliWrap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.RegularExpressions.4.3.0\lib\net463\System.Text.RegularExpressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
