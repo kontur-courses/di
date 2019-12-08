@@ -31,6 +31,8 @@ namespace TagsCloudContainer
             public int Size { get; set; }
             [Option('c', "color", Default = "Red", HelpText = "Font color. (Does not work)")]
             public string Color { get; set; }
+            [Option('i', "image", Default = "image.png", HelpText = "Image name.")]
+            public string Image { get; set; }
         }
 
         static void Main(string[] args)
@@ -62,7 +64,7 @@ namespace TagsCloudContainer
                        var tagsCloudGenerator = container.Resolve<TagsCloudGenerator>();
 
                        var bitmap = tagsCloudGenerator.CreateTagCloud();
-                       bitmap.Save("image.png");
+                       bitmap.Save(o.Image);
                    });
         }
     }
