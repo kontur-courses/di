@@ -2,6 +2,6 @@
 {
     interface IWordPreprocessor
     {
-        string WordPreprocessing(string word);
+        string[] WordPreprocessing(string word);
     }
 }

@@ -8,23 +8,20 @@ namespace TagsCloudContainer.WordCounters
 {
     class SimpleWordCounter : IWordCounter
     {
-        private IWordPreprocessor wordPreprocessor;
         private IWordFilter wordFilter;
 
-        public SimpleWordCounter(IWordPreprocessor wordPreprocessor, IWordFilter wordFilter)
+        public SimpleWordCounter(IWordFilter wordFilter)
         {
-            this.wordPreprocessor = wordPreprocessor;
             this.wordFilter = wordFilter;
         }
 
         public List<WordToken> CountWords(string[] words)
         {
-            var processedWords = words
-                .Where(word => wordFilter.IsCorrect(word))
-                .Select(word => wordPreprocessor.WordPreprocessing(word));
+            var filteredWords = words
+                .Where(word => wordFilter.IsCorrect(word));
 
             var dict = new Dictionary<string, int>();
-            foreach (var word in processedWords)
+            foreach (var word in filteredWords)
             {
                 if (!dict.ContainsKey(word))
                     dict[word] = 0;

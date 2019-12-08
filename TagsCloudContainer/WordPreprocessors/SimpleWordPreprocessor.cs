@@ -2,9 +2,9 @@
 {
     class SimpleWordPreprocessor : IWordPreprocessor
     {
-        public string WordPreprocessing(string word)
+        public string[] WordPreprocessing(string word)
         {
-            return word.ToLower();
+            return word.ToLower().Split('\n');
         }
     }
 }

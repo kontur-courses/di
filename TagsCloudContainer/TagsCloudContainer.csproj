@@ -120,6 +120,7 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="WaPv1p1.txt" />
     <Content Include="Words.txt" />
   </ItemGroup>
   <ItemGroup>

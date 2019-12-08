@@ -11,7 +11,6 @@ using Autofac.Core;
 using TagsCloudContainer.Readers;
 using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.TagsCloudGenerators;
-using System;
 using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer

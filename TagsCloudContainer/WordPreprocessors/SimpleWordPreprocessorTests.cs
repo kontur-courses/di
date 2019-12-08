@@ -21,10 +21,10 @@ namespace TagsCloudContainer.WordPreprocessors
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
         }
 
-        [TestCase("aaa", ExpectedResult = "aaa")]
-        [TestCase("aaA", ExpectedResult = "aaa")]
-        [TestCase("AAA", ExpectedResult = "aaa")]
-        public string CountWords(string word)
+        [TestCase("aaa", ExpectedResult = new[] { "aaa" })]
+        [TestCase("aaA", ExpectedResult = new[] { "aaa" })]
+        [TestCase("AAA", ExpectedResult = new[] { "aaa" })]
+        public string[] CountWords(string word)
         {
             var container = containerBuilder.Build();
             var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();

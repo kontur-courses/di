@@ -2,6 +2,6 @@
 {
     interface IReader
     {
-        string[] ReadAllLines();
+        string ReadAll();
     }
 }

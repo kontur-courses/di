@@ -10,9 +10,9 @@ namespace TagsCloudContainer.Readers
         {
             var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.docx");
 
-            var result = simpleReader.ReadAllLines();
+            var result = simpleReader.ReadAll();
 
-            var expect = new[] { "A", "A", "A", "A", "D", "D", "B", "B", "D", "A" };
+            var expect = "A\nA\nA\nA\nD\nD\nB\nB\nD\nA\n";
 
             Assert.AreEqual(expect.Length, result.Length);
             Assert.AreEqual(expect, result);
@@ -23,9 +23,9 @@ namespace TagsCloudContainer.Readers
         {
             var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.doc");
 
-            var result = simpleReader.ReadAllLines();
+            var result = simpleReader.ReadAll();
 
-            var expect = new[] { "A", "A", "A", "A", "D", "D", "B", "B", "D", "A", "D" };
+            var expect = "A\nA\nA\nA\nD\nD\nB\nB\nD\nA\nD\n";
 
             Assert.AreEqual(expect.Length, result.Length);
             Assert.AreEqual(expect, result);
