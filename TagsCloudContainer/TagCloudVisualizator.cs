@@ -34,16 +34,16 @@ namespace TagsCloudContainer
             var strTokens = tokensParser.GetTokens(text);
             strTokens = filter.Filtering(strTokens);
 
-            var tokens = CreateTokens(strTokens).OrderBy(token => token.Count).Reverse();
+            var tokens = CreateTokens(strTokens).OrderByDescending(token => token.Count).ToArray();
 
             var visualizer = new Visualizer(setting);
             var font = setting.Font;
+            var maxCount = tokens[0].Count;
             foreach (var token in tokens)
             {
+                font = new Font(font.FontFamily, (int) Math.Max(((double) token.Count / maxCount) * setting.Font.Size, 9f));
                 var rect = rectangleGenerator.PutNextRectangle(TextRenderer.MeasureText(token.Value, font));
                 visualizer.DrawTag(new TagRectangle(token.Value, rect), font);
-                if (font.Size >= 9)
-                    font = new Font(font.FontFamily, font.Size - 4);
             }
 
             Console.WriteLine();
