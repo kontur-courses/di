@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Visualization;
 
 namespace TagCloud.CloudLayouter
 {
@@ -9,59 +10,59 @@ namespace TagCloud.CloudLayouter
     {
         private readonly ArchimedeanSpiral spiral;
         public HashSet<Rectangle> Rectangles { get; set; }
-        public ImageSettings LayouterSize { get; }
+        public ImageSettings LayouterSettings { get; }
 
         public CircularCloudLayouter(ArchimedeanSpiral spiral,
-            ImageSettings layouterSize)
+            ImageSettings layouterSettings)
         {
-            LayouterSize = layouterSize;
+            LayouterSettings = layouterSettings;
             this.spiral = spiral;
-            IsCorrectSize(layouterSize);
+            CheckCorrectSize(layouterSettings);
             Rectangles = new HashSet<Rectangle>();
         }
 
-        public void RefreshLayouter()
+        public void ResetLayouter()
         {
             spiral.SetNewStartPoint();
             Rectangles = new HashSet<Rectangle>();
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public bool TryPutNextRectangle(Size rectangleSize, out Rectangle outRectangle)
         {
-            IsCorrectSize(rectangleSize);
+            CheckCorrectSize(rectangleSize);
             foreach (var point in spiral.GetNewPointLazy())
             {
-                var rect = new Rectangle(point, rectangleSize);
-                if (!IsCorrectRectanglePosition(rect)) continue;
-                if (!RectangleDoesNotIntersect(rect)) continue;
-                Rectangles.Add(rect);
-                return rect;
+                outRectangle = new Rectangle(point, rectangleSize);
+                if (!IsCorrectRectanglePosition(outRectangle)) return false;
+                if (!RectangleDoesNotIntersect(outRectangle)) continue;
+                Rectangles.Add(outRectangle);
+                return true;
             }
 
             throw new InvalidOperationException("Rectangle should be added after foreach block");
         }
 
-        private void IsCorrectSize(ImageSettings settings)
+        private void CheckCorrectSize(ImageSettings settings)
         {
-            IsCorrectSize(new Size(settings.Width, settings.Height));
+            CheckCorrectSize(settings.ImageSize);
         }
 
-        private void IsCorrectSize(Size rectangleSize)
+        private void CheckCorrectSize(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0
-                || rectangleSize.Width > LayouterSize.Width
+                || rectangleSize.Width > LayouterSettings.ImageSize.Width
                 || rectangleSize.Height <= 0
-                || rectangleSize.Height > LayouterSize.Height)
+                || rectangleSize.Height > LayouterSettings.ImageSize.Height)
                 throw new ArgumentException(
                     $"Incorrect size of rectangle. Width: {rectangleSize.Width}, Height: {rectangleSize.Height}");
         }
 
         private bool IsCorrectRectanglePosition(Rectangle rect)
         {
-            return rect.Location.X + rect.Size.Width <= LayouterSize.Width / 2 &&
-                   rect.Location.X >= -LayouterSize.Width / 2 &&
-                   rect.Location.Y + rect.Size.Height <= LayouterSize.Height / 2 &&
-                   rect.Location.Y >= -LayouterSize.Height / 2;
+            return rect.Location.X + rect.Size.Width <= LayouterSettings.ImageSize.Width / 2 &&
+                   rect.Location.X >= -LayouterSettings.ImageSize.Width / 2 &&
+                   rect.Location.Y + rect.Size.Height <= LayouterSettings.ImageSize.Height / 2 &&
+                   rect.Location.Y >= -LayouterSettings.ImageSize.Height / 2;
         }
 
         private bool RectangleDoesNotIntersect(Rectangle rectToAdd)

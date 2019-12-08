@@ -10,7 +10,7 @@ namespace TagCloud.CloudLayouter
         private readonly SpiralSettings settings;
         private double angleChange;
         private double densityParameter;
-        public double angle;
+        private double angle;
 
         public ArchimedeanSpiral(SpiralSettings settings)
         {
