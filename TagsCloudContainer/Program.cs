@@ -12,6 +12,7 @@ using TagsCloudContainer.Readers;
 using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.TagsCloudGenerators;
 using TagsCloudContainer.PaintersWords;
+using System;
 
 namespace TagsCloudContainer
 {

@@ -48,9 +48,11 @@ namespace TagsCloudContainer.WordPreprocessors
         {
             var container = containerBuilder.Build();
             var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();
-            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
+            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\WordsRus.txt");
 
             var result = simpleWordPreprocessor.WordPreprocessing(simpleReader.ReadAllLines());
+
+            Assert.AreEqual(new[] { "огонь", "а", "а", "полено" }, result);
         }
     }
 }

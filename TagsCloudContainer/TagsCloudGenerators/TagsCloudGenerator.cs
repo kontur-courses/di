@@ -3,6 +3,7 @@ using TagsCloudContainer.Visualizers;
 using TagsCloudContainer.Readers;
 using System.Drawing;
 using TagsCloudContainer.WordPreprocessors;
+using System;
 
 namespace TagsCloudContainer.TagsCloudGenerators
 {
