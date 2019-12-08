@@ -20,7 +20,7 @@ namespace TagCloudForm.Actions
 
         public void Perform()
         {
-            SettingsForm.For(spiralSettings).ShowDialog();
+            SettingsForm<SpiralSettings>.For(spiralSettings).ShowDialog();
             painter.Paint();
         }
     }

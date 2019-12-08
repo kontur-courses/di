@@ -18,7 +18,7 @@ namespace TagCloudForm.Actions
 
         public void Perform()
         {
-            SettingsForm.For(viewSettings).ShowDialog();
+            SettingsForm<ViewSettings>.For(viewSettings).ShowDialog();
         }
     }
 }
