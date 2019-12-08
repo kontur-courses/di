@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagCloud.Algorithm.SpiralBasedLayouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         public Point Center { get; }
         private readonly Spiral spiral;

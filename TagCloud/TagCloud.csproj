@@ -37,6 +37,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\ICloudLayouter.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\DistanceUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\GeometryUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\RectangleUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\Segment.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\Spiral.cs" />
     <Compile Include="IWordsProvider.cs" />
     <Compile Include="WordsPreparation\IWordSizeSetter.cs" />
     <Compile Include="ITagCloudGenerator.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagCloud.Algorithm.SpiralBasedLayouter
 {
     public class GeometryUtils
     {
