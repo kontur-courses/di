@@ -28,16 +28,16 @@ namespace TagsCloud
 		private Size GetWordSize(string word, int fontSize)
 		{
 			var graphics = _imageHolder.GetGraphics();
-			var font = new Font(_settings.Font.FontFamily, fontSize);
+			var font = new Font(_settings.Font.Name, fontSize);
 			var wordSize = graphics.MeasureString(word, font);
-			wordSize = new SizeF(wordSize.Width * 1.1F, wordSize.Height * 0.8F);
+			wordSize = new SizeF(wordSize.Width * 1.04F, wordSize.Height * 0.8F);
 			return wordSize.ToSize();
 		}
 
 		private int CalculateFontSize(Word word)
 		{
 			var size = Math.Log(word.Frequency, 1.09);
-			size = size > _settings.MaxFontSize ? size % _settings.MaxFontSize : size;
+			size = size > _settings.MaxFontSize ? _settings.MaxFontSize : size;
 			return (int) (size < _settings.MinFontSize ? _settings.MinFontSize : size);
 		}
 	}

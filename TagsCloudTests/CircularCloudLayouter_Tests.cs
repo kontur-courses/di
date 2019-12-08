@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Linq;
-using System.Drawing;
-using NUnit.Framework;
-using FluentAssertions;
 using System.Collections.Generic;
-using Autofac;
-using NUnit.Framework.Interfaces;
-using TagsCloud.Interfaces;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using FluentAssertions;
+using NSubstitute;
+using NUnit.Framework;
+using TagsCloud;
 
-namespace TagsCloud
+namespace TagsCloudTests
 {
 	[TestFixture]
 	public class CircularCloudLayouter_Tests
 	{
 		private CircularCloudLayouter _circularCloudLayouter;
-		private IContainer _container;
-
-		[OneTimeSetUp]
-		public void FirstSetUp()
-		{
-			var builder = new ContainerBuilder();
-			builder.RegisterType<CircularCloudLayouter>().AsSelf();
-			builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
-			builder.RegisterType<SpiralSettings>().AsSelf();
-			_container = builder.Build();
-		}
 		
 		[SetUp]
-		public void SetUp() => _circularCloudLayouter = _container.Resolve<CircularCloudLayouter>();
+		public void SetUp()
+		{
+			var spiral = new ArchimedeSpiral(new SpiralSettings());
+			_circularCloudLayouter = new CircularCloudLayouter(spiral);
+		}
 
 		[Test]
 		public void PutNextRectangle_SavesPutRectangles()
@@ -36,8 +29,16 @@ namespace TagsCloud
 
 			for (var i = 0; i < expectedRectanglesCount; i++)
 				_circularCloudLayouter.PlaceNextRectangle(new Size());
-			var actualRectangles = _circularCloudLayouter.Rectangles;
+			var actualRectangles = GetRectangles();
 			actualRectangles.Count.Should().Be(expectedRectanglesCount);
+		}
+
+		private List<Rectangle> GetRectangles()
+		{
+			const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+			var rectangles = typeof(CircularCloudLayouter).GetField("_rectangles", flags)
+				.GetValue(_circularCloudLayouter);
+			return (List<Rectangle>) rectangles;
 		}
 
 		[TestCase(-1, 0, TestName = "Negative rectangle width")]
@@ -76,7 +77,7 @@ namespace TagsCloud
 
 		private void CheckIntersection()
 		{
-			var rectangles = _circularCloudLayouter.Rectangles;
+			var rectangles = GetRectangles();
 			for (var i = 0; i < rectangles.Count; i++)
 			for (var j = i + 1; j < rectangles.Count; j++)
 			{
@@ -92,10 +93,11 @@ namespace TagsCloud
 			var rectangleSize = new Size(20, 20);
 			for (var i = 0; i < 100; i++)
 				_circularCloudLayouter.PlaceNextRectangle(rectangleSize);
-			var maxDistance = _circularCloudLayouter.Rectangles.Select(CalculateDistanceFromCenter).Max();
+			var rectangles = GetRectangles();
+			var maxDistance = rectangles.Select(CalculateDistanceFromCenter).Max();
 			var maxArea = Math.PI * maxDistance * maxDistance;
 			
-			var actualFilledArea = _circularCloudLayouter.Rectangles.Sum(rect => rect.Width * rect.Height);
+			var actualFilledArea = rectangles.Sum(rect => rect.Width * rect.Height);
 			var actualDensityCoefficient = actualFilledArea / maxArea;
 			actualDensityCoefficient.Should().BeGreaterOrEqualTo(minimumAreaRatio);
 		}

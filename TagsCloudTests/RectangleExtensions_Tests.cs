@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloud;
 
-namespace TagsCloud
+namespace TagsCloudTests
 {
 	[TestFixture]
 	public class RectangleExtensions_Tests
