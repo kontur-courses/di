@@ -3,14 +3,6 @@ using System.Windows.Forms;
 
 namespace TagCloudForm.Settings
 {
-    public static class SettingsForm
-    {
-        public static SettingsForm<TSettings> For<TSettings>(TSettings settings)
-        {
-            return new SettingsForm<TSettings>(settings);
-        }
-    }
-
     public class SettingsForm<TSettings> : Form
     {
         public SettingsForm(TSettings settings)
@@ -34,6 +26,11 @@ namespace TagCloudForm.Settings
         {
             base.OnLoad(e);
             Text = "Настройки";
+        }
+
+        public static SettingsForm<TSettings> For(TSettings settings)
+        {
+            return new SettingsForm<TSettings>(settings);
         }
     }
 }

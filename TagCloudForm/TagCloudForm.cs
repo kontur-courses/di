@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
-using TagCloud;
+using TagCloud.Visualization;
 using TagCloudForm.Actions;
 using TagCloudForm.Holder;
 using TagCloudForm.Settings;
@@ -13,7 +12,7 @@ namespace TagCloudForm
         public TagCloudForm(IEnumerable<IUiAction> actions, PictureBoxImageHolder pictureBox,
             ImageSettings imageSettings)
         {
-            ClientSize = new Size(imageSettings.Width, imageSettings.Height);
+            ClientSize = imageSettings.ImageSize;
             WindowState = WindowState = FormWindowState.Maximized;
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());

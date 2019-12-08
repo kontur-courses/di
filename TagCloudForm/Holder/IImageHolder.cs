@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagCloud;
+using TagCloud.Visualization;
 
 namespace TagCloudForm.Holder
 {
