@@ -100,6 +100,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Words.docx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">

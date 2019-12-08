@@ -11,6 +11,7 @@ using Autofac.Core;
 using TagsCloudContainer.Readers;
 using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.TagsCloudGenerators;
+using System;
 
 namespace TagsCloudContainer
 {
@@ -18,7 +19,7 @@ namespace TagsCloudContainer
     {
         public class Options
         {
-            [Option('f', "file", Default = @"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt", HelpText = "Full wordlist file name.")]
+            [Option('r', "read", MetaValue = "FILE", Required = true, HelpText = "Full wordlist file name.")]
             public string File { get; set; }
             [Option('h', "height", Default = 1024, HelpText = "Image height.")]
             public int Height { get; set; }
