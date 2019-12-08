@@ -12,11 +12,11 @@ namespace TagCloud.Visualization
             Brushes.Gold, Brushes.Green, Brushes.Fuchsia, Brushes.BlueViolet
         };
 
-        public string FontName { get; set; } = "PT Mono";
-        public Color BackgroundColor { get; set; } = Color.Black;
-        public Color TextColor { get; set; } = Color.Black;
+        public string FontName { get; set; } = "courier new";
+        public Color BackgroundColor { get; set; } = Color.DarkBlue;
+        public Color TextColor { get; set; } = Color.OrangeRed;
 
-        public bool EnableWordRectangles { get; set; } = true;
+        public bool EnableWordRectangles { get; set; } = false;
 
         public int WordsCount { get; set; } = 100;
     }

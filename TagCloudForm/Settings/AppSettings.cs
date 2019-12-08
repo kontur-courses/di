@@ -1,11 +1,8 @@
-﻿using TagCloud;
-
-namespace TagCloudForm.Settings
+﻿namespace TagCloudForm.Settings
 {
-    public class AppSettings : IImageDirectoryProvider, IImageSettingsProvider
+    public class AppSettings : IImageDirectoryProvider
     {
         public string ImagesDirectory { get; set; } = ".";
-        public ImageSettings ImageSettings { get; set; }
         public const string FormName = "Tag cloud";
     }
 }
