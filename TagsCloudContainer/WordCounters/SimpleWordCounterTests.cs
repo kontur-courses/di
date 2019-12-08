@@ -21,7 +21,7 @@ namespace TagsCloudContainer.WordCounters
 
             var container = containerBuilder.Build();
 
-            var words = new string[] { "a", "d", "d", "j", "a", "h", "a" };
+            var words = new[] { "a", "d", "d", "j", "a", "h", "a" };
             var expect = new WordToken[]
             {
                 new WordToken("a", 3),
