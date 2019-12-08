@@ -5,11 +5,9 @@ namespace TagsCloudVisualization.TextReaders
 {
     public class TxtReader : ITextReader
     {
-        private FileStream stream;
-        private string text;
-
         public string ReadText(string filePath)
         {
+            FileStream stream;
             try
             {
                 stream = new FileStream(filePath, FileMode.Open);
@@ -20,10 +18,8 @@ namespace TagsCloudVisualization.TextReaders
             }
             using (var streamReader = new StreamReader(stream))
             {
-                text = streamReader.ReadToEnd();
+                return streamReader.ReadToEnd();
             }
-            
-            return text;
         }
     }
 }

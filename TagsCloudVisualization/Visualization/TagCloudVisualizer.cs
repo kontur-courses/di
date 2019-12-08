@@ -15,7 +15,7 @@ namespace TagsCloudVisualization.Visualization
             this.visualisingOptions = visualisingOptions;
         }
 
-        public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, CloudPainter cloudPainter)
+        public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, ICloudPainter cloudPainter)
         {
             var rectangles = GetRectanglesForWords(words, layouter);
             return cloudPainter.GetImage(words, rectangles, visualisingOptions);
@@ -30,8 +30,10 @@ namespace TagsCloudVisualization.Visualization
         private Size GetWordSize(string word, Font font, Size pictureSize)
         {
             var bitmap = new Bitmap(pictureSize.Width, pictureSize.Height);
-            var image = Graphics.FromImage(bitmap);
-            return image.MeasureString(word, font).ToSize();
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                return graphics.MeasureString(word, font).ToSize();
+            }
         }
     }
 }

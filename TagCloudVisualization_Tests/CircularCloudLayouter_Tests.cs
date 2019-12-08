@@ -99,8 +99,8 @@ namespace TagsCloudVisualization_Tests
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
             var testName = TestContext.CurrentContext.Test.Name;
-            var painter = new MultiColorCloudPainter();
-            var image = painter.GetMultiColorCloud(rectangles, new Size(1000, 1000));
+            var painter = new MultiColorRectanglesPainter();
+            var image = painter.GetImage(rectangles, new Size(1000, 1000));
             var fileName = $"{testName}Failed";
             var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");

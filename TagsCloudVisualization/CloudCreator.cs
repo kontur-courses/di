@@ -11,28 +11,29 @@ namespace TagsCloudVisualization
     public class CloudCreator
     {
         private readonly ITextReader textReader;
-        private readonly WordsProvider wordsProvider;
+        private readonly WordsExtractor wordsExtractor;
         private readonly WordPreprocessor wordPreprocessor;
-        private readonly CloudPainter cloudPainter;
+        private readonly ICloudPainter cloudPainter;
+        private readonly TagCloudVisualizer tagCloudVisualizer;
+        private readonly ILayouter layouter;
 
-        public CloudCreator(ITextReader textReader, WordsProvider wordsProvider, WordPreprocessor wordPreprocessor,
-            CloudPainter cloudPainter)
+        public CloudCreator(ITextReader textReader, WordsExtractor wordsExtractor, WordPreprocessor wordPreprocessor,
+            ICloudPainter cloudPainter, TagCloudVisualizer tagCloudVisualizer, ILayouter layouter)
         {
             this.textReader = textReader;
-            this.wordsProvider = wordsProvider;
+            this.wordsExtractor = wordsExtractor;
             this.wordPreprocessor = wordPreprocessor;
             this.cloudPainter = cloudPainter;
+            this.tagCloudVisualizer = tagCloudVisualizer;
+            this.layouter = layouter;
         }
 
-        public Bitmap GetCloud(VisualisingOptions visualisingOptions, string textName)
+        public Bitmap GetCloud(string textName)
         {
-            var cloudVisualizer = new TagCloudVisualizer(visualisingOptions);
-            var center = new Point(visualisingOptions.ImageSize.Width / 2, visualisingOptions.ImageSize.Height / 2);
-            var layouter = new CircularCloudLayouter(new Spiral(center));
             var text = textReader.ReadText(PathFinder.GetTextsPath(textName));
-            var words = wordsProvider.GetWords(text);
+            var words = wordsExtractor.GetWords(text);
             var preprocessedWords = wordPreprocessor.GetPreprocessedWords(words);
-            var image = cloudVisualizer.GetVisualization(preprocessedWords, layouter, cloudPainter);
+            var image = tagCloudVisualizer.GetVisualization(preprocessedWords, layouter, cloudPainter);
             return image;
         }
     }

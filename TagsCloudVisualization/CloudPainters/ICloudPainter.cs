@@ -4,9 +4,9 @@ using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.CloudPainters
 {
-    public abstract class CloudPainter
+    public interface ICloudPainter
     {
-        internal abstract Bitmap GetImage(IEnumerable<string> words, IEnumerable<Rectangle> rectangles,
+        Bitmap GetImage(IEnumerable<string> words, IEnumerable<Rectangle> rectangles,
             VisualisingOptions visualisingOptions);
     }
 }

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudVisualization.TextPreprocessing
 {
-    public class WordsProvider
+    public class WordsExtractor
     {
         public IEnumerable<string> GetWords(string text)
         {
