@@ -9,23 +9,24 @@ namespace TagsCloud
 	{
 		private readonly ITagsProcessor _tagsProcessor;
 		private readonly ICloudLayouter _layouter;
-		private readonly List<Tag> _layoutTags;
 
 		public LayoutConstructor(ITagsProcessor tagsProcessor, ICloudLayouter layouter)
 		{
 			_tagsProcessor = tagsProcessor;
 			_layouter = layouter;
-			_layoutTags = new List<Tag>();
 		}
 
 		public Layout GetLayout()
 		{
+			var layoutTags = new List<Tag>();
+			_layouter.ResetState();
+			
 			foreach (var tag in _tagsProcessor.GetTags())
 			{
 				var tagArea = _layouter.PlaceNextRectangle(tag.Area.Size);
-				_layoutTags.Add(new Tag(tag.Text, tag.TextSize, tagArea));
+				layoutTags.Add(new Tag(tag.Text, tag.TextSize, tagArea));
 			}
-			return new Layout(_layoutTags);
+			return new Layout(layoutTags);
 		}
 	}
 }

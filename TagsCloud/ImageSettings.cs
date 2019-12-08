@@ -2,7 +2,7 @@
 {
 	public class ImageSettings
 	{
-		public int Width { get; set; } = 800;
-		public int Height { get; set; } = 600;
+		public int Width { get; set; } = 1360;
+		public int Height { get; set; } = 710;
 	}
 }

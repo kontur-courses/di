@@ -8,17 +8,16 @@ namespace TagsCloud
 	{
 		private readonly ITextReader _textReader;
 		private readonly IEnumerable<IWordFilter> _wordFilters;
-		private readonly Dictionary<string, int> _frequencies;
 
 		public WordsProcessor(ITextReader textReader, IEnumerable<IWordFilter> wordFilters)
 		{
 			_textReader = textReader;
 			_wordFilters = wordFilters;
-			_frequencies = new Dictionary<string, int>();
 		}
 
 		public IEnumerable<Word> GetSortedWordsWithFrequencies()
 		{
+			var _frequencies = new Dictionary<string, int>();
 			foreach (var word in FilterWords().Select(w => w.ToLower()))
 			{
 				if (_frequencies.ContainsKey(word))

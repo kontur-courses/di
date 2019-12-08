@@ -16,7 +16,7 @@ namespace TagsCloud
     {
         public static void Main(string[] args)
         {
-            const string sourceTextFilePath = @"../../text.txt";
+            const string sourceTextFilePath = @"../../Resources/text.txt";
             var builder = new ContainerBuilder();
             
             builder.RegisterType<MainForm>().AsSelf();

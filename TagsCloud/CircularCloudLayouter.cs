@@ -9,8 +9,7 @@ namespace TagsCloud
 	public class CircularCloudLayouter: ICloudLayouter
 	{
 		private readonly ISpiral _spiral;
-
-		public List<Rectangle> Rectangles { get; } = new List<Rectangle>();
+		private readonly List<Rectangle> _rectangles = new List<Rectangle>();
 
 		public CircularCloudLayouter(ISpiral spiral) => _spiral = spiral;
 
@@ -20,11 +19,17 @@ namespace TagsCloud
 				throw new ArgumentException("Size values must be non-negative");
 
 			var newRectangle = new Rectangle(_spiral.GetNextPoint(), rectangleSize);
-			while (Rectangles.Any(rect => newRectangle.Intersects(rect)))
+			while (_rectangles.Any(rect => newRectangle.Intersects(rect)))
 				newRectangle = new Rectangle(_spiral.GetNextPoint(), rectangleSize);
 			
-			Rectangles.Add(newRectangle);
+			_rectangles.Add(newRectangle);
 			return newRectangle;
+		}
+
+		public void ResetState()
+		{
+			_rectangles.Clear();
+			_spiral.ResetState();
 		}
 	}
 }

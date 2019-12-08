@@ -34,7 +34,6 @@ namespace TagsCloud
 			var backgroundColor = new SolidBrush(_palette.BackgroundColor);
 			graphics.FillRectangle(backgroundColor, 0, 0, _imageSettings.Width, _imageSettings.Height);
 			DrawTags(graphics, correctTags);
-			_imageHolder.UpdateUi();
 		}
 
 		private static Rectangle ToComputerCoordinates(Rectangle rectangle, Size imageSize)
@@ -52,6 +51,9 @@ namespace TagsCloud
 				var color = _palette.RandomizeColors ? _palette.GenerateColor() : _palette.TextColor;
 				var font = new Font(_fontSettings.Font.FontFamily, tag.TextSize);
 				graphics.DrawString(tag.Text, font, new SolidBrush(color), tag.Area);
+				if (_fontSettings.DrawWordRectangle)
+					graphics.DrawRectangle(new Pen(color), tag.Area);
+				_imageHolder.UpdateUi();
 			}
 		}
 	}

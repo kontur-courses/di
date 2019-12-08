@@ -9,15 +9,15 @@ namespace TagsCloud
 	{
 		public MainForm(IMenuAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
 		{
-			ClientSize = new Size(imageSettings.Width, imageSettings.Height);
-
 			var mainMenu = new MenuStrip();
 			mainMenu.Items.AddRange(actions.ToMenuItems());
 			Controls.Add(mainMenu);
 
 			pictureBox.Dock = DockStyle.Fill;
 			Controls.Add(pictureBox);
+			pictureBox.RecreateImage(imageSettings);
 
+			WindowState = FormWindowState.Maximized;
 			Text = "Tags cloud";
 		}
 	}
