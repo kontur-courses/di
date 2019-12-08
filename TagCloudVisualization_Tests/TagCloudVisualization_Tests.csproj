@@ -12,6 +12,7 @@
     <ItemGroup>
       <PackageReference Include="Autofac" Version="4.9.4" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+      <PackageReference Include="NHunspell" Version="1.2.5554.16953" />
     </ItemGroup>
 
     <ItemGroup>

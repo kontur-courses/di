@@ -8,7 +8,8 @@
     <ItemGroup>
       <PackageReference Include="Autofac" Version="4.9.4" />
       <PackageReference Include="FluentAssertions" Version="5.9.0" />
-      <PackageReference Include="NUnit" Version="3.12.0" />
+      <PackageReference Include="NHunspell" Version="1.2.5554.16953" />
+	  <PackageReference Include="NUnit" Version="3.12.0" />
       <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
       <PackageReference Include="ZedGraph" Version="6.0.0-alpha0001" />
     </ItemGroup>

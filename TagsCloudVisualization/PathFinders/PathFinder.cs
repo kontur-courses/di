@@ -15,6 +15,11 @@ namespace TagsCloudVisualization.PathFinders
             return Path.Combine(GetFolderPath("Images"), $"{name}.{imageFormat}");
         }
 
+        public static string GetHunspellDictionariesPath(string name)
+        {
+            return Path.Combine(GetFolderPath("HunspellDictionaries"), name);
+        }
+
         private static string GetFolderPath(string folderName)
         {
             var projectPath = Path.GetFullPath("..\\..\\..\\");
