@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.TextPreprocessing;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization_Tests
 {
     public class TextPreparer_Tests
     {

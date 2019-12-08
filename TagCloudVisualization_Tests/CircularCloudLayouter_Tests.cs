@@ -6,13 +6,13 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using static TagsCloudVisualization.Tests.CircularCloudLayouter_Tests_AuxiliaryTools;
+using static TagsCloudVisualization_Tests.CircularCloudLayouter_Tests_AuxiliaryTools;
 using TagsCloudVisualization.CloudPainters;
-using TagsCloudVisualization.PointExtensions;
+using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Visualization;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization_Tests
 {
     [TestFixture]
     public class CircularCloudLayouter_Tests

@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Layouters;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization_Tests
 {
     [TestFixture]
     public class Spriral_Tests
@@ -31,8 +31,7 @@ namespace TagsCloudVisualization.Tests
             var previousAngle = spiral.Angle;
             spiral.GetNextPoint();
             var currentAngle = spiral.Angle;
-            var difference = currentAngle - previousAngle;
-            difference.Should().BePositive();
+            currentAngle.Should().BeGreaterThan(previousAngle);
         }
     }
 }

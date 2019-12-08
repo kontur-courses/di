@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Layouters;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization_Tests
 {
     public static class CircularCloudLayouter_Tests_AuxiliaryTools
     {

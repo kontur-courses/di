@@ -6,7 +6,7 @@ using TagsCloudVisualization.TextFilters;
 using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.WordConverters;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization_Tests
 {
     public class WordPreprocessor_Tests
     {
