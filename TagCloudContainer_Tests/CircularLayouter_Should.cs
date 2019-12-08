@@ -5,6 +5,8 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloudContainer;
+using TagCloudContainer.Api;
+using TagCloudContainer.Implementations;
 
 namespace TagCloudContainer_Tests
 {
@@ -12,7 +14,7 @@ namespace TagCloudContainer_Tests
     public class CircularLayouter_Should
     {
         private CircularCloudLayouter layouter;
-
+        private IRectanglePenProvider penProvider = new OneColorPenProvider();
         private DrawingOptions drawingOptions = new DrawingOptions();
 
         [SetUp]
@@ -27,7 +29,7 @@ namespace TagCloudContainer_Tests
             if (TestContext.CurrentContext.Result.Outcome.Status.Equals(TestStatus.Failed))
             {
                 var fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
-                var img = new LayoutVisualizer(layouter).CreateImageWithRectangles(drawingOptions);
+                var img = new LayoutVisualizer(layouter, penProvider, drawingOptions).CreateImageWithRectangles();
                 img.Save(fileName);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }

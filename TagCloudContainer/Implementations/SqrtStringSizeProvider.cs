@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using TagCloudContainer.Api;
 
-namespace TagCloudContainer
+namespace TagCloudContainer.Implementations
 {
     public class SqrtStringSizeProvider : IStringSizeProvider
     {

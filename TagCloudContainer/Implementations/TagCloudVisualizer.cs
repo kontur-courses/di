@@ -3,48 +3,53 @@ using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
 
-namespace TagCloudContainer
+namespace TagCloudContainer.Implementations
 {
     public class TagCloudVisualizer : IWordVisualizer
     {
-        private IWordCloudLayouter Layouter;
+        private readonly IWordCloudLayouter layouter;
+        private readonly IWordBrushProvider wordBrushProvider;
 
-        public TagCloudVisualizer(IWordCloudLayouter layouter)
+        public TagCloudVisualizer(IWordCloudLayouter layouter, IWordBrushProvider wordBrushProvider)
         {
-            Layouter = layouter;
+            this.layouter = layouter;
+            this.wordBrushProvider = wordBrushProvider;
         }
 
         public Image CreateImageWithWords(IEnumerable<string> words, DrawingOptions options)
         {
             var wordsAndCounts = WordCounter.CreateWordOccurrencesDictionary(words);
-            var wordsAndRectangles = Layouter.AddWords(wordsAndCounts);
+            var wordsAndRectangles = layouter.AddWords(wordsAndCounts);
 
             var bmp = CreateSizedBitmap();
             var graphics = Graphics.FromImage(bmp);
 
             FillBackground(graphics, bmp, options);
-            WriteWordsOnImage(wordsAndRectangles, options, graphics, bmp);
+            WriteWordsOnImage(wordsAndRectangles, wordsAndCounts, options, graphics, bmp);
 
             graphics.Flush();
             return bmp;
         }
 
-        private static void WriteWordsOnImage(IReadOnlyDictionary<string, Rectangle> pairs,
+        private void WriteWordsOnImage(IReadOnlyDictionary<string, Rectangle> rectangles,
+            IReadOnlyDictionary<string, int> counts,
             DrawingOptions options, Graphics graphics, Image bmp)
         {
-            foreach (var (word, rect) in pairs)
+            foreach (var (word, rect) in rectangles)
             {
+                var count = counts[word];
+                var brush = wordBrushProvider.CreateBrushForWord(word, count);
                 rect.Offset(+bmp.Width / 2, +bmp.Height / 2);
-                graphics.DrawString(word, options.Font, options.WordBrush, rect.X, rect.Y);
+                graphics.DrawString(word, options.Font, brush, rect.X, rect.Y);
             }
         }
 
         private Bitmap CreateSizedBitmap()
         {
-            int maxX = Layouter.Layout.Select(r => r.Right).Max();
-            int minX = Layouter.Layout.Select(r => r.Left).Min();
-            int maxY = Layouter.Layout.Select(r => r.Bottom).Max();
-            int minY = Layouter.Layout.Select(r => r.Top).Min();
+            int maxX = layouter.Layout.Select(r => r.Right).Max();
+            int minX = layouter.Layout.Select(r => r.Left).Min();
+            int maxY = layouter.Layout.Select(r => r.Bottom).Max();
+            int minY = layouter.Layout.Select(r => r.Top).Min();
 
             int bmpWidth = maxX - minX;
             int bmpHeight = maxY - minY;

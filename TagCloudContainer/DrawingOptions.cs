@@ -4,22 +4,33 @@ namespace TagCloudContainer
 {
     public class DrawingOptions
     {
-        public Brush BackgroundBrush { get; }
-        public Brush WordBrush { get; }
-        public Font Font { get; }
-        public Pen Pen { get; }
+        public Brush BackgroundBrush { get; private set; }
+        public Font Font { get; private set; }
 
-        public DrawingOptions() : this(new SolidBrush(Color.White), new SolidBrush(Color.Blue),
-            new Font(FontFamily.GenericSerif, 14), new Pen(Color.Blue))
+        private DrawingOptions(DrawingOptions parent) :
+            this(parent.BackgroundBrush, parent.Font)
         {
         }
 
-        public DrawingOptions(Brush backgroundBrush, Brush wordBrush, Font font, Pen pen)
+        public DrawingOptions() :
+            this(new SolidBrush(Color.White), new Font(FontFamily.GenericSerif, 14))
+        {
+        }
+
+        private DrawingOptions(Brush backgroundBrush, Font font)
         {
             BackgroundBrush = backgroundBrush;
-            WordBrush = wordBrush;
             Font = font;
-            Pen = pen;
+        }
+
+        public DrawingOptions WithBackgoundBrush(Brush brush)
+        {
+            return new DrawingOptions(this) {BackgroundBrush = brush};
+        }
+
+        public DrawingOptions WithFont(Font font)
+        {
+            return new DrawingOptions(this) {Font = font};
         }
     }
 }

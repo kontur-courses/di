@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
 
-namespace TagCloudContainer
+namespace TagCloudContainer.Implementations
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
