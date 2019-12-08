@@ -1,4 +1,4 @@
-﻿namespace TagCloud.WordProcessing
+﻿namespace TagCloud.WordsProcessing
 {
     public interface IWordClassIdentifier
     {

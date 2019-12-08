@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagCloud.Infrastructure;
 
-namespace TagCloud.WordProcessing
+namespace TagCloud.WordsProcessing
 {
     public class WordProcessor : IWordProcessor
     {
@@ -12,11 +13,12 @@ namespace TagCloud.WordProcessing
             this.wordSelector = wordSelector;
         }
 
-        public IEnumerable<string> PrepareWords(IEnumerable<string> rawWords)
+        public IEnumerable<Word> PrepareWords(IEnumerable<string> rawWords)
         {
             return rawWords
                 .Select(rawWord => rawWord.ToLower())
-                .Where(word => wordSelector.IsSelectedWord(word));
+                .Where(word => wordSelector.IsSelectedWord(word))
+                .Select(word => new Word(word));
         }
     }
 }

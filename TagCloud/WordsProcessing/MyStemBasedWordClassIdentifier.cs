@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CliWrap;
 
-namespace TagCloud.WordProcessing
+namespace TagCloud.WordsProcessing
 {
     public class MyStemBasedWordClassIdentifier : IWordClassIdentifier
     {

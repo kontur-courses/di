@@ -1,6 +1,4 @@
-﻿using TagCloud.WordProcessing;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     public class Program
     {
