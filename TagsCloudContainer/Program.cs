@@ -9,8 +9,8 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             var container = Register(args);
-            var compositor = container.Resolve<Compositor>();
-            compositor.Composite();
+            var imageCreator = container.Resolve<ImageCreator>();
+            imageCreator.Save();
         }
 
         private static IContainer Register(string[] args)
@@ -28,6 +28,7 @@ namespace TagsCloudContainer
                 return new CircularCloudLayouter(new Point(setting.Width / 2, setting.Height / 2));
             }).As<ICloudLayouter>();
             builder.RegisterType<Compositor>().As<Compositor>();
+            builder.RegisterType<ImageCreator>().As<ImageCreator>();
             return builder.Build();
         }
     }
