@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace TagsCloudVisualization
 {
@@ -47,9 +48,15 @@ namespace TagsCloudVisualization
             return brushes[random.Next(0, brushes.Count)];
         }
 
-        public void Save(string name)
+        public void Save(string fileName)
         {
-            bitmap.Save(name + ".png");
+            bitmap.Save(fileName + ".png");
+        }
+
+        public void Save(string directoryPath, string fileName)
+        {
+            var pathToFile = Path.Combine(directoryPath, fileName + ".png");
+            bitmap.Save(pathToFile);
         }
     }
 }
