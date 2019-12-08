@@ -51,7 +51,6 @@ namespace TagCloudContainer.Implementations
 
         private Bitmap CreateSizedBitmap()
         {
-            Console.WriteLine(layouter.Layout.Count);
             int maxX = layouter.Layout.Select(r => r.Right).Max();
             int minX = layouter.Layout.Select(r => r.Left).Min();
             int maxY = layouter.Layout.Select(r => r.Bottom).Max();

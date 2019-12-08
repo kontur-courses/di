@@ -10,8 +10,8 @@ namespace TagCloudContainer.fluent
 {
     public class TagCloudConfig
     {
-        private readonly string inputFile;
-        private IWordsProvider wordsProvider;
+        public readonly string inputFile;
+        private IWordProvider wordProvider;
         private Type wordProcessor;
         private Type wordVisualizer;
         private Type cloudLayouter;
@@ -25,7 +25,7 @@ namespace TagCloudContainer.fluent
         private TagCloudConfig(TagCloudConfig parent)
         {
             inputFile = parent.inputFile;
-            wordsProvider = parent.wordsProvider;
+            wordProvider = parent.wordProvider;
             wordProcessor = parent.wordProcessor;
             wordVisualizer = parent.wordVisualizer;
             cloudLayouter = parent.cloudLayouter;
@@ -41,7 +41,7 @@ namespace TagCloudContainer.fluent
             this.inputFile = inputFile;
             imageFormat = ImageFormat.Png;
             options = new DrawingOptions();
-            wordsProvider = new TxtFileReader(inputFile);
+            wordProvider = new TxtFileReader(inputFile);
             wordProcessor = typeof(LowercaseWordProcessor);
             cloudLayouter = typeof(CircularCloudLayouter);
             sizeProvider = typeof(StringSizeProvider);
@@ -51,9 +51,9 @@ namespace TagCloudContainer.fluent
             wordVisualizer = typeof(TagCloudVisualizer);
         }
 
-        public TagCloudConfig Using(IWordsProvider wordsProvider)
+        public TagCloudConfig UsingWordProvider(IWordProvider wordProvider)
         {
-            return new TagCloudConfig(this) {wordsProvider = wordsProvider};
+            return new TagCloudConfig(this) {wordProvider = wordProvider};
         }
 
         public TagCloudConfig UsingWordProcessor(Type wordProcessor)
@@ -126,12 +126,12 @@ namespace TagCloudContainer.fluent
         private IContainer PrepareContainer()
         {
             var builder = new ContainerBuilder();
-            builder.Register(c => wordsProvider).As<IWordsProvider>().SingleInstance();
+            builder.Register(c => wordProvider).As<IWordProvider>().SingleInstance();
             builder.RegisterType(wordProcessor).As<IWordProcessor>().SingleInstance();
 
             builder.Register(c =>
             {
-                var words = c.Resolve<IWordsProvider>().GetWords();
+                var words = c.Resolve<IWordProvider>().GetWords();
                 return c.Resolve<IWordProcessor>().Process(words);
             }).As<IEnumerable<string>>();
 

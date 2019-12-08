@@ -4,7 +4,7 @@ using TagCloudContainer.Api;
 
 namespace TagCloudContainer.Implementations
 {
-    public class TxtFileReader : IWordsProvider
+    public class TxtFileReader : IWordProvider
     {
         private readonly string txtFileName;
 
