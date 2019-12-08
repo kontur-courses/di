@@ -39,6 +39,9 @@ namespace TagsCloudContainer.Filters
                 case "SPRO":
                     type = WordType.Preposition;
                     break;
+                case "CONJ":
+                    type = WordType.Conjunction;
+                    break;
                 default:
                     type = WordType.None;
                     break;

@@ -31,8 +31,8 @@ namespace TagsCloudContainer
             builder.RegisterType<FileManager.FileManager>().As<IFileManager>();
             builder.RegisterType<MyStem>().As<ITokensParser>().As<IFilter>()
                 .SingleInstance()
-                .WithParameter("excludedWorldType",
-                    new[] {WordType.Conjunction, WordType.Pronoun, WordType.Preposition});
+                .WithParameter("allowedWorldType",
+                    new[] {WordType.Noun, WordType.Verb, WordType.Adjective, WordType.Adverb});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
             builder.Register(c => setting.GetCenterImage()).As<Point>().SingleInstance();
             builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();

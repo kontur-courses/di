@@ -13,7 +13,7 @@ namespace TagsCloudContainer.TokensGenerator
     public class MyStem : ITokensParser, IFilter
     {
         private readonly IFileManager fileManager;
-        private readonly WordType[] excludedWorldType;
+        private readonly WordType[] allowedWorldType;
         private readonly string pathToMyStem;
 
         public MyStem(IFileManager fileManager, string pathToMyStem = null)
@@ -22,10 +22,10 @@ namespace TagsCloudContainer.TokensGenerator
             this.pathToMyStem = pathToMyStem;
         }
 
-        public MyStem(IFileManager fileManager, WordType[] excludedWorldType, string pathToMyStem = null)
+        public MyStem(IFileManager fileManager, WordType[] allowedWorldType, string pathToMyStem = null)
         {
             this.fileManager = fileManager;
-            this.excludedWorldType = excludedWorldType;
+            this.allowedWorldType = allowedWorldType;
             this.pathToMyStem = pathToMyStem;
         }
 
@@ -87,7 +87,7 @@ namespace TagsCloudContainer.TokensGenerator
             var res = strFile.Split(new[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries)
                 .Select(JObject.Parse)
                 .Select(Token.FromJson)
-                .Where(t => !excludedWorldType.Contains(t.WordType));
+                .Where(t => allowedWorldType.Contains(t.WordType));
 
             return res.Select(t => t.Value).Where(s => s.Length > 3);
         }
