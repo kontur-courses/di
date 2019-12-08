@@ -9,7 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualizationTests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YandexStem", "YandexStem", "{3B8EEB03-561D-41CD-B0AB-67C3EC538768}"
 	ProjectSection(SolutionItems) = preProject
-		TagsCloudVisualization\bin\Debug\YandexStem\input.txt = TagsCloudVisualization\bin\Debug\YandexStem\input.txt
 		TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe = TagsCloudVisualization\bin\Debug\YandexStem\mystem.exe
 	EndProjectSection
 EndProject

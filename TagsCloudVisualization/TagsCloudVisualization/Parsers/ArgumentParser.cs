@@ -1,29 +1,42 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using DocoptNet;
 using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.WordAnalyzers;
 
 namespace TagsCloudVisualization.Parsers
 {
-    class ArgumentParser: IArgumentParser
+    public class ArgumentParser: IArgumentParser
     {
 
         private const string usage = @"TagCloud.
     Usage:
-      TagsCloudVisualization.exe --file FILE [--image_name IMAGENAME] [--extention EXTENTION] [--filter FILTER] --image_width WIDTH 
-                                 --image_height HEIGHT --radius radius --x_coord COORD --y_coord COORD --text_size SIZE
+      TagsCloudVisualization.exe --file FILE [--image_name IMAGENAME] [--extention EXTENTION] [--font FONT] [--colors COLORS]
+                                [--filter FILTER] [--exclude PARTS_OF_SPEECH] [--print_only PART_OF_SPEECH] 
+                                [--image_width WIDTH]  [--image_height HEIGHT] --radius radius --x_coord COORD --y_coord COORD --text_size SIZE
+                                
+
+    Filters:
+      POS - Part Of Speech filter. Flags:  --exclude PARTS_OF_SPEECH  In quotes list parts of speech to exclude[default: '']    .
+                                           -po --print_only PART_OF_SPEECH  Will create cloud only with indicated part of speech[default: '']. 
 
     Options:
       --help  Show this screen.
       -f --file FILE  File with text for cloud.
       -im --image_name IMAGENAME  Final image name[default: tagCloudVisualization].
+      --font FONT  Font of words that will be drawn in picture[default: Consolas].
+      -c --colors COLORS  Word's colors[default: black].
       -e --extention EXTENTION  Final image extention[default: .png].
-      -w --image_width WIDTH  Final image width.
-      -h --image_height HEIGHT  Final image height.
+      -w --image_width WIDTH  Final image width[default: 0].
+      -h --image_height HEIGHT  Final image height[default: 0].
       -r --radius radius  Tag cloud radious.
       -x --x_coord COORD  X coordinate of tag cloud center.
       -y --y_coord COORD  Y coordinate of tag cloud center.
       --filter FILTER  Filter for tag cloud[default: POS]
       --text_size SIZE
+      --exclude PARTS_OF_SPEECH  In quotes list parts of speech to exclude[default: ''].
+      -po --print_only PART_OF_SPEECH  Will create cloud only with indicated part of speech[default: '']. 
     ";
 
         public CloudSettings CreateCloudSettings(string[] args)
@@ -37,19 +50,29 @@ namespace TagsCloudVisualization.Parsers
         public ImageSettings CreateImageSettings(string[] args)
         {
             var arguments = new Docopt().Apply(usage, args, exit: true);
-            var size = new Size(int.Parse(arguments["--image_width"].Value.ToString()), int.Parse(arguments["--image_height"].Value.ToString()));
+            var width = int.Parse(arguments["--image_width"].Value.ToString());
+            var height = int.Parse(arguments["--image_height"].Value.ToString());
+            width = width == 0 ?
+                int.Parse(arguments["--x_coord"].ToString()) + int.Parse(arguments["--radius"].ToString()) : width;
+            height = height == 0 ? 
+                int.Parse(arguments["--y_coord"].ToString()) + int.Parse(arguments["--radius"].ToString()) : height;
+            var size = new Size(width, height);
             var imageName = arguments["--image_name"].Value.ToString();
             var extention = arguments["--extention"].Value.ToString();
             var textSize = int.Parse(arguments["--text_size"].Value.ToString());
-            return new ImageSettings(size,  imageName, extention, textSize);
+            var font = arguments["--font"].Value.ToString();
+            var colors = arguments["--colors"].Value.ToString();
+            return new ImageSettings(size, imageName, extention, textSize, font, colors);
         }
 
-        public TextSettings CreateTextSettings(string[] args)
+        public TextSettings CreateTextSettings(string[] args, IMorphAnalyzer analyzer)
         {
             var arguments = new Docopt().Apply(usage, args, exit: true);
             var path = arguments["--file"].Value.ToString();
             var filter = arguments["--filter"].Value.ToString();
-            return new TextSettings(path, filter);
+            var partsOfSpeech = arguments["--exclude"].Value.ToString();
+            var partOfSpeech = arguments["--print_only"].Value.ToString();
+            return new TextSettings(path, filter, partsOfSpeech, partOfSpeech, analyzer);
         }
     }
 }

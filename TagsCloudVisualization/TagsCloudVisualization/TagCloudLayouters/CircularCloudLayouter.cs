@@ -8,7 +8,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.TagCloudLayouters
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter: ILayouter
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly SortedList<double, HashSet<Point>> corners = new SortedList<double, HashSet<Point>>();

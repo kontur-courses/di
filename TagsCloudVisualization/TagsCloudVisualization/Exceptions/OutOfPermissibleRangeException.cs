@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace TagsCloudVisualization.Exceptions
 {
     public class OutOfPermissibleRangeException : Exception

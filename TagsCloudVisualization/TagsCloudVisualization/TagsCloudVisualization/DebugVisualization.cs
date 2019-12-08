@@ -16,21 +16,24 @@ namespace TagsCloudVisualization.TagsCloudVisualization
             this.rectangles = rectangles;
         }
 
-        public void Draw()
+        public void Draw(Dictionary<string, int> words = null)
         {
-            var image = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
-            using (var drawPlace = Graphics.FromImage(image))
+            using (var image = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height))
             {
-                var blackPen = new Pen(new SolidBrush(Color.Black), 3);
-                var redPen = new Pen(new SolidBrush(Color.Red), 3);
-                foreach (var rectangle in rectangles)
+                using (var drawPlace = Graphics.FromImage(image))
                 {
-                    var rectangleIntersectsAnother = rectangles.Any(rec => rec != rectangle
-                                                                           && rectangle.IntersectsWith(rec));
-                    drawPlace.DrawRectangle(rectangleIntersectsAnother ? redPen : blackPen, rectangle);
+                    var blackPen = new Pen(new SolidBrush(Color.Black), 3);
+                    var redPen = new Pen(new SolidBrush(Color.Red), 3);
+                    foreach (var rectangle in rectangles)
+                    {
+                        var rectangleIntersectsAnother = rectangles.Any(rec => rec != rectangle
+                                                                               && rectangle.IntersectsWith(rec));
+                        drawPlace.DrawRectangle(rectangleIntersectsAnother ? redPen : blackPen, rectangle);
+                    }
                 }
+
+                image.Save(imageSettings.ImageName + imageSettings.ImageExtention);
             }
-            image.Save(imageSettings.ImageName + imageSettings.ImageExtention);
         }
     }
 }

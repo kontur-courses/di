@@ -1,7 +1,9 @@
-﻿namespace TagsCloudVisualization.TagsCloudVisualization
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization.TagsCloudVisualization
 {
-    internal interface ITagsCloudVisualization<in T>
+    public interface ITagsCloudVisualization<in T>
     {   
-        void Draw();
+        void Draw(Dictionary<string, int> words);
     }
 }

@@ -76,18 +76,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filters\IFilter.cs" />
-    <Compile Include="Filters\PartOfSpeachFilter.cs" />
+    <Compile Include="Filters\PartOfSpeechFilter.cs" />
+    <Compile Include="WordAnalyzers\IMorphAnalyzer.cs" />
     <Compile Include="Parsers\ArgumentParser.cs" />
     <Compile Include="Exceptions\OutOfPermissibleRangeException.cs" />
     <Compile Include="Geometry\CenterMassChecker.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Parsers\IArgumentParser.cs" />
-    <Compile Include="Stemmers\IStemmer.cs" />
-    <Compile Include="Stemmers\YandexStemmer.cs" />
+    <Compile Include="WordAnalyzers\YandexAnalyzer\YandexStemmer.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="Settings\CloudSettings.cs" />
     <Compile Include="Settings\ImageSettings.cs" />
     <Compile Include="Settings\TextSettings.cs" />
+    <Compile Include="TagCloudLayouters\ILayouter.cs" />
     <Compile Include="TagsCloudVisualization\DebugVisualization.cs" />
     <Compile Include="TagsCloudVisualization\ITagsCloudVisualization.cs" />
     <Compile Include="Geometry\PointExtention.cs" />

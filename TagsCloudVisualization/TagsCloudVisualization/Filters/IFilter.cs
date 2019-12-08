@@ -1,7 +1,10 @@
-﻿namespace TagsCloudVisualization.Filters
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization.Filters
 {
-    interface  IFilter
+    public interface  IFilter
     {
         (bool isValid, string value) Filter(string stemmedString);
+        IEnumerable<string> GetFilteredValues(string valueToFilter);
     }
 }

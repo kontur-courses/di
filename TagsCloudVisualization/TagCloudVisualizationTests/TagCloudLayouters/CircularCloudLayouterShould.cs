@@ -208,7 +208,7 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
         private void SaveFiles(string path)
         {
             var pathToFile = Path.Combine(path, "Rectangles");
-            var imageSettings = new ImageSettings(new Size(1800, 1800), pathToFile, ".png", 0);
+            var imageSettings = new ImageSettings(new Size(1800, 1800), pathToFile, ".png", 0, "consolas", "");
             var debugVisualization = new DebugVisualization(imageSettings, rectangles);
             debugVisualization.Draw();
             File.WriteAllText(Path.Combine(path, "Rectangles.json"), JsonConvert.SerializeObject(rectangles));
