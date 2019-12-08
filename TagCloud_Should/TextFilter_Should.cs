@@ -2,68 +2,71 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.TextFilter;
+using TagCloud.TextProvider;
 
 namespace TagCloud_Should
 {
     [TestFixture]
     public class TextFilter_Should
     {
+        private readonly ITextProvider textProvider = new UnitTestsTextProvider();
+
         [Test]
-        public void TestFilter_WithEmptyBlacklist_ShouldReturnSameWords()
+        public void WithEmptyBlacklist_ShouldReturnSameWords()
         {
-            var textFilter = new TextFilter(new BlacklistMaker(new TextFilterSettings(), new BlacklistSettings
+            var blacklistSettings = new BlacklistSettings
             {
                 FilesWithBannedWords = new HashSet<string>()
-            }), new TextFilterSettings());
-            var allWords = new Dictionary<string, int>
-            {
-                {"word1", 5},
-                {"word2", 7},
-                {"word3", 9},
-                {"word4", 4}
             };
-            textFilter.FilterWords(allWords).Count.Should().Be(4);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            {
+                WordMinLength = 0
+            };
+            ;
+            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            textFilter.FilterWords().Should().BeEquivalentTo(textProvider.GetAllWords());
         }
 
         [Test]
-        public void TextFilter_ShouldRemoveBannedWords()
+        public void ShouldRemoveBannedWords()
         {
-            var textFilter = new TextFilter(new BlacklistMaker(new TextFilterSettings(), new BlacklistSettings
+            var blacklistSettings = new BlacklistSettings
             {
                 FilesWithBannedWords = new HashSet<string>()
-            })
-            {
-                BlackList = {"bannedWord1", "bannedWord2"}
-            }, new TextFilterSettings());
-            var allWords = new Dictionary<string, int>
-            {
-                {"word1", 5},
-                {"bannedWord1", 5},
-                {"word2", 7},
-                {"bannedWord2", 4},
-                {"word3", 9},
-                {"word4", 4}
             };
-            textFilter.FilterWords(allWords).Count.Should().Be(4);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            {
+                BlackList = {"blacklistWord"}
+            };
+            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            textFilter.FilterWords().Contains("blacklistWord").Should().BeFalse();
         }
 
         [Test]
-        public void TextFilter_ShouldRemoveSmallWords()
+        public void ShouldRemoveSmallWords()
         {
-            var textFilter = new TextFilter(
-                new BlacklistMaker(new TextFilterSettings(),
-                    new BlacklistSettings {FilesWithBannedWords = new HashSet<string>()}), new TextFilterSettings());
-            var allWords = new Dictionary<string, int>
+            var blacklistSettings = new BlacklistSettings
             {
-                {"a", 5},
-                {"b", 5},
-                {"c", 5},
-                {"normalWord1", 5},
-                {"normalWord2", 5},
-                {"ef", 5},
-                {"", 5},
+                FilesWithBannedWords = new HashSet<string>()
             };
-            textFilter.FilterWords(allWords).Count.Should().Be(2);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider);
+            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            textFilter.FilterWords().Contains("b").Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldNotRemoveNotBannedWords()
+        {
+            var blacklistSettings = new BlacklistSettings
+            {
+                FilesWithBannedWords = new HashSet<string>()
+            };
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            {
+                BlackList = {"blacklistWord", "word1", "word2"}
+            };
+            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            textFilter.FilterWords().Should().Contain("word3");
         }
     }
 }

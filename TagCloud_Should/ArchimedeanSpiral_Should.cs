@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Drawing;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.CloudLayouter;
@@ -16,27 +17,15 @@ namespace TagCloud_Should
         }
 
         [Test]
-        public void ArchimedeanSpiral_GetCurrentX_ShouldReturnZeroAtStart()
+        public void GetNewPointLazy_ShouldReturnZeroZeroAtStart()
         {
-            spiral.GetNewPointLazy().GetEnumerator().Current.X.Should().Be(0);
+            spiral.GetNewPointLazy().GetEnumerator().Current.Should().BeEquivalentTo(new Point(0, 0));
         }
 
         [Test]
-        public void ArchimedeanSpiral_GetCurrentY_ShouldReturnZeroAtStart()
+        public void GetNewPointLazy_ShouldReturnCorrectPoint()
         {
-            spiral.GetNewPointLazy().GetEnumerator().Current.Y.Should().Be(0);
-        }
-
-        [Test]
-        public void ArchimedeanSpiral_GetCurrentX_ShouldReturnCorrectX()
-        {
-            spiral.GetNewPointLazy().First().X.Should().Be(7);
-        }
-
-        [Test]
-        public void ArchimedeanSpiral_GetCurrentY_ShouldReturnCorrectY()
-        {
-            spiral.GetNewPointLazy().First().Y.Should().Be(3);
+            spiral.GetNewPointLazy().First().Should().BeEquivalentTo(new Point(7, 3));
         }
     }
 }
