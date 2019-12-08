@@ -4,6 +4,6 @@ namespace TagsCloud
 {
 	public class FontSettings
 	{
-		public Font Font { get; set; }
+		public Font Font { get; set; } = new Font(FontFamily.GenericMonospace, 20);
 	}
 }

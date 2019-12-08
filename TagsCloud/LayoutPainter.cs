@@ -50,7 +50,8 @@ namespace TagsCloud
 			foreach (var tag in tags)
 			{
 				var color = _palette.RandomizeColors ? _palette.GenerateColor() : _palette.TextColor;
-				graphics.DrawString(tag.Text, _fontSettings.Font, new SolidBrush(color), tag.Area);
+				var font = new Font(_fontSettings.Font.FontFamily, tag.TextSize);
+				graphics.DrawString(tag.Text, font, new SolidBrush(color), tag.Area);
 			}
 		}
 	}

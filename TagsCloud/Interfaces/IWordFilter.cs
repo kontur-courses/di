@@ -2,8 +2,8 @@
 
 namespace TagsCloud.Interfaces
 {
-	public interface IWordFiltersApplyer
+	public interface IWordFilter
 	{
-		IEnumerable<string> GetWords();
+		bool CheckWord(string word);
 	}
 }

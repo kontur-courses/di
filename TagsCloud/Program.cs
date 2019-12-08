@@ -16,10 +16,12 @@ namespace TagsCloud
     {
         public static void Main(string[] args)
         {
-            var sourceTextFilePath = @"../../text.txt";
+            const string sourceTextFilePath = @"../../text.txt";
             var builder = new ContainerBuilder();
+            
             builder.RegisterType<MainForm>().AsSelf();
-            builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>();
+            builder.RegisterType<PictureBoxImageHolder>()
+                .As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
@@ -36,14 +38,8 @@ namespace TagsCloud
             builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
             builder.RegisterType<TagsProcessor>().As<ITagsProcessor>();
             builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
-            builder.RegisterType<WordFiltersApplyer>()
-                .WithParameter(ResolvedParameter
-                    .ForNamed<Func<string, bool>>("defaultFilter"))
-                .As<IWordFiltersApplyer>();
-            builder
-                .Register<Func<string, bool>>(c => word => word.Length >= 3)
-                .Named<Func<string, bool>>("defaultFilter");
             builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>();
+            builder.RegisterType<WordLengthFilter>().As<IWordFilter>();
             var container = builder.Build();
 
             Application.EnableVisualStyles();
