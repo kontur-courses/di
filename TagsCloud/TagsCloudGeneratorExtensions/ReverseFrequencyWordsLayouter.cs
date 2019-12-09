@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGeneratorExtensions
 {
+    [Factorial("ReverseFrequencyWordsLayouter")]
     public class ReverseFrequencyWordsLayouter : IWordsLayouter
     {
         private const int MaxSize = 300;
@@ -13,8 +15,6 @@ namespace TagsCloudGeneratorExtensions
 
         private readonly IRectanglesLayouter rectanglesLayouter;
         private readonly ISettings settings;
-
-        public string FactorialId => "ReverseFrequencyWordsLayouter";
 
         public ReverseFrequencyWordsLayouter(IRectanglesLayouter rectanglesLayouter, ISettings settings)
         {

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.WordsFilters
 {
+    [Priority(10)]
+    [Factorial("BoringWordsFilter")]
     public class BoringWordsFilter : IWordsFilter
     {
         private readonly HashSet<string> wordsToExclude;
@@ -15,10 +18,6 @@ namespace TagsCloudGenerator.WordsFilters
                 "и", "но", "если", "когда", "или",
                 "я", "он", "она", "оно", "они"
             };
-
-        public int Priority => 10;
-
-        public string FactorialId => "BoringWordsFilter";
 
         public string[] Execute(string[] input)
         {

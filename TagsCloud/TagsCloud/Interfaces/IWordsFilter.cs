@@ -1,5 +1,5 @@
 ﻿namespace TagsCloudGenerator.Interfaces
 {
-    public interface IWordsFilter : IPriorityExecutable<string[], string[]>, IFactorial
+    public interface IWordsFilter : IExecutable<string[], string[]>, IFactorial
     {}
 }

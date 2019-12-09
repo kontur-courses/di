@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloudGenerator.Attributes;
+using TagsCloudGenerator.Extensions;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.Bases
@@ -19,7 +21,11 @@ namespace TagsCloudGenerator.Bases
             Func<IFactorySettings, string> getSingleFactorialId, 
             Func<IFactorySettings, string[]> getFactorialsIdsArray)
         {
-            this.factorials = factorials.ToDictionary(c => c.FactorialId);
+            this.factorials = factorials.ToDictionary(f =>
+                f
+                .GetType()
+                .GetFirstAttributeObj<FactorialAttribute>()
+                .FactorialId);
             this.factorySettings = factorySettings;
             this.getSingleFactorialId = getSingleFactorialId;
             this.getFactorialsIdsArray = getFactorialsIdsArray;

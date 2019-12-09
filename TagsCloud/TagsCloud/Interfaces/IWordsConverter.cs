@@ -1,5 +1,5 @@
 ﻿namespace TagsCloudGenerator.Interfaces
 {
-    public interface IWordsConverter : IPriorityExecutable<string[], string[]>, IFactorial
+    public interface IWordsConverter : IExecutable<string[], string[]>, IFactorial
     {}
 }

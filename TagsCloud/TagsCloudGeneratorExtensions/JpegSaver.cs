@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGeneratorExtensions
 {
+    [Factorial("JpegSaver")]
     public class JpegSaver : ISaver
     {
-        public string FactorialId => "JpegSaver";
-
         public bool TrySaveTo(string filePath, Bitmap bitmap)
         {
             if (filePath == null || bitmap == null)

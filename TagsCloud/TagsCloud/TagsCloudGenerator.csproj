@@ -45,8 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\FactorialAttribute.cs" />
+    <Compile Include="Attributes\PriorityAttribute.cs" />
     <Compile Include="Bases\FactoryBase.cs" />
     <Compile Include="Executors\PriorityExecutor.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Factories\PaintersFactory.cs" />
     <Compile Include="Factories\PointsSearchersFactory.cs" />
     <Compile Include="Factories\SaversFactory.cs" />
@@ -54,6 +57,7 @@
     <Compile Include="Factories\WordsFiltersFactory.cs" />
     <Compile Include="Factories\WordsLayoutersFactory.cs" />
     <Compile Include="Factories\WordsParsersFactory.cs" />
+    <Compile Include="Interfaces\IExecutable.cs" />
     <Compile Include="Interfaces\IExecutor.cs" />
     <Compile Include="Interfaces\IFactorial.cs" />
     <Compile Include="Interfaces\IFactory.cs" />
@@ -62,7 +66,6 @@
     <Compile Include="Interfaces\IPainterAndSaver.cs" />
     <Compile Include="Interfaces\IPainterSettings.cs" />
     <Compile Include="Interfaces\IPointsSearcher.cs" />
-    <Compile Include="Interfaces\IPriorityExecutable.cs" />
     <Compile Include="Interfaces\IRectanglesLayouter.cs" />
     <Compile Include="Interfaces\IResettable.cs" />
     <Compile Include="Interfaces\ISaver.cs" />

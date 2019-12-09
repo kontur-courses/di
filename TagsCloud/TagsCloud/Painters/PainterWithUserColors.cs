@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.Painters
 {
+    [Factorial("PainterWithUserColors")]
     public class PainterWithUserColors : IPainter
     {
         private readonly IPainterSettings painterSettings;
 
-        public PainterWithUserColors(IPainterSettings painterSettings)
-        {
+        public PainterWithUserColors(IPainterSettings painterSettings) =>
             this.painterSettings = painterSettings;
-        }
-
-        public string FactorialId => "PainterWithUserColors";
 
         public void DrawWords(
             (string word, float maxFontSymbolWidth, string fontName, RectangleF wordRectangle)[] layoutedWords,

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.PointsSearchers
 {
+    [Factorial("PointsSearcherOnSpiral")]
     public class PointsSearcherOnSpiral : IPointsSearcher
     {
         private const double maxAngle = 2 * Math.PI;
@@ -13,8 +15,6 @@ namespace TagsCloudGenerator.PointsSearchers
         private double step;
 
         public PointsSearcherOnSpiral() => Reset();
-
-        public string FactorialId => "PointsSearcherOnSpiral";
 
         public PointF GetNextPoint()
         {

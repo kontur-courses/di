@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.WordsLayouters
 {
+    [Factorial("WordsFrequencyLayouter")]
     public class WordsFrequencyLayouter : IWordsLayouter
     {
         private const int MaxSize = 300;
@@ -13,8 +15,6 @@ namespace TagsCloudGenerator.WordsLayouters
 
         private readonly IRectanglesLayouter rectanglesLayouter;
         private readonly ISettings settings;
-
-        public string FactorialId => "WordsFrequencyLayouter";
 
         public WordsFrequencyLayouter(IRectanglesLayouter rectanglesLayouter, ISettings settings)
         {

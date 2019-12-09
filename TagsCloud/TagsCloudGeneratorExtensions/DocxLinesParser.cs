@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 using Xceed.Words.NET;
 
 namespace TagsCloudGeneratorExtensions
 {
+    [Factorial("DocxLinesParser")]
     public class DocxLinesParser : IWordsParser
     {
-        public string FactorialId => "DocxLinesParser";
-
         public string[] ParseFromFile(string filePath)
         {
             if (filePath == null)

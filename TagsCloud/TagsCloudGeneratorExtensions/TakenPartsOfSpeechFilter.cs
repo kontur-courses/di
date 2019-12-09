@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using MyStemWrapper;
+using TagsCloudGenerator.Attributes;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGeneratorExtensions
 {
+    [Priority(5)]
+    [Factorial("TakenPartsOfSpeechFilter")]
     public class TakenPartsOfSpeechFilter : IWordsFilter
     {
         private readonly Settings settings;
@@ -14,10 +17,6 @@ namespace TagsCloudGeneratorExtensions
             this.settings = settings;
             stem = new MyStem { PathToMyStem = Metadata.PathToMyStem, Parameters = "-nli" };
         }
-
-        public int Priority => 5;
-
-        public string FactorialId => "TakenPartsOfSpeechFilter";
 
         public string[] Execute(string[] input)
         {

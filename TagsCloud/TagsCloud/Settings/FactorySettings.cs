@@ -1,4 +1,14 @@
-﻿using TagsCloudGenerator.Interfaces;
+﻿using System;
+using TagsCloudGenerator.Attributes;
+using TagsCloudGenerator.Extensions;
+using TagsCloudGenerator.Interfaces;
+using TagsCloudGenerator.Painters;
+using TagsCloudGenerator.PointsSearchers;
+using TagsCloudGenerator.Savers;
+using TagsCloudGenerator.WordsConverters;
+using TagsCloudGenerator.WordsFilters;
+using TagsCloudGenerator.WordsLayouters;
+using TagsCloudGenerator.WordsParsers;
 
 namespace TagsCloudGenerator.Settings
 {
@@ -16,13 +26,18 @@ namespace TagsCloudGenerator.Settings
 
         public virtual void Reset()
         {
-            PainterId = "PainterWithUserColors";
-            SaverId = "PngSaver";
-            PointsSearcherId = "PointsSearcherOnSpiral";
-            WordsParserId = "UTF8LinesParser";
-            WordsLayouterId = "WordsFrequencyLayouter";
-            WordsFiltersIds = new[] { "BoringWordsFilter" };
-            WordsConvertersIds = new[] { "WordsToLowerConverter" };
+            PainterId = GetFactorialIdForType(typeof(PainterWithUserColors));
+            SaverId = GetFactorialIdForType(typeof(PngSaver));
+            PointsSearcherId = GetFactorialIdForType(typeof(PointsSearcherOnSpiral));
+            WordsParserId = GetFactorialIdForType(typeof(UTF8LinesParser));
+            WordsLayouterId = GetFactorialIdForType(typeof(WordsFrequencyLayouter));
+            WordsFiltersIds = new[] { GetFactorialIdForType(typeof(BoringWordsFilter)) };
+            WordsConvertersIds = new[] { GetFactorialIdForType(typeof(WordsToLowerConverter)) };
         }
+
+        private string GetFactorialIdForType(Type type) =>
+            type
+            .GetFirstAttributeObj<FactorialAttribute>()
+            .FactorialId;
     }
 }
