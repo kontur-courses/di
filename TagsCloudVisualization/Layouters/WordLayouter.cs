@@ -21,9 +21,9 @@ namespace TagsCloudVisualization.Layouters
 
         public AnalyzedLayoutedText GetLayoutedText(AnalyzedText analyzedText)
         {
-            var sizes = sizeChooser.GetWordSizes(analyzedText);
+            var sizes = sizeChooser.GetWordSizes(analyzedText, 20, 20);
             var layout = new Dictionary<Word, Rectangle>();
-            foreach (var wordSizePair in sizes)
+            foreach (var wordSizePair in sizes.OrderByDescending(x => x.Value.Width))
                 layout[wordSizePair.Key] = layouter.PutNextRectangle(wordSizePair.Value);
             return analyzedText.ToLayoutedText(layout
                 .Select(x => new LayoutedWord(x.Key, x.Value))

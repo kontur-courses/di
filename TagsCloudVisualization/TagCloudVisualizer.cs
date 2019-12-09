@@ -52,28 +52,29 @@ namespace TagsCloudVisualization
 
         private static void ConfigureContainer()
         {
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, true)); //TODO: Register all base classes automatically
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, true));
+
 
             container.Register(Component.For<ITextReader>().ImplementedBy<TxtFileReader>().LifestyleTransient());
 
-            container.Register(Component.For<InputPreprocessor>().ImplementedBy<InputPreprocessor>());
 
             container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
-            //container.Register(Component.For<IPreprocessor>().ImplementedBy<PreprocessAction>()); //TODO: Add part of speech tagger
+            container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotWordsPreprocessor>());
 
-            container.Register(Component.For<StatisticsCounter>().ImplementedBy<StatisticsCounter>());
 
             container.Register(Component.For<IStatisticsCollector>().ImplementedBy<WordCountCollector>());
 
+
             container.Register(Component.For<IWordSizeChooser>().ImplementedBy<WordCountSizeChooser>());
 
-            container.Register(Component.For<WordLayouter>().LifestyleTransient());
 
             container.Register(Component.For<WordPainter>()
                 .ImplementedBy<DefaultWordPainter>()
                 .LifestyleTransient());
 
+
             container.Register(Component.For<WordDrawer>().ImplementedBy<DefaultWordDrawer>());
+
 
             container.Register(Component.For<ICloudLayouter>()
                 .UsingFactoryMethod(() =>
@@ -91,13 +92,15 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IGuiAction>().ImplementedBy<TextFileAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
 
+
             container.Register(Component.For<ImageSettings>().ImplementedBy<ImageSettings>().LifestyleSingleton());
             container.Register(Component.For<Font>().Instance(new Font(FontFamily.GenericSansSerif, 2)).LifestyleSingleton());
             container.Register(Component.For<Palette>().ImplementedBy<Palette>().LifestyleSingleton());
             container.Register(Component.For<PictureBoxImageHolder>().ImplementedBy<PictureBoxImageHolder>().LifestyleSingleton());
             container.Register(Component.For<AppSettings>().ImplementedBy<AppSettings>().LifestyleSingleton());
 
-            container.Register(Component.For<GraphicalVisualizer>().ImplementedBy<GraphicalVisualizer>());
+
+            container.Register(Classes.FromThisAssembly().Where(x => x.IsClass).LifestyleTransient());
         }
     }
 }
