@@ -36,6 +36,9 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -48,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="ParserOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TagsCloudGeneratorExtensions\TagsCloudGeneratorExtensions.csproj">
+      <Project>{6e11af33-e16f-4e79-9e43-06d8e7687ea5}</Project>
+      <Name>TagsCloudGeneratorExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagsCloud\TagsCloudGenerator.csproj">
       <Project>{af0d6741-5bc5-4386-b6dd-e03513fcca8b}</Project>
       <Name>TagsCloudGenerator</Name>

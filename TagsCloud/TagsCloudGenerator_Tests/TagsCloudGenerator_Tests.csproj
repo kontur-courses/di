@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -53,10 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParserConverterFilter_Tests.cs" />
+    <Compile Include="SingletonScopeInstancesContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectanglesLayouters_Tests\DefaultRectanglesLayouter_Tests.cs" />
+    <Compile Include="RectanglesLayouters_Tests\NotIntersectedRectanglesLayouter_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TagsCloudGeneratorExtensions\TagsCloudGeneratorExtensions.csproj">
+      <Project>{6e11af33-e16f-4e79-9e43-06d8e7687ea5}</Project>
+      <Name>TagsCloudGeneratorExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagsCloud\TagsCloudGenerator.csproj">
       <Project>{af0d6741-5bc5-4386-b6dd-e03513fcca8b}</Project>
       <Name>TagsCloudGenerator</Name>

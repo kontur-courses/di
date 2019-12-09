@@ -7,6 +7,8 @@ namespace TagsCloudGenerator.Savers
 {
     public class PngSaver : ISaver
     {
+        public string FactorialId => "PngSaver";
+
         public bool TrySaveTo(string filePath, Bitmap bitmap)
         {
             if (bitmap == null)

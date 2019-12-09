@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudGenerator_Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudConsoleClient", "TagsCloudConsoleClient\TagsCloudConsoleClient.csproj", "{7F04D612-0947-46D6-998A-16BD6B2B061A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudGeneratorExtensions", "TagsCloudGeneratorExtensions\TagsCloudGeneratorExtensions.csproj", "{6E11AF33-E16F-4E79-9E43-06D8E7687EA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7F04D612-0947-46D6-998A-16BD6B2B061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F04D612-0947-46D6-998A-16BD6B2B061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F04D612-0947-46D6-998A-16BD6B2B061A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E11AF33-E16F-4E79-9E43-06D8E7687EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E11AF33-E16F-4E79-9E43-06D8E7687EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E11AF33-E16F-4E79-9E43-06D8E7687EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E11AF33-E16F-4E79-9E43-06D8E7687EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

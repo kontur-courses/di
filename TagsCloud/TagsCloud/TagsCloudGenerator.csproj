@@ -45,30 +45,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Executors\StrArrToStrArrPriorityExecutor.cs" />
+    <Compile Include="Bases\FactoryBase.cs" />
+    <Compile Include="Executors\PriorityExecutor.cs" />
+    <Compile Include="Factories\PaintersFactory.cs" />
+    <Compile Include="Factories\PointsSearchersFactory.cs" />
+    <Compile Include="Factories\SaversFactory.cs" />
+    <Compile Include="Factories\WordsConvertersFactory.cs" />
+    <Compile Include="Factories\WordsFiltersFactory.cs" />
+    <Compile Include="Factories\WordsLayoutersFactory.cs" />
+    <Compile Include="Factories\WordsParsersFactory.cs" />
     <Compile Include="Interfaces\IExecutor.cs" />
+    <Compile Include="Interfaces\IFactorial.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
+    <Compile Include="Interfaces\IFactorySettings.cs" />
     <Compile Include="Interfaces\IPainter.cs" />
     <Compile Include="Interfaces\IPainterAndSaver.cs" />
+    <Compile Include="Interfaces\IPainterSettings.cs" />
     <Compile Include="Interfaces\IPointsSearcher.cs" />
     <Compile Include="Interfaces\IPriorityExecutable.cs" />
     <Compile Include="Interfaces\IRectanglesLayouter.cs" />
+    <Compile Include="Interfaces\IResettable.cs" />
     <Compile Include="Interfaces\ISaver.cs" />
+    <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Interfaces\IWordsFilter.cs" />
     <Compile Include="Interfaces\IWordsParser.cs" />
-    <Compile Include="Interfaces\ITagsCloudGenerator.cs" />
+    <Compile Include="Interfaces\IGenerator.cs" />
     <Compile Include="Interfaces\IWordsConverter.cs" />
     <Compile Include="Interfaces\IWordsLayouter.cs" />
-    <Compile Include="Painters\DefaultPainter.cs" />
-    <Compile Include="PaintersAndSavers\DefaultPainterAndSaver.cs" />
-    <Compile Include="WordsParsers\DefaultWordsParser.cs" />
+    <Compile Include="Painters\PainterWithUserColors.cs" />
+    <Compile Include="PaintersAndSavers\PainterAndSaverWithUserImageSize.cs" />
+    <Compile Include="Settings\FactorySettings.cs" />
+    <Compile Include="Settings\GeneratorSettings.cs" />
+    <Compile Include="Settings\PainterSettings.cs" />
+    <Compile Include="WordsParsers\UTF8LinesParser.cs" />
     <Compile Include="PointsSearchers\PointsSearcherOnSpiral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Generators\DefaultTagsCloudGenerator.cs" />
-    <Compile Include="RectanglesLayouters\DefaultRectanglesLayouter.cs" />
+    <Compile Include="Generators\TagsCloudGenerator.cs" />
+    <Compile Include="RectanglesLayouters\NotIntersectedRectanglesLayouter.cs" />
     <Compile Include="Savers\PngSaver.cs" />
-    <Compile Include="WordsConverters\DefaultWordsConverter.cs" />
-    <Compile Include="WordsFilters\DefaultWordsFilter.cs" />
-    <Compile Include="WordsLayouters\DefaultWordsLayouter.cs" />
+    <Compile Include="WordsConverters\WordsToLowerConverter.cs" />
+    <Compile Include="WordsFilters\BoringWordsFilter.cs" />
+    <Compile Include="WordsLayouters\WordsFrequencyLayouter.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
