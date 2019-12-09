@@ -36,7 +36,7 @@ namespace TagsCloudLibrary
             this.extractor = extractor;
 
             this.preprocessors = preprocessors.ToList();
-            this.preprocessors.Sort((p1, p2) => p1.Priority - p2.Priority);
+            this.preprocessors = this.preprocessors.OrderBy(p => p.Priority).ToList();
 
             this.layouter = layouter;
             this.colorer = colorer;
