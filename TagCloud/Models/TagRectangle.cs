@@ -12,5 +12,10 @@ namespace TagCloud.Models
             Area = area;
             Tag = tag;
         }
+        public TagRectangle()
+        {
+            Area = new RectangleF();
+            Tag = null;
+        }
     }   
 }
