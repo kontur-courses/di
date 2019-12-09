@@ -6,7 +6,7 @@ namespace TagsCloudGenerator
 {
     public class TagOrderByAscending : ITagOrder
     {
-        public List<CountedTextElement> OrderEnumerable(List<CountedTextElement> elements)
+        public List<TextElement> OrderEnumerable(List<TextElement> elements)
         {
             return elements.OrderBy(x => x.Count).ToList();
         }

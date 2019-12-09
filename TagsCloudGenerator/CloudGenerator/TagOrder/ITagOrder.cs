@@ -5,6 +5,6 @@ namespace TagsCloudGenerator
 {
     public interface ITagOrder
     {
-        List<CountedTextElement> OrderEnumerable(List<CountedTextElement> elements);
+        List<TextElement> OrderEnumerable(List<TextElement> elements);
     }
 }

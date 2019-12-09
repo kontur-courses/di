@@ -18,7 +18,7 @@ namespace SyntaxTextParser
 
         /// <exception cref="ArgumentException">Thrown parser can't read that type file</exception>
         /// <exception cref="FileNotFoundException">Thrown parser can't found file</exception>
-        public List<CountedTextElement> ParseElementsFromFile(string path, string fileName, string type)
+        public List<TextElement> ParseElementsFromFile(string path, string fileName, string type)
         {
             if(!fileReader.CanReadThatType(type))
                 throw new ArgumentException($"{nameof(fileReader)} can't read {type} file type");
@@ -29,7 +29,7 @@ namespace SyntaxTextParser
 
             return fileReader.TryReadText(fullPath, out var text)
                 ? elementParser.ParseElementsFromText(text)
-                : new List<CountedTextElement>();
+                : new List<TextElement>();
         }
     }
 }

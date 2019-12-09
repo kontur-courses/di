@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using SyntaxTextParser;
 using TagsCloudGenerator.CloudPrepossessing;
@@ -10,7 +9,7 @@ namespace TagsCloudGenerator
     {
         private const double HeightToWidthIndexMultiplier = 0.6;
 
-        public static List<CloudTag> CreateTagsCloud(List<CountedTextElement> elements, 
+        public static List<CloudTag> CreateTagsCloud(List<TextElement> elements, 
             ITagsPrepossessing tagPlacer, CloudFormat cloudFormat)
         {
             elements = cloudFormat.TagOrderPreform.OrderEnumerable(elements);
