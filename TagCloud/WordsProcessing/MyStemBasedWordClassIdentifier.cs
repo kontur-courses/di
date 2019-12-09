@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CliWrap;
+using TagCloud.Infrastructure;
 
 namespace TagCloud.WordsProcessing
 {
@@ -29,7 +30,7 @@ namespace TagCloud.WordsProcessing
 
         private static readonly string Pattern = ConstructPattern(WordClassTokens.Keys);
 
-        public MyStemBasedWordClassIdentifier(string myStemPath = null)
+        public MyStemBasedWordClassIdentifier(string myStemPath)
         {
             this.myStemPath = myStemPath;
         }
@@ -58,7 +59,7 @@ namespace TagCloud.WordsProcessing
 
         private static string ConstructPattern(IEnumerable<string> possibleWordClasses)
         {
-            return $"^{{\\w+=({string.Join("|", possibleWordClasses.OrderByDescending(c => c.Length))})";
+            return $"^{{[\\w\\?]+=({string.Join("|", possibleWordClasses.OrderByDescending(c => c.Length))})";
         }
     }
 }

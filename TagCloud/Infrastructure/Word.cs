@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagCloud.Infrastructure
 {
@@ -6,27 +7,48 @@ namespace TagCloud.Infrastructure
     {
         public string Value { get; }
         public Size WordRectangleSize { get; private set; }
+        public float FontSize { get; private set; }
         public int Count { get; private set; }
+        public WordClass WordClass
+        {
+            get
+            {
+                if (wordClass == null)
+                    throw new InvalidOperationException($"Word {Value} doesn't have word class");
+                return wordClass.Value;
+            }
+        }
 
-        public Word(string word)
+        private WordClass? wordClass;
+        
+
+        public Word(string word, WordClass? wordClass = null)
         {
             Value = word;
+            this.wordClass = wordClass;
         }
 
-        public Size GetSmallestPossibleSize()
-        {
-            return new Size(Value.Length, 1);
-        }
-
-        public Word WithCount(int count)
+        public Word SetCount(int count)
         {
             Count = count;
             return this;
         }
 
-        public Word WithSize(Size size)
+        public Word SetSize(Size size)
         {
             WordRectangleSize = size;
+            return this;
+        }
+
+        public Word SetFontSize(float fontSize)
+        {
+            FontSize = fontSize;
+            return this;
+        }
+
+        public Word SetWordClass(WordClass wordClass)
+        {
+            this.wordClass = wordClass;
             return this;
         }
 

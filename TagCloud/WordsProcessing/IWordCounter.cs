@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TagCloud.Infrastructure;
 
-namespace TagCloud.WordsPreparation
+namespace TagCloud.WordsProcessing
 {
-    public interface IWordCountSetter
+    public interface IWordCounter
     {
         IEnumerable<Word> GetCountedWords(IEnumerable<Word> words);
     }

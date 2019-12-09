@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TagCloud.Infrastructure;
 
 namespace TagCloud.WordsProcessing
 {
@@ -18,9 +19,10 @@ namespace TagCloud.WordsProcessing
             this.isBlackList = isBlackList;
         }
 
-        public bool IsSelectedWord(string word)
+        public bool IsSelectedWord(Word word)
         {
-            var wordClass = wordClassIdentifier.GetWordClass(word);
+            var wordClass = wordClassIdentifier.GetWordClass(word.Value);
+            word.SetWordClass(wordClass);
             if (isBlackList)
                 return !wordClasses.Contains(wordClass);
             return wordClasses.Contains(wordClass);

@@ -37,7 +37,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\ICloudLayouter.cs" />
+    <Compile Include="Algorithm\ITagCloudLayouter.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\CircularCloudLayouter.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\DistanceUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\GeometryUtils.cs" />
@@ -45,16 +45,19 @@
     <Compile Include="Algorithm\SpiralBasedLayouter\Segment.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\Spiral.cs" />
-    <Compile Include="IWordsProvider.cs" />
-    <Compile Include="WordsPreparation\IWordSizeSetter.cs" />
-    <Compile Include="ITagCloudGenerator.cs" />
+    <Compile Include="Infrastructure\SizeUtils.cs" />
+    <Compile Include="Visualization\IndexBasedWordPainter.cs" />
+    <Compile Include="Visualization\IWordPainter.cs" />
+    <Compile Include="Visualization\IWordsProvider.cs" />
+    <Compile Include="Visualization\IWordSizeSetter.cs" />
+    <Compile Include="Visualization\ITagCloudGenerator.cs" />
     <Compile Include="Infrastructure\Palette.cs" />
-    <Compile Include="Infrastructure\PictureConfiguration.cs" />
-    <Compile Include="WordsPreparation\IWordCountSetter.cs" />
-    <Compile Include="TagCloudGenerator.cs" />
+    <Compile Include="Infrastructure\PictureConfig.cs" />
+    <Compile Include="WordsProcessing\IWordCounter.cs" />
+    <Compile Include="Visualization\TagCloudGenerator.cs" />
     <Compile Include="Infrastructure\Word.cs" />
-    <Compile Include="WordsPreparation\WordCountSetter.cs" />
-    <Compile Include="WordsPreparation\WordSizeSetter.cs" />
+    <Compile Include="WordsProcessing\WordCounter.cs" />
+    <Compile Include="Visualization\WordSizeSetter.cs" />
     <Compile Include="WordsProcessing\IWordProcessor.cs" />
     <Compile Include="WordsProcessing\IWordSelector.cs" />
     <Compile Include="WordsProcessing\IWordClassIdentifier.cs" />
@@ -63,16 +66,20 @@
     <Compile Include="TextReading\ITextReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TextReading\TxtTextReader.cs" />
-    <Compile Include="WordsProcessing\WordClass.cs" />
+    <Compile Include="Infrastructure\WordClass.cs" />
     <Compile Include="WordsProcessing\WordClassBasedSelector.cs" />
-    <Compile Include="WordsProvider.cs" />
+    <Compile Include="Visualization\WordsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="CliWrap, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CliWrap.2.5.0\lib\net45\CliWrap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.Infrastructure;
 using TagCloud.WordsProcessing;
 
 namespace TagCloudTests

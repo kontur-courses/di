@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.Visualization
 {
     public interface ITagCloudGenerator
     {

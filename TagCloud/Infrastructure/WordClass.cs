@@ -1,4 +1,4 @@
-﻿namespace TagCloud.WordsProcessing
+﻿namespace TagCloud.Infrastructure
 {
     public enum WordClass
     {

@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
-using TagCloud.WordsPreparation;
+using TagCloud.Infrastructure;
+using TagCloud.Visualization;
 
 namespace TagCloudTests
 {
@@ -14,54 +14,63 @@ namespace TagCloudTests
         private WordSizeSetter wordSizeSetter;
         private List<Word> words;
         private Word word1;
+        private float word1MinFontSize;
         private Word word2;
+        private float word2MinFontSize;
         private Word word3;
+        private float word3MinFontSize;
+        private PictureConfig pictureConfig;
 
         [SetUp]
         public void SetUp()
         {
-            wordSizeSetter = new WordSizeSetter(new WordCountSetter(), 5);
-            word1 = new Word("кот");
-            word2 = new Word("пёс");
-            word3 = new Word("мышь");
-            words = new List<Word> { word1, word2, word2, word2, word3, word3, word3, word3, word3 };
+            wordSizeSetter = new WordSizeSetter();
+            word1 = new Word("кот").SetCount(1);
+            word2 = new Word("пёс").SetCount(3);
+            word3 = new Word("мышь").SetCount(5);
+            words = new List<Word> { word1, word2, word3 };
+            pictureConfig = new PictureConfig();
+            word1MinFontSize = 1f / 5;
+            word2MinFontSize = 3f / 5;
+            word3MinFontSize = 5f / 5;
         }
 
 
         [Test]
         public void GetSizedWords_ShouldReturnMinimalSize_OnSmallPictureSize()
         {
-            var expectedWords = new List<Word>
+            var expectedSizes = new List<Size>
             {
-                word1.WithCount(1).WithSize(new Size(3, 1)),
-                word2.WithCount(3).WithSize(new Size(9, 3)),
-                word3.WithCount(5).WithSize(new Size(20, 5))
+                SizeUtils.GetWordBasedSize(word1.Value, pictureConfig.FontFamily, word1MinFontSize),
+                SizeUtils.GetWordBasedSize(word2.Value, pictureConfig.FontFamily, word2MinFontSize),
+                SizeUtils.GetWordBasedSize(word3.Value, pictureConfig.FontFamily, word3MinFontSize)
             };
+            pictureConfig.Size = new Size(20, 20);
+            var result = wordSizeSetter.GetSizedWords(words, pictureConfig).ToList();
 
-            var result = wordSizeSetter.GetSizedWords(words, new Size(40, 20));
-
-            result.Should().BeEquivalentTo(expectedWords);
+            result.Select(w => w.WordRectangleSize).Should().BeEquivalentTo(expectedSizes);
         }
 
         [Test]
         public void GetSizedWords_ShouldReturnScaledSize_OnBigPictureSize()
         {
-            var expectedWords = new List<Word>
+            var expectedSizes = new List<Size>
             {
-                word1.WithCount(1).WithSize(new Size(15, 5)),
-                word2.WithCount(3).WithSize(new Size(45, 15)),
-                word3.WithCount(5).WithSize(new Size(100, 25))
+                SizeUtils.GetWordBasedSize(word1.Value, pictureConfig.FontFamily, word1MinFontSize * 14),
+                SizeUtils.GetWordBasedSize(word2.Value, pictureConfig.FontFamily, word2MinFontSize * 14),
+                SizeUtils.GetWordBasedSize(word3.Value, pictureConfig.FontFamily, word3MinFontSize * 14)
             };
+            pictureConfig.Size = new Size(200, 100);
+            var result = wordSizeSetter.GetSizedWords(words, pictureConfig);
 
-            var result = wordSizeSetter.GetSizedWords(words, new Size(200, 100));
-
-            result.Should().BeEquivalentTo(expectedWords);
+            result.Select(w => w.WordRectangleSize).Should().BeEquivalentTo(expectedSizes);
         }
 
         [Test]
         public void GetSizedWords_ShouldThrow_OnTooSmallPictureSize()
         {
-            Action action = () => wordSizeSetter.GetSizedWords(words, new Size(30, 20)).ToList();
+            pictureConfig.Size = new Size(15, 6);
+            Action action = () => wordSizeSetter.GetSizedWords(words, pictureConfig).ToList();
 
             action.Should().Throw<ArgumentException>();
         }

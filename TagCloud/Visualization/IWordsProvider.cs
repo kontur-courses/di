@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagCloud.Infrastructure;
 
-namespace TagCloud
+namespace TagCloud.Visualization
 {
     public interface IWordsProvider
     {

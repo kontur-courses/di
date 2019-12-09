@@ -1,7 +1,9 @@
-﻿namespace TagCloud.WordsProcessing
+﻿using TagCloud.Infrastructure;
+
+namespace TagCloud.WordsProcessing
 {
     public interface IWordSelector
     {
-        bool IsSelectedWord(string word);
+        bool IsSelectedWord(Word word);
     }
 }
