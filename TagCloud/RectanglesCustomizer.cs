@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagCloud.Models;
 
 namespace TagCloud
 {
     public static class RectanglesCustomizer
     {
-        public static List<ColorTagRectangle> GetReactanglesWithRandomColor(List<TagRectangle> tagRectangels)
+        public static List<ColorTagRectangle> GetRectanglesWithRandomColor(List<TagRectangle> tagRectangels)
         {
             var random = new Random();
             return tagRectangels.Select(t => new ColorTagRectangle(

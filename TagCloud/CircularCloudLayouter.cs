@@ -9,16 +9,16 @@ namespace TagCloud
     public class CircularCloudLayouter : ICircularCloudLayouter
     {
         private readonly IAlgorithm algorithm;
-        private List<RectangleF> rectangles;
+        private List<RectangleF> Rectangles { get; set; }
         public CircularCloudLayouter(IAlgorithm algorithm)
         {
             this.algorithm = algorithm;
-            rectangles = new List<RectangleF>();
+            Rectangles = new List<RectangleF>();
         }
 
         public void Clear()
         {
-            rectangles = new List<RectangleF>();
+            Rectangles = new List<RectangleF>();
         }
         public RectangleF PutNextRectangle(SizeF rectangleSize, Point center)
         {
@@ -29,8 +29,8 @@ namespace TagCloud
             {
                 var point = GetRectangleLocation(center, rectangleSize);
                 var rectangle = new RectangleF(point, rectangleSize);
-                if (rectangles.Any(rec => rec.IntersectsWith(rectangle))) continue;
-                rectangles.Add(rectangle);
+                if (Rectangles.Any(rec => rec.IntersectsWith(rectangle))) continue;
+                Rectangles.Add(rectangle);
                 return rectangle;
             }
         }

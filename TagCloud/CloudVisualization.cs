@@ -21,11 +21,9 @@ namespace TagCloud
             var image = new Bitmap(width, height);
             using (var graphics = Graphics.FromImage(image))
             {
-                var rectangles = cloud.GetRectangles( graphics,width, height, path);
+                var rectangles = RectanglesCustomizer.GetRectanglesWithRandomColor(cloud.GetRectangles( graphics,width, height, path));
                 foreach (var rectangle in rectangles)
-                {
-                    graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(color), rectangle.Area.Location);
-                }
+                    graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(rectangle.Color), rectangle.Area.Location);
             }
 
             return image;

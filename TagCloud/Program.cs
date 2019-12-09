@@ -19,7 +19,7 @@ namespace TagCloud
             client.Start(visaulization);
         }
 
-        private static WindsorContainer GetContainer()
+        public static WindsorContainer GetContainer()
         {
             var container = new WindsorContainer();
             container.AddFacility<TypedFactoryFacility>();
