@@ -14,17 +14,6 @@ namespace TagCloudTests
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        [TearDown]
-        public void TearDown()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            var layouter = TestContext.CurrentContext.Test.Arguments.FirstOrDefault() as CircularCloudLayouter;
-            var path = Path.GetTempPath();
-            SaveCloudWhenTestIsFallAndGetName(layouter, TestContext.CurrentContext, path);
-            Console.WriteLine("Tag cloud visualization saved in directory:");
-            Console.WriteLine($"{path}{TestContext.CurrentContext.Test.Name}.png");
-        }
-
         public static WindsorContainer Container { get; set; } = TagCloud.Program.GetContainer();
 
         public static class LayouterSource
@@ -71,16 +60,6 @@ namespace TagCloudTests
             return Math.Sqrt((start.X - end.X) * (start.X - end.X) + (start.Y - end.Y) * (start.Y - end.Y));
         }
 
-        private void SaveCloudWhenTestIsFallAndGetName(CircularCloudLayouter layouter
-            , TestContext context, string path)
-        {
-            var pathToRead =
-                $"{Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName}\\TagCloud\\test.txt";
-            var image = Container.Resolve<ICloudVisualization>().GetAndDrawRectangles(1000, 1000, pathToRead);
-            var name = $"{context.Test.Name}.png";
-            image.Save(Path.Combine(path, string.Format("{0}", name)));
-        }
-
         [Test]
         [TestCaseSource(typeof(LayouterSource), "TestCases")]
         public void Cloud_Should_BeDenseAndRound(List<RectangleF> rectangles, Point center)
@@ -100,6 +79,28 @@ namespace TagCloudTests
             rectangles
                 .Any(first =>
                     rectangles.Any(second => second != first && first.IntersectsWith(second))).Should().BeFalse();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
+            var rectangles = TestContext.CurrentContext.Test.Arguments.FirstOrDefault() as List<RectangleF>;
+            var path = Path.GetTempPath();
+            SaveCloudWhenTestIsFallAndGetName(rectangles, TestContext.CurrentContext, path);
+            Console.WriteLine("Tag cloud visualization saved in directory:");
+            Console.WriteLine($"{path}{TestContext.CurrentContext.Test.Name}.png");
+        }
+
+        private void SaveCloudWhenTestIsFallAndGetName(List<RectangleF> rectangles
+            , TestContext context, string path)
+        {
+            var image = new Bitmap(500, 500);
+            using (var graphics = Graphics.FromImage(image))
+                foreach (var rectangle in rectangles)
+                    graphics.FillRectangle(new SolidBrush(Color.Red), rectangle);
+            var name = $"{context.Test.Name}.png";
+            image.Save(Path.Combine(path, $"{name}"));
         }
     }
 }
