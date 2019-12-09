@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Autofac;
 using CommandLine;
 using TagsCloudLibrary;
@@ -52,7 +53,7 @@ namespace TagsCloudCLI
                 builder.RegisterType<LineByLineExtractor>().As<IWordsExtractor>();
 
 
-            if (options.PartsOfSpeechWhiteList == null)
+            if (!options.PartsOfSpeechWhiteList.Any())
             {
                 builder.RegisterInstance(new List<Word.PartOfSpeech>
                 {
