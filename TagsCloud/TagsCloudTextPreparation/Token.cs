@@ -1,11 +1,11 @@
 namespace TagsCloudTextPreparation
 {
-    public class FrequencyWord
+    public class Token
     {
         public string Word { get; }
         public int Count { get; }
 
-        public FrequencyWord(string word, int count)
+        public Token(string word, int count)
         {
             Word = word;
             Count = count;

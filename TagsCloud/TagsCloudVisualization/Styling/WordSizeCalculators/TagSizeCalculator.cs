@@ -4,9 +4,9 @@ using TagsCloudTextPreparation;
 
 namespace TagsCloudVisualization.Styling.WordSizeCalculators
 {
-    public abstract class WordSizeCalculator
+    public abstract class TagSizeCalculator
     {
-        public SizeF GetTagSize(FontProperties fontProperties, float wordSize, FrequencyWord word)
+        public SizeF GetTagSize(FontProperties fontProperties, float wordSize, Token word)
         {
             SizeF result;
             var font = new Font(fontProperties.Name, wordSize);
@@ -26,6 +26,6 @@ namespace TagsCloudVisualization.Styling.WordSizeCalculators
             return result;
         }
 
-        public abstract float GetScaleFactor(int tagCount);
+        public abstract float GetScaleFactor(int tagCount, int minFontSize);
     }
 }

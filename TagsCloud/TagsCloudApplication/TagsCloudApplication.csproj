@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Example\result.png" />
-    <Content Include="Example\wordsInput.txt" />
+    <Content Include="Example\textInput.txt" />
     <Content Include="Example\wordsToExclude.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

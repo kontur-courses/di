@@ -23,6 +23,11 @@ namespace TagsCloudVisualization.Visualizers
                 return result;
             }
         }
+        
+        private Brush GetRandomBrush(Random random, ImmutableArray<Brush> brushes)
+        {
+            return brushes[random.Next(0, brushes.Length)];
+        }
 
         public Bitmap Visualize(Style style, IEnumerable<Tag> tags,
             int width = 1000, int height = 1000)
@@ -57,7 +62,8 @@ namespace TagsCloudVisualization.Visualizers
 
         private static GraphicsPath GenerateTagPath(Style style, Tag tag)
         {
-            using (var font = new Font(style.FontProperties.Name, style.GetWordSize(tag.Count)))
+            using (var font = new Font(style.FontProperties.Name,
+                style.TagSizeCalculator.GetScaleFactor(tag.Count,style.FontProperties.MinSize)))
             {
                 var formatCentered = new StringFormat
                 {
@@ -75,10 +81,6 @@ namespace TagsCloudVisualization.Visualizers
                 return path;
             }
         }
-
-        private Brush GetRandomBrush(Random random, ImmutableArray<Brush> brushes)
-        {
-            return brushes[random.Next(0, brushes.Length)];
-        }
+        
     }
 }

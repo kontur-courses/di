@@ -75,9 +75,9 @@
     <Compile Include="Layouters\ICloudLayouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Styling\FontProperties.cs" />
-    <Compile Include="Styling\WordSizeCalculators\WordSizeCalculator.cs" />
+    <Compile Include="Styling\WordSizeCalculators\TagSizeCalculator.cs" />
     <Compile Include="Styling\Style.cs" />
-    <Compile Include="Styling\WordSizeCalculators\WordSizeCalculatorLogarithmic.cs" />
+    <Compile Include="Styling\WordSizeCalculators\TagSizeCalculatorLogarithmic.cs" />
     <Compile Include="Styling\Themes\GrayTheme.cs" />
     <Compile Include="Styling\Themes\GreenTheme.cs" />
     <Compile Include="Styling\Themes\IndigoTheme.cs" />
