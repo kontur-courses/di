@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using Autofac;
+using CommandLine;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.TextFilters;
@@ -14,15 +15,30 @@ namespace TagsCloudVisualization
 {
     public static class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            var imageOptions = new VisualisingOptions(new Font("Arial", 10, FontStyle.Bold),
-                new Size(600, 600), Color.Black, Color.Pink);
-            var textName = "2.txt";
-            var imageName = "01";
-            var cloudCreator = GetContainer(imageOptions).Resolve<CloudCreator>();
-            var cloud = cloudCreator.GetCloud(textName);
-            ImageSaver.SaveImageToDefaultDirectory(imageName, cloud, ImageFormat.Png);
+            var applicationOptions = GetApplicationOptions(Parser.Default.ParseArguments<ApplicationOptions>(args));
+            var cloudCreator = GetContainer(applicationOptions.GetVisualizingOptions()).Resolve<CloudCreator>();
+            var cloud = cloudCreator.GetCloud(applicationOptions.TextName);
+            ImageSaver.SaveImageToDefaultDirectory(applicationOptions.ImageName, cloud, ImageFormat.Png);
+        }
+
+        private static ApplicationOptions GetApplicationOptions(ParserResult<ApplicationOptions> parsedOptions)
+        {
+            var applicationOptions = new ApplicationOptions();
+            parsedOptions.WithParsed(o =>
+            {
+                applicationOptions.FontFamily = o.FontFamily;
+                applicationOptions.FontSize = o.FontSize;
+                applicationOptions.ImageHeight = o.ImageHeight;
+                applicationOptions.ImageName = o.ImageName;
+                applicationOptions.ImageWidth = o.ImageWidth;
+                applicationOptions.TextColor = o.TextColor;
+                applicationOptions.TextName = o.TextName;
+                applicationOptions.BackGroundColor = o.BackGroundColor;
+            });
+            
+            return applicationOptions;
         }
 
         private static IContainer GetContainer(VisualisingOptions imageOptions)
