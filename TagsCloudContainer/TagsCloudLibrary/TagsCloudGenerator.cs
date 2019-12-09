@@ -17,7 +17,7 @@ namespace TagsCloudLibrary
 
         private IReader reader;
         private IWordsExtractor extractor;
-        private List<IPreprocessor> preprocessors = new List<IPreprocessor>();
+        private List<IPreprocessor> preprocessors;
         private ILayouter layouter;
         private IColorer colorer;
         private readonly FontFamily wordsFontFamily;

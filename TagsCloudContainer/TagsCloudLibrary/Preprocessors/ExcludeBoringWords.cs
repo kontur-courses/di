@@ -12,9 +12,9 @@ namespace TagsCloudLibrary.Preprocessors
         
         public int Priority { get; } = 20;
 
-        public ExcludeBoringWords(IEnumerable<Word.PartOfSpeech> partOfSpeechWhitelist)
+        public ExcludeBoringWords(BoringWordsConfig boringWordsConfig)
         {
-            this.partOfSpeechWhitelist = partOfSpeechWhitelist;
+            partOfSpeechWhitelist = boringWordsConfig.PartOfSpeechWhitelist;
         }
         
         public IEnumerable<string> Act(IEnumerable<string> words)

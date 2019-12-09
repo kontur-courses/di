@@ -55,20 +55,21 @@ namespace TagsCloudCLI
 
             if (!options.PartsOfSpeechWhiteList.Any())
             {
-                builder.RegisterInstance(new List<Word.PartOfSpeech>
+                builder.RegisterInstance(new BoringWordsConfig(new List<Word.PartOfSpeech>
                 {
                     Word.PartOfSpeech.Adjective,
                     Word.PartOfSpeech.Adverb,
                     Word.PartOfSpeech.Noun,
                     Word.PartOfSpeech.Verb,
-                }).As<IEnumerable<Word.PartOfSpeech>>();
+                })).As<BoringWordsConfig>();
             }
             else
             {
                 builder.RegisterInstance(
-                        PartsOfSpeechListFromStrings(options.PartsOfSpeechWhiteList)
-                        )
-                    .As<IEnumerable<Word.PartOfSpeech>>();
+                        new BoringWordsConfig(
+                            PartsOfSpeechListFromStrings(options.PartsOfSpeechWhiteList)
+                            ))
+                    .As<BoringWordsConfig>();
             }
             
 
