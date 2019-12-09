@@ -25,5 +25,24 @@ namespace TagsCloudTests
 			var actualCenter = rectangle.GetCenter();
 			actualCenter.Should().Be(expectedCenter);
 		}
+
+		[TestCase(-1, 1, 2, 2, true, TestName = "This rectangle inside another one")]
+		[TestCase(-3, 3, 6, 6, true, TestName = "Another rectangle inside this one")]
+		[TestCase(1, 1, 2, 2, true, TestName = "Intersects with half area")]
+		[TestCase(1, 3, 2, 2, true, TestName = "Intersects with one corner")]
+		[TestCase(-2, 2, 4, 4, true, TestName = "Have same area")]
+		[TestCase(3, 1, 1, 1, false, TestName = "Has no common points")]
+		public void Intersects_ReturnsCorrectResult(int locationX,
+													int locationY,
+													int rectangleWidth,
+													int rectangleHeight,
+													bool expectedResult)
+		{
+			var defaultRectangle = new Rectangle(-2, 2, 4, 4);
+			var rectangle = new Rectangle(locationX, locationY, rectangleWidth, rectangleHeight);
+
+			var actualResult = rectangle.Intersects(defaultRectangle);
+			actualResult.Should().Be(expectedResult);
+		}
 	}
 }

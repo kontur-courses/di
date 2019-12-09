@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,32 +12,25 @@ namespace TagsCloudTests
 	[TestFixture]
 	public class CircularCloudLayouter_Tests
 	{
-		private CircularCloudLayouter _circularCloudLayouter;
+		private CircularCloudLayouter circularCloudLayouter;
 		
 		[SetUp]
 		public void SetUp()
 		{
-			var spiral = new ArchimedeSpiral(new SpiralSettings());
-			_circularCloudLayouter = new CircularCloudLayouter(spiral);
+			var spiralParameters = Substitute.For<SpiralParameters>();
+			var spiral = Substitute.For<ArchimedeSpiral>(spiralParameters);
+			circularCloudLayouter = new CircularCloudLayouter(spiral);
 		}
 
 		[Test]
 		public void PutNextRectangle_SavesPutRectangles()
 		{
 			const int expectedRectanglesCount = 5;
-
 			for (var i = 0; i < expectedRectanglesCount; i++)
-				_circularCloudLayouter.PlaceNextRectangle(new Size());
-			var actualRectangles = GetRectangles();
+				circularCloudLayouter.PlaceNextRectangle(new Size());
+			
+			var actualRectangles = circularCloudLayouter.rectangles;
 			actualRectangles.Count.Should().Be(expectedRectanglesCount);
-		}
-
-		private List<Rectangle> GetRectangles()
-		{
-			const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
-			var rectangles = typeof(CircularCloudLayouter).GetField("_rectangles", flags)
-				.GetValue(_circularCloudLayouter);
-			return (List<Rectangle>) rectangles;
 		}
 
 		[TestCase(-1, 0, TestName = "Negative rectangle width")]
@@ -47,7 +39,7 @@ namespace TagsCloudTests
 		public void PutNextRectangle_ThrowsExceptionOnNegativeSizeValues(int width, int height)
 		{
 			var firstRectangleSize = new Size(width, height);
-			Action action = () => _circularCloudLayouter.PlaceNextRectangle(firstRectangleSize);
+			Action action = () => circularCloudLayouter.PlaceNextRectangle(firstRectangleSize);
 			action.Should().Throw<ArgumentException>();
 		}
 
@@ -58,7 +50,7 @@ namespace TagsCloudTests
 		{
 			var rectangleSize = new Size(width, height);
 			for (var i = 0; i < 20; i++)
-				_circularCloudLayouter.PlaceNextRectangle(rectangleSize);
+				circularCloudLayouter.PlaceNextRectangle(rectangleSize);
 			
 			CheckIntersection();
 		}
@@ -70,14 +62,14 @@ namespace TagsCloudTests
 			var minSize = new Size(40, 20);
 			var sizes = GenerateSizes(10, maxSize, minSize);
 			foreach (var size in sizes)
-				_circularCloudLayouter.PlaceNextRectangle(size);
+				circularCloudLayouter.PlaceNextRectangle(size);
 			
 			CheckIntersection();
 		}
 
 		private void CheckIntersection()
 		{
-			var rectangles = GetRectangles();
+			var rectangles = circularCloudLayouter.rectangles;
 			for (var i = 0; i < rectangles.Count; i++)
 			for (var j = i + 1; j < rectangles.Count; j++)
 			{
@@ -92,8 +84,8 @@ namespace TagsCloudTests
 			const double minimumAreaRatio = 0.5;
 			var rectangleSize = new Size(20, 20);
 			for (var i = 0; i < 100; i++)
-				_circularCloudLayouter.PlaceNextRectangle(rectangleSize);
-			var rectangles = GetRectangles();
+				circularCloudLayouter.PlaceNextRectangle(rectangleSize);
+			var rectangles = circularCloudLayouter.rectangles;
 			var maxDistance = rectangles.Select(CalculateDistanceFromCenter).Max();
 			var maxArea = Math.PI * maxDistance * maxDistance;
 			
