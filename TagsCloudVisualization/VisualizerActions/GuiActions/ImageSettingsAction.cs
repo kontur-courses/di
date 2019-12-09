@@ -6,14 +6,11 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public class ImageSettingsAction : IGuiAction
     {
-        private readonly PictureBoxImageHolder imageHolder;
-        private readonly ImageSettings imageSettings;
+        private readonly AppSettings appSettings;
 
-        public ImageSettingsAction(PictureBoxImageHolder imageHolder,
-            ImageSettings imageSettings)
+        public ImageSettingsAction(AppSettings appSettings)
         {
-            this.imageHolder = imageHolder;
-            this.imageSettings = imageSettings;
+            this.appSettings = appSettings;
         }
 
         public string GetActionDescription()
@@ -28,8 +25,13 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
 
         public void Perform()
         {
-            SettingsForm.For(imageSettings).ShowDialog();
-            imageHolder.SetImageSize(imageSettings);
+            SettingsForm.For(appSettings.ImageSettings).ShowDialog();
+            appSettings.ImageHolder.SetImageSize(appSettings.ImageSettings);
+            if (appSettings.LastOpenedFile != null)
+            {
+                var newImage = TagCloudVisualizer.GetTagCloudFromFile(appSettings.LastOpenedFile);
+                appSettings.ImageHolder.SetImage(newImage);
+            }
         }
 
         public MenuCategory GetMenuCategory()

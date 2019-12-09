@@ -93,10 +93,6 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
 
 
-            container.Register(Component.For<ImageSettings>().ImplementedBy<ImageSettings>().LifestyleSingleton());
-            container.Register(Component.For<Font>().Instance(new Font(FontFamily.GenericSansSerif, 2)).LifestyleSingleton());
-            container.Register(Component.For<Palette>().ImplementedBy<Palette>().LifestyleSingleton());
-            container.Register(Component.For<PictureBoxImageHolder>().ImplementedBy<PictureBoxImageHolder>().LifestyleSingleton());
             container.Register(Component.For<AppSettings>().ImplementedBy<AppSettings>().LifestyleSingleton());
 
 

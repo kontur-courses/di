@@ -3,16 +3,17 @@ using System.IO;
 using System.Windows.Forms;
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public class SaveImageAction : IGuiAction
     {
-        private readonly PictureBoxImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public SaveImageAction(PictureBoxImageHolder imageHolder)
+        public SaveImageAction(AppSettings appSettings)
         {
-            this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public string GetActionDescription()
@@ -37,7 +38,7 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                imageHolder.SaveImage(dialog.FileName);
+                appSettings.ImageHolder.SaveImage(dialog.FileName);
         }
 
         public MenuCategory GetMenuCategory()

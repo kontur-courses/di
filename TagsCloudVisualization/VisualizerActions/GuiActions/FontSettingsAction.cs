@@ -2,16 +2,17 @@
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Painters;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public class FontSettingsAction : IGuiAction
     {
-        private readonly Font font;
+        private readonly AppSettings appSettings;
 
-        public FontSettingsAction(Font font)
+        public FontSettingsAction(AppSettings appSettings)
         {
-            this.font = font;
+            this.appSettings = appSettings;
         }
 
         public string GetActionDescription()
@@ -26,7 +27,12 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
 
         public void Perform()
         {
-            SettingsForm.For(font).ShowDialog();
+            SettingsForm.For(appSettings.Font).ShowDialog();
+            if (appSettings.LastOpenedFile != null)
+            {
+                var newImage = TagCloudVisualizer.GetTagCloudFromFile(appSettings.LastOpenedFile);
+                appSettings.ImageHolder.SetImage(newImage);
+            }
         }
 
         public MenuCategory GetMenuCategory()

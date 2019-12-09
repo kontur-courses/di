@@ -7,15 +7,11 @@ namespace TagsCloudVisualization.Drawers
 {
     public abstract class WordDrawer
     {
-        protected ImageSettings ImageSettings { get; }
-        protected Font Font { get; }
-        protected Palette Palette { get; }
+        protected AppSettings appSettings;
 
-        public WordDrawer(ImageSettings imageSettings, Font font, Palette palette)
+        public WordDrawer(AppSettings appSettings)
         {
-            ImageSettings = imageSettings;
-            Font = font;
-            Palette = palette;
+            this.appSettings = appSettings;
         }
 
         public abstract Bitmap GetDrawnLayoutedWords(PaintedWord[] layoutedWords);

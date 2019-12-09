@@ -1,16 +1,17 @@
 ﻿using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Painters;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public class PaletteSettingsAction : IGuiAction
     {
-        private readonly Palette palette;
+        private readonly AppSettings appSettings;
 
-        public PaletteSettingsAction(Palette palette)
+        public PaletteSettingsAction(AppSettings appSettings)
         {
-            this.palette = palette;
+            this.appSettings = appSettings;
         }
 
         public string GetActionDescription()
@@ -25,7 +26,12 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
 
         public void Perform()
         {
-            SettingsForm.For(palette).ShowDialog();
+            SettingsForm.For(appSettings.Palette).ShowDialog();
+            if (appSettings.LastOpenedFile != null)
+            {
+                var newImage = TagCloudVisualizer.GetTagCloudFromFile(appSettings.LastOpenedFile);
+                appSettings.ImageHolder.SetImage(newImage);
+            }
         }
 
         public MenuCategory GetMenuCategory()

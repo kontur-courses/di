@@ -2,16 +2,17 @@
 using System.Windows.Forms;
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public class TextFileAction : IGuiAction
     {
-        private readonly PictureBoxImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public TextFileAction(PictureBoxImageHolder imageHolder)
+        public TextFileAction(AppSettings appSettings)
         {
-            this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public string GetActionDescription()
@@ -39,7 +40,8 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
             if (result == DialogResult.OK)
             {
                 var newImage = TagCloudVisualizer.GetTagCloudFromFile(dialog.FileName);
-                imageHolder.SetImage(newImage);
+                appSettings.ImageHolder.SetImage(newImage);
+                appSettings.LastOpenedFile = dialog.FileName;
             }
         }
 
