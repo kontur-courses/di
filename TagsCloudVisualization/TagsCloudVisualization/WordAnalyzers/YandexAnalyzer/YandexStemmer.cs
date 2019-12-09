@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Text.RegularExpressions;
+using TagsCloudVisualization.Structures;
 
 namespace TagsCloudVisualization.WordAnalyzers.YandexAnalyzer
 {
@@ -17,8 +17,7 @@ namespace TagsCloudVisualization.WordAnalyzers.YandexAnalyzer
         public string GetStandardForm(string str) 
             => regExForStandardWordForm.Match(str).Groups[1].Value;
         
-
-        public IEnumerable<string> AnalyzeText(string text)
+        public IEnumerable<WordInfo> AnalyzeText(string text)
         {
             using (var cmd = new Process())
             {
@@ -42,7 +41,7 @@ namespace TagsCloudVisualization.WordAnalyzers.YandexAnalyzer
                 {
                     stemmedString = cmd.StandardOutput.ReadLine();
                     uselessLinesCounter++;
-                    yield return stemmedString;
+                    yield return new WordInfo(GetStandardForm(stemmedString), DefinePartOfSpeech(stemmedString));
                 }
             }
         }

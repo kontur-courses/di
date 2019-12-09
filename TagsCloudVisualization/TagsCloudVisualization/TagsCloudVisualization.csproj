@@ -77,6 +77,9 @@
   <ItemGroup>
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\PartOfSpeechFilter.cs" />
+    <Compile Include="Structures\WordInfo.cs" />
+    <Compile Include="TextRenderers\DefaultRenderer.cs" />
+    <Compile Include="TextRenderers\ITextRenderer.cs" />
     <Compile Include="WordAnalyzers\IMorphAnalyzer.cs" />
     <Compile Include="Parsers\ArgumentParser.cs" />
     <Compile Include="Exceptions\OutOfPermissibleRangeException.cs" />

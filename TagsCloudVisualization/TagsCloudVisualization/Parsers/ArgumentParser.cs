@@ -1,8 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Drawing;
 using DocoptNet;
 using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.TextRenderers;
 using TagsCloudVisualization.WordAnalyzers;
 
 namespace TagsCloudVisualization.Parsers
@@ -14,7 +13,7 @@ namespace TagsCloudVisualization.Parsers
     Usage:
       TagsCloudVisualization.exe --file FILE [--image_name IMAGENAME] [--extention EXTENTION] [--font FONT] [--colors COLORS]
                                 [--filter FILTER] [--exclude PARTS_OF_SPEECH] [--print_only PART_OF_SPEECH] 
-                                [--image_width WIDTH]  [--image_height HEIGHT] --radius radius --x_coord COORD --y_coord COORD --text_size SIZE
+                                [--image_width WIDTH]  [--image_height HEIGHT] [--radius radius] --x_coord COORD --y_coord COORD --text_size SIZE
                                 
 
     Filters:
@@ -30,7 +29,7 @@ namespace TagsCloudVisualization.Parsers
       -e --extention EXTENTION  Final image extention[default: .png].
       -w --image_width WIDTH  Final image width[default: 0].
       -h --image_height HEIGHT  Final image height[default: 0].
-      -r --radius radius  Tag cloud radious.
+      -r --radius radius  Tag cloud radious[default: 0].
       -x --x_coord COORD  X coordinate of tag cloud center.
       -y --y_coord COORD  Y coordinate of tag cloud center.
       --filter FILTER  Filter for tag cloud[default: POS]
@@ -44,25 +43,22 @@ namespace TagsCloudVisualization.Parsers
             var arguments = new Docopt().Apply(usage, args, exit: true);
             var point = new Point(int.Parse(arguments["--x_coord"].Value.ToString()), int.Parse(arguments["--y_coord"].Value.ToString()));
             var radius = int.Parse(arguments["--radius"].Value.ToString());
+            radius = radius == 0 ? int.MaxValue : radius;
             return new CloudSettings(point, radius);
         }
 
-        public ImageSettings CreateImageSettings(string[] args)
+        public ImageSettings CreateImageSettings(string[] args, ITextRenderer textRenderer)
         {
             var arguments = new Docopt().Apply(usage, args, exit: true);
             var width = int.Parse(arguments["--image_width"].Value.ToString());
             var height = int.Parse(arguments["--image_height"].Value.ToString());
-            width = width == 0 ?
-                int.Parse(arguments["--x_coord"].ToString()) + int.Parse(arguments["--radius"].ToString()) : width;
-            height = height == 0 ? 
-                int.Parse(arguments["--y_coord"].ToString()) + int.Parse(arguments["--radius"].ToString()) : height;
             var size = new Size(width, height);
             var imageName = arguments["--image_name"].Value.ToString();
             var extention = arguments["--extention"].Value.ToString();
             var textSize = int.Parse(arguments["--text_size"].Value.ToString());
             var font = arguments["--font"].Value.ToString();
             var colors = arguments["--colors"].Value.ToString();
-            return new ImageSettings(size, imageName, extention, textSize, font, colors);
+            return new ImageSettings(size, imageName, extention, textSize, font, colors, textRenderer);
         }
 
         public TextSettings CreateTextSettings(string[] args, IMorphAnalyzer analyzer)

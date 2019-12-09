@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Structures;
 
 namespace TagsCloudVisualization.Filters
 {
     public interface  IFilter
     {
-        (bool isValid, string value) Filter(string stemmedString);
+        bool Filter(WordInfo wordInfo);
         IEnumerable<string> GetFilteredValues(string valueToFilter);
     }
 }

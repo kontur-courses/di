@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Spire.Doc;
 using TagsCloudVisualization.Settings;
 
@@ -45,9 +44,7 @@ namespace TagsCloudVisualization.Handlers
             var result = new Dictionary<string, int>();
             var text = fileOpener[textSettings.FileExtention ?? throw new InvalidOperationException()](textSettings.PathToFile);
             foreach (var value in textSettings.Filter.GetFilteredValues(text))
-            {
                 result[value] = result.TryGetValue(value, out var frequency) ? ++frequency : 1;
-            }
 
             return result.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, y => y.Value);
         }

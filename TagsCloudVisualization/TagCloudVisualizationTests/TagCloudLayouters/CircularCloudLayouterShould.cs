@@ -12,6 +12,7 @@ using TagsCloudVisualization.Geometry;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.TagCloudLayouters;
 using TagsCloudVisualization.TagsCloudVisualization;
+using TagsCloudVisualization.TextRenderers;
 
 namespace TagCloudVisualizationTests.TagCloudLayouters
 {
@@ -208,7 +209,7 @@ namespace TagCloudVisualizationTests.TagCloudLayouters
         private void SaveFiles(string path)
         {
             var pathToFile = Path.Combine(path, "Rectangles");
-            var imageSettings = new ImageSettings(new Size(1800, 1800), pathToFile, ".png", 0, "consolas", "");
+            var imageSettings = new ImageSettings(new Size(1800, 1800), pathToFile, ".png", 0, "consolas", "", new DefaultRenderer());
             var debugVisualization = new DebugVisualization(imageSettings, rectangles);
             debugVisualization.Draw();
             File.WriteAllText(Path.Combine(path, "Rectangles.json"), JsonConvert.SerializeObject(rectangles));

@@ -4,6 +4,7 @@ using TagsCloudVisualization.Handlers;
 using TagsCloudVisualization.Parsers;
 using TagsCloudVisualization.TagCloudLayouters;
 using TagsCloudVisualization.TagsCloudVisualization;
+using TagsCloudVisualization.TextRenderers;
 using TagsCloudVisualization.WordAnalyzers.YandexAnalyzer;
 
 namespace TagsCloudVisualization
@@ -22,7 +23,7 @@ namespace TagsCloudVisualization
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<ArgumentParser>().As<IArgumentParser>();
-            containerBuilder.Register(container => container.Resolve<IArgumentParser>().CreateImageSettings(args));
+            containerBuilder.Register(container => container.Resolve<IArgumentParser>().CreateImageSettings(args, new DefaultRenderer()));
             containerBuilder.Register(container => container.Resolve<IArgumentParser>().CreateCloudSettings(args));
             containerBuilder.Register(container => container.Resolve<IArgumentParser>().CreateTextSettings(args, new YandexStemmer()));
             containerBuilder.RegisterType<CircularCloudLayouter>().As(typeof(ILayouter));
