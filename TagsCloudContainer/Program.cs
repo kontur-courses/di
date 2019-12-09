@@ -29,8 +29,8 @@ namespace TagsCloudContainer
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<FileManager.FileManager>().As<IFileManager>();
-            builder.RegisterType<MyStem>().As<ITokensParser>().As<IFilter>()
-                .SingleInstance()
+            builder.RegisterType<MyStemParser>().As<ITokensParser>().SingleInstance();
+            builder.RegisterType<MyStemFilter>().As<IFilter>().SingleInstance()
                 .WithParameter("allowedWorldType",
                     new[] {WordType.Noun, WordType.Verb, WordType.Adjective, WordType.Adverb});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
