@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudVisualizers;
 using TagsCloudContainer.CloudVisualizers.BitmapMakers;
@@ -29,7 +30,8 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             var firstColor = Color.FromName(args[4]);
             var secondColor = Color.FromName(args[5]);
             if(!bool.TryParse(args[6], out var isGradient)) throw new ArgumentException($"Incorrect is gradient value {args[6]}");
-            var font = new Font(args[7], 16);
+            var fontName = string.Join(" ", args.Skip(7)).Trim('\'');
+            var font = new Font(fontName, 16);
             var palette = new Palette
             {
                 BackgroundColor = backgroundColor, IsGradient = isGradient, PrimaryColor = firstColor,
