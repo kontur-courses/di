@@ -17,5 +17,10 @@ namespace TagCloud
             var y = (int) (radiusVector * Math.Sin(alpha));
             return new Point(x, y);
         }
+
+        public void Update()
+        {
+            alpha = 0;
+        }
     }
 }

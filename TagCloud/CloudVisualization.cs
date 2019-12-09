@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Web.UI;
 
 namespace TagCloud
 {
@@ -12,18 +14,20 @@ namespace TagCloud
             this.cloud = cloud;
         }
 
-        public Bitmap GetAndDrawRectangles(int width = 1000, int height = 1000, string path = null)
+        public Bitmap GetAndDrawRectangles(int width = 1000, int height = 1000, string path = "test.txt")
         {
-            var rectangles = cloud.GetRectangles(width, height, path);
             var image = new Bitmap(width, height);
-            var drawPlace = Graphics.FromImage(image);
-            var random = new Random();
-            foreach (var rectangle in rectangles)
+            using (var graphics = Graphics.FromImage(image))
             {
-                var font = new Font(FontFamily.GenericMonospace, (float) rectangle.FSize, FontStyle.Italic);
-                var color = Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
-                drawPlace.DrawString(rectangle.Text, font,new SolidBrush(color),rectangle.Area.Location);
+                var rectangles = cloud.GetRectangles( graphics,width, height, path);
+                var random = new Random();
+                foreach (var rectangle in rectangles)
+                {
+                    var color = Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
+                    graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(color), rectangle.Area.Location);
+                }
             }
+
             return image;
         }
     }

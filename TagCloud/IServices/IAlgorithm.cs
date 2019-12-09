@@ -5,5 +5,6 @@ namespace TagCloud
     public interface IAlgorithm
     {
         Point GetNextCoordinate();
+        void Update();
     }
 }

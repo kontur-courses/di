@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using Castle.Facilities.TypedFactory;
 using System;
+using System.IO;
 using TagCloud.Actions;
 using TagCloud.IServices;
 
@@ -19,7 +20,7 @@ namespace TagCloud
                 var width = int.Parse(Console.ReadLine() ?? throw new ArgumentException());
                 var height = int.Parse(Console.ReadLine() ?? throw new ArgumentException());
                 var pathToRead = Console.ReadLine();
-                var pathToSave = Console.ReadLine();
+                var pathToSave = Path.GetTempPath()+"testCloud1";
                 saveAction.Perform(pathToSave,visaulization.GetAndDrawRectangles(width,height,pathToRead));
             }
         }

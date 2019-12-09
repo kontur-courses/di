@@ -54,6 +54,7 @@
     <Compile Include="IServices\IWordsToTagsParser.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\ShowImageAction.cs" />
+    <Compile Include="Models\FontSettings.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagRectangle.cs" />
     <Compile Include="TagCollection.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="WordsToTagsParser.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="test.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,14 +10,15 @@ namespace TagCloud.Models
 {
     public class Tag
     {
-        public Size Size { get;}
+        public int Count { get;}
         public string Text { get; }
-        public FontSize FSize { get; }
-        public Tag(string text,Size size,FontSize fontSize)
+        public Font Font { get; }
+
+        public Tag(string text,int count,Font font)
         {
-            FSize = fontSize;
-            Size = size;
+            Count = count;
             Text = text;
+            Font = font;
         }
     }
 }

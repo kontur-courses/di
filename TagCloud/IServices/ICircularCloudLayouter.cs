@@ -5,7 +5,7 @@ namespace TagCloud
 {
     public interface ICircularCloudLayouter
     {
-        Rectangle PutNextRectangle(Size rectangleSize, Point center);
+        RectangleF PutNextRectangle(SizeF rectangleSize, Point center);
         void Clear();
     }
 }
