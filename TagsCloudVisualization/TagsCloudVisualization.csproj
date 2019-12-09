@@ -70,11 +70,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\LayoutedWord.cs" />
+    <Compile Include="Core\PaintedWord.cs" />
+    <Compile Include="Drawers\DefaultWordDrawer.cs" />
+    <Compile Include="Drawers\WordDrawer.cs" />
     <Compile Include="GUI\GuiActionExtensions.cs" />
+    <Compile Include="Layouters\AnalyzedLayoutedText.cs" />
     <Compile Include="Layouters\IWordSizeChooser.cs" />
     <Compile Include="Layouters\WordCountSizeChooser.cs" />
+    <Compile Include="Painters\WordPainter.cs" />
     <Compile Include="Preprocessing\PreprocessActions\RemoveBoringWords.cs" />
-    <Compile Include="Preprocessing\PreprocessActions\ToLowercase.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\ToLowercasePreprocessor.cs" />
     <Compile Include="Tests\Layouters\WordLayouterTests.cs" />
     <Compile Include="Tests\TagCloudVisualizerTests.cs" />
     <Compile Include="Text\IPosTagger.cs" />
@@ -94,12 +99,11 @@
     <Compile Include="GUI\GraphicalVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Painters\DefaultWordLayoutPainter.cs" />
+    <Compile Include="Painters\DefaultWordPainter.cs" />
     <Compile Include="Painters\ImageFormat.cs" />
-    <Compile Include="Painters\WordLayoutPainter.cs" />
     <Compile Include="Painters\Palette.cs" />
-    <Compile Include="Preprocessing\PreprocessActions\IPreprocessAction.cs" />
-    <Compile Include="Preprocessing\Preprocessor.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\IPreprocessor.cs" />
+    <Compile Include="Preprocessing\InputPreprocessor.cs" />
     <Compile Include="TagCloudVisualizer.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\ImageSettings.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Tests\Utils\PointConverterTests.cs" />
     <Compile Include="Text\ITextReader.cs" />
     <Compile Include="Text\TextReaders\TxtFileReader.cs" />
-    <Compile Include="Text\WordReader.cs" />
     <Compile Include="Utils\PointExtensions.cs" />
     <Compile Include="Utils\PointUtilities.cs" />
     <Compile Include="VisualizerActions\GuiActions\ImageSettingsAction.cs" />
@@ -118,6 +121,12 @@
     <Compile Include="VisualizerActions\GuiActions\TextFileAction.cs" />
     <Compile Include="VisualizerActions\IVisualizerAction.cs" />
     <Compile Include="Core\Word.cs" />
+    <Compile Include="WordStatistics\AnalyzedText.cs" />
+    <Compile Include="WordStatistics\IStatisticsCollector.cs" />
+    <Compile Include="WordStatistics\StatisticsCounter.cs" />
+    <Compile Include="WordStatistics\StatisticsTypes.cs" />
+    <Compile Include="WordStatistics\WordCountCollector.cs" />
+    <Compile Include="WordStatistics\WordStatistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

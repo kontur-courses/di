@@ -6,7 +6,7 @@ using TagsCloudVisualization.Text;
 
 namespace TagsCloudVisualization.Preprocessing
 {
-    public class RemoveBoringWords : IPreprocessAction
+    public class RemoveBoringWords : IPreprocessor
     {
         private readonly IPosTagger posTagger;
 
@@ -15,7 +15,7 @@ namespace TagsCloudVisualization.Preprocessing
             posTagger = partOfSpeechTagger;
         }
 
-        public IEnumerable<Word> ProcessWords(IEnumerable<Word> words)
+        public IEnumerable<string> ProcessWords(IEnumerable<string> words)
         {
             foreach (var word in words)
             {

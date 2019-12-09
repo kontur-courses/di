@@ -3,8 +3,8 @@ using TagsCloudVisualization.Core;
 
 namespace TagsCloudVisualization.Preprocessing
 {
-    public interface IPreprocessAction
+    public interface IPreprocessor
     {
-        IEnumerable<Word> ProcessWords(IEnumerable<Word> words);
+        IEnumerable<string> ProcessWords(IEnumerable<string> words);
     }
 }

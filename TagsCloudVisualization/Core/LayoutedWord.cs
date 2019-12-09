@@ -2,15 +2,18 @@
 
 namespace TagsCloudVisualization.Core
 {
-    public class LayoutedWord
+    public class LayoutedWord : Word
     {
-        public readonly Word Word;
-        public readonly Rectangle Rectangle;
+        public readonly Rectangle Position;
 
-        public LayoutedWord(Word word, Rectangle rectangle)
+        public LayoutedWord(string value, Rectangle position) : base(value)
         {
-            Word = word;
-            Rectangle = rectangle;
+            Position = position;
+        }
+
+        public LayoutedWord(Word word, Rectangle position) : base(word.Value)
+        {
+            Position = position;
         }
     }
 }

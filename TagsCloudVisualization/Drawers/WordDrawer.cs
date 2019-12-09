@@ -1,22 +1,23 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.Core;
+using TagsCloudVisualization.Painters;
 using TagsCloudVisualization.Settings;
 
-namespace TagsCloudVisualization.Painters
+namespace TagsCloudVisualization.Drawers
 {
-    public abstract class WordLayoutPainter
+    public abstract class WordDrawer
     {
         protected ImageSettings ImageSettings { get; }
         protected Font Font { get; }
         protected Palette Palette { get; }
 
-        public WordLayoutPainter(ImageSettings imageSettings, Font font, Palette palette)
+        public WordDrawer(ImageSettings imageSettings, Font font, Palette palette)
         {
             ImageSettings = imageSettings;
             Font = font;
             Palette = palette;
         }
 
-        public abstract Bitmap GetDrawnLayoutedWords(LayoutedWord[] layoutedWords);
+        public abstract Bitmap GetDrawnLayoutedWords(PaintedWord[] layoutedWords);
     }
 }

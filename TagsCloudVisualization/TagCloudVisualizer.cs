@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using TagsCloudVisualization.Drawers;
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Layouters;
@@ -14,6 +15,7 @@ using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Text;
 using TagsCloudVisualization.Text.TextReaders;
 using TagsCloudVisualization.VisualizerActions.GuiActions;
+using TagsCloudVisualization.WordStatistics;
 
 namespace TagsCloudVisualization
 {
@@ -35,12 +37,17 @@ namespace TagsCloudVisualization
 
         public static Bitmap GetTagCloudFromFile(string filepath)
         {
-            var textParser = container.Resolve<ITextReader>();
-            var preprocessor = container.Resolve<Preprocessor>();
-            var words = WordReader.GetAllWords(textParser, filepath);
-            var preprocessedWords = preprocessor.PreprocessWords(words);
+            var textReader = container.Resolve<ITextReader>();
+            var preprocessor = container.Resolve<InputPreprocessor>();
+            var statCounter = container.Resolve<StatisticsCounter>();
             var layouter = container.Resolve<WordLayouter>();
-            return container.Resolve<WordLayoutPainter>().GetDrawnLayoutedWords(layouter.GetLayoutedWords(preprocessedWords));
+            var painter = container.Resolve<WordPainter>();
+            var drawer = container.Resolve<WordDrawer>();
+            var words = preprocessor.PreprocessWords(textReader, filepath);
+            var analyzedText = statCounter.GetAnalyzedText(words);
+            var analyzedLayoutedText = layouter.GetLayoutedText(analyzedText);
+            var paintedWords = painter.GetPaintedWords(analyzedLayoutedText);
+            return drawer.GetDrawnLayoutedWords(paintedWords);
         }
 
         private static void ConfigureContainer()
@@ -49,12 +56,24 @@ namespace TagsCloudVisualization
 
             container.Register(Component.For<ITextReader>().ImplementedBy<TxtFileReader>().LifestyleTransient());
 
-            container.Register(Component.For<IPreprocessAction>().ImplementedBy<ToLowercase>());
-            //container.Register(Component.For<IPreprocessAction>().ImplementedBy<PreprocessAction>()); //TODO: Add part of speech tagger
+            container.Register(Component.For<InputPreprocessor>().ImplementedBy<InputPreprocessor>());
 
-            container.Register(Component.For<WordLayoutPainter>()
-                .ImplementedBy<DefaultWordLayoutPainter>()
+            container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
+            //container.Register(Component.For<IPreprocessor>().ImplementedBy<PreprocessAction>()); //TODO: Add part of speech tagger
+
+            container.Register(Component.For<StatisticsCounter>().ImplementedBy<StatisticsCounter>());
+
+            container.Register(Component.For<IStatisticsCollector>().ImplementedBy<WordCountCollector>());
+
+            container.Register(Component.For<IWordSizeChooser>().ImplementedBy<WordCountSizeChooser>());
+
+            container.Register(Component.For<WordLayouter>().LifestyleTransient());
+
+            container.Register(Component.For<WordPainter>()
+                .ImplementedBy<DefaultWordPainter>()
                 .LifestyleTransient());
+
+            container.Register(Component.For<WordDrawer>().ImplementedBy<DefaultWordDrawer>());
 
             container.Register(Component.For<ICloudLayouter>()
                 .UsingFactoryMethod(() =>
@@ -65,17 +84,12 @@ namespace TagsCloudVisualization
                 })
                 .LifestyleTransient());
 
-            container.Register(Component.For<Preprocessor>().ImplementedBy<Preprocessor>());
-
-            container.Register(Component.For<IWordSizeChooser>().ImplementedBy<WordCountSizeChooser>());
 
             container.Register(Component.For<IGuiAction>().ImplementedBy<ImageSettingsAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<FontSettingsAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<PaletteSettingsAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<TextFileAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
-
-            container.Register(Component.For<WordLayouter>().LifestyleTransient());
 
             container.Register(Component.For<ImageSettings>().ImplementedBy<ImageSettings>().LifestyleSingleton());
             container.Register(Component.For<Font>().Instance(new Font(FontFamily.GenericSansSerif, 2)).LifestyleSingleton());
