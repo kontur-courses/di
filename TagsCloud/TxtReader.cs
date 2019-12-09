@@ -1,29 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
 	public class TxtReader: ITextReader
 	{
-		private readonly string _fileName;
+		private readonly string fileName;
 
-		public TxtReader(string fileName) => _fileName = fileName;
+		public TxtReader(string fileName) => this.fileName = fileName;
 
 		public string[] Read()
 		{
-			try
-			{
-				var lines = File.ReadAllLines(_fileName);
-				return lines;
-			}
-			catch (FileNotFoundException)
-			{
-				return new[] {$"File {_fileName} is not found"};
-			}
-			catch (FileLoadException)
-			{
-				return new[] {"Something went wrong while loading source text file"};
-			}
+			var lines = File.ReadAllLines(fileName);
+			if (lines.Length == 0)
+				throw new Exception("File is empty");
+			return lines;
 		}
 	}
 }

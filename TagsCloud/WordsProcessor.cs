@@ -6,32 +6,32 @@ namespace TagsCloud
 {
 	public class WordsProcessor: IWordsProcessor
 	{
-		private readonly ITextReader _textReader;
-		private readonly IEnumerable<IWordFilter> _wordFilters;
+		private readonly ITextReader textReader;
+		private readonly IEnumerable<IWordFilter> wordFilters;
 
 		public WordsProcessor(ITextReader textReader, IEnumerable<IWordFilter> wordFilters)
 		{
-			_textReader = textReader;
-			_wordFilters = wordFilters;
+			this.textReader = textReader;
+			this.wordFilters = wordFilters;
 		}
 
-		public IEnumerable<Word> GetSortedWordsWithFrequencies()
+		public IEnumerable<Word> GetWordsWithFrequencies()
 		{
-			var _frequencies = new Dictionary<string, int>();
+			var frequencies = new Dictionary<string, int>();
 			foreach (var word in FilterWords().Select(w => w.ToLower()))
 			{
-				if (_frequencies.ContainsKey(word))
-					_frequencies[word]++;
+				if (frequencies.ContainsKey(word))
+					frequencies[word]++;
 				else
-					_frequencies[word] = 1;
+					frequencies[word] = 1;
 			}
 
-			return _frequencies
+			return frequencies
 				.OrderByDescending(pair => pair.Value)
 				.Select(pair => new Word(pair.Key, pair.Value));
 		}
 
 		private IEnumerable<string> FilterWords() => 
-			_textReader.Read().Where(word => _wordFilters.All(f => f.CheckWord(word)));
+			textReader.Read().Where(word => wordFilters.All(f => f.CheckWord(word)));
 	}
 }

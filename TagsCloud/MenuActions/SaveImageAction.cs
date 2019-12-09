@@ -6,9 +6,9 @@ namespace TagsCloud.MenuActions
 {
 	public class SaveImageAction : IMenuAction
 	{
-		private IImageHolder _imageHolder;
+		private IImageHolder imageHolder;
 
-		public SaveImageAction(IImageHolder imageHolder) => _imageHolder = imageHolder;
+		public SaveImageAction(IImageHolder imageHolder) => this.imageHolder = imageHolder;
 
 		public string Category => "Файл";
 		public string Name => "Сохранить раскладку";
@@ -25,7 +25,7 @@ namespace TagsCloud.MenuActions
 			};
 			var res = dialog.ShowDialog();
 			if (res == DialogResult.OK)
-				_imageHolder.SaveImage(dialog.FileName);
+				imageHolder.SaveImage(dialog.FileName);
 		}
 	}
 }

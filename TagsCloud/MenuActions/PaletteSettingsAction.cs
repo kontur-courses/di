@@ -4,9 +4,9 @@ namespace TagsCloud.MenuActions
 {
 	public class PaletteSettingsAction : IMenuAction
 	{
-		private Palette _palette;
+		private Palette palette;
 
-		public PaletteSettingsAction(Palette palette) => _palette = palette;
+		public PaletteSettingsAction(Palette palette) => this.palette = palette;
 
 		public string Category => "Настройки";
 		public string Name => "Палитра";
@@ -14,7 +14,7 @@ namespace TagsCloud.MenuActions
 
 		public void Perform()
 		{
-			SettingsForm.For(_palette).ShowDialog();
+			SettingsForm.For(palette).ShowDialog();
 		}
 	}
 }

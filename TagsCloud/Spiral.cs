@@ -6,20 +6,20 @@ namespace TagsCloud
 {
 	public class ArchimedeSpiral: ISpiral
 	{
-		private readonly SpiralSettings _settings;
-		private double _currentAngle;
+		private readonly SpiralParameters parameters;
+		private double currentAngle;
 
-		public ArchimedeSpiral(SpiralSettings settings) => _settings = settings;
+		public ArchimedeSpiral(SpiralParameters parameters) => this.parameters = parameters;
 
 		public Point GetNextPoint()
 		{
-			var _density = Math.PI / 180 * _settings.Density;
-			var x = Math.Round(_density * _currentAngle * Math.Sin(_currentAngle));
-			var y = Math.Round(_density * _currentAngle * Math.Cos(_currentAngle));
-			_currentAngle += _settings.AngleStepDegrees;
+			var density = Math.PI / 180 * parameters.Density;
+			var x = Math.Round(density * currentAngle * Math.Sin(currentAngle));
+			var y = Math.Round(density * currentAngle * Math.Cos(currentAngle));
+			currentAngle += parameters.AngleStepDegrees;
 			return new Point((int) x, (int) y);
 		}
 
-		public void ResetState() => _currentAngle = 0;
+		public void ResetState() => currentAngle = 0;
 	}
 }

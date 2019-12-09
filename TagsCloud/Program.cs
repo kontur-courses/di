@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Autofac;
-using Autofac.Builder;
-using Autofac.Core;
-using NUnit.Framework.Internal.Execution;
 using TagsCloud.Interfaces;
 using TagsCloud.MenuActions;
+[assembly: InternalsVisibleTo("TagsCloudTests")]
 
 namespace TagsCloud
 {
@@ -25,7 +21,7 @@ namespace TagsCloud
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            builder.RegisterType<SpiralSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<SpiralParameters>().AsSelf().SingleInstance();
             builder.RegisterType<SaveImageAction>().As<IMenuAction>();
             builder.RegisterType<CircularLayouterAction>().As<IMenuAction>();
             builder.RegisterType<ImageSettingsAction>().As<IMenuAction>();
