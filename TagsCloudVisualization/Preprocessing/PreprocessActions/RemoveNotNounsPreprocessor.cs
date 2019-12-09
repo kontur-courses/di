@@ -7,11 +7,11 @@ using TagsCloudVisualization.Text;
 
 namespace TagsCloudVisualization.Preprocessing
 {
-    public class RemoveNotNouns : IPreprocessor
+    public class RemoveNotNounsPreprocessor : IPreprocessor
     {
         private readonly MaxentTagger tagger;
 
-        public RemoveNotNouns()
+        public RemoveNotNounsPreprocessor()
         {
             var model = "english-bidirectional-distsim.tagger";
             tagger = new MaxentTagger(model);
@@ -26,7 +26,7 @@ namespace TagsCloudVisualization.Preprocessing
             }
         }
 
-        public bool IsNoun(string taggedString) //https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+        private bool IsNoun(string taggedString) //https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
         {
             var tag = taggedString.Split('_').Last();
             return tag.Contains("NN");

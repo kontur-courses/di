@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Preprocessing
     {
         public IEnumerable<string> ProcessWords(IEnumerable<string> words)
         {
-            var wordRegex = new Regex(@"\w+'?-?\w+");
+            var wordRegex = new Regex(@"^[a-zA-Z]+'?-?[a-zA-Z]+");
             foreach (var word in words)
             {
                 if (wordRegex.Match(word).Success)

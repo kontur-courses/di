@@ -60,7 +60,7 @@ namespace TagsCloudVisualization
 
             container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
             container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotWordsPreprocessor>());
-            container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotNouns>());
+            container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotNounsPreprocessor>());
 
 
             container.Register(Component.For<IStatisticsCollector>().ImplementedBy<WordCountCollector>());

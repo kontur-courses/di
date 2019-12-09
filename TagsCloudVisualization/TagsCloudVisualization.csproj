@@ -165,10 +165,12 @@
     <Compile Include="Layouters\IWordSizeChooser.cs" />
     <Compile Include="Layouters\WordCountSizeChooser.cs" />
     <Compile Include="Painters\WordPainter.cs" />
-    <Compile Include="Preprocessing\PreprocessActions\RemoveNotNouns.cs" />
+    <Compile Include="Preprocessing\PreprocessActions\RemoveNotNounsPreprocessor.cs" />
     <Compile Include="Preprocessing\PreprocessActions\RemoveNotWordsPreprocessor.cs" />
     <Compile Include="Preprocessing\PreprocessActions\ToLowercasePreprocessor.cs" />
-    <Compile Include="Tests\Layouters\WordLayouterTests.cs" />
+    <Compile Include="Tests\Layouters\WordCountSizeChooserTests.cs" />
+    <Compile Include="Tests\Preprocessing\RemoveNotNounsTests.cs" />
+    <Compile Include="Tests\Preprocessing\RemoveNotWordsTests.cs" />
     <Compile Include="Tests\TagCloudVisualizerTests.cs" />
     <Compile Include="Text\IPosTagger.cs" />
     <Compile Include="Text\PosTagger.cs" />
