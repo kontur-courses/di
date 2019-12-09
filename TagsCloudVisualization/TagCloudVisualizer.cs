@@ -5,7 +5,6 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using TagsCloudVisualization.Drawers;
-using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Layouters.CloudLayouters;
@@ -32,6 +31,7 @@ namespace TagsCloudVisualization
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var mainForm = container.Resolve<GraphicalVisualizer>();
+            mainForm.WindowState = FormWindowState.Maximized;
             Application.Run(mainForm);
         }
 
@@ -60,6 +60,7 @@ namespace TagsCloudVisualization
 
             container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
             container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotWordsPreprocessor>());
+            container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotNouns>().LifestyleTransient()); //Transient because of long loading
 
 
             container.Register(Component.For<IStatisticsCollector>().ImplementedBy<WordCountCollector>());
