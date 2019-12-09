@@ -13,14 +13,17 @@ namespace TagsCloud.FinalProcessing
         {
             var borderOfRectangles = GetBorderOfRectangles(resultTagCloud);
             var image = new Bitmap(borderOfRectangles.Width + widthOfBorder * 2, borderOfRectangles.Height + widthOfBorder * 2);
-            var graph = Graphics.FromImage(image);
-            graph.Clear(backgroundColor);
-            foreach (var tag in resultTagCloud)
+            using (var graph = Graphics.FromImage(image))
             {
-                var brush = new SolidBrush(tag.tag.colorTag);
-                graph.DrawString(tag.tag.word, tag.tag.font, brush, tag.position.Left - borderOfRectangles.X + widthOfBorder, tag.position.Top - borderOfRectangles.Y + widthOfBorder);
+                graph.Clear(backgroundColor);
+                foreach (var tag in resultTagCloud)
+                {
+                    using (var brush = new SolidBrush(tag.tag.colorTag))
+                    using (var font = new Font(tag.tag.font.fontName, tag.tag.font.fontSize))
+                        graph.DrawString(tag.tag.word, font, brush, tag.position.Left - borderOfRectangles.X + widthOfBorder, tag.position.Top - borderOfRectangles.Y + widthOfBorder);
+                }
+                image = new Bitmap(image, imageSize);
             }
-            image = new Bitmap(image, imageSize);
             return image;
         }
 

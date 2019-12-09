@@ -6,16 +6,6 @@ namespace TagsCloud.WordProcessing
 {
     public class DictionaryBasedCounter: IWordCounter
     {
-        public IEnumerable<(string word, int frequency)> getAllStatistics(IEnumerable<string> words)
-        {
-            var wordFrequency = new Dictionary<string, int>();
-            foreach (var word in words)
-            {
-                if (!wordFrequency.ContainsKey(word))
-                    wordFrequency[word] = 0;
-                wordFrequency[word]++;
-            }
-            return wordFrequency.Select(pair => (pair.Key, pair.Value));
-        }
+        public IEnumerable<(string word, int frequency)> GetWordsStatistics(IEnumerable<string> words) => words.GroupBy(word => word).Select(group => (group.Key, group.Count()));
     }
 }

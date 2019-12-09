@@ -17,13 +17,18 @@ namespace TagsCloud.FinalProcessing
 
         public IEnumerable<(Tag tag, Rectangle position)> GenerateTagCloud(IEnumerable<Tag> allTags)
         {
-            var image = new Bitmap(1,1);
-            var graph = Graphics.FromImage(image);
             var result = new List<(Tag tag, Rectangle position)>();
-            foreach (var tag in allTags)
+            using (var image = new Bitmap(1, 1))
+            using (var graph = Graphics.FromImage(image))
             {
-                var size = graph.MeasureString(tag.word, tag.font).ToSize();
-                result.Add((tag, tagCloud.PutNextRectangle(size)));
+                foreach (var tag in allTags)
+                {
+                    using (var font = new Font(tag.font.fontName, tag.font.fontSize))
+                    {
+                        var size = graph.MeasureString(tag.word, font).ToSize();
+                        result.Add((tag, tagCloud.PutNextRectangle(size)));
+                    }
+                }
             }
             return result;
         }

@@ -16,12 +16,12 @@ namespace TagsCloud.WordProcessing
             this.colorGenerator = colorGenerator;
         }
 
-        public IEnumerable<Tag> GenerateTag(IEnumerable<(string word, int frequncy)> wordStatistics)
+        public IEnumerable<Tag> GenerateTag(IEnumerable<(string word, int frequency)> wordStatistics)
         {
             var currentPosition = 0;
             var countWord = wordStatistics.Count();
             var result = new List<Tag>();
-            foreach (var wordStatistic in wordStatistics.OrderByDescending(pair => pair.frequncy))
+            foreach (var wordStatistic in wordStatistics.OrderByDescending(pair => pair.frequency))
             {
                 var fontSettings = fontGenerator.GetFontSizeForCurrentWord(wordStatistic, currentPosition, countWord);
                 var color = colorGenerator.GetColorForCurrentWord(wordStatistic, currentPosition, countWord);

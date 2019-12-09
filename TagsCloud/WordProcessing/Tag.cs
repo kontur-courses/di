@@ -4,11 +4,11 @@ namespace TagsCloud.WordProcessing
 {
     public class Tag
     {
-        public readonly Font font;
+        public readonly FontSettings font;
         public readonly Color colorTag;
         public readonly string word;
 
-        public Tag(Font font, Color color, string word)
+        public Tag(FontSettings font, Color color, string word)
         {
             this.font = font;
             colorTag = color;

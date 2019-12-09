@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using TagsCloud.WordProcessing;
 
 namespace TagsCloud.Interfaces
 {
     public interface IFontSettingsGenerator
     {
-        Font GetFontSizeForCurrentWord((string word, int frequency) wordFrequency, int positionByFrequency, int countWords);
+        FontSettings GetFontSizeForCurrentWord((string word, int frequency) wordFrequency, int positionByFrequency, int countWords);
     }
 }

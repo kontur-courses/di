@@ -2,6 +2,6 @@
 {
     public interface IWordValidator
     {
-        bool ISValidWord(string word);
+        bool IsValidWord(string word);
     }
 }

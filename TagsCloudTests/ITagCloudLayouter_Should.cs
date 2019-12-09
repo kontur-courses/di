@@ -1,25 +1,26 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud.CloudLayouter;
+using TagsCloud.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudTests
 {
-    [TestFixture]
-    public class CircularCloudLayouter_Should
+    [TestFixture(typeof(AnglesCloudLayouter))]
+    [TestFixture(typeof(CircularCloudLayouter))]
+    public class ITagCloudLayouter_Should<TCloudLayouter> where TCloudLayouter: ITagCloudLayouter, new()
     {
-        private CircularCloudLayouter circularCloud;
+        private ITagCloudLayouter circularCloud;
         private readonly Point center = new Point(0, 0);
         private List<Rectangle> rectangles;
 
         [SetUp]
         public void SetUp()
         {
-            var roundPositionGenerator = new RoundSpiralPositionGenerator();
-            circularCloud = new CircularCloudLayouter(roundPositionGenerator);
+            circularCloud = new TCloudLayouter();
             rectangles = new List<Rectangle>();
         }
 

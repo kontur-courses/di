@@ -19,6 +19,12 @@ namespace TagsCloud.CloudLayouter
             this.positionGenerator = positionGenerator;
         }
 
+        public CircularCloudLayouter()
+        {
+            rectangles = new List<Rectangle>();
+            positionGenerator = new RoundSpiralPositionGenerator();
+        }
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Width < 0 || rectangleSize.Height < 0)

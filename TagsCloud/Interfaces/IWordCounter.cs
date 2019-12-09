@@ -4,6 +4,6 @@ namespace TagsCloud.Interfaces
 {
     public interface IWordCounter
     {
-        IEnumerable<(string word, int frequency)> getAllStatistics(IEnumerable<string> words);
+        IEnumerable<(string word, int frequency)> GetWordsStatistics(IEnumerable<string> words);
     }
 }

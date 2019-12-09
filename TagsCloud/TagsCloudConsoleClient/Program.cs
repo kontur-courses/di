@@ -8,6 +8,7 @@ using CommandLine;
 using System.Drawing;
 using System.Reflection;
 using System;
+using System.IO;
 
 namespace TagsCloud
 {
@@ -38,39 +39,34 @@ namespace TagsCloud
             [Option('s', "splitter", Default = "WhiteSpace", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
             public string splitType { get; set; }
 
-            [Option('d', "delta", Default = 3.14, HelpText = "Delta radius between tusrn spiral.")]
-            public double delta{ get; set; }
+            [Option('b', "boringWords", Default = "DefaultBoringWords", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
+            public string boringWordsPath { get; set; }
 
             // Omitting long name, defaults to name of property, ie "--verbose"
         }
 
         static void Main(string[] args)
         {
-            var inputPath = "";
-            var outputPath = "";
-            var size = Size.Empty;
-            var backgroundColor = Color.Empty;
-            var fontName = "";
-            var splitType = "";
-            var deltaRadiusBetweenTurns = 1.0;
+            string splitType = "";
+            var container = new ContainerBuilder();
             Parser.Default.ParseArguments<Options>(args)
               .WithParsed<Options>(opts =>
               {
-                  inputPath = opts.InputFiles;
-                  outputPath = opts.savePath;
-                  size = new Size(opts.width, opts.height);
-                  backgroundColor = Color.FromName(opts.backgroundColor);
-                  fontName = opts.fontName;
                   splitType = opts.splitType;
-                  deltaRadiusBetweenTurns = opts.delta;
+                  container.RegisterInstance(new TagCloudSettings(opts.InputFiles,
+                      opts.savePath,
+                      opts.boringWordsPath == "DefaultBoringWords" ? @"D:\проекты\SHPORA2019\di\TagsCloud\resources\NewBoringWords.txt" : opts.boringWordsPath,
+                      opts.width,
+                      opts.height,
+                      Color.FromName(opts.backgroundColor),
+                      opts.fontName)).AsSelf().SingleInstance() ;
               });
-            if (string.IsNullOrEmpty(inputPath) || string.IsNullOrEmpty(outputPath))
-                return;
-
             var dataAccess = Assembly.GetExecutingAssembly();
-
-            var container = new ContainerBuilder();
             container.RegisterAssemblyTypes(dataAccess).AsImplementedInterfaces();
+
+            container.RegisterType<PathValidator>().AsSelf();
+            container.RegisterType<SpliterByLine>().AsSelf();
+            //container.RegisterType<AnglesCloudLayouter>().As<ITagCloudLayouter>();
 
             if (splitType == "Line")
                 container.RegisterType<SpliterByLine>().As<ITextSpliter>();
@@ -81,20 +77,12 @@ namespace TagsCloud
                 throw new ArgumentException($"Unsupported split format {splitType}.");
             }
 
-            if (deltaRadiusBetweenTurns < 1 || deltaRadiusBetweenTurns > 10)
-                throw new ArgumentException("Delta radius between turns spiral must be more than 1 but less than 10.");
-
-            container.RegisterType<RoundSpiralPositionGenerator>().As<IPositionGenerator>()
-                .WithParameter(new TypedParameter(typeof(double), deltaRadiusBetweenTurns));
-
-            container.RegisterType<DefaultFontGenerator>().As<IFontSettingsGenerator>()
-                .WithParameter(new TypedParameter(typeof(string), fontName)).SingleInstance();
-
             container.RegisterType<TagCloudVisualizer>().AsSelf();
+            container.RegisterType<WordValidatorSettings>().AsSelf();
 
             Container = container.Build();
 
-            Container.Resolve<TagCloudVisualizer>().GenerateTagCloud(inputPath, outputPath, size, backgroundColor);
+            Container.Resolve<TagCloudVisualizer>().GenerateTagCloud();
         }
     }
 }

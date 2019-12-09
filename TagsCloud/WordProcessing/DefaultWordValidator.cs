@@ -1,17 +1,24 @@
 ﻿using TagsCloud.Interfaces;
 using System.Linq;
+using System.Collections.Generic;
+using TagsCloud.FileReader;
 
 namespace TagsCloud.WordProcessing
 {
     public class DefaultWordValidator : IWordValidator
     {
-        private string[] boringWords = new string[] {"и", "да", "но", "а", "не", "но", "без"};
+        private readonly HashSet<string> boringWords;
 
-        public bool ISValidWord(string word)
+        public DefaultWordValidator(SpliterByLine textSpliter, ITextReader fileReader, WordValidatorSettings wordValidatorSettings)
         {
-            if (word.Length == 0)
-                return false;
-            return !boringWords.Contains(word) && !int.TryParse(word, out var res);
+            boringWords = textSpliter.SplitText(fileReader.ReadFile(wordValidatorSettings.pathToBoringWords)).ToHashSet();
+        }
+
+        public bool IsValidWord(string word)
+        {
+            return word.Length != 0 
+                && boringWords.FirstOrDefault(boringWord => boringWord.Equals(word, System.StringComparison.InvariantCultureIgnoreCase)) == null
+                && !int.TryParse(word, out var res);
         }
     }
 }

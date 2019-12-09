@@ -1,5 +1,6 @@
 ﻿using TagsCloud.Interfaces;
 using System.Drawing;
+using System;
 
 namespace TagsCloud.WordProcessing
 {
@@ -9,18 +10,18 @@ namespace TagsCloud.WordProcessing
         private readonly int minFontSize;
         private readonly string fontName;
 
-        public DefaultFontGenerator(string fontName, int maxFontSize=128, int minFontSize=40)
+        public DefaultFontGenerator(TagCloudSettings fontName, int maxFontSize=128, int minFontSize=40)
         {
-            this.fontName = fontName;
+            this.fontName = fontName.FontName;
             this.maxFontSize = maxFontSize;
             this.minFontSize = minFontSize;
         }
 
-        public Font GetFontSizeForCurrentWord((string word, int frequency) wordFrequency, int positionByFrequency, int countWords)
+        public FontSettings GetFontSizeForCurrentWord((string word, int frequency) wordFrequency, int positionByFrequency, int countWords)
         {
             float fontSize =  maxFontSize * ((float)(countWords - positionByFrequency + 1) / countWords);
-            fontSize = fontSize > minFontSize ? fontSize : minFontSize;
-            return new Font(fontName, fontSize);
+            fontSize = Math.Max(fontSize, minFontSize);
+            return new FontSettings(fontName, fontSize);
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Collections.Generic;
-using TagsCloud.WordProcessing;
 
 namespace TagsCloud.Interfaces
 {

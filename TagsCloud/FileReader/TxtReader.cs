@@ -4,23 +4,23 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloud.FileReader
 {
-    public class TxtReader : IFileReader
+    public class TxtReader : ITextReader
     {
-        private readonly IPathValidator pathValidator;
+        private readonly PathValidator pathValidator;
 
-        public TxtReader(IPathValidator pathValidator)
+        public TxtReader(PathValidator pathValidator)
         {
             this.pathValidator = pathValidator;
         }
 
         public string ReadFile(string path)
         {
-            if (!pathValidator.ValidatePath(path))
+            if (!pathValidator.IsValidPath(path))
                 throw new ArgumentException("File not exist");
             using (var sr = new StreamReader(path))
             {
                 return sr.ReadToEnd();
-            }        
+            }
         }
     }
 }

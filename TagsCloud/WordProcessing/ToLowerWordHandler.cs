@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloud.WordProcessing
 {
-    public class DefaultWordHandler : IWordHandler
+    public class ToLowerWordHandler : IWordHandler
     {
         public string ProseccWord(string word)
         {
