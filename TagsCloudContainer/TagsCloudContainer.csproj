@@ -101,6 +101,7 @@
     <Compile Include="Tests\Commands\SaveCommand_Test.cs" />
     <Compile Include="Tests\Commands\VisualizeCommand_Test.cs" />
     <Compile Include="Tests\Following.cs" />
+    <Compile Include="Tests\TagsCloud_Test.cs" />
     <Compile Include="Tests\TextParsingTests\CloudWordsParser_Test.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWord.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWordsParserSettings.cs" />
