@@ -105,41 +105,11 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
             var maxY = rectangles.OrderBy(rect => rect.Bottom).Last().Bottom;
             var xDifference = Math.Abs(maxX - minX);
             var yDifference = Math.Abs(maxY - minY);
-            var xRatio = 1f;
-            var yRatio = 1f;
+            float xRatio;
+            float yRatio;
             
-            if (xDifference > yDifference)
-                (xRatio, yRatio) = GetHorizontalLayoutRatio(settings, xDifference, maxY, yDifference);
+            (xRatio, yRatio) = ((float)settings.Width / xDifference, (float)settings.Height / yDifference);
 
-            if (xDifference < yDifference)
-                (xRatio, yRatio) = GetVerticalLayoutRatio(settings, maxX, xDifference, yDifference);
-            if (settings.Width == settings.Height)
-                (xRatio, yRatio) = ((float)settings.Width / xDifference, (float)settings.Height / yDifference);
-
-            return (xRatio, yRatio);
-        }
-
-        private static (float xRatio, float yRatio) GetVerticalLayoutRatio(
-            CloudVisualizerSettings settings, 
-            int maxX,
-            int xDifference, 
-            int yDifference)
-        {
-            var xRatioDiff = maxX + (float) settings.Width / xDifference;
-            var xRatio = ((float) settings.Width - xDifference) / xRatioDiff;
-            var yRatio = (float) settings.Height / yDifference;
-            return (xRatio, yRatio);
-        }
-
-        private static (float xRatio, float yRatio) GetHorizontalLayoutRatio(
-            CloudVisualizerSettings settings, 
-            int xDifference,
-            int maxY, 
-            int yDifference)
-        {
-            var xRatio = (float) settings.Width / xDifference;
-            var yRatioDiff = maxY + (float) settings.Height / yDifference;
-            var yRatio = settings.Height / yRatioDiff;
             return (xRatio, yRatio);
         }
     }
