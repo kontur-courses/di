@@ -82,9 +82,7 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Result.cs" />
-    <Compile Include="Tests\BoringWordsTests.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
-    <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />
     <Compile Include="Common\FileBlobStorage.cs" />
@@ -103,24 +101,15 @@
     <Compile Include="WordFilters\IWordsFilter.cs" />
     <Compile Include="WordFilters\PartOfSpeechFilter.cs" />
     <Compile Include="WordFilters\SpellCheckerFilter.cs" />
-    <Compile Include="Tests\SpellCheckerTests.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="UiActions\IUiAction.cs" />
-    <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="CloudForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CircularCloudLayouter\ICircularCloudLayouter.cs" />
     <Compile Include="IWordsFrequencyParser.cs" />
-    <Compile Include="CircularCloudLayouter\PointExtension.cs" />
-    <Compile Include="CircularCloudLayouter\PositionSearchResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CircularCloudLayouter\RectangleExtension.cs" />
-    <Compile Include="CircularCloudLayouter\Segment.cs" />
-    <Compile Include="CircularCloudLayouter\SegmentStacker.cs" />
-    <Compile Include="Tests\RectangleForWordsCreatorTests.cs" />
     <Compile Include="UiActions\UiActionExtensions.cs" />
     <Compile Include="WordsFrequencyParser.cs" />
     <Compile Include="Common\XmlObjectSerializer.cs" />
@@ -162,7 +151,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CirclarCloudLayouter\CircularCloudLayouter.csproj">
+      <Project>{CA08E80F-C34C-41E1-8D05-D0BD7793DA35}</Project>
+      <Name>CircularCloudLayouter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

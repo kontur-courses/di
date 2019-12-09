@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
+using CircularCloudLayouter;
 
 namespace TagsCloudForm.Actions
 {

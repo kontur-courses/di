@@ -36,7 +36,7 @@ namespace TagsCloudForm.WordFilters
                     return new Result<IEnumerable<string>>("Не удалось загрузить словари для Hunspell", words);
                 }
             else
-                return new Result<IEnumerable<string>>("Russian Languge not supported", words);
+                return new Result<IEnumerable<string>>("Chosen Language not supported", words);
             return Result.Ok(words.Where(x => checker.Spell(x.ToLower())));
         }
     }

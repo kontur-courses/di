@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace TagsCloudForm.Tests
+namespace TagsCloudTests
 {
     [TestFixture]
     public class RectangleForWordsCreatorTests

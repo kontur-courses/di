@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudForm.WordFilters;
 
-namespace TagsCloudForm.Tests
+namespace TagsCloudTests
 {
     [TestFixture]
     public class BoringWordsTests

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.WordFilters;
+using TagsCloudForm.CircularCloudLayouter;
 
-namespace TagsCloudForm.Tests
+namespace TagsCloudTests
 {
     [TestFixture]
     public class SpellCheckerTests

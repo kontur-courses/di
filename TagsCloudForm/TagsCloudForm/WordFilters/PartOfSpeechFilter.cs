@@ -51,14 +51,12 @@ namespace TagsCloudForm.WordFilters
             var outList = new List<string>();
             var wordsEnumerator = words.GetEnumerator();
             wordsEnumerator.MoveNext();
-            int counter = 0;
             while (wordsEnumerator.Current != null)
             {
                 var speechPart = posTagger.Tag(new[] { wordsEnumerator.Current });
                 if (!POStoFilter.Contains(speechPart[0]))
                     outList.Add(wordsEnumerator.Current);
                 wordsEnumerator.MoveNext();
-                counter++;
             }
             return Result.Ok<IEnumerable<string>>(outList);
         }

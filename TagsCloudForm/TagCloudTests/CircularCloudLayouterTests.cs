@@ -7,15 +7,15 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using CircularCloudLayouter;
 
-namespace TagsCloudForm.Tests
+namespace TagsCloudTests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
     {
         private Point CloudCenter;
         private CircularCloudLayouter.CircularCloudLayouter Layouter;
-
         private double GetDistance(Rectangle rectangle, Point center)
         {
             var rectangleCenter = new Point(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
@@ -73,7 +73,7 @@ namespace TagsCloudForm.Tests
         public void SetUp()
         {
             CloudCenter = new Point(0, 0);
-            Layouter = new CircularCloudLayouter.CircularCloudLayouter(CloudCenter);
+            Layouter = new global::CircularCloudLayouter.CircularCloudLayouter(CloudCenter);
         }
 
         [TearDown]

@@ -2,6 +2,7 @@
 using System.Drawing;
 using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
+using CircularCloudLayouter;
 
 namespace TagsCloudForm.Actions
 {
