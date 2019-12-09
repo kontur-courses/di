@@ -15,13 +15,13 @@ namespace TagsCloudLibrary
     public class TagsCloudGenerator
     {
 
-        private IReader reader;
-        private IWordsExtractor extractor;
-        private List<IPreprocessor> preprocessors;
-        private ILayouter layouter;
-        private IColorer colorer;
+        private readonly IReader reader;
+        private readonly IWordsExtractor extractor;
+        private readonly List<IPreprocessor> preprocessors;
+        private readonly ILayouter layouter;
+        private readonly IColorer colorer;
         private readonly FontFamily wordsFontFamily;
-        private IImageWriter imageWriter;
+        private readonly IImageWriter imageWriter;
 
         public TagsCloudGenerator(
             IReader reader,
