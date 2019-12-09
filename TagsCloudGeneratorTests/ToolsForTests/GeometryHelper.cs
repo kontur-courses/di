@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudGenerator.Tools;
 
-namespace TagsCloudGenerator.Tools
+namespace TagsCloudGeneratorTests.ToolsForTests
 {
     public static class GeometryHelper
     {

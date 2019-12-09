@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudGenerator.Tools;
 
-namespace TagsCloudGeneratorTests.ToolsTests
+namespace TagsCloudGeneratorTests.ToolsForTests
 {
     public class GeometryHelperTests
     {

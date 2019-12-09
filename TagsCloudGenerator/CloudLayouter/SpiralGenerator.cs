@@ -4,9 +4,20 @@ using System.Drawing;
 
 namespace TagsCloudGenerator.CloudLayouter
 {
-    public static class SpiralGenerator
+    public class SpiralGenerator: ILayoutPointsGenerator
     {
-        public static IEnumerable<Point> GetSpiral(Point center, double spiralStep, double angleStep = 0.5)
+        private Point center;
+        private readonly double spiralStep;
+        private readonly double angleStep;
+
+        public SpiralGenerator(Point center, double spiralStep, double angleStep=0.5)
+        {
+            this.center = center;
+            this.spiralStep = spiralStep;
+            this.angleStep = angleStep;
+        }
+
+        public IEnumerable<Point> GetPoints()
         {
             var angle = 0.0;
             var k = spiralStep / (Math.PI * 2);

@@ -1,35 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloudGenerator.CloudLayouter;
 using TagsCloudGenerator.Tools;
-using TagsCloudGenerator.Visualizer;
+using TagsCloudGeneratorTests.ToolsForTests;
 
 namespace TagsCloudGeneratorTests.CloudLayouterTests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private Point center;
+        private readonly Point center = new Point(7, 11);
         private CircularCloudLayouter layouter;
-        private readonly Size unit = new Size(10, 10);
+        private readonly Font font = SystemFonts.DefaultFont;
 
         private readonly Dictionary<string, int> wordToCount =
             new Dictionary<string, int> {["fish"] = 2, ["sun"] = 1, ["sofa"] = 1, ["cat"] = 40};
 
-        private readonly Font font = SystemFonts.DefaultFont;
-
         [SetUp]
         public void SetUp()
         {
-            center = new Point(7, 11);
-            layouter = new CircularCloudLayouter(center, unit);
+            var spiralGenerator = new SpiralGenerator(center, 0.5, Math.PI / 16);
+            layouter = new CircularCloudLayouter(center, spiralGenerator);
         }
 
         [Test]
@@ -74,10 +69,9 @@ namespace TagsCloudGeneratorTests.CloudLayouterTests
         public void LayoutWords_CloudShouldContainsNWords()
         {
             var cloud = layouter.LayoutWords(wordToCount, font);
+            var actualWords = cloud.Words.Select(x => x.Value).ToList();
 
-            var actual = wordToCount.Keys.Any(word => cloud.Words.All(x => x.Value != word));
-
-            actual.Should().BeFalse();
+            actualWords.Should().BeEquivalentTo(wordToCount.Keys);
         }
 
         [TestCase(20)]

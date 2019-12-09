@@ -4,12 +4,25 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using CommandLine;
+using TagsCloudGenerator.FileReaders;
+using TagsCloudGenerator.Saver;
 using TagsCloudGenerator.Visualizer;
 
 namespace TagsCloudGenerator.Client.Console
 {
     public class ConsoleClient : IClient
     {
+        private IFileReader reader;
+        private IImageSaver saver;
+        private ICloudVisualizer visualizer;
+
+        public ConsoleClient(IFileReader reader, IImageSaver saver, ICloudVisualizer visualizer)
+        {
+            this.reader = reader;
+            this.saver = saver;
+            this.visualizer = visualizer;
+        }
+
         public void Run(ICloudGenerator generator)
         {
             Parser
@@ -29,23 +42,29 @@ namespace TagsCloudGenerator.Client.Console
             }
         }
 
-        private static void Run(ICloudGenerator generator, Options options)
+        private void Run(ICloudGenerator generator, Options options)
+        {
+            var imageSettings = GetImageSettings(options);
+            
+            var words = reader.ReadWords(options.Path);
+            var cloud = generator.Generate(words, imageSettings.Font);
+            var bitmap = visualizer.Draw(cloud, imageSettings);
+            
+            saver.Save(bitmap, options.Output, imageSettings.ImageFormat);
+        }
+
+        private static ImageSettings GetImageSettings(Options options)
         {
             var colors = GetColorsByNames(options.Colors);
             var backgroundColor = Color.FromName(options.BackgroundColor);
             var format = GetImageFormat(options.ImageFormat);
             var font = new Font(options.Font, options.FontSize);
-            var settings = new ImageSettings(
-                options.ImageWidth, options.ImageHeight, 
-                backgroundColor, colors,
-                format, font);
 
-            generator.Generate(options.Path, options.Output, settings);
+            return new ImageSettings(options.ImageWidth, options.ImageHeight, backgroundColor, colors, format, font);
         }
-
         private static List<Color> GetColorsByNames(string names)
         {
-            var colors = names.Split(new[] { ", " }, StringSplitOptions.None);
+            var colors = names.Split(new[] {", "}, StringSplitOptions.None);
 
             return colors.Select(Color.FromName).ToList();
         }

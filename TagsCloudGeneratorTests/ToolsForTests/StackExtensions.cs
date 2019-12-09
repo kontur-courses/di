@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudGenerator.Tools
+namespace TagsCloudGeneratorTests.ToolsForTests
 {
     internal static class StackExtensions
     {

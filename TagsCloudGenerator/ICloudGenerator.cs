@@ -1,10 +1,11 @@
-﻿using System.Drawing;
-using TagsCloudGenerator.Visualizer;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using TagsCloudGenerator.CloudLayouter;
 
 namespace TagsCloudGenerator
 {
     public interface ICloudGenerator
     {
-        void Generate(string inputPath, string outputPath, ImageSettings settings);
+        Cloud Generate(Dictionary<string, int> wordsToCount, Font font);
     }
 }

@@ -53,9 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudLayouterTests\CircularCloudLayouterTests.cs" />
+    <Compile Include="ToolsForTests\GeometryHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolsTests\GeometryHelperTests.cs" />
-    <Compile Include="ToolsTests\SpiralGeneratorTests.cs" />
+    <Compile Include="ToolsForTests\StackExtensions.cs" />
+    <Compile Include="ToolsForTests\GeometryHelperTests.cs" />
+    <Compile Include="CloudLayouterTests\SpiralGeneratorTests.cs" />
     <Compile Include="WordsHandler\BoringWordsEjectorTests.cs" />
     <Compile Include="WordsHandler\LowercaseConverterTests.cs" />
     <Compile Include="WordsHandler\WordHandlerTests.cs" />

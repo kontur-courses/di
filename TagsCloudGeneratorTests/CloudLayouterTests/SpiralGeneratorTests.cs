@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudGenerator.CloudLayouter;
 
-namespace TagsCloudGeneratorTests.ToolsTests
+namespace TagsCloudGeneratorTests.CloudLayouterTests
 {
     public class SpiralGeneratorTests
     {
@@ -14,7 +14,8 @@ namespace TagsCloudGeneratorTests.ToolsTests
         public void GetSpiral_FirstPoint_ShouldReturnCenterCords()
         {
             var center = new Point(5, 12);
-            var cords = SpiralGenerator.GetSpiral(center, 2);
+            var spiralGenerator = new SpiralGenerator(center, 2);
+            var cords = spiralGenerator.GetPoints();
             cords.First().Should().BeEquivalentTo(center);
         }
 
@@ -22,6 +23,7 @@ namespace TagsCloudGeneratorTests.ToolsTests
         public void GetSpiral_ShouldReturnRightPoints()
         {
             var center = new Point(0, 0);
+            var spiralGenerator = new SpiralGenerator(center, 10, Math.PI / 2);
             var expected = new List<Point>()
             {
                 new Point(0, 0),
@@ -31,7 +33,7 @@ namespace TagsCloudGeneratorTests.ToolsTests
                 new Point(10, 0)
             };
 
-            var actual = SpiralGenerator.GetSpiral(center, 10, Math.PI / 2).Take(5).ToList();
+            var actual = spiralGenerator.GetPoints().Take(5).ToList();
 
             actual.Should().BeEquivalentTo(expected);
         }
@@ -40,6 +42,7 @@ namespace TagsCloudGeneratorTests.ToolsTests
         public void GetSpiral_WithMovedCenter_ShouldReturnRightPoints()
         {
             var center = new Point(7, 15);
+            var spiralGenerator = new SpiralGenerator(center, 10, Math.PI / 2);
             var expected = new List<Point>()
             {
                 new Point(7, 15),
@@ -51,7 +54,7 @@ namespace TagsCloudGeneratorTests.ToolsTests
                 new Point(-8, 15)
             };
 
-            var actual = SpiralGenerator.GetSpiral(center, 10, Math.PI / 2).Take(7).ToList();
+            var actual = spiralGenerator.GetPoints().Take(7).ToList();
 
             actual.Should().BeEquivalentTo(expected);
         }

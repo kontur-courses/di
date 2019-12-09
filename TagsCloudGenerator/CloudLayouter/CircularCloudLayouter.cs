@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudGenerator.Tools;
@@ -11,14 +10,12 @@ namespace TagsCloudGenerator.CloudLayouter
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly Cloud cloud;
-        private readonly IEnumerator<Point> spiralEnumerator;
-        private readonly Size unitRectangle;
+        private readonly IEnumerator<Point> layoutPointsEnumerator;
 
-        public CircularCloudLayouter(Point center, Size unitRectangleSize)
+        public CircularCloudLayouter(Point center, ILayoutPointsGenerator layoutPointsGenerator)
         {
-            unitRectangle = unitRectangleSize;
+            this.layoutPointsEnumerator = layoutPointsGenerator.GetPoints().GetEnumerator();
             cloud = new Cloud(center);
-            spiralEnumerator = SpiralGenerator.GetSpiral(center, 0.5, Math.PI / 16).GetEnumerator();
         }
 
         public Cloud LayoutWords(Dictionary<string, int> wordToCount, Font font)
@@ -34,29 +31,33 @@ namespace TagsCloudGenerator.CloudLayouter
             return cloud;
         }
 
-        private Size GetSizeOfWord(string word, int count, Font font)
+        private static Size GetSizeOfWord(string word, int count, Font font)
         {
             return TextRenderer.MeasureText(word,
                 new Font(font.FontFamily, font.Size * count));
         }
 
-        private void PutNextWord(string value, int count, Size rectangleSize)
+        private Word PutNextWord(string value, int count, Size rectangleSize)
         {
             var position = GetRectangleLocation(rectangleSize);
             var rectangle = new Rectangle(position, rectangleSize);
             var word = new Word(value, rectangle, count);
 
             cloud.Words.Add(word);
+            
+            return word;
         }
 
         private Point GetRectangleLocation(Size rectangleSize)
         {
-            Point location;
-
-            while (!TryGetNextLocation(rectangleSize, out location))
+            (bool success, Point location) nextLocation;
+            do
             {
-                //Should be empty
-            }
+                nextLocation = TryGetNextLocation(rectangleSize);
+                
+            } while (!nextLocation.success);
+            
+            var location = nextLocation.location;
 
             if (cloud.Words.Count == 0)
                 return location;
@@ -67,16 +68,17 @@ namespace TagsCloudGenerator.CloudLayouter
             return TryMove(rectangleSize, location, previous);
         }
 
-        private bool TryGetNextLocation(Size rectangleSize, out Point upperLeftCorner)
+        private (bool success, Point location) TryGetNextLocation(Size rectangleSize)
         {
-            spiralEnumerator.MoveNext();
-            var center = spiralEnumerator.Current;
+            layoutPointsEnumerator.MoveNext();
+            var center = layoutPointsEnumerator.Current;
 
-            upperLeftCorner = GetUpperLeftCornerPosition(rectangleSize, center);
+            var upperLeftCorner = GetUpperLeftCornerPosition(rectangleSize, center);
             var rectangle = new Rectangle(upperLeftCorner, rectangleSize);
 
-            return NotIntersectsWithOther(rectangle);
+            return (NotIntersectsWithOther(rectangle), upperLeftCorner);
         }
+
 
         private Point TryMove(Size rectangleSize, Point from, Point to)
         {

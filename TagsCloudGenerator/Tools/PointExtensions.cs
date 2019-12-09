@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudGenerator.Tools
 {
-    internal static class PointExtensions
+    public static class PointExtensions
     {
         public static bool IsBelow(this Point a, Point b)
         {

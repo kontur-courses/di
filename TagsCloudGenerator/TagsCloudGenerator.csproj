@@ -57,8 +57,10 @@
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
     <Compile Include="CloudLayouter\Cloud.cs" />
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
+    <Compile Include="CloudLayouter\ILayoutPointsGenerator.cs" />
     <Compile Include="CloudLayouter\Word.cs" />
     <Compile Include="CloudGenerator.cs" />
+    <Compile Include="DependenciesBuilder.cs" />
     <Compile Include="ICloudGenerator.cs" />
     <Compile Include="Client\Console\Options.cs" />
     <Compile Include="Saver\IImageSaver.cs" />
@@ -67,14 +69,14 @@
     <Compile Include="Visualizer\ImageSettings.cs" />
     <Compile Include="Visualizer\ICloudVisualizer.cs" />
     <Compile Include="Visualizer\IColoringAlgorithm.cs" />
-    <Compile Include="Tools\GeometryHelper.cs" />
     <Compile Include="Tools\PointExtensions.cs" />
     <Compile Include="Tools\RectangleExtensions.cs" />
     <Compile Include="CloudLayouter\SpiralGenerator.cs" />
-    <Compile Include="Tools\StackExtensions.cs" />
     <Compile Include="Visualizer\CyclicColoringAlgorithm.cs" />
     <Compile Include="WordsHandler\BoringWordsEjector.cs" />
     <Compile Include="FileReaders\IFileReader.cs" />
+    <Compile Include="WordsHandler\FuncConverter.cs" />
+    <Compile Include="WordsHandler\PredicateFilter.cs" />
     <Compile Include="WordsHandler\IWordHandler.cs" />
     <Compile Include="WordsHandler\WordHandler.cs" />
     <Compile Include="WordsHandler\IConverter.cs" />
