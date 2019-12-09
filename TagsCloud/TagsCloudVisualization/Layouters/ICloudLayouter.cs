@@ -7,6 +7,6 @@ namespace TagsCloudVisualization.Layouters
     { 
         RectangleF PutNextRectangle(SizeF rectangleSize);
         
-        Tag PutNextTag(FrequencyWord word, SizeF wordSize);
+        Tag PutNextTag(Token word, SizeF wordSize);
     }
 }

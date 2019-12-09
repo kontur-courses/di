@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net.Mime;
-using TagsCloudTextPreparation;
 using TagsCloudTextPreparation.Excluders;
 using TagsCloudTextPreparation.Formatters;
 using TagsCloudTextPreparation.Shufflers;
 using TagsCloudTextPreparation.Splitters;
 using TagsCloudTextPreparation.Tokenizers;
 using TagsCloudVisualization;
+using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
+using TagsCloudVisualization.Styling.TagSizeCalculators;
 using TagsCloudVisualization.Styling.Themes;
-using TagsCloudVisualization.Styling.WordSizeCalculators;
 using TagsCloudVisualization.Visualizers;
 
 namespace TagsCloudApplication
@@ -40,9 +38,12 @@ namespace TagsCloudApplication
             
             var cloud = new Cloud(shuffledTokens, style, visualizer, layouter);
 
-            cloud
-                .Visualize(1500, 1500)
-                .Save(Path.Combine(projectDirectory, "Example", "result.png"), ImageFormat.Png);
+            var bitmap = cloud
+                .Visualize(1500, 1500);
+            
+   
+            new BitmapSaverPng().Save(bitmap, Path.Combine(projectDirectory, "Example","result"));
+            bitmap.Dispose();
         }
     }
 }

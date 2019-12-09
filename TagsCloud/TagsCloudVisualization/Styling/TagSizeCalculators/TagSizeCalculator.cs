@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using TagsCloudTextPreparation;
 
-namespace TagsCloudVisualization.Styling.WordSizeCalculators
+namespace TagsCloudVisualization.Styling.TagSizeCalculators
 {
     public abstract class TagSizeCalculator
     {

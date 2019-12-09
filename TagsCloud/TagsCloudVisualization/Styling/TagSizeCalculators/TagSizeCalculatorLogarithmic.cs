@@ -1,6 +1,6 @@
 using System;
 
-namespace TagsCloudVisualization.Styling.WordSizeCalculators
+namespace TagsCloudVisualization.Styling.TagSizeCalculators
 {
     public class TagSizeCalculatorLogarithmic : TagSizeCalculator
     {

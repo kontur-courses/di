@@ -32,7 +32,7 @@ namespace TagsCloudVisualization.Layouters
             return tempRect;
         }
 
-        public Tag PutNextTag(FrequencyWord word, SizeF wordSize)
+        public Tag PutNextTag(Token word, SizeF wordSize)
         {
             if (wordSize.Height <= 0 || wordSize.Width <= 0)
                 throw new ArgumentException("Tag Cloud tag size parameters should be positive.");
