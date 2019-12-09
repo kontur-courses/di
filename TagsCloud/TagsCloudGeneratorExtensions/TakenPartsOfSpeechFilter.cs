@@ -12,7 +12,7 @@ namespace TagsCloudGeneratorExtensions
         public TakenPartsOfSpeechFilter(Settings settings)
         {
             this.settings = settings;
-            stem = new MyStem { Parameters = "-nli" };
+            stem = new MyStem { PathToMyStem = Metadata.PathToMyStem, Parameters = "-nli" };
         }
 
         public int Priority => 5;
@@ -21,7 +21,6 @@ namespace TagsCloudGeneratorExtensions
 
         public string[] Execute(string[] input)
         {
-            stem.PathToMyStem = Metadata.PathToMyStem;
             var takeWords = input
                 .Distinct()
                 .Where(w =>

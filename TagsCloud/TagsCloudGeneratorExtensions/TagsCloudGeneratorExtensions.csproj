@@ -58,6 +58,11 @@
     <Compile Include="InitialWordsFormConverter.cs" />
     <Compile Include="JpegSaver.cs" />
     <Compile Include="DocxLinesParser.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ReverseFrequencyWordsLayouter.cs" />
     <Compile Include="TakenPartsOfSpeechFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +76,17 @@
       <Project>{af0d6741-5bc5-4386-b6dd-e03513fcca8b}</Project>
       <Name>TagsCloudGenerator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\mystem.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,7 +11,7 @@ namespace TagsCloudGeneratorExtensions
         private readonly MyStem stem;
 
         public InitialWordsFormConverter() =>
-            stem = new MyStem { Parameters = "-nl" };
+            stem = new MyStem { PathToMyStem = Metadata.PathToMyStem, Parameters = "-nl" };
 
         public int Priority => 5;
 
@@ -19,7 +19,6 @@ namespace TagsCloudGeneratorExtensions
 
         public string[] Execute(string[] input)
         {
-            stem.PathToMyStem = Metadata.PathToMyStem;
             var initialForms = new Dictionary<string, string>();
             foreach (var word in input.Distinct())
             {

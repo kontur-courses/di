@@ -5,6 +5,7 @@ using TagsCloudGenerator.WordsParsers;
 using TagsCloudGenerator.WordsConverters;
 using TagsCloudGenerator.WordsFilters;
 using TagsCloudGeneratorExtensions;
+using System.Reflection;
 
 namespace TagsCloudGenerator_Tests
 {
@@ -13,16 +14,13 @@ namespace TagsCloudGenerator_Tests
         private readonly string workingDirectory =
             string.Join(
                 Path.DirectorySeparatorChar.ToString(),
-                "TagsCloudGenerator_Tests", "TestData") + Path.DirectorySeparatorChar;
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "TestData") + Path.DirectorySeparatorChar;
 
         private SingletonScopeInstancesContainer container;
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            container = new SingletonScopeInstancesContainer();
-            Metadata.PathToMyStem = "mystem.exe";
-        }
+        public void OneTimeSetUp() => container = new SingletonScopeInstancesContainer();
 
         [TearDown]
         public void TearDown() => container.Get<Settings>().Reset();
