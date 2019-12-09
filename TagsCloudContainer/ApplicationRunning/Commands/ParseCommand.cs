@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
+using TagsCloudContainer.TextParsing;
 using TagsCloudContainer.TextParsing.CloudParsing.ParsingRules;
 using TagsCloudContainer.TextParsing.FileWordsParsers;
 
@@ -21,9 +22,14 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             if(!File.Exists(path)) throw new ArgumentException($"No file '{path}' found!");
             var extension = Path.GetExtension(path);
             var parser = WordsParser.GetParser(extension);
+            Parse(parser, path);
+            Console.WriteLine($"Successfully parsed words from: '{path}'");
+        }
+
+        public void Parse(IFileWordsParser parser, string path)
+        {
             manager.ConfigureWordsParserSettings(parser, path, new DefaultParsingRule());
             cloud.ParseWords();
-            Console.WriteLine($"Successfully parsed words from: '{path}'");
         }
 
         public string Name => "Parse";

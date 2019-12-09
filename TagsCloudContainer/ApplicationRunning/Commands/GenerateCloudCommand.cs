@@ -26,9 +26,14 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
                 || size <= 0) throw new ArgumentException($"Incorrect size value {args[1]}");
             var algorithm = CloudLayoutingAlgorithms.TryGetLayoutingAlgorithm(args[0], step, broadness);
             if(algorithm == null) throw new ArgumentException($"Incorrect algorithm name {args[0]}");
+            Generate(step, broadness, size, algorithm);
+            Console.WriteLine("Successfully generated cloud.");
+        }
+
+        public void Generate(double step, int broadness, int size, ICloudLayoutingAlgorithm algorithm)
+        {
             manager.ConfigureLayouterSettings(algorithm, size, step, broadness);
             cloud.GenerateTagCloud();
-            Console.WriteLine("Successfully generated cloud.");
         }
 
         public string Name => "generate";

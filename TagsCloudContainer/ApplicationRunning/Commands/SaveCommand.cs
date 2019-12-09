@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.IO;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudVisualizers.ImageSaving;
@@ -22,9 +23,14 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             if(format is null) throw new ArgumentException($"Incorrect image format '{args[2]}'");
             var filename = args[1] + "." + args[2];
             var fullPath = Path.Combine(args[0], filename);
-            manager.ConfigureImageSaverSettings(format, fullPath);
-            cloud.SaveVisualized();
+            Save(format, fullPath);
             Console.WriteLine($"Successfully saved image at {fullPath}");
+        }
+
+        public void Save(ImageFormat format, string path)
+        {
+            manager.ConfigureImageSaverSettings(format, path);
+            cloud.SaveVisualized();
         }
 
         public string Name => "save";

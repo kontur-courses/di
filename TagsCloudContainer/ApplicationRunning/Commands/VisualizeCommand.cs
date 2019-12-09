@@ -30,9 +30,14 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
                 BackgroundColor = backgroundColor, IsGradient = false, PrimaryColor = firstColor,
                 SecondaryColor = secondColor
             };
+            Visualize(palette, maker, width, height);
+            Console.WriteLine("Successfully visualized cloud. Ready to save.");
+        }
+
+        public void Visualize(Palette palette, IBitmapMaker maker, int width, int height)
+        {
             manager.ConfigureVisualizerSettings(palette, maker, width, height);
             cloud.VisualizeCloud();
-            Console.WriteLine("Successfully visualized cloud. Ready to save.");
         }
 
         public string Name => "visualize";
