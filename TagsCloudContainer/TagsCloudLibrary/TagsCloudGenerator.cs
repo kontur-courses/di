@@ -62,7 +62,8 @@ namespace TagsCloudLibrary
                 }
 
                 var wordStatistics = new Dictionary<string, int>();
-                foreach (var word in words)
+                var wordsArray = words.ToArray();
+                foreach (var word in wordsArray)
                 {
                     if (wordStatistics.ContainsKey(word))
                     {
@@ -74,7 +75,7 @@ namespace TagsCloudLibrary
                     }
                 }
 
-                var totalWords = words.Count();
+                var totalWords = wordsArray.Length;
 
                 var wordsWithSizes = wordStatistics
                     .Select(pair => new Tuple<string, int>(pair.Key, pair.Value))
