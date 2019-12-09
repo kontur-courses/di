@@ -1,4 +1,5 @@
-﻿using TagCloud.IServices;
+﻿using System.Linq;
+using TagCloud.IServices;
 
 namespace TagCloud
 {
@@ -17,7 +18,9 @@ namespace TagCloud
         {
             var primaryCollection = wordsHandler.GetWordsAndCount(path);
             var collectionAfterConvertion = wordsHandler.Conversion(primaryCollection);
-            return new TagCollection(parser.GetTagsRectangles(collectionAfterConvertion));
+            return new TagCollection(parser.GetTagsRectangles(collectionAfterConvertion)
+                .OrderByDescending(t => t.Count)
+                .ToList());
         }
     }
 }

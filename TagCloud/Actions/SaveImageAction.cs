@@ -1,15 +1,20 @@
-﻿using System.Drawing;
+﻿using System;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace TagCloud.Actions
 {
-    public class SaveImageAction : ISaveImageAction
+    public class SaveImageAction : IAction
     {
-        public string CommandName => "- SaveImage";
+        public string CommandName => "- saveimage";
 
-        public void Perform(string path, Bitmap image)
+        public void Perform(ClientConfig config)
         {
-            image.Save(path, ImageFormat.Png);
+            Console.WriteLine("Введите путь для сохранения картинки");
+            var path = Console.ReadLine();
+            path = path == string.Empty ? Path.GetTempPath() + "\\image.png" : path;
+            config.ImageToSave.Save(path, ImageFormat.Png);
+            Console.WriteLine($"Файл сохранен в {path}");
         }
     }
 }

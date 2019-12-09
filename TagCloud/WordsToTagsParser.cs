@@ -10,12 +10,12 @@ namespace TagCloud
         public List<Tag> GetTagsRectangles(Dictionary<string, int> words)
         {
             var fontSettings = new FontSettings();
-            return words.Select(s => new Tag(s.Key,s.Value,GetFont(fontSettings,s.Value))).ToList();
+            return words.Select(s => new Tag(s.Key, s.Value, GetFont(fontSettings, s.Value))).ToList();
         }
 
         private Font GetFont(FontSettings fontSettings, int count)
         {
-            var fontSize = fontSettings.defaultFontSize + count*3;
+            var fontSize = fontSettings.defaultFontSize + count * 3;
             return new Font(fontSettings.fontFamily, fontSize, fontSettings.fontStyle);
         }
     }

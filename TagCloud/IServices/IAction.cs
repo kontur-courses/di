@@ -2,7 +2,7 @@
 {
     public interface IAction
     {
-        void Perform();
         string CommandName { get; }
+        void Perform(ClientConfig config);
     }
 }

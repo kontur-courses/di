@@ -4,9 +4,9 @@ namespace TagCloud.Actions
 {
     public class ShowImageAction : IAction
     {
-        public string CommandName => "- ShowImageInForm";
+        public string CommandName => "- showimage";
 
-        public void Perform()
+        public void Perform(ClientConfig config)
         {
             throw new NotImplementedException();
         }
