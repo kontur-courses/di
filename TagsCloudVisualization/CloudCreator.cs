@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Text;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.PathFinders;
@@ -30,7 +32,7 @@ namespace TagsCloudVisualization
 
         public Bitmap GetCloud(string textName)
         {
-            var text = textReader.ReadText(PathFinder.GetTextsPath(textName));
+            var text = textReader.ReadText(PathFinder.GetTextsPath(textName), Encoding.UTF8);
             var words = wordsExtractor.GetWords(text);
             var preprocessedWords = wordPreprocessor.GetPreprocessedWords(words);
             var image = tagCloudVisualizer.GetVisualization(preprocessedWords, layouter, cloudPainter);

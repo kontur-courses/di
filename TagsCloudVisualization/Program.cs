@@ -38,6 +38,7 @@ namespace TagsCloudVisualization
                 .WithParameter("dicPath", dicPath);
             builder.RegisterType<ShortWordsFilter>().As<ITextFilter>();
             builder.RegisterType<BoringWordsFilter>().As<ITextFilter>();
+            builder.RegisterType<RepeatingWordsFilter>().As<ITextFilter>();
             builder.RegisterType<TxtReader>().As<ITextReader>();
             builder.RegisterType<WordsExtractor>().AsSelf();
             builder.RegisterType<WordPreprocessor>().AsSelf();

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudVisualization.Visualization;
-using static TagsCloudVisualization.CloudPainters.MultiColorPainterTools;
+using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {
@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.CloudPainters
                     while (color == visualisingOptions.BackgroundColor)
                         color = GetRandomColor();
                     brush = new SolidBrush(color);
-                    graphics.DrawString(word, visualisingOptions.Font, brush, rectangle.Current.Location);
+                    graphics.DrawString(word.ToString(), visualisingOptions.Font, brush, rectangle.Current.Location);
                 }
             }
 

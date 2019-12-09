@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using static TagsCloudVisualization.CloudPainters.MultiColorPainterTools;
+using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {

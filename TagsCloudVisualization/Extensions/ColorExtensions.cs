@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.CloudPainters
+namespace TagsCloudVisualization.Extensions
 {
-    public static class MultiColorPainterTools
+    public static class ColorExtensions
     {
         public static Color GetRandomColor()
         {
