@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.CloudVisualizers;
@@ -43,11 +43,12 @@ namespace TagsCloudContainer.ApplicationRunning
             Palette palette,
             IBitmapMaker bitmapMaker,
             int width,
-            int height)
+            int height,
+            Font font)
         {
             var newSettings = new CloudVisualizerSettings
             {
-                Palette = palette, BitmapMaker = bitmapMaker, Width = width, Height = height
+                Palette = palette, BitmapMaker = bitmapMaker, Width = width, Height = height, Font = font
             };
             visualizerSettings = newSettings;
         }

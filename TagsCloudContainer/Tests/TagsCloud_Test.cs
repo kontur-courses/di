@@ -88,7 +88,8 @@ namespace TagsCloudContainer.Tests
             var algorithm = new CircularCloudLayouter(new Point(0,0),0.1, 1);
             settings.ConfigureLayouterSettings(algorithm, 100, 0.1, 1);
             cloud.GenerateTagCloud();
-            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700);
+            var font = new Font("Arial", 16);
+            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700, font);
             Following.Code(() => cloud.VisualizeCloud()).ShouldNotThrow("cloud is successfully generated");
         }
         
@@ -101,7 +102,8 @@ namespace TagsCloudContainer.Tests
             var algorithm = new CircularCloudLayouter(new Point(0,0),0.1, 1);
             settings.ConfigureLayouterSettings(algorithm, 100, 0.1, 1);
             cloud.GenerateTagCloud();
-            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700);
+            var font = new Font("Arial", 16);
+            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700, font);
             cloud.VisualizeCloud();
             var currentPath = Directory.GetCurrentDirectory();
             var filename = "test.jpg";
@@ -120,7 +122,8 @@ namespace TagsCloudContainer.Tests
             var algorithm = new CircularCloudLayouter(new Point(0,0),0.1, 1);
             settings.ConfigureLayouterSettings(algorithm, 100, 0.1, 1);
             cloud.GenerateTagCloud();
-            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700);
+            var font = new Font("Arial", 16);
+            settings.ConfigureVisualizerSettings(new Palette(), new DefaultBitmapMaker(), 700, 700, font);
             cloud.VisualizeCloud();
             var currentPath = Directory.GetCurrentDirectory();
             var filename = "test.jpg";

@@ -38,7 +38,8 @@ namespace TagsCloudContainer.Tests.Commands
         [TestCase("ab", TestName = "when not a number")]
         public void Act_Should_ThrowArgumentException_When_IncorrectWidthValue(string width)
         {
-            Following.Code(() => command.Act(new[] {"def", width, "720", "black", "red"})).ShouldThrow<ArgumentException>();
+            var args = new[] {"def", width, "720", "black", "red", "blue", "false", "Arial"};
+            Following.Code(() => command.Act(args)).ShouldThrow<ArgumentException>();
         }
         
         [TestCase("0,5", TestName = "when too small")]
@@ -47,13 +48,15 @@ namespace TagsCloudContainer.Tests.Commands
         [TestCase("ab", TestName = "when not a number")]
         public void Act_Should_ThrowArgumentException_When_IncorrectHeightValue(string height)
         {
-            Following.Code(() => command.Act(new[] {"def", "1280", height, "black", "red"})).ShouldThrow<ArgumentException>();
+            var args = new[] {"def", "1280", height, "black", "red", "blue", "false", "Arial"};
+            Following.Code(() => command.Act(args)).ShouldThrow<ArgumentException>();
         }
         
         [Test()]
         public void Act_Should_ThrowArgumentException_When_IncorrectBitmapMaker()
         {
-            Following.Code(() => command.Act(new[] {"idontexist", "1280", "720", "black", "red"})).ShouldThrow<ArgumentException>();
+            var args = new[] {"idontexist", "1280", "720", "black", "red", "blue", "false", "Arial"};
+            Following.Code(() => command.Act(args)).ShouldThrow<ArgumentException>();
         }
     }
 }
