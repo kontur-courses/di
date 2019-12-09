@@ -8,6 +8,9 @@
             {
                 default:
                     return new TxtWordParser();
+                case ".doc":
+                case ".docx":
+                    return new DocWordParser();
             }
         }
     }
