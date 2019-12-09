@@ -21,8 +21,8 @@ namespace TagsCloudContainer.Tests.Commands
             var parser = new CloudWordsParser(() => settings.GetWordsParserSettings());
             var layouter = new CloudLayouter(() => settings.GetLayouterSettings());
             var visualizer = new CloudVisualizer(() => settings.GetVisualizerSettings());
-            var sasver = new ImageSaver(() => settings.GetImageSaverSettings());
-            var cloud = new TagsCloud(parser, layouter, visualizer, sasver);
+            var saver = new ImageSaver(() => settings.GetImageSaverSettings());
+            var cloud = new TagsCloud(parser, layouter, visualizer, saver);
             command = new GenerateCloudCommand(cloud, settings);
         }
         

@@ -97,6 +97,7 @@
     <Compile Include="Tests\CloudLayoutersTests\CloudLayouter_Test.cs" />
     <Compile Include="Tests\CloudVisualiserTests\CloudVisualiser_Test.cs" />
     <Compile Include="Tests\Commands\GenerateCloudCommand_Test.cs" />
+    <Compile Include="Tests\Commands\ParseCommand_Test.cs" />
     <Compile Include="Tests\Following.cs" />
     <Compile Include="Tests\TextParsingTests\CloudWordsParser_Test.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWord.cs" />
