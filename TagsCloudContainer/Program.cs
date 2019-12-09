@@ -1,6 +1,7 @@
 ﻿
 using Autofac;
 using TagsCloudContainer.ApplicationRunning;
+using TagsCloudContainer.ApplicationRunning.Commands;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudLayouters;
