@@ -21,10 +21,10 @@ namespace TagsCloudApplication
             var textInput = File.ReadAllText(Path.Combine(projectDirectory, "Example", "wordsInput.txt"));
             var textPreparer = new TextPreparer(new TextPreparerConfig().Excluding(wordsToExclude));
             var words = textPreparer.GetWordsByFrequency(textInput);
-            var fontProperties = new FontProperties("Arial Black", 36);
+            var fontProperties = new FontProperties("Arial Black", 60);
             var style = new Style(new GrayTheme(), fontProperties, new WordSizeCalculatorLogarithmic());
             var visualizer = new TextNoRectanglesVisualizer();
-            var layouter = new SpiralCloudLayouter(new Spiral(new Point(600, 700), 0.1f, 0.1f));
+            var layouter = new SpiralCloudLayouter(new Spiral(new PointF(600, 700), 0.1f, 0.1f));
             var cloud = new Cloud(words, style, visualizer, layouter);
 
             cloud
