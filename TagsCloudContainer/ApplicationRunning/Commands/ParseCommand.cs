@@ -26,7 +26,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             Console.WriteLine($"Successfully parsed words from: '{path}'");
         }
 
-        public void Parse(IFileWordsParser parser, string path)
+        private void Parse(IFileWordsParser parser, string path)
         {
             manager.ConfigureWordsParserSettings(parser, path, new DefaultParsingRule());
             cloud.ParseWords();

@@ -27,7 +27,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             Console.WriteLine($"Successfully saved image at {fullPath}");
         }
 
-        public void Save(ImageFormat format, string path)
+        private void Save(ImageFormat format, string path)
         {
             manager.ConfigureImageSaverSettings(format, path);
             cloud.SaveVisualized();

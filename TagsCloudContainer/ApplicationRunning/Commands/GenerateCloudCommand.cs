@@ -30,7 +30,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             Console.WriteLine("Successfully generated cloud.");
         }
 
-        public void Generate(double step, int broadness, int size, ICloudLayoutingAlgorithm algorithm)
+        private void Generate(double step, int broadness, int size, ICloudLayoutingAlgorithm algorithm)
         {
             manager.ConfigureLayouterSettings(algorithm, size, step, broadness);
             cloud.GenerateTagCloud();

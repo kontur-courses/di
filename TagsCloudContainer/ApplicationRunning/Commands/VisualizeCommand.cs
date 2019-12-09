@@ -34,7 +34,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
             Console.WriteLine("Successfully visualized cloud. Ready to save.");
         }
 
-        public void Visualize(Palette palette, IBitmapMaker maker, int width, int height)
+        private void Visualize(Palette palette, IBitmapMaker maker, int width, int height)
         {
             manager.ConfigureVisualizerSettings(palette, maker, width, height);
             cloud.VisualizeCloud();
