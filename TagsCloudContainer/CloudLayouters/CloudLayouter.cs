@@ -34,6 +34,7 @@ namespace TagsCloudContainer.CloudLayouters
             var length = word.Word.Length;
             var ratio = word.Count * sizeMultiplier / length;
             var width = (int) (word.Count * sizeMultiplier - ratio);
+            width = width == 0 ? 1 : width;
             var height = (int) ratio == 0 ? 1 : (int)ratio;
             return new Size(width, height);
         }
