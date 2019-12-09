@@ -20,7 +20,12 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
             {
                 g.ScaleTransform(xRatio, yRatio);
                 g.TranslateTransform(-minX, -minY);
-                g.FillRectangle(new SolidBrush(settings.Palette.BackgroundColor), 0, 0, settings.Width, settings.Height);
+                g.FillRectangle(
+                    new SolidBrush(settings.Palette.BackgroundColor), 
+                    minX, 
+                    minY, 
+                    settings.Width, 
+                    settings.Height);
                 if (settings.Palette.IsGradient)
                     DrawGradient(wordsList, settings, g);
                 else
@@ -50,6 +55,7 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
                 var textSize = g.MeasureString(word.Word, settings.Font);
                 var brush = new SolidBrush(currentColor);
                 WriteWordToRectangle(g, word, textSize, settings.Font, brush);
+                colorCounter++;
             }
         }
 
