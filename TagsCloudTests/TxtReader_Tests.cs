@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud;
@@ -13,7 +12,7 @@ namespace TagsCloudTests
 		
 		[OneTimeSetUp]
 		public void OneTimeSetUp() => 
-			testResourcesDirectory = TestContext.CurrentContext.TestDirectory + @"/../../Resources/Tests";
+			testResourcesDirectory = TestContext.CurrentContext.TestDirectory + @"\..\..\Resources\";
 
 		[Test]
 		public void Read_ThrowsException_WhenFileIsEmpty()
@@ -22,7 +21,7 @@ namespace TagsCloudTests
 			var reader = new TxtReader(fileName);
 
 			Action action = () => reader.Read();
-			action.Should().Throw<Exception>();
+			action.Should().ThrowExactly<Exception>();
 		}
 	}
 }
