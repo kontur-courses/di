@@ -20,7 +20,8 @@ namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
             if(!Directory.Exists(args[0])) throw new ArgumentException($"Incorrect directory '{args[0]}'");
             var format = SupportedImageFormats.TryGetSupportedImageFormats(args[2]);
             if(format is null) throw new ArgumentException($"Incorrect image format '{args[2]}'");
-            var fullPath = Path.Combine(args[0], args[1]);
+            var filename = args[1] + "." + args[2];
+            var fullPath = Path.Combine(args[0], filename);
             manager.ConfigureImageSaverSettings(format, fullPath);
             cloud.SaveVisualized();
             Console.WriteLine($"Successfully saved image at {fullPath}");
