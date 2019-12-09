@@ -52,6 +52,9 @@
     <Compile Include="Nunspell\Hunspell_Test.cs" />
     <Compile Include="Architecture\Interfaces\IFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Realisations\LineTextElementParser.cs" />
+    <Compile Include="Realisations\TextFileReader.cs" />
+    <Compile Include="Realisations\ToLowerPreformer.cs" />
     <Compile Include="TextElement.cs" />
     <Compile Include="TextParser.cs" />
   </ItemGroup>

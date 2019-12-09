@@ -54,6 +54,7 @@
     <Compile Include="CloudGenerator\CloudGenerator.cs" />
     <Compile Include="CloudGenerator\CloudTag.cs" />
     <Compile Include="CloudGenerator\ColorPainter\ICloudColorPainter.cs" />
+    <Compile Include="CloudGenerator\ColorPainter\RandomlyCloudPainer.cs" />
     <Compile Include="CloudGenerator\TagOrder\ITagOrder.cs" />
     <Compile Include="CloudGenerator\TagOrder\TagOrderByAscending.cs" />
     <Compile Include="CloudImageCreator.cs" />
