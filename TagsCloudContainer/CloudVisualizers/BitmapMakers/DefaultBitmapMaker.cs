@@ -10,7 +10,7 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
         public Bitmap MakeBitmap(IEnumerable<CloudVisualizationWord> words, CloudVisualizerSettings settings)
         {
             var bitmap = new Bitmap(settings.Width, settings.Height);
-            var wordsList = words.ToList();
+            var wordsList = words.ToArray();
             var rectangles = wordsList.Select(w => w.Rectangle).ToList();
             var minX = rectangles.OrderBy(rect => rect.X).First().X;
             var minY = rectangles.OrderBy(rect => rect.Y).First().Y;
@@ -20,15 +20,58 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
             {
                 g.ScaleTransform(xRatio, yRatio);
                 g.TranslateTransform(-minX, -minY);
-                foreach (var word in wordsList)
-                {
-                    var font = new Font("Arial", 16);
-                    var textSize = g.MeasureString(word.Word, font);
-                    var brush = new SolidBrush(settings.Palette.PrimaryColor);
-                    WriteWordToRectangle(g, word, textSize, font, brush);
-                }
+                g.FillRectangle(new SolidBrush(settings.Palette.BackgroundColor), 0, 0, settings.Width, settings.Height);
+                if (settings.Palette.IsGradient)
+                    DrawGradient(wordsList, settings, g);
+                else
+                    foreach (var word in wordsList)
+                    {
+                        var textSize = g.MeasureString(word.Word, settings.Font);
+                        var brush = new SolidBrush(settings.Palette.PrimaryColor);
+                        WriteWordToRectangle(g, word, textSize, settings.Font, brush);
+                    }
             }
             return bitmap;
+        }
+
+        private void DrawGradient(
+            IEnumerable<CloudVisualizationWord> words, 
+            CloudVisualizerSettings settings,
+            Graphics g)
+        {
+            var gradientColors = GenerateGradientColors(
+                settings.Palette.PrimaryColor, 
+                settings.Palette.SecondaryColor,
+                words.Count());
+            var colorCounter = 0;
+            foreach (var word in words)
+            {
+                var currentColor = gradientColors[colorCounter];
+                var textSize = g.MeasureString(word.Word, settings.Font);
+                var brush = new SolidBrush(currentColor);
+                WriteWordToRectangle(g, word, textSize, settings.Font, brush);
+            }
+        }
+
+        private static List<Color> GenerateGradientColors(Color first, Color second, int count)
+        {
+            int rMax = first.R;
+            int rMin = second.R;
+            int gMax = first.G;
+            int gMin = second.G;
+            int bMax = first.B;
+            int bMin = second.B;
+            
+            var colorList = new List<Color>();
+            for(var i = 0; i < count; i++)
+            {
+                var rAverage = rMin + (rMax - rMin) * i / count;
+                var gAverage = gMin + (gMax - gMin) * i / count;
+                var bAverage = bMin + (bMax - bMin) * i / count;
+                colorList.Add(Color.FromArgb(rAverage, gAverage, bAverage));
+            }
+
+            return colorList;
         }
 
         private static void WriteWordToRectangle(
