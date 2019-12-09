@@ -7,7 +7,7 @@ using TagsCloudForm.CircularCloudLayouter;
 
 namespace TagsCloudForm.WordFilters
 {
-    public class SpellCheckerFilter
+    public class SpellCheckerFilter : IWordsFilter
     {
         public IEnumerable<string> Filter(IEnumerable<string> words, LanguageEnum language)
         {
@@ -19,6 +19,25 @@ namespace TagsCloudForm.WordFilters
             else
                 throw new NotImplementedException();
             return words.Where(x=>checker.Spell(x.ToLower()));
+        }
+
+        public Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
+        {
+            Hunspell checker;
+            if (settings.Language == LanguageEnum.English)
+                try
+                {
+                    checker = new Hunspell(
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "en_us.aff"),
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "en_us.dic"));
+                }
+                catch (Exception e)
+                {
+                    return new Result<IEnumerable<string>>("Не удалось загрузить словари для Hunspell", words);
+                }
+            else
+                return new Result<IEnumerable<string>>("Russian Languge not supported", words);
+            return Result.Ok(words.Where(x => checker.Spell(x.ToLower())));
         }
     }
 }

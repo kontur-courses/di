@@ -81,6 +81,7 @@
       <DependentUpon>app.settings</DependentUpon>
     </Compile>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Tests\BoringWordsTests.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouter.cs" />
@@ -99,6 +100,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsManager.cs" />
+    <Compile Include="WordFilters\IWordsFilter.cs" />
     <Compile Include="WordFilters\PartOfSpeechFilter.cs" />
     <Compile Include="WordFilters\SpellCheckerFilter.cs" />
     <Compile Include="Tests\SpellCheckerTests.cs" />

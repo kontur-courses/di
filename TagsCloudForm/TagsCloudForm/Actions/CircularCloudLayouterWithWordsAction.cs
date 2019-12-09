@@ -17,28 +17,23 @@ namespace TagsCloudForm.Actions
         private readonly Palette palette;
         private readonly Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory;
         private readonly IWordsFrequencyParser parser;
-        private readonly SpellCheckerFilter spellFilter;
-        private readonly BoringWordsFilter boringWordsFilter;
         private readonly Func<IImageHolder,
             CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter
             , Dictionary<string, int>, CloudWithWordsPainter> painterFactory;
-        private readonly PartOfSpeechFilter partOfSpeechFilter;
+        private readonly IWordsFilter[] filters;
 
         public CircularCloudLayouterWithWordsAction(IImageHolder imageHolder,
              Palette palette, Func<Point, CircularCloudLayouter.CircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
              Func<IImageHolder,
              CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter, Dictionary<string, int>,
-             CloudWithWordsPainter> painterFactory, SpellCheckerFilter spellFilter
-             , BoringWordsFilter boringWordsFilter, PartOfSpeechFilter partOfSpeechFilter)
+             CloudWithWordsPainter> painterFactory, IWordsFilter[] filters)
         {
             this.painterFactory = painterFactory;
             this.imageHolder = imageHolder;
             this.palette = palette;
             this.circularCloudLayouterFactory = circularCloudLayouterFactory;
             this.parser = parser;
-            this.spellFilter = spellFilter;
-            this.boringWordsFilter = boringWordsFilter;
-            this.partOfSpeechFilter = partOfSpeechFilter;
+            this.filters = filters;
         }
         public string Category => "CircularCloud";
         public string Name => "LayouterWithWords";
@@ -60,38 +55,16 @@ namespace TagsCloudForm.Actions
                 lines = new List<string>();
                 MessageBox.Show(e.Message, "Не удалось загрузить файл с словами");
             }
-            HashSet<string> boringWords;
-            try
-            {
-                var settingsFilename = settings.BoringWordsFile;
-                boringWords = File.ReadAllLines(settingsFilename).ToHashSet(StringComparer.OrdinalIgnoreCase);
-            }
-            catch (Exception e)
-            {
-                boringWords = new HashSet<string>();
-                MessageBox.Show(e.Message, "Не удалось загрузить файл с boring words");
-            }
-            HashSet<string> POStoFilter;
-            try
-            {
-                var settingsFilename = settings.filterPOSfile;
-                POStoFilter = File.ReadAllLines(settingsFilename).ToHashSet(StringComparer.OrdinalIgnoreCase);
-            }
-            catch (Exception e)
-            {
-                POStoFilter = new HashSet<string>();
-                MessageBox.Show(e.Message, "Не удалось загрузить файл с POS to Filter");
-            }
 
             if (settings.UpperCase)
                 lines = lines.Select(x => x.ToUpper());
             else
                 lines = lines.Select(x => x.ToLower());
-            var filteredWords = spellFilter.Filter(lines, settings.Language);
-            filteredWords = boringWordsFilter.Filter(boringWords, filteredWords);
-            filteredWords = partOfSpeechFilter.Filter(POStoFilter, filteredWords);
-            var wordsWithFrequency = parser.GetWordsFrequency(filteredWords, settings.Language);
-
+            foreach (var filter in filters)
+            {
+                lines = filter.Filter(settings, lines).OnFail(x => MessageBox.Show(x)).Value;
+            }
+            var wordsWithFrequency = parser.GetWordsFrequency(lines, settings.Language);
             painterFactory.Invoke(imageHolder, settings, palette, layouter, wordsWithFrequency).Paint();
         }
     }

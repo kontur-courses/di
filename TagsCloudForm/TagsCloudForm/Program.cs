@@ -22,7 +22,6 @@ namespace TagsCloudForm
             builder.RegisterType<CloudForm>().As<CloudForm>();
             builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            builder.RegisterType<SpellCheckerFilter>();
 
             builder.RegisterType<CircularCloudLayouter.CircularCloudLayouter>();
 
@@ -30,9 +29,9 @@ namespace TagsCloudForm
 
             builder.RegisterType<CloudWithWordsPainter>();
 
-            builder.RegisterType<BoringWordsFilter>();
-
-            builder.RegisterType<PartOfSpeechFilter>();
+            builder.RegisterType<SpellCheckerFilter>().As<IWordsFilter>();
+            builder.RegisterType<BoringWordsFilter>().As<IWordsFilter>();
+            builder.RegisterType<PartOfSpeechFilter>().As<IWordsFilter>();
 
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
 
