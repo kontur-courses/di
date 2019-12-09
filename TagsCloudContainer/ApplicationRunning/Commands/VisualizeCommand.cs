@@ -20,8 +20,10 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         {
             if(args.Length < 6) throw new ArgumentException("Incorrect arguments count! Expected 6.");
             var maker = BitmapMakers.TryGetBitmapMaker(args[0]);
-            if(!int.TryParse(args[1], out var width)) throw new ArgumentException($"Incorrect width value {args[2]}");
-            if(!int.TryParse(args[2], out var height)) throw new ArgumentException($"Incorrect height value {args[3]}");
+            if(!int.TryParse(args[1], out var width)
+            || width <= 0) throw new ArgumentException($"Incorrect width value {args[2]}");
+            if(!int.TryParse(args[2], out var height)
+            || height <= 0) throw new ArgumentException($"Incorrect height value {args[3]}");
             var backgroundColor = Color.FromName(args[3]);
             var firstColor = Color.FromName(args[4]);
             var secondColor = Color.FromName(args[5]);
