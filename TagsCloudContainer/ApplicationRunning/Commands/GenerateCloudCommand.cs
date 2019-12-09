@@ -18,7 +18,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         {
             if(args.Length < 4) throw new ArgumentException("Incorrect arguments count! Expected 4.");
             if(!double.TryParse(args[2], out var step) 
-               || step <= 0.1) throw new ArgumentException($"Incorrect step value {args[2]}");
+               || step < 0.1) throw new ArgumentException($"Incorrect step value {args[2]}");
             if(!int.TryParse(args[3], out var broadness) 
                || broadness <= 0
                || broadness > 2) throw new ArgumentException($"Incorrect broadness value {args[3]}");
