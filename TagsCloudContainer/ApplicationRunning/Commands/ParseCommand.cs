@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.TextParsing.CloudParsing.ParsingRules;
 using TagsCloudContainer.TextParsing.FileWordsParsers;
 
-namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
+namespace TagsCloudContainer.ApplicationRunning.Commands
 {
     public class ParseCommand : IConsoleCommand
     {

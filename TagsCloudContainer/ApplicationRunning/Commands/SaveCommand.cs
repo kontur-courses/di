@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Drawing.Imaging;
 using System.IO;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudVisualizers.ImageSaving;
 
-namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
+namespace TagsCloudContainer.ApplicationRunning.Commands
 {
     public class SaveCommand : IConsoleCommand
     {

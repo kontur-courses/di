@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Dynamic;
-using NUnit.Framework;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudLayouters;
 
-namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
+namespace TagsCloudContainer.ApplicationRunning.Commands
 {
     public class GenerateCloudCommand : IConsoleCommand
     {

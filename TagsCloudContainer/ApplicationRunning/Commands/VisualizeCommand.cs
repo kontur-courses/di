@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
 using TagsCloudContainer.CloudVisualizers;
 using TagsCloudContainer.CloudVisualizers.BitmapMakers;
 
-namespace TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands
+namespace TagsCloudContainer.ApplicationRunning.Commands
 {
     public class VisualizeCommand : IConsoleCommand
     {

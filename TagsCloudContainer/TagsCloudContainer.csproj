@@ -58,13 +58,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationRunning\Commands\GenerateCloudCommand.cs" />
+    <Compile Include="ApplicationRunning\Commands\ParseCommand.cs" />
+    <Compile Include="ApplicationRunning\Commands\SaveCommand.cs" />
+    <Compile Include="ApplicationRunning\Commands\VisualizeCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleAppRunner.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\CommandsExecutor.cs" />
-    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\GenerateCloudCommand.cs" />
     <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\IConsoleCommand.cs" />
-    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\SaveCommand.cs" />
-    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\VisualizeCommand.cs" />
-    <Compile Include="ApplicationRunning\ConsoleApp\ConsoleCommands\ParseCommand.cs" />
     <Compile Include="ApplicationRunning\IAppRunner.cs" />
     <Compile Include="ApplicationRunning\SettingsManager.cs" />
     <Compile Include="CloudLayouters\CircularCloudLayouter\ArchimedesSpiral.cs" />
