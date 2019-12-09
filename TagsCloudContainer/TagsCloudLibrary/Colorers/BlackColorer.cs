@@ -7,7 +7,7 @@ namespace TagsCloudLibrary.Colorers
 {
     public class BlackColorer : IColorer
     {
-        public string Name { get; } = "frequency";
+        public string Name { get; } = "black";
         public Color ColorForWord(string word, double factor)
         {
             return Color.Black;
