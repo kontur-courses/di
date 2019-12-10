@@ -17,8 +17,8 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         public void Act(string[] args)
         {
             Check.ArgumentsCountIs(args, 4);
-            Check.Argument(args[2], double.TryParse(args[2], out var step), step > 0.1);
-            Check.Argument(args[3], int.TryParse(args[3], out var broadness), broadness > 0, broadness <= 2);
+            Check.Argument(args[2], double.TryParse(args[2], out var step), step >= 0.1);
+            Check.Argument(args[3], int.TryParse(args[3], out var broadness), broadness >= 1, broadness <= 2);
             Check.Argument(args[1], int.TryParse(args[1], out var size), size > 0);
             var algorithm = CloudLayoutingAlgorithms.TryGetLayoutingAlgorithm(args[0], step, broadness);
             Check.Argument(args[0], algorithm != null);
