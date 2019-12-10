@@ -2,7 +2,7 @@
 using CommandLine;
 using TagsCloudVisualization.Visualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.ApplicationOptions
 {
     public class ApplicationOptions
     {

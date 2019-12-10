@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.ApplicationOptions
 {
     public class ApplicationOptionsExtractor
     {
