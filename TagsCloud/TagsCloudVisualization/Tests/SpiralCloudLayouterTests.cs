@@ -35,8 +35,9 @@ namespace TagsCloudVisualization.Tests
         }
     }
 
+    //todo rewrite using PUTNEXTTAG (NOT RECT)
     [TestFixture]
-    public class SpiralCloudLayouterPutNextRectangle_Should
+    public class SpiralCloudLayouterPutNextTag_Should
     {
         private PointF layouterCenter;
         private SpiralCloudLayouter cloudLayouter;
@@ -61,7 +62,7 @@ namespace TagsCloudVisualization.Tests
                 var time = DateTime.Now.ToString("yy-MM-dd hh-mm-ss");
                 var filename = Path.Combine(directory, $"{testName} {time}.png");
                 new TextNoRectanglesVisualizer()
-                    .Visualize(new RedTheme(), layouterRectangles)
+                    .Visualize(new GrayDarkTheme(), layouterRectangles)
                     .Save(filename, ImageFormat.Png);
                 Console.WriteLine($"Tag cloud visualization saved to file {filename}");
             }

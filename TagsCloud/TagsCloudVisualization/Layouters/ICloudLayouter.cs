@@ -1,5 +1,5 @@
 using System.Drawing;
-using TagsCloudTextPreparation;
+using TagsCloudTextProcessing;
 
 namespace TagsCloudVisualization.Layouters
 {
@@ -7,6 +7,6 @@ namespace TagsCloudVisualization.Layouters
     { 
         RectangleF PutNextRectangle(SizeF rectangleSize);
         
-        Tag PutNextTag(Token word, SizeF wordSize);
+        Tag PutNextTag(Token token, SizeF tokenSize);
     }
 }

@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTextPreparation", "TagsCloudTextPreparation\TagsCloudTextPreparation.csproj", "{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTextProcessing", "TagsCloudTextProcessing\TagsCloudTextProcessing.csproj", "{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudApplication", "TagsCloudApplication\TagsCloudApplication.csproj", "{FC3AF8FC-6778-41C6-B2BC-772202A56487}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudConsole", "TagsCloudСonsole\TagsCloudConsole.csproj", "{FC3AF8FC-6778-41C6-B2BC-772202A56487}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

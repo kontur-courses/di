@@ -1,6 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using TagsCloudTextPreparation;
+using TagsCloudTextProcessing;
 
 namespace TagsCloudVisualization.Styling.TagSizeCalculators
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudTextPreparation;
+using TagsCloudTextProcessing;
 
 namespace TagsCloudVisualization.Layouters
 {
@@ -32,12 +32,12 @@ namespace TagsCloudVisualization.Layouters
             return tempRect;
         }
 
-        public Tag PutNextTag(Token word, SizeF wordSize)
+        public Tag PutNextTag(Token token, SizeF tokenSize)
         {
-            if (wordSize.Height <= 0 || wordSize.Width <= 0)
+            if (tokenSize.Height <= 0 || tokenSize.Width <= 0)
                 throw new ArgumentException("Tag Cloud tag size parameters should be positive.");
 
-            var tempTag = new Tag(word.Word, word.Count, wordSize, spiralEnumerator.Current);
+            var tempTag = new Tag(token.Word, token.Count, tokenSize, spiralEnumerator.Current);
             while (arrangedTags.Any(r => r.Area.IntersectsWith(tempTag.Area)) && spiralEnumerator.MoveNext())
                 tempTag.Location = spiralEnumerator.Current;
             arrangedTags.Add(tempTag);

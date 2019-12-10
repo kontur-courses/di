@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
-  <Import Project="packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('packages\NUnit.3.12.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9A59D048-1971-46F7-A3A5-8C871D6E4DFC}</ProjectGuid>
+    <ProjectGuid>{DB6BC691-B31E-4A40-9037-EB1D69BD6DA5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TagsCloudVisualization</RootNamespace>
-    <AssemblyName>TagsCloudVisualization</AssemblyName>
+    <RootNamespace>TagsCloudTextProcessing</RootNamespace>
+    <AssemblyName>TagsCloudTextProcessing</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,77 +33,60 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BitMiracle.Docotic.Pdf, Version=5.10.9957.0, Culture=neutral, PublicKeyToken=221650e173990c07">
+      <HintPath>..\packages\BitMiracle.Docotic.Pdf.5.10.9957\lib\net40\BitMiracle.Docotic.Pdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="mscorlib" />
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xceed.Document.NET, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\DocX.1.5.0\lib\net40\Xceed.Document.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\DocX.1.5.0\lib\net40\Xceed.Words.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitmapSavers\JpegBitmapSaver.cs" />
-    <Compile Include="BitmapSavers\PngBitmapSaver.cs" />
-    <Compile Include="BitmapSavers\WmfBitmapSaver.cs" />
-    <Compile Include="BitmapSavers\IBitmapSaver.cs" />
-    <Compile Include="DrawingUtils.cs" />
-    <Compile Include="Cloud.cs" />
-    <Compile Include="Layouters\Spiral.cs" />
-    <Compile Include="Layouters\SpiralCloudLayouter.cs" />
-    <Compile Include="Layouters\ICloudLayouter.cs" />
+    <Compile Include="Excluders\IWordsExcluder.cs" />
+    <Compile Include="Excluders\WordsExcluder.cs" />
+    <Compile Include="Formatters\IWordsFormatter.cs" />
+    <Compile Include="Formatters\WordsFormatterLowercaseAndTrim.cs" />
+    <Compile Include="Readers\ITextReader.cs" />
+    <Compile Include="Readers\PdfTextReader.cs" />
+    <Compile Include="Readers\TxtTextReader.cs" />
+    <Compile Include="Readers\DocxTextReader.cs" />
+    <Compile Include="Shufflers\ITokenShuffler.cs" />
+    <Compile Include="Shufflers\TokenShufflerAscending.cs" />
+    <Compile Include="Shufflers\TokenShufflerDescending.cs" />
+    <Compile Include="Shufflers\TokenShufflerRandom.cs" />
+    <Compile Include="Splitters\ITextSplitter.cs" />
+    <Compile Include="Splitters\TextSplitter.cs" />
+    <Compile Include="Tests\ShufflersTests.cs" />
+    <Compile Include="Tests\TextSplitterTests.cs" />
+    <Compile Include="Tests\TokenizerTests.cs" />
+    <Compile Include="Tests\WordsExcluderTests.cs" />
+    <Compile Include="Tests\WordsFormatterLowerCaseAndTrimTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Styling\FontProperties.cs" />
-    <Compile Include="Styling\TagColorizer\ITagColorizer.cs" />
-    <Compile Include="Styling\TagColorizer\TagColorizerBySize.cs" />
-    <Compile Include="Styling\TagColorizer\TagColorizerRandom.cs" />
-    <Compile Include="Styling\TagSizeCalculators\TagSizeCalculator.cs" />
-    <Compile Include="Styling\Style.cs" />
-    <Compile Include="Styling\TagSizeCalculators\TagSizeCalculatorLogarithmic.cs" />
-    <Compile Include="Styling\Themes\GodotEngineTheme.cs" />
-    <Compile Include="Styling\Themes\GrayDarkTheme.cs" />
-    <Compile Include="Styling\Themes\ITheme.cs" />
-    <Compile Include="Styling\Themes\PixelArtTheme.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="Tests\SpiralTests.cs" />
-    <Compile Include="Tests\SpiralCloudLayouterTests.cs" />
-    <Compile Include="RectangleGenerator.cs" />
-    <Compile Include="Visualizers\FilledTextNoRectanglesVisualizer.cs" />
-    <Compile Include="Visualizers\ICloudVisualizer.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="Tokenizers\ITokenizer.cs" />
+    <Compile Include="Tokenizers\Tokenizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TagsCloudTextProcessing\TagsCloudTextProcessing.csproj">
-      <Project>{db6bc691-b31e-4a40-9037-eb1d69bd6da5}</Project>
-      <Name>TagsCloudTextProcessing</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
