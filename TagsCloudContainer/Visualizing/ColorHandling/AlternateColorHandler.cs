@@ -6,16 +6,10 @@ namespace TagsCloudContainer.Visualizing.ColorHandling
 {
     public class AlternateColorHandler : IColorHandler
     {
-        private readonly List<Color> colors;
+        private List<Color> colors = new List<Color>();
         private static readonly Color DefaultBackgroundColor = Color.White;
         private static readonly Color DefaultWordColor = Color.Black;
-        private int currentPosition;
-
-        public AlternateColorHandler(List<Color> colors)
-        {
-            this.colors = colors;
-            currentPosition = 1;
-        }
+        private int currentPosition = 1;
 
         public Color GetColorFor(string word, Rectangle rectangle)
         {
@@ -31,5 +25,10 @@ namespace TagsCloudContainer.Visualizing.ColorHandling
         }
 
         public Color BackgroundColor => colors.Count <= 1 ? DefaultBackgroundColor : colors.First();
+        
+        public void SetColorsToUse(List<Color> colorsToUse)
+        {
+            colors = colorsToUse;
+        }
     }
 }

@@ -15,10 +15,10 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var userInterface = new ConsoleUserInterface(new ConsoleArgumentsParser());
-            if (userInterface.TryGetParameters(args, out var parameters))
+            var container = GetDependencyInjectionContainer();
+            var parametersProvider = container.Resolve<IParametersProvider>();
+            if (parametersProvider.TryGetParameters(args, out var parameters))
             {
-                var container = GetDependencyInjectionContainer(parameters, userInterface);
                 var tagCloudVisualizer = container.Resolve<ITagCloudVisualizer>();
                 var bitmap = tagCloudVisualizer.GetTagCloudBitmap(parameters);
                 var resultProcessor = container.Resolve<IResultProcessor>();
@@ -26,24 +26,18 @@ namespace TagsCloudContainer
             }
         }
 
-        private static IContainer GetDependencyInjectionContainer(Parameters parameters, IResultDisplay userInterface)
+        private static IContainer GetDependencyInjectionContainer()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces()
-                .AsSelf();
-            builder.RegisterInstance(userInterface)
-                .As<IResultDisplay>();
+                .AsSelf()
+                .SingleInstance();
 
             var pathToMyStemDirectory = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName,
                 "WordProcessing", "Filtering", "MyStem");
             builder.RegisterInstance(pathToMyStemDirectory).As<string>();
-
-            builder.RegisterInstance(parameters)
-                .As<Parameters>();
-            builder.Register(c => c.Resolve<Parameters>().Colors)
-                .As<List<Color>>();
 
             return builder.Build();
         }

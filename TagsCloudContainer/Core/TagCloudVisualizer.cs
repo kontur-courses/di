@@ -27,7 +27,7 @@ namespace TagsCloudContainer.Core
             var words = fileReader.ReadWords(parameters.InputFilePath);
             var processedWords = wordProcessor.ProcessWords(words);
             var layout = layoutAlgorithm.GetLayout(processedWords, parameters.ImageSize);
-            return visualizer.GetLayoutBitmap(layout, parameters.Font, parameters.ImageSize);
+            return visualizer.GetLayoutBitmap(layout, parameters.Font, parameters.ImageSize, parameters.Colors);
         }
     }
 }

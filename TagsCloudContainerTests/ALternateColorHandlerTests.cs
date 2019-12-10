@@ -14,7 +14,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void BackgroundColor_ShouldReturnDefaultColor_WhenInputColorsIsEmpty()
         {
-            var colorHandler = new AlternateColorHandler(new List<Color>());
+            var colorHandler = new AlternateColorHandler();
 
             var backgroundColor = colorHandler.BackgroundColor;
 
@@ -24,7 +24,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetColorFor_ShouldReturnDefaultColor_WhenInputColorsIsEmpty()
         {
-            var colorHandler = new AlternateColorHandler(new List<Color>());
+            var colorHandler = new AlternateColorHandler();
 
             var color = colorHandler.GetColorFor(string.Empty, Rectangle.Empty);
 
@@ -34,7 +34,8 @@ namespace TagsCloudContainerTests
         [TestCaseSource(nameof(BackgroundColorShouldReturnFirstColorInInputWhenInputColorsContainsAtLeastTwoColorsTestCases))]
         public void BackgroundColor_ShouldReturnFirstColorInInput_WhenInputColorsContainsAtLeastTwoColors(List<Color> colors)
         {
-            var colorHandler = new AlternateColorHandler(colors);
+            var colorHandler = new AlternateColorHandler();
+            colorHandler.SetColorsToUse(colors);
 
             var backgroundColor = colorHandler.BackgroundColor;
 
@@ -57,7 +58,8 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetColorFor_ShouldReturnColorFromInput_WhenInputColorsContainsOnlyOneColor()
         {
-            var colorHandler = new AlternateColorHandler(new List<Color> {Color.Azure});
+            var colorHandler = new AlternateColorHandler();
+            colorHandler.SetColorsToUse(new List<Color> {Color.Azure});
 
             var color = colorHandler.GetColorFor(string.Empty, Rectangle.Empty);
 
@@ -67,7 +69,8 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetColorFor_ShouldReturnSecondColor_WhenInputContainsTwoColors()
         {
-            var colorHandler = new AlternateColorHandler(new List<Color> {Color.Azure, Color.Blue});
+            var colorHandler = new AlternateColorHandler();
+            colorHandler.SetColorsToUse(new List<Color> {Color.Azure, Color.Blue});
 
             var color = colorHandler.GetColorFor(string.Empty, Rectangle.Empty);
 
@@ -77,7 +80,8 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetColorFor_ShouldAlternateColors_WhenInputColorsContainsMoreThanTwoColors()
         {
-            var colorHandler = new AlternateColorHandler(new List<Color> {Color.Azure, Color.Blue, Color.Aqua});
+            var colorHandler = new AlternateColorHandler();
+            colorHandler.SetColorsToUse(new List<Color> { Color.Azure, Color.Blue, Color.Aqua });
 
             var firstColor = colorHandler.GetColorFor(string.Empty, Rectangle.Empty);
             var secondColor = colorHandler.GetColorFor(string.Empty, Rectangle.Empty);
