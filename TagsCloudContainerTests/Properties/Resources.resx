@@ -118,19 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="WaPv1p1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\WaPv1p1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Words" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="WordsDoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Words.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Words1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="WordsDocx" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Words.docx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Words2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="WordsTxt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Words.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="WordsRus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\WordsRus.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

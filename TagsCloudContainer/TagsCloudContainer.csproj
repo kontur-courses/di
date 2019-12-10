@@ -50,9 +50,6 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -70,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
-    <Compile Include="CloudLayouters\Converter.cs" />
+    <Compile Include="CloudLayouters\MyConverter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
     <Compile Include="PaintersWords\EvenPainterWords.cs" />
     <Compile Include="PaintersWords\IPainterWords.cs" />
@@ -107,12 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="WordsRus.txt" />
-    <None Include="Hunspellx64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Hunspellx86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="WaPv1p1.txt" />
     <Content Include="Words.txt" />
   </ItemGroup>

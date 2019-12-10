@@ -7,8 +7,9 @@ using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintersWords;
 using TagsCloudContainer.Palettes;
 using TagsCloudContainer.TokensAndSettings;
+using TagsCloudContainer.Visualizers;
 
-namespace TagsCloudContainer.Visualizers
+namespace TagsCloudContainerTests.Visualizers
 {
     [TestFixture]
     class SimpleVisualizerTests

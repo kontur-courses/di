@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using TagsCloudContainer.Readers;
 
-namespace TagsCloudContainer.Readers
+namespace TagsCloudContainerTests.Readers
 {
     [TestFixture]
     class SimpleReaderTests
@@ -34,7 +35,7 @@ namespace TagsCloudContainer.Readers
         [Test]
         public void ReadAllLines_txt()
         {
-            var simpleReader = new SimpleReader(@"TagsCloudContainerTests\Words.txt");
+            var simpleReader = new SimpleReader(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"TagsCloudContainerTests\Words.txt"));
 
             var result = simpleReader.ReadAllLines();
 

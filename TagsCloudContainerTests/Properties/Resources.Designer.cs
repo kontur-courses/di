@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TagsCloudContainer.Properties {
+namespace TagsCloudContainerTests.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace TagsCloudContainer.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace TagsCloudContainer.Properties {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TagsCloudContainer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TagsCloudContainerTests.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace TagsCloudContainer.Properties {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,21 +61,11 @@ namespace TagsCloudContainer.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на — Eh bien, mon prince. Gênes et Lucques ne sont plus que des apanages, des поместья, de la famille Buonaparte. Non, je vous préviens que si vous ne me dites pas que nous avons la guerre, si vous vous permettez encore de pallier toutes les infamies, toutes les atrocités de cet Antichrist (ma parole, j&apos;y crois) — je ne vous connais plus, vous n&apos;êtes plus mon ami, vous n&apos;êtes plus мой верный раб, comme vous dites 1. Ну, здравствуйте, здравствуйте. Je vois que je vous fais peur 2, садитесь и рассказывайте.
-        ///Так [остаток строки не уместился]&quot;;.
-        /// </summary>
-        internal static string WaPv1p1 {
-            get {
-                return ResourceManager.GetString("WaPv1p1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
-        internal static byte[] Words {
+        public static byte[] WordsDoc {
             get {
-                object obj = ResourceManager.GetObject("Words", resourceCulture);
+                object obj = ResourceManager.GetObject("WordsDoc", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -83,9 +73,9 @@ namespace TagsCloudContainer.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
-        internal static byte[] Words1 {
+        public static byte[] WordsDocx {
             get {
-                object obj = ResourceManager.GetObject("Words1", resourceCulture);
+                object obj = ResourceManager.GetObject("WordsDocx", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -102,21 +92,9 @@ namespace TagsCloudContainer.Properties {
         ///D
         ///A.
         /// </summary>
-        internal static string Words2 {
+        public static string WordsTxt {
             get {
-                return ResourceManager.GetString("Words2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Огонь
-        ///А
-        ///а
-        ///полено.
-        /// </summary>
-        internal static string WordsRus {
-            get {
-                return ResourceManager.GetString("WordsRus", resourceCulture);
+                return ResourceManager.GetString("WordsTxt", resourceCulture);
             }
         }
     }

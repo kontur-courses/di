@@ -2,10 +2,11 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.TokensAndSettings;
+using TagsCloudContainer.WordCounters;
 using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.WordPreprocessors;
 
-namespace TagsCloudContainer.WordCounters
+namespace TagsCloudContainerTests.WordCounters
 {
     [TestFixture]
     class SimpleWordCounterTests

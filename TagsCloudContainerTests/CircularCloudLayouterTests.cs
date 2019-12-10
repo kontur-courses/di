@@ -4,8 +4,9 @@ using NUnit.Framework;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
+using TagsCloudContainer.CloudLayouters;
 
-namespace TagsCloudContainer.CloudLayouters
+namespace TagsCloudContainerTests.CloudLayouters
 {
     [TestFixture]
     class CircularCloudLayouterTests
@@ -18,7 +19,7 @@ namespace TagsCloudContainer.CloudLayouters
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 var fileName = $"{TestContext.CurrentContext.Test.Name}_layout.bmp";
-                Converter.GetBitmapFromRectangles(cloud.rectangles, fileName);
+                MyConverter.GetBitmapFromRectangles(cloud.rectangles, fileName);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }
         }

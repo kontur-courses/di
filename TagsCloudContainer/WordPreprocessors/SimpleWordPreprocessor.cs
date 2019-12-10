@@ -35,7 +35,7 @@ namespace TagsCloudContainer.WordPreprocessors
                 
                 foreach (var line in text)
                 {
-                    cmd.StandardInput.WriteLine($"echo {line} | mystem.exe -e cp866 -nig");
+                    cmd.StandardInput.WriteLine($@"echo {line} | mystem.exe -e cp866 -nig");
                     cmd.StandardOutput.ReadLine();
                     stemWord = cmd.StandardOutput.ReadLine();
                     while (stemWord != "")

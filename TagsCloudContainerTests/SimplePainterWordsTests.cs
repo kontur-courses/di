@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Drawing;
+using TagsCloudContainer.PaintersWords;
 using TagsCloudContainer.TokensAndSettings;
 
-namespace TagsCloudContainer.PaintersWords
+namespace TagsCloudContainerTests.PaintersWords
 {
     [TestFixture]
     class SimplePainterWordsTests

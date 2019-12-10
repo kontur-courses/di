@@ -2,8 +2,9 @@
 using NUnit.Framework;
 using System;
 using TagsCloudContainer.Readers;
+using TagsCloudContainer.WordPreprocessors;
 
-namespace TagsCloudContainer.WordPreprocessors
+namespace TagsCloudContainerTests.WordPreprocessors
 {
     [TestFixture]
     class SimpleWordPreprocessorTests

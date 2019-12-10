@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CloudLayouters
 {
-    public static class Converter
+    public static class MyConverter
     {
         public static void GetBitmapFromRectangles(List<Rectangle> rectangles, string fileName)
         {
