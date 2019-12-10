@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization.Services;
 
 namespace TagsCloudVisualization.Logic
@@ -9,15 +9,20 @@ namespace TagsCloudVisualization.Logic
     {
         private readonly ILayouter layouter;
         private readonly IParser textParser;
+        private readonly IImageGenerator imageGenerator;
         private readonly ITagPainter painter;
         private readonly IBoringWordsProvider boringWordsProvider;
+        private readonly Graphics measureGraphics;
 
         public TagCloudVisualizer(
+            IImageGenerator imageGenerator,
             IParser textParser, 
             ILayouter layouter, 
             ITagPainter painter, 
             IBoringWordsProvider boringWordsProvider)
         {
+            measureGraphics = Graphics.FromImage(new Bitmap(1, 1));
+            this.imageGenerator = imageGenerator;
             this.boringWordsProvider = boringWordsProvider;
             this.textParser = textParser;
             this.layouter = layouter;
@@ -28,27 +33,29 @@ namespace TagsCloudVisualization.Logic
         {
             var imageCenter = new Point(imageSettings.ImageSize.Width / 2, imageSettings.ImageSize.Height / 2);
             var text = TextRetriever.RetrieveTextFromFile(fileName);
-            var wordTokens = textParser.ParseToTokens(text, boringWordsProvider.BoringWords);
-            var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
-            var graphics = Graphics.FromImage(bmp);
-            graphics.FillRectangle(new SolidBrush(imageSettings.BackgroundColor), 0, 0, bmp.Width, bmp.Height);
-            var tags = new List<Tag>();
-            var cloudScale = 1f;
-            foreach (var word in wordTokens)
-            {
-                var tag = CreateTag(graphics, word, imageSettings, imageCenter);
-                var currentCloudScale = CalculateCloudScale(tag, imageSettings, imageCenter);
-                if (currentCloudScale < cloudScale)
-                    cloudScale = currentCloudScale;
-                tags.Add(tag);
-            }
-            foreach (var tag in tags)
-                DrawTag(graphics, tag, cloudScale, imageSettings, imageCenter);
+            var tags = textParser
+                .ParseToTokens(text, boringWordsProvider.BoringWords)
+                .Select(token => CreateTag(token, imageSettings, imageCenter))
+                .ToArray();
+            var cloudScale = CalculateCloudScale(tags, imageSettings, imageCenter);
             layouter.Reset();
-            return bmp;
+            return imageGenerator.CreateImage(tags, cloudScale, imageSettings);
         }
 
-        private float CalculateCloudScale(Tag tag, ImageSettings imageSettings, Point imageCenter)
+        private float CalculateCloudScale(IEnumerable<Tag> tags, ImageSettings imageSettings, Point imageCenter)
+        {
+            var cloudScale = 1f;
+            foreach (var tag in tags)
+            {
+                var currentCloudScale = CalculateTagDistanceFromPointScale(tag, imageSettings, imageCenter);
+                if (currentCloudScale < cloudScale)
+                    cloudScale = currentCloudScale;
+            }
+            return cloudScale;
+        }
+
+
+        private float CalculateTagDistanceFromPointScale(Tag tag, ImageSettings imageSettings, Point imageCenter)
         {
             var furthestRectanglePoint = GetFurthestRectanglePoint(imageCenter, tag.TagBox);
             var cloudBorderSize = imageSettings.ImageSize;
@@ -80,38 +87,23 @@ namespace TagsCloudVisualization.Logic
             return posMinusCenterWithTagBorder;
         }
 
-        private static Size CalculateWordSize(WordToken wordToken, Font font, Graphics graphics)
+        private Size CalculateWordSize(WordToken wordToken, Font font)
         {
-            var size = graphics.MeasureString(wordToken.Word, font);
+            var size = measureGraphics.MeasureString(wordToken.Word, font);
             return size.ToSize();
         }
 
-        private Tag CreateTag(Graphics graphics, WordToken wordToken, ImageSettings imageSettings, Point imageCenter)
+        private Tag CreateTag(WordToken wordToken, ImageSettings imageSettings, Point imageCenter)
         {
             var color = painter.GetTagColor();
             var fontSize = CalculateFontSize(wordToken, imageSettings);
             var wordFont = new Font(imageSettings.Font.FontFamily, fontSize, imageSettings.Font.Style);
-            var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(wordToken, wordFont, graphics));
+            var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(wordToken, wordFont));
             wordRectangle.Location = new Point(
                 wordRectangle.X + imageCenter.X,
                 wordRectangle.Y + imageCenter.Y
             );
             return new Tag(wordToken, wordRectangle, fontSize, color);
-        }
-
-        private void DrawTag(Graphics graphics, Tag tag, float cloudScale, ImageSettings imageSettings, Point imageCenter)
-        {
-            var scaledFontSize = tag.FontSize * cloudScale;
-            var scaledFont = new Font(imageSettings.Font.FontFamily, scaledFontSize, imageSettings.Font.Style);
-            var positionMinusCenter = new Point(
-                tag.TagBox.Location.X - imageCenter.X,
-                tag.TagBox.Location.Y - imageCenter.Y
-            );
-            var newPointLocation = new Point(
-                imageCenter.X + (int) (positionMinusCenter.X * cloudScale),
-                imageCenter.Y + (int) (positionMinusCenter.Y * cloudScale)
-            );
-            graphics.DrawString(tag.WordToken.Word, scaledFont, new SolidBrush(tag.Color), newPointLocation);
         }
 
         private float CalculateFontSize(WordToken word, ImageSettings imageSettings)

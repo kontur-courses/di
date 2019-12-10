@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\ImageGenerator.cs" />
+    <Compile Include="Services\IImageGenerator.cs" />
     <Compile Include="UI\BoringWordsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
