@@ -26,6 +26,8 @@ namespace TagsCloudForm
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
             builder.RegisterType<FileBlobStorage>().As<IBlobStorage>();
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
+            builder.RegisterType<CloudWithWordsPainterFactory>();
+            builder.RegisterType<CloudPainterFactory>();
 
             var container = builder.Build();
             var form = container.Resolve<CloudForm>();

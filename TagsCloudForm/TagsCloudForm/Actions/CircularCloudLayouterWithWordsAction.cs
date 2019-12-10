@@ -14,27 +14,15 @@ namespace TagsCloudForm.Actions
 {
     class CircularCloudLayouterWithWordsAction : IUiAction
     {
-        private readonly IImageHolder imageHolder;
-        private readonly Palette palette;
-        private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
         private readonly IWordsFrequencyParser parser;
-        private readonly Func<IImageHolder,
-            CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter
-            , Dictionary<string, int>, CloudWithWordsPainter> painterFactory;
         private readonly IWordsFilter[] filters;
+        private readonly CloudWithWordsPainterFactory factory;
 
-        public CircularCloudLayouterWithWordsAction(IImageHolder imageHolder,
-             Palette palette, Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory, IWordsFrequencyParser parser,
-             Func<IImageHolder,
-             CircularCloudLayouterWithWordsSettings, Palette, ICircularCloudLayouter, Dictionary<string, int>,
-             CloudWithWordsPainter> painterFactory, IWordsFilter[] filters)
+        public CircularCloudLayouterWithWordsAction(IWordsFrequencyParser parser, IWordsFilter[] filters, CloudWithWordsPainterFactory factory)
         {
-            this.painterFactory = painterFactory;
-            this.imageHolder = imageHolder;
-            this.palette = palette;
-            this.circularCloudLayouterFactory = circularCloudLayouterFactory;
             this.parser = parser;
             this.filters = filters;
+            this.factory = factory;
         }
         public string Category => "CircularCloud";
         public string Name => "LayouterWithWords";
@@ -44,8 +32,6 @@ namespace TagsCloudForm.Actions
         {
             var settings = new CircularCloudLayouterWithWordsSettings();
             SettingsForm.For(settings).ShowDialog();
-            var layouter = circularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY));
-
             IEnumerable<string> lines;
             try
             {
@@ -66,7 +52,7 @@ namespace TagsCloudForm.Actions
                 lines = filter.Filter(settings, lines).OnFail(x => MessageBox.Show(x)).Value;
             }
             var wordsWithFrequency = parser.GetWordsFrequency(lines, settings.Language);
-            painterFactory.Invoke(imageHolder, settings, palette, layouter, wordsWithFrequency).Paint();
+            factory.Create(settings, wordsWithFrequency).Paint();
         }
     }
 }

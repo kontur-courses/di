@@ -35,15 +35,15 @@ namespace TagsCloudForm.WordFilters
 
         public Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
         {
-            HashSet<string> POStoFilter;
+            HashSet<string> partOfSpeechToFilter;
             try
             {
                 var settingsFilename = settings.filterPOSfile;
-                POStoFilter = File.ReadAllLines(settingsFilename).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                partOfSpeechToFilter = File.ReadAllLines(settingsFilename).ToHashSet(StringComparer.OrdinalIgnoreCase);
             }
             catch (Exception e)
             {
-                return new Result<IEnumerable<string>>("Не удалось загрузить файл с POS to Filter", words);
+                return new Result<IEnumerable<string>>("Не удалось загрузить файл с part of speech to filter", words);
             }
             var modelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "EnglishPOS.nbin");
             var tagDictDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "tagdict");
@@ -54,7 +54,7 @@ namespace TagsCloudForm.WordFilters
             while (wordsEnumerator.Current != null)
             {
                 var speechPart = posTagger.Tag(new[] { wordsEnumerator.Current });
-                if (!POStoFilter.Contains(speechPart[0]))
+                if (!partOfSpeechToFilter.Contains(speechPart[0]))
                     outList.Add(wordsEnumerator.Current);
                 wordsEnumerator.MoveNext();
             }

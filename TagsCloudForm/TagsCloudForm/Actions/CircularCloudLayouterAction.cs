@@ -9,21 +9,10 @@ namespace TagsCloudForm.Actions
 {
     public class CircularCloudLayouterAction : IUiAction
     {
-        private readonly Func<IImageHolder,
-            CircularCloudLayouterSettings, 
-            Palette, ICircularCloudLayouter, CloudPainter> painterFactory;
-        private readonly IImageHolder imageHolder;
-        private readonly Palette palette;
-        private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
-        public CircularCloudLayouterAction(Func<IImageHolder,
-                CircularCloudLayouterSettings,
-                Palette, ICircularCloudLayouter, CloudPainter> painterFactory, IImageHolder imageHolder,
-            Palette palette, Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory)
+        private readonly CloudPainterFactory factory;
+        public CircularCloudLayouterAction(CloudPainterFactory factory)
         {
-            this.painterFactory = painterFactory;
-            this.imageHolder = imageHolder;
-            this.palette = palette;
-            this.circularCloudLayouterFactory = circularCloudLayouterFactory;
+            this.factory = factory;
         }
         public string Category => "CircularCloud";
         public string Name => "Layouter";
@@ -33,9 +22,7 @@ namespace TagsCloudForm.Actions
         {
             var settings = new CircularCloudLayouterSettings();
             SettingsForm.For(settings).ShowDialog();
-            var layouter = circularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY));
-            layouter.SetCompression(settings.XCompression, settings.YCompression);
-            painterFactory.Invoke(imageHolder, settings, palette, layouter).Paint();
+            factory.Create(settings).Paint();
         }
     }
 }

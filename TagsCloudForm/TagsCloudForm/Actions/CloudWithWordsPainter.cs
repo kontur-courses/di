@@ -10,7 +10,7 @@ using CircularCloudLayouter;
 
 namespace TagsCloudForm.Actions
 {
-    public class CloudWithWordsPainter
+    public class CloudWithWordsPainter : ICloudPainter
     {
         private readonly IImageHolder imageHolder;
         private readonly CircularCloudLayouterWithWordsSettings settings;

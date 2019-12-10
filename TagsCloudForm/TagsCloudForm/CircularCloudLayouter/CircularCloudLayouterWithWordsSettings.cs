@@ -24,6 +24,7 @@
 
     public enum LanguageEnum
     {
+        Chinese,
         Russian,
         English
     }
