@@ -63,6 +63,58 @@ namespace TagsCloudGenerator_Tests.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] DataForImageDocx {
+            get {
+                object obj = ResourceManager.GetObject("DataForImageDocx", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ноутбук
+        ///КоНВЕрт
+        ///ХлЕб
+        ///Тарелка
+        ///Тарелка
+        ///Тарелка
+        ///Тарелки
+        ///КЛАВИатуРА
+        ///ПрОБел
+        ///прОбел
+        ///Хлеб
+        ///ОнИ
+        ///Он
+        ///ИлИ.
+        /// </summary>
+        internal static string DataForImageTxt {
+            get {
+                return ResourceManager.GetString("DataForImageTxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExpectedImageForDocxData {
+            get {
+                object obj = ResourceManager.GetObject("ExpectedImageForDocxData", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExpectedImageForTxtData {
+            get {
+                object obj = ResourceManager.GetObject("ExpectedImageForTxtData", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] TestDataDocx {
             get {
                 object obj = ResourceManager.GetObject("TestDataDocx", resourceCulture);

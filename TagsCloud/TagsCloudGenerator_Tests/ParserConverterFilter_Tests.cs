@@ -1,22 +1,14 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using FluentAssertions;
 using TagsCloudGenerator.WordsParsers;
 using TagsCloudGenerator.WordsConverters;
 using TagsCloudGenerator.WordsFilters;
 using TagsCloudGeneratorExtensions;
-using System.Reflection;
 
 namespace TagsCloudGenerator_Tests
 {
     internal class ParserConverterFilter_Tests
     {
-        private readonly string workingDirectory =
-            string.Join(
-                Path.DirectorySeparatorChar.ToString(),
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                "TestData") + Path.DirectorySeparatorChar;
-
         private SingletonScopeInstancesContainer container;
 
         [OneTimeSetUp]
@@ -36,7 +28,7 @@ namespace TagsCloudGenerator_Tests
             var toLowerConverter = container.Get<WordsToLowerConverter>();
             var boringWordsFilter = container.Get<BoringWordsFilter>();
 
-            var words = linesParser.ParseFromFile(workingDirectory + pathToRead);
+            var words = linesParser.ParseFromFile(Metadata.WorkingDirectory + pathToRead);
             var wordsToLower = toLowerConverter.Execute(words);
             var actual = boringWordsFilter.Execute(wordsToLower);
 
@@ -55,7 +47,7 @@ namespace TagsCloudGenerator_Tests
             var initialWordFormConverter = container.Get<InitialWordsFormConverter>();
             var boringWordsFilter = container.Get<BoringWordsFilter>();
 
-            var words = docxLinesParser.ParseFromFile(workingDirectory + pathToRead);
+            var words = docxLinesParser.ParseFromFile(Metadata.WorkingDirectory + pathToRead);
             var toLower = toLowerConverter.Execute(words);
             var toInitialWordForm = initialWordFormConverter.Execute(toLower);
             var actual = boringWordsFilter.Execute(toInitialWordForm);
@@ -76,7 +68,7 @@ namespace TagsCloudGenerator_Tests
             var takenVerbsFilter = container.Get<TakenPartsOfSpeechFilter>();
             container.Get<Settings>().TakenPartsOfSpeech = new[] { "v" };
 
-            var words = linesParser.ParseFromFile(workingDirectory + pathToRead);
+            var words = linesParser.ParseFromFile(Metadata.WorkingDirectory + pathToRead);
             var toLower = toLowerConverter.Execute(words);
             var noBoringWords = boringWordsFilter.Execute(toLower);
             var actual = takenVerbsFilter.Execute(noBoringWords);
