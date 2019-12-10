@@ -29,6 +29,12 @@ namespace TagsCloudCLI
 
             [Option('o', "only", Required = false, Default = null, HelpText = "Select only specified parts of speech")]
             public IEnumerable<string> PartsOfSpeechWhiteList { get; set; }
+
+            [Option("width", Required = false, Default = 10000, HelpText = "Width of the image")]
+            public int ImageWidth { get; set; }
+
+            [Option("height", Required = false, Default = 10000, HelpText = "Width of the image")]
+            public int ImageHeight { get; set; }
         }
 
         static void Main(string[] args)
@@ -39,8 +45,8 @@ namespace TagsCloudCLI
 
             if (options == null) return;
 
-            int imageWidth = 10000;
-            int imageHeight = 10000;
+            int imageWidth = options.ImageWidth;
+            int imageHeight = options.ImageHeight;
 
             var builder = new ContainerBuilder();
 
