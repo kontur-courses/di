@@ -28,7 +28,7 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterInstance(
                 new ConstantTextColorProvider(Color.FromName(opts.FontColorName)))
                 .As<ITextColorProvider>();
-            containerBuilder.RegisterInstance(new ImageSaver(ImageFormat.Png))
+            containerBuilder.Register(c => new ImageSaver(c.Resolve<Options>().OutputImageFormatName))
                 .As<ImageSaver>();
             containerBuilder.Register(c => new Point(opts.CentralPoint[0], opts.CentralPoint[1]))
                 .As<Point>();
