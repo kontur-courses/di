@@ -11,4 +11,7 @@
 `TagsCloudContainer.exe --help`
 
 Тестовые файлики для запусков лежат в корневом каталоге проекта и имеют имена:
-`smallTestFile.txt`, `averageTestFile.txt`, `bigTestFile.txt`
+`smallTestFile.txt`, `averageTestFile.txt`, `bigTestFile.txt`, `arbitraryTestFile.txt`
+
+`arbitraryTestFile.txt` служит для проверки того, что программа умеет работать
+с произвольным txt файлом.

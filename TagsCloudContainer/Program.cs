@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 using Autofac;
 using TagsCloudContainer.Core;
 using TagsCloudContainer.ResultProcessing;
 using TagsCloudContainer.UserInterface;
-using TagsCloudContainer.UserInterface.ArgumentsParsing;
 
 namespace TagsCloudContainer
 {

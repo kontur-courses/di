@@ -15,7 +15,7 @@ namespace TagsCloudContainer.WordProcessing.Filtering.MyStem
 
         private string GetPartOfSpeechForWord(string myStemResult, string word)
         {
-            var partOfSpeechRegex = new Regex(word + @"{.+?=(\w+)[,|=]");
+            var partOfSpeechRegex = new Regex($@"(?:^|\s){word}{{.+?=(\w+)[,|=]");
             var match = partOfSpeechRegex.Match(myStemResult);
             var matchGroups = match.Groups;
             if (matchGroups.Count < 2)
