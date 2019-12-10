@@ -64,48 +64,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\CreateCloudAction.cs" />
-    <Compile Include="Actions\ChooseFilePathAction.cs" />
-    <Compile Include="Actions\IUiAction.cs" />
-    <Compile Include="PictureBoxImageHolder.cs">
+    <Compile Include="UI\Actions\CreateCloudAction.cs" />
+    <Compile Include="UI\Actions\ChooseFilePathAction.cs" />
+    <Compile Include="UI\Actions\EditBoringWordsAction.cs" />
+    <Compile Include="UI\Actions\IUiAction.cs" />
+    <Compile Include="Services\PictureBoxImageHolder.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Actions\SaveImageAction.cs" />
-    <Compile Include="Actions\SettingsAction.cs" />
-    <Compile Include="ArchimedeanSpiral.cs" />
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="AppSettings.cs" />
-    <Compile Include="IDocumentPathProvider.cs" />
-    <Compile Include="IImageHolder.cs" />
-    <Compile Include="IImageSettingsProvider.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="UI\Actions\SaveImageAction.cs" />
+    <Compile Include="UI\Actions\SettingsAction.cs" />
+    <Compile Include="Logic\ArchimedeanSpiral.cs" />
+    <Compile Include="Logic\CircularCloudLayouter.cs" />
+    <Compile Include="Services\AppSettings.cs" />
+    <Compile Include="Services\IDocumentPathProvider.cs" />
+    <Compile Include="Services\IImageHolder.cs" />
+    <Compile Include="Services\IImageSettingsProvider.cs" />
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ICirclePointLocator.cs" />
-    <Compile Include="Painter\ITagPainter.cs" />
-    <Compile Include="IVisualizer.cs" />
-    <Compile Include="PointExtensions.cs" />
-    <Compile Include="Painter\RandomPainter.cs" />
-    <Compile Include="Painter\SingleColorPainter.cs" />
-    <Compile Include="SettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TagCloudVisualizer.cs" />
-    <Compile Include="Tag.cs" />
+    <Compile Include="Services\ICirclePointLocator.cs" />
+    <Compile Include="Logic\Painter\ITagPainter.cs" />
+    <Compile Include="Services\IVisualizer.cs" />
+    <Compile Include="Logic\PointExtensions.cs" />
+    <Compile Include="Logic\Painter\RandomPainter.cs" />
+    <Compile Include="Logic\Painter\SingleColorPainter.cs" />
+    <Compile Include="Logic\TagCloudVisualizer.cs" />
+    <Compile Include="Logic\Tag.cs" />
     <Compile Include="Tests\GeometryTests.cs" />
-    <Compile Include="ILayouter.cs" />
-    <Compile Include="ImageSettings.cs" />
-    <Compile Include="IParser.cs" />
+    <Compile Include="Services\ILayouter.cs" />
+    <Compile Include="Services\ImageSettings.cs" />
+    <Compile Include="Services\IParser.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Geometry.cs" />
+    <Compile Include="Logic\Geometry.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
-    <Compile Include="TextParser.cs" />
-    <Compile Include="TextRetriever.cs" />
-    <Compile Include="WordToken.cs" />
+    <Compile Include="Logic\TextParser.cs" />
+    <Compile Include="Logic\TextRetriever.cs" />
+    <Compile Include="Logic\WordToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
