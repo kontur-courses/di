@@ -6,6 +6,7 @@ namespace TagsCloudVisualization.TextRenderers
 {
     public interface ITextRenderer
     {
-        void PrintWords(Bitmap image, Dictionary<string, (RectangleF rectangle, Font font)> info, ImageSettings imageSettings);
+        void PrintWords(int width, int height, Dictionary<string, Rectangle> info, ImageSettings imageSettings);
+        Size GetRectangleSize(ImageSettings imageSettings, KeyValuePair<string, int> wordInfo);
     }
 }
