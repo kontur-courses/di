@@ -36,7 +36,7 @@ namespace TagCloud
             while (!config.ToExit)
             {
                 config.ToCreateNewImage = false;
-                var userSettings = ReadUserSettings();
+                var userSettings = TryReadUserSettings();
                 if (userSettings is null)
                     continue;
                 config.ImageToSave = visualization.GetAndDrawRectangles(userSettings.ImageSettings, userSettings.PathToRead);
@@ -58,15 +58,15 @@ namespace TagCloud
             }
         }
 
-        private UserSettings ReadUserSettings()
+        private UserSettings TryReadUserSettings()
         {
-            if (!ReadWidth(out var width) || !ReadHeight(out var height)
-                || !ReadFontName(out var fontName) || !ReadPaletteName(out var paletteName)) return null;
+            if (!TryReadWidth(out var width) || !TryReadHeight(out var height)
+                || !TryReadFontName(out var fontName) || !TryReadPaletteName(out var paletteName)) return null;
             var pathToRead = ReadPathToRead();
             return new UserSettings(new ImageSettings(width, height, fontName, paletteName), pathToRead);
         }
 
-        private static bool ReadWidth(out int width)
+        private static bool TryReadWidth(out int width)
         {
             Console.WriteLine("Введите ширину изображения");
             Console.Write(">>>");
@@ -75,7 +75,7 @@ namespace TagCloud
             return false;
         }
 
-        private static bool ReadHeight(out int height)
+        private static bool TryReadHeight(out int height)
         {
             Console.WriteLine("Введите высоту изображения");
             Console.Write(">>>");
@@ -96,7 +96,7 @@ namespace TagCloud
                 : pathToRead;
         }
 
-        private bool ReadFontName(out string fontName)
+        private bool TryReadFontName(out string fontName)
         {
             var defaultFontName = "Arial";
             Console.WriteLine("Введите шрифт");
@@ -114,7 +114,7 @@ namespace TagCloud
             return false;
         }
 
-        private bool ReadPaletteName(out string paletteName)
+        private bool TryReadPaletteName(out string paletteName)
         {
             var defaultPaletteName = "ShadesOfBlue";
             Console.WriteLine("Введите название палитры");

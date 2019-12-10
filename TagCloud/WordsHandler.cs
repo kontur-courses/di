@@ -11,7 +11,7 @@ namespace TagCloud
         public Dictionary<string, int> Conversion(Dictionary<string, int> wordsAndCount)
         {
             var boringWords = File.ReadAllLines($"{GetCurrentDirectoryPath()}\\BoringWords.txt")
-                .Select(s => s.ToLower())
+                .Select(s => s.ToLower().Trim())
                 .ToHashSet();
 
             return wordsAndCount
@@ -24,11 +24,10 @@ namespace TagCloud
         {
             if (!File.Exists(path))
                 throw new FileNotFoundException("Файла не существует");
-            if (path == null)
-                throw new ArgumentNullException("Путь к файлу не введен");
             return File.ReadAllLines(path, Encoding.UTF8)
                 .Where(s => s != string.Empty)
-                .GroupBy(word => word)
+                .Select(s=>s.Trim())
+                .GroupBy(word => word.ToLower())
                 .ToDictionary(g => g.Key, g => g.Count());
         }
 

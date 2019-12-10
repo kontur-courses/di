@@ -41,6 +41,7 @@ following
 for
 from
 in
+is
 in accordance with
 in addition to
 in case of
