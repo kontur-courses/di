@@ -1,8 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Facilities.TypedFactory;
-using System;
-using System.IO;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using TagCloud.Actions;
 using TagCloud.IServices;
@@ -24,6 +22,10 @@ namespace TagCloud
             var container = new WindsorContainer();
             container.AddFacility<TypedFactoryFacility>();
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel, true));
+            container.Register(Component.For<IPaletteDictionaryFactory>().ImplementedBy<PaletteDictionaryFactory>()
+                .LifestyleSingleton());
+            container.Register(Component.For<IFontSettingsFactory>().ImplementedBy<FontSettingsFactory>()
+                .LifestyleSingleton());
             container.Register(Component.For<IWordsToTagsParser>().ImplementedBy<WordsToTagsParser>());
             container.Register(Component.For<IWordsHandler>().ImplementedBy<WordsHandler>());
             container.Register(Component.For<ITagCollectionFactory>().ImplementedBy<TagCollectionFactory>()
@@ -32,6 +34,8 @@ namespace TagCloud
             container.Register(Component.For<ICircularCloudLayouter>().ImplementedBy<CircularCloudLayouter>());
             container.Register(Component.For<ICloud>().ImplementedBy<Cloud>());
             container.Register(Component.For<ICloudVisualization>().ImplementedBy<CloudVisualization>());
+            container.Register(Component.For<IPaletteNamesFactory>().ImplementedBy<PaletteNamesFactory>()
+                .LifestyleSingleton());
             container.Register(Component.For<IAction>().ImplementedBy<NewImageAction>().LifestyleSingleton());
             container.Register(Component.For<IAction>().ImplementedBy<SaveImageAction>().LifestyleSingleton());
             container.Register(Component.For<IAction>().ImplementedBy<ShowImageAction>().LifestyleSingleton());

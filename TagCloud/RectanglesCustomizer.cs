@@ -8,6 +8,16 @@ namespace TagCloud
 {
     public static class RectanglesCustomizer
     {
+
+        public static List<ColorTagRectangle> GetRectanglesWithPalette(Palette palette,
+            List<TagRectangle> tagRectangles)
+        {
+            return tagRectangles.Select(t => new ColorTagRectangle(
+                    t.Tag,
+                    t.Area,
+                    palette.GetNextColor()))
+                .ToList();
+        }
         public static List<ColorTagRectangle> GetRectanglesWithRandomColor(List<TagRectangle> tagRectangels)
         {
             var random = new Random();

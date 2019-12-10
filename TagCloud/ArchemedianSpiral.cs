@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagCloud
@@ -9,18 +10,17 @@ namespace TagCloud
         private const double Step = Math.PI / 40;
         private const double DensityCoefficient = 0.2;
 
-        public Point GetNextCoordinate()
-        {
-            alpha += Step;
-            var radiusVector = alpha * DensityCoefficient;
-            var x = (int) (radiusVector * Math.Cos(alpha));
-            var y = (int) (radiusVector * Math.Sin(alpha));
-            return new Point(x, y);
-        }
-
-        public void Update()
+        public IEnumerable<Point> GetCoordinates()
         {
             alpha = 0;
+            while (true)
+            {
+                alpha += Step;
+                var radiusVector = alpha * DensityCoefficient;
+                var x = (int)(radiusVector * Math.Cos(alpha));
+                var y = (int)(radiusVector * Math.Sin(alpha));
+                yield return new Point(x, y);
+            }
         }
     }
 }

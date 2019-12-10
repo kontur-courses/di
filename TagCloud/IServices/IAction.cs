@@ -1,8 +1,11 @@
-﻿namespace TagCloud
+﻿using TagCloud.Models;
+
+namespace TagCloud
 {
     public interface IAction
     {
         string CommandName { get; }
-        void Perform(ClientConfig config);
+        string Description { get; }
+        void Perform(ClientConfig config,ImageSettings imageSettings);
     }
 }

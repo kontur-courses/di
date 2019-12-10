@@ -10,9 +10,10 @@ namespace TagCloud
     {
         public Dictionary<string, int> Conversion(Dictionary<string, int> wordsAndCount)
         {
-            var boringWords = File.ReadAllLines($"{GetCurrentDirectoryPath()}\\BoringWords.txt", Encoding.UTF8)
+            var boringWords = File.ReadAllLines($"{GetCurrentDirectoryPath()}\\BoringWords.txt")
                 .Select(s => s.ToLower())
                 .ToHashSet();
+
             return wordsAndCount
                 .Select(p => new KeyValuePair<string, int>(p.Key.ToLower(), p.Value))
                 .Where(p => !boringWords.Contains(p.Key))

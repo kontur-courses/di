@@ -1,7 +1,9 @@
-﻿namespace TagCloud.IServices
+﻿using TagCloud.Models;
+
+namespace TagCloud.IServices
 {
     public interface ITagCollectionFactory
     {
-        TagCollection Create(string path);
+        TagCollection Create(ImageSettings imageSettings,string path);
     }
 }

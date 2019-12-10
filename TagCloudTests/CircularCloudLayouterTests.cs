@@ -50,7 +50,7 @@ namespace TagCloudTests
                 var random = new Random();
                 for (var i = 0; i < 50; i++)
                     differentSizeRectangles.Add(
-                        layouter.PutNextRectangle(new SizeF(random.Next(1, 10), random.Next(1, 10)), center));
+                        layouter.PutNextRectangle(new SizeF(random.Next(10, 20), random.Next(10, 20)), center));
                 return differentSizeRectangles;
             }
         }
@@ -95,10 +95,12 @@ namespace TagCloudTests
         private void SaveCloudWhenTestIsFallAndGetName(List<RectangleF> rectangles
             , TestContext context, string path)
         {
-            var image = new Bitmap(500, 500);
+            var image = new Bitmap(200, 200);
             using (var graphics = Graphics.FromImage(image))
+            {
                 foreach (var rectangle in rectangles)
-                    graphics.FillRectangle(new SolidBrush(Color.Red), rectangle);
+                    graphics.FillRectangle(new SolidBrush(Color.Black), rectangle);
+            }
             var name = $"{context.Test.Name}.png";
             image.Save(Path.Combine(path, $"{name}"));
         }

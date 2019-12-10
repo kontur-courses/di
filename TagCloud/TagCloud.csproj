@@ -43,27 +43,41 @@
     <Reference Include="Castle.Windsor, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.5.0.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\ExitAction.cs" />
     <Compile Include="Actions\NewImageAction.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientConfig.cs" />
+    <Compile Include="IServices\FontSettingsFactory.cs" />
     <Compile Include="IServices\IClient.cs" />
+    <Compile Include="IServices\IFontSettingsFactory.cs" />
+    <Compile Include="IServices\IPaletteDictionaryFactory.cs" />
+    <Compile Include="IServices\IPaletteNamesFactory.cs" />
     <Compile Include="IServices\ISaveImageAction.cs" />
     <Compile Include="IServices\ITagCollectionFactory.cs" />
     <Compile Include="IServices\IWordsToTagsParser.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\ShowImageAction.cs" />
+    <Compile Include="IServices\PaletteDictionaryFactory.cs" />
+    <Compile Include="IServices\PaletteNamesFactory.cs" />
     <Compile Include="Models\ColorTagRectangle.cs" />
     <Compile Include="Models\FontSettings.cs" />
+    <Compile Include="Models\ImageSettings.cs" />
+    <Compile Include="Models\Palette.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagRectangle.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="RectanglesCustomizer.cs" />
+    <Compile Include="ShowImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TagCollection.cs" />
     <Compile Include="TagCollectionFactory.cs" />
     <Compile Include="WordsHandler.cs" />
@@ -83,6 +97,11 @@
   <ItemGroup>
     <Content Include="BoringWords.txt" />
     <Content Include="test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ShowImageForm.resx">
+      <DependentUpon>ShowImageForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Web.UI;
+using TagCloud.IServices;
 using TagCloud.Models;
 
 namespace TagCloud
@@ -10,18 +11,20 @@ namespace TagCloud
     public class CloudVisualization : ICloudVisualization
     {
         private readonly ICloud cloud;
-
-        public CloudVisualization(ICloud cloud)
+        public  Dictionary<string,Palette> PaletteDictionary { get; }
+        public CloudVisualization(ICloud cloud, IPaletteDictionaryFactory paletteDictionaryFactory)
         {
+            PaletteDictionary = paletteDictionaryFactory.GetPaletteDictioanry();
             this.cloud = cloud;
         }
 
-        public Bitmap GetAndDrawRectangles(int width = 1000, int height = 1000, string path = "test.txt")
+        public Bitmap GetAndDrawRectangles(ImageSettings imageSettings, string path = "test.txt")
         {
-            var image = new Bitmap(width, height);
+            var palette = PaletteDictionary[imageSettings.PaletteName];
+            var image = new Bitmap(imageSettings.Width, imageSettings.Height);
             using (var graphics = Graphics.FromImage(image))
             {
-                var rectangles = RectanglesCustomizer.GetRectanglesWithRandomColor(cloud.GetRectangles( graphics,width, height, path));
+                var rectangles = RectanglesCustomizer.GetRectanglesWithPalette(palette,cloud.GetRectangles( graphics,imageSettings, path));
                 foreach (var rectangle in rectangles)
                     graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(rectangle.Color), rectangle.Area.Location);
             }

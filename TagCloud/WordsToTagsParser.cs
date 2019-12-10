@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.IServices;
 using TagCloud.Models;
 
 namespace TagCloud
 {
     public class WordsToTagsParser : IWordsToTagsParser
     {
-        public List<Tag> GetTagsRectangles(Dictionary<string, int> words)
+        private readonly IFontSettingsFactory fontSettingsFactory;
+        public WordsToTagsParser(IFontSettingsFactory fontSettingsFactory)
         {
-            var fontSettings = new FontSettings();
+            this.fontSettingsFactory = fontSettingsFactory;
+        }
+        public List<Tag> GetTagsRectangles(Dictionary<string, int> words, ImageSettings imageSettings)
+        {
+            var fontSettings = fontSettingsFactory.CreateFontSettings(imageSettings.FontName);
             return words.Select(s => new Tag(s.Key, s.Value, GetFont(fontSettings, s.Value))).ToList();
         }
 

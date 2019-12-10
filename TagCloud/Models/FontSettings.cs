@@ -21,7 +21,14 @@ namespace TagCloud.Models
             this.fontFamily = new FontFamily("Arial");
             this.fontStyle = FontStyle.Bold;
             this.color = Color.Black;
+        }
 
+        public FontSettings(string fontName)
+        {
+            this.defaultFontSize = 12;
+            this.fontFamily = new FontFamily(fontName);
+            this.fontStyle = FontStyle.Bold;
+            this.color = Color.Black;
         }
     }
 }

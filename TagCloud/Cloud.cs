@@ -17,11 +17,11 @@ namespace TagCloud
             this.layouter = layouter;
         }
 
-        public List<TagRectangle> GetRectangles(Graphics graphics, int width,int height,string path = null)
+        public List<TagRectangle> GetRectangles(Graphics graphics, ImageSettings imageSettings,string path = null)
         {
             layouter.Clear();
-            var tagCollection = tagCollectionFactory.Create(path);
-            var center = new Point(width/2,height/2);
+            var tagCollection = tagCollectionFactory.Create(imageSettings,path);
+            var center = new Point(imageSettings.Width/2,imageSettings.Height/2);
             var rectangles = tagCollection.Tags
                 .Select(t => new TagRectangle(
                     t,

@@ -1,10 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagCloud
 {
     public interface IAlgorithm
     {
-        Point GetNextCoordinate();
-        void Update();
+        IEnumerable<Point> GetCoordinates();
     }
 }

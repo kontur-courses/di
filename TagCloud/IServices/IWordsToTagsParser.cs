@@ -5,6 +5,6 @@ namespace TagCloud
 {
     public interface IWordsToTagsParser
     {
-        List<Tag> GetTagsRectangles(Dictionary<string, int> words);
+        List<Tag> GetTagsRectangles(Dictionary<string, int> words, ImageSettings imageSettings);
     }
 }

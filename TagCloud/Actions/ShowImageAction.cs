@@ -1,14 +1,25 @@
-﻿using System;
+﻿using System.Threading;
+using System.Windows.Forms;
+using TagCloud.Models;
 
 namespace TagCloud.Actions
 {
     public class ShowImageAction : IAction
     {
-        public string CommandName => "- showimage";
+        public string CommandName { get; } = "-showimage";
 
-        public void Perform(ClientConfig config)
+        public string Description { get; } = "display image";
+
+        public  void  Perform(ClientConfig config, ImageSettings imageSettings)
         {
-            throw new NotImplementedException();
+            var thread = new Thread(() =>
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var showImageForm = new ShowImageForm(config.ImageToSave);
+                Application.Run(showImageForm);
+            });
+            thread.Start();
         }
     }
 }
