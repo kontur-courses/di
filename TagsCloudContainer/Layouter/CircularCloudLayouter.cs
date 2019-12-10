@@ -10,14 +10,12 @@ namespace TagsCloudContainer.Layouter
         private Point center;
         private SortedSet<Point> cornerPoints;
         private HashSet<Rectangle> rectangles;
-        private Dictionary<Point, int> countOfRectanglesOnPoint;
 
         public CircularCloudLayouter(Point center)
         {
             this.center = center;
-            cornerPoints = new SortedSet<Point>(new PointRadiusComparer()) {center};
+            cornerPoints = new SortedSet<Point>(new PointRadiusComparer()) {new Point(0, 0)};
             rectangles = new HashSet<Rectangle>();
-            countOfRectanglesOnPoint = new Dictionary<Point, int>{{center, 4}};
         }
 
         public CircularCloudLayouter() : this(Point.Empty)
@@ -49,15 +47,10 @@ namespace TagsCloudContainer.Layouter
                     rectangles.Add(rectangle);
                     foreach (var corner in RectanglesHelper.GetCorners(rectangle))
                     {
-                        cornerPoints.Add(corner - (Size) center);
-                        if (corner != possibleLocation)
-                            countOfRectanglesOnPoint[corner] = 3;
+                        cornerPoints.Add(corner);;
                     }
-                    if (--countOfRectanglesOnPoint[possibleLocation] != 0) 
-                        return rectangle;
-                    cornerPoints.Remove(possibleLocation);
-                    countOfRectanglesOnPoint.Remove(possibleLocation);
-                    return rectangle;
+                    
+                    return new Rectangle(rectangle.Location + (Size) center, rectangle.Size);
                 }
             }
 

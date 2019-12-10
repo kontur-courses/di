@@ -20,9 +20,7 @@ namespace TagsCloudContainer
             var words = new HashSet<(Rectangle, LayoutWord)>();
             foreach (var layoutWord in wordSelector.Select())
             {
-                var size = new Size(layoutWord.Word.Length * layoutWord.Count,
-                    layoutWord.Font.Height * layoutWord.Count);
-                var rectangle = layouter.PutNextRectangle(size);
+                var rectangle = layouter.PutNextRectangle(layoutWord.Size);
                 words.Add((rectangle, layoutWord));
             }
 
