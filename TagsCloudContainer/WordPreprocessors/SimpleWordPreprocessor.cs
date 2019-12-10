@@ -3,21 +3,23 @@ using System.Linq;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System;
+using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.WordPreprocessors
 {
     public class SimpleWordPreprocessor : IWordPreprocessor
     {
         private Regex findInitialForm = new Regex(@"{(\w+)=");
+        private Regex findPartOfSpeach = new Regex(@"=(\w+),");
 
-        public string[] WordPreprocessing(string[] text)
+        public ProcessedWord[] WordPreprocessing(string[] text)
         {
             return StemWords(text)
-                .Select(word => word.ToLower())
+                .Select(word => new ProcessedWord(word.Word.ToLower(), word.PartOfSpeech))
                 .ToArray();
         }
 
-        private IEnumerable<string> StemWords(string[] text)
+        private IEnumerable<ProcessedWord> StemWords(string[] text)
         {
             using (var cmd = new Process())
             {
@@ -40,7 +42,9 @@ namespace TagsCloudContainer.WordPreprocessors
                     stemWord = cmd.StandardOutput.ReadLine();
                     while (stemWord != "")
                     {
-                        yield return findInitialForm.Match(stemWord).Groups[1].Value;
+                        yield return new ProcessedWord(
+                            findInitialForm.Match(stemWord).Groups[1].Value,
+                            findPartOfSpeach.Match(stemWord).Groups[1].Value);
                         stemWord = cmd.StandardOutput.ReadLine();
                     }
                 }

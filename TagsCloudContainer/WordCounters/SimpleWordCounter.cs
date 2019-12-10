@@ -15,10 +15,11 @@ namespace TagsCloudContainer.WordCounters
             this.wordFilter = wordFilter;
         }
 
-        public List<WordToken> CountWords(string[] words)
+        public List<WordToken> CountWords(ProcessedWord[] words)
         {
             var filteredWords = words
-                .Where(word => wordFilter.IsCorrect(word));
+                .Where(word => wordFilter.IsCorrect(word))
+                .Select(word => word.Word);
 
             var dict = new Dictionary<string, int>();
             foreach (var word in filteredWords)

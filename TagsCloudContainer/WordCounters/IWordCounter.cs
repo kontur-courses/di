@@ -5,6 +5,6 @@ namespace TagsCloudContainer.WordCounters
 {
     public interface IWordCounter
     {
-        List<WordToken> CountWords(string[] words);
+        List<WordToken> CountWords(ProcessedWord[] words);
     }
 }

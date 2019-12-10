@@ -22,10 +22,18 @@ namespace TagsCloudContainerTests.WordCounters
 
             var container = containerBuilder.Build();
 
-            var words = new[] { "a", "d", "d", "j", "a", "h", "a" };
+            var words = new[] {
+                new ProcessedWord("a", "v"),
+                new ProcessedWord("a", "v"),
+                new ProcessedWord("d", "v"),
+                new ProcessedWord("d", "v"),
+                new ProcessedWord("j", "v"),
+                new ProcessedWord("a", "v"),
+                new ProcessedWord("h", "v"),
+                new ProcessedWord("a", "v") };
             var expect = new WordToken[]
             {
-                new WordToken("a", 3),
+                new WordToken("a", 4),
                 new WordToken("d", 2),
                 new WordToken("j", 1),
                 new WordToken("h", 1),

@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using NUnit.Framework;
-using System;
+using System.Linq;
 using TagsCloudContainer.Readers;
+using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.WordPreprocessors;
+using FluentAssertions;
 
 namespace TagsCloudContainerTests.WordPreprocessors
 {
@@ -29,7 +31,7 @@ namespace TagsCloudContainerTests.WordPreprocessors
 
             var result = simpleWordPreprocessor.WordPreprocessing(new[] { word });
 
-            return result;
+            return result.Select(resultWord => resultWord.Word).ToArray();
         }
 
         [TestCase("бегают", ExpectedResult = new[] { "бегать" })]
@@ -41,7 +43,7 @@ namespace TagsCloudContainerTests.WordPreprocessors
 
             var result = simpleWordPreprocessor.WordPreprocessing(new[] { word });
 
-            return result;
+            return result.Select(resultWord => resultWord.Word).ToArray();
         }
 
         [Test]
@@ -53,7 +55,9 @@ namespace TagsCloudContainerTests.WordPreprocessors
 
             var result = simpleWordPreprocessor.WordPreprocessing(simpleReader.ReadAllLines());
 
-            Assert.AreEqual(new[] { "огонь", "а", "а", "полено" }, result);
+            result.Should().BeEquivalentTo(new[] {
+                new ProcessedWord("огонь", "S"),
+                new ProcessedWord("полено", "S") });
         }
     }
 }

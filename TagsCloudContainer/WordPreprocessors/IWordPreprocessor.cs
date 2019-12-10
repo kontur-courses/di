@@ -1,7 +1,9 @@
-﻿namespace TagsCloudContainer.WordPreprocessors
+﻿using TagsCloudContainer.TokensAndSettings;
+
+namespace TagsCloudContainer.WordPreprocessors
 {
     public interface IWordPreprocessor
     {
-        string[] WordPreprocessing(string[] text);
+        ProcessedWord[] WordPreprocessing(string[] text);
     }
 }

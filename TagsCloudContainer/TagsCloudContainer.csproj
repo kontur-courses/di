@@ -82,6 +82,7 @@
     <Compile Include="Palettes\SimplePalette.cs" />
     <Compile Include="Readers\IReader.cs" />
     <Compile Include="Readers\SimpleReader.cs" />
+    <Compile Include="TokensAndSettings\ProcessedWord.cs" />
     <Compile Include="TokensAndSettings\TagToken.cs" />
     <Compile Include="Visualizers\IVisualizer.cs" />
     <Compile Include="Visualizers\SimpleVisualizer.cs" />
