@@ -34,7 +34,7 @@ namespace TagsCloudLibraryTests
                         )
                 },
                 new CircularCloudLayouter(),
-                new BlackColorer(),
+                new ConstantColorer(Color.Black),
                 new FontFamily("Arial"), 
                 new PngWriter()
             );

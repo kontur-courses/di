@@ -39,6 +39,9 @@ namespace TagsCloudCLI
 
             [Option('f', "format", Required = false, Default = "png", HelpText = "Output image format")]
             public string OutputFormat { get; set; }
+
+            [Option('c', "color", Required = false, Default = "black", HelpText = "Coloring algorithm or constant color")]
+            public string Color { get; set; }
         }
 
         static void Main(string[] args)
@@ -89,7 +92,17 @@ namespace TagsCloudCLI
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
 
             builder.RegisterInstance(FontFamily.GenericSansSerif).As<FontFamily>();
-            builder.RegisterType<BlackColorer>().As<IColorer>();
+
+            switch (options.Color)
+            {
+                case "word":
+                    builder.RegisterType<WordColorer>().As<IColorer>();
+                    break;
+                default:
+                    var color = Color.FromName(options.Color);
+                    builder.RegisterInstance(new ConstantColorer(color)).As<IColorer>();
+                    break;
+            }
 
             switch (options.OutputFormat)
             {
