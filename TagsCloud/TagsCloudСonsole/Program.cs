@@ -34,7 +34,7 @@ namespace TagsCloudApplication
             
             //Bauhaus 93
             var fontProperties = new FontProperties("Bauhaus 93", 30);
-            var style = new Style(new PixelArtTheme(), fontProperties, new TagSizeCalculatorLogarithmic());
+            var style = new Style(new GrayDarkTheme(), fontProperties, new TagSizeCalculatorLogarithmic());
             var visualizer = new TextNoRectanglesVisualizer();
             var layouter = new SpiralCloudLayouter(new Spiral(new PointF(1500, 1500), 0.1f, 0.2f));
             

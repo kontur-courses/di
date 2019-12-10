@@ -41,7 +41,7 @@ namespace TagsCloudVisualization.Visualizers
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
                 graphics.CompositingMode = CompositingMode.SourceOver;
-                graphics.FillRectangle(DrawingUtils.GetBrushFromHexColor(style.Theme.BackgroundColor), new RectangleF(0, 0, width, height));
+                graphics.FillRectangle(DrawingUtils.GetBrushFromHexColor(style.Theme.BackgroundColor), new Rectangle(0, 0, width, height));
                 foreach (var tag in tags)
                     DrawTag(style, tag, graphics);
                 return result;
