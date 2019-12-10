@@ -79,8 +79,8 @@ namespace TagsCloudLibrary
 
                 var wordsWithSizes = wordStatistics
                     .Select(pair => new Tuple<string, int>(pair.Key, pair.Value))
+                    .OrderByDescending(tuple => tuple.Item2)
                     .ToList();
-                wordsWithSizes.Sort((t1, t2) => (t2.Item2 - t1.Item2));
 
                 var image = new Bitmap(imageWidth, imageHeight);
                 var graphics = Graphics.FromImage(image);
