@@ -8,20 +8,24 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var container = Register(args);
+            args = new[] {"-f", "timeSolution.txt"};
+            var consoleParser = new ConsoleArgumentParser();
+            var path = consoleParser.GetPath(args);
+            var imageSetting = consoleParser.GetImageSetting(args);
+            var wordSetting = consoleParser.GetWordSetting(args);
+            var container = Register(wordSetting, imageSetting, path);
             var imageCreator = container.Resolve<ImageCreator>();
             imageCreator.Save();
         }
 
-        private static IContainer Register(string[] args)
+        private static IContainer Register(WordSetting wordSetting, ImageSetting imageSetting, string path)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<BasicWordsSelector>().As<IWordsSelector>();
             builder.RegisterType<WordReaderFromFile>().As<IWordReader>();
-            builder.RegisterType<ConsoleArgumentParser>().As<IArgumentParser>();
-            builder.Register(c => c.Resolve<IArgumentParser>().GetWordSetting(args)).As<WordSetting>();
-            builder.Register(c => c.Resolve<IArgumentParser>().GetImageSetting(args)).As<ImageSetting>();
-            builder.Register(c => c.Resolve<IArgumentParser>().GetPath(args)).As<string>();
+            builder.RegisterInstance(wordSetting).As<WordSetting>();
+            builder.RegisterInstance(imageSetting).As<ImageSetting>();
+            builder.RegisterInstance(path).As<string>();
             builder.Register(c =>
             {
                 var setting = c.Resolve<ImageSetting>();
