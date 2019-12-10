@@ -3,7 +3,7 @@ using TagsCloudContainer.PaintersWords;
 
 namespace TagsCloudContainer.Palettes
 {
-    interface IPalette
+    public interface IPalette
     {
         Font Font { get; }
         IPainterWords PainterWords { get; }

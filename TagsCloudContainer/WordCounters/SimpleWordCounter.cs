@@ -6,7 +6,7 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.WordCounters
 {
-    class SimpleWordCounter : IWordCounter
+    public class SimpleWordCounter : IWordCounter
     {
         private IWordFilter wordFilter;
 

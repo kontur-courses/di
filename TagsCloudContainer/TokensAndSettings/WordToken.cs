@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.TokensAndSettings
 {
-    class WordToken
+    public class WordToken
     {
         public string Word { get; }
         public int Count { get; }

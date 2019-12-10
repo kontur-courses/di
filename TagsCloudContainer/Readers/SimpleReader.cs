@@ -6,7 +6,7 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace TagsCloudContainer.Readers
 {
-    class SimpleReader : IReader
+    public class SimpleReader : IReader
     {
         private string path { get; }
         private Dictionary<string, Func<string, string[]>> readers;

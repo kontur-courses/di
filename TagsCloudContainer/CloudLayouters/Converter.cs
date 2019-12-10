@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer
 {
-    static class Converter
+    public static class Converter
     {
         public static void GetBitmapFromRectangles(List<Rectangle> rectangles, string fileName)
         {

@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.Readers
 {
-    interface IReader
+    public interface IReader
     {
         string[] ReadAllLines();
     }

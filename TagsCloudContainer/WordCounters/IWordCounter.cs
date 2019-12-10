@@ -3,7 +3,7 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.WordCounters
 {
-    interface IWordCounter
+    public interface IWordCounter
     {
         List<WordToken> CountWords(string[] words);
     }

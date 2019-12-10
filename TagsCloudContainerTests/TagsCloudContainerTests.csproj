@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E42C24F-D357-434C-918A-4CFBD8289407}</ProjectGuid>
+    <ProjectGuid>{42CCDFE4-1112-4D96-A089-B09B1E4C62FC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TagsCloudContainer</RootNamespace>
-    <AssemblyName>TagsCloudContainer</AssemblyName>
+    <RootNamespace>TagsCloudContainerTests</RootNamespace>
+    <AssemblyName>TagsCloudContainerTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -40,23 +39,12 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -69,67 +57,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
-    <Compile Include="CloudLayouters\Converter.cs" />
-    <Compile Include="CloudLayouters\ICloudLayouter.cs" />
-    <Compile Include="PaintersWords\EvenPainterWords.cs" />
-    <Compile Include="PaintersWords\IPainterWords.cs" />
-    <Compile Include="PaintersWords\SimplePainterWords.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="TokensAndSettings\ImageSettings.cs" />
-    <Compile Include="Palettes\IPalette.cs" />
-    <Compile Include="Palettes\SimplePalette.cs" />
-    <Compile Include="Readers\IReader.cs" />
-    <Compile Include="Readers\SimpleReader.cs" />
-    <Compile Include="TokensAndSettings\TagToken.cs" />
-    <Compile Include="Visualizers\IVisualizer.cs" />
-    <Compile Include="Visualizers\SimpleVisualizer.cs" />
-    <Compile Include="WordCounters\IWordCounter.cs" />
+    <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="EvenPainterWordsTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordCounters\SimpleWordCounter.cs" />
-    <Compile Include="TagsCloudGenerators\TagsCloudGenerator.cs" />
-    <Compile Include="WordFilters\IWordFilter.cs" />
-    <Compile Include="WordFilters\SimpleWordFilter.cs" />
-    <Compile Include="WordPreprocessors\IWordPreprocessor.cs" />
-    <Compile Include="WordPreprocessors\SimpleWordPreprocessor.cs" />
-    <Compile Include="TokensAndSettings\WordToken.cs" />
+    <Compile Include="SimplePainterWordsTests.cs" />
+    <Compile Include="SimpleReaderTests.cs" />
+    <Compile Include="SimpleVisualizerTests.cs" />
+    <Compile Include="SimpleWordCounterTests.cs" />
+    <Compile Include="SimpleWordPreprocessorTests.cs" />
+    <Compile Include="TagCloudGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Words.doc" />
-    <None Include="Words.docx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WordsRus.txt" />
-    <None Include="Hunspellx64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Hunspellx86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="WaPv1p1.txt" />
-    <Content Include="Words.txt" />
+    <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
+      <Project>{8e42c24f-d357-434c-918a-4cfbd8289407}</Project>
+      <Name>TagsCloudContainer</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
 </Project>

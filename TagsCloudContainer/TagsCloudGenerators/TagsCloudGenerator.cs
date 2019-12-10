@@ -7,7 +7,7 @@ using System;
 
 namespace TagsCloudContainer.TagsCloudGenerators
 {
-    class TagsCloudGenerator
+    public class TagsCloudGenerator
     {
         private IWordCounter wordCounter;
         private IVisualizer visualizer;

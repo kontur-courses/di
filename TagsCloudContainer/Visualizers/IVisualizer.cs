@@ -4,7 +4,7 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.Visualizers
 {
-    interface IVisualizer
+    public interface IVisualizer
     {
         Bitmap VisualizeCloud(List<WordToken> wordTokens);
     }

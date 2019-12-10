@@ -8,7 +8,7 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.Visualizers
 {
-    class SimpleVisualizer : IVisualizer
+    public class SimpleVisualizer : IVisualizer
     {
         private IPalette palette;
         private ICloudLayouter cloudLayouter;

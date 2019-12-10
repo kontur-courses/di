@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.WordFilters
 {
-    interface IWordFilter
+    public interface IWordFilter
     {
         bool IsCorrect(string word);
     }

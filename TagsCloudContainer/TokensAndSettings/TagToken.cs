@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.TokensAndSettings
 {
-    class TagToken : WordToken
+    public class TagToken : WordToken
     {
         public Rectangle Rectangle { get; }
 

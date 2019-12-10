@@ -6,7 +6,7 @@ using System;
 
 namespace TagsCloudContainer.WordPreprocessors
 {
-    class SimpleWordPreprocessor : IWordPreprocessor
+    public class SimpleWordPreprocessor : IWordPreprocessor
     {
         private Regex findInitialForm = new Regex(@"{(\w+)=");
 

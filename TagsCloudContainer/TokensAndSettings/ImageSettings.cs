@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.TokensAndSettings
 {
-    class ImageSettings
+    public class ImageSettings
     {
         public int Height { get; }
         public int Width { get; }

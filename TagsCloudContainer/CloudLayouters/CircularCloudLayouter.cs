@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.CloudLayouters
 {
-    class CircularCloudLayouter : ICloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private Point centerCloud;
         public List<Rectangle> rectangles { get; }

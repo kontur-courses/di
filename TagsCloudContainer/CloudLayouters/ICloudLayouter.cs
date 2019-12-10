@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.CloudLayouters
 {
-    interface ICloudLayouter
+    public interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
     }

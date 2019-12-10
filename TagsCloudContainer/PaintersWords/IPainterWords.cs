@@ -3,7 +3,7 @@ using TagsCloudContainer.TokensAndSettings;
 
 namespace TagsCloudContainer.PaintersWords
 {
-    interface IPainterWords
+    public interface IPainterWords
     {
         Brush GetNextBrush(WordToken wordToken);
     }
