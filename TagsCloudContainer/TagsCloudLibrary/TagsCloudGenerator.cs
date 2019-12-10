@@ -89,7 +89,9 @@ namespace TagsCloudLibrary
                     var (word, size) = wordWithSize;
                     var font = new Font(wordsFontFamily, (float) size * imageHeight / totalWords * 2);
                     var color = colorer.ColorForWord(word, size);
-                    var rectangle = layouter.PutNextRectangle(graphics.MeasureString(word, font).ToSize());
+                    var textSize = graphics.MeasureString(word, font).ToSize();
+                    if (textSize.Width <= 0 || textSize.Height <= 0) continue;
+                    var rectangle = layouter.PutNextRectangle(textSize);
                     graphics.DrawString(
                         word,
                         font,
