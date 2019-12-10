@@ -4,6 +4,6 @@ namespace TagCloud.TextReading
 {
     public interface ITextReader
     {
-        IEnumerable<string> ReadWords();
+        IEnumerable<string> ReadWords(string path);
     }
 }

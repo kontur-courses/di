@@ -41,14 +41,21 @@
     <Compile Include="Algorithm\SpiralBasedLayouter\CircularCloudLayouter.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\DistanceUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\GeometryUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\LayouterParameters.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\RectangleUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\Segment.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\Spiral.cs" />
+    <Compile Include="App\Application.cs" />
+    <Compile Include="App\ConsoleSettingsProvider.cs" />
+    <Compile Include="App\ISettingsProvider.cs" />
+    <Compile Include="App\Options.cs" />
+    <Compile Include="App\AppSettings.cs" />
+    <Compile Include="Infrastructure\IImageFormat.cs" />
+    <Compile Include="Infrastructure\PngImageFormat.cs" />
     <Compile Include="Infrastructure\SizeUtils.cs" />
     <Compile Include="Visualization\IndexBasedWordPainter.cs" />
     <Compile Include="Visualization\IWordPainter.cs" />
-    <Compile Include="Visualization\IWordsProvider.cs" />
     <Compile Include="Visualization\IWordSizeSetter.cs" />
     <Compile Include="Visualization\ITagCloudGenerator.cs" />
     <Compile Include="Infrastructure\Palette.cs" />
@@ -68,7 +75,6 @@
     <Compile Include="TextReading\TxtTextReader.cs" />
     <Compile Include="Infrastructure\WordClass.cs" />
     <Compile Include="WordsProcessing\WordClassBasedSelector.cs" />
-    <Compile Include="Visualization\WordsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -76,6 +82,9 @@
     </Reference>
     <Reference Include="CliWrap, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CliWrap.2.5.0\lib\net45\CliWrap.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />

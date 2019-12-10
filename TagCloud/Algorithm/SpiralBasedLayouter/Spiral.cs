@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Drawing;
+using TagCloud.Infrastructure;
 
 namespace TagCloud.Algorithm.SpiralBasedLayouter
 {
     public class Spiral
     {
-        private readonly double parameter;
-        private readonly Point center;
-        private readonly double stepInRadians;
+        private readonly PictureConfig pictureConfig;
+        private double Parameter => pictureConfig.Parameters.Parameter;
+        private double StepInRadians => pictureConfig.Parameters.StepInDegrees * Math.PI / 180;
+        private Point Center => pictureConfig.Center;
+        
         private double phi;
 
-        public Spiral(double parameter, int stepInDegrees, Point center)
+        public Spiral(PictureConfig pictureConfig)
         {
-            this.parameter = parameter;
-            this.center = center;
-            stepInRadians = stepInDegrees * Math.PI / 180;
+            this.pictureConfig = pictureConfig;
         }
 
         public Point GetNextPoint()
         {
-            var r = parameter * phi;
+            var r = Parameter * phi;
             var point =  GeometryUtils.ConvertPolarToIntegerCartesian(r, phi);
-            phi += stepInRadians;
-            return new Point(point.X + center.X, point.Y + center.Y);
+            phi += StepInRadians;
+            return new Point(point.X + Center.X, point.Y + Center.Y);
         }
     }
 }

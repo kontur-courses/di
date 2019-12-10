@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TagCloud.Algorithm;
 using TagCloud.Infrastructure;
@@ -8,25 +9,21 @@ namespace TagCloud.Visualization
     public class TagCloudGenerator : ITagCloudGenerator
     {
         private readonly PictureConfig pictureConfig;
-        private readonly IWordsProvider wordsProvider;
         private readonly ITagCloudLayouter tagCloudLayouter;
         private readonly IWordPainter wordPainter;
 
         public TagCloudGenerator(
-            PictureConfig pictureConfig, 
-            IWordsProvider wordsProvider, 
+            PictureConfig pictureConfig,
             ITagCloudLayouter tagCloudLayouter,
             IWordPainter wordPainter)
         {
             this.pictureConfig = pictureConfig;
-            this.wordsProvider = wordsProvider;
             this.tagCloudLayouter = tagCloudLayouter;
             this.wordPainter = wordPainter;
         }
 
-        public Bitmap GetTagCloudBitmap()
+        public Bitmap GetTagCloudBitmap(IEnumerable<Word> words)
         {
-            var words = wordsProvider.GetWords();
             var bitmap = new Bitmap(pictureConfig.Size.Width, pictureConfig.Size.Height);
             var g = Graphics.FromImage(bitmap);
             g.Clear(pictureConfig.Palette.BackgroundColor);

@@ -5,16 +5,9 @@ namespace TagCloud.TextReading
 {
     public class TxtTextReader : ITextReader
     {
-        private readonly string path;
-
-        public TxtTextReader(string filePath)
+        public IEnumerable<string> ReadWords(string filePath)
         {
-            path = filePath;
-        }
-
-        public IEnumerable<string> ReadWords()
-        {
-            return File.ReadLines(path);
+            return File.ReadLines(filePath);
         }
     }
 }
