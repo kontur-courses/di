@@ -4,7 +4,7 @@ using TagsCloud.WordProcessing;
 using CommandLine;
 using TagsCloud.Interfaces;
 using System.Drawing;
-using System.Reflection;
+using TagsCloud.FinalProcessing;
 using System;
 using TagsCloud.CloudLayouter;
 
@@ -46,6 +46,10 @@ namespace TagsCloud.TagsCloudConsoleClient
             [Option('g', "GenerationAlgorithm", Default = "CircularCloud", HelpText = "Which algorithm will be used to generate the cloud. " +
                 "(CircularCloud || MiddleCloud)")]
             public string GenerationAlgoritm { get; set; }
+
+            [Option('c', "ColorScheme", Default = "RandomColor", HelpText = "Color scheme of result cloud." +
+                "(RandomColor || RedGreenBlueScheme)")]
+            public string ColorScheme { get; set; }
         }
 
         static void Main(string[] args)
@@ -53,8 +57,7 @@ namespace TagsCloud.TagsCloudConsoleClient
             var container = new ContainerBuilder();
             Type tagLayouterType = null;
             Type textSpliterType = null;
-            container.RegisterType<PathValidator>().AsSelf();
-            container.RegisterType<SpliterByLine>().AsSelf();
+            Type colorScheme = null;
             Parser.Default.ParseArguments<Options>(args)
               .WithParsed(opts =>
               {
@@ -77,14 +80,34 @@ namespace TagsCloud.TagsCloudConsoleClient
                   textSpliterType = TypesCollector.GetTypeSpliterByName(opts.splitType);
                   if (textSpliterType == null)
                       throw new ArgumentException($"Unsupported split format {opts.splitType}.");
-                  container.RegisterAssemblyTypes(textSpliterType.Assembly).AsImplementedInterfaces();
+                  colorScheme = TypesCollector.GetColorSchemeByName(opts.ColorScheme);
+                  if (colorScheme == null)
+                      throw new ArgumentException($"Unsupported color scheme {opts.ColorScheme}.");
               });
+            RegistrAllTypes(container, tagLayouterType, textSpliterType, colorScheme);
+            Container = container.Build();
+            Container.Resolve<TagCloudVisualizer>().GenerateTagCloud();
+        }
+
+        private static void RegistrAllTypes(ContainerBuilder container, Type tagLayouterType, Type textSpliterType, Type colorScheme)
+        {
+            container.RegisterType<PathValidator>().AsSelf();
+            container.RegisterType<SpliterByLine>().AsSelf();
+            container.RegisterType<WordStream>().As<IWordStream>().SingleInstance();
+            container.RegisterType<TagGenerator>().As<ITagGenerator>().SingleInstance();
+            container.RegisterType<TagCloudGenerator>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<DefaultCloudDrawer>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<ImageSaver>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<DictionaryBasedCounter>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<TxtReader>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<ToLowerWordHandler>().AsImplementedInterfaces();
             container.RegisterType<TagCloudVisualizer>().AsSelf().SingleInstance();
             container.RegisterType<WordValidatorSettings>().AsSelf().SingleInstance();
             container.RegisterType(tagLayouterType).As<ITagCloudLayouter>().SingleInstance();
             container.RegisterType(textSpliterType).As<ITextSpliter>().SingleInstance();
-            Container = container.Build();
-            Container.Resolve<TagCloudVisualizer>().GenerateTagCloud();
+            container.RegisterType<DefaultWordValidator>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType<DefaultFontGenerator>().AsImplementedInterfaces().SingleInstance();
+            container.RegisterType(colorScheme).AsImplementedInterfaces().SingleInstance();
         }
     }
 }

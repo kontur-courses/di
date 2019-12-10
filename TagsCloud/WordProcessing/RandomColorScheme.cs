@@ -4,7 +4,7 @@ using System;
 
 namespace TagsCloud.WordProcessing
 {
-    public class DefaultColorScheme : IColorScheme
+    public class RandomColorScheme : IColorScheme
     {
         public Color GetColorForCurrentWord((string word, int frequency) wordFrequency, int positionByFrequency, int countWords)
         {

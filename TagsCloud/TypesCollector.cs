@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using TagsCloud.CloudLayouter;
 using TagsCloud.FileReader;
+using TagsCloud.WordProcessing;
 
 namespace TagsCloud
 {
@@ -28,17 +29,23 @@ namespace TagsCloud
             {"jpeg", ImageFormat.Jpeg }
         };
 
-        public static Type GetTypeGeneationLayoutersByName(string word)
+        private static Dictionary<string, Type> supportedColodScheme = new Dictionary<string, Type>
+        {
+            {"RandomColor", typeof(RandomColorScheme) },
+            {"RedGreenBlueScheme", typeof(RedGreenBlueScheme) }
+        };
+
+        public static Type GetTypeGeneationLayoutersByName(string layouterName)
         {
             Type type;
-            Layouters.TryGetValue(word, out type);
+            Layouters.TryGetValue(layouterName, out type);
             return type;
         }
 
-        public static Type GetTypeSpliterByName(string word)
+        public static Type GetTypeSpliterByName(string spliterName)
         {
             Type type;
-            Splitter.TryGetValue(word, out type);
+            Splitter.TryGetValue(spliterName, out type);
             return type;
         }
 
@@ -51,6 +58,13 @@ namespace TagsCloud
             ImageFormat imageFormat;
             supportedImageFormat.TryGetValue(extension, out imageFormat);
             return imageFormat;
+        }
+
+        public static Type GetColorSchemeByName(string schemeName)
+        {
+            Type colorScheme;
+            supportedColodScheme.TryGetValue(schemeName, out colorScheme);
+            return colorScheme;
         }
     }
 }
