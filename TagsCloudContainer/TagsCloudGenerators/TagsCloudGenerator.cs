@@ -4,6 +4,7 @@ using TagsCloudContainer.Readers;
 using System.Drawing;
 using TagsCloudContainer.WordPreprocessors;
 using System;
+using System.Linq;
 
 namespace TagsCloudContainer.TagsCloudGenerators
 {

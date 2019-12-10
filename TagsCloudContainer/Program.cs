@@ -53,7 +53,7 @@ namespace TagsCloudContainer
                            new Parameter[]
                            {
                                new NamedParameter("font", new Font(o.Font, o.Size)),
-                               new NamedParameter("painterWords", new EvenPainterWords())
+                               new NamedParameter("painterWords", new SimplePainterWords(new SolidBrush(Color.FromName(o.Color))))
                            }
                            );
                        containerBuilder.RegisterType<SimpleVisualizer>().As<IVisualizer>().WithParameter("imageSettings", new ImageSettings(o.Height, o.Width));
