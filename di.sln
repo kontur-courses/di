@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{8C7D787E-7A77-4EC4-955F-9140194C3538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualization_Tests", "TagCloudVisualization_Tests\TagCloudVisualization_Tests.csproj", "{3044650D-A7C0-4CFE-B2F9-4D22570D8356}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization_Tests", "TagsCloudVisualization_Tests\TagsCloudVisualization_Tests.csproj", "{3044650D-A7C0-4CFE-B2F9-4D22570D8356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

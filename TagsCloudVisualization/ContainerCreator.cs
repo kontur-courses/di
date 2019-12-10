@@ -1,0 +1,39 @@
+﻿using System.Drawing;
+using Autofac;
+using TagsCloudVisualization.CloudPainters;
+using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.PathFinders;
+using TagsCloudVisualization.TextFilters;
+using TagsCloudVisualization.TextPreprocessing;
+using TagsCloudVisualization.TextReaders;
+using TagsCloudVisualization.Visualization;
+using TagsCloudVisualization.WordConverters;
+
+namespace TagsCloudVisualization
+{
+    public class ContainerCreator
+    {
+        public IContainer GetContainer(VisualisingOptions imageOptions)
+        {
+            var affPath = PathFinder.GetHunspellDictionariesPath("ru_RU.aff");
+            var dicPath = PathFinder.GetHunspellDictionariesPath("ru_RU.dic");
+            var center = new Point(imageOptions.ImageSize.Width / 2, imageOptions.ImageSize.Height / 2);
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MultiColorFrequencyCloudPainter>().As<ICloudPainter>();
+            builder.RegisterType<LowerCaseWordConverter>().As<IWordConverter>();
+            builder.RegisterType<NormalFormWordConverter>().As<IWordConverter>()
+                .WithParameter("affPath", affPath)
+                .WithParameter("dicPath", dicPath);
+            builder.RegisterType<ShortWordsFilter>().As<ITextFilter>();
+            builder.RegisterType<BoringWordsFilter>().As<ITextFilter>();
+            builder.RegisterType<TxtReader>().As<ITextReader>();
+            builder.RegisterType<WordsExtractor>().AsSelf();
+            builder.RegisterType<WordPreprocessor>().AsSelf();
+            builder.RegisterType<TagCloudVisualizer>().AsSelf().WithParameter("visualisingOptions", imageOptions);
+            builder.RegisterType<Spiral>().AsSelf().WithParameter("center", center);
+            builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
+            builder.RegisterType<CloudCreator>().AsSelf();
+            return builder.Build();
+        }
+    }
+}

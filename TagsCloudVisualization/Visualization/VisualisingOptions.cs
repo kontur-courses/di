@@ -16,5 +16,11 @@ namespace TagsCloudVisualization.Visualization
             BackgroundColor = backgroundColor;
             TextColor = textColor;
         }
+
+        public static VisualisingOptions GetDefaultOptions()
+        {
+            return new VisualisingOptions(new Font("Arial", 30),
+                new Size(1000, 1000), Color.Black, Color.White);
+        }
     }
 }

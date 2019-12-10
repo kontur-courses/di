@@ -3,6 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>TagCloudVisualization_Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

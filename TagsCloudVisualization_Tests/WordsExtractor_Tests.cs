@@ -6,10 +6,10 @@ using TagsCloudVisualization.TextPreprocessing;
 
 namespace TagsCloudVisualization_Tests
 {
-    public class TextPreparer_Tests
+    public class WordsExtractor_Tests
     {
         [Test]
-        public void TextPreparer_DifferentWords_ShouldReturnRightWordsCount()
+        public void WordsExtractor_DifferentWords_ShouldReturnRightWordsCount()
         {
             var text = "У РЖД можно арендовать вагоны разного Класса и прицеплять их К поездам в нужных направлениях.";
             var words = new WordsExtractor().GetWords(text);
@@ -17,7 +17,7 @@ namespace TagsCloudVisualization_Tests
         }
         
         [Test]
-        public void TextPreparer_TextWithSigns_ShouldReturnWordsWithoutSigns()
+        public void WordsExtractor_TextWithSigns_ShouldReturnWordsWithoutSigns()
         {
             var text = "У РЖД можно арендовать вагоны разного! Класса,.";
             var words = new WordsExtractor().GetWords(text);
@@ -26,7 +26,7 @@ namespace TagsCloudVisualization_Tests
         }
         
         [Test]
-        public void TextPreparer_WordsWithHyphen_ShouldBeRightProcessed()
+        public void WordsExtractor_WordsWithHyphen_ShouldBeRightProcessed()
         {
             var text = "как-нибудь темно-русый человек";
             var words = new WordsExtractor().GetWords(text);
@@ -35,7 +35,7 @@ namespace TagsCloudVisualization_Tests
         }
         
         [Test]
-        public void TextPreparer_WordsWithoutSpacesBetween_ShouldReturnWordsSplitBySigns()
+        public void WordsExtractor_WordsWithoutSpacesBetween_ShouldReturnWordsSplitBySigns()
         {
             var text = "У РЖД можно арендовать,вагоны разного!Класса,.";
             var words = new WordsExtractor().GetWords(text);
@@ -44,7 +44,7 @@ namespace TagsCloudVisualization_Tests
         }
         
         [Test]
-        public void TextPreparer_WordsWithSpecialSymbols_ShouldReturnRightResult()
+        public void WordsExtractor_WordsWithSpecialSymbols_ShouldReturnRightResult()
         {
             var text = "\t\tУ РЖД можно\r арендовать,вагоны\n разного!Класса,.";
             var words = new WordsExtractor().GetWords(text);

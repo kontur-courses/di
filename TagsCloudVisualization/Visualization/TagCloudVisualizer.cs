@@ -6,7 +6,7 @@ using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public class TagCloudVisualizer
+    public class TagCloudVisualizer : ICloudVisualizer
     {
         private readonly VisualisingOptions visualisingOptions;
 
@@ -17,10 +17,10 @@ namespace TagsCloudVisualization.Visualization
 
         public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, ICloudPainter cloudPainter)
         {
-            var rectangles = GetRectanglesForWords(words, layouter);
-            return cloudPainter.GetImage(words, rectangles, visualisingOptions);
+            var cloudComponents = new CloudComponents{Words = words, Layouter = layouter, VisualisingOptions = visualisingOptions};
+            return cloudPainter.GetImage(cloudComponents,  visualisingOptions);
         }
-
+        
         private IEnumerable<Rectangle> GetRectanglesForWords(IEnumerable<string> words, ILayouter layouter)
         {
             return words.Select(word =>

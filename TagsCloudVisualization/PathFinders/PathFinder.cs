@@ -1,4 +1,5 @@
-﻿using System.Drawing.Imaging;
+﻿using System;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace TagsCloudVisualization.PathFinders
@@ -22,7 +23,7 @@ namespace TagsCloudVisualization.PathFinders
 
         private static string GetFolderPath(string folderName)
         {
-            var projectPath = Path.GetFullPath("..\\..\\..\\");
+            var projectPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\")) ;
             return Path.Combine(projectPath, folderName);
         }
     }

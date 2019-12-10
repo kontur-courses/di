@@ -12,19 +12,19 @@ namespace TagsCloudVisualization
         [Option('s', HelpText = "Font size", Default = 10)]
         public int FontSize { get; set; }
 
-        [Option('w', HelpText = "Image width", Default = 600)]
+        [Option('w', HelpText = "Image width", Default = 1000)]
         public int ImageWidth { get; set; }
 
-        [Option('h', HelpText = "Image height", Default = 600)]
+        [Option('h', HelpText = "Image height", Default = 1000)]
         public int ImageHeight { get; set; }
 
         [Option('b', HelpText = "Background color", Default = "Black")]
-        public string BackGroundColor { get; set; }
+        public string BackGroundColorName { get; set; }
 
         [Option('b', HelpText = "Text color", Default = "Pink")]
-        public string TextColor { get; set; }
+        public string TextColorName { get; set; }
 
-        [Option('t', HelpText = "Text name", Default = "2.txt")]
+        [Option('t', HelpText = "Text name", Default = "1.txt")]
         public string TextName { get; set; }
 
         [Option('i', HelpText = "Image name", Default = "01")]
@@ -33,7 +33,7 @@ namespace TagsCloudVisualization
         public VisualisingOptions GetVisualizingOptions()
         {
             return new VisualisingOptions(new Font(FontFamily, FontSize), new Size(ImageWidth, ImageHeight),
-                Color.FromName(BackGroundColor), Color.FromName(TextColor));
+                Color.FromName(BackGroundColorName), Color.FromName(TextColorName));
         }
     }
 }

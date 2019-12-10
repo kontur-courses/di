@@ -1,10 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization.Visualization;
 using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {
-    public class MultiColorCloudPainter : ICloudPainter
+    public class MultiColorFrequencyCloudPainter : ICloudPainter
     {
         public Bitmap GetImage(CloudComponents cloudComponents, VisualisingOptions visualisingOptions)
         {
@@ -12,16 +14,15 @@ namespace TagsCloudVisualization.CloudPainters
             using (var graphics = Graphics.FromImage(field))
             {
                 graphics.Clear(visualisingOptions.BackgroundColor);
-                var rectangle = cloudComponents.Rectangles.GetEnumerator();
-                var brush = new SolidBrush(GetRandomColor());
-                foreach (var word in cloudComponents.Words)
+                var sizedWords = cloudComponents.GetSizedWords();
+                var rectangles = cloudComponents.GetRectanglesForSizedWords(sizedWords);
+                foreach (var (word, rectangle) in sizedWords.Zip(rectangles, Tuple.Create))
                 {
-                    rectangle.MoveNext();
                     var color = GetRandomColor();
                     while (color == visualisingOptions.BackgroundColor)
                         color = GetRandomColor();
-                    brush = new SolidBrush(color);
-                    graphics.DrawString(word, visualisingOptions.Font, brush, rectangle.Current.Location);
+                    var brush = new SolidBrush(color);
+                    graphics.DrawString(word.Value, new Font(visualisingOptions.Font.FontFamily, word.Size), brush, rectangle.Location);
                 }
             }
 

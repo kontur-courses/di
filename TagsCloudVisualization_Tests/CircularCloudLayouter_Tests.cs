@@ -6,6 +6,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudVisualization;
 using static TagsCloudVisualization_Tests.CircularCloudLayouter_Tests_AuxiliaryTools;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Extensions;
@@ -92,7 +93,7 @@ namespace TagsCloudVisualization_Tests
 
             rectanglesOutOfCircleCount.Should().BeLessOrEqualTo((int) (rectanglesCount * 0.03));
         }
-        
+
         [TearDown]
         public void TearDown()
         {
@@ -100,7 +101,8 @@ namespace TagsCloudVisualization_Tests
                 return;
             var testName = TestContext.CurrentContext.Test.Name;
             var painter = new MultiColorRectanglesPainter();
-            var image = painter.GetImage(rectangles, new Size(1000, 1000));
+            var image = painter.GetImage(new CloudComponents {Rectangles = rectangles},
+                VisualisingOptions.GetDefaultOptions());
             var fileName = $"{testName}Failed";
             var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
