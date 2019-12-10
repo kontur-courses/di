@@ -8,7 +8,7 @@ namespace TagsCloudContainer.Readers
         [Test]
         public void ReadAllLines_Docx()
         {
-            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.docx");
+            var simpleReader = new SimpleReader(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"TagsCloudContainerTests\Words.docx"));
 
             var result = simpleReader.ReadAllLines();
 
@@ -21,7 +21,7 @@ namespace TagsCloudContainer.Readers
         [Test]
         public void ReadAllLines_Doc()
         {
-            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.doc");
+            var simpleReader = new SimpleReader(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"TagsCloudContainerTests\Words.doc"));
 
             var result = simpleReader.ReadAllLines();
 
@@ -34,7 +34,7 @@ namespace TagsCloudContainer.Readers
         [Test]
         public void ReadAllLines_txt()
         {
-            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\Words.txt");
+            var simpleReader = new SimpleReader(@"TagsCloudContainerTests\Words.txt");
 
             var result = simpleReader.ReadAllLines();
 

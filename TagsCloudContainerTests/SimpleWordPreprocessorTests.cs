@@ -48,7 +48,7 @@ namespace TagsCloudContainer.WordPreprocessors
         {
             var container = containerBuilder.Build();
             var simpleWordPreprocessor = container.Resolve<IWordPreprocessor>();
-            var simpleReader = new SimpleReader(@"E:\Projects\Shpora1\di\TagsCloudContainer\WordsRus.txt");
+            var simpleReader = new SimpleReader(@"TagsCloudContainer\WordsRus.txt");
 
             var result = simpleWordPreprocessor.WordPreprocessing(simpleReader.ReadAllLines());
 

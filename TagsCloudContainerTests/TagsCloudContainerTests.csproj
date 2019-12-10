@@ -71,12 +71,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Words.doc" />
+    <None Include="Words.docx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
       <Project>{8e42c24f-d357-434c-918a-4cfbd8289407}</Project>
       <Name>TagsCloudContainer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Words.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
