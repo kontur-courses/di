@@ -10,6 +10,9 @@ namespace TagsCloudVisualization
         [Option('o', Default = "Cloud.png", HelpText = "Set path for resulting image")]
         public string OutputFilename { get; set; }
 
+        [Option('b', Default = null, HelpText = "Set path for file with excluded words")]
+        public string BoringWordsFilename { get; set; }
+
         [Option('f', Default = "Comic Sans MS", HelpText = "Set text font family")]
         public string FontFamilyName { get; set; }
 

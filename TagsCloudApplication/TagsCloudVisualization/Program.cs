@@ -39,6 +39,12 @@ namespace TagsCloudVisualization
                 .As<IWordFilter>();
             containerBuilder.RegisterType<EmptyWordFilter>()
                 .As<IWordFilter>();
+            if (opts.BoringWordsFilename != null)
+                containerBuilder.Register(c => 
+                new CustomBoringWordsFilter(
+                    c.Resolve<ITextReader>(), 
+                    c.Resolve<Options>().BoringWordsFilename))
+                .As<IWordFilter>();
             containerBuilder.RegisterType<ToLowerCaseProcessor>()
                 .As<IWordProcessor>();
             containerBuilder.RegisterType<TextPreprocessor>();
