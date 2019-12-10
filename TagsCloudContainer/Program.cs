@@ -7,6 +7,7 @@ using Autofac;
 using TagsCloudContainer.Core;
 using TagsCloudContainer.ResultProcessing;
 using TagsCloudContainer.UserInterface;
+using TagsCloudContainer.UserInterface.ArgumentsParsing;
 
 namespace TagsCloudContainer
 {
@@ -14,18 +15,18 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var userInterface = new ConsoleUserInterface();
+            var userInterface = new ConsoleUserInterface(new ConsoleArgumentsParser());
             if (userInterface.TryGetParameters(args, out var parameters))
             {
                 var container = GetDependencyInjectionContainer(parameters, userInterface);
                 var tagCloudVisualizer = container.Resolve<ITagCloudVisualizer>();
                 var bitmap = tagCloudVisualizer.GetTagCloudBitmap(parameters);
                 var resultProcessor = container.Resolve<IResultProcessor>();
-                resultProcessor.ProcessResult(bitmap, parameters.OutputFilePath);
+                resultProcessor.ProcessResult(bitmap, parameters.OutputFilePath, parameters.ImageFormat);
             }
         }
 
-        private static IContainer GetDependencyInjectionContainer(Parameters parameters, IUserInterface userInterface)
+        private static IContainer GetDependencyInjectionContainer(Parameters parameters, IResultDisplay userInterface)
         {
             var builder = new ContainerBuilder();
 

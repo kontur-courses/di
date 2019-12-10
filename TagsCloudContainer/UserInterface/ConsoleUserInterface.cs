@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Fclp;
 using TagsCloudContainer.Core;
+using TagsCloudContainer.UserInterface.ArgumentsParsing;
 
 namespace TagsCloudContainer.UserInterface
 {
-    public class ConsoleUserInterface : IUserInterface
+    public class ConsoleUserInterface : IParametersProvider, IResultDisplay
     {
+        private readonly IArgumentsParser<ConsoleUserInterfaceArguments> argumentsParser;
+
+        public ConsoleUserInterface(IArgumentsParser<ConsoleUserInterfaceArguments> argumentsParser)
+        {
+            this.argumentsParser = argumentsParser;
+        }
+
         public bool TryGetParameters(string[] programArgs, out Parameters parameters)
         {
             var parser = SetupParser();
@@ -16,7 +23,7 @@ namespace TagsCloudContainer.UserInterface
             var parseResult = parser.Parse(programArgs);
             if (!parseResult.HasErrors && !parseResult.HelpCalled)
             {
-                parameters = ParseArgumentsToParameters(parser.Object);
+                parameters = argumentsParser.ParseArgumentsToParameters(parser.Object);
                 return true;
             }
 
@@ -46,21 +53,13 @@ namespace TagsCloudContainer.UserInterface
                 .WithDescription("name of font, default is Arial");
             parser.Setup(arg => arg.Colors).As("colors").SetDefault(new List<string> {"Aqua", "Black"})
                 .WithDescription("names of colors to use, default: Aqua Black");
+            parser.Setup(arg => arg.ImageFormat).As('e', "extension").SetDefault("Png")
+                .WithDescription("extension of image file, default is Png");
 
             parser.SetupHelp("?", "help").UseForEmptyArgs().Callback(text => Console.WriteLine(text))
                 .WithHeader("Arguments to use:");
 
             return parser;
-        }
-
-        private Parameters ParseArgumentsToParameters(ConsoleUserInterfaceArguments arguments)
-        {
-            var imageSize = new Size(arguments.Width, arguments.Height);
-            var fontConverter = new FontConverter();
-            var font = fontConverter.ConvertFromString(arguments.Font) as Font;
-            var colorConverter = new ColorConverter();
-            var colors = arguments.Colors.Select(name => colorConverter.ConvertFromString(name)).Cast<Color>().ToList();
-            return new Parameters(arguments.InputFilePath, arguments.OutputFilePath, colors, font, imageSize);
         }
     }
 }

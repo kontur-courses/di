@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using TagsCloudContainer.Visualizing.ColorHandling;
 
 namespace TagsCloudContainer.Visualizing
@@ -19,6 +20,7 @@ namespace TagsCloudContainer.Visualizing
             var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(bitmap);
             graphics.Clear(colorHandler.BackgroundColor);
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
             foreach (var (word, rectangle) in wordsInRectangles)
             {
                 var suitableFontSize = GetSuitableFontSize(graphics, word, rectangle.Size, font);

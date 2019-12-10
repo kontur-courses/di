@@ -4,7 +4,7 @@
 
 `TagsCloudContainer.exe -i yourtext.txt`
 
-`TagsCloudContainer.exe -i yourtext.txt -o yourpng.png -w 1280 -h 720 -f Arial --colors Red Blue Green`
+`TagsCloudContainer.exe -i yourtext.txt -o yourpng.png -w 1280 -h 720 -f Arial -e Bmp --colors Red Blue Green`
 
 Подробнее об аргументах программы, их значениях по умолчанию, какие из них обязательны, можно узнать запустив:
 

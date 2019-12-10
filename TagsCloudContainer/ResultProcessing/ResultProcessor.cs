@@ -16,9 +16,9 @@ namespace TagsCloudContainer.ResultProcessing
             this.resultDisplay = resultDisplay;
         }
 
-        public void ProcessResult(Bitmap bitmap, string filePath)
+        public void ProcessResult(Bitmap bitmap, string filePath, ImageFormat imageFormat)
         {
-            imageSaver.SaveBitmap(bitmap, filePath, ImageFormat.Png);
+            imageSaver.SaveBitmap(bitmap, filePath, imageFormat);
             resultDisplay.ShowResult(bitmap);
         }
     }

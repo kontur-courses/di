@@ -15,5 +15,7 @@ namespace TagsCloudContainer.UserInterface
         public string Font { get; set; }
 
         public List<string> Colors { get; set; }
+
+        public string ImageFormat { get; set; }
     }
 }

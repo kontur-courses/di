@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudContainer.Core
 {
@@ -14,14 +15,17 @@ namespace TagsCloudContainer.Core
         public Font Font { get; }
 
         public Size ImageSize { get; }
+        public ImageFormat ImageFormat { get; }
 
-        public Parameters(string inputFilePath, string outputFilePath, List<Color> colors, Font font, Size imageSize)
+        public Parameters(string inputFilePath, string outputFilePath, List<Color> colors, Font font, Size imageSize,
+            ImageFormat imageFormat)
         {
             InputFilePath = inputFilePath;
             OutputFilePath = outputFilePath;
             Colors = colors;
             Font = font;
             ImageSize = imageSize;
+            ImageFormat = imageFormat;
         }
     }
 }
