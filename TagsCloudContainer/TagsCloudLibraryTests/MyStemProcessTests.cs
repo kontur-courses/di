@@ -125,7 +125,7 @@ namespace TagsCloudLibraryTests
             };
 
 
-            var words = myStemProcess.GetWordsWithGrammar(wordsList);
+            var words = myStemProcess.GetWordsWithGrammar(wordsList).ToList();
             var initialStrings = words.Select(word => word.InitialString);
             var initialForms = words.Select(word => word.Grammar.InitialForm);
 
