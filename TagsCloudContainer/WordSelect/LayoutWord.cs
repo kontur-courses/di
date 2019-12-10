@@ -8,16 +8,15 @@ namespace TagsCloudContainer
         public Brush Brush { get; }
         public Font Font { get; }
         
-        public int Count { get; private set; }
+        public Size Size { get; }
 
-        public LayoutWord(string word, Brush brush, Font font)
+        public LayoutWord(string word, Brush brush, Font font, Size size)
         {
             Word = word;
             Brush = brush;
             Font = font;
-            Count = 1;
+            Size = size;
         }
         
-        public void Add() => Count++;
     }
 }

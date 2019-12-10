@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using NHunspell;
 
 namespace TagsCloudContainer
 {
@@ -12,27 +16,32 @@ namespace TagsCloudContainer
             this.reader = reader;
             this.wordSetting = wordSetting;
         }
-        
+
         public IEnumerable<LayoutWord> Select()
         {
-            var layoutWords = new Dictionary<string, LayoutWord>();
+            var layoutWords = new Dictionary<string, int>();
             foreach (var word in reader.ReadWords())
             {
                 var clearWord = SelectWord(word);
-                if(clearWord is null)
+                if (clearWord is null)
                     continue;
                 if (layoutWords.ContainsKey(clearWord))
-                    layoutWords[clearWord].Add();
+                    layoutWords[clearWord]++;
                 else
-                    layoutWords[clearWord] = new LayoutWord(clearWord, wordSetting.Brush, wordSetting.Font);                
+                    layoutWords[clearWord] = 1;
             }
-            
-            return layoutWords.Values;
+
+            return layoutWords.Keys.Select(x =>
+            {
+                var font = new Font(wordSetting.FontName, layoutWords[x] < 12 ? layoutWords[x] + 6 : 18);
+                var size = new Size(x.Length * (int) Math.Round(font.Size), font.Height);
+                return new LayoutWord(x, wordSetting.Brush, font, size);
+            });
         }
 
         private string SelectWord(string word)
         {
-            return word.Length < 4 ? null : word.ToLower();
+            return word.Length < 4 ? null : word.ToLower().Trim();
         }
     }
 }

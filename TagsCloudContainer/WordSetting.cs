@@ -5,12 +5,12 @@ namespace TagsCloudContainer
 {
     public class WordSetting
     {
-        public Font Font { get; }
+        public string FontName { get; }
         public SolidBrush Brush { get; }
         
         public WordSetting(string fontName, int size, string color)
         {
-            Font = new Font(fontName, size);
+            FontName = fontName;
             Brush = new SolidBrush(Color.FromName(color));
         }
     }
