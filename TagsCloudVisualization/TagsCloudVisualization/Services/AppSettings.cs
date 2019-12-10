@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagsCloudVisualization.Services;
+using TagsCloudVisualization.Logic;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Services
 {
     public class AppSettings : IImageSettingsProvider, IDocumentPathProvider, IBoringWordsProvider
     {

@@ -5,8 +5,10 @@ using Autofac;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
+using TagsCloudVisualization.Logic;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
@@ -47,7 +49,7 @@ namespace TagsCloudVisualization
         {
             var recSize = new Size(10, 10);
             var expectedShiftedCenter =
-                new Point(- recSize.Width / 2, - recSize.Height / 2);
+                new Point(-recSize.Width / 2, -recSize.Height / 2);
             var rectangle = layouter.PutNextRectangle(recSize);
 
             new Point(rectangle.X, rectangle.Y).Should().Be(expectedShiftedCenter);

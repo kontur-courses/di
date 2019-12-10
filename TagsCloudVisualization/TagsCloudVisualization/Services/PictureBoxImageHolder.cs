@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace TagsCloudVisualization.Actions
+namespace TagsCloudVisualization.Services
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder 
     {

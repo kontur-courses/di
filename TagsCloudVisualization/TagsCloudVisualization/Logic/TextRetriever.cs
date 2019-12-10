@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Logic
 {
     public static class TextRetriever
     {

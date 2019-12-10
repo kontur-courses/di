@@ -2,41 +2,54 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TagsCloudVisualization.Actions;
+using TagsCloudVisualization.Services;
+using TagsCloudVisualization.UI.Actions;
 
 namespace TagsCloudVisualization
 {
     public partial class MainForm : Form
     {
+        private readonly Panel imagePanel;
+        private readonly Panel buttonPanel;
+
         public MainForm(IUiAction[] menuActions, PictureBoxImageHolder imageHolderBox)
         {
             WindowState = FormWindowState.Maximized;
-            var buttonPanel = InitializeButtonPanel(menuActions);
-            var panel = InitializeImagePanel(imageHolderBox, new Padding(0, buttonPanel.Height,0,0));
+            buttonPanel = InitializeButtonPanel(menuActions);
+            imagePanel = InitializeImagePanel(imageHolderBox);
+            ResizeFormComponents();
             Controls.Add(buttonPanel);
-            Controls.Add(panel);
+            Controls.Add(imagePanel);
         }
 
-        private FlowLayoutPanel InitializeImagePanel(PictureBox imageHolderBox, Padding panelPadding)
+        protected override void OnResize(EventArgs e)
+        {
+            ResizeFormComponents();
+        }
+
+        private void ResizeFormComponents()
+        {
+            imagePanel.Size = new Size(ClientSize.Width, ClientSize.Height - buttonPanel.Height);
+        }
+
+
+        private FlowLayoutPanel InitializeImagePanel(PictureBox imageHolderBox)
         {
             imageHolderBox.Dock = DockStyle.Fill;
             imageHolderBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            var imagePanel = new FlowLayoutPanel
+            var panel = new FlowLayoutPanel
             {
-                Dock = DockStyle.Fill,
                 AutoScroll = true,
+                Location = new Point(0, buttonPanel.Height)
             };
-            imagePanel.VerticalScroll.Maximum = 200;
-            imageHolderBox.AutoScrollOffset = new Point(100, 100);
-            imagePanel.DockPadding.Top = panelPadding.Top;
-            imagePanel.Controls.Add(imageHolderBox);
-            return imagePanel;
+            panel.Controls.Add(imageHolderBox);
+            return panel;
         }
 
         private Panel InitializeButtonPanel(IEnumerable<IUiAction> actions)
         {
             var buttonSize = new Size(200, 80);
-            var buttonPanel = new Panel
+            var panel = new Panel
             {
                 AutoSize = true,
                 Dock = DockStyle.Fill,
@@ -48,9 +61,9 @@ namespace TagsCloudVisualization
             {
                 var button = CreateButtonFromAction(action, buttonSize, buttonPosition);
                 buttonPosition = new Point(buttonPosition.X + buttonSize.Width, 0);
-                buttonPanel.Controls.Add(button);
+                panel.Controls.Add(button);
             }
-            return buttonPanel;
+            return panel;
         }
 
         private Button CreateButtonFromAction(IUiAction action, Size size, Point position)

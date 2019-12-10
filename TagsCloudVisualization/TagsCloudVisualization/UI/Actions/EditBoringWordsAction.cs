@@ -1,7 +1,7 @@
 ﻿using System;
 using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization.Actions
+namespace TagsCloudVisualization.UI.Actions
 {
     public class EditBoringWordsAction : IUiAction
     {

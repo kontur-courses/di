@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization.Actions
+namespace TagsCloudVisualization.UI.Actions
 {
     public class SaveImageAction : IUiAction
     {

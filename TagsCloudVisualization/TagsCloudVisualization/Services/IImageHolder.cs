@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Services
 {
     public interface IImageHolder
     {

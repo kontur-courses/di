@@ -2,8 +2,9 @@
 using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloudVisualization.Actions;
+using TagsCloudVisualization.Logic;
 using TagsCloudVisualization.Services;
+using TagsCloudVisualization.UI.Actions;
 
 namespace TagsCloudVisualization
 {
@@ -31,8 +32,7 @@ namespace TagsCloudVisualization
             builder.RegisterType<AppSettings>()
                 .SingleInstance()
                 .As<IImageSettingsProvider>()
-                .As<IDocumentPathProvider>()
-                .As<IBoringWordsProvider>();
+                .As<IDocumentPathProvider>().As<IBoringWordsProvider>();
             return builder.Build();
         }
     }

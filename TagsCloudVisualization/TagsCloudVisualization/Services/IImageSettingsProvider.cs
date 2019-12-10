@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Services
 {
     public interface IImageSettingsProvider
     {

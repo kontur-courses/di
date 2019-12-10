@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization.Actions
+namespace TagsCloudVisualization.UI.Actions
 {
     public class ChooseFilePathAction : IUiAction
     {

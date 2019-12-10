@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Logic
 {
     public class TextParser : IParser
     {

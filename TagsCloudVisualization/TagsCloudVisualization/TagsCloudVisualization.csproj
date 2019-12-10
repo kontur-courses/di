@@ -66,7 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoringWordsEditor.cs">
+    <Compile Include="UI\BoringWordsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Services\IBoringWordsProvider.cs" />

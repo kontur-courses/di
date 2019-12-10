@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Logic
 {
     public class ArchimedeanSpiral : ICirclePointLocator
     {

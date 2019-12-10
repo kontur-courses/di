@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
+using TagsCloudVisualization.Services;
 
-namespace TagsCloudVisualization.Actions
+namespace TagsCloudVisualization.UI.Actions
 {
     public class CreateCloudAction : IUiAction
     {
@@ -14,7 +14,7 @@ namespace TagsCloudVisualization.Actions
 
         public CreateCloudAction(
             IVisualizer visualizer,
-            IImageSettingsProvider imageSettingsProvider, 
+            IImageSettingsProvider imageSettingsProvider,
             IDocumentPathProvider pathProvider,
             IImageHolder imageHolder)
         {
