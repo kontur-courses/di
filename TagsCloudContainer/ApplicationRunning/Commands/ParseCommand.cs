@@ -19,7 +19,7 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         public void Act(string[] args)
         {
             var path = string.Join(" ", args).Trim('\'');
-            if(!File.Exists(path)) throw new ArgumentException($"No file '{path}' found!");
+            Check.Argument(path, $"No file '{path}' found!", File.Exists(path));
             var extension = Path.GetExtension(path);
             var parser = WordsParser.GetParser(extension);
             Parse(parser, path);

@@ -19,17 +19,15 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
 
         public void Act(string[] args)
         {
-            if(args.Length < 8) throw new ArgumentException("Incorrect arguments count! Expected 8.");
+            Check.ArgumentsCountIs(args, 8);
             var maker = BitmapMakers.TryGetBitmapMaker(args[0]);
-            if(maker is null) throw new ArgumentException($"Incorrect bitmap maker value {args[0]}");
-            if(!int.TryParse(args[1], out var width)
-            || width <= 1) throw new ArgumentException($"Incorrect width value {args[2]}");
-            if(!int.TryParse(args[2], out var height)
-            || height <= 1) throw new ArgumentException($"Incorrect height value {args[3]}");
+            Check.Argument(args[0], maker != null);
+            Check.Argument(args[1], int.TryParse(args[1], out var width), width > 1);
+            Check.Argument(args[2], int.TryParse(args[2], out var height), height > 1);
             var backgroundColor = Color.FromName(args[3]);
             var firstColor = Color.FromName(args[4]);
             var secondColor = Color.FromName(args[5]);
-            if(!bool.TryParse(args[6], out var isGradient)) throw new ArgumentException($"Incorrect is gradient value {args[6]}");
+            Check.Argument(args[6], bool.TryParse(args[6], out var isGradient));
             var fontName = string.Join(" ", args.Skip(7)).Trim('\'');
             var font = new Font(fontName, 16);
             var palette = new Palette

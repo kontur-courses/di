@@ -72,6 +72,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationRunning\Commands\Check.cs" />
     <Compile Include="ApplicationRunning\Commands\GenerateCloudCommand.cs" />
     <Compile Include="ApplicationRunning\Commands\ParseCommand.cs" />
     <Compile Include="ApplicationRunning\Commands\SaveCommand.cs" />

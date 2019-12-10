@@ -17,10 +17,10 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         }
         public void Act(string[] args)
         {
-            if(args.Length < 3) throw new ArgumentException("Incorrect arguments count! Expected 3.");
-            if(!Directory.Exists(args[0])) throw new ArgumentException($"Incorrect directory '{args[0]}'");
+            Check.ArgumentsCountIs(args, 3);
+            Check.Argument(args[0], $"Incorrect directory '{args[0]}'", Directory.Exists(args[0]));
             var format = SupportedImageFormats.TryGetSupportedImageFormats(args[2]);
-            if(format is null) throw new ArgumentException($"Incorrect image format '{args[2]}'");
+            Check.Argument(args[2], format != null);
             var filename = args[1] + "." + args[2];
             var fullPath = Path.Combine(args[0], filename);
             Save(format, fullPath);

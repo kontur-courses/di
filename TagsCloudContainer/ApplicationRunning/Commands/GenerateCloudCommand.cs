@@ -16,16 +16,12 @@ namespace TagsCloudContainer.ApplicationRunning.Commands
         
         public void Act(string[] args)
         {
-            if(args.Length < 4) throw new ArgumentException("Incorrect arguments count! Expected 4.");
-            if(!double.TryParse(args[2], out var step) 
-               || step < 0.1) throw new ArgumentException($"Incorrect step value {args[2]}");
-            if(!int.TryParse(args[3], out var broadness) 
-               || broadness <= 0
-               || broadness > 2) throw new ArgumentException($"Incorrect broadness value {args[3]}");
-            if (!int.TryParse(args[1], out var size) 
-                || size <= 0) throw new ArgumentException($"Incorrect size value {args[1]}");
+            Check.ArgumentsCountIs(args, 4);
+            Check.Argument(args[2], double.TryParse(args[2], out var step), step > 0.1);
+            Check.Argument(args[3], int.TryParse(args[3], out var broadness), broadness > 0, broadness <= 2);
+            Check.Argument(args[1], int.TryParse(args[1], out var size), size > 0);
             var algorithm = CloudLayoutingAlgorithms.TryGetLayoutingAlgorithm(args[0], step, broadness);
-            if(algorithm == null) throw new ArgumentException($"Incorrect algorithm name {args[0]}");
+            Check.Argument(args[0], algorithm != null);
             Generate(step, broadness, size, algorithm);
             Console.WriteLine("Successfully generated cloud.");
         }
