@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Autofac;
@@ -35,6 +36,9 @@ namespace TagsCloudCLI
 
             [Option("height", Required = false, Default = 10000, HelpText = "Width of the image")]
             public int ImageHeight { get; set; }
+
+            [Option('f', "format", Required = false, Default = "png", HelpText = "Output image format")]
+            public string OutputFormat { get; set; }
         }
 
         static void Main(string[] args)
@@ -87,7 +91,23 @@ namespace TagsCloudCLI
             builder.RegisterInstance(FontFamily.GenericSansSerif).As<FontFamily>();
             builder.RegisterType<BlackColorer>().As<IColorer>();
 
-            builder.RegisterType<PngWriter>().As<IImageWriter>();
+            switch (options.OutputFormat)
+            {
+                case "jpeg":
+                case "jpg":
+                    builder.RegisterType<JpegWriter>().As<IImageWriter>();
+                    break;
+                case "bmp":
+                    builder.RegisterType<BmpWriter>().As<IImageWriter>();
+                    break;
+                case "png":
+                    builder.RegisterType<PngWriter>().As<IImageWriter>();
+                    break;
+                default:
+                    Console.WriteLine($"Given wrong output format {options.OutputFormat}. Reverting to png.");
+                    builder.RegisterType<PngWriter>().As<IImageWriter>();
+                    break;
+            }
 
             builder.RegisterType<TagsCloudGenerator>().AsSelf();
             
