@@ -38,7 +38,7 @@ namespace TagsCloud
             var tags = tagGenerator.GenerateTag(wordStatistics);
             var tagCloud = tagCloudGenerator.GenerateTagCloud(tags);
             using (var image = cloudDrawer.Paint(tagCloud, new Size(tagCloudSettings.WidthOutputImage, tagCloudSettings.HeightOutputImage), tagCloudSettings.BackgroundColor, 15))
-                imageSaver.SaveImage(image, tagCloudSettings.PathToOutput);
+                imageSaver.SaveImage(image, tagCloudSettings.PathToOutput, tagCloudSettings.imageFormat);
         }
     }
 }

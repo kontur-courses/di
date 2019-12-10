@@ -58,6 +58,9 @@ namespace TagsCloud.TagsCloudConsoleClient
             Parser.Default.ParseArguments<Options>(args)
               .WithParsed(opts =>
               {
+                  var imageFormatResult = TypesCollector.GetFormatFromPathSaveFile(opts.savePath);
+                  if (imageFormatResult == null)
+                      throw new ArgumentException("Unsupported image format.");
                   container.RegisterInstance(new TagCloudSettings(opts.InputFiles,
                       opts.savePath,
                       opts.boringWordsPath,
@@ -66,7 +69,8 @@ namespace TagsCloud.TagsCloudConsoleClient
                       Color.FromName(opts.backgroundColor),
                       opts.fontName,
                       opts.ignoredPartsOfSpeech.Split(","),
-                      opts.GenerationAlgoritm)).AsSelf().SingleInstance();
+                      opts.GenerationAlgoritm, 
+                      imageFormatResult)).AsSelf().SingleInstance();
                   tagLayouterType = TypesCollector.GetTypeGeneationLayoutersByName(opts.GenerationAlgoritm);
                   if (tagLayouterType == null)
                       throw new ArgumentException($"Unknown generation algoritm {opts.GenerationAlgoritm}");

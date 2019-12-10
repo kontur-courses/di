@@ -24,7 +24,8 @@ namespace TagsCloud
             Color BackgroundColor,
             string FontName,
             string[] ignoredPartOfSpeech,
-            string generationAlgoritm)
+            string generationAlgoritm,
+            ImageFormat imageFormat)
         {
             this.PathToInput = PathToInput;
             this.PathToOutput = PathToOutput;
@@ -33,7 +34,7 @@ namespace TagsCloud
             this.HeightOutputImage = HeightOutputImage;
             this.BackgroundColor = BackgroundColor;
             this.FontName = FontName;
-            this.imageFormat = ImageFormat.Png;
+            this.imageFormat = imageFormat;
             this.ignoredPartOfSpeech = ignoredPartOfSpeech;
             this.generationAlgoritm = generationAlgoritm;
         }

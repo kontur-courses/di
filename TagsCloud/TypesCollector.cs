@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using TagsCloud.CloudLayouter;
 using TagsCloud.FileReader;
 
@@ -19,6 +21,12 @@ namespace TagsCloud
             {"WhiteSpace", typeof(SpliterByWhiteSpace) }
         };
 
+        private static Dictionary<string, ImageFormat> supportedImageFormat = new Dictionary<string, ImageFormat>
+        {
+            {"png", ImageFormat.Png },
+            {"bmp", ImageFormat.Bmp },
+            {"jpeg", ImageFormat.Jpeg }
+        };
 
         public static Type GetTypeGeneationLayoutersByName(string word)
         {
@@ -32,6 +40,17 @@ namespace TagsCloud
             Type type;
             Splitter.TryGetValue(word, out type);
             return type;
+        }
+
+        public static ImageFormat GetFormatFromPathSaveFile(string path)
+        {
+            var fileInfo = Path.GetFileName(path).Split(".");
+            if (fileInfo.Length < 2)
+                throw new ArgumentException("Missing image format of result");
+            var extension = fileInfo[1].ToLower();
+            ImageFormat imageFormat;
+            supportedImageFormat.TryGetValue(extension, out imageFormat);
+            return imageFormat;
         }
     }
 }
