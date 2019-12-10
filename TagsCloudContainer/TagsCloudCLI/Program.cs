@@ -42,6 +42,9 @@ namespace TagsCloudCLI
 
             [Option('c', "color", Required = false, Default = "black", HelpText = "Coloring algorithm or constant color")]
             public string Color { get; set; }
+            
+            [Option("font", Required = false, Default = "Arial", HelpText = "Font family for text")]
+            public string Font { get; set; }
         }
 
         static void Main(string[] args)
@@ -91,7 +94,17 @@ namespace TagsCloudCLI
 
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
 
-            builder.RegisterInstance(FontFamily.GenericSansSerif).As<FontFamily>();
+
+            FontFamily fontFamily;
+            try
+            {
+                fontFamily = new FontFamily(options.Font);
+            }
+            catch
+            {
+                fontFamily = FontFamily.GenericSansSerif;
+            }
+            builder.RegisterInstance(fontFamily).As<FontFamily>();
 
             switch (options.Color)
             {
@@ -127,6 +140,7 @@ namespace TagsCloudCLI
             var container = builder.Build();
 
             var tagsCloud = container.Resolve<TagsCloudGenerator>();
+
             tagsCloud.GenerateFromFile(options.InputFile, options.OutputFile, imageWidth, imageHeight);
         }
 
