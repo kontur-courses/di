@@ -32,14 +32,16 @@ namespace TagsCloudApplicationTests
             containerBuilder.RegisterType<WordsProvider>();
         }
 
-        public WordsProvider GetSimpleWordProvider()
+        private WordsProvider GetSimpleWordProvider()
         {
             containerBuilder.RegisterType<EmptyWordFilter>()
+                .As<IWordFilter>();
+            containerBuilder.RegisterType<BoringWordsFilter>()
                 .As<IWordFilter>();
             return containerBuilder.Build().Resolve<WordsProvider>();
         }
 
-        public string GetFilePath(string testFileName)
+        private string GetFilePath(string testFileName)
         {
             return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 @"WordsProviderTestFiles", testFileName);
@@ -48,23 +50,37 @@ namespace TagsCloudApplicationTests
         [Test]
         public void ParseEmptyFile_Properly()
         {
-            var wordProvider = GetSimpleWordProvider();
-            var testFilePath = GetFilePath("EmptyFile.txt");
-
-            var resultWords = wordProvider.ReadWordsFromFile(testFilePath);
-
-            resultWords.Should().BeEquivalentTo(new List<string>());
+            TestSimpleWordsProvider("EmptyFile.txt", new List<string>());
         }
 
         [Test]
         public void ParseWhitespaceFile_Properly()
         {
+            TestSimpleWordsProvider("WhitespaceFile.txt", new List<string>());
+        }
+
+        [Test]
+        public void ConvertToLowerCase_WithLowerCaseProcessor()
+        {
+            var expectedWords = new List<string>() { "first", "second", "third", "fourth", "fifth" };
+            TestSimpleWordsProvider("VariousCaseFile.txt", expectedWords);
+        }
+
+        [Test]
+        public void FilterBoringWords_WithBoringWordsFilter()
+        {
+            var expectedWords = new List<string>() { "first", "second", "third" };
+            TestSimpleWordsProvider("BoringWordsFile.txt", expectedWords);
+        }
+
+        private void TestSimpleWordsProvider(string filename, List<string> expectedWords)
+        {
             var wordProvider = GetSimpleWordProvider();
-            var testFilePath = GetFilePath("WhitespaceFile.txt");
+            var testFilePath = GetFilePath(filename);
 
             var resultWords = wordProvider.ReadWordsFromFile(testFilePath);
 
-            resultWords.Should().BeEquivalentTo(new List<string>());
+            resultWords.Should().BeEquivalentTo(expectedWords);
         }
     }
 }
