@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.Services;
 
 namespace TagsCloudVisualization
 {
@@ -9,9 +10,15 @@ namespace TagsCloudVisualization
         private readonly ILayouter layouter;
         private readonly IParser textParser;
         private readonly ITagPainter painter;
+        private readonly IBoringWordsProvider boringWordsProvider;
 
-        public TagCloudVisualizer(IParser textParser, ILayouter layouter, ITagPainter painter)
+        public TagCloudVisualizer(
+            IParser textParser, 
+            ILayouter layouter, 
+            ITagPainter painter, 
+            IBoringWordsProvider boringWordsProvider)
         {
+            this.boringWordsProvider = boringWordsProvider;
             this.textParser = textParser;
             this.layouter = layouter;
             this.painter = painter;
@@ -20,7 +27,7 @@ namespace TagsCloudVisualization
         public Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings)
         {
             var text = TextRetriever.RetrieveTextFromFile(fileName);
-            var wordTokens = textParser.ParseToTokens(text);
+            var wordTokens = textParser.ParseToTokens(text, boringWordsProvider.BoringWords);
             var bmp = new Bitmap(imageSettings.ImageSize.Width, imageSettings.ImageSize.Height);
             var graphics = Graphics.FromImage(bmp);
             graphics.FillRectangle(new SolidBrush(imageSettings.BackgroundColor), 0, 0, bmp.Width, bmp.Height);

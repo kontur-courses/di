@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface IParser
     {
-        IEnumerable<WordToken> ParseToTokens(string text);
+        IEnumerable<WordToken> ParseToTokens(string text, HashSet<string> boringWords);
     }
 }

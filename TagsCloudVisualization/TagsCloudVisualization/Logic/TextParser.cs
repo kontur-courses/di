@@ -5,14 +5,7 @@ namespace TagsCloudVisualization
 {
     public class TextParser : IParser
     {
-        private readonly HashSet<string> boringWords;
-
-        public TextParser()
-        {
-            boringWords = new HashSet<string>(ExtractBoringWords());
-        }
-
-        public IEnumerable<WordToken> ParseToTokens(string text)
+        public IEnumerable<WordToken> ParseToTokens(string text, HashSet<string> boringWords)
         {
             var wordCountDictionary = new Dictionary<string, int>();
             var splittedText = text.Split('\n').Select(word => word.ToLower());
@@ -28,11 +21,6 @@ namespace TagsCloudVisualization
             }
             foreach (var kvp in wordCountDictionary)
                 yield return new WordToken(kvp.Key, kvp.Value);
-        }
-
-        private IEnumerable<string> ExtractBoringWords()
-        {
-            return TextRetriever.RetrieveTextFromFile("BoringWords.txt").Split('\n');
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudVisualization.Actions;
+using TagsCloudVisualization.Services;
 
 namespace TagsCloudVisualization
 {
@@ -27,7 +28,11 @@ namespace TagsCloudVisualization
             builder.RegisterType<RandomTagPainter>().SingleInstance().As<ITagPainter>();
             builder.RegisterType<MainForm>().SingleInstance().As<MainForm>();
             builder.RegisterType<PictureBoxImageHolder>().SingleInstance().As<IImageHolder>().As<PictureBoxImageHolder>();
-            builder.RegisterType<AppSettings>().SingleInstance().As<IImageSettingsProvider>().As<IDocumentPathProvider>();
+            builder.RegisterType<AppSettings>()
+                .SingleInstance()
+                .As<IImageSettingsProvider>()
+                .As<IDocumentPathProvider>()
+                .As<IBoringWordsProvider>();
             return builder.Build();
         }
     }
