@@ -20,7 +20,6 @@ namespace TagsCloudLibraryTests
     {
         private TagsCloudGenerator tagsCloudGenerator;
         private Size imageSize = new Size(10000, 10000);
-        private string inputFileName;
 
         [SetUp]
         public void SetUp()
