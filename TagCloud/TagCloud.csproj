@@ -78,7 +78,6 @@
     <Compile Include="ShowImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TagCollection.cs" />
     <Compile Include="TagCollectionFactory.cs" />
     <Compile Include="WordsHandler.cs" />
     <Compile Include="ArchemedianSpiral.cs" />

@@ -1,9 +1,10 @@
-﻿using TagCloud.Models;
+﻿using System.Collections.Generic;
+using TagCloud.Models;
 
 namespace TagCloud.IServices
 {
     public interface ITagCollectionFactory
     {
-        TagCollection Create(ImageSettings imageSettings,string path);
+        List<Tag> Create(ImageSettings imageSettings,string path);
     }
 }

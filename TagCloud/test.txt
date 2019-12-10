@@ -26,9 +26,9 @@ love
 and
 i
 hate
-boat
-boat
-boat
+BOAT
+boaT
+Boat
 boat
 boat
 boat

@@ -22,7 +22,7 @@ namespace TagCloud
             layouter.Clear();
             var tagCollection = tagCollectionFactory.Create(imageSettings,path);
             var center = new Point(imageSettings.Width/2,imageSettings.Height/2);
-            var rectangles = tagCollection.Tags
+            var rectangles = tagCollection
                 .Select(t => new TagRectangle(
                     t,
                     layouter.PutNextRectangle(GetWordSize(t, graphics), center)))

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TagCloud.IServices;
 using TagCloud.Models;
 
@@ -15,13 +16,13 @@ namespace TagCloud
             this.parser = parser;
         }
 
-        public TagCollection Create(ImageSettings imageSettings, string path)
+        public List<Tag> Create(ImageSettings imageSettings, string path)
         {
             var primaryCollection = wordsHandler.GetWordsAndCount(path);
             var collectionAfterConvertion = wordsHandler.Conversion(primaryCollection);
-            return new TagCollection(parser.GetTagsRectangles(collectionAfterConvertion,imageSettings)
+            return parser.GetTagsRectangles(collectionAfterConvertion,imageSettings)
                 .OrderByDescending(t => t.Count)
-                .ToList());
+                .ToList();
         }
     }
 }
