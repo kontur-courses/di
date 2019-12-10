@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization
 {
-    public interface ImageSettingsProvider
+    public interface IImageSettingsProvider
     {
         ImageSettings ImageSettings { get; }
     }

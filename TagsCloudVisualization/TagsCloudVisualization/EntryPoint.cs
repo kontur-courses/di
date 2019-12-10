@@ -26,8 +26,8 @@ namespace TagsCloudVisualization
             builder.RegisterType<TextParser>().SingleInstance().As<IParser>();
             builder.RegisterType<RandomTagPainter>().SingleInstance().As<ITagPainter>();
             builder.RegisterType<MainForm>().SingleInstance().As<MainForm>();
-            builder.RegisterType<PictureBox>().SingleInstance().As<PictureBox>();
-            builder.RegisterType<AppSettings>().SingleInstance().As<ImageSettingsProvider>();
+            builder.RegisterType<PictureBoxImageHolder>().SingleInstance().As<IImageHolder>().As<PictureBoxImageHolder>();
+            builder.RegisterType<AppSettings>().SingleInstance().As<IImageSettingsProvider>().As<IDocumentPathProvider>();
             return builder.Build();
         }
     }

@@ -1,20 +1,21 @@
-﻿using System.Drawing.Imaging;
+﻿using System;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace TagsCloudVisualization.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private readonly PictureBox imageHolder;
+        private readonly IImageHolder imageHolder;
         public string Name { get; }
 
-        public SaveImageAction(PictureBox imageHolder)
+        public SaveImageAction(IImageHolder imageHolder)
         {
             this.imageHolder = imageHolder;
             Name = "Save";
         }
 
-        public void Perform()
+        public void Perform(object sender, EventArgs e)
         {
             var saveDialog = new SaveFileDialog {Filter = "Images|*.png"};
             if (saveDialog.ShowDialog() == DialogResult.OK)

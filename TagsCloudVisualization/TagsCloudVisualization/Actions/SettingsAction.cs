@@ -1,17 +1,19 @@
-﻿namespace TagsCloudVisualization.Actions
+﻿using System;
+
+namespace TagsCloudVisualization.Actions
 {
     public class SettingsAction : IUiAction
     {
-        private readonly ImageSettingsProvider imageSettingsProvider;
+        private readonly IImageSettingsProvider imageSettingsProvider;
         public string Name { get; }
 
-        public SettingsAction(ImageSettingsProvider imageSettingsProvider)
+        public SettingsAction(IImageSettingsProvider imageSettingsProvider)
         {
             Name = "Settings";
             this.imageSettingsProvider = imageSettingsProvider;
         }
 
-        public void Perform()
+        public void Perform(object sender, EventArgs e)
         {
             var settings = new SettingsForm(imageSettingsProvider.ImageSettings);
             settings.ShowDialog();

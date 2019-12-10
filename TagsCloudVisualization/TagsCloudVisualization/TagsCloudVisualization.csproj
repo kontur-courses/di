@@ -64,14 +64,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\CreateCloudFromFileAction.cs" />
+    <Compile Include="Actions\CreateCloudAction.cs" />
+    <Compile Include="Actions\ChooseFilePathAction.cs" />
     <Compile Include="Actions\IUiAction.cs" />
+    <Compile Include="PictureBoxImageHolder.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\SettingsAction.cs" />
     <Compile Include="ArchimedeanSpiral.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="AppSettings.cs" />
-    <Compile Include="ImageSettingsProvider.cs" />
+    <Compile Include="IDocumentPathProvider.cs" />
+    <Compile Include="IImageHolder.cs" />
+    <Compile Include="IImageSettingsProvider.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
