@@ -19,9 +19,6 @@ namespace TagsCloudContainer
             [Option('w', "width", Required = false, HelpText = "Width of image", Default = 640)]
             public int Width { get; set; }
             
-            [Option('s', "size", Required = false, HelpText = "Size of letter", Default = 20)]
-            public int Size { get; set; }
-            
             [Option('c', "color", Required = false, HelpText = "Color of word", Default = "Black")]
             public string Color { get; set; }
             
@@ -34,7 +31,7 @@ namespace TagsCloudContainer
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
-                   setting = new WordSetting(o.Font, o.Size, o.Color);
+                   setting = new WordSetting(o.Font, o.Color);
                    
                 });
             return setting;
@@ -55,7 +52,7 @@ namespace TagsCloudContainer
         public string GetPath(string[] args)
         {
             var path = default(string);
-            Parser.Default.ParseArguments<Options>(args).WithNotParsed<Options>(errors => throw new ArgumentException())
+            Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
                     path = o.Filename;

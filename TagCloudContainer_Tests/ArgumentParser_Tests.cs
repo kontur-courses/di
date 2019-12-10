@@ -20,13 +20,13 @@ namespace TagCloudContainer_Tests
         }
         
         [Test]
-        public void GetFilePath_IfNotGetRequiredFileName_throwException()
+        public void GetFilePath_IfNotGetRequiredFileName_ReturnNull()
         {
             var args = new[]{"-w", "140", "-h", "180"};
 
-           Action action = () => parser.GetPath(args);
-    
-            action.Should().Throw<ArgumentException>();
+            var actual = parser.GetPath(args);
+
+            actual.Should().BeNullOrEmpty();
         }
 
 

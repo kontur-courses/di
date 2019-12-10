@@ -8,7 +8,7 @@ namespace TagsCloudContainer
         public string FontName { get; }
         public SolidBrush Brush { get; }
         
-        public WordSetting(string fontName, int size, string color)
+        public WordSetting(string fontName, string color)
         {
             FontName = fontName;
             Brush = new SolidBrush(Color.FromName(color));

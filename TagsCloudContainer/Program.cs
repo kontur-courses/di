@@ -10,6 +10,8 @@ namespace TagsCloudContainer
         {
             var consoleParser = new ConsoleArgumentParser();
             var path = consoleParser.GetPath(args);
+            if (path is null)
+                return;
             var imageSetting = consoleParser.GetImageSetting(args);
             var wordSetting = consoleParser.GetWordSetting(args);
             var container = Register(wordSetting, imageSetting, path);
