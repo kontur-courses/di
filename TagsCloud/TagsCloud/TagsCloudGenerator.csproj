@@ -50,7 +50,6 @@
     <Compile Include="Bases\FactoryBase.cs" />
     <Compile Include="Bases\WordsLayouterBase.cs" />
     <Compile Include="Executors\PriorityExecutor.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Factories\PaintersFactory.cs" />
     <Compile Include="Factories\PointsSearchersFactory.cs" />
     <Compile Include="Factories\SaversFactory.cs" />

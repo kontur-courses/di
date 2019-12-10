@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using System.Reflection;
 using TagsCloudGenerator.Attributes;
-using TagsCloudGenerator.Extensions;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.Executors
@@ -18,7 +18,7 @@ namespace TagsCloudGenerator.Executors
             foreach (var executable in executables
                 .OrderByDescending(e => e
                     .GetType()
-                    .GetFirstAttributeObj<PriorityAttribute>()
+                    .GetCustomAttribute<PriorityAttribute>()
                     .Priority))
                 result = executable.Execute(result);
             return result;

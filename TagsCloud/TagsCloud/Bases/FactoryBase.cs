@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TagsCloudGenerator.Attributes;
-using TagsCloudGenerator.Extensions;
 using TagsCloudGenerator.Interfaces;
 
 namespace TagsCloudGenerator.Bases
@@ -24,7 +24,7 @@ namespace TagsCloudGenerator.Bases
             this.factorials = factorials.ToDictionary(f =>
                 f
                 .GetType()
-                .GetFirstAttributeObj<FactorialAttribute>()
+                .GetCustomAttribute<FactorialAttribute>()
                 .FactorialId);
             this.factorySettings = factorySettings;
             this.getSingleFactorialId = getSingleFactorialId;

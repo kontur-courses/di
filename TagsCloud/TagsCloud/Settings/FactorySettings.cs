@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Reflection;
 using TagsCloudGenerator.Attributes;
-using TagsCloudGenerator.Extensions;
 using TagsCloudGenerator.Interfaces;
 using TagsCloudGenerator.Painters;
 using TagsCloudGenerator.PointsSearchers;
@@ -37,7 +37,7 @@ namespace TagsCloudGenerator.Settings
 
         private string GetFactorialIdForType(Type type) =>
             type
-            .GetFirstAttributeObj<FactorialAttribute>()
+            .GetCustomAttribute<FactorialAttribute>()
             .FactorialId;
     }
 }
