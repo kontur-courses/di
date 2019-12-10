@@ -81,3 +81,4 @@
 - Тема  - [`PixelArtTheme`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudVisualization/Styling/Themes/PixelArtTheme.cs) 
 - Перемешиватель тегов - [`TokenShufflerAscending`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudTextProcessing/Shufflers/TokenShufflerAscending.cs)
 - Шрифт - **Bauhaus 93**
+- Разделитель текста - [`TextSplitter`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudTextProcessing/Splitters/TextSplitter.cs) с параметром `[^a-zA-Z]+`
