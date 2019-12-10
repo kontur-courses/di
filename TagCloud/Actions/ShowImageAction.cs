@@ -10,13 +10,14 @@ namespace TagCloud.Actions
 
         public string Description { get; } = "display image";
 
-        public  void  Perform(ClientConfig config, ImageSettings imageSettings)
+        public  void  Perform(ClientConfig config)
         {
             var thread = new Thread(() =>
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 var showImageForm = new ShowImageForm(config.ImageToSave);
+                config.IsRunning = true;
                 Application.Run(showImageForm);
             });
             thread.Start();

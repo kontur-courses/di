@@ -10,7 +10,6 @@ namespace TagCloud.Models
     {
         public ImageSettings ImageSettings { get; }
         public string PathToRead { get; }
-
         public UserSettings(ImageSettings imageSettings, string pathToRead)
         {
             ImageSettings = imageSettings;

@@ -1,4 +1,6 @@
-﻿using TagCloud.Models;
+﻿using System.Net.Mime;
+using System.Windows.Forms;
+using TagCloud.Models;
 
 namespace TagCloud.Actions
 {
@@ -7,8 +9,13 @@ namespace TagCloud.Actions
         public string CommandName { get; } = "-newimage";
         public string Description { get; } = "set parameters for a new image";
 
-        public void Perform(ClientConfig config, ImageSettings imageSettings)
+        public void Perform(ClientConfig config)
         {
+            if (config.IsRunning)
+            {
+                Application.Exit();
+                config.IsRunning = false;
+            }
             config.ToCreateNewImage = true;
         }
     }

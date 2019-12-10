@@ -6,6 +6,6 @@ namespace TagCloud
     {
         string CommandName { get; }
         string Description { get; }
-        void Perform(ClientConfig config,ImageSettings imageSettings);
+        void Perform(ClientConfig config);
     }
 }

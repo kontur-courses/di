@@ -25,7 +25,7 @@ namespace TagCloud
             };
             config = new ClientConfig();
             this.actions = actions;
-            this.paletteNamesFactory=paletteNamesFactory;
+            this.paletteNamesFactory = paletteNamesFactory;
             availablePaletteNames = new HashSet<string>();
         }
 
@@ -37,76 +37,101 @@ namespace TagCloud
             {
                 config.ToCreateNewImage = false;
                 var userSettings = ReadUserSettings();
-                if(userSettings is null)
+                if (userSettings is null)
                     continue;
                 config.ImageToSave = visualization.GetAndDrawRectangles(userSettings.ImageSettings, userSettings.PathToRead);
+                Console.WriteLine("Список доступных комманд :");
+                foreach (var action in actions)
+                    Console.WriteLine($"{action.CommandName}     \"{action.Description}\"");
                 while (!config.ToCreateNewImage)
                 {
                     Console.WriteLine("Введите команду");
-                    Console.WriteLine("Список доступных комманд :");
-                    foreach (var action in actions)
-                        Console.WriteLine($"{action.CommandName}     \"{action.Description}\"");
+                    Console.Write(">>>");
                     var command = Console.ReadLine().ToLower();
                     if (!actionsDictionary.ContainsKey(command))
                     {
                         Console.WriteLine("Unknown command");
                         continue;
                     }
-                    actionsDictionary[command].Perform(config,userSettings.ImageSettings);
+                    actionsDictionary[command].Perform(config);
                 }
             }
         }
 
         private UserSettings ReadUserSettings()
         {
-            var defaultFontName = "Arial";
-            var defaultPath = $"{Directory.GetParent(Environment.CurrentDirectory).Parent.FullName}\\test.txt";
-            var defaultPaletteName = "ShadesOfBlue";
+            if (!ReadWidth(out var width) || !ReadHeight(out var height)
+                || !ReadFontName(out var fontName) || !ReadPaletteName(out var paletteName)) return null;
+            var pathToRead = ReadPathToRead();
+            return new UserSettings(new ImageSettings(width, height, fontName, paletteName), pathToRead);
+        }
+
+        private static bool ReadWidth(out int width)
+        {
             Console.WriteLine("Введите ширину изображения");
-            if (!int.TryParse(Console.ReadLine() ?? throw new ArgumentException(), out var width))
-            {
-                Console.WriteLine("Введенная ширина не является числом");
-                return null;
-            }
+            Console.Write(">>>");
+            if (int.TryParse(Console.ReadLine() ?? throw new ArgumentException(), out width)) return true;
+            Console.WriteLine("Введенная ширина не является числом");
+            return false;
+        }
+
+        private static bool ReadHeight(out int height)
+        {
             Console.WriteLine("Введите высоту изображения");
-            if (!int.TryParse(Console.ReadLine() ?? throw new ArgumentException(), out var height))
-            {
-                Console.WriteLine("Введенная высота не является числом");
-                return null;
-            }
+            Console.Write(">>>");
+            if (int.TryParse(Console.ReadLine() ?? throw new ArgumentException(), out height)) return true;
+            Console.WriteLine("Введенная высота не является числом");
+            return false;
+        }
+
+        private static string ReadPathToRead()
+        {
+            var defaultPath = $"{Directory.GetParent(Environment.CurrentDirectory).Parent.FullName}\\test.txt";
             Console.WriteLine("Укажите путь к файлу с тегами");
             Console.WriteLine("Оставьте строку пустой, чтоб использовать путь: " + defaultPath);
+            Console.Write(">>>");
             var pathToRead = Console.ReadLine();
-            pathToRead = pathToRead == string.Empty
+            return pathToRead == string.Empty
                 ? defaultPath
                 : pathToRead;
+        }
+
+        private bool ReadFontName(out string fontName)
+        {
+            var defaultFontName = "Arial";
             Console.WriteLine("Введите шрифт");
             Console.WriteLine("Список доступных шрифтов :");
             foreach (var availableFontName in availableFontNames)
                 Console.WriteLine(availableFontName);
-            var fontName = Console.ReadLine();
+            Console.WriteLine("Оставьте строку пустой, чтоб использовать шрифт: " + defaultFontName);
+            Console.Write(">>>");
+            fontName = Console.ReadLine();
             fontName = fontName == string.Empty
                 ? defaultFontName
                 : fontName;
-            if (!availableFontNames.Contains(fontName))
-            {
-                Console.WriteLine("Введенный шрифт не поддерживается");
-                return null;
-            }
+            if (availableFontNames.Contains(fontName)) return true;
+            Console.WriteLine("Введенный шрифт не поддерживается");
+            return false;
+        }
+
+        private bool ReadPaletteName(out string paletteName)
+        {
+            var defaultPaletteName = "ShadesOfBlue";
             Console.WriteLine("Введите название палитры");
             Console.WriteLine("Список доступных палитр :");
             foreach (var name in availablePaletteNames)
                 Console.WriteLine(name);
-            var palleteName = Console.ReadLine();
-            palleteName = palleteName == string.Empty
+            Console.WriteLine("Оставьте строку пустой, чтоб использовать палитру: " +defaultPaletteName);
+            Console.Write(">>>");
+            paletteName = Console.ReadLine();
+            paletteName = paletteName == string.Empty
                 ? defaultPaletteName
-                : palleteName;
-            if (!availablePaletteNames.Contains(palleteName))
-            {
-                Console.WriteLine("Введенная палитра не поддерживается");
-                return null;
-            }
-            return new UserSettings(new ImageSettings(width,height,fontName,palleteName),pathToRead);
+                : paletteName;
+            if (availablePaletteNames.Contains(paletteName)) return true;
+            Console.WriteLine("Введенная палитра не поддерживается");
+            return false;
+
         }
+
     }
 }

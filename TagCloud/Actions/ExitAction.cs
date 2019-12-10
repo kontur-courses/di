@@ -8,7 +8,7 @@ namespace TagCloud.Actions
 
         public string Description { get; } = "exit the program";
 
-        public void Perform(ClientConfig config,ImageSettings imageSettings)
+        public void Perform(ClientConfig config)
         {
             config.ToExit = true;
         }
