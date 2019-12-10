@@ -8,7 +8,6 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            args = new[] {"-f", "timeSolution.txt"};
             var consoleParser = new ConsoleArgumentParser();
             var path = consoleParser.GetPath(args);
             var imageSetting = consoleParser.GetImageSetting(args);
