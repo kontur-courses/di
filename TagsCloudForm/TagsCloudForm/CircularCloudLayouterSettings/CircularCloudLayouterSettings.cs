@@ -1,4 +1,4 @@
-﻿namespace TagsCloudForm.CircularCloudLayouter
+﻿namespace TagsCloudForm.CircularCloudLayouterSettings
 {
     public class CircularCloudLayouterSettings
     {

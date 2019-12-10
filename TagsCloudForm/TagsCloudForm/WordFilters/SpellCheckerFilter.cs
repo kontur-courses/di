@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NHunspell;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 
 namespace TagsCloudForm.WordFilters
 {

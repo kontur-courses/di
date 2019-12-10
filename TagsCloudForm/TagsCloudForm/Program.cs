@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudForm.Actions;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 using TagsCloudForm.WordFilters;
@@ -51,7 +51,7 @@ namespace TagsCloudForm
 
         private static void RegisterSettingsClasses(ContainerBuilder builder)
         {
-            builder.RegisterType<CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings>();
+            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterSettings>();
             builder.Register(x => x.Resolve<AppSettings>().ImageSettings).As<ImageSettings>().SingleInstance();
             builder.RegisterType<SettingsManager>().As<SettingsManager>();
             builder.Register(x => x.Resolve<SettingsManager>().Load()).As<AppSettings, IImageDirectoryProvider>().SingleInstance();

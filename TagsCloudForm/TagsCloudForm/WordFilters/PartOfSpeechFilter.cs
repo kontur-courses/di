@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenNLP;
 using OpenNLP.Tools.PosTagger;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 
 namespace TagsCloudForm.WordFilters
 {

@@ -86,8 +86,8 @@
     <Compile Include="AppSettings.cs" />
     <Compile Include="Common\IPalette.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
-    <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
-    <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />
+    <Compile Include="CircularCloudLayouterSettings\CircularCloudLayouterSettings.cs" />
+    <Compile Include="CircularCloudLayouterSettings\CircularCloudLayouterWithWordsSettings.cs" />
     <Compile Include="Common\FileBlobStorage.cs" />
     <Compile Include="Common\IBlobStorage.cs" />
     <Compile Include="Common\IImageDirectoryProvider.cs" />

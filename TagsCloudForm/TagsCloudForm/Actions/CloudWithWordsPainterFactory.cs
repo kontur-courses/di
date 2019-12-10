@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using CircularCloudLayouter;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 
 namespace TagsCloudForm.Actions

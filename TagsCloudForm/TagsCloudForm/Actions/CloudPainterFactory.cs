@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CircularCloudLayouter;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 
 namespace TagsCloudForm.Actions
@@ -24,7 +24,7 @@ namespace TagsCloudForm.Actions
             this.circularCloudLayouterFactory = circularCloudLayouterFactory;
         }
 
-        public CloudPainter Create(CircularCloudLayouterSettings settings)
+        public CloudPainter Create(CircularCloudLayouterSettings.CircularCloudLayouterSettings settings)
         {
             var layouter = circularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY));
             layouter.SetCompression(settings.XCompression, settings.YCompression);

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 
 namespace TagsCloudForm
 {
