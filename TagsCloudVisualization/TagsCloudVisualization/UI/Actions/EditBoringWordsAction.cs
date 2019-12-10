@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing.Design;
+using System.Windows.Forms;
 
 namespace TagsCloudVisualization.Actions
 {
@@ -24,8 +26,8 @@ namespace TagsCloudVisualization.Actions
                 "Cat"
             };
             var editor = new UITypeEditor();
-            //editor.
-
+            var form = new Form();
+            form.Controls.Add(editor);
         }
     }
 }

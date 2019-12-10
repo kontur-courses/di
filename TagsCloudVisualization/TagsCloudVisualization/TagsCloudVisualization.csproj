@@ -104,6 +104,9 @@
     <Compile Include="Logic\TextParser.cs" />
     <Compile Include="Logic\TextRetriever.cs" />
     <Compile Include="Logic\WordToken.cs" />
+    <Compile Include="UI\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
