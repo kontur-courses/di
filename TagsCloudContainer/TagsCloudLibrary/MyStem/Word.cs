@@ -36,27 +36,20 @@ namespace TagsCloudLibrary.MyStem
 
         public Word(string myStemConclusion)
         {
-            try
-            {
-                var match = WordAndLemmaRegex.Match(myStemConclusion);
-                var lemma = match.Groups[2].Value;
-                var possibilities = lemma.Split('|');
-                var possibility = possibilities[0].Split('=');
-                var initialForm = possibility[0];
-                var grammarInfo = possibility[1];
-                var partOfSpeechInfo = grammarInfo.Split(',')[0];
+            var match = WordAndLemmaRegex.Match(myStemConclusion);
+            var lemma = match.Groups[2].Value;
+            var possibilities = lemma.Split('|');
+            var possibility = possibilities[0].Split('=');
+            var initialForm = possibility[0];
+            var grammarInfo = possibility[1];
+            var partOfSpeechInfo = grammarInfo.Split(',')[0];
 
-                InitialString = match.Groups[1].Value;
-                Grammar = new WordGrammar
-                {
-                    InitialForm = initialForm,
-                    PartOfSpeech = PartOfSpeechFromMystem(partOfSpeechInfo)
-                };
-            }
-            catch (Exception e)
+            InitialString = match.Groups[1].Value;
+            Grammar = new WordGrammar
             {
-                throw new FormatException("Wrong mystem conclusion was given", e);
-            }
+                InitialForm = initialForm,
+                PartOfSpeech = PartOfSpeechFromMystem(partOfSpeechInfo)
+            };
         }
 
         public PartOfSpeech PartOfSpeechFromMystem(string partOfSpeechInfo)

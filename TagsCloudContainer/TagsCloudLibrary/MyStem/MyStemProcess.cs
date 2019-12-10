@@ -53,8 +53,15 @@ namespace TagsCloudLibrary.MyStem
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    var word = new Word(line);
-                    words.Add(word);
+                    try
+                    {
+                        var word = new Word(line);
+                        words.Add(word);
+                    }
+                    catch (Exception e)
+                    {
+                        // ignore if word cannot be determined
+                    }
                 }
             }
             
