@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="ParserOptions.cs" />
+    <Compile Include="ParserOptionsHelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

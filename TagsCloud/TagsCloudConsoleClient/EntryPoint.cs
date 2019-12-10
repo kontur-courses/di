@@ -14,6 +14,7 @@ namespace TagsCloudConsoleClient
         private static void Main(string[] args)
         {
             var container = BuildContainer();
+            Console.WriteLine(new ParserOptionsHelp(container).GenerateHelp());
             var parseResult = Parser.Default.ParseArguments<ParserOptions>(args);
             SetSettingsFromArguments(container.Resolve<Settings>(), parseResult);
             var (readFrom, saveTo) = GetPathsToReadAndToSave(parseResult);
