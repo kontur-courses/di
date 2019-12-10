@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudLibrary.MyStem
 {
-    class MyStemProcess
+    public class MyStemProcess
     {
         private readonly Process myStemProcess;
 
@@ -83,4 +83,4 @@ namespace TagsCloudLibrary.MyStem
             return RunMystemOn(StreamFromString(words.Aggregate("\n", (s1, s2) => s1 + "\n" + s2)));
         }
     }
-}
+ }
