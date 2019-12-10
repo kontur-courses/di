@@ -3,7 +3,7 @@ using System.Drawing;
 using TagsCloudContainer.PaintersWords;
 using TagsCloudContainer.TokensAndSettings;
 
-namespace TagsCloudContainerTests.PaintersWords
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class EvenPainterWordsTests

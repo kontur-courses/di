@@ -70,6 +70,7 @@
     <Compile Include="SimpleReaderTests.cs" />
     <Compile Include="SimpleVisualizerTests.cs" />
     <Compile Include="SimpleWordCounterTests.cs" />
+    <Compile Include="SimpleWordFilterTests.cs" />
     <Compile Include="SimpleWordPreprocessorTests.cs" />
     <Compile Include="TagCloudGeneratorTests.cs" />
   </ItemGroup>

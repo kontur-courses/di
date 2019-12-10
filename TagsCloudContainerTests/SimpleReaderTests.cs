@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using TagsCloudContainer.Readers;
 
-namespace TagsCloudContainerTests.Readers
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class SimpleReaderTests

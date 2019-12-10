@@ -6,7 +6,7 @@ using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.WordPreprocessors;
 using FluentAssertions;
 
-namespace TagsCloudContainerTests.WordPreprocessors
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class SimpleWordPreprocessorTests

@@ -9,7 +9,7 @@ using TagsCloudContainer.Palettes;
 using TagsCloudContainer.TokensAndSettings;
 using TagsCloudContainer.Visualizers;
 
-namespace TagsCloudContainerTests.Visualizers
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class SimpleVisualizerTests

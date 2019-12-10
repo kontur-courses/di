@@ -15,7 +15,7 @@ using System.IO;
 using TagsCloudContainer.PaintersWords;
 using TagsCloudContainer.TagsCloudGenerators;
 
-namespace TagsCloudContainerTests.TagsCloudGenerators
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class TagCloudGeneratorTests

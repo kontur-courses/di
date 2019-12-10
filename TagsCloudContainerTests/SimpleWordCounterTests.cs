@@ -6,7 +6,7 @@ using TagsCloudContainer.WordCounters;
 using TagsCloudContainer.WordFilters;
 using TagsCloudContainer.WordPreprocessors;
 
-namespace TagsCloudContainerTests.WordCounters
+namespace TagsCloudContainerTests
 {
     [TestFixture]
     class SimpleWordCounterTests
