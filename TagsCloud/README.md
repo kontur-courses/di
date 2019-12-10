@@ -32,7 +32,7 @@
 
 ## Примеры генерации облаков тегов
 
-#### Tag Cloud, сгенерированный из текста песни
+### Tag Cloud, сгенерированный из текста песни
 
 ![](https://raw.githubusercontent.com/Sc222/di/hometask/TagsCloud/Examples/Txt/result.png)
 >[Папка с примером](https://github.com/Sc222/di/tree/hometask/TagsCloud/Examples/Txt)
@@ -49,7 +49,7 @@
 - Перемешиватель тегов - [`TokenShufflerRandom`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudTextProcessing/Shufflers/TokenShufflerRandom.cs) с параметром 10
 - Шрифт - **Arial Black**
 
-#### Tag Cloud, сгенерированный из фрагмента документации к игровому движку Godot
+### Tag Cloud, сгенерированный из фрагмента документации к игровому движку Godot
 
 ![](https://raw.githubusercontent.com/Sc222/di/hometask/TagsCloud/Examples/Pdf/result.png)
 
@@ -65,7 +65,7 @@
 - Перемешиватель тегов - [`TokenShufflerDescending`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudTextProcessing/Shufflers/TokenShufflerDescending.cs)
 - Шрифт - **Berlin Sans**
 
-#### Tag Cloud, сгенерированный из статьи про Pixel Art
+### Tag Cloud, сгенерированный из статьи про Pixel Art
 
 ![](https://raw.githubusercontent.com/Sc222/di/hometask/TagsCloud/Examples/Docx/result.png)
 
@@ -80,4 +80,4 @@
 
 - Тема  - [`PixelArtTheme`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudVisualization/Styling/Themes/PixelArtTheme.cs) 
 - Перемешиватель тегов - [`TokenShufflerAscending`](https://github.com/Sc222/di/blob/hometask/TagsCloud/TagsCloudTextProcessing/Shufflers/TokenShufflerAscending.cs)
-- Шрифт - **Bauhaus 96**
+- Шрифт - **Bauhaus 93**

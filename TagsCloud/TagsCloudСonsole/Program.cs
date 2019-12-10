@@ -32,7 +32,7 @@ namespace TagsCloudApplication
             var tokens = new Tokenizer().Tokenize(wordsAfterExclusion);
             var shuffledTokens = new TokenShufflerAscending().Shuffle(tokens);
             
-            //Bauhaus 93
+  
             var fontProperties = new FontProperties("Bauhaus 93", 30);
             var style = new Style(new GrayDarkTheme(), fontProperties, new TagSizeCalculatorLogarithmic());
             var visualizer = new TextNoRectanglesVisualizer();
