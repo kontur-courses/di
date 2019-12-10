@@ -9,7 +9,7 @@ using TagsCloud.Interfaces;
 
 namespace TagsCloudTests
 {
-    [TestFixture(typeof(AnglesCloudLayouter))]
+    [TestFixture(typeof(MiddleRectangleCloudLayouter))]
     [TestFixture(typeof(CircularCloudLayouter))]
     public class ITagCloudLayouter_Should<TCloudLayouter> where TCloudLayouter: ITagCloudLayouter, new()
     {

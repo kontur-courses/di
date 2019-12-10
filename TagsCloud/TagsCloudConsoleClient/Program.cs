@@ -1,20 +1,17 @@
 ﻿using Autofac;
 using TagsCloud.FileReader;
-using TagsCloud.Interfaces;
-using TagsCloud.CloudLayouter;
 using TagsCloud.WordProcessing;
-using TagsCloud.FinalProcessing;
 using CommandLine;
+using TagsCloud.Interfaces;
 using System.Drawing;
 using System.Reflection;
 using System;
-using System.IO;
+using TagsCloud.CloudLayouter;
 
-namespace TagsCloud
+namespace TagsCloud.TagsCloudConsoleClient
 {
     class Program
     {
-
         private static IContainer Container { get; set; }
         class Options
         {
@@ -36,52 +33,53 @@ namespace TagsCloud
             [Option('f', "font", Default = "Comic Sans MS", HelpText = "Font name.")]
             public string fontName { get; set; }
 
-            [Option('s', "splitter", Default = "WhiteSpace", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
+            [Option('s', "spliter", Default = "WhiteSpace", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
             public string splitType { get; set; }
 
-            [Option('b', "boringWords", Default = "DefaultBoringWords", HelpText = "Split by line or white space. (Line || WhiteSpace)")]
+            [Option('b', "boringWords", Default = "", HelpText = "Path to file with boring words. Words must be separated by line.")]
             public string boringWordsPath { get; set; }
 
-            // Omitting long name, defaults to name of property, ie "--verbose"
+            [Option('i', "ignoredPartsOfSpeech", Default = "ADVPRO,APRO,CONJ,INTJ,PR,PART,SPRO", HelpText = "Parts of speech to be excluded. " +
+                "Possible parts: A, ADV, ADVPRO, ANUM, APRO, COM, CONJ, INTJ, NUM, PART, PR, S, SPRO, V.")]
+            public string ignoredPartsOfSpeech { get; set; }
+
+            [Option('g', "GenerationAlgorithm", Default = "CircularCloud", HelpText = "Which algorithm will be used to generate the cloud. " +
+                "(CircularCloud || MiddleCloud)")]
+            public string GenerationAlgoritm { get; set; }
         }
 
         static void Main(string[] args)
         {
-            string splitType = "";
             var container = new ContainerBuilder();
+            Type tagLayouterType = null;
+            Type textSpliterType = null;
+            container.RegisterType<PathValidator>().AsSelf();
+            container.RegisterType<SpliterByLine>().AsSelf();
             Parser.Default.ParseArguments<Options>(args)
-              .WithParsed<Options>(opts =>
+              .WithParsed(opts =>
               {
-                  splitType = opts.splitType;
                   container.RegisterInstance(new TagCloudSettings(opts.InputFiles,
                       opts.savePath,
-                      opts.boringWordsPath == "DefaultBoringWords" ? @"D:\проекты\SHPORA2019\di\TagsCloud\resources\NewBoringWords.txt" : opts.boringWordsPath,
+                      opts.boringWordsPath,
                       opts.width,
                       opts.height,
                       Color.FromName(opts.backgroundColor),
-                      opts.fontName)).AsSelf().SingleInstance() ;
+                      opts.fontName,
+                      opts.ignoredPartsOfSpeech.Split(","),
+                      opts.GenerationAlgoritm)).AsSelf().SingleInstance();
+                  tagLayouterType = TypesCollector.GetTypeGeneationLayoutersByName(opts.GenerationAlgoritm);
+                  if (tagLayouterType == null)
+                      throw new ArgumentException($"Unknown generation algoritm {opts.GenerationAlgoritm}");
+                  textSpliterType = TypesCollector.GetTypeSpliterByName(opts.splitType);
+                  if (textSpliterType == null)
+                      throw new ArgumentException($"Unsupported split format {opts.splitType}.");
+                  container.RegisterAssemblyTypes(textSpliterType.Assembly).AsImplementedInterfaces();
               });
-            var dataAccess = Assembly.GetExecutingAssembly();
-            container.RegisterAssemblyTypes(dataAccess).AsImplementedInterfaces();
-
-            container.RegisterType<PathValidator>().AsSelf();
-            container.RegisterType<SpliterByLine>().AsSelf();
-            //container.RegisterType<AnglesCloudLayouter>().As<ITagCloudLayouter>();
-
-            if (splitType == "Line")
-                container.RegisterType<SpliterByLine>().As<ITextSpliter>();
-            else if (splitType == "WhiteSpace")
-                container.RegisterType<SpliterByWhiteSpace>().As<ITextSpliter>();
-            else
-            {
-                throw new ArgumentException($"Unsupported split format {splitType}.");
-            }
-
-            container.RegisterType<TagCloudVisualizer>().AsSelf();
-            container.RegisterType<WordValidatorSettings>().AsSelf();
-
+            container.RegisterType<TagCloudVisualizer>().AsSelf().SingleInstance();
+            container.RegisterType<WordValidatorSettings>().AsSelf().SingleInstance();
+            container.RegisterType(tagLayouterType).As<ITagCloudLayouter>().SingleInstance();
+            container.RegisterType(textSpliterType).As<ITextSpliter>().SingleInstance();
             Container = container.Build();
-
             Container.Resolve<TagCloudVisualizer>().GenerateTagCloud();
         }
     }
