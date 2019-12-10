@@ -37,17 +37,7 @@ namespace TagCloudContainer_Tests
 
             var actual = parser.GetWordSetting(args);
 
-            actual.Font.Should().Be(new Font("Universe", 10));
-        }
-        
-        [Test]
-        public void GetWordSettings_IfGetFont_WithSize()
-        {
-            var args = new[] {"-f", "file", "-o", "Universe", "-s", "12"};
-
-            var actual = parser.GetWordSetting(args);
-
-            actual.Font.Should().Be(new Font("Universe", 12));
+            actual.FontName.Should().Be("Universe");
         }
 
         [Test]
@@ -67,7 +57,7 @@ namespace TagCloudContainer_Tests
 
             var actual = parser.GetImageSetting(args);
             
-            actual.Should().BeEquivalentTo(new ImageSetting(100, 180));
+            actual.Should().BeEquivalentTo(new ImageSetting(100, 180, "White"));
         }
     }
 }

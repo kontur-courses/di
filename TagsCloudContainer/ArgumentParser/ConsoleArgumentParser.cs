@@ -19,11 +19,14 @@ namespace TagsCloudContainer
             [Option('w', "width", Required = false, HelpText = "Width of image", Default = 640)]
             public int Width { get; set; }
             
-            [Option('s', "size", Required = false, HelpText = "Size of letter", Default = 10)]
+            [Option('s', "size", Required = false, HelpText = "Size of letter", Default = 20)]
             public int Size { get; set; }
             
             [Option('c', "color", Required = false, HelpText = "Color of word", Default = "Black")]
             public string Color { get; set; }
+            
+            [Option('b', "backgroundColor", Required = false, HelpText = "BackGround color", Default = "White")]
+            public string BackColor { get; set; }
         }
         public WordSetting GetWordSetting(string[] args)
         {
@@ -43,7 +46,7 @@ namespace TagsCloudContainer
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
-                    setting = new ImageSetting(o.Height, o.Width);
+                    setting = new ImageSetting(o.Height, o.Width, o.BackColor);
                    
                 });
             return setting;
