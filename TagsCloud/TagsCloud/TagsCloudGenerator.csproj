@@ -48,6 +48,7 @@
     <Compile Include="Attributes\FactorialAttribute.cs" />
     <Compile Include="Attributes\PriorityAttribute.cs" />
     <Compile Include="Bases\FactoryBase.cs" />
+    <Compile Include="Bases\WordsLayouterBase.cs" />
     <Compile Include="Executors\PriorityExecutor.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Factories\PaintersFactory.cs" />
