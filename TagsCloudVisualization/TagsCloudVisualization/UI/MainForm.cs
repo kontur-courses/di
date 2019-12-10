@@ -17,21 +17,20 @@ namespace TagsCloudVisualization
             WindowState = FormWindowState.Maximized;
             buttonPanel = InitializeButtonPanel(menuActions);
             imagePanel = InitializeImagePanel(imageHolderBox);
-            ResizeFormComponents();
+            ResizeImagePanel();
             Controls.Add(buttonPanel);
             Controls.Add(imagePanel);
         }
 
         protected override void OnResize(EventArgs e)
         {
-            ResizeFormComponents();
+            ResizeImagePanel();
         }
 
-        private void ResizeFormComponents()
+        private void ResizeImagePanel()
         {
             imagePanel.Size = new Size(ClientSize.Width, ClientSize.Height - buttonPanel.Height);
         }
-
 
         private FlowLayoutPanel InitializeImagePanel(PictureBox imageHolderBox)
         {
