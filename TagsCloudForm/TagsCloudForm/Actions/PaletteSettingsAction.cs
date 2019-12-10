@@ -5,9 +5,9 @@ namespace TagsCloudForm.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private readonly Palette palette;
+        private readonly IPalette palette;
 
-        public PaletteSettingsAction(Palette palette)
+        public PaletteSettingsAction(IPalette palette)
         {
             this.palette = palette;
         }

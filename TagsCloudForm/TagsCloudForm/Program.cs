@@ -17,17 +17,16 @@ namespace TagsCloudForm
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<CloudForm>().As<CloudForm>();
-            builder.RegisterType<Palette>().AsSelf().SingleInstance();
+            builder.RegisterType<Palette>().As<IPalette>().SingleInstance();
             builder.RegisterType<global::CircularCloudLayouter.CircularCloudLayouter>().As<ICircularCloudLayouter>();
             RegisterPainters(builder);
             RegisterWordFiltersAndFunctions(builder);
             RegisterActions(builder);
             RegisterSettingsClasses(builder);
+            RegisterFactories(builder);
             builder.RegisterType<XmlObjectSerializer>().As<IObjectSerializer>();
             builder.RegisterType<FileBlobStorage>().As<IBlobStorage>();
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
-            builder.RegisterType<CloudWithWordsPainterFactory>();
-            builder.RegisterType<CloudPainterFactory>();
 
             var container = builder.Build();
             var form = container.Resolve<CloudForm>();
@@ -62,6 +61,12 @@ namespace TagsCloudForm
         {
             builder.RegisterType<CloudPainter>();
             builder.RegisterType<CloudWithWordsPainter>();
+        }
+
+        private static void RegisterFactories(ContainerBuilder builder)
+        {
+            builder.RegisterType<CloudWithWordsPainterFactory>();
+            builder.RegisterType<CloudPainterFactory>();
         }
     }
 }

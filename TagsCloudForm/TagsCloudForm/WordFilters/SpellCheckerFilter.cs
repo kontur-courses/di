@@ -21,7 +21,7 @@ namespace TagsCloudForm.WordFilters
             return words.Where(x=>checker.Spell(x.ToLower()));
         }
 
-        public Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
+        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
         {
             Hunspell checker;
             if (settings.Language == LanguageEnum.English)
@@ -33,11 +33,11 @@ namespace TagsCloudForm.WordFilters
                 }
                 catch (Exception e)
                 {
-                    return new Result<IEnumerable<string>>("Не удалось загрузить словари для Hunspell", words);
+                    throw new Exception("Не удалось загрузить словари для Hunspell");
                 }
             else
-                return new Result<IEnumerable<string>>("Chosen Language not supported", words);
-            return Result.Ok(words.Where(x => checker.Spell(x.ToLower())));
+                throw new Exception("Chosen Language not supported");
+            return words.Where(x => checker.Spell(x.ToLower()));
         }
     }
 }

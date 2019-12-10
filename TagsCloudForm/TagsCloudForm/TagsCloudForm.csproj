@@ -84,7 +84,7 @@
       <DependentUpon>app.settings</DependentUpon>
     </Compile>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="Result.cs" />
+    <Compile Include="Common\IPalette.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterSettings.cs" />
     <Compile Include="CircularCloudLayouter\CircularCloudLayouterWithWordsSettings.cs" />

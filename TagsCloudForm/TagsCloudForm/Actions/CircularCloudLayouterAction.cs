@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using CircularCloudLayouter;
-using TagsCloudForm.CircularCloudLayouter;
+﻿using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 

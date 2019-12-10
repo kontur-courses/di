@@ -13,10 +13,10 @@ namespace TagsCloudForm.Actions
     public class CloudPainterFactory
     {
         private readonly IImageHolder imageHolder;
-        private readonly Palette palette;
+        private readonly IPalette palette;
         private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
         public CloudPainterFactory(IImageHolder imageHolder,
-            Palette palette,
+            IPalette palette,
             Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory)
         {
             this.imageHolder = imageHolder;

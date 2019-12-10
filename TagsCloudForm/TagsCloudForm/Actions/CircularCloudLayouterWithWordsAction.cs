@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,7 +7,6 @@ using TagsCloudForm.CircularCloudLayouter;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 using TagsCloudForm.WordFilters;
-using CircularCloudLayouter;
 
 namespace TagsCloudForm.Actions
 {
@@ -49,7 +47,18 @@ namespace TagsCloudForm.Actions
                 lines = lines.Select(x => x.ToLower());
             foreach (var filter in filters)
             {
-                lines = filter.Filter(settings, lines).OnFail(x => MessageBox.Show(x)).Value;
+                IEnumerable<string> filtered = lines;
+                try
+                {
+                    filtered = filter.Filter(settings, lines);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    filtered = lines;
+                }
+
+                lines = filtered;
             }
             var wordsWithFrequency = parser.GetWordsFrequency(lines, settings.Language);
             factory.Create(settings, wordsWithFrequency).Paint();

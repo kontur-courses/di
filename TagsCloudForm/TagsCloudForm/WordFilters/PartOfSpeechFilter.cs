@@ -33,7 +33,7 @@ namespace TagsCloudForm.WordFilters
         }
 
 
-        public Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
+        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
         {
             HashSet<string> partOfSpeechToFilter;
             try
@@ -43,7 +43,7 @@ namespace TagsCloudForm.WordFilters
             }
             catch (Exception e)
             {
-                return new Result<IEnumerable<string>>("Не удалось загрузить файл с part of speech to filter", words);
+                throw new Exception("Не удалось загрузить файл с part of speech to filter");
             }
             var modelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "EnglishPOS.nbin");
             var tagDictDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "tagdict");
@@ -58,7 +58,7 @@ namespace TagsCloudForm.WordFilters
                     outList.Add(wordsEnumerator.Current);
                 wordsEnumerator.MoveNext();
             }
-            return Result.Ok<IEnumerable<string>>(outList);
+            return outList;
         }
     }
 }

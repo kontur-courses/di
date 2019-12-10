@@ -6,19 +6,16 @@ using CircularCloudLayouter;
 
 namespace TagsCloudForm.Actions
 {
-    public class CloudPainter
+    public class CloudPainter : ICloudPainter
     {
         private readonly IImageHolder imageHolder;
         private readonly CircularCloudLayouterSettings settings;
-        private readonly Palette palette;
+        private readonly IPalette palette;
         private Size imageSize;
         private ICircularCloudLayouter layouter;
 
-        public delegate CloudPainter Factory(IImageHolder imageHolder,
-            CircularCloudLayouterWithWordsSettings settings, Palette palette, ICircularCloudLayouter layouter);
-
         public CloudPainter(IImageHolder imageHolder,
-            CircularCloudLayouterSettings settings, Palette palette, ICircularCloudLayouter layouter)
+            CircularCloudLayouterSettings settings, IPalette palette, ICircularCloudLayouter layouter)
         {
             this.imageHolder = imageHolder;
             this.settings = settings;

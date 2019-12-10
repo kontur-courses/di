@@ -8,7 +8,7 @@ namespace TagsCloudForm.WordFilters
 {
     public class BoringWordsFilter : IWordsFilter
     {
-        public Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings,
+        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings,
             IEnumerable<string> words)
         {
             HashSet<string> boringWords;
@@ -19,10 +19,10 @@ namespace TagsCloudForm.WordFilters
             }
             catch (Exception e)
             {
-                return new Result<IEnumerable<string>>("Не удалось загрузить файл с boring words", words);
+                throw new Exception("Не удалось загрузить файл с boring words");
             }
 
-            return Result.Ok(words.Where(x => !boringWords.Contains(x)));
+            return words.Where(x => !boringWords.Contains(x));
         }
 
         public IEnumerable<string> Filter(HashSet<string> boringWords, IEnumerable<string> words)

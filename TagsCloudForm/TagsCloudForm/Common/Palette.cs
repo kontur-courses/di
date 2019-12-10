@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TagsCloudForm.Common
 {
-    public class Palette
+    public class Palette : IPalette
     {
         public Color PrimaryColor { get; set; } = Color.Yellow;
         public Color SecondaryColor { get; set; } = Color.Red;

@@ -9,6 +9,6 @@ namespace TagsCloudForm.WordFilters
 {
     interface IWordsFilter
     {
-        Result<IEnumerable<string>> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words);
+        IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words);
     }
 }
