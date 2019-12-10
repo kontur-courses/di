@@ -14,6 +14,7 @@ namespace TagsCloudContainer.Tests.Commands
     public class GenerateCloudCommand_Test
     {
         private GenerateCloudCommand command;
+
         [SetUp]
         public void SetUp()
         {
@@ -25,13 +26,13 @@ namespace TagsCloudContainer.Tests.Commands
             var cloud = new TagsCloud(parser, layouter, visualizer, saver);
             command = new GenerateCloudCommand(cloud, settings);
         }
-        
+
         [Test]
         public void Act_Should_ThrowArgumentException_When_WrongArgumentsCount()
         {
             Following.Code(() => command.Act(new[] {"circle", "100", "0,1"})).ShouldThrow<ArgumentException>();
         }
-        
+
         [TestCase("0,01", TestName = "when too small")]
         [TestCase("0", TestName = "when zero")]
         [TestCase("-0,1", TestName = "when negative")]
@@ -40,7 +41,7 @@ namespace TagsCloudContainer.Tests.Commands
         {
             Following.Code(() => command.Act(new[] {"circle", "100", step, "1"})).ShouldThrow<ArgumentException>();
         }
-        
+
         [TestCase("0.1", TestName = "when too small")]
         [TestCase("-1", TestName = "when negative")]
         [TestCase("0", TestName = "when zero")]
@@ -49,7 +50,7 @@ namespace TagsCloudContainer.Tests.Commands
         {
             Following.Code(() => command.Act(new[] {"circle", size, "0,1", "1"})).ShouldThrow<ArgumentException>();
         }
-        
+
         [TestCase("0.1", TestName = "when too small")]
         [TestCase("-1", TestName = "when negative")]
         [TestCase("0", TestName = "when zero")]
@@ -57,14 +58,15 @@ namespace TagsCloudContainer.Tests.Commands
         [TestCase("3", TestName = "when out of range")]
         public void Act_Should_ThrowArgumentException_When_IncorrectBroadnessValue(string broadness)
         {
-            Following.Code(() => command.Act(new[] {"circle", "100", "0,1", broadness})).ShouldThrow<ArgumentException>();
+            Following.Code(() => command.Act(new[] {"circle", "100", "0,1", broadness}))
+                .ShouldThrow<ArgumentException>();
         }
-        
+
         [Test]
         public void Act_Should_ThrowArgumentException_When_IncorrectAlgorithm()
         {
-            Following.Code(() => command.Act(new[] {"notACorrectAlgorithm", "100", "0,1", "1"})).ShouldThrow<ArgumentException>();
+            Following.Code(() => command.Act(new[] {"notACorrectAlgorithm", "100", "0,1", "1"}))
+                .ShouldThrow<ArgumentException>();
         }
-
     }
 }

@@ -18,7 +18,7 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
         [SetUp]
         public void SetUp()
         {
-            circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 0.1,1);
+            circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 0.1, 1);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
             var secondRectangle = circularCloudLayouter.PutNextRectangle(secondSize);
             secondRectangle.IntersectsWith(firstRectangle).Should().BeFalse();
         }
-        
+
         private static IEnumerable<TestCaseData> DifferentTypesOfTwoRectangles
         {
             get
@@ -76,9 +76,10 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
         public void PutNextRectangle_Should_PutRectanglesInCircleShape()
         {
             for (var i = 0; i < 100; i++)
-                            circularCloudLayouter.PutNextRectangle(new Size(30, 20));
+                circularCloudLayouter.PutNextRectangle(new Size(30, 20));
             var verticalLength = GetCloudVerticalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
-            var horizontalLength = GetCloudHorizontalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
+            var horizontalLength =
+                GetCloudHorizontalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
             var ratio = verticalLength / horizontalLength;
             ratio.Should().BeInRange(0.8, 1.2);
         }
@@ -86,11 +87,12 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
         private double GetCircumscribedCircleArea()
         {
             var verticalLength = GetCloudVerticalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
-            var horizontalLength = GetCloudHorizontalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
+            var horizontalLength =
+                GetCloudHorizontalLength(circularCloudLayouter.Rectangles, circularCloudLayouter.Center);
             var radius = horizontalLength > verticalLength ? horizontalLength / 2 : verticalLength / 2;
             return Math.PI * radius * radius;
         }
-        
+
         private double GetCloudHorizontalLength(IEnumerable<Rectangle> rectangles, Point center)
         {
             var enumerable = rectangles.ToList();
@@ -100,12 +102,13 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
             var rightMostPoint = new Point(maxX, center.Y);
             return leftMostPoint.GetDistanceTo(rightMostPoint);
         }
-        
+
         private double GetCloudVerticalLength(IEnumerable<Rectangle> rectangles, Point center)
         {
             var enumerable = rectangles as Rectangle[] ?? rectangles.ToArray();
             var minY = enumerable.OrderBy(rect => rect.Y).First().Y;
-            var topMostPoint = new Point(center.X, minY); ;
+            var topMostPoint = new Point(center.X, minY);
+            ;
             var maxY = enumerable.OrderBy(rect => rect.Bottom).Last().Bottom;
             var bottomMostPoint = new Point(center.X, maxY);
             return topMostPoint.GetDistanceTo(bottomMostPoint);

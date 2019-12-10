@@ -13,6 +13,7 @@ namespace TagsCloudContainer.Tests.TextParsingTests
     {
         private CloudWordsParser parser;
         private CloudWordsParserSettings settings;
+
         [SetUp]
         public void SetUp()
         {
@@ -26,7 +27,7 @@ namespace TagsCloudContainer.Tests.TextParsingTests
         [TearDown]
         public void TearDown()
         {
-            if(File.Exists(settings.Path))
+            if (File.Exists(settings.Path))
                 File.Delete(settings.Path);
         }
 
@@ -42,10 +43,11 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
+
             var result = parser.Parse();
             result.Select(w => w.Word).Should().Contain("sandwich");
         }
-        
+
         [Test]
         public void ParseFrom_Should_CountWordsRight()
         {
@@ -57,10 +59,11 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
+
             var result = parser.Parse();
             result.First(w => w.Word == "apple").Count.Should().Be(2);
         }
-        
+
         [Test]
         public void ParseFrom_Should_ParseToLowercase_When_DefaultRule()
         {
@@ -70,10 +73,11 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("aPPLe");
                 writer.WriteLine("apple");
             }
+
             var result = parser.Parse();
             result.Count().Should().Be(1);
         }
-        
+
         [Test]
         public void ParseFrom_Should_IgnoreExceptedWords_When_DefaultRule()
         {
@@ -85,9 +89,9 @@ namespace TagsCloudContainer.Tests.TextParsingTests
                 writer.WriteLine("you");
                 writer.WriteLine("apple");
             }
+
             var result = parser.Parse();
             result.Count().Should().Be(2);
         }
-
     }
 }

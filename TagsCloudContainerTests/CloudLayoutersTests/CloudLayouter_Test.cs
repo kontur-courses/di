@@ -14,13 +14,14 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
     {
         private CloudLayouterSettings settings;
         private CloudLayouter layouter;
+
         [SetUp]
         public void SetUp()
         {
             settings = new CloudLayouterSettings();
             settings.Algorithm = new CircularCloudLayouter(
                 new Point(0, 0),
-                settings.RectangleStep, 
+                settings.RectangleStep,
                 settings.RectangleBroadness);
             settings.RectangleSquareMultiplier = 100;
             layouter = new CloudLayouter(() => settings);
@@ -38,7 +39,7 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
             var visualizationWords = layouter.GetWords(words);
             visualizationWords.First().Word.Should().Be("apple");
         }
-        
+
         [Test]
         public void GetWords_Should_ReturnWordsWithDescendingSizes()
         {

@@ -13,6 +13,7 @@ namespace TagsCloudContainer.Tests.CloudVisualiserTests
     {
         private CloudVisualizer visualizer;
         private CloudVisualizerSettings settings;
+
         [SetUp]
         public void SetUp()
         {
@@ -33,7 +34,7 @@ namespace TagsCloudContainer.Tests.CloudVisualiserTests
             var secondSize = GetWordRectangleSize("cider", 1);
             var secondWord = new CloudVisualizationWord(new Rectangle(secondLocation, secondSize), "as");
             var words = new List<CloudVisualizationWord> {secondWord, firstWord};
-            
+
             visualizer.GetBitmap(words).Should().NotBeNull();
         }
 
@@ -45,6 +46,5 @@ namespace TagsCloudContainer.Tests.CloudVisualiserTests
             var height = ratio;
             return new Size(width, height);
         }
-
     }
 }

@@ -107,17 +107,6 @@
     <Compile Include="TagsCloudMaker.cs" />
     <Compile Include="TagsCloud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\CloudLayoutersTests\CircularCloudLayouterTestVisualizer.cs" />
-    <Compile Include="Tests\CloudLayoutersTests\CircularCloudLayouter_Test.cs" />
-    <Compile Include="Tests\CloudLayoutersTests\CloudLayouter_Test.cs" />
-    <Compile Include="Tests\CloudVisualiserTests\CloudVisualiser_Test.cs" />
-    <Compile Include="Tests\Commands\GenerateCloudCommand_Test.cs" />
-    <Compile Include="Tests\Commands\ParseCommand_Test.cs" />
-    <Compile Include="Tests\Commands\SaveCommand_Test.cs" />
-    <Compile Include="Tests\Commands\VisualizeCommand_Test.cs" />
-    <Compile Include="Tests\Following.cs" />
-    <Compile Include="Tests\TagsCloud_Test.cs" />
-    <Compile Include="Tests\TextParsingTests\CloudWordsParser_Test.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWord.cs" />
     <Compile Include="TextParsing\CloudParsing\CloudWordsParserSettings.cs" />
     <Compile Include="TextParsing\CloudParsing\ICloudWordParsingRule.cs" />

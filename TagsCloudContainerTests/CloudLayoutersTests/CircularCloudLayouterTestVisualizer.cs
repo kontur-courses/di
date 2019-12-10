@@ -25,7 +25,7 @@ namespace TagsCloudContainer.Tests.CloudLayoutersTests
                 foreach (var rectangle in enumerable)
                     g.DrawRectangle(Pens.Red, rectangle);
             }
-            
+
             bitmap.Save(path);
         }
     }

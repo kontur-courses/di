@@ -15,6 +15,7 @@ namespace TagsCloudContainer.Tests.Commands
     public class SaveCommand_Test
     {
         private SaveCommand command;
+
         [SetUp]
         public void SetUp()
         {
@@ -26,19 +27,19 @@ namespace TagsCloudContainer.Tests.Commands
             var cloud = new TagsCloud(parser, layouter, visualizer, saver);
             command = new SaveCommand(cloud, settings);
         }
-        
+
         [Test]
         public void Act_Should_ThrowArgumentException_When_WrongArgumentsCount()
         {
             Following.Code(() => command.Act(new[] {@"D:\coolpath", "coolimage"})).ShouldThrow<ArgumentException>();
         }
-        
+
         [Test]
         public void Act_Should_ThrowArgumentException_When_IncorrectPath()
         {
             Following.Code(() => command.Act(new[] {"toocooltobetrue", "coolimage"})).ShouldThrow<ArgumentException>();
         }
-        
+
         [Test]
         public void Act_Should_ThrowArgumentException_When_IncorrectFormat()
         {

@@ -14,6 +14,7 @@ namespace TagsCloudContainer.Tests.Commands
     public class ParseCommand_Test
     {
         private ParseCommand command;
+
         [SetUp]
         public void SetUp()
         {
