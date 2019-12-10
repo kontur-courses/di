@@ -68,6 +68,8 @@
     <Compile Include="TextFilter\BlacklistSettings.cs" />
     <Compile Include="TextFilter\FrequencyDictionaryMaker.cs" />
     <Compile Include="TextFilter\TextFilter.cs" />
+    <Compile Include="TextParser\ITextParser.cs" />
+    <Compile Include="TextParser\TextParser.cs" />
     <Compile Include="TextProvider\ITextProvider.cs" />
     <Compile Include="TextProvider\TextFileReader.cs" />
     <Compile Include="Visualization\ImageSettings.cs" />
@@ -77,9 +79,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudTextPreparer\CloudTextPreparer.csproj">
-      <Project>{36b54e05-de3e-445e-a904-d3df5d95c888}</Project>
-      <Name>CloudTextPreparer</Name>
+    <ProjectReference Include="..\TagCloudForm\TagCloudForm.csproj">
+      <Project>{b231c16e-1495-47c3-a296-6dd6bc69c837}</Project>
+      <Name>TagCloudForm</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -19,11 +19,12 @@ namespace TagCloud_Should
             {
                 FilesWithBannedWords = new HashSet<string>()
             };
-            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            var textParser = new TextParser(textProvider);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textParser)
             {
                 BlackList = {"blacklistWord"}
             };
-            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            var textFilter = new TextFilter(textParser, blacklistMaker);
             frequencyDictionaryMaker = new FrequencyDictionaryMaker(textFilter);
         }
 

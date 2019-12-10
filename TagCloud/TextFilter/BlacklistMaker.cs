@@ -5,9 +5,9 @@ namespace TagCloud.TextFilter
 {
     public class BlacklistMaker
     {
-        private readonly ITextProvider textProvider;
+        private readonly ITextParser textParser;
         private readonly BlacklistSettings blacklistSettings;
-        public HashSet<string> BlackList { get; } = new HashSet<string>();
+        public HashSet<string> BlackList = new HashSet<string>();
         public int WordMinLength { get; set; } = 3;
 
         private string newBlacklistWord;
@@ -15,19 +15,19 @@ namespace TagCloud.TextFilter
         public string NewBlacklistWord
         {
             get => newBlacklistWord;
-            set => BlackList.Add(value.MakeFirstLetterLowerCase());
+            set => BlackList.Add(value.MakeLettersLowerCase());
         }
 
-        public BlacklistMaker(BlacklistSettings blacklistSettings, ITextProvider textProvider)
+        public BlacklistMaker(BlacklistSettings blacklistSettings, ITextParser textParser)
         {
-            this.textProvider = textProvider;
+            this.textParser = textParser;
             this.blacklistSettings = blacklistSettings;
             CreateBlackList();
         }
 
         private void CreateBlackList()
         {
-            foreach (var word in textProvider.GetAllWords(blacklistSettings.FilesWithBannedWords))
+            foreach (var word in textParser.ParseText(blacklistSettings.FilesWithBannedWords))
                 BlackList.Add(word);
         }
     }

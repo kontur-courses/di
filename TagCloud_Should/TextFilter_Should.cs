@@ -12,33 +12,18 @@ namespace TagCloud_Should
         private readonly ITextProvider textProvider = new UnitTestsTextProvider();
 
         [Test]
-        public void WithEmptyBlacklist_ShouldReturnSameWords()
-        {
-            var blacklistSettings = new BlacklistSettings
-            {
-                FilesWithBannedWords = new HashSet<string>()
-            };
-            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
-            {
-                WordMinLength = 0
-            };
-            ;
-            var textFilter = new TextFilter(textProvider, blacklistMaker);
-            textFilter.FilterWords().Should().BeEquivalentTo(textProvider.GetAllWords());
-        }
-
-        [Test]
         public void ShouldRemoveBannedWords()
         {
             var blacklistSettings = new BlacklistSettings
             {
                 FilesWithBannedWords = new HashSet<string>()
             };
-            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            var textParser = new TextParser(textProvider);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textParser)
             {
                 BlackList = {"blacklistWord"}
             };
-            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            var textFilter = new TextFilter(textParser, blacklistMaker);
             textFilter.FilterWords().Contains("blacklistWord").Should().BeFalse();
         }
 
@@ -49,8 +34,9 @@ namespace TagCloud_Should
             {
                 FilesWithBannedWords = new HashSet<string>()
             };
-            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider);
-            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            var textParser = new TextParser(textProvider);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textParser);
+            var textFilter = new TextFilter(textParser, blacklistMaker);
             textFilter.FilterWords().Contains("b").Should().BeFalse();
         }
 
@@ -61,11 +47,12 @@ namespace TagCloud_Should
             {
                 FilesWithBannedWords = new HashSet<string>()
             };
-            var blacklistMaker = new BlacklistMaker(blacklistSettings, textProvider)
+            var textParser = new TextParser(textProvider);
+            var blacklistMaker = new BlacklistMaker(blacklistSettings, textParser)
             {
                 BlackList = {"blacklistWord", "word1", "word2"}
             };
-            var textFilter = new TextFilter(textProvider, blacklistMaker);
+            var textFilter = new TextFilter(textParser, blacklistMaker);
             textFilter.FilterWords().Should().Contain("word3");
         }
     }

@@ -8,7 +8,7 @@ namespace TagCloud.TextProvider
 {
     public class TextFileReader : ITextProvider
     {
-        private HashSet<string> FilesPaths { get; set; } = new HashSet<string>
+        public HashSet<string> FilesPaths { get; set; } = new HashSet<string>
         {
             @"..\..\Input\input.txt",
             @"..\..\Input\song.txt"
@@ -16,32 +16,27 @@ namespace TagCloud.TextProvider
 
         public Encoding TextEncoding { get; set; } = Encoding.UTF8;
 
-        private const string RegexPattern = @"[!, ?._'@\[\] ]+";
-
-        public List<string> GetAllWords()
+        public List<string> GetAllLines()
         {
-            var allWordsList = new List<string>();
+            var allLinesList = new List<string>();
             foreach (var path in FilesPaths)
-                GetAllWordsInOneText(path, allWordsList);
-            return allWordsList;
+                GetAllLinesInOneText(path, allLinesList);
+            return allLinesList;
         }
 
-        public List<string> GetAllWords(IEnumerable<string> paths)
+        public List<string> GetAllLines(IEnumerable<string> paths)
         {
             var allWordsList = new List<string>();
             foreach (var path in paths)
-                GetAllWordsInOneText(path, allWordsList);
+                GetAllLinesInOneText(path, allWordsList);
             return allWordsList;
         }
 
-        private void GetAllWordsInOneText(string path, List<string> allWordsList)
+        private void GetAllLinesInOneText(string path, List<string> allLinesList)
         {
-            using (var sr = new StreamReader(path, TextEncoding))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                    allWordsList.AddRange(Regex.Split(line, RegexPattern, RegexOptions.IgnoreCase)
-                        .Select(s => s.MakeFirstLetterLowerCase()));
+                var lines = File.ReadAllLines(path);
+                allLinesList.AddRange(lines);
             }
         }
     }

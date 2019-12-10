@@ -5,8 +5,8 @@ namespace TagCloud.TextProvider
 {
     public interface ITextProvider
     {
-        List<string> GetAllWords();
-        List<string> GetAllWords(IEnumerable<string> paths);
+        List<string> GetAllLines();
+        List<string> GetAllLines(IEnumerable<string> paths);
         Encoding TextEncoding { get; set; }
     }
 }

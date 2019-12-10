@@ -28,9 +28,15 @@ namespace TagCloudForm
             builder.RegisterType<TagCloudForm>().AsSelf().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Name.EndsWith("Action"))
+                .Where(t => t.Name.EndsWith("Action") || t.Name.EndsWith("Condition"))
                 .AsImplementedInterfaces();
+            
+//            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+//                .Where(t => t.Name.EndsWith("Condition"))
+//                .AsImplementedInterfaces();
 
+//            builder.RegisterType<BlacklistCondition>().As<IFilterCondition>().SingleInstance();
+//            builder.RegisterType<WordLengthCondition>().As<IFilterCondition>().SingleInstance();
             builder.RegisterType<AppSettings>().As<IImageDirectoryProvider>().SingleInstance();
             builder.RegisterType<AppSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
@@ -39,13 +45,14 @@ namespace TagCloudForm
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().SingleInstance();
             builder.RegisterType<ViewSettings>().AsSelf().SingleInstance();
             builder.RegisterType<BlacklistMaker>().AsSelf().SingleInstance();
-            builder.RegisterType<TextFilter>().AsSelf();
+            builder.RegisterType<TextFilter>().AsSelf().SingleInstance();
+            builder.RegisterType<TextParser>().As<ITextParser>().SingleInstance();
             builder.RegisterType<SpiralSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ArchimedeanSpiral>().AsSelf().SingleInstance();
             builder.RegisterType<BlacklistSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<TextFileReader>().As<ITextProvider>().SingleInstance();
+            builder.RegisterType<TextFileReader>().As<ITextProvider, TextFileReader>().SingleInstance();
             builder.RegisterType<FrequencyDictionaryMaker>().AsSelf().SingleInstance();
-
+            
             var container = builder.Build();
             Application.Run(container.Resolve<TagCloudForm>());
         }

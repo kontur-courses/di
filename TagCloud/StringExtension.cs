@@ -4,10 +4,9 @@ namespace TagCloud
 {
     public static class StringExtension
     {
-        public static string MakeFirstLetterLowerCase(this string word)
+        public static string MakeLettersLowerCase(this string word)
         {
-            if (string.IsNullOrEmpty(word)) return string.Empty;
-            return word.First().ToString().ToLower() + word.Substring(1);
+            return string.IsNullOrEmpty(word) ? string.Empty : word.ToString().ToLower();
         }
     }
 }

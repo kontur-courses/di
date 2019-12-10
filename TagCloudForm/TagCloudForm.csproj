@@ -74,6 +74,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextFilterConditions\BlacklistCondition.cs" />
+    <Compile Include="TextFilterConditions\IFilterCondition.cs" />
+    <Compile Include="TextFilterConditions\WordLengthCondition.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
