@@ -77,6 +77,12 @@
     <Content Include="WordsProviderTestFiles\BoringWordsFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WordsProviderTestFiles\BoringWordsList.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WordsProviderTestFiles\CustomBoringWordsFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WordsProviderTestFiles\EmptyFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

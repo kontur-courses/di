@@ -26,14 +26,26 @@ namespace TagsCloudApplicationTests
             containerBuilder.RegisterType<ToLowerCaseProcessor>()
                 .As<IWordProcessor>();
             containerBuilder.RegisterType<WordsProvider>();
+            containerBuilder.RegisterType<EmptyWordFilter>()
+                .As<IWordFilter>();
         }
 
         private WordsProvider GetSimpleWordProvider()
         {
-            containerBuilder.RegisterType<EmptyWordFilter>()
-                .As<IWordFilter>();
             containerBuilder.RegisterType<BoringWordsFilter>()
                 .As<IWordFilter>();
+            return containerBuilder.Build().Resolve<WordsProvider>();
+        }
+
+        private WordsProvider GetWordProviderWithCustomBoringWordsFilter(string boringWordsListFilename)
+        {
+            var boringWordsListPath = GetFilePath(boringWordsListFilename);
+            containerBuilder.Register(c =>
+                new CustomBoringWordsFilter(
+                    c.Resolve<ITextReader>(),
+                    boringWordsListPath))
+                .As<IWordFilter>();
+
             return containerBuilder.Build().Resolve<WordsProvider>();
         }
 
@@ -67,6 +79,18 @@ namespace TagsCloudApplicationTests
         {
             var expectedWords = new List<string>() { "first", "second", "third" };
             TestSimpleWordsProvider("BoringWordsFile.txt", expectedWords);
+        }
+
+        [Test]
+        public void FilterCustomBoringWords_WhenProvided()
+        {
+            var wordProvider = GetWordProviderWithCustomBoringWordsFilter("BoringWordsList.txt");
+            var testFilePath = GetFilePath("CustomBoringWordsFile.txt");
+            var expectedWords = new List<string>() { "it's", "wrong" };
+
+            var resultWords = wordProvider.ReadWordsFromFile(testFilePath);
+
+            resultWords.Should().BeEquivalentTo(expectedWords);
         }
 
         private void TestSimpleWordsProvider(string filename, List<string> expectedWords)
