@@ -74,7 +74,6 @@
     <Compile Include="BitmapSavers\WmfBitmapSaver.cs" />
     <Compile Include="BitmapSavers\IBitmapSaver.cs" />
     <Compile Include="DrawingUtils.cs" />
-    <Compile Include="Cloud.cs" />
     <Compile Include="Layouters\Spiral.cs" />
     <Compile Include="Layouters\SpiralCloudLayouter.cs" />
     <Compile Include="Layouters\ICloudLayouter.cs" />

@@ -18,23 +18,23 @@ namespace TagsCloudConsole
 {
     public class Application
     {
-        protected readonly string wordsToExcludePath;
-        protected readonly ITextReader textReader;
-        protected readonly ITextSplitter textSplitter;
-        protected readonly IWordsFormatter wordsFormatter;
-        protected readonly IWordsExcluder wordsExcluder;
-        protected readonly ITokenizer tokenizer;
-        protected readonly ITokenShuffler tokenShuffler;
-        protected readonly FontProperties fontProperties;
-        protected readonly ITheme theme;
-        protected readonly TagSizeCalculator tagSizeCalculator;
-        protected readonly ITagColorizer tagColorizer;
-        protected readonly  ICloudVisualizer cloudVisualizer;
-        protected readonly ICloudLayouter cloudLayouter;
-        protected readonly  IBitmapSaver bitmapSaver;
-        protected readonly string imageOutputPath;
-        protected readonly int width;
-        protected readonly int height;
+        private readonly string wordsToExcludePath;
+        private readonly ITextReader textReader;
+        private readonly ITextSplitter textSplitter;
+        private readonly IWordsFormatter wordsFormatter;
+        private readonly IWordsExcluder wordsExcluder;
+        private readonly ITokenizer tokenizer;
+        private readonly ITokenShuffler tokenShuffler;
+        private readonly FontProperties fontProperties;
+        private readonly ITheme theme;
+        private readonly TagSizeCalculator tagSizeCalculator;
+        private readonly ITagColorizer tagColorizer;
+        private readonly ICloudVisualizer cloudVisualizer;
+        private readonly ICloudLayouter cloudLayouter;
+        private readonly IBitmapSaver bitmapSaver;
+        private readonly string imageOutputPath;
+        private readonly int width;
+        private readonly int height;
 
         public Application(
             string wordsToExcludePath,
@@ -85,11 +85,10 @@ namespace TagsCloudConsole
                 var wordsToExclude = File.ReadAllLines(wordsToExcludePath);
                 words = wordsExcluder.ExcludeWords(words, wordsToExclude);
             }
+
             var tokens = tokenizer.Tokenize(words);
             var shuffledTokens = tokenShuffler.Shuffle(tokens);
             var enumerable = shuffledTokens.ToList();
-            /*foreach (var t in enumerable)
-                Console.WriteLine(t.Word +"  "+t.Count);*/
             var style = new Style(theme, fontProperties, tagSizeCalculator, tagColorizer);
             var tags = cloudLayouter.GenerateTagsSequence(style, enumerable);
             using (var bitmap = cloudVisualizer.Visualize(style, tags, width, height))

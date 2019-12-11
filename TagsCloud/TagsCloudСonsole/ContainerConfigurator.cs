@@ -29,11 +29,11 @@ namespace TagsCloudConsole
                 .WithParameter("wordsToExcludePath", parameters["--exclude"].ToString())
                 .WithParameter("width", parameters["--w"].ToString())
                 .WithParameter("height", parameters["--h"].ToString())
-                .WithParameter("imageOutputPath", parameters["--output"].ToString()); //todo fix
+                .WithParameter("imageOutputPath", parameters["--output"].ToString());
 
             //text reading configure
             ConfigureTextReader(parameters["--input"].ToString(), parameters["--input_ext"].ToString(), builder);
-            
+
             //text processing configure
             builder.RegisterType<TextSplitter>()
                 .As<ITextSplitter>()
@@ -41,7 +41,7 @@ namespace TagsCloudConsole
             builder.RegisterType<WordsFormatterLowercaseAndTrim>().As<IWordsFormatter>();
             builder.RegisterType<WordsExcluder>().As<IWordsExcluder>();
             builder.RegisterType<Tokenizer>().As<ITokenizer>();
-            
+
             //style and visualize configure
             ConfigureShuffler(parameters["--shuffle"].ToString(), parameters["--seed"], builder);
             ConfigureFontProperties(parameters["--font"].ToString(), parameters["--font_size"], builder);
@@ -57,7 +57,7 @@ namespace TagsCloudConsole
                 parameters["--angle"].ToString(),
                 builder);
             builder.RegisterType<SpiralCloudLayouter>().As<ICloudLayouter>();
-            
+
             //configure bitmap saver
             ConfigureSaver(parameters["--output_ext"].ToString(), builder);
             return builder.Build();
@@ -74,7 +74,7 @@ namespace TagsCloudConsole
             builder.RegisterType(saverType)
                 .As<IBitmapSaver>();
         }
-        
+
         private static void ConfigureSpiral(string x, string y, string radius, string increment,
             string angle, ContainerBuilder builder)
         {
