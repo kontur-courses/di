@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Logic;
+using TagsCloudVisualization.Services;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -15,13 +17,14 @@ namespace TagsCloudVisualization.Tests
         [OneTimeSetUp]
         public void InitializeTextParser()
         {
-            textParser = new TextParser();
+            var defaultContainer = EntryPoint.InitializeContainer();
+            textParser = defaultContainer.Resolve<IParser>() as TextParser;
         }
 
         [Test]
         public void TextParser_ThrowsArgumentNullException_WhenTextIsNull()
         {
-            Action action = () => textParser.ParseToTokens(null, null).ToArray();
+            Action action = () => textParser.ParseToTokens(null).ToArray();
             action.Should().Throw<ArgumentNullException>();
         }
 
@@ -29,7 +32,7 @@ namespace TagsCloudVisualization.Tests
         public void TextParser_ReturnsEmptyCollection_WhenTextIsEmpty()
         {
             var text = "";
-            textParser.ParseToTokens(text, null).Should().BeEmpty();
+            textParser.ParseToTokens(text).Should().BeEmpty();
         }
 
         [Test]
@@ -38,7 +41,7 @@ namespace TagsCloudVisualization.Tests
             var wordTags = new[] {"dog", "cat", "rat", "monkey" };
             var text = wordTags.Aggregate("", (current, word) => current + (word + Environment.NewLine));
             textParser
-                .ParseToTokens(text, null)
+                .ParseToTokens(text)
                 .Select(token => token.Word)
                 .ToArray()
                 .Should()
@@ -51,7 +54,7 @@ namespace TagsCloudVisualization.Tests
             var wordTags = new[] { "dog", "cat", "", "monkey", ""};
             var text = wordTags.Aggregate("", (current, word) => current + (word + Environment.NewLine));
             textParser
-                .ParseToTokens(text, null)
+                .ParseToTokens(text)
                 .Select(token => token.Word)
                 .ToArray()
                 .Should()
@@ -66,18 +69,9 @@ namespace TagsCloudVisualization.Tests
         {
             var wordTags = new[] { "dog", "dog", "dog", "dog"};
             var text = wordTags.Aggregate("", (current, word) => current + (word + Environment.NewLine));
-            var tokens = textParser.ParseToTokens(text, null).ToArray();
+            var tokens = textParser.ParseToTokens(text).ToArray();
             tokens.Length.Should().Be(1);
             tokens.First().Should().BeEquivalentTo(new WordToken("dog", 4));
-        }
-
-        [Test]
-        public void TextParser_ReturnsEmptyCollection_WhenWordsAreBoring()
-        {
-            var wordTags = new[] {"i", "am", "not"};
-            var boringWords = new HashSet<string>(wordTags);
-            var text = wordTags.Aggregate("", (current, word) => current + (word + Environment.NewLine));
-            textParser.ParseToTokens(text, boringWords).Should().BeEmpty();
         }
     }
 }

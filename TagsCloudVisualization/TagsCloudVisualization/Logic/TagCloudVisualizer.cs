@@ -13,41 +13,47 @@ namespace TagsCloudVisualization.Logic
         private readonly ITagPainter painter;
         private readonly IBoringWordsProvider boringWordsProvider;
         private readonly Graphics measureGraphics;
+        private readonly IImageSettingsProvider imageSettingsProvider;
 
         public TagCloudVisualizer(
             IImageGenerator imageGenerator,
             IParser textParser, 
             ILayouter layouter, 
             ITagPainter painter, 
-            IBoringWordsProvider boringWordsProvider)
+            IBoringWordsProvider boringWordsProvider,
+            IImageSettingsProvider imageSettingsProvider)
         {
             measureGraphics = Graphics.FromImage(new Bitmap(1, 1));
             this.imageGenerator = imageGenerator;
+            this.imageSettingsProvider = imageSettingsProvider;
             this.boringWordsProvider = boringWordsProvider;
             this.textParser = textParser;
             this.layouter = layouter;
             this.painter = painter;
         }
 
-        public Bitmap VisualizeTextFromFile(string fileName, ImageSettings imageSettings)
+        public Bitmap VisualizeTextFromFile(string fileName)
         {
-            var imageCenter = new Point(imageSettings.ImageSize.Width / 2, imageSettings.ImageSize.Height / 2);
+            var imageCenter = new Point(
+                imageSettingsProvider.ImageSettings.ImageSize.Width / 2, 
+                imageSettingsProvider.ImageSettings.ImageSize.Height / 2
+                );
             var text = TextRetriever.RetrieveTextFromFile(fileName);
             var tags = textParser
-                .ParseToTokens(text, boringWordsProvider.BoringWords)
-                .Select(token => CreateTag(token, imageSettings, imageCenter))
+                .ParseToTokens(text)
+                .Select(token => CreateTag(token,imageCenter))
                 .ToArray();
-            var cloudScale = CalculateCloudScale(tags, imageSettings, imageCenter);
+            var cloudScale = CalculateCloudScale(tags,imageCenter);
             layouter.Reset();
-            return imageGenerator.CreateImage(tags, cloudScale, imageSettings);
-        }
+            return imageGenerator.CreateImage(tags,cloudScale, imageSettingsProvider.ImageSettings);
+        } 
 
-        private float CalculateCloudScale(IEnumerable<Tag> tags, ImageSettings imageSettings, Point imageCenter)
+        private float CalculateCloudScale(IEnumerable<Tag> tags, Point imageCenter)
         {
             var cloudScale = 1f;
             foreach (var tag in tags)
             {
-                var currentCloudScale = CalculateTagDistanceFromPointScale(tag, imageSettings, imageCenter);
+                var currentCloudScale = CalculateTagDistanceFromPointScale(tag, imageCenter);
                 if (currentCloudScale < cloudScale)
                     cloudScale = currentCloudScale;
             }
@@ -55,10 +61,10 @@ namespace TagsCloudVisualization.Logic
         }
 
 
-        private float CalculateTagDistanceFromPointScale(Tag tag, ImageSettings imageSettings, Point imageCenter)
+        private float CalculateTagDistanceFromPointScale(Tag tag, Point imageCenter)
         {
             var furthestRectanglePoint = GetFurthestRectanglePoint(imageCenter, tag.TagBox);
-            var cloudBorderSize = imageSettings.ImageSize;
+            var cloudBorderSize = imageSettingsProvider.ImageSettings.ImageSize;
             var distanceToImageBorder = Geometry
                 .GetLengthFromRectangleCenterToBorderOnVector(
                     new Rectangle(Point.Empty, cloudBorderSize),
@@ -93,11 +99,15 @@ namespace TagsCloudVisualization.Logic
             return size.ToSize();
         }
 
-        private Tag CreateTag(WordToken wordToken, ImageSettings imageSettings, Point imageCenter)
+        private Tag CreateTag(WordToken wordToken, Point imageCenter)
         {
             var color = painter.GetTagColor();
-            var fontSize = CalculateFontSize(wordToken, imageSettings);
-            var wordFont = new Font(imageSettings.Font.FontFamily, fontSize, imageSettings.Font.Style);
+            var fontSize = CalculateFontSize(wordToken, imageSettingsProvider.ImageSettings);
+            var wordFont = new Font(
+                imageSettingsProvider.ImageSettings.Font.FontFamily, 
+                fontSize, 
+                imageSettingsProvider.ImageSettings.Font.Style
+                );
             var wordRectangle = layouter.PutNextRectangle(CalculateWordSize(wordToken, wordFont));
             wordRectangle.Location = new Point(
                 wordRectangle.X + imageCenter.X,

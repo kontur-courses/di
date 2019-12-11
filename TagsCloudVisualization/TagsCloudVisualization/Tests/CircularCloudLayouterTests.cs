@@ -14,17 +14,11 @@ namespace TagsCloudVisualization.Tests
     public class CircularCloudLayouterTests
     {
         private CircularCloudLayouter layouter;
-        private IContainer defaultContainer;
 
         [OneTimeSetUp]
-        public void InitializeContainer()
+        public void InitializeLayouter()
         {
-            defaultContainer = EntryPoint.InitializeContainer();
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
+            var defaultContainer = EntryPoint.InitializeContainer();
             layouter = defaultContainer.Resolve<ILayouter>() as CircularCloudLayouter;
         }
 

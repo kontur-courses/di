@@ -70,7 +70,7 @@ namespace TagsCloudVisualization
             foreach (DataGridViewRow objRow in dataGridView.Rows)
             {
                 var boringWord = objRow.Cells[0].Value as string;
-                if (boringWord == string.Empty)
+                if (boringWord != string.Empty)
                     yield return boringWord;
             }
         }

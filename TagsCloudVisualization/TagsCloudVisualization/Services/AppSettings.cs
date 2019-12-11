@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagsCloudVisualization.Logic;
@@ -12,7 +13,10 @@ namespace TagsCloudVisualization.Services
 
         public AppSettings()
         {
-            BoringWords = TextRetriever.RetrieveTextFromFile("BoringWords.txt").Split('\n').ToHashSet();
+            BoringWords = TextRetriever
+                .RetrieveTextFromFile(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BoringWords.txt")))
+                .Split(new[] {'\r','\n'}, StringSplitOptions.RemoveEmptyEntries)
+                .ToHashSet();
             ImageSettings = ImageSettings.InitializeDefaultSettings();
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Logic;
@@ -20,6 +22,14 @@ namespace TagsCloudVisualization.Tests
         {
             Action action = () => TextRetriever.RetrieveTextFromFile("nonexistingpath");
             action.Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public void TextRetriever_ReturnsCorrectText_WhenFileIsTxt()
+        {
+            var textPath = TestContext.CurrentContext.TestDirectory + "\\Tests\\TestText.txt";
+            var expectedText = File.ReadAllText(textPath, Encoding.UTF8);
+            TextRetriever.RetrieveTextFromFile(textPath).Should().BeEquivalentTo(expectedText);
         }
     }
 }

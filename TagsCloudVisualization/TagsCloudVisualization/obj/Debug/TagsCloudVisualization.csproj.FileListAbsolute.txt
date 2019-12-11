@@ -33,4 +33,6 @@ C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization
 C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\BoringWords.txt
 C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\InputData\Input2.txt
 C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\InputData\Input3.txt
-C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\Tests\TestText.txt
+C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\Tests\TestTexts\animals.txt
+C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\Tests\TestTexts\1000tags.txt
+C:\Users\tf2ge\Documents\GitHub\di\TagsCloudVisualization\TagsCloudVisualization\bin\Debug\Tests\TestTexts\100tags.txt

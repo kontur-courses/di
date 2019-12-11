@@ -69,6 +69,7 @@
     <Compile Include="Logic\ImageGenerator.cs" />
     <Compile Include="Services\IImageGenerator.cs" />
     <Compile Include="Tests\PointExtensionsTests.cs" />
+    <Compile Include="Tests\ScenarioTests.cs" />
     <Compile Include="Tests\TextParserTests.cs" />
     <Compile Include="Tests\TextRetrieverTests.cs" />
     <Compile Include="UI\BoringWordsEditor.cs">
@@ -137,7 +138,13 @@
     <Content Include="InputData\Input3.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tests\TestText.txt">
+    <Content Include="Tests\TestTexts\1000tags.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tests\TestTexts\100tags.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tests\TestTexts\animals.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

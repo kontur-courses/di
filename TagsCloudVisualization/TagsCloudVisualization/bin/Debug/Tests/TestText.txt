@@ -1,5 +1,0 @@
-﻿apple
-banana
-orange
-tomato
-cucumber

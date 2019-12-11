@@ -29,7 +29,7 @@ namespace TagsCloudVisualization.UI.Actions
         {
             if (pathProvider.TryGetPath(out var path))
             {
-                var image = visualizer.VisualizeTextFromFile(path, imageSettingsProvider.ImageSettings);
+                var image = visualizer.VisualizeTextFromFile(path);
                 imageHolder.Image = image;
             }
             else
