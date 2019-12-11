@@ -45,6 +45,7 @@
     <Compile Include="ArchimedeanSpiral_Should.cs" />
     <Compile Include="CloudLayouter_Should.cs" />
     <Compile Include="CloudTagProvider_Should.cs" />
+    <Compile Include="ImageUtilities_Should.cs" />
     <Compile Include="WordsProvider_Should.cs" />
   </ItemGroup>
   <ItemGroup>
