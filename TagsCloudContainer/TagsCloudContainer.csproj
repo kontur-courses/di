@@ -71,10 +71,9 @@
     <Compile Include="Tests\ArchimedeanSpiralTests.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="Visualization\CircularCloudVisualizer.cs" />
-    <Compile Include="Visualization\Layouts\CentricWordsLayout.cs" />
-    <Compile Include="Visualization\Layouts\IWordsLayout.cs" />
-    <Compile Include="Visualization\Layouts\Tag.cs" />
-    <Compile Include="Visualization\Painters\ColoringScheme.cs" />
+    <Compile Include="Visualization\Measurers\ProbabilityWordMeasurer.cs" />
+    <Compile Include="Visualization\Measurers\IWordMeasurer.cs" />
+    <Compile Include="Visualization\Measurers\Tag.cs" />
     <Compile Include="Visualization\Painters\ConstantColorsPainter.cs" />
     <Compile Include="Visualization\Painters\IPainter.cs" />
   </ItemGroup>
