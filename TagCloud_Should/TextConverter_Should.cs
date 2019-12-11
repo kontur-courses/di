@@ -12,9 +12,9 @@ using TagCloud.TextProvider;
 namespace TagCloud_Should
 {
     [TestFixture]
-    public class TextFilter_Should
+    public class TextConverter_Should
     {
-        private TextFilter textFilter;
+        private TextConverter textConverter;
 
         [SetUp]
         public void SetUp()
@@ -33,25 +33,18 @@ namespace TagCloud_Should
                 .WithProperty("FilesWithBannedWords", new HashSet<string>());
 
             var container = builder.Build();
-            textFilter = container.Resolve<TextFilter>();
+            textConverter = container.Resolve<TextConverter>();
         }
 
         [Test]
-        public void ShouldRemoveBannedWords()
+        public void ShouldConvertToLower()
         {
-            textFilter.FilterWords().Contains("blacklistWord").Should().BeFalse();
-        }
-
-        [Test]
-        public void ShouldRemoveSmallWords()
-        {
-            textFilter.FilterWords().Contains("b").Should().BeFalse();
-        }
-
-        [Test]
-        public void ShouldNotRemoveNotBannedWords()
-        {
-            textFilter.FilterWords().Should().Contain("word3");
+            textConverter.ConvertWords().Should().BeEquivalentTo(new List<string>
+            {
+                "word1", "word2", "word", "than", "more", "word", "word1", "word", "word1", "word1", "word1", "word2",
+                "word2", "word2", "blacklistword", "blacklistword", "word3", "blacklistword", "word", "the", "word",
+                "word", "unit", "test", "are", "mad"
+            });
         }
     }
 }

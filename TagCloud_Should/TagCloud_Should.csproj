@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -61,8 +65,10 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral_Should.cs" />
     <Compile Include="CircularCloudLayouter_Should.cs" />
+    <Compile Include="EndToEndTest.cs" />
     <Compile Include="FrequencyDictionaryMaker_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextConverter_Should.cs" />
     <Compile Include="TextFilter_Should.cs" />
     <Compile Include="TextParser_Should.cs" />
     <Compile Include="UnitTestsTextProvider.cs" />

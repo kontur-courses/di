@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.TextParser;
 using TagCloud.TextProvider;
 
 namespace TagCloud_Should
@@ -8,12 +10,17 @@ namespace TagCloud_Should
     public class TextParser_Should
     {
         private TextParser textParser;
-        private UnitTestsTextProvider textProvider = new UnitTestsTextProvider();
+        private UnitTestsTextProvider textProvider;
 
         [SetUp]
         public void SetUp()
         {
-            textParser = new TextParser(textProvider);
+            var builder = new ContainerBuilder();
+            builder.RegisterType<UnitTestsTextProvider>().As<ITextProvider, UnitTestsTextProvider>();
+            builder.RegisterType<TextParser>().AsSelf();
+            var container = builder.Build();
+            textParser = container.Resolve<TextParser>();
+            textProvider = container.Resolve<UnitTestsTextProvider>();
         }
 
         [Test]
@@ -21,10 +28,10 @@ namespace TagCloud_Should
         {
             textParser.ParseText().Should().BeEquivalentTo(new List<string>
             {
-                "word1", "word2", "", "word", "", "than", "more", "", "", "word", "word1", "", "", "word", "word1",
-                "word1", "word1", "word2", "word2", "word2", "blacklistword", "blacklistword", "word3", "blacklistword",
-                "", "word", "", "the", "", "", "word", "", "am", "i", "word", "", "is", "it", "unit", "test", "", "are",
-                "u", "mad", "", "", "", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"
+                "wOrd1", "Word2", "word", "tHan", "more", "word", "word1", "word", "WORD1", "word1", "word1", "word2",
+                "WORD2", "wORd2", "blacklistword", "blacklistword", "word3", "blacklistword", "word", "the", "worD",
+                "am", "I", "wOrd", "Is", "It", "UnIt", "TesT", "are", "u", "mad", "a", "b", "c", "D", "e", "f", "g",
+                "h", "i", "j", "k", "l", "m", "n"
             });
         }
 
@@ -40,10 +47,11 @@ namespace TagCloud_Should
         [Test]
         public void ShouldParseLinesWithPunctuationSigns()
         {
-            textParser.ParseAllLines(textProvider.GetLineWithPunctuationSigns()).Should().BeEquivalentTo(new List<string>
-            {
-                "sentence", "", "with", "", "punctuation", "signs", "", "must", "", "be", "parsed", "correctly", "", "isn", "t", "it", ""
-            });
+            textParser.ParseAllLines(textProvider.GetLineWithPunctuationSigns()).Should().BeEquivalentTo(
+                new List<string>
+                {
+                    "sentence", "with", "punctuation", "signs", "must", "be", "parsed", "correctly", "Isn", "t", "it"
+                });
         }
     }
 }

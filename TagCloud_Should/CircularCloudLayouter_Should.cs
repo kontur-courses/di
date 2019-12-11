@@ -2,7 +2,7 @@
 using System.Drawing;
 using NUnit.Framework;
 using FluentAssertions;
-using TagCloud.CloudLayouter;
+using TagCloud.CloudLayouter.CircularLayouter;
 using TagCloud.Visualization;
 
 namespace TagCloud_Should

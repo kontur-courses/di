@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.CloudLayouter;
+using TagCloud.CloudLayouter.CircularLayouter;
 
 namespace TagCloud_Should
 {
