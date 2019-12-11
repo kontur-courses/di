@@ -87,7 +87,7 @@ namespace TagsCloudContainer.Tests
             var file = Path.ChangeExtension(context.Test.Name, "png");
             var path = Path.Combine(dir, file);
 
-            var visualizer = new CircularCloudVisualizer();
+            var visualizer = new TagsCloudVisualizer();
             var layouter = GetTestProperty<CircularCloudLayouter>(LayouterKey);
             var rectangles = layouter.Rectangles.ToArray();
             using (var bitmap = visualizer.Visualize(Painter, rectangles))

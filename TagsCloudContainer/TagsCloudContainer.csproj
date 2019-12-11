@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Core\Generators\ArchimedeanSpiral.cs" />
     <Compile Include="Core\Generators\IPointGenerator.cs" />
+    <Compile Include="Core\Layouters\IRectangleLayouter.cs" />
     <Compile Include="Core\Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Data\Processors\LowerCaseTransformer.cs" />
     <Compile Include="Data\Processors\WordFilter.cs" />

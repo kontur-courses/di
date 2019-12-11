@@ -7,7 +7,7 @@ using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Visualization
 {
-    public class CircularCloudVisualizer
+    public class TagsCloudVisualizer
     {
         private static readonly StringFormat StringFormat = new StringFormat
         {
@@ -21,7 +21,7 @@ namespace TagsCloudContainer.Visualization
 
         public Color BackgroundColor { get; set; } = Color.Transparent;
 
-        public CircularCloudVisualizer(Size? imageSize = null)
+        public TagsCloudVisualizer(Size? imageSize = null)
         {
             this.imageSize = imageSize;
         }

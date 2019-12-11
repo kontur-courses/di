@@ -5,13 +5,13 @@ using TagsCloudContainer.Core.Generators;
 
 namespace TagsCloudContainer.Core.Layouters
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : IRectangleLayouter
     {
         private readonly Point center;
         private readonly IPointGenerator sequence;
         private readonly List<Rectangle> rectangles;
 
-        internal IEnumerable<Rectangle> Rectangles => rectangles;
+        public IEnumerable<Rectangle> Rectangles => rectangles;
 
         public CircularCloudLayouter(Point center, IPointGenerator sequence)
         {
