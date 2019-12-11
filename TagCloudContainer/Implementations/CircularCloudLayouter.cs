@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
@@ -10,20 +11,22 @@ namespace TagCloudContainer.Implementations
     {
         private float spiralCounter = 0;
 
-        public List<Rectangle> Layout { get; } = new List<Rectangle>();
-
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public Rectangle PutNextRectangle(Size rectangleSize, List<Rectangle> container)
         {
-            var rect = GetNextEmptyRectangleAtSpiral(rectangleSize);
-            Layout.Add(rect);
+            var rect = GetNextEmptyRectangleAtSpiral(rectangleSize, container);
+            container.Add(rect);
             return rect;
         }
 
-        private Rectangle GetNextEmptyRectangleAtSpiral(Size rectangleSize)
+        private Rectangle GetNextEmptyRectangleAtSpiral(Size rectangleSize, List<Rectangle> container)
         {
+            if (container is null)
+                throw new ArgumentException("Container shouldn't be null");
+            
             return GetPointsOnSpiral()
                 .Select(p => new Rectangle(p - rectangleSize / 2, rectangleSize))
-                .SkipWhile(r => Layout.Any(r.IntersectsWith)).First();
+                .SkipWhile(r => container.Any(r.IntersectsWith))
+                .FirstOrDefault();
         }
 
         private IEnumerable<Point> GetPointsOnSpiral()

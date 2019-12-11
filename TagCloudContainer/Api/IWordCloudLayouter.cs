@@ -3,8 +3,9 @@ using System.Drawing;
 
 namespace TagCloudContainer.Api
 {
-    public interface IWordCloudLayouter : ILayoutProvider
+    public interface IWordCloudLayouter
     {
-        IReadOnlyDictionary<string, Rectangle> AddWords(IReadOnlyDictionary<string, int> words);
+        IReadOnlyDictionary<string, Rectangle> AddWords(IReadOnlyDictionary<string, int> words,
+            List<Rectangle> containter);
     }
 }

@@ -19,10 +19,11 @@ namespace TagCloudContainer.Implementations
 
         public Image CreateImageWithWords(IEnumerable<string> words, DrawingOptions options)
         {
+            List<Rectangle> layout = new List<Rectangle>();
             var wordsAndCounts = WordCounter.CreateWordOccurrencesDictionary(words);
-            var wordsAndRectangles = layouter.AddWords(wordsAndCounts);
+            var wordsAndRectangles = layouter.AddWords(wordsAndCounts, layout);
 
-            var bmp = CreateSizedBitmap();
+            var bmp = layout.CreateSizedBitmap();
             var graphics = Graphics.FromImage(bmp);
 
             FillBackground(graphics, bmp, options);
@@ -49,18 +50,6 @@ namespace TagCloudContainer.Implementations
             }
         }
 
-        private Bitmap CreateSizedBitmap()
-        {
-            int maxX = layouter.Layout.Select(r => r.Right).Max();
-            int minX = layouter.Layout.Select(r => r.Left).Min();
-            int maxY = layouter.Layout.Select(r => r.Bottom).Max();
-            int minY = layouter.Layout.Select(r => r.Top).Min();
-
-            int bmpWidth = maxX - minX;
-            int bmpHeight = maxY - minY;
-
-            return new Bitmap(bmpWidth, bmpHeight);
-        }
 
         private static void FillBackground(Graphics graphics, Image bmp, DrawingOptions options)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
@@ -14,6 +15,7 @@ namespace TagCloudContainer_Tests
     public class CircularLayouter_Should
     {
         private CircularCloudLayouter layouter;
+        private List<Rectangle> layout;
         private IRectanglePenProvider penProvider;
         private DrawingOptions drawingOptions;
 
@@ -21,6 +23,7 @@ namespace TagCloudContainer_Tests
         public void SetUp()
         {
             layouter = new CircularCloudLayouter();
+            layout = new List<Rectangle>();
             drawingOptions = new DrawingOptions();
             penProvider = new OneColorPenProvider(drawingOptions);
         }
@@ -31,7 +34,7 @@ namespace TagCloudContainer_Tests
             if (TestContext.CurrentContext.Result.Outcome.Status.Equals(TestStatus.Failed))
             {
                 var fileName = $"{TestContext.CurrentContext.Test.Name}_rects.bmp";
-                var img = new LayoutVisualizer(layouter, penProvider, drawingOptions).CreateImageWithRectangles();
+                var img = new LayoutVisualizer(penProvider, layout, drawingOptions).CreateImageWithRectangles();
                 img.Save(fileName);
                 Console.Error.WriteLine($"Tag cloud visualization saved to file {fileName}");
             }
@@ -46,11 +49,10 @@ namespace TagCloudContainer_Tests
             for (int i = 0; i < rectCount; i++)
             {
                 var size = new Size(random.Next(minWidth, maxWidth), random.Next(minHeight, maxHeight));
-                layouter.PutNextRectangle(size);
+                layouter.PutNextRectangle(size, layout);
             }
 
-            layouter.Layout.Any(r => layouter.Layout.Any(s => r != s && s.IntersectsWith(r)))
-                .Should().BeFalse();
+            layout.Any(r => layout.Any(s => r != s && s.IntersectsWith(r))).Should().BeFalse();
         }
 
         [Test]
@@ -58,7 +60,7 @@ namespace TagCloudContainer_Tests
         {
             var size = new Size(200, 200);
             var expected = new Rectangle(-100, -100, 200, 200);
-            var rect = layouter.PutNextRectangle(size);
+            var rect = layouter.PutNextRectangle(size, layout);
 
             rect.Should().BeEquivalentTo(expected);
         }

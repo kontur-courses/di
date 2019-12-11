@@ -18,20 +18,19 @@ namespace TagCloudContainer.Implementations
         }
 
         public IReadOnlyDictionary<string, Rectangle> AddWords(
-            IReadOnlyDictionary<string, int> words)
+            IReadOnlyDictionary<string, int> words, List<Rectangle> container)
         {
             return words.OrderByDescending(pair => pair.Value)
-                .Select(pair => CreateBoundingRectangle(pair.Key, pair.Value))
+                .Select(pair => CreateBoundingRectangle(pair.Key, pair.Value, container))
                 .ToDictionary(p => p.word, p => p.rect);
         }
 
-        private (string word, Rectangle rect) CreateBoundingRectangle(string word, int occurrenceCount)
+        private (string word, Rectangle rect) CreateBoundingRectangle(string word, int occurrenceCount,
+            List<Rectangle> container)
         {
             var stringSize = sizeProvider.GetStringSize(word, occurrenceCount) * occurrenceCount;
-            var rectangle = rectangleLayouter.PutNextRectangle(stringSize);
+            var rectangle = rectangleLayouter.PutNextRectangle(stringSize, container);
             return (word, rectangle);
         }
-
-        public List<Rectangle> Layout => rectangleLayouter.Layout;
     }
 }

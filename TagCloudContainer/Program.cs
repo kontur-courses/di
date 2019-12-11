@@ -45,9 +45,6 @@ namespace TagCloudContainer
 
         static void Main(string[] args)
         {
-//            var inputFile = "words.txt";
-//            var outputFile = "wordCloud.bmp";
-
             var p = new FluentCommandLineParser();
             TagCloudConfig config = null;
             p.Setup<string>('f', "file").Callback(file => config = CreateTagCloud.FromFile(file)).Required();
