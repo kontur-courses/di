@@ -7,6 +7,7 @@ using TagsCloudContainer.RectangleGenerator;
 using TagsCloudContainer.RectangleGenerator.PointGenerator;
 using TagsCloudContainer.TokensGenerator;
 using TagsCloudContainer.Visualization;
+using YandexMystem.Wrapper.Enums;
 
 namespace TagsCloudContainer
 {
@@ -32,7 +33,7 @@ namespace TagsCloudContainer
             builder.RegisterType<MyStemParser>().As<ITokensParser>().SingleInstance();
             builder.RegisterType<MyStemFilter>().As<IFilter>().SingleInstance()
                 .WithParameter("allowedWorldType",
-                    new[] {WordType.Noun, WordType.Verb, WordType.Adjective, WordType.Adverb});
+                    new[] {GramPartsEnum.Noun, GramPartsEnum.Verb, GramPartsEnum.Adjective, GramPartsEnum.Adverb});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
             builder.Register(c => setting.GetCenterImage()).As<Point>().SingleInstance();
             builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();

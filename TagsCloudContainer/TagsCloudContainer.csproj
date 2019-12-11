@@ -80,8 +80,6 @@
     <Compile Include="Filters\BoringFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\MyStemFilter.cs" />
-    <Compile Include="Filters\Token.cs" />
-    <Compile Include="Filters\WordType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleGenerator\CircularCloudLayouter.cs" />
