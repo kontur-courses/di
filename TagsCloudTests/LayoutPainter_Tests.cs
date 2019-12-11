@@ -11,7 +11,7 @@ namespace TagsCloudTests
 		[TestCase(0, 0, 50, 50, 25, 25, TestName = "Location at (0, 0) and image size (50, 50)")]
 		[TestCase(0, 0, 25, 25, 12, 12, TestName = "Location at (0, 0) and odd image width and height")]
 		[TestCase(-5, 5, 20, 20, 5, 5, TestName = "Square with center at image center and image size (20, 20)")]
-		public void ToComputerCoordinates_ReturnsCorrectValue(int locationX, 
+		public void ToComputerCoordinates_ReturnsCorrectValue(int locationX,
 																int locationY,
 																int imageWidth,
 																int imageHeight,

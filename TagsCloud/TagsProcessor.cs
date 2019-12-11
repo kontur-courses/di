@@ -8,6 +8,9 @@ namespace TagsCloud
 {
 	public class TagsProcessor: ITagsProcessor
 	{
+		private const float WordWidthScale = 1.04F;
+		private const float WordHeightScale = 0.8F;
+		private const double FontSizeScale = 1.09;
 		private readonly IWordsProcessor wordsProcessor;
 		private readonly FontSettings settings;
 		private readonly IImageHolder imageHolder;
@@ -30,7 +33,7 @@ namespace TagsCloud
 			var graphics = imageHolder.GetGraphics();
 			var font = new Font(settings.Font.Name, fontSize);
 			var wordSize = graphics.MeasureString(word, font);
-			wordSize = new SizeF(wordSize.Width * 1.04F, wordSize.Height * 0.8F);
+			wordSize = new SizeF(wordSize.Width * WordWidthScale, wordSize.Height * WordHeightScale);
 			return wordSize.ToSize();
 		}
 
@@ -43,7 +46,7 @@ namespace TagsCloud
 			if (settings.MinFontSize < 1)
 				throw new ArgumentException("MinFontSize must be grater than 1");
 			
-			var size = Math.Log(word.Frequency, 1.09);
+			var size = Math.Log(word.Frequency, FontSizeScale);
 			size = size > settings.MaxFontSize ? settings.MaxFontSize : size;
 			return (int) (size < settings.MinFontSize ? settings.MinFontSize : size);
 		}

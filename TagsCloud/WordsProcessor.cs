@@ -18,7 +18,7 @@ namespace TagsCloud
 		public IEnumerable<Word> GetWordsWithFrequencies()
 		{
 			var frequencies = new Dictionary<string, int>();
-			foreach (var word in FilterWords().Select(w => w.ToLower()))
+			foreach (var word in FilterWords())
 			{
 				if (frequencies.ContainsKey(word))
 					frequencies[word]++;
@@ -32,6 +32,6 @@ namespace TagsCloud
 		}
 
 		private IEnumerable<string> FilterWords() => 
-			textReader.Read().Where(word => wordFilters.All(f => f.CheckWord(word)));
+			textReader.Read().Select(w => w.ToLower()).Where(word => wordFilters.All(f => f.CheckWord(word)));
 	}
 }

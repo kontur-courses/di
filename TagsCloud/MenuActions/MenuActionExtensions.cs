@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.Interfaces;
@@ -22,15 +23,13 @@ namespace TagsCloud.MenuActions
 			return new ToolStripMenuItem(name, null, menuItems);
 		}
 
-		public static ToolStripItem ToMenuItem(this IMenuAction action)
+		private static ToolStripItem ToMenuItem(this IMenuAction action)
 		{
-			return
-				new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())
-				{
-					ToolTipText = action.Description,
-					Tag = action
-				};
+			return new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())
+			{
+				ToolTipText = action.Description,
+				Tag = action
+			};
 		}
 	}
-
 }

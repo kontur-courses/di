@@ -54,24 +54,17 @@ namespace TagsCloudTests
 		[Test]
 		public void GetWordsWithFrequencies_FilterWordsWithAllAddedFilters()
 		{
-			textReader.Read().Returns(new[] {"a", "b", "there", "here", "you", "home"});
+			textReader.Read().Returns(new[] {"a", "here", "home"});
 			wordFilters.Add(new WordLengthFilter());
-			wordFilters.Add(new SomeWordsFilter());
+			var someFilter = Substitute.For<IWordFilter>();
+			someFilter.CheckWord(Arg.Any<string>()).Returns(call => (string) call[0] != "here");
+			wordFilters.Add(someFilter);
 			var expectedWords = new[] {"home"};
 
 			var actualWords = wordsProcessor.GetWordsWithFrequencies().Select(w => w.Text);
 			actualWords.Should().BeEquivalentTo(expectedWords);
 		}
 		
-		private class SomeWordsFilter: IWordFilter
-		{
-			public bool CheckWord(string word)
-			{
-				var boringWords = new HashSet<string>{"you", "there", "here"};
-				return !boringWords.Contains(word);
-			}
-		}
-
 		[Test]
 		public void GetWordsWithFrequencies_ReturnsWordsInLowerCase()
 		{

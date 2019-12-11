@@ -20,7 +20,7 @@ namespace TagsCloudTests
 		public void SetUp()
 		{
 			wordsProcessor = Substitute.For<IWordsProcessor>();
-			settings = Substitute.For<FontSettings>();
+			settings = new FontSettings();
 			imageHolder = Substitute.For<IImageHolder>();
 			tagsProcessor = new TagsProcessor(wordsProcessor, settings, imageHolder);
 		}
@@ -54,14 +54,14 @@ namespace TagsCloudTests
 			actualSizes.Should().AllBeEquivalentTo(expectedSize);
 		}
 
-		[TestCase(100, 10, 50, 50, TestName = "Calculated size grater than max size => max size")]
-		[TestCase(2, 10, 50, 10, TestName = "Calculated size less than min size => min size")]
-		[TestCase(1, 10, 50, 10, TestName = "Calculated size is zero => min size")]
-		[TestCase(50, 10, 50, 45, TestName = "Word frequency = 50 => 45")]
-		public void CalculateFontSize_ReturnsCorrectValue_When(int wordFrequency,
-																int minFontSize, 
-																int maxFontSize,
-																int expectedFontSize)
+		[TestCase(100, 10, 50, 50, TestName = "Max size WHEN Calculated size grater than max size")]
+		[TestCase(2, 10, 50, 10, TestName = "Min size WHEN Calculated size less than min size")]
+		[TestCase(1, 10, 50, 10, TestName = "Min size WHEN Calculated size is zero")]
+		[TestCase(50, 10, 50, 45, TestName = "45 WHEN Word frequency = 50")]
+		public void CalculateFontSize_Returns(int wordFrequency,
+												int minFontSize, 
+												int maxFontSize,
+												int expectedFontSize)
 		{
 			settings.MaxFontSize = maxFontSize;
 			settings.MinFontSize = minFontSize;

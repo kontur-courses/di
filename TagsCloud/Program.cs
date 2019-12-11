@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloud.Interfaces;
 using TagsCloud.MenuActions;
-[assembly: InternalsVisibleTo("TagsCloudTests")]
 
 namespace TagsCloud
 {
@@ -15,27 +13,31 @@ namespace TagsCloud
             const string sourceTextFilePath = @"../../Resources/text.txt";
             var builder = new ContainerBuilder();
             
-            builder.RegisterType<MainForm>().AsSelf();
+            builder.RegisterType<MainForm>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxImageHolder>()
                 .As<IImageHolder, PictureBoxImageHolder>().SingleInstance();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<SpiralParameters>().AsSelf().SingleInstance();
-            builder.RegisterType<SaveImageAction>().As<IMenuAction>();
-            builder.RegisterType<CircularLayouterAction>().As<IMenuAction>();
-            builder.RegisterType<ImageSettingsAction>().As<IMenuAction>();
-            builder.RegisterType<FontSettingsAction>().As<IMenuAction>();
-            builder.RegisterType<PaletteSettingsAction>().As<IMenuAction>();
-            builder.RegisterType<LayoutPainter>().As<ILayoutPainter>();
-            builder.Register(c => new Random()).As<Random>();
-            builder.RegisterType<LayoutConstructor>().As<ILayoutConstructor>();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterType<ArchimedeSpiral>().As<ISpiral>();
-            builder.RegisterType<TagsProcessor>().As<ITagsProcessor>();
-            builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
-            builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>();
-            builder.RegisterType<WordLengthFilter>().As<IWordFilter>();
+            
+            builder.RegisterType<SaveImageAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<CircularLayouterAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<ImageSettingsAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<FontSettingsAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<PaletteSettingsAction>().As<IMenuAction>().SingleInstance();
+            
+            builder.RegisterType<LayoutPainter>().As<ILayoutPainter>().SingleInstance();
+            builder.RegisterType<Random>().AsSelf().SingleInstance();
+            builder.RegisterType<LayoutConstructor>().As<ILayoutConstructor>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().SingleInstance();
+            builder.RegisterType<ArchimedeSpiral>().As<ISpiral>().SingleInstance();
+            builder.RegisterType<TagsProcessor>().As<ITagsProcessor>().SingleInstance();
+            builder.RegisterType<WordsProcessor>().As<IWordsProcessor>().SingleInstance();
+            builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>().SingleInstance();
+            builder.RegisterType<WordLengthFilter>().As<IWordFilter>().SingleInstance();
+            builder.RegisterType<BoringWordsFilter>().As<IWordFilter>().SingleInstance();
+            builder.RegisterType<GUIExceptionsHandler>().As<IExceptionHandler>().SingleInstance();
             var container = builder.Build();
 
             Application.EnableVisualStyles();

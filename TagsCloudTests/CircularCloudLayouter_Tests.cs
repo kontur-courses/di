@@ -17,8 +17,7 @@ namespace TagsCloudTests
 		[SetUp]
 		public void SetUp()
 		{
-			var spiralParameters = Substitute.For<SpiralParameters>();
-			var spiral = Substitute.For<ArchimedeSpiral>(spiralParameters);
+			var spiral = new ArchimedeSpiral(new SpiralParameters());
 			circularCloudLayouter = new CircularCloudLayouter(spiral);
 		}
 

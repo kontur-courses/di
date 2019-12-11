@@ -51,7 +51,7 @@ namespace TagsCloud
 				var color = palette.RandomizeColors ? palette.GenerateColor() : palette.TextColor;
 				var font = new Font(fontSettings.Font.FontFamily, tag.TextSize);
 				graphics.DrawString(tag.Text, font, new SolidBrush(color), tag.Area);
-				if (fontSettings.DrawWordRectangle)
+				if (palette.DrawWordRectangle)
 					graphics.DrawRectangle(new Pen(color), tag.Area);
 				imageHolder.UpdateUi();
 			}
