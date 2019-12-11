@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using CommandLine;
 using TagsCloudVisualization.Visualization;
-
 namespace TagsCloudVisualization.ApplicationOptions
 {
     public class ApplicationOptions
@@ -9,25 +8,25 @@ namespace TagsCloudVisualization.ApplicationOptions
         [Option('o', "font", HelpText = "Font family name", Default = "Arial")]
         public string FontFamily { get; set; }
 
-        [Option('s', HelpText = "Font size", Default = 10)]
+        [Option('s', "fontSize", HelpText = "Font size", Default = 10)]
         public int FontSize { get; set; }
 
-        [Option('w', HelpText = "Image width", Default = 1000)]
+        [Option('w', "imageWidth", HelpText = "Image width", Default = 1000)]
         public int ImageWidth { get; set; }
 
-        [Option('h', HelpText = "Image height", Default = 1000)]
+        [Option('n', "imageHeight", HelpText = "Image height", Default = 1000)]
         public int ImageHeight { get; set; }
 
-        [Option('b', HelpText = "Background color", Default = "Black")]
+        [Option('b', "backgroundColor", HelpText = "Background color", Default = "Black")]
         public string BackGroundColorName { get; set; }
 
-        [Option('b', HelpText = "Text color", Default = "Pink")]
+        [Option('d', "textColor", HelpText = "Text color", Default = "Pink")]
         public string TextColorName { get; set; }
 
-        [Option('t', HelpText = "Text name", Default = "1.txt")]
+        [Option('t', "textName",  HelpText = "Text name", Required = true)]
         public string TextName { get; set; }
 
-        [Option('i', HelpText = "Image name", Default = "01")]
+        [Option('i', "imageName", HelpText = "Image name", Required = true)]
         public string ImageName { get; set; }
 
         public VisualisingOptions GetVisualizingOptions()
