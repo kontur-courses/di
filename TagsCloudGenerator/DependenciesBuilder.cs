@@ -10,6 +10,8 @@ using TagsCloudGenerator.FileReaders;
 using TagsCloudGenerator.Saver;
 using TagsCloudGenerator.Visualizer;
 using TagsCloudGenerator.WordsHandler;
+using TagsCloudGenerator.WordsHandler.Converters;
+using TagsCloudGenerator.WordsHandler.Filters;
 
 namespace TagsCloudGenerator
 {
@@ -21,9 +23,12 @@ namespace TagsCloudGenerator
             var center = new Point(0, 0);
             bool KeyLengthMoreThanTen(KeyValuePair<string, int> pair) => pair.Key.Length > 10;
             KeyValuePair<string, int> EmptyConvert(KeyValuePair<string, int> pair) => pair;
-
+            
             builder.RegisterType<ConsoleClient>().As<IClient>().SingleInstance();
-            builder.RegisterType<SimpleFileReader>().As<IFileReader>().SingleInstance();
+            //builder.RegisterType<SimpleFileReader>().As<IFileReader>().SingleInstance();
+            builder.RegisterType<XmlFileReader>().As<IFileReader>().SingleInstance();
+            //builder.RegisterType<DocFileReader>().As<IFileReader>().SingleInstance();
+
             builder.RegisterType<CyclicColoringAlgorithm>().As<IColoringAlgorithm>().SingleInstance();
             builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>().SingleInstance();
             builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();

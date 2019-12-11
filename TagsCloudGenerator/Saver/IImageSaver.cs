@@ -5,6 +5,6 @@ namespace TagsCloudGenerator.Saver
 {
     public interface IImageSaver
     {
-        void Save(Bitmap bitmap, string filename, ImageFormat imageFormat);
+        void Save(Bitmap bitmap, string output, ImageFormat imageFormat);
     }
 }

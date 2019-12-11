@@ -57,7 +57,7 @@ namespace TagsCloudGenerator.Client.Console
         {
             var colors = GetColorsByNames(options.Colors);
             var backgroundColor = Color.FromName(options.BackgroundColor);
-            var format = GetImageFormat(options.ImageFormat);
+            var format = GetImageFormat(options.Output.Split('.').Last());
             var font = new Font(options.Font, options.FontSize);
 
             return new ImageSettings(options.ImageWidth, options.ImageHeight, backgroundColor, colors, format, font);

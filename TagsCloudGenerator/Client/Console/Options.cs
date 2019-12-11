@@ -7,7 +7,7 @@ namespace TagsCloudGenerator.Client.Console
         [Option("input", Required = true, HelpText = "Path to file with words")]
         public string Path { get; set; }
 
-        [Option('o', "output", Required = false, Default = "cloud", HelpText = "Output file name")]
+        [Option('o', "output", Required = false, Default = "cloud.png", HelpText = "Output file name")]
         public string Output { get; set; }
 
         [Option('w', "width", Required = false, Default = 5000, HelpText = "Output image width")]
@@ -15,9 +15,6 @@ namespace TagsCloudGenerator.Client.Console
 
         [Option('h', "height", Required = false, Default = 5000, HelpText = "Output image height")]
         public int ImageHeight { get; set; }
-
-        [Option('f', "format", Required = false, Default = "png", HelpText = "Output image format")]
-        public string ImageFormat { get; set; }
 
         [Option('b', "backgroundColor", Required = false, Default = "Black",
             HelpText = "image background color name - initial letter must be uppercase")]
@@ -28,10 +25,13 @@ namespace TagsCloudGenerator.Client.Console
                        "names should be separeted \', \'")]
         public string Colors { get; set; }
 
-        [Option("font", Required = false, Default = "Arial", HelpText = "font to draw words")]
+        [Option('f',"font", Required = false, Default = "Arial", HelpText = "font to draw words")]
         public string Font { get; set; }
 
         [Option("fontSize", Required = false, Default = 16.0f, HelpText = "size of font to draw words")]
         public float FontSize { get; set; }
+
+        [Option("boringWords",Required = false, HelpText = "path to file with boring words")]
+        public string PathToBoringWords { get; set; }
     }
 }

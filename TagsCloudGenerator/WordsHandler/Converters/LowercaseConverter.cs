@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TagsCloudGenerator.WordsHandler
+namespace TagsCloudGenerator.WordsHandler.Converters
 {
     public class LowercaseConverter : IConverter
     {

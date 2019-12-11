@@ -10,17 +10,7 @@ namespace TagsCloudGenerator.FileReaders
             var words = new List<string>();
             words.AddRange(File.ReadAllLines(path));
 
-            var wordToCount = new Dictionary<string, int>();
-            
-            foreach (var word in words)
-            {
-                if (wordToCount.ContainsKey(word))
-                    wordToCount[word]++;
-                else
-                    wordToCount.Add(word, 1);
-            }
-            
-            return wordToCount;
+            return WordToCountConverter.GetWordToCount(words);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudGenerator.WordsHandler;
+using TagsCloudGenerator.WordsHandler.Converters;
+using TagsCloudGenerator.WordsHandler.Filters;
 
 namespace TagsCloudGeneratorTests.WordsHandler
 {

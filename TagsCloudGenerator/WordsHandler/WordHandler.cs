@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloudGenerator.WordsHandler.Converters;
+using TagsCloudGenerator.WordsHandler.Filters;
 
 namespace TagsCloudGenerator.WordsHandler
 {

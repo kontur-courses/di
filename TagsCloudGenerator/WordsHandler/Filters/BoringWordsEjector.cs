@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudGenerator.WordsHandler
+namespace TagsCloudGenerator.WordsHandler.Filters
 {
     public class BoringWordsEjector : IWordsFilter
     {

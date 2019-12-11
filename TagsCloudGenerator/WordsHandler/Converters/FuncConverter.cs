@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudGenerator.WordsHandler
+namespace TagsCloudGenerator.WordsHandler.Converters
 {
     public class FuncConverter : IConverter
     {

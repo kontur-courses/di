@@ -39,6 +39,13 @@
     <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -61,6 +68,9 @@
     <Compile Include="CloudLayouter\Word.cs" />
     <Compile Include="CloudGenerator.cs" />
     <Compile Include="DependenciesBuilder.cs" />
+    <Compile Include="FileReaders\DocFileReader.cs" />
+    <Compile Include="FileReaders\WordToCountConverter.cs" />
+    <Compile Include="FileReaders\XmlFileReader.cs" />
     <Compile Include="ICloudGenerator.cs" />
     <Compile Include="Client\Console\Options.cs" />
     <Compile Include="Saver\IImageSaver.cs" />
@@ -73,21 +83,28 @@
     <Compile Include="Tools\RectangleExtensions.cs" />
     <Compile Include="CloudLayouter\SpiralGenerator.cs" />
     <Compile Include="Visualizer\CyclicColoringAlgorithm.cs" />
-    <Compile Include="WordsHandler\BoringWordsEjector.cs" />
+    <Compile Include="WordsHandler\Filters\BoringWordsEjector.cs" />
     <Compile Include="FileReaders\IFileReader.cs" />
-    <Compile Include="WordsHandler\FuncConverter.cs" />
-    <Compile Include="WordsHandler\PredicateFilter.cs" />
+    <Compile Include="WordsHandler\Converters\FuncConverter.cs" />
+    <Compile Include="WordsHandler\Converters\InitialFormConverter.cs" />
+    <Compile Include="WordsHandler\Filters\PredicateFilter.cs" />
     <Compile Include="WordsHandler\IWordHandler.cs" />
     <Compile Include="WordsHandler\WordHandler.cs" />
-    <Compile Include="WordsHandler\IConverter.cs" />
-    <Compile Include="WordsHandler\IWordsFilter.cs" />
-    <Compile Include="WordsHandler\LowercaseConverter.cs" />
+    <Compile Include="WordsHandler\Converters\IConverter.cs" />
+    <Compile Include="WordsHandler\Filters\IWordsFilter.cs" />
+    <Compile Include="WordsHandler\Converters\LowercaseConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileReaders\SimpleFileReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="en-GB\index.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en-GB\index.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +136,18 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

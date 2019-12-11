@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudGenerator.WordsHandler
+namespace TagsCloudGenerator.WordsHandler.Converters
 {
     public interface IConverter
     {

@@ -47,7 +47,7 @@ namespace TagsCloudGenerator.Visualizer
             return bitmap;
         }
 
-        private float ComputeScale(IReadOnlyCollection<Word> words, ImageSettings settings)
+        private static float ComputeScale(IReadOnlyCollection<Word> words, ImageSettings settings)
         {
             var widthScale = settings.Width / words.Average(x => x.Rectangle.Width) / (words.Count / 3f);
             var heightScale = settings.Height / words.Average(x => x.Rectangle.Height) / (words.Count / 3f);

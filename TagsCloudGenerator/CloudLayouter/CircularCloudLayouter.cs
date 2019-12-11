@@ -20,7 +20,9 @@ namespace TagsCloudGenerator.CloudLayouter
 
         public Cloud LayoutWords(Dictionary<string, int> wordToCount, Font font)
         {
-            foreach (var item in wordToCount)
+            var sortedWordsToCount = wordToCount.OrderByDescending(x => x.Value);
+
+            foreach (var item in sortedWordsToCount)
             {
                 var word = item.Key;
                 var count = item.Value;
