@@ -1,4 +1,4 @@
-﻿namespace TagCloud.CloudLayouter
+﻿namespace TagCloud.CloudLayouter.CircularLayouter
 {
     public class SpiralSettings
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud.CloudLayouter
+namespace TagCloud.CloudLayouter.CircularLayouter
 {
     public class ArchimedeanSpiral
     {
