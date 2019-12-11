@@ -24,8 +24,8 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
                     new SolidBrush(settings.Palette.BackgroundColor), 
                     minX, 
                     minY, 
-                    settings.Width, 
-                    settings.Height);
+                    settings.Width * (1/xRatio), 
+                    settings.Height * (1/yRatio));
                 if (settings.Palette.IsGradient)
                     DrawGradient(wordsList, settings, g);
                 else
@@ -89,8 +89,8 @@ namespace TagsCloudContainer.CloudVisualizers.BitmapMakers
         {
             var state = g.Save();
             g.TranslateTransform(word.Rectangle.Left, word.Rectangle.Top);
-            g.ScaleTransform(word.Rectangle.Width / textSize.Width,
-                word.Rectangle.Height / textSize.Height);
+            g.ScaleTransform(word.Rectangle.Width * 1.08f / textSize.Width,
+                word.Rectangle.Height * 1.1f  / textSize.Height);
             g.DrawString(word.Word, font, brush, PointF.Empty);
             g.Restore(state);
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using TagsCloudContainer.CloudVisualizers;
 using TagsCloudContainer.TextParsing.CloudParsing;
 
@@ -31,12 +32,10 @@ namespace TagsCloudContainer.CloudLayouters
 
         private static Size GetSize(CloudWord word, double sizeMultiplier)
         {
-            var length = word.Word.Length;
-            var ratio = word.Count * sizeMultiplier / length;
-            var width = (int) (word.Count * sizeMultiplier - ratio);
-            width = width == 0 ? 1 : width;
-            var height = (int) ratio == 0 ? 1 : (int)ratio;
-            return new Size(width, height);
+            var size = TextRenderer.MeasureText(word.Word, new Font("Arial", 16));
+            var width = size.Width * sizeMultiplier * word.Count;
+            var height = size.Height * sizeMultiplier * word.Count;
+            return new Size((int)width, (int)height);
         }
 
         private double GetSizeMultiplier(IOrderedEnumerable<CloudWord> ordered, CloudLayouterSettings settings)

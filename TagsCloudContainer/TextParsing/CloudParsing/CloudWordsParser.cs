@@ -19,6 +19,7 @@ namespace TagsCloudContainer.TextParsing.CloudParsing
         public IEnumerable<CloudWord> Parse()
         {
             var settings = settingsFactory();
+            words = new Dictionary<string, CloudWord>();
             foreach (var word in settings.FileWordsParser.ParseFrom(settings.Path))
             {
                 if (!settings.Rule.Check(word)) continue;

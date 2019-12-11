@@ -4,6 +4,7 @@ using TagsCloudContainer.ApplicationRunning;
 using TagsCloudContainer.ApplicationRunning.Commands;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp;
 using TagsCloudContainer.ApplicationRunning.ConsoleApp.ConsoleCommands;
+using TagsCloudContainer.ApplicationRunning.UIApp;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.CloudVisualizers;
 using TagsCloudContainer.CloudVisualizers.BitmapMakers;
@@ -21,7 +22,7 @@ namespace TagsCloudContainer
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TagsCloudMaker>().AsSelf().SingleInstance();
-            builder.RegisterType<ConsoleAppRunner>().As<IAppRunner>();
+            builder.RegisterType<UIAppRunner>().As<IAppRunner>();
             builder.RegisterType<TagsCloud>().AsSelf().SingleInstance();
             builder.RegisterType<CloudWordsParser>().As<ICloudWordsParser>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();

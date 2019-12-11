@@ -13,7 +13,7 @@ namespace TagsCloudContainer
     {
         private List<CloudWord> parsedWords;
         private List<CloudVisualizationWord> visualizationWords;
-        private Bitmap visualizedBitmap;
+        public Bitmap VisualizedBitmap { get; private set; }
         private readonly ICloudWordsParser wordsParser;
         private readonly ICloudLayouter cloudLayouter;
         private readonly ICloudVisualizer cloudVisualizer;
@@ -45,14 +45,14 @@ namespace TagsCloudContainer
         {
             if (visualizationWords is null)
                 GenerateTagCloud();
-            visualizedBitmap = cloudVisualizer.GetBitmap(visualizationWords);
+            VisualizedBitmap = cloudVisualizer.GetBitmap(visualizationWords);
         }
 
         public void SaveVisualized()
         {
-            if(visualizedBitmap is null)
+            if(VisualizedBitmap is null)
                 VisualizeCloud();
-            imageSaver.Save(visualizedBitmap);
+            imageSaver.Save(VisualizedBitmap);
         }
     }
 }
