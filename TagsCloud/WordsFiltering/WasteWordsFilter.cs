@@ -76,7 +76,8 @@ namespace TagsCloud.WordsFiltering
                 process.StartInfo.CreateNoWindow = true;
                 process.EnableRaisingEvents = true;
                 process.Start();
-                process.WaitForExit(); 
+                if (!process.WaitForExit(30000))
+                    throw new TimeoutException("'Mystem' operation timeout reached.");
             }
 
             return new List<string>(File.ReadAllLines(output));
