@@ -1,4 +1,4 @@
-﻿namespace TagCloudForm.TextFilterConditions
+﻿namespace TagCloud.TextFilterConditions
 {
     public interface IFilterCondition
     {

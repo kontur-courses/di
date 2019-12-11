@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloud.TextProvider;
-using TagCloudForm.TextFilterConditions;
+using TagCloud.TextFilterConditions;
+using TagCloud.TextParser;
 
-namespace TagCloud.TextFilter
+namespace TagCloud.TextFiltration
 {
     public class TextFilter
     {
-        private readonly BlacklistMaker blacklistMaker;
         private readonly IEnumerable<IFilterCondition> filterConditions;
         private readonly ITextParser textParser;
 
-        public TextFilter(ITextParser textParser, BlacklistMaker blacklistMaker,
+        public TextFilter(ITextParser textParser,
             IEnumerable<IFilterCondition> filterConditions)
         {
-            this.blacklistMaker = blacklistMaker;
             this.filterConditions = filterConditions;
             this.textParser = textParser;
         }
@@ -22,15 +20,13 @@ namespace TagCloud.TextFilter
         public List<string> FilterWords()
         {
             var allWords = textParser.ParseText();
-//            return allWords.Where(word => word.Length >= blacklistMaker.WordMinLength
-//                                          && !blacklistMaker.BlackList.Contains(word)).ToList();
             return allWords.Where(PassThroughAllFilters).ToList();
         }
 
         private bool PassThroughAllFilters(string s)
         {
             return filterConditions.All(condition => condition.CheckFilterCondition(s))
-                   || filterConditions.Count() == 0;
+                   || !filterConditions.Any();
         }
     }
 }

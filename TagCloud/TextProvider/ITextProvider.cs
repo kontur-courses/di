@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 
 namespace TagCloud.TextProvider
 {
@@ -7,6 +6,5 @@ namespace TagCloud.TextProvider
     {
         List<string> GetAllLines();
         List<string> GetAllLines(IEnumerable<string> paths);
-        Encoding TextEncoding { get; set; }
     }
 }

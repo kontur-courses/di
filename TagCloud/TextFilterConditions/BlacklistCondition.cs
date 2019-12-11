@@ -1,6 +1,6 @@
-﻿using TagCloud.TextFilter;
+﻿using TagCloud.TextFiltration;
 
-namespace TagCloudForm.TextFilterConditions
+namespace TagCloud.TextFilterConditions
 {
     public class BlacklistCondition : IFilterCondition
     {

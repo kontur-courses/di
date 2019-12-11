@@ -1,20 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace TagCloud.TextProvider
 {
-    public class TextFileReader : ITextProvider
+    public class TxtFileReader : ITextProvider
     {
         public HashSet<string> FilesPaths { get; set; } = new HashSet<string>
         {
-            @"..\..\Input\input.txt",
-            @"..\..\Input\song.txt"
+            @"..\..\..\TagCloud\Input\input.txt",
+            @"..\..\..\TagCloud\Input\song.txt"
         };
-
-        public Encoding TextEncoding { get; set; } = Encoding.UTF8;
 
         public List<string> GetAllLines()
         {
