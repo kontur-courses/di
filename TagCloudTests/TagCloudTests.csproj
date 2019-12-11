@@ -42,9 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="GraphicsTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ResolveTests.cs" />
-    <Compile Include="WordsHandlerTests.cs" />
+    <Compile Include="ParserTests.cs" />
+    <Compile Include="SetUpMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">

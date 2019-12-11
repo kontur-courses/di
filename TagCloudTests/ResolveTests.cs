@@ -11,12 +11,18 @@ namespace TagCloudTests
     [TestFixture]
     public class ResolveTests
     {
-        public static WindsorContainer Container { get; set; } = TagCloud.Program.GetContainer();
+        private WindsorContainer container;
+
+        [SetUp]
+        public void SetUp()
+        {
+            container = TagCloud.Program.GetContainer();
+        }
 
         [Test]
         public void Container_Should_ResolveIClientCorrectly()
         { 
-            Action resolve = () => Container.Resolve<IClient>();
+            Action resolve = () => container.Resolve<IClient>();
             resolve.Should().NotThrow();
         }
     }

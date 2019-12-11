@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,50 +10,34 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using TagCloud;
+using TagCloud.IServices;
+using TagCloud.Models;
 
 namespace TagCloudTests
 {
     [TestFixture]
-    public class WordsHandlerTests
+    public class ParserTests
     {
         private string pathToBoringWords;
         private string pathToReadWords;
         private IWordsHandler wordsHandler;
         private WindsorContainer container;
+        private ITagCollectionFactory tagCollectionFactory;
+        private ImageSettings imageSettings;
 
         [SetUp]
         public void SetUp()
         {
-            pathToReadWords = $"{Directory.GetParent(Environment.CurrentDirectory).Parent.FullName}\\ForParsingTests.txt";
-            pathToBoringWords = $"{Directory.GetParent(Environment.CurrentDirectory).Parent.FullName}\\BoringWords.txt";
-            CreateBoringWordsFile(pathToBoringWords);
-            CreateTestFile(pathToReadWords);
+            pathToReadWords = SetUpMethods.GetPathToWordsToRead();
+            pathToBoringWords = SetUpMethods.GetPathToBoringWords();
+            SetUpMethods.CreateFile(pathToBoringWords);
+            SetUpMethods.WriteLinesInFile(pathToBoringWords,"in");
+            SetUpMethods.CreateFile(pathToReadWords);
+            SetUpMethods.WriteLinesInFile(pathToReadWords, "i ", "   I", "i     ", "I", "Boat  ", "   BoaT", "BoAt", "BOAT", "in", "IN");
             container = TagCloud.Program.GetContainer();
             wordsHandler = container.Resolve<IWordsHandler>();
-        }
-
-        private void CreateTestFile(string path)
-        {
-            var lines = new string[] { "i", "I", "i", "I", "Boat", "BoaT", "BoAt", "BOAT", "in", "IN" };
-            var f = File.Create($"{Directory.GetParent(Environment.CurrentDirectory).FullName}\\ForParsingTests.txt");
-            f.Close();
-            using (var sw = new StreamWriter(path))
-            {
-                foreach (var line in lines)
-                    sw.WriteLine(line);
-            }
-        }
-
-        private void CreateBoringWordsFile(string path)
-        {
-            var lines = new string[] {"in"};
-            var f = File.Create($"{Directory.GetParent(Environment.CurrentDirectory).FullName}\\ForParsingTests.txt");
-            f.Close();
-            using (var sw = new StreamWriter(path))
-            {
-                foreach (var line in lines)
-                    sw.WriteLine(line);
-            }
+            tagCollectionFactory = container.Resolve<ITagCollectionFactory>();
+            imageSettings = new ImageSettings(300, 300, "Arial", "ShadesOfPink");
         }
 
         [Test]
@@ -75,6 +60,24 @@ namespace TagCloudTests
             var expectedDictionary = new Dictionary<string, int>() { { "i", 4 }, { "boat", 4 } };
             var primaryCollection = wordsHandler.GetWordsAndCount(pathToReadWords);
             wordsHandler.Conversion(primaryCollection).Should().BeEquivalentTo(expectedDictionary);
+        }
+
+        [Test]
+        public void WordsToTagsParser_Should_NotThrows_When_Parse()
+        {
+            Action action =  () => tagCollectionFactory.Create(imageSettings, pathToReadWords);
+            action.Should().NotThrow();
+        }
+
+        [Test]
+        public void WordsToTagsParser_Should_ParseWordsCorrectly()
+        {
+            var collection = tagCollectionFactory.Create(imageSettings, pathToReadWords);
+            var font = new Font("Arial", 24, FontStyle.Bold);
+            var expectedCollection = new List<Tag>(){new Tag("i",4,font),
+                new Tag("boat",4,font)};
+            collection.Should().BeEquivalentTo(expectedCollection);
+
         }
     }
 }
