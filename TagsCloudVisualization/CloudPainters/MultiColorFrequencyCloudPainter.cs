@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Visualization;
-using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {
@@ -18,9 +17,9 @@ namespace TagsCloudVisualization.CloudPainters
                 var rectangles = cloudComponents.GetRectanglesForSizedWords(sizedWords);
                 foreach (var (word, rectangle) in sizedWords.Zip(rectangles, Tuple.Create))
                 {
-                    var color = GetRandomColor();
+                    var color = ColorGenerator.Generate();
                     while (color == visualisingOptions.BackgroundColor)
-                        color = GetRandomColor();
+                        color = ColorGenerator.Generate();
                     var brush = new SolidBrush(color);
                     graphics.DrawString(word.Value, new Font(visualisingOptions.Font.FontFamily, word.Size), brush, rectangle.Location);
                 }

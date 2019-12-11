@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.Visualization;
-using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {
@@ -11,10 +10,9 @@ namespace TagsCloudVisualization.CloudPainters
             var field = new Bitmap(visualisingOptions.ImageSize.Width, visualisingOptions.ImageSize.Height);
             using (var graphics = Graphics.FromImage(field))
             {
-                var brush = new SolidBrush(GetRandomColor());
                 foreach (var rectangle in cloudComponents.Rectangles)
                 {
-                    brush = new SolidBrush(GetRandomColor());
+                    var brush = new SolidBrush(ColorGenerator.Generate());
                     graphics.FillRectangle(brush, rectangle);
                 }
             }

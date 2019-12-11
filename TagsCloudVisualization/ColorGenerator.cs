@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Extensions
+namespace TagsCloudVisualization
 {
-    public static class ColorExtensions
+    public static class ColorGenerator
     {
-        public static Color GetRandomColor()
+        public static Color Generate()
         {
             var random = new Random();
             return Color.FromArgb(random.Next(256),

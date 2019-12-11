@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.Visualization;
-using static TagsCloudVisualization.Extensions.ColorExtensions;
 
 namespace TagsCloudVisualization.CloudPainters
 {
@@ -13,14 +12,13 @@ namespace TagsCloudVisualization.CloudPainters
             {
                 graphics.Clear(visualisingOptions.BackgroundColor);
                 var rectangle = cloudComponents.Rectangles.GetEnumerator();
-                var brush = new SolidBrush(GetRandomColor());
                 foreach (var word in cloudComponents.Words)
                 {
                     rectangle.MoveNext();
-                    var color = GetRandomColor();
+                    var color = ColorGenerator.Generate();
                     while (color == visualisingOptions.BackgroundColor)
-                        color = GetRandomColor();
-                    brush = new SolidBrush(color);
+                        color = ColorGenerator.Generate();
+                    var brush = new SolidBrush(color);
                     graphics.DrawString(word, visualisingOptions.Font, brush, rectangle.Current.Location);
                 }
             }
