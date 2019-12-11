@@ -17,8 +17,10 @@ namespace TagCloud.IServices
                 Color.Pink,Color.DarkSalmon,Color.HotPink);
             var shadesOfBlue = new Palette("ShadesOfBlue",Color.Blue,Color.Aqua,
                 Color.CornflowerBlue);
+            var randomColors = new Palette("RandomColors");
             paletteDictionary[shadesOfPinkPallete.Name] = shadesOfPinkPallete;
             paletteDictionary[shadesOfBlue.Name] = shadesOfBlue;
+            paletteDictionary[randomColors.Name] = randomColors;
             return paletteDictionary;
         }
     }

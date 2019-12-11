@@ -12,8 +12,9 @@ namespace TagCloud
             var pictureBox = new PictureBox
             {
                 Image = image,
-                ClientSize = new Size(image.Width, image.Height),
-                Location = new Point(0,0)
+                Location = new Point(0,0),
+                Size=ClientSize,
+
             };
             Controls.Add(pictureBox);
         }

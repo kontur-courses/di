@@ -1,4 +1,4 @@
-I
+﻿I
 still
 see
 your
@@ -29,6 +29,21 @@ hate
 BOAT
 boaT
 Boat
+﻿Dog
+Cat
+Monkey
+Monkey
+Butterfly
+Elephant
+Tiger
+Wolf
+Bee
+Lion
+Crocodile
+Ape
+Ant
+Cow
+Sheep
 boat
 boat
 boat

@@ -19,8 +19,8 @@ namespace TagCloud
         public List<Tag> Create(ImageSettings imageSettings, string path)
         {
             var primaryCollection = wordsHandler.GetWordsAndCount(path);
-            var collectionAfterConvertion = wordsHandler.Conversion(primaryCollection);
-            return parser.GetTagsRectangles(collectionAfterConvertion,imageSettings)
+            var collectionAfterConversion = wordsHandler.Conversion(primaryCollection);
+            return parser.GetTagsRectangles(collectionAfterConversion,imageSettings)
                 .OrderByDescending(t => t.Count)
                 .ToList();
         }

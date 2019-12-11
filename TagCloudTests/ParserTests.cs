@@ -77,7 +77,6 @@ namespace TagCloudTests
             var expectedCollection = new List<Tag>(){new Tag("i",4,font),
                 new Tag("boat",4,font)};
             collection.Should().BeEquivalentTo(expectedCollection);
-
         }
     }
 }

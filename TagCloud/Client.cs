@@ -43,7 +43,7 @@ namespace TagCloud
                 Console.WriteLine("Список доступных комманд :");
                 foreach (var action in actions)
                     Console.WriteLine($"{action.CommandName}     \"{action.Description}\"");
-                while (!config.ToCreateNewImage)
+                while (!config.ToExit && !config.ToCreateNewImage)
                 {
                     Console.WriteLine("Введите команду");
                     Console.Write(">>>");
@@ -130,7 +130,6 @@ namespace TagCloud
             if (availablePaletteNames.Contains(paletteName)) return true;
             Console.WriteLine("Введенная палитра не поддерживается");
             return false;
-
         }
 
     }

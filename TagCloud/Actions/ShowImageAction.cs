@@ -15,7 +15,6 @@ namespace TagCloud.Actions
             var thread = new Thread(() =>
             {
                 Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
                 var showImageForm = new ShowImageForm(config.ImageToSave);
                 config.IsRunning = true;
                 Application.Run(showImageForm);
