@@ -12,11 +12,6 @@ namespace TagCloudForm.Holder
             RecreateImage(imageSettings);
         }
 
-        public Graphics StartDrawing()
-        {
-            return Graphics.FromImage(Image);
-        }
-
         public void UpdateUi()
         {
             Refresh();

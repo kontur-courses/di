@@ -5,7 +5,7 @@ namespace TagCloudForm.Settings
 {
     public class SettingsForm<TSettings> : Form
     {
-        public SettingsForm(TSettings settings)
+        private SettingsForm(TSettings settings)
         {
             var okButton = new Button
             {

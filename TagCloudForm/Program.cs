@@ -3,8 +3,14 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
+using TagCloud;
 using TagCloud.CloudLayouter;
-using TagCloud.TextFilter;
+using TagCloud.CloudLayouter.CircularLayouter;
+using TagCloud.TextColoration;
+using TagCloud.TextConversion;
+using TagCloud.TextFilterConditions;
+using TagCloud.TextFiltration;
+using TagCloud.TextParser;
 using TagCloud.TextProvider;
 using TagCloud.Visualization;
 using TagCloudForm.Holder;
@@ -30,14 +36,14 @@ namespace TagCloudForm
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.Name.EndsWith("Action") || t.Name.EndsWith("Condition"))
                 .AsImplementedInterfaces();
-            
-//            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-//                .Where(t => t.Name.EndsWith("Condition"))
-//                .AsImplementedInterfaces();
 
-//            builder.RegisterType<BlacklistCondition>().As<IFilterCondition>().SingleInstance();
-//            builder.RegisterType<WordLengthCondition>().As<IFilterCondition>().SingleInstance();
-            builder.RegisterType<AppSettings>().As<IImageDirectoryProvider>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom("TagCloud.dll"))
+                .Where(t => t.Name.EndsWith("Condition"))
+                .AsImplementedInterfaces();
+
+            builder.RegisterType<WordLengthCondition>().As<IFilterCondition, WordLengthCondition>().SingleInstance();
+            builder.RegisterType<CloudVisualization>().AsSelf().SingleInstance();
+            builder.RegisterType<AppSettings>().As<IDirectoryProvider>().SingleInstance();
             builder.RegisterType<AppSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<Size>().AsSelf();
@@ -46,13 +52,16 @@ namespace TagCloudForm
             builder.RegisterType<ViewSettings>().AsSelf().SingleInstance();
             builder.RegisterType<BlacklistMaker>().AsSelf().SingleInstance();
             builder.RegisterType<TextFilter>().AsSelf().SingleInstance();
+            builder.RegisterType<TextConverter>().AsSelf().SingleInstance();
             builder.RegisterType<TextParser>().As<ITextParser>().SingleInstance();
             builder.RegisterType<SpiralSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ArchimedeanSpiral>().AsSelf().SingleInstance();
             builder.RegisterType<BlacklistSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<TextFileReader>().As<ITextProvider, TextFileReader>().SingleInstance();
+            builder.RegisterType<TxtFileReader>().As<ITextProvider, TxtFileReader>().SingleInstance();
             builder.RegisterType<FrequencyDictionaryMaker>().AsSelf().SingleInstance();
-            
+            builder.RegisterType<RandomTextColoration>().As<ITextColoration>();
+            builder.RegisterType<ToLowerCaseConversion>().As<ITextConversion>();
+
             var container = builder.Build();
             Application.Run(container.Resolve<TagCloudForm>());
         }

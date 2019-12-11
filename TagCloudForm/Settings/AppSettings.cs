@@ -1,8 +1,8 @@
 ﻿namespace TagCloudForm.Settings
 {
-    public class AppSettings : IImageDirectoryProvider
+    public class AppSettings : IDirectoryProvider
     {
-        public string ImagesDirectory { get; set; } = @"..\..\.";
+        public string Directory { get; } = @"..\..\..\TagCloud\.";
         public const string FormName = "Tag cloud";
     }
 }
