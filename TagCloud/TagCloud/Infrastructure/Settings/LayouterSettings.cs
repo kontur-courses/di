@@ -2,8 +2,8 @@
 {
     public class LayouterSettings
     {
-        public readonly float Radius = 0.5f;
-        public readonly double Step = 0.5f;
+        public float Radius { get; set; }
+        public double Step { get; set; }
 
         public LayouterSettings(float radius, double step)
         {

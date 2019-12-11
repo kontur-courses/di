@@ -4,22 +4,20 @@ namespace TagCloud
 {
     public class FontSettings
     {
-        public readonly FontFamily FontFamily;
-        public readonly FontStyle Style;
-        public readonly Color Color;
-        public readonly float DefaultSize;
-        public readonly float CountMultiplier;
+        public FontFamily FontFamily { get; set; }
+        public FontStyle Style { get; set; }
+        public float DefaultSize { get; set; }
+        public float CountMultiplier { get; set; }
 
-        public FontSettings(string fontFamilyName, FontStyle style, Color color, float size, float multiplier)
+        public FontSettings(string fontFamilyName, FontStyle style, float size, float multiplier)
         {
             FontFamily = new FontFamily(fontFamilyName);
             Style = style;
-            Color = color;
             DefaultSize = size;
             CountMultiplier = multiplier;
         }
 
         public static FontSettings GetDefaultSettings() =>
-            new FontSettings("Arial", FontStyle.Bold, Color.Black, 12, 1.5f);
+            new FontSettings("Arial", FontStyle.Bold, 12, 1.5f);
     }
 }

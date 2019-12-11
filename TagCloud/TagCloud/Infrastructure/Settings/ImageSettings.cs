@@ -5,9 +5,9 @@ namespace TagCloud
 {
     public class ImageSettings
     {
-        public readonly int Height;
-        public readonly int Width;
-        public readonly PointF CloudCenter;
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public PointF CloudCenter { get; set; }
 
         public ImageSettings(int height, int width, PointF cloudCenter)
         {
