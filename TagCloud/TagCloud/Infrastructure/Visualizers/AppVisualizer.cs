@@ -5,51 +5,64 @@ namespace TagCloud
 {
     public class AppVisualizer : IVisualizer
     {
-        private readonly IReader reader;
+        private readonly Reader reader;
         private readonly IExtractor extracter;
         private readonly ILayouter layouter;
-        private readonly ParserList parserList;
-        private readonly FilterList filterList;
+        private readonly IParser[] parsers;
+        private readonly IFilter[] filters;
         private readonly FontSettings fontSettings;
         private readonly ImageSettings imageSettings;
         private readonly ImageHolder imageHolder;
-        private readonly ThemeList themeList;
+        private readonly ITheme[] themes;
 
-        public AppVisualizer(IReader reader, IExtractor extracter, ILayouter layouter,
-            ParserList parserList, FilterList filterList, FontSettings fontSettings, ThemeList themeList,
+        public AppVisualizer(Reader reader, IExtractor extracter, ILayouter layouter,
+            IParser[] parsers, IFilter[] filters, FontSettings fontSettings, ITheme[] themes,
             ImageSettings imageSettings, ImageHolder imageHolder)
         {
             this.reader = reader;
             this.extracter = extracter;
             this.layouter = layouter;
-            this.parserList = parserList;
-            this.filterList = filterList;
+            this.parsers = parsers;
+            this.filters = filters;
             this.fontSettings = fontSettings;
             this.imageSettings = imageSettings;
-            this.themeList = themeList;
+            this.themes = themes;
             this.imageHolder = imageHolder;
         }
 
         public void Visualize()
         {
-            var text = reader.ReadAllText("input.txt");
+            var wordTokens = GetWordTokens();
+            DrawWordTokens(wordTokens);
+            imageHolder.UpdateUi();
+            layouter.Reset();
+        }
+
+        private WordToken[] GetWordTokens()
+        {
+            var textReader = reader.TextReader;
+            var text = textReader.ReadAllText(reader.PathToFile);
             var words = extracter.ExtractWords(text);
             var filteredWords = words;
-            foreach (var filter in filterList.SelectedItems)
-                filteredWords = filter.FilterWords(filteredWords).ToArray();
+            foreach (var filter in filters)
+                if (filter.IsChecked)
+                    filteredWords = filter.FilterWords(filteredWords).ToArray();
             var parsedWords = filteredWords;
-            foreach (var parser in parserList.SelectedItems)
-                parsedWords = parser.ParseWords(parsedWords).ToArray();
-            var wordTokens = WordTokenizer.TokenizeWithNoSpeechPart(parsedWords);
-            var theme = themeList.SelectedItems.First();
+            foreach (var parser in parsers)
+                if (parser.IsChecked)
+                    parsedWords = parser.ParseWords(parsedWords).ToArray();
+            return WordTokenizer.TokenizeWithNoSpeechPart(parsedWords);
+        }
+
+        private void DrawWordTokens(WordToken[] wordTokens)
+        {
+            var theme = themes.Where(t => t.IsChecked).First();
             using (var graphics = imageHolder.StartDrawing())
             {
                 graphics.FillRectangle(new SolidBrush(theme.BackgroundColor), 0, 0, imageSettings.Width, imageSettings.Height);
                 foreach (var wordToken in wordTokens)
                     DrawWord(wordToken, graphics, theme);
             }
-            imageHolder.UpdateUi();
-            layouter.Reset();
         }
 
         private void DrawWord(WordToken wordToken, Graphics graphics, ITheme theme)
