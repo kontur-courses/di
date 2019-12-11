@@ -1,7 +1,12 @@
-﻿namespace TagsCloudContainer.Visualization.Painters
+﻿using System.Drawing;
+using TagsCloudContainer.Visualization.Layouts;
+
+namespace TagsCloudContainer.Visualization.Painters
 {
     public interface IPainter
     {
-        ColoringScheme[] Colorize(int quantity);
+        ColorizedRectangle[] Colorize(Rectangle[] rectangles);
+
+        ColorizedTag[] Colorize(Tag[] tags);
     }
 }

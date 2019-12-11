@@ -1,23 +1,34 @@
 ﻿using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Visualization.Layouts;
 
 namespace TagsCloudContainer.Visualization.Painters
 {
     public class ConstantColorsPainter : IPainter
     {
-        private readonly ColoringScheme scheme;
+        private readonly Brush textBrush;
+        private readonly Brush fillBrush;
+        private readonly Pen borderPen;
 
         public ConstantColorsPainter(Color textColor, Color fillColor, Color borderColor)
         {
-            var textBrush = new SolidBrush(textColor);
-            var fillBrush = new SolidBrush(fillColor);
-            var borderPen = new Pen(borderColor);
-            scheme = new ColoringScheme(textBrush, fillBrush, borderPen);
+            textBrush = new SolidBrush(textColor);
+            fillBrush = new SolidBrush(fillColor);
+            borderPen = new Pen(borderColor);
         }
 
-        public ColoringScheme[] Colorize(int quantity)
+        public ColorizedRectangle[] Colorize(Rectangle[] rectangles)
         {
-            return Enumerable.Repeat(scheme, quantity).ToArray();
+            return rectangles
+                .Select(rect => new ColorizedRectangle(rect, fillBrush, borderPen))
+                .ToArray();
+        }
+
+        public ColorizedTag[] Colorize(Tag[] tags)
+        {
+            return tags
+                .Select(tag => new ColorizedTag(tag, textBrush, fillBrush, borderPen))
+                .ToArray();
         }
     }
 }

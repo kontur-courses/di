@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Visualization.Layouts;
 using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Visualization
@@ -16,7 +15,7 @@ namespace TagsCloudContainer.Visualization
             FormatFlags = StringFormatFlags.NoWrap,
             Trimming = StringTrimming.None
         };
-        
+
         private readonly Size? imageSize;
 
         public Color BackgroundColor { get; set; } = Color.Transparent;
@@ -26,30 +25,30 @@ namespace TagsCloudContainer.Visualization
             this.imageSize = imageSize;
         }
 
-        public Bitmap Visualize(IPainter painter, Tag[] tags)
+        public Bitmap Visualize(ColorizedTag[] colorizedTags)
         {
-            var viewport = GetViewport(tags.Select(tag => tag.Rectangle));
-            var schemes = painter.Colorize(tags.Length);
-            var border = GetBorder(schemes);
+            var rectangles = colorizedTags.Select(c => c.Tag.Rectangle);
+            var viewport = GetViewport(rectangles);
+            var border = GetBorder(colorizedTags);
             var bitmap = CreateBitmap(viewport, border);
             var graphics = CreateGraphics(bitmap, viewport, border);
 
-            for (var i = 0; i < tags.Length; i++)
-                DrawTag(graphics, schemes[i], tags[i]);
+            foreach (var tag in colorizedTags)
+                DrawTag(graphics, tag);
 
             return bitmap;
         }
 
-        public Bitmap Visualize(IPainter painter, Rectangle[] rectangles)
+        public Bitmap Visualize(ColorizedRectangle[] colorizedRectangles)
         {
+            var rectangles = colorizedRectangles.Select(c => c.Rectangle);
             var viewport = GetViewport(rectangles);
-            var schemes = painter.Colorize(rectangles.Length);
-            var border = GetBorder(schemes);
+            var border = GetBorder(colorizedRectangles);
             var bitmap = CreateBitmap(viewport, border);
             var graphics = CreateGraphics(bitmap, viewport, border);
 
-            for (var i = 0; i < rectangles.Length; i++)
-                DrawRectangle(graphics, schemes[i], rectangles[i]);
+            foreach (var rectangle in colorizedRectangles)
+                DrawRectangle(graphics, rectangle);
 
             return bitmap;
         }
@@ -87,9 +86,9 @@ namespace TagsCloudContainer.Visualization
             return new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
         }
 
-        private static int GetBorder(IReadOnlyList<ColoringScheme> schemes)
+        private static int GetBorder(IReadOnlyList<ColorizedRectangle> colorized)
         {
-            return (int) schemes[0].RectangleBorderPen.Width;
+            return (int) colorized[0].BorderPen.Width;
         }
 
         private static Bitmap CreateBitmap(Rectangle viewport, int border)
@@ -98,16 +97,17 @@ namespace TagsCloudContainer.Visualization
             return new Bitmap(viewport.Width + border, viewport.Height + border);
         }
 
-        private static void DrawTag(Graphics graphics, ColoringScheme scheme, Tag tag)
+        private static void DrawTag(Graphics graphics, ColorizedTag colorized)
         {
-            DrawRectangle(graphics, scheme, tag.Rectangle);
-            graphics.DrawString(tag.Text, tag.Font, scheme.TextBrush, tag.Rectangle, StringFormat);
+            DrawRectangle(graphics, colorized);
+            graphics.DrawString(colorized.Tag.Text, colorized.Tag.Font,
+                colorized.TextBrush, colorized.Rectangle, StringFormat);
         }
 
-        private static void DrawRectangle(Graphics graphics, ColoringScheme scheme, Rectangle rectangle)
+        private static void DrawRectangle(Graphics graphics, ColorizedRectangle colorized)
         {
-            graphics.FillRectangle(scheme.RectangleFillBrush, rectangle);
-            graphics.DrawRectangle(scheme.RectangleBorderPen, rectangle);
+            graphics.FillRectangle(colorized.FillBrush, colorized.Rectangle);
+            graphics.DrawRectangle(colorized.BorderPen, colorized.Rectangle);
         }
     }
 }

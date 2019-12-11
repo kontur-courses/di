@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using Autofac;
@@ -13,44 +14,43 @@ using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer
 {
-    public class Program
+    public static class Program
     {
         public static void Main()
         {
-            const string boringWordsPath = "Resources/boring_words.txt";
-            const string wordsPath = "Resources/words.txt";
-
             var container = CreateContainer();
 
-            var boringWordsPathParam = new NamedParameter("boringWordsPath", boringWordsPath);
-            var wordsPathParam = new NamedParameter("wordsPath", wordsPath);
-            var wordReader = container.Resolve<IWordReader>(wordsPathParam, boringWordsPathParam);
-            var words = wordReader.ReadAllWords().ToArray();
+            var wordReader = container.ResolveNamed<IWordsFileReader>("txtWordReader");
+            var words = wordReader.ReadAllWords("Resources/words.txt").ToArray();
+            var boringWords = wordReader.ReadAllWords("Resources/boring_words.txt").ToArray();
 
-            var layouter = container.Resolve<CircularCloudLayouter>();
+            var lowerCaseProcessor = container.ResolveNamed<IWordProcessor>("lowerCaseProcessor");
+            var wordFilter = container.ResolveNamed<IWordProcessor>("wordFilter",
+                new NamedParameter("boringWords", boringWords));
+            words = wordFilter.Process(lowerCaseProcessor.Process(words)).ToArray();
 
-            var family = FontFamily.GenericMonospace;
-            const float sizeFactor = 100;
+            var familyParam = new NamedParameter("family", FontFamily.GenericMonospace);
+            var sizeFactorParam = new NamedParameter("sizeFactor", 100f);
+            var wordMeasurer = container.Resolve<IWordMeasurer>(familyParam, sizeFactorParam);
+            var layouter = container.Resolve<IRectangleLayouter>();
+            var tags = WordCounter.Count(words)
+                .Select(word =>
+                {
+                    var (font, size) = wordMeasurer.Measure(word);
+                    return new Tag(word.Value, font, layouter.PutNextRectangle(size));
+                })
+                .ToArray();
 
-            var familyParam = new NamedParameter("family", family);
-            var sizeFactorParam = new NamedParameter("sizeFactor", sizeFactor);
-            var wordsLayout = container.Resolve<IWordsLayout>(familyParam, sizeFactorParam);
-            var tags = wordsLayout.PlaceWords(layouter, WordCounter.Count(words)).ToArray();
-
-            var textColor = Color.Black;
-            var fillColor = Color.Transparent;
-            var borderColor = Color.Transparent;
-
-            var textColorParam = new NamedParameter("textColor", textColor);
-            var fillColorParam = new NamedParameter("fillColor", fillColor);
-            var borderColorParam = new NamedParameter("borderColor", borderColor);
+            var textColorParam = new NamedParameter("textColor", Color.Black);
+            var fillColorParam = new NamedParameter("fillColor", Color.Transparent);
+            var borderColorParam = new NamedParameter("borderColor", Color.Transparent);
             var painter = container.Resolve<IPainter>(textColorParam, fillColorParam, borderColorParam);
 
-            var visualizer = container.Resolve<CircularCloudVisualizer>();
-            var image = visualizer.Visualize(painter, tags);
+            var visualizer = container.Resolve<TagsCloudVisualizer>();
+            var image = visualizer.Visualize(painter.Colorize(tags));
             var format = ImageFormat.Png;
             var extension = new ImageFormatConverter().ConvertToString(format)?.ToLower();
-            image.Save($"tags_cloud.{extension}", format);
+            image.Save($"cloud.{extension}", format);
         }
 
         private static IContainer CreateContainer()
@@ -60,20 +60,18 @@ namespace TagsCloudContainer
             builder.RegisterType<ArchimedeanSpiral>().As<IPointGenerator>();
             builder.RegisterType<CircularCloudLayouter>()
                 .WithParameter("center", Point.Empty)
-                .AsSelf();
+                .As<IRectangleLayouter>();
 
-            builder.Register((c, p) => new WordListReader(p.Named<string>("boringWordsPath")))
-                .Named<WordListReader>("boringWordReader");
-            builder.Register((c, p) => new WordListReader(p.Named<string>("wordsPath")))
-                .As<IWordReader>();
+            builder.RegisterType<TxtWordsFileReader>().Named<IWordsFileReader>("txtWordReader");
 
-            builder.RegisterDecorator<LowerCaseTransformer, IWordReader>();
-            builder.RegisterDecorator<IWordReader>((c, p, i) =>
-                new WordFilter(i, c.ResolveNamed<WordListReader>("boringWordReader", p).ReadAllWords()));
+            builder.RegisterType<LowerCaseWordProcessor>().Named<IWordProcessor>("lowerCaseProcessor");
+            builder.Register((c, p) =>
+                    new WordFilter(p.Named<IEnumerable<string>>("boringWords")))
+                .Named<IWordProcessor>("wordFilter");
 
-            builder.Register((c, p) => new CentricWordsLayout(p.Named<FontFamily>("family"),
-                    p.Named<float>("sizeFactor")))
-                .As<IWordsLayout>();
+            builder.Register((c, p) => new ProbabilityWordMeasurer(
+                    p.Named<FontFamily>("family"), p.Named<float>("sizeFactor")))
+                .As<IWordMeasurer>();
 
             builder.Register((c, p) => new ConstantColorsPainter(
                     p.Named<Color>("textColor"),
@@ -81,7 +79,7 @@ namespace TagsCloudContainer
                     p.Named<Color>("borderColor")))
                 .As<IPainter>();
 
-            builder.RegisterType<CircularCloudVisualizer>().AsSelf();
+            builder.RegisterType<TagsCloudVisualizer>().AsSelf();
 
             return builder.Build();
         }
