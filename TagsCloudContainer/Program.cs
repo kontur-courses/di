@@ -5,6 +5,7 @@ using Autofac;
 using TagsCloudContainer.Core;
 using TagsCloudContainer.ResultProcessing;
 using TagsCloudContainer.UserInterface;
+using TagsCloudContainer.WordProcessing.Converting;
 
 namespace TagsCloudContainer
 {
@@ -31,9 +32,11 @@ namespace TagsCloudContainer
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .SingleInstance();
+            builder.RegisterType<ToInitialFormWordConverter>()
+                .As<IWordConverter>();
 
-            var pathToMyStemDirectory = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName,
-                "WordProcessing", "Filtering", "MyStem");
+            var pathToMyStemDirectory =
+                Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent?.FullName, "MyStem");
             builder.RegisterInstance(pathToMyStemDirectory).As<string>();
 
             return builder.Build();

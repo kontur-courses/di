@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer.CommandsExecuting;
+using TagsCloudContainer.MyStem;
 using TagsCloudContainer.WordProcessing.Filtering;
-using TagsCloudContainer.WordProcessing.Filtering.CommandsExecuting;
-using TagsCloudContainer.WordProcessing.Filtering.MyStem;
 
 namespace TagsCloudContainerTests
 {
@@ -20,9 +20,9 @@ namespace TagsCloudContainerTests
         {
             var pathToMyStemDirectory = Path.Combine(
                 Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.FullName,
-                "TagsCloudContainer", "WordProcessing", "Filtering", "MyStem");
-            filter = new ExcludingBoringWordsFilter(new CmdCommandExecutor(), new MyStemResultParser(),
-                pathToMyStemDirectory);
+                "TagsCloudContainer", "MyStem");
+            filter = new ExcludingBoringWordsFilter(new MyStemExecutor(new CmdCommandExecutor(), pathToMyStemDirectory),
+                new MyStemResultParser());
         }
 
 

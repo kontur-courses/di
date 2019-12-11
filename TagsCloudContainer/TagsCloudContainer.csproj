@@ -72,6 +72,7 @@
     <Compile Include="FileReading\IFileReader.cs" />
     <Compile Include="FileReading\OneWordInLineFileReader.cs" />
     <Compile Include="FileReading\TextFileReader.cs" />
+    <Compile Include="MyStem\MyStemExecutor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -93,11 +94,12 @@
     <Compile Include="Visualizing\ColorHandling\IColorHandler.cs" />
     <Compile Include="Visualizing\IVisualizer.cs" />
     <Compile Include="Visualizing\Visualizer.cs" />
-    <Compile Include="WordProcessing\Filtering\CommandsExecuting\CmdCommandExecutor.cs" />
+    <Compile Include="CommandsExecuting\CmdCommandExecutor.cs" />
+    <Compile Include="WordProcessing\Converting\ToInitialFormWordConverter.cs" />
     <Compile Include="WordProcessing\Filtering\ExcludingBoringWordsFilter.cs" />
     <Compile Include="WordProcessing\Converting\IWordConverter.cs" />
     <Compile Include="WordProcessing\Filtering\IWordFilter.cs" />
-    <Compile Include="WordProcessing\Filtering\MyStem\MyStemResultParser.cs" />
+    <Compile Include="MyStem\MyStemResultParser.cs" />
     <Compile Include="WordProcessing\IWordProcessor.cs" />
     <Compile Include="WordProcessing\Converting\ToLowerWordConverter.cs" />
     <Compile Include="WordProcessing\WordProcessor.cs" />
@@ -114,7 +116,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WordProcessing\Filtering\MyStem\mystem.exe" />
+    <None Include="MyStem\mystem.exe" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">

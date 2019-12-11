@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using CliWrap;
 
-namespace TagsCloudContainer.WordProcessing.Filtering.CommandsExecuting
+namespace TagsCloudContainer.CommandsExecuting
 {
     public class CmdCommandExecutor
     {
