@@ -1,6 +1,6 @@
 ﻿namespace TagCloud
 {
-    public interface IParser
+    public interface IParser : ICheckable
     {
         string[] ParseWords(string[] words);
     }

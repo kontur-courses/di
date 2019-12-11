@@ -1,6 +1,6 @@
 ﻿namespace TagCloud
 {
-    public interface IFilter
+    public interface IFilter : ICheckable
     {
         string[] FilterWords(string[] words);
     }

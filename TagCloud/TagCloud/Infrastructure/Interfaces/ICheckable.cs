@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TagCloud
 {
-    public interface ITheme : ICheckable
+    public interface ICheckable
     {
-        Color BackgroundColor { get; }
-        Color GetWordFontColor(WordToken wordToken);
+        bool IsChecked { get; set; }
+        string Name { get; }
     }
 }
