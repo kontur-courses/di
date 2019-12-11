@@ -53,10 +53,10 @@ namespace TagsCloudVisualization
                     );
             });
             
-            builder.RegisterType<TagCloudSettings>().AsSelf();
+            builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
 
             builder.RegisterType<TagCloudPainter>();
-            builder.RegisterType<ImageSettings>().AsSelf();
+            builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(type => typeof(IUiAction).IsAssignableFrom(type))

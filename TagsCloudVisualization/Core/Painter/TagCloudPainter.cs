@@ -40,14 +40,15 @@ namespace TagsCloudVisualization.Core.Painter
                 var translator = textToTagsTranslatorFactory(tagCloudSettings.SpiralAlpha, tagCloudSettings.StepPhi);
                 var tags = translator.TranslateTextToTags(
                     File.ReadLines(tagCloudSettings.TextFilename),
-                    new HashSet<string>());
+                    new HashSet<string>(),
+                    tagCloudSettings.FontFamily,
+                    tagCloudSettings.MinFontSize);
 
                 var cloudDrawer =
                     new RectangleCloudDrawer(palette.BackgroundColor, new SolidBrush(palette.PrimaryColor));
                 var bitmap = cloudDrawer.DrawCloud(tags.ToList());
-                imageSettings.Width = bitmap.Width;
-                imageSettings.Height = bitmap.Height;
-                graphics.DrawImage(bitmap, 0, 0);
+                var toPaint = ImageUtils.ResizeImage(bitmap, imageSettings.Width, imageSettings.Height);
+                graphics.DrawImage(toPaint, 0, 0);
             }
 
             imageHolder.UpdateUi();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -26,19 +27,24 @@ namespace TagsCloudGenerator.Core.Translators
             this.layouter = layouter;
         }
 
-        public IEnumerable<TagInfo> TranslateTextToTags(IEnumerable<string> text, HashSet<string> boringWords)
+        public IEnumerable<TagInfo> TranslateTextToTags(
+            IEnumerable<string> text,
+            HashSet<string> boringWords,
+            string fontFamily,
+            int minFontSize)
         {
+            minFontSize = Math.Min(120, minFontSize);
             var normalizedWords = wordsNormalizer.GetNormalizedWords(text, boringWords, hunspell);
 
             var filteredWords = wordsFilter.GetFilteredWords(normalizedWords);
 
-            var frequencies = GetWordsFrequencies(filteredWords);
+            var frequencies = GetWordsFrequencies(filteredWords).Take(70);
             var minFrequency = frequencies.Min(pair => pair.Value);
 
             foreach (var pair in frequencies)
             {
-                var fontSize = pair.Value - minFrequency + 10;
-                var font = new Font("Arial", fontSize);
+                var fontSize = pair.Value - minFrequency + (int)(minFontSize * 1.15);
+                var font = new Font(fontFamily, fontSize);
                 var value = pair.Key;
                 var rectSize = TextRenderer.MeasureText(value, font);
                 var rect = layouter.PutNextRectangle(rectSize);

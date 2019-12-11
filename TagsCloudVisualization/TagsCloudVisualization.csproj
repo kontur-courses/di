@@ -37,6 +37,7 @@
     <Compile Include="Core\Painter\TagCloudSettings.cs" />
     <Compile Include="Infrastructure\Common\IImageHolder.cs" />
     <Compile Include="Infrastructure\Common\ImageSettings.cs" />
+    <Compile Include="Infrastructure\Common\ImageUtils.cs" />
     <Compile Include="Infrastructure\Common\Palette.cs" />
     <Compile Include="Infrastructure\Common\SettingsForm.cs" />
     <Compile Include="Infrastructure\UiActions\EnumExtensions.cs" />

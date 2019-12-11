@@ -8,6 +8,7 @@ namespace TagsCloudVisualization.Infrastructure.Common
         Graphics StartDrawing();
         void UpdateUi();
         void RecreateImage(ImageSettings settings);
+        void ResizeImage(ImageSettings settings);
         void SaveImage(string fileName);
     }
 }

@@ -22,7 +22,7 @@ namespace TagsCloudVisualization.Core.Actions
         public void Perform()
         {
             SettingsForm.For(imageSettings).ShowDialog();
-            imageHolder.RecreateImage(imageSettings);
+            imageHolder.ResizeImage(imageSettings);
         }
     }
 }

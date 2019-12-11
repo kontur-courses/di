@@ -38,6 +38,11 @@ namespace TagsCloudVisualization.Core
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
         }
 
+        public void ResizeImage(ImageSettings imageSettings)
+        {
+            Image = ImageUtils.ResizeImage(Image, imageSettings.Width, imageSettings.Height);
+        }
+
         public void SaveImage(string fileName)
         {
             FailIfNotInitialized();
