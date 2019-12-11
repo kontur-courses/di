@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Tests.TokenGenerator
         public void SetUp()
         {
             word = "слово";
-            tokenParser = new MyStemParser(new FileManager.FileManager());
+            tokenParser = new MyStemParser();
         }
 
         [Test]
@@ -49,7 +49,6 @@ namespace TagsCloudContainer.Tests.TokenGenerator
         public void GetTokens_WhenDuplicate_ContainOneToken()
         {
             var result = tokenParser.GetTokens(word + Environment.NewLine + word);
-            Console.WriteLine(result);
             result.Should().HaveCount(2);
         }
 
@@ -63,7 +62,21 @@ namespace TagsCloudContainer.Tests.TokenGenerator
         [Test]
         public void GetTokens_WhenPunctuation_ShouldntContainPunctuation()
         {
-            var text = "Просто - предложение, предложение просто.\r\nТочка.";
+            var text = @"aba честных правил,
+            Мой дядя самых честных правил,
+            Когда не в шутку занемог, 
+                Он уважать себя заставил
+                И лучше выдумать не мог.
+                Его пример другим наука;
+            Но, боже мой, какая скука
+                С больным сидеть и день и ночь,
+                Не отходя ни шагу прочь!
+                Какое низкое коварство
+            Полуживого забавлять,
+                Ему подушки поправлять,
+                Печально подносить лекарство,
+                Вздыхать и думать про себя:
+            Когда же черт возьмет тебя!";
             var token = tokenParser.GetTokens(text);
             token.Should().NotContain(new []{",",".", "-"});
         }

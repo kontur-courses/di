@@ -1,37 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-using TagsCloudContainer.FileManager;
-using TagsCloudContainer.TokensGenerator;
+using YandexMystem.Wrapper;
+using YandexMystem.Wrapper.Enums;
+using YandexMystem.Wrapper.Models.Mystem;
 
 namespace TagsCloudContainer.Filters
 {
-    public class MyStemFilter : MyStem, IFilter
+    public class MyStemFilter : IFilter
     {
-        private readonly WordType[] allowedWorldType;
+        private readonly GramPartsEnum[] allowedWorldType;
+        private Mysteam mystem;
 
-        public MyStemFilter(IFileManager fileManager, WordType[] allowedWorldType, string pathToMyStem = null) : base(fileManager, pathToMyStem)
+        public MyStemFilter(GramPartsEnum[] allowedWorldType, string pathToMyStem = null)
         {
             this.allowedWorldType = allowedWorldType;
+            mystem = new Mysteam();
+
         }
         
         public IEnumerable<string> Filtering(IEnumerable<string> tokens)
         {
-            var inputFilePath = FileManager.MakeFile();
-            var outputFilePath = FileManager.MakeFile();
-
-            FileManager.WriteInFile(inputFilePath, string.Join("\r\n", tokens));
-            RunMyStem(inputFilePath, outputFilePath, $"--format json -dgin");
-
-
-            var strFile = FileManager.ReadFile(outputFilePath);
-            var res = strFile.Split(new[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries)
-                .Select(JObject.Parse)
-                .Select(Token.FromJson)
-                .Where(t => allowedWorldType.Contains(t.WordType));
-
-            return res.Select(t => t.Value).Where(s => s.Length > 3);
+            var result =mystem.GetWords(string.Join(" ", tokens))
+                .Where(el => allowedWorldType.Contains(el.Lexems[0].GramPart))
+                .Select(t => t.SourceWord.Text)
+                .Where(s => s.Length > 3);
+            return result;
         }
     }
 }

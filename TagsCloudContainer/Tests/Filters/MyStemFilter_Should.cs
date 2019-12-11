@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Filters;
+using YandexMystem.Wrapper.Enums;
 
 namespace TagsCloudContainer.Tests.Filters
 {
@@ -11,7 +12,7 @@ namespace TagsCloudContainer.Tests.Filters
         [SetUp]
         public void SetUp()
         {
-            filter = new MyStemFilter(new FileManager.FileManager(), new []{WordType.Noun});
+            filter = new MyStemFilter( new []{GramPartsEnum.Noun});
         }
 
         [Test]
