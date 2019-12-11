@@ -2,25 +2,30 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using CommandLine;
 using TagsCloudGenerator.FileReaders;
 using TagsCloudGenerator.Saver;
+using TagsCloudGenerator.Tools;
 using TagsCloudGenerator.Visualizer;
+using TagsCloudGenerator.WordsHandler.Filters;
 
 namespace TagsCloudGenerator.Client.Console
 {
     public class ConsoleClient : IClient
     {
-        private IFileReader reader;
-        private IImageSaver saver;
-        private ICloudVisualizer visualizer;
+        private readonly IFileReader reader;
+        private readonly IImageSaver saver;
+        private readonly ICloudVisualizer visualizer;
+        private readonly BoringWordsEjector boringWordsEjector;
 
-        public ConsoleClient(IFileReader reader, IImageSaver saver, ICloudVisualizer visualizer)
+        public ConsoleClient(IFileReader reader, IImageSaver saver, ICloudVisualizer visualizer, BoringWordsEjector boringWordsEjector)
         {
             this.reader = reader;
             this.saver = saver;
             this.visualizer = visualizer;
+            this.boringWordsEjector = boringWordsEjector;
         }
 
         public void Run(ICloudGenerator generator)
@@ -37,20 +42,42 @@ namespace TagsCloudGenerator.Client.Console
             System.Console.WriteLine("During argument parsing errors was occured:");
 
             foreach (var error in errors)
-            {
                 System.Console.WriteLine(error);
-            }
         }
 
         private void Run(ICloudGenerator generator, Options options)
         {
+
+            if (options.PathToBoringWords != null)
+                LoadBoringWords(options.PathToBoringWords);
+            
+            
             var imageSettings = GetImageSettings(options);
             
             var words = reader.ReadWords(options.Path);
             var cloud = generator.Generate(words, imageSettings.Font);
             var bitmap = visualizer.Draw(cloud, imageSettings);
-            
+
             saver.Save(bitmap, options.Output, imageSettings.ImageFormat);
+        }
+
+        private void LoadBoringWords(string path)
+        {
+            var extension = Helper.GetFileExtension(path);
+            var boringWordsReader = ReaderFactory.GetReaderFor(extension);
+            var words = new List<string>();
+
+            try
+            {
+                words = boringWordsReader.ReadWords(path).Select(x => x.Key).ToList();
+            }
+            catch (FileNotFoundException e)
+            {
+                System.Console.WriteLine("Fail load file with boring words: " + e.Message);
+                
+            }
+
+            boringWordsEjector.AddBoringWords(words);
         }
 
         private static ImageSettings GetImageSettings(Options options)
@@ -62,6 +89,7 @@ namespace TagsCloudGenerator.Client.Console
 
             return new ImageSettings(options.ImageWidth, options.ImageHeight, backgroundColor, colors, format, font);
         }
+
         private static List<Color> GetColorsByNames(string names)
         {
             var colors = names.Split(new[] {", "}, StringSplitOptions.None);
@@ -74,10 +102,10 @@ namespace TagsCloudGenerator.Client.Console
             ImageFormat result = null;
             var info = typeof(ImageFormat).GetProperties().FirstOrDefault(p =>
                 p.Name.Equals(extension, StringComparison.InvariantCultureIgnoreCase));
+            
             if (info != null)
-            {
                 result = info.GetValue(info) as ImageFormat;
-            }
+            
 
             return result;
         }

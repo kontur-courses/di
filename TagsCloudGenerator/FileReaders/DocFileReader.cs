@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Office.Interop.Word;
+using TagsCloudGenerator.Tools;
 
 
 namespace TagsCloudGenerator.FileReaders
@@ -22,7 +23,7 @@ namespace TagsCloudGenerator.FileReaders
 
             application.Quit();
 
-            return WordToCountConverter.GetWordToCount(words);
+            return Helper.GetWordToCount(words);
         }
     }
 }

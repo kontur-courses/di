@@ -25,13 +25,13 @@ namespace TagsCloudGenerator.Client.Console
                        "names should be separeted \', \'")]
         public string Colors { get; set; }
 
-        [Option('f',"font", Required = false, Default = "Arial", HelpText = "font to draw words")]
+        [Option('f', "font", Required = false, Default = "Arial", HelpText = "font to draw words")]
         public string Font { get; set; }
 
         [Option("fontSize", Required = false, Default = 16.0f, HelpText = "size of font to draw words")]
         public float FontSize { get; set; }
 
-        [Option("boringWords",Required = false, HelpText = "path to file with boring words")]
+        [Option("boringWords", Required = false, HelpText = "path to file with boring words")]
         public string PathToBoringWords { get; set; }
     }
 }

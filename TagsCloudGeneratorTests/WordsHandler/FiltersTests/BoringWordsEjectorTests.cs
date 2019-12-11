@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudGenerator.WordsHandler;
 using TagsCloudGenerator.WordsHandler.Filters;
 
-namespace TagsCloudGeneratorTests.WordsHandler
+namespace TagsCloudGeneratorTests.WordsHandler.FiltersTests
 {
     public class BoringWordsEjectorTests
     {
-        private readonly string[] boringWords = {"in", "with", "are", "have"};
+        private readonly List<string> boringWords = new List<string> {"in", "with", "are", "have"};
         private BoringWordsEjector filter;
 
         [SetUp]
         public void SetUp()
         {
-            filter =  new BoringWordsEjector(boringWords);
+           filter =  new BoringWordsEjector();
+           filter.AddBoringWords(boringWords);
         }
 
         [Test]

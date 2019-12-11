@@ -15,6 +15,9 @@ namespace TagsCloudGenerator.WordsHandler.Converters
 
         public Dictionary<string, int> Convert(Dictionary<string, int> wordToCount)
         {
+            if (wordToCount == null)
+                throw new ArgumentNullException();
+
             return wordToCount.Select(convert).ToDictionary(x => x.Key, x => x.Value);
         }
     }

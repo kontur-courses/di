@@ -58,12 +58,22 @@
     <Compile Include="ToolsForTests\StackExtensions.cs" />
     <Compile Include="ToolsForTests\GeometryHelperTests.cs" />
     <Compile Include="CloudLayouterTests\SpiralGeneratorTests.cs" />
-    <Compile Include="WordsHandler\BoringWordsEjectorTests.cs" />
-    <Compile Include="WordsHandler\LowercaseConverterTests.cs" />
+    <Compile Include="ToolsTests\HelperTests.cs" />
+    <Compile Include="WordsHandler\ConvertersTests\FuncConverterTests.cs" />
+    <Compile Include="WordsHandler\ConvertersTests\InitialFormConverterTests.cs" />
+    <Compile Include="WordsHandler\FiltersTests\BoringWordsEjectorTests.cs" />
+    <Compile Include="WordsHandler\ConvertersTests\LowercaseConverterTests.cs" />
+    <Compile Include="WordsHandler\FiltersTests\PredicateFilterTests.cs" />
     <Compile Include="WordsHandler\WordHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="en-GB\index.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en-GB\index.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudGenerator\TagsCloudGenerator.csproj">

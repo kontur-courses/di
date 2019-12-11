@@ -24,7 +24,7 @@ namespace TagsCloudGenerator.FileReaders
                 var word = entry.Attribute("value")?.Value;
                 var count = entry.Attribute("count")?.Value;
 
-                if(word== null || count == null)
+                if (word == null || count == null)
                     continue;
 
                 if (!wordToCount.ContainsKey(word))
@@ -32,7 +32,7 @@ namespace TagsCloudGenerator.FileReaders
 
                 wordToCount[word] += Convert.ToInt32(count);
             }
-            
+
             return wordToCount;
         }
     }

@@ -10,7 +10,9 @@ namespace TagsCloudGeneratorTests.WordsHandler
 {
     public class WordHandlerTests
     {
-        private readonly string[] boringWords = {"in", "with", "are", "have", "coherent applying converters "};
+        private readonly List<string> boringWords = new List<string>
+            {"in", "with", "are", "have", "coherent applying converters "};
+
         private WordHandler handlerWithOnlyOneConverter;
         private WordHandler handlerWithOnlyOneFilter;
 
@@ -45,9 +47,10 @@ namespace TagsCloudGeneratorTests.WordsHandler
         {
             var filter = new TakeTenElementsFilter();
             var converter = new SpaceAdder();
-            var realFilter = new BoringWordsEjector(boringWords);
+            var realFilter = new BoringWordsEjector();
+            realFilter.AddBoringWords(boringWords);
             var realConverter = new LowercaseConverter();
-            
+
             handlerWithOnlyOneFilter = new WordHandler(new List<IWordsFilter>{realFilter}, new List<IConverter>{converter, realConverter});
             handlerWithOnlyOneConverter = new WordHandler(new List<IWordsFilter>{filter, realFilter}, new List<IConverter>{realConverter});
         }

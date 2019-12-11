@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudGenerator.WordsHandler;
 using TagsCloudGenerator.WordsHandler.Converters;
 
-namespace TagsCloudGeneratorTests.WordsHandler
+namespace TagsCloudGeneratorTests.WordsHandler.ConvertersTests
 {
     public class LowercaseConverterTests
     {

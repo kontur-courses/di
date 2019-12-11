@@ -8,13 +8,25 @@ namespace TagsCloudGenerator.WordsHandler.Converters
 {
     public class InitialFormConverter : IConverter
     {
+        private readonly string pathToAff;
+        private readonly string pathToDictionary;
+
+        public InitialFormConverter(string pathToAff, string pathToDictionary)
+        {
+            this.pathToAff = pathToAff;
+            this.pathToDictionary = pathToDictionary;
+        }
+
         public Dictionary<string, int> Convert(Dictionary<string, int> wordToCount)
         {
+            if (wordToCount == null)
+                throw new ArgumentNullException();
+
             var converted = new Dictionary<string, int>();
 
             try
             {
-                using (var hunspell = new Hunspell(@"en-GB/index.aff", @"en-GB/index.dic"))
+                using (var hunspell = new Hunspell(pathToAff, pathToDictionary))
                 {
                     foreach (var word in wordToCount)
                     {
@@ -32,7 +44,7 @@ namespace TagsCloudGenerator.WordsHandler.Converters
             }
             catch (FileNotFoundException e)
             {
-                Console.WriteLine("failed to convert words to initial form: "+ e.Message);
+                Console.WriteLine("failed to convert words to initial form: " + e.Message);
                 return wordToCount;
             }
 

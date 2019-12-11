@@ -8,7 +8,7 @@ namespace TagsCloudGenerator.WordsHandler.Filters
     {
         private readonly Predicate<KeyValuePair<string, int>> removePredicate;
 
-        public PredicateFilter( Predicate<KeyValuePair<string, int>> removePredicate)
+        public PredicateFilter(Predicate<KeyValuePair<string, int>> removePredicate)
         {
             this.removePredicate = removePredicate;
         }

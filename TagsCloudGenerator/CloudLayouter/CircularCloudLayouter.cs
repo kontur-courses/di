@@ -46,7 +46,7 @@ namespace TagsCloudGenerator.CloudLayouter
             var word = new Word(value, rectangle, count);
 
             cloud.Words.Add(word);
-            
+
             return word;
         }
 
@@ -56,9 +56,8 @@ namespace TagsCloudGenerator.CloudLayouter
             do
             {
                 nextLocation = TryGetNextLocation(rectangleSize);
-                
             } while (!nextLocation.success);
-            
+
             var location = nextLocation.location;
 
             if (cloud.Words.Count == 0)

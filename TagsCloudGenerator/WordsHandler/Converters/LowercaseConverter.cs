@@ -7,16 +7,16 @@ namespace TagsCloudGenerator.WordsHandler.Converters
     {
         public Dictionary<string, int> Convert(Dictionary<string, int> wordToCount)
         {
-            if(wordToCount == null)
+            if (wordToCount == null)
                 throw new ArgumentNullException();
 
             var converted = new Dictionary<string, int>();
-            
+
             foreach (var el in wordToCount)
             {
                 var newKey = el.Key.ToLower();
-                
-                if(!converted.ContainsKey(newKey))
+
+                if (!converted.ContainsKey(newKey))
                     converted.Add(newKey, el.Value);
                 else
                     converted[newKey]++;

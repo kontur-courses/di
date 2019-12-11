@@ -69,13 +69,15 @@
     <Compile Include="CloudGenerator.cs" />
     <Compile Include="DependenciesBuilder.cs" />
     <Compile Include="FileReaders\DocFileReader.cs" />
-    <Compile Include="FileReaders\WordToCountConverter.cs" />
+    <Compile Include="Tools\ReaderFactory.cs" />
+    <Compile Include="Tools\Helper.cs" />
     <Compile Include="FileReaders\XmlFileReader.cs" />
     <Compile Include="ICloudGenerator.cs" />
     <Compile Include="Client\Console\Options.cs" />
     <Compile Include="Saver\IImageSaver.cs" />
     <Compile Include="Saver\ImageSaver.cs" />
     <Compile Include="Visualizer\CloudVisualizer.cs" />
+    <Compile Include="Visualizer\ColoringRandomColorAlgorithm.cs" />
     <Compile Include="Visualizer\ImageSettings.cs" />
     <Compile Include="Visualizer\ICloudVisualizer.cs" />
     <Compile Include="Visualizer\IColoringAlgorithm.cs" />
@@ -95,7 +97,7 @@
     <Compile Include="WordsHandler\Converters\LowercaseConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FileReaders\SimpleFileReader.cs" />
+    <Compile Include="FileReaders\TxtFileReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
