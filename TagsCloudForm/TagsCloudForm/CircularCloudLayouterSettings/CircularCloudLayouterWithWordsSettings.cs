@@ -12,10 +12,15 @@
 
         public string BoringWordsFile { get; set; } = "UserData/boring.txt";
 
-        public string filterPOSfile { get; set; } = "UserData/filterPOS.txt";
+        public string PartOfSpeechToFilterFile { get; set; } = "UserData/filterPOS.txt";
 
         public bool Ordered { get; set; } = false;
+
         public bool UpperCase { get; set; } = true;
+
+        public bool Frame { get; set; } = true;
+
+        public bool Fill { get; set; } = true;
 
 
         public LanguageEnum Language { get; set; } = LanguageEnum.English;

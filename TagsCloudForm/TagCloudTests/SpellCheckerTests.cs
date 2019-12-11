@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudForm.WordFilters;
-using TagsCloudForm.CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 
 namespace TagsCloudTests
 {
@@ -14,16 +14,20 @@ namespace TagsCloudTests
             var checker = new SpellCheckerFilter();
             var words = new string[] {"www", "hello", "asd"};
 
-            checker.Filter(words, LanguageEnum.English).Should().BeEquivalentTo(new string[] { "hello" });
+            var filtered = checker.Filter(words, LanguageEnum.English);
+
+            filtered.Should().BeEquivalentTo(new string[] { "hello" });
         }
 
         [Test]
-        public void SpellChecker_FilterTest_ShouldFilterUpperCaseWords()
+        public void SpellChecker_FilterTest_ShouldFilterNotWordsUpperCase()
         {
             var checker = new SpellCheckerFilter();
             var words = new string[] { "WWW", "Hello", "aSd" };
 
-            checker.Filter(words, LanguageEnum.English).Should().BeEquivalentTo(new string[] { "Hello" });
+            var filtered = checker.Filter(words, LanguageEnum.English);
+
+            filtered.Should().BeEquivalentTo(new string[] { "Hello" });
         }
     }
 }

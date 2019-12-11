@@ -1,13 +1,12 @@
-﻿using TagsCloudForm.CircularCloudLayouterSettings;
-using TagsCloudForm.Common;
+﻿using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
     public class CircularCloudLayouterAction : IUiAction
     {
-        private readonly CloudPainterFactory factory;
-        public CircularCloudLayouterAction(CloudPainterFactory factory)
+        private readonly IPainterFactory factory;
+        public CircularCloudLayouterAction(IPainterFactory factory)
         {
             this.factory = factory;
         }
@@ -17,9 +16,7 @@ namespace TagsCloudForm.Actions
 
         public void Perform()
         {
-            var settings = new CircularCloudLayouterSettings.CircularCloudLayouterSettings();
-            SettingsForm.For(settings).ShowDialog();
-            factory.Create(settings).Paint();
+            factory.Create().Paint();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using Autofac;
+using Autofac.Core;
 using TagsCloudForm.Actions;
-using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 using TagsCloudForm.WordFilters;
@@ -18,7 +18,7 @@ namespace TagsCloudForm
             var builder = new ContainerBuilder();
             builder.RegisterType<CloudForm>().As<CloudForm>();
             builder.RegisterType<Palette>().As<IPalette>().SingleInstance();
-            builder.RegisterType<global::CircularCloudLayouter.CircularCloudLayouter>().As<ICircularCloudLayouter>();
+            builder.RegisterType<CircularCloudLayouter.CircularCloudLayouter>().As<ICircularCloudLayouter>();
             RegisterPainters(builder);
             RegisterWordFiltersAndFunctions(builder);
             RegisterActions(builder);
@@ -44,14 +44,17 @@ namespace TagsCloudForm
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
-            builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>();
-            builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>();
+            builder.RegisterType<CircularCloudLayouterAction>().As<IUiAction>().WithParameter(ResolvedParameter.ForNamed<IPainterFactory>("CircularCloudLayouterAction"));
+            builder.RegisterType<CircularCloudLayouterWithWordsAction>().As<IUiAction>().WithParameter(ResolvedParameter.ForNamed<IPainterFactory>("CircularCloudLayouterWithWordsAction"));
             builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
+            builder.RegisterType<CircularCloudLayouterSettingsAction>().As<IUiAction>();
+            builder.RegisterType<LayouterWithWordsSettingsAction>().As<IUiAction>();
         }
 
         private static void RegisterSettingsClasses(ContainerBuilder builder)
         {
-            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterSettings>();
+            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterWithWordsSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterWithWordsSettings>().SingleInstance();
             builder.Register(x => x.Resolve<AppSettings>().ImageSettings).As<ImageSettings>().SingleInstance();
             builder.RegisterType<SettingsManager>().As<SettingsManager>();
             builder.Register(x => x.Resolve<SettingsManager>().Load()).As<AppSettings, IImageDirectoryProvider>().SingleInstance();
@@ -65,8 +68,8 @@ namespace TagsCloudForm
 
         private static void RegisterFactories(ContainerBuilder builder)
         {
-            builder.RegisterType<CloudWithWordsPainterFactory>();
-            builder.RegisterType<CloudPainterFactory>();
+            builder.RegisterType<CloudPainterFactory>().Named<IPainterFactory>("CircularCloudLayouterAction");
+            builder.RegisterType<CloudWithWordsPainterFactory>().Named<IPainterFactory>("CircularCloudLayouterWithWordsAction");
         }
     }
 }

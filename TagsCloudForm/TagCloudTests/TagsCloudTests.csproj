@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="BoringWordsTests.cs" />
     <Compile Include="CircularCloudLayouterTests.cs" />
-    <Compile Include="RectangleForWordsCreatorTests.cs" />
+    <Compile Include="PartOfSpeechFilterTests.cs" />
     <Compile Include="SpellCheckerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

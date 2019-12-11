@@ -72,12 +72,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
+    <Compile Include="Actions\CircularCloudLayouterSettingsAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterWithWordsAction.cs" />
     <Compile Include="Actions\CloudPainter.cs" />
     <Compile Include="Actions\CloudPainterFactory.cs" />
     <Compile Include="Actions\CloudWithWordsPainter.cs" />
     <Compile Include="Actions\ICloudPainter.cs" />
     <Compile Include="Actions\CloudWithWordsPainterFactory.cs" />
+    <Compile Include="Actions\IPainterFactory.cs" />
+    <Compile Include="Actions\LayouterWithWordsSettingsAction.cs" />
     <Compile Include="app.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

@@ -1,30 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CircularCloudLayouter;
-using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 
 namespace TagsCloudForm.Actions
 {
-    public class CloudPainterFactory
+    public class CloudPainterFactory : IPainterFactory
     {
         private readonly IImageHolder imageHolder;
         private readonly IPalette palette;
         private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
+        private readonly CircularCloudLayouterSettings.CircularCloudLayouterSettings settings;
         public CloudPainterFactory(IImageHolder imageHolder,
             IPalette palette,
+            CircularCloudLayouterSettings.CircularCloudLayouterSettings settings,
             Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory)
         {
+            
             this.imageHolder = imageHolder;
             this.palette = palette;
             this.circularCloudLayouterFactory = circularCloudLayouterFactory;
+            this.settings = settings;
         }
 
-        public CloudPainter Create(CircularCloudLayouterSettings.CircularCloudLayouterSettings settings)
+        public ICloudPainter Create()
         {
             var layouter = circularCloudLayouterFactory.Invoke(new Point(settings.CenterX, settings.CenterY));
             layouter.SetCompression(settings.XCompression, settings.YCompression);

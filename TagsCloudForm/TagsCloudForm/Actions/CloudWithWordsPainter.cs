@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudForm.CircularCloudLayouterSettings;
@@ -51,8 +50,10 @@ namespace TagsCloudForm.Actions
                     var font = new Font("Arial", Math.Min(72, word.Value * settings.Scale));
                     var size = new Size(TextRenderer.MeasureText(word.Key, font).Width, TextRenderer.MeasureText(word.Key, font).Height);
                     var rect = layouter.PutNextRectangle(size);
-                    graphics.FillRectangle(backgroundBrush, rect);
-                    graphics.DrawRectangle(rectBrush, rect);
+                    if (settings.Fill)
+                        graphics.FillRectangle(backgroundBrush, rect);
+                    if (settings.Frame)
+                        graphics.DrawRectangle(rectBrush, rect);
                     graphics.DrawString(word.Key, font, new SolidBrush(palette.PrimaryColor), new PointF(rect.X, rect.Y));
                 }
             }

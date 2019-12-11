@@ -7,7 +7,6 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using CircularCloudLayouter;
 
 namespace TagsCloudTests
 {
@@ -73,7 +72,7 @@ namespace TagsCloudTests
         public void SetUp()
         {
             CloudCenter = new Point(0, 0);
-            Layouter = new global::CircularCloudLayouter.CircularCloudLayouter(CloudCenter);
+            Layouter = new CircularCloudLayouter.CircularCloudLayouter(CloudCenter);
         }
 
         [TearDown]

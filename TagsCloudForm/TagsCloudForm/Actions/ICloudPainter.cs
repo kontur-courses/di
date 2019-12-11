@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudForm.Actions
+﻿namespace TagsCloudForm.Actions
 {
-    interface ICloudPainter
+    public interface ICloudPainter
     {
         void Paint();
     }

@@ -14,7 +14,7 @@ namespace TagsCloudForm.Actions
 
         public string Category => "Настройки";
         public string Name => "Палитра...";
-        public string Description => "Цвета для рисования фракталов";
+        public string Description => "Цвета для рисования облака";
 
         public void Perform()
         {

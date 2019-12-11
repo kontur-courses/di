@@ -26,11 +26,11 @@ namespace TagsCloudTests
         {
             var filter = new BoringWordsFilter();
             var words = new List<string> { "www", "hello", "asd" };
-            var boringWords = new HashSet<string>() { "asd", "www"};
+            var boringWords = new HashSet<string> { "asd", "www"};
 
             var filtered = filter.Filter(boringWords, words);
 
-            filtered.Should().BeEquivalentTo(new List<string>() {"hello"});
+            filtered.Should().BeEquivalentTo(new List<string> {"hello"});
         }
     }
 }

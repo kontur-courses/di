@@ -4,8 +4,8 @@ namespace TagsCloudForm.Common
 {
     public class Palette : IPalette
     {
-        public Color PrimaryColor { get; set; } = Color.Yellow;
-        public Color SecondaryColor { get; set; } = Color.Red;
-        public Color BackgroundColor { get; set; } = Color.DarkBlue;
+        public Color PrimaryColor { get; set; } = Color.Black;
+        public Color SecondaryColor { get; set; } = Color.GreenYellow;
+        public Color BackgroundColor { get; set; } = Color.Gainsboro;
     }
 }
