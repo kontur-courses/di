@@ -97,6 +97,7 @@ namespace TagsCloudContainer.ApplicationRunning.UIApp.Forms
             this.LayoutingAlgorithmComboBox.Name = "LayoutingAlgorithmComboBox";
             this.LayoutingAlgorithmComboBox.Size = new System.Drawing.Size(178, 28);
             this.LayoutingAlgorithmComboBox.TabIndex = 2;
+            this.LayoutingAlgorithmComboBox.SelectedIndex = 0;
             this.label1.Location = new System.Drawing.Point(548, 71);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 18);
