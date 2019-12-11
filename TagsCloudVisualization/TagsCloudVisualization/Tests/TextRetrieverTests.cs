@@ -27,7 +27,7 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void TextRetriever_ReturnsCorrectText_WhenFileIsTxt()
         {
-            var textPath = TestContext.CurrentContext.TestDirectory + "\\Tests\\TestText.txt";
+            var textPath = TestContext.CurrentContext.TestDirectory + "\\Tests\\TestTexts\\animals.txt";
             var expectedText = File.ReadAllText(textPath, Encoding.UTF8);
             TextRetriever.RetrieveTextFromFile(textPath).Should().BeEquivalentTo(expectedText);
         }
