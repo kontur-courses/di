@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using NHunspell;
 
@@ -27,6 +25,12 @@ namespace TagsCloudGenerator.Core.Normalizers
         {
             var countPunctuationFromStart = str.TakeWhile(char.IsPunctuation).Count();
             var countPunctuationFromEnd = str.Reverse().TakeWhile(char.IsPunctuation).Count();
+            
+            if (countPunctuationFromStart == str.Length &&
+                countPunctuationFromEnd == str.Length)
+            {
+                return "";
+            }
 
             return str.Substring(countPunctuationFromStart,
                 str.Length - countPunctuationFromEnd - countPunctuationFromStart);
