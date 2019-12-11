@@ -16,11 +16,16 @@ namespace TagsCloudVisualization.Tests
         private IContainer container;
         private string testTextDirectory;
 
+        [OneTimeSetUp]
+        public void InitializeTextsDirectory()
+        {
+            testTextDirectory = TestContext.CurrentContext.TestDirectory + "\\Tests\\TestTexts\\";
+        }
+
         [SetUp]
         public void InitializeProperties()
         {
             container = EntryPoint.InitializeContainer();
-            testTextDirectory = TestContext.CurrentContext.TestDirectory + "\\Tests\\TestTexts\\";
         }
 
         [Test]

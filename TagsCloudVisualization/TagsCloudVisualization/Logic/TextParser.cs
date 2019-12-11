@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Logic
 {
     public class TextParser : IParser
     {
-        private static readonly char[] separators = {'\n', '\r'};
+        private static readonly char[] Separators = {'\n', '\r'};
         private readonly IBoringWordsProvider boringWordsProvider;
 
         public TextParser(IBoringWordsProvider boringWordsProvider)
@@ -21,15 +21,12 @@ namespace TagsCloudVisualization.Logic
                 throw new ArgumentNullException();
             var wordCountDictionary = new Dictionary<string, int>();
             var splittedText = text
-                .Split(separators, StringSplitOptions.RemoveEmptyEntries)
+                .Split(Separators, StringSplitOptions.RemoveEmptyEntries)
                 .Select(word => word.ToLower());
             foreach (var lineWord in splittedText)
             {
-                if (boringWordsProvider.BoringWords != null 
-                    && boringWordsProvider.BoringWords.Contains(lineWord) 
-                    || string.IsNullOrEmpty(lineWord))
+                if (IsWordInvalid(lineWord))
                     continue;
-
                 if (!wordCountDictionary.ContainsKey(lineWord))
                     wordCountDictionary.Add(lineWord, 1);
                 else
@@ -37,6 +34,13 @@ namespace TagsCloudVisualization.Logic
             }
             foreach (var kvp in wordCountDictionary)
                 yield return new WordToken(kvp.Key, kvp.Value);
+        }
+
+        private bool IsWordInvalid(string word)
+        {
+            return boringWordsProvider.BoringWords != null
+                   && boringWordsProvider.BoringWords.Contains(word)
+                   || string.IsNullOrEmpty(word);
         }
     }
 }

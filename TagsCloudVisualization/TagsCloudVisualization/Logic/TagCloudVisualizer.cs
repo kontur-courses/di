@@ -11,22 +11,19 @@ namespace TagsCloudVisualization.Logic
         private readonly IParser textParser;
         private readonly IImageGenerator imageGenerator;
         private readonly ITagPainter painter;
-        private readonly IBoringWordsProvider boringWordsProvider;
-        private readonly Graphics measureGraphics;
         private readonly IImageSettingsProvider imageSettingsProvider;
+        private readonly Graphics measureGraphics;
 
         public TagCloudVisualizer(
             IImageGenerator imageGenerator,
             IParser textParser, 
             ILayouter layouter, 
-            ITagPainter painter, 
-            IBoringWordsProvider boringWordsProvider,
+            ITagPainter painter,
             IImageSettingsProvider imageSettingsProvider)
         {
             measureGraphics = Graphics.FromImage(new Bitmap(1, 1));
             this.imageGenerator = imageGenerator;
             this.imageSettingsProvider = imageSettingsProvider;
-            this.boringWordsProvider = boringWordsProvider;
             this.textParser = textParser;
             this.layouter = layouter;
             this.painter = painter;
