@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace TagCloud
 {
@@ -9,7 +10,7 @@ namespace TagCloud
             if (text == null)
                 throw new ArgumentNullException();
             var words = text.Split('\r', '\n');
-            return words;
+            return words.Where(word => word != "").ToArray();
         }
     }
 }
