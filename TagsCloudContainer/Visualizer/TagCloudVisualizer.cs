@@ -25,12 +25,12 @@ namespace TagsCloudContainer.Visualizer
             }
         }
 
-        public Image DrawImage(IList<WordRectangle> wordRectangles)
+        public Image DrawImage(IList<WordRectangle> wordRectangles, Size imageSize)
         {
-            var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            var image = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(image);
             graphics.FillRectangle(settings.BackgroundBrush, 0, 0,
-                settings.ImageSize.Width, settings.ImageSize.Height);
+                imageSize.Width, imageSize.Height);
             DrawWords(wordRectangles, graphics);
             return image;
         }

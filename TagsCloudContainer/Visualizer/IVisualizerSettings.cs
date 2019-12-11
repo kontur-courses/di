@@ -7,7 +7,6 @@ namespace TagsCloudContainer.Visualizer
 {
     public interface IVisualizerSettings
     {
-        Size ImageSize { get; }
         Brush BackgroundBrush { get; }
 
         Font GetFont(WordRectangle wordRectangle);

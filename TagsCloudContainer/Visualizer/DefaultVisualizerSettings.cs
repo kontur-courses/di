@@ -8,13 +8,7 @@ namespace TagsCloudContainer.Visualizer
 {
     class DefaultVisualizerSettings : IVisualizerSettings
     {
-        public Size ImageSize { get; }
         public Brush BackgroundBrush { get; } = Brushes.White;
-
-        public DefaultVisualizerSettings(Size imageSize)
-        {
-            ImageSize = imageSize;
-        }
 
         public Font GetFont(WordRectangle wordRectangle)
         {

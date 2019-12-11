@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer.RectanglesTransformer
 {
     public class CenterRectanglesShifter : IRectanglesTransformer
     {
-        private readonly IShifterSettings settings;
+        private readonly ILayouterSettings settings;
 
-        public CenterRectanglesShifter(IShifterSettings settings)
+        public CenterRectanglesShifter(ILayouterSettings settings)
         {
             this.settings = settings;
         }
 
-        public IList<Rectangle> TransformRectangles(IEnumerable<Rectangle> rectangles)
+        public IList<Rectangle> TransformRectangles(IEnumerable<Rectangle> rectangles, Size imageSize)
         {
-            return VisualizerСalculations.GetRectanglesWithOptimalLocation(rectangles, settings.Offset);
+            var optimalCenter = TransformerСalculations.GetCenter(imageSize);
+            var offset = new Size(optimalCenter) - new Size(settings.Center);
+            return TransformerСalculations.GetRectanglesWithOptimalLocation(rectangles, offset);
         }
     }
 }

@@ -1,26 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using NHunspell;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.WordProcessor
 {
     public class BasicWordProcessor : IWordProcessor
     {
+        private readonly HashSet<string> boringPartsOfSpeech = new HashSet<string>
+        {
+            "ADVPRO", "APRO", "CONJ", "INTJ", "PART", "PR", "SPRO"
+        };
+
         public IEnumerable<WordWithCount> ProcessWords(IEnumerable<string> words)
         {
-            var lowerWords = words.Select(w => w.ToLower());
-            var directoryInfo = DirectoryMethods.GetProjectDirectoryInfo();
-            var directoryName = $@"{directoryInfo.FullName}\Hunspell";
-            var hunspell = new Hunspell($@"{directoryName}\ru.aff", $@"{directoryName}\ru.dic");
             var processedWords = new List<string>();
-            //Убрать скучные слова
-            foreach (var word in lowerWords)
+            var inputName = "words_for_mystem_in.txt";
+            var outputName = "words_for_mystem_out.txt";
+            File.WriteAllText(inputName, string.Join(" ", words));
+            var process = Process.Start("mystem.exe", $"-n -i -d -g {inputName} {outputName}");
+            if (process == null)
+                throw new Exception("mystem.exe not found");
+            process.WaitForExit();
+            var wordAnalyzes = File.ReadAllLines(outputName);
+            var analysisRegex = new Regex(@"^\w+{(\w+)\??=(\w+)[,=]", RegexOptions.Compiled);
+            foreach (var analysis in wordAnalyzes)
             {
-                var stemResult = hunspell.Stem(word);
-                processedWords.Add(stemResult.Count > 0 ? stemResult[0] : word);
+                var match = analysisRegex.Match(analysis);
+                var initialForm = match.Groups[1].Value;
+                var partOfSpeech = match.Groups[2].Value;
+                if (!boringPartsOfSpeech.Contains(partOfSpeech)) 
+                    processedWords.Add(initialForm);
             }
+
             return GetWordsWithCount(processedWords);
         }
 

@@ -7,6 +7,6 @@ namespace TagsCloudContainer.RectanglesTransformer
 {
     public interface IRectanglesTransformer
     {
-        IList<Rectangle> TransformRectangles(IEnumerable<Rectangle> rectangles);
+        IList<Rectangle> TransformRectangles(IEnumerable<Rectangle> rectangles, Size imageSize);
     }
 }

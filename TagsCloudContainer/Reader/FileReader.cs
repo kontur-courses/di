@@ -3,27 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer.Reader
 {
     public class FileReader : ITextReader
     {
-        private readonly string path;
-
-        public FileReader(string path)
-        {
-            this.path = path;
-        }
-
-        private string ReadText()
+        public IEnumerable<string> ReadWords(string path)
         {
             var text = File.ReadAllText(path);
-            return text;
-        }
-
-        public IEnumerable<string> ReadWords()
-        {
-            var text = ReadText();
             return text
                 .Trim()
                 .Split(' ', ',', '.', '!', '?', '(', ')', ':', ';', '<', '>', '"')

@@ -78,9 +78,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryMethods.cs" />
     <Compile Include="ImageSaver\IImageSaver.cs" />
     <Compile Include="ImageSaver\Saver.cs" />
+    <Compile Include="ImageSizeCalculator\DefaultImageSizeCalculator.cs" />
+    <Compile Include="ImageSizeCalculator\IImageSizeCalculator.cs" />
+    <Compile Include="UI\IInitialSettings.cs" />
+    <Compile Include="UI\InitialSettings.cs" />
+    <Compile Include="UI\IUI.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\DefaultLayouterSettings.cs" />
     <Compile Include="Layouter\ILayouter.cs" />
@@ -88,6 +92,9 @@
     <Compile Include="Layouter\PointExtensions.cs" />
     <Compile Include="Layouter\PointsRadiusComparer.cs" />
     <Compile Include="Layouter\RectanglesExtensions.cs" />
+    <None Include="mystem.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Compile Include="NewTests\BasicWordProcessorTests.cs" />
     <Compile Include="NewTests\WordFrequenciesToSizesConverterTests.cs" />
     <Compile Include="Program.cs" />
@@ -95,17 +102,15 @@
     <Compile Include="Reader\ITextReader.cs" />
     <Compile Include="Reader\FileReader.cs" />
     <Compile Include="RectanglesTransformer\CenterRectanglesShifter.cs" />
-    <Compile Include="RectanglesTransformer\ShifterSettings.cs" />
     <Compile Include="RectanglesTransformer\IRectanglesTransformer.cs" />
-    <Compile Include="RectanglesTransformer\IShifterSettings.cs" />
-    <Compile Include="RectanglesTransformer\VisualizerСalculations.cs" />
-    <Compile Include="TagsCloudCreator.cs" />
+    <Compile Include="RectanglesTransformer\TransformerСalculations.cs" />
+    <Compile Include="UI\ConsoleTagsCloudCreator.cs" />
     <Compile Include="OldTests\CircularCloudLayouterTests.cs" />
     <Compile Include="OldTests\Generator.cs" />
     <Compile Include="OldTests\PointExtensionsTests.cs" />
     <Compile Include="OldTests\PointsRadiusComparerTests.cs" />
     <Compile Include="OldTests\RectanglesExtensionsTests.cs" />
-    <Compile Include="OldTests\RectanglesVisualizerCalculationsTests.cs" />
+    <Compile Include="OldTests\RectanglesTransformerCalculationsTests.cs" />
     <Compile Include="Visualizer\DefaultVisualizerSettings.cs" />
     <Compile Include="Visualizer\IVisualizer.cs" />
     <Compile Include="Visualizer\IVisualizerSettings.cs" />

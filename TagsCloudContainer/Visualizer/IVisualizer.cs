@@ -7,6 +7,6 @@ namespace TagsCloudContainer.Visualizer
 {
     public interface IVisualizer
     { 
-        Image DrawImage(IList<WordRectangle> wordRectangles);
+        Image DrawImage(IList<WordRectangle> wordRectangles, Size imageSize);
     }
 }
