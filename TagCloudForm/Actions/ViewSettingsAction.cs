@@ -6,10 +6,12 @@ namespace TagCloudForm.Actions
     public class ViewSettingsAction : IUiAction
     {
         private readonly ViewSettings viewSettings;
+        private readonly CloudPainter cloudPainter;
 
-        public ViewSettingsAction(ViewSettings viewSettings)
+        public ViewSettingsAction(ViewSettings viewSettings, CloudPainter cloudPainter)
         {
             this.viewSettings = viewSettings;
+            this.cloudPainter = cloudPainter;
         }
 
         public string Category => "Вид";
@@ -19,6 +21,7 @@ namespace TagCloudForm.Actions
         public void Perform()
         {
             SettingsForm<ViewSettings>.For(viewSettings).ShowDialog();
+            cloudPainter.Paint();
         }
     }
 }

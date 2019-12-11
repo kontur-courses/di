@@ -7,12 +7,12 @@ namespace TagCloudForm.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private readonly IImageDirectoryProvider imageDirectoryProvider;
+        private readonly IDirectoryProvider directoryProvider;
         private readonly IImageHolder imageHolder;
 
-        public SaveImageAction(IImageDirectoryProvider imageDirectoryProvider, IImageHolder imageHolder)
+        public SaveImageAction(IDirectoryProvider directoryProvider, IImageHolder imageHolder)
         {
-            this.imageDirectoryProvider = imageDirectoryProvider;
+            this.directoryProvider = directoryProvider;
             this.imageHolder = imageHolder;
         }
 
@@ -25,7 +25,7 @@ namespace TagCloudForm.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
+                InitialDirectory = Path.GetFullPath(directoryProvider.Directory),
                 DefaultExt = "png",
                 FileName = "image",
                 Filter = "Изображения (*.png)|*.png"

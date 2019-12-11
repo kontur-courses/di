@@ -1,32 +1,35 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using TagCloud.TextProvider;
+using TagCloud.TextFiltration;
 using TagCloud.Visualization;
 using TagCloudForm.Settings;
 
 namespace TagCloudForm.Actions
 {
-    public class SelectTextFileAction : IUiAction
+    public class SelectBlackListAction : IUiAction
     {
         private readonly IDirectoryProvider directoryProvider;
-        private readonly TxtFileReader txtFileReader;
         private readonly CloudVisualization cloudVisualization;
         private readonly CloudPainter cloudPainter;
+        private readonly BlacklistSettings blacklistSettings;
+        private readonly BlacklistMaker blacklistMaker;
 
 
-        public SelectTextFileAction(IDirectoryProvider directoryProvider, TxtFileReader txtFileReader,
-            CloudVisualization cloudVisualization, CloudPainter cloudPainter)
+        public SelectBlackListAction(IDirectoryProvider directoryProvider,
+            CloudVisualization cloudVisualization, CloudPainter cloudPainter, BlacklistSettings blacklistSettings,
+            BlacklistMaker blacklistMaker)
         {
             this.directoryProvider = directoryProvider;
-            this.txtFileReader = txtFileReader;
             this.cloudVisualization = cloudVisualization;
             this.cloudPainter = cloudPainter;
+            this.blacklistSettings = blacklistSettings;
+            this.blacklistMaker = blacklistMaker;
         }
 
-        public string Category => "Текст";
-        public string Name => "Выбрать файл";
-        public string Description => "Выбрать файл с текстом";
+        public string Category => "Черный список";
+        public string Name => "Выбрать";
+        public string Description => "Выбрать черный список из файла";
 
         public void Perform()
         {
@@ -40,7 +43,8 @@ namespace TagCloudForm.Actions
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
             {
-                txtFileReader.FilesPaths = new HashSet<string>(dialog.FileNames);
+                blacklistSettings.FilesWithBannedWords = new HashSet<string>(dialog.FileNames);
+                blacklistMaker.CreateBlackList();
                 cloudVisualization.ResetWordsFrequenciesDictionary();
                 cloudPainter.Paint();
             }

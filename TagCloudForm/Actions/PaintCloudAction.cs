@@ -1,4 +1,4 @@
-﻿using TagCloud.CloudLayouter;
+﻿using TagCloud.CloudLayouter.CircularLayouter;
 using TagCloudForm.Settings;
 
 namespace TagCloudForm.Actions
