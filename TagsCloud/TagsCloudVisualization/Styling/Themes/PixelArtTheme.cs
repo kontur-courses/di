@@ -27,7 +27,5 @@ namespace TagsCloudVisualization.Styling.Themes
         };
 
         public string BackgroundColor => "#ffffff";
-
-        public Brush GetTagBrush(Tag tag) => Brushes.Aqua; //todo remove gettagbrush
     }
 }

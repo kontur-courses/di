@@ -1,0 +1,20 @@
+generate
+--input .\godot.pdf
+--input_ext pdf
+--exclude .\godotexclude.txt
+--split_pattern [^a-zA-Z]+
+--shuffle r
+--seed 10
+--font Chiller
+--font_size 50
+--theme gr
+--colorize s
+--x 900
+--y 900
+--rad 0.5
+--incr 0.1
+--angle 0
+--w 2000
+--h 2000
+--output .\customized
+--output_ext jpeg

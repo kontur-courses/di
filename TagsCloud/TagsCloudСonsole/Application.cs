@@ -1,16 +1,14 @@
-using System;
-using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Web.Razor.Tokenizer;
+using System.Linq;
 using TagsCloudTextProcessing.Excluders;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
 using TagsCloudTextProcessing.Splitters;
-using TagsCloudTextProcessing.Tokenizers;
+using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
+using TagsCloudVisualization.Styling.TagColorizer;
 using TagsCloudVisualization.Styling.TagSizeCalculators;
 using TagsCloudVisualization.Styling.Themes;
 using TagsCloudVisualization.Visualizers;
@@ -20,8 +18,6 @@ namespace TagsCloudConsole
 {
     public class Application
     {
-        //protected readonly IEmployeeService _employeeService;
-        //protected readonly IPrintService _printService;
         protected readonly string wordsToExcludePath;
         protected readonly ITextReader textReader;
         protected readonly ITextSplitter textSplitter;
@@ -29,7 +25,16 @@ namespace TagsCloudConsole
         protected readonly IWordsExcluder wordsExcluder;
         protected readonly ITokenizer tokenizer;
         protected readonly ITokenShuffler tokenShuffler;
-
+        protected readonly FontProperties fontProperties;
+        protected readonly ITheme theme;
+        protected readonly TagSizeCalculator tagSizeCalculator;
+        protected readonly ITagColorizer tagColorizer;
+        protected readonly  ICloudVisualizer cloudVisualizer;
+        protected readonly ICloudLayouter cloudLayouter;
+        protected readonly  IBitmapSaver bitmapSaver;
+        protected readonly string imageOutputPath;
+        protected readonly int width;
+        protected readonly int height;
 
         public Application(
             string wordsToExcludePath,
@@ -38,7 +43,17 @@ namespace TagsCloudConsole
             IWordsFormatter wordsFormatter,
             IWordsExcluder wordsExcluder,
             ITokenizer tokenizer,
-            ITokenShuffler tokenShuffler
+            ITokenShuffler tokenShuffler,
+            FontProperties fontProperties,
+            ITheme theme,
+            TagSizeCalculator tagSizeCalculator,
+            ITagColorizer tagColorizer,
+            ICloudVisualizer cloudVisualizer,
+            ICloudLayouter cloudLayouter,
+            IBitmapSaver bitmapSaver,
+            int width,
+            int height,
+            string imageOutputPath
         )
         {
             this.wordsToExcludePath = wordsToExcludePath;
@@ -48,30 +63,37 @@ namespace TagsCloudConsole
             this.wordsExcluder = wordsExcluder;
             this.tokenizer = tokenizer;
             this.tokenShuffler = tokenShuffler;
+            this.fontProperties = fontProperties;
+            this.theme = theme;
+            this.tagSizeCalculator = tagSizeCalculator;
+            this.tagColorizer = tagColorizer;
+            this.cloudVisualizer = cloudVisualizer;
+            this.cloudLayouter = cloudLayouter;
+            this.bitmapSaver = bitmapSaver;
+            this.width = width;
+            this.height = height;
+            this.imageOutputPath = imageOutputPath;
         }
 
         public void Run()
         {
-            var wordsToExclude = File.ReadAllLines(wordsToExcludePath);
             var textInput = textReader.ReadText();
             var wordsInput = textSplitter.SplitText(textInput);
-            var wordsAfterFormat = wordsFormatter.Format(wordsInput);
-            var wordsAfterExclusion = wordsExcluder.ExcludeWords(wordsAfterFormat, wordsToExclude);
-            var tokens = tokenizer.Tokenize(wordsAfterExclusion);
-            var shuffledTokens = tokenShuffler.Shuffle(tokens);
-
-            foreach (var t in shuffledTokens)
+            var words = wordsFormatter.Format(wordsInput);
+            if (wordsToExcludePath != "none")
             {
-                Console.WriteLine(t.Word +"  "+t.Count);
+                var wordsToExclude = File.ReadAllLines(wordsToExcludePath);
+                words = wordsExcluder.ExcludeWords(words, wordsToExclude);
             }
-            
-            //work in progress
-            var fontProperties = new FontProperties("Bauhaus 93", 30);
-            var style = new Style(new GrayDarkTheme(), fontProperties, new TagSizeCalculatorLogarithmic());
-            var visualizer = new TextNoRectanglesVisualizer();
-            var layouter = new SpiralCloudLayouter(new Spiral(new PointF(1500, 1500), 0.1f, 0.2f));
-
-           
+            var tokens = tokenizer.Tokenize(words);
+            var shuffledTokens = tokenShuffler.Shuffle(tokens);
+            var enumerable = shuffledTokens.ToList();
+            /*foreach (var t in enumerable)
+                Console.WriteLine(t.Word +"  "+t.Count);*/
+            var style = new Style(theme, fontProperties, tagSizeCalculator, tagColorizer);
+            var tags = cloudLayouter.GenerateTagsSequence(style, enumerable);
+            using (var bitmap = cloudVisualizer.Visualize(style, tags, width, height))
+                bitmapSaver.Save(bitmap, imageOutputPath);
         }
     }
 }

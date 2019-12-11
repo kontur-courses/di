@@ -9,7 +9,7 @@ namespace TagsCloudVisualization.Layouters
     {
         private readonly Func<SpiralEnumerator> spiralEnumerator;
 
-        public Spiral(PointF center, float radius = 0.5f, float increment = 0.5f, float angle = 0)
+        public Spiral(PointF center = default, float radius = 0.5f, float increment = 0.5f, float angle = 0)
         {
             if (Math.Abs(radius) < float.Epsilon)
                 throw new ArgumentException("Spiral radius absolute value can't be less then float.Epsilon");

@@ -15,8 +15,5 @@ namespace TagsCloudVisualization.Styling.Themes
         string[] TextColors { get; }
 
         string BackgroundColor { get; }
-
-        //todo remove gettagbrush
-        Brush GetTagBrush(Tag tag);
     }
 }

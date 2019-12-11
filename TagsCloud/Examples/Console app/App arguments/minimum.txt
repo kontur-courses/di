@@ -1,0 +1,7 @@
+generate
+--input .\song.txt
+--x 500
+--y 500
+--w 1000
+--h 1000
+--output .\minimum

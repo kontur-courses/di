@@ -11,8 +11,6 @@ namespace TagsCloudVisualization.Visualizers
 {
     public class TextNoRectanglesVisualizer : ICloudVisualizer
     {
-        
-        //todo remove brushes
         public Bitmap Visualize(ITheme theme, IEnumerable<RectangleF> rectangles,
             int width = 1000, int height = 1000)
         {
@@ -21,13 +19,13 @@ namespace TagsCloudVisualization.Visualizers
             using (var graphics = Graphics.FromImage(result))
             {
                 graphics.FillRectangle(DrawingUtils.GetBrushFromHexColor(theme.BackgroundColor), new RectangleF(0, 0, width, height));
-                //foreach (var rectangle in rectangles)
-                ////graphics.FillRectangle(GetRandomBrush(random, theme.RectangleBrushes), rectangle);
+                foreach (var rectangle in rectangles)
+                    graphics.FillRectangle(GetRandomBrush(random, theme.TextColors), rectangle);
                 return result;
             }
         }
         
-        private Brush GetRandomBrush(Random random, ImmutableArray<string> brushes)
+        private static Brush GetRandomBrush(Random random, string[] brushes)
         {
             return DrawingUtils.GetBrushFromHexColor(brushes[random.Next(0, brushes.Length)]);
         }
@@ -60,8 +58,7 @@ namespace TagsCloudVisualization.Visualizers
                 };
                 graphics.Transform = new Matrix(path.GetBounds(), transformMatrix);
                 
-                //todo move it to params and add new class in style (or divide style)
-                var tagBrush = DrawingUtils.GetBrushFromHexColor(new TagColorizerRandom().GetTagColor(style.Theme.TextColors,tag));
+                var tagBrush = DrawingUtils.GetBrushFromHexColor(style.TagColorizer.GetTagColor(style.Theme.TextColors,tag));
                 
                 graphics.FillPath(tagBrush, path);
             }

@@ -18,20 +18,11 @@ namespace TagsCloudVisualization
         {
             this.style = style;
             this.visualizer = visualizer;
-            tags = GenerateTagsSequence(words, layouter);
+            tags = layouter.GenerateTagsSequence(style, words);
         }
 
         public Bitmap Visualize(int width = 1000, int height = 1000) =>
             visualizer.Visualize(style, tags, width, height);
-
-        private IEnumerable<Tag> GenerateTagsSequence(IEnumerable<Token> words, ICloudLayouter cloudLayouter)
-        {
-            foreach (var word in words)
-            {
-                var scaleFactor = style.TagSizeCalculator.GetScaleFactor(word.Count, style.FontProperties.MinSize);
-                var tagSize = style.TagSizeCalculator.GetTagSize(style.FontProperties, scaleFactor, word);
-                yield return cloudLayouter.PutNextTag(word, tagSize);
-            }
-        }
+        
     }
 }

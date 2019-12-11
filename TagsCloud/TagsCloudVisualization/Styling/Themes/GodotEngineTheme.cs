@@ -17,7 +17,5 @@ namespace TagsCloudVisualization.Styling.Themes
         };
 
         public string BackgroundColor => "#1D2630";
-
-        public Brush GetTagBrush(Tag tag) =>Brushes.Aqua;//todo remove gettagbrush
     }
 }

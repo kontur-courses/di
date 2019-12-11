@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudTextProcessing;
+using TagsCloudVisualization.Styling;
 
 namespace TagsCloudVisualization.Layouters
 {
@@ -42,6 +43,16 @@ namespace TagsCloudVisualization.Layouters
                 tempTag.Location = spiralEnumerator.Current;
             arrangedTags.Add(tempTag);
             return tempTag;
+        }
+        
+        public IEnumerable<Tag> GenerateTagsSequence(Style style, IEnumerable<Token> tokens)
+        {
+            foreach (var token in tokens)
+            {
+                var scaleFactor = style.TagSizeCalculator.GetScaleFactor(token.Count, style.FontProperties.MinSize);
+                var tagSize = style.TagSizeCalculator.GetTagSize(style.FontProperties, scaleFactor, token);
+                yield return PutNextTag(token, tagSize);
+            }
         }
     }
 }
