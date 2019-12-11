@@ -10,7 +10,6 @@ using TagsCloudContainer.WordProcessing.Filtering;
 
 namespace TagsCloudContainerTests
 {
-    [TestFixture]
     public class ExcludingBoringWordsFilterTests
     {
         private ExcludingBoringWordsFilter filter;

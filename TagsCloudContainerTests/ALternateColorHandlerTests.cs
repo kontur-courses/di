@@ -8,7 +8,6 @@ using TagsCloudContainer.Visualizing.ColorHandling;
 
 namespace TagsCloudContainerTests
 {
-    [TestFixture]
     public class AlternateColorHandlerTests
     {
         [Test]

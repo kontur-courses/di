@@ -6,9 +6,9 @@ using TagsCloudContainer.Core;
 
 namespace TagsCloudContainer.UserInterface.ArgumentsParsing
 {
-    public class ConsoleArgumentsParser : IArgumentsParser<ConsoleUserInterfaceArguments>
+    public class ArgumentsParser : IArgumentsParser<UserInterfaceArguments>
     {
-        public Parameters ParseArgumentsToParameters(ConsoleUserInterfaceArguments arguments)
+        public Parameters ParseArgumentsToParameters(UserInterfaceArguments arguments)
         {
             var imageSize = new Size(arguments.Width, arguments.Height);
             var fontConverter = new FontConverter();

@@ -1,5 +1,9 @@
 ﻿Запускать нужно проект TagsCloudContainer.
 
+Теперь по умолчанию запускается GUI, чтобы снова перейти на консоль нужно:
+в классе `Program` в конфигурировании контейнера зарегистрировать
+`ConsoleUserInterface` как `IUserInterface` и как `IResultDisplay`.
+
 Примеры запуска:
 
 `TagsCloudContainer.exe -i yourtext.txt`

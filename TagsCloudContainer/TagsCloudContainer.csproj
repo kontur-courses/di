@@ -42,10 +42,20 @@
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +79,7 @@
     <Compile Include="Core\Parameters.cs" />
     <Compile Include="Core\TagCloudVisualizer.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
+    <Compile Include="Extensions\TableLayoutPanelExtensions.cs" />
     <Compile Include="FileReading\IFileReader.cs" />
     <Compile Include="FileReading\OneWordInLineFileReader.cs" />
     <Compile Include="FileReading\TextFileReader.cs" />
@@ -84,12 +95,19 @@
     <Compile Include="ResultProcessing\ImageSaving\ImageSaver.cs" />
     <Compile Include="ResultProcessing\IResultProcessor.cs" />
     <Compile Include="ResultProcessing\ResultProcessor.cs" />
-    <Compile Include="UserInterface\ArgumentsParsing\ConsoleArgumentsParser.cs" />
-    <Compile Include="UserInterface\ConsoleUserInterface.cs" />
-    <Compile Include="UserInterface\ConsoleUserInterfaceArguments.cs" />
+    <Compile Include="UserInterface\ArgumentsParsing\ArgumentsParser.cs" />
+    <Compile Include="UserInterface\Console\ConsoleUserInterface.cs" />
+    <Compile Include="UserInterface\UserInterfaceArguments.cs" />
     <Compile Include="UserInterface\ArgumentsParsing\IArgumentsParser.cs" />
-    <Compile Include="UserInterface\IParametersProvider.cs" />
     <Compile Include="UserInterface\IResultDisplay.cs" />
+    <Compile Include="UserInterface\IUserInterface.cs" />
+    <Compile Include="UserInterface\Window\ApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Window\BitmapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Window\Elements.cs" />
     <Compile Include="Visualizing\ColorHandling\AlternateColorHandler.cs" />
     <Compile Include="Visualizing\ColorHandling\IColorHandler.cs" />
     <Compile Include="Visualizing\IVisualizer.cs" />

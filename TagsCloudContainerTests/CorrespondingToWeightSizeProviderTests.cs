@@ -8,7 +8,6 @@ using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainerTests
 {
-    [TestFixture]
     public class CorrespondingToWeightSizeProviderTests
     {
         private CorrespondingToWeightSizeProvider sizeProvider;

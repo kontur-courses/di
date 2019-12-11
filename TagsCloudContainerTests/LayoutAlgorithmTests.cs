@@ -13,7 +13,6 @@ using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudContainerTests
 {
-    [TestFixture]
     public class LayoutAlgorithmTests
     {
         private LayoutAlgorithm layoutAlgorithm;

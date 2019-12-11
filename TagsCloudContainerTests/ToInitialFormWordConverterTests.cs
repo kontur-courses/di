@@ -11,7 +11,6 @@ using TagsCloudContainer.WordProcessing.Converting;
 
 namespace TagsCloudContainerTests
 {
-    [TestFixture]
     public class ToInitialFormWordConverterTests
     {
         private ToInitialFormWordConverter wordConverter;
