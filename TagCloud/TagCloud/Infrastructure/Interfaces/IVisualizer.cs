@@ -1,9 +1,7 @@
-﻿using System.Drawing;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     public interface IVisualizer
     {
-        Bitmap VisualizeTextFromFile(string path);
+        void Visualize();
     }
 }
