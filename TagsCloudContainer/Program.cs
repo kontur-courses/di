@@ -6,8 +6,8 @@ using TagsCloudContainer.Core.ImageBuilder;
 using TagsCloudContainer.Core.ImageSavers;
 using TagsCloudContainer.Core.LayoutAlgorithms;
 using TagsCloudContainer.Core.Readers;
+using TagsCloudContainer.Core.TextHandler.WordConverters;
 using TagsCloudContainer.Core.TextHandler.WordFilters;
-using TagsCloudContainer.Core.TextHandler.WordHandlers;
 using TagsCloudContainer.Core.UserInterfaces;
 using TagsCloudContainer.Core.UserInterfaces.ConsoleUI;
 using Component = Castle.MicroKernel.Registration.Component;
@@ -19,7 +19,8 @@ namespace TagsCloudContainer
         public static void Main(string[] args)
         {
             var container = BuildContainer(args);
-            container.Resolve<IUi>();
+            var ui = container.Resolve<IUi>();
+            ui.Run(args);
         }
 
         public static WindsorContainer BuildContainer(string[] args)
@@ -28,25 +29,24 @@ namespace TagsCloudContainer
 
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel, false));
             container.Register(Component.For<IUi>()
-                .ImplementedBy<ConsoleUi>()
-                .DependsOn(Dependency.OnValue("userInput", args)));
+                .ImplementedBy<ConsoleUi>());
             container.Register(Component.For<IReader>()
                 .ImplementedBy<FileReader>());
             container.Register(Component.For<ILayoutAlgorithm>()
                 .ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("center", new Point(500, 500))));
             container.Register(Component.For<IImageBuilder>()
-                .ImplementedBy<TagCloudImageCreator>()
+                .ImplementedBy<TagCloudImageBuilder>()
                 .DependsOn(Dependency.OnValue("wordBrush", new SolidBrush(Color.Blue))));
             container.Register(Component.For<IWordFilter>().ImplementedBy<BoringWordsFilter>());
             container.Register(
-                Component.For<IWordHandler>().ImplementedBy<LowerCaseHandler>(),
-                                 Component.For<IWordHandler>().ImplementedBy<PunctuationRemover>());
+                Component.For<IWordConverter>().ImplementedBy<LowerCaseConverter>(),
+                                 Component.For<IWordConverter>().ImplementedBy<PunctuationRemover>());
             container.Register(Component.For<IImageSaver>()
                 .ImplementedBy<PngSaver>());
             container.Register(Component.For<Filter>()
                 .LifestyleSingleton());
-            container.Register(Component.For<Handler>()
+            container.Register(Component.For<WordConverter>()
                 .LifestyleSingleton());
             return container;
         }

@@ -36,7 +36,7 @@ namespace TagsCloudContainer.Tests
             {
                 tags.Add(new Tag("a", rectangle, 1));
             }
-            var tagCloudImageCreator = new TagCloudImageCreator(new SolidBrush(Color.Empty));
+            var tagCloudImageCreator = new TagCloudImageBuilder(new SolidBrush(Color.Empty));
             var testName = TestContext.CurrentContext.Test.FullName;
             var path = $@"C:\\TagCloudTests\{testName}.jpg";
             var bitmap = tagCloudImageCreator.Build("Arial", tags, new Size(1000, 1000));

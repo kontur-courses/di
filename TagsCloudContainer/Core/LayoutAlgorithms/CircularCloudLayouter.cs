@@ -20,20 +20,6 @@ namespace TagsCloudContainer.Core.LayoutAlgorithms
             spiral = new ArchimedeanSpiral(this.center);
         }
 
-        private int GetMaxValueAlongAxis(Axis axis)
-        {
-            return axis == Axis.X
-                ? rectangles.Select(rectangle => rectangle.Right).Max()
-                : rectangles.Select(rectangle => rectangle.Bottom).Max();
-        }
-
-        public int GetMaxOffsetFromCenterAlongAxis(Axis axis)
-        {
-            return axis == Axis.X
-                ? GetMaxValueAlongAxis(Axis.X) - center.X
-                : GetMaxValueAlongAxis(Axis.Y) - center.Y;
-        }
-
         public Size GetLayoutSize()
         {
             var maxOffsetFromCenterAlongAxisX = GetMaxOffsetFromCenterAlongAxis(Axis.X);
@@ -42,8 +28,6 @@ namespace TagsCloudContainer.Core.LayoutAlgorithms
             var height = 2 * Math.Max(center.Y, maxOffsetFromCenterAlongAxisY);
             return new Size(width, height);
         }
-
-        public bool DoesItIntersectWithSome(Rectangle rectangle) => rectangles.Any(r => r.IntersectsWith(rectangle));
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
@@ -61,6 +45,22 @@ namespace TagsCloudContainer.Core.LayoutAlgorithms
             rectangles.Add(rectangle);
             return rectangle;
         }
+
+        public int GetMaxOffsetFromCenterAlongAxis(Axis axis)
+        {
+            return axis == Axis.X
+                ? GetMaxValueAlongAxis(Axis.X) - center.X
+                : GetMaxValueAlongAxis(Axis.Y) - center.Y;
+        }
+
+        private int GetMaxValueAlongAxis(Axis axis)
+        {
+            return axis == Axis.X
+                ? rectangles.Select(rectangle => rectangle.Right).Max()
+                : rectangles.Select(rectangle => rectangle.Bottom).Max();
+        }
+
+        private bool DoesItIntersectWithSome(Rectangle rectangle) => rectangles.Any(r => r.IntersectsWith(rectangle));
 
         private Point GetOffset(Point first, Point second, Axis axis)
         {

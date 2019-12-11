@@ -1,6 +1,6 @@
-﻿namespace TagsCloudContainer.Core.TextHandler.WordHandlers
+﻿namespace TagsCloudContainer.Core.TextHandler.WordConverters
 {
-    class PunctuationRemover : IWordHandler
+    class PunctuationRemover : IWordConverter
     {
         public string Handle(string word) => word.Trim('[', '-', '.', '?', '!', ')', '(', ',', ':', ']', '\'', '\"');
     }

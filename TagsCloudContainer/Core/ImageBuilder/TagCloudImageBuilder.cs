@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 
 namespace TagsCloudContainer.Core.ImageBuilder
 {
-    class TagCloudImageCreator : IImageBuilder
+    class TagCloudImageBuilder : IImageBuilder
     {
         private readonly Brush brush;
         private readonly Pen pen;
         private readonly Brush wordBrush;
         private readonly StringFormat stringFormat;
 
-        public TagCloudImageCreator(Brush wordBrush)
+        public TagCloudImageBuilder(Brush wordBrush)
         {
             brush = new SolidBrush(Color.White);
             this.wordBrush = wordBrush;

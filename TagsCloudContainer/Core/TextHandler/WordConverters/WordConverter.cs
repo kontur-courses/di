@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Core.TextHandler.WordHandlers
+namespace TagsCloudContainer.Core.TextHandler.WordConverters
 {
-    class Handler
+    class WordConverter
     {
-        private readonly IWordHandler[] wordHandlers;
-        public Handler(IWordHandler[] wordHandlers)
+        private readonly IWordConverter[] wordHandlers;
+        public WordConverter(IWordConverter[] wordHandlers)
         {
             this.wordHandlers = wordHandlers;
         }

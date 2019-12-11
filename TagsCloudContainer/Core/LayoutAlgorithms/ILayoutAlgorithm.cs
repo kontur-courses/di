@@ -6,5 +6,6 @@ namespace TagsCloudContainer.Core.LayoutAlgorithms
     {
         Rectangle PutNextRectangle(Size rectangleSize);
         Size GetLayoutSize();
+        int GetMaxOffsetFromCenterAlongAxis(Axis axis);
     }
 }

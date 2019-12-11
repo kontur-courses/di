@@ -1,9 +1,9 @@
-﻿using TagsCloudContainer.Core.UserInterfaces.ConsoleUI;
+﻿using System.Collections.Generic;
 
 namespace TagsCloudContainer.Core.UserInterfaces
 {
     interface IUi
     {
-        void Run(Options options);
+        void Run(IEnumerable<string> userInput);
     }
 }

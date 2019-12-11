@@ -8,8 +8,8 @@ using TagsCloudContainer.Core.ImageBuilder;
 using TagsCloudContainer.Core.ImageSavers;
 using TagsCloudContainer.Core.LayoutAlgorithms;
 using TagsCloudContainer.Core.Readers;
+using TagsCloudContainer.Core.TextHandler.WordConverters;
 using TagsCloudContainer.Core.TextHandler.WordFilters;
-using TagsCloudContainer.Core.TextHandler.WordHandlers;
 
 namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 {
@@ -20,29 +20,34 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
         private readonly ILayoutAlgorithm layoutAlgorithm;
         private readonly IImageSaver imageSaver;
         private readonly Filter filter;
-        private readonly Handler handler;
+        private readonly WordConverter wordConverter;
 
-        public ConsoleUi(IEnumerable<string> userInput, IReader reader,
+        public ConsoleUi(IReader reader,
             IImageBuilder tagCloudImageCreator, ILayoutAlgorithm layoutAlgorithm,
             IImageSaver imageSaver,
-            Filter filter, Handler handler)
+            Filter filter, WordConverter wordConverter)
         {
             this.filter = filter;
-            this.handler = handler;
+            this.wordConverter = wordConverter;
             this.reader = reader;
             this.tagCloudImageCreator = tagCloudImageCreator;
             this.imageSaver = imageSaver;
             this.layoutAlgorithm = layoutAlgorithm;
-            Parser.Default
-                .ParseArguments<Options>(userInput)
-                .WithParsed(Run);
+            
 
         }
 
-        public void Run(Options options)
+        public void Run(IEnumerable<string> userInput)
+        {
+            var options = Parser.Default
+                .ParseArguments<Options>(userInput)
+                .WithParsed(Run);
+        }
+
+        private void Run(Options options)
         {
             Console.WriteLine(options.FontName);
-            var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(handler.HandleWord);
+            var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(wordConverter.HandleWord);
             var tags = new List<Tag>();
             var frequencyDictionary = new FrequencyDictionary<string>(words);
             var top30 = frequencyDictionary.Top(30).ToArray();
