@@ -7,25 +7,30 @@ namespace TagCloud
 {
     public class ArchimedeanSpiralLayouter : ILayouter
     {
-        private readonly List<RectangleF> rectangles;
-        private readonly PointF cloudCenter;
-        private readonly float radius;
-        private readonly double step;
-        private double angle = 0;
+        private readonly ImageSettings imageSettings;
+        private readonly LayouterSettings layouterSettings;
+        private List<RectangleF> rectangles;
+        private double angle;
 
         public ArchimedeanSpiralLayouter(LayouterSettings layouterSettings, ImageSettings imageSettings)
         {
-            cloudCenter = imageSettings.CloudCenter;
-            radius = layouterSettings.Radius;
-            step = layouterSettings.Step;
+            this.layouterSettings = layouterSettings;
+            this.imageSettings = imageSettings;
             rectangles = new List<RectangleF>();
+            angle = 0;
+        }
+
+        public void Reset()
+        {
+            rectangles = new List<RectangleF>();
+            angle = 0;
         }
 
         public RectangleF PutNextRectangle(SizeF rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("Invalid size");
-            var center = cloudCenter;
+            var center = imageSettings.CloudCenter;
             var corner = GetRectangleCorner(center, rectangleSize);
             var nextRectangle = new RectangleF(corner, rectangleSize);
             while (IsIntersectingOrOutOfBorders(nextRectangle))
@@ -48,10 +53,10 @@ namespace TagCloud
         private PointF GetNextRectangleCenter()
         {
             var t = Math.PI * angle;
-            var x = (float)(Math.Cos(angle) * (angle * radius));
-            var y = (float)(Math.Sin(angle) * (angle * radius));
-            angle += step;
-            return new PointF(cloudCenter.X + x, cloudCenter.Y + y);
+            var x = (float)(Math.Cos(angle) * (angle * layouterSettings.Radius));
+            var y = (float)(Math.Sin(angle) * (angle * layouterSettings.Radius));
+            angle += layouterSettings.Step;
+            return new PointF(imageSettings.CloudCenter.X + x, imageSettings.CloudCenter.Y + y);
         }
     }
 }

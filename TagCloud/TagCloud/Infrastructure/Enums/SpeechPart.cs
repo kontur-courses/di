@@ -2,6 +2,7 @@
 {
     public enum SpeechPart
     {
+        None,
         Noun,
         Adverb,
         Verb,
