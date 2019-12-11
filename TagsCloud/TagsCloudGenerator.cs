@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using TagsCloud.Decorators;
+using TagsCloud.Renderers;
 using TagsCloud.FileParsers;
 using TagsCloud.ImageSavers;
 using TagsCloud.Layouters;
@@ -23,16 +23,16 @@ namespace TagsCloud
 
         private List<LayoutItem> layoutItems;
         private readonly ITagsCloudLayouter layouter;
-        private readonly ITagsCloudDecorator decorator;
+        private readonly ITagsCloudRenderer renderer;
         private readonly IImageSaver[] imageSavers;
 
         public TagsCloudGenerator(IFileParser[] parsers, IFilter[] filters, ITagsCloudLayouter layouter,
-            ITagsCloudDecorator decorator, IImageSaver[] imageSavers)
+            ITagsCloudRenderer renderer, IImageSaver[] imageSavers)
         {
             this.parsers = parsers;
             this.filters = filters;
             this.layouter = layouter;
-            this.decorator = decorator;
+            this.renderer = renderer;
             this.imageSavers = imageSavers;
         }
 
@@ -73,7 +73,7 @@ namespace TagsCloud
         private void PrepareLayout()
         {
             layoutItems = Tags.ConvertAll(t => new LayoutItem(new Rectangle(Point.Empty, Size.Empty), t.Tag, t.Rate));
-            decorator.CalcTagsRectanglesSizes(layoutItems);
+            renderer.CalcTagsRectanglesSizes(layoutItems);
             layouter.ReallocItems(layoutItems);
         }
 
@@ -82,7 +82,7 @@ namespace TagsCloud
             //todo Size in constructor
             var size = new Size(500, 500);
             TagCloudImage = new Bitmap(size.Width, size.Height);
-            decorator.Render(layoutItems, TagCloudImage);
+            renderer.Render(layoutItems, TagCloudImage);
         }
 
         public Image TagCloudImage { get; private set; }

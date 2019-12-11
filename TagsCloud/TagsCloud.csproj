@@ -45,9 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Decorators\ITagsCloudDecorator.cs" />
-    <Compile Include="Decorators\ColoredDecorator.cs" />
-    <Compile Include="Decorators\SimpleDecorator.cs" />
+    <Compile Include="Renderers\ITagsCloudRenderer.cs" />
+    <Compile Include="Renderers\ColoredRenderer.cs" />
+    <Compile Include="Renderers\SimpleDecorator.cs" />
     <Compile Include="FileParsers\IFileParser.cs" />
     <Compile Include="FileParsers\DocParser.cs" />
     <Compile Include="FileParsers\TxtParser.cs" />

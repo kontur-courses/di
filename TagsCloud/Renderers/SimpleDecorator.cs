@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using TagsCloud.Layouters;
 
-namespace TagsCloud.Decorators
+namespace TagsCloud.Renderers
 {
-    public class SimpleDecorator : ITagsCloudDecorator
+    public class SimpleRenderer : ITagsCloudRenderer
     {
         public Font TagFont { get; set; } = SystemFonts.DefaultFont;
         public int MinFontSize { get; set; } = 30;

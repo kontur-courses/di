@@ -2,9 +2,9 @@
 using System.Drawing;
 using TagsCloud.Layouters;
 
-namespace TagsCloud.Decorators
+namespace TagsCloud.Renderers
 {
-    public interface ITagsCloudDecorator
+    public interface ITagsCloudRenderer
     {
         Font TagFont { get; set; }
         void CalcTagsRectanglesSizes(List<LayoutItem> layoutItems);

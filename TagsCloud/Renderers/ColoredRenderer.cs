@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using TagsCloud.Layouters;
 
-namespace TagsCloud.Decorators
+namespace TagsCloud.Renderers
 {
-    public class ColoredDecorator : SimpleDecorator
+    public class ColoredRenderer : SimpleRenderer
     {
         public Color BackgroundColor { get; set; } = Color.LightGray;
         public Color TagColor { get; set; } = Color.LightGray;

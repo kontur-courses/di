@@ -3,7 +3,7 @@ using CommandLine;
 using System;
 using System.Reflection;
 using TagsCloud;
-using TagsCloud.Decorators;
+using TagsCloud.Renderers;
 using TagsCloud.FileParsers;
 using TagsCloud.ImageSavers;
 using TagsCloud.Layouters;
@@ -20,7 +20,7 @@ namespace TagsCloud_console
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IFileParser).Namespace).As<IFileParser>().SingleInstance();
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IFilter).Namespace).As<IFilter>().SingleInstance().SingleInstance();
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(ITagsCloudLayouter).Namespace).As<ITagsCloudLayouter>().SingleInstance();
-            builder.RegisterType<SimpleDecorator>().As<ITagsCloudDecorator>().SingleInstance();
+            builder.RegisterType<SimpleRenderer>().As<ITagsCloudRenderer>().SingleInstance();
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IImageSaver).Namespace).As<IImageSaver>().SingleInstance();
             builder.RegisterType<TagsCloudGenerator>().AsSelf().SingleInstance();
 

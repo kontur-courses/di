@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using TagsCloud;
-using TagsCloud.Decorators;
+using TagsCloud.Renderers;
 using TagsCloud.FileParsers;
 using TagsCloud.ImageSavers;
 using TagsCloud.Layouters;
@@ -26,8 +26,8 @@ namespace TagsCloud_wpf
         private readonly IFilter[] filters;
         private readonly ITagsCloudLayouter[] layouters;
         private ITagsCloudLayouter selectedLayouter;
-        private readonly ITagsCloudDecorator[] decorators;
-        private ITagsCloudDecorator selectedDecorator;
+        private readonly ITagsCloudRenderer[] renderers;
+        private ITagsCloudRenderer selectedRenderer;
         private readonly IImageSaver[] imageSavers;
         private TagsCloudGenerator tagsCloud;
 
@@ -36,7 +36,7 @@ namespace TagsCloud_wpf
         public MainWindow(IFileParser[] parsers, 
                           IFilter[] filters, 
                           ITagsCloudLayouter[] layouters, 
-                          ITagsCloudDecorator[] decorators, 
+                          ITagsCloudRenderer[] renderers, 
                           IImageSaver[] imageSavers)
         {
             InitializeComponent();
@@ -44,12 +44,12 @@ namespace TagsCloud_wpf
             this.parsers = parsers;
             this.filters = filters;
             this.layouters = layouters;
-            this.decorators = decorators;
+            this.renderers = renderers;
             this.imageSavers = imageSavers;
 
             PrepareFiltersMenu();
             PrepareLayoutersMenu();
-            PrepareDecoratorsMenu();
+            PrepareRendersMenu();
             UpdateImageControl();
         }
 
@@ -98,19 +98,19 @@ namespace TagsCloud_wpf
             ComboBoxLayouters.SelectedIndex = 0;
         }
 
-        private void PrepareDecoratorsMenu()
+        private void PrepareRendersMenu()
         {
-            ComboBoxDecorators.ItemsSource = decorators.OrderBy(d => d.GetType().Name).Select(decorator =>
-                new KeyValuePair<ITagsCloudDecorator, string>(decorator, decorator.GetType().Name));
-            ComboBoxDecorators.DisplayMemberPath = "Value";
-            ComboBoxDecorators.SelectionChanged += (sender, e) =>
+            ComboBoxRenders.ItemsSource = renderers.OrderBy(d => d.GetType().Name).Select(renderer =>
+                new KeyValuePair<ITagsCloudRenderer, string>(renderer, renderer.GetType().Name));
+            ComboBoxRenders.DisplayMemberPath = "Value";
+            ComboBoxRenders.SelectionChanged += (sender, e) =>
             {
-                if (sender is ComboBox comboBox && comboBox.SelectedValue is KeyValuePair<ITagsCloudDecorator, string> kv)
-                    selectedDecorator = kv.Key;
-                if (selectedDecorator == null) return;
-                FillPropertiesPanel(selectedDecorator, DecoratorSettingsPanel);
+                if (sender is ComboBox comboBox && comboBox.SelectedValue is KeyValuePair<ITagsCloudRenderer, string> kv)
+                    selectedRenderer = kv.Key;
+                if (selectedRenderer == null) return;
+                FillPropertiesPanel(selectedRenderer, RenderSettingsPanel);
             };
-            ComboBoxDecorators.SelectedIndex = 0;
+            ComboBoxRenders.SelectedIndex = 0;
         }
 
         private void FillPropertiesPanel(object obj, StackPanel settingsPanel)
@@ -191,7 +191,7 @@ namespace TagsCloud_wpf
 
         private void MenuItemGenerate_Click(object sender, RoutedEventArgs e)
         {
-            tagsCloud = new TagsCloudGenerator(parsers, filters, selectedLayouter, selectedDecorator, imageSavers);
+            tagsCloud = new TagsCloudGenerator(parsers, filters, selectedLayouter, selectedRenderer, imageSavers);
             tagsCloud.GenerateCloud(inputFileName);
             UpdateImageControl();
         }

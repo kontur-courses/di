@@ -30,10 +30,10 @@
                     <StackPanel Name="LayouterSettingsPanel"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Grid.Column="2" Name="DecoratorSettingsGroupBox" Header="Decorator:">
+            <GroupBox Grid.Column="2" Name="RenderSettingsGroupBox" Header="Render:">
                 <StackPanel>
-                    <ComboBox Name="ComboBoxDecorators"/>
-                    <StackPanel Name="DecoratorSettingsPanel"/>
+                    <ComboBox Name="ComboBoxRenders"/>
+                    <StackPanel Name="RenderSettingsPanel"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Grid.Column="3" Header="Tags cloud image">
