@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,24 +33,19 @@ namespace TagsCloud_wpf
 
         private readonly Regex digitsRegex = new Regex("[^0-9]+");
 
-        public MainWindow()
+        public MainWindow(IFileParser[] parsers, 
+                          IFilter[] filters, 
+                          ITagsCloudLayouter[] layouters, 
+                          ITagsCloudDecorator[] decorators, 
+                          IImageSaver[] imageSavers)
         {
             InitializeComponent();
 
-            var builder = new ContainerBuilder();
-            var tagsCloudAssembly = Assembly.GetAssembly(typeof(TagsCloudGenerator));
-            builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IFileParser).Namespace).As<IFileParser>().SingleInstance();
-            builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IFilter).Namespace).As<IFilter>().SingleInstance().SingleInstance();
-            builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(ITagsCloudLayouter).Namespace).As<ITagsCloudLayouter>().SingleInstance();
-            builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(ITagsCloudDecorator).Namespace).As<ITagsCloudDecorator>().SingleInstance();
-            builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IImageSaver).Namespace).As<IImageSaver>().SingleInstance();
-
-            var container = builder.Build();
-            parsers = container.Resolve<IFileParser[]>();
-            filters = container.Resolve<IFilter[]>();
-            layouters = container.Resolve<ITagsCloudLayouter[]>();
-            decorators = container.Resolve<ITagsCloudDecorator[]>();
-            imageSavers = container.Resolve<IImageSaver[]>();
+            this.parsers = parsers;
+            this.filters = filters;
+            this.layouters = layouters;
+            this.decorators = decorators;
+            this.imageSavers = imageSavers;
 
             PrepareFiltersMenu();
             PrepareLayoutersMenu();
@@ -197,17 +191,8 @@ namespace TagsCloud_wpf
 
         private void MenuItemGenerate_Click(object sender, RoutedEventArgs e)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(parsers).As<IFileParser[]>();
-            builder.RegisterInstance(filters).As<IFilter[]>();
-            builder.RegisterInstance(selectedLayouter).As<ITagsCloudLayouter>();
-            builder.RegisterInstance(selectedDecorator).As<ITagsCloudDecorator>();
-            builder.RegisterInstance(imageSavers).As<IImageSaver[]>();
-            builder.RegisterType<TagsCloudGenerator>().AsSelf();
-            var container = builder.Build();
-            tagsCloud = container.Resolve<TagsCloudGenerator>();
+            tagsCloud = new TagsCloudGenerator(parsers, filters, selectedLayouter, selectedDecorator, imageSavers);
             tagsCloud.GenerateCloud(inputFileName);
-
             UpdateImageControl();
         }
 
