@@ -58,31 +58,36 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
-    <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouter\CircularLayouter\ArchimedeanSpiral.cs" />
+    <Compile Include="CloudLayouter\CircularLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouter\CircularLayouter\SpiralSettings.cs" />
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
-    <Compile Include="CloudLayouter\SpiralSettings.cs" />
+    <Compile Include="FrequencyDictionaryMaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtension.cs" />
-    <Compile Include="TextFilter\BlacklistMaker.cs" />
-    <Compile Include="TextFilter\BlacklistSettings.cs" />
-    <Compile Include="TextFilter\FrequencyDictionaryMaker.cs" />
-    <Compile Include="TextFilter\TextFilter.cs" />
+    <Compile Include="TextColoration\ITextColoration.cs" />
+    <Compile Include="TextColoration\RandomTextColoration.cs" />
+    <Compile Include="TextColoration\SimpleTextColoration.cs" />
+    <Compile Include="TextConversion\TextConverter.cs" />
+    <Compile Include="TextConversion\ITextConversion.cs" />
+    <Compile Include="TextConversion\ToLowerCaseConversion.cs" />
+    <Compile Include="TextConversion\ToUpperCaseConversion.cs" />
+    <Compile Include="TextFilterConditions\BlacklistCondition.cs" />
+    <Compile Include="TextFilterConditions\IFilterCondition.cs" />
+    <Compile Include="TextFilterConditions\WordLengthCondition.cs" />
+    <Compile Include="TextFiltration\BlacklistMaker.cs" />
+    <Compile Include="TextFiltration\BlacklistSettings.cs" />
+    <Compile Include="TextFiltration\TextFilter.cs" />
     <Compile Include="TextParser\ITextParser.cs" />
     <Compile Include="TextParser\TextParser.cs" />
     <Compile Include="TextProvider\ITextProvider.cs" />
-    <Compile Include="TextProvider\TextFileReader.cs" />
+    <Compile Include="TextProvider\TxtFileReader.cs" />
+    <Compile Include="Visualization\CloudVisualization.cs" />
     <Compile Include="Visualization\ImageSettings.cs" />
     <Compile Include="Visualization\ViewSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TagCloudForm\TagCloudForm.csproj">
-      <Project>{b231c16e-1495-47c3-a296-6dd6bc69c837}</Project>
-      <Name>TagCloudForm</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
