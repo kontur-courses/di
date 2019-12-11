@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Reflection;
 using Fclp;
 using TagCloudContainer.Api;
 using TagCloudContainer.fluent;
@@ -8,34 +10,13 @@ using TagCloudContainer.Implementations;
 
 namespace TagCloudContainer
 {
-    class Program
+    internal class Program
     {
         public static Dictionary<string, Func<TagCloudConfig, IWordProvider>> wordProviders =
-            new Dictionary<string, Func<TagCloudConfig, IWordProvider>>()
-                {{"txt", cfg => new TxtFileReader(cfg.inputFile)}};
+            new Dictionary<string, Func<TagCloudConfig, IWordProvider>>
+                {{"txt", cfg => new TxtFileReader(cfg.InputFile)}};
 
-        public static Dictionary<string, Type> wordProcessors = new Dictionary<string, Type>()
-            {{"lowercase", typeof(LowercaseWordProcessor)}};
-
-        public static Dictionary<string, Type> cloudLayouters = new Dictionary<string, Type>()
-            {{"circular", typeof(CircularCloudLayouter)}};
-
-        public static Dictionary<string, Type> sizeProviders = new Dictionary<string, Type>()
-            {{"default", typeof(StringSizeProvider)}};
-
-        public static Dictionary<string, Type> brushProviders = new Dictionary<string, Type>()
-            {{"onecolor", typeof(OneColorBrushProvider)}};
-
-        public static Dictionary<string, Type> penProviders = new Dictionary<string, Type>()
-            {{"onecolor", typeof(OneColorPenProvider)}};
-
-        public static Dictionary<string, Type> wordCloudLayouters = new Dictionary<string, Type>()
-            {{"default", typeof(WordCloudLayouter)}};
-
-        public static Dictionary<string, Type> wordVisualizers = new Dictionary<string, Type>()
-            {{"default", typeof(TagCloudVisualizer)}};
-
-        public static Dictionary<string, ImageFormat> imageFormats = new Dictionary<string, ImageFormat>()
+        public static Dictionary<string, ImageFormat> imageFormats = new Dictionary<string, ImageFormat>
         {
             {"bmp", ImageFormat.Bmp}, {"emf", ImageFormat.Emf}, {"exif", ImageFormat.Exif},
             {"gif", ImageFormat.Gif}, {"icon", ImageFormat.Icon}, {"jpeg", ImageFormat.Jpeg},
@@ -43,25 +24,47 @@ namespace TagCloudContainer
             {"membmp", ImageFormat.MemoryBmp}
         };
 
-        static void Main(string[] args)
+        public static Dictionary<string, Type> cliElements = new Dictionary<string, Type>();
+
+        private static void Main(string[] args)
         {
             var p = new FluentCommandLineParser();
             TagCloudConfig config = null;
             p.Setup<string>('f', "file").Callback(file => config = CreateTagCloud.FromFile(file)).Required();
-            p.Setup<string>("source-type").Callback(type => config.UsingWordProvider(wordProviders[type](config)));
-            p.Setup<string>("processor").Callback(proc => config.UsingWordProcessor(wordProcessors[proc]));
-            p.Setup<string>("layout").Callback(layout => config.UsingCloudLayouter(cloudLayouters[layout]));
+            p.Setup<string>('p').Callback(useParameters =>
+            {
+                if (useParameters.ToLower().Equals("true"))
+                    CollectCliElements();
+            });
+            p.Setup<string>("source-type").Callback(type => config.WordProvider = wordProviders[type](config));
+            p.Setup<string>("processor").Callback(proc => config.WordProcessor = cliElements[proc]);
+            p.Setup<string>("layout").Callback(layout => config.CloudLayouter = cliElements[layout]);
             p.Setup<string>("wordlayouter")
-                .Callback(layouter => config.UsingWordCloudLayouter(wordCloudLayouters[layouter]));
-            p.Setup<string>("sizefunc").Callback(size => config.UsingStringSizeProvider(sizeProviders[size]));
-            p.Setup<string>("brush").Callback(brush => config.UsingWordBrushProvider(brushProviders[brush]));
-            p.Setup<string>("pen").Callback(pen => config.UsingRectanglePenProvider(penProviders[pen]));
+                .Callback(layouter => config.WordCloudLayouter = cliElements[layouter]);
+            p.Setup<string>("sizefunc").Callback(size => config.SizeProvider = cliElements[size]);
+            p.Setup<string>("brush").Callback(brush => config.BrushProvider = cliElements[brush]);
+            p.Setup<string>("pen").Callback(pen => config.PenProvider = cliElements[pen]);
             p.Setup<string>("visualizer")
-                .Callback(visualizer => config.UsingWordVisualizer(wordVisualizers[visualizer]));
-            p.Setup<string>("format").Callback(format => config.Using(imageFormats[format]));
+                .Callback(visualizer => config.WordVisualizer = cliElements[visualizer]);
+            p.Setup<string>("format").Callback(format => config.ImageFormat = imageFormats[format]);
+            p.Setup<string>("size").Callback(size => config.SetSize(size));
             p.Setup<string>('o', "output").Callback(file => config.SaveToFile(file)).Required();
 
             p.Parse(args);
+        }
+
+        private static void CollectCliElements()
+        {
+            var cliAttributeType = typeof(CliElementAttribute);
+
+            var assembly = Assembly.GetAssembly(cliAttributeType);
+            foreach (var type in assembly.DefinedTypes.Where(t =>
+                t.GetCustomAttributes(cliAttributeType).Any()))
+            {
+                var attributes = type.GetCustomAttributes(cliAttributeType).Select(t => (CliElementAttribute) t);
+                var attribute = attributes.First();
+                cliElements.Add(attribute.CliName, attribute.TargetType);
+            }
         }
     }
 }

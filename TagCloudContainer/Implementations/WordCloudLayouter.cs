@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
 
 namespace TagCloudContainer.Implementations
 {
+    [CliElement("wordlayouter", typeof(WordCloudLayouter))]
     public class WordCloudLayouter : IWordCloudLayouter
     {
         private readonly ICloudLayouter rectangleLayouter;

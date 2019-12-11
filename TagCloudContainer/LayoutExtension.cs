@@ -6,17 +6,25 @@ namespace TagCloudContainer
 {
     public static class LayoutExtension
     {
-        public static Bitmap CreateSizedBitmap(this List<Rectangle> layout)
+        public static Bitmap CreateSizedBitmap(this List<Rectangle> layout, Size size)
         {
-            int maxX = layout.Select(r => r.Right).Max();
-            int minX = layout.Select(r => r.Left).Min();
-            int maxY = layout.Select(r => r.Bottom).Max();
-            int minY = layout.Select(r => r.Top).Min();
+            if (size != Size.Empty) return new Bitmap(size.Width, size.Height);
 
-            int bmpWidth = maxX - minX;
-            int bmpHeight = maxY - minY;
+            var (bmpWidth, bmpHeight) = layout.GetLayoutDimensions();
 
             return new Bitmap(bmpWidth, bmpHeight);
+        }
+
+        public static (int width, int height) GetLayoutDimensions(this List<Rectangle> layout)
+        {
+            var maxX = layout.Select(r => r.Right).Max();
+            var minX = layout.Select(r => r.Left).Min();
+            var maxY = layout.Select(r => r.Bottom).Max();
+            var minY = layout.Select(r => r.Top).Min();
+
+            var bmpWidth = maxX - minX;
+            var bmpHeight = maxY - minY;
+            return (bmpWidth, bmpHeight);
         }
     }
 }

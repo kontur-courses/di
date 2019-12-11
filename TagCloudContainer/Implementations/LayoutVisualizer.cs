@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagCloudContainer.Api;
 
 namespace TagCloudContainer.Implementations
 {
     public class LayoutVisualizer : IRectangleVisualizer
     {
-        private IRectanglePenProvider penProvider;
-        private DrawingOptions options;
-        private List<Rectangle> layout;
+        private readonly List<Rectangle> layout;
+        private readonly DrawingOptions options;
+        private readonly IRectanglePenProvider penProvider;
 
         public LayoutVisualizer(IRectanglePenProvider penProvider, List<Rectangle> layout, DrawingOptions options)
         {
@@ -20,7 +19,7 @@ namespace TagCloudContainer.Implementations
 
         public Image CreateImageWithRectangles()
         {
-            var bmp = layout.CreateSizedBitmap();
+            var bmp = layout.CreateSizedBitmap(options.ImageSize);
             var graphics = Graphics.FromImage(bmp);
             FillBackground(graphics, bmp, options);
 

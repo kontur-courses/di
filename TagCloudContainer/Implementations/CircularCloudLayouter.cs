@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Api;
 
 namespace TagCloudContainer.Implementations
 {
+    [CliElement("circular", typeof(CircularCloudLayouter))]
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private float spiralCounter = 0;
+        private float spiralCounter;
 
         public Rectangle PutNextRectangle(Size rectangleSize, List<Rectangle> container)
         {
@@ -22,7 +22,7 @@ namespace TagCloudContainer.Implementations
         {
             if (container is null)
                 throw new ArgumentException("Container shouldn't be null");
-            
+
             return GetPointsOnSpiral()
                 .Select(p => new Rectangle(p - rectangleSize / 2, rectangleSize))
                 .SkipWhile(r => container.Any(r.IntersectsWith))
@@ -33,9 +33,9 @@ namespace TagCloudContainer.Implementations
         {
             while (true)
             {
-                float distanceFromCenter = MathF.Sqrt(spiralCounter);
-                int x = (int) (distanceFromCenter * MathF.Cos(spiralCounter));
-                int y = (int) (distanceFromCenter * MathF.Sin(spiralCounter++));
+                var distanceFromCenter = MathF.Sqrt(spiralCounter);
+                var x = (int) (distanceFromCenter * MathF.Cos(spiralCounter));
+                var y = (int) (distanceFromCenter * MathF.Sin(spiralCounter++));
                 yield return new Point(x, y);
             }
         }

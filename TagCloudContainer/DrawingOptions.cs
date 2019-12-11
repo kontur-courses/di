@@ -4,48 +4,30 @@ namespace TagCloudContainer
 {
     public class DrawingOptions
     {
-        public Brush BackgroundBrush { get; private set; }
-        public Brush WordBrush { get; private set; }
-        public Pen Pen { get; private set; }
-        public Font Font { get; private set; }
-
         private DrawingOptions(DrawingOptions parent) :
-            this(parent.BackgroundBrush, parent.WordBrush, parent.Pen, parent.Font)
+            this(parent.BackgroundBrush, parent.WordBrush, parent.Pen, parent.Font, parent.ImageSize)
         {
         }
 
         public DrawingOptions() :
             this(new SolidBrush(Color.White), new SolidBrush(Color.Orange), new Pen(Color.Blue),
-                new Font(FontFamily.GenericMonospace, 14))
+                new Font(FontFamily.GenericMonospace, 14), Size.Empty)
         {
         }
 
-        private DrawingOptions(Brush backgroundBrush, Brush wordBrush, Pen pen, Font font)
+        private DrawingOptions(Brush backgroundBrush, Brush wordBrush, Pen pen, Font font, Size imageSize)
         {
             BackgroundBrush = backgroundBrush;
             WordBrush = wordBrush;
             Pen = pen;
             Font = font;
+            ImageSize = imageSize;
         }
 
-        public DrawingOptions WithBackgroundBrush(Brush brush)
-        {
-            return new DrawingOptions(this) {BackgroundBrush = brush};
-        }
-
-        public DrawingOptions WithFont(Font font)
-        {
-            return new DrawingOptions(this) {Font = font};
-        }
-
-        public DrawingOptions WithWordBrush(Brush brush)
-        {
-            return new DrawingOptions(this) {WordBrush = brush};
-        }
-
-        public DrawingOptions WithPen(Pen pen)
-        {
-            return new DrawingOptions(this) {Pen = pen};
-        }
+        public Brush BackgroundBrush { get; set; }
+        public Brush WordBrush { get; set; }
+        public Pen Pen { get; set; }
+        public Font Font { get; set; }
+        public Size ImageSize { get; set; }
     }
 }
