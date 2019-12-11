@@ -2,9 +2,9 @@
 {
     public class BoringWordsListAction : IUiAction
     {
-        private readonly BoringWordsList boringWords;
+        private readonly BoringWord[] boringWords;
 
-        public BoringWordsListAction(BoringWordsList boringWords)
+        public BoringWordsListAction(BoringWord[] boringWords)
         {
             this.boringWords = boringWords;
         }

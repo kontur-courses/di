@@ -2,11 +2,11 @@
 {
     public class SpeechPartListAction : IUiAction
     {
-        private readonly SpeechPartList speechPartList;
+        private readonly SpeechPart[] speechParts;
 
-        public SpeechPartListAction(SpeechPartList speechPartList)
+        public SpeechPartListAction(SpeechPart[] speechParts)
         {
-            this.speechPartList = speechPartList;
+            this.speechParts = speechParts;
         }
 
         public MenuCategory Category => MenuCategory.Lists;
@@ -15,7 +15,7 @@
 
         public void Perform()
         {
-            CheckedListForm.For(speechPartList).ShowDialog();
+            CheckedListForm.For(speechParts).ShowDialog();
         }
     }
 }

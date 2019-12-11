@@ -2,11 +2,11 @@
 {
     public class FilterListAction : IUiAction
     {
-        private readonly FilterList filterList;
+        private readonly IFilter[] filters;
 
-        public FilterListAction(FilterList filterList)
+        public FilterListAction(IFilter[] filters)
         {
-            this.filterList = filterList;
+            this.filters = filters;
         }
 
         public MenuCategory Category => MenuCategory.Lists;
@@ -15,7 +15,7 @@
 
         public void Perform()
         {
-            CheckedListForm.For(filterList).ShowDialog();
+            CheckedListForm.For(filters).ShowDialog();
         }
     }
 }

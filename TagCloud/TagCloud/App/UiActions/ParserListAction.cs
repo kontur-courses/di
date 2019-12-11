@@ -2,11 +2,11 @@
 {
     public class ParserListAction : IUiAction
     {
-        private readonly ParserList parserList;
+        private readonly IParser[] parsers;
 
-        public ParserListAction(ParserList parserList)
+        public ParserListAction(IParser[] parsers)
         {
-            this.parserList = parserList;
+            this.parsers = parsers;
         }
 
         public MenuCategory Category => MenuCategory.Lists;
@@ -15,7 +15,7 @@
 
         public void Perform()
         {
-            CheckedListForm.For(parserList).ShowDialog();
+            CheckedListForm.For(parsers).ShowDialog();
         }
     }
 }

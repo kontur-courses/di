@@ -2,11 +2,11 @@
 {
     public class ThemeListAction : IUiAction
     {
-        private readonly ThemeList themeList;
+        private readonly ITheme[] themes;
 
-        public ThemeListAction(ThemeList themeList)
+        public ThemeListAction(ITheme[] themes)
         {
-            this.themeList = themeList;
+            this.themes = themes;
         }
 
         public MenuCategory Category => MenuCategory.Lists;
@@ -15,7 +15,7 @@
 
         public void Perform()
         {
-            CheckedListForm.For(themeList).ShowDialog();
+            CheckedListForm.For(themes).ShowDialog();
         }
     }
 }

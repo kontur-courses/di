@@ -6,20 +6,20 @@ namespace TagCloud
 {
     public static class CheckedListForm
     {
-        public static CheckedListForm<T> For<T>(IItemList<T> list)
+        public static CheckedListForm<T> For<T>(T[] items) where T : ICheckable
         {
-            return new CheckedListForm<T>(list);
+            return new CheckedListForm<T>(items);
         }
     }
 
     public class CheckedListForm<T> : Form
     {
         private CheckedListBox checkedListBox;
-        private IItemList<T> list;
+        private readonly T[] items;
 
-        public CheckedListForm(IItemList<T> items)
+        public CheckedListForm(T[] items)
         {
-            list = items;
+            this.items = items;
             var okButton = new Button
             {
                 Text = "OK",
@@ -35,14 +35,13 @@ namespace TagCloud
                 CheckOnClick = true,
             };
 
-            foreach (var item in items.AllItems)
-                checkedListBox.Items.Add(item);
+            foreach (var item in items)
+                checkedListBox.Items.Add((item as ICheckable).Name);
 
             for (int i = 0; i < checkedListBox.Items.Count; i++)
             {
                 var item = checkedListBox.Items[i];
-                if (items.SelectedItems.Contains((T)item))
-                    checkedListBox.SetItemChecked(i, true);
+                checkedListBox.SetItemChecked(i, (items[i] as ICheckable).IsChecked);
             }
             Controls.Add(checkedListBox);
             AcceptButton = okButton;
@@ -50,10 +49,11 @@ namespace TagCloud
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            var selectedItems = new HashSet<T>();
-            foreach (var item in checkedListBox.CheckedItems)
-                selectedItems.Add((T)item);
-            list.SelectedItems = selectedItems;
+            for (int i = 0; i < checkedListBox.Items.Count; i++)
+            {
+                var item = checkedListBox.Items[i];
+                (items[i] as ICheckable).IsChecked = checkedListBox.GetItemChecked(i);
+            }
         }
 
         protected override void OnLoad(EventArgs e)
