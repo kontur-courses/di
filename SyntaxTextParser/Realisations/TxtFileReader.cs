@@ -4,7 +4,7 @@ using SyntaxTextParser.Architecture;
 
 namespace SyntaxTextParser
 {
-    public class TextFileReader : IFileReader
+    public class TxtFileReader : IFileReader
     {
         public bool TryReadText(string filePath, out string text)
         {

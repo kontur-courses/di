@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace TagsCloudGenerator
 {
-    public static class CloudImageCreator
+    public class BitmapCloudBuilder : ICloudBuilder<Bitmap>
     {
-        public static Bitmap CreateTagCloudBitmap(IEnumerable<CloudTag> tags, Size imageSize, CloudFormat format)
+        public Bitmap CreateTagCloudFromTags(IEnumerable<CloudTag> tags, Size imageSize, CloudFormat format)
         {
             var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(bitmap);

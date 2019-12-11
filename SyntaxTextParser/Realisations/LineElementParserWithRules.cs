@@ -5,21 +5,21 @@ using SyntaxTextParser.Architecture;
 
 namespace SyntaxTextParser
 {
-    public class LineTextElementParser : TextElementParser
+    public class LineElementParserWithRules : ElementParserWithRules
     {
-        public LineTextElementParser(IEnumerable<IElementValidator> elementValidators, IElementPreformer elementFormatter) :
+        public LineElementParserWithRules(IEnumerable<IElementValidator> elementValidators, IElementFormatter elementFormatter) :
             base(elementValidators, elementFormatter)
         { }
 
         protected override IEnumerable<TypedTextElement> ParseText(string text)
         {
             return text.Split()
-                .Select(str => new TypedTextElement(str, GetElementType(str)));
+                .Select(str => new TypedTextElement(str, GetElementType(str), ElementFormatter));
         }
 
         protected string GetElementType(string element)
         {
-            throw new NotImplementedException("Хз как библиотеку ту впихнуть");
+            throw new NotImplementedException("Впихни библиотеку");
         }
     }
 }

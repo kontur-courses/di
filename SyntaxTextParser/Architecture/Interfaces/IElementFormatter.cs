@@ -1,6 +1,6 @@
 ﻿namespace SyntaxTextParser.Architecture
 {
-    public interface IElementPreformer
+    public interface IElementFormatter
     {
         string ConvertToUsedForm(string element);
     }

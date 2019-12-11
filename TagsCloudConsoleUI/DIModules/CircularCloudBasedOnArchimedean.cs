@@ -19,7 +19,7 @@ namespace TagsCloudConsoleUI.DIModules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(new ArchimedeanShape(Center, SpiralStep))
-                .As<IShapeGenerator>();
+                .As<IShapeGenerator>();//TODO Don't call constructor
             builder.RegisterType<CircularCloudPrepossessing>().As<ITagsPrepossessing>();
         }
     }

@@ -7,12 +7,12 @@ namespace SyntaxTextParser
 {
     public sealed class TextParser
     {
-        private readonly TextElementParser elementParser;
+        private readonly ElementParserWithRules elementParserWithRules;
         private readonly IFileReader fileReader;
 
-        public TextParser(TextElementParser elementParser, IFileReader fileReader)
+        public TextParser(ElementParserWithRules elementParserWithRules, IFileReader fileReader)
         {
-            this.elementParser = elementParser;
+            this.elementParserWithRules = elementParserWithRules;
             this.fileReader = fileReader;
         }
 
@@ -28,7 +28,7 @@ namespace SyntaxTextParser
                 throw new FileNotFoundException($"Path {path} isn't valid");
 
             return fileReader.TryReadText(fullPath, out var text)
-                ? elementParser.ParseElementsFromText(text)
+                ? elementParserWithRules.ParseElementsFromText(text)
                 : new List<TextElement>();
         }
     }

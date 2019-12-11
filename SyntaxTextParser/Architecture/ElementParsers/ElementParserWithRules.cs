@@ -3,15 +3,14 @@ using System.Linq;
 
 namespace SyntaxTextParser.Architecture
 {
-    public abstract class TextElementParser
+    public abstract class ElementParserWithRules : BaseElementParser //TODO 
     {
         protected readonly IEnumerable<IElementValidator> ElementValidators;
-        protected readonly IElementPreformer ElementFormatter;
 
-        protected TextElementParser(IEnumerable<IElementValidator> elementValidators, IElementPreformer elementFormatter)
+        protected ElementParserWithRules(IEnumerable<IElementValidator> elementValidators, IElementFormatter elementFormatter) : 
+            base(elementFormatter)
         {
             ElementValidators = elementValidators;
-            ElementFormatter = elementFormatter;
         }
 
         protected bool IsCorrectElement(TypedTextElement element)
@@ -20,7 +19,7 @@ namespace SyntaxTextParser.Architecture
                 .TrueForAll(x => x.IsValidElement(element));
         }
 
-        public List<TextElement> ParseElementsFromText(string text)
+        public override List<TextElement> ParseElementsFromText(string text)
         {
             var elements = new Dictionary<TypedTextElement, int>();
 
@@ -35,7 +34,7 @@ namespace SyntaxTextParser.Architecture
             }
 
             return elements
-                .Select(x => x.Key.ConvertToTextElement(x.Value, ElementFormatter))
+                .Select(x => x.Key.ConvertToTextElement(x.Value))
                 .ToList();
         }
 

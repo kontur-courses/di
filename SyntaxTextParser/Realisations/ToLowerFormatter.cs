@@ -2,7 +2,7 @@
 
 namespace SyntaxTextParser
 {
-    public class ToLowerPreformer : IElementPreformer
+    public class ToLowerFormatter : IElementFormatter
     {
         public string ConvertToUsedForm(string element)
         {

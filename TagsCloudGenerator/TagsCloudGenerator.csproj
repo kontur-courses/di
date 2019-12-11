@@ -57,8 +57,9 @@
     <Compile Include="CloudGenerator\ColorPainter\RandomlyCloudPainer.cs" />
     <Compile Include="CloudGenerator\TagOrder\ITagOrder.cs" />
     <Compile Include="CloudGenerator\TagOrder\TagOrderByAscending.cs" />
-    <Compile Include="CloudImageCreator.cs" />
+    <Compile Include="CloudBuilder\BitmapCloudBuilder.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="CloudBuilder\ICloudBuilder.cs" />
     <Compile Include="ShapeGenerator\ArchimedeanShape.cs" />
     <Compile Include="CloudPrepossessing\ITagsPrepossessing.cs" />
     <Compile Include="CloudPrepossessing\CircularCloudPrepossessing.cs" />
