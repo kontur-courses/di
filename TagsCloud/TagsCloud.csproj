@@ -62,7 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsFiltering\IFilter.cs" />
     <Compile Include="WordsFiltering\WasteWordsFilter.cs" />
-    <Compile Include="WordsFiltering\LowerCaseFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

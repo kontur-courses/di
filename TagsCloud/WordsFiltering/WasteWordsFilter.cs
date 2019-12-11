@@ -9,7 +9,6 @@ namespace TagsCloud.WordsFiltering
 {
     public class WasteWordsFilter : IFilter
     {
-        public bool IsActive { get; set; } = true;
         public bool AllowAdjectives { get; set; } = true; //A
         public bool AllowAdverbs { get; set; } = false; //ADV
         public bool AllowPronounAdverb { get; set; } = false; //ADVPRO
@@ -27,8 +26,6 @@ namespace TagsCloud.WordsFiltering
 
         public Func<List<string>, List<string>> FilterFunc => words =>
         {
-            if (!IsActive) return words;
-
             var res = new List<string>();
             var grammems = Task.Run(() => GetGrammems(words)).Result;
 
