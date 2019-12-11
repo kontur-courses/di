@@ -79,10 +79,7 @@ namespace TagsCloud
 
         private void Render()
         {
-            //todo Size in constructor
-            var size = new Size(500, 500);
-            TagCloudImage = new Bitmap(size.Width, size.Height);
-            renderer.Render(layoutItems, TagCloudImage);
+            TagCloudImage = renderer.Render(layoutItems);
         }
 
         public Image TagCloudImage { get; private set; }

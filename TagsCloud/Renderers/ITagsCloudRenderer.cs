@@ -7,7 +7,9 @@ namespace TagsCloud.Renderers
     public interface ITagsCloudRenderer
     {
         Font TagFont { get; set; }
+        int ImageWidth { get; set; }
+        int ImageHeight { get; set; }
         void CalcTagsRectanglesSizes(List<LayoutItem> layoutItems);
-        void Render(List<LayoutItem> layoutItems, Image image);
+        Image Render(List<LayoutItem> layoutItems);
     }
 }

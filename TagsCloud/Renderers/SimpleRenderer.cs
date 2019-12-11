@@ -8,6 +8,8 @@ namespace TagsCloud.Renderers
 {
     public class SimpleRenderer : ITagsCloudRenderer
     {
+        public int ImageWidth { get; set; } = 500;
+        public int ImageHeight { get; set; } = 500;
         public Font TagFont { get; set; } = SystemFonts.DefaultFont;
         public int MinFontSize { get; set; } = 30;
         public int MaxFontSize { get; set; } = 100;
@@ -35,7 +37,7 @@ namespace TagsCloud.Renderers
             return MinFontSize + (MaxFontSize - MinFontSize) * (rate - minRate) / (maxRate - minRate);
         }
 
-        public virtual void Render(List<LayoutItem> layoutItems, Image image)
+        public virtual Image Render(List<LayoutItem> layoutItems)
         {
             if (layoutItems.Count() == 0)
                 throw new ArgumentException("There are no items.");
@@ -48,6 +50,7 @@ namespace TagsCloud.Renderers
             var top = layoutItems.Min(item => item.Rectangle.Top);
             var bottom = layoutItems.Max(item => item.Rectangle.Bottom);
 
+            var image = new Bitmap(ImageWidth, ImageHeight);
             using (var bmp = new Bitmap(right - left + 1, bottom - top + 1))
             {
                 using (var graphics = Graphics.FromImage(bmp))
@@ -77,9 +80,10 @@ namespace TagsCloud.Renderers
 
                 using (var graphics = Graphics.FromImage(image))
                 {
-                    graphics.DrawImage(bmp, new Rectangle(0, 0, image.Width, image.Height), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
+                    graphics.DrawImage(bmp, new Rectangle(0, 0, ImageWidth, ImageHeight), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
                 }
             }
+            return image;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TagsCloud.Renderers
             return MinFontSize + (MaxFontSize - MinFontSize) * (rate - minRate) / (maxRate - minRate);
         }
 
-        public override void Render(List<LayoutItem> layoutItems, Image image)
+        public override Image Render(List<LayoutItem> layoutItems)
         {
             if (layoutItems.Count() == 0)
                 throw new ArgumentException("There are no items.");
@@ -38,6 +38,7 @@ namespace TagsCloud.Renderers
             var tagRectanglePen = new Pen(TagRectangleColor);
             var tagTextBrush = new SolidBrush(TagTextColor);
 
+            var image = new Bitmap(ImageWidth, ImageHeight);
             using (var bmp = new Bitmap(right - left + 1, bottom - top + 1))
             {
                 using (var graphics = Graphics.FromImage(bmp))
@@ -54,9 +55,10 @@ namespace TagsCloud.Renderers
 
                 using (var graphics = Graphics.FromImage(image))
                 {
-                    graphics.DrawImage(bmp, new Rectangle(0, 0, image.Width, image.Height), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
+                    graphics.DrawImage(bmp, new Rectangle(0, 0, ImageWidth, ImageHeight), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
                 }
             }
+            return image;
         }
     }
 }
