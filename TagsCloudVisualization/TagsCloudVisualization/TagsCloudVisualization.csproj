@@ -68,6 +68,9 @@
   <ItemGroup>
     <Compile Include="Logic\ImageGenerator.cs" />
     <Compile Include="Services\IImageGenerator.cs" />
+    <Compile Include="Tests\PointExtensionsTests.cs" />
+    <Compile Include="Tests\TextParserTests.cs" />
+    <Compile Include="Tests\TextRetrieverTests.cs" />
     <Compile Include="UI\BoringWordsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +135,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="InputData\Input3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tests\TestText.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
