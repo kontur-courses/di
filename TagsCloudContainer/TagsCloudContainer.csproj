@@ -59,10 +59,11 @@
     <Compile Include="Core\Generators\IPointGenerator.cs" />
     <Compile Include="Core\Layouters\IRectangleLayouter.cs" />
     <Compile Include="Core\Layouters\CircularCloudLayouter.cs" />
-    <Compile Include="Data\Processors\LowerCaseTransformer.cs" />
+    <Compile Include="Data\Processors\IWordProcessor.cs" />
+    <Compile Include="Data\Processors\LowerCaseWordProcessor.cs" />
     <Compile Include="Data\Processors\WordFilter.cs" />
-    <Compile Include="Data\Readers\WordListReader.cs" />
-    <Compile Include="Data\Readers\IWordReader.cs" />
+    <Compile Include="Data\Readers\TxtWordsFileReader.cs" />
+    <Compile Include="Data\Readers\IWordsFileReader.cs" />
     <Compile Include="Data\Word.cs" />
     <Compile Include="Data\WordCounter.cs" />
     <Compile Include="Program.cs" />

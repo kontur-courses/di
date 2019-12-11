@@ -2,8 +2,8 @@
 
 namespace TagsCloudContainer.Data.Readers
 {
-    public interface IWordReader
+    public interface IWordsFileReader
     {
-        IEnumerable<string> ReadAllWords();
+        IEnumerable<string> ReadAllWords(string path);
     }
 }
