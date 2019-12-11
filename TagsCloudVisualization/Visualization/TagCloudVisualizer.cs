@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.CloudPainters;
@@ -6,7 +7,7 @@ using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public class TagCloudVisualizer : ICloudVisualizer
+    public class TagCloudVisualizer : ICloudVisualizer<Tuple<string, Rectangle>>
     {
         private readonly VisualisingOptions visualisingOptions;
 
@@ -15,12 +16,13 @@ namespace TagsCloudVisualization.Visualization
             this.visualisingOptions = visualisingOptions;
         }
 
-        public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, ICloudPainter cloudPainter)
+        public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter,
+            ICloudPainter<Tuple<string, Rectangle>> cloudPainter)
         {
-            var cloudComponents = new CloudComponents{Words = words, Layouter = layouter, VisualisingOptions = visualisingOptions};
-            return cloudPainter.GetImage(cloudComponents,  visualisingOptions);
+            var rectangles = GetRectanglesForWords(words, layouter);
+            return cloudPainter.GetImage(words.Zip(rectangles, Tuple.Create), visualisingOptions);
         }
-        
+
         private IEnumerable<Rectangle> GetRectanglesForWords(IEnumerable<string> words, ILayouter layouter)
         {
             return words.Select(word =>

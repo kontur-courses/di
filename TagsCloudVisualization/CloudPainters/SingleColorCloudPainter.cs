@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.CloudPainters
 {
-    public class SingleColorCloudPainter : ICloudPainter
+    public class SingleColorCloudPainter : ICloudPainter<Tuple<string, Rectangle>>
     {
-        public Bitmap GetImage(CloudComponents cloudComponents, VisualisingOptions visualisingOptions)
+        public Bitmap GetImage(IEnumerable<Tuple<string, Rectangle>> drawnComponents, VisualisingOptions visualisingOptions)
         {
             var field = new Bitmap(visualisingOptions.ImageSize.Width, visualisingOptions.ImageSize.Height);
             var brush = new SolidBrush(visualisingOptions.TextColor);
             using (var graphics = Graphics.FromImage(field))
             {
-                foreach (var (word, rectangle) in cloudComponents.Words.Zip(cloudComponents.Rectangles, Tuple.Create))
+                graphics.Clear(visualisingOptions.BackgroundColor);
+                foreach (var (word, rectangle) in drawnComponents)
                 {
                     graphics.DrawString(word, visualisingOptions.Font, brush, rectangle.Location);
                 }

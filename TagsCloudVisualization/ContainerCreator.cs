@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Autofac;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
@@ -8,6 +9,7 @@ using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.TextReaders;
 using TagsCloudVisualization.Visualization;
 using TagsCloudVisualization.WordConverters;
+using TagsCloudVisualization.WordSizing;
 
 namespace TagsCloudVisualization
 {
@@ -19,7 +21,8 @@ namespace TagsCloudVisualization
             var dicPath = PathFinder.GetHunspellDictionariesPath("ru_RU.dic");
             var center = new Point(imageOptions.ImageSize.Width / 2, imageOptions.ImageSize.Height / 2);
             var builder = new ContainerBuilder();
-            builder.RegisterType<MultiColorFrequencyCloudPainter>().As<ICloudPainter>();
+            builder.RegisterType<SizedWord>().AsSelf();
+            builder.RegisterType<MultiColorCloudPainter>().As<ICloudPainter<Tuple<string, Rectangle>>>();
             builder.RegisterType<LowerCaseWordConverter>().As<IWordConverter>();
             builder.RegisterType<NormalFormWordConverter>().As<IWordConverter>()
                 .WithParameter("affPath", affPath)

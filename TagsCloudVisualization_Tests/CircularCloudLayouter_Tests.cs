@@ -101,7 +101,7 @@ namespace TagsCloudVisualization_Tests
                 return;
             var testName = TestContext.CurrentContext.Test.Name;
             var painter = new MultiColorRectanglesPainter();
-            var image = painter.GetImage(new CloudComponents {Rectangles = rectangles},
+            var image = painter.GetImage(rectangles,
                 VisualisingOptions.GetDefaultOptions());
             var fileName = $"{testName}Failed";
             var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);

@@ -5,8 +5,8 @@ using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public interface ICloudVisualizer
+    public interface ICloudVisualizer<T>
     {
-        Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, ICloudPainter cloudPainter);
+        Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter, ICloudPainter<T> cloudPainter);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Text;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
@@ -14,12 +15,13 @@ namespace TagsCloudVisualization
         private readonly ITextReader textReader;
         private readonly WordsExtractor wordsExtractor;
         private readonly WordPreprocessor wordPreprocessor;
-        private readonly ICloudPainter cloudPainter;
+        private readonly ICloudPainter<Tuple<string, Rectangle>> cloudPainter;
         private readonly TagCloudVisualizer tagCloudVisualizer;
         private readonly ILayouter layouter;
 
         public CloudCreator(ITextReader textReader, WordsExtractor wordsExtractor, WordPreprocessor wordPreprocessor,
-            ICloudPainter cloudPainter, TagCloudVisualizer tagCloudVisualizer, ILayouter layouter)
+            ICloudPainter<Tuple<string, Rectangle>> cloudPainter, TagCloudVisualizer tagCloudVisualizer,
+            ILayouter layouter)
         {
             this.textReader = textReader;
             this.wordsExtractor = wordsExtractor;

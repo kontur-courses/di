@@ -1,16 +1,18 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization.CloudPainters
 {
-    public class MultiColorRectanglesPainter : ICloudPainter
+    public class MultiColorRectanglesPainter : ICloudPainter<Rectangle>
     {
-        public Bitmap GetImage(CloudComponents cloudComponents, VisualisingOptions visualisingOptions)
+        public Bitmap GetImage(IEnumerable<Rectangle> drawnComponents, VisualisingOptions visualisingOptions)
         {
             var field = new Bitmap(visualisingOptions.ImageSize.Width, visualisingOptions.ImageSize.Height);
             using (var graphics = Graphics.FromImage(field))
             {
-                foreach (var rectangle in cloudComponents.Rectangles)
+                graphics.Clear(visualisingOptions.BackgroundColor);
+                foreach (var rectangle in drawnComponents)
                 {
                     var brush = new SolidBrush(ColorGenerator.Generate());
                     graphics.FillRectangle(brush, rectangle);

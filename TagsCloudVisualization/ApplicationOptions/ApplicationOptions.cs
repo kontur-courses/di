@@ -23,10 +23,10 @@ namespace TagsCloudVisualization.ApplicationOptions
         [Option('d', "textColor", HelpText = "Text color", Default = "Pink")]
         public string TextColorName { get; set; }
 
-        [Option('t', "textName",  HelpText = "Text name", Required = true)]
+        [Option('t', "textName",  HelpText = "Text name", Default = "1.txt")]
         public string TextName { get; set; }
 
-        [Option('i', "imageName", HelpText = "Image name", Required = true)]
+        [Option('i', "imageName", HelpText = "Image name", Default = "0Console")]
         public string ImageName { get; set; }
 
         public VisualisingOptions GetVisualizingOptions()
