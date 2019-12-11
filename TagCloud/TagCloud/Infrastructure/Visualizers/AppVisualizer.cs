@@ -40,8 +40,7 @@ namespace TagCloud
 
         private WordToken[] GetWordTokens()
         {
-            var textReader = reader.TextReader;
-            var text = textReader.ReadAllText(reader.PathToFile);
+            var text = reader.ReadTextFromFile();
             var words = extracter.ExtractWords(text);
             var filteredWords = words;
             foreach (var filter in filters)

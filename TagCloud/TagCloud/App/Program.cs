@@ -33,14 +33,8 @@ namespace TagCloud
                 builder.RegisterInstance(new SpeechPart(speechPartValue, speechPart)).As<SpeechPart>();
             }
             builder.RegisterType<Reader>().SingleInstance().As<Reader>();
-            builder.Register<IReader>((c, p) =>
-            {
-                var path = p.Named<string>("PathToFile");
-                if (path.Contains(".doc"))
-                    return new DocReader();
-                else
-                    return new TxtReader();
-            });
+            builder.RegisterType<TxtReader>().SingleInstance().As<TxtReader>();
+            builder.RegisterType<DocReader>().SingleInstance().As<DocReader>();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => typeof(IUiAction).IsAssignableFrom(t)).SingleInstance().As<IUiAction>();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
@@ -51,7 +45,6 @@ namespace TagCloud
                 .Where(t => typeof(ITheme).IsAssignableFrom(t)).SingleInstance().As<ITheme>();
             builder.RegisterType<DefaultExtractor>().SingleInstance().As<IExtractor>();
             builder.RegisterType<ArchimedeanSpiralLayouter>().SingleInstance().As<ILayouter>();
-            builder.RegisterType<TxtReader>().SingleInstance().As<IReader>();
             builder.RegisterType<AppVisualizer>().SingleInstance().As<IVisualizer>();
             builder.RegisterType<ImageHolder>().SingleInstance().As<IImageHolder>().As<PictureBox>().As<ImageHolder>();
             builder.Register(context => ImageSettings.GetDefaultSettings()).SingleInstance().As<ImageSettings>();

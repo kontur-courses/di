@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace TagCloud
 {
     public class Reader
     {
-        public delegate Reader Factory();
+        public readonly DocReader docReader;
+        public readonly TxtReader txtReader;
 
-        public Reader(IReader textReader)
+        public Reader(DocReader docReader, TxtReader txtReader)
         {
-            TextReader = textReader;
+            this.docReader = docReader;
+            this.txtReader = txtReader;
         }
 
-        public IReader TextReader;
+        public string ReadTextFromFile()
+        {
+            if (Regex.IsMatch(PathToFile, @"\w*.doc"))
+                return docReader.ReadAllText(PathToFile);
+            else
+                return txtReader.ReadAllText(PathToFile);
+        }
 
         public string PathToFile { get; set; }
 
