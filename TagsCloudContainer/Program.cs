@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using TagsCloudContainer.Core.ColoringAlgorithms;
 using TagsCloudContainer.Core.ImageBuilder;
 using TagsCloudContainer.Core.ImageSavers;
 using TagsCloudContainer.Core.LayoutAlgorithms;
@@ -36,8 +37,9 @@ namespace TagsCloudContainer
                 .ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("center", new Point(500, 500))));
             container.Register(Component.For<IImageBuilder>()
-                .ImplementedBy<TagCloudImageBuilder>()
-                .DependsOn(Dependency.OnValue("wordBrush", new SolidBrush(Color.Blue))));
+                .ImplementedBy<TagCloudImageBuilder>());
+            container.Register(Component.For<IColoringAlgorithm>()
+                .ImplementedBy<RandomColoring>());
             container.Register(Component.For<IWordFilter>().ImplementedBy<BoringWordsFilter>());
             container.Register(
                 Component.For<IWordConverter>().ImplementedBy<LowerCaseConverter>(),

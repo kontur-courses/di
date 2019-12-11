@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.Core.ColoringAlgorithms;
 
 namespace TagsCloudContainer.Core.ImageBuilder
 {
@@ -7,19 +8,19 @@ namespace TagsCloudContainer.Core.ImageBuilder
     {
         private readonly Brush brush;
         private readonly Pen pen;
-        private readonly Brush wordBrush;
         private readonly StringFormat stringFormat;
+        private readonly IColoringAlgorithm coloringAlgorithm;
 
-        public TagCloudImageBuilder(Brush wordBrush)
+        public TagCloudImageBuilder(IColoringAlgorithm coloringAlgorithm)
         {
             brush = new SolidBrush(Color.White);
-            this.wordBrush = wordBrush;
             pen = new Pen(Color.Blue);
             stringFormat = new StringFormat()
             {
                 FormatFlags = StringFormatFlags.NoWrap,
                 Trimming = StringTrimming.None
             };
+            this.coloringAlgorithm = coloringAlgorithm;
         }
 
         public Bitmap Build(string fontName, IEnumerable<Tag> tags, Size size)
@@ -29,7 +30,11 @@ namespace TagsCloudContainer.Core.ImageBuilder
             graphics.FillRectangle(brush, new Rectangle(0, 0, size.Width, size.Height));
 
             foreach (var tag in tags)
-                graphics.DrawString(tag.Word, new Font(fontName, tag.FontSize), wordBrush, tag.Rectangle, stringFormat);
+            {
+                var currentColor = coloringAlgorithm.GetNextColor();
+                graphics.DrawString(tag.Word, new Font(fontName, tag.FontSize),
+                    new SolidBrush(currentColor), tag.Rectangle, stringFormat);
+            }
 
             return bitmap;
         }

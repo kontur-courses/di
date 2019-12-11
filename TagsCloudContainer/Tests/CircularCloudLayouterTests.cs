@@ -7,6 +7,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudContainer.Core;
+using TagsCloudContainer.Core.ColoringAlgorithms;
 using TagsCloudContainer.Core.ImageBuilder;
 using TagsCloudContainer.Core.ImageSavers;
 using TagsCloudContainer.Core.LayoutAlgorithms;
@@ -36,7 +37,7 @@ namespace TagsCloudContainer.Tests
             {
                 tags.Add(new Tag("a", rectangle, 1));
             }
-            var tagCloudImageCreator = new TagCloudImageBuilder(new SolidBrush(Color.Empty));
+            var tagCloudImageCreator = new TagCloudImageBuilder(new RandomColoring());
             var testName = TestContext.CurrentContext.Test.FullName;
             var path = $@"C:\\TagCloudTests\{testName}.jpg";
             var bitmap = tagCloudImageCreator.Build("Arial", tags, new Size(1000, 1000));
