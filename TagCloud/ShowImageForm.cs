@@ -12,29 +12,26 @@ namespace TagCloud
             var pictureBox = new PictureBox
             {
                 Image = image,
-                Location = new Point(0,0),
-                Size=ClientSize,
-
+                Location = new Point(0, 0),
+                Size = ClientSize
             };
             Controls.Add(pictureBox);
         }
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // ShowImageForm
             // 
-            this.ClientSize = new System.Drawing.Size(282, 253);
-            this.Name = "ShowImageForm";
-            this.Load += new System.EventHandler(this.ShowImageForm_Load);
-            this.ResumeLayout(false);
-
+            ClientSize = new Size(282, 253);
+            Name = "ShowImageForm";
+            Load += ShowImageForm_Load;
+            ResumeLayout(false);
         }
 
         private void ShowImageForm_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

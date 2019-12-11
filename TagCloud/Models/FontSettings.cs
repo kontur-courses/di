@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace TagCloud.Models
 {
     public class FontSettings
     {
+        public readonly Color color;
         public readonly float defaultFontSize;
         public readonly FontFamily fontFamily;
         public readonly FontStyle fontStyle;
-        public readonly Color color;
 
         public FontSettings()
         {
-            this.defaultFontSize = 12;
-            this.fontFamily = new FontFamily("Arial");
-            this.fontStyle = FontStyle.Bold;
-            this.color = Color.Black;
+            defaultFontSize = 12;
+            fontFamily = new FontFamily("Arial");
+            fontStyle = FontStyle.Bold;
+            color = Color.Black;
         }
 
         public FontSettings(string fontName)
         {
-            this.defaultFontSize = 12;
-            this.fontFamily = new FontFamily(fontName);
-            this.fontStyle = FontStyle.Bold;
-            this.color = Color.Black;
+            defaultFontSize = 12;
+            fontFamily = new FontFamily(fontName);
+            fontStyle = FontStyle.Bold;
+            color = Color.Black;
         }
     }
 }

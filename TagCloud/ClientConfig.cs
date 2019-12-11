@@ -11,6 +11,7 @@ namespace TagCloud
             ImageToSave = null;
             IsRunning = false;
         }
+
         public bool IsRunning { get; set; }
         public bool ToExit { get; set; }
         public bool ToCreateNewImage { get; set; }

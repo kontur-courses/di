@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagCloud.IServices
 {
@@ -11,7 +8,7 @@ namespace TagCloud.IServices
         public HashSet<string> GetPaletteNames(ICloudVisualization visualization)
         {
             return visualization.PaletteDictionary
-                .Select(p=>p.Key)
+                .Select(p => p.Key)
                 .ToHashSet();
         }
     }

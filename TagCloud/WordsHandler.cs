@@ -26,7 +26,7 @@ namespace TagCloud
                 throw new FileNotFoundException("Файла не существует");
             return File.ReadAllLines(path, Encoding.UTF8)
                 .Where(s => s != string.Empty)
-                .Select(s=>s.Trim())
+                .Select(s => s.Trim())
                 .GroupBy(word => word.ToLower())
                 .ToDictionary(g => g.Key, g => g.Count());
         }

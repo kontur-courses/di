@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Web.UI;
 using TagCloud.IServices;
 using TagCloud.Models;
 
@@ -11,12 +8,14 @@ namespace TagCloud
     public class CloudVisualization : ICloudVisualization
     {
         private readonly ICloud cloud;
-        public  Dictionary<string,Palette> PaletteDictionary { get; }
+
         public CloudVisualization(ICloud cloud, IPaletteDictionaryFactory paletteDictionaryFactory)
         {
             PaletteDictionary = paletteDictionaryFactory.GetPaletteDictioanry();
             this.cloud = cloud;
         }
+
+        public Dictionary<string, Palette> PaletteDictionary { get; }
 
         public Bitmap GetAndDrawRectangles(ImageSettings imageSettings, string path = "test.txt")
         {
@@ -24,9 +23,12 @@ namespace TagCloud
             var image = new Bitmap(imageSettings.Width, imageSettings.Height);
             using (var graphics = Graphics.FromImage(image))
             {
-                var rectangles = RectanglesCustomizer.GetRectanglesWithPalette(palette,cloud.GetRectangles( graphics,imageSettings, path));
+                var rectangles =
+                    RectanglesCustomizer.GetRectanglesWithPalette(palette,
+                        cloud.GetRectangles(graphics, imageSettings, path));
                 foreach (var rectangle in rectangles)
-                    graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(rectangle.Color), rectangle.Area.Location);
+                    graphics.DrawString(rectangle.Tag.Text, rectangle.Tag.Font, new SolidBrush(rectangle.Color),
+                        rectangle.Area.Location);
             }
 
             return image;

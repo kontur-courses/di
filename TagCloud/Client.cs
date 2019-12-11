@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using TagCloud.IServices;
 using TagCloud.Models;
-using System.Windows.Forms;
 
 namespace TagCloud
 {
     public class Client : IClient
     {
         private readonly IAction[] actions;
-        private readonly ClientConfig config;
         private readonly HashSet<string> availableFontNames;
-        private HashSet<string> availablePaletteNames;
+        private readonly ClientConfig config;
         private readonly IPaletteNamesFactory paletteNamesFactory;
+        private HashSet<string> availablePaletteNames;
+
         public Client(IAction[] actions, IPaletteNamesFactory paletteNamesFactory)
         {
-            availableFontNames = new HashSet<string>()
+            availableFontNames = new HashSet<string>
             {
                 "Arial",
                 "Comic Sans MS"
@@ -39,7 +38,8 @@ namespace TagCloud
                 var userSettings = TryReadUserSettings();
                 if (userSettings is null)
                     continue;
-                config.ImageToSave = visualization.GetAndDrawRectangles(userSettings.ImageSettings, userSettings.PathToRead);
+                config.ImageToSave =
+                    visualization.GetAndDrawRectangles(userSettings.ImageSettings, userSettings.PathToRead);
                 Console.WriteLine("Список доступных комманд :");
                 foreach (var action in actions)
                     Console.WriteLine($"{action.CommandName}     \"{action.Description}\"");
@@ -53,6 +53,7 @@ namespace TagCloud
                         Console.WriteLine("Unknown command");
                         continue;
                     }
+
                     actionsDictionary[command].Perform(config);
                 }
             }
@@ -61,7 +62,8 @@ namespace TagCloud
         private UserSettings TryReadUserSettings()
         {
             if (!TryReadWidth(out var width) || !TryReadHeight(out var height)
-                || !TryReadFontName(out var fontName) || !TryReadPaletteName(out var paletteName)) return null;
+                                             || !TryReadFontName(out var fontName) ||
+                                             !TryReadPaletteName(out var paletteName)) return null;
             var pathToRead = ReadPathToRead();
             return new UserSettings(new ImageSettings(width, height, fontName, paletteName), pathToRead);
         }
@@ -121,7 +123,7 @@ namespace TagCloud
             Console.WriteLine("Список доступных палитр :");
             foreach (var name in availablePaletteNames)
                 Console.WriteLine(name);
-            Console.WriteLine("Оставьте строку пустой, чтоб использовать палитру: " +defaultPaletteName);
+            Console.WriteLine("Оставьте строку пустой, чтоб использовать палитру: " + defaultPaletteName);
             Console.Write(">>>");
             paletteName = Console.ReadLine();
             paletteName = paletteName == string.Empty
@@ -131,6 +133,5 @@ namespace TagCloud
             Console.WriteLine("Введенная палитра не поддерживается");
             return false;
         }
-
     }
 }

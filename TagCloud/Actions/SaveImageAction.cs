@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
-using TagCloud.Models;
 
 namespace TagCloud.Actions
 {
     public class SaveImageAction : IAction
     {
-        public string CommandName { get; } = "-saveimage";
-
-        public string Description { get; } = "save image";
-        private readonly Dictionary<string,ImageFormat> namesFormatsToSave;
+        private readonly Dictionary<string, ImageFormat> namesFormatsToSave;
 
         public SaveImageAction()
         {
             namesFormatsToSave = new Dictionary<string, ImageFormat>();
-            namesFormatsToSave["jpg"]=ImageFormat.Jpeg;
-            namesFormatsToSave["png"]=ImageFormat.Png;
-            namesFormatsToSave["bmp"]=ImageFormat.Bmp;
+            namesFormatsToSave["jpg"] = ImageFormat.Jpeg;
+            namesFormatsToSave["png"] = ImageFormat.Png;
+            namesFormatsToSave["bmp"] = ImageFormat.Bmp;
         }
+
+        public string CommandName { get; } = "-saveimage";
+
+        public string Description { get; } = "save image";
+
         public void Perform(ClientConfig config)
         {
             Console.WriteLine("Введите путь для сохранения картинки");
@@ -48,7 +49,6 @@ namespace TagCloud.Actions
             if (namesFormatsToSave.ContainsKey(name)) return namesFormatsToSave[name];
             Console.WriteLine("Введенный формат не поддерживается");
             return null;
-
         }
     }
 }

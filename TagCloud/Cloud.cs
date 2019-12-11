@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.IServices;
@@ -9,19 +8,20 @@ namespace TagCloud
 {
     public class Cloud : ICloud
     {
-        private readonly ITagCollectionFactory tagCollectionFactory;
         private readonly ICircularCloudLayouter layouter;
-        public Cloud (ICircularCloudLayouter layouter, ITagCollectionFactory tagCollectionFactory)
+        private readonly ITagCollectionFactory tagCollectionFactory;
+
+        public Cloud(ICircularCloudLayouter layouter, ITagCollectionFactory tagCollectionFactory)
         {
             this.tagCollectionFactory = tagCollectionFactory;
             this.layouter = layouter;
         }
 
-        public List<TagRectangle> GetRectangles(Graphics graphics, ImageSettings imageSettings,string path = null)
+        public List<TagRectangle> GetRectangles(Graphics graphics, ImageSettings imageSettings, string path = null)
         {
             layouter.Clear();
-            var tagCollection = tagCollectionFactory.Create(imageSettings,path);
-            var center = new Point(imageSettings.Width/2,imageSettings.Height/2);
+            var tagCollection = tagCollectionFactory.Create(imageSettings, path);
+            var center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
             var rectangles = tagCollection
                 .Select(t => new TagRectangle(
                     t,
@@ -32,7 +32,7 @@ namespace TagCloud
 
         private SizeF GetWordSize(Tag tag, Graphics graphics)
         {
-           return  graphics.MeasureString(tag.Text, tag.Font);
+            return graphics.MeasureString(tag.Text, tag.Font);
         }
     }
 }

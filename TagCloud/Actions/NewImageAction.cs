@@ -1,6 +1,4 @@
-﻿using System.Net.Mime;
-using System.Windows.Forms;
-using TagCloud.Models;
+﻿using System.Windows.Forms;
 
 namespace TagCloud.Actions
 {
@@ -16,6 +14,7 @@ namespace TagCloud.Actions
                 Application.Exit();
                 config.IsRunning = false;
             }
+
             config.ToCreateNewImage = true;
         }
     }

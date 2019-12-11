@@ -1,6 +1,4 @@
-﻿using TagCloud.Models;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     public interface IAction
     {

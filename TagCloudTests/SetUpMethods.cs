@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagCloudTests
 {
@@ -18,8 +14,10 @@ namespace TagCloudTests
         public static void WriteLinesInFile(string path, params string[] lines)
         {
             using (var sw = new StreamWriter(path))
+            {
                 foreach (var line in lines)
                     sw.WriteLine(line);
+            }
         }
 
         public static string GetPathToWordsToRead()

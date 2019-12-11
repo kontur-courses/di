@@ -1,7 +1,7 @@
-﻿using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using Castle.Facilities.TypedFactory;
+﻿using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor;
 using TagCloud.Actions;
 using TagCloud.IServices;
 
@@ -12,9 +12,9 @@ namespace TagCloud
         public static void Main()
         {
             var container = GetContainer();
-            var visaulization = container.Resolve<ICloudVisualization>();
+            var visualization = container.Resolve<ICloudVisualization>();
             var client = container.Resolve<IClient>();
-            client.Start(visaulization);
+            client.Start(visualization);
         }
 
         public static WindsorContainer GetContainer()

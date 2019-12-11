@@ -6,9 +6,9 @@ namespace TagCloud
 {
     public class ArchimedianSprial : IAlgorithm
     {
-        private  double alpha;
         private const double Step = Math.PI / 40;
         private const double DensityCoefficient = 0.2;
+        private double alpha;
 
         public IEnumerable<Point> GetCoordinates()
         {
@@ -17,8 +17,8 @@ namespace TagCloud
             {
                 alpha += Step;
                 var radiusVector = alpha * DensityCoefficient;
-                var x = (int)(radiusVector * Math.Cos(alpha));
-                var y = (int)(radiusVector * Math.Sin(alpha));
+                var x = (int) (radiusVector * Math.Cos(alpha));
+                var y = (int) (radiusVector * Math.Sin(alpha));
                 yield return new Point(x, y);
             }
         }

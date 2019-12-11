@@ -9,10 +9,12 @@ namespace TagCloud
     public class WordsToTagsParser : IWordsToTagsParser
     {
         private readonly IFontSettingsFactory fontSettingsFactory;
+
         public WordsToTagsParser(IFontSettingsFactory fontSettingsFactory)
         {
             this.fontSettingsFactory = fontSettingsFactory;
         }
+
         public List<Tag> GetTagsRectangles(Dictionary<string, int> words, ImageSettings imageSettings)
         {
             var fontSettings = fontSettingsFactory.CreateFontSettings(imageSettings.FontName);

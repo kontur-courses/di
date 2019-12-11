@@ -15,6 +15,7 @@ namespace TagCloud
                 ? GetRectanglesWithRandomColor(tagRectangles)
                 : GetRectanglesWithSimplePalette(palette, tagRectangles);
         }
+
         private static List<ColorTagRectangle> GetRectanglesWithRandomColor(List<TagRectangle> tagRectangels)
         {
             var random = new Random();

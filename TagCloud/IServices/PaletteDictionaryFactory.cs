@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagCloud.Models;
 
 namespace TagCloud.IServices
@@ -12,10 +8,10 @@ namespace TagCloud.IServices
     {
         public Dictionary<string, Palette> GetPaletteDictioanry()
         {
-            var paletteDictionary = new Dictionary<string,Palette>();
-            var shadesOfPinkPallete = new Palette("ShadesOfPink",Color.DeepPink,
-                Color.Pink,Color.DarkSalmon,Color.HotPink);
-            var shadesOfBlue = new Palette("ShadesOfBlue",Color.Blue,Color.Aqua,
+            var paletteDictionary = new Dictionary<string, Palette>();
+            var shadesOfPinkPallete = new Palette("ShadesOfPink", Color.DeepPink,
+                Color.Pink, Color.DarkSalmon, Color.HotPink);
+            var shadesOfBlue = new Palette("ShadesOfBlue", Color.Blue, Color.Aqua,
                 Color.CornflowerBlue);
             var randomColors = new Palette("RandomColors");
             paletteDictionary[shadesOfPinkPallete.Name] = shadesOfPinkPallete;

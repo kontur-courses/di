@@ -6,30 +6,30 @@ namespace TagCloud.Models
 {
     public class Palette
     {
-        private int count { get; set; }
-        public List<Color> Colors { get; }
-        public string Name { get; }
-
         public Palette(string name, List<Color> colors)
         {
-            count = 0;
+            Count = 0;
             Colors = colors;
             Name = name;
         }
 
         public Palette(string name, params Color[] colors)
         {
-            count = 0;
+            Count = 0;
             Colors = colors.ToList();
             Name = name;
         }
 
+        private int Count { get; set; }
+        public List<Color> Colors { get; }
+        public string Name { get; }
+
         public Color GetNextColor()
         {
-            if (count == Colors.Count)
-                count = 0;
-            var result = Colors[count];
-            count++;
+            if (Count == Colors.Count)
+                Count = 0;
+            var result = Colors[Count];
+            Count++;
             return result;
         }
     }

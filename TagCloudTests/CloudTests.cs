@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Castle.Windsor;
 using FluentAssertions;
-using FluentAssertions.Extensions;
 using NUnit.Framework;
 using TagCloud;
-using TagCloud.IServices;
 using TagCloud.Models;
 
 namespace TagCloudTests

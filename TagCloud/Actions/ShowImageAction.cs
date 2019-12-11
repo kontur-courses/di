@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Windows.Forms;
-using TagCloud.Models;
 
 namespace TagCloud.Actions
 {
@@ -10,7 +9,7 @@ namespace TagCloud.Actions
 
         public string Description { get; } = "display image";
 
-        public  void  Perform(ClientConfig config)
+        public void Perform(ClientConfig config)
         {
             var thread = new Thread(() =>
             {

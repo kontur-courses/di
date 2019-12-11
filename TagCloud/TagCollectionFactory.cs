@@ -20,7 +20,7 @@ namespace TagCloud
         {
             var primaryCollection = wordsHandler.GetWordsAndCount(path);
             var collectionAfterConversion = wordsHandler.Conversion(primaryCollection);
-            return parser.GetTagsRectangles(collectionAfterConversion,imageSettings)
+            return parser.GetTagsRectangles(collectionAfterConversion, imageSettings)
                 .OrderByDescending(t => t.Count)
                 .ToList();
         }

@@ -1,6 +1,4 @@
-﻿using TagCloud.Models;
-
-namespace TagCloud.Actions
+﻿namespace TagCloud.Actions
 {
     public class ExitAction : IAction
     {
