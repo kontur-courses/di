@@ -24,20 +24,22 @@ namespace TagsCloudConsole
         public static IContainer Configure(IDictionary<string, ValueObject> parameters)
         {
             var builder = new ContainerBuilder();
+            var applicationParameters = typeof(Application).GetConstructors()[0].GetParameters();
             builder
                 .RegisterType<Application>()
-                .WithParameter("wordsToExcludePath", parameters["--exclude"].ToString())
-                .WithParameter("width", parameters["--w"].ToString())
-                .WithParameter("height", parameters["--h"].ToString())
-                .WithParameter("imageOutputPath", parameters["--output"].ToString());
+                .WithParameter(applicationParameters[0].Name, parameters["--exclude"].ToString())
+                .WithParameter(applicationParameters[1].Name, parameters["--w"].ToString())
+                .WithParameter(applicationParameters[2].Name, parameters["--h"].ToString())
+                .WithParameter(applicationParameters[3].Name, parameters["--output"].ToString());
 
             //text reading configure
             ConfigureTextReader(parameters["--input"].ToString(), parameters["--input_ext"].ToString(), builder);
 
             //text processing configure
+            var patternName = typeof(TextSplitter).GetConstructors()[0].GetParameters()[0].Name;
             builder.RegisterType<TextSplitter>()
                 .As<ITextSplitter>()
-                .WithParameter("splitPatter", parameters["--split_pattern"].ToString());
+                .WithParameter(patternName, parameters["--split_pattern"].ToString());
             builder.RegisterType<WordsFormatterLowercaseAndTrim>().As<IWordsFormatter>();
             builder.RegisterType<WordsExcluder>().As<IWordsExcluder>();
             builder.RegisterType<Tokenizer>().As<ITokenizer>();
@@ -128,9 +130,11 @@ namespace TagsCloudConsole
             else if (extension == "pdf")
                 readerType = typeof(PdfTextReader);
 
+            var pathName = typeof(TxtTextReader).GetConstructors()[0].GetParameters()[0].Name;
+            
             builder.RegisterType(readerType)
                 .As<ITextReader>()
-                .WithParameter("path", path);
+                .WithParameter(pathName, path);
         }
 
         private static void ConfigureShuffler(string shuffleType, ValueObject seed, ContainerBuilder builder)
@@ -147,12 +151,13 @@ namespace TagsCloudConsole
                     break;
                 default:
                 {
+                    var randomSeedName = typeof(TokenShufflerRandom).GetConstructors()[0].GetParameters()[0].Name;
                     var randomSeed = Environment.TickCount;
                     if (seed.IsInt)
                         randomSeed = seed.AsInt;
                     builder.RegisterType<TokenShufflerRandom>()
                         .As<ITokenShuffler>()
-                        .WithParameter("randomSeed", randomSeed);
+                        .WithParameter(randomSeedName, randomSeed);
                     break;
                 }
             }

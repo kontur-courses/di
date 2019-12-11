@@ -61,12 +61,6 @@ namespace TagsCloudConsole
         public static void Main(string[] args)
         {
             var parameters = new Docopt().Apply(Usage, args, version: Version, exit: true);
-            Console.WriteLine("parsed args: " + parameters.Count);
-            foreach (var param in parameters)
-            {
-                Console.WriteLine("{0} = {1}", param.Key, param.Value);
-            }
-
             var container = ContainerConfigurator.Configure(parameters);
             container.Resolve<Application>().Run();
         }

@@ -5,6 +5,7 @@ using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
 using TagsCloudTextProcessing.Splitters;
+using TagsCloudTextProcessing.Tokenizers;
 using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
@@ -12,32 +13,34 @@ using TagsCloudVisualization.Styling.TagColorizer;
 using TagsCloudVisualization.Styling.TagSizeCalculators;
 using TagsCloudVisualization.Styling.Themes;
 using TagsCloudVisualization.Visualizers;
-using ITokenizer = TagsCloudTextProcessing.Tokenizers.ITokenizer;
 
 namespace TagsCloudConsole
 {
     public class Application
     {
-        private readonly string wordsToExcludePath;
+        private readonly IBitmapSaver bitmapSaver;
+        private readonly ICloudLayouter cloudLayouter;
+        private readonly ICloudVisualizer cloudVisualizer;
+        private readonly FontProperties fontProperties;
+        private readonly int height;
+        private readonly string imageOutputPath;
+        private readonly ITagColorizer tagColorizer;
+        private readonly TagSizeCalculator tagSizeCalculator;
         private readonly ITextReader textReader;
         private readonly ITextSplitter textSplitter;
-        private readonly IWordsFormatter wordsFormatter;
-        private readonly IWordsExcluder wordsExcluder;
+        private readonly ITheme theme;
         private readonly ITokenizer tokenizer;
         private readonly ITokenShuffler tokenShuffler;
-        private readonly FontProperties fontProperties;
-        private readonly ITheme theme;
-        private readonly TagSizeCalculator tagSizeCalculator;
-        private readonly ITagColorizer tagColorizer;
-        private readonly ICloudVisualizer cloudVisualizer;
-        private readonly ICloudLayouter cloudLayouter;
-        private readonly IBitmapSaver bitmapSaver;
-        private readonly string imageOutputPath;
         private readonly int width;
-        private readonly int height;
+        private readonly IWordsExcluder wordsExcluder;
+        private readonly IWordsFormatter wordsFormatter;
+        private readonly string wordsToExcludePath;
 
         public Application(
             string wordsToExcludePath,
+            int width,
+            int height,
+            string imageOutputPath,
             ITextReader textReader,
             ITextSplitter textSplitter,
             IWordsFormatter wordsFormatter,
@@ -50,10 +53,7 @@ namespace TagsCloudConsole
             ITagColorizer tagColorizer,
             ICloudVisualizer cloudVisualizer,
             ICloudLayouter cloudLayouter,
-            IBitmapSaver bitmapSaver,
-            int width,
-            int height,
-            string imageOutputPath
+            IBitmapSaver bitmapSaver
         )
         {
             this.wordsToExcludePath = wordsToExcludePath;
@@ -92,7 +92,9 @@ namespace TagsCloudConsole
             var style = new Style(theme, fontProperties, tagSizeCalculator, tagColorizer);
             var tags = cloudLayouter.GenerateTagsSequence(style, enumerable);
             using (var bitmap = cloudVisualizer.Visualize(style, tags, width, height))
+            {
                 bitmapSaver.Save(bitmap, imageOutputPath);
+            }
         }
     }
 }
