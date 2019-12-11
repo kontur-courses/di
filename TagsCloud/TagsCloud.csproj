@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,9 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DI\TagsCloudModule.cs" />
     <Compile Include="Renderers\ITagsCloudRenderer.cs" />
     <Compile Include="Renderers\ColoredRenderer.cs" />
-    <Compile Include="Renderers\SimpleDecorator.cs" />
+    <Compile Include="Renderers\SimpleRenderer.cs" />
     <Compile Include="FileParsers\IFileParser.cs" />
     <Compile Include="FileParsers\DocParser.cs" />
     <Compile Include="FileParsers\TxtParser.cs" />
