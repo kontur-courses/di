@@ -9,7 +9,7 @@ namespace TagsCloudGenerator.Core.Filters
 {
     public class WordsFilter : IWordsFilter
     {
-        private readonly string[] unusedPartsOfSpeech = {"PR", "ADV", "CONJ", "PART"};
+        private readonly string[] unusedPartsOfSpeech = {"PR", "ADV", "CONJ", "PART", "SPRO"};
 
         public IEnumerable<string> GetFilteredWords(IEnumerable<string> words)
         {

@@ -36,6 +36,8 @@
     <Compile Include="ArchimedeanSpiralTests.cs" />
     <Compile Include="SpiralCloudLayouterTests.cs" />
     <Compile Include="TagsCloudGeneratorTests.cs" />
+    <Compile Include="WordsFilterTests\WordsFilterTests.cs" />
+    <Compile Include="WordsFilterTests\WordsFilterTestsData.cs" />
     <Compile Include="WordsNormalizerTests\WordsNormalizerTests.cs" />
     <Compile Include="WordsNormalizerTests\WordsNormalizerTestsData.cs" />
   </ItemGroup>
