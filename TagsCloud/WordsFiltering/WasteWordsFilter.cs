@@ -71,15 +71,16 @@ namespace TagsCloud.WordsFiltering
 
             var asmLocation = Assembly.GetExecutingAssembly().Location;
             var path = Path.GetDirectoryName(asmLocation);
-            var process = new Process();
-            process.StartInfo.FileName = $"{path}\\WordsFiltering\\mystem.exe";
-            process.StartInfo.Arguments = $"-nldig \"{input}\" \"{output}\"";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.EnableRaisingEvents = true;
-            process.Start();
-            process.WaitForExit();
-            process.Dispose();
+            using (var process = new Process())
+            {
+                process.StartInfo.FileName = $"{path}\\WordsFiltering\\mystem.exe";
+                process.StartInfo.Arguments = $"-nldig \"{input}\" \"{output}\"";
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+                process.EnableRaisingEvents = true;
+                process.Start();
+                process.WaitForExit(); 
+            }
 
             return new List<string>(File.ReadAllLines(output));
         }
