@@ -39,28 +39,5 @@ namespace TagsCloudTextProcessing.Tests
 
             shuffledTokens.Should().BeInAscendingOrder(t => t.Count);
         }
-
-        [Test]
-        public void TokenShufflerRandomShuffle_Should_ShuffleTokensRandomly()
-        {
-            var tokensBeforeShuffling = new[]
-            {
-                new Token("b", 1),
-                new Token("a", 2),
-                new Token("d", 3),
-                new Token("f", 4)
-            };
-            var expectedTokens = new[]
-            {
-                new Token("f", 4),
-                new Token("d", 3),
-                new Token("a", 2),
-                new Token("b", 1)
-            };
-
-            var shuffledTokens = new TokenShufflerRandom(10).Shuffle(tokensBeforeShuffling);
-
-            shuffledTokens.Should().BeEquivalentTo(expectedTokens, options => options.WithStrictOrdering());
-        }
     }
 }

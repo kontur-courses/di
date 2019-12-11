@@ -4,6 +4,13 @@ namespace TagsCloudTextProcessing.Readers
 {
     public class TxtTextReader : ITextReader
     {
-        public string ReadText(string path) => File.ReadAllText(path);
+        private readonly string path;
+
+        public TxtTextReader(string path)
+        {
+            this.path = path;
+        }
+
+        public string ReadText() => File.ReadAllText(path);
     }
 }

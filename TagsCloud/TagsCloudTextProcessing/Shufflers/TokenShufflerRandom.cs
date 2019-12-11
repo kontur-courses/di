@@ -8,9 +8,10 @@ namespace TagsCloudTextProcessing.Shufflers
 
     {
         private readonly int randomSeed;
-        public TokenShufflerRandom(int randomSeed) => this.randomSeed = randomSeed;
-
-        public TokenShufflerRandom() => randomSeed = Environment.TickCount;
+        public TokenShufflerRandom(int randomSeed)
+        {
+            this.randomSeed = randomSeed;
+        }
 
         public IEnumerable<Token> Shuffle(IEnumerable<Token> tokens)
         {

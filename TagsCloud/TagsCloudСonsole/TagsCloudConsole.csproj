@@ -36,6 +36,11 @@
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DocoptNet, Version=0.0.0.0, Culture=neutral, PublicKeyToken=7a38c71da49a547e">
+      <HintPath>..\packages\docopt.net.0.6.1.10\lib\net40\DocoptNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -67,7 +72,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContainerConfig.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="ArgumentsParser.cs" />
+    <Compile Include="ContainerConfigurator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -34,10 +34,9 @@ namespace TagsCloudVisualization.Tests
             action.Should().NotThrow<Exception>();
         }
     }
-
-    //todo rewrite using PUTNEXTTAG (NOT RECT)
+    
     [TestFixture]
-    public class SpiralCloudLayouterPutNextTag_Should
+    public class SpiralCloudLayouterPutNextRectangle_Should
     {
         private PointF layouterCenter;
         private SpiralCloudLayouter cloudLayouter;
