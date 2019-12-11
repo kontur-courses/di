@@ -7,31 +7,38 @@ using TagsCloudLayout.PointLayouters;
 using TextConfiguration.WordFilters;
 using TextConfiguration.WordProcessors;
 using CommandLine;
-using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization
 {
     public static class Program
     {
+        private static void ConfigureConsolePropertiesProvider(this ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<ConsoleTagCloudBuilderPropertiesProvider>();
+            containerBuilder.Register(c => c.Resolve<ConsoleTagCloudBuilderPropertiesProvider>()
+                .GetCloudTagProperties())
+                .As<CloudTagProperties>();
+            containerBuilder.Register(c => c.Resolve<ConsoleTagCloudBuilderPropertiesProvider>()
+                .GetVisualizatorProperties())
+                .As<VisualizatorProperties>();
+            containerBuilder.Register(c => c.Resolve<ConsoleTagCloudBuilderPropertiesProvider>()
+                .GetConstantTextColorProvider())
+                .As<ITextColorProvider>();
+            containerBuilder.Register(c => c.Resolve<ConsoleTagCloudBuilderPropertiesProvider>()
+                .GetIOSettings())
+                .As<ITagCloudBuilderProperties>();
+            containerBuilder.Register(c => c.Resolve<ConsoleTagCloudBuilderPropertiesProvider>()
+                .GetCentralPoint())
+                .As<Point>();
+        }
+
         private static IContainer ConfigureContainer(Options opts)
         {
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterInstance(opts)
                 .As<Options>();
-            containerBuilder.RegisterInstance(
-                new CloudTagProperties(new FontFamily(opts.FontFamilyName), opts.FontSize))
-                .As<CloudTagProperties>();
-            containerBuilder.RegisterInstance(
-                new VisualizatorProperties(new Size(opts.ImageSize[0], opts.ImageSize[1])))
-                .As<VisualizatorProperties>();
-            containerBuilder.RegisterInstance(
-                new ConstantTextColorProvider(Color.FromName(opts.FontColorName)))
-                .As<ITextColorProvider>();
-            containerBuilder.Register(c => new ImageSaver(c.Resolve<Options>().OutputImageFormatName))
-                .As<ImageSaver>();
-            containerBuilder.Register(c => new Point(opts.CentralPoint[0], opts.CentralPoint[1]))
-                .As<Point>();
+            containerBuilder.ConfigureConsolePropertiesProvider();
 
             containerBuilder.RegisterType<RawTextReader>()
                 .As<ITextReader>();
@@ -40,23 +47,27 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterType<EmptyWordFilter>()
                 .As<IWordFilter>();
             if (opts.BoringWordsFilename != null)
-                containerBuilder.Register(c => 
+                containerBuilder.Register(c =>
                 new CustomBoringWordsFilter(
-                    c.Resolve<ITextReader>(), 
+                    c.Resolve<ITextReader>(),
                     c.Resolve<Options>().BoringWordsFilename))
                 .As<IWordFilter>();
             containerBuilder.RegisterType<ToLowerCaseProcessor>()
                 .As<IWordProcessor>();
-            containerBuilder.RegisterType<TextPreprocessor>();
-            containerBuilder.RegisterType<WordsProvider>();
-            containerBuilder.RegisterType<CloudTagProvider>();
+            containerBuilder.RegisterType<TextPreprocessor>()
+                .As<ITextPreprocessor>();
+            containerBuilder.RegisterType<WordsProvider>()
+                .As<IWordsProvider>();
+            containerBuilder.RegisterType<CloudTagProvider>()
+                .As<ITagProvider>();
 
             containerBuilder.RegisterType<ArchimedeanSpiral>()
                 .As<ICircularPointLayouter>();
             containerBuilder.RegisterType<CircularCloudLayouter>()
                 .As<ICloudLayouter>();
 
-            containerBuilder.RegisterType<TagCloudVisualizator>();
+            containerBuilder.RegisterType<TagCloudVisualizator>()
+                .As<ITagCloudVisualizator>();
 
             containerBuilder.RegisterType<ConsoleTagCloudBuilder>();
 

@@ -7,7 +7,7 @@ namespace TextConfiguration.WordFilters
         private readonly List<string> excludedWords =
             new List<string>() { "boring", "bored", "boooored", "зевнул" };
 
-        public bool ShouldFilter(string word)
+        public bool ShouldExclude(string word)
         {
             return excludedWords.Contains(word.ToLower());
         }

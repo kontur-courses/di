@@ -13,7 +13,7 @@ namespace TextConfiguration.WordFilters
             excludedWords = reader.ReadText(filename).Split().ToList();
         }
 
-        public bool ShouldFilter(string word)
+        public bool ShouldExclude(string word)
         {
             return excludedWords.Contains(word.ToLower());
         }

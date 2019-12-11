@@ -4,7 +4,7 @@ namespace TextConfiguration.WordFilters
 {
     public class EmptyWordFilter : IWordFilter
     {
-        public bool ShouldFilter(string word)
+        public bool ShouldExclude(string word)
         {
             return String.IsNullOrWhiteSpace(word);
         }

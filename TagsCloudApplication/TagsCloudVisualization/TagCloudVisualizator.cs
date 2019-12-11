@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization
 {
-    public class TagCloudVisualizator
+    public class TagCloudVisualizator : ITagCloudVisualizator
     {
         private readonly VisualizatorProperties properties;
         private readonly ITextColorProvider colorGenerator;
@@ -20,7 +20,7 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Bitmap VisualizeCloudTags(List<CloudTag> cloudTags)
+        public Bitmap VisualizeCloudTags(IReadOnlyCollection<CloudTag> cloudTags)
         {
             var bitmap = new Bitmap(properties.ImageSize.Width, properties.ImageSize.Height);
             var graphics = Graphics.FromImage(bitmap);

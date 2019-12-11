@@ -22,10 +22,13 @@ namespace TagsCloudApplicationTests
             containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<RawTextReader>()
                 .As<ITextReader>();
-            containerBuilder.RegisterType<TextPreprocessor>();
+            containerBuilder.RegisterType<TextPreprocessor>()
+                .As<ITextPreprocessor>();
             containerBuilder.RegisterType<ToLowerCaseProcessor>()
                 .As<IWordProcessor>();
-            containerBuilder.RegisterType<WordsProvider>();
+            containerBuilder.RegisterType<WordsProvider>()
+                .AsSelf()
+                .As<IWordsProvider>();
             containerBuilder.RegisterType<EmptyWordFilter>()
                 .As<IWordFilter>();
         }

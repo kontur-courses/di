@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TextConfiguration
 {
-    public class TextPreprocessor
+    public class TextPreprocessor : ITextPreprocessor
     {
         private readonly IWordFilter[] filters;
         private readonly IWordProcessor wordProcessor;
@@ -20,7 +20,7 @@ namespace TextConfiguration
         {
             return text
                 .Split()
-                .Where(wrd => !filters.Any(fltr => fltr.ShouldFilter(wrd)))
+                .Where(wrd => !filters.Any(fltr => fltr.ShouldExclude(wrd)))
                 .Select(wrd => wordProcessor.ProcessWord(wrd))
                 .ToList();
         }

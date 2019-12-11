@@ -6,12 +6,12 @@ using TextConfiguration;
 
 namespace TagsCloudVisualization
 {
-    public class CloudTagProvider
+    public class CloudTagProvider : ITagProvider
     {
         private readonly CloudTagProperties properties;
-        private readonly WordsProvider provider;
+        private readonly IWordsProvider provider;
 
-        public CloudTagProvider(CloudTagProperties properties, WordsProvider provider)
+        public CloudTagProvider(CloudTagProperties properties, IWordsProvider provider)
         {
             this.properties = properties;
             this.provider = provider;

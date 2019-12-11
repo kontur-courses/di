@@ -3,12 +3,12 @@ using TextConfiguration.TextReaders;
 
 namespace TextConfiguration
 {
-    public class WordsProvider
+    public class WordsProvider : IWordsProvider
     {
         private readonly ITextReader reader;
-        private readonly TextPreprocessor preprocessor;
+        private readonly ITextPreprocessor preprocessor;
 
-        public WordsProvider(ITextReader reader, TextPreprocessor preprocessor)
+        public WordsProvider(ITextReader reader, ITextPreprocessor preprocessor)
         {
             this.reader = reader;
             this.preprocessor = preprocessor;

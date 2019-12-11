@@ -40,10 +40,15 @@
     <Compile Include="CloudTag.cs" />
     <Compile Include="CloudTagProperties.cs" />
     <Compile Include="ConsoleTagCloudBuilder.cs" />
-    <Compile Include="ImageSaver.cs" />
+    <Compile Include="ConsoleTagCloudBuilderPropertiesProvider.cs" />
+    <Compile Include="ImageUtilities.cs" />
+    <Compile Include="ITagCloudBuilderProperties.cs" />
+    <Compile Include="ITagCloudVisualizator.cs" />
+    <Compile Include="ITagProvider.cs" />
     <Compile Include="ITextColorProvider.cs" />
     <Compile Include="CloudTagProvider.cs" />
     <Compile Include="Options.cs" />
+    <Compile Include="ConsoleTagCloudBuilderIOSettings.cs" />
     <Compile Include="VisualizatorProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ConstantTextColorProvider.cs" />
