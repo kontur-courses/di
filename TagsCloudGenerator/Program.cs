@@ -20,26 +20,28 @@ namespace TagsCloudGenerator
         public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed<Options>(options =>
-                {
-                    var translator = new TextToTagsTranslator(
-                        new WordsNormalizer(),
-                        new Hunspell(@"HunspellDictionaries\ru.aff", @"HunspellDictionaries\ru.dic"),
-                        new WordsFilter(),
-                        new SpiralRectangleCloudLayouter(new ArchimedeanSpiral(options.Alpha, options.Phi)));
-                    var tags = translator.TranslateTextToTags(
-                        File.ReadLines(options.InputFilename),
-                        new HashSet<string>(),
-                        options.FontFamily,
-                        options.MinFontSize);
+                .WithParsed(Run);
+        }
 
-                    var palette = options.ColorTheme.Palette();
-                    var cloudDrawer =
-                        new RectangleCloudDrawer(palette.BackgroundColor, new SolidBrush(palette.PrimaryColor));
-                    var bitmap = cloudDrawer.DrawCloud(tags.ToList());
-                    bitmap = ImageUtils.ResizeImage(bitmap, options.Width, options.Height);
-                    bitmap.Save(options.OutputFilename);
-                });
+        private static void Run(Options options)
+        {
+            var translator = new TextToTagsTranslator(
+                new WordsNormalizer(),
+                new Hunspell(@"HunspellDictionaries\ru.aff", @"HunspellDictionaries\ru.dic"),
+                new WordsFilter(),
+                new SpiralRectangleCloudLayouter(new ArchimedeanSpiral(options.Alpha, options.Phi)));
+            var tags = translator.TranslateTextToTags(
+                File.ReadLines(options.InputFilename),
+                new HashSet<string>(),
+                options.FontFamily,
+                options.MinFontSize);
+
+            var palette = options.ColorTheme.Palette();
+            var cloudDrawer =
+                new RectangleCloudDrawer(palette.BackgroundColor, new SolidBrush(palette.PrimaryColor));
+            var bitmap = cloudDrawer.DrawCloud(tags.ToList());
+            bitmap = ImageUtils.ResizeImage(bitmap, options.Width, options.Height);
+            bitmap.Save(options.OutputFilename);
         }
     }
 }

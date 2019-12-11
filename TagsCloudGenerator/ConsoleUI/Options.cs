@@ -22,7 +22,7 @@ namespace TagsCloudGenerator.ConsoleUI
         [Option('s', "size", Default = 10, Required = false, HelpText = "Min font size")]
         public int MinFontSize { get; set; }
 
-        [Option('t', "theme", Default = ColorTheme.First, Required = false, HelpText = "Color theme number")]
+        [Option('t', "theme", Default = ColorTheme.Second, Required = false, HelpText = "Color theme number")]
         public ColorTheme ColorTheme { get; set; }
             
         [Option('w', "width", Default = 500, Required = false, HelpText = "Image width")]

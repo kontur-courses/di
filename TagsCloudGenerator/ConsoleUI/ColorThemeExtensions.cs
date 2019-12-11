@@ -9,8 +9,8 @@ namespace TagsCloudGenerator.ConsoleUI
         private static readonly Dictionary<ColorTheme, Palette> ColorThemes = new Dictionary<ColorTheme, Palette>()
         {
             [ColorTheme.First] = new Palette(),
-            [ColorTheme.Second] = new Palette() {PrimaryColor = Color.Blue, SecondaryColor = Color.Yellow},
-            [ColorTheme.Third] = new Palette() {PrimaryColor = Color.LightSlateGray, SecondaryColor = Color.Coral}
+            [ColorTheme.Second] = new Palette() {BackgroundColor = Color.Blue, PrimaryColor = Color.Yellow},
+            [ColorTheme.Third] = new Palette() {BackgroundColor = Color.LightSlateGray, PrimaryColor = Color.Coral}
         };
 
         public static Palette Palette(this ColorTheme theme)
