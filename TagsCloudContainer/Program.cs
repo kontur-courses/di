@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
 using Autofac;
 using TagsCloudContainer.Core.Generators;
@@ -8,6 +7,7 @@ using TagsCloudContainer.Core.Layouters;
 using TagsCloudContainer.Data;
 using TagsCloudContainer.Data.Processors;
 using TagsCloudContainer.Data.Readers;
+using TagsCloudContainer.Savers;
 using TagsCloudContainer.Visualization;
 using TagsCloudContainer.Visualization.Layouts;
 using TagsCloudContainer.Visualization.Painters;
@@ -48,9 +48,9 @@ namespace TagsCloudContainer
 
             var visualizer = container.Resolve<TagsCloudVisualizer>();
             var image = visualizer.Visualize(painter.Colorize(tags));
-            var format = ImageFormat.Png;
-            var extension = new ImageFormatConverter().ConvertToString(format)?.ToLower();
-            image.Save($"cloud.{extension}", format);
+
+            var saver = container.ResolveNamed<IImageSaver>("pngImageSaver");
+            saver.Save("cloud.png", image);
         }
 
         private static IContainer CreateContainer()
@@ -80,6 +80,8 @@ namespace TagsCloudContainer
                 .As<IPainter>();
 
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
+
+            builder.RegisterType<PngImageSaver>().Named<IImageSaver>("pngImageSaver");
 
             return builder.Build();
         }
