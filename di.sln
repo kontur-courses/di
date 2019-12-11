@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudGenerator", "TagsCloudGenerator\TagsCloudGenerator.csproj", "{632074C4-5B9E-4B51-AE9D-D57A52AA9AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGeneratorTests", "TagCloudGeneratorTests\TagCloudGeneratorTests.csproj", "{5E7E4139-D740-4E53-9CAC-C401DBA7326B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudGeneratorTests", "TagsCloudGeneratorTests\TagsCloudGeneratorTests.csproj", "{5E7E4139-D740-4E53-9CAC-C401DBA7326B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Step11", "FractalPainter\Solved\Step11\Step11.csproj", "{EC139EB8-6E2E-4690-95E8-E1853F725C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudVisualization", "TagCloudVisualization\TagCloudVisualization.csproj", "{C9B09415-B89C-4A76-97CF-2BBACE04F7A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{C9B09415-B89C-4A76-97CF-2BBACE04F7A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

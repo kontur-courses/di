@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization.Infrastructure;
+using TagsCloudGenerator.Infrastructure;
 
 namespace TagsCloudGenerator.Core.Drawers
 {

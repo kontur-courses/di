@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Infrastructure
+namespace TagsCloudGenerator.Infrastructure
 {
     public static class PointUtils
     {

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NHunspell;
 
@@ -6,23 +8,28 @@ namespace TagsCloudGenerator.Core.Normalizers
 {
     public class WordsNormalizer : IWordsNormalizer
     {
-        private readonly char[] punctuationMarks = {':', '.', ',', ';', '?', '!', ')', '(', '*', '"', '\'', '«', '»'};
-        
         public IEnumerable<string> GetNormalizedWords(IEnumerable<string> text, HashSet<string> boringWords,
             Hunspell hunspell)
-        {   
-            foreach (var line in text)
-            {
-                foreach (var word in line.Split().Select(w => w.Trim(punctuationMarks)).Where(w => w.Length > 0))
-                {
-                    var stemResult = hunspell.Stem(word);
-                    var normalizedWord = stemResult.Count > 0 ? stemResult[0] : word.ToLower();
-                    if (hunspell.Spell(normalizedWord) && !boringWords.Contains(normalizedWord))
-                    {
-                        yield return normalizedWord;
-                    }
-                }
-            }
+        {
+            return from line in text
+                from word in line
+                    .Split()
+                    .Select(TrimPunctuation)
+                    .Where(w => w.Length > 0)
+                let stemResult = hunspell.Stem(word)
+                select stemResult.Count > 0 ? stemResult[0] : word.ToLower()
+                into normalizedWord
+                where hunspell.Spell(normalizedWord) && !boringWords.Contains(normalizedWord)
+                select normalizedWord;
+        }
+
+        private static string TrimPunctuation(string str)
+        {
+            var countPunctuationFromStart = str.TakeWhile(char.IsPunctuation).Count();
+            var countPunctuationFromEnd = str.Reverse().TakeWhile(char.IsPunctuation).Count();
+
+            return str.Substring(countPunctuationFromStart,
+                str.Length - countPunctuationFromEnd - countPunctuationFromStart);
         }
     }
 }

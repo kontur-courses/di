@@ -6,7 +6,7 @@ using NHunspell;
 using TagsCloudGenerator.Core.Filters;
 using TagsCloudGenerator.Core.Layouters;
 using TagsCloudGenerator.Core.Normalizers;
-using TagsCloudVisualization.Infrastructure;
+using TagsCloudGenerator.Infrastructure;
 
 namespace TagsCloudGenerator.Core.Translators
 {

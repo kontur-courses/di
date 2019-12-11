@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudGenerator.Core.Spirals;
-using TagsCloudVisualization.Infrastructure;
+using TagsCloudGenerator.Infrastructure;
 
 namespace TagsCloudGenerator.Core.Layouters
 {

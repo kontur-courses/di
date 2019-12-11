@@ -46,11 +46,18 @@
     <Compile Include="Examples\UsageExamples.cs" />
     <Compile Include="Infrastructure\PointFComparer.cs" />
     <Compile Include="Infrastructure\PointUtils.cs" />
-    <Compile Include="Infrastructure\RectangleUtils.cs" />
+    <Compile Include="Infrastructure\RectangleExtensions.cs" />
     <Compile Include="Infrastructure\TagInfo.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\exampleText.txt" />
+    <Content Include="bin\Debug\HunspellDictionaries\ru.aff" />
+    <Content Include="bin\Debug\HunspellDictionaries\ru.dic" />
+    <Content Include="bin\Debug\Hunspellx64.dll" />
+    <Content Include="bin\Debug\Hunspellx86.dll" />
+    <Content Include="bin\Debug\mystem32.exe" />
+    <Content Include="bin\Debug\mystem64.exe" />
     <Content Include="Examples\images\first.png" />
     <Content Include="Examples\images\fourth.png" />
     <Content Include="Examples\images\second.png" />
@@ -72,9 +79,6 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

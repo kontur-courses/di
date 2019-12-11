@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Infrastructure
+namespace TagsCloudGenerator.Infrastructure
 {
     public class PointFComparer : IEqualityComparer<PointF>
     {

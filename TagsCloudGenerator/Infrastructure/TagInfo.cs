@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloudVisualization.Infrastructure
+namespace TagsCloudGenerator.Infrastructure
 {
     public class TagInfo
     {

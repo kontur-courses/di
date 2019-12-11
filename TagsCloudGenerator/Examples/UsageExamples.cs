@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using TagsCloudGenerator.Core.Drawers;
 using TagsCloudGenerator.Core.Layouters;
 using TagsCloudGenerator.Core.Spirals;
-using TagsCloudVisualization.Infrastructure;
+using TagsCloudGenerator.Infrastructure;
 
 namespace TagsCloudGenerator.Examples
 {
