@@ -7,9 +7,15 @@ namespace TagCloud
     {
         private readonly Random random;
 
+        public bool IsChecked { get; set; }
+
+        public string Name { get; private set; }
+
         public RandomTheme()
         {
             random = new Random();
+            IsChecked = true;
+            Name = "RandomTheme";
         }
 
         public Color BackgroundColor =>

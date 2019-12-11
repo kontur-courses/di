@@ -4,17 +4,26 @@ namespace TagCloud
 {
     public class BoringWordsFilter : IFilter
     {
-        private BoringWordsList boringWordsList;
+        private BoringWord[] boringWords;
 
-        public BoringWordsFilter(BoringWordsList boringWordsList)
+        public bool IsChecked { get; set; }
+
+        public string Name { get; private set; }
+
+        public BoringWordsFilter(BoringWord[] boringWords)
         {
-            this.boringWordsList = boringWordsList;
+            this.boringWords = boringWords;
+            IsChecked = true;
+            Name = "Boring words filter";
         }
 
         public string[] FilterWords(string[] words)
         {
+            var boring = boringWords
+                .Where(word => word.IsChecked)
+                .Select(word => word.Name);
             var filteredWords = words
-                .Where(word => !boringWordsList.SelectedItems.Contains(word.ToLower()))
+                .Where(word => !boring.Contains(word))
                 .ToArray();
             return filteredWords;
         }
