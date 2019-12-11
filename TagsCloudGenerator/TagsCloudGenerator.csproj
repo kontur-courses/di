@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ConsoleUI\ColorTheme.cs" />
+    <Compile Include="ConsoleUI\ColorThemeExtensions.cs" />
+    <Compile Include="ConsoleUI\Options.cs" />
     <Compile Include="Core\Drawers\IRectangleCloudDrawer.cs" />
     <Compile Include="Core\Drawers\RectangleCloudDrawer.cs" />
     <Compile Include="Core\Filters\IWordsFilter.cs" />
@@ -70,6 +73,10 @@
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
       <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
       <Private>True</Private>
@@ -79,6 +86,12 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
+      <Project>{c9b09415-b89c-4a76-97cf-2bbace04f7a2}</Project>
+      <Name>TagsCloudVisualization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

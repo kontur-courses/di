@@ -47,8 +47,8 @@ namespace TagsCloudVisualization.Core.Painter
                 var cloudDrawer =
                     new RectangleCloudDrawer(palette.BackgroundColor, new SolidBrush(palette.PrimaryColor));
                 var bitmap = cloudDrawer.DrawCloud(tags.ToList());
-                var toPaint = ImageUtils.ResizeImage(bitmap, imageSettings.Width, imageSettings.Height);
-                graphics.DrawImage(toPaint, 0, 0);
+                bitmap = ImageUtils.ResizeImage(bitmap, imageSettings.Width, imageSettings.Height);
+                graphics.DrawImage(bitmap, 0, 0);
             }
 
             imageHolder.UpdateUi();

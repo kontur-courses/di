@@ -1,4 +1,5 @@
-﻿using TagsCloudVisualization.Core.Painter;
+﻿using TagsCloudGenerator.Infrastructure;
+using TagsCloudVisualization.Core.Painter;
 using TagsCloudVisualization.Infrastructure.Common;
 using TagsCloudVisualization.Infrastructure.UiActions;
 
