@@ -121,6 +121,7 @@
     <Compile Include="Infrastructure\SpeechPart.cs" />
     <Compile Include="Infrastructure\Enums\SpeechPartEnum.cs" />
     <Compile Include="Infrastructure\Reader.cs" />
+    <Compile Include="Infrastructure\Parsers\UpperCaseParser.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
