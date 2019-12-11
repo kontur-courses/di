@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Logic.Painter
 {
     public class RandomTagPainter : ITagPainter
     {

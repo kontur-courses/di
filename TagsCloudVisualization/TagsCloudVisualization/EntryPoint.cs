@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudVisualization.Logic;
+using TagsCloudVisualization.Logic.Painter;
 using TagsCloudVisualization.Services;
 using TagsCloudVisualization.UI.Actions;
 

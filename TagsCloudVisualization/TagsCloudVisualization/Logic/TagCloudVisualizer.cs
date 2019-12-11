@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Logic.Painter;
 using TagsCloudVisualization.Services;
 
 namespace TagsCloudVisualization.Logic
