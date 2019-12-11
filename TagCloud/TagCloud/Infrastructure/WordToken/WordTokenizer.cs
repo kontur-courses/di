@@ -10,7 +10,7 @@ namespace TagCloud
                 .GroupBy(word => word)
                 .ToDictionary(group => group.Key, group => group.Count());
             var wordTokens = frequencyDictionary
-                .Select(pair => new WordToken(pair.Key, pair.Value, SpeechPart.None))
+                .Select(pair => new WordToken(pair.Key, pair.Value, SpeechPartEnum.None))
                 .ToArray();
             return wordTokens;
         }

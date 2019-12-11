@@ -4,9 +4,9 @@
     {
         public readonly string Value;
         public readonly int Count;
-        public readonly SpeechPart SpeechPart;
+        public readonly SpeechPartEnum SpeechPart;
 
-        public WordToken(string value, int count, SpeechPart speechPart)
+        public WordToken(string value, int count, SpeechPartEnum speechPart)
         {
             Value = value;
             Count = count;
