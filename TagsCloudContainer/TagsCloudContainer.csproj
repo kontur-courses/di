@@ -45,7 +45,7 @@
     <Compile Include="Core\ColoringAlgorithms\RandomColoring.cs" />
     <Compile Include="Core\FrequencyDictionary.cs" />
     <Compile Include="Core\ImageSavers\IImageSaver.cs" />
-    <Compile Include="Core\ImageSavers\PngSaver.cs" />
+    <Compile Include="Core\ImageSavers\ImageSaver.cs" />
     <Compile Include="Core\LayoutAlgorithms\ArchimedeanSpiral.cs" />
     <Compile Include="Core\LayoutAlgorithms\Axis.cs" />
     <Compile Include="Core\LayoutAlgorithms\CircularCloudLayouter.cs" />

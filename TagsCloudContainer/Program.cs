@@ -45,7 +45,7 @@ namespace TagsCloudContainer
                 Component.For<IWordConverter>().ImplementedBy<LowerCaseConverter>(),
                                  Component.For<IWordConverter>().ImplementedBy<PunctuationRemover>());
             container.Register(Component.For<IImageSaver>()
-                .ImplementedBy<PngSaver>());
+                .ImplementedBy<ImageSaver>());
             container.Register(Component.For<Filter>()
                 .LifestyleSingleton());
             container.Register(Component.For<WordConverter>()

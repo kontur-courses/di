@@ -32,16 +32,13 @@ namespace TagsCloudContainer.Tests
             if (!Directory.Exists($@"C:\\TagCloudTests"))
                 Directory.CreateDirectory($@"C:\\TagCloudTests");
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure) return;
-            var tags = new List<Tag>();
-            foreach (var rectangle in circularCloudLayouter.Rectangles)
-            {
-                tags.Add(new Tag("a", rectangle, 1));
-            }
+            var tags = circularCloudLayouter.Rectangles.Select(rectangle => new Tag("a", rectangle, 1))
+                    .ToList();
             var tagCloudImageCreator = new TagCloudImageBuilder(new RandomColoring());
             var testName = TestContext.CurrentContext.Test.FullName;
             var path = $@"C:\\TagCloudTests\{testName}.jpg";
             var bitmap = tagCloudImageCreator.Build("Arial", tags, new Size(1000, 1000));
-            new PngSaver().Save(path, bitmap);
+            new ImageSaver().Save(path, bitmap, "jpeg");
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 

@@ -10,7 +10,10 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
         [Option('o', "output", Required = true, HelpText = "Output file with tag cloud.")]
         public string OutputFile { get; set; }
 
-        [Option('f', "font", Default = "Arial", Required = false, HelpText = "font to be used in the cloud")]
+        [Option('f', "font", Default = "Arial", Required = false, HelpText = "Font to be used in the cloud")]
         public string FontName { get; set; }
+
+        [Option('e', "image_format", Default = "jpeg", HelpText = "Tag cloud image format")]
+        public string ImageFormat { get; set; }
     }
 }

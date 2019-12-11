@@ -59,7 +59,7 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
             }
 
             var bitmap = tagCloudImageCreator.Build(options.FontName, tags, layoutAlgorithm.GetLayoutSize());
-            imageSaver.Save(options.OutputFile, bitmap);
+            imageSaver.Save(options.OutputFile, bitmap, options.ImageFormat);
         }
     }
 }
