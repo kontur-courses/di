@@ -44,12 +44,17 @@
   <ItemGroup>
     <Compile Include="ArchimedeanSpiral_Should.cs" />
     <Compile Include="CloudLayouter_Should.cs" />
+    <Compile Include="CloudTagProvider_Should.cs" />
     <Compile Include="WordsProvider_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudLayout\TagsCloudLayout.csproj">
       <Project>{8b34d40a-8013-4c69-aff0-f4f9b9e50c8b}</Project>
       <Name>TagsCloudLayout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
+      <Project>{8068ca09-8e81-4508-86c7-d8187ca86570}</Project>
+      <Name>TagsCloudVisualization</Name>
     </ProjectReference>
     <ProjectReference Include="..\TextConfiguration\TextConfiguration.csproj">
       <Project>{ab1a0f6a-67e7-482f-9f87-2b0c2b2c7d46}</Project>

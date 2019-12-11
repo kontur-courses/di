@@ -20,6 +20,8 @@ namespace TagsCloudVisualization
         public List<CloudTag> ReadCloudTags(string filePath)
         {
             var processedWords = provider.ReadWordsFromFile(filePath);
+            if (processedWords.Count == 0)
+                return new List<CloudTag>();
 
             return processedWords
                 .CountWords()
