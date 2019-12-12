@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Unicode;
 using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.TextReaders;

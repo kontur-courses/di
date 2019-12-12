@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Text;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.TextReaders;
 using TagsCloudVisualization.Visualization;

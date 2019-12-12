@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
 using CommandLine;
-using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.Visualization;
 namespace TagsCloudVisualization.ApplicationOptions
 {
@@ -11,7 +9,7 @@ namespace TagsCloudVisualization.ApplicationOptions
         public string FontFamily { get; set; }
 
         [Option('s', "fontSize", HelpText = "Font size", Default = 10)]
-        public int FontSize { get; set; }
+        public int MinFontSize { get; set; }
 
         [Option('w', "imageWidth", HelpText = "Image width", Default = 1000)]
         public int ImageWidth { get; set; }
@@ -33,7 +31,7 @@ namespace TagsCloudVisualization.ApplicationOptions
 
         public VisualisingOptions GetVisualizingOptions()
         {
-            return new VisualisingOptions(new Font(FontFamily, FontSize), new Size(ImageWidth, ImageHeight),
+            return new VisualisingOptions(new Font(FontFamily, MinFontSize), new Size(ImageWidth, ImageHeight),
                 Color.FromName(BackGroundColorName), Color.FromName(TextColorName));
         }
     }

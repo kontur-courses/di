@@ -1,5 +1,4 @@
 ﻿using System;
-using TagsCloudVisualization.WordSizing;
 
 namespace TagsCloudVisualization.Clients
 {

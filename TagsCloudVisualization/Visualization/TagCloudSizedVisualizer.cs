@@ -20,7 +20,7 @@ namespace TagsCloudVisualization.Visualization
         public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter,
             ICloudPainter<Tuple<SizedWord, Rectangle>> cloudPainter)
         {
-            var sizedWords = new FrequencyWordSizer().GetSizedWords(words);
+            var sizedWords = new FrequencyWordSizer().GetSizedWords(words, (int)visualisingOptions.Font.Size, (int)visualisingOptions.Font.Size/2);
             var rectangles = GetRectanglesForWords(sizedWords, layouter);
             return cloudPainter.GetImage(sizedWords.Zip(rectangles, Tuple.Create), visualisingOptions);
         }
