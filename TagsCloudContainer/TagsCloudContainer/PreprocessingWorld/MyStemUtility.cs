@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TagsCloudContainer.PreprocessingWorld
 {
@@ -17,19 +17,31 @@ namespace TagsCloudContainer.PreprocessingWorld
             flags = "-nig --format json";
         }
 
-
-        public string GetResult(string filePath)
+        private string WordProcessing(MyStemOutput myStemOutput)
         {
-            var bufer = new StringBuilder();
+            if (myStemOutput.analysis != null)
+                foreach (var wordInfo in myStemOutput.analysis)
+                    if (wordInfo.gr.Contains("S") && wordInfo.gr.Contains("ед") && wordInfo.gr.Contains("им") )
+                        return wordInfo.lex.ToLower();
+            return null;
+        }
+        
+        private IEnumerable<string> GetResult(string filePath)
+        {
+            var listWord = new List<string>();
+            
             using (var proc = CreateProcess(filePath))
             {
                 proc.Start();
                 while (!proc.StandardOutput.EndOfStream)
                 {
-                    bufer.AppendLine(proc.StandardOutput.ReadLine());
+                    var word = WordProcessing(JsonConvert.DeserializeObject<MyStemOutput>(proc.StandardOutput.ReadLine()));
+                    if (word != null)
+                        listWord.Add(word);
                 }
             }
-            return bufer.ToString();
+
+            return listWord;
         }
         
         private Process CreateProcess(string filePath)
@@ -46,10 +58,17 @@ namespace TagsCloudContainer.PreprocessingWorld
                 }
             };
         }
-
+        
         public IEnumerable<string> Preprocessing(IEnumerable<string> strings)
         {
-            throw new System.NotImplementedException();
+            var pathTempFile = Path.GetTempFileName();
+            using (var sw = File.CreateText(pathTempFile))
+                foreach (var str in strings)
+                    sw.WriteLine(str);
+
+            var result = GetResult(pathTempFile);
+            File.Delete(pathTempFile);
+            return result;
         }
     }
 }

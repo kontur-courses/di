@@ -2,7 +2,7 @@
 using System.Drawing;
 using TagsCloudContainer.CloudLayouter;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.CloudDrawing
 {
     public class CircularCloudDrawing
     {

@@ -6,6 +6,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudContainer.CloudDrawing;
 using TagsCloudContainer.CloudLayouter;
 using TagsCloudContainer.CloudLayouter.Spiral;
 
