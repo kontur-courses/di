@@ -1,17 +1,21 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.CloudLayouter;
+using TagsCloudContainer.CloudLayouter.Spiral;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     public static class ExamplesCircularCloud
     {
         public static void GenerateTagCloud(IEnumerable<Tuple<string, Font>> strings, Size size, string filename)
         {
-            var circularCloudDrawing = new CircularCloudDrawing(size);
+            var circularCloudDrawing = new CircularCloudDrawing(size, Color.Lime,
+                p => new CircularCloudLayouter(p, p1 => new CircularSpiral(p1)));
             foreach (var (str, font) in strings) 
-                circularCloudDrawing.DrawString(str, font);
+                circularCloudDrawing.DrawString(str, font, Brushes.Brown,
+                    new StringFormat() {LineAlignment = StringAlignment.Center});
             circularCloudDrawing.SaveImage(filename);
         }
 

@@ -1,41 +1,33 @@
-﻿﻿using System;
+﻿using System;
 using System.Drawing;
+using TagsCloudContainer.CloudLayouter;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     public class CircularCloudDrawing
     {
-        private CircularCloudLayouter layouter;
+        private ICloudLayouter layouter;
         private Bitmap bitmap;
         private Graphics graphics;
-        private StringFormat stringFormat;
-        private Pen pen;
-        private Brush brush;
-        
-        public CircularCloudDrawing(Size imageSize)
+
+        public CircularCloudDrawing(Size imageSize, Color background, Func<Point, ICloudLayouter> cloudLayouterGenerator)
         {
             if (imageSize.Height <= 0 || imageSize.Height <= 0)
                 throw new AggregateException("Size have zero width or height");
             bitmap = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(Color.Linen);
-            brush = Brushes.Black;
-            layouter = new CircularCloudLayouter(new Point(imageSize.Width / 2, imageSize.Height / 2));
-            pen = new Pen(Brushes.Brown);
-            stringFormat = new StringFormat()
-            {
-                LineAlignment = StringAlignment.Center
-            };
+            graphics.Clear(background);
+            layouter = cloudLayouterGenerator(new Point(imageSize.Width / 2, imageSize.Height / 2));
         }
 
-        public void DrawString(string str, Font font)
+        public void DrawString(string str, Font font, Brush brush, StringFormat stringFormat)
         {
             var stringSize = (graphics.MeasureString(str, font) + new SizeF(1, 1)).ToSize();
             var stringRectangle = layouter.PutNextRectangle(stringSize);
             graphics.DrawString(str, font, brush, stringRectangle, stringFormat);
         }
         
-        public void DrawRectangle(Rectangle rectangle)
+        public void DrawRectangle(Rectangle rectangle, Pen pen)
         {
             graphics.DrawRectangle(pen, rectangle);
         }

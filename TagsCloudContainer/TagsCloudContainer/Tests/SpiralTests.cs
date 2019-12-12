@@ -1,11 +1,11 @@
-﻿﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer.CloudLayouter.Spiral;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudContainer.Tests
 {
     [TestFixture()]
     public class SpiralTests
@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.Tests
         [TestCaseSource(nameof(cloudCenters))]
         public void GetPoints_ShouldGiveFirstPointCenter(Point center)
         {
-            var spiral = new Spiral(center);
+            var spiral = new CircularSpiral(center);
             var firstPoint = spiral.GetPoints().Take(1).First();
             firstPoint.Should().BeEquivalentTo(center);
         }
