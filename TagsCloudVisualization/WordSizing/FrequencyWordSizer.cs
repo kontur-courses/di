@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.WordSizing
 {
     public class FrequencyWordSizer : IWordSizer
     {
-        public IEnumerable<SizedWord> GetSizedWords(IEnumerable<string> words, int minSize = 10, int step = 1)
+        public IEnumerable<SizedWord> GetSizedWords(IEnumerable<string> words, int minSize = 10, int step = 5)
         {
             if (minSize <= 0)
                 throw new ArgumentException("Min size must be positive");

@@ -7,6 +7,7 @@ using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.TextPreprocessing;
 using TagsCloudVisualization.TextReaders;
 using TagsCloudVisualization.Visualization;
+using TagsCloudVisualization.WordSizing;
 
 namespace TagsCloudVisualization
 {
@@ -15,12 +16,12 @@ namespace TagsCloudVisualization
         private readonly ITextReader textReader;
         private readonly WordsExtractor wordsExtractor;
         private readonly WordPreprocessor wordPreprocessor;
-        private readonly ICloudPainter<Tuple<string, Rectangle>> cloudPainter;
-        private readonly TagCloudVisualizer tagCloudVisualizer;
+        private readonly ICloudPainter<Tuple<SizedWord, Rectangle>> cloudPainter;
+        private readonly TagCloudSizedVisualizer tagCloudVisualizer;
         private readonly ILayouter layouter;
 
         public CloudCreator(ITextReader textReader, WordsExtractor wordsExtractor, WordPreprocessor wordPreprocessor,
-            ICloudPainter<Tuple<string, Rectangle>> cloudPainter, TagCloudVisualizer tagCloudVisualizer,
+            ICloudPainter<Tuple<SizedWord, Rectangle>> cloudPainter, TagCloudSizedVisualizer tagCloudVisualizer,
             ILayouter layouter)
         {
             this.textReader = textReader;

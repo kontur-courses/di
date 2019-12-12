@@ -22,7 +22,8 @@ namespace TagsCloudVisualization
             var center = new Point(imageOptions.ImageSize.Width / 2, imageOptions.ImageSize.Height / 2);
             var builder = new ContainerBuilder();
             builder.RegisterType<SizedWord>().AsSelf();
-            builder.RegisterType<MultiColorCloudPainter>().As<ICloudPainter<Tuple<string, Rectangle>>>();
+            //builder.RegisterType<MultiColorCloudPainter>().As<ICloudPainter<Tuple<string, Rectangle>>>();
+            builder.RegisterType<MultiColorFrequencyCloudPainter>().As<ICloudPainter<Tuple<SizedWord, Rectangle>>>();
             builder.RegisterType<LowerCaseWordConverter>().As<IWordConverter>();
             builder.RegisterType<NormalFormWordConverter>().As<IWordConverter>()
                 .WithParameter("affPath", affPath)
@@ -33,6 +34,7 @@ namespace TagsCloudVisualization
             builder.RegisterType<WordsExtractor>().AsSelf();
             builder.RegisterType<WordPreprocessor>().AsSelf();
             builder.RegisterType<TagCloudVisualizer>().AsSelf().WithParameter("visualisingOptions", imageOptions);
+            builder.RegisterType<TagCloudSizedVisualizer>().AsSelf().WithParameter("visualisingOptions", imageOptions);
             builder.RegisterType<Spiral>().AsSelf().WithParameter("center", center);
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<CloudCreator>().AsSelf();
