@@ -15,5 +15,8 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 
         [Option('e', "image_format", Default = "jpeg", HelpText = "Tag cloud image format")]
         public string ImageFormat { get; set; }
+
+        [Option('b', "boring", Required = false, HelpText = "File with boring words to be excluded")]
+        public string FileWithBoringWords { get; set; }
     }
 }

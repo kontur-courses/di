@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using CommandLine;
@@ -48,11 +49,19 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 
         private void Run(Options options)
         {
-            Console.WriteLine(options.FontName);
-            var reader = SelectReader(options.InputFile);
-            if (reader == null)
+            var readerForInput = SelectReader(options.InputFile);
+            if (readerForInput == null)
                 throw new ArgumentException("Формат входного файла не поддерживается");
-            var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(wordConverter.ConvertWord);
+            var boringWords = new HashSet<string>();
+            if (options.FileWithBoringWords != null)
+            {
+                Console.WriteLine(options.FileWithBoringWords);
+                var readerForBoring = SelectReader(options.FileWithBoringWords);
+                boringWords = FormWords(options.FileWithBoringWords, readerForBoring).ToHashSet();
+                Console.WriteLine(string.Join(", ", boringWords));
+            }
+            var words = FormWords(options.InputFile, readerForInput)
+                .Where(w => !boringWords.Contains(w));
             var tags = new List<Tag>();
             var frequencyDictionary = new Dictionary<string, int>();
             foreach (var word in words)
@@ -67,6 +76,13 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 
             var bitmap = tagCloudImageCreator.Build(options.FontName, tags, layoutAlgorithm.GetLayoutSize());
             imageSaver.Save(options.OutputFile, bitmap, options.ImageFormat);
+        }
+
+        private IEnumerable<string> FormWords(string path, IReader reader)
+        {
+            return reader.ReadWords(path)
+                .Where(filter.FilterWord)
+                .Select(wordConverter.ConvertWord);
         }
     }
 }
