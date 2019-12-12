@@ -1,0 +1,6 @@
+{X=-5,Y=-5,Width=10,Height=10}
+{X=-20,Y=-15,Width=40,Height=10}
+{X=-20,Y=5,Width=40,Height=10}
+{X=-40,Y=-50,Width=20,Height=100}
+{X=5,Y=-5,Width=15,Height=15}
+
