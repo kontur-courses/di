@@ -78,11 +78,10 @@
     <Compile Include="LayoutConstructor.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MenuActions\CircularLayouterAction.cs" />
-    <Compile Include="MenuActions\FontSettingsAction.cs" />
-    <Compile Include="MenuActions\ImageSettingsAction.cs" />
     <Compile Include="MenuActions\MenuActionExtensions.cs" />
-    <Compile Include="MenuActions\PaletteSettingsAction.cs" />
+    <Compile Include="MenuActions\PainterSettingsAction.cs" />
     <Compile Include="MenuActions\SaveImageAction.cs" />
+    <Compile Include="PainterSettings.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="PictureBoxImageHolder.cs" />
     <Compile Include="Program.cs" />

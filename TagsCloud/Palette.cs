@@ -20,8 +20,7 @@ namespace TagsCloud
 			Color.Red,
 			Color.DarkOrange,
 		};
-		public bool DrawWordRectangle { get; set; } = true;
-
+		
 		public Palette(Random randomizer) => this.randomizer = randomizer;
 
 		public Color GenerateColor()
