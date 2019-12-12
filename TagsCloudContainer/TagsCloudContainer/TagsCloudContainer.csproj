@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -60,11 +68,14 @@
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
     <Compile Include="CloudLayouter\Spiral\ISpiral.cs" />
     <Compile Include="CloudLayouter\Spiral\CircularSpiral.cs" />
-    <Compile Include="PreprocessingWorld\IRreprocessingWorld.cs" />
+    <Compile Include="Options.cs" />
+    <Compile Include="PreprocessingWorld\IPreprocessingWorld.cs" />
     <Compile Include="PreprocessingWorld\MyStemOutput.cs" />
     <Compile Include="PreprocessingWorld\MyStemUtility.cs" />
     <Compile Include="PreprocessingWorld\TempFile.cs" />
     <Compile Include="PreprocessingWorld\WordInfo.cs" />
+    <Compile Include="ProcessingWorld\IProcessor.cs" />
+    <Compile Include="ProcessingWorld\Processor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader\IReader.cs" />

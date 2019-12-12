@@ -5,14 +5,11 @@ namespace TagsCloudContainer.Reader
 {
     public class ReaderFromTxt : IReader
     {
-        private readonly string path;
-
-        public ReaderFromTxt(string path)
+        public ReaderFromTxt()
         {
-            this.path = path;
+            
         }
-        
-        public IEnumerable<string> GetWorldSet()
+        public IEnumerable<string> GetWorldSet(string path)
         {
             using (var sr = new StreamReader(path))
             {

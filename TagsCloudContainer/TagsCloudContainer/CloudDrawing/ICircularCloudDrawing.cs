@@ -9,5 +9,6 @@ namespace TagsCloudContainer.CloudDrawing
         void DrawRectangle(Rectangle rectangle, Pen pen);
 
         void SaveImage(string filename);
+        void SetBackground(Color background);
     }
 }

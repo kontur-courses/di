@@ -9,14 +9,19 @@ namespace TagsCloudContainer.CloudLayouter
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<Rectangle> rectangles;
-        private readonly IEnumerator<Point> spiralPoint;
+        private IEnumerator<Point> spiralPoint;
+        private readonly ISpiral spiral;
 
-        public CircularCloudLayouter(Point center ,Func<Point, ISpiral> spiralGenerator)
+        public CircularCloudLayouter(ISpiral spiral)
         {
             rectangles = new List<Rectangle>();
-            spiralPoint = spiralGenerator(center).GetPoints().GetEnumerator();
+            this.spiral = spiral;
         }
-        
+
+        public void SetCenter(Point center)
+        {
+            spiralPoint = spiral.GetPoints(center).GetEnumerator();
+        }
         
         public Rectangle PutNextRectangle(Size rectangleSize)
         {

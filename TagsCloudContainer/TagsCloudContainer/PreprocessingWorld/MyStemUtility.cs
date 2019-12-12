@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -11,9 +12,9 @@ namespace TagsCloudContainer.PreprocessingWorld
         private readonly string pathMyStemUtility;
         private readonly string flags;
         
-        public MyStemUtility(string pathMyStemUtility)
+        public MyStemUtility()
         {
-            this.pathMyStemUtility = pathMyStemUtility;
+            pathMyStemUtility = Environment.CurrentDirectory + @"\..\..\mystem.exe";
             flags = "-nig --format json";
         }
 

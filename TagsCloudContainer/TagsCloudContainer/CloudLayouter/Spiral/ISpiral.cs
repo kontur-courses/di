@@ -5,6 +5,6 @@ namespace TagsCloudContainer.CloudLayouter.Spiral
 {
     public interface ISpiral
     {
-        IEnumerable<Point> GetPoints();
+        IEnumerable<Point> GetPoints(Point center);
     }
 }

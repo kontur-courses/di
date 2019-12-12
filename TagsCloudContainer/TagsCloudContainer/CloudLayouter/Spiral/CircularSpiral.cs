@@ -7,12 +7,7 @@ namespace TagsCloudContainer.CloudLayouter.Spiral
     public class CircularSpiral : ISpiral
     {
         private readonly Point center;
-
-        public CircularSpiral(Point center)
-        {
-            this.center = center;
-        }
-        public IEnumerable<Point> GetPoints()
+        public IEnumerable<Point> GetPoints(Point center)
         {
             var radius = 0.0; 
             var angle = 0.0;

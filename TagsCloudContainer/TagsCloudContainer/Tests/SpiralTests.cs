@@ -13,8 +13,8 @@ namespace TagsCloudContainer.Tests
         [TestCaseSource(nameof(cloudCenters))]
         public void GetPoints_ShouldGiveFirstPointCenter(Point center)
         {
-            var spiral = new CircularSpiral(center);
-            var firstPoint = spiral.GetPoints().Take(1).First();
+            var spiral = new CircularSpiral();
+            var firstPoint = spiral.GetPoints(center).Take(1).First();
             firstPoint.Should().BeEquivalentTo(center);
         }
         

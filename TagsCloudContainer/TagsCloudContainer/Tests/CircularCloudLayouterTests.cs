@@ -24,7 +24,7 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void Constructor_DoesNotThrow_WithСorrectСenter([ValueSource(nameof(cloudCenters))]Point center) 
         { 
-            Action action = () => new CircularCloudLayouter(center, p => new CircularSpiral(p)); 
+            Action action = () => new CircularCloudLayouter(new CircularSpiral()); 
             action.Should().NotThrow(); 
         }
         
@@ -32,7 +32,8 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void PutNextRectangle_LocateFirstRectangle_OnSpecifiedByXCenter([ValueSource(nameof(cloudCenters))]Point center)
         {
-            var circularCloudLayouter = new CircularCloudLayouter(center, p => new CircularSpiral(p)); 
+            var circularCloudLayouter = new CircularCloudLayouter(new CircularSpiral()); 
+            circularCloudLayouter.SetCenter(center);
             rectangles.Add(circularCloudLayouter.PutNextRectangle(new Size(31 , 42)));
             rectangles[0].X.Should().Be(center.X - 31 / 2);
         }
@@ -40,7 +41,8 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void PutNextRectangle_LocateFirstRectangle_OnSpecifiedByYCenter( [ValueSource(nameof(cloudCenters))]Point center)
         {
-            var circularCloudLayouter = new CircularCloudLayouter(center, p => new CircularSpiral(p)); 
+            var circularCloudLayouter = new CircularCloudLayouter(new CircularSpiral()); 
+            circularCloudLayouter.SetCenter(center);
             rectangles.Add(circularCloudLayouter.PutNextRectangle(new Size(31 , 42)));
             rectangles[0].Y.Should().Be(center.Y - 42 / 2);
         }
@@ -53,7 +55,8 @@ namespace TagsCloudContainer.Tests
         [TestCase(100, TestName = "HundredRectangles")]
         public void PutNextRectangle_RectanglesMustNotIntersect(int countRectangles)
         {
-            var circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), p => new CircularSpiral(p));
+            var circularCloudLayouter = new CircularCloudLayouter(new CircularSpiral());
+            circularCloudLayouter.SetCenter(new Point(0, 0));
             rectangles.AddRange(Enumerable.Range(10, countRectangles)
                 .Select(i => circularCloudLayouter.PutNextRectangle(new Size(i * 3, i))));
             
@@ -67,8 +70,8 @@ namespace TagsCloudContainer.Tests
             var path = Path.Combine(Environment.CurrentDirectory, "TagCloudTests");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            var circularCloudDrawing = new CircularCloudDrawing(new Size(2000, 2000),Color.Azure, 
-                p => new CircularCloudLayouter(p, p1 => new CircularSpiral(p1)));
+            
+            var circularCloudDrawing = new CircularCloudDrawing(new CircularCloudLayouter( new CircularSpiral()));
             foreach (var rectangle in rectangles) 
                 circularCloudDrawing.DrawRectangle(rectangle, new Pen(Color.Blue));
             var testName = TestContext.CurrentContext.Test.FullName;
