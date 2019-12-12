@@ -74,7 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtensions_Tests.cs" />
     <Compile Include="TagsProcessor_Tests.cs" />
-    <Compile Include="TxtReader_Tests.cs" />
     <Compile Include="WordsProcessor_Tests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,9 +13,9 @@ namespace TagsCloud
 			mainMenu.Items.AddRange(actions.ToMenuItems());
 			Controls.Add(mainMenu);
 
+			pictureBox.RecreateImage(imageSettings);
 			pictureBox.Dock = DockStyle.Fill;
 			Controls.Add(pictureBox);
-			pictureBox.RecreateImage(imageSettings);
 
 			WindowState = FormWindowState.Maximized;
 			Text = "Tags cloud";

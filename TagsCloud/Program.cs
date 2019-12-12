@@ -6,8 +6,9 @@ using TagsCloud.MenuActions;
 
 namespace TagsCloud
 {
-    internal class Program
+    internal static class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             const string sourceTextFilePath = @"../../Resources/text.txt";
@@ -34,7 +35,11 @@ namespace TagsCloud
             builder.RegisterType<ArchimedeSpiral>().As<ISpiral>().SingleInstance();
             builder.RegisterType<TagsProcessor>().As<ITagsProcessor>().SingleInstance();
             builder.RegisterType<WordsProcessor>().As<IWordsProcessor>().SingleInstance();
-            builder.RegisterInstance(new TxtReader(sourceTextFilePath)).As<ITextReader>().SingleInstance();
+            builder.Register(c =>
+            {
+                var exHandler = c.Resolve<IExceptionHandler>();
+                return new TxtReader(sourceTextFilePath, exHandler);
+            }).As<ITextReader>().SingleInstance();
             builder.RegisterType<WordLengthFilter>().As<IWordFilter>().SingleInstance();
             builder.RegisterType<BoringWordsFilter>().As<IWordFilter>().SingleInstance();
             builder.RegisterType<GUIExceptionsHandler>().As<IExceptionHandler>().SingleInstance();

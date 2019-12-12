@@ -38,14 +38,8 @@ namespace TagsCloud.MenuActions
 			    !(Math.Abs(parameters.AngleStepDegrees) < double.Epsilon))
 				return true;
 
-			HandleException(new ArgumentException("Spiral parameters can't be zero"));
+			exceptionHandler.Handle(new ArgumentException("Spiral parameters can't be zero"));
 			return false;
-		}
-
-		private void HandleException(Exception exception)
-		{
-			void Target() => exceptionHandler.Handle(exception);
-			new Thread(new ThreadStart((Action) Target)).Start();
 		}
 	}
 }

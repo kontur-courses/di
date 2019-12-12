@@ -19,6 +19,7 @@ namespace TagsCloud.MenuActions
 			var dialog = new SaveFileDialog
 			{
 				CheckFileExists = false,
+				InitialDirectory = @"D:\",
 				DefaultExt = "png",
 				FileName = "image.png",
 				Filter = "Изображения|*.png;*.bmp;*.jpg"

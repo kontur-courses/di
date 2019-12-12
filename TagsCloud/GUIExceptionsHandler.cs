@@ -11,7 +11,7 @@ namespace TagsCloud
 			var caption = "Something went wrong";
 			if (exception is ArgumentException)
 				caption = "Wrong input";
-			MessageBox.Show(exception.Message, caption);
+			MessageBox.Show(exception.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 	}
 }
