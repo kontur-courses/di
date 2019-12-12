@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="ConsoleUI\ColorTheme.cs" />
     <Compile Include="ConsoleUI\ColorThemeExtensions.cs" />
+    <Compile Include="ConsoleUI\ImageFormatUtils.cs" />
     <Compile Include="ConsoleUI\Options.cs" />
     <Compile Include="Core\Drawers\IRectangleCloudDrawer.cs" />
     <Compile Include="Core\Drawers\RectangleCloudDrawer.cs" />

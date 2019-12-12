@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -41,7 +42,7 @@ namespace TagsCloudGenerator
                 new RectangleCloudDrawer(palette.BackgroundColor, new SolidBrush(palette.PrimaryColor));
             var bitmap = cloudDrawer.DrawCloud(tags.ToList());
             bitmap = ImageUtils.ResizeImage(bitmap, options.Width, options.Height);
-            bitmap.Save(options.OutputFilename);
+            bitmap.Save(options.OutputFilename, ImageFormatUtils.GetImageFormatByExtension(options.ImageFormat));
         }
     }
 }
