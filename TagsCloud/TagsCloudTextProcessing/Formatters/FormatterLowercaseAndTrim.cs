@@ -7,7 +7,8 @@ namespace TagsCloudTextProcessing.Formatters
     {
         public IEnumerable<string> Format(IEnumerable<string> wordsInput)
         {
-            return wordsInput.Select(w => w.Trim().ToLower());
+            wordsInput = new TrimFormatter().Format(wordsInput);
+            return new LowercaseFormatter().Format(wordsInput);
         }
     }
 }
