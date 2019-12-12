@@ -2,6 +2,6 @@
 {
     interface IWordConverter
     {
-        string Handle(string word);
+        string Convert(string word);
     }
 }

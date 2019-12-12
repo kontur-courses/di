@@ -11,10 +11,10 @@ namespace TagsCloudContainer.Core.TextHandler.WordConverters
             this.wordHandlers = wordHandlers;
         }
 
-        public IEnumerable<string> HandleWords(IEnumerable<string> words) => words.Select(HandleWord);
+        public IEnumerable<string> ConvertWords(IEnumerable<string> words) => words.Select(ConvertWord);
 
-        public string HandleWord(string word) =>
-            wordHandlers.Aggregate(word, (current, wordHandler) => wordHandler.Handle(current));
+        public string ConvertWord(string word) =>
+            wordHandlers.Aggregate(word, (current, wordHandler) => wordHandler.Convert(current));
 
     }
 }

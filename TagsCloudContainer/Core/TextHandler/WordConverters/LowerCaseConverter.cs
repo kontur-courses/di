@@ -2,6 +2,6 @@
 {
     class LowerCaseConverter : IWordConverter
     {
-        public string Handle(string word) => word.ToLower();
+        public string Convert(string word) => word.ToLower();
     }
 }

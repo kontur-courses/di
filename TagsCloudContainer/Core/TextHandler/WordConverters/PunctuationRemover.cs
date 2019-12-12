@@ -2,6 +2,6 @@
 {
     class PunctuationRemover : IWordConverter
     {
-        public string Handle(string word) => word.Trim('[', '-', '.', '?', '!', ')', '(', ',', ':', ']', '\'', '\"');
+        public string Convert(string word) => word.Trim('[', '-', ';', '.', '?', '!', ')', '(', ',', ':', ']', '\'', '\"');
     }
 }
