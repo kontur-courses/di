@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TagsCloudVisualization.PathFinders;
@@ -14,13 +15,6 @@ namespace TagsCloudVisualization.TextFilters
         public BoringWordsFilter(IEnumerable<string> boringWords)
         {
             this.boringWords = boringWords.ToHashSet();
-        }
-        
-        public BoringWordsFilter()
-        {
-            var text = new TxtReader().ReadText(PathFinder.GetTextsPath("boringWords"), Encoding.Default);
-            var words = new WordsExtractor().GetWords(text);
-            boringWords = words.ToHashSet();
         }
 
         public IEnumerable<string> FilterWords(IEnumerable<string> words)

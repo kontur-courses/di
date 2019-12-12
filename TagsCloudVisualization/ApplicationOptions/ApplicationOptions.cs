@@ -28,6 +28,9 @@ namespace TagsCloudVisualization.ApplicationOptions
 
         [Option('i', "imagePath", HelpText = "Image path", Required = true)]
         public string ImagePath { get; set; }
+        
+        [Option('y', "boringWords", HelpText = "Boring words", Required = true)]
+        public string BoringWords { get; set; }
 
         public VisualisingOptions GetVisualizingOptions()
         {

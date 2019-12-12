@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
 using TagsCloudVisualization.CloudPainters;
@@ -15,8 +16,10 @@ namespace TagsCloudVisualization
 {
     public class ContainerCreator
     {
-        public IContainer GetContainer(VisualisingOptions imageOptions)
+        public IContainer GetContainer(ApplicationOptions.ApplicationOptions applicationOptions)
         {
+            var imageOptions = applicationOptions.GetVisualizingOptions();
+            var boringWords = new WordsExtractor().GetWords(applicationOptions.BoringWords);
             var affPath = PathFinder.GetHunspellDictionariesPath("ru_RU.aff");
             var dicPath = PathFinder.GetHunspellDictionariesPath("ru_RU.dic");
             var center = new Point(imageOptions.ImageSize.Width / 2, imageOptions.ImageSize.Height / 2);
@@ -29,7 +32,8 @@ namespace TagsCloudVisualization
                 .WithParameter("affPath", affPath)
                 .WithParameter("dicPath", dicPath);
             builder.RegisterType<ShortWordsFilter>().As<ITextFilter>();
-            builder.RegisterType<BoringWordsFilter>().As<ITextFilter>();
+            builder.RegisterType<BoringWordsFilter>().As<ITextFilter>()
+                .WithParameter("boringWords", boringWords);
             builder.RegisterType<TxtReader>().As<ITextReader>();
             builder.RegisterType<WordsExtractor>().AsSelf();
             builder.RegisterType<WordPreprocessor>().AsSelf();
