@@ -8,7 +8,6 @@ using TagsCloudGenerator.Core.Layouters;
 using TagsCloudGenerator.Core.Normalizers;
 using TagsCloudGenerator.Core.Spirals;
 using TagsCloudGenerator.Core.Translators;
-using TagsCloudGenerator.Infrastructure;
 using TagsCloudVisualization.Core;
 using TagsCloudVisualization.Core.Painter;
 using TagsCloudVisualization.Infrastructure.Common;
@@ -55,7 +54,6 @@ namespace TagsCloudVisualization
             });
             
             builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
-
             builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
 

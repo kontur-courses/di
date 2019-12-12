@@ -43,10 +43,10 @@ namespace TagsCloudVisualization.Core
             Image = ImageUtils.ResizeImage(Image, imageSettings.Width, imageSettings.Height);
         }
 
-        public void SaveImage(string fileName)
+        public void SaveImage(string fileName, ImageFormat format)
         {
             FailIfNotInitialized();
-            Image.Save(fileName);
+            Image.Save(fileName, format);
         }
     }
 }

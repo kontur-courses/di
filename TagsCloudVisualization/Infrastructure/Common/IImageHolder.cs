@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization.Infrastructure.Common
 {
@@ -9,6 +10,6 @@ namespace TagsCloudVisualization.Infrastructure.Common
         void UpdateUi();
         void RecreateImage(ImageSettings settings);
         void ResizeImage(ImageSettings settings);
-        void SaveImage(string fileName);
+        void SaveImage(string fileName, ImageFormat format);
     }
 }

@@ -31,7 +31,7 @@ namespace TagsCloudGenerator.ConsoleUI
         [Option('h', "height", Default = 500, Required = false, HelpText = "Image height")]
         public int Height { get; set; }
         
-        [Option("format", Default = "png", Required = false, HelpText = "Image format")]
-        public string ImageFormat { get; set; }
+        [Option("format", Default = "png", Required = false, HelpText = "Image extension")]
+        public string ImageExtension { get; set; }
     }
 }

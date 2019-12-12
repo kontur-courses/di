@@ -3,6 +3,7 @@ namespace TagsCloudVisualization.Core.Painter
     public class TagCloudSettings
     {
         public string TextFilename { get; set; } = "exampleText.txt";
+        public string ImageExtension { get; set; } = "png";
         public string FontFamily { get; set; } = "Calibri";
         public int MinFontSize { get; set; } = 10;      
         public float SpiralAlpha { get; set; } = 1;
