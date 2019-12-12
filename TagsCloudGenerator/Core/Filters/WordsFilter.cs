@@ -15,13 +15,12 @@ namespace TagsCloudGenerator.Core.Filters
         {
             var myStemOutput = GetMyStemOutput(words);
 
-            foreach (var stemResult in myStemOutput.Split('\n').Where(s => s != ""))
-            {
-                if (!unusedPartsOfSpeech.Any(p => stemResult.Contains($"={p}")))
-                {
-                    yield return stemResult.Split('{')[0];
-                }
-            }
+            var filteredWords = myStemOutput
+                .Split('\n')
+                .Where(s => s != "" && !unusedPartsOfSpeech.Any(p => s.Contains($"={p}")))
+                .Select(s => s.Split('{')[0]);
+            foreach (var word in filteredWords)
+                yield return word;
         }
 
         private string GetMyStemOutput(IEnumerable<string> words)
