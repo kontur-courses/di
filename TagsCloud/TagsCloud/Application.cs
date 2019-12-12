@@ -20,12 +20,21 @@ namespace TagsCloud
         private readonly IWriter _writer;
         private readonly IWordGetter _wordGetter;
         private readonly IWordsProcessor _wordsProcessor;
+        private readonly ImageFormat _imageFormat;
 
         private readonly char[] _delimiters = new char[]
             {',', '.', ' ', ':', ';', '(', ')', '—', '–', '[', ']', '!', '?', '\n'};
+        private readonly Dictionary< ImageFormat, string> _imageFormatDenotation =
+            new Dictionary<ImageFormat, string>
+            {
+                { ImageFormat.Jpeg,"jpg"},
+                { ImageFormat.Png, "png"},
+                { ImageFormat.Bmp,"bmp"},
+                { ImageFormat.Gif,"gif"}
+            };
 
         public Application(IWordAnalyzer wordStatisticGetter, ILayouter layouter, IVisualizer visualizer, Options options,
-            IWriter writer, IWordGetter wordGetter, IWordsProcessor wordsProcessor)
+            IWriter writer, IWordGetter wordGetter, IWordsProcessor wordsProcessor, ImageFormat imageFormat = null)
         {
             this._wordStatisticGetter = wordStatisticGetter;
             this._layouter = layouter;
@@ -34,6 +43,7 @@ namespace TagsCloud
             this._writer = writer;
             this._wordGetter = wordGetter;
             this._wordsProcessor = wordsProcessor;
+            this._imageFormat = imageFormat ?? ImageFormat.Jpeg ;
         }
 
         public void Run()
@@ -47,9 +57,9 @@ namespace TagsCloud
             using (var bitmap = _visualizer.GetCloudVisualization(tags.ToList()))
             {
                 var name = Path.GetFileName(_options.File);
-                var jpgName = Path.ChangeExtension(name, "jpg");
-                _writer.Write($"Your image located at:  {new FileInfo(jpgName).FullName}");
-                bitmap.Save(jpgName, ImageFormat.Jpeg);
+                var imgName = Path.ChangeExtension(name, _imageFormatDenotation[_imageFormat]);
+                _writer.Write($"Your image located at:  {new FileInfo(imgName).FullName}");
+                bitmap.Save(imgName, _imageFormat);
             }
         }
 

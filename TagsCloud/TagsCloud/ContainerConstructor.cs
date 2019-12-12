@@ -39,9 +39,13 @@ namespace TagsCloud
                 new NamedParameter("maxFontSize", options.MaxFontSize)
             }
             );
-            builder.RegisterType<Application>().AsSelf().WithParameter("options", options);
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<WordsCleaner>().As<IWordsProcessor>().WithParameter("infinitive", options.Infinitive);
+            builder.RegisterType<Application>().AsSelf().WithParameters(new List<Parameter>
+            {
+                new NamedParameter("options", options),
+                new NamedParameter("imageFormat", options.Format),
+            });
 
             return builder.Build();
         }

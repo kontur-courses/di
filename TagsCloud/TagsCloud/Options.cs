@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using CommandLine;
 using TagsCloud.Visualization.ColorDefiner;
 using TagsCloud.Visualization.SizeDefiner;
+using static System.Drawing.Imaging.ImageFormat;
 
 namespace TagsCloud
 {
@@ -45,5 +47,8 @@ namespace TagsCloud
         
         [Option("inf", Required = false, Default = false, HelpText = "Get words in infinitive form")]
         public bool Infinitive { get; set; }
+        
+        [Option('o',"outputFormat", Required = false, HelpText = "Format of image")]
+        public ImageFormat Format { get; set; }
     }
 }
