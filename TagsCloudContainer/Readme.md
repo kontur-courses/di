@@ -19,7 +19,7 @@
 
 TagsCloudContainer.exe -i ../../text.txt -o ../../out.png 
 
-![Пример] (../../out.png)
+![](https://github.com/lgnv/di/blob/master/TagsCloudContainer/out.png)
 
 ![Пример2] (../../randomColoring.jpeg)
 
