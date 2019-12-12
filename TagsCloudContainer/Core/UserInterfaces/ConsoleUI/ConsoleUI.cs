@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CommandLine;
+using TagsCloudContainer.Core.Extensions;
 using TagsCloudContainer.Core.ImageBuilder;
 using TagsCloudContainer.Core.ImageSavers;
 using TagsCloudContainer.Core.LayoutAlgorithms;
@@ -72,8 +73,8 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 
         private HashSet<string> FormBoringWords(string path)
         {
-            return path == null 
-                ? new HashSet<string>() 
+            return path == null
+                ? new HashSet<string>()
                 : FormWordsFromFile(path).ToHashSet();
         }
 

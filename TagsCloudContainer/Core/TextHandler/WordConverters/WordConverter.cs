@@ -6,6 +6,7 @@ namespace TagsCloudContainer.Core.TextHandler.WordConverters
     class WordConverter
     {
         private readonly IWordConverter[] wordHandlers;
+
         public WordConverter(IWordConverter[] wordHandlers)
         {
             this.wordHandlers = wordHandlers;
@@ -15,6 +16,5 @@ namespace TagsCloudContainer.Core.TextHandler.WordConverters
 
         public string ConvertWord(string word) =>
             wordHandlers.Aggregate(word, (current, wordHandler) => wordHandler.Convert(current));
-
     }
 }

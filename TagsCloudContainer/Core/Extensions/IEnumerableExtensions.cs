@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Core
+namespace TagsCloudContainer.Core.Extensions
 {
     public static class IEnumerableExtensions
     {

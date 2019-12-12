@@ -53,11 +53,13 @@ namespace TagsCloudContainer.Tests
             action.Should().NotThrow();
         }
 
-        [TestCase(1, true, Description = "It is expected that one rectangle added to an empty layout will not intersect",
+        [TestCase(1, true,
+            Description = "It is expected that one rectangle added to an empty layout will not intersect",
             TestName = "WhenAdded1SameRectangles")]
         [TestCase(50, true, Description = "None of the fifty added rectangles are expected to intersect",
             TestName = "WhenAdded50SameRectangles")]
-        [TestCase(1, false, Description = "It is expected that one rectangle added to an empty layout will not intersect",
+        [TestCase(1, false,
+            Description = "It is expected that one rectangle added to an empty layout will not intersect",
             TestName = "WhenAdded1DifferentRectangles")]
         [TestCase(50, false, Description = "None of the fifty added rectangles are expected to intersect",
             TestName = "WhenAdded50DifferentRectangles")]
@@ -78,7 +80,8 @@ namespace TagsCloudContainer.Tests
             TestName = "WhenAdded1DifferentRectangles")]
         [TestCase(50, false, Description = "Expect only fifty rectangle in the layout, after we added one",
             TestName = "WhenAdded50DifferentRectangles")]
-        public void PutNextRectangle_NumberRectanglesShouldBeAsAdded_WhenSameRectangles(int countRectangles, bool sameRectangles)
+        public void PutNextRectangle_NumberRectanglesShouldBeAsAdded_WhenSameRectangles(int countRectangles,
+            bool sameRectangles)
         {
             if (sameRectangles)
                 AddSameRectangles(countRectangles, 50);

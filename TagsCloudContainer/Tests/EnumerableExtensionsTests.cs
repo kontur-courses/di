@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.Core;
+using TagsCloudContainer.Core.Extensions;
 
 namespace TagsCloudContainer.Tests
 {
@@ -18,6 +17,5 @@ namespace TagsCloudContainer.Tests
                 .Should()
                 .BeInDescendingOrder(kvp => kvp.Item2);
         }
-
     }
 }

@@ -33,7 +33,7 @@ namespace TagsCloudContainer
                 .ImplementedBy<ConsoleUi>());
             container.Register(
                 Component.For<IReader>().ImplementedBy<TxtReader>(),
-                                 Component.For<IReader>().ImplementedBy<DocReader>());
+                Component.For<IReader>().ImplementedBy<DocReader>());
             container.Register(Component.For<ILayoutAlgorithm>()
                 .ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("center", new Point(500, 500))));
@@ -44,7 +44,7 @@ namespace TagsCloudContainer
             container.Register(Component.For<IWordFilter>().ImplementedBy<BoringWordsFilter>());
             container.Register(
                 Component.For<IWordConverter>().ImplementedBy<LowerCaseConverter>(),
-                                 Component.For<IWordConverter>().ImplementedBy<PunctuationRemover>());
+                Component.For<IWordConverter>().ImplementedBy<PunctuationRemover>());
             container.Register(Component.For<IImageSaver>()
                 .ImplementedBy<ImageSaver>());
             container.Register(Component.For<Filter>()

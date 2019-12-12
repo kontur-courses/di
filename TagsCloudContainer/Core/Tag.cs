@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+
 namespace TagsCloudContainer.Core
 {
     class Tag

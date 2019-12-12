@@ -21,10 +21,12 @@ namespace TagsCloudContainer.Core.ImageSavers
                 ["tif"] = ImageFormat.Tiff
             };
         }
+
         public void Save(string pathImage, Bitmap bitmap, string format)
-        { 
+        {
             if (!formats.ContainsKey(format))
-                throw new ArgumentException($"Неподдерживаемый формат\nПоддерживаются {string.Join(", ", formats.Keys)}");
+                throw new ArgumentException(
+                    $"Неподдерживаемый формат\nПоддерживаются {string.Join(", ", formats.Keys)}");
             bitmap.Save(pathImage, formats[format]);
             Console.WriteLine($"Tag cloud visualization saved to file {pathImage}");
         }

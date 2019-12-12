@@ -22,6 +22,7 @@ namespace TagsCloudContainer.Core.ColoringAlgorithms
             };
             random = new Random();
         }
+
         public Color GetNextColor()
         {
             var randomNumber = random.Next(0, colors.Length - 1);
