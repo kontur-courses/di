@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Core;
@@ -8,25 +9,18 @@ namespace TagsCloudContainer.Tests
     [TestFixture]
     class FrequencyDictionaryTests
     {
-        private FrequencyDictionary<string> frequencyDictionary;
+        private Dictionary<string, int> frequencyDictionary;
 
         [SetUp]
         public void SetUp()
         {
-            frequencyDictionary = new FrequencyDictionary<string>();;
+            frequencyDictionary = new Dictionary<string, int>();;
         }
 
         [Test]
         public void Constructor_DoesNotThrow_WhenWithoutParameters()
         {
-            Action action = () => new FrequencyDictionary<string>();
-            action.Should().NotThrow();
-        }
-
-        [Test]
-        public void Constructor_DoesNotThrow_WhenWithIEnumerableKeys()
-        {
-            Action action = () => new FrequencyDictionary<string>(new [] {"a", "b", "c"});
+            Action action = () => new Dictionary<string, int>();
             action.Should().NotThrow();
         }
 

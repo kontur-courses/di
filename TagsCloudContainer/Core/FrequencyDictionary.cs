@@ -4,38 +4,24 @@ using System.Linq;
 
 namespace TagsCloudContainer.Core
 {
-    class FrequencyDictionary<T>
+    public static class DictionaryExtension
     {
-        private readonly Dictionary<T, int> frequencyDictionary;
-        public FrequencyDictionary()
+        public static void Add<T>(this Dictionary<T, int> source, T key)
         {
-            frequencyDictionary = new Dictionary<T, int>();
+            if (!source.ContainsKey(key))
+                source[key] = 0;
+            source[key]++;
         }
 
-        public FrequencyDictionary(IEnumerable<T> keys) : this()
-        {
-            foreach (var key in keys)
-                Add(key);
-        }
+        public static int GetCounter<T>(this Dictionary<T, int> source, T key) =>
+            source.TryGetValue(key, out var result) ? result : 0;
 
-        public void Add(T key)
+        public static IEnumerable<(T, int)> Top<T>(this Dictionary<T, int> source, int count)
         {
-            if (!frequencyDictionary.ContainsKey(key))
-                frequencyDictionary[key] = 0;
-            frequencyDictionary[key]++;
-        }
-
-        public int GetCounter(T key) => frequencyDictionary.TryGetValue(key, out var result) ? result : 0;
-
-        public IEnumerable<(T, int)> Top(int count)
-        {
-            return frequencyDictionary
+            return source
                 .OrderByDescending(kvp => kvp.Value)
-                .Take(Math.Min(count, frequencyDictionary.Count))
+                .Take(Math.Min(count, source.Count))
                 .Select(kvp => (kvp.Key, kvp.Value));
         }
-
-        public int Count() => frequencyDictionary.Count;
-
     }
 }

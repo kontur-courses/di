@@ -54,7 +54,9 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
                 throw new ArgumentException("Формат входного файла не поддерживается");
             var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(wordConverter.ConvertWord);
             var tags = new List<Tag>();
-            var frequencyDictionary = new FrequencyDictionary<string>(words);
+            var frequencyDictionary = new Dictionary<string, int>();
+            foreach (var word in words)
+                frequencyDictionary.Add(word);
             var top30 = frequencyDictionary.Top(30).ToArray();
             for (var i = 0; i < top30.Length; i++)
             {
