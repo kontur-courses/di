@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudContainer.Data;
 
-namespace TagsCloudContainer.Visualization.Layouts
+namespace TagsCloudContainer.Visualization.Measurers
 {
     public interface IWordMeasurer
     {

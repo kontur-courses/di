@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Visualization.Layouts
+namespace TagsCloudContainer.Visualization.Measurers
 {
     public class Tag
     {

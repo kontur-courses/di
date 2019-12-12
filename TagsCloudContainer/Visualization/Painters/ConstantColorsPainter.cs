@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Visualization.Layouts;
+using TagsCloudContainer.Visualization.Measurers;
 
 namespace TagsCloudContainer.Visualization.Painters
 {
@@ -9,6 +9,11 @@ namespace TagsCloudContainer.Visualization.Painters
         private readonly Brush textBrush;
         private readonly Brush fillBrush;
         private readonly Pen borderPen;
+
+        public ConstantColorsPainter(ISettings settings) :
+            this(settings.TextColor, settings.FillColor, settings.BorderColor)
+        {
+        }
 
         public ConstantColorsPainter(Color textColor, Color fillColor, Color borderColor)
         {
@@ -29,6 +34,13 @@ namespace TagsCloudContainer.Visualization.Painters
             return tags
                 .Select(tag => new ColorizedTag(tag, textBrush, fillBrush, borderPen))
                 .ToArray();
+        }
+
+        public interface ISettings
+        {
+            Color TextColor { get; }
+            Color FillColor { get; }
+            Color BorderColor { get; }
         }
     }
 }

@@ -2,14 +2,18 @@
 using System.Windows.Forms;
 using TagsCloudContainer.Data;
 
-namespace TagsCloudContainer.Visualization.Layouts
+namespace TagsCloudContainer.Visualization.Measurers
 {
     internal class ProbabilityWordMeasurer : IWordMeasurer
     {
         private readonly FontFamily fontFamily;
         private readonly float sizeFactor;
 
-        internal ProbabilityWordMeasurer(FontFamily fontFamily, float sizeFactor)
+        public ProbabilityWordMeasurer(ISettings settings) : this(settings.FontFamily, settings.SizeFactor)
+        {
+        }
+
+        private ProbabilityWordMeasurer(FontFamily fontFamily, float sizeFactor)
         {
             this.fontFamily = fontFamily;
             this.sizeFactor = sizeFactor;
@@ -21,6 +25,12 @@ namespace TagsCloudContainer.Visualization.Layouts
             var font = new Font(fontFamily, emSize);
             var size = TextRenderer.MeasureText(word.Value, font);
             return (font, size);
+        }
+
+        public interface ISettings
+        {
+            FontFamily FontFamily { get; }
+            float SizeFactor { get; }
         }
     }
 }

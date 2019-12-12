@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Visualization.Layouts;
+using TagsCloudContainer.Visualization.Measurers;
 
 namespace TagsCloudContainer.Visualization.Painters
 {

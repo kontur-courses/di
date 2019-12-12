@@ -20,6 +20,11 @@ namespace TagsCloudContainer.Visualization
 
         public Color BackgroundColor { get; set; } = Color.Transparent;
 
+        public TagsCloudVisualizer(ISettings settings) : this(settings.ImageSize)
+        {
+            BackgroundColor = settings.BackgroundColor;
+        }
+
         public TagsCloudVisualizer(Size? imageSize = null)
         {
             this.imageSize = imageSize;
@@ -108,6 +113,12 @@ namespace TagsCloudContainer.Visualization
         {
             graphics.FillRectangle(colorized.FillBrush, colorized.Rectangle);
             graphics.DrawRectangle(colorized.BorderPen, colorized.Rectangle);
+        }
+
+        public interface ISettings
+        {
+            Size? ImageSize { get; }
+            Color BackgroundColor { get; }
         }
     }
 }
