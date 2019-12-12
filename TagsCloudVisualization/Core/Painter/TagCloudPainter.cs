@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using TagsCloudGenerator.Core.Drawers;
 using TagsCloudGenerator.Core.Translators;
+using TagsCloudGenerator.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Common;
 
 namespace TagsCloudVisualization.Core.Painter

@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloudVisualization.Infrastructure.Common
+namespace TagsCloudGenerator.Infrastructure
 {
     public class Palette
     {

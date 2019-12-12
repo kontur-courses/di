@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace TagsCloudVisualization.Infrastructure.Common
+namespace TagsCloudGenerator.Infrastructure
 {
     public class ImageUtils
     {

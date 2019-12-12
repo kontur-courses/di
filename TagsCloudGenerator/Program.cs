@@ -12,7 +12,7 @@ using TagsCloudGenerator.Core.Layouters;
 using TagsCloudGenerator.Core.Normalizers;
 using TagsCloudGenerator.Core.Spirals;
 using TagsCloudGenerator.Core.Translators;
-using TagsCloudVisualization.Infrastructure.Common;
+using TagsCloudGenerator.Infrastructure;
 
 namespace TagsCloudGenerator
 {

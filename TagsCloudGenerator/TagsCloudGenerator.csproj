@@ -48,6 +48,8 @@
     <Compile Include="Core\Spirals\ISpiral.cs" />
     <Compile Include="Core\Translators\TextToTagsTranslator.cs" />
     <Compile Include="Examples\UsageExamples.cs" />
+    <Compile Include="Infrastructure\ImageUtils.cs" />
+    <Compile Include="Infrastructure\Palette.cs" />
     <Compile Include="Infrastructure\PointFComparer.cs" />
     <Compile Include="Infrastructure\PointUtils.cs" />
     <Compile Include="Infrastructure\RectangleExtensions.cs" />
@@ -87,12 +89,6 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
-      <Project>{c9b09415-b89c-4a76-97cf-2bbace04f7a2}</Project>
-      <Name>TagsCloudVisualization</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
