@@ -1,21 +1,25 @@
-# Tags Cloud Container
+﻿# Tags Cloud Container
 
 ## Manual 
 
-  -i, --input     Input file with data to process.
+  -i, --input           Required. Input file with data to process.
 
-  -o, --output    Output file with tag cloud.
+  -o, --output          Required. Output file with tag cloud.
 
-  -f, --font      (Default: Arial) font to be used in the cloud
+  -f, --font            (Default: Arial) Font to be used in the cloud
 
-  --help          Display this help screen.
+  -e, --image_format    (Default: jpeg) Tag cloud image format
 
-  --version       Display version information.
-  
+  -b, --boring          File with boring words to be excluded
+
+  --help                Display this help screen.
+
+  --version             Display version information.  
 ## Example 
 
 TagsCloudContainer.exe -i ../../text.txt -o ../../out.png 
 
 ![Пример] (../../out.png)
 
+![Пример2] (../../randomColoring.jpeg)
 
