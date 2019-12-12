@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TagsCloud.WordPreprocessing
 {
@@ -13,22 +15,19 @@ namespace TagsCloud.WordPreprocessing
 
         public FileReader(FileInfo fileName, Encoding encoding = null)
         {
-            if(!fileName.Exists) throw new FileNotFoundException();
+            if (!fileName.Exists) throw new FileNotFoundException();
             FileName = fileName;
             Encoding = encoding ?? Encoding.Default;
         }
 
         public IEnumerable<string> GetWords(params char[] delimiters)
         {
-            delimiters = delimiters.Length > 0 ? delimiters : new char[] {'\n'};
-            using (var sr = new StreamReader(FileName.FullName, Encoding.Default))
+            delimiters = delimiters.ToList().Append(' ').ToArray();
+            using (var sr = new StreamReader(FileName.FullName, Encoding))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    foreach (var word in line.Split(delimiters).Where(w => w != "" && w != " "))
-                        yield return word;
-                }
+                var regex = new Regex(@"^\s*$");
+                return sr.ReadToEnd().Split(delimiters, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(w => !regex.IsMatch(w));
             }
         }
     }

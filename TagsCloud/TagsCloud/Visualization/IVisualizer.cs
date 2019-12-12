@@ -5,6 +5,6 @@ namespace TagsCloud.Visualization
 {
     public interface IVisualizer
     {
-        Bitmap GetCloudVisualization(IEnumerable<Tag.Tag> tags);
+        Bitmap GetCloudVisualization(List<Tag.Tag> tags);
     }
 }

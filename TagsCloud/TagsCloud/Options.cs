@@ -32,15 +32,15 @@ namespace TagsCloud
         [Option("bgcolor", Required = false, Default = "Black", HelpText = "Color of the background.")]
         public string BackgroundColor { get; set; }
 
-        [Option("tagscolor", Required = false, Default = ColorDefinersCollection.Random,
+        [Option("tagscolor", Required = false, Default = ColorDefinersType.Random,
             HelpText = "Color of tags" +
                        "Possible types are: Random")]
-        public ColorDefinersCollection ColorDefiner { get; set; }
+        public ColorDefinersType ColorDefiner { get; set; }
 
 
-        [Option("sizedefiner", Required = false, Default = SizeDefinersCollection.Frequency, HelpText =
+        [Option("sizedefiner", Required = false, Default = SizeDefinersType.Frequency, HelpText =
             "Type of the size definer." +
             "Possible types are: Frequency")]
-        public SizeDefinersCollection SizeDefiner { get; set; }
+        public SizeDefinersType SizeDefiner { get; set; }
     }
 }

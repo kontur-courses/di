@@ -21,7 +21,7 @@ namespace TagsCloud.Visualization
             ColorDefiner = colorDefiner;
         }
 
-        public  Bitmap GetCloudVisualization( IEnumerable<Tag.Tag> tags)
+        public Bitmap GetCloudVisualization(List<Tag.Tag> tags)
         {
             var imgRectangle = GetImageRectangle(tags);
             var bitmap = new Bitmap(imgRectangle.Width, imgRectangle.Height);
@@ -31,8 +31,11 @@ namespace TagsCloud.Visualization
                 graphics.TranslateTransform(-imgRectangle.X, -imgRectangle.Y);
                 foreach (var tag in tags)
                 {
-                    Brush brush = new SolidBrush(ColorDefiner.DefineColor(tag.Frequency));
-                    graphics.DrawString(tag.Word, new Font(FontName, tag.Size), brush, tag.LocationRectangle.Location);
+                    using (var font = new Font(FontName, tag.Size))
+                    using (var brush = new SolidBrush(ColorDefiner.DefineColor(tag.Frequency)))
+                    {
+                        graphics.DrawString(tag.Word, font, brush, tag.LocationRectangle.Location);
+                    }
                 }
             }
 
@@ -41,14 +44,12 @@ namespace TagsCloud.Visualization
 
         private static Rectangle GetImageRectangle(IEnumerable<Tag.Tag> tags)
         {
-            var rectangles = tags.Select(t => t.LocationRectangle);
-            var enumerable = rectangles as Rectangle[] ?? rectangles.ToArray();
-            var minX = enumerable.Min(rect => rect.Left);
-            var minY = enumerable.Min(rect => rect.Top);
-            var maxX = enumerable.Max(rect => rect.Right);
-            var maxY = enumerable.Max(rect => rect.Bottom);
-            return new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
+            var rectangles = tags.Select(t => t.LocationRectangle).ToArray();
+            var minX = rectangles.Min(rect => rect.Left);
+            var minY = rectangles.Min(rect => rect.Top);
+            var maxX = rectangles.Max(rect => rect.Right);
+            var maxY = rectangles.Max(rect => rect.Bottom);
+            return new Rectangle(minX, minY, maxX - minX, maxY - minY);
         }
-        
     }
 }

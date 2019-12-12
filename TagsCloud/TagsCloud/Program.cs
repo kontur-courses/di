@@ -8,7 +8,7 @@ namespace TagsCloud
   {
     public static void Main(string[] args)
     {
-        var container = AppConstructor.Configure(args);
+        var container = ContainerConstructor.Configure(args);
         var app = container.Resolve<Application>();
         app.Run();
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,10 +10,11 @@ using TagsCloud.Visualization;
 using TagsCloud.Visualization.ColorDefiner;
 using TagsCloud.Visualization.SizeDefiner;
 using TagsCloud.WordPreprocessing;
+using TagsCloud.Writer;
 
 namespace TagsCloud
 {
-    public class AppConstructor
+    public static class ContainerConstructor
     {
         public static IContainer Configure(IEnumerable<string> args)
         {
@@ -38,8 +40,10 @@ namespace TagsCloud
             }
             );
             builder.RegisterType<Application>().AsSelf().WithParameter("options", options);
+            builder.RegisterType<ConsoleWriter>().As<IWriter>();
 
             return builder.Build();
         }
+        
     }
 }
