@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using TagCloud.CloudLayouter;
 using TagCloud.Factories;
@@ -9,29 +10,32 @@ namespace TagCloud.CloudVisualizer.CloudViewConfiguration
 {
     public class CloudViewConfiguration
     {
+        [Browsable(false)]
         public IFigurePathFactory FigurePath { get; }
+
+        [Browsable(false)]
         public Func<ICloudLayouter> CloudLayouter { get; }
         public int WordsCount { get; set; }
         public double ScaleCoefficient { get; set; }
         public Size ImageSize { get; set; }
         public Point CloudCenter { get; set; }
+
+        [Browsable(false)]
         public FontFamily FontFamily { get; set; }
         public Color BackgroundColor { get; set; }
+        public Color TextColor { get; set; }
         public bool NeedSnuggle { get; set; }
 
-        public Brush GetBrush(Word word)
+        public Brush GetBrush()
         {
-            return new SolidBrush(colorPicker.GetColor(word));
+            return new SolidBrush(TextColor);
         }
-
-        private IColorWordPicker colorPicker;
 
 
         public CloudViewConfiguration(IFigurePathFactory figureFactory, Func<ICloudLayouter> createCloudLayouter, IColorWordPicker colorWordPicker)
         {
             FigurePath = figureFactory;
             CloudLayouter = createCloudLayouter;
-            colorPicker = colorWordPicker;
             InitializeDefaultValues();
         }
 
@@ -50,6 +54,7 @@ namespace TagCloud.CloudVisualizer.CloudViewConfiguration
                 FontFamily = FontFamily.GenericSerif;
             }
             BackgroundColor = Color.Green;
+            TextColor = Color.White;
         }
     }
 }

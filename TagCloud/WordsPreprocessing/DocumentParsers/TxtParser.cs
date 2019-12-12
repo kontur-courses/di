@@ -13,8 +13,11 @@ namespace TagCloud.WordsPreprocessing.DocumentParsers
 
         public IEnumerable<string> GetWords(ApplicationSettings settings)
         {
-            
             return settings.GetDocumentStream().ReadToEnd().Split(' ');
+        }
+
+        public void Close()
+        {
         }
     }
 }

@@ -3,7 +3,7 @@ using TagCloud.FigurePaths;
 
 namespace TagCloud.Factories
 {
-    class SpiralFactory : IFigurePathFactory
+    public class SpiralFactory : IFigurePathFactory
     {
         public double DistanceBetweenTurns { get; set; }
         public double DeltaAngle { get; set; }

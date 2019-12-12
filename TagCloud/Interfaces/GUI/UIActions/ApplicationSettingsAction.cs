@@ -9,21 +9,22 @@ using TagCloud.Interfaces.GUI.Forms;
 
 namespace TagCloud.Interfaces.GUI.UIActions
 {
-    class SettingsAction : IUIAction
+    class ApplicationSettingsAction : IUIAction
     {
-        private CloudViewConfiguration cloudConfiguration;
         private Lazy<MainForm> mainForm;
         private ApplicationSettings applicationSettings;
+        private Form applicationSettingsDialog;
 
-        public SettingsAction(CloudViewConfiguration cloudConfiguration, Lazy<MainForm> mainForm, ApplicationSettings appSettings)
+        public ApplicationSettingsAction(Lazy<MainForm> mainForm,
+            ApplicationSettings appSettings, ApplicationSettingsForm appSettingsDialog)
         {
-            this.cloudConfiguration = cloudConfiguration;
+            applicationSettingsDialog = appSettingsDialog;
             this.mainForm = mainForm;
             applicationSettings = appSettings;
         }
 
         public string Category => "Настройки";
-        public string Name => "Настройки облака";
+        public string Name => "Конфигурация препроцессинга слов";
         public string Description => "";
 
         public void Perform()
@@ -35,7 +36,8 @@ namespace TagCloud.Interfaces.GUI.UIActions
                 return;
             }
 
-            SettingsForm.For(cloudConfiguration).ShowDialog();
+            applicationSettingsDialog.ShowDialog();
+
             mainForm.Value.RedrawImage();
         }
     }

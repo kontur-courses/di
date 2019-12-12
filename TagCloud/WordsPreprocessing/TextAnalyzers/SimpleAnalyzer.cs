@@ -8,6 +8,8 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
     /// </summary>
     public class SimpleAnalyzer : ITextAnalyzer
     {
+        public string AnalyzerName => "SimpleAnalyzer";
+
         public Word[] GetWords(IEnumerable<string> words, int count)
         {
             var countedWords = new Dictionary<string, Word>();
@@ -22,11 +24,15 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
                 wordsCounter++;
             }
 
-            return countedWords.Select(w =>
-            {
-                w.Value.Frequency = (double)w.Value.Count / wordsCounter;
-                return w.Value;
-            }).OrderByDescending(w => w.Count).Take(count).ToArray();
+            return countedWords
+                .OrderByDescending(w => w.Value.Count)
+                .Select(w =>
+                {
+                    w.Value.Frequency = (double) w.Value.Count / wordsCounter;
+                    return w.Value;
+                })
+                .Take(count)
+                .ToArray();
         }
     }
 }

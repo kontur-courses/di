@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.FigurePaths
 {
-    class Spiral : IFigurePath
+    public class Spiral : IFigurePath
     {
         private readonly double turnsDistance;
         private readonly double deltaAngle;
@@ -18,7 +18,7 @@ namespace TagCloud.FigurePaths
         {
             this.turnsDistance = turnsDistance / 2 / Math.PI;
             this.deltaAngle = deltaAngle * Math.PI / 180;
-            angle = -deltaAngle;
+            angle = -this.deltaAngle;
         }
 
         public Point GetNextPoint()

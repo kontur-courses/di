@@ -23,9 +23,9 @@ namespace TagCloud.CloudVisualizer
             {
                 var font = new Font(cloudViewConfiguration.FontFamily,
                     (float)(word.Frequency * cloudViewConfiguration.ScaleCoefficient));
-                var size = TextRenderer.MeasureText(word.Value, font);
+                var size = TextRenderer.MeasureText(word.Value, font) + new Size(1, 1);
                 var rectangle = cloudLayouter.PutNextRectangle(size);
-                graphics.DrawString(word.Value, font, cloudViewConfiguration.GetBrush(word), rectangle.Location);
+                graphics.DrawString(word.Value, font, cloudViewConfiguration.GetBrush(), rectangle.Location);
             }
 
             graphics.Dispose();

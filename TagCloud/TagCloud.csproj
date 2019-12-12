@@ -77,24 +77,38 @@
     <Compile Include="CloudVisualizer\CloudViewConfiguration\CloudViewConfiguration.cs" />
     <Compile Include="Factories\SpiralFactory.cs" />
     <Compile Include="Interfaces\ApplicationSettings.cs" />
+    <Compile Include="Interfaces\BaseApplication.cs" />
     <Compile Include="Interfaces\GUI\Forms\SettingsForm.cs" />
+    <Compile Include="Interfaces\GUI\Forms\WordSelectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\GUI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\GUI\Forms\ApplicationSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\GUI\UIActions\CloudConfigurationAction.cs" />
+    <Compile Include="Interfaces\GUI\Forms\CloudSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\GUI\UIActions\IUIAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\OpenAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\SaveAction.cs" />
-    <Compile Include="Interfaces\GUI\UIActions\SettingsAction.cs" />
+    <Compile Include="Interfaces\GUI\UIActions\ApplicationSettingsAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\UIActionsExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsPreprocessing\DocumentParsers\DocParser.cs" />
     <Compile Include="WordsPreprocessing\DocumentParsers\IDocumentParser.cs" />
     <Compile Include="WordsPreprocessing\DocumentParsers\TxtParser.cs" />
     <Compile Include="WordsPreprocessing\SpeechPart.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\DefaultAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\ITextAnalyzer.cs" />
+    <Compile Include="WordsPreprocessing\TextAnalyzers\RussianLanguageAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\SimpleAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\Word.cs" />
+    <Compile Include="WordsPreprocessing\WordsSelector\WordSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -107,6 +121,26 @@
     <EmbeddedResource Include="Interfaces\GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

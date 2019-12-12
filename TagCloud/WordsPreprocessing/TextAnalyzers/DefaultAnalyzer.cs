@@ -9,5 +9,7 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
         {
             return words.Select(w => new Word(w, SpeechPart.Noun){ Frequency = 1}).Take(count).ToArray();
         }
+
+        public string AnalyzerName => "DefaultAnalyzer";
     }
 }

@@ -20,6 +20,13 @@ namespace TagCloud.Interfaces.GUI.UIActions
         public string Description => "";
         public void Perform()
         {
+            if (mainForm.Value.Image is null)
+            {
+                MessageBox.Show("Для начала необходимо загрузить файл с текстом.", "Ошибка данных",
+                    MessageBoxButtons.OK);
+                return;
+            }
+
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,

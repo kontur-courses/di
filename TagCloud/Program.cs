@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using TagCloud.Interfaces.GUI;
 using GroboContainer.Core;
 using GroboContainer.Impl;
 using TagCloud.CloudLayouter;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
-using TagCloud.FigurePaths;
+using TagCloud.WordsPreprocessing;
 using TagCloud.WordsPreprocessing.TextAnalyzers;
 
 namespace TagCloud
 {
-    class Program
-    {
-        [STAThread]
+    public class Program
+    {[STAThread]
         static void Main(string[] args)
         {
-            var container = new Container(new ContainerConfiguration(Assembly.GetEntryAssembly()));
-            container.Configurator.ForAbstraction<ICloudLayouter>().UseType<CircularCloudLayouter>();
-            container.Configurator.ForAbstraction<ITextAnalyzer>().UseType<SimpleAnalyzer>();
-
+            var container = InitializeContainer();
             try
             { 
                 Application.EnableVisualStyles();
@@ -32,6 +27,17 @@ namespace TagCloud
                 Console.WriteLine(e);
                 MessageBox.Show(e.Message);
             }
+        }
+
+        public static Container InitializeContainer()
+        {
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            var container = new Container(new ContainerConfiguration(assembly));
+            container.Configurator.ForAbstraction<ICloudLayouter>().UseType<CircularCloudLayouter>();
+            container.Configurator.ForAbstraction<HashSet<string>>().UseInstances(new HashSet<string>());
+            container.Configurator.ForAbstraction<HashSet<SpeechPart>>().UseInstances(new HashSet<SpeechPart>());
+
+            return container;
         }
     }
 }

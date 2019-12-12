@@ -7,5 +7,6 @@ namespace TagCloud.WordsPreprocessing.DocumentParsers
     {
         HashSet<string> AllowedTypes { get; }
         IEnumerable<string> GetWords(ApplicationSettings settings);
+        void Close();
     }
 }
