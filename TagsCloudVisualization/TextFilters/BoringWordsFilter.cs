@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Unicode;
+using TagsCloudVisualization.PathFinders;
+using TagsCloudVisualization.TextPreprocessing;
+using TagsCloudVisualization.TextReaders;
 
 namespace TagsCloudVisualization.TextFilters
 {
@@ -14,7 +19,9 @@ namespace TagsCloudVisualization.TextFilters
         
         public BoringWordsFilter()
         {
-            // TODO добавить дефолтный словарь скучных слов
+            var text = new TxtReader().ReadText(PathFinder.GetTextsPath("boringWords"), Encoding.Default);
+            var words = new WordsExtractor().GetWords(text);
+            boringWords = words.ToHashSet();
         }
 
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
