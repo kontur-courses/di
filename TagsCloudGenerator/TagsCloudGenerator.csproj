@@ -47,6 +47,7 @@
     <Compile Include="Core\Spirals\ArchimedeanSpiral.cs" />
     <Compile Include="Core\Spirals\ISpiral.cs" />
     <Compile Include="Core\Translators\TextToTagsTranslator.cs" />
+    <Compile Include="Core\Translators\TextToTagsTranslatorFactory.cs" />
     <Compile Include="Examples\UsageExamples.cs" />
     <Compile Include="Infrastructure\ImageUtils.cs" />
     <Compile Include="Infrastructure\Palette.cs" />

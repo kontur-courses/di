@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using Autofac;
 using CommandLine;
 using NHunspell;
 using TagsCloudGenerator.ConsoleUI;
@@ -26,11 +27,7 @@ namespace TagsCloudGenerator
 
         private static void Run(Options options)
         {
-            var translator = new TextToTagsTranslator(
-                new WordsNormalizer(),
-                new Hunspell(@"HunspellDictionaries\ru.aff", @"HunspellDictionaries\ru.dic"),
-                new WordsFilter(),
-                new SpiralRectangleCloudLayouter(new ArchimedeanSpiral(options.Alpha, options.Phi)));
+            var translator = TextToTagsTranslatorFactory.Create(options.Alpha, options.Phi);
             var tags = translator.TranslateTextToTags(
                 File.ReadLines(options.InputFilename),
                 new HashSet<string>(),

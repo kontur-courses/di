@@ -26,7 +26,7 @@ namespace TagsCloudVisualization.Core
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Text = "Tag cloud generator";
+            Text = "Tags cloud generator";
         }
     }
 }

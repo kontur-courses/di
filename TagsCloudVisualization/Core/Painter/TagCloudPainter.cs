@@ -18,24 +18,22 @@ namespace TagsCloudVisualization.Core.Painter
         private readonly TagCloudSettings tagCloudSettings;
         private readonly ImageSettings imageSettings;
         private readonly Palette palette;
-        private readonly Func<float, float, TextToTagsTranslator> textToTagsTranslatorFactory;
 
         public TagCloudPainter(IImageHolder imageHolder,
-            TagCloudSettings tagCloudSettings, Palette palette, ImageSettings imageSettings,
-            Func<float, float, TextToTagsTranslator> textToTagsTranslatorFactory)
+            TagCloudSettings tagCloudSettings, Palette palette, ImageSettings imageSettings)
         {
             this.imageHolder = imageHolder;
             this.tagCloudSettings = tagCloudSettings;
             this.palette = palette;
             this.imageSettings = imageSettings;
-            this.textToTagsTranslatorFactory = textToTagsTranslatorFactory;
         }
 
         public void Paint()
         {
             using (var graphics = imageHolder.StartDrawing())
             {
-                var translator = textToTagsTranslatorFactory(tagCloudSettings.SpiralAlpha, tagCloudSettings.StepPhi);
+                var translator = TextToTagsTranslatorFactory
+                    .Create(tagCloudSettings.SpiralAlpha, tagCloudSettings.StepPhi);
                 var tags = translator.TranslateTextToTags(
                     File.ReadLines(tagCloudSettings.TextFilename),
                     new HashSet<string>(),
