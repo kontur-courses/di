@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using Autofac;
 using TagsCloudGenerator.Client;
 using TagsCloudGenerator.Client.Console;
@@ -23,10 +24,11 @@ namespace TagsCloudGenerator
             bool KeyLengthMoreThanTen(KeyValuePair<string, int> pair) => pair.Key.Length > 10;
             KeyValuePair<string, int> EmptyConvert(KeyValuePair<string, int> pair) => pair;
 
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(x => typeof(IFileReader).IsAssignableFrom(x) && !x.IsAbstract)
+                .AsImplementedInterfaces().SingleInstance();
+
             builder.RegisterType<ConsoleClient>().As<IClient>().SingleInstance();
-            //builder.RegisterType<TxtFileReader>().As<IFileReader>().SingleInstance();
-            builder.RegisterType<XmlFileReader>().As<IFileReader>().SingleInstance();
-            //builder.RegisterType<DocFileReader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<CyclicColoringAlgorithm>().As<IColoringAlgorithm>().SingleInstance();
             builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>().SingleInstance();
             builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
@@ -40,15 +42,15 @@ namespace TagsCloudGenerator
             builder.RegisterInstance<Func<KeyValuePair<string, int>, KeyValuePair<string, int>>>(EmptyConvert)
                 .SingleInstance();
 
+            builder.RegisterType<PredicateFilter>().As<IWordsFilter>().SingleInstance();
+            builder.RegisterType<FuncConverter>().As<IConverter>().SingleInstance();
+            builder.RegisterType<LowercaseConverter>().As<IConverter>().SingleInstance();
 
             builder.RegisterType<BoringWordsEjector>()
                 .As<IWordsFilter>()
                 .As<BoringWordsEjector>()
-                //.WithParameter(new TypedParameter(typeof(string), "boring.txt"))
                 .SingleInstance();
-            builder.RegisterType<PredicateFilter>().As<IWordsFilter>().SingleInstance();
-            builder.RegisterType<FuncConverter>().As<IConverter>().SingleInstance();
-            builder.RegisterType<LowercaseConverter>().As<IConverter>().SingleInstance();
+
             builder.RegisterType<InitialFormConverter>().As<IConverter>()
                 .WithParameter(new NamedParameter("pathToAff", @"en-GB/index.aff"))
                 .WithParameter(new NamedParameter("pathToDictionary", @"en-GB/index.dic"))

@@ -15,14 +15,12 @@ namespace TagsCloudGenerator.Client.Console
 {
     public class ConsoleClient : IClient
     {
-        private readonly IFileReader reader;
         private readonly IImageSaver saver;
         private readonly ICloudVisualizer visualizer;
         private readonly BoringWordsEjector boringWordsEjector;
 
-        public ConsoleClient(IFileReader reader, IImageSaver saver, ICloudVisualizer visualizer, BoringWordsEjector boringWordsEjector)
+        public ConsoleClient(IImageSaver saver, ICloudVisualizer visualizer, BoringWordsEjector boringWordsEjector)
         {
-            this.reader = reader;
             this.saver = saver;
             this.visualizer = visualizer;
             this.boringWordsEjector = boringWordsEjector;
@@ -47,13 +45,16 @@ namespace TagsCloudGenerator.Client.Console
 
         private void Run(ICloudGenerator generator, Options options)
         {
-
             if (options.PathToBoringWords != null)
                 LoadBoringWords(options.PathToBoringWords);
-            
-            
+
+
             var imageSettings = GetImageSettings(options);
-            
+
+            var input = options.Path;
+
+            var extension = Helper.GetFileExtension(input);
+            var reader = ReaderFactory.GetReaderFor(extension);
             var words = reader.ReadWords(options.Path);
             var cloud = generator.Generate(words, imageSettings.Font);
             var bitmap = visualizer.Draw(cloud, imageSettings);
@@ -74,7 +75,6 @@ namespace TagsCloudGenerator.Client.Console
             catch (FileNotFoundException e)
             {
                 System.Console.WriteLine("Fail load file with boring words: " + e.Message);
-                
             }
 
             boringWordsEjector.AddBoringWords(words);
@@ -84,7 +84,7 @@ namespace TagsCloudGenerator.Client.Console
         {
             var colors = GetColorsByNames(options.Colors);
             var backgroundColor = Color.FromName(options.BackgroundColor);
-            var format = GetImageFormat(options.Output.Split('.').Last());
+            var format = GetImageFormat(Helper.GetFileExtension(options.Output));
             var font = new Font(options.Font, options.FontSize);
 
             return new ImageSettings(options.ImageWidth, options.ImageHeight, backgroundColor, colors, format, font);
@@ -102,10 +102,10 @@ namespace TagsCloudGenerator.Client.Console
             ImageFormat result = null;
             var info = typeof(ImageFormat).GetProperties().FirstOrDefault(p =>
                 p.Name.Equals(extension, StringComparison.InvariantCultureIgnoreCase));
-            
+
             if (info != null)
                 result = info.GetValue(info) as ImageFormat;
-            
+
 
             return result;
         }
