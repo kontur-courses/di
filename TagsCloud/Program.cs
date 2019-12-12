@@ -20,12 +20,13 @@ namespace TagsCloud
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<FontSettings>().AsSelf().SingleInstance();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            builder.RegisterType<PainterSettings>().AsSelf().SingleInstance();
             builder.RegisterType<SpiralParameters>().AsSelf().SingleInstance();
             
             builder.RegisterType<SaveImageAction>().As<IMenuAction>().SingleInstance();
             builder.RegisterType<CircularLayouterAction>().As<IMenuAction>().SingleInstance();
-            builder.RegisterType<PainterSettingsAction>().As<IMenuAction>();
+            builder.RegisterType<ImageSettingsAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<FontSettingsAction>().As<IMenuAction>().SingleInstance();
+            builder.RegisterType<PaletteSettingsAction>().As<IMenuAction>().SingleInstance();
             
             builder.RegisterType<LayoutPainter>().As<ILayoutPainter>().SingleInstance();
             builder.RegisterType<Random>().AsSelf().SingleInstance();
