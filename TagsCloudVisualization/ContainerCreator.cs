@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
 using TagsCloudVisualization.CloudPainters;
@@ -19,21 +18,27 @@ namespace TagsCloudVisualization
         public IContainer GetContainer(ApplicationOptions.ApplicationOptions applicationOptions)
         {
             var imageOptions = applicationOptions.GetVisualizingOptions();
-            var boringWords = new WordsExtractor().GetWords(applicationOptions.BoringWords);
             var affPath = PathFinder.GetHunspellDictionariesPath("ru_RU.aff");
             var dicPath = PathFinder.GetHunspellDictionariesPath("ru_RU.dic");
             var center = new Point(imageOptions.ImageSize.Width / 2, imageOptions.ImageSize.Height / 2);
             var builder = new ContainerBuilder();
+            if (applicationOptions.BoringWords != null)
+            {
+                var boringWords = new WordsExtractor().GetWords(applicationOptions.BoringWords);
+                builder.RegisterType<BoringWordsFilter>().As<ITextFilter>()
+                    .WithParameter("boringWords", boringWords);
+            }
+            else
+            {
+                builder.RegisterType<BoringWordsFilter>().As<ITextFilter>();
+            }
             builder.RegisterType<SizedWord>().AsSelf();
-            //builder.RegisterType<MultiColorCloudPainter>().As<ICloudPainter<Tuple<string, Rectangle>>>();
             builder.RegisterType<MultiColorFrequencyCloudPainter>().As<ICloudPainter<Tuple<SizedWord, Rectangle>>>();
             builder.RegisterType<LowerCaseWordConverter>().As<IWordConverter>();
             builder.RegisterType<NormalFormWordConverter>().As<IWordConverter>()
                 .WithParameter("affPath", affPath)
                 .WithParameter("dicPath", dicPath);
             builder.RegisterType<ShortWordsFilter>().As<ITextFilter>();
-            builder.RegisterType<BoringWordsFilter>().As<ITextFilter>()
-                .WithParameter("boringWords", boringWords);
             builder.RegisterType<TxtReader>().As<ITextReader>();
             builder.RegisterType<WordsExtractor>().AsSelf();
             builder.RegisterType<WordPreprocessor>().AsSelf();

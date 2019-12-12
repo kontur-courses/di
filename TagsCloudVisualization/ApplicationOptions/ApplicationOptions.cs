@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using CommandLine;
 using TagsCloudVisualization.Visualization;
+
 namespace TagsCloudVisualization.ApplicationOptions
 {
     public class ApplicationOptions
@@ -29,7 +30,7 @@ namespace TagsCloudVisualization.ApplicationOptions
         [Option('i', "imagePath", HelpText = "Image path", Required = true)]
         public string ImagePath { get; set; }
         
-        [Option('y', "boringWords", HelpText = "Boring words", Required = true)]
+        [Option('y', "boringWords", HelpText = "Boring words")]
         public string BoringWords { get; set; }
 
         public VisualisingOptions GetVisualizingOptions()
