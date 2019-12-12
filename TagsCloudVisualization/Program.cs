@@ -33,15 +33,12 @@ namespace TagsCloudVisualization
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainForm>().AsSelf().SingleInstance();
-
-            builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>().SingleInstance();
-            builder.RegisterType<WordsFilter>().As<IWordsFilter>().SingleInstance();
+            builder.RegisterType<MainForm>().AsSelf();
+            builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>();
+            builder.RegisterType<WordsFilter>().As<IWordsFilter>();
             builder.Register(context =>
-                    new Hunspell(@"HunspellDictionaries\ru.aff", @"HunspellDictionaries\ru.dic"))
-                .SingleInstance();
+                new Hunspell(@"HunspellDictionaries\ru.aff", @"HunspellDictionaries\ru.dic"));
 
-            builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
             builder.Register<Func<float, float, TextToTagsTranslator>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
@@ -53,10 +50,10 @@ namespace TagsCloudVisualization
                         new SpiralRectangleCloudLayouter(new ArchimedeanSpiral(alpha, phi))
                     );
             });
-            
+
             builder.RegisterType<TagCloudSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<TagCloudPainter>();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(type => typeof(IUiAction).IsAssignableFrom(type))

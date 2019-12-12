@@ -19,7 +19,6 @@ namespace TagsCloudVisualization.Core.Painter
         private readonly ImageSettings imageSettings;
         private readonly Palette palette;
         private readonly Func<float, float, TextToTagsTranslator> textToTagsTranslatorFactory;
-        private readonly float size;
 
         public TagCloudPainter(IImageHolder imageHolder,
             TagCloudSettings tagCloudSettings, Palette palette, ImageSettings imageSettings,
@@ -30,8 +29,6 @@ namespace TagsCloudVisualization.Core.Painter
             this.palette = palette;
             this.imageSettings = imageSettings;
             this.textToTagsTranslatorFactory = textToTagsTranslatorFactory;
-            var imageSize = imageHolder.GetImageSize();
-            size = Math.Min(imageSize.Width, imageSize.Height) / 2.1f;
         }
 
         public void Paint()
