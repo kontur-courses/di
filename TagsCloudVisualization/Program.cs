@@ -15,7 +15,7 @@ namespace TagsCloudVisualization
             var container = new ContainerCreator().GetContainer(applicationOptions.GetVisualizingOptions());
             var cloudCreator = container.Resolve<CloudCreator>();
             var cloud = cloudCreator.GetCloud(applicationOptions.TextName);
-            ImageSaver.SaveImageToDefaultDirectory(applicationOptions.ImageName, cloud, ImageFormat.Png);
+            ImageSaver.SaveImage(applicationOptions.ImagePath, cloud, ImageFormat.Png);
         }
     }
 }

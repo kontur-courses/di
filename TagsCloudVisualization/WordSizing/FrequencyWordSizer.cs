@@ -28,6 +28,7 @@ namespace TagsCloudVisualization.WordSizing
                 sizedWords.Add(new SizedWord(word.Key, currentSize));
             }
 
+            sizedWords.Reverse();
             return sizedWords;
         }
 

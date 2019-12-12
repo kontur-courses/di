@@ -4,29 +4,32 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.WordSizing;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public class TagCloudVisualizer : ICloudVisualizer<Tuple<string, Rectangle>>
+    public class TagCloudSizedVisualizer : ICloudVisualizer<Tuple<SizedWord, Rectangle>>
     {
         private readonly VisualisingOptions visualisingOptions;
 
-        public TagCloudVisualizer(VisualisingOptions visualisingOptions)
+        public TagCloudSizedVisualizer(VisualisingOptions visualisingOptions)
         {
             this.visualisingOptions = visualisingOptions;
         }
 
         public Bitmap GetVisualization(IEnumerable<string> words, ILayouter layouter,
-            ICloudPainter<Tuple<string, Rectangle>> cloudPainter)
+            ICloudPainter<Tuple<SizedWord, Rectangle>> cloudPainter)
         {
-            var rectangles = GetRectanglesForWords(words, layouter);
-            return cloudPainter.GetImage(words.Zip(rectangles, Tuple.Create), visualisingOptions);
+            var sizedWords = new FrequencyWordSizer().GetSizedWords(words);
+            var rectangles = GetRectanglesForWords(sizedWords, layouter);
+            return cloudPainter.GetImage(sizedWords.Zip(rectangles, Tuple.Create), visualisingOptions);
         }
-        
-        private IEnumerable<Rectangle> GetRectanglesForWords(IEnumerable<string> words, ILayouter layouter)
+
+        private IEnumerable<Rectangle> GetRectanglesForWords(IEnumerable<SizedWord> words, ILayouter layouter)
         {
             return words.Select(word =>
-                layouter.PutNextRectangle(GetWordSize(word, visualisingOptions.Font, visualisingOptions.ImageSize)));
+                layouter.PutNextRectangle(GetWordSize(word.Value,
+                    new Font(visualisingOptions.Font.FontFamily, word.Size), visualisingOptions.ImageSize)));
         }
 
         private Size GetWordSize(string word, Font font, Size pictureSize)

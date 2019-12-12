@@ -18,5 +18,11 @@
     <ItemGroup>
         <Folder Include="Images" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+        <HintPath>..\..\..\..\..\..\Program Files\JetBrains\JetBrains Rider 2019.2.2\lib\ReSharperHost\linux-x64\mono\lib\mono\4.5\System.Windows.Forms.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>
 

@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using CommandLine;
+using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.Visualization;
 namespace TagsCloudVisualization.ApplicationOptions
 {
@@ -23,11 +25,11 @@ namespace TagsCloudVisualization.ApplicationOptions
         [Option('d', "textColor", HelpText = "Text color", Default = "Pink")]
         public string TextColorName { get; set; }
 
-        [Option('t', "textName",  HelpText = "Text name", Default = "1.txt")]
+        [Option('t', "textPath",  HelpText = "Text path", Required = true)]
         public string TextName { get; set; }
 
-        [Option('i', "imageName", HelpText = "Image name", Default = "0Console")]
-        public string ImageName { get; set; }
+        [Option('i', "imagePath", HelpText = "Image path", Required = true)]
+        public string ImagePath { get; set; }
 
         public VisualisingOptions GetVisualizingOptions()
         {

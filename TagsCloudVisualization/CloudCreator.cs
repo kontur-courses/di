@@ -31,9 +31,9 @@ namespace TagsCloudVisualization
             this.layouter = layouter;
         }
 
-        public Bitmap GetCloud(string textName)
+        public Bitmap GetCloud(string textPath)
         {
-            var text = textReader.ReadText(PathFinder.GetTextsPath(textName), Encoding.UTF8);
+            var text = textReader.ReadText(textPath, Encoding.UTF8);
             var words = wordsExtractor.GetWords(text);
             var preprocessedWords = wordPreprocessor.GetPreprocessedWords(words);
             var image = tagCloudVisualizer.GetVisualization(preprocessedWords, layouter, cloudPainter);

@@ -13,5 +13,12 @@ namespace TagsCloudVisualization.Visualization
 
             return path;
         }
+        
+        public static string SaveImage(string path, Bitmap image, ImageFormat format)
+        {
+            image.Save(path, format);
+
+            return path;
+        }
     }
 }

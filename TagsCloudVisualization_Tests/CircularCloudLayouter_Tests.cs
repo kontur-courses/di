@@ -6,11 +6,11 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
 using static TagsCloudVisualization_Tests.CircularCloudLayouter_Tests_AuxiliaryTools;
 using TagsCloudVisualization.CloudPainters;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.PathFinders;
 using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualization_Tests
@@ -104,7 +104,7 @@ namespace TagsCloudVisualization_Tests
             var image = painter.GetImage(rectangles,
                 VisualisingOptions.GetDefaultOptions());
             var fileName = $"{testName}Failed";
-            var path = ImageSaver.SaveImageToDefaultDirectory(fileName, image, ImageFormat.Png);
+            var path = ImageSaver.SaveImageToDefaultDirectory(PathFinder.GetImagesPath(fileName, ImageFormat.Png), image, ImageFormat.Png);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
     }
