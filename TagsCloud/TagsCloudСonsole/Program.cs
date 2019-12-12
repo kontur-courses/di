@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using Autofac;
 using DocoptNet;
-using TagsCloudTextProcessing.Excluders;
+using TagsCloudTextProcessing.Filters;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;

@@ -2,7 +2,7 @@ using System;
 
 namespace TagsCloudVisualization.Styling.TagSizeCalculators
 {
-    public class TagSizeCalculatorLogarithmic : TagSizeCalculator
+    public class LogarithmicTagSizeCalculator : TagSizeCalculator
     {
         public override float GetScaleFactor(int wordCount, int minFontSize)
         {

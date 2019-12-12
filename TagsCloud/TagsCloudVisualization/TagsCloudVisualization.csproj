@@ -80,11 +80,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Styling\FontProperties.cs" />
     <Compile Include="Styling\TagColorizer\ITagColorizer.cs" />
-    <Compile Include="Styling\TagColorizer\TagColorizerBySize.cs" />
-    <Compile Include="Styling\TagColorizer\TagColorizerRandom.cs" />
+    <Compile Include="Styling\TagColorizer\BySizeTagColorizer.cs" />
+    <Compile Include="Styling\TagColorizer\RandomTagColorizer.cs" />
     <Compile Include="Styling\TagSizeCalculators\TagSizeCalculator.cs" />
     <Compile Include="Styling\Style.cs" />
-    <Compile Include="Styling\TagSizeCalculators\TagSizeCalculatorLogarithmic.cs" />
+    <Compile Include="Styling\TagSizeCalculators\LogarithmicTagSizeCalculator.cs" />
     <Compile Include="Styling\Themes\GodotEngineTheme.cs" />
     <Compile Include="Styling\Themes\GrayDarkTheme.cs" />
     <Compile Include="Styling\Themes\ITheme.cs" />

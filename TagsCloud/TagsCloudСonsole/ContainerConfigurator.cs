@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using Autofac;
 using DocoptNet;
-using TagsCloudTextProcessing.Excluders;
+using TagsCloudTextProcessing.Filters;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
@@ -27,10 +28,9 @@ namespace TagsCloudConsole
             var applicationParameters = typeof(Application).GetConstructors()[0].GetParameters();
             builder
                 .RegisterType<Application>()
-                .WithParameter(applicationParameters[0].Name, parameters["--exclude"].ToString())
-                .WithParameter(applicationParameters[1].Name, parameters["--w"].ToString())
-                .WithParameter(applicationParameters[2].Name, parameters["--h"].ToString())
-                .WithParameter(applicationParameters[3].Name, parameters["--output"].ToString());
+                .WithParameter(applicationParameters[0].Name, parameters["--w"].ToString())
+                .WithParameter(applicationParameters[1].Name, parameters["--h"].ToString())
+                .WithParameter(applicationParameters[2].Name, parameters["--output"].ToString());
 
             //text reading configure
             ConfigureTextReader(parameters["--input"].ToString(), parameters["--input_ext"].ToString(), builder);
@@ -40,15 +40,15 @@ namespace TagsCloudConsole
             builder.RegisterType<TextSplitter>()
                 .As<ITextSplitter>()
                 .WithParameter(patternName, parameters["--split_pattern"].ToString());
-            builder.RegisterType<WordsFormatterLowercaseAndTrim>().As<IWordsFormatter>();
-            builder.RegisterType<WordsExcluder>().As<IWordsExcluder>();
-            builder.RegisterType<Tokenizer>().As<ITokenizer>();
+            builder.RegisterType<WordsFormatterLowercaseAndTrim>().As<IWordsFormatter>(); //todo ???
+            ConfigureWordsFilter(parameters["--exclude"].ToString(), builder);
+            builder.RegisterType<Tokenizer>().As<ITokenizer>(); //todo ???
 
             //style and visualize configure
             ConfigureShuffler(parameters["--shuffle"].ToString(), parameters["--seed"], builder);
             ConfigureFontProperties(parameters["--font"].ToString(), parameters["--font_size"], builder);
             ConfigureTheme(parameters["--theme"].ToString(), builder);
-            builder.RegisterType<TagSizeCalculatorLogarithmic>().As<TagSizeCalculator>();
+            builder.RegisterType<LogarithmicTagSizeCalculator>().As<TagSizeCalculator>();
             ConfigureColorizer(parameters["--colorize"].ToString(), builder);
             builder.RegisterType<TextNoRectanglesVisualizer>().As<ICloudVisualizer>();
             ConfigureSpiral(
@@ -63,6 +63,17 @@ namespace TagsCloudConsole
             //configure bitmap saver
             ConfigureSaver(parameters["--output_ext"].ToString(), builder);
             return builder.Build();
+        }
+
+        private static void ConfigureWordsFilter(string wordsToExcludePath, ContainerBuilder builder)
+        {
+            var wordsToExclude = new []{""};
+            if (wordsToExcludePath != "none")
+                wordsToExclude = File.ReadAllLines(wordsToExcludePath);
+            var excludeFromListFilterParameters = typeof(ExcludeFromListFilter).GetConstructors()[0].GetParameters();
+            builder.RegisterType<ExcludeFromListFilter>()
+                .As<IWordsFilter>()
+                .WithParameter(excludeFromListFilterParameters[0].Name,wordsToExclude);
         }
 
         private static void ConfigureSaver(string extension, ContainerBuilder builder)
@@ -94,9 +105,9 @@ namespace TagsCloudConsole
 
         private static void ConfigureColorizer(string colorizeMethod, ContainerBuilder builder)
         {
-            var colorizerType = typeof(TagColorizerRandom);
+            var colorizerType = typeof(RandomTagColorizer);
             if (colorizeMethod == "s")
-                colorizerType = typeof(TagColorizerBySize);
+                colorizerType = typeof(BySizeTagColorizer);
 
             builder.RegisterType(colorizerType)
                 .As<ITagColorizer>();
@@ -142,20 +153,20 @@ namespace TagsCloudConsole
             switch (shuffleType)
             {
                 case "a":
-                    builder.RegisterType<TokenShufflerAscending>()
+                    builder.RegisterType<AscendingCountShuffler>()
                         .As<ITokenShuffler>();
                     break;
                 case "d":
-                    builder.RegisterType<TokenShufflerDescending>()
+                    builder.RegisterType<DescendingCountShuffler>()
                         .As<ITokenShuffler>();
                     break;
                 default:
                 {
-                    var randomSeedName = typeof(TokenShufflerRandom).GetConstructors()[0].GetParameters()[0].Name;
+                    var randomSeedName = typeof(RandomShuffler).GetConstructors()[0].GetParameters()[0].Name;
                     var randomSeed = Environment.TickCount;
                     if (seed.IsInt)
                         randomSeed = seed.AsInt;
-                    builder.RegisterType<TokenShufflerRandom>()
+                    builder.RegisterType<RandomShuffler>()
                         .As<ITokenShuffler>()
                         .WithParameter(randomSeedName, randomSeed);
                     break;

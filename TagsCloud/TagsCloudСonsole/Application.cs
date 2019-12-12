@@ -1,6 +1,5 @@
-using System.IO;
 using System.Linq;
-using TagsCloudTextProcessing.Excluders;
+using TagsCloudTextProcessing.Filters;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
@@ -32,19 +31,17 @@ namespace TagsCloudConsole
         private readonly ITokenizer tokenizer;
         private readonly ITokenShuffler tokenShuffler;
         private readonly int width;
-        private readonly IWordsExcluder wordsExcluder;
+        private readonly IWordsFilter wordsFilter;
         private readonly IWordsFormatter wordsFormatter;
-        private readonly string wordsToExcludePath;
 
         public Application(
-            string wordsToExcludePath,
             int width,
             int height,
             string imageOutputPath,
             ITextReader textReader,
             ITextSplitter textSplitter,
             IWordsFormatter wordsFormatter,
-            IWordsExcluder wordsExcluder,
+            IWordsFilter wordsFilter,
             ITokenizer tokenizer,
             ITokenShuffler tokenShuffler,
             FontProperties fontProperties,
@@ -56,11 +53,10 @@ namespace TagsCloudConsole
             IBitmapSaver bitmapSaver
         )
         {
-            this.wordsToExcludePath = wordsToExcludePath;
             this.textReader = textReader;
             this.textSplitter = textSplitter;
             this.wordsFormatter = wordsFormatter;
-            this.wordsExcluder = wordsExcluder;
+            this.wordsFilter = wordsFilter;
             this.tokenizer = tokenizer;
             this.tokenShuffler = tokenShuffler;
             this.fontProperties = fontProperties;
@@ -80,12 +76,7 @@ namespace TagsCloudConsole
             var textInput = textReader.ReadText();
             var wordsInput = textSplitter.SplitText(textInput);
             var words = wordsFormatter.Format(wordsInput);
-            if (wordsToExcludePath != "none")
-            {
-                var wordsToExclude = File.ReadAllLines(wordsToExcludePath);
-                words = wordsExcluder.ExcludeWords(words, wordsToExclude);
-            }
-
+            words = wordsFilter.Filter(words);
             var tokens = tokenizer.Tokenize(words);
             var shuffledTokens = tokenShuffler.Shuffle(tokens);
             var enumerable = shuffledTokens.ToList();

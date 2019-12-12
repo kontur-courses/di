@@ -61,24 +61,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Excluders\IWordsExcluder.cs" />
-    <Compile Include="Excluders\WordsExcluder.cs" />
+    <Compile Include="Filters\IWordsFilter.cs" />
+    <Compile Include="Filters\ExcludeFromListFilter.cs" />
     <Compile Include="Formatters\IWordsFormatter.cs" />
+    <Compile Include="Formatters\LowercaseFormatter.cs" />
+    <Compile Include="Formatters\TrimFormatter.cs" />
     <Compile Include="Formatters\WordsFormatterLowercaseAndTrim.cs" />
     <Compile Include="Readers\ITextReader.cs" />
     <Compile Include="Readers\PdfTextReader.cs" />
     <Compile Include="Readers\TxtTextReader.cs" />
     <Compile Include="Readers\DocxTextReader.cs" />
     <Compile Include="Shufflers\ITokenShuffler.cs" />
-    <Compile Include="Shufflers\TokenShufflerAscending.cs" />
-    <Compile Include="Shufflers\TokenShufflerDescending.cs" />
-    <Compile Include="Shufflers\TokenShufflerRandom.cs" />
+    <Compile Include="Shufflers\AscendingCountShuffler.cs" />
+    <Compile Include="Shufflers\DescendingCountShuffler.cs" />
+    <Compile Include="Shufflers\RandomShuffler.cs" />
     <Compile Include="Splitters\ITextSplitter.cs" />
     <Compile Include="Splitters\TextSplitter.cs" />
     <Compile Include="Tests\ShufflersTests.cs" />
     <Compile Include="Tests\TextSplitterTests.cs" />
     <Compile Include="Tests\TokenizerTests.cs" />
-    <Compile Include="Tests\WordsExcluderTests.cs" />
+    <Compile Include="Tests\ExcludeFromListFilterTests.cs" />
     <Compile Include="Tests\WordsFormatterLowerCaseAndTrimTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />

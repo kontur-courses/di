@@ -1,6 +1,6 @@
 namespace TagsCloudVisualization.Styling.TagColorizer
  {
-     public class TagColorizerBySize : ITagColorizer
+     public class BySizeTagColorizer : ITagColorizer
      {
          public string GetTagColor(string[] tagColors, Tag tag)
          {

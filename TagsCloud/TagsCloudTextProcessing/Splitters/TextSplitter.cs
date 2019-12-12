@@ -6,12 +6,12 @@ namespace TagsCloudTextProcessing.Splitters
 {
     public class TextSplitter : ITextSplitter
     {
-        private readonly string splitPattern;
-        public TextSplitter(string splitPattern = @"\W+") => this.splitPattern = splitPattern;
+        private readonly Regex splitRegex;
+        public TextSplitter(string splitPattern = @"\W+") => splitRegex = new Regex(splitPattern);
 
         public IEnumerable<string> SplitText(string text)
         {
-            return Regex.Split(text, splitPattern).Where(w => w.Length > 0);;
+            return splitRegex.Split(text).Where(w => w.Length > 0);
         }
     }
 }

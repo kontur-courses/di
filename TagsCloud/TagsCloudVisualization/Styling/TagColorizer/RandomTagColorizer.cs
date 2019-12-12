@@ -2,7 +2,7 @@ using System;
 
 namespace TagsCloudVisualization.Styling.TagColorizer
 {
-    public class TagColorizerRandom : ITagColorizer
+    public class RandomTagColorizer : ITagColorizer
     {
         public string GetTagColor(string[] tagColors, Tag tag)
         {

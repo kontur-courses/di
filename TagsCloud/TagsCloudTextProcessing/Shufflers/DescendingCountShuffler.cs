@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace TagsCloudTextProcessing.Shufflers
 {
-    public class TokenShufflerAscending: ITokenShuffler
+    public class DescendingCountShuffler : ITokenShuffler
     {
         public IEnumerable<Token> Shuffle(IEnumerable<Token> tokens)
         {
-            return tokens.OrderBy(token => token.Count);
+            return tokens.OrderByDescending(token => token.Count);
         }
     }
 }

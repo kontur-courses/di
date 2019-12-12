@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace TagsCloudTextProcessing.Shufflers
 {
-    public class TokenShufflerRandom : ITokenShuffler
+    public class RandomShuffler : ITokenShuffler
 
     {
         private readonly int randomSeed;
-        public TokenShufflerRandom(int randomSeed)
+        public RandomShuffler(int randomSeed)
         {
             this.randomSeed = randomSeed;
         }
