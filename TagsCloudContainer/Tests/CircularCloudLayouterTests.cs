@@ -53,24 +53,37 @@ namespace TagsCloudContainer.Tests
             action.Should().NotThrow();
         }
 
-        [TestCase(1, Description = "It is expected that one rectangle added to an empty layout will not intersect",
-            TestName = "Added1Rectangle")]
-        [TestCase(50, Description = "None of the fifty added rectangles are expected to intersect",
-            TestName = "Added50Rectangle")]
-        public void PutNextRectangle_AddDisjointRectangles_WhenSameRectangles(int countRectangles)
+        [TestCase(1, true, Description = "It is expected that one rectangle added to an empty layout will not intersect",
+            TestName = "WhenAdded1SameRectangles")]
+        [TestCase(50, true, Description = "None of the fifty added rectangles are expected to intersect",
+            TestName = "WhenAdded50SameRectangles")]
+        [TestCase(1, false, Description = "It is expected that one rectangle added to an empty layout will not intersect",
+            TestName = "WhenAdded1DifferentRectangles")]
+        [TestCase(50, false, Description = "None of the fifty added rectangles are expected to intersect",
+            TestName = "WhenAdded50DifferentRectangles")]
+        public void PutNextRectangle_AddDisjointRectangles(int countRectangles, bool sameRectangles)
         {
-            AddSameRectangles(countRectangles, 50);
-
+            if (sameRectangles)
+                AddSameRectangles(countRectangles, 50);
+            else
+                AddDifferentRectangles(countRectangles, 50);
             IntersectionOfAnyTwo(circularCloudLayouter.Rectangles.ToArray()).Should().HaveCount(0);
         }
 
-        [TestCase(1, Description = "Expect only one rectangle in the layout, after we added one",
-            TestName = "Added1Rectangle")]
-        [TestCase(50, Description = "Expect only fifty rectangle in the layout, after we added one",
-            TestName = "Added50Rectangle")]
-        public void PutNextRectangle_NumberRectanglesShouldBeAsAdded_WhenSameRectangles(int countRectangles)
+        [TestCase(1, true, Description = "Expect only one rectangle in the layout, after we added one",
+            TestName = "WhenAdded1SameRectangles")]
+        [TestCase(50, true, Description = "Expect only fifty rectangle in the layout, after we added one",
+            TestName = "WhenAdded50SameRectangles")]
+        [TestCase(1, false, Description = "Expect only one rectangle in the layout, after we added one",
+            TestName = "WhenAdded1DifferentRectangles")]
+        [TestCase(50, false, Description = "Expect only fifty rectangle in the layout, after we added one",
+            TestName = "WhenAdded50DifferentRectangles")]
+        public void PutNextRectangle_NumberRectanglesShouldBeAsAdded_WhenSameRectangles(int countRectangles, bool sameRectangles)
         {
-            AddSameRectangles(countRectangles, 50);
+            if (sameRectangles)
+                AddSameRectangles(countRectangles, 50);
+            else
+                AddDifferentRectangles(countRectangles, 50);
 
             circularCloudLayouter.Rectangles.Should().HaveCount(countRectangles);
         }
@@ -78,11 +91,11 @@ namespace TagsCloudContainer.Tests
         [TestCase(1,
             Description =
                 "it is expected that after adding the rectangle the maximum values along the X and Y axes will be relatively close to the center",
-            TestName = "Added1Rectangle")]
+            TestName = "WhenAdded1SameRectangles")]
         [TestCase(50,
             Description =
                 "It is expected that after adding fifty rectangles the maximum values along the X and Y axes will be relatively close to the center",
-            TestName = "Added50Rectangle")]
+            TestName = "WhenAdded50SameRectangles")]
         public void PutNextRectangle_RectanglesShouldBeTightlyCentered_WhenSameRectangles(int countRectangles)
         {
             AddSameRectangles(countRectangles, 1);
@@ -105,6 +118,12 @@ namespace TagsCloudContainer.Tests
         {
             for (var i = 0; i < countRectangles; i++)
                 circularCloudLayouter.PutNextRectangle(new Size(size, size));
+        }
+
+        private void AddDifferentRectangles(int countRectangles, int baseSize)
+        {
+            for (var i = 0; i < countRectangles; i++)
+                circularCloudLayouter.PutNextRectangle(new Size(baseSize - i, baseSize + i));
         }
     }
 }
