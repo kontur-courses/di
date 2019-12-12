@@ -4,7 +4,7 @@ using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
 using TagsCloudTextProcessing.Splitters;
-using TagsCloudTextProcessing.Tokenizers;
+using TagsCloudTextProcessing.WordsIntoTokensTranslators;
 using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
@@ -26,9 +26,9 @@ namespace TagsCloudConsole
         private readonly ITagColorizer tagColorizer;
         private readonly TagSizeCalculator tagSizeCalculator;
         private readonly ITextReader textReader;
-        private readonly ITextSplitter textSplitter;
-        private readonly ITheme theme;
         private readonly ITokenizer tokenizer;
+        private readonly ITheme theme;
+        private readonly IWordsIntoTokenTranslator wordsIntoTokenTranslator;
         private readonly ITokenShuffler tokenShuffler;
         private readonly int width;
         private readonly IWordsFilter wordsFilter;
@@ -39,10 +39,10 @@ namespace TagsCloudConsole
             int height,
             string imageOutputPath,
             ITextReader textReader,
-            ITextSplitter textSplitter,
+            ITokenizer tokenizer,
             IWordsFormatter wordsFormatter,
             IWordsFilter wordsFilter,
-            ITokenizer tokenizer,
+            IWordsIntoTokenTranslator wordsIntoTokenTranslator,
             ITokenShuffler tokenShuffler,
             FontProperties fontProperties,
             ITheme theme,
@@ -54,10 +54,10 @@ namespace TagsCloudConsole
         )
         {
             this.textReader = textReader;
-            this.textSplitter = textSplitter;
+            this.tokenizer = tokenizer;
             this.wordsFormatter = wordsFormatter;
             this.wordsFilter = wordsFilter;
-            this.tokenizer = tokenizer;
+            this.wordsIntoTokenTranslator = wordsIntoTokenTranslator;
             this.tokenShuffler = tokenShuffler;
             this.fontProperties = fontProperties;
             this.theme = theme;
@@ -74,10 +74,10 @@ namespace TagsCloudConsole
         public void Run()
         {
             var textInput = textReader.ReadText();
-            var wordsInput = textSplitter.SplitText(textInput);
+            var wordsInput = tokenizer.Tokenize(textInput);
             var words = wordsFormatter.Format(wordsInput);
             words = wordsFilter.Filter(words);
-            var tokens = tokenizer.Tokenize(words);
+            var tokens = wordsIntoTokenTranslator.TranslateIntoTokens(words);
             var shuffledTokens = tokenShuffler.Shuffle(tokens);
             var enumerable = shuffledTokens.ToList();
             var style = new Style(theme, fontProperties, tagSizeCalculator, tagColorizer);

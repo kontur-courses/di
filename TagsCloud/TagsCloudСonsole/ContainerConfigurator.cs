@@ -9,7 +9,7 @@ using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
 using TagsCloudTextProcessing.Splitters;
-using TagsCloudTextProcessing.Tokenizers;
+using TagsCloudTextProcessing.WordsIntoTokensTranslators;
 using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Styling;
@@ -36,13 +36,13 @@ namespace TagsCloudConsole
             ConfigureTextReader(parameters["--input"].ToString(), parameters["--input_ext"].ToString(), builder);
 
             //text processing configure
-            var patternName = typeof(TextSplitter).GetConstructors()[0].GetParameters()[0].Name;
-            builder.RegisterType<TextSplitter>()
-                .As<ITextSplitter>()
+            var patternName = typeof(Tokenizer).GetConstructors()[0].GetParameters()[0].Name;
+            builder.RegisterType<Tokenizer>()
+                .As<ITokenizer>()
                 .WithParameter(patternName, parameters["--split_pattern"].ToString());
-            builder.RegisterType<WordsFormatterLowercaseAndTrim>().As<IWordsFormatter>(); //todo ???
+            builder.RegisterType<FormatterLowercaseAndTrim>().As<IWordsFormatter>();
             ConfigureWordsFilter(parameters["--exclude"].ToString(), builder);
-            builder.RegisterType<Tokenizer>().As<ITokenizer>(); //todo ???
+            builder.RegisterType<WordsIntoTokenTranslator>().As<IWordsIntoTokenTranslator>();
 
             //style and visualize configure
             ConfigureShuffler(parameters["--shuffle"].ToString(), parameters["--seed"], builder);

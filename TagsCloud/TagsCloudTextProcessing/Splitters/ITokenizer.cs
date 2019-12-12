@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace TagsCloudTextProcessing.Splitters
 {
-    public interface ITextSplitter
+    public interface ITokenizer
     {
-        IEnumerable<string> SplitText(string text);
+        IEnumerable<string> Tokenize(string text);
     }
 }

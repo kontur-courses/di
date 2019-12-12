@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudTextProcessing.Tokenizers
+namespace TagsCloudTextProcessing.WordsIntoTokensTranslators
 {
-    public class Tokenizer : ITokenizer
+    public class WordsIntoTokenTranslator : IWordsIntoTokenTranslator
     {
-        public IEnumerable<Token> Tokenize(IEnumerable<string> words)
+        public IEnumerable<Token> TranslateIntoTokens(IEnumerable<string> words)
         {
             var tokensDictionary = new Dictionary<string, int>();
             foreach (var word in words)

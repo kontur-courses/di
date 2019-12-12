@@ -5,14 +5,14 @@ using TagsCloudTextProcessing.Formatters;
 namespace TagsCloudTextProcessing.Tests
 {
     [TestFixture]
-    public class WordsFormatterLowerCaseAndTrimTests
+    public class FormatterLowerCaseAndTrimTests
     {
         [Test]
         public void Format_Should_ChangeWordsCaseToLower()
         {
             var inputWords = new[] {"CHANGE", "Case", "ToLower"};
             
-            var formattedWords =  new WordsFormatterLowercaseAndTrim().Format(inputWords);
+            var formattedWords =  new FormatterLowercaseAndTrim().Format(inputWords);
             
             formattedWords.Should().BeEquivalentTo("change", "case", "tolower");
         }
@@ -22,7 +22,7 @@ namespace TagsCloudTextProcessing.Tests
         {
             var inputWords = new[] {"cat", "cat ", " cat", " cat "};
             
-            var formattedWords =  new WordsFormatterLowercaseAndTrim().Format(inputWords);
+            var formattedWords =  new FormatterLowercaseAndTrim().Format(inputWords);
             
             formattedWords.Should().BeEquivalentTo("cat", "cat", "cat", "cat");
         }

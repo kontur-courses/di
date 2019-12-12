@@ -4,12 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudTextProcessing.Splitters
 {
-    public class TextSplitter : ITextSplitter
+    public class Tokenizer : ITokenizer
     {
         private readonly Regex splitRegex;
-        public TextSplitter(string splitPattern = @"\W+") => splitRegex = new Regex(splitPattern);
+        public Tokenizer(string splitPattern = @"\W+") => splitRegex = new Regex(splitPattern);
 
-        public IEnumerable<string> SplitText(string text)
+        public IEnumerable<string> Tokenize(string text)
         {
             return splitRegex.Split(text).Where(w => w.Length > 0);
         }

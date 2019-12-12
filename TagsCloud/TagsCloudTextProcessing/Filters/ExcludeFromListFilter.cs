@@ -17,7 +17,6 @@ namespace TagsCloudTextProcessing.Filters
         private static IEnumerable<string> ConvertToUnifiedFormat(IEnumerable<string> wordsToExclude)
         {
             wordsToExclude = new LowercaseFormatter().Format(wordsToExclude);
-            wordsToExclude = new TrimFormatter().Format(wordsToExclude);
             return wordsToExclude;
         }
 

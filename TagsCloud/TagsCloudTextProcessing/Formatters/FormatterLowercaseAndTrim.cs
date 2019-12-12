@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagsCloudTextProcessing.Formatters
 {
-    public class WordsFormatterLowercaseAndTrim : IWordsFormatter
+    public class FormatterLowercaseAndTrim : IWordsFormatter
     {
         public IEnumerable<string> Format(IEnumerable<string> wordsInput)
         {

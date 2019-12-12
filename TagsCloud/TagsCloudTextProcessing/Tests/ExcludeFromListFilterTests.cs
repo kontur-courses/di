@@ -39,5 +39,16 @@ namespace TagsCloudTextProcessing.Tests
 
             wordsAfterExclusion.Should().BeEquivalentTo("f", "ab", "a b", "c a", "aba", "a b a");
         }
+        
+        [Test]
+        public void ExcludeWords_Should_ExcludeWords_NotCaseSensitive()
+        {
+            var excludedWords = new[] {"eXclude", "tHis", "Words"};
+            var inputWords = new[] {"excludE", "tag", "thiS", "WORDS", "cloud"};
+
+            var wordsAfterExclusion = new ExcludeFromListFilter(excludedWords).Filter(inputWords);
+
+            wordsAfterExclusion.Should().NotContain(excludedWords);
+        }
     }
 }

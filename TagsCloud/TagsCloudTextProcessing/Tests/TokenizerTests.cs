@@ -1,7 +1,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudTextProcessing.Tokenizers;
+using TagsCloudTextProcessing.Splitters;
 
 namespace TagsCloudTextProcessing.Tests
 {
@@ -9,25 +9,32 @@ namespace TagsCloudTextProcessing.Tests
     public class TokenizerTests
     {
         [Test]
-        public void GetPreparedText_Should_CountWordsOccurrences()
+        public void Tokenize_Should_SplitTextWithDefaultWordsAndNumbersPattern()
         {
-            var words = new[] {"cat", "cat", "dog", "dog", "dog"};
+            var textSplitter = new Tokenizer();
             
-            var tokens =  new Tokenizer().Tokenize(words);
+            var words = textSplitter.Tokenize("cat. \"cat?\" %cat1!@");
+            
+            words.Should().BeEquivalentTo("cat", "cat", "cat1");
+        }
+        
+        [TestCase(@"[0-9]+", "23!cat2342c.at34c at600",new []{"!cat", "c.at", "c at"},TestName = "Split by numbers")]
+        [TestCase(@"\s+", "c.at? c3at cat*",new []{"c.at?", "c3at", "cat*"},TestName = "Split by spaces")]
+        public void Tokenize_Should_SplitTextWithCustomPattern( string pattern, string text,string[] expected)
+        {
+            var textSplitter = new Tokenizer(pattern);
+            
+            var words = textSplitter.Tokenize(text);
 
-            tokens
-                .Should()
-                .BeEquivalentTo(new Token("cat", 2), new Token("dog", 3));
+            words.Should().BeEquivalentTo(expected);
         }
         
         [Test]
-        public void GetPreparedText_Should_Not_ContainRepeatedWords()
+        public void Tokenize_Should_RemoveEmptyWords()
         {
-            var words = new[] {"words", "words", "words"};
-            
-            var tokens =  new Tokenizer().Tokenize(words);
-
-            tokens.Select(f => f.Word).Should().BeEquivalentTo("words");
+            var textPreparer = new Tokenizer();
+            var words = textPreparer.Tokenize("!?");
+            words.Count().Should().Be(0);
         }
     }
 }
