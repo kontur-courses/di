@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
 {
     public static class RectangleGenerator
     {
-        public static List<RectangleF> GenerateRandomRectangles(SpiralCloudLayouter layouter, int count, int minSize,
+        public static List<RectangleF> GenerateRandomRectangles(SpiralLayouter layouter, int count, int minSize,
             int maxSize, Random random)
         {
             return Enumerable.Range(0, count)

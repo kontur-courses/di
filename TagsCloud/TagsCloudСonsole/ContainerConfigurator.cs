@@ -8,7 +8,7 @@ using TagsCloudTextProcessing.Filters;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
-using TagsCloudTextProcessing.Splitters;
+using TagsCloudTextProcessing.Tokenizers;
 using TagsCloudTextProcessing.WordsIntoTokensTranslators;
 using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;
@@ -58,7 +58,7 @@ namespace TagsCloudConsole
                 parameters["--incr"].ToString(),
                 parameters["--angle"].ToString(),
                 builder);
-            builder.RegisterType<SpiralCloudLayouter>().As<ICloudLayouter>();
+            builder.RegisterType<SpiralLayouter>().As<ICloudLayouter>();
 
             //configure bitmap saver
             ConfigureSaver(parameters["--output_ext"].ToString(), builder);
@@ -67,13 +67,13 @@ namespace TagsCloudConsole
 
         private static void ConfigureWordsFilter(string wordsToExcludePath, ContainerBuilder builder)
         {
-            var wordsToExclude = new []{""};
+            var wordsToExclude = new[] {""};
             if (wordsToExcludePath != "none")
                 wordsToExclude = File.ReadAllLines(wordsToExcludePath);
             var excludeFromListFilterParameters = typeof(ExcludeFromListFilter).GetConstructors()[0].GetParameters();
             builder.RegisterType<ExcludeFromListFilter>()
                 .As<IWordsFilter>()
-                .WithParameter(excludeFromListFilterParameters[0].Name,wordsToExclude);
+                .WithParameter(excludeFromListFilterParameters[0].Name, wordsToExclude);
         }
 
         private static void ConfigureSaver(string extension, ContainerBuilder builder)
@@ -142,7 +142,7 @@ namespace TagsCloudConsole
                 readerType = typeof(PdfTextReader);
 
             var pathName = typeof(TxtTextReader).GetConstructors()[0].GetParameters()[0].Name;
-            
+
             builder.RegisterType(readerType)
                 .As<ITextReader>()
                 .WithParameter(pathName, path);

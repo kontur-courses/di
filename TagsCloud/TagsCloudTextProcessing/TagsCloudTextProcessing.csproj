@@ -75,8 +75,8 @@
     <Compile Include="Shufflers\AscendingCountShuffler.cs" />
     <Compile Include="Shufflers\DescendingCountShuffler.cs" />
     <Compile Include="Shufflers\RandomShuffler.cs" />
-    <Compile Include="Splitters\ITokenizer.cs" />
-    <Compile Include="Splitters\Tokenizer.cs" />
+    <Compile Include="Tokenizers\ITokenizer.cs" />
+    <Compile Include="Tokenizers\Tokenizer.cs" />
     <Compile Include="Tests\ShufflersTests.cs" />
     <Compile Include="Tests\TokenizerTests.cs" />
     <Compile Include="Tests\WordsIntoTokenTranslatorTests.cs" />

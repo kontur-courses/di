@@ -7,13 +7,13 @@ using TagsCloudVisualization.Styling;
 
 namespace TagsCloudVisualization.Layouters
 {
-    public class SpiralCloudLayouter : ICloudLayouter
+    public class SpiralLayouter : ICloudLayouter
     {
         protected readonly List<RectangleF> arrangedRectangles = new List<RectangleF>();
         protected readonly List<Tag> arrangedTags = new List<Tag>();
         protected readonly IEnumerator<PointF> spiralEnumerator;
 
-        public SpiralCloudLayouter(Spiral spiral)
+        public SpiralLayouter(Spiral spiral)
         {
             if (spiral == null)
                 throw new ArgumentException("Tag Cloud spiral can't be null.");

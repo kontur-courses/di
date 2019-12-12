@@ -3,7 +3,7 @@ using TagsCloudTextProcessing.Filters;
 using TagsCloudTextProcessing.Formatters;
 using TagsCloudTextProcessing.Readers;
 using TagsCloudTextProcessing.Shufflers;
-using TagsCloudTextProcessing.Splitters;
+using TagsCloudTextProcessing.Tokenizers;
 using TagsCloudTextProcessing.WordsIntoTokensTranslators;
 using TagsCloudVisualization.BitmapSavers;
 using TagsCloudVisualization.Layouters;

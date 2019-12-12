@@ -1,27 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using Autofac;
+﻿using Autofac;
 using DocoptNet;
-using TagsCloudTextProcessing.Filters;
-using TagsCloudTextProcessing.Formatters;
-using TagsCloudTextProcessing.Readers;
-using TagsCloudTextProcessing.Shufflers;
-using TagsCloudTextProcessing.Splitters;
-using TagsCloudTextProcessing.WordsIntoTokensTranslators;
-using TagsCloudVisualization;
-using TagsCloudVisualization.BitmapSavers;
-using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Styling;
-using TagsCloudVisualization.Styling.TagSizeCalculators;
-using TagsCloudVisualization.Styling.Themes;
-using TagsCloudVisualization.Visualizers;
 
 namespace TagsCloudConsole
 {
-    internal class Program
+    internal static class Program
     {
         private const string Usage = @"Sc222's Tags Cloud Generator.
 

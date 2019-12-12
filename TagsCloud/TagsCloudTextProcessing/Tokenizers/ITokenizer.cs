@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TagsCloudTextProcessing.Splitters
+namespace TagsCloudTextProcessing.Tokenizers
 {
     public interface ITokenizer
     {

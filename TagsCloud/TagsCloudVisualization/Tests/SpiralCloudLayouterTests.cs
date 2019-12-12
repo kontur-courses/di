@@ -14,12 +14,12 @@ using TagsCloudVisualization.Visualizers;
 namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
-    public class SpiralCloudLayouterConstructor_Should
+    public class SpiralLayouterConstructor_Should
     {
         [Test]
         public void ThrowArgumentException_WhenSpiralIsNull()
         {
-            Action action = () => new SpiralCloudLayouter(null);
+            Action action = () => new SpiralLayouter(null);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -29,24 +29,24 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new PointF(150, 250);
 
-            Action action = () => new SpiralCloudLayouter(new Spiral(center));
+            Action action = () => new SpiralLayouter(new Spiral(center));
 
             action.Should().NotThrow<Exception>();
         }
     }
     
     [TestFixture]
-    public class SpiralCloudLayouterPutNextRectangle_Should
+    public class SpiralLayouterPutNextRectangle_Should
     {
         private PointF layouterCenter;
-        private SpiralCloudLayouter cloudLayouter;
+        private SpiralLayouter layouter;
         private List<RectangleF> layouterRectangles;
 
         [SetUp]
         public void Init()
         {
             layouterCenter = new PointF(500, 500);
-            cloudLayouter = new SpiralCloudLayouter(new Spiral(layouterCenter));
+            layouter = new SpiralLayouter(new Spiral(layouterCenter));
             layouterRectangles = new List<RectangleF>();
         }
 
@@ -73,7 +73,7 @@ namespace TagsCloudVisualization.Tests
         [TestCase(10, -1, TestName = "Height y is negative")]
         public void ThrowArgumentException_When(int width, int height)
         {
-            Action action = () => cloudLayouter.PutNextRectangle(new SizeF(width, height));
+            Action action = () => layouter.PutNextRectangle(new SizeF(width, height));
 
             action.Should().Throw<ArgumentException>();
         }
@@ -81,7 +81,7 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void AddFirstRectangleInTheCloudCenter()
         {
-            var addedRectangle = cloudLayouter.PutNextRectangle(new SizeF(100, 200));
+            var addedRectangle = layouter.PutNextRectangle(new SizeF(100, 200));
 
             layouterRectangles = new List<RectangleF> {addedRectangle};
 
@@ -93,10 +93,10 @@ namespace TagsCloudVisualization.Tests
         {
             var rectangles = new List<RectangleF>
             {
-                cloudLayouter.PutNextRectangle(new SizeF(100, 200)),
-                cloudLayouter.PutNextRectangle(new SizeF(130, 250)),
-                cloudLayouter.PutNextRectangle(new SizeF(210, 160)),
-                cloudLayouter.PutNextRectangle(new SizeF(120, 115))
+                layouter.PutNextRectangle(new SizeF(100, 200)),
+                layouter.PutNextRectangle(new SizeF(130, 250)),
+                layouter.PutNextRectangle(new SizeF(210, 160)),
+                layouter.PutNextRectangle(new SizeF(120, 115))
             };
 
             rectangles.Any(r1 => rectangles.Any(r2 => r1.IntersectsWith(r2) && r1 != r2)).Should().BeFalse();
@@ -105,8 +105,8 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void AddNextRectangle_That_DoesntIntersectWithFirst()
         {
-            var firstRectangle = cloudLayouter.PutNextRectangle(new SizeF(100, 200));
-            var secondRectangle = cloudLayouter.PutNextRectangle(new SizeF(50, 100));
+            var firstRectangle = layouter.PutNextRectangle(new SizeF(100, 200));
+            var secondRectangle = layouter.PutNextRectangle(new SizeF(50, 100));
 
             layouterRectangles = new List<RectangleF> {firstRectangle, secondRectangle};
 
@@ -116,7 +116,7 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void NotChangeRectangleSize()
         {
-            var addedRectangle = cloudLayouter.PutNextRectangle(new SizeF(100, 200));
+            var addedRectangle = layouter.PutNextRectangle(new SizeF(100, 200));
 
             layouterRectangles = new List<RectangleF> {addedRectangle};
 
@@ -128,8 +128,8 @@ namespace TagsCloudVisualization.Tests
         {
             var acceptableYAxisShift = 5;
             var acceptableXAxisShift = 25;
-            var firstRectangle = cloudLayouter.PutNextRectangle(new SizeF(100, 100));
-            var secondRectangle = cloudLayouter.PutNextRectangle(new SizeF(20, 102));
+            var firstRectangle = layouter.PutNextRectangle(new SizeF(100, 100));
+            var secondRectangle = layouter.PutNextRectangle(new SizeF(20, 102));
 
             layouterRectangles = new List<RectangleF> {firstRectangle, secondRectangle};
 
@@ -152,7 +152,7 @@ namespace TagsCloudVisualization.Tests
             var random = new Random(randomSeed);
 
             layouterRectangles =
-                RectangleGenerator.GenerateRandomRectangles(cloudLayouter, count, minSize, maxSize, random);
+                RectangleGenerator.GenerateRandomRectangles(layouter, count, minSize, maxSize, random);
 
             var furthestDistance = layouterRectangles
                 .Select(r => GetDistanceBetweenRectangleAndPoint(r, layouterCenter))

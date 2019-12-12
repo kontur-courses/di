@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudTextProcessing.Splitters
+namespace TagsCloudTextProcessing.Tokenizers
 {
     public class Tokenizer : ITokenizer
     {

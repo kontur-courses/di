@@ -1,7 +1,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudTextProcessing.Splitters;
+using TagsCloudTextProcessing.Tokenizers;
 
 namespace TagsCloudTextProcessing.Tests
 {

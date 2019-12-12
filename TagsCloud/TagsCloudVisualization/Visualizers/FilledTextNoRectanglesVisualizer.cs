@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using TagsCloudVisualization.Styling;
-using TagsCloudVisualization.Styling.TagColorizer;
 using TagsCloudVisualization.Styling.Themes;
 
 namespace TagsCloudVisualization.Visualizers
