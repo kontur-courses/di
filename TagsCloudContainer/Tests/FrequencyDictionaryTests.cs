@@ -38,11 +38,11 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void Top_ShouldReturnsMostFrequent()
         {
-            for(var i = 0; i < 5; i++)
+            for (var i = 0; i < 5; i++)
                 frequencyDictionary.Add("a");
-            for(var i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
                 frequencyDictionary.Add("b");
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
                 frequencyDictionary.Add("c");
 
             frequencyDictionary.Top(3).Should().BeInDescendingOrder(kvp => kvp.Item2);

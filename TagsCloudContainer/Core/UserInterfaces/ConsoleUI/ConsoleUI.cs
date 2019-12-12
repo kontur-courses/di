@@ -49,40 +49,45 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 
         private void Run(Options options)
         {
-            var readerForInput = SelectReader(options.InputFile);
-            if (readerForInput == null)
-                throw new ArgumentException("Формат входного файла не поддерживается");
-            var boringWords = new HashSet<string>();
-            if (options.FileWithBoringWords != null)
-            {
-                Console.WriteLine(options.FileWithBoringWords);
-                var readerForBoring = SelectReader(options.FileWithBoringWords);
-                boringWords = FormWords(options.FileWithBoringWords, readerForBoring).ToHashSet();
-                Console.WriteLine(string.Join(", ", boringWords));
-            }
-            var words = FormWords(options.InputFile, readerForInput)
-                .Where(w => !boringWords.Contains(w));
-            var tags = new List<Tag>();
+            var boringWords = FormBoringWords(options.FileWithBoringWords);
+            var words = FormResultWords(options.InputFile, boringWords);
+            
             var frequencyDictionary = new Dictionary<string, int>();
             foreach (var word in words)
                 frequencyDictionary.Add(word);
-            var top30 = frequencyDictionary.Top(30).ToArray();
-            for (var i = 0; i < top30.Length; i++)
-            {
-                var (word, _) = top30[i];
-                var size = TextRenderer.MeasureText(word, new Font(options.FontName, 40 - i));
-                tags.Add(new Tag(word, layoutAlgorithm.PutNextRectangle(size), 40 - i));
-            }
+            var top30 = frequencyDictionary.Top(30).Select(kvp => kvp.Item1).ToArray();
 
+            var tags = FormTags(top30, options.FontName);
             var bitmap = tagCloudImageCreator.Build(options.FontName, tags, layoutAlgorithm.GetLayoutSize());
             imageSaver.Save(options.OutputFile, bitmap, options.ImageFormat);
         }
 
-        private IEnumerable<string> FormWords(string path, IReader reader)
+        private IEnumerable<string> FormWordsFromFile(string path)
         {
+            var reader = SelectReader(path);
+            if (reader == null)
+                throw new ArgumentException("Формат входного файла не поддерживается");
             return reader.ReadWords(path)
                 .Where(filter.FilterWord)
                 .Select(wordConverter.ConvertWord);
+        }
+
+        private IEnumerable<string> FormResultWords(string path, HashSet<string> boringWords) => FormWordsFromFile(path)
+            .Where(w => !boringWords.Contains(w));
+
+        private HashSet<string> FormBoringWords(string path) => FormWordsFromFile(path).ToHashSet();
+
+        private IEnumerable<Tag> FormTags(IReadOnlyList<string> words, string font)
+        {
+            var tags = new List<Tag>();
+            for (var i = 0; i < words.Count; i++)
+            {
+                var word = words[i];
+                var size = TextRenderer.MeasureText(word, new Font(font, 40 - i));
+                tags.Add(new Tag(word, layoutAlgorithm.PutNextRectangle(size), 40 - i));
+            }
+
+            return tags;
         }
     }
 }
