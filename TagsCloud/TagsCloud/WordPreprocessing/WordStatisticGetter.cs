@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloud.WordPreprocessing
 {
-    public class WordAnalyzer : IWordAnalyzer
+    public class WordStatisticGetter : IWordAnalyzer
     {
         public Dictionary<string, int> GetWordsStatistics(IEnumerable<string> words)
         {

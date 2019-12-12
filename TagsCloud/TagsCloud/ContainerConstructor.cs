@@ -30,7 +30,7 @@ namespace TagsCloud
                 new NamedParameter("backgroundColor", Color.FromName(options.BackgroundColor)),
             });
             builder.RegisterType<FileReader>().As<IWordGetter>().WithParameter("fileName", new FileInfo(options.File));
-            builder.RegisterType<WordAnalyzer>().As<IWordAnalyzer>();
+            builder.RegisterType<WordStatisticGetter>().As<IWordAnalyzer>();
             builder.RegisterType<RandomColorDefiner>().As<IColorDefiner>();
             builder.RegisterType<FrequencySizeDefiner>().As<ISizeDefiner>().WithParameters(new List<Parameter>
             {
@@ -41,6 +41,7 @@ namespace TagsCloud
             );
             builder.RegisterType<Application>().AsSelf().WithParameter("options", options);
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
+            builder.RegisterType<WordsCleaner>().As<IWordsProcessor>().WithParameter("infinitive", options.Infinitive);
 
             return builder.Build();
         }

@@ -26,7 +26,7 @@ namespace TagsCloud
         [Option("minFS", Required = false, Default = 10, HelpText = "Min font-size.")]
         public int MinFontSize { get; set; }
 
-        [Option("maxFS", Required = false, Default = 200, HelpText = "Max font-size.")]
+        [Option("maxFS", Required = false, Default = 100, HelpText = "Max font-size.")]
         public int MaxFontSize { get; set; }
 
         [Option("bgcolor", Required = false, Default = "Black", HelpText = "Color of the background.")]
@@ -42,5 +42,8 @@ namespace TagsCloud
             "Type of the size definer." +
             "Possible types are: Frequency")]
         public SizeDefinersType SizeDefiner { get; set; }
+        
+        [Option("inf", Required = false, Default = false, HelpText = "Get words in infinitive form")]
+        public bool Infinitive { get; set; }
     }
 }

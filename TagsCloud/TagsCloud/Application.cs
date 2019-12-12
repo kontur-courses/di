@@ -13,25 +13,27 @@ namespace TagsCloud
 {
     public class Application
     {
-        private readonly IWordAnalyzer _wordAnalyzer;
+        private readonly IWordAnalyzer _wordStatisticGetter;
         private readonly ILayouter _layouter;
         private readonly IVisualizer _visualizer;
         private readonly Options _options;
         private readonly IWriter _writer;
         private readonly IWordGetter _wordGetter;
+        private readonly IWordsProcessor _wordsProcessor;
 
         private readonly char[] _delimiters = new char[]
             {',', '.', ' ', ':', ';', '(', ')', '—', '–', '[', ']', '!', '?', '\n'};
 
-        public Application(IWordAnalyzer wordAnalyzer, ILayouter layouter, IVisualizer visualizer, Options options,
-            IWriter writer, IWordGetter wordGetter)
+        public Application(IWordAnalyzer wordStatisticGetter, ILayouter layouter, IVisualizer visualizer, Options options,
+            IWriter writer, IWordGetter wordGetter, IWordsProcessor wordsProcessor)
         {
-            this._wordAnalyzer = wordAnalyzer;
+            this._wordStatisticGetter = wordStatisticGetter;
             this._layouter = layouter;
             this._visualizer = visualizer;
             this._options = options;
             this._writer = writer;
             this._wordGetter = wordGetter;
+            this._wordsProcessor = wordsProcessor;
         }
 
         public void Run()
@@ -53,8 +55,9 @@ namespace TagsCloud
 
         private IEnumerable<Tag> GetTags()
         {
-            var words = _wordGetter.GetWords(_delimiters);
-            var statistics = _wordAnalyzer.GetWordsStatistics(words);
+            var rawWords = _wordGetter.GetWords(_delimiters);
+            var words = _wordsProcessor.ProcessWords(rawWords).ToList();
+            var statistics = _wordStatisticGetter.GetWordsStatistics(words);
             return _layouter.GetTags(statistics);
         }
     }
