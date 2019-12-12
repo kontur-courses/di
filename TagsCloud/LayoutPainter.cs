@@ -13,14 +13,16 @@ namespace TagsCloud
 		private readonly IImageHolder imageHolder;
 		private readonly Palette palette;
 		private readonly FontSettings fontSettings;
+		private readonly PainterSettings painterSettings;
 
 		public LayoutPainter(ImageSettings imageSettings, IImageHolder imageHolder, 
-							Palette palette, FontSettings fontSettings)
+							Palette palette, FontSettings fontSettings, PainterSettings painterSettings)
 		{
 			this.imageSettings = imageSettings;
 			this.imageHolder = imageHolder;
 			this.palette = palette;
 			this.fontSettings = fontSettings;
+			this.painterSettings = painterSettings;
 		}
 
 		public void PaintTags(Layout layout)
@@ -51,7 +53,7 @@ namespace TagsCloud
 				var color = palette.RandomizeColors ? palette.GenerateColor() : palette.TextColor;
 				var font = new Font(fontSettings.Font.FontFamily, tag.TextSize);
 				graphics.DrawString(tag.Text, font, new SolidBrush(color), tag.Area);
-				if (palette.DrawWordRectangle)
+				if (painterSettings.DrawWordRectangle)
 					graphics.DrawRectangle(new Pen(color), tag.Area);
 				imageHolder.UpdateUi();
 			}
