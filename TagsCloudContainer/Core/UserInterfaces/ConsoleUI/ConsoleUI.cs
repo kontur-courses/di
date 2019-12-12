@@ -15,21 +15,21 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
 {
     class ConsoleUi : IUi
     {
-        private readonly IReader reader;
+        private readonly IReader[] readers;
         private readonly IImageBuilder tagCloudImageCreator;
         private readonly ILayoutAlgorithm layoutAlgorithm;
         private readonly IImageSaver imageSaver;
         private readonly Filter filter;
         private readonly WordConverter wordConverter;
 
-        public ConsoleUi(IReader reader,
+        public ConsoleUi(IReader[] readers,
             IImageBuilder tagCloudImageCreator, ILayoutAlgorithm layoutAlgorithm,
             IImageSaver imageSaver,
             Filter filter, WordConverter wordConverter)
         {
             this.filter = filter;
             this.wordConverter = wordConverter;
-            this.reader = reader;
+            this.readers = readers;
             this.tagCloudImageCreator = tagCloudImageCreator;
             this.imageSaver = imageSaver;
             this.layoutAlgorithm = layoutAlgorithm;
@@ -44,10 +44,15 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
                 .WithParsed(Run);
         }
 
+        private IReader SelectReader(string path) => readers.FirstOrDefault(r => r.CanRead(path));
+
         private void Run(Options options)
         {
             Console.WriteLine(options.FontName);
-            var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(wordConverter.HandleWord);
+            var reader = SelectReader(options.InputFile);
+            if (reader == null)
+                throw new ArgumentException("Формат входного файла не поддерживается");
+            var words = reader.ReadWords(options.InputFile).Where(filter.FilterWord).Select(wordConverter.ConvertWord);
             var tags = new List<Tag>();
             var frequencyDictionary = new FrequencyDictionary<string>(words);
             var top30 = frequencyDictionary.Top(30).ToArray();

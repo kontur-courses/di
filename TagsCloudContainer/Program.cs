@@ -31,8 +31,9 @@ namespace TagsCloudContainer
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel, false));
             container.Register(Component.For<IUi>()
                 .ImplementedBy<ConsoleUi>());
-            container.Register(Component.For<IReader>()
-                .ImplementedBy<FileReader>());
+            container.Register(
+                Component.For<IReader>().ImplementedBy<TxtReader>(),
+                                 Component.For<IReader>().ImplementedBy<DocReader>());
             container.Register(Component.For<ILayoutAlgorithm>()
                 .ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("center", new Point(500, 500))));

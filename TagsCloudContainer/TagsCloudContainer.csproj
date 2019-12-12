@@ -51,7 +51,8 @@
     <Compile Include="Core\LayoutAlgorithms\CircularCloudLayouter.cs" />
     <Compile Include="Core\ImageBuilder\IImageBuilder.cs" />
     <Compile Include="Core\LayoutAlgorithms\ILayoutAlgorithm.cs" />
-    <Compile Include="Core\Readers\FileReader.cs" />
+    <Compile Include="Core\Readers\DocReader.cs" />
+    <Compile Include="Core\Readers\TxtReader.cs" />
     <Compile Include="Core\Readers\IReader.cs" />
     <Compile Include="Core\ImageBuilder\TagCloudImageBuilder.cs" />
     <Compile Include="Core\Tag.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Core\UserInterfaces\ConsoleUI\Options.cs" />
     <Compile Include="Core\UserInterfaces\IUI.cs" />
     <Compile Include="Tests\FrequencyDictionaryTests.cs" />
+    <Compile Include="Tests\TextHandlersTests\WordConvertersTests\LowerCaseConverterTests.cs" />
+    <Compile Include="Tests\TextHandlersTests\WordConvertersTests\PunctuationRemoverTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -95,6 +98,12 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xceed.Document.NET, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.5.0\lib\net40\Xceed.Document.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.5.0\lib\net40\Xceed.Words.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
