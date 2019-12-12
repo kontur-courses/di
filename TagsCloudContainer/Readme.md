@@ -17,9 +17,9 @@
   --version             Display version information.  
 ## Example 
 
+### Run
 TagsCloudContainer.exe -i ../../text.txt -o ../../out.png 
 
-![](https://github.com/lgnv/di/blob/master/TagsCloudContainer/out.png)
-
-![Пример2] (../../randomColoring.jpeg)
+### Result
+![] (https://github.com/lgnv/di/blob/master/TagsCloudContainer/randomColoring.jpeg)
 
