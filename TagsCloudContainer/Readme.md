@@ -21,5 +21,5 @@
 TagsCloudContainer.exe -i ../../text.txt -o ../../out.png 
 
 ### Result
-![] (https://github.com/lgnv/di/blob/master/TagsCloudContainer/randomColoring.jpeg)
+![](https://github.com/lgnv/di/blob/master/TagsCloudContainer/randomColoring.jpeg)
 
