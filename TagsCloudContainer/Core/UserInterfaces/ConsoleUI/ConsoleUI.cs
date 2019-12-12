@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using CommandLine;
@@ -34,8 +33,6 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
             this.tagCloudImageCreator = tagCloudImageCreator;
             this.imageSaver = imageSaver;
             this.layoutAlgorithm = layoutAlgorithm;
-            
-
         }
 
         public void Run(IEnumerable<string> userInput)
@@ -50,14 +47,12 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
         private void Run(Options options)
         {
             var boringWords = FormBoringWords(options.FileWithBoringWords);
-            var words = FormResultWords(options.InputFile, boringWords);
-            
-            var frequencyDictionary = new Dictionary<string, int>();
-            foreach (var word in words)
-                frequencyDictionary.Add(word);
-            var top30 = frequencyDictionary.Top(30).Select(kvp => kvp.Item1).ToArray();
+            var words = FormResultWords(options.InputFile, boringWords)
+                .MostCommon(30)
+                .Select(kvp => kvp.Item1)
+                .ToArray();
 
-            var tags = FormTags(top30, options.FontName);
+            var tags = FormTags(words, options.FontName);
             var bitmap = tagCloudImageCreator.Build(options.FontName, tags, layoutAlgorithm.GetLayoutSize());
             imageSaver.Save(options.OutputFile, bitmap, options.ImageFormat);
         }
@@ -75,7 +70,12 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
         private IEnumerable<string> FormResultWords(string path, HashSet<string> boringWords) => FormWordsFromFile(path)
             .Where(w => !boringWords.Contains(w));
 
-        private HashSet<string> FormBoringWords(string path) => FormWordsFromFile(path).ToHashSet();
+        private HashSet<string> FormBoringWords(string path)
+        {
+            return path == null 
+                ? new HashSet<string>() 
+                : FormWordsFromFile(path).ToHashSet();
+        }
 
         private IEnumerable<Tag> FormTags(IReadOnlyList<string> words, string font)
         {

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Core\ColoringAlgorithms\IColoringAlgorithm.cs" />
     <Compile Include="Core\ColoringAlgorithms\RandomColoring.cs" />
-    <Compile Include="Core\FrequencyDictionary.cs" />
+    <Compile Include="Core\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Core\ImageSavers\IImageSaver.cs" />
     <Compile Include="Core\ImageSavers\ImageSaver.cs" />
     <Compile Include="Core\LayoutAlgorithms\ArchimedeanSpiral.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Core\UserInterfaces\ConsoleUI\ConsoleUI.cs" />
     <Compile Include="Core\UserInterfaces\ConsoleUI\Options.cs" />
     <Compile Include="Core\UserInterfaces\IUI.cs" />
-    <Compile Include="Tests\FrequencyDictionaryTests.cs" />
+    <Compile Include="Tests\EnumerableExtensionsTests.cs" />
     <Compile Include="Tests\TextHandlersTests\WordConvertersTests\LowerCaseConverterTests.cs" />
     <Compile Include="Tests\TextHandlersTests\WordConvertersTests\PunctuationRemoverTests.cs" />
   </ItemGroup>
