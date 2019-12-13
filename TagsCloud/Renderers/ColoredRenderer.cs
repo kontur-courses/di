@@ -55,8 +55,9 @@ namespace TagsCloud.Renderers
 
                 using (var graphics = Graphics.FromImage(image))
                 {
-                    graphics.DrawImage(bmp, new Rectangle(0, 0, ImageWidth, ImageHeight), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
+                    graphics.FillRectangle(backgroundBrush, 0, 0, image.Width, image.Height);
                 }
+                CopyImage(bmp, image);
             }
             return image;
         }

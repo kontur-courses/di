@@ -78,12 +78,34 @@ namespace TagsCloud.Renderers
                     }
                 }
 
-                using (var graphics = Graphics.FromImage(image))
-                {
-                    graphics.DrawImage(bmp, new Rectangle(0, 0, ImageWidth, ImageHeight), 0, 0, bmp.Width, bmp.Height, GraphicsUnit.Pixel);
-                }
+                CopyImage(bmp, image);
             }
             return image;
+        }
+
+        protected void CopyImage(Image src, Image dest)
+        {
+            using (var graphics = Graphics.FromImage(dest))
+            {
+                var srcAspectRatio = (double)src.Width / src.Height;
+                var dstAspectRatio = (double)ImageWidth / ImageHeight;
+
+                int destWidth, destHeight;
+                if (srcAspectRatio > dstAspectRatio)
+                {
+                    destWidth = ImageWidth;
+                    destHeight = (int)((double)destWidth / src.Width * src.Height);
+                }
+                else
+                {
+                    destHeight = ImageHeight;
+                    destWidth = (int)((double)destHeight / src.Height * src.Width);
+                }
+
+                var x = destWidth < ImageWidth ? (ImageWidth - destWidth) / 2 : 0;
+                var y = destHeight < ImageHeight ? (ImageHeight - destHeight) / 2 : 0;
+                graphics.DrawImage(src, new Rectangle(x, y, destWidth, destHeight), 0, 0, src.Width, src.Height, GraphicsUnit.Pixel);
+            }
         }
     }
 }
