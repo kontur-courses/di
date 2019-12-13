@@ -1,21 +1,14 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using Autofac;
 using CommandLine;
-using NHunspell;
-using TagsCloudGenerator.ConsoleUI;
+using TagsCloudConsoleVersion.ConsoleUI;
 using TagsCloudGenerator.Core.Drawers;
-using TagsCloudGenerator.Core.Filters;
-using TagsCloudGenerator.Core.Layouters;
-using TagsCloudGenerator.Core.Normalizers;
-using TagsCloudGenerator.Core.Spirals;
 using TagsCloudGenerator.Core.Translators;
 using TagsCloudGenerator.Infrastructure;
 
-namespace TagsCloudGenerator
+namespace TagsCloudConsoleVersion
 {
     public class Program
     {

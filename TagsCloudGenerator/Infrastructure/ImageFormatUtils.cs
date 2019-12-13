@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing.Imaging;
 
-namespace TagsCloudGenerator.ConsoleUI
+namespace TagsCloudGenerator.Infrastructure
 {
     public static class ImageFormatUtils
     {

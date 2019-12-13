@@ -1,4 +1,4 @@
-namespace TagsCloudGenerator.ConsoleUI
+namespace TagsCloudGenerator.Infrastructure
 {
     public enum ColorTheme
     {

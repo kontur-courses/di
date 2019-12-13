@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using TagsCloudGenerator.ConsoleUI;
+using TagsCloudGenerator.Infrastructure;
 using TagsCloudVisualization.Core.Painter;
 using TagsCloudVisualization.Infrastructure.Common;
 using TagsCloudVisualization.Infrastructure.UiActions;

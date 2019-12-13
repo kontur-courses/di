@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{632074C4-5B9E-4B51-AE9D-D57A52AA9AAB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TagsCloudGenerator</RootNamespace>
     <AssemblyName>TagsCloudGenerator</AssemblyName>
@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUI\ColorTheme.cs" />
-    <Compile Include="ConsoleUI\ColorThemeExtensions.cs" />
-    <Compile Include="ConsoleUI\ImageFormatUtils.cs" />
-    <Compile Include="ConsoleUI\Options.cs" />
     <Compile Include="Core\Drawers\IRectangleCloudDrawer.cs" />
     <Compile Include="Core\Drawers\RectangleCloudDrawer.cs" />
     <Compile Include="Core\Filters\IWordsFilter.cs" />
@@ -49,22 +45,17 @@
     <Compile Include="Core\Translators\TextToTagsTranslator.cs" />
     <Compile Include="Core\Translators\TextToTagsTranslatorFactory.cs" />
     <Compile Include="Examples\UsageExamples.cs" />
+    <Compile Include="Infrastructure\ColorTheme.cs" />
+    <Compile Include="Infrastructure\ColorThemeExtensions.cs" />
+    <Compile Include="Infrastructure\ImageFormatUtils.cs" />
     <Compile Include="Infrastructure\ImageUtils.cs" />
     <Compile Include="Infrastructure\Palette.cs" />
     <Compile Include="Infrastructure\PointFComparer.cs" />
     <Compile Include="Infrastructure\PointUtils.cs" />
     <Compile Include="Infrastructure\RectangleExtensions.cs" />
     <Compile Include="Infrastructure\TagInfo.cs" />
-    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\exampleText.txt" />
-    <Content Include="bin\Debug\HunspellDictionaries\ru.aff" />
-    <Content Include="bin\Debug\HunspellDictionaries\ru.dic" />
-    <Content Include="bin\Debug\Hunspellx64.dll" />
-    <Content Include="bin\Debug\Hunspellx86.dll" />
-    <Content Include="bin\Debug\mystem32.exe" />
-    <Content Include="bin\Debug\mystem64.exe" />
     <Content Include="Examples\images\first.png" />
     <Content Include="Examples\images\fourth.png" />
     <Content Include="Examples\images\second.png" />
@@ -73,14 +64,6 @@
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
-      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
-      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
       <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
       <Private>True</Private>

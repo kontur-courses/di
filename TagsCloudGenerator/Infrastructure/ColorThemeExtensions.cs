@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudGenerator.Infrastructure;
 
-namespace TagsCloudGenerator.ConsoleUI
+namespace TagsCloudGenerator.Infrastructure
 {
     public static class ColorThemeExtensions
     {
