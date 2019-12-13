@@ -23,7 +23,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="0" Name="FiltersSettingsGroupBox" Header="Filters:" />
+            <GroupBox Grid.Column="0" Header="Filters:">
+                <ScrollViewer Name="FiltersSettingsControl"/>
+            </GroupBox>
             <GroupBox Grid.Column="1" Name="LayouterSettingsGroupBox" Header="Layouter:">
                 <StackPanel>
                     <ComboBox Name="ComboBoxLayouters"/>

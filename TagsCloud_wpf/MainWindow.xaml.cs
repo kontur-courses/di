@@ -21,14 +21,22 @@ namespace TagsCloud_wpf
 {
     public partial class MainWindow : Window
     {
+        private class FilterOptions
+        {
+            public IFilter Filter;
+            public bool IsActive { get; set; }
+            public int Priority { get; set; }
+        }
+
         private string inputFileName = string.Empty;
-        private readonly IFileParser[] parsers;
-        private readonly IFilter[] filters;
-        private readonly ITagsCloudLayouter[] layouters;
+        private readonly IFileParser[] knownParsers;
+        private readonly IFilter[] knownFilters;
+        private List<FilterOptions> filtersOptions;
+        private readonly ITagsCloudLayouter[] knownLayouters;
         private ITagsCloudLayouter selectedLayouter;
-        private readonly ITagsCloudRenderer[] renderers;
+        private readonly ITagsCloudRenderer[] knownRenderers;
         private ITagsCloudRenderer selectedRenderer;
-        private readonly IImageSaver[] imageSavers;
+        private readonly IImageSaver[] knownImageSavers;
         private TagsCloudGenerator tagsCloud;
 
         private readonly Regex digitsRegex = new Regex("[^0-9]+");
@@ -41,11 +49,11 @@ namespace TagsCloud_wpf
         {
             InitializeComponent();
 
-            this.parsers = parsers;
-            this.filters = filters;
-            this.layouters = layouters;
-            this.renderers = renderers;
-            this.imageSavers = imageSavers;
+            this.knownParsers = parsers;
+            this.knownFilters = filters;
+            this.knownLayouters = layouters;
+            this.knownRenderers = renderers;
+            this.knownImageSavers = imageSavers;
 
             PrepareFiltersMenu();
             PrepareLayoutersMenu();
@@ -55,7 +63,7 @@ namespace TagsCloud_wpf
 
         private void MenuItemOpenFile_Click(object sender, RoutedEventArgs e)
         {
-            var filenameFilters = string.Join(";", parsers.Select(parser =>
+            var filenameFilters = string.Join(";", knownParsers.Select(parser =>
                 string.Join(";", parser.FileExtensions.Select(ext => $"*{ext}"))));
             filenameFilters = $"Text files|{filenameFilters}";
 
@@ -70,22 +78,37 @@ namespace TagsCloud_wpf
 
         private void PrepareFiltersMenu()
         {
-            var filtersStackPanel = new StackPanel();
-            foreach (var filter in filters.OrderBy(f => f.GetType().Name))
+            filtersOptions = knownFilters.Select(f => new FilterOptions()
             {
-                var groupBox = new GroupBox { Header = filter.GetType().Name };
-                filtersStackPanel.Children.Add(groupBox);
+                Filter = f,
+                IsActive = true,
+                Priority = 0
+            }).OrderBy(f => f.GetType().Name).ToList();
+
+            var allFiltersPanel = new StackPanel();
+            foreach (var filterOptions in filtersOptions)
+            {
+                var groupBox = new GroupBox { Header = filterOptions.Filter.GetType().Name };
+                allFiltersPanel.Children.Add(groupBox);
+
+                var filterOptionsPanel = new StackPanel();
+                FillPropertiesPanel(filterOptions, filterOptionsPanel);
+
                 var propsStackPanel = new StackPanel();
-                groupBox.Content = propsStackPanel;
-                FillPropertiesPanel(filter, propsStackPanel);
+                FillPropertiesPanel(filterOptions.Filter, propsStackPanel);
+
+                var filterPanel = new StackPanel();
+                filterPanel.Children.Add(filterOptionsPanel);
+                filterPanel.Children.Add(propsStackPanel);
+                groupBox.Content = filterPanel;
             }
 
-            FiltersSettingsGroupBox.Content = filtersStackPanel;
+            FiltersSettingsControl.Content = allFiltersPanel;
         }
 
         private void PrepareLayoutersMenu()
         {
-            ComboBoxLayouters.ItemsSource = layouters.OrderBy(l => l.GetType().Name).Select(layouter =>
+            ComboBoxLayouters.ItemsSource = knownLayouters.OrderBy(l => l.GetType().Name).Select(layouter =>
                 new KeyValuePair<ITagsCloudLayouter, string>(layouter, layouter.GetType().Name));
             ComboBoxLayouters.DisplayMemberPath = "Value";
             ComboBoxLayouters.SelectionChanged += (sender, e) =>
@@ -100,7 +123,7 @@ namespace TagsCloud_wpf
 
         private void PrepareRendersMenu()
         {
-            ComboBoxRenders.ItemsSource = renderers.OrderBy(d => d.GetType().Name).Select(renderer =>
+            ComboBoxRenders.ItemsSource = knownRenderers.OrderBy(d => d.GetType().Name).Select(renderer =>
                 new KeyValuePair<ITagsCloudRenderer, string>(renderer, renderer.GetType().Name));
             ComboBoxRenders.DisplayMemberPath = "Value";
             ComboBoxRenders.SelectionChanged += (sender, e) =>
@@ -191,7 +214,8 @@ namespace TagsCloud_wpf
 
         private void MenuItemGenerate_Click(object sender, RoutedEventArgs e)
         {
-            tagsCloud = new TagsCloudGenerator(parsers, filters, selectedLayouter, selectedRenderer, imageSavers);
+            var selectedFilters = filtersOptions.Where(fo => fo.IsActive).OrderBy(fo => fo.Priority).Select(fo => fo.Filter).ToArray();
+            tagsCloud = new TagsCloudGenerator(knownParsers, selectedFilters, selectedLayouter, selectedRenderer, knownImageSavers);
             tagsCloud.GenerateCloud(inputFileName);
             UpdateImageControl();
         }
@@ -216,7 +240,7 @@ namespace TagsCloud_wpf
 
         private void MenuItemSaveToFile_Click(object sender, RoutedEventArgs e)
         {
-            var filenameFilters = string.Join(";", imageSavers.Select(saver =>
+            var filenameFilters = string.Join(";", knownImageSavers.Select(saver =>
                 string.Join(";", saver.FileExtensions.Select(ext => $"*{ext}"))));
             filenameFilters = $"Image files|{filenameFilters}";
 
