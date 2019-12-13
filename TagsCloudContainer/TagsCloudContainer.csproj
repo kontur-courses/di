@@ -50,8 +50,8 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="mscorlib" />
-        <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
-          <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+        <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
@@ -72,6 +72,10 @@
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
         <Reference Include="WindowsBase" />
+        <Reference Include="YandexMystem.Wrapper, Version=1.0.0.18234, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\YandexMystem.Wrapper.1.0.0.18234\lib\net452\YandexMystem.Wrapper.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CMDOptions.cs" />
@@ -82,7 +86,7 @@
         <Compile Include="IWordsToSizesConverter.cs" />
         <Compile Include="Layouter\CircularCloudLayouter.cs" />
         <Compile Include="Layouter\CircularCloudLayouter_Should.cs" />
-        <Compile Include="Layouter\ICircularCloudLayouter.cs" />
+        <Compile Include="Layouter\ICloudLayouter.cs" />
         <Compile Include="Layouter\SpiralPointsGenerator..cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,12 +98,6 @@
         <Compile Include="TagsCloudContainer.cs" />
     </ItemGroup>
     <ItemGroup>
-      <None Include="Hunspellx64.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Include="Hunspellx86.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>

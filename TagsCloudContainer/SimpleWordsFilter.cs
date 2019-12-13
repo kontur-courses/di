@@ -5,7 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using NHunspell;
+using YandexMystem.Wrapper;
+using YandexMystem.Wrapper.Models;
 
 namespace TagsCloudContainer
 {
@@ -22,56 +23,49 @@ namespace TagsCloudContainer
         {
             Words = arr;
         }
+        
+        private string WordsToString()
+        {
+            var res = "";
+            foreach (var str in this.Words)
+            {
+                res += $"{str} ";
+            }
 
+            return res;
+        }
+        
         public IEnumerable<string> FilterWords()
         {
-            //Hunspell hunspell = new Hunspell("en_us.aff", "en_us.dic");
-             return Words.Select(x=>x.ToLower()).Where(x=> !IsBoring(GetInfoAboutWord(x)));
+            return FilterWords(GetInfoAboutWords());
         }
 
-        private bool IsBoring(string wordInfo)
+        private List<string> FilterWords(List<WordModel> wordsInfos)
         {
-            var regexp = "(\\w)+=(\\w)\\s,";
-            var matchRes = Regex.Match(wordInfo, regexp);
-            if (matchRes.Success)
+            var res = new List<string>();
+            foreach (var wordInfo in wordsInfos)
             {
-                if(excludedTypes.Contains(matchRes.Groups[1].Value))
-                    return  true;
+                var flag = false;
+                foreach (var type in excludedTypes)
+                {
+                    if (wordInfo.SourceWord.Analysis[0].Gr.Contains(type))
+                        flag = true;
+                }
+                if (flag)
+                    continue;
+                res.Add(wordInfo.SourceWord.Text);
             }
 
-            return false;
+            return res;
         }
 
-        private string GetInfoAboutWord(string word)
+        private List<WordModel> GetInfoAboutWords()
         {
             var outputBuilder = new StringBuilder();
-            using (var process = new Process
-            {
-                StartInfo =
-                {
-                    FileName = "mystem.exe",
-                    Arguments = "-lni",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true
-                }
-            })
-            {
-                process.OutputDataReceived += (sender, eventArgs) => outputBuilder.AppendLine(eventArgs.Data);
-                process.Start();
-                //var sw = new StreamWriter(process.StandardInput.BaseStream);
-                  //  sw.WriteLine(word);
-                process.StandardInput.WriteLine(word);
-                //var sr =  new StreamReader(process.StandardOutput.BaseStream);
-                   // var res = sr.ReadToEnd();
-                  //  sw.Close();
-                    //sr.Close();
-                    process.WaitForExit();
-                //return res;
-            }
+            var mst = new Mysteam();
+            var res = mst.GetWords(WordsToString());
 
-            return outputBuilder.ToString();
+            return res;
         }
     }
 

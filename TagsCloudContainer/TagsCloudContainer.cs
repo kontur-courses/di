@@ -11,13 +11,13 @@ namespace TagsCloudContainer
         private IWordsFilter WordsFilter;
         private IWordsCounter WordsCounter;
         private IWordsToSizesConverter WordsToSizesConverter;
-        private ICircularCloudLayouter CCL;
+        private ICloudLayouter CCL;
         private IVisualiser Visualiser;
         private string OutputFile;
         
         public TagsCloudContainer(ITextReader textReader, IWordsFilter wordsFilter, IWordsCounter wordsCounter,
             IWordsToSizesConverter wordsToSizesConverter,
-            ICircularCloudLayouter ccl, IVisualiser visualiser,
+            ICloudLayouter ccl, IVisualiser visualiser,
             string output
         )
         {

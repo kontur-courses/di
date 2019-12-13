@@ -14,10 +14,32 @@ namespace TagsCloudContainer
     {
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
         {
+            if (errs.ToArray().Length != 0)
+            {
+                var isHelp = false;
+                foreach (var err in errs)
+                {
+                    if (err is CommandLine.HelpRequestedError)
+                    {
+                        isHelp = true;
+                        break;
+                    }
+
+                    Console.WriteLine(err.ToString());
+                }
+
+                if (!isHelp)
+                {
+                    Console.WriteLine("Use --help to see usage");
+                    return;
+                }
+            }
+
             var helpText = HelpText.AutoBuild(result, help =>
             {
                 help.AdditionalNewLineAfterOption = true;
-                help.AddPreOptionsLine("Usage: TagsCloudContainer -f/--file words.txt -s/--size width height -o/--output dest.png");
+                help.AddPreOptionsLine("Usage: TagsCloudContainer -i/--input words.txt -w/--width width -h/-height height " +
+                                       "-o/--output dest.png");
                 help.AddPreOptionsLine("Default language: russian");
                 return help;
             }, e => e);
@@ -56,7 +78,7 @@ namespace TagsCloudContainer
                             counter.CountWords().ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
                         Dependency.OnValue("sizeOfLayout", size)));
                 var converter = container.Resolve<IWordsToSizesConverter>();
-                container.Register(Component.For<ICircularCloudLayouter>()
+                container.Register(Component.For<ICloudLayouter>()
                     .ImplementedBy<CircularCloudLayouter>()
                     .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
                     ));
@@ -77,7 +99,7 @@ namespace TagsCloudContainer
             parserResult.WithParsed<CMDOptions>(O =>
             {
                 var path = O.InputFile;
-                var size = new Size(int.Parse(O.Size.ToList()[0]), int.Parse(O.Size.ToList()[1]));
+                var size = new Size(O.Width, O.Height);
                 var output = O.OutputFile;
                 
                 var container = new WindsorContainer();

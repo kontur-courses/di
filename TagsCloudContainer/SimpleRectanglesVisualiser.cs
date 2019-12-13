@@ -14,7 +14,7 @@ namespace TagsCloudContainer
             SizeOfBitmap = size;
         }
 
-        public Bitmap DrawRectangles(ICircularCloudLayouter ccl, (string, Size)[] arr)
+        public Bitmap DrawRectangles(ICloudLayouter ccl, (string, Size)[] arr)
         {
             var bitmapWidth = SizeOfBitmap.Width;
             var bitmapHeight = SizeOfBitmap.Height;

@@ -9,7 +9,7 @@ using Size = System.Drawing.Size;
 
 namespace TagsCloudContainer.Layouter
 {
-    public class CircularCloudLayouter : MustInitialize<Point>, ICircularCloudLayouter
+    public class CircularCloudLayouter : MustInitialize<Point>, ICloudLayouter
     {
         public Point Center { get; set; }
     

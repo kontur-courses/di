@@ -11,7 +11,7 @@ namespace TagsCloudContainer.Layouter
         }
     }
     
-    public interface ICircularCloudLayouter
+    public interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
         List<Rectangle> RectanglesList { get; }
