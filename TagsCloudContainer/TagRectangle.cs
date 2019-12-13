@@ -9,7 +9,7 @@ namespace TagsCloudContainer
         public TagRectangle(string value, Rectangle rectangle)
         {
             Value = value;
-            this.Rectangle = rectangle;
+            Rectangle = rectangle;
         }
     }
 }

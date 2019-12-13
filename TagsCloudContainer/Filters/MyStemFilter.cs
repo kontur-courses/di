@@ -2,7 +2,6 @@
 using System.Linq;
 using YandexMystem.Wrapper;
 using YandexMystem.Wrapper.Enums;
-using YandexMystem.Wrapper.Models.Mystem;
 
 namespace TagsCloudContainer.Filters
 {
