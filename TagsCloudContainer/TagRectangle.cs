@@ -11,5 +11,10 @@ namespace TagsCloudContainer
             Value = value;
             Rectangle = rectangle;
         }
+
+        public bool Equals(TagRectangle obj)
+        {
+            return Value == obj.Value && Rectangle.Equals(obj.Rectangle);
+        }
     }
 }

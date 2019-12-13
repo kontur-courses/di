@@ -16,6 +16,7 @@ namespace TagsCloudContainer.Tests
         private IFilter filter;
         private IRectangleGenerator rectangleGenerator;
         private TagCloudVisualizator tagCloudVisualizator;
+        private IVisualizer visualizer;
 
         [SetUp]
         public void SetUp()
@@ -23,7 +24,8 @@ namespace TagsCloudContainer.Tests
             tokensParser = A.Fake<ITokensParser>();
             filter = A.Fake<IFilter>();
             rectangleGenerator = A.Fake<IRectangleGenerator>();
-            tagCloudVisualizator = new TagCloudVisualizator(tokensParser, filter, rectangleGenerator);
+            visualizer = A.Fake<IVisualizer>();
+            tagCloudVisualizator = new TagCloudVisualizator(tokensParser, filter, rectangleGenerator, visualizer);
         }
 
         [Test]
@@ -43,13 +45,30 @@ namespace TagsCloudContainer.Tests
         }
 
         [Test]
-        public void DoSomething_WhenSomething()
+        public void DrawTagCloud_ShouldPutRectangle()
         {
             var filteringWord = new[] {"aba", "abc"};
-            A.CallTo(() => filter.Filtering(A<IEnumerable<string>>.Ignored)).ReturnsLazily(() => filteringWord);
+            A.CallTo(() => filter.Filtering(A<IEnumerable<string>>.Ignored)).Returns(filteringWord);
             tagCloudVisualizator.DrawTagCloud("", TagsCloudSetting.GetDefault());
             A.CallTo(() => rectangleGenerator.PutNextRectangle(A<Size>.Ignored))
                 .MustHaveHappened(filteringWord.Length, Times.Exactly);
+        }
+
+        [Test]
+        public void DrawTagCloud_ShouldCorrectWorkVisualizer()
+        {
+            var filteringWord = new[] {"aba", "abc"};
+            A.CallTo(() => filter.Filtering(A<IEnumerable<string>>.Ignored)).Returns(filteringWord);
+            var rectangles = new[] {new Rectangle(0, 0, 50, 50), new Rectangle(50, 50, 50, 50)};
+            A.CallTo(() => rectangleGenerator.PutNextRectangle(A<Size>.Ignored)).Returns(rectangles[1]).Once();
+            A.CallTo(() => rectangleGenerator.PutNextRectangle(A<Size>.Ignored)).Returns(rectangles[0]).Once();
+
+            tagCloudVisualizator.DrawTagCloud("", TagsCloudSetting.GetDefault());
+
+            A.CallTo(() => visualizer.DrawTag(A<TagRectangle>.That.Matches(x => x.Equals(new TagRectangle(filteringWord[0],rectangles[0]))), A<Font>.Ignored))
+                .MustHaveHappenedOnceExactly();
+            A.CallTo(() => visualizer.DrawTag(A<TagRectangle>.That.Matches(x => x.Equals(new TagRectangle(filteringWord[1],rectangles[1]))), A<Font>.Ignored))
+                .MustHaveHappenedOnceExactly();
         }
     }
 }

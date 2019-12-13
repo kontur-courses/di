@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Visualization
 {
-    public class Visualizer
+    public class Visualizer : IVisualizer
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
@@ -14,7 +14,11 @@ namespace TagsCloudContainer.Visualization
             CloudSetting = cloudSetting;
             bitmap = new Bitmap(cloudSetting.ImageSize.Width, cloudSetting.ImageSize.Height);
             graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(cloudSetting.BackgroundColor);
+        }
+
+        public void Clear()
+        {
+            graphics.Clear(CloudSetting.BackgroundColor);
         }
 
         public void DrawTag(TagRectangle tag, Font font)

@@ -102,6 +102,7 @@
     <Compile Include="TokensGenerator\MyStemParser.cs" />
     <Compile Include="TokensGenerator\TokensParser.cs" />
     <Compile Include="Visualization\ICloudSetting.cs" />
+    <Compile Include="Visualization\IVisualizer.cs" />
     <Compile Include="Visualization\TagsCloudSetting.cs" />
     <Compile Include="Visualization\Visualizer.cs" />
   </ItemGroup>

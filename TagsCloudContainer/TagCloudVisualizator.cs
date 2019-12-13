@@ -15,23 +15,24 @@ namespace TagsCloudContainer
         private readonly ITokensParser tokensParser;
         private readonly IFilter filter;
         private readonly IRectangleGenerator rectangleGenerator;
+        private IVisualizer visualizer;
 
         public TagCloudVisualizator(ITokensParser tokensParser, IFilter filter,
-            IRectangleGenerator rectangleGenerator)
+            IRectangleGenerator rectangleGenerator, IVisualizer visualizer)
         {
             this.tokensParser = tokensParser;
             this.filter = filter;
             this.rectangleGenerator = rectangleGenerator;
+            this.visualizer = visualizer;
         }
 
         public Bitmap DrawTagCloud(string text, ICloudSetting setting)
         {
             var strTokens = tokensParser.GetTokens(text);
             strTokens = filter.Filtering(strTokens);
-
             var tokens = CreateTokens(strTokens).OrderByDescending(token => token.Count).ToArray();
 
-            var visualizer = new Visualizer(setting);
+            visualizer.Clear();
             var font = setting.Font;
             if (tokens.Length == 0)
                 return visualizer.Save();

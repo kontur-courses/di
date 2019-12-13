@@ -32,6 +32,7 @@ namespace TagsCloudContainer
         private static IContainer BuildContainer(TagsCloudSetting setting)
         {
             var builder = new ContainerBuilder();
+            builder.RegisterType<Visualizer>().As<IVisualizer>();
             builder.RegisterType<FileReader>().As<IReader>();
             builder.RegisterType<MyStemParser>().As<ITokensParser>().SingleInstance();
             builder.RegisterType<MyStemFilter>().As<IFilter>().SingleInstance()
