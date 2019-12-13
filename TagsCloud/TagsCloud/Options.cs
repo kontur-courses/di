@@ -19,7 +19,8 @@ namespace TagsCloud
             return options;
         }
 
-        [Option('f', "file", Required = false, Default = @"input1.txt",HelpText = "The file from which we take the words")]
+        [Option('f', "file", Required = false, Default = @"input1.txt",
+            HelpText = "The file from which we take the words")]
         public string File { get; set; }
 
         [Option("font", Required = false, Default = "Arial", HelpText = "Defines font of words.")]
@@ -44,11 +45,11 @@ namespace TagsCloud
             "Type of the size definer." +
             "Possible types are: Frequency")]
         public SizeDefinersType SizeDefiner { get; set; }
-        
-        [Option("inf", Required = false, Default = false, HelpText = "Get words in infinitive form")]
+
+        [Option("inf", Required = false, Default = true, HelpText = "Get words in infinitive form")]
         public bool Infinitive { get; set; }
-        
-        [Option('o',"outputFormat", Required = false, HelpText = "Format of image")]
+
+        [Option('o', "outputFormat", Required = false, HelpText = "Format of image")]
         public ImageFormat Format { get; set; }
     }
 }

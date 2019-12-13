@@ -24,16 +24,18 @@ namespace TagsCloud
 
         private readonly char[] _delimiters = new char[]
             {',', '.', ' ', ':', ';', '(', ')', '—', '–', '[', ']', '!', '?', '\n'};
-        private readonly Dictionary< ImageFormat, string> _imageFormatDenotation =
+
+        private readonly Dictionary<ImageFormat, string> _imageFormatDenotation =
             new Dictionary<ImageFormat, string>
             {
-                { ImageFormat.Jpeg,"jpg"},
-                { ImageFormat.Png, "png"},
-                { ImageFormat.Bmp,"bmp"},
-                { ImageFormat.Gif,"gif"}
+                {ImageFormat.Jpeg, "jpg"},
+                {ImageFormat.Png, "png"},
+                {ImageFormat.Bmp, "bmp"},
+                {ImageFormat.Gif, "gif"}
             };
 
-        public Application(IWordAnalyzer wordStatisticGetter, ILayouter layouter, IVisualizer visualizer, Options options,
+        public Application(IWordAnalyzer wordStatisticGetter, ILayouter layouter, IVisualizer visualizer,
+            Options options,
             IWriter writer, IWordGetter wordGetter, IWordsProcessor wordsProcessor, ImageFormat imageFormat = null)
         {
             this._wordStatisticGetter = wordStatisticGetter;
@@ -43,7 +45,7 @@ namespace TagsCloud
             this._writer = writer;
             this._wordGetter = wordGetter;
             this._wordsProcessor = wordsProcessor;
-            this._imageFormat = imageFormat ?? ImageFormat.Jpeg ;
+            this._imageFormat = imageFormat ?? ImageFormat.Jpeg;
         }
 
         public void Run()

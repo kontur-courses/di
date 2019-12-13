@@ -9,14 +9,14 @@ namespace TagsCloud.CloudConstruction
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly Point _center;
+        public readonly Point Center;
         private const int Frequency = 36;
 
-        private List<Rectangle> Rectangles { get; set; }
+        public List<Rectangle> Rectangles { get; set; }
 
         public CircularCloudLayouter(Point center)
         {
-            this._center = center;
+            this.Center = center;
             Rectangles = new List<Rectangle>();
         }
 
@@ -58,14 +58,14 @@ namespace TagsCloud.CloudConstruction
         private IEnumerable<Point> SpiralPointGenerator()
         {
             var angle = 0.0;
-            var curPoint = _center;
+            var curPoint = Center;
             while (true)
             {
                 yield return curPoint;
                 angle += Math.PI / Frequency;
 
-                var x = (int) (angle * Math.Cos(angle) - _center.X);
-                var y = (int) (angle * Math.Sin(angle) - _center.Y);
+                var x = (int) (angle * Math.Cos(angle) - Center.X);
+                var y = (int) (angle * Math.Sin(angle) - Center.Y);
                 curPoint = new Point(x, y);
             }
         }

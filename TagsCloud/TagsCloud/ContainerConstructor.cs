@@ -33,11 +33,11 @@ namespace TagsCloud
             builder.RegisterType<WordStatisticGetter>().As<IWordAnalyzer>();
             builder.RegisterType<RandomColorDefiner>().As<IColorDefiner>();
             builder.RegisterType<FrequencySizeDefiner>().As<ISizeDefiner>().WithParameters(new List<Parameter>
-            {
-                new NamedParameter("fontName", options.Font),
-                new NamedParameter("minFontSize", options.MinFontSize),
-                new NamedParameter("maxFontSize", options.MaxFontSize)
-            }
+                {
+                    new NamedParameter("fontName", options.Font),
+                    new NamedParameter("minFontSize", options.MinFontSize),
+                    new NamedParameter("maxFontSize", options.MaxFontSize)
+                }
             );
             builder.RegisterType<ConsoleWriter>().As<IWriter>();
             builder.RegisterType<WordsCleaner>().As<IWordsProcessor>().WithParameter("infinitive", options.Infinitive);
@@ -49,6 +49,5 @@ namespace TagsCloud
 
             return builder.Build();
         }
-        
     }
 }
