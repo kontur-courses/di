@@ -19,7 +19,7 @@ namespace TagsCloudContainer.TokensGenerator
             if (str == null)
                 throw new ArgumentNullException();
             var replace = str.Replace("\r\n", " ");
-            return mystem.GetWords(replace).Select(el => el.SourceWord.Analysis.FirstOrDefault()?.Lex ?? el.SourceWord.Text);
+            return mystem.GetWords(replace).Select(el => el.SourceWord.Analysis.FirstOrDefault()?.Lex ?? el.SourceWord.Text.ToLower());
         }
     }
 }
