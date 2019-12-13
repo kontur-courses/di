@@ -1,6 +1,9 @@
 ﻿# Задание Облако тегов
-
+>TagsCloudContainer.exe -i Input.txt
 ![Example1](TagCloud.png)
+
+>TagsCloudContainer.exe -i Input.txt t 1 -b 1
+![Example2](TagCloud2.png)
 
 from
 
