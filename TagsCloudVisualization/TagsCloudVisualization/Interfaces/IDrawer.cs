@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Providers.Layouter;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Interfaces
 {
-    public interface IDrawer
+    public interface IDrawer<T>
     {
-        Bitmap DrawImage();
+        Bitmap GetBitmap(CloudInfo<T> sizableSource, DrawerSettings settings);
     }
 }
