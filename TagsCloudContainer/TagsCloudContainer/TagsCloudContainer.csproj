@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="Instances\DullWordsEliminators.cs" />
+    <Compile Include="DullWordsEliminators\DefaultDullWordsEliminator.cs" />
+    <Compile Include="DullWordsEliminators\DullWordsEliminator.cs" />
+    <Compile Include="DullWordsEliminators\OnlyNounDullWords.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="Interfaces\IBuildingAlgorithm.cs" />
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
