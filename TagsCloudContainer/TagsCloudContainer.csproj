@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="example.txt" />
+    <Content Include="excludedwords.txt" />
     <None Include="Hunspellx64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

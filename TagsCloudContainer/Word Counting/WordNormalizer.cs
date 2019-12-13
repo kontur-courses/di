@@ -1,4 +1,5 @@
-﻿using NHunspell;
+﻿using System.Collections.Generic;
+using NHunspell;
 
 namespace TagsCloudContainer.Word_Counting
 {

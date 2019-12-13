@@ -13,8 +13,8 @@ namespace TagsCloudContainer
         [Option("excluded", Required = false, HelpText = "excluded words file", Default = @"..\..\excludedwords.txt")]
         public string ExcludedWordsPath { get; set; }
 
-        [Option("parts", Required = false, HelpText = "analyzed parts of speech", Default = @"..\..\partsofspeech.txt")]
-        public string PartsOfSpeechPath { get; set; }
+        [Option("parts", Required = false, HelpText = "excluded parts of speech", Default = @"..\..\partsofspeech.txt")]
+        public string ExcludedPartsOfSpeechPath { get; set; }
 
         [Option("background", Required = false, HelpText = "background color", Default = "white")]
         public string BackgroundColorWord { get; set; }

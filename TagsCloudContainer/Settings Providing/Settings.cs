@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Settings_Providing
         public readonly string InputPath;
         public readonly string OutputPath;
         public readonly HashSet<string> ExcludedWords;
-        public readonly HashSet<string> PartsOfSpeech;
+        public readonly HashSet<string> ExcludedPartsOfSpeech;
         public readonly ColoringOptions ColoringOptions;
         public readonly Size Resolution;
         public readonly string FontName;
@@ -21,7 +21,7 @@ namespace TagsCloudContainer.Settings_Providing
             string outputPath,
             ColoringOptions coloringOptions,
             HashSet<string> excludedWords,
-            HashSet<string> partsOfSpeech,
+            HashSet<string> excludedPartsOfSpeech,
             Size resolution,
             string fontName)
         {
@@ -29,7 +29,7 @@ namespace TagsCloudContainer.Settings_Providing
             OutputPath = outputPath;
             ColoringOptions = coloringOptions;
             ExcludedWords = excludedWords;
-            PartsOfSpeech = partsOfSpeech;
+            ExcludedPartsOfSpeech = excludedPartsOfSpeech;
             Resolution = resolution;
             FontName = fontName;
         }

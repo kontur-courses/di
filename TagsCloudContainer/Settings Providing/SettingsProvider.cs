@@ -35,10 +35,10 @@ namespace TagsCloudContainer.Settings_Providing
         {
             var coloringOptions = GetColoringOptions(options);
             var excludedWords = GetWordsHashSet(options.ExcludedWordsPath, parser);
-            var partsOfSpeech = GetWordsHashSet(options.PartsOfSpeechPath, parser);
+            var excludedPartsOfSpeech = GetWordsHashSet(options.ExcludedPartsOfSpeechPath, parser);
             var resolution = GetSizeFromString(options.ResolutionString);
             return new Settings(options.InputPath, options.OutputPath, coloringOptions, excludedWords,
-                partsOfSpeech, resolution, options.FontName);
+                excludedPartsOfSpeech, resolution, options.FontName);
         }
 
         private static ColoringOptions GetColoringOptions(Options options)

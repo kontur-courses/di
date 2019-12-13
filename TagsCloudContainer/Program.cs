@@ -36,10 +36,7 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
             builder.RegisterType<TxtParser>().As<IFileParser>();
             builder.RegisterType<SizeTranslator>().As<ISizeTranslator>();
-            builder.RegisterType<WordFilter>().As<IWordFilter>();
             builder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
-            builder.RegisterType<WordCounter>().As<IWordCounter>();
-            builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<CircularCloudLayouter>().As<IWordLayouter>();
             builder.RegisterInstance(new Hunspell(
                 GetDictionaryDirectoryPath("index.aff"),
@@ -49,12 +46,20 @@ namespace TagsCloudContainer
                 .As<SettingsProvider>();
             builder.Register(c => c.Resolve<SettingsProvider>().GetSettings()).As<Settings>();
             builder.Register(c => c.Resolve<SettingsProvider>().GetColoringOptions()).As<ColoringOptions>();
+            
             builder.Register(c =>
             {
                 var settings = c.Resolve<Settings>();
                 return new CircularCloudVisualizer(settings.ColoringOptions, c.Resolve<ISaver>(), settings.Resolution,
                     settings.FontName);
             }).As<IVisualizer>();
+            builder.Register(c =>
+            {
+                var settings = c.Resolve<Settings>();
+                return new WordFilter(settings.ExcludedWords, settings.ExcludedPartsOfSpeech);
+            }).As<IWordFilter>();
+            builder.RegisterType<WordCounter>().As<IWordCounter>();
+            builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
             container = builder.Build();
         }
 
