@@ -39,23 +39,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="InputInfo.cs" />
+    <Compile Include="Interfaces\IUserHandler.cs" />
+    <Compile Include="TagsLayouters\CircularCloudTagsLayouter.cs" />
+    <Compile Include="Interfaces\ITagsLayouter.cs" />
+    <Compile Include="TagCloudBuildingAlgorithms\DefaultTagCloudBuildingAlgorithm.cs" />
     <Compile Include="DullWordsEliminators\DefaultDullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminators\DullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminators\OnlyNounDullWords.cs" />
+    <Compile Include="Interfaces\ITextReader.cs" />
     <Compile Include="TextHandler.cs" />
     <Compile Include="Interfaces\ITagCloudBuildingAlgorithm.cs" />
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
     <Compile Include="Interfaces\ITagsPaintingAlgorithm.cs" />
     <Compile Include="Instances\TagsPaintingAlgorithms.cs" />
     <Compile Include="Interfaces\ITagCloudBuilder.cs" />
-    <Compile Include="ITextReader.cs" />
     <Compile Include="TextFileReader.cs" />
     <Compile Include="WorkWithUser\OutputLogger.cs" />
     <Compile Include="PictureInfo.cs" />
     <Compile Include="ProgrammMain.cs" />
-    <Compile Include="WorkWithUser\ConsoleParser.cs" />
-    <Compile Include="Instances\GeneratingWordsSizesAlgorithms.cs" />
+    <Compile Include="WorkWithUser\ConsoleUserHandler.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="TagCloudBuilder.cs" />
     <Compile Include="TagCloudDrawer.cs" />

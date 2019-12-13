@@ -6,19 +6,17 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouter
+    public class CircularTagsLayouter : ITagsLayouter
     {
-        private readonly Point cloudCenter;
+        private readonly Point cloudCenter = new Point(0, 0);
         private List<Rectangle> RectanglesList { get; } = new List<Rectangle>();
         private const double SpiralCoefControlsPointShift = 1;
         private double spiralAngle = 0;
         private const double AngleDelta = 0.1;
 
 
-        public CircularCloudLayouter(Point center)
-        {
-            cloudCenter = center;
-        }
+        public CircularTagsLayouter()
+        {}
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {

@@ -11,21 +11,22 @@ namespace TagsCloudContainer
     {
         private readonly PictureInfo pictureInfo;
         private readonly ITagCloudBuilder tagCloudBuilder;
-        private readonly CircularCloudLayouter tagCloud;
+        private readonly ITagsLayouter tagsLayouter;
         private readonly ITagsPaintingAlgorithm painter;
 
-        public TagCloudDrawer(PictureInfo pictureInfo, ITagCloudBuilder tagCloudBuilder, ITagsPaintingAlgorithm painter)
+        public TagCloudDrawer(PictureInfo pictureInfo, ITagsLayouter tagsLayouter,
+            ITagCloudBuilder tagCloudBuilder, ITagsPaintingAlgorithm painter)
         {
             this.pictureInfo = pictureInfo;
             this.tagCloudBuilder = tagCloudBuilder;
             this.painter = painter;
-            tagCloud = new CircularCloudLayouter(pictureInfo.TagCloudCenter);
+            this.tagsLayouter = tagsLayouter;
         }
 
 
         private List<Rectangle> GetRectangles(IEnumerable<Tag> tags)
         {
-            return tags.Select(x => tagCloud.PutNextRectangle(x.Size)).ToList();
+            return tags.Select(x => tagsLayouter.PutNextRectangle(x.Size)).ToList();
         }
 
         public void DrawTagCloud(string fileName, int maxWordsCnt)
