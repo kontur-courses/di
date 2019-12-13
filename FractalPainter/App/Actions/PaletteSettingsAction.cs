@@ -4,13 +4,18 @@ using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    public class PaletteSettingsAction : IUiAction, INeed<Palette>
+    public class PaletteSettingsAction : IUiAction//, INeed<Palette>
     {
         private Palette palette;
-
+        /*
         public void SetDependency(Palette dependency)
         {
             palette = dependency;
+        }
+        */
+        public PaletteSettingsAction(Palette palette)
+        {
+            this.palette = palette;
         }
 
         public string Category => "Настройки";
