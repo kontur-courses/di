@@ -13,12 +13,15 @@ namespace TagsCloudVisualization.Settings
         public PictureBoxImageHolder ImageHolder;
         public ImageSettings ImageSettings;
         public Palette Palette;
+        public Restrictions Restrictions;
 
-        public AppSettings(ImageSettings imageSettings, PictureBoxImageHolder imageHolder, Palette palette)
+        public AppSettings(ImageSettings imageSettings, PictureBoxImageHolder imageHolder, Palette palette,
+            Restrictions restrictions)
         {
             ImageSettings = imageSettings;
             ImageHolder = imageHolder;
             Palette = palette;
+            Restrictions = restrictions;
         }
     }
 }

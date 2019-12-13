@@ -11,6 +11,7 @@ using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Layouters.CloudLayouters;
 using TagsCloudVisualization.Painters;
 using TagsCloudVisualization.Preprocessing;
+using TagsCloudVisualization.Preprocessing.PreprocessActions;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Text;
 using TagsCloudVisualization.Text.TextReaders;
@@ -43,6 +44,7 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
             container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotWordsPreprocessor>());
             container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveNotNounsPreprocessor>());
+            container.Register(Component.For<IPreprocessor>().ImplementedBy<RemoveIgnoredWords>());
 
 
             container.Register(Component.For<IStatisticsCollector>().ImplementedBy<WordCountCollector>());
@@ -74,6 +76,7 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IGuiAction>().ImplementedBy<PaletteSettingsAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<TextFileAction>());
             container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<RestrictionsSettingsAction>());
 
 
             container.Register(Component.For<IVisualizer>().UsingFactoryMethod(() =>

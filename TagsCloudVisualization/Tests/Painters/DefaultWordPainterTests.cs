@@ -12,7 +12,7 @@ namespace TagsCloudVisualization.Tests.Painters
     [TestFixture]
     public class WordPainterTests
     {
-        private WordPainter wordPainter = new DefaultWordPainter(new Palette());
+        private readonly WordPainter wordPainter = new DefaultWordPainter(new Palette());
 
         [Test]
         public void GetPaintedWords_PaintsWords()
@@ -30,9 +30,7 @@ namespace TagsCloudVisualization.Tests.Painters
             var text = new AnalyzedLayoutedText(layoutedWords, statDict);
 
             foreach (var paintedWord in wordPainter.GetPaintedWords(text))
-            {
                 paintedWord.FontColor.Should().NotBe(default(Color));
-            }
         }
     }
 }
