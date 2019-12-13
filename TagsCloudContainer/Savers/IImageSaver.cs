@@ -1,9 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudContainer.Savers
 {
     public interface IImageSaver
     {
-        void Save(string path, Image image);
+        IEnumerable<string> Extensions { get; }
+        void Save(string path, string extension, Image image);
     }
 }

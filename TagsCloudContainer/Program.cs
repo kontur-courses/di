@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
@@ -74,7 +74,11 @@ namespace TagsCloudContainer
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
                 .UsingConstructor(typeof(TagsCloudVisualizer.ISettings));
 
-            builder.RegisterType<FileImageSaver>().As<IImageSaver>();
+            builder.Register(c => new[]
+            {
+                new DefaultImageSaver()
+            }).As<IEnumerable<IImageSaver>>();
+            builder.RegisterType<ImageSaver>().AsSelf();
 
             builder.RegisterType<TagsCloud>().AsSelf();
 

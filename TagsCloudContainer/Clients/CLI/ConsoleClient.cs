@@ -28,7 +28,7 @@ namespace TagsCloudContainer.Clients.CLI
             TagsCloudSettings cloudSettings,
             ServiceSettings serviceSettings,
             Func<TagsCloud> cloudFactory,
-            IImageSaver saver) :
+            ImageSaver saver) :
             base(cloudSettings, serviceSettings, cloudFactory, saver)
         {
             this.args = args;

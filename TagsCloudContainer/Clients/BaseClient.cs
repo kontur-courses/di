@@ -10,13 +10,13 @@ namespace TagsCloudContainer.Clients
         protected readonly TagsCloudSettings CloudSettings;
         protected readonly ServiceSettings ServiceSettings;
         private readonly Func<TagsCloud> cloudFactory;
-        private readonly IImageSaver saver;
+        private readonly ImageSaver saver;
 
         protected BaseClient(
             TagsCloudSettings cloudSettings,
             ServiceSettings serviceSettings,
             Func<TagsCloud> cloudFactory,
-            IImageSaver saver)
+            ImageSaver saver)
         {
             CloudSettings = cloudSettings;
             ServiceSettings = serviceSettings;

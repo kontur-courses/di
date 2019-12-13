@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 
 namespace TagsCloudContainer.Savers
 {
-    public class FileImageSaver : IImageSaver
+    public class DefaultImageSaver : IImageSaver
     {
         private static readonly IDictionary<string, ImageFormat> Formats;
 
-        static FileImageSaver()
+        public IEnumerable<string> Extensions => Formats.Keys;
+
+        static DefaultImageSaver()
         {
             Formats = new Dictionary<string, ImageFormat>()
             {
@@ -24,11 +23,8 @@ namespace TagsCloudContainer.Savers
             };
         }
 
-        public void Save(string path, Image image)
+        public void Save(string path, string extension, Image image)
         {
-            var extension = Path.GetExtension(path);
-            if (extension == null)
-                throw new ArgumentException($"Cannot get extension from {path}");
             image.Save(path, Formats[extension]);
         }
     }
