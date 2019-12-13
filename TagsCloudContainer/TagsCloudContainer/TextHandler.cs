@@ -5,23 +5,22 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer
 {
-    public class FileHandler
+    public class TextHandler
     {
         private readonly IDullWordsEliminator dullWordsEliminator;
         private static readonly Regex wordPattern = new Regex(@"\b[a-zA-Z]+", RegexOptions.Compiled);
+        private readonly ITextReader textReader;
 
-        public FileHandler(IDullWordsEliminator dullWordsEliminator)
+        public TextHandler(ITextReader textReader, IDullWordsEliminator dullWordsEliminator)
         {
             this.dullWordsEliminator = dullWordsEliminator;
-
+            this.textReader = textReader;
         }
 
-        public Dictionary<string, int> GetWordsFrequencyDict(string fileName)
+        public Dictionary<string, int> GetWordsFrequencyDict()
         {
-            if (!File.Exists(fileName))
-                throw new FileNotFoundException(string.Format("Text file {0} is not found", fileName));
             var result = new Dictionary<string, int>();
-            foreach (var line in File.ReadLines(fileName))
+            foreach (var line in textReader.GetLines())
             {
                 foreach (Match match in wordPattern.Matches(line))
                 {

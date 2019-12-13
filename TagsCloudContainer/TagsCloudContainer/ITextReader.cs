@@ -2,8 +2,9 @@
 
 namespace TagsCloudContainer
 {
-    public interface ITagCloudBuilder
+    public interface ITextReader
     {
-        IEnumerable<Tag> GetTagsCloud();
+        IEnumerable<string> GetLines();
     }
+
 }

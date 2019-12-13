@@ -30,7 +30,7 @@ namespace TagsCloudContainer
 
         public void DrawTagCloud(string fileName, int maxWordsCnt)
         {
-            var tags = tagCloudBuilder.GetTagsCloud(fileName).Take(maxWordsCnt).ToList();
+            var tags = tagCloudBuilder.GetTagsCloud().Take(maxWordsCnt).ToList();
             var rectangles = GetRectangles(tags);
             var maxY = rectangles.Max(x => x.Bottom);
             var minY = rectangles.Min(x => x.Top);
@@ -49,7 +49,7 @@ namespace TagsCloudContainer
                 curRectangle.Location = new Point(curRectangle.Location.X - shiftX,
                     curRectangle.Location.Y - shiftY);
                 var curRectangleSize = curRectangle.Size;
-                var curColor = colors[ind++];
+                var curColor = colors[ind];
                 drawingObj.DrawString(curTag.Word, new Font("Georgia", curRectangleSize.Height / 2),
                     new SolidBrush(curColor), curRectangle, strFormat);
             }

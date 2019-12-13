@@ -4,19 +4,19 @@ namespace TagsCloudContainer
 {
     public class TagCloudBuilder : ITagCloudBuilder
     {
-        private readonly FileHandler fileHandler;
+        private readonly TextHandler fileHandler;
         private readonly ITagCloudBuildingAlgorithm algorithmToBuild;
 
-        public TagCloudBuilder(FileHandler fileHandler,
+        public TagCloudBuilder(TextHandler fileHandler,
             ITagCloudBuildingAlgorithm algorithmToBuild)
         {
             this.fileHandler = fileHandler;
             this.algorithmToBuild = algorithmToBuild;
         }
 
-        public IEnumerable<Tag> GetTagsCloud(string fileName)
+        public IEnumerable<Tag> GetTagsCloud()
         {
-            var frequencyDict = fileHandler.GetWordsFrequencyDict(fileName);
+            var frequencyDict = fileHandler.GetWordsFrequencyDict();
             return algorithmToBuild.GetTags(frequencyDict);
         }
     }

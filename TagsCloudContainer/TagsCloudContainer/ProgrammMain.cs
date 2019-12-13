@@ -19,7 +19,8 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
             builder.RegisterInstance(new OnlyNounDullWordsEliminator())
                 .As<IDullWordsEliminator>();
-            builder.RegisterType<FileHandler>().AsSelf();
+            builder.RegisterInstance(new TextFileReader(textFile)).As<ITextReader>();
+            builder.RegisterType<TextHandler>().AsSelf();
             builder.RegisterType<DefaultAlgorithm>().As<ITagCloudBuildingAlgorithm>();
             builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
             builder.RegisterInstance(new PictureInfo("tagCloud", new Point(0, 0), imageFormat)).AsSelf();
