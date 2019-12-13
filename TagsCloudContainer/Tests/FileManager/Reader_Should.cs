@@ -1,7 +1,7 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.FileManager;
+using TagsCloudContainer.Reader;
 
 namespace TagsCloudContainer.Tests.FileManager
 {

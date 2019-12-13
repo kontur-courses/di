@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace TagsCloudContainer.FileManager
+namespace TagsCloudContainer.Reader
 {
     public class FileReader : IReader
     {

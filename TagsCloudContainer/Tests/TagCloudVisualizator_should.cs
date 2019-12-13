@@ -31,7 +31,7 @@ namespace TagsCloudContainer.Tests
         {
             tagCloudVisualizator.DrawTagCloud("", TagsCloudSetting.GetDefault());
             A.CallTo(() => filter.Filtering(A<IEnumerable<string>>.Ignored))
-                .MustHaveHappened(Repeated.Exactly.Once);
+                .MustHaveHappenedOnceExactly();
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace TagsCloudContainer.Tests
         {
             tagCloudVisualizator.DrawTagCloud("", TagsCloudSetting.GetDefault());
             A.CallTo(() => tokensParser.GetTokens(A<string>.Ignored))
-                .MustHaveHappened(Repeated.Exactly.Once);
+                .MustHaveHappenedOnceExactly();
         }
 
         [Test]

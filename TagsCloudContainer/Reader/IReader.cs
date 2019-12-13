@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.FileManager
+﻿namespace TagsCloudContainer.Reader
 {
     public interface IReader
     {
