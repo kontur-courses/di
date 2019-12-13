@@ -10,16 +10,13 @@ namespace TagsCloud_console
         [Option(Required = true, HelpText = "Output graphic file name.")]
         public string OutputFile { get; set; }
 
-        [Option(Required = true, HelpText = "Selected layouter name.")]
+        [Option(Required = false, HelpText = "Selected filters semicolon separated names with comma separated settings formatted as 'PropertyName:Value' in parentheses.")]
+        public string Filters { get; set; }
+
+        [Option(Required = true, HelpText = "Selected layouter name with comma separated settings formatted as 'PropertyName:Value' in parentheses.")]
         public string Layouter { get; set; }
 
-        [Option(Required = false, Default = "", HelpText = "Selected layouter comma separated settings formatted as 'PropertyName:Value'.")]
-        public string LayouterSettings { get; set; }
-
-        [Option(Required = true, HelpText = "Selected renderer name.")]
+        [Option(Required = true, HelpText = "Selected renderer name with comma separated settings formatted as 'PropertyName:Value' in parentheses.")]
         public string Renderer { get; set; }
-
-        [Option(Required = false, Default = "", HelpText = "Selected renderer comma separated settings formatted as 'PropertyName:Value'.")]
-        public string RendererSettings { get; set; }
     }
 }

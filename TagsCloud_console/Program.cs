@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using TagsCloud;
 using TagsCloud.DI;
 using TagsCloud.Layouters;
 using TagsCloud.Renderers;
+using TagsCloud.WordsFiltering;
 
 namespace TagsCloud_console
 {
@@ -22,31 +24,34 @@ namespace TagsCloud_console
 
             Parser.Default.ParseArguments<InputOptions>(args).WithParsed(opts =>
             {
-                var layouters = container.Resolve<ITagsCloudLayouter[]>();
-                var selectedLayouterName = opts.Layouter;
-                if (!layouters.Select(l => l.GetType().Name).Contains(selectedLayouterName))
-                {
-                    Console.Error.WriteLine($"There is no such layouter: {selectedLayouterName}");
-                    return;
-                }
-                var selectedLayouter = layouters.First(l => l.GetType().Name == selectedLayouterName);
-                if (!ParseSettings(selectedLayouter, opts.LayouterSettings.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)))
-                    return;
+                var knownFilters = container.Resolve<IFilter[]>().Cast<object>();
+                var selectedFilters = TryParseObjects(knownFilters, opts.Filters.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                if (selectedFilters == null) return;
 
-                var renderers = container.Resolve<ITagsCloudRenderer[]>();
-                var selectedRendererName = opts.Renderer;
-                if (!renderers.Select(r => r.GetType().Name).Contains(selectedRendererName))
+                var knownLayouters = container.Resolve<ITagsCloudLayouter[]>().Cast<object>();
+                var parsedLayouters = TryParseObjects(knownLayouters, new string[] { opts.Layouter });
+                if (parsedLayouters == null) return;
+                if (parsedLayouters.Length != 1)
                 {
-                    Console.Error.WriteLine($"There is no such renderer: {selectedRendererName}");
+                    Console.Error.WriteLine($"One layouter must be selected");
                     return;
                 }
-                var selectedRenderer = renderers.First(r => r.GetType().Name == selectedRendererName);
-                if (!ParseSettings(selectedRenderer, opts.RendererSettings.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)))
+                var selectedLayouter = parsedLayouters[0];
+
+                var knownRenderers = container.Resolve<ITagsCloudRenderer[]>().Cast<object>();
+                var parsedRenderers = TryParseObjects(knownRenderers, new string[] { opts.Renderer });
+                if (parsedRenderers == null) return;
+                if (parsedRenderers.Length != 1)
+                {
+                    Console.Error.WriteLine($"One renderer must be selected");
                     return;
+                }
+                var selectedRenderer = parsedRenderers[0];
 
                 var tagCloud = container.Resolve<TagsCloudGenerator>(
-                    new NamedParameter("layouter", selectedLayouter),
-                    new NamedParameter("renderer", selectedRenderer));
+                    new NamedParameter("filters", selectedFilters.Cast<IFilter>().ToArray()),
+                    new NamedParameter("layouter", selectedLayouter as ITagsCloudLayouter),
+                    new NamedParameter("renderer", selectedRenderer as ITagsCloudRenderer));
                 tagCloud.GenerateCloud(opts.InputFile).SaveTo(opts.OutputFile);
             });
 
@@ -54,7 +59,38 @@ namespace TagsCloud_console
             Console.ReadKey();
         }
 
-        private static bool ParseSettings(object obj, string[] options)
+        private static object[] TryParseObjects(IEnumerable<object> knownObjects, string[] settings)
+        {
+            var res = new List<object>();
+
+            var regexObjectWithSettings = new Regex(@"(\S+)\((\S+)\)");
+            foreach (var item in settings)
+            {
+                var matchObjectWithSettings = regexObjectWithSettings.Match(item);
+                string neededObjectTypeName = matchObjectWithSettings.Success
+                    ? matchObjectWithSettings.Groups[1].Value
+                    : item;
+                var findedObject = knownObjects.FirstOrDefault(o => o.GetType().Name == neededObjectTypeName);
+                if (findedObject == null)
+                {
+                    Console.Error.WriteLine($"Can't parse object '{item}'");
+                    return null;
+                }
+
+                if (matchObjectWithSettings.Success)
+                {
+                    var objectSettings = matchObjectWithSettings.Groups[2].Value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (!TryParseSettings(findedObject, objectSettings))
+                        return null;
+                }
+
+                res.Add(findedObject);
+            }
+
+            return res.ToArray();
+        }
+
+        private static bool TryParseSettings(object obj, string[] options)
         {
             var props = new Dictionary<string, PropertyInfo>();
             foreach (var p in obj.GetType().GetProperties().Where(p => p.CanWrite))
@@ -68,7 +104,7 @@ namespace TagsCloud_console
                     Console.Error.WriteLine($"Can't parse '{option}' as option of {obj.GetType().Name}");
                     return false;
                 }
-                
+
                 var propName = kv[0];
                 if (!props.TryGetValue(propName, out var propertyInfo))
                 {
