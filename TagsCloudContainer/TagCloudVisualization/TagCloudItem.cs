@@ -1,16 +1,18 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagCloudVisualization
 {
     public class TagCloudItem
     {
         public Rectangle Rectangle { get; }
         public string Word { get; }
+        public int Coefficient { get; }
 
-        public TagCloudItem(Rectangle rectangle, string word)
+        public TagCloudItem(Rectangle rectangle, string word, int coefficient)
         {
             Rectangle = rectangle;
             Word = word;
+            Coefficient = coefficient;
         }
     }
 }

@@ -1,33 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.WordProcessing
 {
-    public class MyStem
+    public class MyStem : IWordNormalizer
     {
-        public string WorkingDirectory => GetMyStemWorkingDirectory();
-        
-        public void ProcessWords(string inputFilePath, string outputFile)
+        private readonly string workingDirectory;
+
+        public MyStem()
         {
-            var arguments = $"/C mystem.exe {inputFilePath} {outputFile} -cls";
-            var workingDirectory = WorkingDirectory;
+            workingDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent?.Parent?.FullName + "\\MyStem";
+        }
+
+        public IEnumerable<string> NormalizeWords(IEnumerable<string> words)
+        {
+            var inputFile = $"{workingDirectory}\\input.txt";
+            var inputFile1 = "input.txt";
+            File.WriteAllLines(inputFile, words);
+            var outputFile = $"{workingDirectory}\\output.txt";
+            var outputFile1 = "output.txt";
+            var arguments = $"/C mystem.exe {inputFile1} {outputFile1} -cls";
             var startInfo = new ProcessStartInfo
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = "cmd.exe",
                 Arguments = arguments,
-                WorkingDirectory = workingDirectory
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = true
             };
             var process = new Process {StartInfo = startInfo};
             process.Start();
             process.WaitForExit();
+
+            return File.ReadLines(outputFile)
+                .Select(Parse)
+                .Select(s => s.ToLower());
         }
 
-        private static string GetMyStemWorkingDirectory()
+        private static string Parse(string line)
         {
-            var workingDirectory = Environment.CurrentDirectory;
-            return Directory.GetParent(workingDirectory).Parent?.Parent?.FullName + "\\MyStem";
+            var match = Regex.Match(line, @"{([a-zA-Zа-яА-Я]+)(\?.*)?}").Groups;
+            return match[1].Value;
         }
     }
 }

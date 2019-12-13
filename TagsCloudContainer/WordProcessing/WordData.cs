@@ -2,8 +2,8 @@
 {
     public class WordData
     {
-        public readonly string Word;
-        public readonly int Count;
+        public string Word { get; }
+        public int Count { get; }
 
         public WordData(string word, int count)
         {

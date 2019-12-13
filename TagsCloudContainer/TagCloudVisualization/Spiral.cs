@@ -3,13 +3,12 @@ using System.Drawing;
 
 namespace TagsCloudContainer.TagCloudVisualization
 {
-    public class Spiral
+    public class Spiral : IPlacingFunc
     {
         private readonly Func<double, Point> func;
 
         public Spiral() : this(0.1)
         {
-            
         }
 
         private Spiral(double coefficient)
@@ -18,7 +17,7 @@ namespace TagsCloudContainer.TagCloudVisualization
                 Convert.ToInt32(coefficient * t * Math.Cos(t)));
         }
 
-        public Point Calculate(double param)
+        public Point CalculatePoint(double param)
         {
             return func(param);
         }
