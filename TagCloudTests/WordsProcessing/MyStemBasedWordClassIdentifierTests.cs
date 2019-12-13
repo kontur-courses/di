@@ -5,7 +5,7 @@ using NUnit.Framework;
 using TagCloud.Infrastructure;
 using TagCloud.WordsProcessing;
 
-namespace TagCloudTests
+namespace TagCloudTests.WordsProcessing
 {
     public class MyStemBasedWordClassIdentifierTests
     {

@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure;
 
-namespace TagCloudTests
+namespace TagCloudTests.Infrastructure
 {
     public class SizeUtilsTests
     {

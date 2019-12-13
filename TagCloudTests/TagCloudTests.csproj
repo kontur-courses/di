@@ -43,18 +43,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouterTests.cs" />
-    <Compile Include="DistanceUtilsTests.cs" />
-    <Compile Include="GeometryUtilsTests.cs" />
-    <Compile Include="MyStemBasedWordClassIdentifierTests.cs" />
-    <Compile Include="RectangleUtilsTests.cs" />
-    <Compile Include="SegmentTests.cs" />
-    <Compile Include="ShiftUtilsTests.cs" />
-    <Compile Include="SizeUtilsTests.cs" />
-    <Compile Include="SpiralTests.cs" />
-    <Compile Include="Visualizer.cs" />
-    <Compile Include="WordSizeSetterTests.cs" />
-    <Compile Include="WordCountSetterTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\CircularCloudLayouterTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\DistanceUtilsTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\GeometryUtilsTests.cs" />
+    <Compile Include="WordsProcessing\MyStemBasedWordClassIdentifierTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\RectangleUtilsTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\SegmentTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtilsTests.cs" />
+    <Compile Include="Infrastructure\SizeUtilsTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\SpiralTests.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\Visualizer.cs" />
+    <Compile Include="Visualization\WordSizeSetterTests.cs" />
+    <Compile Include="WordsProcessing\WordCounterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
@@ -77,6 +77,7 @@
       <Name>TagCloud</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

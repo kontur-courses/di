@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using FakeItEasy;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
 
-namespace TagCloudTests
+namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 {
     public class CircularCloudLayouterTests
     {

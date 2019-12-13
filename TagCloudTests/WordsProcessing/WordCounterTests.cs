@@ -4,15 +4,15 @@ using NUnit.Framework;
 using TagCloud.Infrastructure;
 using TagCloud.WordsProcessing;
 
-namespace TagCloudTests
+namespace TagCloudTests.WordsProcessing
 {
-    public class WordCountSetterTests
+    public class WordCounterTests
     {
 
         [Test]
         public void GetCountedWords_ShouldSetCorrectCount_OnWords()
         {
-            var wordWeightSetter = new WordCounter();
+            var wordCounter = new WordCounter();
             var word1 = new Word("груша");
             var word2 = new Word("яблоко");
             var word3 = new Word("банан");
@@ -27,7 +27,7 @@ namespace TagCloudTests
             };
             var expectedCountedWords = new List<Word> {word3.SetCount(2), word1.SetCount(3), word2.SetCount(1)};
 
-            var result = wordWeightSetter.GetCountedWords(words);
+            var result = wordCounter.GetCountedWords(words);
 
             result.Should().BeEquivalentTo(expectedCountedWords);
         }

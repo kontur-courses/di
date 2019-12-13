@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 
-namespace TagCloudTests
+namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 {
     public class GeometryUtilsTests
     {

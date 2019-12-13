@@ -5,7 +5,7 @@ using NUnit.Framework;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
 
-namespace TagCloudTests
+namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 {
     [TestFixture]
     public class SpiralTests

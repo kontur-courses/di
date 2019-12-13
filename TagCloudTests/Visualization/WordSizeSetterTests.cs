@@ -7,7 +7,7 @@ using NUnit.Framework;
 using TagCloud.Infrastructure;
 using TagCloud.Visualization;
 
-namespace TagCloudTests
+namespace TagCloudTests.Visualization
 {
     public class WordSizeSetterTests
     {

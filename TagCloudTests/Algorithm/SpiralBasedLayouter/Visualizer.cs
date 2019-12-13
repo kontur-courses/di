@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 
-namespace TagCloudTests
+namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 {
     public class Visualizer
     {
