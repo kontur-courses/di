@@ -1,7 +1,7 @@
 using CommandLine;
 using TagsCloudGenerator.Infrastructure;
 
-namespace TagsCloudConsoleVersion.ConsoleUI
+namespace TagsCloudConsoleVersion
 {
     public class Options
     {

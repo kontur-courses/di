@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using CommandLine;
-using TagsCloudConsoleVersion.ConsoleUI;
 using TagsCloudGenerator.Core.Drawers;
 using TagsCloudGenerator.Core.Translators;
 using TagsCloudGenerator.Infrastructure;
