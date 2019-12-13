@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
+﻿using System.Drawing;
 
 namespace TagsCloudApp.ImageSave
 {
     public class Saver : IImageSaver
     {
-        public void SaveImage(Bitmap bitmap, string directoryName, string filename)
+        public void SaveImage(Bitmap bitmap, string filename)
         {            
             bitmap.Save(filename);
         }

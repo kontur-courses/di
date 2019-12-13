@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudApp.Visualization
 {
@@ -16,9 +13,8 @@ namespace TagsCloudApp.Visualization
             Graphics g = Graphics.FromImage(bitmap);
             var pen = new Pen(currentColor, 2);
             foreach (var wordRectangle in wordRectanglePairs)
-            {
-                var size = wordRectangle.Item2.Height;                
-                Font font = currentFont;                
+            {                
+                Font font = new Font(currentFont.SystemFontName, wordRectangle.Item2.Height / 2);
                 var brush = new SolidBrush(pen.Color);                
                 g.DrawString(wordRectangle.Item1, font, brush, wordRectangle.Item2);
 

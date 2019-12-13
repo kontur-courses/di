@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using TagsCloudApp.WordFiltering;
 using TagsCloudApp.ToSizeConverter;
@@ -10,7 +6,6 @@ using TagsCloudApp.Reader;
 using TagsCloudApp.Visualization;
 using TagsCloudApp.LayOuter;
 using TagsCloudApp.ImageSave;
-using System.Drawing;
 using TagsCloudApp.App;
 
 namespace TagsCloudApp
@@ -37,6 +32,5 @@ namespace TagsCloudApp
             builder.RegisterType<Application>().AsSelf().SingleInstance();
             return builder.Build();
         }
-
     }
 }

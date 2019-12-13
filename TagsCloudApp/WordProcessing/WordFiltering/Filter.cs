@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using NHunspell;
 
 namespace TagsCloudApp.WordFiltering
 {
@@ -43,9 +40,7 @@ namespace TagsCloudApp.WordFiltering
                 myStemProcess.Start();
                 result += myStemProcess.StandardOutput.ReadToEnd();
             }
-
             File.Delete("temp.txt");
-
             return result;
         }
     }

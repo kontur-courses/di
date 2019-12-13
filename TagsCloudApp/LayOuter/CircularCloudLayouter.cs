@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudApp.LayOuter
 {
@@ -15,6 +13,15 @@ namespace TagsCloudApp.LayOuter
         public CircularCloudLayouter()
         {
             var currentCenter = new Point(1000, 1000);
+            if (currentCenter.X < 0 || currentCenter.Y < 0)
+                throw new ArgumentException("Center coordinates should be greater than null");
+            rectanglesList = new List<Rectangle>();
+            сenter = currentCenter;
+        }
+
+        public CircularCloudLayouter(Point center)
+        {
+            var currentCenter = center;
             if (currentCenter.X < 0 || currentCenter.Y < 0)
                 throw new ArgumentException("Center coordinates should be greater than null");
             rectanglesList = new List<Rectangle>();

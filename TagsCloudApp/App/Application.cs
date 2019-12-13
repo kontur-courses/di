@@ -9,7 +9,6 @@ using TagsCloudApp.LayOuter;
 using TagsCloudApp.Reader;
 using TagsCloudApp.ToSizeConverter;
 using TagsCloudApp.Visualization;
-using TagsCloudApp.WordConverting;
 using TagsCloudApp.WordFiltering;
 
 namespace TagsCloudApp.App
@@ -60,8 +59,7 @@ namespace TagsCloudApp.App
 
         public IInitialSettings GetSettings(IEnumerable<string> args)
         {
-            Console.WriteLine(args);
-            InitialSettings settings = null;
+            InitialSettings settings = null;            
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
                 if (!File.Exists(o.Input))
@@ -72,33 +70,35 @@ namespace TagsCloudApp.App
                 var inputPath = new FileInfo(o.Input).FullName;
                 var outputPath = new FileInfo(o.Output).FullName;
                 var imageSize = new Size(0, 0);
-                var font = new Font(o.FontFamily, 12.0f);
+                var font = new Font(o.FontFamily, 14.0f);
                 var color = Color.FromName(o.WordsColors);               
                 imageSize = new Size(o.Width, o.Height);
                 settings = new InitialSettings(inputPath, outputPath, imageSize, color, font);
             });
             if (settings == null)
+            {
                 throw new Exception("Cant get settings with these arguments");
+            }
             return settings;
         }
 
         public void CreateImage(IEnumerable<string> args)
         {
             var settings = GetSettings(args);
-            var zed1 = new FileTextReader();
-            var zed2 = zed1.ReadWords(settings.InputFilePath);
-            var zed = new Filter();
-            var zed3 = zed.FilterWords(zed2);
-            var e = new WordToSizeConverter();
-            var z = e.ConvertToSizes(zed3);
-            var t = new Visualisator();            
+            var reader = new FileTextReader();
+            var words = reader.ReadWords(settings.InputFilePath);
+            var filter = new Filter();
+            var filteredWords = filter.FilterWords(words);
+            var converter = new WordToSizeConverter();
+            var wordsSizes = converter.ConvertToSizes(filteredWords);
+            var visualisator = new Visualisator();            
             var color = settings.WordsColor;
             var font = settings.WordsFont;
             var layouter = new CircularCloudLayouter();
-            var q = z.Select(s => new Tuple<string, Rectangle>(s.Item1, layouter.PutNextRectangle(s.Item2)));
-            var p = t.Visualize(q, settings.ImageSize, color, font);
-            var x = new Saver();
-            x.SaveImage(p, "", "");
+            var wordsRectangles = wordsSizes.Select(s => new Tuple<string, Rectangle>(s.Item1, layouter.PutNextRectangle(s.Item2)));
+            var currentBitmap = visualisator.Visualize(wordsRectangles, settings.ImageSize, color, font);
+            var saver = new Saver();
+            saver.SaveImage(currentBitmap, settings.OutputFilePath);
         }
     }
 }
