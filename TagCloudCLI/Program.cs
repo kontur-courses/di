@@ -33,7 +33,7 @@ namespace TagCloudCLI
               {
                   var imageFormatResult = TypesCollector.GetFormatFromPathSaveFile(opts.savePath);
                   if (imageFormatResult == null)
-                      throw new ArgumentException("Unsupported image format.");
+                      throw new ArgumentException($"Unsupported image format");
                   settings = new TagCloudSettings(opts.InputFiles,
                       opts.savePath,
                       opts.boringWordsPath,
