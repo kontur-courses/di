@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud_console", "TagsCl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud_wpf", "TagsCloud_wpf\TagsCloud_wpf.csproj", "{3BB39E5A-0A31-47A0-9F31-F2F38CFDB358}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud_Tests", "TagsCloud_Tests\TagsCloud_Tests.csproj", "{96E4C659-2E39-43ED-9AEC-FBE3F1188905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3BB39E5A-0A31-47A0-9F31-F2F38CFDB358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BB39E5A-0A31-47A0-9F31-F2F38CFDB358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BB39E5A-0A31-47A0-9F31-F2F38CFDB358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96E4C659-2E39-43ED-9AEC-FBE3F1188905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E4C659-2E39-43ED-9AEC-FBE3F1188905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96E4C659-2E39-43ED-9AEC-FBE3F1188905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96E4C659-2E39-43ED-9AEC-FBE3F1188905}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
