@@ -1,6 +1,5 @@
 ﻿using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
-using TagsCloudVisualization.Painters;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
@@ -27,9 +26,9 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
         public void Perform()
         {
             SettingsForm.For(appSettings.Palette).ShowDialog();
-            if (appSettings.LastOpenedFile != null)
+            if (appSettings.CurrentFile != null)
             {
-                var newImage = TagCloudVisualizer.GetTagCloudFromFile(appSettings.LastOpenedFile);
+                var newImage = appSettings.CurrentInterface.GetTagCloud();
                 appSettings.ImageHolder.SetImage(newImage);
             }
         }

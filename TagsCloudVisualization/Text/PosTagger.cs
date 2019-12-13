@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using Console = System.Console;
-
-namespace TagsCloudVisualization.Text
+﻿namespace TagsCloudVisualization.Text
 {
     public class PosTagger : IPosTagger
     {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TagsCloudVisualization.Core;
-using TagsCloudVisualization.Text;
 
 namespace TagsCloudVisualization.Preprocessing
 {
@@ -16,9 +13,8 @@ namespace TagsCloudVisualization.Preprocessing
             this.preprocessors = preprocessors;
         }
 
-        public Word[] PreprocessWords(ITextReader textReader, string filepath)
+        public Word[] PreprocessWords(IEnumerable<string> words)
         {
-            var words = textReader.GetAllWords(filepath);
             return preprocessors
                 .Aggregate(words, (current, action) => action.ProcessWords(current))
                 .Select(x => new Word(x))

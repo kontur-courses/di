@@ -5,8 +5,8 @@ namespace TagsCloudVisualization.WordStatistics
 {
     public class WordStatistics
     {
-        public readonly Word Word;
         public readonly StatisticsType Type;
+        public readonly Word Word;
 
         public WordStatistics(Word word, StatisticsType type)
         {

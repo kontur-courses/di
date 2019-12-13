@@ -132,6 +132,10 @@
     <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
       <HintPath>packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -158,10 +162,12 @@
   <ItemGroup>
     <Compile Include="Core\LayoutedWord.cs" />
     <Compile Include="Core\PaintedWord.cs" />
+    <Compile Include="Core\TagCloudContainer.cs" />
     <Compile Include="Drawers\DefaultWordDrawer.cs" />
     <Compile Include="Drawers\WordDrawer.cs" />
     <Compile Include="GUI\GuiActionExtensions.cs" />
     <Compile Include="Layouters\AnalyzedLayoutedText.cs" />
+    <Compile Include="Layouters\CloudLayouters\CloudLayouterConfiguration.cs" />
     <Compile Include="Layouters\IWordSizeChooser.cs" />
     <Compile Include="Layouters\WordCountSizeChooser.cs" />
     <Compile Include="Painters\WordPainter.cs" />
@@ -169,11 +175,14 @@
     <Compile Include="Preprocessing\PreprocessActions\RemoveNotWordsPreprocessor.cs" />
     <Compile Include="Preprocessing\PreprocessActions\ToLowercasePreprocessor.cs" />
     <Compile Include="Tests\Layouters\WordCountSizeChooserTests.cs" />
+    <Compile Include="Tests\Painters\DefaultWordPainterTests.cs" />
     <Compile Include="Tests\Preprocessing\RemoveNotNounsTests.cs" />
     <Compile Include="Tests\Preprocessing\RemoveNotWordsTests.cs" />
     <Compile Include="Tests\TagCloudVisualizerTests.cs" />
     <Compile Include="Text\IPosTagger.cs" />
     <Compile Include="Text\PosTagger.cs" />
+    <Compile Include="Text\TextReaders\DocxFileReader.cs" />
+    <Compile Include="UI\IVisualizer.cs" />
     <Compile Include="VisualizerActions\GuiActions\FontSettingsAction.cs" />
     <Compile Include="VisualizerActions\GuiActions\IGuiAction.cs" />
     <Compile Include="GUI\MenuCategory.cs" />
@@ -190,11 +199,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Painters\DefaultWordPainter.cs" />
-    <Compile Include="Painters\ImageFormat.cs" />
     <Compile Include="Painters\Palette.cs" />
     <Compile Include="Preprocessing\PreprocessActions\IPreprocessor.cs" />
     <Compile Include="Preprocessing\InputPreprocessor.cs" />
-    <Compile Include="TagCloudVisualizer.cs" />
+    <Compile Include="TagCloudVisualizerEntryPoint.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\ImageSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

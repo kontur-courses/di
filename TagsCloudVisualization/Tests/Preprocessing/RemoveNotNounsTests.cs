@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.Tests.Preprocessing
         [Test]
         public void RemoveNotNouns_WorksCorrectly() //Test may not work because it requires loading module file.
         {
-            var words = new [] {"apple", "gold", "brain", "meat", "chicken", "golden", "wonderful", "runner", "blow"};
+            var words = new[] {"apple", "gold", "brain", "meat", "chicken", "golden", "wonderful", "runner", "blow"};
             var expectedResult = new[] {"apple", "gold", "brain", "meat", "chicken", "runner"};
             var preprocessor = new RemoveNotNounsPreprocessor();
             var actualResult = preprocessor.ProcessWords(words).ToArray();

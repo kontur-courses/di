@@ -39,9 +39,9 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
             var result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var newImage = TagCloudVisualizer.GetTagCloudFromFile(dialog.FileName);
+                appSettings.CurrentFile = dialog.FileName;
+                var newImage = appSettings.CurrentInterface.GetTagCloud();
                 appSettings.ImageHolder.SetImage(newImage);
-                appSettings.LastOpenedFile = dialog.FileName;
             }
         }
 

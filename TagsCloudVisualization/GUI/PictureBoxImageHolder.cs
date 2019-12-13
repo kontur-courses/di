@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using TagsCloudVisualization.Settings;
@@ -29,9 +28,9 @@ namespace TagsCloudVisualization.GUI
             Image = bitmap;
         }
 
-        public void SaveImage(string fileName)
+        public void SaveImage(string fileName, ImageFormat format)
         {
-            Image.Save(fileName);
+            Image.Save(fileName, format);
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Drawing;
-using TagsCloudVisualization.Core;
+﻿using TagsCloudVisualization.Core;
 using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Painters
 {
@@ -15,9 +13,7 @@ namespace TagsCloudVisualization.Painters
         {
             var words = new PaintedWord[analyzedLayoutedText.Words.Length];
             for (var i = 0; i < words.Length; i++)
-            {
                 words[i] = new PaintedWord(analyzedLayoutedText.Words[i], palette.FontColor);
-            }
             return words;
         }
     }

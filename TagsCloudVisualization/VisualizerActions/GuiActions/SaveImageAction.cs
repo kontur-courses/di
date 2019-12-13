@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
@@ -34,11 +34,27 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
                 InitialDirectory = Environment.CurrentDirectory,
                 DefaultExt = "png",
                 FileName = "image.png",
-                Filter = "Изображения (*.png)|*.png"
+                Filter = "Изображения (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                appSettings.ImageHolder.SaveImage(dialog.FileName);
+                switch (dialog.FilterIndex)
+                {
+                    case 1:
+                        appSettings.ImageHolder.SaveImage(dialog.FileName,
+                            ImageFormat.Png);
+                        break;
+
+                    case 2:
+                        appSettings.ImageHolder.SaveImage(dialog.FileName,
+                            ImageFormat.Jpeg);
+                        break;
+
+                    case 3:
+                        appSettings.ImageHolder.SaveImage(dialog.FileName,
+                            ImageFormat.Bmp);
+                        break;
+                }
         }
 
         public MenuCategory GetMenuCategory()

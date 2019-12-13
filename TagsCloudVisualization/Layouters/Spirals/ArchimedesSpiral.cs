@@ -7,12 +7,12 @@ namespace TagsCloudVisualization.Layouters.Spirals
 {
     public class ArchimedesSpiral : ISpiral
     {
-        private const float DeltaAngle = (float)(5 * Math.PI / 180);
+        private const float DeltaAngle = (float) (5 * Math.PI / 180);
         private const float Thickness = 1;
+        private readonly PointF center;
+        private readonly float deltaAngle;
 
         private readonly float thickness;
-        private readonly float deltaAngle;
-        private readonly PointF center;
 
         public ArchimedesSpiral()
         {
@@ -44,7 +44,7 @@ namespace TagsCloudVisualization.Layouters.Spirals
 
         public IEnumerable<PointF> GetSpiralPoints()
         {
-            for (float theta = 0; ; theta += deltaAngle)
+            for (float theta = 0;; theta += deltaAngle)
             {
                 var r = thickness * theta;
                 float x, y;

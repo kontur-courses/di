@@ -6,8 +6,8 @@ namespace TagsCloudVisualization.Layouters
 {
     public class AnalyzedLayoutedText
     {
-        public readonly LayoutedWord[] Words;
         private readonly Dictionary<WordStatistics.WordStatistics, int> statistics;
+        public readonly LayoutedWord[] Words;
 
         public AnalyzedLayoutedText(LayoutedWord[] words, Dictionary<WordStatistics.WordStatistics, int> statistics)
         {

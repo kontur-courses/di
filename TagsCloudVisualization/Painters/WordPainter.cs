@@ -1,7 +1,5 @@
-﻿using System.Drawing;
-using TagsCloudVisualization.Core;
+﻿using TagsCloudVisualization.Core;
 using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Painters
 {

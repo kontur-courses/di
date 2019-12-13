@@ -13,14 +13,6 @@ namespace TagsCloudVisualization.Tests
     [TestFixture]
     public class WordCountSizeChooserTests
     {
-        private ICloudLayouter cloudLayouter;
-        private IWordSizeChooser sizeChooser;
-        private AnalyzedText analyzedText;
-        private Word[] words = {new Word("test"),
-            new Word("Test2"),
-            new Word("test3"),
-            new Word("test4")};
-
         [SetUp]
         public void Setup()
         {
@@ -29,18 +21,29 @@ namespace TagsCloudVisualization.Tests
             var stat = new Dictionary<WordStatistics.WordStatistics, int>();
             var counter = 1;
             foreach (var word in words)
-            {
                 stat[new WordStatistics.WordStatistics(word, StatisticsType.WordCount)] = counter++;
-            }
             analyzedText = new AnalyzedText(words, stat);
         }
+
+        private ICloudLayouter cloudLayouter;
+        private IWordSizeChooser sizeChooser;
+        private AnalyzedText analyzedText;
+
+        private readonly Word[] words =
+        {
+            new Word("test"),
+            new Word("Test2"),
+            new Word("test3"),
+            new Word("test4")
+        };
 
         [Test]
         public void GetLayoutedWords_ReturnDifferentSizes_OnDifferentWordFrequency()
         {
-            var wordLayouter = new WordLayouter(cloudLayouter, sizeChooser);
+            var wordLayouter = new WordLayouter(new CloudLayouterConfiguration(() => cloudLayouter), sizeChooser);
             var previousHeight = -1;
-            foreach (var layoutedWord in wordLayouter.GetLayoutedText(analyzedText).Words.OrderBy(x => x.Position.Height))
+            foreach (var layoutedWord in wordLayouter.GetLayoutedText(analyzedText).Words
+                .OrderBy(x => x.Position.Height))
             {
                 layoutedWord.Position.Height.Should().BeGreaterThan(previousHeight);
                 previousHeight = layoutedWord.Position.Height;

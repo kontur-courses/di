@@ -11,8 +11,14 @@ namespace TagsCloudVisualization.Tests.Layouters.Spirals
     [TestFixture]
     public class ArchimedesSpiralTests
     {
+        [TearDown]
+        public void Dispose()
+        {
+            generator?.Dispose();
+        }
+
         private const double Epsilon = 1e-2;
-        private const float DeltaAngle = (float)(5 * Math.PI / 180);
+        private const float DeltaAngle = (float) (5 * Math.PI / 180);
         private IEnumerator<PointF> generator;
 
         [TestCase(7, 0, 0, 0, 0, 0, TestName = "SpiralStartsAtCenter")]
@@ -33,9 +39,11 @@ namespace TagsCloudVisualization.Tests.Layouters.Spirals
         [TestCase(7, 0, 0, 20, TestName = "RandomPointOnSpiral")]
         [TestCase(2, 0, 0, 16, TestName = "RandomPointOnDifferentThickness")]
         [TestCase(2, 16, -2, 16, TestName = "RandomPointWhenCenterIsNotZero")]
-        public void IEnumerator_YieldsSequenceInCorrectOrder(float thickness, float centerX, float centerY, int elementIndex)
+        public void IEnumerator_YieldsSequenceInCorrectOrder(float thickness, float centerX, float centerY,
+            int elementIndex)
         {
-            generator = new ArchimedesSpiral(new PointF(centerX, centerY), thickness, DeltaAngle).GetSpiralPoints().GetEnumerator();
+            generator = new ArchimedesSpiral(new PointF(centerX, centerY), thickness, DeltaAngle).GetSpiralPoints()
+                .GetEnumerator();
             for (var i = 0; i <= elementIndex; i++)
                 generator.MoveNext();
             var firstPoint = generator.Current;
@@ -46,14 +54,8 @@ namespace TagsCloudVisualization.Tests.Layouters.Spirals
             r = thickness * theta;
             var nextX = (float) (r * Math.Cos(theta)) + centerX;
             var nextY = (float) (r * Math.Sin(theta)) + centerY;
-            generator.Current.X.Should().BeApproximately(nextX, (float)Epsilon);
-            generator.Current.Y.Should().BeApproximately(nextY, (float)Epsilon);
-        }
-
-        [TearDown]
-        public void Dispose()
-        {
-            generator?.Dispose();
+            generator.Current.X.Should().BeApproximately(nextX, (float) Epsilon);
+            generator.Current.Y.Should().BeApproximately(nextY, (float) Epsilon);
         }
     }
 }

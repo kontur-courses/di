@@ -6,8 +6,8 @@ namespace TagsCloudVisualization.WordStatistics
 {
     public class AnalyzedText
     {
-        public readonly Word[] Words;
         private readonly Dictionary<WordStatistics, int> statistics;
+        public readonly Word[] Words;
 
         public AnalyzedText(Word[] words, Dictionary<WordStatistics, int> statistics)
         {

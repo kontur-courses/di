@@ -16,12 +16,8 @@ namespace TagsCloudVisualization.WordStatistics
         {
             var statistics = new Dictionary<WordStatistics, int>();
             foreach (var collector in statCollectors)
-            {
-                foreach (var (wordStatistics, value) in collector.GetStatistics(words))
-                {
-                    statistics[wordStatistics] = value;
-                }
-            }
+            foreach (var (wordStatistics, value) in collector.GetStatistics(words))
+                statistics[wordStatistics] = value;
             return new AnalyzedText(words, statistics);
         }
     }

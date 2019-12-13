@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.Core;
-using TagsCloudVisualization.Painters;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Drawers

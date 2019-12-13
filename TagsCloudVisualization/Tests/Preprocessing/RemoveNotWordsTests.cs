@@ -11,7 +11,10 @@ namespace TagsCloudVisualization.Tests.Preprocessing
         [Test]
         public void RemoveNotWords_WorksCorrectly()
         {
-            var words = new[] {"asdf", "123-51", "hell'es", "SMILE", "RIGHT", "NOW", "GOOD", "TESTS", "Ding-dong", "  ", "--\\asdzc12"};
+            var words = new[]
+            {
+                "asdf", "123-51", "hell'es", "SMILE", "RIGHT", "NOW", "GOOD", "TESTS", "Ding-dong", "  ", "--\\asdzc12"
+            };
             var expectedResult = new[] {"asdf", "hell'es", "SMILE", "RIGHT", "NOW", "GOOD", "TESTS", "Ding-dong"};
             var preprocessor = new RemoveNotWordsPreprocessor();
             var actualResult = preprocessor.ProcessWords(words).ToArray();

@@ -14,22 +14,27 @@ namespace TagsCloudVisualization.Tests.Layouters
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private CircularCloudLayouter layouter;
-        private List<Rectangle> generatedRectangles;
-
         [SetUp]
         public void SetUp()
         {
             generatedRectangles = new List<Rectangle>();
         }
 
-        [Test]
-        public void PutNextRectangle_Throws_WhenNegativeSize()
+        [TearDown]
+        public void DrawPictureToDebug_OnFail()
         {
-            layouter = new CircularCloudLayouter(new Point(0, 0));
-            Action action = () => PutNextRectangle(new Size(-10, 0));
-            action.Should().Throw<ArgumentException>();
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                var path = Path.Combine(
+                    Directory.CreateDirectory($"{AppDomain.CurrentDomain.BaseDirectory}\\TestFailurePictures").FullName,
+                    Guid.NewGuid() + ".png");
+                //new Visualizer().DrawRectangles(generatedRectangles).Save(path);
+                Console.WriteLine($"Tag cloud visualization saved to file {path}");
+            }
         }
+
+        private CircularCloudLayouter layouter;
+        private List<Rectangle> generatedRectangles;
 
         [TestCase(0, 0, 5, TestName = "OnTwoRectangles")]
         [TestCase(0, 0, 5, TestName = "CenterIsZero")]
@@ -75,7 +80,8 @@ namespace TagsCloudVisualization.Tests.Layouters
                 PutNextRectangle(size);
             var rectangleArea = generatedRectangles.Sum(x => x.Height * x.Width);
             var outerCircleRadius =
-                generatedRectangles.Max(x => x.Location.GetDistanceTo(center)) + Math.Sqrt(size.Width * size.Width + size.Height * size.Height);
+                generatedRectangles.Max(x => x.Location.GetDistanceTo(center)) +
+                Math.Sqrt(size.Width * size.Width + size.Height * size.Height);
             var circleArea = Math.PI * outerCircleRadius * outerCircleRadius;
             rectangleArea.Should().BeGreaterOrEqualTo((int) (circleArea / 6));
         }
@@ -121,23 +127,19 @@ namespace TagsCloudVisualization.Tests.Layouters
 
         private Rectangle PutNextRectangle(Size size)
         {
-            if(layouter == null)
+            if (layouter == null)
                 throw new NullReferenceException("Layouter was not initialized!");
             var rect = layouter.PutNextRectangle(size);
             generatedRectangles.Add(rect);
             return rect;
         }
 
-        [TearDown]
-        public void DrawPictureToDebug_OnFail()
+        [Test]
+        public void PutNextRectangle_Throws_WhenNegativeSize()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                var path = Path.Combine(
-                    Directory.CreateDirectory($"{AppDomain.CurrentDomain.BaseDirectory}\\TestFailurePictures").FullName, Guid.NewGuid() + ".png");
-                //new Visualizer().DrawRectangles(generatedRectangles).Save(path);
-                Console.WriteLine($"Tag cloud visualization saved to file {path}");
-            }
+            layouter = new CircularCloudLayouter(new Point(0, 0));
+            Action action = () => PutNextRectangle(new Size(-10, 0));
+            action.Should().Throw<ArgumentException>();
         }
     }
 }

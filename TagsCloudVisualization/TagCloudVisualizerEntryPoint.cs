@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using TagsCloudVisualization.Core;
 using TagsCloudVisualization.Drawers;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Layouters;
@@ -13,49 +14,30 @@ using TagsCloudVisualization.Preprocessing;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.Text;
 using TagsCloudVisualization.Text.TextReaders;
+using TagsCloudVisualization.UI;
 using TagsCloudVisualization.VisualizerActions.GuiActions;
 using TagsCloudVisualization.WordStatistics;
 
 namespace TagsCloudVisualization
 {
-    public static class TagCloudVisualizer
+    public static class TagCloudVisualizerEntryPoint
     {
         private static WindsorContainer container;
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
             container = new WindsorContainer();
             ConfigureContainer();
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var mainForm = container.Resolve<GraphicalVisualizer>();
-            mainForm.WindowState = FormWindowState.Maximized;
-            Application.Run(mainForm);
-        }
-
-        public static Bitmap GetTagCloudFromFile(string filepath)
-        {
-            var textReader = container.Resolve<ITextReader>();
-            var preprocessor = container.Resolve<InputPreprocessor>();
-            var statCounter = container.Resolve<StatisticsCounter>();
-            var layouter = container.Resolve<WordLayouter>();
-            var painter = container.Resolve<WordPainter>();
-            var drawer = container.Resolve<WordDrawer>();
-            var words = preprocessor.PreprocessWords(textReader, filepath);
-            var analyzedText = statCounter.GetAnalyzedText(words);
-            var analyzedLayoutedText = layouter.GetLayoutedText(analyzedText);
-            var paintedWords = painter.GetPaintedWords(analyzedLayoutedText);
-            return drawer.GetDrawnLayoutedWords(paintedWords);
+            container.Resolve<IVisualizer>().Start(args);
         }
 
         private static void ConfigureContainer()
         {
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, true));
 
-
-            container.Register(Component.For<ITextReader>().ImplementedBy<TxtFileReader>().LifestyleTransient());
+            container.Register(Component.For<ITextReader>().ImplementedBy<TxtFileReader>());
+            container.Register(Component.For<ITextReader>().ImplementedBy<DocxFileReader>());
 
 
             container.Register(Component.For<IPreprocessor>().ImplementedBy<ToLowercasePreprocessor>());
@@ -69,22 +51,22 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IWordSizeChooser>().ImplementedBy<WordCountSizeChooser>());
 
 
-            container.Register(Component.For<WordPainter>()
-                .ImplementedBy<DefaultWordPainter>()
-                .LifestyleTransient());
+            container.Register(Component.For<WordPainter>().ImplementedBy<DefaultWordPainter>());
 
 
             container.Register(Component.For<WordDrawer>().ImplementedBy<DefaultWordDrawer>());
 
 
-            container.Register(Component.For<ICloudLayouter>()
-                .UsingFactoryMethod(() =>
+            container.Register(Component.For<CloudLayouterConfiguration>().UsingFactoryMethod(() =>
+            {
+                return new CloudLayouterConfiguration(() =>
                 {
-                    var imageSettings = container.Resolve<ImageSettings>();
-                    var imageCenter = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+                    var appSettings = container.Resolve<AppSettings>();
+                    var imageCenter = new Point(appSettings.ImageSettings.Width / 2,
+                        appSettings.ImageSettings.Height / 2);
                     return new CircularCloudLayouter(imageCenter);
-                })
-                .LifestyleTransient());
+                });
+            }));
 
 
             container.Register(Component.For<IGuiAction>().ImplementedBy<ImageSettingsAction>());
@@ -94,10 +76,20 @@ namespace TagsCloudVisualization
             container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
 
 
-            container.Register(Component.For<AppSettings>().ImplementedBy<AppSettings>().LifestyleSingleton());
+            container.Register(Component.For<IVisualizer>().UsingFactoryMethod(() =>
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false); //because this should be called before initializing form
+                var guiActions = container.ResolveAll<IGuiAction>();
+                var appSettings = container.Resolve<AppSettings>();
+                var tagCloud = container.Resolve<TagCloudContainer>();
+                var visualizer = new GraphicalVisualizer(guiActions, appSettings, tagCloud);
+                appSettings.CurrentInterface = visualizer;
+                return visualizer;
+            }));
 
 
-            container.Register(Classes.FromThisAssembly().Where(x => x.IsClass).LifestyleTransient());
+            container.Register(Classes.FromThisAssembly().Where(x => x.IsClass));
         }
     }
 }

@@ -1,25 +1,43 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloudVisualization.Core;
 using TagsCloudVisualization.GUI;
 using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.UI;
 
 namespace TagsCloudVisualization
 {
-    public class GraphicalVisualizer : Form
+    public class GraphicalVisualizer : Form, IVisualizer
     {
-        public GraphicalVisualizer(IGuiAction[] actions, AppSettings appSettings)
+        private readonly AppSettings appSettings;
+        private readonly TagCloudContainer container;
+
+        public GraphicalVisualizer(IGuiAction[] actions, AppSettings appSettings, TagCloudContainer container)
         {
+            this.appSettings = appSettings;
+            this.container = container;
+            WindowState = FormWindowState.Maximized;
             ClientSize = new Size(appSettings.ImageSettings.Width, appSettings.ImageSettings.Height);
 
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
-            
+
             appSettings.ImageHolder.SetImageSize(appSettings.ImageSettings);
             appSettings.ImageHolder.Dock = DockStyle.Fill;
             Controls.Add(appSettings.ImageHolder);
+        }
+
+        public void Start(string[] args)
+        {
+            Application.Run(this);
+        }
+
+        public Bitmap GetTagCloud()
+        {
+            return container.GetTagCloud(appSettings.CurrentFile);
         }
 
         protected override void OnShown(EventArgs e)

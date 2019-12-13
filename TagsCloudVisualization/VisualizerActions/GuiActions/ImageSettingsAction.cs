@@ -27,9 +27,9 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
         {
             SettingsForm.For(appSettings.ImageSettings).ShowDialog();
             appSettings.ImageHolder.SetImageSize(appSettings.ImageSettings);
-            if (appSettings.LastOpenedFile != null)
+            if (appSettings.CurrentFile != null)
             {
-                var newImage = TagCloudVisualizer.GetTagCloudFromFile(appSettings.LastOpenedFile);
+                var newImage = appSettings.CurrentInterface.GetTagCloud();
                 appSettings.ImageHolder.SetImage(newImage);
             }
         }
