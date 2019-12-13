@@ -13,21 +13,25 @@ namespace TagsCloudContainer.Visualization
         private readonly Brush backgroundFillBrush;
         private readonly Brush textBrush;
         private readonly ISaver saver;
+        private readonly Size resolution;
+        private readonly string fontName;
 
         public CircularCloudVisualizer(
-            ColoringOptions options, ISaver saver)
+            ColoringOptions options, ISaver saver, Size resolution, string fontName)
         {
             rectangleFillBrush = options.rectangleFillBrush;
             backgroundFillBrush = options.backgroundFillBrush;
             rectangleBorderPen = options.rectangleBorderPen;
             textBrush = options.textBrush;
             this.saver = saver;
+            this.resolution = resolution;
+            this.fontName = fontName;
         }
 
         public void Visualize(IEnumerable<WordRectangle> wordRectangles, string path)
         {
             var visualization = GetVisualization(wordRectangles);
-            saver.SaveImage(path, visualization);
+            saver.SaveImage(path, visualization, resolution);
         }
 
         public Bitmap GetVisualization(IEnumerable<WordRectangle> rectangles)
@@ -66,7 +70,7 @@ namespace TagsCloudContainer.Visualization
                     graphics.DrawRectangle(rectangleBorderPen, rectangle);
                     graphics.DrawString(
                         wordRectangle.SizedWord.Word,
-                        new Font(FontFamily.GenericSansSerif, wordRectangle.SizedWord.FontSize),
+                        new Font(fontName, wordRectangle.SizedWord.FontSize),
                         textBrush,
                         rectangle);
                 }

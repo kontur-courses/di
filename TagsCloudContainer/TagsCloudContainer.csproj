@@ -39,6 +39,9 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -62,13 +65,14 @@
   <ItemGroup>
     <Compile Include="CloudLayouter.cs" />
     <Compile Include="ICloudLayouter.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="RectangleTranslation\SizedWord.cs" />
+    <Compile Include="Settings Providing\ISettingsProvider.cs" />
     <Compile Include="Settings Providing\SettingsProvider.cs" />
     <Compile Include="Visualization\Interfaces\ISaver.cs" />
     <Compile Include="Visualization\Interfaces\IWordLayouter.cs" />
     <Compile Include="Visualization\PngSaver.cs" />
     <Compile Include="Visualization\WordRectangle.cs" />
-    <Compile Include="Settings Providing\ISettingsProvider.cs" />
     <Compile Include="Parsing\IFileParser.cs" />
     <Compile Include="Parsing\TxtParser.cs" />
     <Compile Include="RectangleTranslation\ISizeTranslator.cs" />
@@ -107,7 +111,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

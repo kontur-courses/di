@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using Autofac;
+using CommandLine;
 using NHunspell;
 using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
@@ -16,15 +20,18 @@ namespace TagsCloudContainer
 
         public static void Main(string[] args)
         {
-            SetDependencies();
-            using (var scope = container.BeginLifetimeScope())
-            {
-                var layouter = scope.Resolve<ICloudLayouter>();
-                layouter.Layout(Path.Combine("..", "..", "example.txt"), Path.Combine("..", "..", "example.png"));
-            }
+            Parser.Default.ParseArguments<Options>(args).WithParsed(Execute)
+                .WithNotParsed(HandleExceptions);
         }
 
-        private static void SetDependencies()
+        private static void Execute(Options options)
+        {
+            SetDependencies(options);
+            var layouter = container.Resolve<ICloudLayouter>();
+            layouter.Layout(options.InputPath, options.OutputPath);
+        }
+
+        private static void SetDependencies(Options options)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TxtParser>().As<IFileParser>();
@@ -34,20 +41,34 @@ namespace TagsCloudContainer
             builder.RegisterType<WordCounter>().As<IWordCounter>();
             builder.RegisterType<CloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<CircularCloudLayouter>().As<IWordLayouter>();
-            builder.RegisterType<CircularCloudVisualizer>().As<IVisualizer>();
             builder.RegisterInstance(new Hunspell(
                 GetDictionaryDirectoryPath("index.aff"),
                 GetDictionaryDirectoryPath("index.dic"))).As<Hunspell>();
-            builder.RegisterInstance(new SettingsProvider()).As<SettingsProvider>();
-            builder.Register(c => c.Resolve<SettingsProvider>().GetSettings()).As<Settings>();
-            builder.Register(c => c.Resolve<Settings>().ColoringOptions).As<ColoringOptions>();
             builder.RegisterType<PngSaver>().As<ISaver>();
+            builder.Register(c => new SettingsProvider(options, c.Resolve<IFileParser>()))
+                .As<SettingsProvider>();
+            builder.Register(c => c.Resolve<SettingsProvider>().GetSettings()).As<Settings>();
+            builder.Register(c => c.Resolve<SettingsProvider>().GetColoringOptions()).As<ColoringOptions>();
+            builder.Register(c =>
+            {
+                var settings = c.Resolve<Settings>();
+                return new CircularCloudVisualizer(settings.ColoringOptions, c.Resolve<ISaver>(), settings.Resolution,
+                    settings.FontName);
+            }).As<IVisualizer>();
             container = builder.Build();
         }
 
         private static string GetDictionaryDirectoryPath(string filename)
         {
             return Path.Combine("..", "..", "Dictionaries", filename);
+        }
+
+        private static void HandleExceptions(IEnumerable<Error> errors)
+        {
+            foreach (var error in errors)
+            {
+                throw new ArgumentException(error.ToString());
+            }
         }
     }
 }

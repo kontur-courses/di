@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloudContainer.Parsing;
 using TagsCloudContainer.RectangleTranslation;
 using TagsCloudContainer.Settings_Providing;
 
@@ -22,8 +24,9 @@ namespace TagsCloudContainer.Visualization.Tests
         [SetUp]
         public void Initialize()
         {
-            var settingsProvider = new SettingsProvider();
-            visualizer = new CircularCloudVisualizer(settingsProvider.GetSettings().ColoringOptions, new PngSaver());
+            var settingsProvider = new SettingsProvider(new TxtParser());
+            visualizer = new CircularCloudVisualizer(settingsProvider.GetSettings().ColoringOptions, new PngSaver(),
+                new Size(1920, 1080), "Consolas");
         }
 
         [TearDown]
