@@ -74,12 +74,12 @@
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterSettingsAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterWithWordsAction.cs" />
-    <Compile Include="Actions\CloudPainter.cs" />
-    <Compile Include="Actions\CloudPainterFactory.cs" />
-    <Compile Include="Actions\CloudWithWordsPainter.cs" />
-    <Compile Include="Actions\ICloudPainter.cs" />
-    <Compile Include="Actions\CloudWithWordsPainterFactory.cs" />
-    <Compile Include="Actions\IPainterFactory.cs" />
+    <Compile Include="CloudPainters\CloudPainter.cs" />
+    <Compile Include="CloudPainters\CloudPainterFactory.cs" />
+    <Compile Include="CloudPainters\CloudWithWordsPainter.cs" />
+    <Compile Include="CloudPainters\ICloudPainter.cs" />
+    <Compile Include="CloudPainters\CloudWithWordsPainterFactory.cs" />
+    <Compile Include="CloudPainters\IPainterFactory.cs" />
     <Compile Include="Actions\LayouterWithWordsSettingsAction.cs" />
     <Compile Include="app.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -174,15 +174,16 @@
   <ItemGroup>
     <Content Include="Data\en_US.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content> 
-		<Content Include="Data\en_US.dic">
+    </Content>
+    <Content Include="Data\en_US.dic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content> 
-	<Content Include="Data\EnglishPOS.nbin">
+    </Content>
+    <Content Include="Data\EnglishPOS.nbin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content> 
-	<Content Include="Data\tagdict">
+    </Content>
+    <Content Include="Data\tagdict">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content> 
+    </Content>
   </ItemGroup>
+  <ItemGroup />
 </Project>

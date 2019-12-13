@@ -5,7 +5,7 @@ using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
-    public class SaveImageAction : IUiAction
+    internal class SaveImageAction : IUiAction
     {
         private readonly IImageDirectoryProvider imageDirectoryProvider;
         private readonly IImageHolder imageHolder;

@@ -15,12 +15,11 @@ namespace TagsCloudForm.WordFilters
             var tagDictDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\", "tagdict");
             var posTagger = new EnglishMaximumEntropyPosTagger(modelPath, tagDictDir);
             var outList = new List<string>();
-            var wordsEnumerator = words.GetEnumerator();
-            while (wordsEnumerator.MoveNext())
+            foreach (var word in words)
             {
-                var speechPart = posTagger.Tag(new[] { wordsEnumerator.Current });
+                var speechPart = posTagger.Tag(new[] { word });
                 if (!partOfSpeechToFilter.Contains(speechPart[0]))
-                    outList.Add(wordsEnumerator.Current);
+                    outList.Add(word);
             }
             return outList;
         }

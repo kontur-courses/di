@@ -2,7 +2,7 @@
 
 namespace TagsCloudForm.Actions
 {
-    class CircularCloudLayouterWithWordsAction : IUiAction
+    internal class CircularCloudLayouterWithWordsAction : IUiAction
     {
         private readonly IPainterFactory factory;
 

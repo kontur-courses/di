@@ -3,7 +3,7 @@ using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
-    public class PaletteSettingsAction : IUiAction
+    internal class PaletteSettingsAction : IUiAction
     {
         private readonly IPalette palette;
 

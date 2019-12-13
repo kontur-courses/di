@@ -1,9 +1,8 @@
-﻿using TagsCloudForm.Common;
-using TagsCloudForm.UiActions;
+﻿using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
-    public class CircularCloudLayouterAction : IUiAction
+    internal class CircularCloudLayouterAction : IUiAction
     {
         private readonly IPainterFactory factory;
         public CircularCloudLayouterAction(IPainterFactory factory)

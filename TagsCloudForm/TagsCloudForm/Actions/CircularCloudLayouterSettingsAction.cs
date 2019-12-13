@@ -3,7 +3,7 @@ using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {
-    public class CircularCloudLayouterSettingsAction : IUiAction
+    internal class CircularCloudLayouterSettingsAction : IUiAction
     {
         private readonly CircularCloudLayouterSettings.CircularCloudLayouterSettings settings;
 
