@@ -214,6 +214,13 @@ namespace TagsCloud_wpf
 
         private void MenuItemGenerate_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(inputFileName))
+            {
+                MenuItemOpenFile_Click(null, null);
+                if (string.IsNullOrWhiteSpace(inputFileName))
+                    return;
+            }
+
             var wordsLoader = new WordsLoader(knownParsers);
             var words = wordsLoader.LoadWords(inputFileName);
 
@@ -247,6 +254,13 @@ namespace TagsCloud_wpf
 
         private void MenuItemSaveToFile_Click(object sender, RoutedEventArgs e)
         {
+            if (tagsCloud == null || tagsCloud.TagCloudImage == null)
+            {
+                MenuItemGenerate_Click(null, null);
+                if (tagsCloud == null || tagsCloud.TagCloudImage == null)
+                    return;
+            }
+
             var filenameFilters = string.Join(";", knownImageSavers.Select(saver =>
                 string.Join(";", saver.FileExtensions.Select(ext => $"*{ext}"))));
             filenameFilters = $"Image files|{filenameFilters}";
