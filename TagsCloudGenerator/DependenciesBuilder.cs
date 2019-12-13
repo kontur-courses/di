@@ -8,6 +8,7 @@ using TagsCloudGenerator.Client.Console;
 using TagsCloudGenerator.CloudLayouter;
 using TagsCloudGenerator.FileReaders;
 using TagsCloudGenerator.Saver;
+using TagsCloudGenerator.Tools;
 using TagsCloudGenerator.Visualizer;
 using TagsCloudGenerator.WordsHandler;
 using TagsCloudGenerator.WordsHandler.Converters;
@@ -34,6 +35,7 @@ namespace TagsCloudGenerator
             builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
             builder.RegisterType<CloudGenerator>().As<ICloudGenerator>().SingleInstance();
             builder.RegisterType<WordHandler>().As<IWordHandler>().SingleInstance();
+            builder.RegisterType<WordsParser>().As<IWordsParser>().SingleInstance();
 
             builder.RegisterInstance<ILayoutPointsGenerator>(new SpiralGenerator(center, 0.5, Math.PI / 16))
                 .SingleInstance();

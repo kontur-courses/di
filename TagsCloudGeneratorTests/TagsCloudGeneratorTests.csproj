@@ -59,6 +59,7 @@
     <Compile Include="ToolsForTests\GeometryHelperTests.cs" />
     <Compile Include="CloudLayouterTests\SpiralGeneratorTests.cs" />
     <Compile Include="ToolsTests\HelperTests.cs" />
+    <Compile Include="ToolsTests\WordsParserTests.cs" />
     <Compile Include="WordsHandler\ConvertersTests\FuncConverterTests.cs" />
     <Compile Include="WordsHandler\ConvertersTests\InitialFormConverterTests.cs" />
     <Compile Include="WordsHandler\FiltersTests\BoringWordsEjectorTests.cs" />

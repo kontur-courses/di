@@ -10,10 +10,10 @@ namespace TagsCloudGenerator.Tools
             switch (fileExtension)
             {
                 case "txt":
-                    return new TxtFileReader();
+                    return new TxtFileReader(new WordsParser());
                 case "doc":
                 case "docx":
-                    return new DocFileReader();
+                    return new DocFileReader(new WordsParser());
                 case "xml":
                     return new XmlFileReader();
                 default:
