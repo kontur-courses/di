@@ -74,7 +74,7 @@ namespace TagsCloudContainer
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
                 .UsingConstructor(typeof(TagsCloudVisualizer.ISettings));
 
-            builder.RegisterType<PngImageSaver>().As<IImageSaver>();
+            builder.RegisterType<FileImageSaver>().As<IImageSaver>();
 
             builder.RegisterType<TagsCloud>().AsSelf();
 

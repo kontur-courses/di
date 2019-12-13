@@ -79,7 +79,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Savers\IImageSaver.cs" />
-    <Compile Include="Savers\PngImageSaver.cs" />
+    <Compile Include="Savers\FileImageSaver.cs" />
     <Compile Include="Tests\ArchimedeanSpiralTests.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />
     <Compile Include="Visualization\Painters\SteppedColorPainter.cs" />
