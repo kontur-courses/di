@@ -2,9 +2,9 @@
 
 namespace TagsCloudContainer.FileManager
 {
-    public class FileManager : IFileManager
+    public class FileReader : IReader
     {
-        public string ReadFile(string inputFile)
+        public string Read(string inputFile)
         {
             using (var file  = new StreamReader(inputFile))
             {
@@ -12,7 +12,7 @@ namespace TagsCloudContainer.FileManager
                 return result;
             }
         }
-
+        
         public string MakeFile()
         {
             var fileName = Path.GetTempFileName();
