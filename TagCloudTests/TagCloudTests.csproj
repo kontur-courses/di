@@ -44,8 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouterTests.cs" />
+    <Compile Include="DistanceUtilsTests.cs" />
+    <Compile Include="GeometryUtilsTests.cs" />
     <Compile Include="MyStemBasedWordClassIdentifierTests.cs" />
+    <Compile Include="RectangleUtilsTests.cs" />
+    <Compile Include="SegmentTests.cs" />
+    <Compile Include="ShiftUtilsTests.cs" />
     <Compile Include="SizeUtilsTests.cs" />
+    <Compile Include="SpiralTests.cs" />
     <Compile Include="Visualizer.cs" />
     <Compile Include="WordSizeSetterTests.cs" />
     <Compile Include="WordCountSetterTests.cs" />
