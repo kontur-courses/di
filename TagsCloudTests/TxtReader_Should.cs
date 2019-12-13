@@ -4,6 +4,7 @@ using NUnit.Framework;
 using TagsCloud.FileReader;
 using System.IO;
 using System.Collections.Generic;
+using TagsCloud.PathValidators;
 
 namespace TagsCloudTests
 {

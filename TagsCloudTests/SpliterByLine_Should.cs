@@ -1,9 +1,8 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloud.FileReader;
-using TagsCloud.Interfaces;
 using System.Collections.Generic;
+using TagsCloud.Spliters;
 
 namespace TagsCloudTests
 {

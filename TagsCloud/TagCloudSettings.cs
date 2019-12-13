@@ -14,7 +14,9 @@ namespace TagsCloud
         public readonly string FontName;
         public readonly ImageFormat imageFormat;
         public readonly string[] ignoredPartOfSpeech;
-        public readonly string generationAlgoritm;
+        public readonly string generationAlgoritmName;
+        public readonly string spliterName;
+        public readonly string colorSchemeName;
 
         public TagCloudSettings(string PathToInput,
             string PathToOutput,
@@ -25,6 +27,8 @@ namespace TagsCloud
             string FontName,
             string[] ignoredPartOfSpeech,
             string generationAlgoritm,
+            string splitType,
+            string colorScheme,
             ImageFormat imageFormat)
         {
             this.PathToInput = PathToInput;
@@ -36,7 +40,9 @@ namespace TagsCloud
             this.FontName = FontName;
             this.imageFormat = imageFormat;
             this.ignoredPartOfSpeech = ignoredPartOfSpeech;
-            this.generationAlgoritm = generationAlgoritm;
+            this.generationAlgoritmName = generationAlgoritm;
+            this.spliterName = splitType;
+            this.colorSchemeName = colorScheme;
         }
     }
 }

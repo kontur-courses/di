@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TagsCloud
 {
-    class TagCloudVisualizer
+    public class TagCloudVisualizer
     {
         private readonly IWordStream wordStream;
         private readonly ITagGenerator tagGenerator;

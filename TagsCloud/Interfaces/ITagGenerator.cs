@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TagsCloud.WordProcessing;
+using TagsCloud.TagGenerators;
 
 namespace TagsCloud.Interfaces
 {

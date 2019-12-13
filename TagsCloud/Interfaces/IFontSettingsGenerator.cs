@@ -1,4 +1,4 @@
-﻿using TagsCloud.WordProcessing;
+﻿using TagsCloud.FontGenerators;
 
 namespace TagsCloud.Interfaces
 {

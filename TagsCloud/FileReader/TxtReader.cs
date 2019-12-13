@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using TagsCloud.Interfaces;
+using TagsCloud.PathValidators;
 
 namespace TagsCloud.FileReader
 {

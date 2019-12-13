@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagCloudCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\проекты\\SHPORA2019\\di\\ВойнаИМир.txt result.png -g MiddleCloud -c RedGreenBlu"
+    }
+  }
+}

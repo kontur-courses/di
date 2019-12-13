@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
-using TagsCloud.CloudLayouter;
-using TagsCloud.FileReader;
-using TagsCloud.WordProcessing;
+using TagsCloud.CloudLayouters;
+using TagsCloud.ColorSchemes;
+using TagsCloud.Spliters;
 
 namespace TagsCloud
 {

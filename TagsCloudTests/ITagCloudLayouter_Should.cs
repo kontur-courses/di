@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloud.CloudLayouter;
+using TagsCloud.CloudLayouters;
 using TagsCloud.Interfaces;
 
 namespace TagsCloudTests
@@ -13,14 +13,14 @@ namespace TagsCloudTests
     [TestFixture(typeof(CircularCloudLayouter))]
     public class ITagCloudLayouter_Should<TCloudLayouter> where TCloudLayouter: ITagCloudLayouter, new()
     {
-        private ITagCloudLayouter circularCloud;
+        private ITagCloudLayouter CloudLayouter;
         private readonly Point center = new Point(0, 0);
         private List<Rectangle> rectangles;
 
         [SetUp]
         public void SetUp()
         {
-            circularCloud = new TCloudLayouter();
+            CloudLayouter = new TCloudLayouter();
             rectangles = new List<Rectangle>();
         }
 
@@ -28,7 +28,7 @@ namespace TagsCloudTests
         public void ThrowException_WhenSizeHaveNegativeNumber()
         {
             var rectangleSize = new Size(-1, 100);
-            Action act = () => circularCloud.PutNextRectangle(rectangleSize);
+            Action act = () => CloudLayouter.PutNextRectangle(rectangleSize);
             act.Should().Throw<ArgumentException>();
         }
 
@@ -36,7 +36,7 @@ namespace TagsCloudTests
         public void FirstRectangle_MustBeNearCenter()
         {
             var rectangleSize = new Size(100, 100);
-            var rectangle = circularCloud.PutNextRectangle(rectangleSize);
+            var rectangle = CloudLayouter.PutNextRectangle(rectangleSize);
             rectangles.Add(rectangle);
             var deltaX = Math.Abs(rectangle.X - center.X);
             var deltaY = Math.Abs(rectangle.Y - center.Y);
@@ -52,7 +52,7 @@ namespace TagsCloudTests
             var rectangleSize = new Size(100, 100);
             for (var i = 0; i < countRectangles; i++)
             {
-                var rect = circularCloud.PutNextRectangle(rectangleSize);
+                var rect = CloudLayouter.PutNextRectangle(rectangleSize);
                 rectangles.Any(previousRectangle => rect.IntersectsWith(previousRectangle)).Should().Be(false);
                 rectangles.Add(rect);
             }
@@ -64,7 +64,7 @@ namespace TagsCloudTests
             var rectangleSize = new Size(123, 112);
             for (var i = 0; i < 100; i++)
             {
-                rectangles.Add(circularCloud.PutNextRectangle(rectangleSize));
+                rectangles.Add(CloudLayouter.PutNextRectangle(rectangleSize));
             }
             var maxY = rectangles.Max(rect => rect.Bottom);
             var minY = rectangles.Min(rect => rect.Top);
