@@ -20,10 +20,10 @@ namespace TagsCloudContainer
             builder.RegisterInstance(new OnlyNounDullWordsEliminator())
                 .As<IDullWordsEliminator>();
             builder.RegisterType<FileHandler>().AsSelf();
-            builder.RegisterType<DefaultAlgorithm>().As<IBuildingAlgorithm>();
-            builder.RegisterType<TagCloudBuilder>().AsSelf();
+            builder.RegisterType<DefaultAlgorithm>().As<ITagCloudBuildingAlgorithm>();
+            builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
             builder.RegisterInstance(new PictureInfo("tagCloud", new Point(0, 0), imageFormat)).AsSelf();
-            builder.RegisterType<DefaultPaintingAlgorithm>().As<IPaintingAlgorithm>();
+            builder.RegisterType<DefaultTagsPaintingAlgorithm>().As<ITagsPaintingAlgorithm>();
             builder.RegisterType<TagCloudDrawer>().AsSelf();
             var container = builder.Build();
 

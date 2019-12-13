@@ -44,10 +44,11 @@
     <Compile Include="DullWordsEliminators\DullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminators\OnlyNounDullWords.cs" />
     <Compile Include="FileHandler.cs" />
-    <Compile Include="Interfaces\IBuildingAlgorithm.cs" />
+    <Compile Include="Interfaces\ITagCloudBuildingAlgorithm.cs" />
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
-    <Compile Include="Interfaces\IPaintingAlgorithm.cs" />
-    <Compile Include="Instances\PaintingAlgorithms.cs" />
+    <Compile Include="Interfaces\ITagsPaintingAlgorithm.cs" />
+    <Compile Include="Instances\TagsPaintingAlgorithms.cs" />
+    <Compile Include="Interfaces\ITagCloudBuilder.cs" />
     <Compile Include="WorkWithUser\OutputLogger.cs" />
     <Compile Include="PictureInfo.cs" />
     <Compile Include="ProgrammMain.cs" />

@@ -8,21 +8,22 @@ namespace TagsCloudContainer
     public class FileHandler
     {
         private readonly IDullWordsEliminator dullWordsEliminator;
+        private static readonly Regex wordPattern = new Regex(@"\b[a-zA-Z]+", RegexOptions.Compiled);
 
         public FileHandler(IDullWordsEliminator dullWordsEliminator)
         {
             this.dullWordsEliminator = dullWordsEliminator;
+
         }
 
         public Dictionary<string, int> GetWordsFrequencyDict(string fileName)
         {
             if (!File.Exists(fileName))
-                throw new FileNotFoundException("File with such name is not found");
+                throw new FileNotFoundException(string.Format("Text file {0} is not found", fileName));
             var result = new Dictionary<string, int>();
-            string pattern = @"\b[a-zA-Z]+";
             foreach (var line in File.ReadLines(fileName))
             {
-                foreach (Match match in Regex.Matches(line, pattern))
+                foreach (Match match in wordPattern.Matches(line))
                 {
                     var currentWord = match.Value.ToLower();
                     if (!dullWordsEliminator.IsDull(currentWord))

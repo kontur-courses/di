@@ -2,22 +2,22 @@
 
 namespace TagsCloudContainer
 {
-    public class TagCloudBuilder
+    public class TagCloudBuilder : ITagCloudBuilder
     {
         private readonly FileHandler fileHandler;
-        private readonly IBuildingAlgorithm algorithmToBuild;
+        private readonly ITagCloudBuildingAlgorithm algorithmToBuild;
 
         public TagCloudBuilder(FileHandler fileHandler,
-            IBuildingAlgorithm algorithmToBuild)
+            ITagCloudBuildingAlgorithm algorithmToBuild)
         {
             this.fileHandler = fileHandler;
             this.algorithmToBuild = algorithmToBuild;
         }
 
-        public IEnumerable<Tag> GetTagClouds(string fileName)
+        public IEnumerable<Tag> GetTagsCloud(string fileName)
         {
             var frequencyDict = fileHandler.GetWordsFrequencyDict(fileName);
-            return algorithmToBuild.GetRectangleSizes(frequencyDict);
+            return algorithmToBuild.GetTags(frequencyDict);
         }
     }
 }

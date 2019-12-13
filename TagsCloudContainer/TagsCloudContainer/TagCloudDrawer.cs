@@ -10,11 +10,11 @@ namespace TagsCloudContainer
     public class TagCloudDrawer
     {
         private readonly PictureInfo pictureInfo;
-        private readonly TagCloudBuilder tagCloudBuilder;
+        private readonly ITagCloudBuilder tagCloudBuilder;
         private readonly CircularCloudLayouter tagCloud;
-        private readonly IPaintingAlgorithm painter;
+        private readonly ITagsPaintingAlgorithm painter;
 
-        public TagCloudDrawer(PictureInfo pictureInfo, TagCloudBuilder tagCloudBuilder, IPaintingAlgorithm painter)
+        public TagCloudDrawer(PictureInfo pictureInfo, ITagCloudBuilder tagCloudBuilder, ITagsPaintingAlgorithm painter)
         {
             this.pictureInfo = pictureInfo;
             this.tagCloudBuilder = tagCloudBuilder;
@@ -30,7 +30,7 @@ namespace TagsCloudContainer
 
         public void DrawTagCloud(string fileName, int maxWordsCnt)
         {
-            var tags = tagCloudBuilder.GetTagClouds(fileName).Take(maxWordsCnt).ToList();
+            var tags = tagCloudBuilder.GetTagsCloud(fileName).Take(maxWordsCnt).ToList();
             var rectangles = GetRectangles(tags);
             var maxY = rectangles.Max(x => x.Bottom);
             var minY = rectangles.Min(x => x.Top);

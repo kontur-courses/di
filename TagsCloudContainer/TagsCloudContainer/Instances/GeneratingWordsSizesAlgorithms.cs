@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class DefaultAlgorithm : IBuildingAlgorithm
+    public class DefaultAlgorithm : ITagCloudBuildingAlgorithm
     {
         private const double scaleCoefficient = 200;
         private const int initialWordHeight = 200;
         private const int minHeight = 30;
         private const int minWidth = 30;
 
-        public IEnumerable<Tag> GetRectangleSizes(Dictionary<string, int> wordsFrequency)
+        public IEnumerable<Tag> GetTags(Dictionary<string, int> wordsFrequency)
         {
             var result = new List<Tag>();
             if (wordsFrequency.Count == 0)
