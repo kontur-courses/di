@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.Cloud;
 using TagsCloudContainer.Savers;
 
 namespace TagsCloudContainer.Clients
 {
     public abstract class BaseClient
     {
-        protected readonly Func<TagsCloudSettings> SettingsFactory;
+        protected readonly TagsCloudSettings Settings;
         private readonly Func<TagsCloud> cloudFactory;
         private readonly IImageSaver saver;
 
-        protected BaseClient(Func<TagsCloudSettings> settingsFactory, Func<TagsCloud> cloudFactory, IImageSaver saver)
+        protected BaseClient(TagsCloudSettings settings, Func<TagsCloud> cloudFactory, IImageSaver saver)
         {
-            SettingsFactory = settingsFactory;
+            Settings = settings;
             this.cloudFactory = cloudFactory;
             this.saver = saver;
         }

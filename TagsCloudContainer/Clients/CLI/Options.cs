@@ -3,6 +3,7 @@ using CommandLine;
 
 namespace TagsCloudContainer.Clients.CLI
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Options
     {
         [Option('w', "words", Required = true, HelpText = "File with words")]

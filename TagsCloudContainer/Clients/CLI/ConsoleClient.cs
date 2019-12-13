@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using CommandLine;
+using TagsCloudContainer.Cloud;
 using TagsCloudContainer.Savers;
 
 namespace TagsCloudContainer.Clients.CLI
@@ -11,10 +12,10 @@ namespace TagsCloudContainer.Clients.CLI
 
         public ConsoleClient(
             string[] args,
-            Func<TagsCloudSettings> settingsFactory,
+            TagsCloudSettings settings,
             Func<TagsCloud> cloudFactory,
             IImageSaver saver) :
-            base(settingsFactory, cloudFactory, saver)
+            base(settings, cloudFactory, saver)
         {
             this.args = args;
         }
@@ -26,25 +27,23 @@ namespace TagsCloudContainer.Clients.CLI
 
         private void Execute(Options options)
         {
-            var settings = Configure(options);
-            var image = CreateTagsCloud(settings);
+            Configure(options);
+            var image = CreateTagsCloud(Settings);
             SaveTagsCloud(options.ImagePath, image);
         }
 
-        private TagsCloudSettings Configure(Options options)
+        private void Configure(Options options)
         {
-            var settings = SettingsFactory();
-            settings.Distance = options.Distance;
-            settings.Delta = options.Delta;
-            settings.WordsPath = options.WordsPath;
-            settings.BoringWordsPath = options.BoringWordsPath;
-            settings.FontFamily = new FontFamily(options.Font);
-            settings.SizeFactor = options.SizeFactor;
-            settings.TextColor = Color.FromName(options.TextColor);
-            settings.FillColor = Color.FromName(options.FillColor);
-            settings.BorderColor = Color.FromName(options.BorderColor);
-            settings.BackgroundColor = Color.FromName(options.BackgroundColor);
-            return settings;
+            Settings.Distance = options.Distance;
+            Settings.Delta = options.Delta;
+            Settings.WordsPath = options.WordsPath;
+            Settings.BoringWordsPath = options.BoringWordsPath;
+            Settings.FontFamily = new FontFamily(options.Font);
+            Settings.SizeFactor = options.SizeFactor;
+            Settings.TextColor = Color.FromName(options.TextColor);
+            Settings.FillColor = Color.FromName(options.FillColor);
+            Settings.BorderColor = Color.FromName(options.BorderColor);
+            Settings.BackgroundColor = Color.FromName(options.BackgroundColor);
         }
     }
 }

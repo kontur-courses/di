@@ -4,6 +4,7 @@ using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.Clients.CLI;
+using TagsCloudContainer.Cloud;
 using TagsCloudContainer.Core.Generators;
 using TagsCloudContainer.Core.Layouters;
 using TagsCloudContainer.Data.Processors;

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Drawing;
 using TagsCloudContainer.Core.Generators;
 using TagsCloudContainer.Visualization;
 using TagsCloudContainer.Visualization.Measurers;
 using TagsCloudContainer.Visualization.Painters;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Cloud
 {
     public class TagsCloudSettings : ArchimedeanSpiral.ISettings, ProbabilityWordMeasurer.ISettings,
         ConstantColorsPainter.ISettings, TagsCloudVisualizer.ISettings

@@ -9,7 +9,7 @@ using TagsCloudContainer.Visualization;
 using TagsCloudContainer.Visualization.Measurers;
 using TagsCloudContainer.Visualization.Painters;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Cloud
 {
     public class TagsCloud
     {
