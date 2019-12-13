@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using Autofac;
-using TagsCloudContainer.FileManager;
 using TagsCloudContainer.Filters;
+using TagsCloudContainer.Reader;
 using TagsCloudContainer.RectangleGenerator;
 using TagsCloudContainer.RectangleGenerator.PointGenerator;
 using TagsCloudContainer.TokensGenerator;
@@ -17,11 +17,14 @@ namespace TagsCloudContainer
         {
             var options = ArgumentParser.ParseArguments(args);
             var setting = new TagsCloudSetting(options);
-//          var setting = TagsCloudSetting.GetDefault();
+            //var setting = TagsCloudSetting.GetDefault();
 
             var container = BuildContainer(setting);
             var tagCloudVisualizator = container.Resolve<TagCloudVisualizator>();
-            tagCloudVisualizator.DrawTagCloud(options.InputFile, options.OutputFile, setting);
+            var fileReader = container.Resolve<FileReader>();
+            var text = fileReader.Read(options.InputFile);
+            tagCloudVisualizator.DrawTagCloud(text, setting)
+                .Save(options.OutputFile);
             Console.WriteLine($"Image save in {options.OutputFile}");
         }
 
@@ -29,7 +32,7 @@ namespace TagsCloudContainer
         private static IContainer BuildContainer(TagsCloudSetting setting)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<FileManager.FileManager>().As<IFileManager>();
+            builder.RegisterType<FileReader>().As<IReader>();
             builder.RegisterType<MyStemParser>().As<ITokensParser>().SingleInstance();
             builder.RegisterType<MyStemFilter>().As<IFilter>().SingleInstance()
                 .WithParameter("allowedWorldType",
@@ -39,6 +42,7 @@ namespace TagsCloudContainer
             builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();
             builder.RegisterType<CircularCloudLayouter>().As<IRectangleGenerator>();
             builder.RegisterType<TagCloudVisualizator>().AsSelf();
+            builder.RegisterType<FileReader>().AsSelf();
 
             return builder.Build();
         }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudContainer.Visualization
 {
@@ -25,9 +26,37 @@ namespace TagsCloudContainer.Visualization
         {
             Font = new Font(FontFamily.GenericMonospace,argument.FontSize);
             ImageSize = new Size(argument.Size,argument.Size);
-            TextColor = Color.Red;
-            BackgroundColor = Color.Black ;
+            TextColor = GetTextColor(argument.TextColor);
+            BackgroundColor = GetBackgroundColor(argument.BackgroundColor);
         }
+        
+        private static Color GetBackgroundColor(int number)
+        {
+            switch (number)
+            {
+                case 0:
+                    return Color.Black;
+                case 1:
+                    return Color.White;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        
+        private static Color GetTextColor(int number)
+        {
+            switch (number)
+            {
+                case 0:
+                    return Color.Red;
+                case 1:
+                    return Color.Black;
+                case 2:
+                    return Color.White;
+                default:
+                    throw new ArgumentException();
+            }
+        } 
 
 
         public static TagsCloudSetting GetDefault()
