@@ -26,12 +26,12 @@ namespace TagsCloudContainer
             builder.RegisterType<TagCloudBuilder>().AsSelf();
             builder.RegisterInstance(new PictureInfo("tagCloud", new Point(0, 0))).AsSelf();
             builder.RegisterType<DefaultPaintingAlgorithm>().As<IPaintingAlgorithm>();
-            builder.RegisterType<TagCloudDrawing>().AsSelf();
+            builder.RegisterType<TagCloudDrawer>().AsSelf();
             var container = builder.Build();
 
             using (var scope = container.BeginLifetimeScope())
             {
-                var drawer = scope.Resolve<TagCloudDrawing>();
+                var drawer = scope.Resolve<TagCloudDrawer>();
                 drawer.DrawTagCloud(textFile, maxWordsCount);
             }
         }

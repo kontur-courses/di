@@ -46,13 +46,14 @@
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
     <Compile Include="Interfaces\IPaintingAlgorithm.cs" />
     <Compile Include="Instances\PaintingAlgorithms.cs" />
+    <Compile Include="OutputLogger.cs" />
     <Compile Include="PictureInfo.cs" />
     <Compile Include="ProgrammMain.cs" />
     <Compile Include="WorkWithUser\ConsoleParser.cs" />
     <Compile Include="Instances\GeneratingWordsSizesAlgorithms.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="TagCloudBuilder.cs" />
-    <Compile Include="TagCloudDrawing.cs" />
+    <Compile Include="TagCloudDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

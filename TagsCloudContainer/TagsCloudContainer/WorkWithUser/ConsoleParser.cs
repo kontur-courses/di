@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-
+using System;
 
 namespace TagsCloudContainer
 {
@@ -17,6 +17,9 @@ namespace TagsCloudContainer
         {
             var a = Parser.Default.ParseArguments<StandartOptions>(args).
                 WithParsed(opts => ProgrammMain.Execute(opts));
+            var logs = OutputLogger.GetAllLogs();
+            foreach (var log in logs)
+                Console.WriteLine(log);
         }
     }
 }
