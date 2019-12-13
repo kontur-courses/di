@@ -1,4 +1,4 @@
-![Example](https://github.com/TAHK518/di/blob/master/TagsCloud/TagsCloudConsoleClient/result.png)
+![Example](https://github.com/TAHK518/di/blob/master/TagCloudCLI/result.png)
 
 Аргументы запуска: 
   -w, --width                   (Default: 1920) Width result image.
