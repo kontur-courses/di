@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloudContainer.FileManager;
 using TagsCloudContainer.Filters;
 using TagsCloudContainer.RectangleGenerator;
 using TagsCloudContainer.TokensGenerator;
@@ -13,24 +12,20 @@ namespace TagsCloudContainer
 {
     public class TagCloudVisualizator
     {
-        private readonly IFileManager fileManager;
         private readonly ITokensParser tokensParser;
         private readonly IFilter filter;
         private readonly IRectangleGenerator rectangleGenerator;
 
-        public TagCloudVisualizator(IFileManager fileManager, ITokensParser tokensParser, IFilter filter,
+        public TagCloudVisualizator(ITokensParser tokensParser, IFilter filter,
             IRectangleGenerator rectangleGenerator)
         {
-            this.fileManager = fileManager;
             this.tokensParser = tokensParser;
             this.filter = filter;
             this.rectangleGenerator = rectangleGenerator;
         }
 
-        public void DrawTagCloud(string inputFile, string outputFile, ICloudSetting setting)
+        public Bitmap DrawTagCloud(string text, ICloudSetting setting)
         {
-            var text = fileManager.ReadFile(inputFile);
-
             var strTokens = tokensParser.GetTokens(text);
             strTokens = filter.Filtering(strTokens);
 
@@ -38,6 +33,8 @@ namespace TagsCloudContainer
 
             var visualizer = new Visualizer(setting);
             var font = setting.Font;
+            if (tokens.Length == 0)
+                return visualizer.Save();
             var maxCount = tokens[0].Count;
             foreach (var token in tokens)
             {
@@ -45,9 +42,8 @@ namespace TagsCloudContainer
                 var rect = rectangleGenerator.PutNextRectangle(TextRenderer.MeasureText(token.Value, font));
                 visualizer.DrawTag(new TagRectangle(token.Value, rect), font);
             }
-
-            Console.WriteLine();
-            visualizer.Save(outputFile);
+            
+            return visualizer.Save();
         }
 
         private static IEnumerable<Token> CreateTokens(IEnumerable<string> tokens)

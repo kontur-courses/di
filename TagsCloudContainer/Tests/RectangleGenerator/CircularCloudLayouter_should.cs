@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -152,7 +151,7 @@ namespace TagsCloudContainer.Tests.RectangleGenerator
             var visualizer = new Visualizer(TagsCloudSetting.GetDefault());
             visualizer.DrawRectangles(layouter.Rectangles);
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, $"{TestContext.CurrentContext.Test.Name}.bmp");
-            visualizer.Save(path);
+            visualizer.Save().Save(path);
             Console.WriteLine($"Error Tests TagCloud saved to file {path}");
         }
     }

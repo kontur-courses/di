@@ -75,8 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentParser.cs" />
-    <Compile Include="FileManager\FileManager.cs" />
-    <Compile Include="FileManager\IFileManager.cs" />
+    <Compile Include="Reader\FileReader.cs" />
+    <Compile Include="Reader\IReader.cs" />
     <Compile Include="Filters\BoringFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\MyStemFilter.cs" />
@@ -89,11 +89,13 @@
     <Compile Include="RectangleGenerator\RectangleExtension.cs" />
     <Compile Include="TagCloudVisualizator.cs" />
     <Compile Include="TagRectangle.cs" />
+    <Compile Include="Tests\FileManager\Reader_Should.cs" />
     <Compile Include="Tests\Filters\BoringFilter.cs" />
     <Compile Include="Tests\Filters\MyStemFilter_Should.cs" />
     <Compile Include="Tests\RectangleGenerator\CircularCloudLayouter_should.cs" />
     <Compile Include="Tests\RectangleGenerator\RectangleExtension_should.cs" />
     <Compile Include="Tests\RectangleGenerator\SpiralGenerator_should.cs" />
+    <Compile Include="Tests\TagCloudVisualizator_should.cs" />
     <Compile Include="Tests\TokenGenerator\MyStemParser.cs" />
     <Compile Include="Tests\TokenGenerator\TokensParser_Should.cs" />
     <Compile Include="TokensGenerator\ITokensParser.cs" />
@@ -109,7 +111,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\FileManager" />
     <Folder Include="Tests\Visualization" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
