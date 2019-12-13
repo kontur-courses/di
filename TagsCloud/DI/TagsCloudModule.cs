@@ -19,6 +19,9 @@ namespace TagsCloud.DI
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(ITagsCloudLayouter).Namespace).As<ITagsCloudLayouter>().SingleInstance();
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(ITagsCloudRenderer).Namespace).As<ITagsCloudRenderer>().SingleInstance();
             builder.RegisterAssemblyTypes(tagsCloudAssembly).InNamespace(typeof(IImageSaver).Namespace).As<IImageSaver>().SingleInstance();
+            builder.RegisterType<WordsLoader>().AsSelf().SingleInstance();
+            builder.RegisterType<WordsFilterer>().AsSelf().SingleInstance();
+            builder.RegisterType<ImageSaveHelper>().AsSelf().SingleInstance();
             builder.RegisterType<TagsCloudGenerator>().AsSelf().SingleInstance();
         }
     }

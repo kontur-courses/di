@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\TagsCloudModule.cs" />
+    <Compile Include="ImageSaveHelper.cs" />
     <Compile Include="Renderers\ITagsCloudRenderer.cs" />
     <Compile Include="Renderers\ColoredRenderer.cs" />
     <Compile Include="Renderers\SimpleRenderer.cs" />
@@ -64,9 +65,11 @@
     <Compile Include="Layouters\LayoutItem.cs" />
     <Compile Include="Layouters\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsFilterer.cs" />
     <Compile Include="WordsFiltering\IFilter.cs" />
     <Compile Include="WordsFiltering\UpperCaseFilter.cs" />
     <Compile Include="WordsFiltering\WasteWordsFilter.cs" />
+    <Compile Include="WordsLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -48,11 +48,19 @@ namespace TagsCloud_console
                 }
                 var selectedRenderer = parsedRenderers[0];
 
+                var wordsLoader = container.Resolve<WordsLoader>();
+                var words = wordsLoader.LoadWords(opts.InputFile);
+
+                var wordsFilterer = container.Resolve<WordsFilterer>(new NamedParameter("filters", selectedFilters.Cast<IFilter>().ToArray()));
+                var filteredWords = wordsFilterer.FilterWords(words);
+
                 var tagCloud = container.Resolve<TagsCloudGenerator>(
-                    new NamedParameter("filters", selectedFilters.Cast<IFilter>().ToArray()),
                     new NamedParameter("layouter", selectedLayouter as ITagsCloudLayouter),
                     new NamedParameter("renderer", selectedRenderer as ITagsCloudRenderer));
-                tagCloud.GenerateCloud(opts.InputFile).SaveTo(opts.OutputFile);
+                var image = tagCloud.GenerateCloud(filteredWords);
+
+                var imageSaveHelper = container.Resolve<ImageSaveHelper>();
+                imageSaveHelper.SaveTo(image, opts.OutputFile);
             });
 
             Console.WriteLine("OK");

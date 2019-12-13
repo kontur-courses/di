@@ -214,9 +214,16 @@ namespace TagsCloud_wpf
 
         private void MenuItemGenerate_Click(object sender, RoutedEventArgs e)
         {
+            var wordsLoader = new WordsLoader(knownParsers);
+            var words = wordsLoader.LoadWords(inputFileName);
+
             var selectedFilters = filtersOptions.Where(fo => fo.IsActive).OrderBy(fo => fo.Priority).Select(fo => fo.Filter).ToArray();
-            tagsCloud = new TagsCloudGenerator(knownParsers, selectedFilters, selectedLayouter, selectedRenderer, knownImageSavers);
-            tagsCloud.GenerateCloud(inputFileName);
+            var wordsFilterer = new WordsFilterer(selectedFilters);
+            var filteredWords = wordsFilterer.FilterWords(words);
+
+            tagsCloud = new TagsCloudGenerator(selectedLayouter, selectedRenderer);
+            tagsCloud.GenerateCloud(filteredWords);
+
             UpdateImageControl();
         }
 
@@ -250,7 +257,8 @@ namespace TagsCloud_wpf
             };
             if (dlg.ShowDialog(this) != true) { return; }
 
-            tagsCloud.SaveTo(dlg.FileName);
+            var imageSaveHelper = new ImageSaveHelper(knownImageSavers);
+            imageSaveHelper.SaveTo(tagsCloud.TagCloudImage, dlg.FileName);
         }
     }
 }
