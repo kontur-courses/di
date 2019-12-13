@@ -6,7 +6,7 @@ using edu.stanford.nlp.tagger.maxent;
 
 namespace TagsCloudContainer
 {
-    public class ProgrammMain
+    public class Program
     { 
         public static void Main(string[] args)
         {
@@ -16,7 +16,7 @@ namespace TagsCloudContainer
             builder.RegisterInstance(new OnlyNounDullWordsEliminator())
                 .As<IDullWordsEliminator>();
             builder.RegisterInstance(new TextFileReader(inputInfo.FileName)).As<ITextReader>();
-            builder.RegisterType<TextHandler>().AsSelf();
+            builder.RegisterType<DefaultTextHandler>().As<TextHandler>();
             builder.RegisterType<DefaultAlgorithm>().As<ITagCloudBuildingAlgorithm>();
             builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
             builder.RegisterInstance(new PictureInfo("tagCloud", inputInfo.ImageFormat)).AsSelf();

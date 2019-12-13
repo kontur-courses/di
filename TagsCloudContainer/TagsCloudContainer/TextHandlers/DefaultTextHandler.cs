@@ -5,19 +5,15 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer
 {
-    public class TextHandler
+    public class DefaultTextHandler : TextHandler
     {
-        private readonly IDullWordsEliminator dullWordsEliminator;
         private static readonly Regex wordPattern = new Regex(@"\b[a-zA-Z]+", RegexOptions.Compiled);
-        private readonly ITextReader textReader;
 
-        public TextHandler(ITextReader textReader, IDullWordsEliminator dullWordsEliminator)
-        {
-            this.dullWordsEliminator = dullWordsEliminator;
-            this.textReader = textReader;
-        }
+        public DefaultTextHandler(ITextReader textReader, IDullWordsEliminator dullWordsEliminator) :
+            base(textReader, dullWordsEliminator)
+        {}
 
-        public Dictionary<string, int> GetWordsFrequencyDict()
+        public override Dictionary<string, int> GetWordsFrequencyDict()
         {
             var result = new Dictionary<string, int>();
             foreach (var line in textReader.GetLines())

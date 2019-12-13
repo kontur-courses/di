@@ -39,7 +39,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InputInfo.cs" />
+    <Compile Include="InputInfo\InputInfo.cs" />
+    <Compile Include="Interfaces\ITextHandler.cs" />
     <Compile Include="Interfaces\IUserHandler.cs" />
     <Compile Include="TagsLayouters\CircularCloudTagsLayouter.cs" />
     <Compile Include="Interfaces\ITagsLayouter.cs" />
@@ -48,20 +49,20 @@
     <Compile Include="DullWordsEliminators\DullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminators\OnlyNounDullWords.cs" />
     <Compile Include="Interfaces\ITextReader.cs" />
-    <Compile Include="TextHandler.cs" />
+    <Compile Include="TextHandlers\DefaultTextHandler.cs" />
     <Compile Include="Interfaces\ITagCloudBuildingAlgorithm.cs" />
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
     <Compile Include="Interfaces\ITagsPaintingAlgorithm.cs" />
     <Compile Include="Instances\TagsPaintingAlgorithms.cs" />
     <Compile Include="Interfaces\ITagCloudBuilder.cs" />
-    <Compile Include="TextFileReader.cs" />
+    <Compile Include="TextFileReader\TextFileReader.cs" />
     <Compile Include="WorkWithUser\OutputLogger.cs" />
-    <Compile Include="PictureInfo.cs" />
-    <Compile Include="ProgrammMain.cs" />
+    <Compile Include="PictureInfo\PictureInfo.cs" />
+    <Compile Include="Program\Program.cs" />
     <Compile Include="WorkWithUser\ConsoleUserHandler.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="TagCloudBuilder.cs" />
-    <Compile Include="TagCloudDrawer.cs" />
+    <Compile Include="Tag\Tag.cs" />
+    <Compile Include="TagCloudBuilder\TagCloudBuilder.cs" />
+    <Compile Include="TagCloudDrawer\TagCloudDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -173,5 +174,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
