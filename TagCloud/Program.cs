@@ -53,7 +53,14 @@ namespace TagCloud
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<Application>();
-                app.Run();
+                try
+                {
+                    app.Run();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 

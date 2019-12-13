@@ -7,12 +7,12 @@ namespace TagCloud.Visualization
 {
     public class WordSizeSetter : IWordSizeSetter
     {
-        private readonly float error;
+        private readonly float wordsCountCorrectionCoefficient;
         private readonly int minFontSize;
 
-        public WordSizeSetter(float error, int minFontSize)
+        public WordSizeSetter(float wordsCountCorrectionCoefficient, int minFontSize)
         {
-            this.error = error;
+            this.wordsCountCorrectionCoefficient = wordsCountCorrectionCoefficient;
             this.minFontSize = minFontSize;
         }
 
@@ -24,7 +24,7 @@ namespace TagCloud.Visualization
             var wordsList = words.ToList();
             var maxWord = wordsList.OrderByDescending(w => w.Count).First();
             var maxWordFontSize = GetMaxWordFontSize(maxWord, wordsList.Count, pictureConfig);
-            var fontSizeCoefficient = Math.Max(wordsList.Count / error, 1) * maxWordFontSize / maxWord.Count;
+            var fontSizeCoefficient = Math.Max(wordsList.Count / wordsCountCorrectionCoefficient, 1) * maxWordFontSize / maxWord.Count;
             foreach (var word in wordsList)
             {
                 var fontSize = word.Count * fontSizeCoefficient;
