@@ -43,12 +43,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularCloudLayouterTests.cs" />
     <Compile Include="MyStemBasedWordClassIdentifierTests.cs" />
     <Compile Include="SizeUtilsTests.cs" />
+    <Compile Include="Visualizer.cs" />
     <Compile Include="WordSizeSetterTests.cs" />
     <Compile Include="WordCountSetterTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.5.5.0\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
