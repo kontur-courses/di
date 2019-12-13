@@ -1,14 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using CommandLine;
 using TagsCloudContainer.Cloud;
 using TagsCloudContainer.Savers;
+using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Clients.CLI
 {
     public class ConsoleClient : BaseClient
     {
+        private static readonly IDictionary<string, Type> Services;
+
         private readonly string[] args;
+
+        static ConsoleClient()
+        {
+            Services = new Dictionary<string, Type>()
+            {
+                ["constant"] = typeof(ConstantColorsPainter),
+                ["stepped"] = typeof(SteppedColorPainter)
+            };
+        }
 
         public ConsoleClient(
             string[] args,
@@ -27,12 +40,13 @@ namespace TagsCloudContainer.Clients.CLI
 
         private void Execute(Options options)
         {
-            Configure(options);
+            ConfigureCloud(options);
+            ConfigureService(options);
             var image = CreateTagsCloud(Settings);
             SaveTagsCloud(options.ImagePath, image);
         }
 
-        private void Configure(Options options)
+        private void ConfigureCloud(Options options)
         {
             Settings.Distance = options.Distance;
             Settings.Delta = options.Delta;
@@ -44,6 +58,11 @@ namespace TagsCloudContainer.Clients.CLI
             Settings.FillColor = Color.FromName(options.FillColor);
             Settings.BorderColor = Color.FromName(options.BorderColor);
             Settings.BackgroundColor = Color.FromName(options.BackgroundColor);
+        }
+
+        private void ConfigureService(Options options)
+        {
+            ServiceSettings.SetService<IPainter>(Services[options.Painter]);
         }
     }
 }

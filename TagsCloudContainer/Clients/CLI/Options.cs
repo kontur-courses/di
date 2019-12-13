@@ -25,7 +25,10 @@ namespace TagsCloudContainer.Clients.CLI
         public string Font { get; set; }
 
         [Option("factor", Required = false, Default = 100f, HelpText = "Tag size factor")]
-        public float SizeFactor { get; set; } = 100f;
+        public float SizeFactor { get; set; }
+        
+        [Option(Required = false, Default = "stepped", HelpText = "Tag coloring algorithm")]
+        public string Painter { get; set; }
 
         [Option("text", Required = false, Default = "Black", HelpText = "Text color name")]
         public string TextColor { get; set; }
@@ -35,6 +38,15 @@ namespace TagsCloudContainer.Clients.CLI
 
         [Option("border", Required = false, Default = "Transparent", HelpText = "Border color name")]
         public string BorderColor { get; set; }
+
+        [Option("primary", Required = false, Default = "LightYellow", HelpText = "Primary text color")]
+        public string PrimaryColor { get; set; }
+
+        [Option("majority", Required = false, Default = "OrangeRed", HelpText = "Majority text color")]
+        public string MajorityColor { get; set; }
+
+        [Option("minority", Required = false, Default = "Chocolate", HelpText = "Minority text color")]
+        public string MinorityColor { get; set; }
 
         [Option("background", Required = false, Default = "Transparent", HelpText = "Background color name")]
         public string BackgroundColor { get; set; }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using TagsCloudContainer.Core.Generators;
 using TagsCloudContainer.Visualization;
@@ -8,7 +8,7 @@ using TagsCloudContainer.Visualization.Painters;
 namespace TagsCloudContainer.Cloud
 {
     public class TagsCloudSettings : ArchimedeanSpiral.ISettings, ProbabilityWordMeasurer.ISettings,
-        ConstantColorsPainter.ISettings, TagsCloudVisualizer.ISettings
+        ConstantColorsPainter.ISettings, SteppedColorPainter.ISettings, TagsCloudVisualizer.ISettings
     {
         public double Distance { get; set; } = 1;
         public double Delta { get; set; } = Math.PI / 180;
@@ -19,6 +19,9 @@ namespace TagsCloudContainer.Cloud
         public Color TextColor { get; set; } = Color.Black;
         public Color FillColor { get; set; } = Color.Transparent;
         public Color BorderColor { get; set; } = Color.Transparent;
+        public Color PrimaryColor { get; set; } = Color.LightYellow;
+        public Color MajorityColor { get; set; } = Color.OrangeRed;
+        public Color MinorityColor { get; set; } = Color.Chocolate;
         public Color BackgroundColor { get; set; } = Color.Transparent;
         public Size? ImageSize { get; set; } = null;
     }

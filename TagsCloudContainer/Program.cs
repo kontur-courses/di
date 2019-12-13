@@ -20,6 +20,7 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
+            ConfigureServices();
             var container = CreateContainer();
             var clientFactory = container.Resolve<Func<string[], BaseClient>>();
             clientFactory(args).Run();
@@ -56,8 +57,17 @@ namespace TagsCloudContainer
             builder.RegisterType<ProbabilityWordMeasurer>().As<IWordMeasurer>()
                 .UsingConstructor(typeof(ProbabilityWordMeasurer.ISettings));
 
-            builder.RegisterType<ConstantColorsPainter>().As<IPainter>()
+            builder.RegisterType<ConstantColorsPainter>()
+                .Named<IPainter>(typeof(ConstantColorsPainter).Name)
                 .UsingConstructor(typeof(ConstantColorsPainter.ISettings));
+            builder.RegisterType<SteppedColorPainter>()
+                .Named<IPainter>(typeof(SteppedColorPainter).Name)
+                .UsingConstructor(typeof(SteppedColorPainter.ISettings));
+            builder.Register(c =>
+            {
+                var type = ServiceSettings.GetService<IPainter>();
+                return c.ResolveNamed<IPainter>(type.Name);
+            }).As<IPainter>();
 
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
                 .UsingConstructor(typeof(TagsCloudVisualizer.ISettings));
@@ -69,6 +79,11 @@ namespace TagsCloudContainer
             builder.RegisterType<ConsoleClient>().As<BaseClient>();
 
             return builder.Build();
+        }
+
+        private static void ConfigureServices()
+        {
+            ServiceSettings.SetService<IPainter, SteppedColorPainter>();
         }
     }
 }
