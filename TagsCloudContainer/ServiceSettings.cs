@@ -3,30 +3,30 @@ using System.Collections.Generic;
 
 namespace TagsCloudContainer
 {
-    public static class ServiceSettings
+    public class ServiceSettings
     {
-        private static readonly IDictionary<Type, Type> Services;
+        private readonly IDictionary<Type, Type> services;
 
-        static ServiceSettings()
+        public ServiceSettings()
         {
-            Services = new Dictionary<Type, Type>();
+            services = new Dictionary<Type, Type>();
         }
 
-        internal static Type GetService<T>()
+        internal Type GetService<T>()
         {
-            return Services[typeof(T)];
+            return services[typeof(T)];
         }
 
-        internal static void SetService<T, TService>() where TService : T
+        internal void SetService<T, TService>() where TService : T
         {
             SetService<T>(typeof(TService));
         }
 
-        internal static void SetService<T>(Type service)
+        internal void SetService<T>(Type service)
         {
             var abstraction = typeof(T);
             if (abstraction.IsAssignableFrom(service))
-                Services[abstraction] = service;
+                services[abstraction] = service;
             else
                 throw new ArgumentException($"{abstraction} isn't assignable from {service}");
         }

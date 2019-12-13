@@ -20,8 +20,8 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            ConfigureServices();
             var container = CreateContainer();
+            ConfigureServices(container.Resolve<ServiceSettings>());
             var clientFactory = container.Resolve<Func<string[], BaseClient>>();
             clientFactory(args).Run();
         }
@@ -31,6 +31,7 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
 
             builder.RegisterType<TagsCloudSettings>().AsImplementedInterfaces().AsSelf().SingleInstance();
+            builder.RegisterType<ServiceSettings>().AsSelf().SingleInstance();
 
             builder.RegisterType<ArchimedeanSpiral>().As<IPointGenerator>()
                 .UsingConstructor(typeof(ArchimedeanSpiral.ISettings));
@@ -65,8 +66,9 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(SteppedColorPainter.ISettings));
             builder.Register(c =>
             {
-                var type = ServiceSettings.GetService<IPainter>();
-                return c.ResolveNamed<IPainter>(type.Name);
+                var settings = c.Resolve<ServiceSettings>();
+                var name = settings.GetService<IPainter>().Name;
+                return c.ResolveNamed<IPainter>(name);
             }).As<IPainter>();
 
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
@@ -81,9 +83,9 @@ namespace TagsCloudContainer
             return builder.Build();
         }
 
-        private static void ConfigureServices()
+        private static void ConfigureServices(ServiceSettings settings)
         {
-            ServiceSettings.SetService<IPainter, SteppedColorPainter>();
+            settings.SetService<IPainter, SteppedColorPainter>();
         }
     }
 }

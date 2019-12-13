@@ -7,13 +7,19 @@ namespace TagsCloudContainer.Clients
 {
     public abstract class BaseClient
     {
-        protected readonly TagsCloudSettings Settings;
+        protected readonly TagsCloudSettings CloudSettings;
+        protected readonly ServiceSettings ServiceSettings;
         private readonly Func<TagsCloud> cloudFactory;
         private readonly IImageSaver saver;
 
-        protected BaseClient(TagsCloudSettings settings, Func<TagsCloud> cloudFactory, IImageSaver saver)
+        protected BaseClient(
+            TagsCloudSettings cloudSettings,
+            ServiceSettings serviceSettings,
+            Func<TagsCloud> cloudFactory,
+            IImageSaver saver)
         {
-            Settings = settings;
+            CloudSettings = cloudSettings;
+            ServiceSettings = serviceSettings;
             this.cloudFactory = cloudFactory;
             this.saver = saver;
         }
