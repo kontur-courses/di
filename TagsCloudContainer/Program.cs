@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
@@ -39,9 +39,12 @@ namespace TagsCloudContainer
                 .WithParameter("center", Point.Empty)
                 .As<IRectangleLayouter>();
 
-            builder.RegisterType<TxtWordsFileReader>().As<IWordsFileReader>();
-
-            builder.RegisterType<LowerCaseWordProcessor>().Named<IWordProcessor>("lowerCaseProcessor");
+            builder.Register(c => new IFileFormatReader[]
+            {
+                new TxtWordsFileReader(), new DocWordsFileReader()
+            }).As<IEnumerable<IFileFormatReader>>();
+            builder.RegisterType<WordsFileReader>().As<IWordsFileReader>();
+            
             builder.Register(context =>
                 {
                     var reader = context.Resolve<IWordsFileReader>();
@@ -51,8 +54,7 @@ namespace TagsCloudContainer
                 .Named<IWordProcessor>("wordFilter");
             builder.Register(c => new[]
             {
-                c.ResolveNamed<IWordProcessor>("lowerCaseProcessor"),
-                c.ResolveNamed<IWordProcessor>("wordFilter")
+                new LowerCaseWordProcessor(), c.ResolveNamed<IWordProcessor>("wordFilter")
             }).As<IEnumerable<IWordProcessor>>();
 
             builder.RegisterType<ProbabilityWordMeasurer>().As<IWordMeasurer>()
