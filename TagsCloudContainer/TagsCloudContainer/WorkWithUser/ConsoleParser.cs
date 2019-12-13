@@ -11,6 +11,8 @@ namespace TagsCloudContainer
             public string File { get; set;  }
             [Option('c', "count", Required = false, Default = int.MaxValue, HelpText = "Count of words in tag cloud")]
             public int MaxCnt { get; set; }
+            [Option('f', "format", Required = false, Default = "png", HelpText = "Format of tag cloud file")]
+            public string Format { get; set; }
         }
 
         static void Main(string[] args)

@@ -14,7 +14,6 @@ namespace TagsCloudContainer
         private readonly CircularCloudLayouter tagCloud;
         private readonly IPaintingAlgorithm painter;
 
-
         public TagCloudDrawer(PictureInfo pictureInfo, TagCloudBuilder tagCloudBuilder, IPaintingAlgorithm painter)
         {
             this.pictureInfo = pictureInfo;
@@ -56,7 +55,7 @@ namespace TagsCloudContainer
             }
 
             var imagePath = Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory,
-                pictureInfo.FileName + ".png" });
+                pictureInfo.FileName + "." + pictureInfo.Format });
             OutputLogger.AddLog("Tag cloud visualization saved to file " + imagePath);
             image.Save(imagePath);
             drawingObj.Dispose();

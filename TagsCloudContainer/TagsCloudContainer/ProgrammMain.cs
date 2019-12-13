@@ -1,22 +1,20 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Autofac;
+using com.sun.codemodel.@internal.fmt;
 using edu.stanford.nlp.tagger.maxent;
 
 namespace TagsCloudContainer
 {
     public class ProgrammMain
-    {
-        private static string textFile;
-        private static int maxWordsCount = int.MaxValue;
-
+    { 
         public static void Execute(ConsoleParser.StandartOptions parsedArgs)
         {
-            textFile = parsedArgs.File;
-            maxWordsCount = parsedArgs.MaxCnt;
-            Execute();
+            Execute(parsedArgs.File, parsedArgs.MaxCnt, parsedArgs.Format);
         }
 
-        public static void Execute()
+        public static void Execute(string textFile, int maxWordsCount = int.MaxValue,
+            string imageFormat = "png")
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(new OnlyNounDullWordsEliminator())
@@ -24,7 +22,7 @@ namespace TagsCloudContainer
             builder.RegisterType<FileHandler>().AsSelf();
             builder.RegisterType<DefaultAlgorithm>().As<IBuildingAlgorithm>();
             builder.RegisterType<TagCloudBuilder>().AsSelf();
-            builder.RegisterInstance(new PictureInfo("tagCloud", new Point(0, 0))).AsSelf();
+            builder.RegisterInstance(new PictureInfo("tagCloud", new Point(0, 0), imageFormat)).AsSelf();
             builder.RegisterType<DefaultPaintingAlgorithm>().As<IPaintingAlgorithm>();
             builder.RegisterType<TagCloudDrawer>().AsSelf();
             var container = builder.Build();

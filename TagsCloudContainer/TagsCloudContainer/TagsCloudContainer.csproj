@@ -46,7 +46,7 @@
     <Compile Include="Interfaces\IDullWordsEliminator.cs" />
     <Compile Include="Interfaces\IPaintingAlgorithm.cs" />
     <Compile Include="Instances\PaintingAlgorithms.cs" />
-    <Compile Include="OutputLogger.cs" />
+    <Compile Include="WorkWithUser\OutputLogger.cs" />
     <Compile Include="PictureInfo.cs" />
     <Compile Include="ProgrammMain.cs" />
     <Compile Include="WorkWithUser\ConsoleParser.cs" />

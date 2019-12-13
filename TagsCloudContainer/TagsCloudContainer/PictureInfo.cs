@@ -5,11 +5,14 @@ namespace TagsCloudContainer
 {
     public class PictureInfo
     {
-        public PictureInfo(string fileName, Point tagCloudCenter)
+        public PictureInfo(string fileName, Point tagCloudCenter, string format="png")
         {
             FileName = fileName;
             TagCloudCenter = tagCloudCenter;
+            Format = format;
         }
+
+        public string Format { get; set; }
 
         public string FileName
         {
@@ -23,7 +26,7 @@ namespace TagsCloudContainer
         }
 
         public Point TagCloudCenter { get; set; }
-
+        
         private string fileName;
     }
 }
