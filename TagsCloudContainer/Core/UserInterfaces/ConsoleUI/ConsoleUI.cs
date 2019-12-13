@@ -48,7 +48,8 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
         private void Run(Options options)
         {
             var boringWords = FormBoringWords(options.FileWithBoringWords);
-            var words = FormResultWords(options.InputFile, boringWords)
+            filter.UserExcludedWords = boringWords;
+            var words = FormWordsFromFile(options.InputFile)
                 .MostCommon(30)
                 .Select(kvp => kvp.Item1)
                 .ToArray();
@@ -68,8 +69,6 @@ namespace TagsCloudContainer.Core.UserInterfaces.ConsoleUI
                 .Select(wordConverter.ConvertWord);
         }
 
-        private IEnumerable<string> FormResultWords(string path, HashSet<string> boringWords) => FormWordsFromFile(path)
-            .Where(w => !boringWords.Contains(w));
 
         private HashSet<string> FormBoringWords(string path)
         {
