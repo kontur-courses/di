@@ -95,7 +95,6 @@
     <Compile Include="Common\IBlobStorage.cs" />
     <Compile Include="Common\IImageDirectoryProvider.cs" />
     <Compile Include="Common\IImageHolder.cs" />
-    <Compile Include="Common\IImageSettingsProvider.cs" />
     <Compile Include="Common\ImageSettings.cs" />
     <Compile Include="Common\IObjectSerializer.cs" />
     <Compile Include="Common\Palette.cs" />
