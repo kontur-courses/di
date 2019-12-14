@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
+      <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -55,11 +59,22 @@
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="Tags\TagStyle.cs" />
     <Compile Include="Tags\TagType.cs" />
+    <Compile Include="UserInterfaces\CommandLineVerbs\DoubleFontsCloud.cs" />
+    <Compile Include="UserInterfaces\CommandLineVerbs\TagCloudOptions.cs" />
+    <Compile Include="UserInterfaces\CommandLineVerbs\FourFontsCloud.cs" />
+    <Compile Include="UserInterfaces\InputData.cs" />
+    <Compile Include="UserInterfaces\Options.cs" />
+    <Compile Include="UserInterfaces\UIDataParser.cs" />
+    <Compile Include="UserInterfaces\VocabularyParsers\CloudVocabularyParser.cs" />
+    <Compile Include="UserInterfaces\VocabularyParsers\TxtVocabularyParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\CommonWordsTagCloud.bmp" />
     <Content Include="Images\WebTagCloud.bmp" />
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
