@@ -8,10 +8,10 @@ namespace TagsCloudTests
 	[TestFixture]
 	public class RectangleExtensions_Tests
 	{
-		[TestCase(0, 0, 2, 2, 1, -1, TestName = "Square at (0, 0)")]
-		[TestCase(-1, 1, 2, 2, 0, 0, TestName = "Square at (-1, 1)")]
-		[TestCase(-5, -2, 2, 2, -4, -3, TestName = "Square at (-1, 1)")]
-		[TestCase(0, 0, 3, 5, 1.5f, -2.5f, TestName = "Rectangle with odd width and height at (0, 0)")]
+		[TestCase(0, 0, 2, 2, 1, -1, TestName = "Square_At_Zero_Center")]
+		[TestCase(-1, 1, 2, 2, 0, 0, TestName = "Square_At_Second_Quarter")]
+		[TestCase(-5, -2, 2, 2, -4, -3, TestName = "Square_At_Third_Quarter")]
+		[TestCase(0, 0, 3, 5, 1.5f, -2.5f, TestName = "Rectangle_With_Odd_Width_And_Height_At_Zero_Center")]
 		public void GetCenter_ReturnsCorrectValue(int locationX,
 													int locationY,
 													int rectangleWidth,
@@ -26,12 +26,12 @@ namespace TagsCloudTests
 			actualCenter.Should().Be(expectedCenter);
 		}
 
-		[TestCase(-1, 1, 2, 2, true, TestName = "This rectangle inside another one")]
-		[TestCase(-3, 3, 6, 6, true, TestName = "Another rectangle inside this one")]
-		[TestCase(1, 1, 2, 2, true, TestName = "Intersects with half area")]
-		[TestCase(1, 3, 2, 2, true, TestName = "Intersects with one corner")]
-		[TestCase(-2, 2, 4, 4, true, TestName = "Have same area")]
-		[TestCase(3, 1, 1, 1, false, TestName = "Has no common points")]
+		[TestCase(-1, 1, 2, 2, true, TestName = "This_Rectangle_Inside_Another_One")]
+		[TestCase(-3, 3, 6, 6, true, TestName = "Another_Rectangle_Inside_This_One")]
+		[TestCase(1, 1, 2, 2, true, TestName = "Intersects_With_Half_Area")]
+		[TestCase(1, 3, 2, 2, true, TestName = "Intersects_With_One_Corner")]
+		[TestCase(-2, 2, 4, 4, true, TestName = "Have_Same_Area")]
+		[TestCase(3, 1, 1, 1, false, TestName = "Has_No_Common_Points")]
 		public void Intersects_ReturnsCorrectResult(int locationX,
 													int locationY,
 													int rectangleWidth,

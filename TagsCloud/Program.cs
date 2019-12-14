@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Autofac;
+using Autofac.Core;
 using TagsCloud.Interfaces;
 using TagsCloud.MenuActions;
 
@@ -12,6 +13,7 @@ namespace TagsCloud
         public static void Main(string[] args)
         {
             const string sourceTextFilePath = @"../../Resources/text.txt";
+            const string boringWords = "../../Resources/boringWords.txt";
             var builder = new ContainerBuilder();
             
             builder.RegisterType<MainForm>().AsSelf().SingleInstance();
@@ -42,8 +44,15 @@ namespace TagsCloud
                 var exHandler = c.Resolve<IExceptionHandler>();
                 return new TxtReader(sourceTextFilePath, exHandler);
             }).As<ITextReader>().SingleInstance();
+            builder.Register(c =>
+            {
+                var exHandler = c.Resolve<IExceptionHandler>();
+                return new TxtReader(boringWords, exHandler);
+            }).Named<ITextReader>("boringWordsReader").SingleInstance();
             builder.RegisterType<WordLengthFilter>().As<IWordFilter>().SingleInstance();
-            builder.RegisterType<BoringWordsFilter>().As<IWordFilter>().SingleInstance();
+            builder.RegisterType<BoringWordsFilter>()
+                .WithParameter(ResolvedParameter.ForNamed<ITextReader>("boringWordsReader"))
+                .As<IWordFilter>().SingleInstance();
             builder.RegisterType<GUIExceptionsHandler>().As<IExceptionHandler>().SingleInstance();
             var container = builder.Build();
 

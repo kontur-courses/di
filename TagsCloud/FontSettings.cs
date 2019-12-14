@@ -7,5 +7,6 @@ namespace TagsCloud
 		public Font Font { get; set; } = new Font(FontFamily.GenericMonospace, 20);
 		public int MaxFontSize { get; set; } = 60;
 		public int MinFontSize { get; set; } = 10;
+		public double FontSizeScale { get; set; } = 1.09;
 	}
 }

@@ -32,9 +32,9 @@ namespace TagsCloudTests
 			actualRectangles.Count.Should().Be(expectedRectanglesCount);
 		}
 
-		[TestCase(-1, 0, TestName = "Negative rectangle width")]
-		[TestCase(0, -1, TestName = "Negative rectangle height")]
-		[TestCase(-1, -1, TestName = "Negative rectangle width and height")]
+		[TestCase(-1, 0, TestName = "Negative_Rectangle_Width")]
+		[TestCase(0, -1, TestName = "Negative_Rectangle_Height")]
+		[TestCase(-1, -1, TestName = "Negative_Rectangle_Width_And_Height")]
 		public void PutNextRectangle_ThrowsExceptionOnNegativeSizeValues(int width, int height)
 		{
 			var firstRectangleSize = new Size(width, height);
@@ -43,8 +43,8 @@ namespace TagsCloudTests
 		}
 
 		[TestCase(20, 20, TestName = "Squares")]
-		[TestCase(50, 30, TestName = "Horizontal rectangles")]
-		[TestCase(30, 50, TestName = "Vertical rectangles")]
+		[TestCase(50, 30, TestName = "Horizontal_Rectangles")]
+		[TestCase(30, 50, TestName = "Vertical_Rectangles")]
 		public void RectanglesShouldNotIntersect(int width, int height)
 		{
 			var rectangleSize = new Size(width, height);

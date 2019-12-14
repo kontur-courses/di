@@ -6,10 +6,9 @@ namespace TagsCloud
 {
 	public class BoringWordsFilter: IWordFilter
 	{
-		private HashSet<string> boringWords;
-		private const string wordsSource = "../../Resources/boringWords.txt";
+		private readonly HashSet<string> boringWords;
 		
-		public BoringWordsFilter() => boringWords = new HashSet<string>(File.ReadAllLines(wordsSource));
+		public BoringWordsFilter(ITextReader textReader) => boringWords = new HashSet<string>(textReader.Read());
 
 		public bool CheckWord(string word) => !boringWords.Contains(word);
 	}

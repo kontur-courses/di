@@ -25,10 +25,10 @@ namespace TagsCloudTests
 			tagsProcessor = new TagsProcessor(wordsProcessor, settings, imageHolder);
 		}
 
-		[TestCase(1, 5, 15, TestName = "Min size grater than max size")]
-		[TestCase(0, 5, 15, TestName = "Word frequency less than 1")]
-		[TestCase(1, -1, 15, TestName = "Max size less than 1")]
-		[TestCase(1, 1, -15, TestName = "Min size less than 1")]
+		[TestCase(1, 5, 15, TestName = "Min_Size_Grater_Than_Max_Size")]
+		[TestCase(0, 5, 15, TestName = "Word_Frequency_Less_Than_One")]
+		[TestCase(1, -1, 15, TestName = "Max_Size_Less_Than_One")]
+		[TestCase(1, 1, -15, TestName = "Min_Size_Less_Than_One")]
 		public void CalculateFontSize_ThrowsException_When(int wordFrequency, int maxSize, int minSize)
 		{
 			settings.MaxFontSize = maxSize;
@@ -54,10 +54,10 @@ namespace TagsCloudTests
 			actualSizes.Should().AllBeEquivalentTo(expectedSize);
 		}
 
-		[TestCase(100, 10, 50, 50, TestName = "Max size WHEN Calculated size grater than max size")]
-		[TestCase(2, 10, 50, 10, TestName = "Min size WHEN Calculated size less than min size")]
-		[TestCase(1, 10, 50, 10, TestName = "Min size WHEN Calculated size is zero")]
-		[TestCase(50, 10, 50, 45, TestName = "45 WHEN Word frequency = 50")]
+		[TestCase(100, 10, 50, 50, TestName = "Max_Size_When_Calculated_Size_Grater_Than_Max_Size")]
+		[TestCase(2, 10, 50, 10, TestName = "Min_Size_When_Calculated_Size_Less_Than_Min_Size")]
+		[TestCase(1, 10, 50, 10, TestName = "Min_Size_When_Calculated_Size_Is_Zero")]
+		[TestCase(50, 10, 50, 45, TestName = "45_When_Word_Frequency_Is_50")]
 		public void CalculateFontSize_Returns(int wordFrequency,
 												int minFontSize, 
 												int maxFontSize,

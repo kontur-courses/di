@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="FileReadingException.cs" />
     <Compile Include="GUIExceptionsHandler.cs" />
     <Compile Include="Interfaces\IExceptionHandler.cs" />
     <Compile Include="Interfaces\ILayoutConstructor.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using TagsCloud.Interfaces;
 
@@ -21,7 +22,7 @@ namespace TagsCloud
 			{
 				var lines = File.ReadAllLines(fileName);
 				if (lines.Length == 0)
-					throw new Exception("File is empty");
+					throw new FileReadingException("File is empty");
 				return lines;
 			}
 			catch (Exception e)

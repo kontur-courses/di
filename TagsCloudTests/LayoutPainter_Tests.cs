@@ -8,9 +8,9 @@ namespace TagsCloudTests
 	[TestFixture]
 	public class LayoutPainter_Tests
 	{
-		[TestCase(0, 0, 50, 50, 25, 25, TestName = "Location at (0, 0) and image size (50, 50)")]
-		[TestCase(0, 0, 25, 25, 12, 12, TestName = "Location at (0, 0) and odd image width and height")]
-		[TestCase(-5, 5, 20, 20, 5, 5, TestName = "Square with center at image center and image size (20, 20)")]
+		[TestCase(0, 0, 50, 50, 25, 25, TestName = "Location_At_0_0_And_Image_Size_50_50")]
+		[TestCase(0, 0, 25, 25, 12, 12, TestName = "Location_At_0_0_And_Odd_Image_Width_And_Height")]
+		[TestCase(-5, 5, 20, 20, 5, 5, TestName = "Square_With_Center_At_Image_Center_And_Image_Size_20_20")]
 		public void ToComputerCoordinates_ReturnsCorrectValue(int locationX,
 																int locationY,
 																int imageWidth,
