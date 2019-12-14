@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -21,8 +20,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         public void SetUp()
         {
             rectangles = null;
-            config = A.Fake<PictureConfig>();
-            config.Size = new Size(0,0);
+            config = new PictureConfig {Size = new Size(0, 0)};
             var spiral = new ArchimedeanSpiral(config);
             layouter = new CircularCloudLayouter(spiral, config);
         }

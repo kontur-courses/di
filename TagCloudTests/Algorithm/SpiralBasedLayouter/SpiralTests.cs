@@ -1,5 +1,4 @@
 ﻿using System;
-using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Algorithm.SpiralBasedLayouter;
@@ -20,10 +19,11 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var expectedPoint = GeometryUtils.ConvertPolarToIntegerCartesian(
                 parameter * stepInRadians * expectedPointShift, 
                 stepInRadians * expectedPointShift);
-            var config = A.Fake<PictureConfig>();
-            config.Parameters = A.Fake<LayouterParameters>();
-            config.Parameters.Parameter = parameter;
-            config.Parameters.StepInDegrees = 30;
+            var config = new PictureConfig
+            {
+                Parameters = new LayouterParameters { Parameter = parameter, StepInDegrees = 30 }
+            };
+
             var spiral = new ArchimedeanSpiral(config);
 
             for (var i = 0; i < expectedPointShift; i++)
