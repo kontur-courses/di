@@ -17,6 +17,8 @@ namespace TagsCloudVisualization.Text.TextReaders
             this.separators = separators;
         }
 
+        public HashSet<string> Formats { get; } = new HashSet<string> {"txt"};
+
         public IEnumerable<string> GetAllWords(string filepath)
         {
             using (var fileStream = new FileStream(filepath, FileMode.Open))

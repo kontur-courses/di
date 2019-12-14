@@ -1,6 +1,6 @@
-﻿using TagsCloudVisualization.VisualizerActions;
+﻿using TagsCloudVisualization.GUI;
 
-namespace TagsCloudVisualization.GUI.GuiActions
+namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
     public interface IGuiAction : IVisualizerAction
     {

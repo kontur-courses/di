@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloudVisualization.GUI.GuiActions;
+using TagsCloudVisualization.VisualizerActions.GuiActions;
 
 namespace TagsCloudVisualization.GUI
 {

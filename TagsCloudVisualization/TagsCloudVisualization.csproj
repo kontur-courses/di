@@ -45,6 +45,9 @@
     <Reference Include="Castle.Windsor, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>packages\Castle.Windsor.5.0.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>packages\FakeItEasy.5.5.0\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -189,7 +192,8 @@
     <Compile Include="Text\PosTagger.cs" />
     <Compile Include="Text\TextReaders\DocxFileReader.cs" />
     <Compile Include="UI\IVisualizer.cs" />
-    <Compile Include="VisualizerActions\GuiActions\FontSettingsAction.cs" />
+    <Compile Include="VisualizerActions\FontSetAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\FontSetGuiAction.cs" />
     <Compile Include="VisualizerActions\GuiActions\IGuiAction.cs" />
     <Compile Include="GUI\MenuCategory.cs" />
     <Compile Include="GUI\PictureBoxImageHolder.cs">
@@ -219,13 +223,18 @@
     <Compile Include="Text\TextReaders\TxtFileReader.cs" />
     <Compile Include="Utils\PointExtensions.cs" />
     <Compile Include="Utils\PointUtilities.cs" />
-    <Compile Include="VisualizerActions\GuiActions\ImageSettingsAction.cs" />
-    <Compile Include="VisualizerActions\GuiActions\PaletteSettingsAction.cs" />
-    <Compile Include="VisualizerActions\GuiActions\RestrictionsSettingsAction.cs" />
-    <Compile Include="VisualizerActions\GuiActions\SaveImageAction.cs" />
-    <Compile Include="VisualizerActions\GuiActions\TextFileAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\ImageSettingsSetGuiAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\PaletteSetGuiAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\RestrictionsSetGuiAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\ImageSaveGuiAction.cs" />
+    <Compile Include="VisualizerActions\GuiActions\OpenTextFileGuiAction.cs" />
+    <Compile Include="VisualizerActions\ImageSettingsSetAction.cs" />
     <Compile Include="VisualizerActions\IVisualizerAction.cs" />
     <Compile Include="Core\Word.cs" />
+    <Compile Include="VisualizerActions\PaletteSetAction.cs" />
+    <Compile Include="VisualizerActions\RestrictionsSetAction.cs" />
+    <Compile Include="VisualizerActions\ImageSaveAction.cs" />
+    <Compile Include="VisualizerActions\OpenTextFileAction.cs" />
     <Compile Include="WordStatistics\AnalyzedText.cs" />
     <Compile Include="WordStatistics\IStatisticsCollector.cs" />
     <Compile Include="WordStatistics\StatisticsCounter.cs" />

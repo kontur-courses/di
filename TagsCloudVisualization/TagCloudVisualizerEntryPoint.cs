@@ -6,7 +6,6 @@ using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using TagsCloudVisualization.Core;
 using TagsCloudVisualization.Drawers;
-using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Layouters.CloudLayouters;
 using TagsCloudVisualization.Painters;
@@ -71,12 +70,12 @@ namespace TagsCloudVisualization
             }));
 
 
-            container.Register(Component.For<IGuiAction>().ImplementedBy<ImageSettingsAction>());
-            container.Register(Component.For<IGuiAction>().ImplementedBy<FontSettingsAction>());
-            container.Register(Component.For<IGuiAction>().ImplementedBy<PaletteSettingsAction>());
-            container.Register(Component.For<IGuiAction>().ImplementedBy<TextFileAction>());
-            container.Register(Component.For<IGuiAction>().ImplementedBy<SaveImageAction>());
-            container.Register(Component.For<IGuiAction>().ImplementedBy<RestrictionsSettingsAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<ImageSettingsSetGuiAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<FontSetGuiAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<PaletteSetGuiAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<OpenTextFileGuiAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<ImageSaveGuiAction>());
+            container.Register(Component.For<IGuiAction>().ImplementedBy<RestrictionsSetGuiAction>());
 
 
             container.Register(Component.For<IVisualizer>().UsingFactoryMethod(() =>

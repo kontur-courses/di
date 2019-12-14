@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using TagsCloudVisualization.Core;
 using TagsCloudVisualization.GUI;
-using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.UI;
+using TagsCloudVisualization.VisualizerActions.GuiActions;
 
 namespace TagsCloudVisualization
 {

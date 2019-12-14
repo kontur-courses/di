@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Windows.Forms;
 using TagsCloudVisualization.GUI;
-using TagsCloudVisualization.GUI.GuiActions;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.VisualizerActions.GuiActions
 {
-    public class TextFileAction : IGuiAction
+    public class OpenTextFileGuiAction : OpenTextFileAction, IGuiAction
     {
-        private readonly AppSettings appSettings;
+        public OpenTextFileGuiAction(AppSettings appSettings) : base(appSettings)
+        {}
 
-        public TextFileAction(AppSettings appSettings)
-        {
-            this.appSettings = appSettings;
-        }
-
-        public string GetActionDescription()
+        public override string GetActionDescription()
         {
             return "Открыть файл с текстом";
         }
 
-        public string GetActionName()
+        public override string GetActionName()
         {
             return "Текст...";
         }
 
-        public void Perform()
+        protected override bool TryGetCorrectFileToOpen(out string filepath)
         {
             var dialog = new OpenFileDialog
             {
@@ -39,10 +34,11 @@ namespace TagsCloudVisualization.VisualizerActions.GuiActions
             var result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                appSettings.CurrentFile = dialog.FileName;
-                var newImage = appSettings.CurrentInterface.GetTagCloud();
-                appSettings.ImageHolder.SetImage(newImage);
+                filepath = dialog.FileName;
+                return true;
             }
+            filepath = null;
+            return false;
         }
 
         public MenuCategory GetMenuCategory()

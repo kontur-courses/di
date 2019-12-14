@@ -19,6 +19,8 @@ namespace TagsCloudVisualization.Text.TextReaders
         }
 
 
+        public HashSet<string> Formats { get; } = new HashSet<string> {"docx", "doc"};
+
         public IEnumerable<string> GetAllWords(string filepath)
         {
             application = new MsWord.Application {Visible = false};
