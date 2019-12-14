@@ -13,8 +13,9 @@ namespace TagCloudGenerator.UserInterfaces.VocabularyParsers
 
         protected override IEnumerable<string> ParseCloudVocabulary(StreamReader vocabularyFileStream)
         {
-            while (!vocabularyFileStream.EndOfStream)
-                yield return vocabularyFileStream.ReadLine();
+            using (vocabularyFileStream)
+                while (!vocabularyFileStream.EndOfStream)
+                    yield return vocabularyFileStream.ReadLine();
         }
     }
 }

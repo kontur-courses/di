@@ -15,8 +15,9 @@ namespace TagCloudGenerator.Tests.TestFixtures
     public class WrongVisualizationTests
     {
         private WrongVisualizationCloud wrongVisualizationCloud;
-        private static Size VisualizationImageSize => new Size(1000, 800);
         private readonly List<string> createdTempFileNames = new List<string>();
+
+        private static Size VisualizationImageSize => new Size(1000, 800);
 
         [TearDown]
         public void TearDown()
@@ -43,7 +44,6 @@ namespace TagCloudGenerator.Tests.TestFixtures
                                                   exception is UnauthorizedAccessException) { }
         }
 
-
         [Test]
         [Order(1)]
         public void AlwaysFailedTest()
@@ -62,7 +62,9 @@ namespace TagCloudGenerator.Tests.TestFixtures
             var intersectingRectangles = TestsHelper.GetAnyPairOfIntersectingRectangles(rectangles);
 
             if (intersectingRectangles.HasValue)
-                wrongVisualizationCloud = new WrongVisualizationCloud(intersectingRectangles.Value, rectangles);
+                wrongVisualizationCloud = new WrongVisualizationCloud(TestsHelper.BackgroundColor,
+                                                                      TestsHelper.TagStyleByTagType,
+                                                                      intersectingRectangles.Value, rectangles);
 
             Assert.Fail("Should fail to test logging functionality.");
         }
@@ -75,6 +77,8 @@ namespace TagCloudGenerator.Tests.TestFixtures
         [Test]
         [SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
         public void WrongVisualizationCloudConstructor_OnEmptySizeWrongRectangles_ThrowArgumentException() =>
-            Assert.Throws<ArgumentException>(() => new WrongVisualizationCloud((Rectangle.Empty, Rectangle.Empty)));
+            Assert.Throws<ArgumentException>(() => new WrongVisualizationCloud(TestsHelper.BackgroundColor,
+                                                                               TestsHelper.TagStyleByTagType,
+                                                                               (Rectangle.Empty, Rectangle.Empty)));
     }
 }

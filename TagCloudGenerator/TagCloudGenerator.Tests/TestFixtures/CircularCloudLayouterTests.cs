@@ -60,8 +60,10 @@ namespace TagCloudGenerator.Tests.TestFixtures
             circularCloudLayouter = new CircularCloudLayouter(origin);
             var firstRectangle = circularCloudLayouter.PutNextRectangle(new Size(width, height));
 
-            wrongVisualizationCloud = new WrongVisualizationCloud((firstRectangle,
-                                                                   new Rectangle(origin, new Size(1, 1))));
+            wrongVisualizationCloud = new WrongVisualizationCloud(
+                TestsHelper.BackgroundColor,
+                TestsHelper.TagStyleByTagType,
+                (firstRectangle, new Rectangle(origin, new Size(1, 1))));
 
             firstRectangle.CheckIfPointIsCenterOfRectangle(origin, Precision).Should().BeTrue();
         }
@@ -74,8 +76,10 @@ namespace TagCloudGenerator.Tests.TestFixtures
             var center = new Point(xCenter, yCenter);
             var firstRectangle = new CircularCloudLayouter(center).PutNextRectangle(new Size(100, 50));
 
-            wrongVisualizationCloud = new WrongVisualizationCloud((firstRectangle,
-                                                                   new Rectangle(center, new Size(1, 1))));
+            wrongVisualizationCloud = new WrongVisualizationCloud(
+                TestsHelper.BackgroundColor,
+                TestsHelper.TagStyleByTagType,
+                (firstRectangle, new Rectangle(center, new Size(1, 1))));
 
             firstRectangle.CheckIfPointIsCenterOfRectangle(center, Precision).Should().BeTrue();
         }
@@ -86,7 +90,9 @@ namespace TagCloudGenerator.Tests.TestFixtures
             var firstRectangle = circularCloudLayouter.PutNextRectangle(new Size(10, 5));
             var secondRectangle = circularCloudLayouter.PutNextRectangle(new Size(7, 3));
 
-            wrongVisualizationCloud = new WrongVisualizationCloud((firstRectangle, secondRectangle));
+            wrongVisualizationCloud = new WrongVisualizationCloud(TestsHelper.BackgroundColor,
+                                                                  TestsHelper.TagStyleByTagType,
+                                                                  (firstRectangle, secondRectangle));
 
             firstRectangle.IntersectsWith(secondRectangle).Should().BeFalse();
         }
@@ -104,7 +110,9 @@ namespace TagCloudGenerator.Tests.TestFixtures
             var intersectingRectangles = TestsHelper.GetAnyPairOfIntersectingRectangles(rectangles);
 
             if (intersectingRectangles.HasValue)
-                wrongVisualizationCloud = new WrongVisualizationCloud(intersectingRectangles.Value, rectangles);
+                wrongVisualizationCloud = new WrongVisualizationCloud(TestsHelper.BackgroundColor,
+                                                                      TestsHelper.TagStyleByTagType,
+                                                                      intersectingRectangles.Value, rectangles);
 
             intersectingRectangles.Should().BeNull();
         }
@@ -142,7 +150,9 @@ namespace TagCloudGenerator.Tests.TestFixtures
                 .Select(size => circularCloudLayouter.PutNextRectangle(size))
                 .ToArray();
 
-            wrongVisualizationCloud = new WrongVisualizationCloud(rectangles);
+            wrongVisualizationCloud = new WrongVisualizationCloud(TestsHelper.BackgroundColor,
+                                                                  TestsHelper.TagStyleByTagType,
+                                                                  rectangles);
 
             var maxRadius = rectangles.Max(rectangle => ImageCenter.GetDistanceToPoint(rectangle.GetRectangleCenter()));
             var maxArea = maxRadius * maxRadius * Math.PI;

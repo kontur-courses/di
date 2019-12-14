@@ -8,7 +8,8 @@ namespace TagCloudGenerator.Tests.WrongVisualization
 {
     public static class WrongVisualizationSaver
     {
-        public static string SaveAndGetPathToWrongVisualization(TagCloud tagCloud, Size imageSize, string directoryName)
+        public static string SaveAndGetPathToWrongVisualization(
+            TagCloud<TagType> tagCloud, Size imageSize, string directoryName)
         {
             var failedTestFilename = $"{GetCurrentTestName()}_{DateTime.Now:dd.MM.yyyy-HH.mm.ss}.png";
 

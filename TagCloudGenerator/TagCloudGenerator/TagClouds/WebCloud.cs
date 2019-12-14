@@ -6,21 +6,13 @@ using TagCloudGenerator.Tags;
 
 namespace TagCloudGenerator.TagClouds
 {
-    public class WebCloud : TagCloud
+    public class WebCloud : TagCloud<TagType>
     {
-        private const string MutualFont = "Bahnschrift SemiLight";
         private const int LargeTagsFrequency = 8;
         private const int MediumTagsFrequency = 3;
 
-        private static readonly Dictionary<TagType, TagStyle> tagStyleByTagType = new Dictionary<TagType, TagStyle>
-        {
-            [TagType.Central] = new TagStyle(Color.White, new Font(MutualFont, 60)),
-            [TagType.Large] = new TagStyle(Color.FromArgb(255, 102, 0), new Font(MutualFont, 22)),
-            [TagType.Medium] = new TagStyle(Color.FromArgb(212, 85, 0), new Font(MutualFont, 18)),
-            [TagType.Small] = new TagStyle(Color.FromArgb(160, 90, 44), new Font(MutualFont, 13))
-        };
-
-        protected override Color BackgroundColor => Color.FromArgb(0, 34, 43);
+        public WebCloud(Color backgroundColor, Dictionary<TagType, TagStyle> tagStyleByTagType) :
+            base(backgroundColor, tagStyleByTagType) { }
 
         protected override Action<Tag> GetTagDrawer(Graphics graphics)
         {
@@ -39,7 +31,7 @@ namespace TagCloudGenerator.TagClouds
             {
                 var tagText = cloudStrings[i];
                 var tagType = GetTagType(i);
-                var tagStyle = tagStyleByTagType[tagType];
+                var tagStyle = TagStyleByTagType[tagType];
 
                 var sizeF = graphics.MeasureString(tagText, tagStyle.Font);
                 var size = new Size((int)Math.Ceiling(sizeF.Width), (int)Math.Ceiling(sizeF.Height));

@@ -8,15 +8,23 @@ using TagCloudGenerator.Tags;
 
 namespace TagCloudGenerator.TagClouds
 {
-    public abstract class TagCloud
+    public abstract class TagCloud<TTagType> where TTagType : Enum
     {
-        protected abstract Color BackgroundColor { get; }
+        private readonly Color backgroundColor;
+
+        protected TagCloud(Color backgroundColor, Dictionary<TTagType, TagStyle> tagStyleByTagType)
+        {
+            this.backgroundColor = backgroundColor;
+            TagStyleByTagType = tagStyleByTagType;
+        }
+
+        protected Dictionary<TTagType, TagStyle> TagStyleByTagType { get; }
 
         public Bitmap CreateBitmap(string[] cloudStrings, ICloudLayouter cloudLayouter, Size bitmapSize)
         {
             var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             using var graphics = GetGraphics(bitmap);
-            using var backgroundBrush = new SolidBrush(BackgroundColor);
+            using var backgroundBrush = new SolidBrush(backgroundColor);
 
             graphics.FillRectangle(backgroundBrush, new Rectangle(Point.Empty, bitmap.Size));
 

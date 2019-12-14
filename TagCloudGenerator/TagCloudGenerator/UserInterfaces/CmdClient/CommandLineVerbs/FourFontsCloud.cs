@@ -1,12 +1,12 @@
 using CommandLine;
 
-namespace TagCloudGenerator.UserInterfaces.CommandLineVerbs
+namespace TagCloudGenerator.UserInterfaces.CmdClient.CommandLineVerbs
 {
-    [Verb("DoubleFontsCloud", HelpText = "All tags except central will have same text font.")]
-    public class DoubleFontsCloud : TagCloudOptions
+    [Verb("FourFontsCloud", HelpText = "All tags will divide into four font-groups.")]
+    public class FourFontsCloud : TagCloudOptions
     {
-        public override string ImageFilename => "CommonWordsTagCloud.png";
-        public override int GroupsCount => 2;
+        public override string ImageFilename => "WebTagCloud.png";
+        public override int GroupsCount => 4;
 
         [Option("mutual_font",
                 Default = "Bahnschrift SemiLight",
@@ -14,17 +14,17 @@ namespace TagCloudGenerator.UserInterfaces.CommandLineVerbs
         public override string MutualFont { get; set; }
 
         [Option("background_color",
-                Default = "#FFFFFFFF",
+                Default = "#FF00222B",
                 HelpText = "Background color of cloud image.")]
         public override string BackgroundColor { get; set; }
 
         [Option("font_sizes",
-                Default = "30_18",
+                Default = "60_22_18_13",
                 HelpText = "Font sizes for each tags group.")]
         public override string FontSizes { get; set; }
 
         [Option("tag_colors",
-                Default = "#FF000000_#FF000000",
+                Default = "#FFFFFFFF_#FFFF6600_#FFD45500_#FFA05A2C",
                 HelpText = "Tag colors for each tags group.")]
         public override string TagColors { get; set; }
     }

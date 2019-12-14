@@ -1,6 +1,6 @@
 using CommandLine;
 
-namespace TagCloudGenerator.UserInterfaces.CommandLineVerbs
+namespace TagCloudGenerator.UserInterfaces.CmdClient.CommandLineVerbs
 {
     public abstract class TagCloudOptions
     {
@@ -14,6 +14,10 @@ namespace TagCloudGenerator.UserInterfaces.CommandLineVerbs
                 Default = "800x600",
                 HelpText = "Cloud image size in format: [width]x[height]")]
         public string ImageSize { get; set; }
+
+        [Option('e', "excluded_vocabulary_filename",
+                HelpText = "Words from this file will be excluded from cloud.")]
+        public string ExcludedWordsVocabularyFilename { get; set; }
 
         public abstract string ImageFilename { get; }
         public abstract int GroupsCount { get; }

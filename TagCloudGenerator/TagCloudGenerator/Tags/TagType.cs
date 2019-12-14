@@ -2,9 +2,9 @@
 {
     public enum TagType
     {
-        Small,
-        Medium,
+        Central,
         Large,
-        Central
+        Medium,
+        Small
     }
 }

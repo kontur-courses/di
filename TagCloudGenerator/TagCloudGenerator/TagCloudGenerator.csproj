@@ -47,11 +47,13 @@
     <Compile Include="CloudLayouters\ArchimedeanSpiral.cs" />
     <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="CloudVocabularyPreprocessors\CloudVocabularyPreprocessor.cs" />
+    <Compile Include="CloudVocabularyPreprocessors\ExcludingPreprocessors.cs" />
+    <Compile Include="CloudVocabularyPreprocessors\ToLowerPreprocessor.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagCloudContent.cs" />
     <Compile Include="TagCloudContext.cs" />
     <Compile Include="TagClouds\CommonWordsCloud.cs" />
     <Compile Include="TagClouds\TagCloud.cs" />
@@ -59,12 +61,10 @@
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="Tags\TagStyle.cs" />
     <Compile Include="Tags\TagType.cs" />
-    <Compile Include="UserInterfaces\CommandLineVerbs\DoubleFontsCloud.cs" />
-    <Compile Include="UserInterfaces\CommandLineVerbs\TagCloudOptions.cs" />
-    <Compile Include="UserInterfaces\CommandLineVerbs\FourFontsCloud.cs" />
-    <Compile Include="UserInterfaces\InputData.cs" />
-    <Compile Include="UserInterfaces\Options.cs" />
-    <Compile Include="UserInterfaces\UIDataParser.cs" />
+    <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\DoubleFontsCloud.cs" />
+    <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\FourFontsCloud.cs" />
+    <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\TagCloudOptions.cs" />
+    <Compile Include="UserInterfaces\CmdClient\ArgumentParser.cs" />
     <Compile Include="UserInterfaces\VocabularyParsers\CloudVocabularyParser.cs" />
     <Compile Include="UserInterfaces\VocabularyParsers\TxtVocabularyParser.cs" />
   </ItemGroup>

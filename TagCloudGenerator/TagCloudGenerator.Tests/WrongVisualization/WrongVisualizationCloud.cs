@@ -9,19 +9,14 @@ using TagCloudGenerator.Tags;
 
 namespace TagCloudGenerator.Tests.WrongVisualization
 {
-    public class WrongVisualizationCloud : TagCloud
+    public class WrongVisualizationCloud : TagCloud<TagType>
     {
-        private static readonly Dictionary<TagType, TagStyle> tagStyleByTagType = new Dictionary<TagType, TagStyle>
-        {
-            [TagType.Normal] = new TagStyle(Color.LightGray, null),
-            [TagType.SecondWrong] = new TagStyle(Color.Crimson, null),
-            [TagType.FirstWrong] = new TagStyle(Color.Teal, null)
-        };
-
         private readonly Rectangle[] allRectangles;
         private readonly (Rectangle, Rectangle) wrongRectanglesPair;
 
-        public WrongVisualizationCloud(IEnumerable<Rectangle> allRectangles)
+        public WrongVisualizationCloud(Color backgroundColor,
+                                       Dictionary<TagType, TagStyle> tagStyleByTagType,
+                                       IEnumerable<Rectangle> allRectangles) : base(backgroundColor, tagStyleByTagType)
         {
             if (allRectangles is null) throw new ArgumentNullException(nameof(allRectangles));
             this.allRectangles = allRectangles.ToArray();
@@ -30,8 +25,11 @@ namespace TagCloudGenerator.Tests.WrongVisualization
                 throw new ArgumentException("Empty sequence was passed", nameof(allRectangles));
         }
 
-        public WrongVisualizationCloud((Rectangle, Rectangle) wrongRectanglesPair,
-                                       IEnumerable<Rectangle> allRectangles = null)
+        public WrongVisualizationCloud(Color backgroundColor,
+                                       Dictionary<TagType, TagStyle> tagStyleByTagType,
+                                       (Rectangle, Rectangle) wrongRectanglesPair,
+                                       IEnumerable<Rectangle> allRectangles = null) : base(backgroundColor,
+                                                                                           tagStyleByTagType)
         {
             if (wrongRectanglesPair.Item1.Size.IsEmpty && wrongRectanglesPair.Item2.Size.IsEmpty)
                 throw new ArgumentException("Both of rectangles have empty size", nameof(wrongRectanglesPair));
@@ -39,8 +37,6 @@ namespace TagCloudGenerator.Tests.WrongVisualization
             this.allRectangles = allRectangles?.ToArray() ?? new Rectangle[0];
             this.wrongRectanglesPair = wrongRectanglesPair;
         }
-
-        protected override Color BackgroundColor => Color.White;
 
         protected override Action<Tag> GetTagDrawer(Graphics graphics) =>
             tag =>
@@ -56,7 +52,7 @@ namespace TagCloudGenerator.Tests.WrongVisualization
             let tagType = wrongRectanglesPair.Item1 == rectangle ? TagType.FirstWrong :
                           wrongRectanglesPair.Item2 == rectangle ? TagType.SecondWrong :
                                                                    TagType.Normal
-            let tagStyle = tagStyleByTagType[tagType]
+            let tagStyle = TagStyleByTagType[tagType]
             select new Tag(null, tagStyle, rectangle);
     }
 }

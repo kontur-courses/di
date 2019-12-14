@@ -23,7 +23,7 @@ namespace TagCloudGenerator.UserInterfaces.VocabularyParsers
                 nextParser.GetCloudVocabulary(cloudVocabularyFilename);
             }
 
-            using var vocabularyFile = File.OpenText(cloudVocabularyFilename);
+            var vocabularyFile = File.OpenText(cloudVocabularyFilename);
 
             return ParseCloudVocabulary(vocabularyFile);
         }
