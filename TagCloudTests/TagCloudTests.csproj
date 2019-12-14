@@ -53,6 +53,7 @@
     <Compile Include="Infrastructure\SizeUtilsTests.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\SpiralTests.cs" />
     <Compile Include="Visualization\WordSizeSetterTests.cs" />
+    <Compile Include="WordsProcessing\WordClassBasedSelectorTests.cs" />
     <Compile Include="WordsProcessing\WordCounterTests.cs" />
     <Compile Include="WordsProcessing\WordProcessorTests.cs" />
   </ItemGroup>
