@@ -1,4 +1,5 @@
 ﻿using System;
+using SyntaxTextParser.Architecture;
 
 namespace SyntaxTextParser
 {
@@ -7,12 +8,12 @@ namespace SyntaxTextParser
         public readonly string Element;
         public readonly int Count;
 
-        public TextElement(string element, int count)
+        public TextElement(TypedTextElement element, int count)
         {
             if(count < 0)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"Element count can't be less than zero");
 
-            Element = element ?? throw new NullReferenceException($"{nameof(Element)} can't be null");
+            Element = element.Word;
             Count = count;
         }
     }

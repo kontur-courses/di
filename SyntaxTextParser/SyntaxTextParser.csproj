@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,53 +50,28 @@
     <Compile Include="Architecture\Interfaces\IElementValidator.cs" />
     <Compile Include="Architecture\ElementParsers\ElementParserWithRules.cs" />
     <Compile Include="Architecture\ElementParsers\BaseElementParser.cs" />
+    <Compile Include="Architecture\ExternalToolUser.cs" />
     <Compile Include="Architecture\TypedTextElement.cs" />
-    <Compile Include="Nunspell\Hunspell_Test.cs" />
     <Compile Include="Architecture\Interfaces\IFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Realisations\LineElementParserWithRules.cs" />
-    <Compile Include="Realisations\TxtFileReader.cs" />
-    <Compile Include="Realisations\ToLowerFormatter.cs" />
+    <Compile Include="Realisations\Rules\BoringWordsValidator.cs" />
+    <Compile Include="Realisations\Rules\LengthMoreThanValidator.cs" />
+    <Compile Include="Realisations\Rules\YandexBoringPartsOfSpeechValidator.cs" />
+    <Compile Include="Realisations\FileReaders\MSWordFileReader.cs" />
+    <Compile Include="Realisations\FileReaders\TxtFileReader.cs" />
+    <Compile Include="Realisations\Formatter\ToLowerFormatter.cs" />
     <Compile Include="TextElement.cs" />
     <Compile Include="TextParser.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Nunspell\Dictionaries\En_GB\index.aff">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_GB\index.dic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_US\hyph_en_US.dic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_US\index.aff">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_US\index.dic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_US\th_en_US.dat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\En_US\th_en_US.idx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\Ru\index.aff">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Dictionaries\Ru\index.dic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Hunspellx64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Nunspell\Hunspellx86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Compile Include="Realisations\Parsers\YandexElementParser.cs" />
+    <Compile Include="YandexParser\YandexToolUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="YandexParser\mystem.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

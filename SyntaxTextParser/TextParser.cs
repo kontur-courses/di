@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SyntaxTextParser.Architecture;
 
 namespace SyntaxTextParser
@@ -8,26 +9,27 @@ namespace SyntaxTextParser
     public sealed class TextParser
     {
         private readonly ElementParserWithRules elementParserWithRules;
-        private readonly IFileReader fileReader;
+        private readonly IFileReader[] fileReaders;
 
-        public TextParser(ElementParserWithRules elementParserWithRules, IFileReader fileReader)
+        public TextParser(ElementParserWithRules elementParserWithRules, IFileReader[] fileReaders)
         {
             this.elementParserWithRules = elementParserWithRules;
-            this.fileReader = fileReader;
+            this.fileReaders = fileReaders;
         }
 
         /// <exception cref="ArgumentException">Thrown parser can't read that type file</exception>
         /// <exception cref="FileNotFoundException">Thrown parser can't found file</exception>
         public List<TextElement> ParseElementsFromFile(string path, string fileName, string type)
         {
-            if(!fileReader.CanReadThatType(type))
-                throw new ArgumentException($"{nameof(fileReader)} can't read {type} file type");
-
             var fullPath = Path.Combine(path, fileName + '.' + type);
-            if(!Directory.Exists(fullPath))
-                throw new FileNotFoundException($"Path {path} isn't valid");
+            if(!File.Exists(fullPath))
+                throw new FileNotFoundException($"File {path} isn't valid");
 
-            return fileReader.TryReadText(fullPath, out var text)
+            var reader = fileReaders.FirstOrDefault(x => x.CanReadThatType(type));
+            if (reader == null)
+                throw new ArgumentException($"Parser can't read [{type}] file type");
+
+            return reader.TryReadText(fullPath, out var text)
                 ? elementParserWithRules.ParseElementsFromText(text)
                 : new List<TextElement>();
         }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SyntaxTextParser.Architecture
 {
-    public abstract class ElementParserWithRules : BaseElementParser //TODO 
+    public abstract class ElementParserWithRules : BaseElementParser
     {
         protected readonly IEnumerable<IElementValidator> ElementValidators;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SyntaxTextParser.Architecture
+﻿namespace SyntaxTextParser.Architecture
 {
     public interface IFileReader
     {
