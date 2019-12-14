@@ -52,7 +52,6 @@
     <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtilsTests.cs" />
     <Compile Include="Infrastructure\SizeUtilsTests.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\SpiralTests.cs" />
-    <Compile Include="Algorithm\SpiralBasedLayouter\Visualizer.cs" />
     <Compile Include="Visualization\WordSizeSetterTests.cs" />
     <Compile Include="WordsProcessing\WordCounterTests.cs" />
   </ItemGroup>

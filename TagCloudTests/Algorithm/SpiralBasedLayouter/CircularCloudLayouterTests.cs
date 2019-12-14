@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
 
@@ -190,24 +189,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var actualDelta = distances.Max() - distances.Min();
 
             (expectedMaxDelta - actualDelta).Should().BeGreaterOrEqualTo(0);
-        }
-        
-        [TearDown]
-        public void TearDown()
-        {
-            var context = TestContext.CurrentContext;
-            if (context.Result.Outcome.Status != TestStatus.Failed)
-                return;
-
-            var testMethodName = TestContext.CurrentContext.Test.MethodName;
-            var testName = TestContext.CurrentContext.Test.Name;
-            var fileName = $"{AppDomain.CurrentDomain.BaseDirectory}\\fail_{testMethodName}_{testName}.bmp";
-
-            var visualizer = new Visualizer(config.Center, 10);
-            var bitmap = visualizer.GetVisualization(rectangles);
-            bitmap.Save(fileName);
-
-            TestContext.Out.WriteLine($"Tag cloud visualization saved to file {fileName}");
         }
     }
 }
