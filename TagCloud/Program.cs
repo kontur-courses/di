@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using TagCloud.Interfaces.GUI;
 using GroboContainer.Core;
 using GroboContainer.Impl;
-using TagCloud.WordsPreprocessing;
 
 namespace TagCloud
 {
@@ -32,9 +30,6 @@ namespace TagCloud
         {
             var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             var container = new Container(new ContainerConfiguration(assembly));
-
-            container.Configurator.ForAbstraction<HashSet<string>>().UseInstances(new HashSet<string>());
-            container.Configurator.ForAbstraction<HashSet<SpeechPart>>().UseInstances(new HashSet<SpeechPart>());
 
             return container;
         }

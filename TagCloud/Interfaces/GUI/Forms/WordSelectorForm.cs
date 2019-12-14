@@ -10,12 +10,12 @@ namespace TagCloud.Interfaces.GUI.Forms
     public class WordSelectorForm : Form
     {
         private ListBox ignoredWordsBox;
-        private WordSelector wordSelector;
+        private WordSelectorSettings wordSelectorSettings;
         private TextBox textBox;
 
-        public WordSelectorForm(WordSelector wordSelector)
+        public WordSelectorForm(WordSelectorSettings wordSelectorSettings)
         {
-            this.wordSelector = wordSelector;
+            this.wordSelectorSettings = wordSelectorSettings;
             InitializeForm();
         }
 
@@ -64,7 +64,7 @@ namespace TagCloud.Interfaces.GUI.Forms
                 Text = "Игнорируемые слова"
             };
             ignoredWordsBox = new ListBox();
-            ignoredWordsBox.Items.AddRange(wordSelector.IgnoredWords.ToArray());
+            ignoredWordsBox.Items.AddRange(wordSelectorSettings.IgnoredWords.ToArray());
             
             //Кнопка убрать выделенное слово
             var deleteWordBtn = new Button
@@ -107,25 +107,27 @@ namespace TagCloud.Interfaces.GUI.Forms
 
         private void OnItemCheckSpeechParts(object sender, EventArgs e)
         {
-            wordSelector.IgnoredSpeechParts.Clear();
-            foreach (var elem in ((CheckedListBox) sender).CheckedItems)
-                wordSelector.IgnoredSpeechParts.Add((SpeechPart)elem);
+            var item = (SpeechPart)((CheckedListBox) sender).SelectedItem;
+            if (((ItemCheckEventArgs) e).NewValue == CheckState.Checked)
+                wordSelectorSettings.AddIgnoredSpeechPart(item);
+            else
+                wordSelectorSettings.RemoveIgnoredSpeechPart(item);
         }
 
         private void OnLengthChanged(object sender, EventArgs e)
         {
-            wordSelector.IgnoreWordsWithLengthLessThan = (int) ((NumericUpDown) sender).Value;
+            wordSelectorSettings.IgnoreWordsWithLengthLessThan = (int) ((NumericUpDown) sender).Value;
         }
 
         private void OnClickDeleteBtn(object sender, EventArgs e)
         {
-            wordSelector.IgnoredWords.Remove((string) ignoredWordsBox.SelectedItem);
+            wordSelectorSettings.RemoveIgnoredWord((string) ignoredWordsBox.SelectedItem);
             ignoredWordsBox.Items.Remove(ignoredWordsBox.SelectedItem);
         }
 
         private void OnAddBtnClick(object sender, EventArgs e)
         {
-            wordSelector.IgnoredWords.Add(textBox.Text);
+            wordSelectorSettings.AddIgnoredWord(textBox.Text);
             ignoredWordsBox.Items.Add(textBox.Text);
         }
     }

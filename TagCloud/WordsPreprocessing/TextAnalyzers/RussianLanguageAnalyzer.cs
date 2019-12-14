@@ -13,13 +13,13 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
     [Name("RussianLanguageAnalyzer")]
     public class RussianLanguageAnalyzer : ITextAnalyzer
     {
-        private readonly WordSelector wordSelector;
+        private readonly WordSelectorSettings wordSelectorSettings;
 
         private readonly Mysteam mystem;
 
-        public RussianLanguageAnalyzer(WordSelector wordSelector)
+        public RussianLanguageAnalyzer(WordSelectorSettings wordSelectorSettings)
         {
-            this.wordSelector = wordSelector;
+            this.wordSelectorSettings = wordSelectorSettings;
             mystem = new Mysteam();
         }
 
@@ -44,7 +44,7 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
                     result.Count = w.Count();
                     return result;
                 })
-                .Where(wordSelector.CanUseThisWord)
+                .Where(wordSelectorSettings.CanUseThisWord)
                 .Take(count)
                 .Select(w =>
                 {

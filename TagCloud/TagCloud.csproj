@@ -108,7 +108,7 @@
     <Compile Include="WordsPreprocessing\TextAnalyzers\RussianLanguageAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\TextAnalyzers\SimpleAnalyzer.cs" />
     <Compile Include="WordsPreprocessing\Word.cs" />
-    <Compile Include="WordsPreprocessing\WordsSelector\WordSelector.cs" />
+    <Compile Include="WordsPreprocessing\WordsSelector\WordSelectorSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

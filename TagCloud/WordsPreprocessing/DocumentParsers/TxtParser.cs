@@ -10,7 +10,6 @@ namespace TagCloud.WordsPreprocessing.DocumentParsers
     {
         public HashSet<string> AllowedTypes => new HashSet<string>{".txt"};
 
-
         public IEnumerable<string> GetWords(ApplicationSettings settings)
         {
             return settings.GetDocumentStream().ReadToEnd().Split(' ');

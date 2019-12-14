@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagCloud.WordsPreprocessing.WordsSelector;
 
 namespace TagCloud.WordsPreprocessing.TextAnalyzers
 {
@@ -9,6 +10,13 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
     [Name("SimpleAnalyzer")]
     public class SimpleAnalyzer : ITextAnalyzer
     {
+        private readonly WordSelectorSettings wordSelectorSettings;
+
+        public SimpleAnalyzer(WordSelectorSettings wordSelectorSettings)
+        {
+            this.wordSelectorSettings = wordSelectorSettings;
+        }
+
         public Word[] GetWords(IEnumerable<string> words, int count)
         {
             var countedWords = new Dictionary<string, Word>();
@@ -25,6 +33,7 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
 
             return countedWords
                 .OrderByDescending(w => w.Value.Count)
+                .Where(w => wordSelectorSettings.CanUseThisWord(w.Value))
                 .Take(count)
                 .Select(w =>
                 {
