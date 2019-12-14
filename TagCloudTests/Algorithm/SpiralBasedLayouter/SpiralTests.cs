@@ -24,7 +24,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             config.Parameters = A.Fake<LayouterParameters>();
             config.Parameters.Parameter = parameter;
             config.Parameters.StepInDegrees = 30;
-            var spiral = new Spiral(config);
+            var spiral = new ArchimedeanSpiral(config);
 
             for (var i = 0; i < expectedPointShift; i++)
                 spiral.GetNextPoint();

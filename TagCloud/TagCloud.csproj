@@ -41,11 +41,12 @@
     <Compile Include="Algorithm\SpiralBasedLayouter\CircularCloudLayouter.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\DistanceUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\GeometryUtils.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\ISpiral.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\LayouterParameters.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\RectangleUtils.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\Segment.cs" />
     <Compile Include="Algorithm\SpiralBasedLayouter\ShiftUtils.cs" />
-    <Compile Include="Algorithm\SpiralBasedLayouter\Spiral.cs" />
+    <Compile Include="Algorithm\SpiralBasedLayouter\ArchimedeanSpiral.cs" />
     <Compile Include="App\Application.cs" />
     <Compile Include="App\ConsoleSettingsProvider.cs" />
     <Compile Include="App\ISettingsProvider.cs" />

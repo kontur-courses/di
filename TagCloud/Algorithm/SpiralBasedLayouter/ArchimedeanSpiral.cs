@@ -4,7 +4,7 @@ using TagCloud.Infrastructure;
 
 namespace TagCloud.Algorithm.SpiralBasedLayouter
 {
-    public class Spiral
+    public class ArchimedeanSpiral : ISpiral
     {
         private readonly PictureConfig pictureConfig;
         private double Parameter => pictureConfig.Parameters.Parameter;
@@ -13,7 +13,7 @@ namespace TagCloud.Algorithm.SpiralBasedLayouter
         
         private double phi;
 
-        public Spiral(PictureConfig pictureConfig)
+        public ArchimedeanSpiral(PictureConfig pictureConfig)
         {
             this.pictureConfig = pictureConfig;
         }

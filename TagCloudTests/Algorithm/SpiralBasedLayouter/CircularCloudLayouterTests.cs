@@ -15,6 +15,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
     {
         private List<Rectangle> rectangles;
         private PictureConfig config;
+        private CircularCloudLayouter layouter;
 
         [SetUp]
         public void SetUp()
@@ -22,13 +23,14 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             rectangles = null;
             config = A.Fake<PictureConfig>();
             config.Size = new Size(0,0);
+            var spiral = new ArchimedeanSpiral(config);
+            layouter = new CircularCloudLayouter(spiral, config);
         }
 
         [Test]
         public void PutNextRectangle_ShouldPutRectangleInCenter_WhenOneRectangle()
         {
             var size = new Size(2, 1);
-            var layouter = new CircularCloudLayouter(config);
 
             var rectangle = layouter.PutNextRectangle(size);
             rectangles = new List<Rectangle> { rectangle };
@@ -46,7 +48,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         {
             var firstSize = new Size(2, 1);
             var secondSize = new Size(3, 4);
-            var layouter = new CircularCloudLayouter(config);
 
             var firstRectangle = layouter.PutNextRectangle(firstSize);
             var secondRectangle = layouter.PutNextRectangle(secondSize);
@@ -66,7 +67,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         public void PutNextRectangle_RectanglesShouldNotIntersect_WhenManyRectangles(int rectanglesCount)
         {
             var size = new Size(2, 1);
-            var layouter = new CircularCloudLayouter(config);
 
             rectangles = Enumerable.Range(0, rectanglesCount)
                 .Select(n => layouter.PutNextRectangle(size)).ToList();
@@ -88,7 +88,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             int rectanglesCount)
         {
             var size = new Size(2, 1);
-            var layouter = new CircularCloudLayouter(config);
 
             rectangles = Enumerable.Range(0, rectanglesCount)
                 .Select(n => layouter.PutNextRectangle(size)).ToList();
@@ -116,7 +115,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         [TestCase(100, TestName = "100 rectangles")]
         public void PutNextRectangle_ShouldPlaceRectanglesTightly_WhenManyRectanglesWithDifferentSize(int rectanglesCount)
         {
-            var layouter = new CircularCloudLayouter(config);
             var sizes = new List<Size>();
             var rnd = new Random();
             for (var i = 0; i < rectanglesCount; i++)
@@ -153,7 +151,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             int rectanglesCount)
         {
             var size = new Size(2, 1);
-            var layouter = new CircularCloudLayouter(config);
 
             rectangles = Enumerable.Range(0, rectanglesCount)
                 .Select(n => layouter.PutNextRectangle(size)).ToList();
@@ -161,7 +158,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var expectedMaxDelta = rectangles.Select(RectangleUtils.GetRectangleDiagonal).Max();
 
             var convexHullPoints = GeometryUtils.BuildConvexHull(rectangles);
-            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center));
+            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center)).ToList();
             var actualDelta = distances.Max() - distances.Min();
 
             (expectedMaxDelta - actualDelta).Should().BeGreaterOrEqualTo(0);
@@ -177,7 +174,6 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         public void PutNextRectangle_ShouldPlaceRectanglesCloseToCircle_WhenManyRectanglesWithDifferentSize(
             int rectanglesCount)
         {
-            var layouter = new CircularCloudLayouter(config);
             var sizes = new List<Size>();
             var rnd = new Random();
             for (var i = 0; i < rectanglesCount; i++)
@@ -192,7 +188,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var expectedMaxDelta = rectangles.Select(RectangleUtils.GetRectangleDiagonal).Max();
 
             var convexHullPoints = GeometryUtils.BuildConvexHull(rectangles);
-            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center));
+            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center)).ToList();
             var actualDelta = distances.Max() - distances.Min();
 
             (expectedMaxDelta - actualDelta).Should().BeGreaterOrEqualTo(0);

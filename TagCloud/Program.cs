@@ -23,6 +23,7 @@ namespace TagCloud
             builder.RegisterType<WordSizeSetter>().As<IWordSizeSetter>();
             builder.RegisterType<WordProcessor>().As<IWordProcessor>();
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
+            builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
             builder.RegisterType<IndexBasedWordPainter>().As<IWordPainter>();
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
