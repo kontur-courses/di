@@ -48,7 +48,8 @@ namespace TagsCloudContainer
             Console.WriteLine(helpText);
         }
 
-        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size)
+        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size, 
+            String color, String font)
         {
             container.Register(Component.For<TagsCloudContainer>()
                 .DependsOn(
@@ -72,9 +73,12 @@ namespace TagsCloudContainer
             container.Register(Component.For<IPointsGenerator>()
                 .ImplementedBy<SpiralPointsGenerator>());
             container.Register(Component.For<IVisualiser>()
-                .ImplementedBy<DefaultRectanglesVisualiser>()
+                .ImplementedBy<DefaultVisualiser>()
                 .DependsOn(
-                    Dependency.OnValue("size", size))
+                    Dependency.OnValue("size", size),
+                    Dependency.OnValue("color", color),
+                    Dependency.OnValue("font", font)
+                    )
             );
 
             return container;
@@ -92,7 +96,7 @@ namespace TagsCloudContainer
                 var output = O.OutputFile;
 
                 var container = new WindsorContainer();
-                container = SetUpContainer(container, output, path, size);
+                container = SetUpContainer(container, output, path, size, O.Color, O.Font);
 
                 var tagsContainer = container.Resolve<TagsCloudContainer>();
                 tagsContainer.Perform();

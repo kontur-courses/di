@@ -5,19 +5,23 @@ using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer
 {
-    public class DefaultRectanglesVisualiser : IVisualiser
+    public class DefaultVisualiser : IVisualiser
     {
-        private Size SizeOfBitmap;
+        private Size sizeOfBitmap;
+        private Color fontColor;
+        private Font font; 
         
-        public DefaultRectanglesVisualiser(Size size)
+        public DefaultVisualiser(Size size, String color, String font)
         {
-            SizeOfBitmap = size;
+            sizeOfBitmap = size;
+            fontColor = Color.FromName(color);
+            this.font = new Font(font, 50);
         }
 
         public Bitmap DrawRectangles(ICloudLayouter ccl, (string, Size)[] arr)
         {
-            var bitmapWidth = SizeOfBitmap.Width;
-            var bitmapHeight = SizeOfBitmap.Height;
+            var bitmapWidth = sizeOfBitmap.Width;
+            var bitmapHeight = sizeOfBitmap.Height;
             
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             Graphics g = Graphics.FromImage(bitmap);
@@ -25,15 +29,14 @@ namespace TagsCloudContainer
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            
-            var brush = new SolidBrush(Color.White);
-            var pen = new Pen(Color.Black, 4);
+            var brush = new SolidBrush(fontColor);
+            var pen = new Pen(fontColor, 4);
             g.Clear(Color.White);
             for (var i = 0; i < ccl.RectanglesList.Count; i++)
             {
                 var rect = ccl.RectanglesList[i];
-                var font = GetAdjustedFont(g, arr[i].Item1, new Font("Tahoma", 8), arr[i].Item2.Width,300, 1, true);
-                g.DrawString(arr[i].Item1, font, Brushes.Black, rect);
+                var font = GetAdjustedFont(g, arr[i].Item1, this.font, arr[i].Item2.Width,300, 1, true);
+                g.DrawString(arr[i].Item1, font, brush, rect);
                 g.DrawRectangle(pen, rect);
             }
             return bitmap;

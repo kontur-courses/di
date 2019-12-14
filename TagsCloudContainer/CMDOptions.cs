@@ -25,5 +25,17 @@ namespace TagsCloudContainer
             Required =  true,
             HelpText = "Input height size of bitmap/cloud.")]
         public int Height { get; set; }
+        
+        [Option('c', "color",
+            Required =  false,
+            Default =  "Black",
+            HelpText = "Color of text and border")]
+        public string Color { get; set; }
+        
+        [Option('f', "font", 
+            Required =  false,
+            Default =  "Tahoma",
+            HelpText = "Font name")]
+        public string Font { get; set; }
     }
 }
