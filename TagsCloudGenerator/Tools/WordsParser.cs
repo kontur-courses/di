@@ -10,11 +10,10 @@ namespace TagsCloudGenerator.Tools
         {
             var matches = Regex.Matches(text, @"\b[\w']*\b");
 
-            var words = from m in matches.Cast<Match>()
-                where !string.IsNullOrEmpty(m.Value)
-                select TrimSuffix(m.Value);
-
-            return words.ToList();
+            return matches
+                .Cast<Match>()
+                .Where(m => !string.IsNullOrEmpty(m.Value))
+                .Select(m => TrimSuffix(m.Value)).ToList();
         }
 
         private static string TrimSuffix(string word)

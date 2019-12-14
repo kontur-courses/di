@@ -70,8 +70,9 @@
     <Compile Include="DependenciesBuilder.cs" />
     <Compile Include="FileReaders\DocFileReader.cs" />
     <Compile Include="Tools\IWordsParser.cs" />
+    <Compile Include="Tools\PathHelper.cs" />
     <Compile Include="Tools\ReaderFactory.cs" />
-    <Compile Include="Tools\Helper.cs" />
+    <Compile Include="Tools\ParseHelper.cs" />
     <Compile Include="FileReaders\XmlFileReader.cs" />
     <Compile Include="ICloudGenerator.cs" />
     <Compile Include="Client\Console\Options.cs" />

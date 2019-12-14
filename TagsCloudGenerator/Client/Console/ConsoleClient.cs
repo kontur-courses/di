@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using CommandLine;
-using TagsCloudGenerator.FileReaders;
 using TagsCloudGenerator.Saver;
 using TagsCloudGenerator.Tools;
 using TagsCloudGenerator.Visualizer;
@@ -53,7 +52,7 @@ namespace TagsCloudGenerator.Client.Console
 
             var input = options.Path;
 
-            var extension = Helper.GetFileExtension(input);
+            var extension = PathHelper.GetFileExtension(input);
             var reader = ReaderFactory.GetReaderFor(extension);
             var words = reader.ReadWords(options.Path);
             var cloud = generator.Generate(words, imageSettings.Font);
@@ -64,7 +63,7 @@ namespace TagsCloudGenerator.Client.Console
 
         private void LoadBoringWords(string path)
         {
-            var extension = Helper.GetFileExtension(path);
+            var extension = PathHelper.GetFileExtension(path);
             var boringWordsReader = ReaderFactory.GetReaderFor(extension);
             var words = new List<string>();
 
@@ -84,7 +83,7 @@ namespace TagsCloudGenerator.Client.Console
         {
             var colors = GetColorsByNames(options.Colors);
             var backgroundColor = Color.FromName(options.BackgroundColor);
-            var format = GetImageFormat(Helper.GetFileExtension(options.Output));
+            var format = GetImageFormat(PathHelper.GetFileExtension(options.Output));
             var font = new Font(options.Font, options.FontSize);
 
             return new ImageSettings(options.ImageWidth, options.ImageHeight, backgroundColor, colors, format, font);

@@ -18,7 +18,7 @@ namespace TagsCloudGenerator.FileReaders
             var text = File.ReadAllText(path);
             var words = parser.Parse(text);
 
-            return Helper.GetWordToCount(words);
+            return ParseHelper.GetWordToCount(words);
         }
     }
 }

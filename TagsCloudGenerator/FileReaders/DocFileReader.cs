@@ -19,7 +19,7 @@ namespace TagsCloudGenerator.FileReaders
         public Dictionary<string, int> ReadWords(string path)
         {
             var words = parser.Parse(ReadFile(path));
-            return Helper.GetWordToCount(words);
+            return ParseHelper.GetWordToCount(words);
         }
 
         private static string ReadFile(string path)

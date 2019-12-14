@@ -55,14 +55,14 @@ namespace TagsCloudGeneratorTests.CloudLayouterTests
         }
 
         [Test]
-        public void LayoutWords_TwoRectanglesWithEqualsSize_RectanglesShouldBeNotEquals()
+        public void LayoutWords_TwoRectanglesWithEqualsSize_RectanglesShouldNotIntersects()
         {
             var cloud = layouter.LayoutWords(new Dictionary<string, int> {["fish"] = 1, ["cat"] = 1}, font);
 
             var first = cloud.Words[0].Rectangle;
             var second = cloud.Words[1].Rectangle;
 
-            first.Should().NotBeEquivalentTo(second);
+            first.IntersectsWith(second).Should().BeFalse();
         }
 
         [Test]
