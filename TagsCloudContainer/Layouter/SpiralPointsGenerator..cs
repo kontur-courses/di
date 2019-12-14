@@ -6,7 +6,7 @@ namespace TagsCloudContainer.Layouter
     public class SpiralPointsGenerator
     {
         private double spiralCoeff = 1 / (2 * Math.PI);
-        private double angleStep = 3.14 / 8;
+        private double angleStep = 3.14 / 16;
         private double angle = 0;
         
         public Point GetNextSpiralPoint()

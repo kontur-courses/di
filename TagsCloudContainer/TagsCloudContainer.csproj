@@ -117,6 +117,17 @@
     <ItemGroup>
       <Folder Include="bin\Debug" />
     </ItemGroup>
+    <ItemGroup>
+      <COMReference Include="System_Drawing">
+        <Guid>{D37E2A3E-8545-3A39-9F4F-31827C9124AB}</Guid>
+        <VersionMajor>2</VersionMajor>
+        <VersionMinor>4</VersionMinor>
+        <Lcid>0</Lcid>
+        <WrapperTool>tlbimp</WrapperTool>
+        <Isolated>False</Isolated>
+        <EmbedInteropTypes>True</EmbedInteropTypes>
+      </COMReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
       <PropertyGroup>

@@ -35,12 +35,11 @@ namespace TagsCloudContainer
 
         public void Perform()
         {
-            var size = new Size(2000, 2000);
             var text = TextReader.Read(InputFile);
             var textFiltered = WordsFilter.FilterWords(text);
             var wordsCount = WordsCounter.CountWords(textFiltered);
             var sizes = WordsToSizesConverter.GetSizesOf(wordsCount).ToArray();
-            sizes = sizes.OrderBy(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
+            sizes = sizes.OrderByDescending(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
             
             CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
             for (var i = 0; i < sizes.Length; i++)

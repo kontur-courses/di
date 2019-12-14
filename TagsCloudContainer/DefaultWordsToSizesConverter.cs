@@ -9,6 +9,8 @@ namespace TagsCloudContainer
         public Size Size { get; set; }
         public int MaxHeight { get; set; }
         public int MaxWidth { get; set; }
+
+        public Graphics g;
         //private readonly  Dictionary<string, int> dictionary;
 
         public DefaultWordsToSizesConverter(Size size, int maxHeight = 0, int maxWidth = 0)
@@ -23,16 +25,19 @@ namespace TagsCloudContainer
                 MaxHeight = maxHeight;
                 MaxWidth = maxWidth;
             }
+
+            var bitmap = new Bitmap(size.Width, size.Height);
+            Graphics g = Graphics.FromImage(bitmap);
+            this.g = g;
         }
 
         private Size GetSizeOf(string word, Dictionary<string, int> dictionary)
         {
-            var heightL = Size.Height;
-            var widthL = Size.Width;
-            double width = Math.Sqrt((heightL - heightL/3) * (widthL - widthL/3) * ((double)dictionary[word] / dictionary.Count));
-            double height = Math.Sqrt((heightL - heightL/3) * (widthL - widthL/3) * ((double)dictionary[word] / dictionary.Count));
-            return new Size(Math.Min((int)width, MaxWidth), 
-                Math.Min((int)height, MaxHeight));
+            var sizeFD = g.MeasureString(word, new Font("Tahoma", 500));
+            var widthFD = sizeFD.Width * ((double)dictionary[word] / dictionary.Count);
+            var heightFD = sizeFD.Height * ((double)dictionary[word] / dictionary.Count);
+            return new Size(Math.Min((int)widthFD, MaxWidth), 
+                Math.Min((int)heightFD, MaxHeight));
         }
 
         public IEnumerable<(string, Size)> GetSizesOf(Dictionary<string, int> dictionary)
@@ -43,7 +48,26 @@ namespace TagsCloudContainer
                 var tup = (key, GetSizeOf(key, dictionary));
                 res.Add(tup);
             }
-            return res;
+
+            var ourSquare = 0.0;
+            foreach (var item in res)
+            {
+                var rect = item.Item2;
+                ourSquare += rect.Height * rect.Width;
+            }
+
+            double bitmapSquare = (Size.Height-Size.Height/2.5) * (Size.Width - Size.Width/2.5);
+
+            var coeff = Math.Sqrt(bitmapSquare / ourSquare);
+
+            var result = new List<(string, Size)>();
+            foreach (var item in res)
+            {
+                var newRect = new Size((int)(item.Item2.Width * coeff), (int)(item.Item2.Height*coeff));
+                result.Add((item.Item1,newRect));
+            }
+            
+            return result;
         }
     }
 }
