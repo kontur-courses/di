@@ -43,8 +43,10 @@ namespace TagCloudGenerator.TagClouds
 
             static TagType GetTagType(int tagIndex)
             {
-                if (tagIndex == 0) return TagType.Central;
-                if (tagIndex % LargeTagsFrequency == 0) return TagType.Large;
+                if (tagIndex == 0)
+                    return TagType.Central;
+                if (tagIndex % LargeTagsFrequency == 0)
+                    return TagType.Large;
 
                 return tagIndex % MediumTagsFrequency == 0 ? TagType.Medium : TagType.Small;
             }

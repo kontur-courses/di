@@ -18,7 +18,9 @@ namespace TagCloudGenerator.Tests.WrongVisualization
                                        Dictionary<TagType, TagStyle> tagStyleByTagType,
                                        IEnumerable<Rectangle> allRectangles) : base(backgroundColor, tagStyleByTagType)
         {
-            if (allRectangles is null) throw new ArgumentNullException(nameof(allRectangles));
+            if (allRectangles is null)
+                throw new ArgumentNullException(nameof(allRectangles));
+
             this.allRectangles = allRectangles.ToArray();
 
             if (this.allRectangles.Length == 0)

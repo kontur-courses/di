@@ -25,10 +25,10 @@ namespace TagCloudGenerator.Tests.WrongVisualization
 
             return wrongVisualisationImageFilepath;
 
-            string GetCurrentTestName() => TestContext.CurrentContext.Test is var test &&
-                                           test.MethodName == test.Name
-                                               ? test.Name
-                                               : test.MethodName + test.Name;
+            static string GetCurrentTestName() => TestContext.CurrentContext.Test is var test &&
+                                                  test.MethodName == test.Name
+                                                      ? test.Name
+                                                      : test.MethodName + test.Name;
         }
     }
 }

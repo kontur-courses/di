@@ -43,14 +43,16 @@ namespace TagCloudGenerator.CloudLayouters
             {
                 var rectangle = new Rectangle(currentArchimedeanSpiralPoint, rectangleSize);
 
-                if (!rectangle.IntersectsWith(rectangles)) return rectangle;
+                if (!rectangle.IntersectsWith(rectangles))
+                    return rectangle;
 
-                if (currentArchimedeanSpiralPoint.X <= 0)
-                {
-                    rectangle.Offset(new Point(-rectangleSize.Width, -rectangleSize.Height));
+                if (currentArchimedeanSpiralPoint.X > 0)
+                    continue;
+                
+                rectangle.Offset(new Point(-rectangleSize.Width, -rectangleSize.Height));
 
-                    if (!rectangle.IntersectsWith(rectangles)) return rectangle;
-                }
+                if (!rectangle.IntersectsWith(rectangles))
+                    return rectangle;
             }
 
             throw new Exception("Unreachable code, GetPoints() returns infinity lazy sequence.");
@@ -58,16 +60,16 @@ namespace TagCloudGenerator.CloudLayouters
 
         private static Rectangle MoveRectangleToOrigin(Rectangle rectangle, IReadOnlyCollection<Rectangle> rectangles)
         {
-            if (rectangle.Contains(0, 0)) return rectangle;
+            if (rectangle.Contains(0, 0))
+                return rectangle;
 
             var xDelta = -Math.Sign(rectangle.X + rectangle.Width / 2);
             var yDelta = -Math.Sign(rectangle.Y + rectangle.Height / 2);
 
             var sizes = new[] { new Size(xDelta, 0), new Size(0, yDelta) }.Where(size => !size.IsEmpty);
 
-            for (int i = 0; i < 2; i++)
-                // ReSharper disable once PossibleMultipleEnumeration
-                foreach (var size in sizes)
+            foreach (var size in sizes)
+                for (int i = 0; i < 2; i++)
                     while (true)
                     {
                         var movedRectangle = rectangle.CreateMovedCopy(size);

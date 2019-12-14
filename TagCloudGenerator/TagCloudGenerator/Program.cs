@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TagCloudGenerator.CloudVocabularyPreprocessors;
 using TagCloudGenerator.Extensions;
+using TagCloudGenerator.TagClouds;
+using TagCloudGenerator.Tags;
+using TagCloudGenerator.UserInterfaces;
 using TagCloudGenerator.UserInterfaces.CmdClient;
+using TagCloudGenerator.UserInterfaces.CmdClient.CommandLineVerbs;
 
 namespace TagCloudGenerator
 {
@@ -11,10 +16,18 @@ namespace TagCloudGenerator
     {
         private static void Main(string[] args)
         {
-            var cloudContext = ArgumentParser.GetTegCloudContext(args);
+            var cloudOptions = ArgumentParser.ReadCommandLineOptions(args);
+            var cloudContext = TagCloudOptionsParser.GetTegCloudContext(cloudOptions, CloudConstructor);
+
             cloudContext.TagCloudContent = ProcessVocabulary(cloudContext);
 
             CreateTagCloudImage(cloudContext);
+
+            TagCloud<TagType> CloudConstructor(Color backgroundColor,
+                                               Dictionary<TagType, TagStyle> tagStyleByTagType) =>
+                cloudOptions is DoubleFontsCloud
+                    ? new CommonWordsCloud(backgroundColor, tagStyleByTagType)
+                    : (TagCloud<TagType>)new WebCloud(backgroundColor, tagStyleByTagType);
         }
 
         private static IEnumerable<string> ProcessVocabulary(TagCloudContext cloudContext)

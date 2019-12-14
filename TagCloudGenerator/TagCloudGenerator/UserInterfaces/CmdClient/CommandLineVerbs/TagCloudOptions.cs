@@ -1,8 +1,12 @@
 using CommandLine;
 
+// used implicitly by CommandLine lib
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedMember.Global
+
 namespace TagCloudGenerator.UserInterfaces.CmdClient.CommandLineVerbs
 {
-    public abstract class TagCloudOptions
+    public abstract class TagCloudOptions : ITagCloudOptions
     {
         [Value(0,
                MetaName = "cloud_vocabulary_filename",

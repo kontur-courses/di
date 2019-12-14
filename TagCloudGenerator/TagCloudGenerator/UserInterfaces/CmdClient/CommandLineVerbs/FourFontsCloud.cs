@@ -1,5 +1,8 @@
 using CommandLine;
 
+// used implicitly by CommandLine lib
+// ReSharper disable ClassNeverInstantiated.Global
+
 namespace TagCloudGenerator.UserInterfaces.CmdClient.CommandLineVerbs
 {
     [Verb("FourFontsCloud", HelpText = "All tags will divide into four font-groups.")]

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379">
       <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
       <Private>True</Private>
@@ -61,10 +65,12 @@
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="Tags\TagStyle.cs" />
     <Compile Include="Tags\TagType.cs" />
+    <Compile Include="UserInterfaces\CmdClient\ArgumentParser.cs" />
+    <Compile Include="UserInterfaces\TagCloudOptionsParser.cs" />
     <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\DoubleFontsCloud.cs" />
     <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\FourFontsCloud.cs" />
     <Compile Include="UserInterfaces\CmdClient\CommandLineVerbs\TagCloudOptions.cs" />
-    <Compile Include="UserInterfaces\CmdClient\ArgumentParser.cs" />
+    <Compile Include="UserInterfaces\ITagCloudOptions.cs" />
     <Compile Include="UserInterfaces\VocabularyParsers\CloudVocabularyParser.cs" />
     <Compile Include="UserInterfaces\VocabularyParsers\TxtVocabularyParser.cs" />
   </ItemGroup>

@@ -9,7 +9,7 @@ namespace TagCloudGenerator.UserInterfaces.VocabularyParsers
 
         public TxtVocabularyParser(CloudVocabularyParser nextParser) : base(nextParser) { }
 
-        protected override bool VerifyFilePath(string filePath) => Path.GetExtension(filePath) == FileExtension;
+        protected override bool VerifyFilename(string filePath) => Path.GetExtension(filePath) == FileExtension;
 
         protected override IEnumerable<string> ParseCloudVocabulary(StreamReader vocabularyFileStream)
         {

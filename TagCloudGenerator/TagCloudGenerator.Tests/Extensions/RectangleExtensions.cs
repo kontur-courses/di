@@ -20,7 +20,8 @@ namespace TagCloudGenerator.Tests.Extensions
 
         public static bool CheckIfPointIsCenterOfRectangle(this Rectangle rectangle, Point point, double precision)
         {
-            if (!rectangle.Contains(point)) return false;
+            if (!rectangle.Contains(point))
+                return false;
 
             var topRight = new Point(rectangle.Right, rectangle.Top);
             var bottomRight = new Point(rectangle.Right, rectangle.Bottom);

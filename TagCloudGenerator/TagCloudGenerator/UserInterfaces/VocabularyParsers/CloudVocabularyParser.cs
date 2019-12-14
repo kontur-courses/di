@@ -15,7 +15,7 @@ namespace TagCloudGenerator.UserInterfaces.VocabularyParsers
             if (!File.Exists(cloudVocabularyFilename))
                 throw new FileNotFoundException("Specified file path doesn't exist", cloudVocabularyFilename);
 
-            if (!VerifyFilePath(cloudVocabularyFilename))
+            if (!VerifyFilename(cloudVocabularyFilename))
             {
                 if (nextParser is null)
                     throw new NotSupportedException("Invalid vocabulary filename format");
@@ -28,7 +28,7 @@ namespace TagCloudGenerator.UserInterfaces.VocabularyParsers
             return ParseCloudVocabulary(vocabularyFile);
         }
 
-        protected abstract bool VerifyFilePath(string filePath);
+        protected abstract bool VerifyFilename(string filePath);
         protected abstract IEnumerable<string> ParseCloudVocabulary(StreamReader vocabularyFileStream);
     }
 }
