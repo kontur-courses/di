@@ -1,4 +1,4 @@
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Infrastructure.Common
 {
     public interface IWordReader
     {

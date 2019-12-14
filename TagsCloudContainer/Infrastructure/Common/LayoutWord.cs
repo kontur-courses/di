@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Infrastructure.Common
 {
     public class LayoutWord
     {

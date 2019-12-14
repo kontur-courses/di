@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.Layouter
+namespace TagsCloudContainer.Infrastructure.Common
 {
     public interface ICloudLayouter
     {

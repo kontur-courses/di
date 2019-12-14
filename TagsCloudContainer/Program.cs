@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Autofac;
+using TagsCloudContainer.Infrastructure.Common;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer
@@ -8,23 +9,27 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
+            args = new[] {"-f", "exmp.txt", "-c", "random", "-b", "Black", "-a", "True"};
             var consoleParser = new ConsoleArgumentParser();
             var path = consoleParser.GetPath(args);
             if (path is null)
                 return;
             var imageSetting = consoleParser.GetImageSetting(args);
             var wordSetting = consoleParser.GetWordSetting(args);
-            var container = Register(wordSetting, imageSetting, path);
+            var algSetting = consoleParser.GetAlgorithmsSettings(args);
+            var container = Register(wordSetting, imageSetting, algSetting, path);
             var imageCreator = container.Resolve<ImageCreator>();
             imageCreator.Save();
         }
 
-        private static IContainer Register(WordSetting wordSetting, ImageSetting imageSetting, string path)
+        private static IContainer Register(WordSetting wordSetting, ImageSetting imageSetting,
+            AlgorithmsSettings algorithmsSettings, string path)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<BasicWordsSelector>().As<IWordsSelector>();
             builder.RegisterType<WordReaderFromFile>().As<IWordReader>();
             builder.RegisterInstance(wordSetting).As<WordSetting>();
+            builder.RegisterInstance(algorithmsSettings).As<AlgorithmsSettings>();
             builder.RegisterInstance(imageSetting).As<ImageSetting>();
             builder.RegisterInstance(path).As<string>();
             builder.Register(c =>

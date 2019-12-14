@@ -1,4 +1,5 @@
 using System.IO;
+using TagsCloudContainer.Infrastructure.Common;
 
 namespace TagsCloudContainer
 {
