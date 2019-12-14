@@ -11,7 +11,6 @@ namespace TagsCloudContainer.OldTests
     class CircularCloudLayouterTests
     {
         private CircularCloudLayouter layouter;
-        private readonly Point defaultCenter = new Point(0, 0);
 
         [SetUp]
         public void CreateCircularCloudLayouter()

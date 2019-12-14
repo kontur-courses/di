@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.UI;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.UI
 {
-    public interface IUi
+    public interface IUserInterface
     {
-        void CreateImage(IEnumerable<string> args);
+        void Run(IEnumerable<string> args);
     }
 }

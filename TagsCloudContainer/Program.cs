@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using TagsCloudContainer.ImageCreator;
 using TagsCloudContainer.Reader;
 using TagsCloudContainer.WordProcessor;
 using TagsCloudContainer.WordsToSizesConverter;
@@ -7,7 +8,8 @@ using TagsCloudContainer.RectanglesTransformer;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.ImageSaver;
 using TagsCloudContainer.ImageSizeCalculator;
-using TagsCloudContainer.Ui;
+using TagsCloudContainer.UI;
+using TagsCloudContainer.UI.SettingsCommands;
 
 namespace TagsCloudContainer
 {
@@ -16,8 +18,8 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             var container = GetContainer();
-            var tagsCloudCreator = container.Resolve<ConsoleTagsCloudCreator>();
-            tagsCloudCreator.CreateImage(args);
+            var tagsCloudCreator = container.Resolve<IUserInterface>();
+            tagsCloudCreator.Run(args);
         }
 
         private static IContainer GetContainer()
@@ -32,8 +34,12 @@ namespace TagsCloudContainer
             builder.RegisterType<CenterRectanglesShifter>().As<IRectanglesTransformer>().SingleInstance();
             builder.RegisterType<DefaultVisualizerSettings>().As<IVisualizerSettings>().SingleInstance();
             builder.RegisterType<TagCloudVisualizer>().As<IVisualizer>().SingleInstance();
-            builder.RegisterType<Saver>().As<IImageSaver>().SingleInstance();
-            builder.RegisterType<ConsoleTagsCloudCreator>().AsSelf().SingleInstance();
+            builder.RegisterType<ImageSaver.ImageSaver>().As<IImageSaver>().SingleInstance();
+            builder.RegisterType<ImageCreator.ImageCreator>().As<IImageCreator>().SingleInstance();
+            builder.RegisterType<InputFileSettingsCommand>().As<ISettingsCommand>().SingleInstance();
+            builder.RegisterType<OutputFileSettingsCommand>().As<ISettingsCommand>().SingleInstance();
+            builder.RegisterType<ImageSizeSettingsCommand>().As<ISettingsCommand>().SingleInstance();
+            builder.RegisterType<CyclicConsoleUI>().As<IUserInterface>().SingleInstance();
             return builder.Build();
         }
     }

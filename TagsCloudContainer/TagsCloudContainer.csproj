@@ -57,6 +57,9 @@
     <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.5.5.0\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
@@ -78,13 +81,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageCreator\IImageCreator.cs" />
+    <Compile Include="ImageCreator\ImageCreator.cs" />
     <Compile Include="ImageSaver\IImageSaver.cs" />
-    <Compile Include="ImageSaver\Saver.cs" />
+    <Compile Include="ImageSaver\ImageSaver.cs" />
     <Compile Include="ImageSizeCalculator\DefaultImageSizeCalculator.cs" />
     <Compile Include="ImageSizeCalculator\IImageSizeCalculator.cs" />
+    <Compile Include="NewTests\ImageCreatorTests.cs" />
+    <Compile Include="NewTests\ImageSizeSettingsCommandTests.cs" />
+    <Compile Include="NewTests\OutputFileSettingsCommandTests.cs" />
+    <Compile Include="NewTests\TagCloudVisualizerTests.cs" />
     <Compile Include="UI\IInitialSettings.cs" />
     <Compile Include="UI\InitialSettings.cs" />
-    <Compile Include="UI\IUI.cs" />
+    <Compile Include="UI\IUserInterface.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Layouter\DefaultLayouterSettings.cs" />
     <Compile Include="Layouter\ILayouter.cs" />
@@ -95,7 +104,6 @@
     <None Include="mystem.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="NewTests\BasicWordProcessorTests.cs" />
     <Compile Include="NewTests\WordFrequenciesToSizesConverterTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +119,13 @@
     <Compile Include="OldTests\PointsRadiusComparerTests.cs" />
     <Compile Include="OldTests\RectanglesExtensionsTests.cs" />
     <Compile Include="OldTests\RectanglesTransformerCalculationsTests.cs" />
+    <Compile Include="UI\Result.cs" />
+    <Compile Include="UI\SettingsCommands\ImageSizeSettingsCommand.cs" />
+    <Compile Include="UI\SettingsCommands\InputFileSettingsCommand.cs" />
+    <Compile Include="UI\SettingsCommands\ISettingsCommand.cs" />
+    <Compile Include="UI\SettingsCommands\OutputFileSettingsCommand.cs" />
+    <Compile Include="UI\SettingsCommands\SettingsCommand.cs" />
+    <Compile Include="UI\СyclicConsoleUI.cs" />
     <Compile Include="Visualizer\DefaultVisualizerSettings.cs" />
     <Compile Include="Visualizer\IVisualizer.cs" />
     <Compile Include="Visualizer\IVisualizerSettings.cs" />

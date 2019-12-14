@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TagsCloudContainer.ImageSaver
 {
-    class Saver : IImageSaver
+    class ImageSaver : IImageSaver
     {
         public void SaveImage(Image image, string path)
         {

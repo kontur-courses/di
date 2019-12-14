@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer.UI
 {
-    public interface IInitialSettings
+    public interface IInitialSettings : ICloneable
     {
-        string InputFilePath { get; }
-        string OutputFilePath { get; }
-        Size ImageSize { get; }
+        string InputFilePath { get; set; }
+        string OutputFilePath { get; set; }
+        Size ImageSize { get; set; }
     }
 }
