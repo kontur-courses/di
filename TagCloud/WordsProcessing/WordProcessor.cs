@@ -22,10 +22,8 @@ namespace TagCloud.WordsProcessing
                 .Select(word => new Word(word));
             var countedWords = wordCounter.GetCountedWords(convertedWords);
             return countedWords
-                .Where(word => wordSelector.IsSelectedWord(word))
-                ;
+                .Where(word => wordSelector.IsSelectedWord(word));
 
-            // .Where(word => wordSelector.IsSelectedWord(word));
         }
     }
 }
