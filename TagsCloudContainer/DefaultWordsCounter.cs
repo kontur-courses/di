@@ -2,11 +2,11 @@
 
 namespace TagsCloudContainer
 {
-    public class SimpleWordsCounter : IWordsCounter
+    public class DefaultWordsCounter : IWordsCounter
     {
         private readonly string[] arr;
         
-        public SimpleWordsCounter(string[] arr)
+        public DefaultWordsCounter(string[] arr)
         {
             this.arr = arr;
         }

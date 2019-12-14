@@ -5,11 +5,11 @@ using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer
 {
-    public class SimpleRectanglesVisualiser : IVisualiser
+    public class DefaultRectanglesVisualiser : IVisualiser
     {
         private Size SizeOfBitmap;
         
-        public SimpleRectanglesVisualiser(Size size)
+        public DefaultRectanglesVisualiser(Size size)
         {
             SizeOfBitmap = size;
         }

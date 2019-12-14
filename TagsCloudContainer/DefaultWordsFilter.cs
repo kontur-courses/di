@@ -10,7 +10,7 @@ using YandexMystem.Wrapper.Models;
 
 namespace TagsCloudContainer
 {
-    public class SimpleWordsFilter : IWordsFilter
+    public class DefaultWordsFilter : IWordsFilter
     {
         private readonly string[] Words;
         private HashSet<string> excludedTypes = new HashSet<string>() {
@@ -19,7 +19,7 @@ namespace TagsCloudContainer
             "CONJ"
             };
         
-        public SimpleWordsFilter(string[] arr)
+        public DefaultWordsFilter(string[] arr)
         {
             Words = arr;
         }

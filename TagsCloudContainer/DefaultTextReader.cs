@@ -3,11 +3,11 @@ using System.IO;
 
 namespace TagsCloudContainer
 {
-    public class SimpleTextReader : ITextReader
+    public class DefaultTextReader : ITextReader
     {
         private readonly string FilePath;
         
-        public SimpleTextReader(string path)
+        public DefaultTextReader(string path)
         {
             FilePath = path;
         }

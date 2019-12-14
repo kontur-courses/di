@@ -90,11 +90,11 @@
         <Compile Include="Layouter\SpiralPointsGenerator..cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="SimpleRectanglesVisualiser.cs" />
-        <Compile Include="SimpleTextReader.cs" />
-        <Compile Include="SimpleWordsCounter.cs" />
-        <Compile Include="SimpleWordsFilter.cs" />
-        <Compile Include="SimpleWordsToSizesConverter.cs" />
+        <Compile Include="DefaultRectanglesVisualiser.cs" />
+        <Compile Include="DefaultTextReader.cs" />
+        <Compile Include="DefaultWordsCounter.cs" />
+        <Compile Include="DefaultWordsFilter.cs" />
+        <Compile Include="DefaultWordsToSizesConverter.cs" />
         <Compile Include="TagsCloudContainer.cs" />
     </ItemGroup>
     <ItemGroup>

@@ -4,14 +4,14 @@ using System.Drawing;
 
 namespace TagsCloudContainer
 {
-    public class SimpleWordsToSizesConverter : IWordsToSizesConverter
+    public class DefaultWordsToSizesConverter : IWordsToSizesConverter
     {
         public Size SizeOfLayout { get; set; }
         public int MaxHeight { get; set; }
         public int MaxWidth { get; set; }
         private readonly  IDictionary<string, int> dict;
 
-        public SimpleWordsToSizesConverter(Size sizeOfLayout, Dictionary<string, int> dictionary, int maxHeight = 0, int maxWidth = 0)
+        public DefaultWordsToSizesConverter(Size sizeOfLayout, Dictionary<string, int> dictionary, int maxHeight = 0, int maxWidth = 0)
         {
             SizeOfLayout = sizeOfLayout;
             dict = dictionary;

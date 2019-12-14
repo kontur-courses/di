@@ -16,7 +16,6 @@ namespace TagsCloudContainer.Layouter
         public List<Rectangle> RectanglesList
         {
             get { return layout; }
-            private set { }
         }
         private List<Rectangle> layout = new List<Rectangle>();
         

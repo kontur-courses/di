@@ -53,25 +53,25 @@ namespace TagsCloudContainer
                             Dependency.OnValue("output", output)
                         ));
                 container.Register(Component.For<ITextReader>()
-                    .ImplementedBy<SimpleTextReader>()
+                    .ImplementedBy<DefaultTextReader>()
                     .DependsOn(
                         Dependency.OnValue("path", path)
                     ));
                 var reader = container.Resolve<ITextReader>();
                 container.Register(Component.For<IWordsFilter>()
-                    .ImplementedBy<SimpleWordsFilter>()
+                    .ImplementedBy<DefaultWordsFilter>()
                     .DependsOn(
                         Dependency.OnValue("arr", reader.Read().ToArray())
                     ));
                 var filter = container.Resolve<IWordsFilter>();
                 container.Register(Component.For<IWordsCounter>()
-                    .ImplementedBy<SimpleWordsCounter>()
+                    .ImplementedBy<DefaultWordsCounter>()
                     .DependsOn(
                         Dependency.OnValue("arr", filter.FilterWords().ToArray())
                     ));
                 var counter = container.Resolve<IWordsCounter>();
                 container.Register(Component.For<IWordsToSizesConverter>()
-                    .ImplementedBy<SimpleWordsToSizesConverter>()
+                    .ImplementedBy<DefaultWordsToSizesConverter>()
                     .DependsOn(
                         Dependency.OnValue("size", size),
                         Dependency.OnValue("dictionary",
@@ -83,7 +83,7 @@ namespace TagsCloudContainer
                     .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
                     ));
                 container.Register(Component.For<IVisualiser>()
-                    .ImplementedBy<SimpleRectanglesVisualiser>()
+                    .ImplementedBy<DefaultRectanglesVisualiser>()
                     .DependsOn(
                         Dependency.OnValue("size", size))
                 );
