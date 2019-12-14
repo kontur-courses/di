@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using NUnit.Framework;
-using FluentAssertions;
-using NUnit.Framework.Interfaces;
 using System.IO;
 using System.Linq;
+using FluentAssertions;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using TagsCloudVisualization.Canvas;
+using TagsCloudVisualization.Spirals;
+using TagsCloudVisualization.TagCloudLayouter;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
-    class CircularCloudLayouter_should
+    class CircularCloudLayouter_Should
     {
         static CircularCloudLayouter cloudLayouter;
 
@@ -24,7 +27,7 @@ namespace TagsCloudVisualization
 
             var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{TestContext.CurrentContext.Test.Name}.png");
 
-            var canvas = new Canvas(100,100);
+            var canvas = new TagCloudCanvas(100,100);
             foreach (var rec in cloudLayouter.GetAllRectangles())
                 canvas.Draw(rec, new SolidBrush(Color.DarkRed));
             canvas.Save(imagePath);
@@ -64,9 +67,9 @@ namespace TagsCloudVisualization
         public void PutNextRectangle_ShouldBePutFirstRectangle_InCenter(int centerX, int centerY)
         {
             var center = new Point(centerX, centerY);
-            var cloudLayouter = new CircularCloudLayouter(center, new RectangularSpiral());
+            var layouter = new CircularCloudLayouter(center, new RectangularSpiral());
 
-            var firstRectangle = cloudLayouter.PutNextRectangle(new Size(1, 1));
+            var firstRectangle = layouter.PutNextRectangle(new Size(1, 1));
 
             firstRectangle.Location.Should().Be(center);
         }

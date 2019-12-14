@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A99E9356-1023-4DED-91AF-AB319AD7D17B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{AC0B5656-F017-44DD-887F-DB2436F1136F}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TagCloud</RootNamespace>
-    <AssemblyName>TagCloud</AssemblyName>
+    <RootNamespace>TagCloudPainter</RootNamespace>
+    <AssemblyName>TagCloudPainter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
-      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -44,22 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleCommands\DrawDefaultTagCloud.cs" />
-    <Compile Include="ConsoleCommands\MaxFontSize.cs" />
-    <Compile Include="ConsoleCommands\SetImageName.cs" />
-    <Compile Include="ConsoleCommands\SetImageSize.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ITagCloudPainter.cs" />
+    <Compile Include="PainterConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagCloudCreator.cs" />
+    <Compile Include="Painter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TagCloudPainter\TagCloudPainter.csproj">
-      <Project>{ac0b5656-f017-44dd-887f-db2436f1136f}</Project>
-      <Name>TagCloudPainter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
       <Project>{925383d8-6e9e-4ddd-9ceb-63fe15425f54}</Project>
       <Name>TagsCloudVisualization</Name>
@@ -67,10 +53,6 @@
     <ProjectReference Include="..\TextPreprocessor\TextPreprocessor.csproj">
       <Project>{11bebeae-4951-4d6d-831a-9cb98bccf4bf}</Project>
       <Name>TextPreprocessor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UIConsole\UIConsole.csproj">
-      <Project>{b1f3e754-5a95-43eb-909a-1cea160acc58}</Project>
-      <Name>UIConsole</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

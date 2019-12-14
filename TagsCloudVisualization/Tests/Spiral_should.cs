@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Linq;
+using TagsCloudVisualization.Spirals;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture(typeof(ArchimedeanSpiral))]
     [TestFixture(typeof(RectangularSpiral))]
@@ -25,7 +25,7 @@ namespace TagsCloudVisualization
         [TestCase(10)]
         [TestCase(100)]
         [TestCase(1000)]
-        public void GetPoints_ShouldtBeReturnPoints_NotRepeated(int countPoints)
+        public void GetPoints_ShouldBeReturnPoints_NotRepeated(int countPoints)
         {
             var spiralPoints = spiral.GetPoints().Take(countPoints).ToList();
 
@@ -35,7 +35,7 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void GetPoints_ShouldtBeReturnPoints_OnСlockwiseDirections()
+        public void GetPoints_ShouldBeReturnPoints_OnСlockwiseDirections()
         {
             var spiralPoints = spiral.GetPoints().Take(1000).ToList();
 

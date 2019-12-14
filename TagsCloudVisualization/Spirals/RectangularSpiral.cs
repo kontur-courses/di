@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Spirals
 {
-    class RectangularSpiral : ISpiral
+    public class RectangularSpiral : ISpiral
     {
-        static Size[] directions = new Size[]
+        private static readonly Size[] Directions = 
         {
             new Size(0, 1),
             new Size(1, 0),
@@ -16,17 +16,17 @@ namespace TagsCloudVisualization
         public IEnumerable<Point> GetPoints()
         {
             var stepNumber = 0;
-            var curentPosition = new Point(0, 0);
-            yield return curentPosition;
+            var currentPosition = new Point(0, 0);
+            yield return currentPosition;
 
             while (true)
             {
                 var countStepsInCurentDirection = (stepNumber / 2) + 1;
-                var curentDirection = directions[stepNumber % 4];
+                var currentDirection = Directions[stepNumber % 4];
                 for (int i = 0; i < countStepsInCurentDirection; i++)
                 {
-                    curentPosition += curentDirection;
-                    yield return curentPosition;
+                    currentPosition += currentDirection;
+                    yield return currentPosition;
                 }
                 stepNumber += 1;
             }

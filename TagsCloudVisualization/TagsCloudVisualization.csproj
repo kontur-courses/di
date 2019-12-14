@@ -41,11 +41,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularCloudLayouter.cs" />
-    <Compile Include="Canvas.cs" />
+    <Compile Include="Canvas\Canvas.cs" />
+    <Compile Include="Canvas\TagCloudCanvas.cs" />
     <Compile Include="Spirals\ArchimedeanSpiral.cs" />
     <Compile Include="Spirals\ISpiral.cs" />
     <Compile Include="Spirals\RectangularSpiral.cs" />
+    <Compile Include="TagCloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="TagCloudLayouter\ITagCloudLayouter.cs" />
+    <Compile Include="TagCloudLayouter\LayouterFactory.cs" />
     <Compile Include="Tests\CircularCloudLayouter_should.cs" />
     <Compile Include="Tests\Spiral_should.cs" />
   </ItemGroup>
