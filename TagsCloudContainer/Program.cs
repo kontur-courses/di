@@ -69,6 +69,8 @@ namespace TagsCloudContainer
                 .ImplementedBy<CircularCloudLayouter>()
                 .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
                 ));
+            container.Register(Component.For<IPointsGenerator>()
+                .ImplementedBy<SpiralPointsGenerator>());
             container.Register(Component.For<IVisualiser>()
                 .ImplementedBy<DefaultRectanglesVisualiser>()
                 .DependsOn(

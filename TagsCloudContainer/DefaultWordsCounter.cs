@@ -5,11 +5,8 @@ namespace TagsCloudContainer
 {
     public class DefaultWordsCounter : IWordsCounter
     {
-        //private readonly string[] arr;
-        
         public DefaultWordsCounter()
-        {
-            //this.arr = arr;
+        { 
         }
         public Dictionary<string, int> CountWords(IEnumerable<string> arr)
         {

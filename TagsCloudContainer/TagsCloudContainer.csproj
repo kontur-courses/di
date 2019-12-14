@@ -87,6 +87,7 @@
         <Compile Include="Layouter\CircularCloudLayouter.cs" />
         <Compile Include="Layouter\CircularCloudLayouter_Should.cs" />
         <Compile Include="Layouter\ICloudLayouter.cs" />
+        <Compile Include="Layouter\IPointsGenerator.cs" />
         <Compile Include="Layouter\SpiralPointsGenerator..cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

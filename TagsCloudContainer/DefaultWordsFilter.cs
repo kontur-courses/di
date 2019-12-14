@@ -12,8 +12,6 @@ namespace TagsCloudContainer
 {
     public class DefaultWordsFilter : IWordsFilter
     {
-        //private readonly string[] Words;
-
         private HashSet<string> excludedTypes = new HashSet<string>()
         {
             "PR",

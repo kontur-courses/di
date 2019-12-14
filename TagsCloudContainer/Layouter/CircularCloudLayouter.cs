@@ -12,18 +12,18 @@ namespace TagsCloudContainer.Layouter
     public class CircularCloudLayouter : MustInitialize<Point>, ICloudLayouter
     {
         public Point Center { get; set; }
-    
         public List<Rectangle> RectanglesList
         {
             get { return layout; }
         }
+        public IPointsGenerator PointsGenerator { get; }  
+
         private List<Rectangle> layout = new List<Rectangle>();
         
-        private SpiralPointsGenerator spiralPointsGenerator = new SpiralPointsGenerator();
-
-        public CircularCloudLayouter(Point center) : base(center)
+        public CircularCloudLayouter(Point center, IPointsGenerator pointGen) : base(center)
         {
             this.Center = center;
+            this.PointsGenerator = pointGen;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -35,7 +35,7 @@ namespace TagsCloudContainer.Layouter
 
             while (true)
             {
-                var point = spiralPointsGenerator.GetNextSpiralPoint();
+                var point = PointsGenerator.GetNextPoint();
                 var top = Center.Y + point.Y + rectangleSize.Height / 2;
                 var left = Center.X + point.X - rectangleSize.Width / 2;
                 var rect = new Rectangle(new Point(left, top),

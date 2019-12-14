@@ -9,9 +9,7 @@ namespace TagsCloudContainer
         public Size Size { get; set; }
         public int MaxHeight { get; set; }
         public int MaxWidth { get; set; }
-
         public Graphics g;
-        //private readonly  Dictionary<string, int> dictionary;
 
         public DefaultWordsToSizesConverter(Size size, int maxHeight = 0, int maxWidth = 0)
         {

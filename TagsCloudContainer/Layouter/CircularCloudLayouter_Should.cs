@@ -20,22 +20,8 @@ namespace TagsCloudContainer.Layouter
         [SetUp]
         public void SetUp()
         {
-            ccl = new CircularCloudLayouter(new Point(0, 0));
+            ccl = new CircularCloudLayouter(new Point(0, 0), new SpiralPointsGenerator());
         }
-        
-//        [TearDown]
-//        public void TearDown()
-//        {
-//            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-//            {
-//                var bitmap = Visualiser.DrawRectangles(ccl, 1000, 1000);
-//                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
-//                    "TearDown.png");
-//                bitmap.Save(path, ImageFormat.Png);
-//                TestContext.WriteLine("Tag cloud visualization saved to file {0}", path);
-//                return;
-//            }
-//        }
 
         [TestCase(1000, 1000)]
         [TestCase(300, 300)]
@@ -45,7 +31,7 @@ namespace TagsCloudContainer.Layouter
             var rectSize = new Size(width, height);
             ccl.PutNextRectangle(rectSize);
             var expectedRect = new Rectangle(new Point(-width / 2, height / 2), rectSize);
-            //ccl.RectanglesList[0].ShouldBeEquivalentTo(expectedRect);
+            ccl.RectanglesList[0].Should().BeEquivalentTo(expectedRect);
         }
         
         [TestCase(1000)]
@@ -71,7 +57,7 @@ namespace TagsCloudContainer.Layouter
         public void ThrowArgumentException_With_NegativeOrZeroSize(int width, int height)
         {
             var rectSize = new Size(width, height);
-            //ccl.Invoking(y => y.PutNextRectangle(rectSize)).ShouldThrow<ArgumentException>();
+            ccl.Invoking(y => y.PutNextRectangle(rectSize)).Should().Throw<ArgumentException>();
         }
 
         private void CheckNotIntersection_EachWithEach()
