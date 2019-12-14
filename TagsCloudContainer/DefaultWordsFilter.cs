@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using TagsCloudContainer.Interfaces;
 using YandexMystem.Wrapper;
 using YandexMystem.Wrapper.Models;
 

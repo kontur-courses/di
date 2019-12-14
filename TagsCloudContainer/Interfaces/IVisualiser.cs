@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudContainer.Layouter;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Interfaces
 {
     public interface IVisualiser
     {

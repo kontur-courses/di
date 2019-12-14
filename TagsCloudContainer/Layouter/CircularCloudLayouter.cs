@@ -11,6 +11,7 @@ namespace TagsCloudContainer.Layouter
 {
     public class CircularCloudLayouter : MustInitialize<Point>, ICloudLayouter
     {
+        private bool compressionFlag;
         public Point Center { get; set; }
         public List<Rectangle> RectanglesList
         {
@@ -20,10 +21,11 @@ namespace TagsCloudContainer.Layouter
 
         private List<Rectangle> layout = new List<Rectangle>();
         
-        public CircularCloudLayouter(Point center, IPointsGenerator pointGen) : base(center)
+        public CircularCloudLayouter(Point center, bool compression, IPointsGenerator pointGen) : base(center)
         {
             this.Center = center;
             this.PointsGenerator = pointGen;
+            compressionFlag = compression;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -43,7 +45,8 @@ namespace TagsCloudContainer.Layouter
 
                 if (CheckIntersection(rect))
                     continue;
-                rect = MoveToCenter(rect);
+                if(compressionFlag)
+                    rect = MoveToCenter(rect);
                 layout.Add(rect);
                 return rect;
             }

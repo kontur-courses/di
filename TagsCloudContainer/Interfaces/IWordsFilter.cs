@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Interfaces
 {
     public interface IWordsFilter
     {

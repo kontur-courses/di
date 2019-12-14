@@ -79,11 +79,11 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CMDOptions.cs" />
-        <Compile Include="ITextReader.cs" />
-        <Compile Include="IVisualiser.cs" />
-        <Compile Include="IWordsCounter.cs" />
-        <Compile Include="IWordsFilter.cs" />
-        <Compile Include="IWordsToSizesConverter.cs" />
+        <Compile Include="Interfaces\ITextReader.cs" />
+        <Compile Include="Interfaces\IVisualiser.cs" />
+        <Compile Include="Interfaces\IWordsCounter.cs" />
+        <Compile Include="Interfaces\IWordsFilter.cs" />
+        <Compile Include="Interfaces\IWordsToSizesConverter.cs" />
         <Compile Include="Layouter\CircularCloudLayouter.cs" />
         <Compile Include="Layouter\CircularCloudLayouter_Should.cs" />
         <Compile Include="Layouter\ICloudLayouter.cs" />
@@ -102,21 +102,12 @@
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="en_US.aff">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="en_US.dic">
+      <Content Include="bin\Debug\words.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="mystem.exe">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="words.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="bin\Debug" />
     </ItemGroup>
     <ItemGroup>
       <COMReference Include="System_Drawing">
@@ -128,6 +119,9 @@
         <Isolated>False</Isolated>
         <EmbedInteropTypes>True</EmbedInteropTypes>
       </COMReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Tests" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

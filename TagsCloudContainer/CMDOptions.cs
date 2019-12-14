@@ -37,5 +37,11 @@ namespace TagsCloudContainer
             Default =  "Tahoma",
             HelpText = "Font name")]
         public string Font { get; set; }
+        
+        [Option('m', "compression", 
+            Required =  false,
+            Default =  true,
+            HelpText = "Flag to enable/unable compression")]
+        public bool Compression { get; set; }
     }
 }

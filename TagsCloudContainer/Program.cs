@@ -6,6 +6,7 @@ using Castle.Windsor;
 using Castle.MicroKernel.Registration;
 using CommandLine;
 using CommandLine.Text;
+using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.Layouter;
 using Component = Castle.MicroKernel.Registration.Component;
 
@@ -40,8 +41,7 @@ namespace TagsCloudContainer
             {
                 help.AdditionalNewLineAfterOption = true;
                 help.AddPreOptionsLine(
-                    "Usage: TagsCloudContainer -i/--input words.txt -w/--width width -h/-height height " +
-                    "-o/--output dest.png");
+                    "Usage: TagsCloudContainer -i words.txt -w 2000 -h 2000 -o test.png -f Impact -c Red -m false");
                 help.AddPreOptionsLine("Default language: russian");
                 return help;
             }, e => e);
@@ -49,7 +49,7 @@ namespace TagsCloudContainer
         }
 
         static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size, 
-            String color, String font)
+            String color, String font, bool compression)
         {
             container.Register(Component.For<TagsCloudContainer>()
                 .DependsOn(
@@ -68,8 +68,8 @@ namespace TagsCloudContainer
             );
             container.Register(Component.For<ICloudLayouter>()
                 .ImplementedBy<CircularCloudLayouter>()
-                .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
-                ));
+                .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2)),
+                    Dependency.OnValue("compression", compression)));
             container.Register(Component.For<IPointsGenerator>()
                 .ImplementedBy<SpiralPointsGenerator>());
             container.Register(Component.For<IVisualiser>()
@@ -96,7 +96,7 @@ namespace TagsCloudContainer
                 var output = O.OutputFile;
 
                 var container = new WindsorContainer();
-                container = SetUpContainer(container, output, path, size, O.Color, O.Font);
+                container = SetUpContainer(container, output, path, size, O.Color, O.Font, O.Compression);
 
                 var tagsContainer = container.Resolve<TagsCloudContainer>();
                 tagsContainer.Perform();

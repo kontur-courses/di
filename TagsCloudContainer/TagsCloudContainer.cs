@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer

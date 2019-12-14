@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Layouter
         [SetUp]
         public void SetUp()
         {
-            ccl = new CircularCloudLayouter(new Point(0, 0), new SpiralPointsGenerator());
+            ccl = new CircularCloudLayouter(new Point(0, 0),true, new SpiralPointsGenerator());
         }
 
         [TestCase(1000, 1000)]

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Interfaces
 {
     public interface IWordsToSizesConverter
     {
