@@ -6,10 +6,21 @@ namespace TagsCloud
 {
 	public class BoringWordsFilter: IWordFilter
 	{
-		private readonly HashSet<string> boringWords;
+		private readonly ITextReader textReader;
+		private HashSet<string> boringWords;
 		
-		public BoringWordsFilter(ITextReader textReader) => boringWords = new HashSet<string>(textReader.Read());
+		public BoringWordsFilter(ITextReader textReader) => this.textReader = textReader;
 
-		public bool CheckWord(string word) => !boringWords.Contains(word);
+		public bool CheckWord(string word)
+		{
+			PrepareWords();
+			return !boringWords.Contains(word);
+		}
+
+		private void PrepareWords()
+		{
+			if (boringWords != null) return;
+			boringWords = new HashSet<string>(textReader.Read());
+		}
 	}
 }
