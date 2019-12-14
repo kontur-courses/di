@@ -6,10 +6,9 @@ namespace TagsCloudContainer
 {
     public interface IWordsToSizesConverter
     {
-        Size SizeOfLayout { get; set; }
+        Size Size { get; set; }
         int MaxHeight { get; set; }
         int MaxWidth { get; set; }
-        Size GetSizeOf(string word);
-        IEnumerable<(string, Size)> GetSizesOf();
+        IEnumerable<(string, Size)> GetSizesOf(Dictionary<string, int> dictionary);
     }
 }

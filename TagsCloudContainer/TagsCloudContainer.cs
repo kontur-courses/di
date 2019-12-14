@@ -14,11 +14,13 @@ namespace TagsCloudContainer
         private ICloudLayouter CCL;
         private IVisualiser Visualiser;
         private string OutputFile;
+        private string InputFile;
         
         public TagsCloudContainer(ITextReader textReader, IWordsFilter wordsFilter, IWordsCounter wordsCounter,
             IWordsToSizesConverter wordsToSizesConverter,
             ICloudLayouter ccl, IVisualiser visualiser,
-            string output
+            string output,
+            string input
         )
         {
             TextReader = textReader;
@@ -28,20 +30,19 @@ namespace TagsCloudContainer
             CCL = ccl;
             Visualiser = visualiser;
             OutputFile = output;
+            InputFile = input;
         }
 
         public void Perform()
         {
             var size = new Size(2000, 2000);
-//            var textReader = new SimpleTextReader("words.txt");
-//            var textFilter = new SimpleWordsFilter(textReader.Read().ToArray());
-//            var wordsCounter = new SimpleWordsCounter(textFilter.FilterWords().ToArray());
-//            var wordsToSizes = new SimpleWordsToSizesConverter(size,
-//                wordsCounter.CountWords().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
-            var sizes = WordsToSizesConverter.GetSizesOf().ToArray();
+            var text = TextReader.Read(InputFile);
+            var textFiltered = WordsFilter.FilterWords(text);
+            var wordsCount = WordsCounter.CountWords(textFiltered);
+            var sizes = WordsToSizesConverter.GetSizesOf(wordsCount).ToArray();
             sizes = sizes.OrderBy(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
-           // var oneSizedCcl = new CircularCloudLayouter(new Point(1000, 1000));
-           CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
+            
+            CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
             for (var i = 0; i < sizes.Length; i++)
             {
                 CCL.PutNextRectangle(sizes[i].Item2);

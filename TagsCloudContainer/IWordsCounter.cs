@@ -4,6 +4,6 @@ namespace TagsCloudContainer
 {
     public interface IWordsCounter
     {
-        IDictionary<string, int> CountWords();
+        Dictionary<string, int> CountWords(IEnumerable<string> arr);
     }
 }

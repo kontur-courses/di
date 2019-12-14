@@ -7,6 +7,7 @@ using Castle.MicroKernel.Registration;
 using CommandLine;
 using CommandLine.Text;
 using TagsCloudContainer.Layouter;
+using Component = Castle.MicroKernel.Registration.Component;
 
 namespace TagsCloudContainer
 {
@@ -38,57 +39,43 @@ namespace TagsCloudContainer
             var helpText = HelpText.AutoBuild(result, help =>
             {
                 help.AdditionalNewLineAfterOption = true;
-                help.AddPreOptionsLine("Usage: TagsCloudContainer -i/--input words.txt -w/--width width -h/-height height " +
-                                       "-o/--output dest.png");
+                help.AddPreOptionsLine(
+                    "Usage: TagsCloudContainer -i/--input words.txt -w/--width width -h/-height height " +
+                    "-o/--output dest.png");
                 help.AddPreOptionsLine("Default language: russian");
                 return help;
             }, e => e);
             Console.WriteLine(helpText);
         }
 
-        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string path, Size size)
+        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size)
         {
             container.Register(Component.For<TagsCloudContainer>()
-                        .DependsOn(
-                            Dependency.OnValue("output", output)
-                        ));
-                container.Register(Component.For<ITextReader>()
-                    .ImplementedBy<DefaultTextReader>()
-                    .DependsOn(
-                        Dependency.OnValue("path", path)
-                    ));
-                var reader = container.Resolve<ITextReader>();
-                container.Register(Component.For<IWordsFilter>()
-                    .ImplementedBy<DefaultWordsFilter>()
-                    .DependsOn(
-                        Dependency.OnValue("arr", reader.Read().ToArray())
-                    ));
-                var filter = container.Resolve<IWordsFilter>();
-                container.Register(Component.For<IWordsCounter>()
-                    .ImplementedBy<DefaultWordsCounter>()
-                    .DependsOn(
-                        Dependency.OnValue("arr", filter.FilterWords().ToArray())
-                    ));
-                var counter = container.Resolve<IWordsCounter>();
-                container.Register(Component.For<IWordsToSizesConverter>()
-                    .ImplementedBy<DefaultWordsToSizesConverter>()
-                    .DependsOn(
-                        Dependency.OnValue("size", size),
-                        Dependency.OnValue("dictionary",
-                            counter.CountWords().ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
-                        Dependency.OnValue("sizeOfLayout", size)));
-                var converter = container.Resolve<IWordsToSizesConverter>();
-                container.Register(Component.For<ICloudLayouter>()
-                    .ImplementedBy<CircularCloudLayouter>()
-                    .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
-                    ));
-                container.Register(Component.For<IVisualiser>()
-                    .ImplementedBy<DefaultRectanglesVisualiser>()
-                    .DependsOn(
-                        Dependency.OnValue("size", size))
-                );
+                .DependsOn(
+                    Dependency.OnValue("output", output),
+                    Dependency.OnValue("input", input)
+                ));
+            container.Register(Component.For<ITextReader>()
+                .ImplementedBy<DefaultTextReader>());
+            container.Register(Component.For<IWordsFilter>()
+                .ImplementedBy<DefaultWordsFilter>());
+            container.Register(Component.For<IWordsCounter>()
+                .ImplementedBy<DefaultWordsCounter>());
+            container.Register(Component.For<IWordsToSizesConverter>()
+                .ImplementedBy<DefaultWordsToSizesConverter>()
+                .DependsOn(Dependency.OnValue("size", size))
+            );
+            container.Register(Component.For<ICloudLayouter>()
+                .ImplementedBy<CircularCloudLayouter>()
+                .DependsOn(Dependency.OnValue("center", new Point(size.Width / 2, size.Height / 2))
+                ));
+            container.Register(Component.For<IVisualiser>()
+                .ImplementedBy<DefaultRectanglesVisualiser>()
+                .DependsOn(
+                    Dependency.OnValue("size", size))
+            );
 
-                return container;
+            return container;
         }
 
         public static void Main(string[] args)
@@ -101,13 +88,13 @@ namespace TagsCloudContainer
                 var path = O.InputFile;
                 var size = new Size(O.Width, O.Height);
                 var output = O.OutputFile;
-                
+
                 var container = new WindsorContainer();
                 container = SetUpContainer(container, output, path, size);
-                
+
                 var tagsContainer = container.Resolve<TagsCloudContainer>();
                 tagsContainer.Perform();
-                
+
                 Console.WriteLine($"Your file was succesfuly created and saved into {output}");
             });
         }

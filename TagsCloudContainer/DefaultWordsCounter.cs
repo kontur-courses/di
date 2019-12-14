@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace TagsCloudContainer
 {
     public class DefaultWordsCounter : IWordsCounter
     {
-        private readonly string[] arr;
+        //private readonly string[] arr;
         
-        public DefaultWordsCounter(string[] arr)
+        public DefaultWordsCounter()
         {
-            this.arr = arr;
+            //this.arr = arr;
         }
-        public IDictionary<string, int> CountWords()
+        public Dictionary<string, int> CountWords(IEnumerable<string> arr)
         {
             var res = new Dictionary<string, int>();
             foreach (var str in arr)

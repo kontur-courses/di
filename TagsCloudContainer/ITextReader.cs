@@ -5,6 +5,6 @@ namespace TagsCloudContainer
 {
     public interface ITextReader
     {
-        IEnumerable<string> Read();
+        IEnumerable<string> Read(string path);
     }
 }

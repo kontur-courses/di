@@ -5,16 +5,16 @@ namespace TagsCloudContainer
 {
     public class DefaultTextReader : ITextReader
     {
-        private readonly string FilePath;
+        //private readonly string FilePath;
         
-        public DefaultTextReader(string path)
+        public DefaultTextReader()
         {
-            FilePath = path;
+            //FilePath = path;
         }
 
-        public IEnumerable<string> Read()
+        public IEnumerable<string> Read(string path)
         {
-            return File.ReadAllLines(FilePath);
+            return File.ReadAllLines(path);
         }
     }
 }

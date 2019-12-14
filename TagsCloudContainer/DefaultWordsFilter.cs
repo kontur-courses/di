@@ -12,32 +12,23 @@ namespace TagsCloudContainer
 {
     public class DefaultWordsFilter : IWordsFilter
     {
-        private readonly string[] Words;
-        private HashSet<string> excludedTypes = new HashSet<string>() {
+        //private readonly string[] Words;
+
+        private HashSet<string> excludedTypes = new HashSet<string>()
+        {
             "PR",
             "PART",
             "CONJ"
-            };
-        
-        public DefaultWordsFilter(string[] arr)
-        {
-            Words = arr;
-        }
-        
-        private string WordsToString()
-        {
-            var res = "";
-            foreach (var str in this.Words)
-            {
-                res += $"{str} ";
-            }
+        };
 
-            return res;
-        }
-        
-        public IEnumerable<string> FilterWords()
+        public DefaultWordsFilter()
         {
-            return FilterWords(GetInfoAboutWords());
+        }
+
+
+        public IEnumerable<string> FilterWords(IEnumerable<string> words)
+        {
+            return FilterWords(GetInfoAboutWords(words.ToArray()));
         }
 
         private List<string> FilterWords(List<WordModel> wordsInfos)
@@ -51,6 +42,7 @@ namespace TagsCloudContainer
                     if (wordInfo.SourceWord.Analysis[0].Gr.Contains(type))
                         flag = true;
                 }
+
                 if (flag)
                     continue;
                 res.Add(wordInfo.SourceWord.Text);
@@ -59,15 +51,24 @@ namespace TagsCloudContainer
             return res;
         }
 
-        private List<WordModel> GetInfoAboutWords()
+        private string WordsToString(string[] words)
+        {
+            var res = "";
+            foreach (var str in words)
+            {
+                res += $"{str} ";
+            }
+
+            return res;
+        }
+
+        private List<WordModel> GetInfoAboutWords(string[] words)
         {
             var outputBuilder = new StringBuilder();
             var mst = new Mysteam();
-            var res = mst.GetWords(WordsToString());
+            var res = mst.GetWords(WordsToString(words));
 
             return res;
         }
     }
-
-    
 }
