@@ -6,12 +6,12 @@ using FluentAssertions;
 using GroboContainer.Core;
 using NUnit.Framework;
 using TagCloud.CloudLayouter;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
+using TagCloud.CloudVisualizerSpace.CloudViewConfigurationSpace;
 
 namespace TagCloudTests.CloudLayouter
 {
     [TestFixture]
-    class CircularCloudLayouter_Should
+    class CircularCloudLayouterShould
     {
         private CircularCloudLayouter cloudLayouter;
         private CloudViewConfiguration cloudConfiguration;

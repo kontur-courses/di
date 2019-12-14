@@ -1,50 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TagCloud.WordsPreprocessing.WordsSelector;
+using YandexMystem.Wrapper;
+using YandexMystem.Wrapper.Enums;
+using YandexMystem.Wrapper.Models;
 
 namespace TagCloud.WordsPreprocessing.TextAnalyzers
 {
     /// <summary>
     /// Приводит слова русского языка к начальной форме 
     /// </summary>
-    public class RussianLanguageAnalyzer : SimpleAnalyzer, ITextAnalyzer
+    [Name("RussianLanguageAnalyzer")]
+    public class RussianLanguageAnalyzer : ITextAnalyzer
     {
-        private readonly ProcessStartInfo processInfo;
-        private WordSelector wordSelector;
+        private readonly WordSelector wordSelector;
 
-        public new string AnalyzerName => "RussianLanguageAnalyzer";
+        private readonly Mysteam mystem;
 
         public RussianLanguageAnalyzer(WordSelector wordSelector)
         {
             this.wordSelector = wordSelector;
-
-            processInfo = new ProcessStartInfo("cmd.exe", "/c mystem -n -l -e cp866 -i")
-            {
-                RedirectStandardInput = true, UseShellExecute = false, RedirectStandardOutput = true
-            };
+            mystem = new Mysteam();
         }
 
-        public new Word[] GetWords(IEnumerable<string> words, int count)
+        public Word[] GetWords(IEnumerable<string> words, int count)
         {
-            words = words as string[] ?? words.ToArray();
-
-            words = words.Select(w =>
-            {
-                var p = Process.Start(processInfo);
-                p.StandardInput.WriteLine(w);
-                p.StandardInput.Close();
-                return p.StandardOutput.ReadToEnd();
-            });
-
+            var counter = 0;
 
             return words
-                .Select(w => w.Split('|')[0])
-                .GroupBy(w => w)
+                .Select(w => mystem.GetWords(w))
+                .Where(w =>
+                {
+                    if (w.Count == 0) return false;
+                    counter++;
+                    return true;
+
+                })
+                .Select(w => ParseWord(w[0]))
+                .GroupBy(w => w.Value)
                 .Select(w =>
                 {
-                    var result = ParseWord(w.Key);
+                    var result = w.First();
                     result.Count = w.Count();
                     return result;
                 })
@@ -52,29 +48,28 @@ namespace TagCloud.WordsPreprocessing.TextAnalyzers
                 .Take(count)
                 .Select(w =>
                 {
-                    w.Frequency = (double)w.Count / words.Count();
+                    w.Frequency = (double)w.Count / counter;
                     return w;
                 })
                 .ToArray();
         }
 
-        private Word ParseWord(string wordWithLexemes)
+        private static Word ParseWord(WordModel model)
         {
-            var lexemes = wordWithLexemes.Split('=')[1].Split(',');
             SpeechPart speechPart;
-            switch (lexemes[0])
+            switch (model.Lexems[0].GramPart)
             {
-                case "V":
+                case GramPartsEnum.Verb:
                     speechPart = SpeechPart.Verb;
                     break;
-                case "A":
+                case GramPartsEnum.Adjective:
                     speechPart = SpeechPart.Adjective;
                     break;
                 default:
                     speechPart = SpeechPart.Noun;
                     break;
             }
-            return new Word(wordWithLexemes.Split('=')[0], speechPart);
+            return new Word(model.Lexems[0].Lexeme, speechPart);
         }
     }
 }

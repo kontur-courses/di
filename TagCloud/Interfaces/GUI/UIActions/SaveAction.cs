@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace TagCloud.Interfaces.GUI.UIActions
 {
-    class SaveAction : IUIAction
+    class SaveAction : IUiAction
     {
         private Lazy<MainForm> mainForm;
         public SaveAction(Lazy<MainForm> mainForm)

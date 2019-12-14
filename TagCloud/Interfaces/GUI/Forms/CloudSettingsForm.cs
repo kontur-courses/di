@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
+using TagCloud.CloudVisualizerSpace.CloudViewConfigurationSpace;
 
 namespace TagCloud.Interfaces.GUI.Forms
 {

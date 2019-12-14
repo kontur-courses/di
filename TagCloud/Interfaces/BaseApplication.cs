@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Linq;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
+using TagCloud.CloudVisualizerSpace;
+using TagCloud.CloudVisualizerSpace.CloudViewConfigurationSpace;
 using TagCloud.WordsPreprocessing.DocumentParsers;
 
 namespace TagCloud.Interfaces
@@ -8,11 +9,11 @@ namespace TagCloud.Interfaces
     public class BaseApplication
     {
         public ApplicationSettings AppSettings { get; }
-        private readonly CloudVisualizer.CloudVisualizer visualizer;
+        private readonly CloudVisualizer visualizer;
         public CloudViewConfiguration CloudConfiguration { get; }
         public IDocumentParser[] Parsers { get; }
 
-        public BaseApplication(CloudVisualizer.CloudVisualizer visualizer, CloudViewConfiguration cloudConfiguration,
+        public BaseApplication(CloudVisualizer visualizer, CloudViewConfiguration cloudConfiguration,
             IDocumentParser[] parsers, ApplicationSettings settings)
         {
             AppSettings = settings;

@@ -1,5 +1,4 @@
-﻿using TagCloud.CloudVisualizer.CloudViewConfiguration;
-using TagCloud.FigurePaths;
+﻿using TagCloud.CloudLayouter.FigurePaths;
 
 namespace TagCloud.Factories
 {

@@ -4,7 +4,7 @@ using TagCloud.Interfaces.GUI.Forms;
 
 namespace TagCloud.Interfaces.GUI.UIActions
 {
-    class CloudConfigurationAction : IUIAction
+    class CloudConfigurationAction : IUiAction
     {
         private ApplicationSettings appSettings;
         private Lazy<MainForm> mainForm;

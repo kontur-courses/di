@@ -9,7 +9,7 @@ namespace TagCloud.Interfaces.GUI.UIActions
 {
     public static class UiActionExtensions
     {
-        public static ToolStripItem[] ToMenuItems(this IUIAction[] actions)
+        public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
         {
             var items = actions.GroupBy(a => a.Category)
                 .OrderBy(a => a.Key)
@@ -19,13 +19,13 @@ namespace TagCloud.Interfaces.GUI.UIActions
             return items;
         }
 
-        private static ToolStripMenuItem CreateTopLevelMenuItem(string category, IList<IUIAction> items)
+        private static ToolStripMenuItem CreateTopLevelMenuItem(string category, IList<IUiAction> items)
         {
             var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
             return new ToolStripMenuItem(category, null, menuItems);
         }
 
-        public static ToolStripItem ToMenuItem(this IUIAction action)
+        public static ToolStripItem ToMenuItem(this IUiAction action)
         {
             return
                 new ToolStripMenuItem(action.Name, null, (sender, args) => action.Perform())

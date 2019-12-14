@@ -5,15 +5,14 @@ using System.Windows.Forms;
 using TagCloud.Interfaces.GUI;
 using GroboContainer.Core;
 using GroboContainer.Impl;
-using TagCloud.CloudLayouter;
 using TagCloud.WordsPreprocessing;
-using TagCloud.WordsPreprocessing.TextAnalyzers;
 
 namespace TagCloud
 {
     public class Program
-    {[STAThread]
-        static void Main(string[] args)
+    {
+        [STAThread]
+        public static void Main(string[] args)
         {
             var container = InitializeContainer();
             try
@@ -33,7 +32,7 @@ namespace TagCloud
         {
             var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             var container = new Container(new ContainerConfiguration(assembly));
-            container.Configurator.ForAbstraction<ICloudLayouter>().UseType<CircularCloudLayouter>();
+
             container.Configurator.ForAbstraction<HashSet<string>>().UseInstances(new HashSet<string>());
             container.Configurator.ForAbstraction<HashSet<SpeechPart>>().UseInstances(new HashSet<SpeechPart>());
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.FigurePaths
+namespace TagCloud.CloudLayouter.FigurePaths
 {
     public class Spiral : IFigurePath
     {

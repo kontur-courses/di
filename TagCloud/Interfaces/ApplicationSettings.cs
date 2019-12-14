@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using TagCloud.WordsPreprocessing.TextAnalyzers;
-using TagCloud.WordsPreprocessing.WordsSelector;
 
 namespace TagCloud.Interfaces
 {
@@ -30,12 +29,6 @@ namespace TagCloud.Interfaces
         {
             TextAnalyzers = analyzers;
             CurrentTextAnalyzer = TextAnalyzers.FirstOrDefault();
-        }
-
-        public ITextAnalyzer SetAnalyzer(string analyzer)
-        {
-            CurrentTextAnalyzer = TextAnalyzers.FirstOrDefault(w => w.AnalyzerName == analyzer);
-            return CurrentTextAnalyzer;
         }
     }
 }

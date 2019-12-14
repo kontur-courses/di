@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace TagCloud.Interfaces.GUI.Forms
@@ -39,7 +40,11 @@ namespace TagCloud.Interfaces.GUI.Forms
                 Location = labelAnalyzer.Location + new Size(labelAnalyzer.Size.Width, 0)
             };
 
-            textAnalyzers.Items.AddRange(settings.TextAnalyzers.Select(w => w.AnalyzerName).ToArray());
+            var analyzerNames = settings.TextAnalyzers
+                .Select(w => w.GetType().GetCustomAttribute<NameAttribute>()?.Name ?? "UnknownName")
+                .ToArray();
+
+            textAnalyzers.Items.AddRange(analyzerNames);
 
             Controls.Add(labelAnalyzer);
             Controls.Add(textAnalyzers);
@@ -50,7 +55,7 @@ namespace TagCloud.Interfaces.GUI.Forms
 
         private void OnUpdateTextAnalyzer(object sender, EventArgs e)
         {
-            settings.SetAnalyzer((string)((ComboBox)sender).SelectedItem);
+            settings.CurrentTextAnalyzer = settings.TextAnalyzers[((ComboBox) sender).SelectedIndex];
         }
     }
 }

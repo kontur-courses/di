@@ -5,15 +5,15 @@ using TagCloud.WordsPreprocessing.DocumentParsers;
 
 namespace TagCloud.Interfaces.GUI.UIActions
 {
-    class OpenAction : IUIAction
+    class OpenAction : IUiAction
     {
-        private string[] allowedTypes;
-        private ApplicationSettings applicationSettings;
-        private Lazy<MainForm> mainForm;
+        private readonly string[] allowedTypes;
+        private readonly ApplicationSettings applicationSettings;
+        private CloudConfigurationAction cloudConfigurationAction;
 
-        public OpenAction(ApplicationSettings settings, IDocumentParser[] parsers, Lazy<MainForm> mainForm)
+        public OpenAction(ApplicationSettings settings, IDocumentParser[] parsers, CloudConfigurationAction cloudConfigurationAction)
         {
-            this.mainForm = mainForm;
+            this.cloudConfigurationAction = cloudConfigurationAction;
             applicationSettings = settings;
             allowedTypes = parsers.SelectMany(p => p.AllowedTypes).ToArray();
         }
@@ -33,7 +33,7 @@ namespace TagCloud.Interfaces.GUI.UIActions
             if (dialogResult == DialogResult.OK)
             {
                 applicationSettings.FilePath = dialog.FileName;
-                mainForm.Value.RedrawImage();
+                cloudConfigurationAction.Perform();
             }
         }
     }

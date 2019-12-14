@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.Interfaces.GUI.UIActions
 {
-    public interface IUIAction
+    public interface IUiAction
     {
         string Category { get; }
         string Name { get; }

@@ -1,10 +1,6 @@
 ﻿using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
 using TagCloud.Interfaces.GUI.UIActions;
-using TagCloud.WordsPreprocessing.DocumentParsers;
-using TagCloud.WordsPreprocessing.TextAnalyzers;
 
 namespace TagCloud.Interfaces.GUI
 {
@@ -15,7 +11,7 @@ namespace TagCloud.Interfaces.GUI
 
         public Image Image { get; private set; }
 
-        public MainForm(IUIAction[] actions, PictureBox pictureBox, BaseApplication baseApplication)
+        public MainForm(IUiAction[] actions, PictureBox pictureBox, BaseApplication baseApplication)
         {
             this.baseApplication = baseApplication;
             var mainMenu = new MenuStrip();
@@ -24,7 +20,7 @@ namespace TagCloud.Interfaces.GUI
             ClientSize = new Size(600, 400);
             this.pictureBox = pictureBox;
             pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Closed += (a, b) => baseApplication.Close();
         }
 

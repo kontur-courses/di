@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
 using TagCloud.Interfaces.GUI.Forms;
 
 namespace TagCloud.Interfaces.GUI.UIActions
 {
-    class ApplicationSettingsAction : IUIAction
+    class ApplicationSettingsAction : IUiAction
     {
         private Lazy<MainForm> mainForm;
         private ApplicationSettings applicationSettings;

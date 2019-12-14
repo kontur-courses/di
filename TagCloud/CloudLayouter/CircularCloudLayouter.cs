@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.CloudVisualizer.CloudViewConfiguration;
-using TagCloud.FigurePaths;
+using TagCloud.CloudLayouter.FigurePaths;
+using TagCloud.CloudVisualizerSpace.CloudViewConfigurationSpace;
 
 namespace TagCloud.CloudLayouter
 {

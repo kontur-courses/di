@@ -71,14 +71,13 @@
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
     <Compile Include="CloudLayouter\FigurePaths\IFigurePath.cs" />
     <Compile Include="CloudLayouter\FigurePaths\Spiral.cs" />
-    <Compile Include="CloudVisualizer\CloudViewConfiguration\DefaultColorPicker.cs" />
-    <Compile Include="CloudVisualizer\CloudViewConfiguration\IColorWordPicker.cs" />
-    <Compile Include="CloudVisualizer\CloudVisualizer.cs" />
-    <Compile Include="CloudVisualizer\CloudViewConfiguration\CloudViewConfiguration.cs" />
+    <Compile Include="CloudVisualizerSpace\CloudViewConfigurationSpace\DefaultColorPicker.cs" />
+    <Compile Include="CloudVisualizerSpace\CloudViewConfigurationSpace\IColorWordPicker.cs" />
+    <Compile Include="CloudVisualizerSpace\CloudVisualizer.cs" />
+    <Compile Include="CloudVisualizerSpace\CloudViewConfigurationSpace\CloudViewConfiguration.cs" />
     <Compile Include="Factories\SpiralFactory.cs" />
     <Compile Include="Interfaces\ApplicationSettings.cs" />
     <Compile Include="Interfaces\BaseApplication.cs" />
-    <Compile Include="Interfaces\GUI\Forms\SettingsForm.cs" />
     <Compile Include="Interfaces\GUI\Forms\WordSelectorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,11 +91,12 @@
     <Compile Include="Interfaces\GUI\Forms\CloudSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\GUI\UIActions\IUIAction.cs" />
+    <Compile Include="Interfaces\GUI\UIActions\IUiAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\OpenAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\SaveAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\ApplicationSettingsAction.cs" />
     <Compile Include="Interfaces\GUI\UIActions\UIActionsExtensions.cs" />
+    <Compile Include="NameAttribute.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsPreprocessing\DocumentParsers\DocParser.cs" />
