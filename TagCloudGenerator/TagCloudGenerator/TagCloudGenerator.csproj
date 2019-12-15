@@ -75,9 +75,13 @@
     <Compile Include="UserInterfaces\VocabularyParsers\TxtVocabularyParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\CommonWordsTagCloud.bmp" />
-    <Content Include="Images\WebTagCloud.bmp" />
+    <Content Include="Images\CommonWordsTagCloud.png" />
+    <Content Include="Images\CommonWordsTagCloud_v2.png" />
+    <Content Include="Images\WebTagCloud.png" />
     <Content Include="README.md" />
+    <Content Include="Vocabularies\CommonWordsCloudFilename.txt" />
+    <Content Include="Vocabularies\ExcludedWords.txt" />
+    <Content Include="Vocabularies\WebTagCloud.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
