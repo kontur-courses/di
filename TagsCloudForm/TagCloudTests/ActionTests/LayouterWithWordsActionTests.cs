@@ -24,7 +24,9 @@ namespace TagsCloudTests.ActionTests
         public void CircularCloudLayouterAction_CallsPaint_WhenPerformCalled()
         {
             var action = new CircularCloudLayouterWithWordsAction(painterFactory);
+
             action.Perform();
+
             A.CallTo(() => painter.Paint()).MustHaveHappened();
         }
 
@@ -32,7 +34,9 @@ namespace TagsCloudTests.ActionTests
         public void CircularCloudLayouterAction_CallsPaintOnlyOnce_WhenPerformCalled()
         {
             var action = new CircularCloudLayouterWithWordsAction(painterFactory);
+
             action.Perform();
+
             A.CallTo(() => painter.Paint()).MustHaveHappenedOnceExactly();
         }
     }
