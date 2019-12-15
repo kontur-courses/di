@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudGenerator.Extensions;
+using TagCloudGenerator.GeneratorCore.Extensions;
 using TagCloudGenerator.Tests.Extensions;
 
 namespace TagCloudGenerator.Tests.TestFixtures

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagCloudGenerator.CloudLayouters;
+using TagCloudGenerator.GeneratorCore.CloudLayouters;
 using TagCloudGenerator.Tests.WrongVisualization;
 
 namespace TagCloudGenerator.Tests.TestFixtures

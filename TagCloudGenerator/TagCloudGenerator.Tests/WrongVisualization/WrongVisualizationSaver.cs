@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 using NUnit.Framework;
-using TagCloudGenerator.TagClouds;
+using TagCloudGenerator.GeneratorCore.TagClouds;
 
 namespace TagCloudGenerator.Tests.WrongVisualization
 {

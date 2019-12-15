@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloudGenerator.Tags;
+using TagCloudGenerator.GeneratorCore.Tags;
 using TagType = TagCloudGenerator.Tests.WrongVisualization.TagType;
 
 namespace TagCloudGenerator.Tests

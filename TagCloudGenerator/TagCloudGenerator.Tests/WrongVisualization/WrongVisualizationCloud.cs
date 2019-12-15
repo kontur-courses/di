@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using TagCloudGenerator.CloudLayouters;
-using TagCloudGenerator.TagClouds;
-using TagCloudGenerator.Tags;
+using TagCloudGenerator.GeneratorCore.CloudLayouters;
+using TagCloudGenerator.GeneratorCore.TagClouds;
+using TagCloudGenerator.GeneratorCore.Tags;
 
 namespace TagCloudGenerator.Tests.WrongVisualization
 {
