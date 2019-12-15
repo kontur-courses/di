@@ -5,7 +5,7 @@ namespace TagsCloudForm.Common
     public interface IImageHolder
     {
         Size GetImageSize();
-        Graphics StartDrawing();
+        IGraphicDrawer StartDrawing();
         void UpdateUi();
         void RecreateImage(ImageSettings settings);
         void SaveImage(string fileName);

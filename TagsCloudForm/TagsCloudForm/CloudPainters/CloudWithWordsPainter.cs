@@ -12,14 +12,14 @@ namespace TagsCloudForm.Actions
     public class CloudWithWordsPainter : ICloudPainter
     {
         private readonly IImageHolder imageHolder;
-        private readonly CircularCloudLayouterWithWordsSettings settings;
+        private readonly ICircularCloudLayouterWithWordsSettings settings;
         private readonly IPalette palette;
         private Size imageSize;
         private ICircularCloudLayouter layouter;
         private readonly Dictionary<string, int> words;
 
         public CloudWithWordsPainter(IImageHolder imageHolder,
-            CircularCloudLayouterWithWordsSettings settings, IPalette palette, ICircularCloudLayouter layouter,
+            ICircularCloudLayouterWithWordsSettings settings, IPalette palette, ICircularCloudLayouter layouter,
             Dictionary<string,int> words)
         {
             this.imageHolder = imageHolder;
@@ -53,7 +53,7 @@ namespace TagsCloudForm.Actions
             imageHolder.UpdateUi();
         }
 
-        private void DrawRectangle(Graphics graphics, string word, int wordFrequency, Brush backgroundBrush, Pen rectPen, Brush textBrush)
+        private void DrawRectangle(IGraphicDrawer graphics, string word, int wordFrequency, Brush backgroundBrush, Pen rectPen, Brush textBrush)
         {
             var font = new Font("Arial", Math.Min(72, wordFrequency * settings.Scale));
             var size = new Size(TextRenderer.MeasureText(word, font).Width, TextRenderer.MeasureText(word, font).Height);

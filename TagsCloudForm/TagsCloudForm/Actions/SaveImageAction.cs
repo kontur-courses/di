@@ -1,8 +1,10 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 
+[assembly: InternalsVisibleTo("TagsCloudTests.ActionTests")]
 namespace TagsCloudForm.Actions
 {
     internal class SaveImageAction : IUiAction

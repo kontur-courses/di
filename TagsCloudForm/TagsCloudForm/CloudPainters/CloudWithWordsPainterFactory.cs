@@ -16,12 +16,12 @@ namespace TagsCloudForm.Actions
         private readonly IImageHolder imageHolder;
         private readonly IPalette palette;
         private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
-        private readonly CircularCloudLayouterWithWordsSettings settings;
+        private readonly ICircularCloudLayouterWithWordsSettings settings;
         private readonly IWordsFilter[] filters;
         private readonly IWordsFrequencyParser parser;
         public CloudWithWordsPainterFactory(IImageHolder imageHolder,
             IPalette palette,
-            CircularCloudLayouterWithWordsSettings settings,
+            ICircularCloudLayouterWithWordsSettings settings,
             Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory, IWordsFilter[] filters, IWordsFrequencyParser parser)
         {
             this.imageHolder = imageHolder;

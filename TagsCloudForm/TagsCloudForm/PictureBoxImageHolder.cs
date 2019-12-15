@@ -14,10 +14,10 @@ namespace TagsCloudForm
             return Image.Size;
         }
 
-        public Graphics StartDrawing()
+        public IGraphicDrawer StartDrawing()
         {
             FailIfNotInitialized();
-            return Graphics.FromImage(Image);
+            return new GraphicDrawer(Image);
         }
 
         private void FailIfNotInitialized()

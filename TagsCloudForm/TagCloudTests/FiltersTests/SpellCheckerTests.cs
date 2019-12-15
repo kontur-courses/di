@@ -3,7 +3,7 @@ using NUnit.Framework;
 using TagsCloudForm.WordFilters;
 using TagsCloudForm.CircularCloudLayouterSettings;
 
-namespace TagsCloudTests
+namespace TagsCloudTests.FiltersTests
 {
     [TestFixture]
     public class SpellCheckerTests

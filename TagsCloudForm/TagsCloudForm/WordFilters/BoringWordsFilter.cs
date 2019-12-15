@@ -8,7 +8,7 @@ namespace TagsCloudForm.WordFilters
 {
     public class BoringWordsFilter : IWordsFilter
     {
-        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings,
+        public IEnumerable<string> Filter(ICircularCloudLayouterWithWordsSettings settings,
             IEnumerable<string> words)
         {
             HashSet<string> boringWords;

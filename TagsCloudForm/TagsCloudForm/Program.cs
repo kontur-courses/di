@@ -7,6 +7,7 @@ using TagsCloudForm.Common;
 using TagsCloudForm.UiActions;
 using TagsCloudForm.WordFilters;
 using CircularCloudLayouter;
+using TagsCloudForm.CircularCloudLayouterSettings;
 
 namespace TagsCloudForm
 {
@@ -49,12 +50,13 @@ namespace TagsCloudForm
             builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
             builder.RegisterType<CircularCloudLayouterSettingsAction>().As<IUiAction>();
             builder.RegisterType<LayouterWithWordsSettingsAction>().As<IUiAction>();
+            builder.RegisterType<GraphicDrawer>().As<IGraphicDrawer>();
         }
 
         private static void RegisterSettingsClasses(ContainerBuilder builder)
         {
-            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().SingleInstance();
-            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterWithWordsSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterWithWordsSettings>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouterSettings.CircularCloudLayouterSettings>().As<CircularCloudLayouterSettings.CircularCloudLayouterSettings, ICircularCloudLayouterSettings>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouterWithWordsSettings>().As<CircularCloudLayouterWithWordsSettings, ICircularCloudLayouterWithWordsSettings>().SingleInstance();
             builder.Register(x => x.Resolve<AppSettings>().ImageSettings).As<ImageSettings>().SingleInstance();
             builder.RegisterType<SettingsManager>().As<SettingsManager>();
             builder.Register(x => x.Resolve<SettingsManager>().Load()).As<AppSettings, IImageDirectoryProvider>().SingleInstance();

@@ -21,7 +21,7 @@ namespace TagsCloudForm.WordFilters
             return words.Where(x=>checker.Spell(x.ToLower()));
         }
 
-        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
+        public IEnumerable<string> Filter(ICircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
         {
             return Filter(words, settings.Language);
         }

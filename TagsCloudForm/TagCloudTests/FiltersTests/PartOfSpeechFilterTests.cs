@@ -3,9 +3,9 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudForm.WordFilters;
 
-namespace TagsCloudTests
+namespace TagsCloudTests.FiltersTests
 {
-    class PartOfSpeechFilterTests
+    public class PartOfSpeechFilterTests
     {
         [Test]
         public void PartOfSpeechFilter_FilterTest_ShouldFilterNotWords()

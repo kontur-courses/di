@@ -1,5 +1,7 @@
-﻿using TagsCloudForm.UiActions;
+﻿using System.Runtime.CompilerServices;
+using TagsCloudForm.UiActions;
 
+[assembly: InternalsVisibleTo("TagsCloudTests")]
 namespace TagsCloudForm.Actions
 {
     internal class CircularCloudLayouterAction : IUiAction

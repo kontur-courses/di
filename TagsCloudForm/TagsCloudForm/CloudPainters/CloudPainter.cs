@@ -8,13 +8,13 @@ namespace TagsCloudForm.Actions
     public class CloudPainter : ICloudPainter
     {
         private readonly IImageHolder imageHolder;
-        private readonly CircularCloudLayouterSettings.CircularCloudLayouterSettings settings;
+        private readonly CircularCloudLayouterSettings.ICircularCloudLayouterSettings settings;
         private readonly IPalette palette;
         private Size imageSize;
         private ICircularCloudLayouter layouter;
 
         public CloudPainter(IImageHolder imageHolder,
-            CircularCloudLayouterSettings.CircularCloudLayouterSettings settings, IPalette palette, ICircularCloudLayouter layouter)
+            CircularCloudLayouterSettings.ICircularCloudLayouterSettings settings, IPalette palette, ICircularCloudLayouter layouter)
         {
             this.imageHolder = imageHolder;
             this.settings = settings;

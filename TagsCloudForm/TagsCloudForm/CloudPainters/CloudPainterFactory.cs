@@ -10,10 +10,10 @@ namespace TagsCloudForm.Actions
         private readonly IImageHolder imageHolder;
         private readonly IPalette palette;
         private readonly Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory;
-        private readonly CircularCloudLayouterSettings.CircularCloudLayouterSettings settings;
+        private readonly CircularCloudLayouterSettings.ICircularCloudLayouterSettings settings;
         public CloudPainterFactory(IImageHolder imageHolder,
             IPalette palette,
-            CircularCloudLayouterSettings.CircularCloudLayouterSettings settings,
+            CircularCloudLayouterSettings.ICircularCloudLayouterSettings settings,
             Func<Point, ICircularCloudLayouter> circularCloudLayouterFactory)
         {
             

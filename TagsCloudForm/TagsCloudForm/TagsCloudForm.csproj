@@ -74,6 +74,8 @@
     <Compile Include="Actions\CircularCloudLayouterAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterSettingsAction.cs" />
     <Compile Include="Actions\CircularCloudLayouterWithWordsAction.cs" />
+    <Compile Include="CircularCloudLayouterSettings\ICircularCloudLayouterSettings.cs" />
+    <Compile Include="CircularCloudLayouterSettings\ICircularCloudLayouterWithWordsSettings.cs" />
     <Compile Include="CloudPainters\CloudPainter.cs" />
     <Compile Include="CloudPainters\CloudPainterFactory.cs" />
     <Compile Include="CloudPainters\CloudWithWordsPainter.cs" />
@@ -88,6 +90,8 @@
     </Compile>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Common\IPalette.cs" />
+    <Compile Include="GraphicDrawer.cs" />
+    <Compile Include="IGraphicDrawer.cs" />
     <Compile Include="WordFilters\BoringWordsFilter.cs" />
     <Compile Include="CircularCloudLayouterSettings\CircularCloudLayouterSettings.cs" />
     <Compile Include="CircularCloudLayouterSettings\CircularCloudLayouterWithWordsSettings.cs" />

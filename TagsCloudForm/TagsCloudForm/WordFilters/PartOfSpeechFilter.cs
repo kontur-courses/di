@@ -25,7 +25,7 @@ namespace TagsCloudForm.WordFilters
         }
 
 
-        public IEnumerable<string> Filter(CircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
+        public IEnumerable<string> Filter(ICircularCloudLayouterWithWordsSettings settings, IEnumerable<string> words)
         {
             HashSet<string> partOfSpeechToFilter;
             try

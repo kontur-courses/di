@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudForm.CircularCloudLayouterSettings
 {
-    public class CircularCloudLayouterSettings
+    public class CircularCloudLayouterSettings:ICircularCloudLayouterSettings
     {
         public int CenterX { get; set; } = 200;
 
