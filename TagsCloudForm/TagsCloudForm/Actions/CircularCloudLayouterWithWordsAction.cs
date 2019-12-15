@@ -1,4 +1,5 @@
-﻿using TagsCloudForm.UiActions;
+﻿using TagsCloudForm.CloudPainters;
+using TagsCloudForm.UiActions;
 
 namespace TagsCloudForm.Actions
 {

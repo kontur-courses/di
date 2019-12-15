@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using FakeItEasy;
-using FluentAssertions;
 using TagsCloudForm.Actions;
+using TagsCloudForm.CloudPainters;
 
 namespace TagsCloudTests.ActionTests
 {

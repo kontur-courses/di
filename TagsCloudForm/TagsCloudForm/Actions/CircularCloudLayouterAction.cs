@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using TagsCloudForm.CloudPainters;
 using TagsCloudForm.UiActions;
 
 [assembly: InternalsVisibleTo("TagsCloudTests")]

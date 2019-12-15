@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework.Internal;
-using NUnit;
 using NUnit.Framework;
 using TagsCloudForm;
-using FluentAssertions;
 using TagsCloudForm.Common;
 
 namespace TagsCloudTests
@@ -15,7 +11,7 @@ namespace TagsCloudTests
     public class PictureBoxImageHolderTests
     {
         [Test]
-        public void PictureBox_Startdrawing_ShouldThrowExcepionWhenNoPicture()
+        public void PictureBox_StartDrawing_ShouldThrowExceptionWhenNoPicture()
         {
             var pictureBox = new PictureBoxImageHolder();
 
@@ -23,7 +19,7 @@ namespace TagsCloudTests
         }
 
         [Test]
-        public void PictureBox_GetImageSize_ShouldThrowExcepionWhenNoPicture()
+        public void PictureBox_GetImageSize_ShouldThrowExceptionWhenNoPicture()
         {
             var pictureBox = new PictureBoxImageHolder();
 
@@ -31,7 +27,7 @@ namespace TagsCloudTests
         }
 
         [Test]
-        public void PictureBox_SaveImage_ShouldThrowExcepionWhenNoPicture()
+        public void PictureBox_SaveImage_ShouldThrowExceptionWhenNoPicture()
         {
             var pictureBox = new PictureBoxImageHolder();
 

@@ -1,4 +1,4 @@
-﻿namespace TagsCloudForm.Actions
+﻿namespace TagsCloudForm.CloudPainters
 {
     public interface ICloudPainter
     {

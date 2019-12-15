@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using CircularCloudLayouter;
+using TagsCloudForm.Actions;
 using TagsCloudForm.CircularCloudLayouterSettings;
 using TagsCloudForm.Common;
 using TagsCloudForm.WordFilters;
 
-namespace TagsCloudForm.Actions
+namespace TagsCloudForm.CloudPainters
 {
     public class CloudWithWordsPainterFactory : IPainterFactory
     {

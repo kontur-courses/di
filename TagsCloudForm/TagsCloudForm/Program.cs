@@ -8,6 +8,7 @@ using TagsCloudForm.UiActions;
 using TagsCloudForm.WordFilters;
 using CircularCloudLayouter;
 using TagsCloudForm.CircularCloudLayouterSettings;
+using TagsCloudForm.CloudPainters;
 
 namespace TagsCloudForm
 {

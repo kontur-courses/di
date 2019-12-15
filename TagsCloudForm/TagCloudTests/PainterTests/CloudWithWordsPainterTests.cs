@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using CircularCloudLayouter;
 using FakeItEasy;
@@ -8,6 +7,7 @@ using NUnit.Framework;
 using TagsCloudForm;
 using TagsCloudForm.Actions;
 using TagsCloudForm.CircularCloudLayouterSettings;
+using TagsCloudForm.CloudPainters;
 using TagsCloudForm.Common;
 
 namespace TagsCloudTests.PainterTests

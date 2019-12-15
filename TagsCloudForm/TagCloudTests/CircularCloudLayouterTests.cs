@@ -135,7 +135,7 @@ namespace TagsCloudTests
             rect1.IntersectsWith(rect2).Should().BeFalse();
         }
 
-
+        [Test]
         public void PutNextRectangle_RandomRectangles_RectanglesShouldNotIntersect()
         {
             var rectangles = new List<Rectangle>{

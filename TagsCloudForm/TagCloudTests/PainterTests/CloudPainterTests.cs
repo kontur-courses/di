@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using CircularCloudLayouter;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 using TagsCloudForm;
 using TagsCloudForm.Actions;
 using TagsCloudForm.CircularCloudLayouterSettings;
+using TagsCloudForm.CloudPainters;
 using TagsCloudForm.Common;
 
 namespace TagsCloudTests.PainterTests
@@ -70,7 +70,7 @@ namespace TagsCloudTests.PainterTests
         }
 
         [Test]
-        public void CloudPainter_ShouldCallDrawRectagle_ExactTimesThatSpecifiedInSettings()
+        public void CloudPainter_ShouldCallDrawRectangle_ExactTimesThatSpecifiedInSettings()
         {
             var iterations = 10;
             A.CallTo(() => settings.IterationsCount).Returns(iterations);
