@@ -1,18 +1,22 @@
 ﻿using Autofac;
-using SyntaxTextParser;
-using SyntaxTextParser.Architecture;
-using SyntaxTextParser.YandexParser;
-using System;
-using System.Linq;
-using System.Reflection;
-using CommandLine;
+using TagsCloudConsoleUI.DIPresetModules;
 
 namespace TagsCloudConsoleUI
 {
     internal class Program
-    { 
+    {
         static void Main(string[] args)
         {
+            ConsoleManager.Run(CloudPresetContainer);
+        }
+
+        static IContainer CloudPresetContainer(BuildOptions options)
+        {
+            return CloudBuilder.BuildPreset(
+                new CircularRandomCloudModule(options),
+                new WordParserWithYandexToolModule(options.BoringPartsOfSpeech.Split(' '),
+                    options.BoringWords.Split(' ')),
+                new BitmapImageCreatorModule());
         }
     }
 }

@@ -22,8 +22,15 @@ namespace SyntaxTextParser
         public List<TextElement> ParseElementsFromFile(string path, string fileName, string type)
         {
             var fullPath = Path.Combine(path, fileName + '.' + type);
-            if(!File.Exists(fullPath))
-                throw new FileNotFoundException($"File {path} isn't valid");
+            return ParseElementsFromFile(fullPath);
+        }
+
+        public List<TextElement> ParseElementsFromFile(string fullPath)
+        {
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException($"File {fullPath} isn't valid");
+
+            var type = fullPath.Split('.').Last();
 
             var reader = fileReaders.FirstOrDefault(x => x.CanReadThatType(type));
             if (reader == null)

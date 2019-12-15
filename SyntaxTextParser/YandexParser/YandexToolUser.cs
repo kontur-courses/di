@@ -8,6 +8,7 @@ namespace SyntaxTextParser.YandexParser
 {
     public class YandexToolUser : ExternalToolUser
     {
+        private const string ConsoleArgs = "nidg";
         private readonly bool needDeleteTempFiles;
         private const string TempInputFile = "TempInput.txt";
         private const string TempOutputFile = "TempOutput.txt";
@@ -23,7 +24,8 @@ namespace SyntaxTextParser.YandexParser
             File.WriteAllText(TempInputFile, text);
 
             var pathToTool = Path.Combine(FilePath, ToolName);
-            var process = Process.Start(pathToTool, $"-nidg {TempInputFile} {TempOutputFile}");
+            var process = Process.Start(pathToTool, $"-{ConsoleArgs} {TempInputFile} {TempOutputFile}");
+
             if (process == null)
                 throw new Exception($"{ToolName} not found");
             process.WaitForExit();

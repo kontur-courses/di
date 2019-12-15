@@ -20,8 +20,7 @@ namespace SyntaxTextParser
 
         protected override IEnumerable<TypedTextElement> ParseText(string text)
         {
-            var temp = toolUser.ParseTextInTool(text);
-            foreach (var analysis in temp)
+            foreach (var analysis in toolUser.ParseTextInTool(text))
             {
                 var match = analysisRegex.Match(analysis);
                 var initialForm = match.Groups[1].Value;
