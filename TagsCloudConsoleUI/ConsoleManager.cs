@@ -15,23 +15,14 @@ namespace TagsCloudConsoleUI
             });
         }
 
-        private static string InitialMessage => "Tag Cloud Generator\nWrite \"--help\" to see commands:";
-        private static string BorderString(int width) => new string('=', width);
-        private static string SuccessfulMessage(string path) => $"&&&&&&  Image created successful, saved to {path}  &&&&&&";
-        private static string ErrorMessage => $"####### Image created unsuccessful, reasons: #######";
-        private static string ParseCommandErrorMessage => $"####### Incorrect command: #######";
-        private static string ErrorSymbol => "*\t";
-
-
-
-        public static void Run(Func<BuildOptions, IContainer> presetBuilder)
+        public static void Run(Func<BuildOptions, IContainer> presetBuilder, IConsoleManagerFormatter formatter)
         {
             var commandParser = InitCommandParser();
-            Console.WriteLine(InitialMessage);
+            Console.WriteLine(formatter.InitialMessage);
 
             while (true)
             {
-                Console.WriteLine('\n' + BorderString(Console.WindowWidth));
+                Console.WriteLine('\n' + formatter.BorderString(Console.WindowWidth));
                 try
                 {
                     var command = Console.ReadLine()?.Split(' ');
@@ -41,18 +32,18 @@ namespace TagsCloudConsoleUI
                         .WithParsed(options =>
                         {
                             CloudBuilder.CreateCloudImageAndSave(options, presetBuilder(options));
-                            Console.WriteLine(SuccessfulMessage(options.OutputFileName));
+                            Console.WriteLine(formatter.SuccessfulMessage(options.OutputFileName));
                         })
                         .WithNotParsed(errors =>
                         {
-                            Console.WriteLine(ParseCommandErrorMessage);
+                            Console.WriteLine(formatter.ParseCommandErrorMessage);
                             foreach (var error in errors)
-                                Console.WriteLine(ErrorSymbol + error);
+                                Console.WriteLine(formatter.ErrorSymbol + error);
                         });
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(ErrorMessage);
+                    Console.WriteLine(formatter.ErrorMessage);
                     Console.WriteLine(e);
                 }
             }

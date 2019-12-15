@@ -7,7 +7,7 @@ namespace TagsCloudConsoleUI
     {
         static void Main(string[] args)
         {
-            ConsoleManager.Run(CloudPresetContainer);
+            ConsoleManager.Run(CloudPresetContainer, new DefaultConsoleFormatter());
         }
 
         static IContainer CloudPresetContainer(BuildOptions options)

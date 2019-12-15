@@ -53,6 +53,8 @@
     <Compile Include="BuildOptions.cs" />
     <Compile Include="CloudBuilder.cs" />
     <Compile Include="ConsoleManager.cs" />
+    <Compile Include="ConsoleFormatter\DefaultConsoleFormatter.cs" />
+    <Compile Include="ConsoleFormatter\IConsoleManagerFormatter.cs" />
     <Compile Include="DIPresetModules\BitmapImageCreatorModule.cs" />
     <Compile Include="DIPresetModules\CircularRandomCloudModule.cs" />
     <Compile Include="DIPresetModules\WordParserWithYandexToolModule.cs" />

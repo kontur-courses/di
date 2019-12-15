@@ -7,7 +7,7 @@ namespace TagsCloudGenerator
     {
         public static List<T> ShuffleList<T>(this List<T> inputList)
         {
-            var randomList = new List<T>();
+            var randomList = new List<T>(inputList.Count);
 
             var random = new Random();
             while (inputList.Count > 0)
