@@ -17,7 +17,7 @@ namespace TagsCloudContainer
         private IFileSaver imageSaver;
         private string outputFile;
         private string inputFile;
-        
+
         public TagsCloudContainer(ITextReader textReader, IWordsFilter wordsFilter, IWordsCounter wordsCounter,
             IWordsToSizesConverter wordsToSizesConverter,
             ICloudLayouter ccl, IVisualiser visualiser, IFileSaver fileSaver,
@@ -43,8 +43,8 @@ namespace TagsCloudContainer
             var wordsCount = wordsCounter.CountWords(textFiltered);
             var sizes = wordsToSizesConverter.GetSizesOf(wordsCount).ToArray();
             sizes = sizes.OrderByDescending(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
-            
-            CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
+
+            CCL.Center = new Point(CCL.Center.X, CCL.Center.Y - sizes[0].Item2.Height);
             for (var i = 0; i < sizes.Length; i++)
             {
                 CCL.PutNextRectangle(sizes[i].Item2);

@@ -7,8 +7,9 @@ namespace TagsCloudContainer
     public class DefaultWordsCounter : IWordsCounter
     {
         public DefaultWordsCounter()
-        { 
+        {
         }
+
         public Dictionary<string, int> CountWords(IEnumerable<string> arr)
         {
             var res = new Dictionary<string, int>();

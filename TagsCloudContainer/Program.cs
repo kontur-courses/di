@@ -21,7 +21,7 @@ namespace TagsCloudContainer
                 var isHelp = false;
                 foreach (var err in errs)
                 {
-                    if (err is CommandLine.HelpRequestedError)
+                    if (err is HelpRequestedError)
                     {
                         isHelp = true;
                         break;
@@ -41,25 +41,28 @@ namespace TagsCloudContainer
             {
                 help.AdditionalNewLineAfterOption = true;
                 help.AddPreOptionsLine(
-                    "Usage: TagsCloudContainer -i words.txt -w 2000 -h 2000 -o test.png -f Impact -c Red -m false");
+                    "Usage: TagsCloudContainer -i words.txt -w 2000 -h 2000 -o test -f Impact -c Red -m false -r Jpeg " +
+                    "-e PR SPRO");
                 help.AddPreOptionsLine("Default language: russian");
                 return help;
             }, e => e);
             Console.WriteLine(helpText);
         }
 
-        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size, 
-            String color, String font, bool compression, string format)
+        static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size,
+            String color, String font, bool compression, string format, IEnumerable<string> excluded)
         {
             container.Register(Component.For<TagsCloudContainer>()
                 .DependsOn(
-                    Dependency.OnValue("output", output),
+                    Dependency.OnValue("output", output + $".{format}"),
                     Dependency.OnValue("input", input)
                 ));
             container.Register(Component.For<ITextReader>()
                 .ImplementedBy<DefaultTextReader>());
             container.Register(Component.For<IWordsFilter>()
-                .ImplementedBy<DefaultWordsFilter>());
+                .ImplementedBy<DefaultWordsFilter>()
+                .DependsOn(Dependency.OnValue("excluded", excluded))
+            );
             container.Register(Component.For<IWordsCounter>()
                 .ImplementedBy<DefaultWordsCounter>());
             container.Register(Component.For<IWordsToSizesConverter>()
@@ -78,7 +81,7 @@ namespace TagsCloudContainer
                     Dependency.OnValue("size", size),
                     Dependency.OnValue("color", color),
                     Dependency.OnValue("font", font)
-                    )
+                )
             );
             container.Register(Component.For<IFileSaver>()
                 .ImplementedBy<ImageSaver>()
@@ -100,12 +103,13 @@ namespace TagsCloudContainer
                 var output = O.OutputFile;
 
                 var container = new WindsorContainer();
-                container = SetUpContainer(container, output, path, size, O.Color, O.Font, O.Compression, O.Format);
+                container = SetUpContainer(container, output, path, size, O.Color, O.Font, O.Compression,
+                    O.Format, O.Excluded);
 
                 var tagsContainer = container.Resolve<TagsCloudContainer>();
                 tagsContainer.Perform();
 
-                Console.WriteLine($"Your file was succesfuly created and saved into {output}");
+                Console.WriteLine($"Your file was succesfuly created and saved into {output}.{O.Format}");
             });
         }
     }

@@ -10,8 +10,8 @@ namespace TagsCloudContainer
     {
         private Size sizeOfBitmap;
         private Color fontColor;
-        private Font font; 
-        
+        private Font font;
+
         public DefaultVisualiser(Size size, String color, String font)
         {
             sizeOfBitmap = size;
@@ -23,7 +23,7 @@ namespace TagsCloudContainer
         {
             var bitmapWidth = sizeOfBitmap.Width;
             var bitmapHeight = sizeOfBitmap.Height;
-            
+
             var bitmap = new Bitmap(bitmapWidth, bitmapHeight);
             Graphics g = Graphics.FromImage(bitmap);
 
@@ -36,14 +36,16 @@ namespace TagsCloudContainer
             for (var i = 0; i < ccl.RectanglesList.Count; i++)
             {
                 var rect = ccl.RectanglesList[i];
-                var font = GetAdjustedFont(g, arr[i].Item1, this.font, arr[i].Item2.Width,300, 1, true);
+                var font = GetAdjustedFont(g, arr[i].Item1, this.font, arr[i].Item2.Width, 300, 1, true);
                 g.DrawString(arr[i].Item1, font, brush, rect);
                 g.DrawRectangle(pen, rect);
             }
+
             return bitmap;
         }
-        
-        public static Font GetAdjustedFont(Graphics g, string graphicString, Font originalFont, int containerWidth, int maxFontSize, int minFontSize, bool smallestOnFail)
+
+        public static Font GetAdjustedFont(Graphics g, string graphicString, Font originalFont, int containerWidth,
+            int maxFontSize, int minFontSize, bool smallestOnFail)
         {
             Font testFont = null;
             for (int adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
@@ -57,7 +59,7 @@ namespace TagsCloudContainer
                     return testFont;
                 }
             }
-            
+
             if (smallestOnFail)
             {
                 return testFont;

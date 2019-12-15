@@ -7,10 +7,9 @@ namespace TagsCloudContainer.Layouter
     {
         public MustInitialize(T parameters)
         {
-
         }
     }
-    
+
     public interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);

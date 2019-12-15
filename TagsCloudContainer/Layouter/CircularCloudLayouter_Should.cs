@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Layouter
         [SetUp]
         public void SetUp()
         {
-            ccl = new CircularCloudLayouter(new Point(0, 0),true, new SpiralPointsGenerator());
+            ccl = new CircularCloudLayouter(new Point(0, 0), true, new SpiralPointsGenerator());
         }
 
         [TestCase(1000, 1000)]
@@ -33,7 +33,7 @@ namespace TagsCloudContainer.Layouter
             var expectedRect = new Rectangle(new Point(-width / 2, height / 2), rectSize);
             ccl.RectanglesList[0].Should().BeEquivalentTo(expectedRect);
         }
-        
+
         [TestCase(1000)]
         [TestCase(300)]
         [TestCase(50)]
@@ -129,22 +129,22 @@ namespace TagsCloudContainer.Layouter
 
             return (minX: minX, maxX: maxX, minY: minY, maxY: maxY);
         }
-        
+
         [Test]
         public void CheckCorrectRadius()
         {
-            ccl.Center = new Point(10,10);
+            ccl.Center = new Point(10, 10);
             ccl.PutNextRectangle(new Size(10, 10));
             var radius = GetOuterCircleRadius();
-            Assert.AreEqual(7,radius, 1);
+            Assert.AreEqual(7, radius, 1);
         }
 
         private double GetOuterCircleRadius()
         {
             var minsAndMaxes = GetMinAndMaxCoordinatesByAxis();
-            var minX = minsAndMaxes.minX-ccl.Center.X;
+            var minX = minsAndMaxes.minX - ccl.Center.X;
             var maxX = minsAndMaxes.maxX - ccl.Center.X;
-            var minY = minsAndMaxes.minY-ccl.Center.Y;
+            var minY = minsAndMaxes.minY - ccl.Center.Y;
             var maxY = minsAndMaxes.maxY - ccl.Center.Y;
 
             int X = Math.Max(Math.Abs(maxX), Math.Abs(minX));
@@ -201,7 +201,7 @@ namespace TagsCloudContainer.Layouter
             var maxRadVectLeftTop = ccl.RectanglesList.Where(rectangle => rectangle.X < 0 && rectangle.Y > 0)
                 .Max(rectangle => new Vector(rectangle.X, rectangle.Y).Length);
             var maxRadVectRightBot = ccl.RectanglesList.Where(rectangle => rectangle.X > 0 && rectangle.Y < 0)
-                .Max(rectangle => new Vector(rectangle.X + rectangle.Width, rectangle.Y-rectangle.Height).Length);
+                .Max(rectangle => new Vector(rectangle.X + rectangle.Width, rectangle.Y - rectangle.Height).Length);
             var maxRadVectRightTop = ccl.RectanglesList.Where(rectangle => rectangle.X > 0 && rectangle.Y > 0)
                 .Max(rectangle => new Vector(rectangle.X + rectangle.Width, rectangle.Y).Length);
             var maxRadVectLeftBot = ccl.RectanglesList.Where(rectangle => rectangle.X < 0 && rectangle.Y < 0)
@@ -215,8 +215,8 @@ namespace TagsCloudContainer.Layouter
             var yDiameter = Math.Abs(minY) + Math.Abs(maxY);
             var leftToRightDiameter = maxRadVectLeftTop + maxRadVectRightBot;
             var rightToLeftDiameter = maxRadVectRightTop + maxRadVectLeftBot;
-            Assert.AreEqual(xDiameter,yDiameter,25);
-            Assert.AreEqual(leftToRightDiameter,rightToLeftDiameter,25);
+            Assert.AreEqual(xDiameter, yDiameter, 25);
+            Assert.AreEqual(leftToRightDiameter, rightToLeftDiameter, 25);
         }
     }
 }

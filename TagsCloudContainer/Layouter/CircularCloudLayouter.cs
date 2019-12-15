@@ -11,14 +11,13 @@ namespace TagsCloudContainer.Layouter
 {
     public class CircularCloudLayouter : MustInitialize<Point>, ICloudLayouter
     {
-        private bool compressionFlag;
         public Point Center { get; set; }
         public List<Rectangle> RectanglesList
         {
             get { return layout; }
         }
         public IPointsGenerator PointsGenerator { get; }  
-
+        private bool compressionFlag;
         private List<Rectangle> layout = new List<Rectangle>();
         
         public CircularCloudLayouter(Point center, bool compression, IPointsGenerator pointGen) : base(center)

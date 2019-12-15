@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,15 +14,15 @@ namespace TagsCloudContainer
 {
     public class DefaultWordsFilter : IWordsFilter
     {
-        private HashSet<string> excludedTypes = new HashSet<string>()
-        {
-            "PR",
-            "PART",
-            "CONJ"
-        };
+        private HashSet<string> excludedTypes;
 
-        public DefaultWordsFilter()
+        public DefaultWordsFilter(IEnumerable<string> excluded)
         {
+            excludedTypes = new HashSet<string>();
+            foreach (var type in excluded)
+            {
+                excludedTypes.Add(type);
+            }
         }
 
 

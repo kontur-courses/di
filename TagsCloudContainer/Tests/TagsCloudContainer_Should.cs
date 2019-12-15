@@ -18,7 +18,7 @@ namespace TagsCloudContainer.Tests
         private ICloudLayouter ccl;
         private IVisualiser visualiser;
         private IFileSaver imageSaver;
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -33,19 +33,19 @@ namespace TagsCloudContainer.Tests
 
         private void ConfigureDefaultFakes()
         {
-            A.CallTo(() => textReader.Read(A<string>.Ignored)).Returns(new []{"t", "y", "f"});
+            A.CallTo(() => textReader.Read(A<string>.Ignored)).Returns(new[] {"t", "y", "f"});
             A.CallTo(() => wordsFilter.FilterWords(A<IEnumerable<string>>.Ignored)).Returns(new[] {"t", "y"});
             A.CallTo(() => wordsCounter.CountWords(A<IEnumerable<string>>.Ignored))
-                .Returns(new Dictionary<string, int>() { { "t", 1 }, {"y", 1} });
+                .Returns(new Dictionary<string, int>() {{"t", 1}, {"y", 1}});
             A.CallTo(() => wordsToSizesConverter.GetSizesOf(A<Dictionary<string, int>>.Ignored)).Returns(
-                new []{ ("t",new Size(50,50)), ("y", new Size(50,50)) }
+                new[] {("t", new Size(50, 50)), ("y", new Size(50, 50))}
             );
             A.CallTo(() => ccl.PutNextRectangle(A<Size>.Ignored)).Returns(new Rectangle());
             A.CallTo(() => visualiser.DrawRectangles(A<ICloudLayouter>.Ignored, A<(string, Size)[]>.Ignored))
                 .Returns(new Bitmap(500, 500));
             A.CallTo(() => imageSaver.Save(A<Bitmap>.Ignored, A<string>.Ignored)).DoesNothing();
         }
-        
+
         [Test]
         public void CallNecessaryMethods()
         {
@@ -63,7 +63,7 @@ namespace TagsCloudContainer.Tests
 
             ConfigureDefaultFakes();
             app.Perform();
-            
+
             A.CallTo(() => textReader.Read(A<string>.Ignored))
                 .MustHaveHappenedOnceExactly();
             A.CallTo(() => wordsFilter.FilterWords(A<IEnumerable<string>>.Ignored))
@@ -76,6 +76,5 @@ namespace TagsCloudContainer.Tests
                 .MustHaveHappenedOnceExactly();
             A.CallTo(() => imageSaver.Save(A<Bitmap>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
         }
-
     }
 }

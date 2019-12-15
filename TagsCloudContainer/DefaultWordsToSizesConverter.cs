@@ -33,10 +33,10 @@ namespace TagsCloudContainer
         private Size GetSizeOf(string word, Dictionary<string, int> dictionary)
         {
             var sizeFD = g.MeasureString(word, new Font("Tahoma", 500));
-            var widthFD = sizeFD.Width * ((double)dictionary[word] / dictionary.Count);
-            var heightFD = sizeFD.Height * ((double)dictionary[word] / dictionary.Count);
-            return new Size(Math.Min((int)widthFD, MaxWidth), 
-                Math.Min((int)heightFD, MaxHeight));
+            var widthFD = sizeFD.Width * ((double) dictionary[word] / dictionary.Count);
+            var heightFD = sizeFD.Height * ((double) dictionary[word] / dictionary.Count);
+            return new Size(Math.Min((int) widthFD, MaxWidth),
+                Math.Min((int) heightFD, MaxHeight));
         }
 
         public IEnumerable<(string, Size)> GetSizesOf(Dictionary<string, int> dictionary)
@@ -55,17 +55,17 @@ namespace TagsCloudContainer
                 ourSquare += rect.Height * rect.Width;
             }
 
-            double bitmapSquare = (Size.Height-Size.Height/2.5) * (Size.Width - Size.Width/2.5);
+            double bitmapSquare = (Size.Height - Size.Height / 2.5) * (Size.Width - Size.Width / 2.5);
 
             var coeff = Math.Sqrt(bitmapSquare / ourSquare);
 
             var result = new List<(string, Size)>();
             foreach (var item in res)
             {
-                var newRect = new Size((int)(item.Item2.Width * coeff), (int)(item.Item2.Height*coeff));
-                result.Add((item.Item1,newRect));
+                var newRect = new Size((int) (item.Item2.Width * coeff), (int) (item.Item2.Height * coeff));
+                result.Add((item.Item1, newRect));
             }
-            
+
             return result;
         }
     }
