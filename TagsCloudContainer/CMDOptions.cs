@@ -43,5 +43,11 @@ namespace TagsCloudContainer
             Default =  true,
             HelpText = "Flag to enable/unable compression")]
         public bool Compression { get; set; }
+        
+        [Option('r', "format", 
+            Required =  false,
+            Default =  "PNG",
+            HelpText = "Format of output file, should be one of: MemoryBmp,Bmp,Emf,Wmf,Gif,Jpeg,Png,Tiff,Exif,Icon")]
+        public string Format { get; set; }
     }
 }

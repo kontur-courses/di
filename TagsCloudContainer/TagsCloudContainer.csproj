@@ -45,6 +45,10 @@
           <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
+          <HintPath>..\packages\FakeItEasy.5.5.0\lib\net45\FakeItEasy.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
           <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
           <Private>True</Private>
@@ -79,6 +83,8 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CMDOptions.cs" />
+        <Compile Include="ImageSaver.cs" />
+        <Compile Include="Interfaces\IFileSaver.cs" />
         <Compile Include="Interfaces\ITextReader.cs" />
         <Compile Include="Interfaces\IVisualiser.cs" />
         <Compile Include="Interfaces\IWordsCounter.cs" />
@@ -97,16 +103,17 @@
         <Compile Include="DefaultWordsFilter.cs" />
         <Compile Include="DefaultWordsToSizesConverter.cs" />
         <Compile Include="TagsCloudContainer.cs" />
+        <Compile Include="Tests\TagsCloudContainer_Should.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="bin\Debug\words.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="mystem.exe">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="words.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
     <ItemGroup>
@@ -121,7 +128,7 @@
       </COMReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Tests" />
+      <Folder Include="bin\Debug" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -49,7 +49,7 @@ namespace TagsCloudContainer
         }
 
         static WindsorContainer SetUpContainer(WindsorContainer container, string output, string input, Size size, 
-            String color, String font, bool compression)
+            String color, String font, bool compression, string format)
         {
             container.Register(Component.For<TagsCloudContainer>()
                 .DependsOn(
@@ -80,6 +80,10 @@ namespace TagsCloudContainer
                     Dependency.OnValue("font", font)
                     )
             );
+            container.Register(Component.For<IFileSaver>()
+                .ImplementedBy<ImageSaver>()
+                .DependsOn(Dependency.OnValue("format", format))
+            );
 
             return container;
         }
@@ -96,7 +100,7 @@ namespace TagsCloudContainer
                 var output = O.OutputFile;
 
                 var container = new WindsorContainer();
-                container = SetUpContainer(container, output, path, size, O.Color, O.Font, O.Compression);
+                container = SetUpContainer(container, output, path, size, O.Color, O.Font, O.Compression, O.Format);
 
                 var tagsContainer = container.Resolve<TagsCloudContainer>();
                 tagsContainer.Perform();

@@ -8,38 +8,40 @@ namespace TagsCloudContainer
 {
     public class TagsCloudContainer
     {
-        private ITextReader TextReader;
-        private IWordsFilter WordsFilter;
-        private IWordsCounter WordsCounter;
-        private IWordsToSizesConverter WordsToSizesConverter;
+        private ITextReader textReader;
+        private IWordsFilter wordsFilter;
+        private IWordsCounter wordsCounter;
+        private IWordsToSizesConverter wordsToSizesConverter;
         private ICloudLayouter CCL;
-        private IVisualiser Visualiser;
-        private string OutputFile;
-        private string InputFile;
+        private IVisualiser visualiser;
+        private IFileSaver imageSaver;
+        private string outputFile;
+        private string inputFile;
         
         public TagsCloudContainer(ITextReader textReader, IWordsFilter wordsFilter, IWordsCounter wordsCounter,
             IWordsToSizesConverter wordsToSizesConverter,
-            ICloudLayouter ccl, IVisualiser visualiser,
+            ICloudLayouter ccl, IVisualiser visualiser, IFileSaver fileSaver,
             string output,
             string input
         )
         {
-            TextReader = textReader;
-            WordsFilter = wordsFilter;
-            WordsCounter = wordsCounter;
-            WordsToSizesConverter = wordsToSizesConverter;
+            this.textReader = textReader;
+            this.wordsFilter = wordsFilter;
+            this.wordsCounter = wordsCounter;
+            this.wordsToSizesConverter = wordsToSizesConverter;
             CCL = ccl;
-            Visualiser = visualiser;
-            OutputFile = output;
-            InputFile = input;
+            this.visualiser = visualiser;
+            outputFile = output;
+            inputFile = input;
+            imageSaver = fileSaver;
         }
 
         public void Perform()
         {
-            var text = TextReader.Read(InputFile);
-            var textFiltered = WordsFilter.FilterWords(text);
-            var wordsCount = WordsCounter.CountWords(textFiltered);
-            var sizes = WordsToSizesConverter.GetSizesOf(wordsCount).ToArray();
+            var text = textReader.Read(inputFile);
+            var textFiltered = wordsFilter.FilterWords(text);
+            var wordsCount = wordsCounter.CountWords(textFiltered);
+            var sizes = wordsToSizesConverter.GetSizesOf(wordsCount).ToArray();
             sizes = sizes.OrderByDescending(x => x.Item2.Width).ThenBy(x => x.Item2.Height).ToArray();
             
             CCL.Center = new Point(CCL.Center.X , CCL.Center.Y - sizes[0].Item2.Height);  
@@ -48,8 +50,8 @@ namespace TagsCloudContainer
                 CCL.PutNextRectangle(sizes[i].Item2);
             }
 
-            var bitmap = Visualiser.DrawRectangles(CCL, sizes);
-            bitmap.Save(OutputFile, ImageFormat.Png);
+            var bitmap = visualiser.DrawRectangles(CCL, sizes);
+            imageSaver.Save(bitmap, outputFile);
         }
     }
 }
