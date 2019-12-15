@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerBuilderExtensions.cs" />
     <Compile Include="GeneratorCore\CloudContextGenerator.cs" />
     <Compile Include="GeneratorCore\CloudGenerator.cs" />
     <Compile Include="GeneratorCore\CloudLayouters\ArchimedeanSpiral.cs" />

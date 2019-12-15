@@ -1,4 +1,6 @@
-﻿using TagCloudGenerator.Clients.CmdClient;
+﻿using Autofac;
+using TagCloudGenerator.Clients;
+using TagCloudGenerator.Clients.CmdClient;
 using TagCloudGenerator.GeneratorCore;
 using TagCloudGenerator.GeneratorCore.CloudVocabularyPreprocessors;
 
@@ -8,22 +10,21 @@ namespace TagCloudGenerator
     {
         private static void Main(string[] args)
         {
-            var cmdClient = new CommandLineClient(args);
-            var contextGenerator = new CloudContextGenerator(cmdClient);
-            var preprocessor = GetPreprocessor(contextGenerator);
-            var cloudGenerator = new CloudGenerator(contextGenerator, preprocessor);
-
-            cloudGenerator.CreateTagCloudImage();
+            var container = BuildContainer(args);
+            container.Resolve<CloudGenerator>().CreateTagCloudImage();
         }
 
-        private static CloudVocabularyPreprocessor GetPreprocessor(CloudContextGenerator cloudContextGenerator)
+        private static IContainer BuildContainer(string[] args)
         {
-            var cloudContext = cloudContextGenerator.GetTagCloudContext();
+            var containerBuilder = new ContainerBuilder();
 
-            CloudVocabularyPreprocessor preprocessor = new ExcludingPreprocessors(null, cloudContext);
-            preprocessor = new ToLowerPreprocessor(preprocessor);
+            containerBuilder.RegisterInstance(new CommandLineClient(args)).As<IClient>().SingleInstance();
+            containerBuilder.RegisterType<CloudContextGenerator>().AsSelf().SingleInstance();
+            containerBuilder
+                .RegisterDecorator<CloudVocabularyPreprocessor, ExcludingPreprocessors, ToLowerPreprocessor>();
+            containerBuilder.RegisterType<CloudGenerator>().AsSelf();
 
-            return preprocessor;
+            return containerBuilder.Build();
         }
     }
 }

@@ -7,9 +7,13 @@ namespace TagCloudGenerator.GeneratorCore.CloudVocabularyPreprocessors
     {
         private readonly TagCloudContext cloudContext;
 
-        public ExcludingPreprocessors(CloudVocabularyPreprocessor nextPreprocessor, TagCloudContext cloudContext)
-            : base(nextPreprocessor) =>
-            this.cloudContext = cloudContext;
+        // used implicitly by Program.BuildContainer
+        // ReSharper disable once UnusedMember.Global
+        public ExcludingPreprocessors(CloudContextGenerator contextGenerator) : this(null, contextGenerator) { }
+
+        private ExcludingPreprocessors(CloudVocabularyPreprocessor nextPreprocessor,
+                                       CloudContextGenerator contextGenerator) : base(nextPreprocessor) =>
+            cloudContext = contextGenerator.GetTagCloudContext();
 
         protected override IEnumerable<string> ProcessVocabulary(IEnumerable<string> words) =>
             words.Where(word => !cloudContext.ExcludedWords.Contains(word));
