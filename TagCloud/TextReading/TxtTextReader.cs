@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TagCloud.TextReading
@@ -7,7 +8,19 @@ namespace TagCloud.TextReading
     {
         public IEnumerable<string> ReadWords(string filePath)
         {
-            return File.ReadLines(filePath);
+            try
+            {
+                return File.ReadLines(filePath);
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new FileNotFoundException($"File {filePath} doesn't exist", e);
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                throw new DirectoryNotFoundException($"Some part of path {filePath} doesn't exist", e);
+            }
+            
         }
     }
 }

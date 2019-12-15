@@ -58,7 +58,11 @@ namespace TagCloud
                 {
                     app.Run();
                 }
-                catch (Exception e)
+                catch (FileNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (DirectoryNotFoundException e)
                 {
                     Console.WriteLine(e.Message);
                 }
