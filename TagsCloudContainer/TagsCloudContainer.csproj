@@ -103,6 +103,7 @@
         <Compile Include="DefaultWordsFilter.cs" />
         <Compile Include="DefaultWordsToSizesConverter.cs" />
         <Compile Include="TagsCloudContainer.cs" />
+        <Compile Include="Tests\DefaultClassesTests.cs" />
         <Compile Include="Tests\TagsCloudContainer_Should.cs" />
     </ItemGroup>
     <ItemGroup>

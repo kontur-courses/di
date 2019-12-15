@@ -36,7 +36,8 @@ namespace TagsCloudContainer
             for (var i = 0; i < ccl.RectanglesList.Count; i++)
             {
                 var rect = ccl.RectanglesList[i];
-                var font = GetAdjustedFont(g, arr[i].Item1, this.font, arr[i].Item2.Width, 300, 1, true);
+                var font = GetAdjustedFont(g, arr[i].Item1, this.font, arr[i].Item2.Width, 
+                    300, 1, true);
                 g.DrawString(arr[i].Item1, font, brush, rect);
                 g.DrawRectangle(pen, rect);
             }

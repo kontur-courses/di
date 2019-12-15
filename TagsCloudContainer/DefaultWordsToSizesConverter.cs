@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
@@ -10,7 +11,7 @@ namespace TagsCloudContainer
         public Size Size { get; set; }
         public int MaxHeight { get; set; }
         public int MaxWidth { get; set; }
-        public Graphics g;
+        private Graphics graphics;
 
         public DefaultWordsToSizesConverter(Size size, int maxHeight = 0, int maxWidth = 0)
         {
@@ -27,14 +28,15 @@ namespace TagsCloudContainer
 
             var bitmap = new Bitmap(size.Width, size.Height);
             Graphics g = Graphics.FromImage(bitmap);
-            this.g = g;
+            this.graphics = g;
         }
 
         private Size GetSizeOf(string word, Dictionary<string, int> dictionary)
         {
-            var sizeFD = g.MeasureString(word, new Font("Tahoma", 500));
-            var widthFD = sizeFD.Width * ((double) dictionary[word] / dictionary.Count);
-            var heightFD = sizeFD.Height * ((double) dictionary[word] / dictionary.Count);
+            var count = dictionary.Select(x => x.Value).Sum();
+            var sizeFD = graphics.MeasureString(word, new Font("Tahoma", 500));
+            var widthFD = sizeFD.Width * ((double) dictionary[word] / count);
+            var heightFD = sizeFD.Height * ((double) dictionary[word] / count);
             return new Size(Math.Min((int) widthFD, MaxWidth),
                 Math.Min((int) heightFD, MaxHeight));
         }
