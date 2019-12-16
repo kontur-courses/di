@@ -9,7 +9,7 @@ namespace TagsCloudVisualization.Tests
 {
     [TestFixture(typeof(ArchimedeanSpiral))]
     [TestFixture(typeof(RectangularSpiral))]
-    class Spiral_should<Spiral> where Spiral : ISpiral, new()
+    internal class Spiral_should<Spiral> where Spiral : ISpiral, new()
     {
         ISpiral spiral;
 

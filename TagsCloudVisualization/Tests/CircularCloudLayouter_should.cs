@@ -15,7 +15,7 @@ namespace TagsCloudVisualization.Tests
     [TestFixture]
     class CircularCloudLayouter_Should
     {
-        static CircularCloudLayouter cloudLayouter;
+        private static CircularCloudLayouter cloudLayouter;
 
         [SetUp]
         public void SetUp() => cloudLayouter = new CircularCloudLayouter(new Point(50, 50), new RectangularSpiral());
@@ -25,9 +25,10 @@ namespace TagsCloudVisualization.Tests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
-            var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{TestContext.CurrentContext.Test.Name}.png");
+            var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                $"{TestContext.CurrentContext.Test.Name}.png");
 
-            var canvas = new TagCloudCanvas(100,100);
+            var canvas = new TagCloudCanvas(100, 100);
             foreach (var rec in cloudLayouter.GetAllRectangles())
                 canvas.Draw(rec, new SolidBrush(Color.DarkRed));
             canvas.Save(imagePath);
@@ -75,12 +76,15 @@ namespace TagsCloudVisualization.Tests
         }
 
         [TestCase(1, 1, 1, 1, Description = "The first and second rectangle are squares")]
-        [TestCase(5, 10, 10, 5, Description = "First rectangle size = (W:5, H:10), second rectangle size = (W:10, H:5)")]
-        [TestCase(10, 5, 5, 10, Description = "first rectangle size = (W:10, H:5), second rectangle size = (W:5, H:10)")]
+        [TestCase(5, 10, 10, 5, Description =
+            "First rectangle size = (W:5, H:10), second rectangle size = (W:10, H:5)")]
+        [TestCase(10, 5, 5, 10, Description =
+            "first rectangle size = (W:10, H:5), second rectangle size = (W:5, H:10)")]
         // Добавил для верхних ТестКейсов такое описани, так как решил что иное просто запутает людей.
         [TestCase(100, 100, 1, 1, Description = "First rectangle is larger than second")]
         [TestCase(1, 1, 100, 100, Description = "Second rectangle is larger than first")]
-        public void PutNextRectangle_FirstAndSecondRectangles_Should_NotIntersect(int rect1Width, int rect1Height, int rect2Width, int rect2Height)
+        public void PutNextRectangle_FirstAndSecondRectangles_Should_NotIntersect(int rect1Width, int rect1Height,
+            int rect2Width, int rect2Height)
         {
             var firstRectangle = cloudLayouter.PutNextRectangle(new Size(rect1Width, rect1Height));
             var secondRectangle = cloudLayouter.PutNextRectangle(new Size(rect2Width, rect2Height));
@@ -108,9 +112,9 @@ namespace TagsCloudVisualization.Tests
                 }
 
                 for (int i = 0; i < rectangles.Count; i++)
-                    for (int j = i + 1; j < rectangles.Count; j++)
-                        if (rectangles[i].IntersectsWith(rectangles[j]))
-                            Assert.Fail($"rectangle: {rectangles[i]} is intersect with rectangle {rectangles[j]}");
+                for (int j = i + 1; j < rectangles.Count; j++)
+                    if (rectangles[i].IntersectsWith(rectangles[j]))
+                        Assert.Fail($"rectangle: {rectangles[i]} is intersect with rectangle {rectangles[j]}");
             }
         }
 
@@ -137,10 +141,10 @@ namespace TagsCloudVisualization.Tests
                     .First();
 
                 double widthCloud = cloudLayouter.GetAllRectangles().Max(rec => rec.X) -
-                                 cloudLayouter.GetAllRectangles().Min(rec => rec.X);
+                                    cloudLayouter.GetAllRectangles().Min(rec => rec.X);
 
                 double heightCloud = cloudLayouter.GetAllRectangles().Max(rec => rec.Y) -
-                                  cloudLayouter.GetAllRectangles().Min(rec => rec.Y);
+                                     cloudLayouter.GetAllRectangles().Min(rec => rec.Y);
 
                 (radius / (widthCloud / 2)).Should().BeLessThan(1.5);
                 (radius / (heightCloud / 2)).Should().BeLessThan(1.5);
@@ -178,7 +182,7 @@ namespace TagsCloudVisualization.Tests
             }
         }
 
-        double GetDistance(Rectangle rec, Point point) => 
+        double GetDistance(Rectangle rec, Point point) =>
             Math.Sqrt(Math.Pow(rec.X - point.X, 2) + Math.Pow(rec.Y - point.Y, 2));
     }
 }

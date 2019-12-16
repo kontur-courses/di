@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-using Autofac;
+﻿using Autofac;
 using TagCloud.ConsoleCommands;
 using TagCloudPainter;
-using TagsCloudVisualization.Spirals;
 using TagsCloudVisualization.TagCloudLayouter;
 using TextPreprocessor.TextAnalyzers;
 using TextPreprocessor.TextRiders;
