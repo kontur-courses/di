@@ -21,30 +21,44 @@ namespace TagsCloudContainer
 
         public IEnumerable<LayoutWord> Select()
         {
-            var layoutWords = new Dictionary<string, int>();
+            var wordsFrequency = GetWordsFrequency();
+
+            foreach (var (word, frequency) in wordsFrequency)
+            {
+                var font = new Font(wordSetting.FontName, frequency < 12 ? frequency + 6 : 18);
+                var size = GetSize(word, frequency, font);
+                var brush = new SolidBrush(GetColor());
+                yield return new LayoutWord(word, brush, font, size);
+            }
+        }
+
+        private Color GetColor() =>
+            wordSetting.Color == "random"
+                ? Color.FromArgb(random.Next(255), random.Next(255), random.Next(255))
+                : Color.FromName(wordSetting.Color);
+
+
+        private Dictionary<string, int> GetWordsFrequency()
+        {
+            var wordsFrequency = new Dictionary<string, int>();
             foreach (var word in reader.ReadWords())
             {
                 var clearWord = SelectWord(word);
                 if (clearWord is null)
                     continue;
-                if (layoutWords.ContainsKey(clearWord))
-                    layoutWords[clearWord]++;
+                if (wordsFrequency.ContainsKey(clearWord))
+                    wordsFrequency[clearWord]++;
                 else
-                    layoutWords[clearWord] = 1;
+                    wordsFrequency[clearWord] = 1;
             }
 
-            return layoutWords.Keys.Select(x =>
-            {
-                var font = new Font(wordSetting.FontName, layoutWords[x] < 12 ? layoutWords[x] + 6 : 18);
-                var size = new Size(x.Length * ((int) Math.Floor(font.Size) - (layoutWords[x] == 1 ? 0 : 2)),
-                    font.Height);
-                Color color;
-                color = wordSetting.Color == "random"
-                    ? Color.FromArgb(random.Next(255), random.Next(255), random.Next(255))
-                    : Color.FromName(wordSetting.Color);
-                var brush = new SolidBrush(color);
-                return new LayoutWord(x, brush, font, size);
-            });
+            return wordsFrequency;
+        }
+
+        private Size GetSize(string word, int frequency, Font font)
+        {
+            return new Size(word.Length * ((int) Math.Floor(font.Size) - (frequency == 1 ? 0 : 2)),
+                font.Height);
         }
 
         private string SelectWord(string word)
