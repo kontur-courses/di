@@ -9,7 +9,6 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            args = new[] {"-f", "exmp.txt", "-c", "random", "-b", "Black", "-a", "True"};
             var consoleParser = new ConsoleArgumentParser();
             var path = consoleParser.GetPath(args);
             if (path is null)
@@ -32,6 +31,7 @@ namespace TagsCloudContainer
             builder.RegisterInstance(algorithmsSettings).As<AlgorithmsSettings>();
             builder.RegisterInstance(imageSetting).As<ImageSetting>();
             builder.RegisterInstance(path).As<string>();
+            builder.RegisterType<CloudDrawer>().As<IDrawer>();
             builder.Register(c =>
             {
                 var setting = c.Resolve<ImageSetting>();

@@ -7,28 +7,22 @@ namespace TagsCloudContainer
     {
         private Compositor compositor;
         private ImageSetting setting;
+        private IDrawer drawer;
         
-        public ImageCreator(ImageSetting setting, Compositor compositor)
+        public ImageCreator(ImageSetting setting, Compositor compositor, IDrawer drawer)
         {
             this.setting = setting;
             this.compositor = compositor;
+            this.drawer = drawer;
         }
 
         public void Save()
         {
             var words = compositor.Composite();
-            
-            using (var bitmap = new Bitmap(setting.Width, setting.Height))
-            {
-                var graphic = Graphics.FromImage(bitmap);
-                graphic.FillRectangle(new SolidBrush(setting.BackGround), new Rectangle(0, 0, setting.Width, setting.Height));
-                foreach (var (rectangle, layoutWord) in words)
-                {
-                    graphic.DrawString(layoutWord.Word, layoutWord.Font, layoutWord.Brush, rectangle);                 
-                }
+            var image = drawer.Draw(setting, words);
 
-                bitmap.Save("WordsCloud.png",System.Drawing.Imaging.ImageFormat.Png);
-            }
+            image.Save($"{setting.Name}.{setting.Format}");
+            image.Dispose();
         }
     }
 }

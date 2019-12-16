@@ -29,6 +29,13 @@ namespace TagsCloudContainer
 
             [Option('a', "algorithm", Required = false, HelpText = "True if you want another picture", Default = false)]
             public bool Cenrings { get; set; }
+
+            [Option('F', "format", Required = false, HelpText = "jpeg, png, bmp and other (Default: png)",
+                Default = "png")]
+            public string Format { get; set; }
+
+            [Option('n', "name", Required = true, HelpText = "Name for saving image")]
+            public string Name { get; set; }
         }
 
         public WordSetting GetWordSetting(string[] args)
@@ -43,7 +50,10 @@ namespace TagsCloudContainer
         {
             var setting = default(ImageSetting);
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed<Options>(o => { setting = new ImageSetting(o.Height, o.Width, o.BackColor); });
+                .WithParsed<Options>(o =>
+                {
+                    setting = new ImageSetting(o.Height, o.Width, o.BackColor, o.Format, o.Name);
+                });
             return setting;
         }
 
