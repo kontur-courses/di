@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Autofac;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FluentAssertions;
 
 
 namespace TagsCloudContainer
@@ -62,6 +65,36 @@ namespace TagsCloudContainer
             drawingObj.Dispose();
             image.Dispose();
             strFormat.Dispose();
+        }
+
+        [TestFixture]
+        public class InjectionTest
+        {
+            [Test]
+            public void TagCloudDrawerInjections()
+            {
+                var builder = new ContainerBuilder();
+                builder.RegisterInstance(new TextFileReader("test")).As<ITextReader>();
+                builder.RegisterInstance(new NothingDullEliminator())
+                    .As<IDullWordsEliminator>();
+                builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
+                builder.RegisterType<DefaultTextHandler>().As<TextHandler>();
+                builder.RegisterType<DefaultAlgorithm>().As<ITagCloudBuildingAlgorithm>();
+                builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
+                builder.RegisterInstance(new PictureInfo("tagCloud")).AsSelf();
+                builder.RegisterType<DefaultTagsPaintingAlgorithm>().As<ITagsPaintingAlgorithm>();
+                builder.RegisterInstance(new CircularTagsCloudLayouter()).As<ITagsLayouter>();
+                builder.RegisterType<TagCloudDrawer>().AsSelf();
+                var container = builder.Build();
+
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var tagCloudDrawer = scope.Resolve<TagCloudDrawer>();
+                    tagCloudDrawer.tagCloudBuilder.Should().BeOfType(typeof(TagCloudBuilder));
+                    tagCloudDrawer.painter.Should().BeOfType(typeof(DefaultTagsPaintingAlgorithm));
+                    tagCloudDrawer.tagsLayouter.Should().BeOfType(typeof(CircularTagsCloudLayouter));
+                }
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class CircularTagsLayouter : ITagsLayouter
+    public class CircularTagsCloudLayouter : ITagsLayouter
     {
         private readonly Point cloudCenter = new Point(0, 0);
         private List<Rectangle> RectanglesList { get; } = new List<Rectangle>();
@@ -15,7 +15,7 @@ namespace TagsCloudContainer
         private const double AngleDelta = 0.1;
 
 
-        public CircularTagsLayouter()
+        public CircularTagsCloudLayouter()
         {}
 
         public Rectangle PutNextRectangle(Size rectangleSize)

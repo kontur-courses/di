@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Autofac;
-using com.sun.codemodel.@internal.fmt;
-using edu.stanford.nlp.tagger.maxent;
+﻿using Autofac;
 
 namespace TagsCloudContainer
 {
@@ -21,7 +17,7 @@ namespace TagsCloudContainer
             builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
             builder.RegisterInstance(new PictureInfo("tagCloud", inputInfo.ImageFormat)).AsSelf();
             builder.RegisterType<DefaultTagsPaintingAlgorithm>().As<ITagsPaintingAlgorithm>();
-            builder.RegisterInstance(new CircularTagsLayouter()).As<ITagsLayouter>();
+            builder.RegisterInstance(new CircularTagsCloudLayouter()).As<ITagsLayouter>();
             builder.RegisterType<TagCloudDrawer>().AsSelf();
             var container = builder.Build();
 
