@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using TagCloudPainter;
 using UIConsole;
 
 namespace TagCloud.ConsoleCommands
 {
-    public class SetImageSize : IConsoleCommand
+    public class ImageSize : IConsoleCommand
     {
         private PainterConfig painterConfig;
         
-        public SetImageSize(PainterConfig config)
+        public ImageSize(PainterConfig config)
         {
             painterConfig = config;
         }
@@ -19,6 +20,7 @@ namespace TagCloud.ConsoleCommands
         {
             painterConfig.ImageWidth = int.Parse(args["Width"].ToString());
             painterConfig.ImageHeight = int.Parse(args["Height"].ToString());
+            painterConfig.CloudCenter = new Point(painterConfig.ImageWidth / 2, painterConfig.ImageHeight / 2);
         }
         public List<string> ArgsName => new List<string>() { "Width", "Height" };
     }

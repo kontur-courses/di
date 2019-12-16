@@ -44,10 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleCommands\DrawDefaultTagCloud.cs" />
-    <Compile Include="ConsoleCommands\MaxFontSize.cs" />
-    <Compile Include="ConsoleCommands\SetImageName.cs" />
-    <Compile Include="ConsoleCommands\SetImageSize.cs" />
+    <Compile Include="ConsoleCommands\DrawTagCloud.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\ImageName.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\ImageSize.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\MaxFontSize.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\MinFontSize.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\PathToSave.cs" />
+    <Compile Include="ConsoleCommands\TextRiderConfigCommands\AddSkipWord.cs" />
+    <Compile Include="ConsoleCommands\TextRiderConfigCommands\PathToFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagCloudCreator.cs" />

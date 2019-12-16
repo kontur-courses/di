@@ -25,21 +25,24 @@ namespace TagCloud
             containerBuilder.RegisterType<ConsoleUserInterface>().AsSelf().SingleInstance();
             
             containerBuilder.RegisterInstance(TextRiderConfig.Default()).As<TextRiderConfig>().SingleInstance();
-            containerBuilder.RegisterType<FileFileTextRider>().As<IFileTextRider>().SingleInstance();
+            containerBuilder.RegisterType<TxtTextRider>().As<IFileTextRider>().SingleInstance();
+            
+            containerBuilder.RegisterInstance(PainterConfig.Default()).As<PainterConfig>().SingleInstance();
+            containerBuilder.RegisterType<Painter>().As<ITagCloudPainter>().SingleInstance();
             
             containerBuilder.RegisterType<FrequencyTextAnalyzer>().As<ITextAnalyzer>().SingleInstance();
 
             containerBuilder.RegisterInstance(new LayouterFactory()).AsSelf().SingleInstance();
             
-            containerBuilder.RegisterInstance(PainterConfig.Default()).As<PainterConfig>().SingleInstance();
-            containerBuilder.RegisterType<Painter>().As<ITagCloudPainter>().SingleInstance();
-
-            containerBuilder.RegisterType<DrawDefaultTagCloud>().As<IConsoleCommand>().SingleInstance();
-            containerBuilder.RegisterType<SetImageName>().As<IConsoleCommand>().SingleInstance();
-            containerBuilder.RegisterType<SetImageSize>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<DrawTagCloud>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<ImageName>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<ImageSize>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<MaxFontSize>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<MinFontSize>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<PathToFile>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<PathToSave>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<AddSkipWord>().As<IConsoleCommand>().SingleInstance();
             
-            containerBuilder.Register(c => new Point(500, 500)).As<Point>();
             return containerBuilder.Build();
         }
     }

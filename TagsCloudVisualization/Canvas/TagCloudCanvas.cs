@@ -11,7 +11,6 @@ namespace TagsCloudVisualization.Canvas
         public override void Draw(Rectangle rectangle, Brush brush = null)
         {
             Graphics.FillRectangle(brush ?? RandomBrush(), rectangle);
-            Graphics.DrawRectangle(new Pen(Color.White), rectangle);
         }
 
         public override void Draw(string word, Font font, RectangleF rectangleF, Brush brush = null)
@@ -23,13 +22,13 @@ namespace TagsCloudVisualization.Canvas
         {
             var brushes = new List<Brush>()
             {
-                new SolidBrush(Color.Green),
-                new SolidBrush(Color.Blue),
+                new SolidBrush(Color.LawnGreen),
+                new SolidBrush(Color.RoyalBlue),
                 new SolidBrush(Color.Red),
-                new SolidBrush(Color.Magenta),
-                new SolidBrush(Color.Black),
+                new SolidBrush(Color.Orange),
+                new SolidBrush(Color.WhiteSmoke),
                 new SolidBrush(Color.Aqua),
-                new SolidBrush(Color.Indigo),
+                new SolidBrush(Color.GreenYellow),
             };
 
             return brushes[Random.Next(0, brushes.Count)];

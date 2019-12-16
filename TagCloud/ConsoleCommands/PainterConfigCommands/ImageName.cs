@@ -4,11 +4,11 @@ using UIConsole;
 
 namespace TagCloud.ConsoleCommands
 {
-    public class SetImageName : IConsoleCommand
+    public class ImageName : IConsoleCommand
     {
         private PainterConfig painterConfig;
         
-        public SetImageName(PainterConfig config)
+        public ImageName(PainterConfig config)
         {
             painterConfig = config;
         }

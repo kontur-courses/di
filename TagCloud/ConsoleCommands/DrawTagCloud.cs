@@ -6,13 +6,13 @@ using UIConsole;
 
 namespace TagCloud.ConsoleCommands
 {
-    public class DrawDefaultTagCloud : IConsoleCommand
+    public class DrawTagCloud : IConsoleCommand
     {
         private readonly IFileTextRider fileTextRider;
         private readonly ITextAnalyzer textAnalyzer;
         private readonly ITagCloudPainter tagCloudPainter;
         
-        public DrawDefaultTagCloud(IFileTextRider fileTextRider, ITextAnalyzer textAnalyzer, ITagCloudPainter tagCloudPainter)
+        public DrawTagCloud(IFileTextRider fileTextRider, ITextAnalyzer textAnalyzer, ITagCloudPainter tagCloudPainter)
         {
             this.fileTextRider = fileTextRider;
             this.textAnalyzer = textAnalyzer;
@@ -25,7 +25,6 @@ namespace TagCloud.ConsoleCommands
         {
             TagCloudCreator.Create(fileTextRider, textAnalyzer, tagCloudPainter);
         }
-
         public List<string> ArgsName => new List<string>();
     }
 }

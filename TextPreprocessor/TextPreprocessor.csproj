@@ -43,7 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextAnalyzers\FrequencyTextAnalyzer.cs" />
     <Compile Include="TextAnalyzers\ITextAnalyzer.cs" />
-    <Compile Include="TextRiders\FileFileTextRider.cs" />
+    <Compile Include="TextRiders\TxtTextRider.cs" />
     <Compile Include="TextRiders\IFileTextRider.cs" />
     <Compile Include="TextRiders\TextRiderConfig.cs" />
   </ItemGroup>

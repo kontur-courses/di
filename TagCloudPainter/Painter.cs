@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloudVisualization;
 using TagsCloudVisualization.Canvas;
 using TagsCloudVisualization.TagCloudLayouter;
 using TextPreprocessor.Core;
@@ -31,6 +30,8 @@ namespace TagCloudPainter
                 .ToArray();
             var maxFrequency = sortedTagInfos.First().Frequency;
             var minFrequency = sortedTagInfos.Last().Frequency;
+            
+            canvas.Draw(new Rectangle(new Point(0,0),new Size(painterConfig.ImageWidth, painterConfig.ImageHeight)), new SolidBrush(Color.Black));
             
             foreach (var tagInfo in sortedTagInfos)
             {

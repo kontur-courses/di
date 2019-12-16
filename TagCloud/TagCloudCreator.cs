@@ -8,7 +8,7 @@ namespace TagCloud
     {
         public static void Create(IFileTextRider fileTextRider, ITextAnalyzer textAnalyzer, ITagCloudPainter tagCloudPainter)
         {
-            var tags = fileTextRider.GetWords();
+            var tags = fileTextRider.GetTags();
             var tagInfos = textAnalyzer.GetTagInfo(tags);
 
             tagCloudPainter.Draw(tagInfos);
