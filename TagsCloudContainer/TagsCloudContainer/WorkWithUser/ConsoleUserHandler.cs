@@ -1,4 +1,6 @@
-﻿using CommandLine;
+﻿using System;
+using System.Linq;
+using CommandLine;
 
 namespace TagsCloudContainer
 {
@@ -22,7 +24,8 @@ namespace TagsCloudContainer
                     fileName = opts.File;
                     maxCnt = opts.MaxCnt;
                     imageFormat = opts.Format;
-                });
+                })
+                .WithNotParsed(opts => throw new Exception(opts.First().ToString()));
             return new InputInfo(fileName, maxCnt, imageFormat);
         }
     }

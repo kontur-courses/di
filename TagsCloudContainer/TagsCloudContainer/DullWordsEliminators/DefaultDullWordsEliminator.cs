@@ -1,10 +1,7 @@
 ﻿namespace TagsCloudContainer
 {
     public class DefaultDullWordsEliminator : DullWordEliminator
-    {
-        public DefaultDullWordsEliminator() : base()
-        { }
-
+    {   
         public override bool IsDull(string s)
         {
             return tagger.tagString(s).Contains("IN") || tagger.tagString(s).Contains("DT") ||

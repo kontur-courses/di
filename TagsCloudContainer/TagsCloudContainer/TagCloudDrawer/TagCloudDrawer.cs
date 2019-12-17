@@ -34,16 +34,21 @@ namespace TagsCloudContainer
             return tags.Select(x => tagsLayouter.PutNextRectangle(x.Size)).ToList();
         }
 
+        private int GetShiftX (IEnumerable<Rectangle> rectangles) => rectangles.Min(x => x.Left);
+        private int GetShiftY(IEnumerable<Rectangle> rectangles) => rectangles.Min(x => x.Top);
+        private int GetWidth(IEnumerable<Rectangle> rectangles) =>
+            rectangles.Max(x => x.Right) - rectangles.Min(x => x.Left);
+        private int GetHeight(IEnumerable<Rectangle> rectangles) =>
+            rectangles.Max(x => x.Bottom) - rectangles.Min(x => x.Top);
+
         public void DrawTagCloud(int maxWordsCnt)
         {
             var tags = tagCloudBuilder.GetTagsCloud().Take(maxWordsCnt).ToList();
             var rectangles = GetRectangles(tags);
-            var maxY = rectangles.Max(x => x.Bottom);
-            var minY = rectangles.Min(x => x.Top);
-            var width = rectangles.Max(x => x.Right) - rectangles.Min(x => x.Left);
-            var height = rectangles.Max(x => x.Bottom) - rectangles.Min(x => x.Top);
-            var shiftX = rectangles.Min(x => x.Left);
-            var shiftY = rectangles.Min(x => x.Top);
+            var width = GetWidth(rectangles);
+            var height = GetHeight(rectangles);
+            var shiftX = GetShiftX(rectangles);
+            var shiftY = GetShiftY(rectangles);
             var image = new Bitmap(width, height);
             var drawingObj = Graphics.FromImage(image);
             var strFormat = new StringFormat {Alignment = StringAlignment.Center};

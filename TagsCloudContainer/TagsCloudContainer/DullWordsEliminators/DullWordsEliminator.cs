@@ -1,5 +1,4 @@
 ﻿using edu.stanford.nlp.tagger.maxent;
-using System;
 
 namespace TagsCloudContainer
 {

@@ -2,9 +2,6 @@
 {
     public class OnlyNounDullWordsEliminator : DullWordEliminator
     {
-        public OnlyNounDullWordsEliminator() : base()
-        { }
-
         public override bool IsDull(string s)
         {
             return !(tagger.tagString(s).Contains("NN") || tagger.tagString(s).Contains("NNS") ||

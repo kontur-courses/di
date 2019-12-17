@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 
 namespace TagsCloudContainer
 {
@@ -11,7 +11,16 @@ namespace TagsCloudContainer
             Format = format;
         }
 
-        public string Format { get; set; }
+        public string Format
+        {
+            get { return format; }
+            set
+            {
+                if (!availableFormats.Contains(value))
+                    throw new ArgumentException("Not valid format");
+                format = value;
+            }
+        }
 
         public string FileName
         {
@@ -23,7 +32,10 @@ namespace TagsCloudContainer
                 fileName = value;
             }
         }
-        
+
+        private string format;
         private string fileName;
+        private readonly HashSet<string> availableFormats = new HashSet<string>(
+            new[] { "png", "bmp", "gif", "jpeg" });
     }
 }
