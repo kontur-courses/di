@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="CircularTagsCloudLayouterTests.cs" />
     <Compile Include="DullWordsEliminators\NothingDullEliminator.cs" />
+    <Compile Include="WorkWithUser\ILogger.cs" />
     <Compile Include="InputInfo\InputInfo.cs" />
     <Compile Include="Interfaces and abstract classes\TextHandler.cs" />
     <Compile Include="Interfaces and abstract classes\IUserHandler.cs" />
@@ -61,13 +62,14 @@
     <Compile Include="TagsPaintingAlgorithms\DefaultTagsPaintingAlgorithm.cs" />
     <Compile Include="Interfaces and abstract classes\ITagCloudBuilder.cs" />
     <Compile Include="TextFileReader\TextFileReader.cs" />
-    <Compile Include="WorkWithUser\OutputLogger.cs" />
+    <Compile Include="WorkWithUser\ConsoleLogger.cs" />
     <Compile Include="PictureInfo\PictureInfo.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="WorkWithUser\ConsoleUserHandler.cs" />
     <Compile Include="Tag\Tag.cs" />
     <Compile Include="TagCloudBuilder\TagCloudBuilder.cs" />
     <Compile Include="TagCloudDrawer\TagCloudDrawer.cs" />
+    <Compile Include="WorkWithUser\StandartOptiions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

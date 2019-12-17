@@ -6,9 +6,16 @@ namespace TagsCloudContainer
     { 
         public static void Main(string[] args)
         {
-            var builder = new ContainerBuilder();
             var userHandler = new ConsoleUserHandler(args);
             var inputInfo = userHandler.GetInputInfo();
+            var container = GetInjectionContainer(inputInfo);
+            ExecuteProgram(container, inputInfo);
+        }
+
+        private static IContainer GetInjectionContainer(InputInfo inputInfo)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<ConsoleLogger>().As<ILogger>();
             builder.RegisterInstance(new OnlyNounDullWordsEliminator())
                 .As<IDullWordsEliminator>();
             builder.RegisterInstance(new TextFileReader(inputInfo.FileName)).As<ITextReader>();
@@ -19,13 +26,15 @@ namespace TagsCloudContainer
             builder.RegisterType<DefaultTagsPaintingAlgorithm>().As<ITagsPaintingAlgorithm>();
             builder.RegisterInstance(new CircularTagsCloudLayouter()).As<ITagsLayouter>();
             builder.RegisterType<TagCloudDrawer>().AsSelf();
-            var container = builder.Build();
+            return builder.Build();
+        }
 
+        private static void ExecuteProgram(IContainer container, InputInfo inputInfo)
+        {
             using (var scope = container.BeginLifetimeScope())
             {
                 var drawer = scope.Resolve<TagCloudDrawer>();
-                drawer.DrawTagCloud(inputInfo.FileName, inputInfo.MaxWordsCnt);
-                userHandler.WriteToUser(OutputLogger.GetAllLogs());
+                drawer.DrawTagCloud(inputInfo.MaxWordsCnt);
             }
         }
     }

@@ -16,14 +16,16 @@ namespace TagsCloudContainer
         private readonly ITagCloudBuilder tagCloudBuilder;
         private readonly ITagsLayouter tagsLayouter;
         private readonly ITagsPaintingAlgorithm painter;
+        private readonly ILogger logger;
 
         public TagCloudDrawer(PictureInfo pictureInfo, ITagsLayouter tagsLayouter,
-            ITagCloudBuilder tagCloudBuilder, ITagsPaintingAlgorithm painter)
+            ITagCloudBuilder tagCloudBuilder, ITagsPaintingAlgorithm painter, ILogger logger)
         {
             this.pictureInfo = pictureInfo;
             this.tagCloudBuilder = tagCloudBuilder;
             this.painter = painter;
             this.tagsLayouter = tagsLayouter;
+            this.logger = logger;
         }
 
 
@@ -32,7 +34,7 @@ namespace TagsCloudContainer
             return tags.Select(x => tagsLayouter.PutNextRectangle(x.Size)).ToList();
         }
 
-        public void DrawTagCloud(string fileName, int maxWordsCnt)
+        public void DrawTagCloud(int maxWordsCnt)
         {
             var tags = tagCloudBuilder.GetTagsCloud().Take(maxWordsCnt).ToList();
             var rectangles = GetRectangles(tags);
@@ -60,7 +62,7 @@ namespace TagsCloudContainer
 
             var imagePath = Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory,
                 pictureInfo.FileName + "." + pictureInfo.Format });
-            OutputLogger.AddLog("Tag cloud visualization saved to file " + imagePath);
+            logger.LogOut("Tag cloud visualization saved to file " + imagePath);
             image.Save(imagePath);
             drawingObj.Dispose();
             image.Dispose();
@@ -74,6 +76,7 @@ namespace TagsCloudContainer
             public void TagCloudDrawerInjections()
             {
                 var builder = new ContainerBuilder();
+                builder.RegisterType<ConsoleLogger>().As<ILogger>();
                 builder.RegisterInstance(new TextFileReader("test")).As<ITextReader>();
                 builder.RegisterInstance(new NothingDullEliminator())
                     .As<IDullWordsEliminator>();

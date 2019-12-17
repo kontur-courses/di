@@ -18,7 +18,7 @@ namespace TagsCloudContainer
             if (wordsFrequency.Count == 0)
                 return result;
             double maxFrequency = wordsFrequency.Max(pair => pair.Value);
-            foreach (var pair in wordsFrequency.OrderBy(pair => pair.Value).Reverse())
+            foreach (var pair in wordsFrequency.OrderByDescending(pair => pair.Value))
             {
                 var curFrequency = pair.Value;
                 var frequencyRatio = Math.Min(0.05 + curFrequency / maxFrequency, 1.0);
