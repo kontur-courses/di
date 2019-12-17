@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using Autofac;
 using TagsCloudContainer.Filters;
-using TagsCloudContainer.Reader;
 using TagsCloudContainer.RectangleGenerator;
 using TagsCloudContainer.RectangleGenerator.PointGenerator;
 using TagsCloudContainer.TokensGenerator;
@@ -21,8 +21,7 @@ namespace TagsCloudContainer
 
             var container = BuildContainer(setting);
             var tagCloudVisualizator = container.Resolve<TagCloudVisualizator>();
-            var fileReader = container.Resolve<FileReader>();
-            var text = fileReader.Read(options.InputFile);
+            var text = File.ReadAllText(options.InputFile);
             tagCloudVisualizator.DrawTagCloud(text, setting)
                 .Save(options.OutputFile);
             Console.WriteLine($"Image save in {options.OutputFile}");
@@ -33,7 +32,6 @@ namespace TagsCloudContainer
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<Visualizer>().As<IVisualizer>();
-            builder.RegisterType<FileReader>().As<IReader>();
             builder.RegisterType<MyStemParser>().As<ITokensParser>().SingleInstance();
             builder.RegisterType<MyStemFilter>().As<IFilter>().SingleInstance()
                 .WithParameter("allowedWorldType",
@@ -43,7 +41,6 @@ namespace TagsCloudContainer
             builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();
             builder.RegisterType<CircularCloudLayouter>().As<IRectangleGenerator>();
             builder.RegisterType<TagCloudVisualizator>().AsSelf();
-            builder.RegisterType<FileReader>().AsSelf();
 
             return builder.Build();
         }

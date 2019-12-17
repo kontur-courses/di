@@ -75,8 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentParser.cs" />
-    <Compile Include="Reader\FileReader.cs" />
-    <Compile Include="Reader\IReader.cs" />
     <Compile Include="Filters\BoringFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\MyStemFilter.cs" />
@@ -89,7 +87,6 @@
     <Compile Include="RectangleGenerator\RectangleExtension.cs" />
     <Compile Include="TagCloudVisualizator.cs" />
     <Compile Include="TagRectangle.cs" />
-    <Compile Include="Tests\FileManager\Reader_Should.cs" />
     <Compile Include="Tests\Filters\BoringFilter.cs" />
     <Compile Include="Tests\Filters\MyStemFilter_Should.cs" />
     <Compile Include="Tests\RectangleGenerator\CircularCloudLayouter_should.cs" />

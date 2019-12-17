@@ -36,10 +36,6 @@ namespace TagsCloudContainer
                 Default = 0,
                 HelpText = "Set size for background.\r\n0 - black(default);\r\n1 - white;")]
             public int BackgroundColor { get; set; }
-
-//            [Option('h', "help", Required = false,
-//                HelpText = "Help <command> prints help for command.")]
-//            public bool Help { get; set; }
         }
 
         public static Options ParseArguments(string[] args)
