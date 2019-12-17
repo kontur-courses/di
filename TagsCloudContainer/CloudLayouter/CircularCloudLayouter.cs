@@ -1,37 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.CloudLayouter.Spiral;
+using CloudLayouter.Spiral;
 
-namespace TagsCloudContainer.CloudLayouter
+
+namespace CloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly List<Rectangle> rectangles;
-        private IEnumerator<Point> spiralPoint;
-        private readonly ISpiral spiral;
+        protected readonly List<Rectangle> Rectangles;
+        protected IEnumerator<Point> SpiralPoint;
+        protected readonly ISpiral Spiral;
+
+        public Point center;
 
         public CircularCloudLayouter(ISpiral spiral)
         {
-            rectangles = new List<Rectangle>();
-            this.spiral = spiral;
+            Rectangles = new List<Rectangle>();
+            this.Spiral = spiral;
         }
 
         public void SetCenter(Point center)
         {
-            spiralPoint = spiral.GetPoints(center).GetEnumerator();
+            this.center = center;
+            SpiralPoint = Spiral.GetPoints(center).GetEnumerator();
         }
+        
         
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             while (true)
             {
-                spiralPoint.MoveNext();
-                var point = spiralPoint.Current;
+                SpiralPoint.MoveNext();
+                var point = SpiralPoint.Current;
+                
                 var rectangle = new Rectangle(new Point(point.X - rectangleSize.Width / 2, point.Y - rectangleSize.Height / 2), rectangleSize);
-                if (HasOverlappingRectangles(rectangle, rectangles)) continue;
-                rectangles.Add(rectangle);
+                if (HasOverlappingRectangles(rectangle, Rectangles)) continue;
+
+                Rectangles.Add(rectangle);
                 return rectangle;
             }
         }

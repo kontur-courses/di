@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.PreprocessingWorld
+namespace TagsCloudContainer.PreprocessingWords
 {
-    public interface IPreprocessingWorld
+    public interface IPreprocessingWords
     {
         IEnumerable<string> Preprocessing(IEnumerable<string> strings);
     }

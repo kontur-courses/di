@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.CloudDrawing
+namespace CloudDrawing
 {
     public interface ICircularCloudDrawing
     {
@@ -9,6 +9,6 @@ namespace TagsCloudContainer.CloudDrawing
         void DrawRectangle(Rectangle rectangle, Pen pen);
 
         void SaveImage(string filename);
-        void SetBackground(Color background);
+        void SetOptions(Color background, Size imageSize);
     }
 }

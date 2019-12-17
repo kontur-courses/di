@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Drawing;
 using Autofac;
+using CloudDrawing;
+using CloudLayouter;
+using CloudLayouter.Spiral;
 using CommandLine;
-using TagsCloudContainer.CloudDrawing;
-using TagsCloudContainer.CloudLayouter;
-using TagsCloudContainer.CloudLayouter.Spiral;
-using TagsCloudContainer.PreprocessingWorld;
-using TagsCloudContainer.ProcessingWorld;
+using TagsCloudContainer.PreprocessingWords;
+using TagsCloudContainer.ProcessingWords;
 using TagsCloudContainer.Reader;
 
 namespace TagsCloudContainer
@@ -20,13 +20,22 @@ namespace TagsCloudContainer
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<CircularCloudDrawing>().As<ICircularCloudDrawing>();
             builder.RegisterType<ReaderFromTxt>().As<IReader>();
-            builder.RegisterType<MyStemUtility>().As<IPreprocessingWorld>();
+            builder.RegisterType<MyStemUtility>().As<IPreprocessingWords>();
             builder.RegisterType<Processor>().As<IProcessor>();
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
                     var proc = builder.Build().Resolve<IProcessor>();
-                    proc.Run(o.PathToFile, o.PathSaveFile);
+                    proc.Run(o.PathToFile,
+                        o.PathSaveFile,
+                        Color.Aquamarine,
+                        "Arial",
+                        Brushes.Black,
+                        new StringFormat()
+                        {
+                            LineAlignment = StringAlignment.Center
+                        },
+                        new Size(1500, 1500));
                 });
             
         }

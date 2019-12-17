@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using TagsCloudContainer.CloudLayouter;
+using CloudLayouter;
 
-namespace TagsCloudContainer.CloudDrawing
+namespace CloudDrawing
 {
     public class CircularCloudDrawing : ICircularCloudDrawing
     {
@@ -12,18 +12,19 @@ namespace TagsCloudContainer.CloudDrawing
 
         public CircularCloudDrawing(ICloudLayouter cloudLayouter)
         {
-            var imageSize = new Size(2000, 2000);
+            
+            layouter = cloudLayouter;
+           
+        }
+
+        public void SetOptions(Color background, Size imageSize)
+        {
             if (imageSize.Height <= 0 || imageSize.Height <= 0)
                 throw new AggregateException("Size have zero width or height");
             bitmap = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(bitmap);
-            layouter = cloudLayouter;
-            layouter.SetCenter(new Point(imageSize.Width / 2, imageSize.Height / 2));
-        }
-
-        public void SetBackground(Color background)
-        {
             graphics.Clear(background);
+            layouter.SetCenter(new Point(imageSize.Width / 2, imageSize.Height / 2));
         }
         
         public void DrawString(string str, Font font, Brush brush, StringFormat stringFormat)

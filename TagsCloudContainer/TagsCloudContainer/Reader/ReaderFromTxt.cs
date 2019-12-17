@@ -5,16 +5,12 @@ namespace TagsCloudContainer.Reader
 {
     public class ReaderFromTxt : IReader
     {
-        public ReaderFromTxt()
+        public IEnumerable<string> GetWordsSet(string path)
         {
-            
-        }
-        public IEnumerable<string> GetWorldSet(string path)
-        {
-            using (var sr = new StreamReader(path))
+            using (var streamReader = new StreamReader(path))
             {
                 string strLine;
-                while ((strLine = sr.ReadLine()) != null)
+                while ((strLine = streamReader.ReadLine()) != null)
                     yield return strLine.Trim();
             }
         }

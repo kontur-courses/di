@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using CloudDrawing;
+using CloudLayouter;
+using CloudLayouter.Spiral;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudContainer.CloudDrawing;
-using TagsCloudContainer.CloudLayouter;
-using TagsCloudContainer.CloudLayouter.Spiral;
 
-namespace TagsCloudContainer.Tests
+namespace CloudLayouterеTests
 {
      public class CircularCloudLayouterTests
      {

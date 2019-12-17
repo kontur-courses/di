@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using CloudLayouter.Spiral;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.CloudLayouter.Spiral;
 
-namespace TagsCloudContainer.Tests
+namespace CloudLayouterеTests
 {
     [TestFixture()]
     public class SpiralTests

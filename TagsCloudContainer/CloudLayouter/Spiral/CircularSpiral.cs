@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.CloudLayouter.Spiral
+namespace CloudLayouter.Spiral
 {
     public class CircularSpiral : ISpiral
     {
-        private readonly Point center;
         public IEnumerable<Point> GetPoints(Point center)
         {
             var radius = 0.0; 

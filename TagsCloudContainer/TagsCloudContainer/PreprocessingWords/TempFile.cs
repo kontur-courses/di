@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudContainer.PreprocessingWorld
+namespace TagsCloudContainer.PreprocessingWords
 {
     public class TempFile : IDisposable
     {
