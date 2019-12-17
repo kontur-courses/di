@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using Autofac;
 using TagsCloudContainer.Filters;
@@ -37,7 +36,8 @@ namespace TagsCloudContainer
                 .WithParameter("allowedWorldType",
                     new[] {GramPartsEnum.Noun, GramPartsEnum.Verb, GramPartsEnum.Adjective, GramPartsEnum.Adverb});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
-            builder.RegisterType<SpiralGenerator>().As<IPointGenerator>().WithParameter("center", setting.GetCenterImage());
+            builder.RegisterType<SpiralGenerator>().As<IPointGenerator>()
+                .WithParameter("center", setting.GetCenterImage());
             builder.RegisterType<CircularCloudLayouter>().As<IRectangleGenerator>();
             builder.RegisterType<TagCloudVisualizator>().AsSelf();
 

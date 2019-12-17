@@ -14,7 +14,7 @@ namespace TagsCloudContainer.Visualization
             return new Point(ImageSize.Width / 2, ImageSize.Height / 2);
         }
 
-        public TagsCloudSetting(Font font, Size imageSize, Color textColor, Color backgroundColor)
+        private TagsCloudSetting(Font font, Size imageSize, Color textColor, Color backgroundColor)
         {
             Font = font;
             ImageSize = imageSize;
