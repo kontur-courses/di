@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using TagsCloudContainer.Models;
 
 namespace TagsCloudContainer
 {
