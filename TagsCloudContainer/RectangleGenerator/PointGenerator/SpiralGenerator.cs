@@ -6,7 +6,7 @@ namespace TagsCloudContainer.RectangleGenerator.PointGenerator
 {
     public class SpiralGenerator : IPointGenerator
     {
-        public Point Center;
+        public Point Center { get; }
         private IEnumerator<Point> Generator { get; }
         private readonly HashSet<Point> prevPoints = new HashSet<Point>();
 

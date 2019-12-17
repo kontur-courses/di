@@ -21,7 +21,7 @@ namespace TagsCloudContainer.Tests.RectangleGenerator
         {
             center = new Point(10, 10);
             pointGenerator = new SpiralGenerator(center);
-            layouter = new CircularCloudLayouter(center, pointGenerator);
+            layouter = new CircularCloudLayouter(pointGenerator);
         }
 
         [Test]
@@ -36,10 +36,11 @@ namespace TagsCloudContainer.Tests.RectangleGenerator
         public void Constructor_WhenInitializedPointWithNegativeCoords_ThrowArgumentException(int x, int y)
         {
             var center = new Point(x, y);
+            pointGenerator = new SpiralGenerator(center);
             Action action = () =>
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                new CircularCloudLayouter(center, pointGenerator);
+                new CircularCloudLayouter(pointGenerator);
             };
             action.Should().Throw<ArgumentException>();
         }
@@ -94,7 +95,7 @@ namespace TagsCloudContainer.Tests.RectangleGenerator
         public void PutNextRectangle_WhenPutEnoughRectangles_RectanglesShouldBeLikeCircle()
         {
             pointGenerator = new SpiralGenerator(new Point(500, 500));
-            layouter = new CircularCloudLayouter(new Point(500, 500), pointGenerator);
+            layouter = new CircularCloudLayouter(pointGenerator);
             var random = new Random(0);
             var areaRectangles = 0;
             double radius = 0;
@@ -117,7 +118,7 @@ namespace TagsCloudContainer.Tests.RectangleGenerator
         [Test]
         public void PutNextRectangle_WhenPutEnoughRectangles_RectanglesShouldBeDense()
         {
-            layouter = new CircularCloudLayouter(new Point(500, 500), pointGenerator);
+            layouter = new CircularCloudLayouter(pointGenerator);
             var random = new Random(0);
 
             for (var i = 0; i < 100; i++)

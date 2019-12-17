@@ -37,8 +37,7 @@ namespace TagsCloudContainer
                 .WithParameter("allowedWorldType",
                     new[] {GramPartsEnum.Noun, GramPartsEnum.Verb, GramPartsEnum.Adjective, GramPartsEnum.Adverb});
             builder.Register(c => setting).As<ICloudSetting>().SingleInstance();
-            builder.Register(c => setting.GetCenterImage()).As<Point>().SingleInstance();
-            builder.RegisterType<SpiralGenerator>().As<IPointGenerator>();
+            builder.RegisterType<SpiralGenerator>().As<IPointGenerator>().WithParameter("center", setting.GetCenterImage());
             builder.RegisterType<CircularCloudLayouter>().As<IRectangleGenerator>();
             builder.RegisterType<TagCloudVisualizator>().AsSelf();
 

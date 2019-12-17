@@ -11,13 +11,13 @@ namespace TagsCloudContainer.RectangleGenerator
         public List<Rectangle> Rectangles { get; }
         private readonly IPointGenerator generator;
 
-        public CircularCloudLayouter(Point center, IPointGenerator pointGenerator)
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            if (center.X < 0 || center.Y < 0)
+            if (pointGenerator.Center.X < 0 || pointGenerator.Center.Y < 0)
                 throw new ArgumentException();
-            Center = center;
             Rectangles = new List<Rectangle>();
             generator = pointGenerator;
+            Center = pointGenerator.Center;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
