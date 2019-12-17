@@ -1,13 +1,11 @@
-﻿using NUnit.Framework;
-using System;
-using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using NUnit.Framework.Interfaces;
-using System.Collections.Generic;
-using TagsCloudContainer;
+using FluentAssertions;
+using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagsCloudContainer
 {
     [TestFixture]
     class CircularTagsCloudLayouterTests

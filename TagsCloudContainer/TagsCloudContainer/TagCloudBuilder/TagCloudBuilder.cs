@@ -24,30 +24,5 @@ namespace TagsCloudContainer
             var frequencyDict = fileHandler.GetWordsFrequencyDict();
             return algorithmToBuild.GetTags(frequencyDict);
         }
-
-        [TestFixture]
-        public class InjectionTest
-        {
-            [Test]
-            public void TagCloudBuilderInjections()
-            {
-                var builder = new ContainerBuilder();
-                builder.RegisterInstance(new TextFileReader("test")).As<ITextReader>();
-                builder.RegisterInstance(new NothingDullEliminator())
-                    .As<IDullWordsEliminator>();
-                builder.RegisterType<DefaultAlgorithm>().As<ITagCloudBuildingAlgorithm>();
-                builder.RegisterType<TagCloudBuilder>().As<ITagCloudBuilder>();
-                builder.RegisterType<DefaultTextHandler>().As<TextHandler>();
-                var container = builder.Build();
-
-                using (var scope = container.BeginLifetimeScope())
-                {
-                    var tagCloudBuilder = scope.Resolve<ITagCloudBuilder>() as TagCloudBuilder;
-
-                    tagCloudBuilder.algorithmToBuild.Should().BeOfType(typeof(DefaultAlgorithm));
-                    tagCloudBuilder.fileHandler.Should().BeOfType(typeof(DefaultTextHandler));
-                }
-            }
-        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TagsCloudContainer
+﻿namespace TagsCloudContainer
 {
     public interface IDullWordsEliminator
     {

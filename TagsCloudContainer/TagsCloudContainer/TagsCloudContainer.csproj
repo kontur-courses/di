@@ -42,8 +42,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircularTagsCloudLayouterTests.cs" />
+    <Compile Include="Tests\CircularTagsCloudLayouterTests.cs" />
     <Compile Include="DullWordsEliminators\NothingDullEliminator.cs" />
+    <Compile Include="Tests\IDullWordsEliminatorTests.cs" />
+    <Compile Include="Tests\TextFileReaderTests.cs" />
+    <Compile Include="Tests\TextHadlersTests.cs" />
     <Compile Include="WorkWithUser\ILogger.cs" />
     <Compile Include="InputInfo\InputInfo.cs" />
     <Compile Include="Interfaces and abstract classes\TextHandler.cs" />
@@ -53,7 +56,7 @@
     <Compile Include="TagCloudBuildingAlgorithms\DefaultTagCloudBuildingAlgorithm.cs" />
     <Compile Include="DullWordsEliminators\DefaultDullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminators\DullWordsEliminator.cs" />
-    <Compile Include="DullWordsEliminators\OnlyNounDullWords.cs" />
+    <Compile Include="DullWordsEliminators\OnlyNounDullWordsEliminator.cs" />
     <Compile Include="Interfaces and abstract classes\ITextReader.cs" />
     <Compile Include="TextHandlers\DefaultTextHandler.cs" />
     <Compile Include="Interfaces and abstract classes\ITagCloudBuildingAlgorithm.cs" />
