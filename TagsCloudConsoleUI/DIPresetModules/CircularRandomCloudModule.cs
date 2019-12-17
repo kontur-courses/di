@@ -1,10 +1,10 @@
-﻿using Autofac;
-using System.Drawing;
+﻿using System.Drawing;
+using Autofac;
 using TagsCloudGenerator;
 using TagsCloudGenerator.CloudPrepossessing;
 using TagsCloudGenerator.ShapeGenerator;
 
-namespace TagsCloudConsoleUI.DiContainerBuilder
+namespace TagsCloudConsoleUI.DIPresetModules
 {
     internal class CircularRandomCloudModule : DiPreset
     {
@@ -12,6 +12,9 @@ namespace TagsCloudConsoleUI.DiContainerBuilder
         private readonly Color[] paletteColors;
         private readonly Point center;
         private readonly float spiralStep;
+        private readonly int fontSizeMultiplier;
+        private readonly int maximalFontSize;
+        private readonly string textFontFamily;
 
         public CircularRandomCloudModule(BuildOptions options) : base(options)
         {
@@ -19,11 +22,20 @@ namespace TagsCloudConsoleUI.DiContainerBuilder
             paletteColors = ColorsHexConverter.CreateFromHexEnumerable(options.ColorsPalette);
             center = new Point(options.Width / 2, options.Height / 2);
             spiralStep = options.SpiralStep;
+            fontSizeMultiplier = options.FontSizeMultiplier;
+            maximalFontSize = options.MaximalFontSize;
+            textFontFamily = options.FontFamily;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CloudFormat>();
+            builder.RegisterType<CloudFormat>().WithParameters(new[]
+            {
+                new NamedParameter("tagTextFontFamily", textFontFamily),
+                new NamedParameter("fontSizeMultiplier", fontSizeMultiplier),
+                new NamedParameter("maximalFontSize", maximalFontSize)
+            });
+
             builder.RegisterType<RandomTagOrder>().As<ITagOrder>();
             builder.RegisterType<FirstBigLetterPreform>().As<ITagTextPreform>();
             builder.RegisterType<RandomlyCloudPainer>().As<ICloudColorPainter>()

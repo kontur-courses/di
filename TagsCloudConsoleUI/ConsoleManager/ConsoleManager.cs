@@ -1,6 +1,5 @@
 ﻿using CommandLine;
 using System;
-using TagsCloudConsoleUI.DiContainerBuilder;
 
 namespace TagsCloudConsoleUI
 {
@@ -15,7 +14,7 @@ namespace TagsCloudConsoleUI
             });
         }
 
-        public static void Run(IConsoleManagerFormatter formatter)
+        public static void Run(IConsoleManagerFormatter formatter, Action<BuildOptions> onCallAction)
         {
             var commandParser = InitCommandParser();
             Console.WriteLine(formatter.InitialMessage);
@@ -31,7 +30,7 @@ namespace TagsCloudConsoleUI
                     commandParser.ParseArguments<BuildOptions>(command)
                         .WithParsed(options =>
                         {
-                            CloudBuilder.CreateCloudImageAndSave(options);
+                            onCallAction(options);
                             Console.WriteLine(formatter.SuccessfulMessage(options.OutputFileName));
                         })
                         .WithNotParsed(errors =>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
 
-namespace TagsCloudConsoleUI.DiContainerBuilder
+namespace TagsCloudConsoleUI.DIPresetModules
 {
     internal abstract class DiPreset : Module
     {

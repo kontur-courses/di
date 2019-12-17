@@ -51,14 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleManager\BuildOptions.cs" />
-    <Compile Include="DiContainerBuilder\BaseCloudBuilder.cs" />
     <Compile Include="ConsoleManager\ConsoleManager.cs" />
     <Compile Include="ConsoleManager\ConsoleFormatter\DefaultConsoleFormatter.cs" />
     <Compile Include="ConsoleManager\ConsoleFormatter\IConsoleManagerFormatter.cs" />
-    <Compile Include="DiContainerBuilder\DIPresetModules\BitmapImageCreatorModule.cs" />
-    <Compile Include="DiContainerBuilder\DIPresetModules\CircularRandomCloudModule.cs" />
-    <Compile Include="DiContainerBuilder\DIPresetModules\DiPreset.cs" />
-    <Compile Include="DiContainerBuilder\DIPresetModules\WordParserWithYandexToolModule.cs" />
+    <Compile Include="DIPresetModules\BitmapImageCreatorModule.cs" />
+    <Compile Include="DIPresetModules\CircularRandomCloudModule.cs" />
+    <Compile Include="DIPresetModules\DiPreset.cs" />
+    <Compile Include="DIPresetModules\WordParserWithYandexToolModule.cs" />
     <Compile Include="ImageFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

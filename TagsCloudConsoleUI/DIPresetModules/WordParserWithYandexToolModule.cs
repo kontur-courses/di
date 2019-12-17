@@ -3,7 +3,7 @@ using SyntaxTextParser;
 using SyntaxTextParser.Architecture;
 using SyntaxTextParser.YandexParser;
 
-namespace TagsCloudConsoleUI.DiContainerBuilder
+namespace TagsCloudConsoleUI.DIPresetModules
 {
     internal class WordParserWithYandexToolModule : DiPreset
     {

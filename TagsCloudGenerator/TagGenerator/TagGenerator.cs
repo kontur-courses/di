@@ -7,11 +7,13 @@ using TagsCloudGenerator.CloudPrepossessing;
 
 namespace TagsCloudGenerator
 {
-    public static class CloudGenerator
-    { 
-        public static List<CloudTag> CreateTagsCloud(List<TextElement> elements, 
+    public static class TagGenerator
+    {
+        public static List<CloudTag> CreateCloudTags(string fullPath, TextParser parser,
             ITagsPrepossessing tagPlacer, CloudFormat cloudFormat)
         {
+            var elements = parser.ParseElementsFromFile(fullPath);
+
             elements = cloudFormat.TagOrderPreform.OrderEnumerable(elements);
             var result = new List<CloudTag>();
 

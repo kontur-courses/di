@@ -2,7 +2,7 @@
 using Autofac;
 using TagsCloudGenerator;
 
-namespace TagsCloudConsoleUI.DiContainerBuilder
+namespace TagsCloudConsoleUI.DIPresetModules
 {
     internal class BitmapImageCreatorModule : DiPreset
     {
@@ -11,7 +11,7 @@ namespace TagsCloudConsoleUI.DiContainerBuilder
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<BitmapCloudBuilder>().As<ICloudBuilder<Bitmap>>();
+            builder.RegisterType<BitmapBaseCloudBuilder>().As<CloudBuilder<Bitmap>>();
         }
     }
 }
