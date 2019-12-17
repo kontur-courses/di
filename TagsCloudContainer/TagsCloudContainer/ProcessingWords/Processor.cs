@@ -22,17 +22,16 @@ namespace TagsCloudContainer.ProcessingWords
             this.preprocessingWords = preprocessingWords;
             this.circularCloudDrawing = circularCloudDrawing;
         }
-
-        public void Run(string pathToFile, string pathSave, Color colorBackground,
+        
+        public Bitmap Run(string pathToFile, Color colorBackground,
             string famyilyNameFont, Brush brushText, StringFormat stringFormatText, Size size)
         {
-            this.circularCloudDrawing.SetOptions(colorBackground, size);
+            circularCloudDrawing.SetOptions(colorBackground, size);
             foreach (var frequencyOfWord in GetWordAndNumberOfRepetitions(preprocessingWords.Preprocessing(reader.GetWordsSet(pathToFile))))
                 circularCloudDrawing.DrawString(frequencyOfWord.Item1, 
                     new Font( famyilyNameFont, frequencyOfWord.Item2 + 10),
                     brushText, stringFormatText);
-            circularCloudDrawing.SaveImage(pathSave);
-
+            return circularCloudDrawing.GetBitmap();
         }
         
         public static IEnumerable<(string, int)> GetWordAndNumberOfRepetitions(IEnumerable<string> words)
@@ -56,6 +55,7 @@ namespace TagsCloudContainer.ProcessingWords
             foreach (var word in wordsRandomSort)
                 yield return (word, frequencyOfWords[word]);
         }
-        
+
+
     }
 }

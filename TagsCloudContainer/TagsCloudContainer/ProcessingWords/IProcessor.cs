@@ -4,7 +4,7 @@ namespace TagsCloudContainer.ProcessingWords
 {
     public interface IProcessor
     {
-        void Run(string pathToFile, string pathSave, Color colorBackground,
+        Bitmap Run(string pathToFile, Color colorBackground,
             string famyilyNameFont, Brush brushText, StringFormat stringFormatText, Size size);
     }
 }

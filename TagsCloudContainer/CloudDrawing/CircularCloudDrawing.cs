@@ -39,6 +39,8 @@ namespace CloudDrawing
             graphics.DrawRectangle(pen, rectangle);
         }
         
+        public Bitmap GetBitmap() => bitmap;
+        
         public void SaveImage(string filename)
         {
             bitmap.Save(filename);
