@@ -19,6 +19,9 @@ namespace TagCloud
         {
             builder.RegisterInstance(new PictureConfig()).As<PictureConfig>();
             builder.RegisterType<TxtTextReader>().As<ITextReader>();
+            builder.RegisterType<MicrosoftWordTextReader>().As<ITextReader>();
+            builder.RegisterType<TextReaderSelector>().As<ITextReaderSelector>();
+            builder.RegisterType<FileInfoProvider>().As<IFileInfoProvider>();
             builder.RegisterType<WordCounter>().As<IWordCounter>();
             builder.RegisterType<WordSizeSetter>().As<IWordSizeSetter>();
             builder.RegisterType<WordProcessor>().As<IWordProcessor>();
@@ -72,6 +75,7 @@ namespace TagCloud
 
         public static void Main(string[] args)
         {
+            args = new[] {"-i", "D:/Desktop/1.docx", "-o", "o10"};
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(Execute)
                 .WithNotParsed(errors => Console.WriteLine(string.Join("\\n", errors)));
