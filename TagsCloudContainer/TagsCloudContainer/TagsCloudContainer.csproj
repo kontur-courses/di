@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PreprocessingWords\CreateProcess.cs" />
+    <Compile Include="PreprocessingWords\ICreateProcess.cs" />
     <Compile Include="PreprocessingWords\IPreprocessingWords.cs" />
     <Compile Include="PreprocessingWords\MyStemOutput.cs" />
     <Compile Include="PreprocessingWords\MyStemUtility.cs" />

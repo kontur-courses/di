@@ -16,14 +16,14 @@ namespace TagsCloudConsoleVersion
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<CircularSpiral>().As<ISpiral>();
-            
             builder.RegisterType<CircularCloudDrawing>().As<ICircularCloudDrawing>();
             builder.RegisterType<ReaderFromTxt>().As<IReader>();
             builder.RegisterType<MyStemUtility>().As<IPreprocessingWords>();
+            builder.RegisterType<CreateProcess>().As<ICreateProcess>();
             builder.RegisterType<Processor>().As<IProcessor>();
             
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed<Options>(o =>
+                .WithParsed(o =>
                 {
                     if (o.UseSqueezedAlgorithm)
                         builder.RegisterType<SqueezedCircularCloudLayouter>().As<ICloudLayouter>();

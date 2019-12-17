@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TagsCloudContainer.PreprocessingWords
 {
-    public static class CreateProcess
+    public class CreateProcess : ICreateProcess
     {
-        public static IEnumerable<string> GetResult(string nameProgram, string arguments)
+        public  IEnumerable<string> GetResult(string nameProgram, string arguments)
         {
             var words = new List<string>();
             using (var process = new Process
