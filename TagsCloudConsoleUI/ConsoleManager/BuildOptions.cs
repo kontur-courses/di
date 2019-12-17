@@ -17,6 +17,9 @@ namespace TagsCloudConsoleUI
         public int Height { get; set; }
 
 
+        [Option("cloudpreset", Default = "YandexCircularRandomImage", Required = false, HelpText = "Preset for tag cloud generator")]
+        public string CloudPreset { get; set; }
+
         [Option("colorpalette", Default = "#8cff8a #e88787 #8797e8 #df95ed", 
             Required = false, HelpText = "Palette of colors from their enumeration separated by a space, use in Tag paint")]
         public string ColorsPalette { get; set; }

@@ -9,7 +9,7 @@ namespace SyntaxTextParser
     {
         private readonly YandexToolUser toolUser;
 
-        private static readonly Regex analysisRegex = new Regex(@"^\w+{(\w+)\??=(\w+)[,=]", RegexOptions.Compiled);
+        private static readonly Regex AnalysisRegex = new Regex(@"^\w+{(\w+)\??=(\w+)[,=]", RegexOptions.Compiled);
 
         public YandexElementParser(IEnumerable<IElementValidator> elementValidators,
             IElementFormatter elementFormatter, YandexToolUser toolUser) :
@@ -22,7 +22,7 @@ namespace SyntaxTextParser
         {
             foreach (var analysis in toolUser.ParseTextInTool(text))
             {
-                var match = analysisRegex.Match(analysis);
+                var match = AnalysisRegex.Match(analysis);
                 var initialForm = match.Groups[1].Value;
                 var partOfSpeech = match.Groups[2].Value;
                 if(string.IsNullOrEmpty(initialForm) 

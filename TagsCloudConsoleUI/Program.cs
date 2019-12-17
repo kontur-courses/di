@@ -1,22 +1,10 @@
-﻿using Autofac;
-using TagsCloudConsoleUI.DIPresetModules;
-
-namespace TagsCloudConsoleUI
+﻿namespace TagsCloudConsoleUI
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            ConsoleManager.Run(CloudPresetContainer, new DefaultConsoleFormatter());
-        }
-
-        static IContainer CloudPresetContainer(BuildOptions options)
-        {
-            return CloudBuilder.BuildPreset(
-                new CircularRandomCloudModule(options),
-                new WordParserWithYandexToolModule(options.BoringPartsOfSpeech.Split(' '),
-                    options.BoringWords.Split(' ')),
-                new BitmapImageCreatorModule());
+            ConsoleManager.Run(new DefaultConsoleFormatter());
         }
     }
 }

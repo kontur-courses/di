@@ -3,19 +3,19 @@ using SyntaxTextParser;
 using SyntaxTextParser.Architecture;
 using SyntaxTextParser.YandexParser;
 
-namespace TagsCloudConsoleUI.DIPresetModules
+namespace TagsCloudConsoleUI.DiContainerBuilder
 {
-    internal class WordParserWithYandexToolModule : Module
+    internal class WordParserWithYandexToolModule : DiPreset
     {
         private readonly string[] boringSpeech;
         private readonly string[] boringWords;
         protected readonly string FilePath = "./YandexParser";
         protected readonly string FileName = "mystem.exe";
 
-        public WordParserWithYandexToolModule(string[] boringSpeech, string[] boringWords)
+        public WordParserWithYandexToolModule(BuildOptions options) : base(options)
         {
-            this.boringSpeech = boringSpeech;
-            this.boringWords = boringWords;
+            boringSpeech = options.BoringPartsOfSpeech.Split(' ');
+            boringWords = options.BoringWords.Split(' ');
         }
 
         protected override void Load(ContainerBuilder builder)

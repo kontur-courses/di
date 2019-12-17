@@ -4,16 +4,16 @@ using TagsCloudGenerator;
 using TagsCloudGenerator.CloudPrepossessing;
 using TagsCloudGenerator.ShapeGenerator;
 
-namespace TagsCloudConsoleUI.DIPresetModules
+namespace TagsCloudConsoleUI.DiContainerBuilder
 {
-    internal class CircularRandomCloudModule : Module
+    internal class CircularRandomCloudModule : DiPreset
     {
         private readonly Color backgroundColor;
         private readonly Color[] paletteColors;
         private readonly Point center;
         private readonly float spiralStep;
 
-        public CircularRandomCloudModule(BuildOptions options)
+        public CircularRandomCloudModule(BuildOptions options) : base(options)
         {
             backgroundColor = ColorsHexConverter.CreateFromHex(options.BackgroundColor);
             paletteColors = ColorsHexConverter.CreateFromHexEnumerable(options.ColorsPalette);

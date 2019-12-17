@@ -12,9 +12,9 @@ namespace TagsCloudGenerator
             var random = new Random();
             while (inputList.Count > 0)
             {
-                var randomIndex = random.Next(0, inputList.Count); 
+                var randomIndex = random.Next(0, inputList.Count);
                 randomList.Add(inputList[randomIndex]);
-                inputList.RemoveAt(randomIndex); 
+                inputList.RemoveAt(randomIndex);
             }
 
             return randomList; 

@@ -30,7 +30,10 @@ namespace SyntaxTextParser
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException($"File {fullPath} isn't valid");
 
-            var type = fullPath.Split('.').Last();
+            var type = Path.GetExtension(fullPath);
+            if (string.IsNullOrEmpty(type)) 
+                throw new ArgumentException($"Incorrect extension in file path {fullPath}");
+            type = type.Substring(1);
 
             var reader = fileReaders.FirstOrDefault(x => x.CanReadThatType(type));
             if (reader == null)

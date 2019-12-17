@@ -34,7 +34,7 @@ namespace TagsCloudGenerator.CloudPrepossessing
                 var rectVariant = new Rectangle(shape.GetNextSpiralPoint(), rectangleSize);
                 
                 if (rectangles.Any(rectVariant.IntersectsWith)) continue;
-                
+
                 rectangles.Add(rectVariant);
                 return rectVariant;
             }
