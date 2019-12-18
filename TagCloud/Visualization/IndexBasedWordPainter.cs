@@ -5,16 +5,17 @@ namespace TagCloud.Visualization
 {
     public class IndexBasedWordPainter : IWordPainter
     {
-        private readonly Color[] colors;
+        private readonly PictureConfig pictureConfig;
+        private Color[] Colors => pictureConfig.Palette.WordsColors;
 
         public IndexBasedWordPainter(PictureConfig pictureConfig)
         {
-            colors = pictureConfig.Palette.WordsColors;
+            this.pictureConfig = pictureConfig;
         }
 
         public Color GetWordColor(Word word, int index)
         {
-            return colors[index % colors.Length];
+            return Colors[index % Colors.Length];
         }
     }
 }

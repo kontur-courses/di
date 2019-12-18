@@ -1,4 +1,5 @@
 ﻿using TagCloud.Infrastructure;
+using TagCloud.WordsProcessing;
 
 namespace TagCloud.App
 {
@@ -7,5 +8,6 @@ namespace TagCloud.App
         public PictureConfig PictureConfig { get; set; }
         public string InputFilePath { get; set; }
         public string OutputFilePath{ get; set; }
+        public WordClassSettings WordClassSettings { get; set; }
     }
 }

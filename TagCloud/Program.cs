@@ -25,6 +25,7 @@ namespace TagCloud
             builder.RegisterType<WordCounter>().As<IWordCounter>();
             builder.RegisterType<WordSizeSetter>().As<IWordSizeSetter>();
             builder.RegisterType<WordProcessor>().As<IWordProcessor>();
+            builder.RegisterType<WordClassBasedSelector>().As<IWordSelector>();
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
             builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
             builder.RegisterType<IndexBasedWordPainter>().As<IWordPainter>();
@@ -44,11 +45,9 @@ namespace TagCloud
             
             var builder = new ContainerBuilder();
             RegisterOptionIndependentDependencies(builder);
-            builder
-                .Register(c =>
-                    new WordClassBasedSelector(c.Resolve<IWordClassIdentifier>(), excludedWordClasses))
-                .As<IWordSelector>();
             builder.RegisterInstance(new MyStemBasedWordClassIdentifier(myStemPath)).As<IWordClassIdentifier>();
+
+
             builder.Register(c =>
                     new ConsoleSettingsProvider(options, c.Resolve<PictureConfig>()))
                 .As<ISettingsProvider>();
@@ -80,7 +79,6 @@ namespace TagCloud
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(Execute)
                 .WithNotParsed(errors => Console.WriteLine(string.Join("\\n", errors)));
-            
         }
     }
 }

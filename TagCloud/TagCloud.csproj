@@ -72,6 +72,7 @@
     <Compile Include="Visualization\TagCloudElement.cs" />
     <Compile Include="Visualization\TagCloudElementsPreparer.cs" />
     <Compile Include="Visualization\WordPainter.cs" />
+    <Compile Include="WordsProcessing\WordClassSettings.cs" />
     <Compile Include="WordsProcessing\IWordCounter.cs" />
     <Compile Include="Visualization\TagCloudGenerator.cs" />
     <Compile Include="Infrastructure\Word.cs" />

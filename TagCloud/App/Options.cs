@@ -25,5 +25,8 @@ namespace TagCloud.App
 
         [Option('b', "background", HelpText = "Background color of output")]
         public string Background { get; set; }
+
+        [Option('t', "wordtype", HelpText = "Word classes used in output")]
+        public IEnumerable<string> WordClasses { get; set; }
     }
 }
