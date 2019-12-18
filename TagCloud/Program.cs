@@ -30,6 +30,8 @@ namespace TagCloud
             builder.RegisterType<IndexBasedWordPainter>().As<IWordPainter>();
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
+            builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>();
+            builder.RegisterType<WordPainter>().As<ITagCloudElementPainter>();
             builder.RegisterType<Application>().AsSelf();
         }
 
@@ -75,7 +77,6 @@ namespace TagCloud
 
         public static void Main(string[] args)
         {
-            args = new[] {"-i", "D:/Desktop/1.docx", "-o", "o10"};
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(Execute)
                 .WithNotParsed(errors => Console.WriteLine(string.Join("\\n", errors)));

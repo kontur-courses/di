@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
+using TagCloud.Visualization;
 
 namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 {
@@ -30,7 +33,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var size = new Size(2, 1);
 
             var rectangle = layouter.PutNextRectangle(size);
-            rectangles = new List<Rectangle> { rectangle };
+            rectangles = new List<Rectangle> {rectangle};
 
             rectangle.Should()
                 .Match<Rectangle>(r =>
@@ -48,7 +51,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
 
             var firstRectangle = layouter.PutNextRectangle(firstSize);
             var secondRectangle = layouter.PutNextRectangle(secondSize);
-            rectangles = new List<Rectangle> { firstRectangle, secondRectangle };
+            rectangles = new List<Rectangle> {firstRectangle, secondRectangle};
 
             RectangleUtils.RectanglesAreIntersected(firstRectangle, secondRectangle)
                 .Should()
@@ -110,7 +113,8 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
         [TestCase(20, TestName = "20 rectangles")]
         [TestCase(50, TestName = "50 rectangles")]
         [TestCase(100, TestName = "100 rectangles")]
-        public void PutNextRectangle_ShouldPlaceRectanglesTightly_WhenManyRectanglesWithDifferentSize(int rectanglesCount)
+        public void PutNextRectangle_ShouldPlaceRectanglesTightly_WhenManyRectanglesWithDifferentSize(
+            int rectanglesCount)
         {
             var sizes = new List<Size>();
             var rnd = new Random();
@@ -155,7 +159,8 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var expectedMaxDelta = rectangles.Select(RectangleUtils.GetRectangleDiagonal).Max();
 
             var convexHullPoints = GeometryUtils.BuildConvexHull(rectangles);
-            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center)).ToList();
+            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center))
+                .ToList();
             var actualDelta = distances.Max() - distances.Min();
 
             (expectedMaxDelta - actualDelta).Should().BeGreaterOrEqualTo(0);
@@ -185,10 +190,61 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var expectedMaxDelta = rectangles.Select(RectangleUtils.GetRectangleDiagonal).Max();
 
             var convexHullPoints = GeometryUtils.BuildConvexHull(rectangles);
-            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center)).ToList();
+            var distances = convexHullPoints.Select(p => DistanceUtils.GetDistanceFromPointToPoint(p, config.Center))
+                .ToList();
             var actualDelta = distances.Max() - distances.Min();
 
             (expectedMaxDelta - actualDelta).Should().BeGreaterOrEqualTo(0);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var context = TestContext.CurrentContext;
+            if (context.Result.Outcome.Status != TestStatus.Failed)
+                return;
+
+            var testMethodName = TestContext.CurrentContext.Test.MethodName;
+            var testName = TestContext.CurrentContext.Test.Name;
+            var fileName = $"{AppDomain.CurrentDomain.BaseDirectory}\\fail_{testMethodName}_{testName}.bmp";
+
+            DrawRectangles().Save(fileName);
+
+            TestContext.Out.WriteLine($"Tag cloud visualization saved to file {fileName}");
+        }
+
+        private Bitmap DrawRectangles()
+        {
+            var parameter = 10;
+            var shift = ShiftUtils.GetShiftToTheFirstQuadrant(new Point(0, 0), rectangles);
+            var resizedAndMovedRectangles = rectangles.Select(r =>
+                ShiftUtils.GetShiftedAndResizedRectangle(r, shift, parameter)).ToList();
+            config.Size = GetSize(resizedAndMovedRectangles);
+            var cloudGenerator = new TagCloudGenerator(config, GetPreparer(resizedAndMovedRectangles), new RectanglePainter());
+            var bitmap = cloudGenerator.GetTagCloudBitmap(null);
+            return bitmap;
+        }
+
+        private ITagCloudElementsPreparer GetPreparer(List<Rectangle> resizedRectangles)
+        {
+            var elements = resizedRectangles
+                .Select(r => new TagCloudElement(null, r, Color.White, config.FontFamily));
+            var elementPreparer = Substitute.For<ITagCloudElementsPreparer>();
+            elementPreparer.PrepareTagCloudElements(null).ReturnsForAnyArgs(elements);
+            return elementPreparer;
+        }
+
+        private static Size GetSize(List<Rectangle> rectangles)
+        {
+            var left = rectangles.Select(r => r.Left).Min();
+            var right = rectangles.Select(r => r.Right).Max();
+            var width = right - left;
+
+            var top = rectangles.Select(r => r.Top).Min();
+            var bottom = rectangles.Select(r => r.Bottom).Max();
+            var height = bottom - top;
+
+            return new Size(width, height);
         }
     }
 }
