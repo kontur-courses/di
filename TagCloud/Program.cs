@@ -46,6 +46,8 @@ namespace TagCloud
             containerBuilder.RegisterType<AddSkipWord>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<ListLayoutAlgorithms>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<LayoutAlgorithm>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<NewPalette>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<AddColor>().As<IConsoleCommand>().SingleInstance();
             
             return containerBuilder.Build();
         }

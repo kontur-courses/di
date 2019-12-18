@@ -55,11 +55,13 @@
   <ItemGroup>
     <Compile Include="ConsoleCommands\DrawTagCloud.cs" />
     <Compile Include="ConsoleCommands\ListLayoutAlgorithms.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\AddColor.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\ImageName.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\ImageSize.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\LayoutAlgorithm.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\MaxFontSize.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\MinFontSize.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\NewPalette.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\PathToSave.cs" />
     <Compile Include="ConsoleCommands\TextRiderConfigCommands\AddSkipWord.cs" />
     <Compile Include="ConsoleCommands\TextRiderConfigCommands\PathToFile.cs" />

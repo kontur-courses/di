@@ -9,31 +9,31 @@ namespace TagsCloudVisualization.Canvas
     {
         public TagCloudCanvas(int width, int height) : base(width, height) {}
 
-        public override void Draw(Rectangle rectangle, Brush brush = null)
+        public override void Draw(Rectangle rectangle, Brush brush)
         {
-            Graphics.FillRectangle(brush ?? RandomBrush(), rectangle);
+            Graphics.FillRectangle(brush, rectangle);
         }
 
-        public override void Draw(string word, Font font, RectangleF rectangleF, Brush brush = null)
+        public override void Draw(string word, Font font, RectangleF rectangleF, Brush brush)
         {
-            Graphics.DrawString(word, font, brush ?? RandomBrush(), rectangleF);
+            Graphics.DrawString(word, font, brush, rectangleF);
         }
 
-        private Brush RandomBrush()
-        {
-            var brushes = new List<Brush>()
-            {
-                new SolidBrush(Color.LawnGreen),
-                new SolidBrush(Color.RoyalBlue),
-                new SolidBrush(Color.Red),
-                new SolidBrush(Color.Orange),
-                new SolidBrush(Color.WhiteSmoke),
-                new SolidBrush(Color.Aqua),
-                new SolidBrush(Color.GreenYellow),
-            };
-
-            return brushes[Random.Next(0, brushes.Count)];
-        }
+//        private Brush RandomBrush()
+//        {
+//            var brushes = new List<Brush>()
+//            {
+//                new SolidBrush(Color.LawnGreen),
+//                new SolidBrush(Color.RoyalBlue),
+//                new SolidBrush(Color.Red),
+//                new SolidBrush(Color.Orange),
+//                new SolidBrush(Color.WhiteSmoke),
+//                new SolidBrush(Color.Aqua),
+//                new SolidBrush(Color.GreenYellow),
+//            };
+//
+//            return brushes[Random.Next(0, brushes.Count)];
+//        }
 
         public void Save(string fileName)
         {

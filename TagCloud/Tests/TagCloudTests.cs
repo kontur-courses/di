@@ -12,7 +12,7 @@ namespace TagCloud.Tests
     public class TagCloudTests
     {
         [Test]
-        public void FirstTest()
+        public void TagCloudCorrectWork()
         {
             var fakeTextRider = A.Fake<IFileTextRider>();
             A.CallTo(() => fakeTextRider.CanReadFile()).Returns(true);
