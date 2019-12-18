@@ -220,7 +220,7 @@ namespace TagCloudTests.Algorithm.SpiralBasedLayouter
             var resizedAndMovedRectangles = rectangles.Select(r =>
                 ShiftUtils.GetShiftedAndResizedRectangle(r, shift, parameter)).ToList();
             config.Size = GetSize(resizedAndMovedRectangles);
-            var cloudGenerator = new TagCloudGenerator(config, GetPreparer(resizedAndMovedRectangles), new RectanglePainter());
+            var cloudGenerator = new TagCloudGenerator(config, GetPreparer(resizedAndMovedRectangles), new RectangleDrawer());
             var bitmap = cloudGenerator.GetTagCloudBitmap(null);
             return bitmap;
         }

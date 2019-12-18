@@ -10,16 +10,16 @@ namespace TagCloud.Visualization
     {
         private readonly PictureConfig pictureConfig;
         private readonly ITagCloudElementsPreparer tagCloudElementsPreparer;
-        private readonly ITagCloudElementPainter tagCloudElementPainter;
+        private readonly ITagCloudElementDrawer tagCloudElementDrawer;
 
         public TagCloudGenerator(
             PictureConfig pictureConfig,
             ITagCloudElementsPreparer tagCloudElementsPreparer,
-            ITagCloudElementPainter tagCloudElementPainter)
+            ITagCloudElementDrawer tagCloudElementDrawer)
         {
             this.pictureConfig = pictureConfig;
             this.tagCloudElementsPreparer = tagCloudElementsPreparer;
-            this.tagCloudElementPainter = tagCloudElementPainter;
+            this.tagCloudElementDrawer = tagCloudElementDrawer;
         }
 
         public Bitmap GetTagCloudBitmap(IEnumerable<Word> words)
@@ -30,7 +30,7 @@ namespace TagCloud.Visualization
             g.Clear(pictureConfig.Palette.BackgroundColor);
             foreach (var element in tagCloudElements)
             {
-                tagCloudElementPainter.Paint(g, element);
+                tagCloudElementDrawer.Draw(g, element);
             }
             return bitmap;
         }

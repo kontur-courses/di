@@ -32,7 +32,7 @@ namespace TagCloud
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
             builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>();
-            builder.RegisterType<WordPainter>().As<ITagCloudElementPainter>();
+            builder.RegisterType<WordDrawer>().As<ITagCloudElementDrawer>();
             builder.RegisterType<Application>().AsSelf();
         }
 

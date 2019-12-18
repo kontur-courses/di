@@ -2,9 +2,9 @@
 
 namespace TagCloud.Visualization
 {
-    public class WordPainter : ITagCloudElementPainter
+    public class WordDrawer : ITagCloudElementDrawer
     {
-        public void Paint(Graphics graphics, TagCloudElement element)
+        public void Draw(Graphics graphics, TagCloudElement element)
         {
             graphics.DrawString(element.WordValue,
                 element.Font,
