@@ -49,29 +49,29 @@ namespace TagsCloudContainer
             var height = GetHeight(rectangles);
             var shiftX = GetShiftX(rectangles);
             var shiftY = GetShiftY(rectangles);
-            var image = new Bitmap(width, height);
-            var drawingObj = Graphics.FromImage(image);
-            var strFormat = new StringFormat {Alignment = StringAlignment.Center};
-            var colors = painter.GetColorForTag(tags);
-            for (var ind = 0; ind < tags.Count; ind++)
+            using (var image = new Bitmap(width, height))
+            using (var drawingObj = Graphics.FromImage(image))
+            using (var strFormat = new StringFormat { Alignment = StringAlignment.Center })
             {
-                var curTag = tags[ind];
-                var curRectangle = rectangles[ind];
-                curRectangle.Location = new Point(curRectangle.Location.X - shiftX,
-                    curRectangle.Location.Y - shiftY);
-                var curRectangleSize = curRectangle.Size;
-                var curColor = colors[ind];
-                drawingObj.DrawString(curTag.Word, new Font("Georgia", curRectangleSize.Height / 2),
-                    new SolidBrush(curColor), curRectangle, strFormat);
-            }
+                var colors = painter.GetColorForTag(tags);
+                for (var ind = 0; ind < tags.Count; ind++)
+                {
+                    var curTag = tags[ind];
+                    var curRectangle = rectangles[ind];
+                    curRectangle.Location = new Point(curRectangle.Location.X - shiftX,
+                        curRectangle.Location.Y - shiftY);
+                    var curRectangleSize = curRectangle.Size;
+                    var curColor = colors[ind];
+                    using (var font = new Font("Georgia", curRectangleSize.Height / 2))
+                    using (var brush = new SolidBrush(curColor))
+                        drawingObj.DrawString(curTag.Word, font, brush, curRectangle, strFormat);
+                }
 
-            var imagePath = Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory,
-                pictureInfo.FileName + "." + pictureInfo.Format });
-            logger.LogOut("Tag cloud visualization saved to file " + imagePath);
-            image.Save(imagePath);
-            drawingObj.Dispose();
-            image.Dispose();
-            strFormat.Dispose();
+                var imagePath = Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory,
+                    pictureInfo.FileName + "." + pictureInfo.Format });
+                logger.LogOut("Tag cloud visualization saved to file " + imagePath);
+                image.Save(imagePath);
+            }
         }
     }
 }

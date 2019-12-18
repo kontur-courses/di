@@ -46,10 +46,9 @@
     <Compile Include="DullWordsEliminator\NothingDullEliminator.cs" />
     <Compile Include="Tests\IDullWordsEliminatorTests.cs" />
     <Compile Include="Tests\TextFileReaderTests.cs" />
-    <Compile Include="Tests\TextHadlersTests.cs" />
+    <Compile Include="Tests\TextHadlerTests.cs" />
     <Compile Include="WorkWithUser\ILogger.cs" />
     <Compile Include="Models\InputInfo.cs" />
-    <Compile Include="TextHandler\TextHandler.cs" />
     <Compile Include="WorkWithUser\IUserHandler.cs" />
     <Compile Include="TagsLayouter\CircularTagsCloudLayouter.cs" />
     <Compile Include="TagsLayouter\ITagsLayouter.cs" />
@@ -58,7 +57,7 @@
     <Compile Include="DullWordsEliminator\DullWordsEliminator.cs" />
     <Compile Include="DullWordsEliminator\OnlyNounDullWordsEliminator.cs" />
     <Compile Include="TextReader\ITextReader.cs" />
-    <Compile Include="TextHandler\DefaultTextHandler.cs" />
+    <Compile Include="TextHandler\TextHandler.cs" />
     <Compile Include="TagCloudBuildingAlgorithms\ITagCloudBuildingAlgorithm.cs" />
     <Compile Include="DullWordsEliminator\IDullWordsEliminator.cs" />
     <Compile Include="TagsPaintingAlgorithms\ITagsPaintingAlgorithm.cs" />

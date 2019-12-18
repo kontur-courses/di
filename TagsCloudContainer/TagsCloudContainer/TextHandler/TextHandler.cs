@@ -1,16 +1,14 @@
-﻿using Autofac;
-using NUnit.Framework;
-using System.Collections.Generic;
-using FluentAssertions;
-using System.IO;
-using System;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer
 {
-    public abstract class TextHandler
+    public class TextHandler
     {
-        protected readonly IDullWordsEliminator dullWordsEliminator;
-        protected readonly ITextReader textReader;
+        private static readonly Regex wordPattern = new Regex(@"\b[a-zA-Z]+", RegexOptions.Compiled);
+        private readonly IDullWordsEliminator dullWordsEliminator;
+        private readonly ITextReader textReader;
 
         public TextHandler(ITextReader textReader, IDullWordsEliminator dullWordsEliminator)
         {
@@ -18,6 +16,19 @@ namespace TagsCloudContainer
             this.textReader = textReader;
         }
 
-        public abstract Dictionary<string, int> GetWordsFrequencyDict();
+        public Dictionary<string, int> GetWordsFrequencyDict()
+        {
+            var result = new Dictionary<string, int>();
+            foreach (var line in textReader.GetLines())
+            {
+                foreach (Match match in wordPattern.Matches(line))
+                {
+                    var currentWord = match.Value.ToLower();
+                    if (!dullWordsEliminator.IsDull(currentWord))
+                        result[currentWord] = result.ContainsKey(currentWord) ? result[currentWord] + 1 : 1;
+                }
+            }
+            return result;
+        }
     }
 }

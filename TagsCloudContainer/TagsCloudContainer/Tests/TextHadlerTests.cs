@@ -6,17 +6,17 @@ using FluentAssertions;
 namespace TagsCloudContainer
 {
     [TestFixture]
-    public class TextHandlersTests
+    public class TextHandlerTests
     {
         [Test]
-        public void DefaultTextHandler_GivesRightFrequencyDict_OnSingleWords()
+        public void TextHandler_GivesRightFrequencyDict_OnSingleWords()
         {
             var lines = new[] {"Hi", "my", "dear", "friend"};
             var textReader = A.Fake<ITextReader>();
             A.CallTo(() => textReader.GetLines()).Returns(lines);
             var wordsEliminator = A.Fake<IDullWordsEliminator>();
             A.CallTo(() => wordsEliminator.IsDull(null)).WithAnyArguments().Returns(false);
-            var defaultTextHandler = new DefaultTextHandler(textReader, wordsEliminator);
+            var defaultTextHandler = new TextHandler(textReader, wordsEliminator);
 
             var dict = defaultTextHandler.GetWordsFrequencyDict();
 
@@ -28,14 +28,14 @@ namespace TagsCloudContainer
         }
 
         [Test]
-        public void DefaultTextHandler_GivesRightFrequencyDict_OnMultiplyWords()
+        public void TextHandler_GivesRightFrequencyDict_OnMultiplyWords()
         {
             var lines = new[] { "Hi", "my", "dear", "friend", "my", "friend", "friend" };
             var textReader = A.Fake<ITextReader>();
             A.CallTo(() => textReader.GetLines()).Returns(lines);
             var wordsEliminator = A.Fake<IDullWordsEliminator>();
             A.CallTo(() => wordsEliminator.IsDull(null)).WithAnyArguments().Returns(false);
-            var defaultTextHandler = new DefaultTextHandler(textReader, wordsEliminator);
+            var defaultTextHandler = new TextHandler(textReader, wordsEliminator);
 
             var dict = defaultTextHandler.GetWordsFrequencyDict();
 
@@ -50,14 +50,14 @@ namespace TagsCloudContainer
         }
 
         [Test]
-        public void DefaultTextHandler_SplittedLinesIntoWords()
+        public void TextHandler_SplittedLinesIntoWords()
         {
             var lines = new[] { "Hi my friend.", "Hi, my friend!" };
             var textReader = A.Fake<ITextReader>();
             A.CallTo(() => textReader.GetLines()).Returns(lines);
             var wordsEliminator = A.Fake<IDullWordsEliminator>();
             A.CallTo(() => wordsEliminator.IsDull(null)).WithAnyArguments().Returns(false);
-            var defaultTextHandler = new DefaultTextHandler(textReader, wordsEliminator);
+            var defaultTextHandler = new TextHandler(textReader, wordsEliminator);
 
             var dict = defaultTextHandler.GetWordsFrequencyDict();
 
