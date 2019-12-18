@@ -75,7 +75,6 @@
     <Compile Include="Data\Readers\DocWordsFileReader.cs" />
     <Compile Include="Data\Readers\IFileFormatReader.cs" />
     <Compile Include="Data\Readers\WordsFileReader.cs" />
-    <Compile Include="ServiceSettings.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="Clients\BaseClient.cs" />
     <Compile Include="Clients\CLI\ConsoleClient.cs" />

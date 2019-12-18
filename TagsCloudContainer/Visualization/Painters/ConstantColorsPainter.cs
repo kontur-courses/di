@@ -6,6 +6,8 @@ namespace TagsCloudContainer.Visualization.Painters
 {
     public class ConstantColorsPainter : IPainter
     {
+        public const string Name = "constant";
+        
         private readonly Brush textBrush;
         private readonly Brush fillBrush;
         private readonly Pen borderPen;

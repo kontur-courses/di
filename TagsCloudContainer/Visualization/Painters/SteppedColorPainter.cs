@@ -6,6 +6,8 @@ namespace TagsCloudContainer.Visualization.Painters
 {
     public class SteppedColorPainter : IPainter
     {
+        public const string Name = "stepped";
+        
         private readonly Brush primaryBrush;
         private readonly Brush majorityBrush;
         private readonly Brush minorityBrush;

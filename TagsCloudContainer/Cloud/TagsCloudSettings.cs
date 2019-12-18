@@ -18,6 +18,7 @@ namespace TagsCloudContainer.Cloud
         public string DicFile { get; set; } = "Resources/ru_RU.dic";
         public FontFamily FontFamily { get; set; } = FontFamily.GenericMonospace;
         public float SizeFactor { get; set; } = 100f;
+        public string Painter { get; set; } = SteppedColorPainter.Name;
         public Color TextColor { get; set; } = Color.Black;
         public Color FillColor { get; set; } = Color.Transparent;
         public Color BorderColor { get; set; } = Color.Transparent;
@@ -25,6 +26,6 @@ namespace TagsCloudContainer.Cloud
         public Color MajorityColor { get; set; } = Color.OrangeRed;
         public Color MinorityColor { get; set; } = Color.Chocolate;
         public Color BackgroundColor { get; set; } = Color.Transparent;
-        public Size? ImageSize { get; set; } = null;
+        public Size? ImageSize { get; set; }
     }
 }

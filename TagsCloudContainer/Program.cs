@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Autofac;
+using Autofac.Core;
 using NHunspell;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.Clients.CLI;
@@ -21,7 +22,6 @@ namespace TagsCloudContainer
         public static void Main(string[] args)
         {
             var container = CreateContainer();
-            ConfigureServices(container.Resolve<ServiceSettings>());
             var clientFactory = container.Resolve<Func<string[], BaseClient>>();
             clientFactory(args).Run();
         }
@@ -31,7 +31,6 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
 
             builder.RegisterType<TagsCloudSettings>().AsImplementedInterfaces().AsSelf().SingleInstance();
-            builder.RegisterType<ServiceSettings>().AsSelf().SingleInstance();
 
             builder.RegisterType<ArchimedeanSpiral>().As<IPointGenerator>()
                 .UsingConstructor(typeof(ArchimedeanSpiral.ISettings));
@@ -61,16 +60,22 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(ProbabilityWordMeasurer.ISettings));
 
             builder.RegisterType<ConstantColorsPainter>()
-                .Named<IPainter>(typeof(ConstantColorsPainter).Name)
+                .Named<IPainter>(ConstantColorsPainter.Name)
                 .UsingConstructor(typeof(ConstantColorsPainter.ISettings));
             builder.RegisterType<SteppedColorPainter>()
-                .Named<IPainter>(typeof(SteppedColorPainter).Name)
+                .Named<IPainter>(SteppedColorPainter.Name)
                 .UsingConstructor(typeof(SteppedColorPainter.ISettings));
             builder.Register(c =>
             {
-                var settings = c.Resolve<ServiceSettings>();
-                var name = settings.GetService<IPainter>().Name;
-                return c.ResolveNamed<IPainter>(name);
+                var settings = c.Resolve<TagsCloudSettings>();
+                try
+                {
+                    return c.ResolveNamed<IPainter>(settings.Painter);
+                }
+                catch (DependencyResolutionException)
+                {
+                    return c.ResolveNamed<IPainter>(SteppedColorPainter.Name);
+                }
             }).As<IPainter>();
 
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
@@ -84,11 +89,6 @@ namespace TagsCloudContainer
             builder.RegisterType<ConsoleClient>().As<BaseClient>();
 
             return builder.Build();
-        }
-
-        private static void ConfigureServices(ServiceSettings settings)
-        {
-            settings.SetService<IPainter, SteppedColorPainter>();
         }
     }
 }

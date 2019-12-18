@@ -1,5 +1,6 @@
 ﻿using System;
 using CommandLine;
+using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Clients.CLI
 {
@@ -32,7 +33,7 @@ namespace TagsCloudContainer.Clients.CLI
         [Option("factor", Required = false, Default = 100f, HelpText = "Tag size factor")]
         public float SizeFactor { get; set; }
 
-        [Option(Required = false, Default = "stepped", HelpText = "Tag coloring algorithm")]
+        [Option("painter", Required = false, Default = SteppedColorPainter.Name, HelpText = "Tag coloring algorithm")]
         public string Painter { get; set; }
 
         [Option("text", Required = false, Default = "Black", HelpText = "Text color name")]
@@ -55,5 +56,11 @@ namespace TagsCloudContainer.Clients.CLI
 
         [Option("background", Required = false, Default = "Transparent", HelpText = "Background color name")]
         public string BackgroundColor { get; set; }
+
+        [Option("width", Required = false, HelpText = "Image width")]
+        public int? Width { get; set; }
+
+        [Option("height", Required = false, HelpText = "Image height")]
+        public int? Height { get; set; }
     }
 }
