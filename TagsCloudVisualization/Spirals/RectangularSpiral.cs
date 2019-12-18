@@ -13,6 +13,8 @@ namespace TagsCloudVisualization.Spirals
             new Size(-1, 0),
         };
 
+        public string Name => "RectangularSpiral";
+
         public IEnumerable<Point> GetPoints()
         {
             var stepNumber = 0;

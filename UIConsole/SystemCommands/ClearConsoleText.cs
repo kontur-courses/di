@@ -12,8 +12,8 @@ namespace UIConsole.SystemCommands
 
         public void Execute(ConsoleUserInterface console, Dictionary<string, object> args)
         {
-            ConsoleUserInterface.ClearConsole();
-            ConsoleUserInterface.PrintInConsole(ConsoleUserInterface.HelloMessage);
+            console.ClearConsole();
+            console.PrintInConsole(ConsoleUserInterface.HelloMessage);
         }
     }
 }

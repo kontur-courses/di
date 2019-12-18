@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using TagCloud.ConsoleCommands;
 using TagCloudPainter;
+using TagsCloudVisualization.Spirals;
 using TagsCloudVisualization.TagCloudLayouter;
 using TextPreprocessor.TextAnalyzers;
 using TextPreprocessor.TextRiders;
@@ -24,6 +25,7 @@ namespace TagCloud
             
             containerBuilder.RegisterInstance(TextRiderConfig.Default()).As<TextRiderConfig>().SingleInstance();
             containerBuilder.RegisterType<TxtTextRider>().As<IFileTextRider>().SingleInstance();
+            containerBuilder.RegisterType<MSWordTextRider>().As<IFileTextRider>().SingleInstance();
             
             containerBuilder.RegisterInstance(PainterConfig.Default()).As<PainterConfig>().SingleInstance();
             containerBuilder.RegisterType<Painter>().As<ITagCloudPainter>().SingleInstance();
@@ -31,6 +33,8 @@ namespace TagCloud
             containerBuilder.RegisterType<FrequencyTextAnalyzer>().As<ITextAnalyzer>().SingleInstance();
 
             containerBuilder.RegisterInstance(new LayouterFactory()).AsSelf().SingleInstance();
+            containerBuilder.RegisterType<ArchimedeanSpiral>().As<ISpiral>().SingleInstance();
+            containerBuilder.RegisterType<RectangularSpiral>().As<ISpiral>().SingleInstance();
             
             containerBuilder.RegisterType<DrawTagCloud>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<ImageName>().As<IConsoleCommand>().SingleInstance();
@@ -40,6 +44,8 @@ namespace TagCloud
             containerBuilder.RegisterType<PathToFile>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<PathToSave>().As<IConsoleCommand>().SingleInstance();
             containerBuilder.RegisterType<AddSkipWord>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<ListLayoutAlgorithms>().As<IConsoleCommand>().SingleInstance();
+            containerBuilder.RegisterType<LayoutAlgorithm>().As<IConsoleCommand>().SingleInstance();
             
             return containerBuilder.Build();
         }

@@ -87,13 +87,13 @@ namespace UIConsole
             }
         }
 
-        internal static void PrintInConsole(string str)
+        public void PrintInConsole(string str)
         {
             Console.WriteLine("\n--------------------");
             Console.WriteLine(str);
             Console.WriteLine("--------------------\n");
         }
 
-        internal static void ClearConsole() => Console.Clear();
+        internal void ClearConsole() => Console.Clear();
     }
 }

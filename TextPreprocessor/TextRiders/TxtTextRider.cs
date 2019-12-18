@@ -13,7 +13,9 @@ namespace TextPreprocessor.TextRiders
         {
             this.textRiderConfig = textRiderConfig;
         }
-        
+
+        public TextRiderConfig RiderConfig => textRiderConfig;
+
         public IEnumerable<Tag> GetTags()
         {
             return GetFileContent(textRiderConfig.FilePath)
@@ -22,6 +24,11 @@ namespace TextPreprocessor.TextRiders
                 .Where(str => !textRiderConfig.IsSkipWord(str))
                 .Where(str => str != "")
                 .Select(str => new Tag(str));
+        }
+
+        public bool CanReadFile()
+        {
+            return Path.GetExtension(textRiderConfig.FilePath) == ".txt";
         }
 
         private string GetFileContent(string filePath)

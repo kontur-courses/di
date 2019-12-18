@@ -10,6 +10,8 @@ namespace TagsCloudVisualization.Spirals
         const double StepValueInRadians = 0.05;
         const double Eccentricity = 1;
 
+        public string Name => "ArchimedeanSpiral";
+
         public IEnumerable<Point> GetPoints()
         {
             double angle = 0;

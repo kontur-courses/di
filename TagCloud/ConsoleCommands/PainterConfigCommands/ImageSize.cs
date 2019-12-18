@@ -14,7 +14,7 @@ namespace TagCloud.ConsoleCommands
             painterConfig = config;
         }
         
-        public string Name => "SetImageSize";
+        public string Name => "ImageSize";
         public string Description => "Задает ширину и высоту картинки";
         public void Execute(ConsoleUserInterface console, Dictionary<string, object> args)
         {

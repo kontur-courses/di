@@ -5,6 +5,7 @@ namespace TagsCloudVisualization.Spirals
 {
     public interface ISpiral
     {
+        string Name { get; }
         IEnumerable<Point> GetPoints();
     }
 }

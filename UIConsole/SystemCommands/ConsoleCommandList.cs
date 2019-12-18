@@ -23,7 +23,7 @@ namespace UIConsole.SystemCommands
                 output.Append($"- {command.Description}\n");
             }
 
-            ConsoleUserInterface.PrintInConsole(output.ToString());
+            console.PrintInConsole(output.ToString());
         }
     }
 }

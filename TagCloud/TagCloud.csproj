@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommands\DrawTagCloud.cs" />
+    <Compile Include="ConsoleCommands\ListLayoutAlgorithms.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\ImageName.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\ImageSize.cs" />
+    <Compile Include="ConsoleCommands\PainterConfigCommands\LayoutAlgorithm.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\MaxFontSize.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\MinFontSize.cs" />
     <Compile Include="ConsoleCommands\PainterConfigCommands\PathToSave.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Spirals;
 
 namespace TagsCloudVisualization.TagCloudLayouter
 {
@@ -7,6 +8,11 @@ namespace TagsCloudVisualization.TagCloudLayouter
         public ITagCloudLayouter GetCircularLayouter(Point center)
         {
             return new CircularCloudLayouter(center);
+        }
+        
+        public ITagCloudLayouter GetCircularLayouter(Point center, ISpiral spiral)
+        {
+            return new CircularCloudLayouter(center, spiral);
         }
     }
 }

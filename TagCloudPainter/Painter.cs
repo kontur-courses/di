@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudVisualization.Canvas;
+using TagsCloudVisualization.Spirals;
 using TagsCloudVisualization.TagCloudLayouter;
 using TextPreprocessor.Core;
 
@@ -23,7 +24,7 @@ namespace TagCloudPainter
         public void Draw(IEnumerable<TagInfo> tagInfos)
         {
             var canvas = new TagCloudCanvas(painterConfig.ImageWidth, painterConfig.ImageHeight);
-            var layouter = layouterFactory.GetCircularLayouter(painterConfig.CloudCenter);
+            var layouter = layouterFactory.GetCircularLayouter(painterConfig.CloudCenter, painterConfig.layoutAlgorithm);
             
             var sortedTagInfos = tagInfos
                 .OrderByDescending(tagInfo => tagInfo.Frequency)

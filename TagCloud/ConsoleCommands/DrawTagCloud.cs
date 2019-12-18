@@ -8,11 +8,11 @@ namespace TagCloud.ConsoleCommands
 {
     public class DrawTagCloud : IConsoleCommand
     {
-        private readonly IFileTextRider fileTextRider;
+        private readonly IFileTextRider[] fileTextRider;
         private readonly ITextAnalyzer textAnalyzer;
         private readonly ITagCloudPainter tagCloudPainter;
-        
-        public DrawTagCloud(IFileTextRider fileTextRider, ITextAnalyzer textAnalyzer, ITagCloudPainter tagCloudPainter)
+
+        public DrawTagCloud(IFileTextRider[] fileTextRider, ITextAnalyzer textAnalyzer, ITagCloudPainter tagCloudPainter)
         {
             this.fileTextRider = fileTextRider;
             this.textAnalyzer = textAnalyzer;

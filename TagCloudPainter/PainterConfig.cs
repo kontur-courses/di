@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
+using TagsCloudVisualization.Spirals;
 
 namespace TagCloudPainter
 {
@@ -18,6 +19,7 @@ namespace TagCloudPainter
         public Point CloudCenter;
 
         public Color BackgroundColor;
+        public ISpiral layoutAlgorithm;
 
         public static PainterConfig Default()
         {
@@ -31,6 +33,7 @@ namespace TagCloudPainter
                 PathForSave = Directory.GetCurrentDirectory(),
                 FontFamily = FontFamily.GenericMonospace,
                 CloudCenter = new Point(2500, 2500),
+                layoutAlgorithm = new ArchimedeanSpiral(),
                 BackgroundColor = Color.Black,
             };
         }

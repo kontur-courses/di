@@ -5,6 +5,8 @@ namespace TextPreprocessor.TextRiders
 {
     public interface IFileTextRider
     {
+        TextRiderConfig RiderConfig { get; }
         IEnumerable<Tag> GetTags();
+        bool CanReadFile();
     }
 }

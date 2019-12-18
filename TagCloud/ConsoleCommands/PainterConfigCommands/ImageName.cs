@@ -13,7 +13,7 @@ namespace TagCloud.ConsoleCommands
             painterConfig = config;
         }
         
-        public string Name => "SetImageName";
+        public string Name => "ImageName";
         public string Description => "Задает имя для изображения";
         public void Execute(ConsoleUserInterface console, Dictionary<string, object> args)
         {
