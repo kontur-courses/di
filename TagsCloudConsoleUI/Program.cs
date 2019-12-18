@@ -37,7 +37,6 @@ namespace TagsCloudConsoleUI
                 .CreateTagCloudRepresentation(fullPath, size, format);
 
             bitmapImage.Save(options.OutputFileName, ImageFormatter.ParseImageFormat(options.ImageExtension));
-
         }
     }
 }

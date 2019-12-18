@@ -1,21 +1,22 @@
 ﻿using Microsoft.Office.Interop.Word;
 using SyntaxTextParser.Architecture;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace SyntaxTextParser
 {
-    public class MSWordFileReader : IFileReader
+    public class MsWordFileReader : IFileReader
     {
         public bool TryReadText(string filePath, out string text)
         {
-            object refFilePath = filePath;
+            object refFullFilePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
             var none = Type.Missing;
             var app = new Application();
             try
             {
                 #region application.Documents.Open(refFilePath)
-                app.Documents.Open(ref refFilePath,
+                app.Documents.Open(ref refFullFilePath,
                     ref none, ref none, ref none, ref none,
                     ref none, ref none, ref none, ref none,
                     ref none, ref none, ref none, ref none, ref none,
@@ -26,9 +27,10 @@ namespace SyntaxTextParser
                 object startIndex = 0;
                 object endIndex = document.Characters.Count;
                 var docRange = document.Range(ref startIndex, ref endIndex);
-                app.Quit(ref none, ref none, ref none);
                 
                 text = docRange.Text;
+                app.Quit(ref none, ref none, ref none);
+
                 return true;
             }
             catch (COMException)

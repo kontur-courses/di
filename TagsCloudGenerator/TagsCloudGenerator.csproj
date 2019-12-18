@@ -59,6 +59,7 @@
     <Compile Include="TagGenerator\ColorPalette\ColorsHEXConverter.cs" />
     <Compile Include="TagGenerator\TagOrder\ITagOrder.cs" />
     <Compile Include="TagGenerator\TagOrder\RandomTagOrder.cs" />
+    <Compile Include="TagGenerator\TagOrder\TagOrderByDescending.cs" />
     <Compile Include="TagGenerator\TagTextPreform\FirstBigLetterPreform.cs" />
     <Compile Include="TagGenerator\TagTextPreform\ITagTextPreform.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />

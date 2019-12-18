@@ -24,7 +24,7 @@ namespace TagsCloudConsoleUI.DIPresetModules
             builder.RegisterType<ToLowerFormatter>().As<IElementFormatter>();
 
             builder.RegisterType<TxtFileReader>().As<IFileReader>();//Todo Try change
-            builder.RegisterType<MSWordFileReader>().As<IFileReader>();//Todo Try change
+            builder.RegisterType<MsWordFileReader>().As<IFileReader>();//Todo Try change
 
             builder.RegisterType<LengthMoreThanValidator>().As<IElementValidator>();
             builder.RegisterType<YandexBoringPartsOfSpeechValidator>().As<IElementValidator>()
