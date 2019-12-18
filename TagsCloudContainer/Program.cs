@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
+using NHunspell;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.Clients.CLI;
 using TagsCloudContainer.Cloud;
@@ -39,23 +39,23 @@ namespace TagsCloudContainer
                 .WithParameter("center", Point.Empty)
                 .As<IRectangleLayouter>();
 
-            builder.Register(c => new IFileFormatReader[]
-            {
-                new TxtWordsFileReader(), new DocWordsFileReader()
-            }).As<IEnumerable<IFileFormatReader>>();
+            builder.RegisterType<TxtWordsFileReader>().As<IFileFormatReader>();
+            builder.RegisterType<DocWordsFileReader>().As<IFileFormatReader>();
             builder.RegisterType<WordsFileReader>().As<IWordsFileReader>();
-            
-            builder.Register(context =>
-                {
-                    var reader = context.Resolve<IWordsFileReader>();
-                    var settings = context.Resolve<TagsCloudSettings>();
-                    return new WordFilter(reader.ReadAllWords(settings.BoringWordsPath));
-                })
-                .Named<IWordProcessor>("wordFilter");
-            builder.Register(c => new[]
+
+            builder.Register(c =>
             {
-                new LowerCaseWordProcessor(), c.ResolveNamed<IWordProcessor>("wordFilter")
-            }).As<IEnumerable<IWordProcessor>>();
+                var settings = c.Resolve<TagsCloudSettings>();
+                return new Hunspell(settings.AffFile, settings.DicFile);
+            }).As<Hunspell>();
+            builder.RegisterType<WordStemProcessor>().As<IWordProcessor>();
+            builder.Register(context =>
+            {
+                var reader = context.Resolve<IWordsFileReader>();
+                var settings = context.Resolve<TagsCloudSettings>();
+                return new WordFilter(reader.ReadAllWords(settings.BoringWordsPath));
+            }).As<IWordProcessor>();
+            builder.RegisterType<LowerCaseWordProcessor>().As<IWordProcessor>();
 
             builder.RegisterType<ProbabilityWordMeasurer>().As<IWordMeasurer>()
                 .UsingConstructor(typeof(ProbabilityWordMeasurer.ISettings));
@@ -76,10 +76,7 @@ namespace TagsCloudContainer
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()
                 .UsingConstructor(typeof(TagsCloudVisualizer.ISettings));
 
-            builder.Register(c => new[]
-            {
-                new DefaultImageSaver()
-            }).As<IEnumerable<IImageSaver>>();
+            builder.RegisterType<DefaultImageSaver>().As<IImageSaver>();
             builder.RegisterType<ImageSaver>().AsSelf();
 
             builder.RegisterType<TagsCloud>().AsSelf();

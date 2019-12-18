@@ -14,6 +14,8 @@ namespace TagsCloudContainer.Cloud
         public double Delta { get; set; } = Math.PI / 180;
         public string WordsPath { get; set; } = "Resources/words.txt";
         public string BoringWordsPath { get; set; } = "Resources/boring_words.txt";
+        public string AffFile { get; set; } = "Resources/ru_RU.aff";
+        public string DicFile { get; set; } = "Resources/ru_RU.dic";
         public FontFamily FontFamily { get; set; } = FontFamily.GenericMonospace;
         public float SizeFactor { get; set; } = 100f;
         public Color TextColor { get; set; } = Color.Black;

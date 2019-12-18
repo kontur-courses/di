@@ -45,6 +45,10 @@
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Processors\WordStemProcessor.cs" />
     <Compile Include="Data\Readers\DocWordsFileReader.cs" />
     <Compile Include="Data\Readers\IFileFormatReader.cs" />
     <Compile Include="Data\Readers\WordsFileReader.cs" />
@@ -112,7 +117,11 @@
     <Folder Include="Core" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Hunspellx64.dll" />
+    <Content Include="Hunspellx86.dll" />
     <Content Include="Resources\boring_words.txt" />
+    <Content Include="Resources\ru_RU.aff" />
+    <Content Include="Resources\ru_RU.dic" />
     <Content Include="Resources\words.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

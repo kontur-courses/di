@@ -53,11 +53,16 @@ namespace TagsCloudContainer.Clients.CLI
             CloudSettings.Delta = options.Delta;
             CloudSettings.WordsPath = options.WordsPath;
             CloudSettings.BoringWordsPath = options.BoringWordsPath;
+            CloudSettings.AffFile = options.AffPath;
+            CloudSettings.DicFile = options.DicPath;
             CloudSettings.FontFamily = new FontFamily(options.Font);
             CloudSettings.SizeFactor = options.SizeFactor;
             CloudSettings.TextColor = Color.FromName(options.TextColor);
             CloudSettings.FillColor = Color.FromName(options.FillColor);
             CloudSettings.BorderColor = Color.FromName(options.BorderColor);
+            CloudSettings.PrimaryColor = Color.FromName(options.PrimaryColor);
+            CloudSettings.MajorityColor = Color.FromName(options.MajorityColor);
+            CloudSettings.MinorityColor = Color.FromName(options.MinorityColor);
             CloudSettings.BackgroundColor = Color.FromName(options.BackgroundColor);
         }
 

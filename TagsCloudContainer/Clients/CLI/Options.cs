@@ -3,7 +3,6 @@ using CommandLine;
 
 namespace TagsCloudContainer.Clients.CLI
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class Options
     {
         [Option('w', "words", Required = true, HelpText = "File with words")]
@@ -14,6 +13,12 @@ namespace TagsCloudContainer.Clients.CLI
 
         [Option('o', "output", Required = true, HelpText = "The file name of the generated tag cloud")]
         public string ImagePath { get; set; }
+
+        [Option("aff", Required = false, HelpText = "The path to the aff file")]
+        public string AffPath { get; set; }
+
+        [Option("dic", Required = false, HelpText = "The path to the dic file")]
+        public string DicPath { get; set; }
 
         [Option("distance", Required = false, Default = 1, HelpText = "The distance between the turns of the spiral")]
         public double Distance { get; set; }
@@ -26,7 +31,7 @@ namespace TagsCloudContainer.Clients.CLI
 
         [Option("factor", Required = false, Default = 100f, HelpText = "Tag size factor")]
         public float SizeFactor { get; set; }
-        
+
         [Option(Required = false, Default = "stepped", HelpText = "Tag coloring algorithm")]
         public string Painter { get; set; }
 
