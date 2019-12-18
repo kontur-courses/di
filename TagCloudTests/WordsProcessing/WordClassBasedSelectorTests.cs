@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using TagCloud.App;
 using TagCloud.Infrastructure;
 using TagCloud.WordsProcessing;
 
@@ -12,10 +13,13 @@ namespace TagCloudTests.WordsProcessing
         private HashSet<WordClass> blackList;
         private HashSet<WordClass> whiteList;
         private IWordClassIdentifier wordClassIdentifier;
+        private ISettingsProvider settingsProvider;
+        private AppSettings settings;
 
         [SetUp]
         public void SetUp()
         {
+            settings = new AppSettings();
             blackList = new HashSet<WordClass>{WordClass.Preposition, WordClass.Pronoun};
             whiteList = new HashSet<WordClass>{WordClass.Noun, WordClass.Adjective};
             wordClassIdentifier = Substitute.For<IWordClassIdentifier>();
@@ -23,13 +27,16 @@ namespace TagCloudTests.WordsProcessing
             wordClassIdentifier.GetWordClass("он").Returns(WordClass.Pronoun);
             wordClassIdentifier.GetWordClass("окно").Returns(WordClass.Noun);
             wordClassIdentifier.GetWordClass("холодный").Returns(WordClass.Adjective);
+            settingsProvider = Substitute.For<ISettingsProvider>();
+            settingsProvider.GetSettings().Returns(settings);
         }
 
 
         [Test]
         public void IsSelectedWord_ShouldReturnTrue_OnWordNotInBlackList()
         {
-            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, blackList);
+            settings.WordClassSettings = new WordClassSettings(blackList, true);
+            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, settingsProvider);
 
             wordSelector.IsSelectedWord(new Word("окно")).Should().BeTrue();
         }
@@ -37,7 +44,8 @@ namespace TagCloudTests.WordsProcessing
         [Test]
         public void IsSelectedWord_ShouldReturnFalse_OnWordInBlackList()
         {
-            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, blackList);
+            settings.WordClassSettings = new WordClassSettings(blackList, true);
+            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, settingsProvider);
 
             wordSelector.IsSelectedWord(new Word("он")).Should().BeFalse();
         }
@@ -45,7 +53,8 @@ namespace TagCloudTests.WordsProcessing
         [Test]
         public void IsSelectedWord_ShouldReturnTrue_OnWordInWhiteList()
         {
-            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, whiteList, false);
+            settings.WordClassSettings = new WordClassSettings(whiteList, false);
+            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, settingsProvider);
 
             wordSelector.IsSelectedWord(new Word("холодный")).Should().BeTrue();
         }
@@ -53,7 +62,8 @@ namespace TagCloudTests.WordsProcessing
         [Test]
         public void IsSelectedWord_ShouldReturnFalse_OnWordNotInWhiteList()
         {
-            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, whiteList, false);
+            settings.WordClassSettings = new WordClassSettings(whiteList, false);
+            var wordSelector = new WordClassBasedSelector(wordClassIdentifier, settingsProvider);
 
             wordSelector.IsSelectedWord(new Word("по")).Should().BeFalse();
         }
