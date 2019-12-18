@@ -7,7 +7,7 @@ namespace TextPreprocessor.TextRiders
 {
     public class TextRiderConfig
     {
-        internal readonly char[] WordsDelimiters = new[] {',', '.', '(', ')', ':', ';', ' '};
+        internal readonly char[] WordsDelimiters = new[] {',', '.', '(', ')', ':', ';', ' ', '\t', '\n', '\r'};
 
         public string FilePath;
         public Func<string, string> GetCorrectWordFormat;

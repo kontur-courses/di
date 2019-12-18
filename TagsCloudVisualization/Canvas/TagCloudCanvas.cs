@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace TagsCloudVisualization.Canvas
@@ -42,7 +43,7 @@ namespace TagsCloudVisualization.Canvas
         public override void Save(string directoryPath, string fileName)
         {
             var pathToFile = Path.Combine(directoryPath, fileName + ".png");
-            Bitmap.Save(pathToFile);
+            Bitmap.Save(pathToFile, ImageFormat.Png);
         }
     }
 }

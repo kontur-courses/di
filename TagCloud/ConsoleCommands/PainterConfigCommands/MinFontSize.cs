@@ -17,7 +17,7 @@ namespace TagCloud.ConsoleCommands
         public string Description => "Задает минимальный размер шрифта";
         public void Execute(ConsoleUserInterface console, Dictionary<string, object> args)
         {
-            painterConfig.MaxFontSize = int.Parse(args["FontSize"].ToString());
+            painterConfig.MinFontSize = int.Parse(args["FontSize"].ToString());
         }
 
         public List<string> ArgsName => new List<string>() { "FontSize" };
