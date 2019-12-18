@@ -77,9 +77,9 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(TagsCloudVisualizer.ISettings));
 
             builder.RegisterType<DefaultImageSaver>().As<IImageSaver>();
-            builder.RegisterType<ImageSaver>().AsSelf();
+            builder.RegisterType<FileImageSaver>().AsSelf();
 
-            builder.RegisterType<TagsCloud>().AsSelf();
+            builder.RegisterType<TagsCloudGenerator>().AsSelf();
 
             builder.RegisterType<ConsoleClient>().As<BaseClient>();
 

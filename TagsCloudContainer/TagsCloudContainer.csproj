@@ -80,7 +80,7 @@
     <Compile Include="Clients\BaseClient.cs" />
     <Compile Include="Clients\CLI\ConsoleClient.cs" />
     <Compile Include="Clients\CLI\Options.cs" />
-    <Compile Include="Cloud\TagsCloud.cs" />
+    <Compile Include="Cloud\TagsCloudGenerator.cs" />
     <Compile Include="Cloud\TagsCloudSettings.cs" />
     <Compile Include="Core\Generators\ArchimedeanSpiral.cs" />
     <Compile Include="Core\Generators\IPointGenerator.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Savers\IImageSaver.cs" />
-    <Compile Include="Savers\ImageSaver.cs" />
+    <Compile Include="Savers\FileImageSaver.cs" />
     <Compile Include="Savers\DefaultImageSaver.cs" />
     <Compile Include="Tests\ArchimedeanSpiralTests.cs" />
     <Compile Include="Tests\CircularCloudLayouterTests.cs" />

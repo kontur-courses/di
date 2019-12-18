@@ -9,14 +9,14 @@ namespace TagsCloudContainer.Clients
     {
         protected readonly TagsCloudSettings CloudSettings;
         protected readonly ServiceSettings ServiceSettings;
-        private readonly Func<TagsCloud> cloudFactory;
-        private readonly ImageSaver saver;
+        private readonly Func<TagsCloudGenerator> cloudFactory;
+        private readonly FileImageSaver saver;
 
         protected BaseClient(
             TagsCloudSettings cloudSettings,
             ServiceSettings serviceSettings,
-            Func<TagsCloud> cloudFactory,
-            ImageSaver saver)
+            Func<TagsCloudGenerator> cloudFactory,
+            FileImageSaver saver)
         {
             CloudSettings = cloudSettings;
             ServiceSettings = serviceSettings;

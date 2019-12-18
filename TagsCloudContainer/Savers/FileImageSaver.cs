@@ -3,11 +3,11 @@ using System.Drawing;
 
 namespace TagsCloudContainer.Savers
 {
-    public class ImageSaver
+    public class FileImageSaver
     {
         private readonly IDictionary<string, IImageSaver> savers;
 
-        public ImageSaver(IEnumerable<IImageSaver> savers)
+        public FileImageSaver(IEnumerable<IImageSaver> savers)
         {
             this.savers = new Dictionary<string, IImageSaver>();
             foreach (var saver in savers)

@@ -11,7 +11,7 @@ using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Cloud
 {
-    public class TagsCloud
+    public class TagsCloudGenerator
     {
         private readonly IRectangleLayouter layouter;
         private readonly IWordsFileReader wordReader;
@@ -20,7 +20,7 @@ namespace TagsCloudContainer.Cloud
         private readonly IPainter painter;
         private readonly TagsCloudVisualizer visualizer;
 
-        public TagsCloud(
+        public TagsCloudGenerator(
             IWordsFileReader wordReader,
             IEnumerable<IWordProcessor> processors,
             IWordMeasurer wordMeasurer,

@@ -27,8 +27,8 @@ namespace TagsCloudContainer.Clients.CLI
             string[] args,
             TagsCloudSettings cloudSettings,
             ServiceSettings serviceSettings,
-            Func<TagsCloud> cloudFactory,
-            ImageSaver saver) :
+            Func<TagsCloudGenerator> cloudFactory,
+            FileImageSaver saver) :
             base(cloudSettings, serviceSettings, cloudFactory, saver)
         {
             this.args = args;
