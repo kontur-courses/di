@@ -9,5 +9,6 @@ namespace TagCloud.App
         public string InputFilePath { get; set; }
         public string OutputFilePath{ get; set; }
         public WordClassSettings WordClassSettings { get; set; }
+        public string WordPainterAlgorithmName { get; set; }
     }
 }

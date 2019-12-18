@@ -28,5 +28,8 @@ namespace TagCloud.App
 
         [Option('t', "wordtype", HelpText = "Word classes used in output")]
         public IEnumerable<string> WordClasses { get; set; }
+
+        [Option('p', "painter", HelpText = "Word painting algorithm: random, index, class")]
+        public string WordPainter { get; set; }
     }
 }

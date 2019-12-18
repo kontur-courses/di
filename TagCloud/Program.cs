@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
@@ -10,6 +9,7 @@ using Autofac;
 using CommandLine;
 using TagCloud.Algorithm;
 using TagCloud.App;
+using TagCloud.Visualization.WordPainting;
 
 namespace TagCloud
 {
@@ -28,7 +28,10 @@ namespace TagCloud
             builder.RegisterType<WordClassBasedSelector>().As<IWordSelector>();
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
             builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
+            builder.RegisterType<WordPainterProvider>().As<IWordPainterProvider>();
             builder.RegisterType<IndexBasedWordPainter>().As<IWordPainter>();
+            builder.RegisterType<WordClassBasedWordPainter>().As<IWordPainter>();
+            builder.RegisterType<RandomColorWordPainter>().As<IWordPainter>();
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
             builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>();
@@ -40,8 +43,6 @@ namespace TagCloud
         {
             var projectsDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             var myStemPath = $"{projectsDirectory}/mystem.exe";
-            var excludedWordClasses = new HashSet<WordClass>
-                {WordClass.Conjunction, WordClass.Preposition, WordClass.Particle, WordClass.Pronoun};
             
             var builder = new ContainerBuilder();
             RegisterOptionIndependentDependencies(builder);

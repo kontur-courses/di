@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using TagCloud.Algorithm;
 using TagCloud.Infrastructure;
 
 namespace TagCloud.Visualization

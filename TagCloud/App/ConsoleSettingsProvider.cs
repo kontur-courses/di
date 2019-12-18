@@ -44,6 +44,7 @@ namespace TagCloud.App
                 ? new WordClassSettings()
                 : new WordClassSettings(
                     ParseWordClasses(wordClasses).ToHashSet(), false);
+            settings.WordPainterAlgorithmName = options.WordPainter ?? "index";
             savedSettings = settings;
             return settings;
         }

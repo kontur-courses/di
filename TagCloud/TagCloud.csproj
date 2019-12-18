@@ -50,8 +50,11 @@
     <Compile Include="App\Application.cs" />
     <Compile Include="App\ConsoleSettingsProvider.cs" />
     <Compile Include="App\ISettingsProvider.cs" />
+    <Compile Include="App\IWordPainterProvider.cs" />
     <Compile Include="App\Options.cs" />
     <Compile Include="App\AppSettings.cs" />
+    <Compile Include="App\WordPainterProvider.cs" />
+    <Compile Include="Infrastructure\ColorUtils.cs" />
     <Compile Include="Infrastructure\FileInfoProvider.cs" />
     <Compile Include="Infrastructure\IImageFormat.cs" />
     <Compile Include="Infrastructure\PngImageFormat.cs" />
@@ -60,10 +63,10 @@
     <Compile Include="TextReading\ITextReaderSelector.cs" />
     <Compile Include="TextReading\MicrosoftWordTextReader.cs" />
     <Compile Include="TextReading\TextReaderSelector.cs" />
-    <Compile Include="Visualization\IndexBasedWordPainter.cs" />
+    <Compile Include="Visualization\WordPainting\IndexBasedWordPainter.cs" />
     <Compile Include="Visualization\ITagCloudElementDrawer.cs" />
     <Compile Include="Visualization\ITagCloudElementsPreparer.cs" />
-    <Compile Include="Visualization\IWordPainter.cs" />
+    <Compile Include="Visualization\WordPainting\IWordPainter.cs" />
     <Compile Include="Visualization\IWordSizeSetter.cs" />
     <Compile Include="Visualization\ITagCloudGenerator.cs" />
     <Compile Include="Infrastructure\Palette.cs" />
@@ -71,6 +74,8 @@
     <Compile Include="Visualization\RectangleDrawer.cs" />
     <Compile Include="Visualization\TagCloudElement.cs" />
     <Compile Include="Visualization\TagCloudElementsPreparer.cs" />
+    <Compile Include="Visualization\WordPainting\RandomColorWordPainter.cs" />
+    <Compile Include="Visualization\WordPainting\WordClassBasedWordPainter.cs" />
     <Compile Include="Visualization\WordDrawer.cs" />
     <Compile Include="WordsProcessing\WordClassSettings.cs" />
     <Compile Include="WordsProcessing\IWordCounter.cs" />

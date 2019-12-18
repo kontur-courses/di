@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagCloud.Infrastructure;
 
-namespace TagCloud.Visualization
+namespace TagCloud.Visualization.WordPainting
 {
     public class IndexBasedWordPainter : IWordPainter
     {
@@ -17,5 +17,7 @@ namespace TagCloud.Visualization
         {
             return Colors[index % Colors.Length];
         }
+
+        public string Name => "index";
     }
 }
