@@ -4,8 +4,8 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Interfaces
 {
-    public interface IDrawer<T>
+    public interface IDrawer
     {
-        Bitmap GetBitmap(CloudInfo<T> sizableSource, DrawerSettings settings);
+        Bitmap GetBitmap(CloudInfo cloudInfo, DrawerSettings drawerSettings);
     }
 }

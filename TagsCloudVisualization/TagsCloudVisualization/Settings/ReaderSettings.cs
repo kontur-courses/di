@@ -1,16 +1,19 @@
-﻿namespace TagsCloudVisualization.Settings
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization.Settings
 {
     public class ReaderSettings
     {
-        public ReaderSettings(string path, int maxObjectsCount, string badWords)
+        public ReaderSettings(string pathToText, int maxObjectsCount, string badWordsPath)
         {
-            this.Path = path;
-            this.MaxObjectsCount = maxObjectsCount;
-            this.BadWords = badWords;
+            PathToText = pathToText;
+            MaxObjectsCount = maxObjectsCount;
+            BadWordsPath = badWordsPath;
         }
 
-        public string BadWords { get; }
-        public string Path { get; }
+        public string BadWordsPath { get; }
+        public string PathToText { get; }
         public int MaxObjectsCount { get; }
+        public IEnumerable<string> BadWords { get; set; }
     }
 }

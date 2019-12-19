@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 using TagsCloudVisualization.Providers.Layouter.Interfaces;
 
 namespace TagsCloudVisualization.Providers.Layouter.Spirals
 {
-    class RectangleSpiral:ISpiral
+    internal class RectangleSpiral : ISpiral
     {
         private readonly Point center;
         private readonly float coefficient;

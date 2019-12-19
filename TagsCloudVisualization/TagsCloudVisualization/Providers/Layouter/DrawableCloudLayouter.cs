@@ -9,26 +9,26 @@ using TagsCloudVisualization.SourcesTypes;
 
 namespace TagsCloudVisualization.Providers.Layouter
 {
-    public class DrawableCloudLayouter : IDrawableProvider<string>
+    public class DrawableCloudLayouter : IDrawableProvider
     {
         private readonly SpiralFactory factory;
-        public readonly List<Rectangle> Rectangles;
         private Point center;
+        public List<Rectangle> Rectangles;
         private ISpiral spiralPointer;
 
         public DrawableCloudLayouter(SpiralFactory factory)
         {
-            Rectangles = new List<Rectangle>();
             this.factory = factory;
         }
 
-        public IEnumerable<Drawable<string>> GetDrawableObjects(IEnumerable<Sizable<string>> objects,
+        public IEnumerable<DrawableWord> GetDrawableSource(IEnumerable<SizableWord> sizableSource,
             LayouterSettings settings)
         {
+            Rectangles = new List<Rectangle>();
             center = settings.Center;
             spiralPointer = factory.Create(settings);
 
-            return objects.Select(sizable => new Drawable<string>(sizable.Value, PutNextRectangle(sizable.DrawSize)));
+            return sizableSource.Select(sizable => new DrawableWord(sizable.Value, PutNextRectangle(sizable.DrawSize)));
         }
 
         private Rectangle PutNextRectangle(Size rectangleSize)

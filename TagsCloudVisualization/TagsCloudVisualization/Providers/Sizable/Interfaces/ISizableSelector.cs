@@ -3,8 +3,8 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Providers.Sizable.Interfaces
 {
-    public interface ISizableSelector<in T, in Tinfo>
+    public interface ISizableSelector
     {
-        Size GetSize(T obj, Tinfo info, DrawerSettings settings);
+        Size GetSize(string word, int count, DrawerSettings settings);
     }
 }

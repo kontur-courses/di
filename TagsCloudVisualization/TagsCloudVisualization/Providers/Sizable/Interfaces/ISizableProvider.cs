@@ -4,9 +4,9 @@ using TagsCloudVisualization.SourcesTypes;
 
 namespace TagsCloudVisualization.Providers.Sizable.Interfaces
 {
-    public interface ISizableProvider<T>
+    public interface ISizableProvider
     {
-        IEnumerable<Sizable<T>> GetSizableObjects(IEnumerable<KeyValuePair<T, int>> objects,
+        IEnumerable<SizableWord> GetSizableSource(IEnumerable<KeyValuePair<string, int>> frequencySource,
             DrawerSettings settings);
     }
 }

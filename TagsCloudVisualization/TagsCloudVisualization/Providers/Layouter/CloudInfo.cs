@@ -5,13 +5,14 @@ using TagsCloudVisualization.SourcesTypes;
 
 namespace TagsCloudVisualization.Providers.Layouter
 {
-    public class CloudInfo<T>
+    public class CloudInfo
     {
-        public readonly IEnumerable<Drawable<T>> DrawableSource;
+        public readonly IEnumerable<DrawableWord> DrawableSource;
 
-        public CloudInfo(IEnumerable<Drawable<T>> drawableSource)
+        public CloudInfo(IEnumerable<DrawableWord> drawableWordSource)
         {
-            this.DrawableSource = drawableSource.ToArray();
+            //TODO toarray
+            DrawableSource = drawableWordSource.ToArray();
         }
 
         public Point TranslateTransform => new Point(LeftDownPointOfCloud.X, LeftDownPointOfCloud.Y);

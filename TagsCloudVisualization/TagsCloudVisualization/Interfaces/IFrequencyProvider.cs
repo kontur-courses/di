@@ -2,8 +2,8 @@
 
 namespace TagsCloudVisualization.Interfaces
 {
-    internal interface IFrequencyProvider<T>
+    internal interface IFrequencyProvider
     {
-        Dictionary<T, int> GetFrequencyDictionary(IEnumerable<T> objects);
+        Dictionary<string, int> GetFrequencyDictionary(IEnumerable<string> wordSource);
     }
 }

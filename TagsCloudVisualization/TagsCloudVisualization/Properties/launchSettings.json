@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudVisualization": {
+      "commandName": "Project",
+      "commandLineArgs": "create --sizer SqrtL --max_words 1000 --coef 5"
+    }
+  }
+}

@@ -4,9 +4,9 @@ using TagsCloudVisualization.SourcesTypes;
 
 namespace TagsCloudVisualization.Providers.Layouter.Interfaces
 {
-    internal interface IDrawableProvider<T>
+    internal interface IDrawableProvider
     {
-                                               IEnumerable<Drawable<T>> GetDrawableObjects(IEnumerable<Sizable<T>> sizableSource,
-            LayouterSettings settings);
+        IEnumerable<DrawableWord> GetDrawableSource(IEnumerable<SizableWord> sizableSource,
+            LayouterSettings layouterSettings);
     }
 }

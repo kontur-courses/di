@@ -9,21 +9,21 @@ using TagsCloudVisualization.WordSource.Interfaces;
 
 namespace TagsCloudVisualization
 {
-    internal class TagCreator<T>
+    internal class TagCreator
     {
-        private readonly IDrawableProvider<T> drawableProvider;
-        private readonly IDrawer<T> drawer;
-        private readonly IFrequencyProvider<T> frequencyProvider;
-        private readonly IObjectProvider<T> objectProvider;
-        private readonly ISizableProvider<T> sizableProvider;
+        private readonly IDrawableProvider drawableProvider;
+        private readonly IDrawer drawer;
+        private readonly IFrequencyProvider frequencyProvider;
+        private readonly ISizableProvider sizableProvider;
+        private readonly IWordsProvider wordsProvider;
 
-        public TagCreator(IObjectProvider<T> objectProvider,
-            IFrequencyProvider<T> frequencyProvider,
-            ISizableProvider<T> sizableProvider,
-            IDrawableProvider<T> drawableProvider,
-            IDrawer<T> drawer)
+        public TagCreator(IWordsProvider wordsProvider,
+            IFrequencyProvider frequencyProvider,
+            ISizableProvider sizableProvider,
+            IDrawableProvider drawableProvider,
+            IDrawer drawer)
         {
-            this.objectProvider = objectProvider;
+            this.wordsProvider = wordsProvider;
             this.frequencyProvider = frequencyProvider;
             this.sizableProvider = sizableProvider;
             this.drawableProvider = drawableProvider;
@@ -33,12 +33,12 @@ namespace TagsCloudVisualization
         public Bitmap DrawTag(ReaderSettings readerSettings, DrawerSettings drawerSettings,
             LayouterSettings layouterSettings)
         {
-            var words = objectProvider.GetObjectSource(readerSettings);
+            var words = wordsProvider.GetObjectSource(readerSettings);
             var frequency = frequencyProvider.GetFrequencyDictionary(words);
             var orderedSource = frequency.OrderByDescending(kv => kv.Value).Take(readerSettings.MaxObjectsCount);
-            var sizableSource = sizableProvider.GetSizableObjects(orderedSource, drawerSettings);
-            var drawableSource = drawableProvider.GetDrawableObjects(sizableSource, layouterSettings);
-            var cloudInfo = new CloudInfo<T>(drawableSource);
+            var sizableSource = sizableProvider.GetSizableSource(orderedSource, drawerSettings);
+            var drawableWordSource = drawableProvider.GetDrawableSource(sizableSource, layouterSettings);
+            var cloudInfo = new CloudInfo(drawableWordSource);
             var bitmap = drawer.GetBitmap(cloudInfo, drawerSettings);
             return bitmap;
         }

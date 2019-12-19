@@ -6,36 +6,36 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
-    internal class TagDrawer : IDrawer<string>
+    internal class TagDrawer : IDrawer
     {
-        public const int Border = 10;
+        private const int Border = 10;
 
         private int height;
         private int width;
 
-        public Bitmap GetBitmap(CloudInfo<string> cloudInfo, DrawerSettings settings)
+        public Bitmap GetBitmap(CloudInfo cloudInfo, DrawerSettings drawerSettings)
         {
-            var heightCoefficient = (float) cloudInfo.SizeOfCloud.Height / (settings.Heigth - Border);
-            var widthCoefficient = (float) cloudInfo.SizeOfCloud.Width / (settings.Width - Border);
+            var heightCoefficient = (float) cloudInfo.SizeOfCloud.Height / (drawerSettings.Height - Border);
+            var widthCoefficient = (float) cloudInfo.SizeOfCloud.Width / (drawerSettings.Width - Border);
             var biggestCoefficient = Math.Max(heightCoefficient, widthCoefficient);
 
-            var bitmap = PrepareBitmap(settings);
-            var graphics = PrepareGraphics(bitmap, cloudInfo, settings.BackgroundColor, biggestCoefficient);
+            var bitmap = PrepareBitmap(drawerSettings);
+            var graphics = PrepareGraphics(bitmap, cloudInfo, drawerSettings.BackgroundColor, biggestCoefficient);
 
             foreach (var drawable in cloudInfo.DrawableSource)
             {
-                var currentFont = new Font(settings.TextFont.FontFamily,
+                using var currentFont = new Font(drawerSettings.TextFont.FontFamily,
                     (int) Math.Round(drawable.Place.Height / (biggestCoefficient * 2)));
                 var currentPlace = new PointF(drawable.Place.X / biggestCoefficient,
                     drawable.Place.Y / biggestCoefficient);
-                graphics.DrawString(drawable.Value, currentFont, settings.TextBrush,
+                graphics.DrawString(drawable.Value, currentFont, drawerSettings.TextBrush,
                     currentPlace);
             }
 
             return bitmap;
         }
 
-        private Graphics PrepareGraphics(Bitmap bitmap, CloudInfo<string> cloudInfo, Color backgroundColor,
+        private Graphics PrepareGraphics(Bitmap bitmap, CloudInfo cloudInfo, Color backgroundColor,
             float coefficient)
         {
             var graphics = Graphics.FromImage(bitmap);
@@ -49,7 +49,7 @@ namespace TagsCloudVisualization
         private Bitmap PrepareBitmap(DrawerSettings settings)
         {
             width = settings.Width;
-            height = settings.Heigth;
+            height = settings.Height;
             var bitmap = new Bitmap(width, height);
             return bitmap;
         }
