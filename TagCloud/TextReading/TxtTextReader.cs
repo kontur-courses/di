@@ -7,7 +7,15 @@ namespace TagCloud.TextReading
     {
         public IEnumerable<string> ReadWords(FileInfo file)
         {
-            return File.ReadLines(file.FullName);
+            try
+            {
+                return File.ReadLines(file.FullName);
+            }
+            catch (IOException e)
+            {
+                throw new IOException($"File {file.FullName} is in use", e);
+            }
+            
         }
 
         public string Extension => ".txt";

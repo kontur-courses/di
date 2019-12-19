@@ -71,6 +71,10 @@ namespace TagCloud
                 {
                     Console.WriteLine(e.Message);
                 }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 
