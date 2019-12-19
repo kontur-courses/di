@@ -1,5 +1,6 @@
 ﻿using System;
 using CommandLine;
+using TagsCloudContainer.Core.Layouters;
 using TagsCloudContainer.Visualization.Painters;
 
 namespace TagsCloudContainer.Clients.CLI
@@ -35,6 +36,9 @@ namespace TagsCloudContainer.Clients.CLI
 
         [Option("painter", Required = false, Default = SteppedColorPainter.Name, HelpText = "Tag coloring algorithm")]
         public string Painter { get; set; }
+        
+        [Option("layouter", Required = false, Default = CircularCloudLayouter.Name, HelpText = "Cloud layout algorithm")]
+        public string Layouter { get; set; }
 
         [Option("text", Required = false, Default = "Black", HelpText = "Text color name")]
         public string TextColor { get; set; }

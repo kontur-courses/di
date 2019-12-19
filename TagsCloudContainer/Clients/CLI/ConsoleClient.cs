@@ -43,6 +43,7 @@ namespace TagsCloudContainer.Clients.CLI
             CloudSettings.FontFamily = new FontFamily(options.Font);
             CloudSettings.SizeFactor = options.SizeFactor;
             CloudSettings.Painter = options.Painter;
+            CloudSettings.Layouter = options.Layouter;
             CloudSettings.TextColor = Color.FromName(options.TextColor);
             CloudSettings.FillColor = Color.FromName(options.FillColor);
             CloudSettings.BorderColor = Color.FromName(options.BorderColor);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using Autofac;
-using Autofac.Core;
 using NHunspell;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.Clients.CLI;
@@ -36,7 +35,14 @@ namespace TagsCloudContainer
                 .UsingConstructor(typeof(ArchimedeanSpiral.ISettings));
             builder.RegisterType<CircularCloudLayouter>()
                 .WithParameter("center", Point.Empty)
-                .As<IRectangleLayouter>();
+                .Named<IRectangleLayouter>(CircularCloudLayouter.Name);
+            builder.Register(c =>
+            {
+                var settings = c.Resolve<TagsCloudSettings>();
+                return c.TryResolveNamed(settings.Layouter, typeof(IRectangleLayouter), out var layouter)
+                    ? layouter
+                    : c.ResolveNamed<IRectangleLayouter>(CircularCloudLayouter.Name);
+            }).As<IRectangleLayouter>();
 
             builder.RegisterType<TxtWordsFileReader>().As<IFileFormatReader>();
             builder.RegisterType<DocWordsFileReader>().As<IFileFormatReader>();
@@ -68,14 +74,9 @@ namespace TagsCloudContainer
             builder.Register(c =>
             {
                 var settings = c.Resolve<TagsCloudSettings>();
-                try
-                {
-                    return c.ResolveNamed<IPainter>(settings.Painter);
-                }
-                catch (DependencyResolutionException)
-                {
-                    return c.ResolveNamed<IPainter>(SteppedColorPainter.Name);
-                }
+                return c.TryResolveNamed(settings.Painter, typeof(IPainter), out var painter)
+                    ? painter
+                    : c.ResolveNamed<IPainter>(SteppedColorPainter.Name);
             }).As<IPainter>();
 
             builder.RegisterType<TagsCloudVisualizer>().AsSelf()

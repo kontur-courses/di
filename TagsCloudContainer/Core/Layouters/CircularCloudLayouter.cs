@@ -7,6 +7,8 @@ namespace TagsCloudContainer.Core.Layouters
 {
     public class CircularCloudLayouter : IRectangleLayouter
     {
+        public const string Name = "circular";
+        
         private readonly Point center;
         private readonly IPointGenerator sequence;
         private readonly List<Rectangle> rectangles;
