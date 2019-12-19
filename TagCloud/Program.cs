@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TagCloud.Algorithm.SpiralBasedLayouter;
 using TagCloud.Infrastructure;
 using TagCloud.TextReading;
@@ -28,15 +30,24 @@ namespace TagCloud
             builder.RegisterType<WordClassBasedSelector>().As<IWordSelector>();
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
             builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
-            builder.RegisterType<WordPainterProvider>().As<IWordPainterProvider>();
-            builder.RegisterType<IndexBasedWordPainter>().As<IWordPainter>();
-            builder.RegisterType<WordClassBasedWordPainter>().As<IWordPainter>();
-            builder.RegisterType<RandomColorWordPainter>().As<IWordPainter>();
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
             builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>();
             builder.RegisterType<WordDrawer>().As<ITagCloudElementDrawer>();
             builder.RegisterType<Application>().AsSelf();
+        }
+        
+        private static IWordPainter GetWordPainter(IComponentContext c)
+        {
+            var settings = c.Resolve<ISettingsProvider>().GetSettings();
+            var config = c.Resolve<PictureConfig>();
+            var painters = new List<IWordPainter>
+            {
+                new IndexBasedWordPainter(config),
+                new RandomColorWordPainter(),
+                new WordClassBasedWordPainter(config)
+            };
+            return painters.First(p => p.Name == settings.WordPainterAlgorithmName);
         }
 
         private static void Execute(Options options)
@@ -48,10 +59,10 @@ namespace TagCloud
             RegisterOptionIndependentDependencies(builder);
             builder.RegisterInstance(new MyStemBasedWordClassIdentifier(myStemPath)).As<IWordClassIdentifier>();
 
-
             builder.Register(c =>
                     new ConsoleSettingsProvider(options, c.Resolve<PictureConfig>()))
-                .As<ISettingsProvider>();
+                .As<ISettingsProvider>().InstancePerLifetimeScope();
+            builder.Register(GetWordPainter).As<IWordPainter>();
 
             var container = builder.Build();
 

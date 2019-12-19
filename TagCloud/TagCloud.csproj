@@ -50,10 +50,8 @@
     <Compile Include="App\Application.cs" />
     <Compile Include="App\ConsoleSettingsProvider.cs" />
     <Compile Include="App\ISettingsProvider.cs" />
-    <Compile Include="App\IWordPainterProvider.cs" />
     <Compile Include="App\Options.cs" />
     <Compile Include="App\AppSettings.cs" />
-    <Compile Include="App\WordPainterProvider.cs" />
     <Compile Include="Infrastructure\ColorExtensions.cs" />
     <Compile Include="Infrastructure\FileInfoProvider.cs" />
     <Compile Include="Infrastructure\IImageFormat.cs" />
