@@ -54,7 +54,7 @@
     <Compile Include="App\Options.cs" />
     <Compile Include="App\AppSettings.cs" />
     <Compile Include="App\WordPainterProvider.cs" />
-    <Compile Include="Infrastructure\ColorUtils.cs" />
+    <Compile Include="Infrastructure\ColorExtensions.cs" />
     <Compile Include="Infrastructure\FileInfoProvider.cs" />
     <Compile Include="Infrastructure\IImageFormat.cs" />
     <Compile Include="Infrastructure\PngImageFormat.cs" />

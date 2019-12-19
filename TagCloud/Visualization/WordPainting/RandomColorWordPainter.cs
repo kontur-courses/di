@@ -7,7 +7,7 @@ namespace TagCloud.Visualization.WordPainting
     {
         public Color GetWordColor(Word word, int index)
         {
-            return ColorUtils.GetRandomColor();
+            return new Color().GetRandomColor();
         }
 
         public string Name => "random";

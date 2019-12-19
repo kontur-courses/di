@@ -22,7 +22,7 @@ namespace TagCloud.Visualization.WordPainting
             if (wordClassesColors.TryGetValue(word.WordClass, out var color))
                 return color;
             var nextColor = currentNewColorIndex >= Colors.Length
-                ? ColorUtils.GetRandomColor()
+                ? new Color().GetRandomColor()
                 : Colors[currentNewColorIndex];
             currentNewColorIndex++;
             wordClassesColors[word.WordClass] = nextColor;

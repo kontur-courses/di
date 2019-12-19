@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace TagCloud.Infrastructure
 {
-    public class ColorUtils
+    public static class ColorExtensions
     {
-        public static Color GetRandomColor()
+        public static Color GetRandomColor(this Color color)
         {
             var rnd = new Random();
             var r = rnd.Next(0, 256);
