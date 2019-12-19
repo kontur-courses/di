@@ -69,8 +69,14 @@ namespace TagsCloudContainer.Visualization
         private Rectangle GetViewport(IEnumerable<Rectangle> rectangles)
         {
             var viewport = CalculateViewport(rectangles);
-            if (imageSize != null)
-                viewport.Size = imageSize.Value;
+            if (imageSize == null)
+                return viewport;
+            if (viewport.Width > imageSize.Value.Width || viewport.Height > imageSize.Value.Height)
+                throw new ArgumentException(
+                    $"A {viewport.Size} tag cloud cannot fit in the given image size {imageSize}");
+            viewport.X -= (imageSize.Value.Width - viewport.Width) / 2;
+            viewport.Y -= (imageSize.Value.Height - viewport.Height) / 2;
+            viewport.Size = imageSize.Value;
             return viewport;
         }
 
