@@ -5,7 +5,7 @@ namespace TagCloud.Visualization.WordPainting
 {
     public interface IWordPainter
     {
-        Color GetWordColor(Word word, int index);
+        Color GetWordColor(Word word);
         string Name { get; }
     }
 }

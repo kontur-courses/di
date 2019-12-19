@@ -17,7 +17,7 @@ namespace TagCloud.Visualization.WordPainting
             this.pictureConfig = pictureConfig;
         }
 
-        public Color GetWordColor(Word word, int index)
+        public Color GetWordColor(Word word)
         {
             if (wordClassesColors.TryGetValue(word.WordClass, out var color))
                 return color;

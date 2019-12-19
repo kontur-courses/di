@@ -6,5 +6,6 @@ namespace TagCloud.Visualization
     public interface ITagCloudElementsPreparer
     {
         IEnumerable<TagCloudElement> PrepareTagCloudElements(IEnumerable<Word> words);
+        int CurrentWordIndex { get; }
     }
 }

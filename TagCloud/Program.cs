@@ -32,11 +32,12 @@ namespace TagCloud
             builder.RegisterType<ArchimedeanSpiral>().As<ISpiral>();
             builder.RegisterType<PngImageFormat>().As<IImageFormat>();
             builder.RegisterType<TagCloudGenerator>().As<ITagCloudGenerator>();
-            builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>();
+            builder.RegisterType<TagCloudElementsPreparer>().As<ITagCloudElementsPreparer>()
+                .InstancePerLifetimeScope();
             builder.RegisterType<WordDrawer>().As<ITagCloudElementDrawer>();
             builder.RegisterType<Application>().AsSelf();
         }
-        
+
         private static IWordPainter GetWordPainter(IComponentContext c)
         {
             var settings = c.Resolve<ISettingsProvider>().GetSettings();
@@ -47,14 +48,15 @@ namespace TagCloud
                 new RandomColorWordPainter(),
                 new WordClassBasedWordPainter(config)
             };
-            return painters.First(p => p.Name == settings.WordPainterAlgorithmName);
+            var painter = painters.First(p => p.Name == settings.WordPainterAlgorithmName);
+            return painter;
         }
 
         private static void Execute(Options options)
         {
             var projectsDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             var myStemPath = $"{projectsDirectory}/mystem.exe";
-            
+
             var builder = new ContainerBuilder();
             RegisterOptionIndependentDependencies(builder);
             builder.RegisterInstance(new MyStemBasedWordClassIdentifier(myStemPath)).As<IWordClassIdentifier>();
@@ -62,7 +64,9 @@ namespace TagCloud
             builder.Register(c =>
                     new ConsoleSettingsProvider(options, c.Resolve<PictureConfig>()))
                 .As<ISettingsProvider>().InstancePerLifetimeScope();
-            builder.Register(GetWordPainter).As<IWordPainter>();
+            builder.Register(GetWordPainter).As<IWordPainter>()
+                  .InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+
 
             var container = builder.Build();
 

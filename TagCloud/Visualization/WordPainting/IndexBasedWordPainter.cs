@@ -6,6 +6,7 @@ namespace TagCloud.Visualization.WordPainting
     public class IndexBasedWordPainter : IWordPainter
     {
         private readonly PictureConfig pictureConfig;
+        public ITagCloudElementsPreparer Preparer { get; set; }
         private Color[] Colors => pictureConfig.Palette.WordsColors;
 
         public IndexBasedWordPainter(PictureConfig pictureConfig)
@@ -13,9 +14,9 @@ namespace TagCloud.Visualization.WordPainting
             this.pictureConfig = pictureConfig;
         }
 
-        public Color GetWordColor(Word word, int index)
+        public Color GetWordColor(Word word)
         {
-            return Colors[index % Colors.Length];
+            return Colors[Preparer.CurrentWordIndex % Colors.Length];
         }
 
         public string Name => "index";
