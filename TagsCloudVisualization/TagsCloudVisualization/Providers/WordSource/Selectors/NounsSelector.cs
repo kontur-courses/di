@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using edu.stanford.nlp.tagger.maxent;
-using TagsCloudVisualization.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
 
-namespace TagsCloudVisualization.WordSource.Selectors
+namespace TagsCloudVisualization.Providers.WordSource.Selectors
 {
     internal class NounsSelector : IWordSelector
     {

@@ -4,8 +4,9 @@ using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Providers.Layouter;
 using TagsCloudVisualization.Providers.Layouter.Interfaces;
 using TagsCloudVisualization.Providers.Sizable.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
+using TagsCloudVisualization.Results;
 using TagsCloudVisualization.Settings;
-using TagsCloudVisualization.WordSource.Interfaces;
 
 namespace TagsCloudVisualization
 {
@@ -30,15 +31,26 @@ namespace TagsCloudVisualization
             this.drawer = drawer;
         }
 
-        public Bitmap DrawTag(ReaderSettings readerSettings, DrawerSettings drawerSettings,
+        public Result<Bitmap> DrawTag(ReaderSettings readerSettings, DrawerSettings drawerSettings,
             LayouterSettings layouterSettings)
         {
             var words = wordsProvider.GetObjectSource(readerSettings);
-            var frequency = frequencyProvider.GetFrequencyDictionary(words);
-            var orderedSource = frequency.OrderByDescending(kv => kv.Value).Take(readerSettings.MaxObjectsCount);
+            if (!words.IsSuccess)
+            {
+                return Result.Fail<Bitmap>(words.Error);
+            }
+
+            var frequency = frequencyProvider.GetFrequencyDictionary(words.Value);
+            var orderedSource = frequency.OrderByDescending(kv => kv.Value)
+                .Take(readerSettings.MaxObjectsCount).ToList();
             var sizableSource = sizableProvider.GetSizableSource(orderedSource, drawerSettings);
             var drawableWordSource = drawableProvider.GetDrawableSource(sizableSource, layouterSettings);
-            var cloudInfo = new CloudInfo(drawableWordSource);
+            if (!drawableWordSource.IsSuccess)
+            {
+                return Result.Fail<Bitmap>(drawableWordSource.Error);
+            }
+
+            var cloudInfo = new CloudInfo(drawableWordSource.Value);
             var bitmap = drawer.GetBitmap(cloudInfo, drawerSettings);
             return bitmap;
         }

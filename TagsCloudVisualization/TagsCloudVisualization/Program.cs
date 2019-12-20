@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System;
 using Autofac;
 using DocoptNet;
 using TagsCloudVisualization.ImageSaver;
@@ -10,7 +10,7 @@ namespace TagsCloudVisualization
         private const string Usage = @"Tags Cloud Visualizer
 
     Usage:
-        TagsCloudVisualization.exe create 
+        TagsCloudVisualization.exe 
             [--input FILE] [--max_words MAX_WORD_COUNT] [--exclude BADWORDS_FILE] 
             [--sizer SIZE_SELECTOR]
             [--brush TEXT_BRUSH] [--back BACKGOUND_COLOR] 
@@ -39,7 +39,7 @@ namespace TagsCloudVisualization
               --x X                    Layouter center x[default: 0]
               --y Y                    Layouter center y[default: 0]
               --coef SPIRAL_COEF       SpiralLayouter coefficient [default: 10]
-              --type SPIRAL_TYPE       SpiralLayouter type Rectangle or Ferma[default: Ferma]
+              --type SPIRAL_TYPE       SpiralLayouter type InLine Rectangle or Ferma[default: Ferma]
               --output_path PATH       Path to output directory [default: ] if path is emty saving to resources
               --output_ext EXT         Image extension[default: Jpg]
     ";
@@ -48,14 +48,34 @@ namespace TagsCloudVisualization
 
         internal static void Main(string[] args)
         {
-            
-            var parameters = new Docopt().Apply(Usage, args, version: Version, exit: true);
-            var appSettings = SettingsParser.GetSettings(parameters);
-
             var container = ContainerProvider.Build();
+
+            var parameters = new Docopt().Apply(Usage, args, version: Version, exit: true);
+            var appSettingsResult = SettingsParser.GetSettings(parameters);
+            if (!appSettingsResult.IsSuccess)
+            {
+                Console.WriteLine(appSettingsResult.Error);
+                return;
+            }
+
+            var appSettings = appSettingsResult.Value;
+
             var bitmap = container.Resolve<TagCreator>().DrawTag(appSettings.ReaderSettings, appSettings.DrawerSettings,
                 appSettings.LayouterSettings);
-            container.Resolve<IImageSaverFactory>().GetSaver(appSettings.ImageExt).Save(bitmap, appSettings.SavePath);
+            if (!bitmap.IsSuccess)
+            {
+                Console.WriteLine(bitmap.Error);
+                return;
+            }
+
+            var saveResult = container.Resolve<IImageSaverFactory>().GetSaver(appSettings.ImageExt)
+                .Save(bitmap.Value, appSettings.SavePath);
+            if (!saveResult.IsSuccess)
+            {
+                Console.WriteLine(saveResult.Error);
+            }
+
+            Console.WriteLine("Ended successful");
         }
     }
 }

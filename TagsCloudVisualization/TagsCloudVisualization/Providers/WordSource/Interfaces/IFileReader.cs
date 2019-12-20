@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Results;
 
-namespace TagsCloudVisualization.WordSource.Interfaces
+namespace TagsCloudVisualization.Providers.WordSource.Interfaces
 {
     internal interface IFileReader
     {
-        IEnumerable<string> ReadLines(string path);
+        Result<List<string>> ReadLines(string path);
     }
 }

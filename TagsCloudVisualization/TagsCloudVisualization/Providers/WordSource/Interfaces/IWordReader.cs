@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudVisualization.WordSource.Interfaces
+namespace TagsCloudVisualization.Providers.WordSource.Interfaces
 {
     internal interface IWordReader
     {

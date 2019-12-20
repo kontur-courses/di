@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudVisualization.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
 
-namespace TagsCloudVisualization.WordSource
+namespace TagsCloudVisualization.Providers.WordSource
 {
     internal class TextSplitter : IWordReader
     {
         public IEnumerable<string> SplitByPunctuation(IEnumerable<string> lineSource)
         {
-            foreach (var line in lineSource)
+            return lineSource.SelectMany(line =>
             {
                 var punctuation = line.Where(char.IsPunctuation).Distinct().ToArray();
-                foreach (var word in line.Split().Select(x => x.Trim(punctuation)))
-                {
-                    yield return word;
-                }
-            }
+                return line.Split().Select(x => x.Trim(punctuation));
+            });
         }
     }
 }

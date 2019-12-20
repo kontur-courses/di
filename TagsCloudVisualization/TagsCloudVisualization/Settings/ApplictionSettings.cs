@@ -1,6 +1,4 @@
-﻿using TagsCloudVisualization.ImageSaver;
-
-namespace TagsCloudVisualization.Settings
+﻿namespace TagsCloudVisualization.Settings
 {
     internal class ApplicationSettings
     {

@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.Providers.Sizable.Interfaces
 {
     public interface ISizableProvider
     {
-        IEnumerable<SizableWord> GetSizableSource(IEnumerable<KeyValuePair<string, int>> frequencySource,
+        List<SizableWord> GetSizableSource(List<KeyValuePair<string, int>> frequencySource,
             DrawerSettings settings);
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using TagsCloudVisualization.Providers.Sizable.Interfaces;
+﻿using TagsCloudVisualization.Providers.Sizable.Interfaces;
 
 namespace TagsCloudVisualization.Providers.Sizable
 {
     internal class SizeSelectorFactory
     {
         private readonly ISizableSelector logSelector;
-        private readonly ISizableSelector sqrtSelector;
         private readonly ISizableSelector sqrtLengthSelector;
+        private readonly ISizableSelector sqrtSelector;
 
         public SizeSelectorFactory()
         {
@@ -24,9 +23,8 @@ namespace TagsCloudVisualization.Providers.Sizable
                     return sqrtSelector;
                 case SizeSelectorType.Log:
                     return logSelector;
-                case SizeSelectorType.SqrtL:
+                default:
                     return sqrtLengthSelector;
-                default: throw new ArgumentException("Cant resolve type");
             }
         }
     }

@@ -7,11 +7,11 @@ using TagsCloudVisualization.Providers.Layouter.Interfaces;
 using TagsCloudVisualization.Providers.Layouter.Spirals;
 using TagsCloudVisualization.Providers.Sizable;
 using TagsCloudVisualization.Providers.Sizable.Interfaces;
-using TagsCloudVisualization.WordSource;
-using TagsCloudVisualization.WordSource.Changers;
-using TagsCloudVisualization.WordSource.Interfaces;
-using TagsCloudVisualization.WordSource.Readers;
-using TagsCloudVisualization.WordSource.Selectors;
+using TagsCloudVisualization.Providers.WordSource;
+using TagsCloudVisualization.Providers.WordSource.Changers;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Readers;
+using TagsCloudVisualization.Providers.WordSource.Selectors;
 
 namespace TagsCloudVisualization
 {

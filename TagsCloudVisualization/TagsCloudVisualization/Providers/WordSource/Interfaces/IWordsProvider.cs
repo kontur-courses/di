@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Results;
 using TagsCloudVisualization.Settings;
 
-namespace TagsCloudVisualization.WordSource.Interfaces
+namespace TagsCloudVisualization.Providers.WordSource.Interfaces
 {
     internal interface IWordsProvider
     {
-        IEnumerable<string> GetObjectSource(ReaderSettings settings);
+        Result<List<string>> GetObjectSource(ReaderSettings settings);
     }
 }

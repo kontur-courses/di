@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagsCloudVisualization.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
+using TagsCloudVisualization.Results;
 
-namespace TagsCloudVisualization.WordSource.Readers
+namespace TagsCloudVisualization.Providers.WordSource.Readers
 {
     internal class PdfReader : IFileReader
     {
-        public IEnumerable<string> ReadLines(string path)
+        public Result<List<string>> ReadLines(string path)
         {
             throw new NotImplementedException();
         }

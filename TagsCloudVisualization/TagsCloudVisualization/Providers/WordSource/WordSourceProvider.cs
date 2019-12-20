@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Readers;
+using TagsCloudVisualization.Results;
 using TagsCloudVisualization.Settings;
-using TagsCloudVisualization.WordSource.Interfaces;
-using TagsCloudVisualization.WordSource.Readers;
 
-namespace TagsCloudVisualization.WordSource
+namespace TagsCloudVisualization.Providers.WordSource
 {
     internal class WordSourceProvider : IWordsProvider
     {
@@ -23,20 +24,27 @@ namespace TagsCloudVisualization.WordSource
             this.textSplitter = textSplitter;
         }
 
-        public IEnumerable<string> GetObjectSource(ReaderSettings settings)
+        public Result<List<string>> GetObjectSource(ReaderSettings settings)
         {
             var words = GetWords(settings.PathToText);
-            settings.BadWords = GetWords(settings.BadWordsPath);
-            var changed = ChangeWords(settings, words);
-            var selected = SelectWords(settings, changed);
-            return selected;
+            var badWords = GetWords(settings.BadWordsPath);
+            if (!words.IsSuccess || !badWords.IsSuccess)
+                return Result.Fail<List<string>>(
+                    $"Can't read file on path {(words.IsSuccess ? settings.BadWordsPath : settings.PathToText)}");
+            settings.BadWords = badWords.Value;
+            var changed = ChangeWords(settings, words.Value);
+            var selected = SelectWords(settings, changed).ToList();
+            return selected.AsResult();
         }
 
-        private IEnumerable<string> GetWords(string path)
+        private Result<IEnumerable<string>> GetWords(string path)
         {
             var lines = textReaderFactory.GetReader(path).ReadLines(path);
-            var words = textSplitter.SplitByPunctuation(lines);
-            return words;
+            if (!lines.IsSuccess)
+                return Result.Fail<IEnumerable<string>>(lines.Error);
+            var words = textSplitter.SplitByPunctuation(lines.Value);
+
+            return words.AsResult();
         }
 
         private IEnumerable<string> ChangeWords(ReaderSettings settings, IEnumerable<string> wordSource)

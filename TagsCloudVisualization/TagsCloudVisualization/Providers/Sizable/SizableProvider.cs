@@ -15,13 +15,13 @@ namespace TagsCloudVisualization.Providers.Sizable
             this.sizableSelector = sizableSelector;
         }
 
-        public IEnumerable<SizableWord> GetSizableSource(IEnumerable<KeyValuePair<string, int>> wordFrequency,
+        public List<SizableWord> GetSizableSource(List<KeyValuePair<string, int>> wordFrequency,
             DrawerSettings settings)
         {
             return wordFrequency.Select(kv =>
                     new SizableWord(kv.Key,
                         sizableSelector.GeSelector(settings.SizeSelector).GetSize(kv.Key, kv.Value, settings)))
-                .Where(sizable => sizable.DrawSize.Width > 0 && sizable.DrawSize.Height > 0);
+                .Where(sizable => sizable.DrawSize.Width > 0 && sizable.DrawSize.Height > 0).ToList();
         }
     }
 }

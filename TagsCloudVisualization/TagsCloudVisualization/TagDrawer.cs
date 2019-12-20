@@ -2,6 +2,7 @@
 using System.Drawing;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Providers.Layouter;
+using TagsCloudVisualization.Results;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
@@ -13,14 +14,19 @@ namespace TagsCloudVisualization
         private int height;
         private int width;
 
-        public Bitmap GetBitmap(CloudInfo cloudInfo, DrawerSettings drawerSettings)
+        public Result<Bitmap> GetBitmap(CloudInfo cloudInfo, DrawerSettings drawerSettings)
         {
             var heightCoefficient = (float) cloudInfo.SizeOfCloud.Height / (drawerSettings.Height - Border);
             var widthCoefficient = (float) cloudInfo.SizeOfCloud.Width / (drawerSettings.Width - Border);
             var biggestCoefficient = Math.Max(heightCoefficient, widthCoefficient);
 
             var bitmap = PrepareBitmap(drawerSettings);
-            var graphics = PrepareGraphics(bitmap, cloudInfo, drawerSettings.BackgroundColor, biggestCoefficient);
+            if (!bitmap.IsSuccess)
+            {
+                return bitmap;
+            }
+
+            var graphics = PrepareGraphics(bitmap.Value, cloudInfo, drawerSettings.BackgroundColor, biggestCoefficient);
 
             foreach (var drawable in cloudInfo.DrawableSource)
             {
@@ -46,12 +52,11 @@ namespace TagsCloudVisualization
             return graphics;
         }
 
-        private Bitmap PrepareBitmap(DrawerSettings settings)
+        private Result<Bitmap> PrepareBitmap(DrawerSettings settings)
         {
             width = settings.Width;
             height = settings.Height;
-            var bitmap = new Bitmap(width, height);
-            return bitmap;
+            return Result.Of(() => new Bitmap(width, height));
         }
     }
 }

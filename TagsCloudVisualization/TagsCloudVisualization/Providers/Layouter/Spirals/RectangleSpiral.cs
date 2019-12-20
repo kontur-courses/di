@@ -24,10 +24,8 @@ namespace TagsCloudVisualization.Providers.Layouter.Spirals
 
         public Point GetSpiralCurrent()
         {
-            var x = coefficient * spiralCounter;
-            var y = coefficient * spiralCounter;
-
-            var pos = new Point((int) (x + center.X), (int) (y + center.Y));
+            var coordinate = coefficient * spiralCounter;
+            var pos = new Point((int) (coordinate + center.X), (int) (coordinate + center.Y));
             return pos;
         }
     }

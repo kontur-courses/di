@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
 using TagsCloudVisualization.Settings;
-using TagsCloudVisualization.WordSource.Interfaces;
 
-namespace TagsCloudVisualization.WordSource.Selectors
+namespace TagsCloudVisualization.Providers.WordSource.Selectors
 {
     internal class WordSelectorFactory : ISelectorFactory
     {

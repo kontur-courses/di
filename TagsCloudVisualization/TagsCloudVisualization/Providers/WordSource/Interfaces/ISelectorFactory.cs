@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloudVisualization.Settings;
 
-namespace TagsCloudVisualization.WordSource.Interfaces
+namespace TagsCloudVisualization.Providers.WordSource.Interfaces
 {
     public interface ISelectorFactory
     {

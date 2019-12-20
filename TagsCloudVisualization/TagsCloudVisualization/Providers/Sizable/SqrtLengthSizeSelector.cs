@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.Providers.Sizable
 
         public Size GetSize(string word, int count, DrawerSettings settings)
         {
-            return (Graphics.MeasureString(word, settings.TextFont) * (MathF.Log(count)*word.Length + 1)).ToSize();
+            return (Graphics.MeasureString(word, settings.TextFont) * (MathF.Log(count) * word.Length + 1)).ToSize();
         }
     }
 }

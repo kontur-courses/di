@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualization.ImageSaver
+﻿using TagsCloudVisualization.Settings;
+
+namespace TagsCloudVisualization.ImageSaver
 {
     public interface IImageSaverFactory
     {

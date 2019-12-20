@@ -1,23 +1,20 @@
 ﻿using System;
-using System.IO;
+using System.Text.RegularExpressions;
+using TagsCloudVisualization.Results;
 
 namespace TagsCloudVisualization
 {
     internal class PathHelper
     {
-        public static string ResourcesPath
+        public static Result<string> ResourcesPath
         {
             get
             {
-                var pathToResources = Environment.CurrentDirectory;
-
-                for (var i = 0; i < 3; i++)
-                {
-                    pathToResources = Directory.GetParent(pathToResources).FullName;
-                }
-
-                pathToResources += "\\Resources";
-                return pathToResources;
+                var projectPathRegex = new Regex(@".*TagsCloudVisualization");
+                var match = projectPathRegex.Match(Environment.CurrentDirectory);
+                if (!match.Success)
+                    return Result.Fail<string>($"Can't get parent directory for {Environment.CurrentDirectory} ");
+                return match.Value + "\\Resources";
             }
         }
     }

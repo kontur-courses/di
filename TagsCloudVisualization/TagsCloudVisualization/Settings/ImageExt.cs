@@ -1,8 +1,7 @@
-﻿namespace TagsCloudVisualization.ImageSaver
+﻿namespace TagsCloudVisualization.Settings
 {
     public enum ImageExt
     {
-        Jpg,
-        Bmp
+        Jpg
     }
 }

@@ -11,7 +11,6 @@ namespace TagsCloudVisualization.Providers.Layouter
 
         public CloudInfo(IEnumerable<DrawableWord> drawableWordSource)
         {
-            //TODO toarray
             DrawableSource = drawableWordSource.ToArray();
         }
 

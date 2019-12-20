@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using TagsCloudVisualization.WordSource.Interfaces;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
+using TagsCloudVisualization.Results;
 
-namespace TagsCloudVisualization.WordSource.Readers
+namespace TagsCloudVisualization.Providers.WordSource.Readers
 {
     internal class TxtReader : IFileReader
     {
-        public IEnumerable<string> ReadLines(string path)
+        public Result<List<string>> ReadLines(string path)
         {
             if (!File.Exists(path))
-                throw new ArgumentException($"File not found {path}");
-            return File.ReadLines(path, Encoding.UTF8);
+                return Result.Fail<List<string>>($"File not found on path : {path}");
+            return Result.Of(() => File.ReadLines(path, Encoding.UTF8).ToList());
         }
     }
 }

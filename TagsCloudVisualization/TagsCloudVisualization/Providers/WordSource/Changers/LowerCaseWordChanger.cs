@@ -1,6 +1,6 @@
-﻿using TagsCloudVisualization.WordSource.Interfaces;
+﻿using TagsCloudVisualization.Providers.WordSource.Interfaces;
 
-namespace TagsCloudVisualization.WordSource.Changers
+namespace TagsCloudVisualization.Providers.WordSource.Changers
 {
     internal class LowerCaseWordChanger : IWordChanger
     {

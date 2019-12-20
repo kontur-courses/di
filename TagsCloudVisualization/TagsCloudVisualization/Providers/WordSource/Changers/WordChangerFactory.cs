@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Providers.WordSource.Interfaces;
 using TagsCloudVisualization.Settings;
-using TagsCloudVisualization.WordSource.Interfaces;
 
-namespace TagsCloudVisualization.WordSource.Changers
+namespace TagsCloudVisualization.Providers.WordSource.Changers
 {
     public class WordChangerFactory : IChangerFactory
     {

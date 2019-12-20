@@ -1,19 +1,23 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using TagsCloudVisualization.Results;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.ImageSaver
 {
     internal class JpgSaver : IImageSaver
 
     {
-        public void Save(Bitmap bitmap, string pathToSave)
+        public Result<None> Save(Bitmap bitmap, string pathToSave)
         {
-            var jpgEncoder = GetEncoder(ImageFormat.Jpeg);
-            var myEncoder = Encoder.Quality;
-            var myEncoderParameter = new EncoderParameter(myEncoder, 0L);
-            var myEncoderParameters = new EncoderParameters(1);
-            myEncoderParameters.Param[0] = myEncoderParameter;
-            bitmap.Save(pathToSave + "/TagCloud.jpg", jpgEncoder, myEncoderParameters);
+            return Result.OfAction(() =>
+            {
+                var jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+                var myEncoder = Encoder.Quality;
+                var myEncoderParameter = new EncoderParameter(myEncoder, 0L);
+                var myEncoderParameters = new EncoderParameters(1);
+                myEncoderParameters.Param[0] = myEncoderParameter;
+                bitmap.Save(pathToSave + "/TagCloud.jpg", jpgEncoder, myEncoderParameters);
+            });
         }
 
         private static ImageCodecInfo GetEncoder(ImageFormat format)

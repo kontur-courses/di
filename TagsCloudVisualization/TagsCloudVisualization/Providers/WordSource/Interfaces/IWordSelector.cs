@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.WordSource.Interfaces
+﻿namespace TagsCloudVisualization.Providers.WordSource.Interfaces
 {
     public interface IWordSelector
     {
