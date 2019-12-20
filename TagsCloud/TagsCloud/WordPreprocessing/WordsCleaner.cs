@@ -54,24 +54,23 @@ namespace TagsCloud.WordPreprocessing
             words = words.Select(w => w.ToLower());
             foreach (var word in words)
             {
-                var partOfSpeech = GetPartOfSpeech(word);
+                var wordData = _stemmer.Analysis(word);
+                var partOfSpeech = GetPartOfSpeech(wordData);
                 if (!boringPartsOfSpeech.Contains(partOfSpeech))
-                    yield return _infinitive ? GetInfinitiveForm(word) : word;
+                    yield return _infinitive ? GetInfinitiveForm(wordData) : word;
             }
         }
 
-        private PartOfSpeech GetPartOfSpeech(string word)
+        private PartOfSpeech GetPartOfSpeech(string jsonAnalysis)
         {
-            var jsonAnalysis = _stemmer.Analysis(word);
             var jsonArray = JArray.Parse(jsonAnalysis);
             if (!jsonAnalysis.Contains("gr")) return PartOfSpeech.Unknown;
             var designation = jsonArray[0]["analysis"][0]["gr"].ToString().Split(',', '=')[0];
             return partOfSpeechDenotation[designation];
         }
 
-        private string GetInfinitiveForm(string word)
+        private string GetInfinitiveForm(string jsonAnalysis)
         {
-            var jsonAnalysis = _stemmer.Analysis(word);
             var jsonArray = JArray.Parse(jsonAnalysis);
             return jsonArray[0]["analysis"][0]["lex"].ToString();
         }
