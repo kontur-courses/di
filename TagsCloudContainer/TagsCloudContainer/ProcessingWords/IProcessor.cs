@@ -1,10 +1,10 @@
-﻿using System.Drawing;
+﻿using CloudDrawing;
 
 namespace TagsCloudContainer.ProcessingWords
 {
     public interface IProcessor
     {
-        Bitmap Run(string pathToFile, Color colorBackground,
-            string famyilyNameFont, Brush brushText, StringFormat stringFormatText, Size size);
+        void Run(string pathToFile, string pathToSaveFile, ImageSettings imageSettings,
+            WordDrawSettings wordDrawSettings);
     }
 }

@@ -17,11 +17,11 @@ namespace CloudLayouterеTests
             var firstPoint = spiral.GetPoints(center).Take(1).First();
             firstPoint.Should().BeEquivalentTo(center);
         }
-        
-        private static IEnumerable<TestCaseData> cloudCenters = Enumerable 
-            .Range(-1, 3) 
-            .SelectMany(i => Enumerable 
-                .Range(-1, 3) 
-                .Select(j => new TestCaseData(new Point(i, j)).SetName("{m}: " + $"X = {i}, Y = {j}"))); 
+
+        private static IEnumerable<TestCaseData> cloudCenters = Enumerable
+            .Range(-1, 3)
+            .SelectMany(i => Enumerable
+                .Range(-1, 3)
+                .Select(j => new TestCaseData(new Point(i, j)).SetName("{m}: " + $"X = {i}, Y = {j}")));
     }
 }

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TagsCloudContainer.Reader
 {
-    public class ReaderFromTxt : IReader
+    public class ReaderLinesFromTxt : IReaderLinesFromFile
     {
         public IEnumerable<string> GetWordsSet(string path)
         {

@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Reader
 {
-    public interface IReader
+    public interface IReaderLinesFromFile
     {
         IEnumerable<string> GetWordsSet(string path);
     }

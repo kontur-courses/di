@@ -1,13 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
 
 namespace CloudDrawing
 {
     public interface ICircularCloudDrawing
     {
-        void DrawString(string str, Font font, Brush brush, StringFormat stringFormat);
-        void DrawRectangle(Rectangle rectangle, Pen pen);
-        Bitmap GetBitmap();
+        void SetOptions(ImageSettings imageSettings);
+        void DrawWords(IEnumerable<(string, int)> wordsFontSize, WordDrawSettings settings);
         void SaveImage(string filename);
-        void SetOptions(Color background, Size imageSize);
     }
 }

@@ -4,10 +4,10 @@ namespace TagsCloudContainer.PreprocessingWords
 {
     internal class WordInfo
     {
-        [JsonProperty("lex")]
+        [JsonProperty("lex")] 
         public string LexicalForm { get; set; }
 
-        [JsonProperty("gr")]
+        [JsonProperty("gr")] 
         public string Grammar { get; set; }
     }
 }

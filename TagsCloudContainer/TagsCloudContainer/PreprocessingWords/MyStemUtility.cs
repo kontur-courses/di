@@ -20,26 +20,24 @@ namespace TagsCloudContainer.PreprocessingWords
                 using (var sw = File.CreateText(pathTempFile))
                     foreach (var str in strings)
                         sw.WriteLine(str);
-                
+
                 return createProcess
                     .GetResult(pathMyStemUtility, flags + " " + pathTempFile)
                     .Select(s => JsonConvert.DeserializeObject<MyStemOutput>(s).GetPrimaryFormOfNouns())
-                    .Where(s => s != null);;
+                    .Where(s => s != null);
+                ;
             }
             finally
             {
                 File.Delete(pathTempFile);
             }
-            
         }
-        
+
         public MyStemUtility(ICreateProcess createProcess)
         {
             this.createProcess = createProcess;
-            pathMyStemUtility = Environment.CurrentDirectory + @"\..\..\..\mystem.exe";
+            pathMyStemUtility = Environment.CurrentDirectory + @"\mystem.exe";
             flags = "-nig --format json";
         }
-        
-        
     }
 }

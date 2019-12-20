@@ -28,5 +28,9 @@ namespace TagsCloudConsoleVersion
 
         [Option('h', "height", Default = 500, HelpText = "Высота изображения")]
         public int Height { get; set; }
+        
+        [Option('d', "delineation", Default = false, HelpText = "Обводка слов прямоугольниками черного цвета")]
+        public bool HaveDelineation { get; set;}
+        
     }
 }

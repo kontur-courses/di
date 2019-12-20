@@ -25,29 +25,31 @@ namespace CloudLayouter
             this.center = center;
             SpiralPoint = Spiral.GetPoints(center).GetEnumerator();
         }
-        
-        
+
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             while (true)
             {
                 SpiralPoint.MoveNext();
                 var point = SpiralPoint.Current;
-                
-                var rectangle = new Rectangle(new Point(point.X - rectangleSize.Width / 2, point.Y - rectangleSize.Height / 2), rectangleSize);
+
+                var rectangle =
+                    new Rectangle(new Point(point.X - rectangleSize.Width / 2, point.Y - rectangleSize.Height / 2),
+                        rectangleSize);
                 if (HasOverlappingRectangles(rectangle, Rectangles)) continue;
 
                 Rectangles.Add(rectangle);
                 return rectangle;
             }
         }
-        
-        
+
+
         public static bool HasOverlappingRectangles(Rectangle rectangle, IEnumerable<Rectangle> rectangles) =>
             rectangles.Any(r => r.IntersectsWith(rectangle));
-        
+
         //различная реализация из-за сложностей алгоритмов 
         public static bool HasOverlappingRectangles(IEnumerable<Rectangle> rectangles) =>
-             rectangles.Any(r => rectangles.Any(r1 => r != r1 && r.IntersectsWith(r1)));
+            rectangles.Any(r => rectangles.Any(r1 => r != r1 && r.IntersectsWith(r1)));
     }
 }

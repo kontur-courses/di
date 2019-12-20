@@ -6,20 +6,20 @@ namespace TagsCloudContainer.PreprocessingWords
 {
     public class CreateProcess : ICreateProcess
     {
-        public  IEnumerable<string> GetResult(string nameProgram, string arguments)
+        public IEnumerable<string> GetResult(string nameProgram, string arguments)
         {
             var words = new List<string>();
             using (var process = new Process
+            {
+                StartInfo =
                 {
-                    StartInfo =
-                    {
-                        FileName = nameProgram,
-                        Arguments = arguments,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        StandardOutputEncoding = Encoding.UTF8
-                    }
-                })
+                    FileName = nameProgram,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    StandardOutputEncoding = Encoding.UTF8
+                }
+            })
             {
                 process.Start();
                 while (!process.StandardOutput.EndOfStream)
@@ -29,6 +29,7 @@ namespace TagsCloudContainer.PreprocessingWords
                         words.Add(word);
                 }
             }
+
             return words;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using CloudLayouter;
 
@@ -12,35 +13,43 @@ namespace CloudDrawing
 
         public CircularCloudDrawing(ICloudLayouter cloudLayouter)
         {
-            
             layouter = cloudLayouter;
-           
         }
 
-        public void SetOptions(Color background, Size imageSize)
+        public void SetOptions(ImageSettings imageSettings)
         {
-            if (imageSize.Height <= 0 || imageSize.Height <= 0)
+            if (imageSettings.Size.Height <= 0 || imageSettings.Size.Height <= 0)
                 throw new AggregateException("Size have zero width or height");
-            bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+            bitmap = new Bitmap(imageSettings.Size.Width, imageSettings.Size.Height);
             graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(background);
-            layouter.SetCenter(new Point(imageSize.Width / 2, imageSize.Height / 2));
+            graphics.Clear(imageSettings.Background);
+            layouter.SetCenter(new Point(imageSettings.Size.Width / 2, imageSettings.Size.Height / 2));
         }
-        
-        public void DrawString(string str, Font font, Brush brush, StringFormat stringFormat)
+
+        public void DrawWords(IEnumerable<(string, int)> wordsFontSize, WordDrawSettings settings)
         {
-            var stringSize = (graphics.MeasureString(str, font) + new SizeF(1, 1)).ToSize();
+            foreach (var (word, fontSize) in wordsFontSize)
+            {
+                var rectangle = DrawWord(word, new Font(settings.FamilyName, fontSize),
+                    settings.Brush, settings.StringFormat);
+                if (settings.HaveDelineation)
+                    DrawRectangle(rectangle);
+            }
+        }
+
+        private Rectangle DrawWord(string word, Font font, Brush brush, StringFormat stringFormat)
+        {
+            var stringSize = (graphics.MeasureString(word, font) + new SizeF(1, 1)).ToSize();
             var stringRectangle = layouter.PutNextRectangle(stringSize);
-            graphics.DrawString(str, font, brush, stringRectangle, stringFormat);
+            graphics.DrawString(word, font, brush, stringRectangle, stringFormat);
+            return stringRectangle;
         }
-        
-        public void DrawRectangle(Rectangle rectangle, Pen pen)
+
+        private void DrawRectangle(Rectangle rectangle)
         {
-            graphics.DrawRectangle(pen, rectangle);
+            graphics.DrawRectangle(new Pen(Color.Black), rectangle);
         }
-        
-        public Bitmap GetBitmap() => bitmap;
-        
+
         public void SaveImage(string filename)
         {
             bitmap.Save(filename);
