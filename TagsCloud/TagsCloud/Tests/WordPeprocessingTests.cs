@@ -13,8 +13,13 @@ namespace TagsCloud.Tests
     {
         private IWordAnalyzer _statisticGetter = new WordStatisticGetter();
 
-        private List<string> _getter = new List<string>()
-            {"жук", "жуку", "жука", "жуки", "жужжит", "жужжал", "жужжать"};
+        private List<string> _getter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _getter = new List<string>() {"жук", "жуку", "жука", "жуки", "жужжит", "жужжал", "жужжать"};
+        }
 
         [Test]
         public void ProcessWords_ReturnsInfinitiveForm_OnInfParameter()
@@ -35,12 +40,22 @@ namespace TagsCloud.Tests
         public void ProcessWords_IgnoreBoring_OnSimpleInput()
         {
             var cleaner = new WordsCleaner(true);
-            _getter
-                .Append("но")
-                .Append("что")
-                .Append("где")
-                .Append("когда")
-                .Append("я");
+            _getter.AddRange(new List<string> {"но", "что", "когда", "я", "мы"});
+
+            var words = cleaner.ProcessWords(_getter);
+
+            words
+                .GroupBy(g => g)
+                .ToDictionary(x => x.Key, x => x.Count()).Should().HaveCount(2)
+                .And.Contain(new KeyValuePair<string, int>("жужжать", 3))
+                .And.Contain(new KeyValuePair<string, int>("жук", 4));
+        }
+        
+        [Test]
+        public void ProcessWords_IgnoreUnknown_OnSimpleInput()
+        {
+            var cleaner = new WordsCleaner(true);
+            _getter.AddRange(new List<string>{"dfkhhk","dfjgkskj" ,"fkjgbku","aaaafsd","szsuhhr"});
 
             var words = cleaner.ProcessWords(_getter);
 
