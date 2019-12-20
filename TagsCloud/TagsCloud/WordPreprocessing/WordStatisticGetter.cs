@@ -10,7 +10,6 @@ namespace TagsCloud.WordPreprocessing
         public Dictionary<string, int> GetWordsStatistics(IEnumerable<string> words)
         {
             return words
-                .Select(s => s.ToLower())
                 .GroupBy(g => g)
                 .ToDictionary(x => x.Key, x => x.Count());
         }
