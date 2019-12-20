@@ -12,8 +12,32 @@ namespace TagsCloud.Tests
     [TestFixture]
     public class ApplicationTest
     {
-        private string _input = Path.Combine(System.IO.Path.GetDirectoryName(
-            System.Reflection.Assembly.GetExecutingAssembly().Location), "test.txt");
+        private string _input;
+
+        private readonly string _text =
+            "лимон\nЛиМоНа\nЛИМОН\nчаЙ\nчая\nМёд\nс\nимбирь\nимбирь\nимбирём\nбегал\nбегает\nбегают\nбег";
+
+        [OneTimeSetUp]
+        public void FirstSetUp()
+        {
+            var rnd = new Random();
+            _input = $"test{rnd.Next(0, 2000000)}.txt";
+            while (File.Exists(_input))
+            {
+              _input =  $"test{rnd.Next(0, 2000000)}.txt";
+            }
+            using (var sw = new StreamWriter(_input, false, System.Text.Encoding.Default))
+            {
+                sw.Write(_text);
+            }
+
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            File.Delete(_input);
+        }
 
         private static List<Tag> GetTags(IEnumerable<string> args)
         {
