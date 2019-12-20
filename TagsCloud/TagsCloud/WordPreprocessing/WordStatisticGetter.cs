@@ -12,8 +12,7 @@ namespace TagsCloud.WordPreprocessing
             return words
                 .Select(s => s.ToLower())
                 .GroupBy(g => g)
-                .Select(s => new ValueTuple<string, int>(s.Key, s.Count()))
-                .ToDictionary(x => x.Item1, x => x.Item2);
+                .ToDictionary(x => x.Key, x => x.Count());
         }
     }
 }
