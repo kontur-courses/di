@@ -68,7 +68,7 @@ namespace TagsCloud
         public IEnumerable<Tag> GetTags()
         {
             var rawWords = _wordGetter.GetWords(_delimiters);
-            var words = _wordsProcessor.ProcessWords(rawWords).ToList();
+            var words = _wordsProcessor.ProcessWords(rawWords);
             var statistics = _wordStatisticGetter.GetWordsStatistics(words);
             return _layouter.GetTags(statistics);
         }
