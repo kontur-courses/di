@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.Results
         }
 
         public string Error { get; }
-        internal T Value { get; }
+        public T Value { get; }
 
         public bool IsSuccess => Error == null;
     }

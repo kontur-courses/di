@@ -20,7 +20,7 @@ namespace TagsCloudVisualization.Providers.Layouter
             new Size(RightUpperPointOfCloud.X - LeftDownPointOfCloud.X,
                 RightUpperPointOfCloud.Y - LeftDownPointOfCloud.Y);
 
-        private Point LeftDownPointOfCloud
+        public Point LeftDownPointOfCloud
         {
             get
             {
@@ -33,7 +33,7 @@ namespace TagsCloudVisualization.Providers.Layouter
             }
         }
 
-        private Point RightUpperPointOfCloud
+        public Point RightUpperPointOfCloud
         {
             get
             {

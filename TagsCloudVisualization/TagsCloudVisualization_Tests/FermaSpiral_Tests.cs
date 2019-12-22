@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Providers.Layouter.Spirals;
 
 namespace TagsCloudVisualization_Tests
 {
@@ -22,7 +23,7 @@ namespace TagsCloudVisualization_Tests
         private static List<int> GetPointCountsInQuarters(int countPoints)
         {
             var points = new List<Point>();
-            var spiral = new FermaSpiral(1, new Point(0, 0));
+            var spiral = new FermaSpiral(new Point(0, 0),1);
 
             for (var i = 0; i < countPoints; i++)
             {

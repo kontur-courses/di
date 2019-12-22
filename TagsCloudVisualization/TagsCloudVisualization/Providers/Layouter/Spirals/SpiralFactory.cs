@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.Providers.Layouter.Spirals
 {
     public class SpiralFactory
     {
-        public ISpiral Create(LayouterSettings layouterSettings)
+        public virtual ISpiral Create(LayouterSettings layouterSettings)
         {
             switch (layouterSettings.SpiralType)
             {
