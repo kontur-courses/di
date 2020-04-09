@@ -19,6 +19,7 @@ namespace FractalPainting.App.Actions
         #region IUiAction
 
         public string Category => "Файл";
+        public int Order => 0;
         public int CategoryOrder => 0;
         public string Name => "Сохранить...";
         public string Description => "Сохранить изображение в файл";

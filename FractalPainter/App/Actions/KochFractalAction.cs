@@ -15,6 +15,7 @@ namespace FractalPainting.App.Actions
         #region IUiAction
 
         public string Category => "Фракталы";
+        public int Order => 1;
         public int CategoryOrder => 1;
         public string Name => "Кривая Коха";
         public string Description => "Кривая Коха";

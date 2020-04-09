@@ -1,7 +1,10 @@
-﻿using FractalPainting.Infrastructure.Common;
+﻿using System;
+using FractalPainting.App.Fractals;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 using Ninject.Extensions.Conventions;
+using Ninject.Extensions.Factory;
 using Ninject.Modules;
 
 namespace FractalPainting.App
@@ -26,13 +29,16 @@ namespace FractalPainting.App
             Bind<IImageHolder, PictureBoxImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
             Bind<Palette>().ToSelf().InSingletonScope();
 
-            //container.Bind<IDragonPainterFactory>().ToFactory();
+            Bind<IDragonPainterFactory>().ToFactory();
 
             Bind<IObjectSerializer>().To<XmlObjectSerializer>();
             Bind<IBlobStorage>().To<FileBlobStorage>();
 
-            Bind<IImageDirectoryProvider, IImageSettingsProvider>()
+            Bind<IImageDirectoryProvider, AppSettings>()
                 .ToMethod(context => context.Kernel.Get<SettingsManager>().Load()).InSingletonScope();
+
+            Bind<ImageSettings>().ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings)
+                .InSingletonScope();
         }
     }
 }

@@ -20,7 +20,11 @@ namespace FractalPainting.Infrastructure.UiActions
 
         private static ToolStripMenuItem CreateToplevelMenuItem(string name, IList<IUiAction> items)
         {
-            var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
+            var menuItems = items
+                .OrderBy(a => a.Order)
+                .Select(a => a.ToMenuItem())
+                .ToArray();
+            
             return new ToolStripMenuItem(name, null, menuItems);
         }
 

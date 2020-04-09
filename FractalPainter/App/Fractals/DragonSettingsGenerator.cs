@@ -22,6 +22,5 @@ namespace FractalPainting.App.Fractals
                 Scale = (float)(1/Math.Sqrt(2) + (random.NextDouble() - 0.5)/10)
             };
         }
-
     }
 }

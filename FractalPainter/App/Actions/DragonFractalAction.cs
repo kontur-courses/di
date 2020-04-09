@@ -5,41 +5,32 @@ using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    // public interface IDragonPainterFactory
-    // {
-    //     DragonPainter CreateDragonPainter(DragonSettings settings);
-    // }
-
     public class DragonFractalAction : IUiAction
     {
-        //private readonly IDragonPainterFactory factory;
-        private readonly Func<DragonSettings, DragonPainter> createPainter;
+        private readonly IDragonPainterFactory factory;
+        private readonly Func<DragonSettingsGenerator> createSettingsGenerator;
 
-        public DragonFractalAction(Func<DragonSettings, DragonPainter> createPainter/*, IDragonPainterFactory factory*/)
+        public DragonFractalAction(Func<DragonSettingsGenerator> createSettingsGenerator, IDragonPainterFactory factory)
         {
-            //this.factory = factory;
-            this.createPainter = createPainter;
+            this.factory = factory;
+            this.createSettingsGenerator = createSettingsGenerator;
         }
 
         #region IUiAction
 
         public string Category => "Фракталы";
+        public int Order => 0;
         public int CategoryOrder => 1;
         public string Name => "Дракон";
         public string Description => "Дракон Хартера-Хейтуэя";
 
         public void Perform()
         {
-            var dragonSettings = CreateRandomSettings();
+            var dragonSettings = createSettingsGenerator().Generate();
             SettingsForm.For(dragonSettings).ShowDialog();
-            
-            //factory.CreateDragonPainter(dragonSettings).Paint();
-            createPainter(dragonSettings).Paint();
+            factory.CreateDragonPainter(dragonSettings).Paint();
         }
 
         #endregion
-
-        private static DragonSettings CreateRandomSettings() => 
-            new DragonSettingsGenerator(new Random()).Generate();
     }
 }
