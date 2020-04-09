@@ -23,7 +23,10 @@ namespace FractalPainting.App
         private void FailIfNotInitialized()
         {
             if (Image == null)
-                throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
+            {
+                throw new InvalidOperationException(
+                    "Call PictureBoxImageHolder.RecreateImage before other method call!");
+            }
         }
 
         public void UpdateUi()

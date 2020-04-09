@@ -5,10 +5,8 @@ namespace FractalPainting.Infrastructure.Common
 {
     public static class SettingsForm
     {
-        public static SettingsForm<TSettings> For<TSettings>(TSettings settings)
-        {
-            return new SettingsForm<TSettings>(settings);
-        }
+        public static SettingsForm<TSettings> For<TSettings>(TSettings settings) => 
+            new SettingsForm<TSettings>(settings);
     }
 
     public class SettingsForm<TSettings> : Form

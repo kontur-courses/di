@@ -8,7 +8,14 @@ namespace FractalPainting.App
     {
         private readonly IObjectSerializer serializer;
         private readonly IBlobStorage storage;
-        private string settingsFilename;
+
+        private string settingsFilename = "app.settings";
+
+        private static AppSettings DefaultSettings => new AppSettings
+        {
+            ImagesDirectory = ".",
+            ImageSettings = new ImageSettings()
+        };
 
         public SettingsManager(IObjectSerializer serializer, IBlobStorage storage)
         {
@@ -20,30 +27,22 @@ namespace FractalPainting.App
         {
             try
             {
-                settingsFilename = "app.settings";
                 var data = storage.Get(settingsFilename);
-                if (data == null)
+                if (data != null)
                 {
-                    var defaultSettings = CreateDefaultSettings();
-                    Save(defaultSettings);
-                    return defaultSettings;
+                    return serializer.Deserialize<AppSettings>(data);
                 }
-                return serializer.Deserialize<AppSettings>(data);
+
+                var defaultSettings = DefaultSettings;
+                Save(defaultSettings);
+
+                return defaultSettings;
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Не удалось загрузить настройки");
-                return CreateDefaultSettings();
+                MessageBox.Show(e.Message, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё");
+                return DefaultSettings;
             }
-        }
-
-        private static AppSettings CreateDefaultSettings()
-        {
-            return new AppSettings
-            {
-                ImagesDirectory = ".",
-                ImageSettings = new ImageSettings()
-            };
         }
 
         public void Save(AppSettings settings)

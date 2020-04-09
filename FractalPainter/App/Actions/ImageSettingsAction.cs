@@ -1,25 +1,23 @@
 ﻿using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    public class ImageSettingsAction : IUiAction, INeed<IImageSettingsProvider>, INeed<IImageHolder>
+    public class ImageSettingsAction : IUiAction
     {
-        private IImageHolder imageHolder;
-        private IImageSettingsProvider imageSettingsProvider;
+        private readonly IImageHolder imageHolder;
+        private readonly IImageSettingsProvider imageSettingsProvider;
 
-        public void SetDependency(IImageHolder dependency)
+        public ImageSettingsAction(IImageHolder imageHolder, IImageSettingsProvider imageSettingsProvider)
         {
-            imageHolder = dependency;
+            this.imageHolder = imageHolder;
+            this.imageSettingsProvider = imageSettingsProvider;
         }
 
-        public void SetDependency(IImageSettingsProvider dependency)
-        {
-            imageSettingsProvider = dependency;
-        }
+        #region IUiAction
 
         public string Category => "Настройки";
+        public int CategoryOrder => 2;
         public string Name => "Изображение...";
         public string Description => "Размеры изображения";
 
@@ -29,5 +27,7 @@ namespace FractalPainting.App.Actions
             SettingsForm.For(imageSettings).ShowDialog();
             imageHolder.RecreateImage(imageSettings);
         }
+
+        #endregion
     }
 }
