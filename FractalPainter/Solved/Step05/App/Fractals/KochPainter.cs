@@ -19,9 +19,10 @@ namespace FractalPainting.Solved.Step05.App.Fractals
         {
             var imageSize = imageHolder.GetImageSize();
             using (var graphics = imageHolder.StartDrawing())
+            using (var backgroundBrush = new SolidBrush(palette.BackgroundColor))
             {
-                graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0, imageSize.Width, imageSize.Height);
-                DrawSegment(graphics, 0, imageSize.Height*0.9f, imageSize.Width, imageSize.Height*0.9f, true);
+                graphics.FillRectangle(backgroundBrush, 0, 0, imageSize.Width, imageSize.Height);
+                DrawSegment(graphics, 0, imageSize.Height * 0.9f, imageSize.Width, imageSize.Height * 0.9f, true);
             }
             imageHolder.UpdateUi();
         }
@@ -32,8 +33,11 @@ namespace FractalPainting.Solved.Step05.App.Fractals
             if (len2 < 4)
             {
                 if (y0 < 0 || y1 < 0) return;
-                var pen = new Pen(new SolidBrush(primaryColor ? palette.PrimaryColor : palette.SecondaryColor), 3);
-                graphics.DrawLine(pen, x0, y0, x1, y1);
+                using (var penBrush = new SolidBrush(primaryColor ? palette.PrimaryColor : palette.SecondaryColor))
+                {
+                    var pen = new Pen(penBrush, 3);
+                    graphics.DrawLine(pen, x0, y0, x1, y1);
+                }
             }
             else
             {
