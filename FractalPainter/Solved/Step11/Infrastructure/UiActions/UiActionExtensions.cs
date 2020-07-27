@@ -10,13 +10,13 @@ namespace FractalPainting.Solved.Step11.Infrastructure.UiActions
         {
             var items = actions.GroupBy(a => a.Category)
                 .OrderBy(a => a.Key)
-                .Select(g => CreateToplevelMenuItem(g.Key, g.ToList()))
+                .Select(g => CreateTopLevelMenuItem(g.Key, g.ToList()))
                 .Cast<ToolStripItem>()
                 .ToArray();
             return items;
         }
 
-        private static ToolStripMenuItem CreateToplevelMenuItem(MenuCategory category, IList<IUiAction> items)
+        private static ToolStripMenuItem CreateTopLevelMenuItem(MenuCategory category, IList<IUiAction> items)
         {
             var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
             return new ToolStripMenuItem(category.GetDescription(), null, menuItems);
