@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿﻿using System.IO;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Solved.Step01.Infrastructure.Injection;
