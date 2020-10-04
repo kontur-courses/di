@@ -9,7 +9,7 @@
 
 Используй алгоритм из блока про [TDD](https://github.com/kontur-courses/tdd).
 
-## Дополнительные ограничения
+## Ограничения
 
 ### Точки расширения
 
@@ -27,7 +27,7 @@
 ### Dependency injection
 
 Для сборки зависимостей используй любой DI Container, отличный от Ninject. 
-Довольно распространенные контейнеры — Autofac и Castle Windsor.
+Можно воспользоваться [Microsoft.Extensions.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/) или довольно распространенным di контейнером [Autofac](https://www.nuget.org/packages/Autofac/). В выборе di контейнера может помочь статья [IoC Container Benchmark - Performance comparison](https://www.palmmedia.de/Blog/2011/8/30/ioc-container-benchmark-performance-comparison).
 
 ### Тесты
 
@@ -58,9 +58,9 @@
 **GUI или Console**:
 * Организуй код так, чтобы было легко сделать оба вида клиентов — и клиента командной строки, и GUI приложение с вводом параметров и интерактивным просмотром.
 * Реализуй одного клиента по выбору
-<br/>
-<br/>
+
 - - -
+
 ### Пункты на перспективу:
 **Исходный текст**: 
 * поддерживать разные форматы файлов (txt, doc, docx, ...)
@@ -79,9 +79,9 @@
 
 **GUI или Console**: 
 * реализуй второго клиента.
-<br/>
-<br/>
-- - -
+
+- - -  
+
 ## Критерии оценивания:
 0 баллов - в решении отсутствует метод Main для запуска приложения, падающие тесты, не выполнены обязательные требования требования
 
@@ -90,19 +90,18 @@
 2 балла - хорошо выполнены обязательные требования
 
 3 балла - выполнены основыные пункты и реализованы минимум два пункта на перспективу из разных разделов.
-<br/>
-<br/>
-- - -
+
+- - -  
+
 ## Дополнительные ссылки
 
 * Библиотеки для разбора аргументов командной строки:
 	
-	* https://github.com/gsscoder/commandline
-	* https://github.com/docopt/docopt.net
+	* https://github.com/commandlineparser/commandline
+	* https://github.com/natemcmaster/CommandLineUtils
 
 * Приведение слова к начальной форме и определение частей речи:
-	
-	* Библиотека NHunspell http://www.crawler-lib.net/nhunspell
+	* Библиотека https://www.nuget.org/packages/WeCantSpell.Hunspell/
 	* Утилита командной строки MyStem https://tech.yandex.ru/mystem/doc/usage-examples-docpage/
 	
 	
