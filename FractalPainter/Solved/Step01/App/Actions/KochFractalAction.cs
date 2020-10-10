@@ -1,4 +1,4 @@
-﻿using FractalPainting.Infrastructure.Common;
+﻿﻿using FractalPainting.Infrastructure.Common;
 using FractalPainting.Solved.Step01.App.Fractals;
 using FractalPainting.Solved.Step01.Infrastructure.Injection;
 using FractalPainting.Solved.Step01.Infrastructure.UiActions;
