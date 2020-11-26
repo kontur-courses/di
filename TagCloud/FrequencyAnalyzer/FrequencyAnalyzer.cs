@@ -5,7 +5,7 @@ namespace TagCloud
 {
     public class FrequencyAnalyzer: IFrequencyAnalyzer
     {
-        private Dictionary<string, int> Frequencies;
+        private Dictionary<string, int> Frequencies = new Dictionary<string, int>();
         private string[] words;
         
         public FrequencyAnalyzer(IWordParser wordParser)
