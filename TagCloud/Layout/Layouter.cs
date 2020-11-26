@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.Layout
 {
     public class Layouter : ILayouter
     {

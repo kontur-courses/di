@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.Layout
 {
     internal class Spiral : ISpiral
     {
         private readonly Point center;
-        private readonly int Step;
+        const int Step = 1;
+        private const double AngleStep = 0.05;
         private double currentAngle;
-        public Spiral(Point center, int step = 1)
+        public Spiral(ICanvas canvas)
         {
-            this.center = center;
-            this.Step = step;
+            this.center = canvas.Center;
             this.currentAngle = 0;
         }
 
@@ -19,7 +19,7 @@ namespace TagCloud
         {
             var x = (int) Math.Round(Step * currentAngle * Math.Cos(currentAngle)) + center.X;
             var y = (int) Math.Round(Step * currentAngle * Math.Sin(currentAngle)) + center.Y;
-            currentAngle += 0.05;
+            currentAngle += AngleStep;
             return new Point(x, y);
         }
     }
