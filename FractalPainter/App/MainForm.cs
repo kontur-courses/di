@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
@@ -16,16 +16,17 @@ namespace FractalPainting.App
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
             var mainMenu = new MenuStrip();
-            mainMenu.Items.AddRange(actions.ToMenuItems());
+            var huj = actions.ToMenuItems()
+                .OrderByDescending(t => t.Text == "Файл" ? 1 : 0)
+                .ThenByDescending(t => t.Text == "Фракталы" ? 1 : 0)
+                .ThenBy(t => t.Text)
+                .ToArray();
+            mainMenu.Items.AddRange(huj);
             Controls.Add(mainMenu);
 
             pictureBox.RecreateImage(imageSettings);
             pictureBox.Dock = DockStyle.Fill;
             Controls.Add(pictureBox);
-
-            DependencyInjector.Inject<IImageHolder>(actions, pictureBox);
-            DependencyInjector.Inject<IImageDirectoryProvider>(actions, CreateSettingsManager().Load());
-            DependencyInjector.Inject(actions, new Palette());
         }
 
         private static SettingsManager CreateSettingsManager()
