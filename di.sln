@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TagCloud", "TagCloud", "{82365357-3F9B-42C6-A8BD-48C20F9392BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualisation", "TagCloud\TagsCloudVisualisation\TagsCloudVisualisation.csproj", "{2A05FAA8-6D18-4602-87BC-088CF824FCB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualisationTests", "TagCloud\TagsCloudVisualisationTests\TagsCloudVisualisationTests.csproj", "{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A05FAA8-6D18-4602-87BC-088CF824FCB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A05FAA8-6D18-4602-87BC-088CF824FCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A05FAA8-6D18-4602-87BC-088CF824FCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A05FAA8-6D18-4602-87BC-088CF824FCB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2A05FAA8-6D18-4602-87BC-088CF824FCB9} = {82365357-3F9B-42C6-A8BD-48C20F9392BB}
+		{F2F493DB-C369-4160-B6DD-A77CF4AF0AF0} = {82365357-3F9B-42C6-A8BD-48C20F9392BB}
 	EndGlobalSection
 EndGlobal
