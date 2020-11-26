@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using TagCloud.Layout;
 
 namespace TagCloud
 {
@@ -10,16 +11,30 @@ namespace TagCloud
     {
         private Dictionary<string, double> Frequencies;
         private ILayouter Layouter;
-        public Visualizer(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter)
+        private ICanvas Canvas;
+        public Visualizer(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter, ICanvas canvas)
         {
             Frequencies = frequencyAnalyzer.GetFrequencyDictionary();
             Layouter = layouter;
+            Canvas = canvas;
         }
 
         public void Visualize()
         {
-            var orderedPairs = Frequencies.OrderBy(pair => pair.Value);
-            //TODO: собрать картинку записать в файл
+            var bitmap = new Bitmap(Canvas.Width, Canvas.Height);
+            var graphics = Graphics.FromImage(bitmap);
+            
+            var orderedPairs = Frequencies.OrderByDescending(pair => pair.Value);
+            foreach (var pair in orderedPairs)
+            {
+                var height = (int)Math.Round(Canvas.Height * pair.Value);
+                var width = (int)Math.Round((double)height * pair.Key.Length / 2);
+                var rectangle = Layouter.PutNextRectangle(new Size(width, height));
+                DrawAndFillRectangle(graphics, rectangle);
+                graphics.DrawString(pair.Key, new Font("Arial", height/2), new SolidBrush(Color.Black), rectangle);
+            }
+            var path = GetNewPngPath();
+            bitmap.Save(path);
         }
 
         private static string GetNewPngPath()
