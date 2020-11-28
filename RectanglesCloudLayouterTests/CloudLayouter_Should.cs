@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using CloudLayouter.SpecialMethods;
-using CloudVisualization.Core;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using RectanglesCloudLayouter.RectanglesCloudVisualization;
+using RectanglesCloudLayouter.SpecialMethods;
 
-namespace CloudLayouterTests
+namespace RectanglesCloudLayouterTests
 {
     public class CloudLayouterShould
     {
-        private CloudLayouter.Core.CloudLayouter _sut;
+        private RectanglesCloudLayouter.Core.CloudLayouter _sut;
         private List<Rectangle> _rectangles;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new CloudLayouter.Core.CloudLayouter(new Point(0, 0));
+            _sut = new RectanglesCloudLayouter.Core.CloudLayouter(new Point(0, 0));
             _rectangles = new List<Rectangle>();
         }
 

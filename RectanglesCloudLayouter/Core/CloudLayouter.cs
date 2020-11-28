@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using CloudLayouter.Interfaces;
-using CloudLayouter.SpecialMethods;
+using RectanglesCloudLayouter.Interfaces;
+using RectanglesCloudLayouter.SpecialMethods;
 
-namespace CloudLayouter.Core
+namespace RectanglesCloudLayouter.Core
 {
     public class CloudLayouter
     {

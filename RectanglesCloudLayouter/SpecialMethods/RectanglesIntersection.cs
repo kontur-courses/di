@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace CloudLayouter.SpecialMethods
+namespace RectanglesCloudLayouter.SpecialMethods
 {
     public static class RectanglesIntersection
     {

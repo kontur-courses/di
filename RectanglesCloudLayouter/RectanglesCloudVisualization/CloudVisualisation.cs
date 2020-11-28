@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace CloudVisualization.Core
+namespace RectanglesCloudLayouter.RectanglesCloudVisualization
 {
     public static class CircularCloudVisualisation
     {

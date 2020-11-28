@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CloudLayouter.SpecialMethods
+namespace RectanglesCloudLayouter.SpecialMethods
 {
     public static class PointsDistance
     {

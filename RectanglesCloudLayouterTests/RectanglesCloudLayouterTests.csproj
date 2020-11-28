@@ -13,8 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CloudLayouter\CloudLayouter.csproj" />
       <ProjectReference Include="..\CloudVisualization\CloudVisualization.csproj" />
+      <ProjectReference Include="..\RectanglesCloudLayouter\RectanglesCloudLayouter.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using CloudLayouter;
-using CloudLayouter.SpecialMethods;
 using FluentAssertions;
 using NUnit.Framework;
+using RectanglesCloudLayouter.SpecialMethods;
 
-namespace CloudLayouterTests
+namespace RectanglesCloudLayouterTests
 {
     [TestFixture]
     public class RectanglesIntersectionShould

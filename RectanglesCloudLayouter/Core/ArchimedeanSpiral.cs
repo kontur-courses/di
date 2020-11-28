@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using CloudLayouter.Interfaces;
+using RectanglesCloudLayouter.Interfaces;
 
-namespace CloudLayouter.Core
+namespace RectanglesCloudLayouter.Core
 {
     public class ArchimedeanSpiral : ISpiral
     {
