@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace TagCloud
 {
@@ -12,16 +13,16 @@ namespace TagCloud
         }
         private bool TryReadFile(string path, out string result)
         {
-            using (var sr = File.OpenText(path))
+            try
             {
-                try
+                using (var sr = File.OpenText(path))
                 {
                     result = sr.ReadToEnd();
                 }
-                catch
-                {
-                    result = null;
-                }
+            }
+            catch
+            {
+                result = null;
             }
             return result != null;
         }
