@@ -2,25 +2,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloud.WordLayouters;
 
 namespace TagsCloud
 {
-    public class WordLayouter
+    public class WordLayouter : IWordLayouter
     {
-        public readonly List<CloudWord> CloudWords = new List<CloudWord>();
+        public List<CloudWord> CloudWords { get; } = new List<CloudWord>();
         
-        private readonly SpiralPoints spiralPoints = new SpiralPoints();
-        private readonly List<Rectangle> rectangles = new List<Rectangle>();
+        private readonly IPointsLayout pointsLayout;
         private readonly FontFamily family;
+        private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
         private int Top;
         private int Left;
         private int Bottom;
         private int Right;
 
-        public WordLayouter(FontFamily family)
+        public WordLayouter(FontFamily family, IPointsLayout pointsLayout)
         {
             this.family = family;
+            this.pointsLayout = pointsLayout;
         }
 
         public void AddWords(Dictionary<string, int> statistic)
@@ -35,7 +37,7 @@ namespace TagsCloud
             }
         }
         
-        public Rectangle CurrentCloudRectangle() => new Rectangle(Left, Top, Right - Left, Bottom - Top);
+        public Rectangle GetCloudRectangle() => new Rectangle(Left, Top, Right - Left, Bottom - Top);
 
         private Rectangle PutNextRectangle(Size size)
         {
@@ -58,7 +60,7 @@ namespace TagsCloud
         private Rectangle GetNextRectangle(Size rectangleSize)
         {
             var halfSize = new Size(rectangleSize.Width / 2, rectangleSize.Height / 2);
-            using var points = spiralPoints.GetSpiralPoints().GetEnumerator();
+            using var points = pointsLayout.GetPoints().GetEnumerator();
             points.MoveNext();
             var rectangle = new Rectangle(points.Current - halfSize, rectangleSize); 
             while (HaveIntersection(rectangle))

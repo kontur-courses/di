@@ -4,13 +4,13 @@ using System.Drawing;
 
 namespace TagsCloud
 {
-    public class SpiralPoints
+    public class SpiralPoints : IPointsLayout
     {
         private readonly HashSet<Point> generatedPoints = new HashSet<Point>{new Point()};
         private int radius = 1;
         private int pointsInCircleCount = 4;
         
-        public IEnumerable<Point> GetSpiralPoints()
+        public IEnumerable<Point> GetPoints()
         {
             foreach (var point in generatedPoints)
                 yield return point;
