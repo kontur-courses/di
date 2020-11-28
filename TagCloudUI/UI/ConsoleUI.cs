@@ -49,7 +49,7 @@ namespace TagCloudUI.UI
                 .Process(GetWordsFromFile(options.InputPath))
                 .MostFrequent(options.WordsCount)
                 .ToList();
-            var tags = CreateTags(processedWords, options.FontName);
+            var tags = CreateTags(processedWords, options.FontName).ToList();
 
             using var bitmap = imageCreator.Create(tags, options.FontName,
                 layoutAlgorithm.GetLayoutSize());
