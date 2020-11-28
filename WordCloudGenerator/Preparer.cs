@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -20,9 +19,9 @@ namespace WordCloudGenerator
             var wordsInText = Regex.Matches(text, @"\w+")
                 .Select(match => match.Value)
                 .Where(word => !wordsToSkip.Contains(word)).ToArray();
-            
+
             return wordsInText.Distinct().ToDictionary(
-                word => word, 
+                word => word,
                 word => wordsInText.Count(el => el == word));
         }
     }
