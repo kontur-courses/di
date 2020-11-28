@@ -4,7 +4,7 @@ using Autofac;
 
 namespace TagsCloud
 {
-    internal static class Program
+    public static class Program
     {
         public static void Main()
         {

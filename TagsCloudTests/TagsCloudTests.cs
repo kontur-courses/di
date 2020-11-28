@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 
-namespace TagsCloud
+namespace TagsCloudTests
 {
     [TestFixture]
     public class TagsCloudTests
@@ -23,7 +23,7 @@ namespace TagsCloud
             
             using var reader = new StreamReader(settings);
             Console.SetIn(reader);
-            Program.MakeCloud();
+            TagsCloud.Program.MakeCloud();
 
             var actual = new FileInfo(samplePath);
             Assert.True(actual.Exists);
