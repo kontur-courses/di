@@ -3,6 +3,6 @@
     public interface IWordParser
     {
         //TODO: Add OtherParsers
-        string[] GetWords();
+        string[] GetWords(string fileName);
     }
 }
