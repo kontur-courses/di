@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using TagsCloudContainer.App.CloudGenerator;
 
 namespace TagsCloudContainer.Infrastructure
 {
     internal interface ICloudGenerator
     {
-        public Dictionary<string, Rectangle> GenerateCloud(Dictionary<string, int> dictionary);
+        public IEnumerable<Tag> GenerateCloud(Dictionary<string, double> frequencyDictionary, string fontName);
     }
 }
