@@ -7,7 +7,7 @@ namespace TagCloud.Extensions
 {
     public static class PointExtension
     {
-        public static Point GetMaxDistanceToLayoutBorder(
+        internal static Point GetMaxDistanceToLayoutBorder(
             this Point point, IEnumerable<Rectangle> rectangles)
         {
             var rects = rectangles.ToList();

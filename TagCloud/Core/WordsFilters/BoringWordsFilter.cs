@@ -2,7 +2,7 @@
 {
     public class BoringWordsFilter : IWordFilter
     {
-        public bool IsValidWord(string word)
+        public bool IsValid(string word)
         {
             throw new System.NotImplementedException();
         }

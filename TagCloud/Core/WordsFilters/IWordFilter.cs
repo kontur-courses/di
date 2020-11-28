@@ -2,6 +2,6 @@
 {
     public interface IWordFilter
     {
-        public bool IsValidWord(string word);
+        public bool IsValid(string word);
     }
 }

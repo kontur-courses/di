@@ -9,7 +9,7 @@ namespace TagCloud.Core.FileReaders
             throw new System.NotImplementedException();
         }
 
-        public bool IsAbleToRead(string filePath)
+        public bool IsValidExtension(string extension)
         {
             throw new System.NotImplementedException();
         }
