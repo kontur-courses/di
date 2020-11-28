@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.App.CloudVisualizer
@@ -6,11 +7,11 @@ namespace TagsCloudContainer.App.CloudVisualizer
     internal class CloudVisualizer : ICloudVisualizer
     {
         private readonly ICloudGenerator cloudGenerator;
-        private readonly IDictionaryGenerator dictionaryGenerator;
+        private readonly IFrequencyDictionaryGenerator dictionaryGenerator;
         private readonly IImageGenerator imageGenerator;
         private readonly IFileReader inputFileReader;
 
-        public CloudVisualizer(IFileReader inputFileReader, IDictionaryGenerator dictionaryGenerator,
+        public CloudVisualizer(IFileReader inputFileReader, IFrequencyDictionaryGenerator dictionaryGenerator,
             ICloudGenerator cloudGenerator, IImageGenerator imageGenerator)
         {
             this.inputFileReader = inputFileReader;
@@ -19,12 +20,12 @@ namespace TagsCloudContainer.App.CloudVisualizer
             this.imageGenerator = imageGenerator;
         }
 
-        public Bitmap Visualize(string inputFileName, Size imageSize)
+        public Bitmap Visualize(string inputFileName, ImageSettings imageSettings)
         {
             var lines = inputFileReader.ReadLines(inputFileName);
-            var dictionary = dictionaryGenerator.GenerateDictionary(lines);
-            var cloud = cloudGenerator.GenerateCloud(dictionary);
-            return imageGenerator.GenerateImage(cloud, imageSize);
+            var dictionary = dictionaryGenerator.GenerateFrequencyDictionary(lines);
+            var cloud = cloudGenerator.GenerateCloud(dictionary, imageSettings.FontName);
+            return imageGenerator.GenerateImage(cloud, imageSettings);
         }
     }
 }

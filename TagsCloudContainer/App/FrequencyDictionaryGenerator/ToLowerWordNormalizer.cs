@@ -1,6 +1,6 @@
 ﻿using TagsCloudContainer.Infrastructure;
 
-namespace TagsCloudContainer.App.DictionaryGenerator
+namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
 {
     internal class ToLowerWordNormalizer : IWordNormalizer
     {

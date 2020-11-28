@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloudContainer.Infrastructure;
 
-namespace TagsCloudContainer.App.DictionaryGenerator
+namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
 {
     internal class SimpleTextParser : ITextParser
     {
