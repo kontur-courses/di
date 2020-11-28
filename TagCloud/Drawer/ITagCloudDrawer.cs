@@ -2,6 +2,6 @@
 {
     public interface ITagCloudDrawer
     {
-        
+        // TODO: Сделать отрисовщик обобщенным
     }
 }

@@ -4,6 +4,6 @@ namespace TagCloud.TextAnalyzer
 {
     public interface ITextAnalyzer
     {
-        public Dictionary<string, int> GetWordCounts(List<string> words);
+        public Dictionary<string, int> GetWordsCounts(List<string> words);
     }
 }
