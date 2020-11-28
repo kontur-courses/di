@@ -1,16 +1,18 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace TagCloud
 {
-    internal class TextReader
+    internal class TextReaderTxt : ITextReader
     {
-        internal string ReadText(string path)
+       public string Extension { get => ".txt"; }
+
+        public string ReadText(string path)
         {
             if (TryReadFile(path, out var result))
                 return result;
             return result;
         }
+
         private bool TryReadFile(string path, out string result)
         {
             try
