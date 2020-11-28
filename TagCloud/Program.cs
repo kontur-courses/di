@@ -9,6 +9,7 @@ namespace TagCloud
         private static IServiceProvider serviceProvider;
         static void Main(string[] args)
         {
+            //TODO: Add CLI or GUI
             ConfigureServices();
             var visualizer = serviceProvider.GetService<IVisualizer>();
             visualizer.Visualize();

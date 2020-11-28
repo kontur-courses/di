@@ -14,6 +14,7 @@ namespace TagCloud
         private ICanvas Canvas;
         public Visualizer(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter, ICanvas canvas)
         {
+            //TODO: add fontFamily and coloring algoritm
             Frequencies = frequencyAnalyzer.GetFrequencyDictionary();
             Layouter = layouter;
             Canvas = canvas;
@@ -39,6 +40,7 @@ namespace TagCloud
 
         private static string GetNewPngPath()
         {
+            //TODO: Move to new class pathFinder
             var workingDirectory = Directory.GetCurrentDirectory();
             var index = workingDirectory.IndexOf("TagCloud");
             var tagCloudPath = workingDirectory.Substring(0, index);
