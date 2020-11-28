@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.Core.UI
+namespace TagCloudUI.UI
 {
     public interface IUserInterface
     {
