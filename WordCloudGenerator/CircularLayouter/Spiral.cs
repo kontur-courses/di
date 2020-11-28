@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CircularCloudLayouter
+namespace WordCloudGenerator.CircularLayouter
 {
     public class Spiral
     {
