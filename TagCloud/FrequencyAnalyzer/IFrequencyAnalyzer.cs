@@ -4,6 +4,6 @@ namespace TagCloud
 {
     public interface IFrequencyAnalyzer
     {
-        Dictionary<string, double> GetFrequencyDictionary();
+        Dictionary<string, double> GetFrequencyDictionary(string fileName);
     }
 }

@@ -12,14 +12,15 @@ namespace TagCloud
             //TODO: Add CLI or GUI
             ConfigureServices();
             var visualizer = serviceProvider.GetService<IVisualizer>();
-            visualizer.Visualize();
+            visualizer.Visualize("input.txt");
         }
         
         private static void ConfigureServices()
         {
             var services = new ServiceCollection();
 
-            services.AddSingleton<IWordParser>(_ => new OneWordInLineParser("input.txt"));
+            services.AddSingleton<IPathCreater, PathCreater>();
+            services.AddSingleton<IWordParser, OneWordInLineParser>();
             services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer>();
             services.AddSingleton<ICanvas>(_ => new Canvas(1000, 800));
             services.AddSingleton<ISpiral, Spiral>();

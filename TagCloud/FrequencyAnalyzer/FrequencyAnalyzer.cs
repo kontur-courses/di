@@ -6,27 +6,34 @@ namespace TagCloud
     public class FrequencyAnalyzer: IFrequencyAnalyzer
     {
         private Dictionary<string, int> Frequencies = new Dictionary<string, int>();
-        private string[] words;
+        private IWordParser Parser;
         
         public FrequencyAnalyzer(IWordParser wordParser)
         {
-            words = wordParser.GetWords();
+            Parser = wordParser;
         }
 
 
-        public Dictionary<string, double> GetFrequencyDictionary()
+        public Dictionary<string, double> GetFrequencyDictionary(string fileName)
         {
-            FillFrequencyDictionary();
+            var words = Parser.GetWords(fileName);
+            FillFrequencyDictionary(words);
+
+            return GetNormalFrequencies(words.Length);
+        }
+
+        private Dictionary<string, double> GetNormalFrequencies(int count)
+        {
             var result = new Dictionary<string, double>();
             foreach (var key in Frequencies.Keys)
             {
-                result[key] = (double)Frequencies[key] / words.Length;
+                result[key] = (double)Frequencies[key] / count;
             }
 
             return result;
         }
 
-        private void FillFrequencyDictionary()
+        private void FillFrequencyDictionary(string[] words)
         {
             foreach (var word in words)
             {

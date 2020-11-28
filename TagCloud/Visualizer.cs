@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using TagCloud.Layout;
 
@@ -9,23 +8,26 @@ namespace TagCloud
 {
     public class Visualizer: IVisualizer
     {
-        private Dictionary<string, double> Frequencies;
+        private IFrequencyAnalyzer FrequencyAnalyzer;
         private ILayouter Layouter;
         private ICanvas Canvas;
-        public Visualizer(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter, ICanvas canvas)
+        private IPathCreater Creater;
+        public Visualizer(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter, ICanvas canvas, IPathCreater pathCreator)
         {
             //TODO: add fontFamily and coloring algoritm
-            Frequencies = frequencyAnalyzer.GetFrequencyDictionary();
+            FrequencyAnalyzer = frequencyAnalyzer;
             Layouter = layouter;
             Canvas = canvas;
+            Creater = pathCreator;
         }
 
-        public void Visualize()
+        public void Visualize(string filename)
         {
+            var frequencies = FrequencyAnalyzer.GetFrequencyDictionary(filename);
             var bitmap = new Bitmap(Canvas.Width, Canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
             
-            var orderedPairs = Frequencies.OrderByDescending(pair => pair.Value);
+            var orderedPairs = frequencies.OrderByDescending(pair => pair.Value);
             foreach (var pair in orderedPairs)
             {
                 var height = (int)Math.Round(Canvas.Height * pair.Value);
@@ -34,17 +36,8 @@ namespace TagCloud
                 DrawAndFillRectangle(graphics, rectangle);
                 graphics.DrawString(pair.Key, new Font("Arial", height/2), new SolidBrush(Color.Black), rectangle);
             }
-            var path = GetNewPngPath();
-            bitmap.Save(path);
-        }
-
-        private static string GetNewPngPath()
-        {
-            //TODO: Move to new class pathFinder
-            var workingDirectory = Directory.GetCurrentDirectory();
-            var index = workingDirectory.IndexOf("TagCloud");
-            var tagCloudPath = workingDirectory.Substring(0, index);
-            return tagCloudPath + "MyPng" +  DateTime.Now.Millisecond + ".png";
+            
+            bitmap.Save(Creater.GetNewPngPath());
         }
 
         private static void DrawAndFillRectangle(Graphics graphics, Rectangle rectangle)

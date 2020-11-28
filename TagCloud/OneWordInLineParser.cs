@@ -5,20 +5,26 @@ namespace TagCloud
 {
     public class OneWordInLineParser : IWordParser
     {
-        private readonly string[] words;
-        public OneWordInLineParser(string inputFileName)
+        private IPathCreater Creater;
+        public OneWordInLineParser(IPathCreater creater)
         {
-            var workingDirectory = Directory.GetCurrentDirectory();
-            var index = workingDirectory.IndexOf("TagCloud");
-            var tagCloudPath = workingDirectory.Substring(0, index);
-            //TODO: Move to pathfinder
-            var path = tagCloudPath + inputFileName;
-            words = File.ReadLines(path).ToArray();
+            Creater = creater;
         }
-        public string[] GetWords()
+        
+        public string[] GetWords(string inputFileName)
         {
             //TODO: Add filterWords
-            return words;
+            
+            try
+            {
+                return File.ReadLines(Creater.GetPathToFile(inputFileName)).ToArray();
+            }
+            catch (FileNotFoundException)
+            {
+                //TODO: handle exception
+            }
+
+            return new string[0];
         }
     }
 }
