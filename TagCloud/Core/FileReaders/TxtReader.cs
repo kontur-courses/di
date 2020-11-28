@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TagCloud.Core.FileReaders
 {
@@ -6,12 +8,12 @@ namespace TagCloud.Core.FileReaders
     {
         public IEnumerable<string> ReadAllWords(string filePath)
         {
-            throw new System.NotImplementedException();
+            return File.ReadAllText(filePath).Split();
         }
 
         public bool IsValidExtension(string extension)
         {
-            throw new System.NotImplementedException();
+            return extension.Equals(".txt", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

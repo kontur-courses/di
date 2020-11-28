@@ -4,7 +4,7 @@
     {
         public string Convert(string word)
         {
-            throw new System.NotImplementedException();
+            return word.ToLower();
         }
     }
 }

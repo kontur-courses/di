@@ -4,7 +4,7 @@
     {
         public bool IsValid(string word)
         {
-            throw new System.NotImplementedException();
+            return word.Length >= 4;
         }
     }
 }
