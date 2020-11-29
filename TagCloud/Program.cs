@@ -36,12 +36,14 @@ namespace TagCloud
         {
             app.HelpOption();
             var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleValue);
+            var optionFont = app.Option("-f|--font <FONT>", "font family", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
                 var visualizer = serviceProvider.GetService<IVisualizer>();
                 var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
-                visualizer.Visualize(filename);
+                var fontFamily = optionFont.HasValue() ? optionFont.Value() : "Arial";
+                visualizer.Visualize(filename, fontFamily);
                 return 0;
             });
         }

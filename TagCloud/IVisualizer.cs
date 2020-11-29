@@ -2,6 +2,6 @@
 {
     public interface IVisualizer
     {
-        void Visualize(string filename);
+        void Visualize(string filename, string fontFamily);
     }
 }

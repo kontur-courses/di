@@ -18,7 +18,7 @@ namespace TagCloud
             ImageInfo = imageInfo;
         }
 
-        public void Visualize(string filename)
+        public void Visualize(string filename, string fontFamily)
         {
             var bitmap = new Bitmap(Canvas.Width, Canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
@@ -27,7 +27,7 @@ namespace TagCloud
             {
                 var rectangle = pair.Item2;
                 DrawAndFillRectangle(graphics, rectangle);
-                graphics.DrawString(pair.Item1, new Font("Arial",rectangle.Height/2),
+                graphics.DrawString(pair.Item1, new Font(fontFamily,rectangle.Height/2),
                     new SolidBrush(Color.Black), rectangle);
             }
             
