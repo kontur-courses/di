@@ -30,5 +30,11 @@ namespace CloudLayouters
         {
             return rectangles.ToList();
         }
+
+        public void Clear()
+        {
+            freePoints.Clear();
+            rectangles.Clear();
+        }
     }
 }

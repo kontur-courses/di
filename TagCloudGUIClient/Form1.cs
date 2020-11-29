@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CloudLayouters;
+using TagCloudCreator;
 
 namespace TagCloud
 {
@@ -10,12 +11,14 @@ namespace TagCloud
     {
         private readonly Bitmap image;
         private readonly List<BaseCloudLayouter> layouters;
+        private readonly CloudPrinter cloudPrinter;
 
-        public Form1(Bitmap image, TableLayoutPanel table, IEnumerable<BaseCloudLayouter> layouters)
+        public Form1(Bitmap image, TableLayoutPanel table,CloudPrinter cloudPrinter , IEnumerable<BaseCloudLayouter> layouters)
         {
             this.image = image;
             this.layouters = layouters.ToList();
             this.table = table;
+            this.cloudPrinter = cloudPrinter;
             InitializeComponent();
         }
     }

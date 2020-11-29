@@ -4,7 +4,9 @@ namespace TagCloudCreator
 {
     public class TxtFileReader : IFileReader
     {
-        public readonly string[] types = {"txt"};
+        public readonly string[] types = {".txt"};
+
+        public string[] Types { get =>types; }
 
         public string[] ReadAllLinesFromFile(string path)
         {

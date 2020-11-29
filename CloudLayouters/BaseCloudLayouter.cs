@@ -31,5 +31,10 @@ namespace CloudLayouters
             point.Y -= rectangleSize.Height / 2;
             return new Rectangle(point, rectangleSize);
         }
+
+        public virtual void ClearLayout()
+        {
+            Container.Clear();
+        }
     }
 }

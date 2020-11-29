@@ -7,7 +7,8 @@ namespace TagCloudCreator
 {
     public class WordPrepairer
     {
-        private static readonly List<string> BoringPOS = new List<string>();
+        private static readonly List<string> BoringPOS = new List<string>()
+            {"CONJ", "INTJ", "PART", "PR", "ADVPRO", "SPRO"};
 
         public static string[] GetInterestingWords(string[] words)
         {
@@ -26,10 +27,15 @@ namespace TagCloudCreator
             return preparedWords;
         }
 
-        private static List<(string, int)> GetWordsStatistic(string[] words)
+        public static List<(string, int)> GetWordsStatistic(IEnumerable<string> words)
         {
-            Dictionary<string, int> statistic = new Dictionary<string, int>();
-            foreach (var word in words) statistic[word]++;
+            var statistic = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (!statistic.ContainsKey(word)) statistic[word] = 0;
+                statistic[word]++;
+            }
+
             return statistic.Select(x => (x.Key, x.Value)).ToList();
         }
     }

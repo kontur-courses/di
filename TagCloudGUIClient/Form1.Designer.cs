@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using CloudLayouters;
 using TagCloudCreator;
 
 namespace TagCloud
@@ -12,6 +13,7 @@ namespace TagCloud
     {
         private System.ComponentModel.IContainer components = null;
         private TableLayoutPanel table;
+        private BaseCloudLayouter layouter;
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -46,12 +48,19 @@ namespace TagCloud
             var typeSelector = new ComboBox(){Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList};
             foreach (var layouter in layouters) typeSelector.Items.Add(layouter.Name);
             typeSelector.SelectedIndex = 0;
+            typeSelector.SelectedIndexChanged += (sender, args) =>
+                layouter = layouters.First(x => x.Name == (string) typeSelector.SelectedItem);
             
             menu.Controls.Add(typeSelector,0,0);
             
             
             var path = new TextBox(){Text = "...",Dock = DockStyle.Fill};
-            var openFileButton = new Button(){Text = "Select file for usage",Dock = DockStyle.Fill, Margin = new Padding(0,0,0,100)};
+            var openFileButton = new Button()
+            {
+                Text = "Select file for usage",
+                Dock = DockStyle.Fill, 
+                Margin = new Padding(0,0,0,100)
+            };
             openFileButton.Click += (sender, args) =>
             {
                 using OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -90,8 +99,8 @@ namespace TagCloud
 
         private void RedrawImage()
         {
-            var path = (this.Controls[1].Controls[1] as TextBox).Text;
-            (table.Controls[0] as PictureBox).Image =  CloudPrinter.DrawCloud(path);
+            var path = (this.Controls[0].Controls[1].Controls[1] as TextBox).Text;
+            (table.Controls[0] as PictureBox).Image = cloudPrinter.DrawCloud(path,layouter);
         }
     }
 }

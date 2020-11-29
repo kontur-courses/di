@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
 using CloudLayouters;
+using TagCloudCreator;
 
 namespace TagCloud
 {
@@ -34,6 +35,8 @@ namespace TagCloud
                 Graphics.FromImage(img).FillRectangle(new SolidBrush(Color.Green), new Rectangle(500, 500, 500, 500));
                 return img;
             }).AsSelf().SingleInstance();
+            builder.RegisterType<CloudPrinter>().AsSelf();
+            builder.RegisterType<TxtFileReader>().As<IFileReader>().AsSelf();
             builder.Register(context =>
             {
                 var table = new TableLayoutPanel {Dock = DockStyle.Fill};

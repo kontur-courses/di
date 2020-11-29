@@ -36,6 +36,12 @@ namespace CloudLayouters
             throw new Exception("free points not found:(");
         }
 
+        public override void ClearLayout()
+        {
+            base.ClearLayout();
+            Container.AddFreePoint(Location);
+        }
+
         private void AddFreePoints(Point point)
         {
             Container.AddFreePoint(point);

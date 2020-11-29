@@ -5,7 +5,9 @@ namespace CloudLayouters
 {
     public class CircularCloudLayouter : BaseCloudLayouter
     {
-        private readonly ArchimedeanSpiral spiral;
+        public Point Center => spiral.Center;
+        private ArchimedeanSpiral spiral;
+
 
         public CircularCloudLayouter(Point center)
         {
@@ -13,8 +15,11 @@ namespace CloudLayouters
             spiral = new ArchimedeanSpiral(center);
         }
 
-        public Point Center => spiral.Center;
-
+        public override void ClearLayout()
+        {
+            base.ClearLayout();
+            spiral = new ArchimedeanSpiral(spiral.Center);
+        }
 
         public override Rectangle PutNextRectangle(Size rectangleSize)
         {
