@@ -8,7 +8,7 @@ namespace TagCloud
     class Program
     {
         private static IServiceProvider serviceProvider;
-        private static CommandLineApplication app;
+        private static CommandLineApplication app = new CommandLineApplication();
         static int Main(string[] args)
         {
             ConfigureServices();
@@ -26,6 +26,7 @@ namespace TagCloud
             services.AddSingleton<ICanvas>(_ => new Canvas(1000, 800));
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
+            services.AddSingleton<IImageInfo, ImageInfo>();
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
@@ -34,7 +35,7 @@ namespace TagCloud
         private static void ConfigureCLI()
         {
             app.HelpOption();
-            var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleOrNoValue);
+            var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
