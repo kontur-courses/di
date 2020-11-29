@@ -4,17 +4,18 @@ using System.IO;
 using System.Linq;
 using MyStemWrapper;
 
-namespace TagsCloudContainer.WordsFrequency
+namespace TagsCloudContainer.TextProcessing
 {
     public static class TextAnalyzer
     {
-        private static HashSet<string> _boringWords = new HashSet<string>{"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"};
-        
+        private static HashSet<string> _boringWords = new HashSet<string>
+            {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"};
+
         public static string[] GetInterestingWords(string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("String must be not null and not empty");
-            var mystemText =  GetMyStemText(text);
+            var mystemText = GetMyStemText(text);
             var interestingWords = Parser.ParseToPartSpeechAndWords(mystemText)
                 .Where(keyValuePair => !_boringWords
                     .Contains(keyValuePair.Key))
@@ -28,7 +29,10 @@ namespace TagsCloudContainer.WordsFrequency
         private static string GetMyStemText(string text)
         {
             var currentDirectory = Directory.GetCurrentDirectory();
-            var pathToMystem = Path.Combine(currentDirectory.Substring(0, currentDirectory.IndexOf("TagsCloudContainer", StringComparison.Ordinal)-1), "mystem.exe");
+            var pathToMystem =
+                Path.Combine(
+                    currentDirectory.Substring(0,
+                        currentDirectory.IndexOf("TagsCloudContainer", StringComparison.Ordinal) - 1), "mystem.exe");
             var mystem = new MyStem
             {
                 PathToMyStem = pathToMystem,

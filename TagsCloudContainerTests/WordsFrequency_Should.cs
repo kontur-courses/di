@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.WordsFrequency;
+using TagsCloudContainer.TextProcessing;
 
 namespace TagsCloudContainerTests
 {

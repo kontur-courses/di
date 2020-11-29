@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TagsCloudContainer.WordsFrequency
+namespace TagsCloudContainer.TextProcessing
 {
     public static class WordsFrequency
     {
@@ -17,6 +17,7 @@ namespace TagsCloudContainer.WordsFrequency
                 else
                     frequency[word] = 1;
             }
+
             return frequency;
         }
     }

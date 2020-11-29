@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudContainer.WordsFrequency
+namespace TagsCloudContainer.TextProcessing
 {
     public static class Parser
     {
@@ -17,8 +17,9 @@ namespace TagsCloudContainer.WordsFrequency
                 if (partOfSpeechAndWords.ContainsKey(wordAndPartOfSpeech[1]))
                     partOfSpeechAndWords[wordAndPartOfSpeech[1]].Add(wordAndPartOfSpeech[0]);
                 else
-                    partOfSpeechAndWords[wordAndPartOfSpeech[1]] = new List<string>{wordAndPartOfSpeech[0]};
+                    partOfSpeechAndWords[wordAndPartOfSpeech[1]] = new List<string> {wordAndPartOfSpeech[0]};
             }
+
             return partOfSpeechAndWords;
         }
     }
