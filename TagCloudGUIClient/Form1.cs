@@ -9,11 +9,11 @@ namespace TagCloud
 {
     public partial class Form1 : Form
     {
-        private Bitmap image;
-        private readonly List<BaseCloudLayouter> layouters;
         private readonly CloudPrinter cloudPrinter;
+        private readonly List<BaseCloudLayouter> layouters;
+        private Bitmap? image;
 
-        public Form1(TableLayoutPanel table,CloudPrinter cloudPrinter , IEnumerable<BaseCloudLayouter> layouters)
+        public Form1(TableLayoutPanel table, CloudPrinter cloudPrinter, IEnumerable<BaseCloudLayouter> layouters)
         {
             this.layouters = layouters.ToList();
             layouter = this.layouters[0];

@@ -6,7 +6,7 @@ namespace CloudLayouters
     public class ArchimedeanSpiral
     {
         private readonly double anglesDelta = 0.005;
-        private readonly double Distance = 0.5;
+        private readonly double distance = 0.5;
         private double angle;
         private Point? previous;
 
@@ -18,7 +18,7 @@ namespace CloudLayouters
         public ArchimedeanSpiral(Point center, double distance, double anglesDelta)
         {
             Center = center;
-            Distance = distance;
+            this.distance = distance;
             this.anglesDelta = anglesDelta;
         }
 
@@ -29,7 +29,7 @@ namespace CloudLayouters
             Point result;
             do
             {
-                var radius = Distance * angle;
+                var radius = distance * angle;
                 var x = radius * Math.Cos(angle);
                 var y = radius * Math.Sin(angle);
                 angle += anglesDelta;

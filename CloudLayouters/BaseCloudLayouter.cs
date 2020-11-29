@@ -8,6 +8,7 @@ namespace CloudLayouters
     {
         protected readonly CloudObjectsContainer Container = new CloudObjectsContainer();
         public string? Name { get; protected set; }
+        public virtual Point Center { get; set; }
 
         public virtual Rectangle PutNextRectangle(Size rectangleSize)
         {

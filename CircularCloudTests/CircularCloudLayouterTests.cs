@@ -11,7 +11,7 @@ using NUnit.Framework.Interfaces;
 namespace CircularCloudTests
 {
     [TestFixture]
-    public class CircularCloud_Should
+    public class CircularCloudTests
     {
         [SetUp]
         public void SetUp()
@@ -114,6 +114,7 @@ namespace CircularCloudTests
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
                 cloud.PutNextRectangle(size);
             }
+
             cloud.ClearLayout();
             cloud.PutNextRectangle(new Size(100, 100)).Location.Should().Be(new Point(950, 950));
         }

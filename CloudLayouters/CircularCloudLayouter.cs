@@ -5,7 +5,6 @@ namespace CloudLayouters
 {
     public class CircularCloudLayouter : BaseCloudLayouter
     {
-        public Point Center => spiral.Center;
         private ArchimedeanSpiral spiral;
 
 
@@ -13,6 +12,16 @@ namespace CloudLayouters
         {
             Name = "Облако круг";
             spiral = new ArchimedeanSpiral(center);
+        }
+
+        public override Point Center
+        {
+            get => spiral.Center;
+            set
+            {
+                spiral = new ArchimedeanSpiral(value);
+                ClearLayout();
+            }
         }
 
         public override void ClearLayout()

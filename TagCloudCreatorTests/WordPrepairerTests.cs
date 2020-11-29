@@ -36,9 +36,9 @@ namespace TagCloudTests
         {
             var words =
                 ("даже плохой программный код может работать однако если код не является чистым " +
-                "это всегда будет мешать развитию проекта и компании разработчика " +
-                "отнимая значительные ресурсы на его поддержку и укрощение")
-                    .Split(' ');
+                 "это всегда будет мешать развитию проекта и компании разработчика " +
+                 "отнимая значительные ресурсы на его поддержку и укрощение")
+                .Split(' ');
             var statistic = WordPrepairer.GetWordsStatistic(words);
             statistic.Count(x => x.Item1 == "код").Should().Be(1);
             statistic.First(x => x.Item1 == "код").Item2.Should().Be(2);
@@ -53,7 +53,7 @@ namespace TagCloudTests
         [Test]
         public void GetWordsStatistic_Null_ThrowsException()
         {
-            new Action(()=>WordPrepairer.GetWordsStatistic(null)).Should().Throw<NullReferenceException>();
+            new Action(() => WordPrepairer.GetWordsStatistic(null)).Should().Throw<NullReferenceException>();
         }
     }
 }

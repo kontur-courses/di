@@ -96,6 +96,7 @@ namespace TagCloud
             {
                 var pair = ((string) sizeSelector.SelectedItem).Split('x');
                 imageSize = new Size(int.Parse(pair[0]),int.Parse(pair[1]));
+                layouters.ForEach(x=>x.Center = new Point(imageSize.Width/2,image.Height/2));
             };
             sizeSelector.Items.AddRange(new []{"3840x2160","1920x1080","1280x800","800x600"});
             menu.Controls.Add(sizeSelector,0,3);

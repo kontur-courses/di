@@ -13,9 +13,6 @@ namespace CircularCloudTests
     [TestFixture]
     public class RectangleLayouterTests
     {
-        private RectangleLayouter cloud;
-        private Random random;
-
         [SetUp]
         public void SetUp()
         {
@@ -32,6 +29,9 @@ namespace CircularCloudTests
             Console.WriteLine("Tag cloud visualization saved to file" + Directory.GetCurrentDirectory() +
                               "\\visualisation.bmp");
         }
+
+        private RectangleLayouter cloud;
+        private Random random;
 
 
         [Test]
@@ -82,7 +82,7 @@ namespace CircularCloudTests
 
             ((double) square / (height * weight)).Should().BeGreaterThan(0.5);
         }
-        
+
         [Test]
         public void ClearLayout_RectanglesBeforeClear_AfterClearPutRectangleInLocation()
         {
@@ -91,6 +91,7 @@ namespace CircularCloudTests
                 var size = new Size(random.Next(1, 100), random.Next(1, 100));
                 cloud.PutNextRectangle(size);
             }
+
             cloud.ClearLayout();
             cloud.PutNextRectangle(new Size(100, 100)).Location.Should().Be(cloud.Location);
         }

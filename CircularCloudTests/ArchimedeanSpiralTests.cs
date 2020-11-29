@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace CircularCloudTests
 {
     [TestFixture]
-    public class ArchimedeanSpiral_Should
+    public class ArchimedeanSpiralTests
     {
         [SetUp]
         public void SetUp()

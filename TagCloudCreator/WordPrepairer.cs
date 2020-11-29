@@ -7,7 +7,7 @@ namespace TagCloudCreator
 {
     public class WordPrepairer
     {
-        private static readonly List<string> BoringPOS = new List<string>()
+        private static readonly List<string> BoringPos = new List<string>
             {"CONJ", "INTJ", "PART", "PR", "ADVPRO", "SPRO"};
 
         public static string[] GetInterestingWords(string[] words)
@@ -24,7 +24,7 @@ namespace TagCloudCreator
             process.Start();
             process.WaitForExit();
             var preparedWords = File.ReadAllLines("out.txt")
-                .Where(line => !line.Contains("??") && !BoringPOS.Contains(line.Split(',')[0].Split('=')[1]))
+                .Where(line => !line.Contains("??") && !BoringPos.Contains(line.Split(',')[0].Split('=')[1]))
                 .Select(x => x.Split('=')[0].TrimEnd('?')).ToArray();
             File.Delete("in.txt");
             File.Delete("out.txt");
