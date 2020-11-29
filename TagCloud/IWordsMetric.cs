@@ -2,7 +2,7 @@
 
 namespace TagCloud
 {
-    internal interface IWordsProcessor
+    internal interface IWordsMetric
     {
         public Dictionary<string, double> Process(IEnumerable<string> words);
     }

@@ -2,7 +2,7 @@
 
 namespace TagCloud
 {
-    internal class CountWordProcessor : IWordsProcessor
+    internal class CountWordMetric : IWordsMetric
     {
         public Dictionary<string, double> Process(IEnumerable<string> words)
         {
