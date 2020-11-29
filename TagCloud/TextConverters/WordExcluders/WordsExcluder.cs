@@ -1,4 +1,4 @@
-﻿namespace TagCloud.TextConverters
+﻿namespace TagCloud.TextConverters.WordExcluders
 {
     internal class WordsExcluder : IWordExcluder
     {
