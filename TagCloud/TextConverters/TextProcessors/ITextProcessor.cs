@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.TextConverters
+namespace TagCloud.TextConverters.TextProcessors
 {
     internal interface ITextProcessor
     {

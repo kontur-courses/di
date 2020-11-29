@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.TextConverters
+namespace TagCloud.TextConverters.TextProcessors
 {
     internal class TextProcessor : ITextProcessor
     {
