@@ -6,19 +6,16 @@ namespace CloudLayouters
 {
     public class RectangleLayouter : BaseCloudLayouter
     {
-        public readonly Point Location = new Point(0, 0);
+        public readonly Point Location;
+        public readonly Point Center;
+        
 
-        public RectangleLayouter()
+        public RectangleLayouter(Point center)
         {
+            Center = center;
+            Location = new Point(center.X/10,center.Y/10);
             Name = "Прямоугольное облако";
             Container.AddFreePoint(Location);
-        }
-
-        public RectangleLayouter(Point location)
-        {
-            Location = location;
-            Name = "Прямоугольное облако";
-            Container.AddFreePoint(location);
         }
 
         public override Rectangle PutNextRectangle(Size rectangleSize)

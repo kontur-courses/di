@@ -13,14 +13,18 @@ namespace TagCloudCreator
         public static string[] GetInterestingWords(string[] words)
         {
             File.WriteAllLines("in.txt", words);
-            var process = new Process();
-            process.StartInfo.FileName = "mystem.exe";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.Arguments = @"-i -l -n in.txt out.txt";
+            var process = new Process
+            {
+                StartInfo =
+                {
+                    FileName = "mystem.exe", UseShellExecute = false, Arguments = @"-i -l -n in.txt out.txt",
+                    CreateNoWindow = true
+                }
+            };
             process.Start();
             process.WaitForExit();
             var preparedWords = File.ReadAllLines("out.txt")
-                .Where(line => !BoringPOS.Contains(line.Split(',')[0].Split('=')[1]))
+                .Where(line => !line.Contains("??") && !BoringPOS.Contains(line.Split(',')[0].Split('=')[1]))
                 .Select(x => x.Split('=')[0].TrimEnd('?')).ToArray();
             File.Delete("in.txt");
             File.Delete("out.txt");

@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularCloudTests", "Circu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGUIClient", "TagCloudGUIClient\TagCloudGUIClient.csproj", "{9B7CC453-82A9-4475-8E80-534B05F00B0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreatorTests", "TagCloudCreatorTests\TagCloudCreatorTests.csproj", "{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloudCreator\TagCloudCreator.csproj", "{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}"
 EndProject

@@ -27,7 +27,7 @@ namespace TagCloud
             builder.RegisterType<Form1>().As<Form>().AsSelf().SingleInstance();
             builder.RegisterType<CircularCloudLayouter>().As<BaseCloudLayouter>().AsSelf();
             builder.RegisterType<RectangleLayouter>().As<BaseCloudLayouter>().AsSelf();
-            builder.Register(context => new Point(500, 500));
+            builder.Register(context => new Point(500, 360));
             builder.Register(context =>
             {
                 var img = new Bitmap(1000, 720);

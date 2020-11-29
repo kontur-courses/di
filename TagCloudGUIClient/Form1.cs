@@ -17,6 +17,7 @@ namespace TagCloud
         {
             this.image = image;
             this.layouters = layouters.ToList();
+            layouter = this.layouters[0];
             this.table = table;
             this.cloudPrinter = cloudPrinter;
             InitializeComponent();
