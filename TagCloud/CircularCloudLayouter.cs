@@ -21,7 +21,7 @@ namespace TagCloud
         internal CircularCloudLayouter(Point center)
         {
             this.center = center;
-            getPointer = new PointGetter(center);
+            getPointer = new CirclePointGetter(center);
             Top = center.Y;
             Bottom = center.Y;
             Right = center.X;
@@ -68,7 +68,9 @@ namespace TagCloud
 
         private Rectangle GetRectangleFromSizeAndCenter(Size size, Point rectangleCenter)
         {
-            var location = new Point(rectangleCenter.X - (int)(size.Width / 2), rectangleCenter.Y - (int)(size.Height / 2));
+            var location = new Point(
+                rectangleCenter.X - (int)(size.Width / 2), 
+                rectangleCenter.Y - (int)(size.Height / 2));
             return new Rectangle(location, size);
         }
 
