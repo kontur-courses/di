@@ -3,14 +3,14 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    internal class PointGetter
+    internal class PointGetter : IPointGetter
     {
         private readonly Point center;
         private double angle;
         private int radius;
         private double dangle => Math.PI / (2 * radius);
         internal PointGetter(Point center) => this.center = center;
-        internal Point GetNextPoint()
+        public Point GetNextPoint()
         {
             var x = (int)(radius * Math.Cos(angle));
             var y = (int)(radius * Math.Sin(angle));

@@ -9,7 +9,7 @@ namespace TagCloud
     {
         internal readonly HashSet<Rectangle> rectangles = new HashSet<Rectangle>();
         public readonly Point center;
-        private readonly PointGetter getPointer;
+        private readonly IPointGetter getPointer;
         public int Top { get; private set; }
         public int Bottom { get; private set; }
         public int Right { get; private set; }
