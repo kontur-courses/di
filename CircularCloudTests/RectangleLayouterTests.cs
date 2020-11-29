@@ -11,13 +11,16 @@ using NUnit.Framework.Interfaces;
 namespace CircularCloudTests
 {
     [TestFixture]
-    public class CircularCloud_Should
+    public class RectangleLayouterTests
     {
+        private RectangleLayouter cloud;
+        private Random random;
+
         [SetUp]
         public void SetUp()
         {
             random = new Random();
-            cloud = new CircularCloudLayouter(new Point(1000, 1000));
+            cloud = new RectangleLayouter(new Point(1000, 1000));
         }
 
         [TearDown]
@@ -29,9 +32,6 @@ namespace CircularCloudTests
             Console.WriteLine("Tag cloud visualization saved to file" + Directory.GetCurrentDirectory() +
                               "\\visualisation.bmp");
         }
-
-        private CircularCloudLayouter cloud;
-        private Random random;
 
 
         [Test]
@@ -76,38 +76,15 @@ namespace CircularCloudTests
                 rectangles.Add(rectangle);
             }
 
+            var height = rectangles.Max(x => x.Bottom) - cloud.Location.Y;
+            var weight = rectangles.Max(x => x.Right) - cloud.Location.X;
 
-            var radius = GetSmallestRadiusForRectangles(rectangles);
-            (square / (Math.PI * radius * radius)).Should().BeGreaterThan(0.5);
+
+            ((double) square / (height * weight)).Should().BeGreaterThan(0.5);
         }
-
-        private double GetSmallestRadiusForRectangles(IEnumerable<Rectangle> rectangles)
-        {
-            return rectangles.Max(rectangle =>
-            {
-                var pointsOfCorners = new[]
-                {
-                    new Size(rectangle.Size.Width, 0),
-                    new Size(rectangle.Size.Width, rectangle.Size.Height),
-                    new Size(0, rectangle.Size.Height),
-                    new Size(0, 0)
-                };
-                return pointsOfCorners.Max(size =>
-                {
-                    var point = rectangle.Location + size - new Size(cloud.Center);
-                    return Math.Sqrt(point.X * point.X + point.Y * point.Y);
-                });
-            });
-        }
-
+        
         [Test]
-        public void PutNextRectangle_OneRectangle_FirstRectangleShouldBePlacedInCenter()
-        {
-            cloud.PutNextRectangle(new Size(100, 100)).Location.Should().Be(new Point(950, 950));
-        }
-
-        [Test]
-        public void ClearLayout_RectanglesBeforeClear_AfterClearPutRectangleInCenter()
+        public void ClearLayout_RectanglesBeforeClear_AfterClearPutRectangleInLocation()
         {
             for (var i = 0; i < 10; i++)
             {
@@ -115,7 +92,7 @@ namespace CircularCloudTests
                 cloud.PutNextRectangle(size);
             }
             cloud.ClearLayout();
-            cloud.PutNextRectangle(new Size(100, 100)).Location.Should().Be(new Point(950, 950));
+            cloud.PutNextRectangle(new Size(100, 100)).Location.Should().Be(cloud.Location);
         }
     }
 }
