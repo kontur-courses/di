@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using TagCloud.TextConverters;
 
 namespace TagCloud.Tests
 {
@@ -7,7 +8,7 @@ namespace TagCloud.Tests
     class TextReaderTest
     {
         private readonly TextReaderTxt reader = new TextReaderTxt();
-        private const string path = "./fileTest.txt";
+        private readonly string path = $".{Path.PathSeparator}fileTest.txt";
 
         [TestCase("")]
         [TestCase(" ")]
