@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace TagCloud
 {
-    internal class TextProcessor
+    internal class TextProcessor : ITextProcessor
     {
         private readonly IWordExcluder excluder = new WordsExcluder();
-        internal IEnumerable<string> Process(string text) =>
+        public IEnumerable<string> Process(string text) =>
             text
             .Split(Environment.NewLine)
             .Where(s => s != string.Empty)
