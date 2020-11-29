@@ -1,6 +1,7 @@
 ﻿using System;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using TagCloud.FrequencyAnalyzer;
 using TagCloud.Layout;
 
 namespace TagCloud
@@ -21,7 +22,7 @@ namespace TagCloud
 
             services.AddSingleton<IPathCreater, PathCreater>();
             services.AddSingleton<IWordParser, OneWordInLineParser>();
-            services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer>();
+            services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer.FrequencyAnalyzer>();
             services.AddSingleton<ICanvas>(_ => new Canvas(canvasWidth, canvasHeight));
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
@@ -40,21 +41,13 @@ namespace TagCloud
 
             app.OnExecute(() =>
             {
-                if (!optionSize.HasValue())
+                if (optionSize.HasValue())
                 {
-                    ConfigureServices(1000, 800);
+                    ConfigureServices(optionSize.Value());
                 }
                 else
                 {
-                    var arr = optionSize.Value().Split(',');
-                    if (arr.Length == 2 && int.TryParse(arr[0], out var width) && int.TryParse(arr[1], out var height))
-                    {
-                        ConfigureServices(width, height);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("bad size argument");
-                    }
+                    ConfigureServices(1000, 800);
                 }
 
                 var visualizer = serviceProvider.GetService<IVisualizer>();
@@ -64,6 +57,19 @@ namespace TagCloud
 
                 return 0;
             });
+        }
+
+        private static void ConfigureServices(string argumentValue)
+        {
+            var arr = argumentValue.Split(',');
+            if (arr.Length == 2 && int.TryParse(arr[0], out var width) && int.TryParse(arr[1], out var height))
+            {
+                ConfigureServices(width, height);
+            }
+            else
+            {
+                throw new ArgumentException("bad size argument");
+            }
         }
     }
 }

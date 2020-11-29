@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
-using TagCloud.Layout;
 
 namespace TagCloud
 {
     public class Visualizer: IVisualizer
     {
-        private ICanvas Canvas;
-        private IPathCreater Creater;
-        private IImageInfo ImageInfo;
+        private readonly ICanvas canvas;
+        private readonly IPathCreater creater;
+        private readonly IImageInfo imageInfo;
+        private readonly Brush textBrush = new SolidBrush(Color.Black);
         public Visualizer(ICanvas canvas, IPathCreater pathCreator, IImageInfo imageInfo)
         {
-            //TODO: add fontFamily and coloring algoritm
-            Canvas = canvas;
-            Creater = pathCreator;
-            ImageInfo = imageInfo;
+            //TODO: add coloring algoritm
+            this.canvas = canvas;
+            creater = pathCreator;
+            this.imageInfo = imageInfo;
         }
 
         public void Visualize(string filename, string fontFamily)
         {
-            var bitmap = new Bitmap(Canvas.Width, Canvas.Height);
+            var bitmap = new Bitmap(canvas.Width, canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
 
-            foreach (var pair in ImageInfo.GetTags(filename, Canvas.Height))
+            foreach (var pair in imageInfo.GetTags(filename, canvas.Height))
             {
                 var rectangle = pair.Item2;
                 DrawAndFillRectangle(graphics, rectangle);
-                graphics.DrawString(pair.Item1, new Font(fontFamily,rectangle.Height/2),
-                    new SolidBrush(Color.Black), rectangle);
+                graphics.DrawString(pair.Item1, new Font(fontFamily,rectangle.Height/2), textBrush, rectangle);
             }
             
-            bitmap.Save(Creater.GetNewPngPath());
+            bitmap.Save(creater.GetNewPngPath());
         }
 
         private static void DrawAndFillRectangle(Graphics graphics, Rectangle rectangle)

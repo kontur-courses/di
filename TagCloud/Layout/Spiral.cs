@@ -6,13 +6,13 @@ namespace TagCloud.Layout
     internal class Spiral : ISpiral
     {
         private readonly Point center;
-        const int Step = 1;
+        private const int Step = 1;
         private const double AngleStep = 0.05;
         private double currentAngle;
         public Spiral(ICanvas canvas)
         {
-            this.center = canvas.Center;
-            this.currentAngle = 0;
+            center = canvas.Center;
+            currentAngle = 0;
         }
 
         public Point GetNextPoint()

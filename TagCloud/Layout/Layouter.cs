@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagCloud.Layout
 {
@@ -7,8 +8,7 @@ namespace TagCloud.Layout
     {
         private readonly List<Rectangle> rectangles;
         private readonly ISpiral spiral;
-        
-        
+
         public Layouter(ISpiral spiral)
         {
             rectangles = new List<Rectangle>();
@@ -39,15 +39,7 @@ namespace TagCloud.Layout
         
         private bool RectangleIntersectWithOthers(Rectangle checkedRectangle)
         {
-            foreach (var rectangle in rectangles)
-            {
-                if (rectangle.IntersectsWith(checkedRectangle))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return rectangles.Count(rect => rect.IntersectsWith(checkedRectangle)) > 0;
         }
     }
 }

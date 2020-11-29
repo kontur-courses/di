@@ -1,4 +1,4 @@
-﻿namespace TagCloud
+﻿namespace TagCloud.FrequencyAnalyzer
 {
     public class FrequencyAnalyzerTest
     {

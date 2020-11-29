@@ -5,10 +5,10 @@ namespace TagCloud
 {
     public class OneWordInLineParser : IWordParser
     {
-        private IPathCreater Creater;
+        private IPathCreater creater;
         public OneWordInLineParser(IPathCreater creater)
         {
-            Creater = creater;
+            this.creater = creater;
         }
         
         public string[] GetWords(string inputFileName)
@@ -17,7 +17,7 @@ namespace TagCloud
             
             try
             {
-                return File.ReadLines(Creater.GetPathToFile(inputFileName)).ToArray();
+                return File.ReadLines(creater.GetPathToFile(inputFileName)).ToArray();
             }
             catch (FileNotFoundException)
             {
