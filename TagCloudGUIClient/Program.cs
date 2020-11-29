@@ -28,13 +28,6 @@ namespace TagCloud
             builder.RegisterType<CircularCloudLayouter>().As<BaseCloudLayouter>().AsSelf();
             builder.RegisterType<RectangleLayouter>().As<BaseCloudLayouter>().AsSelf();
             builder.Register(context => new Point(500, 360));
-            builder.Register(context =>
-            {
-                var img = new Bitmap(1000, 720);
-                Graphics.FromImage(img).FillRectangle(new SolidBrush(Color.Red), new Rectangle(0, 0, 1000, 1000));
-                Graphics.FromImage(img).FillRectangle(new SolidBrush(Color.Green), new Rectangle(500, 500, 500, 500));
-                return img;
-            }).AsSelf().SingleInstance();
             builder.RegisterType<CloudPrinter>().AsSelf();
             builder.RegisterType<TxtFileReader>().As<IFileReader>().AsSelf();
             builder.Register(context =>

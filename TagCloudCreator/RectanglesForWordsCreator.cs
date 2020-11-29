@@ -12,7 +12,7 @@ namespace TagCloudCreator
         private static readonly int MaximalFontSize = 60;
 
         internal static IEnumerable<Word> GetReadyWords(IEnumerable<(string, int)> wordsStatistic,
-            BaseCloudLayouter layouter)
+            BaseCloudLayouter layouter, FontFamily fontFamily)
         {
             var statistic = wordsStatistic.ToList();
             var maxCount = statistic.Max(x => x.Item2);
@@ -21,7 +21,7 @@ namespace TagCloudCreator
                 var fontSize = (MaximalFontSize - MininalFontSize) * (((double) count) / maxCount) + MininalFontSize;
                 var font = new Font(FontFamily.GenericSerif, (float) fontSize);
                 var size = Graphics.FromImage(new Bitmap(1, 1))
-                    .MeasureString(text, font).ToSize();
+                    .MeasureString(text, new Font(fontFamily,(float)fontSize)).ToSize();
                 var word = new Word(text, font, layouter.PutNextRectangle(size).Location, size);
                 yield return word;
             }
