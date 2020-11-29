@@ -7,7 +7,6 @@ namespace TagCloud.Layouters
     public class CircularCloudLayouter : IRectangleLayouter
     {
         private Point Center { get; }
-        private List<Rectangle> Rectangles => rectangles.ToList();
 
         private List<Rectangle> rectangles;
         private Spiral spiral;

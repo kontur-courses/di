@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <UseWindowsForms>true</UseWindowsForms>
+        <RootNamespace>FractalPainting.Infrastructure</RootNamespace>
+        <AssemblyName>FractalPainting.Infrastructure</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\..\Infrastructure\Common\FileBlobStorage.cs">
+            <Link>Common\FileBlobStorage.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\IBlobStorage.cs">
+            <Link>Common\IBlobStorage.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\IImageDirectoryProvider.cs">
+            <Link>Common\IImageDirectoryProvider.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\IImageHolder.cs">
+            <Link>Common\IImageHolder.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\IImageSettingsProvider.cs">
+            <Link>Common\IImageSettingsProvider.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\ImageSettings.cs">
+            <Link>Common\ImageSettings.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\IObjectSerializer.cs">
+            <Link>Common\IObjectSerializer.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\Palette.cs">
+            <Link>Common\Palette.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\SettingsForm.cs">
+            <Link>Common\SettingsForm.cs</Link>
+        </Compile>
+        <Compile Include="..\..\Infrastructure\Common\XmlObjectSerializer.cs">
+            <Link>Common\XmlObjectSerializer.cs</Link>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
+      <PackageReference Include="Ninject" Version="3.3.4" />
+    </ItemGroup>
+</Project>
