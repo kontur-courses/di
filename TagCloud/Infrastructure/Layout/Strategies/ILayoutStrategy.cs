@@ -1,9 +1,10 @@
 using System;
+using System.Drawing;
 
 namespace TagCloud.Infrastructure.Layout.Strategies
 {
-    public interface ILayoutStrategy<out T>
+    public interface ILayoutStrategy
     {
-        T GetPoint(Func<T, bool> isValidPoint);
+        Point GetPoint(Func<Point, bool> isValidPoint);
     }
 }
