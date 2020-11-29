@@ -7,7 +7,7 @@ using RectanglesCloudLayouter.SpecialMethods;
 
 namespace RectanglesCloudLayouter.Core
 {
-    public class CloudLayouter:ICloudLayouter
+    public class CloudLayouter : ICloudLayouter
     {
         private readonly List<Rectangle> _rectangles;
         private readonly ISpiral _spiral;

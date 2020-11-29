@@ -12,7 +12,7 @@ namespace TagsCloudContainer.SettingsForTagsCloud
 
         private object GetSizeFromString(string sizeFromString)
         {
-            var size = sizeFromString.Split(' ');
+            var size = sizeFromString.Split('_');
             if (size.Length != 2 || !int.TryParse(size[0], out var width) || !int.TryParse(size[1], out var height))
                 throw new Exception("Invalid format of size");
             return new Size(width, height);

@@ -12,7 +12,7 @@ namespace TagsCloudContainer.SettingsForTagsCloud
 
         private static Font GetFontFromString(string fontFromString)
         {
-            var parameters = fontFromString.Split(' ');
+            var parameters = fontFromString.Split('_');
             if (parameters.Length < 2 || !float.TryParse(parameters[1], out var fontSize) ||
                 !TryConvertToFont(parameters[0], fontSize, out var font))
                 throw new Exception("Doesn't contain font with the arguments");

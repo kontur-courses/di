@@ -8,7 +8,7 @@ namespace RectanglesCloudLayouter.RectanglesCloudVisualization
     public static class CircularCloudVisualisation
     {
         private static Random _random = new Random();
-        
+
         public static void MakeImageCloud(List<Rectangle> rectangles, int cloudRadius,
             string pathToSave, ImageFormat imageFormat)
         {

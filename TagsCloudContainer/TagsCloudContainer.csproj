@@ -6,6 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MatthiWare.CommandLineParser" Version="0.5.0" />
+      <PackageReference Include="MatthiWare.CommandLineParser.Extensions.FluentValidations" Version="0.5.0" />
       <PackageReference Include="MyStemWrapper" Version="1.0.0" />
       <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     </ItemGroup>

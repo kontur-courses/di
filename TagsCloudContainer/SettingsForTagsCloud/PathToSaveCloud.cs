@@ -10,10 +10,10 @@ namespace TagsCloudContainer.SettingsForTagsCloud
         public ParameterType Type => ParameterType.PathToSave;
         public Func<string, object> GetValue => GetFilePath;
 
-        private string GetFilePath(string path)
+        private static string GetFilePath(string path)
         {
-            var args = path.Split();
-            if (Directory.Exists(args[0]))
+            var directoryLength = path.LastIndexOf('\\');
+            if (Directory.Exists(path.Substring(0, directoryLength)))
                 return path;
             throw new Exception("Doesn't contain the directory to save file");
         }
