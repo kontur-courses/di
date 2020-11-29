@@ -6,12 +6,12 @@ using MyStemWrapper;
 
 namespace TagsCloudContainer.TextProcessing
 {
-    public static class TextAnalyzer
+    public class TextAnalyzer
     {
         private static HashSet<string> _boringWords = new HashSet<string>
             {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"};
 
-        public static string[] GetInterestingWords(string text)
+        public string[] GetInterestingWords(string text)
         {
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("String must be not null and not empty");
@@ -26,7 +26,7 @@ namespace TagsCloudContainer.TextProcessing
             return interestingWords;
         }
 
-        private static string GetMyStemText(string text)
+        private string GetMyStemText(string text)
         {
             var currentDirectory = Directory.GetCurrentDirectory();
             var pathToMystem =

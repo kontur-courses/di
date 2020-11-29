@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.SettingsForTagsCloud
 {
-    public class DefaultCloudSettings
+    public static class DefaultCloudSettings
     {
         public static readonly Color BackgroundColor = Color.White;
         public static readonly Color TextColor = Color.LimeGreen;

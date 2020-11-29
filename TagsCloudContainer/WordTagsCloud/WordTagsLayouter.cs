@@ -1,18 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using RectanglesCloudLayouter.Interfaces;
 
 namespace TagsCloudContainer.WordTagsCloud
 {
-    public static class WordTagsLayouter
+    public class WordTagsLayouter
     {
-        public static IEnumerable<WordTag> GetWordTags(ICloudLayouter cloudLayouter, string[]words, Size symbolSize)
+        private ICloudLayouter _cloudLayouter;
+
+        public WordTagsLayouter(ICloudLayouter cloudLayouter)
         {
-            return words.Select(word => new WordTag(word, cloudLayouter.PutNextRectangle(word.GetWordSize(symbolSize))));
+            _cloudLayouter = cloudLayouter;
         }
 
-        private static Size GetWordSize(this string word, Size symbolSize) =>
-            new Size(symbolSize.Width * word.Length, symbolSize.Height);
+        public IEnumerable<WordTag> GetWordTags(Dictionary<string, int> wordsAndFrequency, Font font)
+        {
+            var list = new List<WordTag>();
+            foreach (var word in wordsAndFrequency.Keys)
+            {
+                var wordFont = new Font(font.FontFamily, font.Size * wordsAndFrequency[word]);
+                var wordSize = GetWordSize(Graphics.FromHwnd(IntPtr.Zero).MeasureString(word, wordFont));
+                var rectangle = _cloudLayouter.PutNextRectangle(wordSize);
+                list.Add(new WordTag(word, rectangle, wordFont));
+            }
+
+            return list;
+        }
+
+        private static Size GetWordSize(SizeF symbolSize) =>
+            new Size((int) Math.Ceiling(symbolSize.Width), (int) Math.Ceiling(symbolSize.Height));
     }
 }

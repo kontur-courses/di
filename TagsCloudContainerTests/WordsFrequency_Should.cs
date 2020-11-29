@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.TextProcessing;
+using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainerTests
 {
@@ -14,7 +14,7 @@ namespace TagsCloudContainerTests
         [Test, TestCaseSource(nameof(TestData_NullOrEmptyArrays))]
         public void GetWordsFrequency_ThrowException_WhenArrayIsNullOrEmpty(string[] words)
         {
-            var act = new Action(() => WordsFrequency.GetWordsFrequency(words));
+            var act = new Action(() => words.GetWordsFrequency());
 
             act.Should().Throw<Exception>();
         }
@@ -22,7 +22,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetWordsFrequency_NotException_WhenContainsWords()
         {
-            var act = new Action(() => WordsFrequency.GetWordsFrequency(_differentWords));
+            var act = new Action(() => _differentWords.GetWordsFrequency());
 
             act.Should().NotThrow<Exception>();
         }
@@ -30,7 +30,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetWordsFrequency_SameCountKeys_WhenDifferentWords()
         {
-            var act = WordsFrequency.GetWordsFrequency(_differentWords);
+            var act = _differentWords.GetWordsFrequency();
 
             act.Should().HaveCount(_differentWords.Length);
         }
@@ -38,7 +38,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetWordsFrequency_LessWordsKeysNumber_WhenExistsSameWords()
         {
-            var act = WordsFrequency.GetWordsFrequency(_existsSameWords);
+            var act = _existsSameWords.GetWordsFrequency();
 
             act.Should().HaveCountLessThan(_existsSameWords.Length);
         }
@@ -46,7 +46,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetWordsFrequency_WordsFrequency_WhenDifferentWords()
         {
-            var act = WordsFrequency.GetWordsFrequency(_differentWords);
+            var act = _differentWords.GetWordsFrequency();
 
             act.Should().BeEquivalentTo(new Dictionary<string, int> {["кот"] = 1, ["код"] = 1, ["игра"] = 1});
         }
@@ -54,7 +54,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void GetWordsFrequency_WordsFrequency_WhenExistsSameWords()
         {
-            var act = WordsFrequency.GetWordsFrequency(_existsSameWords);
+            var act = _existsSameWords.GetWordsFrequency();
 
             act.Should().BeEquivalentTo(new Dictionary<string, int> {["тест"] = 1, ["лев"] = 2});
         }

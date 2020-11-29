@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TagsCloudContainer.TextProcessing
+namespace TagsCloudContainer.Extensions
 {
-    public static class WordsFrequency
+    public static class StringArraysExtensions
     {
-        public static Dictionary<string, int> GetWordsFrequency(string[] words)
+        public static Dictionary<string, int> GetWordsFrequency(this string[] words)
         {
             if (words == null || words.Length == 0)
                 throw new ArgumentException("Array of words must be not null and not empty");
