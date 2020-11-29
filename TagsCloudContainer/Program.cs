@@ -8,12 +8,16 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
+            var parsedArguments = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
             var builder = new ContainerBuilder();
             builder.RegisterType<WordsAnalyzer>().As<IWordsAnalyzer>();
-            builder.RegisterType<FileReader>().As<IWordReader>().WithParameter("filePath", "file.txt");
+            builder.RegisterType<FileReader>().As<IWordReader>().WithParameter("filePath", parsedArguments.FilePath);
             builder.RegisterType<Settings>().As<ISettings>();
-
-            var parsedArguments = Parser.Default.ParseArguments<CommandLineOptions>(args);
+            builder.RegisterType<TagCloudContainer>().As<ITagCloudContainer>();
+            var container = builder.Build();
+            
+            var tagCloudContainer = container.Resolve<ITagCloudContainer>();
+            tagCloudContainer.MakeTagCloud();
         }
     }
 }

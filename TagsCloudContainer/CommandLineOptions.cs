@@ -12,5 +12,8 @@ namespace TagsCloudContainer
         
         [Option("-font", Required = false, HelpText = "Set output text font.", Default = "Times New Roman")]
         public string Font { get; set; }
+        
+        [Option("-file", Required = true, HelpText = "Set input file path.")]
+        public string FilePath { get; set; }
     }
 }
