@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Autofac;
 using MyStemWrapper;
+using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text;
 using TagCloud.Infrastructure.Text.Filters;
 
@@ -15,13 +17,19 @@ namespace TagCloud
             builder.RegisterType<LineParser>().As<IParser<string>>();
             
             builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
-            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
-            builder.RegisterType<MyStem>().SingleInstance();
+            var fileName = "mystem";
+            var path = Path.Combine(Environment.SystemDirectory, "bin", "Debug", "net48", fileName);
+            builder.RegisterType<InterestingWordsFilter>()
+                .As<IFilter<string>>()
+                .WithParameter(new TypedParameter(typeof(string), path));
+            builder.RegisterType<Settings>()
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
             var container = builder.Build();
-            container.Resolve<MyStem>().PathToMyStem = "./mystem";
-            
-            
+            var settingsFactory = container.Resolve<Func<Settings>>();
+            settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO"};
         }
     }
 }

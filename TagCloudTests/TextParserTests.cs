@@ -42,7 +42,11 @@ namespace TagCloudTests
             TestName = "Filter base form")]
         public void Parse_Interesting(string text, string[] expected)
         {
-            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
+            var fileName = "mystem";
+            var path = Path.Combine(Environment.CurrentDirectory, "..", "TagCloud", "bin", "Debug", "net48", fileName);
+            builder.RegisterType<InterestingWordsFilter>()
+                .As<IFilter<string>>()
+                .WithParameter(new TypedParameter(typeof(string), path));
             Parse(text, expected);
         }
         
@@ -64,6 +68,7 @@ namespace TagCloudTests
             var parser = container.Resolve<IParser<string>>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
+            settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO"};
             settingsFactory().Path = path;
             
             File.WriteAllText(path, text);
