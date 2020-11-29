@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TagCloud
+﻿namespace TagCloud.TextConverters
 {
     internal class WordsExcluder : IWordExcluder
     {

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace TagCloud
+namespace TagCloud.TextConverters
 {
     internal class TextReaderTxt : ITextReader
     {
