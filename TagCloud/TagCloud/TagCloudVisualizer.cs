@@ -4,8 +4,8 @@ namespace TagCloud
 {
     public class TagCloudVisualizer : IVisualizer
     {
-        private readonly ITagCloud tagCloud;
         private readonly Pen[] pens;
+        private readonly ITagCloud tagCloud;
 
         public TagCloudVisualizer(ITagCloud tagCloud)
         {
@@ -18,17 +18,6 @@ namespace TagCloud
             pens[4] = new Pen(Color.Teal);
             pens[5] = new Pen(Color.Blue);
             pens[6] = new Pen(Color.Purple);
-        }
-
-        private static PointF[] RectangleToPointFArray(Rectangle rectangle)
-        {
-            return new[]
-            {
-                new PointF(rectangle.Left, rectangle.Bottom),
-                new PointF(rectangle.Right, rectangle.Bottom),
-                new PointF(rectangle.Right, rectangle.Top),
-                new PointF(rectangle.Left, rectangle.Top)
-            };
         }
 
         public Bitmap CreateBitMap(int width, int height)
@@ -45,6 +34,17 @@ namespace TagCloud
             }
 
             return bitMap;
+        }
+
+        private static PointF[] RectangleToPointFArray(Rectangle rectangle)
+        {
+            return new[]
+            {
+                new PointF(rectangle.Left, rectangle.Bottom),
+                new PointF(rectangle.Right, rectangle.Bottom),
+                new PointF(rectangle.Right, rectangle.Top),
+                new PointF(rectangle.Left, rectangle.Top)
+            };
         }
     }
 }

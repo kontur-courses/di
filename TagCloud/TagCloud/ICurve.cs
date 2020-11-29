@@ -2,9 +2,9 @@
 
 namespace TagCloud
 {
-    public interface ISpiral
+    public interface ICurve
     {
-        void Next();
         Point CurrentPoint { get; }
+        void Next();
     }
 }

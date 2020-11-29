@@ -1,30 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 
 namespace TagCloud
 {
-    public class CircularCloudLayouter : ITagCloud
+    public class CircularCloudLayouter : TagCloud
     {
-        private readonly Point center;
-        public List<Rectangle> Rectangles { get; }
-        private readonly ISpiral spiral;
+        private readonly ICurve curve;
 
-        public CircularCloudLayouter(Point center, double spiralDensity = 0.05)
+        public CircularCloudLayouter(ICurve curve)
         {
-            this.center = center;
-            Rectangles = new List<Rectangle>();
-            spiral = new Spiral(center, spiralDensity);
+            this.curve = curve;
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public override Rectangle PutNextRectangle(Size rectangleSize)
         {
             while (true)
             {
-                var currentPoint = spiral.CurrentPoint;
+                var currentPoint = curve.CurrentPoint;
                 var possibleRectangle = new Rectangle(currentPoint, rectangleSize);
                 var canFit = Rectangles.All(rect => !rect.IntersectsWith(possibleRectangle));
-                spiral.Next();
+                curve.Next();
                 if (!canFit) continue;
                 Rectangles.Add(possibleRectangle);
                 return possibleRectangle;

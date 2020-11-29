@@ -11,15 +11,13 @@ namespace TagCloudTest
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private ITagCloud tagCloudWithCenterInZero;
-        private Random rnd = new Random();
-
         [SetUp]
         public void SetUp()
         {
-            tagCloudWithCenterInZero = new CircularCloudLayouter(new Point(0, 0));
+            spiral = new Spiral(new Point(0, 0));
+            tagCloudWithCenterInZero = new CircularCloudLayouter(spiral);
         }
-        
+
         [TearDown]
         public void TearDown()
         {
@@ -31,6 +29,10 @@ namespace TagCloudTest
             var image = visualizer.CreateBitMap(1920, 1080);
             image.Save(path);
         }
+
+        private ITagCloud tagCloudWithCenterInZero;
+        private ICurve spiral;
+        private readonly Random rnd = new Random();
 
         private Size GetRandomSize()
         {
@@ -57,7 +59,7 @@ namespace TagCloudTest
         public void PutNextRectangle_PutsFirstRectangleInCenter()
         {
             var center = new Point(10, 18);
-            var shiftedTagCloud = new CircularCloudLayouter(center);
+            var shiftedTagCloud = new CircularCloudLayouter(new Spiral(center));
             shiftedTagCloud.PutNextRectangle(new Size(10, 5));
 
             shiftedTagCloud.Rectangles[0].Location.Should().Be(center);
@@ -70,14 +72,13 @@ namespace TagCloudTest
                 tagCloudWithCenterInZero.PutNextRectangle(GetRandomSize());
 
             foreach (var rectangle in tagCloudWithCenterInZero.Rectangles)
-            {
                 tagCloudWithCenterInZero.Rectangles.All(
                         other => other.Equals(rectangle) || !other.IntersectsWith(rectangle))
                     .Should().BeTrue();
-            }
         }
 
-        [Test, Timeout(100)]
+        [Test]
+        [Timeout(100)]
         public void Put1000Rectangles_StopsInSufficientTime()
         {
             for (var i = 0; i < 1000; i++)

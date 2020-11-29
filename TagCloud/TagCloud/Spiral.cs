@@ -3,8 +3,15 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    public class Spiral : ISpiral
+    public class Spiral : ICurve
     {
+        public Spiral(Point center, double density = 0.05, int angleStep = 5)
+        {
+            Center = center;
+            Density = density;
+            AngleStep = angleStep;
+        }
+
         private double DistanceFromCenter { get; set; }
         private double Angle { get; set; }
         public double Density { get; }
@@ -13,11 +20,10 @@ namespace TagCloud
 
         public Point CurrentPoint => ShiftPoint(ConvertToCartesianCoordinates());
 
-        public Spiral(Point center, double density = 0.05, int angleStep = 5)
+        public void Next()
         {
-            Center = center;
-            Density = density;
-            AngleStep = angleStep;
+            Angle += AngleStep;
+            DistanceFromCenter = Density * Angle;
         }
 
         private Point ShiftPoint(Point point)
@@ -31,12 +37,6 @@ namespace TagCloud
             var x = (int) Math.Round(DistanceFromCenter * Math.Cos(angleInRadians));
             var y = (int) Math.Round(DistanceFromCenter * Math.Sin(angleInRadians));
             return new Point(x, y);
-        }
-
-        public void Next()
-        {
-            Angle += AngleStep;
-            DistanceFromCenter = Density * Angle;
         }
     }
 }

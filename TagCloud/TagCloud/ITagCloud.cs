@@ -5,7 +5,8 @@ namespace TagCloud
 {
     public interface ITagCloud
     {
-        Rectangle PutNextRectangle(Size rectangleSize);
         List<Rectangle> Rectangles { get; }
+        void GenerateTagCloud(string[] words);
+        Rectangle PutNextRectangle(Size rectangleSize);
     }
 }
