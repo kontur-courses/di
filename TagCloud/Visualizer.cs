@@ -45,7 +45,6 @@ namespace TagCloud
             var brushColor = Color.FromArgb(Math.Abs(rectangle.X) % 255,
                 Math.Abs(rectangle.Y) % 255, 100);
             var brush = new SolidBrush(brushColor);
-            graphics.DrawRectangle(new Pen(Color.Black), rectangle);
             graphics.FillRectangle(brush, rectangle);
         }
     }

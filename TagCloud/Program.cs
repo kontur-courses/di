@@ -1,4 +1,5 @@
 ﻿using System;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using TagCloud.Layout;
 
@@ -7,12 +8,12 @@ namespace TagCloud
     class Program
     {
         private static IServiceProvider serviceProvider;
-        static void Main(string[] args)
+        private static CommandLineApplication app;
+        static int Main(string[] args)
         {
-            //TODO: Add CLI or GUI
             ConfigureServices();
-            var visualizer = serviceProvider.GetService<IVisualizer>();
-            visualizer.Visualize("input.txt");
+            ConfigureCLI();
+            return app.Execute(args);
         }
         
         private static void ConfigureServices()
@@ -28,6 +29,20 @@ namespace TagCloud
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
+        }
+
+        private static void ConfigureCLI()
+        {
+            app.HelpOption();
+            var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleOrNoValue);
+
+            app.OnExecute(() =>
+            {
+                var visualizer = serviceProvider.GetService<IVisualizer>();
+                var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
+                visualizer.Visualize(filename);
+                return 0;
+            });
         }
     }
 }
