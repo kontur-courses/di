@@ -16,13 +16,13 @@ namespace TagsCloudContainer
         public Dictionary<string, int> GetParsedText(string text)
         {
             var matches = Regex.Matches(text, @"\b\w+\b");
-            var words = matches
+            var wordsEntry = matches
                 .Select(x => x.Value.ToLower())
                 .Where(x => !stopWords.Contains(x))
                 .GroupBy(x => x)
                 .ToDictionary(x => x.Key, x => x.Count());
 
-            return words;
+            return wordsEntry;
         }
     }
 }
