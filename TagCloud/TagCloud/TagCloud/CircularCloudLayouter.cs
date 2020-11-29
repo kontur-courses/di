@@ -6,10 +6,12 @@ namespace TagCloud
     public class CircularCloudLayouter : TagCloud
     {
         private readonly ICurve curve;
+        private readonly IWordsProvider wordsProvider;
 
-        public CircularCloudLayouter(ICurve curve)
+        public CircularCloudLayouter(ICurve curve, IWordsProvider wordsProvider)
         {
             this.curve = curve;
+            this.wordsProvider = wordsProvider;
         }
 
         public override Rectangle PutNextRectangle(Size rectangleSize)

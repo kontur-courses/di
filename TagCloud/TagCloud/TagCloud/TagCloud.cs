@@ -6,15 +6,18 @@ namespace TagCloud
 {
     public abstract class TagCloud : ITagCloud
     {
-        public TagCloud()
+        public void GenerateTagCloud()
         {
-            Rectangles = new List<Rectangle>();
+            var words = WordsProvider.GetTokens();
+            foreach (var word in words)
+            {
+                
+            }
         }
-
-        public abstract void GenerateTagCloud(string[] words);
 
         public abstract Rectangle PutNextRectangle(Size rectangleSize);
 
         public List<Rectangle> Rectangles { get; }
+        public IWordsProvider WordsProvider { get; }
     }
 }
