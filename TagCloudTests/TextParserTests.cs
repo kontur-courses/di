@@ -34,6 +34,12 @@ namespace TagCloudTests
 ",
             new string[] {"машина"}, 
             TestName = "Filter CONJ")]
+        [TestCase(@"брошу
+бросил
+бросить
+",
+            new string[] {"бросать", "бросать", "бросать"}, 
+            TestName = "Filter base form")]
         public void Parse_Interesting(string text, string[] expected)
         {
             builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
@@ -49,18 +55,6 @@ namespace TagCloudTests
         public void Parse_ToLower(string text, string[] expected)
         {
             builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
-            Parse(text, expected);
-        }
-        
-        [TestCase(@"брошу
-бросил
-бросить
-",
-            new string[] {"бросать", "бросать", "бросать"}, 
-            TestName = "Filter base form")]
-        public void Parse_BaseForm(string text, string[] expected)
-        {
-            builder.RegisterType<BaseFormFilter>().As<IFilter<string>>();
             Parse(text, expected);
         }
 

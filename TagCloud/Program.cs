@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using MyStemWrapper;
 using TagCloud.Infrastructure.Text;
 using TagCloud.Infrastructure.Text.Filters;
 
@@ -10,12 +11,15 @@ namespace TagCloud
     {
         public static void Main(string[] args)
         {
-            // Create your builder.
             var builder = new ContainerBuilder();
             builder.RegisterType<LineParser>().As<IParser<string>>();
             
             builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
             builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
+            builder.RegisterType<MyStem>().SingleInstance();
+
+            var container = builder.Build();
+            container.Resolve<MyStem>().PathToMyStem = "./mystem";
             
             
         }
