@@ -5,5 +5,5 @@
 
 ## Пример облака тегов, созданного черновой версией 
 
-![DraftExample](https://github.com/CaptainBelyash/tdd/blob/master/TagCloud/draft_example.jpg)
+![DraftExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/draft_example.jpg)
 

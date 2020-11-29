@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.Drawer;
-using TagCloud.FileReaders;
+using TagCloud.Drawers;
+using TagCloud.DataReaders;
 using TagCloud.Layouters;
 using TagCloud.TextAnalyzer;
 
@@ -11,17 +11,17 @@ namespace TagCloud
 {
     public class TagCloud
     {
-        private IRectangleLayouter layouter;
-        private IFileReader fileReader;
+        private ITagCloudDrawer drawer;
+        private IDataReader dataReader;
         private ITextAnalyzer textAnalyzer;
 
         private int minFontSize;
         private int maxFontSize;
         
-        public TagCloud(IRectangleLayouter layouter, IFileReader fileReader, ITextAnalyzer textAnalyzer)
+        public TagCloud(ITagCloudDrawer drawer, IDataReader dataReader, ITextAnalyzer textAnalyzer)
         {
-            this.layouter = layouter;
-            this.fileReader = fileReader;
+            this.drawer = drawer;
+            this.dataReader = dataReader;
             this.textAnalyzer = textAnalyzer;
             
             // TODO: задавать конструктором
@@ -31,22 +31,15 @@ namespace TagCloud
 
         public void MakeTagCloud(string path)
         {
-            var tags = GetTags(path).ToList();
-            var picture = new Picture(new Size(2000, 2000));
-            picture.FillRectangle(new Rectangle(0, 0, 2000, 2000), Color.Black);
-            foreach (var tag in tags.OrderByDescending(t => t.Font.Height))
-            {
-                tag.Rectangle = layouter.PutNextRectangle(tag.Size);
-                picture.DrawTag(tag);
-            }
-
-            picture.Save();
+            var tags = GetTags(path);
+            drawer.DrawTagCloud(tags);
         }
+       
 
         private HashSet<TagInfo> GetTags(string path)
         {
             var tags = new HashSet<TagInfo>();
-            var words = fileReader.ReadWords(path);
+            var words = dataReader.ReadWords(path);
             var wordsToCount = textAnalyzer.GetWordsCounts(words);
             
             var minCount = wordsToCount.Values.ToList().Min();
