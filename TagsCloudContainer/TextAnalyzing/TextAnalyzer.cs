@@ -11,6 +11,8 @@ namespace TagsCloudContainer.TextAnalyzing
         private readonly FilesSettings filesSettings;
         private string text;
         private IEnumerable<string> boringWords;
+        private string pathToTextFile;
+        private string pathToBoringWordsFile;
 
         public TextAnalyzer(FilesSettings filesSettings)
         {
@@ -26,18 +28,17 @@ namespace TagsCloudContainer.TextAnalyzing
         public Dictionary<string, int> GetWordWithFrequency()
         {
             if(boringWords == null) 
-                boringWords = GetWordsFromTextFile(filesSettings.BoringWordsFileName).ToHashSet();
+                boringWords = GetWordsFromTextFile(filesSettings.BoringWordsFilePath).ToHashSet();
             var result = new Dictionary<string, int>();
-            var words = text == null ? GetWordsFromTextFile(filesSettings.TextFileName) : GetWordsFromText(text);
+            var words = text == null ? GetWordsFromTextFile(filesSettings.TextFilePath) : GetWordsFromText(text);
             foreach (var word in words)
                 if (!boringWords.Contains(word))
                     result[word] = result.ContainsKey(word) ? result[word] + 1 : 1;
             return result;
         }
 
-        private IEnumerable<string> GetWordsFromTextFile(string fileName)
+        private IEnumerable<string> GetWordsFromTextFile(string filePath)
         {
-            var filePath = Path.GetFullPath(fileName);
             using (var reader = new StreamReader(filePath))
             {
                 var text = reader.ReadToEnd().ToLower();

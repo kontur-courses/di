@@ -16,6 +16,7 @@ namespace TagsCloudContainerTests.TextAnalyzingTests
         {
             filesSettings = new FilesSettings();
             boringWords = "b, d";
+            filesSettings.BoringWordsFilePath = @"..\..\..\boring words.txt";
         }
 
         [Test]
@@ -39,7 +40,7 @@ namespace TagsCloudContainerTests.TextAnalyzingTests
         [Test]
         public void GetWordsWithFrequency_FromTxtFile()
         {
-            filesSettings.TextFileName = "testTextAnalyzer.txt";
+            filesSettings.TextFilePath = @"..\..\..\testTextAnalyzer.txt";
             var actual = new TextAnalyzer(filesSettings).GetWordWithFrequency();
             var expected = new Dictionary<string, int> {{"a", 3}, {"c", 1}};
             actual.Should().BeEquivalentTo(expected);
@@ -48,7 +49,7 @@ namespace TagsCloudContainerTests.TextAnalyzingTests
         [Test]
         public void GetWordsWithFrequency_FromEmptyTxtFile()
         {
-            filesSettings.TextFileName = "testEmptyTextAnalyzer.txt";
+            filesSettings.TextFilePath = @"..\..\..\testEmptyTextAnalyzer.txt";
             var actual = new TextAnalyzer(filesSettings).GetWordWithFrequency();
             var expected = new Dictionary<string, int>();
             actual.Should().BeEquivalentTo(expected);

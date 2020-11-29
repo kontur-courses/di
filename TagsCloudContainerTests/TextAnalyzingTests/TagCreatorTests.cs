@@ -17,7 +17,8 @@ namespace TagsCloudContainerTests.TextAnalyzingTests
         {
             imageSettings = new ImageSettings();
             filesSettings = new FilesSettings();
-            filesSettings.TextFileName = "testTextAnalyzer.txt";
+            filesSettings.TextFilePath = @"..\..\..\testTextAnalyzer.txt";
+            filesSettings.BoringWordsFilePath = @"..\..\..\boring words.txt";
         }
 
         [Test]
