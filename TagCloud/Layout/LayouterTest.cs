@@ -16,7 +16,8 @@ namespace TagCloud.Layout
         [SetUp]
         public void SetUp()
         {
-            layouter = new Layouter(new Spiral(new Canvas(800, 600)));
+            var canvas = new Canvas(800, 600);
+            layouter = new Layouter(new Spiral(canvas), canvas);
             center = new Point(400, 300);
             rectangles = new List<Rectangle>();
         }

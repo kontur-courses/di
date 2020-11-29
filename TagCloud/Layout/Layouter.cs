@@ -8,18 +8,20 @@ namespace TagCloud.Layout
     {
         private readonly List<Rectangle> rectangles;
         private readonly ISpiral spiral;
+        private readonly ICanvas canvas;
 
-        public Layouter(ISpiral spiral)
+        public Layouter(ISpiral spiral, ICanvas canvas)
         {
             rectangles = new List<Rectangle>();
             this.spiral = spiral;
+            this.canvas = canvas;
         }
         
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            while (true)
+            var point = spiral.GetNextPoint();
+            while (PointBelongsCanvas(point))
             {
-                var point = spiral.GetNextPoint();
                 var newRectangle = GetRectangleByCenter(rectangleSize, point);
                 
                 if (!RectangleIntersectWithOthers(newRectangle))
@@ -27,7 +29,15 @@ namespace TagCloud.Layout
                     rectangles.Add(newRectangle);
                     return newRectangle;
                 }
+
+                point = spiral.GetNextPoint();
             }
+            return Rectangle.Empty;
+        }
+
+        private bool PointBelongsCanvas(Point point)
+        {
+            return point.X > 0 && point.X < canvas.Width && point.Y > 0 && point.Y < canvas.Height;
         }
 
         private Rectangle GetRectangleByCenter(Size rectangleSize, Point rectangleCenter)
