@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using TagCloud.Coloring;
 using TagCloud.FrequencyAnalyzer;
 using TagCloud.Layout;
 
@@ -27,6 +29,7 @@ namespace TagCloud
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
             services.AddSingleton<IImageInfo, ImageInfo>();
+            services.AddSingleton<IPainter>(_ => new PainterWithoutRectangles(Color.Crimson));
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
