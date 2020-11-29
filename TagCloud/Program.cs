@@ -1,4 +1,7 @@
 ﻿using System;
+using Autofac;
+using TagCloud.Infrastructure.Text;
+using TagCloud.Infrastructure.Text.Filters;
 
 namespace TagCloud
 {
@@ -7,7 +10,14 @@ namespace TagCloud
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Create your builder.
+            var builder = new ContainerBuilder();
+            builder.RegisterType<LineParser>().As<IParser<string>>();
+            
+            builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
+            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
+            
+            
         }
     }
 }

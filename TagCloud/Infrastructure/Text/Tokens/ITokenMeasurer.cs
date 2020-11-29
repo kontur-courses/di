@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagCloud.Infrastructure.Layout.Tokens
+namespace TagCloud.Infrastructure.Text.Tokens
 {
     public interface ITokenMeasurer<in TToken>
     {

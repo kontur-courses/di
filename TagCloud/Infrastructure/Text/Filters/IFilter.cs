@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TagCloud.Infrastructure.Text
+namespace TagCloud.Infrastructure.Text.Filters
 {
     public interface IFilter<TToken>
     {
