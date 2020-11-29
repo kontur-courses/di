@@ -1,4 +1,4 @@
-﻿namespace TagCloud.TextConverters
+﻿namespace TagCloud.TextConverters.TextReaders
 {
     internal interface ITextReader
     {
