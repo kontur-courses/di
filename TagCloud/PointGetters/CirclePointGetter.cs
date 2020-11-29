@@ -5,17 +5,17 @@ namespace TagCloud.PointGetters
 {
     internal class CirclePointGetter : IPointGetter
     {
-        private readonly Point center;
+        public Point Center { get; }
         private double angle;
         private int radius;
         private double dangle => Math.PI / (2 * radius);
-        internal CirclePointGetter(Point center) => this.center = center;
+        internal CirclePointGetter(Point center) => Center = center;
         public Point GetNextPoint()
         {
             var x = (int)(radius * Math.Cos(angle));
             var y = (int)(radius * Math.Sin(angle));
             ChangePolarCoordinate();
-            return new Point(x + center.X, y + center.Y);
+            return new Point(x + Center.X, y + Center.Y);
         }
         private void ChangePolarCoordinate()
         {

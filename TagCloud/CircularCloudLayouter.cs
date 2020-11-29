@@ -9,7 +9,7 @@ namespace TagCloud
     public class CircularCloudLayouter
     {
         internal readonly HashSet<Rectangle> rectangles = new HashSet<Rectangle>();
-        public readonly Point center;
+        public Point Center => getPointer.Center;
         private readonly IPointGetter getPointer;
         public int Top { get; private set; }
         public int Bottom { get; private set; }
@@ -19,14 +19,13 @@ namespace TagCloud
         public bool IsEmpty => !rectangles.Any();
 
         public Size Size => new Size(Right - Left, Bottom - Top);
-        internal CircularCloudLayouter(IPointGetter getter, Point center)
+        internal CircularCloudLayouter(IPointGetter getter)
         {
-            this.center = center;
             getPointer = getter;
-            Top = center.Y;
-            Bottom = center.Y;
-            Right = center.X;
-            Left = center.X;
+            Top = getter.Center.Y;
+            Bottom = getter.Center.Y;
+            Right = getter.Center.X;
+            Left = getter.Center.X;
         }
 
         internal Rectangle PutNextRectangle(Size rectangleSize)

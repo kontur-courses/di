@@ -6,15 +6,15 @@ using System.Collections;
 
 namespace TagCloud
 {
-    internal class TagCloud : IEnumerable<(string word, Rectangle location)>
+    public class TagCloud : IEnumerable<(string word, Rectangle location)>
     {
-        private readonly CircularCloudLayouter layouter;
+        internal readonly CircularCloudLayouter layouter;
         private readonly Dictionary<string, double> wordsMetric;
 
         internal TagCloud(Dictionary<string, double> wordsMetric, IPointGetter getter)
         {
             this.wordsMetric = wordsMetric;
-            layouter = new CircularCloudLayouter(getter, Point.Empty);
+            layouter = new CircularCloudLayouter(getter);
         }
 
         public IEnumerator<(string word, Rectangle location)> GetEnumerator()
