@@ -33,7 +33,7 @@ namespace FractalPainting.Infrastructure.Common
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = "Настройки";
+            Text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
         }
     }
 }

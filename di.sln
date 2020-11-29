@@ -2,6 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudLayouters", "CloudLayouters\CloudLayouters.csproj", "{854D1AFE-816D-48A3-8473-9E3B4C83F372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularCloudTests", "CircularCloudTests\CircularCloudTests.csproj", "{5A1ECFBD-24E4-43CD-95D0-1E43630EACBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGUIClient", "TagCloudGUIClient\TagCloudGUIClient.csproj", "{9B7CC453-82A9-4475-8E80-534B05F00B0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloudCreator\TagCloudCreator.csproj", "{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +22,25 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A1ECFBD-24E4-43CD-95D0-1E43630EACBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1ECFBD-24E4-43CD-95D0-1E43630EACBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1ECFBD-24E4-43CD-95D0-1E43630EACBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1ECFBD-24E4-43CD-95D0-1E43630EACBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
