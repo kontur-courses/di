@@ -34,7 +34,7 @@ namespace TagsCloud.Tests
         [TestCase(10, TestName = "WhenGet10Point")]
         [TestCase(100, TestName = "WhenGet100Point")]
         [TestCase(1000, TestName = "WhenGet1000Point")]
-        public void GetNextPointAllPointsShouldBeDifferent(int count)
+        public void GetNextPoint_AllPointsShouldBeDifferent(int count)
         {
             var points = Enumerable.Range(0, count).Select(_ => spiral.GetNextPoint()).ToList();
 

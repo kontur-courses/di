@@ -17,4 +17,13 @@
     <ProjectReference Include="..\TagsCloud.Core\TagsCloud.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

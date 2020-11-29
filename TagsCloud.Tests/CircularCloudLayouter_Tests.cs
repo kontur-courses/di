@@ -17,13 +17,13 @@ namespace TagsCloud.Tests
         private readonly SizeGenerator generator = new SizeGenerator(10, 40, 10, 20);
         private Point center;
         private CircularCloudLayouter cloud;
-        private IEnumerable<Rectangle> rectangles;
+        private List<Rectangle> rectangles;
 
         [SetUp]
         public void SetUp()
         {
             center = new Point(ImageWidth / 2, ImageHeight / 2);
-            cloud = new CircularCloudLayouter(center);
+            cloud = new CircularCloudLayouter(center, 0.005);
         }
 
         [TestCase(-1, 1, TestName = "WhenNotPositiveWidth")]
@@ -38,7 +38,7 @@ namespace TagsCloud.Tests
         [TestCase(100, TestName = "WhenAdd100Rectangle")]
         public void PutNextRectangle_CorrectCountOfRectangles(int count)
         {
-            rectangles = generator.GenerateSize(count).Select(cloud.PutNextRectangle);
+            rectangles = generator.GenerateSize(count).Select(cloud.PutNextRectangle).ToList();
 
             rectangles.Should().HaveCount(count);
         }
@@ -47,7 +47,7 @@ namespace TagsCloud.Tests
         public void PutNextRectangle_FirstRectangleOnCenter()
         {
             center = new Point(1, 2);
-            cloud = new CircularCloudLayouter(center);
+            cloud = new CircularCloudLayouter(center, 0.005);
 
             var rect = cloud.PutNextRectangle(new Size(10, 10));
             var rectCenter = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
@@ -88,7 +88,6 @@ namespace TagsCloud.Tests
         {
             rectangles = generator.GenerateSize(count).Select(cloud.PutNextRectangle).ToList();
             var allRectanglesArea = rectangles.Select(x => x.Width * x.Height).Sum();
-
             var radius = rectangles.Max(x => GetDistanceFromPointToCenter(x.Location));
             var circleArea = Math.PI * radius * radius;
             var areaRatio = allRectanglesArea / circleArea;
@@ -101,9 +100,13 @@ namespace TagsCloud.Tests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
-            var path = $"../../Images/{TestContext.CurrentContext.Test.FullName}.jpg";
+            var path = $"../../../Images/{TestContext.CurrentContext.Test.FullName}.png";
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
-            CircularCloudVisualization.CreateImage(rectangles, ImageWidth, ImageHeight).Save(path);
+            CircularCloudVisualization.CreateImage(
+                Enumerable.Repeat("", rectangles.Count).ToList(),
+                rectangles,
+                ImageWidth, 
+                ImageHeight).Save(path);
         }
 
         private double GetDistanceFromPointToCenter(Point point)

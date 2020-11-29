@@ -9,9 +9,9 @@ namespace TagsCloud.Core
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly ArchimedeanSpiral spiral;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point center, double spiralParameter)
         {
-            spiral = new ArchimedeanSpiral(center, 0.005);
+            spiral = new ArchimedeanSpiral(center, spiralParameter);
         }
 
         public Rectangle PutNextRectangle(Size rectSize)
