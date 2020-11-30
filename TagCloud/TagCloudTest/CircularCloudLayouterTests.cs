@@ -15,7 +15,10 @@ namespace TagCloudTest
         public void SetUp()
         {
             spiral = new Spiral(new Point(0, 0));
-            tagCloudWithCenterInZero = new CircularCloudLayouter(spiral);
+            wordsProvider = new CircularWordsProvider();
+            wordsFilter = new WordsFilter().Normalize();
+            tagCloudWithCenterInZero =
+                new CircularCloudLayouter(spiral, wordsProvider, wordsFilter);
         }
 
         [TearDown]
@@ -33,6 +36,8 @@ namespace TagCloudTest
         private ITagCloud tagCloudWithCenterInZero;
         private ICurve spiral;
         private readonly Random rnd = new Random();
+        private IWordsProvider wordsProvider;
+        private IWordsFilter wordsFilter;
 
         private Size GetRandomSize()
         {
@@ -42,7 +47,7 @@ namespace TagCloudTest
         [Test]
         public void PutNextRectangle_DoesntThrow()
         {
-            Assert.DoesNotThrow(() => tagCloudWithCenterInZero.PutNextRectangle(new Size(10, 10)));
+            Assert.DoesNotThrow(() => tagCloudWithCenterInZero.PutNextWord("abc", new Size(10, 10)));
         }
 
         [Test]
@@ -50,30 +55,31 @@ namespace TagCloudTest
         {
             var expectedRectanglesCount = 15;
             for (var i = 0; i < expectedRectanglesCount; i++)
-                tagCloudWithCenterInZero.PutNextRectangle(GetRandomSize());
+                tagCloudWithCenterInZero.PutNextWord("abc", GetRandomSize());
 
-            tagCloudWithCenterInZero.Rectangles.Should().HaveCount(expectedRectanglesCount);
+            tagCloudWithCenterInZero.WordRectangles.Should().HaveCount(expectedRectanglesCount);
         }
 
         [Test]
         public void PutNextRectangle_PutsFirstRectangleInCenter()
         {
             var center = new Point(10, 18);
-            var shiftedTagCloud = new CircularCloudLayouter(new Spiral(center));
-            shiftedTagCloud.PutNextRectangle(new Size(10, 5));
+            var shiftedTagCloud = new CircularCloudLayouter(new Spiral(center), wordsProvider, wordsFilter);
+            shiftedTagCloud.PutNextWord("dsadsa", new Size(10, 5));
 
-            shiftedTagCloud.Rectangles[0].Location.Should().Be(center);
+            shiftedTagCloud.WordRectangles[0].Rectangle.Location.Should().Be(center);
         }
 
         [Test]
         public void Rectangles_ShouldNotIntersect()
         {
             for (var i = 0; i < 100; i++)
-                tagCloudWithCenterInZero.PutNextRectangle(GetRandomSize());
+                tagCloudWithCenterInZero.PutNextWord("dadas", GetRandomSize());
 
-            foreach (var rectangle in tagCloudWithCenterInZero.Rectangles)
-                tagCloudWithCenterInZero.Rectangles.All(
-                        other => other.Equals(rectangle) || !other.IntersectsWith(rectangle))
+            foreach (var wordRectangle in tagCloudWithCenterInZero.WordRectangles)
+                tagCloudWithCenterInZero.WordRectangles.All(
+                        other => other.Equals(wordRectangle)
+                                 || !other.Rectangle.IntersectsWith(wordRectangle.Rectangle))
                     .Should().BeTrue();
         }
 
@@ -82,7 +88,7 @@ namespace TagCloudTest
         public void Put1000Rectangles_StopsInSufficientTime()
         {
             for (var i = 0; i < 1000; i++)
-                tagCloudWithCenterInZero.PutNextRectangle(GetRandomSize());
+                tagCloudWithCenterInZero.PutNextWord("asda", GetRandomSize());
         }
     }
 }
