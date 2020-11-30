@@ -8,6 +8,8 @@ namespace TagCloud.Core.ColoringAlgorithms
         private readonly Color[] colors;
         private readonly Random randomizer;
 
+        public string Name => "rainbow";
+
         public RainbowColoring()
         {
             randomizer = new Random();
