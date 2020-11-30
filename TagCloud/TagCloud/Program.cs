@@ -8,29 +8,27 @@ namespace TagCloud
         public static void Main()
         {
             var builder = new ContainerBuilder();
-            var center = new Point(0, 0);
-            // builder.RegisterInstance(center).As<Point>();
+            const int width = 1920;
+            const int height = 1080;
+            var center = new Point(width / 2, height / 2);
             const double density = 0.05;
             const int angelStep = 5;
             builder.RegisterType<Spiral>().As<ICurve>()
                 .WithParameter("center", center)
                 .WithParameter("density", density)
                 .WithParameter("angelStep", angelStep);
-            builder.RegisterType<CircularCloudLayouter>().As<ITagCloud>();
+            builder.RegisterType<CircularCloudLayouter>().As<ITagCloud>().SingleInstance();
             builder.RegisterType<TagCloudVisualizer>().As<IVisualizer>();
+            builder.RegisterType<TxtWordsProvider>().As<IWordsProvider>()
+                .WithParameter("filePath", "../../../../words.txt");
+            var wordsFilter = new WordsFilter().Normalize().RemovePrepositions();
+            builder.RegisterInstance(wordsFilter).As<IWordsFilter>();
 
             var container = builder.Build();
 
-            var bitmap = container.Resolve<IVisualizer>().CreateBitMap(1920, 1080);
+            container.Resolve<ITagCloud>().GenerateTagCloud();
+            var bitmap = container.Resolve<IVisualizer>().CreateBitMap(width, height);
             bitmap.Save("test.png");
-
-            // var tagCloud = new CircularCloudLayouter(new Point(1920 / 2, 1080 / 2));
-            // var random = new Random();
-            // for (var i = 0; i < 100; i++)
-            // tagCloud.PutNextRectangle(new Size(random.Next() % 100 + 1, random.Next() % 100 + 1));
-            // var vis = new TagCloudVisualizer(tagCloud);
-            // var image = vis.CreateBitMap(1920, 1080);
-            // image.Save($"100RectanglesDensity1.jpg");
         }
     }
 }

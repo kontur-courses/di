@@ -25,9 +25,15 @@ namespace TagCloud
             var bitMap = new Bitmap(width, height);
             var graphics = Graphics.FromImage(bitMap);
             var penNumber = 0;
-            foreach (var rectangle in tagCloud.Rectangles)
+
+            foreach (var wordRectangle in tagCloud.WordRectangles)
             {
                 var pen = pens[penNumber];
+                var word = wordRectangle.Word;
+                var rectangle = wordRectangle.Rectangle;
+                var font = new Font("Times New Roman", 20);
+                graphics.DrawString(word, font, new SolidBrush(pen.Color),
+                    new PointF(rectangle.Left, (rectangle.Bottom - rectangle.Top) / 2 + rectangle.Y));
                 graphics.DrawPolygon(pen, RectangleToPointFArray(rectangle));
                 penNumber++;
                 penNumber %= pens.Length;

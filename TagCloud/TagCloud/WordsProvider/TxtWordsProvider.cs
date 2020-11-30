@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace TagCloud
@@ -17,10 +16,10 @@ namespace TagCloud
             this.filePath = filePath;
         }
 
-        public override IEnumerable<WordToken> GetTokens()
+        public override IEnumerable<string> GetWords()
         {
             var words = Regex.Split(File.ReadAllText(filePath), @"\W+");
-            return GetTokens(words);
+            return words;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace TagCloud
 {
     public interface IWordsProvider
     {
-        IEnumerable<WordToken> GetTokens();
+        IEnumerable<string> GetWords();
     }
 }

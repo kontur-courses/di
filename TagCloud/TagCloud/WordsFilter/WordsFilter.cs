@@ -6,11 +6,24 @@ namespace TagCloud
 {
     public class WordsFilter : IWordsFilter
     {
-        private HashSet<string> prepositions = new HashSet<string>
+        private readonly List<Func<string, bool>> filters = new List<Func<string, bool>>();
+
+        private readonly HashSet<string> prepositions = new HashSet<string>
             {"in", "of", "but", "at", "until", "to", "for", "on", "by"};
 
-        private List<Func<string, bool>> filters = new List<Func<string, bool>>();
-        private List<Func<string, string>> transformations = new List<Func<string, string>>();
+        private readonly List<Func<string, string>> transformations = new List<Func<string, string>>();
+
+        public IEnumerable<string> Apply(IEnumerable<string> words)
+        {
+            foreach (var word in words)
+            {
+                if (!filters.All(filter => filter(word))) continue;
+                var res = word;
+                foreach (var transformation in transformations) res = transformation(res);
+
+                yield return res;
+            }
+        }
 
         public WordsFilter RemovePrepositions()
         {
@@ -34,15 +47,6 @@ namespace TagCloud
         {
             transformations.Add(transfromation);
             return this;
-        }
-
-        public IEnumerable<string> Apply(IEnumerable<string> words)
-        {
-            return filters
-                .Aggregate(words, (current, filter) => current.Where(filter))
-                .Select(word =>
-                    transformations
-                        .Aggregate(word, (current, transformation) => transformation(current)));
         }
     }
 }
