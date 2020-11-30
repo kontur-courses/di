@@ -20,7 +20,7 @@ namespace TagsCloud.App
             using var graphics = imageHolder.StartDrawing();
             foreach (var word in words)
                 //todo check that word can be drawn in image
-                graphics.DrawString(word.Text, word.Font, new SolidBrush(imageSettings.GetColor()), word.Rectangle);
+                graphics.DrawString(word.Text, word.Font, new SolidBrush(imageSettings.GetColor()), word.Rectangle.Location);
         }
     }
 }
