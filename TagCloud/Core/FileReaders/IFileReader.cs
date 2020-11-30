@@ -4,7 +4,7 @@ namespace TagCloud.Core.FileReaders
 {
     public interface IFileReader
     {
+        public string Extension { get; }
         public IEnumerable<string> ReadAllWords(string filePath);
-        public bool IsValidExtension(string extension);
     }
 }
