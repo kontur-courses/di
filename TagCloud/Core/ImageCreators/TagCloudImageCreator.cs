@@ -6,15 +6,10 @@ namespace TagCloud.Core.ImageCreators
 {
     public class TagCloudImageCreator : IImageCreator
     {
-        private readonly IColoringAlgorithm coloringAlgorithm;
-        private readonly Color backgroundColor = Color.White;
+        private readonly Color backgroundColor = Color.Azure;
 
-        public TagCloudImageCreator(IColoringAlgorithm coloringAlgorithm)
-        {
-            this.coloringAlgorithm = coloringAlgorithm;
-        }
-
-        public Bitmap Create(IEnumerable<Tag> tags, string fontName, Size size)
+        public Bitmap Create(IColoringAlgorithm coloringAlgorithm,
+            IEnumerable<Tag> tags, string fontName, Size size)
         {
             var bitmap = new Bitmap(size.Width, size.Height);
             var graphics = Graphics.FromImage(bitmap);
