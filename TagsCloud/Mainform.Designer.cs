@@ -183,7 +183,12 @@
             // 
             // OpenFileDialog
             // 
-            this.OpenFileDialog.FileName = "openFileDialog1";
+            this.OpenFileDialog.FileName = "File";
+            this.OpenFileDialog.Filter = "Текстовые файлы|*.txt";
+            // 
+            // SaveFileDialog
+            // 
+            this.SaveFileDialog.Filter = "Фото|*.png";
             // 
             // Mainform
             // 

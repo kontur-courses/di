@@ -50,7 +50,7 @@ namespace TagsCloud
 
         private void ImageSaveButton_Click(object sender, EventArgs e)
         {
-            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+            if (PictureBox.Image != null && SaveFileDialog.ShowDialog() == DialogResult.OK)
                 PictureBox.Image.Save(SaveFileDialog.FileName);
         }
 
