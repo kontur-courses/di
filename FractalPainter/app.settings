@@ -2,7 +2,7 @@
 <AppSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ImagesDirectory>.</ImagesDirectory>
   <ImageSettings>
-    <Width>800</Width>
-    <Height>600</Height>
+    <Width>1200</Width>
+    <Height>1000</Height>
   </ImageSettings>
 </AppSettings>

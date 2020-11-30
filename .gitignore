@@ -232,16 +232,3 @@ _Pvt_Extensions
 
 # Paket dependency manager
 .paket/paket.exe
-
-# FAKE - F# Make
-.fake/
-/TagsCloud.GUI/MainForm.cs
-/TagsCloud.GUI/MainForm.Designer.cs
-/TagsCloud.GUI/Program.cs
-/TagsCloud.GUI/Properties/Resources.Designer.cs
-/TagsCloud.GUI/App.config
-/TagsCloud.GUI/Properties/AssemblyInfo.cs
-/TagsCloud.GUI/Properties/Resources.resx
-/TagsCloud.GUI/Properties/Settings.Designer.cs
-/TagsCloud.GUI/Properties/Settings.settings
-/TagsCloud.GUI/TagsCloud.GUI.csproj
