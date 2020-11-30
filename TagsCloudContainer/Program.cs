@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloudContainer.TagsCloudVisualization;

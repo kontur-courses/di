@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-
-namespace TagsCloudContainer
+﻿namespace TagsCloudContainer
 {
     public class WordValidator : IWordValidator
     {
