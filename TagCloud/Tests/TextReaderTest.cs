@@ -8,7 +8,7 @@ namespace TagCloud.Tests
     class TextReaderTest
     {
         private readonly TextReaderTxt reader = new TextReaderTxt();
-        private readonly string path = $".{Path.PathSeparator}fileTest.txt";
+        private readonly string path = $".{Path.DirectorySeparatorChar}fileTest.txt";
 
         [TestCase("")]
         [TestCase(" ")]
