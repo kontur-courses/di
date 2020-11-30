@@ -159,6 +159,7 @@
             this.AlgorithmChoice.Name = "AlgorithmChoice";
             this.AlgorithmChoice.Size = new System.Drawing.Size(142, 23);
             this.AlgorithmChoice.TabIndex = 2;
+            this.AlgorithmChoice.SelectedIndexChanged += new System.EventHandler(this.AlgorithmChoice_SelectedIndexChanged);
             // 
             // SetImageSizeButton
             // 

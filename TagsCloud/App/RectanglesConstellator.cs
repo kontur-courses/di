@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloud.App
 {
-    public class RectanglesConstellator
+    public class RectanglesConstellator : IRectanglesConstellator
     {
         private enum AngleDirection
         {
@@ -21,6 +21,7 @@ namespace TagsCloud.App
             public AngleDirection Direction;
         }
 
+        public string Name { get; } = "По умолчанию";
         public int MaxX { get; private set; }
         public int MinX { get; private set; }
         public int MaxY { get; private set; }

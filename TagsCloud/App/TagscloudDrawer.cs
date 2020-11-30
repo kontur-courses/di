@@ -7,6 +7,13 @@ namespace TagsCloud.App
 {
     class TagscloudDrawer
     {
+        private readonly IRectanglesConstellator constellator;
+
+        public TagscloudDrawer(IRectanglesConstellator constellator)
+        {
+            this.constellator = constellator;
+        }
+
         public Image GetTagscloud(Dictionary<string, int> words, TagcloudSettings settings, double cloudToImageScaleRatio)
         {
             if (cloudToImageScaleRatio <= 0 || cloudToImageScaleRatio > 1)

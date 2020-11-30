@@ -16,8 +16,6 @@ namespace TagsCloud
         [STAThread]
         static void Main(string[] args)
         {
-            try
-            {
                 var builder = new ContainerBuilder();
                 builder.Register(a => new Palette {BackgroundColor = Color.Black, PrimaryColor = Color.Aqua}).AsSelf();
                 builder.Register(a => new ImageSize(500, 500)).AsSelf();
@@ -25,15 +23,11 @@ namespace TagsCloud
                 builder.RegisterType<Mainform>().AsSelf();
                 builder.RegisterType<WordsConverter>().As<IWordsConverter>();
                 builder.RegisterType<TagcloudSettings>().AsSelf();
+                builder.Register(a => new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
                 var container = builder.Build();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(container.Resolve<Mainform>());
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
         }
     }
 }
