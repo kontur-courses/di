@@ -27,13 +27,19 @@ namespace TagCloudTests
 я
 дом
 ",
-            new string[] {"дом"}, 
+            new string[] {"привет", "дом"}, 
             TestName = "Filter SPRO")]
+        [TestCase(@"машины
+и
+машина
+",
+            new string[] {"машина", "машина"}, 
+            TestName = "Filter CONJ")]
         [TestCase(@"в
 машина
 ",
             new string[] {"машина"}, 
-            TestName = "Filter CONJ")]
+            TestName = "Filter PR")]
         [TestCase(@"брошу
 бросил
 бросить
@@ -68,7 +74,7 @@ namespace TagCloudTests
             var parser = container.Resolve<IParser<string>>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
-            settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO"};
+            settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO", "PR"};
             settingsFactory().Path = path;
             File.WriteAllText(path, text);
 

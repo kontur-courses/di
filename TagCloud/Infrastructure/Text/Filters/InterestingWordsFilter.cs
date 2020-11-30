@@ -21,7 +21,7 @@ namespace TagCloud.Infrastructure.Text.Filters
         {
             var analyzer = new MyStem() {PathToMyStem = myStemPath, Parameters = "-i"};
             var analysis = analyzer.Analysis(string.Join(" ", tokens));
-            var wordWithTypeRegex = new Regex(@".+\{(?<word>.+?)=(?<type>.+?),.+}");
+            var wordWithTypeRegex = new Regex(@".+?\{(?<word>.+?)=(?<type>.+?)\W.+?\}");
             foreach (Match match in wordWithTypeRegex.Matches(analysis))
             {
                 if (match.Success && IsInteresting(match.Groups["type"].Value))
