@@ -1,13 +1,11 @@
-using System.Drawing;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using Autofac;
-using TagCloud.Core.ColoringAlgorithms;
-using TagCloud.Core.FileReaders;
-using TagCloud.Core.ImageCreators;
-using TagCloud.Core.ImageSavers;
-using TagCloud.Core.LayoutAlgorithms;
-using TagCloud.Core.WordConverters;
-using TagCloud.Core.WordsFilters;
-using TagCloud.Core.WordsProcessors;
+using TagCloudUI.Infrastructure;
+using TagCloudUI.Infrastructure.Selectors;
 using TagCloudUI.UI;
 
 namespace TagCloudUI
@@ -16,29 +14,31 @@ namespace TagCloudUI
     {
         public static void Main(string[] args)
         {
-            var container = BuildContainer();
+            var container = BuildContainer(args);
             var ui = container.Resolve<IUserInterface>();
-            ui.Run(args);
+            ui.Run(container.Resolve<AppSettings>());
         }
 
-        private static IContainer BuildContainer()
+        private static IContainer BuildContainer(IEnumerable<string> args)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<ConsoleUI>().As<IUserInterface>();
-            builder.RegisterAssemblyTypes(typeof(TxtReader).Assembly)
-                .As<IFileReader>();
 
-            builder.RegisterAssemblyTypes(typeof(ToLowerConverter).Assembly)
-                .As<IWordConverter>();
-            builder.RegisterAssemblyTypes(typeof(BoringWordsFilter).Assembly)
-                .As<IWordFilter>();
-            builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
+            var dlls = Directory.GetFiles(Environment.CurrentDirectory, "TagCloud*.dll");
+            var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
+            builder.RegisterAssemblyModules(assemblies);
 
-            builder.RegisterType<CircularCloudLayouter>().As<ILayoutAlgorithm>()
-                .WithParameter("center", new Point(700, 700));
-            builder.RegisterType<RainbowColoring>().As<IColoringAlgorithm>();
-            builder.RegisterType<TagCloudImageCreator>().As<IImageCreator>();
-            builder.RegisterType<AllExtensionsSaver>().As<IImageSaver>();
+            builder.RegisterType<ReaderSelector>().AsImplementedInterfaces()
+                .SingleInstance();
+            builder.RegisterType<LayoutAlgorithmSelector>().AsImplementedInterfaces()
+                .SingleInstance();
+            builder.RegisterType<ColoringAlgorithmSelector>().AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder.RegisterType<AppSettings>().WithParameter("args", args).SingleInstance();
+            builder.RegisterType<SpiralFactory>().AsImplementedInterfaces();
+            builder.Register(b => b.Resolve<ISpiralFactory>().Create())
+                .AsImplementedInterfaces().SingleInstance();
 
             return builder.Build();
         }

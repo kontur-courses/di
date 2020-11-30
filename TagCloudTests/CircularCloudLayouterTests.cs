@@ -19,7 +19,7 @@ namespace TagCloudTests
         public void SetUp()
         {
             center = new Point(300, 300);
-            layouter = new CircularCloudLayouter(center);
+            layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center));
         }
 
         [TestCase(0, 0, TestName = "CenterAtOrigin")]
@@ -28,8 +28,9 @@ namespace TagCloudTests
         [TestCase(2, -2, TestName = "CenterCoordinatesHaveDifferentSigns")]
         public void CircularCloudLayouterConstructor_DoesNotThrow(int x, int y)
         {
+            var start = new Point(x, y);
             Assert.DoesNotThrow(
-                () => new CircularCloudLayouter(new Point(x, y)));
+                () => new CircularCloudLayouter(new ArchimedeanSpiral(start)));
         }
 
         [TestCase(0, TestName = "ZeroWhenNoPlaced")]
