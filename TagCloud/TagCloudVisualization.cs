@@ -5,10 +5,11 @@ namespace TagCloud
 {
     public static class TagCloudVisualization
     {
-        public static void Visualizate(TagCloud cloud, string path)
+        public static void Visualizate(TagCloud cloud, string path, string font = "Arial", Size? size = null)
         {
             var random = new Random();
-            var bitmap = new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height);
+            var bitmap = size == null ? new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height) :
+                new Bitmap(size.Value.Width, size.Value.Height);
             var vectorShift = new Point(
                 cloud.layouter.Size.Width - cloud.layouter.Center.X, 
                 cloud.layouter.Size.Height - cloud.layouter.Center.Y);
@@ -16,10 +17,10 @@ namespace TagCloud
             foreach (var location in cloud)
             {
                 var randomColor = Color.FromArgb(255, random.Next(255), random.Next(255), random.Next(255));
-                var pen = new Pen(randomColor);
+                ;
                 var brush = new SolidBrush(randomColor);
-                graphics.DrawRectangle(pen, ShiftRectangle(location.location));
-                graphics.FillRectangle(brush, ShiftRectangle(location.location));
+                graphics.DrawString(location.word, new Font(font, location.location.Height), 
+                    brush, ShiftRectangle(location.location));
             }
             bitmap.Save(path);
 
