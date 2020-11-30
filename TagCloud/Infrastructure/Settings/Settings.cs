@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace TagCloud.Infrastructure.Settings
 {
-    public class Settings : IFileSettingsProvider, ITagCloudSettingsProvider, IExcludeTypesSettingsProvider, IFontSettingProvider, ISpiralSettingsProvider, IImageSettingsProvider
+    public class Settings : IFileSettingsProvider, ITagCloudSettingsProvider, IExcludeTypesSettingsProvider, ISpiralSettingsProvider, IImageSettingsProvider, IWordCountThresholdSettingProvider
     {
         public string Path { get; set; }
         public Point Center { get; set; }
@@ -15,5 +15,6 @@ namespace TagCloud.Infrastructure.Settings
         public int Width { get; set;  }
         public int Height { get; set; }
         public string ImagePath { get; set; }
+        public int WordCountThreshold { get; set;  }
     }
 }

@@ -10,10 +10,12 @@ namespace TagCloud.Infrastructure.Text.Tokens
     public class WordCounter : ITokenCounter<string>
     {
         private readonly Func<IFontSettingProvider> fontSettingProvider;
+        private readonly Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider;
 
-        public WordCounter(Func<IFontSettingProvider> fontSettingProvider)
+        public WordCounter(Func<IFontSettingProvider> fontSettingProvider, Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider)
         {
             this.fontSettingProvider = fontSettingProvider;
+            this.wordCountThresholdProvider = wordCountThresholdProvider;
         }
         
         public Dictionary<string, int> GetFontSizes(IEnumerable<string> tokens)
@@ -28,9 +30,12 @@ namespace TagCloud.Infrastructure.Text.Tokens
                                        / (maxCount - minCount) 
                                        + baseFont.MinFontSize; 
             var result = new Dictionary<string, int>();
+            var threshold = wordCountThresholdProvider().WordCountThreshold;
             foreach (var word in wordCount.Keys)
             {
                 var count =  wordCount[word];
+                if (count < threshold)
+                    continue;
                 var fontSize = FontSizeLine(count);
                 result[word] = fontSize;
             }

@@ -24,9 +24,10 @@ namespace TagCloud.Infrastructure.Text.Filters
             var wordWithTypeRegex = new Regex(@".+?\{(?<word>.+?)=(?<type>.+?)\W.+?\}");
             foreach (Match match in wordWithTypeRegex.Matches(analysis))
             {
-                if (match.Success && IsInteresting(match.Groups["type"].Value))
+                var word = match.Groups["word"].Value;
+                if (match.Success && IsInteresting(match.Groups["type"].Value) && !word.EndsWith("?"))
                 {
-                    yield return match.Groups["word"].Value;
+                    yield return word;
                 }
             }
         }

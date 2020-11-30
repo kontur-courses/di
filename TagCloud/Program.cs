@@ -45,16 +45,17 @@ namespace TagCloud
             var settingsFactory = container.Resolve<Func<Settings>>();
             settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO", "PR"};
             settingsFactory().Path = GetReleasePath("input.txt");
+            settingsFactory().WordCountThreshold = 3;
             settingsFactory().Increment = 1;
             var size  = new Size(1000, 1000);
             settingsFactory().Width = size.Width;
             settingsFactory().Height = size.Height;
-            settingsFactory().MinFontSize = 20;
+            settingsFactory().MinFontSize = 5;
             settingsFactory().MaxFontSize = 50;
             settingsFactory().Center = new Point(size.Width/2, size.Height/2);
             settingsFactory().ImagePath = Path.Combine(".","drawing.bmp");
             settingsFactory().FontFamily = new FontFamily("Arial");
-            settingsFactory().Brush = new SolidBrush(Color.Red);
+            settingsFactory().Brush = new SolidBrush(Color.Wheat);
 
             var parser = container.Resolve<IParser<string>>();
             var tokens = parser.Parse();

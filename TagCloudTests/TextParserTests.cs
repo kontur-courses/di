@@ -50,6 +50,10 @@ namespace TagCloudTests
 ",
             new string[] {"бросать", "бросать", "бросать"}, 
             TestName = "Filter base form")]
+        [TestCase(@"фывфывфыв
+",
+            new string[] {}, 
+            TestName = "Filter unknown")]
         public void Parse_Interesting(string text, string[] expected)
         {
             builder.RegisterType<InterestingWordsFilter>()
