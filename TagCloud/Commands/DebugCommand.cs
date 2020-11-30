@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TagCloud.Settings;
+﻿using TagCloud.Settings;
 
 namespace TagCloud.Commands
 {
     public class DebugCommand : ICommand
     {
-        public string CommandId { get; } = "debug";
-        public string Description { get; } = "Just for debug";
-
         private readonly SourceSettings settings;
 
         public DebugCommand(SourceSettings sourceSettings)
@@ -17,9 +11,13 @@ namespace TagCloud.Commands
             settings = sourceSettings;
         }
 
-        public void Handle(string[] args)
+        public string CommandId { get; } = "debug";
+        public string Description { get; } = "Just for debug";
+        public string Usage { get; } = "debug";
+
+        public ICommandResult Handle(string[] args)
         {
-            Console.WriteLine(settings.Destination);
+            return new CommandResult(true, settings.Destination);
         }
     }
 }

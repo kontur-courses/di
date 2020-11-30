@@ -8,6 +8,7 @@ namespace TagCloud.Commands
     {
         string CommandId { get; }
         string Description { get; }
-        void Handle(string[] args);
+        string Usage { get; }
+        ICommandResult Handle(string[] args);
     }
 }

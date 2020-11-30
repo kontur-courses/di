@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TagCloud.Renderers;
+﻿using TagCloud.Renderers;
 using TagCloud.Settings;
 
 namespace TagCloud.Commands
 {
     public class CreateImageCommand : ICommand
     {
-        public string CommandId { get; } = "create";
-        public string Description { get; } = "Create image from tag cloud";
-
-        private IRender render;
         private readonly ResultSettings settings;
+
+        private readonly IRender render;
 
         public CreateImageCommand(IRender render, ResultSettings settings)
         {
@@ -20,17 +15,18 @@ namespace TagCloud.Commands
             this.settings = settings;
         }
 
-        public void Handle(string[] args)
+        public string CommandId { get; } = "create";
+        public string Description { get; } = "Create image from tag cloud";
+        public string Usage { get; } = "create <FileName>";
+
+        public ICommandResult Handle(string[] args)
         {
             if (args.Length == 0)
-            {
-                Console.WriteLine("You must specify file name");
-                return;
-            }
+                return new CommandResult(false, "You must specify file name");
 
             settings.Name = args[0];
             render.Render();
-            Console.WriteLine($"Created in {settings.OutputPath}");
+            return new CommandResult(true, $"Created in {settings.OutputPath}");
         }
     }
 }

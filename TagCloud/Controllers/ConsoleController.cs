@@ -34,7 +34,10 @@ namespace TagCloud.Controllers
                     continue;
                 }
 
-                command.Handle(args.Skip(1).ToArray());
+                var result = command.Handle(args.Skip(1).ToArray());
+                Console.WriteLine(result.Message);
+                if (!result.Success)
+                    Console.WriteLine($"Usage: {command.Usage}");
             }
         }
 
