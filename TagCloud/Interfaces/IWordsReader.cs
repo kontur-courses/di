@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IWordsReader
     {
-        List<string> Get();
+        List<string> Get(string path);
     }
 }

@@ -97,8 +97,8 @@
         <Compile Include="Interfaces\ITagCloudCreator.cs" />
         <Compile Include="Interfaces\IWordsForCloudGenerator.cs" />
         <Compile Include="Interfaces\IWordsNormalizer.cs" />
+        <Compile Include="Interfaces\IWordsReader.cs" />
         <Compile Include="WordsReader.cs" />
-        <Compile Include="IWordsReader.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TagCloudCreator.cs" />

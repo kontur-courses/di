@@ -25,6 +25,7 @@ namespace TagCloud
             var maxFontSizeArg = app.Option<int>("-m|--maxFontSize <int>", "Max font size", CommandOptionType.SingleValue);
             var inputFileArg = app.Option<string>("-n|--inputFile <path>", "Input file .txt", CommandOptionType.SingleValue);
             var outputFileArg = app.Option<string>("-u|--outputFile <path>", "output file", CommandOptionType.SingleValue);
+            var boringWordsFileArg = app.Option<string>("-b|--boringWords <path>", "boring words file", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
@@ -56,13 +57,17 @@ namespace TagCloud
                     ? outputFileArg.ParsedValue
                     : "out.png";
 
-                var bitmap = GetCloudImage(pictureSize, cloudCenter, colors, fontName, maxFontSize, inputFile);
+                var boringWordsFile = boringWordsFileArg.HasValue()
+                    ? boringWordsFileArg.ParsedValue
+                    : "boring.txt";
+
+                var bitmap = GetCloudImage(pictureSize, cloudCenter, colors, fontName, maxFontSize, inputFile, boringWordsFile);
                 bitmap.Save(outputFile);
             });
             app.Execute(args);
         }
 
-        private static Bitmap GetCloudImage(Size pictureSize, Point cloudCenter, Color[] colors, string fontName, int maxFontSize, string inputFile)
+        private static Bitmap GetCloudImage(Size pictureSize, Point cloudCenter, Color[] colors, string fontName, int maxFontSize, string inputFile, string boringWordsFile)
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>();
@@ -81,8 +86,13 @@ namespace TagCloud
 
             builder.RegisterType<CloudDrawer>().As<ICloudDrawer>().WithParameter("pictureSize", pictureSize);
 
-            builder.RegisterType<WordsReader>().As<IWordsReader>().WithParameter("path", inputFile);
-            builder.RegisterType<TagCloudCreator>().As<ITagCloudCreator>();
+            builder.RegisterType<WordsReader>().As<IWordsReader>();
+            builder.RegisterType<TagCloudCreator>().As<ITagCloudCreator>()
+                   .WithParameters(new[]
+                   {
+                       new NamedParameter("inputFile", inputFile),
+                       new NamedParameter("boringWordsFile", boringWordsFile)
+                   });
 
             var tagCloudCreator = builder.Build().Resolve<ITagCloudCreator>();
             var bitmap = tagCloudCreator.GetCloud();

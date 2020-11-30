@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TagCloud.Interfaces;
 
 namespace TagCloud
 {
     public class WordsReader : IWordsReader
     {
-        private readonly string path;
-
-        public WordsReader(string path) =>
-            this.path = path;
-
-        public List<string> Get()
+        public List<string> Get(string path)
         {
             using (var fileStream = new StreamReader(path))
             {
