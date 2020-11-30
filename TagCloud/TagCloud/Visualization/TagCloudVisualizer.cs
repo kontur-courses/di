@@ -15,15 +15,15 @@ namespace TagCloud
         {
             var bitMap = new Bitmap(width, height);
             var graphics = Graphics.FromImage(bitMap);
+            graphics.Clear(Color.Black);
             var colorNumber = 0;
-            
+
             foreach (var wordRectangle in tagCloud.WordRectangles)
             {
                 var color = colors[colorNumber];
                 var word = wordRectangle.Word;
                 var rectangle = wordRectangle.Rectangle;
-                var font = GetBiggestFont(wordRectangle, fontFamily);
-                graphics.FillPolygon(new SolidBrush(Color.Black), RectangleToPointFArray(rectangle));
+                var font = GetBiggestFont(wordRectangle, fontFamily, graphics);
                 graphics.DrawString(word, font, new SolidBrush(color),
                     new PointF(rectangle.Left, rectangle.Y));
                 graphics.DrawPolygon(new Pen(color), RectangleToPointFArray(rectangle));
@@ -35,15 +35,16 @@ namespace TagCloud
             return bitMap;
         }
 
-        private Font GetBiggestFont(WordRectangle token, string fontFamilyName)
+        private Font GetBiggestFont(WordRectangle token, string fontFamilyName, Graphics graphics)
         {
             var word = token.Word;
             var rectangle = token.Rectangle;
             var fontSize = 10;
-            for (; fontSize < 50; fontSize++)
+            for (; fontSize < 100; fontSize++)
             {
                 var font = new Font(fontFamilyName, fontSize);
-                if (font.Height > rectangle.Height || font.Size * word.Length > rectangle.Width)
+                var size = graphics.MeasureString(word, font);
+                if (size.Height > rectangle.Height || size.Width > rectangle.Width)
                     break;
             }
 
