@@ -6,7 +6,6 @@ namespace TagCloud
     {
         private readonly Color[] colors;
         private readonly ITagCloud tagCloud;
-        public string FontFamily => "Times New Roman";
 
         public TagCloudVisualizer(ITagCloud tagCloud)
         {
@@ -20,6 +19,8 @@ namespace TagCloud
             colors[5] = Color.Blue;
             colors[6] = Color.Purple;
         }
+
+        public string FontFamily => "Times New Roman";
 
         public Bitmap CreateBitMap(int width, int height)
         {
