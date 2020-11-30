@@ -7,6 +7,6 @@ namespace TagsCloud.BitmapCreator
 {
     interface IBitmapCreator
     {
-        public Bitmap Create();
+        public Bitmap Create(IEnumerable<string> words);
     }
 }

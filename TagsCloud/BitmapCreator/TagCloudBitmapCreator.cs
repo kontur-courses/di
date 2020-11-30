@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using TagsCloud.ColoringAlgorithms;
 using TagsCloud.ImageConfig;
 using TagsCloud.LayoutAlgorithms;
 using TagsCloud.WordFilters;
@@ -12,10 +13,12 @@ namespace TagsCloud.BitmapCreator
     class TagCloudBitmapCreator : IBitmapCreator
     {
         private ILayoutAlgorithm _layoutAlgorithm;
+        private IImageConfig _imageConfig;
 
-        public TagCloudBitmapCreator(ILayoutAlgorithm layoutAlgorithm)
+        public TagCloudBitmapCreator(ILayoutAlgorithm layoutAlgorithm, IImageConfig imageConfig)
         {
             _layoutAlgorithm = layoutAlgorithm;
+            _imageConfig = imageConfig;
         }
 
         public Bitmap Create(IEnumerable<string> words)
