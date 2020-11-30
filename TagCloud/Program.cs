@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Autofac;
 using TagsCloudVisualization;
 
 namespace TagCloud
@@ -10,48 +11,36 @@ namespace TagCloud
     {
         public static void Main(string[] args)
         {
+            var pictureSize = new Size(2000, 2000);
+            var fontName = "Arial";
+            var fontColor = Color.Black;
+            var maxFontSize = 40;
             var inputFile = "1.txt";
             var outputFile = "qwe.bmp";
+            
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
+            builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>();
+            builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
+            builder.RegisterType<SpiralPoints>().As<IPoints>()
+                   .WithParameter("center", new Point(pictureSize.Height / 2, pictureSize.Width / 2));
 
-            var wordNormalizer = new WordsNormalizer();
-            var wordForCloudGenerator = new WordsForCloudGenerator("Arial", Color.Black, 60);
-            var pictureSize = new Size(1000, 1000);
-            var circularCloudLayouter =
-                new CircularCloudLayouter(new SpiralPoints(new Point(pictureSize.Height / 2, pictureSize.Width / 2)));
+            builder.RegisterType<WordsForCloudGenerator>().As<IWordsForCloudGenerator>()
+                   .WithParameters(new[]
+                   {
+                       new NamedParameter("fontName", fontName),
+                       new NamedParameter("color", fontColor),
+                       new NamedParameter("maxFontSize", maxFontSize)
+                   });
 
+            builder.RegisterType<CloudDrawer>().As<ICloudDrawer>().WithParameter("pictureSize", pictureSize);
 
-            var words = GetWordsFromFile(inputFile);
-            var normalizeWords = wordNormalizer.NormalizeWords(words);
-            var wordsForCloud = wordForCloudGenerator.Generate(normalizeWords);
+            builder.RegisterType<FileReader>().As<IFileReader>().WithParameter("path", inputFile);
+            builder.RegisterType<TagCloudCreator>().As<ITagCloudCreator>();
 
-
-            DrawAndSaveCloud(
-                wordsForCloud.Select(word => circularCloudLayouter.PutNextRectangle(word.WordSize)).ToList(),
-                wordsForCloud, outputFile, pictureSize);
-        }
-
-        private static List<string> GetWordsFromFile(string path)
-        {
-            using (var fileStream = new StreamReader(path))
-            {
-                return fileStream.ReadToEnd().Split('\n').ToList();
-            }
-        }
-
-        private static void DrawAndSaveCloud(List<Rectangle> rectangles, List<WordForCloud> wordsForCloud,
-            string fileName,
-            Size pictureSize)
-        {
-            var bitmap = new Bitmap(pictureSize.Width, pictureSize.Height);
-            var gr = Graphics.FromImage(bitmap);
-            gr.FillRectangle(Brushes.White, 0, 0, pictureSize.Width, pictureSize.Height);
-            for (var i = 0; i < rectangles.Count; i++)
-            {
-                gr.DrawString($"{wordsForCloud[i].Word}", wordsForCloud[i].Font,
-                    new SolidBrush(wordsForCloud[i].WordColor), rectangles[i]);
-            }
-
-            bitmap.Save(fileName);
+            var bulded = builder.Build().Resolve<ITagCloudCreator>();
+            var bitmap = bulded.GetCloud();
+            bitmap.Save(outputFile);
         }
     }
 }

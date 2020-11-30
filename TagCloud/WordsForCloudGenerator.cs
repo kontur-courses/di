@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization;
 
 namespace TagCloud
 {
@@ -9,10 +10,11 @@ namespace TagCloud
         private readonly string fontName;
         private readonly Color fontColor;
         private readonly int maxFontSize;
+        private readonly ITagCloudLayouter tagCloudLayouter;
 
-
-        public WordsForCloudGenerator(string fontName, Color color, int maxFontSize)
+        public WordsForCloudGenerator(string fontName, Color color, int maxFontSize, ITagCloudLayouter tagCloudLayouter)
         {
+            this.tagCloudLayouter = tagCloudLayouter;
             this.fontName = fontName;
             this.maxFontSize = maxFontSize;
             fontColor = color;
@@ -21,20 +23,20 @@ namespace TagCloud
         public List<WordForCloud> Generate(List<string> words)
         {
             var wordFrequency = GetWordsFrequency(words)
-                .OrderBy(x => x.Value)
-                .Reverse()
-                .ToList();
+                                .OrderBy(x => x.Value)
+                                .Reverse()
+                                .ToList();
 
             var maxFrequency = wordFrequency.FirstOrDefault().Value;
             return wordFrequency
-                .Select(x =>
-                    GetWordForCloud(fontName,
-                        maxFontSize,
-                        fontColor,
-                        x.Key,
-                        x.Value,
-                        maxFrequency))
-                .ToList();
+                   .Select(x =>
+                               GetWordForCloud(fontName,
+                                               maxFontSize,
+                                               fontColor,
+                                               x.Key,
+                                               x.Value,
+                                               maxFrequency))
+                   .ToList();
         }
 
         private static Dictionary<string, int> GetWordsFrequency(List<string> words)
@@ -51,12 +53,13 @@ namespace TagCloud
             return wordFrequency;
         }
 
-        private static WordForCloud GetWordForCloud(string font, int maxWordSize, Color color, string word,
-            int wordFrequency, int maxFrequency)
+        private WordForCloud GetWordForCloud(string font, int maxWordSize, Color color, string word,
+                                             int wordFrequency, int maxFrequency)
         {
-            var wordFontSize = (int) (maxWordSize * ((double) wordFrequency / maxFrequency) + 0.6);
-            var wordSize = new Size((int) (word.Length * (wordFontSize + 6) * 0.65), wordFontSize + 10);
-            return new WordForCloud(font, wordFontSize, word, wordSize, color);
+            var wordFontSize = (int) (maxWordSize * ((double) wordFrequency / maxFrequency) + 0.5);
+            var wordSize = new Size((int) (word.Length * (wordFontSize * 0.8)), wordFontSize + 12);
+
+            return new WordForCloud(font, wordFontSize, word, tagCloudLayouter.PutNextRectangle(wordSize), color);
         }
     }
 }
