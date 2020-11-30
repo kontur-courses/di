@@ -11,14 +11,17 @@ namespace TagCloud
     {
         private readonly CloudPrinter cloudPrinter;
         private readonly List<BaseCloudLayouter> layouters;
+        private readonly List<IColorSelector> colorSelectors;
         private Bitmap? image;
 
-        public Form1(TableLayoutPanel table, CloudPrinter cloudPrinter, IEnumerable<BaseCloudLayouter> layouters)
+        public Form1(TableLayoutPanel table, CloudPrinter cloudPrinter, IEnumerable<BaseCloudLayouter> layouters,
+            IEnumerable<IColorSelector> colorSelectors)
         {
             this.layouters = layouters.ToList();
             layouter = this.layouters[0];
             this.table = table;
             this.cloudPrinter = cloudPrinter;
+            this.colorSelectors = colorSelectors.ToList();
             InitializeComponent();
         }
     }

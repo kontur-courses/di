@@ -17,20 +17,19 @@ namespace TagCloudCreator
             this.readers = readers;
         }
 
-        private static Bitmap DrawCloud(IEnumerable<DrawingWord> words, Size imageSize)
+        private static Bitmap DrawCloud(IEnumerable<DrawingWord> words, Size imageSize, IColorSelector colorSelector)
         {
             var cloud = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(cloud);
-            var random = new Random();
             foreach (var word in words)
                 graphics.DrawString(word.Word, word.Font,
-                    new SolidBrush(Color.FromArgb(random.Next(255), random.Next(255), random.Next(255))),
+                    new SolidBrush(colorSelector.GetColor(word)),
                     word.Location);
             return cloud;
         }
 
         public Bitmap DrawCloud(string pathToWordsFile, BaseCloudLayouter layouter, Size imageSize,
-            FontFamily fontFamily)
+            FontFamily fontFamily, IColorSelector colorSelector)
         {
             layouter.ClearLayout();
             if (!File.Exists(pathToWordsFile))
@@ -39,7 +38,8 @@ namespace TagCloudCreator
             var reader = readers.First(x => x.Types.Contains(ext));
             var interestingWords = WordPrepairer.GetInterestingWords(reader.ReadAllLinesFromFile(pathToWordsFile));
             var statistic = WordPrepairer.GetWordsStatistic(interestingWords);
-            return DrawCloud(RectanglesForWordsCreator.GetReadyWords(statistic, layouter, fontFamily), imageSize);
+            return DrawCloud(RectanglesForWordsCreator.GetReadyWords(statistic, layouter, fontFamily), imageSize,
+                colorSelector);
         }
     }
 }

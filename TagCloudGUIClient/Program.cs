@@ -39,6 +39,9 @@ namespace TagCloud
                 table.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
                 return table;
             }).AsSelf();
+            builder.RegisterType<FullRandomColorSelector>().As<IColorSelector>();
+            builder.RegisterType<BlackColorSelector>().As<IColorSelector>();
+            builder.RegisterType<RandomFromColorsColorSelector>().As<IColorSelector>();
             return builder.Build();
         }
     }

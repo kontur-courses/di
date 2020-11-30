@@ -2,7 +2,7 @@
 
 namespace TagCloudCreator
 {
-    internal class DrawingWord
+    public class DrawingWord
     {
         internal readonly Font Font;
         internal readonly string Word;

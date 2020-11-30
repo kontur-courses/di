@@ -102,10 +102,16 @@ namespace TagCloud
             menu.Controls.Add(sizeSelector,0,3);
             
             
+            var colorSelectorSelector = new ComboBox(){DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill};
+            colorSelectorSelector.Text = "Select color selector";
+            colorSelectorSelector.Items.AddRange(colorSelectors.Select(x => x.Name).ToArray());
+            menu.Controls.Add(colorSelectorSelector,0,4);
+            
+            
             var drawButton = new Button() {Dock = DockStyle.Fill, Text = "Draw"};
             drawButton.Click += (sender, args) => RedrawImage();
             
-            menu.Controls.Add(drawButton,0,4);
+            menu.Controls.Add(drawButton,0,5);
 
             
             var saveButton = new Button() {Dock = DockStyle.Fill, Text = "Save"};
@@ -122,16 +128,24 @@ namespace TagCloud
                     }
             };
             
-            menu.Controls.Add(saveButton,0,5);
+            menu.Controls.Add(saveButton,0,6);
             
             return menu;
         }
 
         private void RedrawImage()
         {
+            var fontFamily = FontFamily.Families.First(x =>
+                x.Name == (string) (Controls[0].Controls[1].Controls[3] as ComboBox).SelectedItem);
+            var colorSelector = colorSelectors.First(x =>
+                x.Name == (string) (Controls[0].Controls[1].Controls[5] as ComboBox).SelectedItem);
             var path = (this.Controls[0].Controls[1].Controls[1] as TextBox).Text;
-            (table.Controls[0] as PictureBox).Image = cloudPrinter.DrawCloud(path,layouter,imageSize ,
-                FontFamily.Families.First(x=>x.Name==(string)(Controls[0].Controls[1].Controls[3] as ComboBox).SelectedItem));
+            (table.Controls[0] as PictureBox).Image = 
+                cloudPrinter.DrawCloud(path,
+                    layouter,
+                    imageSize ,
+                    fontFamily,
+                    colorSelector);
         }
     }
 }
