@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,21 +19,53 @@ namespace TagCloud
             return app.Execute(args);
         }
         
-        private static void ConfigureServices(int canvasWidth, int canvasHeight)
+        private static void ConfigureServices(string size, string coloring)
         {
             var services = new ServiceCollection();
 
             services.AddSingleton<IPathCreater, PathCreater>();
             services.AddSingleton<IWordParser, OneWordInLineParser>();
             services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer.FrequencyAnalyzer>();
-            services.AddSingleton<ICanvas>(_ => new Canvas(canvasWidth, canvasHeight));
+            ConfigureCanvas(services, size);
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
             services.AddSingleton<IImageInfo, ImageInfo>();
-            services.AddSingleton<IPainter>(_ => new PainterWithoutRectangles(Color.Crimson));
+            ConfigureColoringService(services, coloring);
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
+        }
+
+        private static void ConfigureCanvas(ServiceCollection services, string size)
+        {
+            var arr = size.Split(',');
+            if (arr.Length == 2 && int.TryParse(arr[0], out var width) && int.TryParse(arr[1], out var height))
+            {
+                services.AddSingleton<ICanvas>(_ => new Canvas(width, height));
+            }
+            else
+            {
+                throw new ArgumentException("bad size argument");
+            }
+        }
+
+        private static void ConfigureColoringService(ServiceCollection services, string coloring)
+        {
+            switch(coloring)
+            {
+              case "location":
+                  services.AddSingleton<IPainter, PainterColoringByLocation>();
+                  break;
+              case "random":
+                  services.AddSingleton<IPainter, PainterRandomColoring>();
+                  break;
+              case "words":
+                  services.AddSingleton<IPainter>(_ => new PainterWithoutRectangles(Color.Crimson));
+                  break;
+              default:
+                  throw new ArgumentException("bad coloring");
+            }
+            
         }
 
         private static void ConfigureCLI()
@@ -41,17 +74,16 @@ namespace TagCloud
             var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleValue);
             var optionFont = app.Option("-f|--font <FONT>", "font family", CommandOptionType.SingleValue);
             var optionSize = app.Option("-s|--size <SIZE>", "size of image width,height", CommandOptionType.SingleValue);
+            var optionColoring =
+                app.Option("-c|--coloring <COLORS>", "coloring algoritm", CommandOptionType.SingleValue);
 
+            
             app.OnExecute(() =>
             {
-                if (optionSize.HasValue())
-                {
-                    ConfigureServices(optionSize.Value());
-                }
-                else
-                {
-                    ConfigureServices(1000, 800);
-                }
+                var size = optionSize.HasValue() ? optionSize.Value() : "1000,800";
+                var coloring = optionColoring.HasValue() ? optionColoring.Value() : "location";
+                
+                ConfigureServices(size, coloring);
 
                 var visualizer = serviceProvider.GetService<IVisualizer>();
                 var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
@@ -60,19 +92,6 @@ namespace TagCloud
 
                 return 0;
             });
-        }
-
-        private static void ConfigureServices(string argumentValue)
-        {
-            var arr = argumentValue.Split(',');
-            if (arr.Length == 2 && int.TryParse(arr[0], out var width) && int.TryParse(arr[1], out var height))
-            {
-                ConfigureServices(width, height);
-            }
-            else
-            {
-                throw new ArgumentException("bad size argument");
-            }
         }
     }
 }
