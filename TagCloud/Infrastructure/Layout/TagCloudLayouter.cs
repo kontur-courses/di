@@ -13,14 +13,12 @@ namespace TagCloud.Infrastructure.Layout
         private readonly Func<ITagCloudSettingsProvider> tagCloudSettingsProvider;
         private readonly IEnvironment<Rectangle> environment;
         private readonly ILayoutStrategy strategy;
-        private readonly Point center;
 
         public TagCloudLayouter(IEnvironment<Rectangle> environment, ILayoutStrategy strategy, Func<ITagCloudSettingsProvider> tagCloudSettingsProvider)
         {
             this.tagCloudSettingsProvider = tagCloudSettingsProvider;
             this.environment = environment;
             this.strategy = strategy;
-            center = tagCloudSettingsProvider().Center;
         }
 
         public Rectangle GetPlace(Size rectangleSize)

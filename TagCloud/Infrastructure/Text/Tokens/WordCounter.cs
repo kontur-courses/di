@@ -23,26 +23,25 @@ namespace TagCloud.Infrastructure.Text.Tokens
             var maxCount = wordCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Value;
             var minCount = wordCount.Aggregate((x, y) => x.Value < y.Value ? x : y).Value;
             
-            int FontSizeLine(int x) => (x - minCount ) 
-                                       / (baseFont.MaxFontSize - baseFont.MinFontSize) 
-                                       * (maxCount - minCount) 
+            int FontSizeLine(int x) => (x - minCount) 
+                                       * (baseFont.MaxFontSize - baseFont.MinFontSize) 
+                                       / (maxCount - minCount) 
                                        + baseFont.MinFontSize; 
             var result = new Dictionary<string, int>();
             foreach (var word in wordCount.Keys)
             {
                 var count =  wordCount[word];
-                var fontSize = GetFontSize(FontSizeLine, count);
+                var fontSize = FontSizeLine(count);
                 result[word] = fontSize;
             }
 
             return result;
         }
 
-        private int GetFontSize(Func<int, int> fontSizeFunction, int x) => fontSizeFunction(x);
-
         private Dictionary<string, int> GetCount(IEnumerable<string> tokens)
         {
             var count = new Dictionary<string, int>();
+            tokens = tokens.ToArray();
             foreach (var token in tokens)
             {
                 if (count.ContainsKey(token))
