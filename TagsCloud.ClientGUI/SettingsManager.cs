@@ -20,7 +20,7 @@ namespace TagsCloud.ClientGUI
         {
             try
             {
-                settingsFileName = "app.settings";
+                settingsFileName = "../../../app.settings";
                 var data = storage.Get(settingsFileName);
                 if (data == null)
                 {
