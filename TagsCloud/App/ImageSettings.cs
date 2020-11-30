@@ -11,6 +11,12 @@ namespace TagsCloud.App
         private readonly Random random = new Random();
         public FontFamily FontFamily { get; set; }
 
+        public ImageSettings(ImageSize imageSize, FontFamily fontFamily)
+        {
+            ImageSize = imageSize;
+            FontFamily = fontFamily;
+        }
+
         public Color GetColor()
         {
             return colors.Count != 0

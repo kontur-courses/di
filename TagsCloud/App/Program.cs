@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using Autofac;
 using TagsCloud.App.Commands;
@@ -27,6 +28,8 @@ namespace TagsCloud.App
             builder.RegisterType<TagCloudLayouter>();
             builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<WordChecker>();
+            builder.RegisterType<ImageSize>();
+            builder.RegisterInstance(new FontFamily("Arial")).As<FontFamily>();
             builder.RegisterType<SpiralAlgorithm>().As<ILayoutAlgorithm>();
             var container = builder.Build();
             container.Resolve<IClient>().Run();
