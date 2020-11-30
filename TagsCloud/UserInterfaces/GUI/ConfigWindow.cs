@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloud.ImageProcessing;
-using TagsCloud.ImageProcessing.ImageBuilders;
-using TagsCloud.ImageProcessing.SaverImage;
-using TagsCloud.TextProcessing;
+using TagsCloud.ImageProcessing.Config;
+using TagsCloud.TagsCloudProcessing;
+using TagsCloud.TextProcessing.Converters;
+using TagsCloud.TextProcessing.TextFilters;
+using TagsCloud.TextProcessing.WordConfig;
 
 namespace TagsCloud.UserInterfaces.GUI
 {
@@ -18,22 +20,25 @@ namespace TagsCloud.UserInterfaces.GUI
         private readonly TableLayoutPanel tableLayoutPanel;
         private readonly NumericUpDown widthNumeric;
         private readonly NumericUpDown heightNumeric;
+        private GroupBox filterBox;
+        private GroupBox convertBox;
 
         private readonly IWordsConfig wordsConfig;
         private readonly IImageConfig imageConfig;
-        private readonly IImageSaver imageSaver;
-        private readonly IImageBuilder imageBuilder;
-
+        private readonly TagsCloudProcessor tagsCloudProcessor;
+        private readonly IFiltersFactory filtersFactory;
+        private readonly IConvertersFactory convertersFactory;
 
         public ConfigWindow(IWordsConfig wordsConfig, IImageConfig imageConfig,
-            IImageSaver imageSaver, IImageBuilder imageBuilder)
+           TagsCloudProcessor tagsCloudProcessor, IFiltersFactory filtersFactory, IConvertersFactory convertersFactory)
         {
             InitializeComponent();
 
             this.wordsConfig = wordsConfig;
             this.imageConfig = imageConfig;
-            this.imageBuilder = imageBuilder;
-            this.imageSaver = imageSaver;
+            this.tagsCloudProcessor = tagsCloudProcessor;
+            this.filtersFactory = filtersFactory;
+            this.convertersFactory = convertersFactory;
 
             colorDialog = new ColorDialog();
             fontDialog = new FontDialog();
@@ -70,8 +75,14 @@ namespace TagsCloud.UserInterfaces.GUI
             AddControl(openButton, 0, 3, "Указать путь для исходного текста", 1, 2);
             openButton.Click += (s, e) => openFileDialog.ShowDialog();
 
+            filterBox = AddCheckBox("Выберите фильтры", filtersFactory.GetFilerNames());
+            AddControl(filterBox, 0, 4, "Выберите фильтры");
+
+            convertBox = AddCheckBox("Выберите преобразования", convertersFactory.GetConverterNames());
+            AddControl(convertBox, 1, 4, "Выберите преобразования");
+
             var sizeImageLabel = new Label();
-            AddControl(sizeImageLabel, 0, 4, "Укажите размер изображения", 1, 2);
+            AddControl(sizeImageLabel, 0, 5, "Укажите размер изображения", 1, 2);
             sizeImageLabel.TextAlign = ContentAlignment.MiddleCenter;
 
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50f));
@@ -79,14 +90,14 @@ namespace TagsCloud.UserInterfaces.GUI
 
             widthNumeric.Maximum = 5000;
             widthNumeric.Value = 500;
-            AddControl(widthNumeric, 0, 5, "");
+            AddControl(widthNumeric, 0, 6, "");
 
             heightNumeric.Maximum = 5000;
             heightNumeric.Value = 500;
-            AddControl(heightNumeric, 1, 5, "");
+            AddControl(heightNumeric, 1, 6, "");
 
             var accept = new Button();
-            AddControl(accept, 0, 6, "Принять настройки", 1, 2);
+            AddControl(accept, 0, 7, "Принять настройки", 1, 2);
             accept.Click += AcceptSettings;
 
             var showButton = new Button();
@@ -106,6 +117,20 @@ namespace TagsCloud.UserInterfaces.GUI
             tableLayoutPanel.SetRowSpan(control, spanRow);
         }
 
+        private GroupBox AddCheckBox(string boxName, IEnumerable<string> names)
+        {
+            var box = new GroupBox();
+            box.Text = boxName;
+            foreach (var name in names)
+            {
+                var checkBox = new CheckBox();
+                checkBox.Text = name;
+                checkBox.Dock = DockStyle.Top;
+                box.Controls.Add(checkBox);
+            }
+            return box;
+        }
+
         private void AcceptSettings(object sender, EventArgs eventArgs)
         {
             var imageSize = new Size((int)widthNumeric.Value, (int)heightNumeric.Value);
@@ -113,20 +138,30 @@ namespace TagsCloud.UserInterfaces.GUI
             wordsConfig.Color = colorDialog.Color;
             wordsConfig.FontName = fontDialog.Font;
             wordsConfig.Path = openFileDialog.FileName;
+            wordsConfig.FilerNames = BindGroupBoxControls(filterBox);
+            wordsConfig.ConvertersNames = BindGroupBoxControls(convertBox);
 
             imageConfig.ImageFormat = ImageFormat.Png;
             imageConfig.ImageSize = imageSize;
             imageConfig.Path = saveFileDialog.FileName;
         }
 
+        private string[] BindGroupBoxControls(GroupBox box)
+        {
+            var names = new List<string>();
+            foreach (var control in box.Controls)
+                if ((control is CheckBox checkBox) && checkBox.Checked)
+                    names.Add(checkBox.Text);
+            return names.ToArray();
+        }
+
         private void ShowImage(object sender, EventArgs eventArgs)
         {
             tableLayoutPanel.Hide();
-            this.Size = imageConfig.ImageSize;
-            var bitmap = imageBuilder.BuildImage(wordsConfig.Path);
+            Size = imageConfig.ImageSize;
+            using var bitmap = tagsCloudProcessor.CreateCloud();
             using var graphics = CreateGraphics();
             graphics.DrawImage(bitmap, new PointF(0, 0));
-            imageSaver.SaveImageWithConfig(bitmap, imageConfig);
         }
     }
 }
