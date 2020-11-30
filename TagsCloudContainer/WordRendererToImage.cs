@@ -15,7 +15,7 @@ namespace TagsCloudContainer
         
         private Func<RenderingInfo, LayoutedWord, Font> fontFunction = DefaultFontFunction;
         private Func<RenderingInfo, LayoutedWord, Color> colorFunction = DefaultColorFunction;
-        private Func<RenderingInfo, LayoutedWord, float> scaleFunction;
+        private Func<SizingInfo, LayoutedWord, float> scaleFunction = (info, word) => word.Count;
 
         public WordRendererToImage(Image output)
         {
@@ -53,6 +53,12 @@ namespace TagsCloudContainer
 
         public WordRendererToImage WithColor(Color defaultColor)
             => WithDefaultColor(defaultColor).WithColor((info, word) => info.Renderer.DefaultColor);
+        
+        public WordRendererToImage WithScale(Func<SizingInfo, LayoutedWord, float> scaleFunc)
+        {
+            scaleFunction = scaleFunc;
+            return this;
+        }
 
         public IEnumerable<LayoutedWord> SizeWords(IEnumerable<LayoutedWord> words)
         {
@@ -60,8 +66,7 @@ namespace TagsCloudContainer
             foreach (var word in sizingInfo.WordsArray)
             {
                 var size = graphics.MeasureString(word.Word, DefaultFont);
-                var t = (word.Count - sizingInfo.MinWordCount) / (float) (sizingInfo.MaxWordCount - sizingInfo.MinWordCount);
-                var scale = Lerp(1, 3, t);
+                var scale = scaleFunction(sizingInfo, word);
                 size = new SizeF(size.Width * scale, size.Height * scale);
                 yield return new LayoutedWord(word.Word, word.Count, size);
             }
@@ -109,6 +114,7 @@ namespace TagsCloudContainer
             public readonly LayoutedWord[] WordsArray;
             public readonly int MinWordCount;
             public readonly int MaxWordCount;
+            public readonly int TotalWordsCount;
             
             public SizingInfo(WordRendererToImage renderer, LayoutedWord[] wordsArray)
             {
@@ -117,6 +123,7 @@ namespace TagsCloudContainer
 
                 MinWordCount = wordsArray.Min(word => word.Count);
                 MaxWordCount = wordsArray.Max(word => word.Count);
+                TotalWordsCount = wordsArray.Sum(word => word.Count);
             }
         }
 
