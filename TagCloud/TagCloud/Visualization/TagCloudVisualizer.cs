@@ -4,40 +4,42 @@ namespace TagCloud
 {
     public class TagCloudVisualizer : IVisualizer
     {
-        private readonly Pen[] pens;
+        private readonly Color[] colors;
         private readonly ITagCloud tagCloud;
         public string FontFamily => "Times New Roman";
 
         public TagCloudVisualizer(ITagCloud tagCloud)
         {
             this.tagCloud = tagCloud;
-            pens = new Pen[7];
-            pens[0] = new Pen(Color.Red);
-            pens[1] = new Pen(Color.Orange);
-            pens[2] = new Pen(Color.Yellow);
-            pens[3] = new Pen(Color.Green);
-            pens[4] = new Pen(Color.Teal);
-            pens[5] = new Pen(Color.Blue);
-            pens[6] = new Pen(Color.Purple);
+            colors = new Color[7];
+            colors[0] = Color.Red;
+            colors[1] = Color.Orange;
+            colors[2] = Color.Yellow;
+            colors[3] = Color.Green;
+            colors[4] = Color.Teal;
+            colors[5] = Color.Blue;
+            colors[6] = Color.Purple;
         }
 
         public Bitmap CreateBitMap(int width, int height)
         {
             var bitMap = new Bitmap(width, height);
             var graphics = Graphics.FromImage(bitMap);
-            var penNumber = 0;
+            var colorNumber = 0;
 
             foreach (var wordRectangle in tagCloud.WordRectangles)
             {
-                var pen = pens[penNumber];
+                var color = colors[colorNumber];
                 var word = wordRectangle.Word;
                 var rectangle = wordRectangle.Rectangle;
                 var font = GetBiggestFont(wordRectangle, FontFamily);
-                graphics.DrawString(word, font, new SolidBrush(pen.Color),
-                    new PointF(rectangle.Left,rectangle.Y));
-                graphics.DrawPolygon(pen, RectangleToPointFArray(rectangle));
-                penNumber++;
-                penNumber %= pens.Length;
+                graphics.FillPolygon(new SolidBrush(Color.Black), RectangleToPointFArray(rectangle));
+                graphics.DrawString(word, font, new SolidBrush(color),
+                    new PointF(rectangle.Left, rectangle.Y));
+                graphics.DrawPolygon(new Pen(color), RectangleToPointFArray(rectangle));
+
+                colorNumber++;
+                colorNumber %= colors.Length;
             }
 
             return bitMap;
