@@ -13,18 +13,13 @@ namespace TagCloud
         
         public string[] GetWords(string inputFileName)
         {
-            //TODO: Add filterWords
-            
-            try
-            {
-                return File.ReadLines(creater.GetPathToFile(inputFileName)).ToArray();
-            }
-            catch (FileNotFoundException)
-            {
-                //TODO: handle exception
-            }
+            return WordProcessing(File.ReadLines(creater.GetPathToFile(inputFileName)).ToArray());
+        }
 
-            return new string[0];
+        private string[] WordProcessing(string[] words)
+        {
+            //TODO: Add filterWords
+            return words.Select(str => str.ToLower()).ToArray();
         }
     }
 }
