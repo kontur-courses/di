@@ -1,25 +1,19 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.PointsGenerators;
 
-namespace TagsCloudVisualization.TagCloud
+namespace TagsCloudVisualization.TagCloudLayouter
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public Point Center { get; }
-        
         private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> cloudRectangles;
 
         public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            if (pointGenerator == null)
-                throw new ArgumentException("Point generator cannot be null");
-            
-            Center = pointGenerator.Center;
-            this.pointGenerator = pointGenerator;
+            this.pointGenerator = pointGenerator ?? throw new ArgumentException("Point generator cannot be null");
             cloudRectangles = new List<Rectangle>();
         }
 
@@ -38,6 +32,11 @@ namespace TagsCloudVisualization.TagCloud
             pointGenerator.StartOver();
             
             return rectangle;
+        }
+
+        public void ClearLayout()
+        {
+            cloudRectangles.Clear();
         }
 
         private Rectangle GetLocatedRectangle(Point position, Size rectangleSize)

@@ -1,10 +1,10 @@
-﻿﻿using System.Drawing;
+﻿using System.Drawing;
 
-namespace TagsCloudVisualization.TagCloud
+namespace TagsCloudVisualization.TagCloudLayouter
 {
     public interface ICloudLayouter
     {
-        public Point Center { get; }
         public Rectangle PutNextRectangle(Size rectangleSize);
+        void ClearLayout();
     }
 }

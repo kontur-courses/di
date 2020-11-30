@@ -4,8 +4,12 @@ using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 using FluentAssertions;
+using TagsCloudVisualization;
+using TagsCloudVisualization.AppSettings;
+using TagsCloudVisualization.Canvases;
+using TagsCloudVisualization.FormAction;
 using TagsCloudVisualization.PointsGenerators;
-using TagsCloudVisualization.TagCloud;
+using TagsCloudVisualization.TagCloudLayouter;
 
 namespace TagsCloudVisualizationTests.TagCloudTests
 {
@@ -15,26 +19,13 @@ namespace TagsCloudVisualizationTests.TagCloudTests
         [SetUp]
         public void SetUp()
         {
-            var centerPoint = new Point(250, 250);
-            pointGenerator = new ArchimedesSpiral(centerPoint);
+            var canvas = new Canvas();
+            new MainForm(new IFormAction[0], new ImageSettings{Width = 100, Height = 100}, canvas);
+            pointGenerator = new ArchimedesSpiral(new SpiralParams(), canvas);
             sut = new CircularCloudLayouter(pointGenerator);
             addedRectangles = new List<Rectangle>();
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            if (TestContext.CurrentContext.Result.FailCount == 0)
-                return;
-            
-            var pathToDirectory = @"..\..\..\FailedTests\";
-            var fileName = TestContext.CurrentContext.Test.Name;
-            TagCloudVisualizer.PrintTagCloud(addedRectangles, sut.Center, 100, 100, 
-                pathToDirectory, fileName);
-            
-            Console.WriteLine($"Tag cloud visualization saved to file {pathToDirectory}{fileName}");
-        }
-        
         private ICloudLayouter sut;
         private IPointGenerator pointGenerator;
         private List<Rectangle> addedRectangles;
@@ -54,8 +45,8 @@ namespace TagsCloudVisualizationTests.TagCloudTests
 
             var firstAddedRect = addedRectangles.First();
 
-            firstAddedRect.Location.Should().Be(new Point(sut.Center.X - firstAddedRect.Width / 2,
-                sut.Center.Y - firstAddedRect.Height / 2));
+            firstAddedRect.Location.Should().Be(new Point(pointGenerator.Center.X - firstAddedRect.Width / 2,
+                pointGenerator.Center.Y - firstAddedRect.Height / 2));
         }
 
         [TestCase(0)]
@@ -71,12 +62,11 @@ namespace TagsCloudVisualizationTests.TagCloudTests
         [Test]
         public void GetAddedRectangle_ReturnAddedRectangle_WhenPutOneRectangle()
         {
-            var size = new Size(200, 200);
+            var size = new Size(100, 100);
             var expectedRects = new List<Rectangle>
             {
                 new Rectangle(
-                    new Point(sut.Center.X - size.Width / 2,
-                        sut.Center.Y - size.Height / 2), size)
+                    new Point(0, 0), size)
             };
             
             addedRectangles.Add(sut.PutNextRectangle(size));
@@ -98,7 +88,7 @@ namespace TagsCloudVisualizationTests.TagCloudTests
         {
             addedRectangles.Add(sut.PutNextRectangle(new Size(50, 50)));
             addedRectangles.Add(sut.PutNextRectangle(new Size(50, 50)));
-            var expectedPosition = new Point(275, 219);
+            var expectedPosition = new Point(75, 19);
 
             var secondAddedRectangle = addedRectangles.Skip(1).First();
 
@@ -109,8 +99,8 @@ namespace TagsCloudVisualizationTests.TagCloudTests
         public void PutNextRectangle_PointsGenerationStartsOver_WhenPutOneRectangle()
         {
             sut.PutNextRectangle(new Size(300, 300));
-
-            pointGenerator.GetNextPoint().Should().Be(sut.Center);
+        
+            pointGenerator.GetNextPoint().Should().Be(pointGenerator.Center);
         }
         
         [TestCase(2)]
