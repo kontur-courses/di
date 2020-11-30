@@ -17,7 +17,7 @@ namespace TagCloud
             
             builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
             var fileName = "mystem";
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            var path = Path.Combine(".", "bin", "Release", fileName);
             builder.RegisterType<InterestingWordsFilter>()
                 .As<IFilter<string>>()
                 .WithParameter(new TypedParameter(typeof(string), path));

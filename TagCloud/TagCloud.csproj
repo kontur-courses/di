@@ -15,5 +15,11 @@
       <PackageReference Include="Autofac" Version="6.0.0" />
       <PackageReference Include="MyStemWrapper" Version="1.0.0" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include="bin\Release\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
 </Project>
