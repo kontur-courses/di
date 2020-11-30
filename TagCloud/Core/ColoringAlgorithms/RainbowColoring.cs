@@ -25,7 +25,7 @@ namespace TagCloud.Core.ColoringAlgorithms
 
         public Color GetNextColor(Tag tag)
         {
-            var randomNumber = randomizer.Next(0, colors.Length - 1);
+            var randomNumber = randomizer.Next(colors.Length);
             return colors[randomNumber];
         }
     }

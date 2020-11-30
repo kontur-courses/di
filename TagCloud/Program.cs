@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     class Program
     {

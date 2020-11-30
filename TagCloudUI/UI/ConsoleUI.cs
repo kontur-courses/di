@@ -11,7 +11,6 @@ using TagCloud.Core.ImageCreators;
 using TagCloud.Core.ImageSavers;
 using TagCloud.Core.LayoutAlgorithms;
 using TagCloud.Core.WordsProcessors;
-using TagCloudUI.Extensions;
 
 namespace TagCloudUI.UI
 {
@@ -46,8 +45,7 @@ namespace TagCloudUI.UI
         private void Run(Options options)
         {
             var processedWords = wordsProcessor
-                .Process(GetWordsFromFile(options.InputPath))
-                .MostFrequent(options.WordsCount)
+                .Process(GetWordsFromFile(options.InputPath), options.WordsCount)
                 .ToList();
             var tags = CreateTags(processedWords, options.FontName).ToList();
 

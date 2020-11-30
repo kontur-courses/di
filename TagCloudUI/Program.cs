@@ -17,14 +17,14 @@ namespace TagCloudUI
         public static void Main(string[] args)
         {
             var container = BuildContainer();
-            var ui = container.Resolve<ConsoleUI>();
+            var ui = container.Resolve<IUserInterface>();
             ui.Run(args);
         }
 
         private static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<ConsoleUI>().AsSelf();
+            builder.RegisterType<ConsoleUI>().As<IUserInterface>();
             builder.RegisterAssemblyTypes(typeof(TxtReader).Assembly)
                 .As<IFileReader>();
 

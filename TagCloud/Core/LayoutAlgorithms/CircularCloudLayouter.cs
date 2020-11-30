@@ -16,8 +16,8 @@ namespace TagCloud.Core.LayoutAlgorithms
         public CircularCloudLayouter(Point center)
         {
             this.center = center;
-            this.spiral = new ArchimedeanSpiral(center);
-            this.rectangles = new List<Rectangle>();
+            spiral = new ArchimedeanSpiral(center);
+            rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

@@ -2,6 +2,7 @@
 using System.Linq;
 using TagCloud.Core.WordConverters;
 using TagCloud.Core.WordsFilters;
+using TagCloud.Extensions;
 
 namespace TagCloud.Core.WordsProcessors
 {
@@ -17,9 +18,13 @@ namespace TagCloud.Core.WordsProcessors
             this.filters = filters.ToList();
         }
 
-        public IEnumerable<string> Process(IEnumerable<string> words)
+        public IEnumerable<string> Process(IEnumerable<string> words, int amountToTake)
         {
-            return words.Where(IsValid).Select(Convert);
+            return words
+                .Where(IsValid)
+                .Select(Convert)
+                .MostFrequent(amountToTake)
+                .Select(e => e.Item1);
         }
 
         private string Convert(string word)

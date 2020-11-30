@@ -71,8 +71,8 @@ namespace TagCloudTests
             var expectedRadius = Math.Sqrt(layoutArea / Math.PI);
             var maxDelta = center.GetMaxDistanceToLayoutBorder(layouter.Rectangles);
 
-            ((double)maxDelta.X).Should().BeLessThan(expectedRadius * 1.25);
-            ((double)maxDelta.Y).Should().BeLessThan(expectedRadius * 1.25);
+            ((double) maxDelta.X).Should().BeLessThan(expectedRadius * 1.25);
+            ((double) maxDelta.Y).Should().BeLessThan(expectedRadius * 1.25);
         }
 
         [TestCase(4, TestName = "FourRectangles")]
@@ -99,8 +99,9 @@ namespace TagCloudTests
 
         private static bool HaveAnyIntersections(IEnumerable<Rectangle> rects)
         {
-            var intersectedRectsCount = rects
-                .Select((item, index) => rects
+            var rectangles = rects.ToList();
+            var intersectedRectsCount = rectangles
+                .Select((item, index) => rectangles
                     .Skip(index).Count(item.IntersectsWith)).Sum();
 
             return intersectedRectsCount == 0;
