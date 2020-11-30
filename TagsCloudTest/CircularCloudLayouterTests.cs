@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloud;
 using TagsCloud.Extensions;
 using TagsCloud.Layouter;
 
-namespace TagsCloud.Tets
+namespace TagsCloudTest
 {
-    [TestFixture]
     public class CircularCloudLayouterTests
     {
         private CircularCloudLayouter layout;
@@ -22,7 +22,7 @@ namespace TagsCloud.Tets
         public void SetUp()
         {
             center = new Point(100, 100);
-            layout = new CircularCloudLayouter();
+            layout = new CircularCloudLayouter(new Spiral());
             layout.SetCenter(center);
             rectangleSizes = GetRandomSizeSet();
             rectangles = new List<Rectangle>();

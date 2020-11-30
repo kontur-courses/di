@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Drawing;
+using TagsCloud;
 
-namespace TagsCloud.Tets
+namespace TagsCloudTest
 {
-    [TestFixture]
     public class TargetVectorTests
     {
         private TargetVector vector;
