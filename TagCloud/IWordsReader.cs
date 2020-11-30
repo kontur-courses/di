@@ -2,7 +2,7 @@
 
 namespace TagCloud
 {
-    public interface IFileReader
+    public interface IWordsReader
     {
         List<string> Get();
     }

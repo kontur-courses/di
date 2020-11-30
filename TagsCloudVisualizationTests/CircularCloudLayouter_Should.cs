@@ -12,7 +12,7 @@ namespace TagsCloudVisualizationTests
     {
         private CircularCloudLayouter cloud;
 
-        private double expectedAreaRatio = 1.6;
+        private double expectedAreaRatio = 1.7;
         private Point center;
         private List<Rectangle> rectangles;
         private TestContext TestContext { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Interfaces;
 using TagsCloudVisualization;
 
 namespace TagCloud
@@ -8,16 +9,16 @@ namespace TagCloud
     public class WordsForCloudGenerator : IWordsForCloudGenerator
     {
         private readonly string fontName;
-        private readonly Color fontColor;
         private readonly int maxFontSize;
         private readonly ITagCloudLayouter tagCloudLayouter;
+        private readonly IColorGenerator colorGenerator;
 
-        public WordsForCloudGenerator(string fontName, Color color, int maxFontSize, ITagCloudLayouter tagCloudLayouter)
+        public WordsForCloudGenerator(string fontName, int maxFontSize, ITagCloudLayouter tagCloudLayouter, IColorGenerator colorGenerator)
         {
             this.tagCloudLayouter = tagCloudLayouter;
             this.fontName = fontName;
             this.maxFontSize = maxFontSize;
-            fontColor = color;
+            this.colorGenerator = colorGenerator;
         }
 
         public List<WordForCloud> Generate(List<string> words)
@@ -32,7 +33,7 @@ namespace TagCloud
                    .Select(x =>
                                GetWordForCloud(fontName,
                                                maxFontSize,
-                                               fontColor,
+                                               colorGenerator.GetNextColor(),
                                                x.Key,
                                                x.Value,
                                                maxFrequency))

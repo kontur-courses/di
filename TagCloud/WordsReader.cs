@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace TagCloud
 {
-    public class FileReader : IFileReader
+    public class WordsReader : IWordsReader
     {
         private readonly string path;
 
-        public FileReader(string path) =>
+        public WordsReader(string path) =>
             this.path = path;
 
         public List<string> Get()
