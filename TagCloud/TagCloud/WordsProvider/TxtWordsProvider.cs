@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace TagCloud
 {
-    public class TxtWordsProvider : WordsProvider
+    public class TxtWordsProvider : IWordsProvider
     {
         public readonly string filePath;
 
@@ -16,7 +16,7 @@ namespace TagCloud
             this.filePath = filePath;
         }
 
-        public override IEnumerable<string> GetWords()
+        public IEnumerable<string> GetWords()
         {
             var words = Regex.Split(File.ReadAllText(filePath), @"\W+");
             return words;
