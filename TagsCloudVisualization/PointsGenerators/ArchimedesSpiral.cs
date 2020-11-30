@@ -1,36 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.Canvases;
 
 namespace TagsCloudVisualization.PointsGenerators
 {
     public class ArchimedesSpiral : IPointGenerator
     {
-        public Point Center { get; }
+        public Point Center { get; private set; }
 
-        private readonly int spiralParameter;
-        private readonly float angleStep;
+        private readonly SpiralParams spiralParams;
         private IEnumerator<Point> spiralPoints;
+        private readonly ICanvas canvas;
 
-        public ArchimedesSpiral(
-            Point center,
-            int spiralParameter = 2,
-            float angleStep = 0.2f)
+        public ArchimedesSpiral(SpiralParams spiralParams, ICanvas canvas)
         {
-            if (Math.Abs(angleStep) < 1e-3)
+            if (Math.Abs(spiralParams.AngleStep) < 1e-3)
                 throw new ArgumentException("Angle step must be not equal zero");
-
-            if (spiralParameter == 0)
+            
+            if (spiralParams.SpiralParameter == 0)
                 throw new ArgumentException("Spiral parameter must be not equal zero");
-
-            Center = center;
-            this.spiralParameter = spiralParameter;
-            this.angleStep = angleStep;
+            
+            this.spiralParams = spiralParams;
+            this.canvas = canvas;
             spiralPoints = GetSpiralPoints().GetEnumerator();
         }
 
         private IEnumerable<Point> GetSpiralPoints()
         {
+            var imageSize = canvas.GetImageSize();
+            Center = new Point(imageSize.Width / 2, imageSize.Height / 2);
             yield return Center;
 
             var angle = 0.0f;
@@ -44,8 +43,8 @@ namespace TagsCloudVisualization.PointsGenerators
                 {
                     try
                     {
-                        x = spiralParameter * (int)Math.Round(angle * Math.Cos(angle)) + Center.X;
-                        y = spiralParameter * (int)Math.Round(angle * Math.Sin(angle)) + Center.Y;
+                        x = spiralParams.SpiralParameter * (int)Math.Round(angle * Math.Cos(angle)) + Center.X;
+                        y = spiralParams.SpiralParameter * (int)Math.Round(angle * Math.Sin(angle)) + Center.Y;
                     }
                     catch (OverflowException)
                     {
@@ -59,7 +58,7 @@ namespace TagsCloudVisualization.PointsGenerators
                     yield return nextPoint;
 
                 currentPoint = nextPoint;
-                angle += angleStep;
+                angle += spiralParams.AngleStep;
             }
         }
 
