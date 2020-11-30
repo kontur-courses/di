@@ -25,8 +25,8 @@ namespace TagCloud
             var wordsCount = wordsFrequencies.Select(wordToken => wordToken.Frequency).Sum();
             foreach (var wordToken in wordsFrequencies)
             {
-                var width = Math.Max(100, 1000 * wordToken.Frequency / wordsCount);
-                var height = 50;
+                var width = Math.Max(100, 500 * wordToken.Frequency / wordsCount);
+                var height = Math.Max(50, 250 * wordToken.Frequency / wordsCount);
                 var size = new Size(width, height);
                 PutNextWord(wordToken.Word, size);
             }

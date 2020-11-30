@@ -6,6 +6,7 @@ namespace TagCloud
     {
         private readonly Pen[] pens;
         private readonly ITagCloud tagCloud;
+        public string FontFamily => "Times New Roman";
 
         public TagCloudVisualizer(ITagCloud tagCloud)
         {
@@ -31,15 +32,30 @@ namespace TagCloud
                 var pen = pens[penNumber];
                 var word = wordRectangle.Word;
                 var rectangle = wordRectangle.Rectangle;
-                var font = new Font("Times New Roman", 20);
+                var font = GetBiggestFont(wordRectangle, FontFamily);
                 graphics.DrawString(word, font, new SolidBrush(pen.Color),
-                    new PointF(rectangle.Left, (rectangle.Bottom - rectangle.Top) / 2 + rectangle.Y));
+                    new PointF(rectangle.Left,rectangle.Y));
                 graphics.DrawPolygon(pen, RectangleToPointFArray(rectangle));
                 penNumber++;
                 penNumber %= pens.Length;
             }
 
             return bitMap;
+        }
+
+        private Font GetBiggestFont(WordRectangle token, string fontFamilyName)
+        {
+            var word = token.Word;
+            var rectangle = token.Rectangle;
+            var fontSize = 10;
+            for (; fontSize < 50; fontSize++)
+            {
+                var font = new Font(fontFamilyName, fontSize);
+                if (font.Height > rectangle.Height || font.Size * word.Length > rectangle.Width)
+                    break;
+            }
+
+            return new Font(fontFamilyName, fontSize - 1);
         }
 
         private static PointF[] RectangleToPointFArray(Rectangle rectangle)
