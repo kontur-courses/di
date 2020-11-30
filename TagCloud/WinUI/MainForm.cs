@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudVisualisation.Extensions;
 using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Preprocessing;
@@ -27,10 +29,11 @@ namespace WinUI
             }
 
             var words = dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
+                .Where(x => x.Word.Length >= 5)
                 .OrderBy(x => x.Frequency)
                 .Take(500)
                 .ToArray();
-            var resultImage = drawer.DrawWords(words);
+            var resultImage = drawer.DrawWords(words).FillBackground(Color.Black);
             writer.Save(resultImage);
         }
     }
