@@ -7,6 +7,7 @@ using TagsCloud.CloudRenderers;
 using TagsCloud.StatisticProviders;
 using TagsCloud.WordLayouters;
 using TagsCloud.WordReaders;
+using TagsCloud.WordSelector;
 
 namespace TagsCloud
 {
@@ -44,7 +45,11 @@ namespace TagsCloud
             var filePath = @"C:\Users\borov\Desktop\abc.txt";//Console.ReadLine();
             builder.RegisterType<RegexWordReader>()
                 .As<IWordReader>()
-                .WithParameter("filePath", filePath);
+                .WithParameters(new Parameter[]
+                {
+                    new TypedParameter(typeof(string), filePath),
+                    new TypedParameter(typeof(IWordSelector), new AllWordSelector()),
+                });
 
             builder.RegisterType<StatisticProvider>()
                 .As<IStatisticProvider>()
