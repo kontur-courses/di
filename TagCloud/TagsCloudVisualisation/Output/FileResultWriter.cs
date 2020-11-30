@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using TagsCloudVisualisation.Configuration;
 
 namespace TagsCloudVisualisation.Output
 {
@@ -8,7 +9,8 @@ namespace TagsCloudVisualisation.Output
     {
         private readonly ImageFormat format;
 
-        public FileResultWriter(ImageFormat format, string path)
+        public FileResultWriter(ImageFormat format, 
+            [InputRequired("Result file path")] string path)
         {
             this.format = format;
             Path = path;
