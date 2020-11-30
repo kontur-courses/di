@@ -8,7 +8,14 @@ namespace TagsCloudContainer.App.CloudVisualizer
 {
     internal class ImageGenerator : IImageGenerator
     {
-        public Bitmap GenerateImage(IEnumerable<Tag> cloud, ImageSettings settings)
+        private readonly ImageSettings settings;
+
+        public ImageGenerator(ImageSettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public Bitmap GenerateImage(IEnumerable<Tag> cloud)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             using var g = Graphics.FromImage(image);

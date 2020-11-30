@@ -3,7 +3,7 @@ using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DictionaryGenerator;
-using TagsCloudContainer.Infrastructure.FileReader;
+using TagsCloudContainer.Infrastructure.DataReader;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {
@@ -12,12 +12,12 @@ namespace TagsCloudContainer.App.CloudVisualizer
         private readonly ICloudGenerator cloudGenerator;
         private readonly IFrequencyDictionaryGenerator dictionaryGenerator;
         private readonly IImageGenerator imageGenerator;
-        private readonly IFileReader inputFileReader;
+        private readonly IDataReader inputDataReader;
 
-        public CloudVisualizer(IFileReader inputFileReader, IFrequencyDictionaryGenerator dictionaryGenerator,
+        public CloudVisualizer(IDataReader inputDataReader, IFrequencyDictionaryGenerator dictionaryGenerator,
             ICloudGenerator cloudGenerator, IImageGenerator imageGenerator)
         {
-            this.inputFileReader = inputFileReader;
+            this.inputDataReader = inputDataReader;
             this.dictionaryGenerator = dictionaryGenerator;
             this.cloudGenerator = cloudGenerator;
             this.imageGenerator = imageGenerator;
@@ -25,10 +25,10 @@ namespace TagsCloudContainer.App.CloudVisualizer
 
         public Bitmap Visualize(string inputFileName, ImageSettings imageSettings)
         {
-            var lines = inputFileReader.ReadLines(inputFileName);
+            var lines = inputDataReader.ReadLines();
             var dictionary = dictionaryGenerator.GenerateFrequencyDictionary(lines);
-            var cloud = cloudGenerator.GenerateCloud(dictionary, imageSettings.FontName);
-            return imageGenerator.GenerateImage(cloud, imageSettings);
+            var cloud = cloudGenerator.GenerateCloud(dictionary);
+            return imageGenerator.GenerateImage(cloud);
         }
     }
 }

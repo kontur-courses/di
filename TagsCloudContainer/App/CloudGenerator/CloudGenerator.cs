@@ -8,31 +8,31 @@ namespace TagsCloudContainer.App.CloudGenerator
 {
     internal class CloudGenerator : ICloudGenerator
     {
-        private readonly IFontSizeGetter fontSizeGetter;
+        private readonly IFontGetter fontGetter;
         private readonly ICloudLayouter layouter;
 
-        public CloudGenerator(IFontSizeGetter fontSizeGetter, ICloudLayouter layouter)
+        public CloudGenerator(IFontGetter fontGetter, ICloudLayouter layouter)
         {
-            this.fontSizeGetter = fontSizeGetter;
+            this.fontGetter = fontGetter;
             this.layouter = layouter;
         }
 
-        public IEnumerable<Tag> GenerateCloud(Dictionary<string, double> frequencyDictionary, string fontName)
+        public IEnumerable<Tag> GenerateCloud(Dictionary<string, double> frequencyDictionary)
         {
             foreach (var pair in frequencyDictionary.OrderByDescending(pair => pair.Value))
             {
                 var word = pair.Key;
                 var frequency = pair.Value;
-                var fontSize = fontSizeGetter.GetFontSize(word, frequency);
-                var rectangleSize = GetRectangleSize(word, fontSize, fontName);
+                var font = fontGetter.GetFont(word, frequency);
+                var rectangleSize = GetRectangleSize(word, font);
                 var nextRectangle = layouter.PutNextRectangle(rectangleSize);
-                yield return new Tag(word, fontSize, nextRectangle.Location);
+                yield return new Tag(word, font.Size, nextRectangle.Location);
             }
         }
 
-        private Size GetRectangleSize(string word, double fontSize, string fontName)
+        private Size GetRectangleSize(string word, Font font)
         {
-            return TextRenderer.MeasureText(word, new Font(fontName, (float) fontSize));
+            return TextRenderer.MeasureText(word, font);
         }
     }
 }
