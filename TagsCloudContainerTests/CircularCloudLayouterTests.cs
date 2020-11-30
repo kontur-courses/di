@@ -5,7 +5,6 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
-using TagsCloudContainer.Drawer;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainerTests
@@ -14,22 +13,16 @@ namespace TagsCloudContainerTests
     public class CircularCloudLayouterTests
     {
         private Point center;
-        private RectangleLayout layout;
         private CircularCloudLayouter layouter;
-        private ILayoutDrawer drawer;
         private Options options;
 
         [SetUp]
         public void SetUp()
         {
-            options = new Options(500, 500, "Arial",
-                @"C:\Users\Алишер\Desktop\Kontur\Homework\di\TagsCloudContainer\test.txt",
-                @"C:\Users\Алишер\Desktop\Kontur\Homework\di\TagsCloudContainer\output.txt");
+            options = new Options(500, 500, "Arial", "", "");
             center = new Point(options.Width / 2, options.Height / 2);
             layouter = new CircularCloudLayouter();
             layouter.SetCenter(center.X, center.Y);
-            drawer = new LayoutDrawer(options);
-            layout = new RectangleLayout(layouter, drawer, options);
         }
 
         [Test]
