@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Autofac;
 using TagsCloud.App;
 using TagsCloud.Infrastructure;
 
@@ -16,7 +17,7 @@ namespace TagsCloud
     {
         private readonly TagcloudSettings settings;
         private string[] words;
-        private string[] excludedWords;
+        private HashSet<string> excludedWords;
         private IWordsConverter wordConverter;
         private IRectanglesConstellator activeConstellator;
         private Dictionary<string, IRectanglesConstellator> constellators;
@@ -26,7 +27,7 @@ namespace TagsCloud
             this.settings = settings;
             wordConverter = converter;
             words = new string[0];
-            excludedWords = new[]
+            excludedWords = new HashSet<string>
             {
                 "и",
                 "a",
@@ -67,7 +68,8 @@ namespace TagsCloud
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            var neededWords = new WordsConverter().ConvertWords(words)
+            var neededWords = wordConverter.ConvertWords(words)
+                .Where(word => !excludedWords.Contains(word))
                 .ToList();
             var counts = new WordsCounter().CountWords(neededWords);
             PictureBox.Image = new TagscloudDrawer(activeConstellator).GetTagscloud(counts, settings, 0.7d);
@@ -75,7 +77,12 @@ namespace TagsCloud
 
         private void SetExcludedWordsButton_Click(object sender, EventArgs e)
         {
-            new SetExcludingWordsForm().ShowDialog();
+            var builder = new ContainerBuilder();
+            builder.Register(a => excludedWords).AsSelf();
+            builder.Register(a => wordConverter).AsSelf();
+            builder.RegisterType<SetExcludingWordsForm>().AsSelf();
+            var container = builder.Build();
+            container.Resolve<SetExcludingWordsForm>().ShowDialog();
         }
 
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)

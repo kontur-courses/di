@@ -5,12 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using TagsCloud.App;
 
 namespace TagsCloud.Infrastructure
 {
     public partial class SetExcludingWordsForm : Form
     {
-        public SetExcludingWordsForm()
+        private readonly HashSet<string> excludedWords;
+        private readonly TextBox textBox;
+        private readonly IWordsConverter converter;
+
+        public SetExcludingWordsForm(HashSet<string> excludedWords, IWordsConverter converter)
         {
             var okButton = new Button
             {
@@ -18,13 +23,23 @@ namespace TagsCloud.Infrastructure
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom
             };
-            Controls.Add(okButton);
-            Controls.Add(new TextBox
+            textBox = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
-                ScrollBars = ScrollBars.Vertical
-            });
+                ScrollBars = ScrollBars.Vertical,
+                Text = string.Join(Environment.NewLine, excludedWords) + Environment.NewLine
+            };
+            this.excludedWords = excludedWords;
+            okButton.Click += OnOkButtonClick;
+            Controls.Add(okButton);
+            Controls.Add(textBox);
+        }
+
+        private void OnOkButtonClick(object sender, EventArgs e)
+        {
+            foreach (var word in textBox.Text.Split('\n'))
+                excludedWords.Add(converter.ConvertWord(word));
         }
     }
 }
