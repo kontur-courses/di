@@ -29,10 +29,9 @@ namespace TagsCloud.App
                 wordFrequencies[word]++;
             }
 
-            foreach (var (word, frequency) in wordFrequencies)
-                wordFrequencies[word] = Math.Round(frequency / lines.Length, 2);
-            wordFrequencies.ToImmutableSortedSet();
-            return wordFrequencies;
+            return wordFrequencies
+                .ToDictionary(x=>x.Key,
+                    x=>Math.Round(x.Value / lines.Length, 2));
         }
     }
 }
