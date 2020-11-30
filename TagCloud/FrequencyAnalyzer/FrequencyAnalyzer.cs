@@ -16,6 +16,7 @@ namespace TagCloud.FrequencyAnalyzer
         public Dictionary<string, double> GetFrequencyDictionary(string fileName)
         {
             var words = parser.GetWords(fileName);
+            
             return words
                 .GroupBy(str => str)
                 .ToDictionary(group => group.Key,

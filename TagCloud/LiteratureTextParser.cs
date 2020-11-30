@@ -18,10 +18,9 @@ namespace TagCloud
         
         public string[] GetWords(string inputFileName)
         {
-            var pathAff = creater.GetCurrentPath() + "ru_RU.aff";
-            var pathDic = creater.GetCurrentPath() + "ru_RU.dic";
-            var dictionary = WordList.CreateFromFiles(pathDic, pathAff);
-            var lines = File.ReadLines(creater.GetCurrentPath() + inputFileName);
+            var path = creater.GetCurrentPath();
+            var dictionary = WordList.CreateFromFiles(path + "ru_RU.dic", path + "ru_RU.aff");
+            var lines = File.ReadLines(path + inputFileName);
             var words = new List<string>();
             foreach (var line in lines)
             {
@@ -29,11 +28,11 @@ namespace TagCloud
             }
             
             return words
-                .Where(str => str.Length > 2)
                 .Select(word => dictionary.ContainsEntriesForRootWord(word)
                     ? word
                     : dictionary.CheckDetails(word).Root)
                 .Where(word => dictionary.ContainsEntriesForRootWord(word))
+                .Where(str => str.Length > 2)
                 .Select(word => word.ToLower())
                 .ToArray();
         }

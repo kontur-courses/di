@@ -86,7 +86,7 @@ namespace TagCloud
                 ConfigureServices(size, coloring);
 
                 var visualizer = serviceProvider.GetService<IVisualizer>();
-                var filename = optionInput.HasValue() ? optionInput.Value() : "cats2.txt";
+                var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
                 var fontFamily = optionFont.HasValue() ? optionFont.Value() : "Arial";
                 visualizer.Visualize(filename, fontFamily);
 
