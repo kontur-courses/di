@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TagsCloud.TextProcessing.TextReaders
 {
-    public class TextReader : ITextReader
+    public class TextReader : IWordsReader
     {
         public bool CanRead(string path) => path.EndsWith(".txt");
 

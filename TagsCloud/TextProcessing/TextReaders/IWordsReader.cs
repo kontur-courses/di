@@ -2,7 +2,7 @@
 
 namespace TagsCloud.TextProcessing
 {
-    public interface ITextReader
+    public interface IWordsReader
     {
         public IEnumerable<string> ReadWords(string path);
         public bool CanRead(string path);
