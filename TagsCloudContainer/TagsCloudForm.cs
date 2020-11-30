@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using TagsCloudContainer.TagsCloudVisualization;
 
@@ -11,10 +12,12 @@ namespace TagsCloudContainer
         private readonly Dictionary<string, Rectangle> rectangles;
         private readonly Dictionary<string, int> wordsEntry;
 
-        public TagsCloudForm(Dictionary<string, int> wordsEntry, ILayouter layouter)
+        public TagsCloudForm(ITextParser parser, ILayouter layouter)
         {
-            this.wordsEntry = wordsEntry;
             this.layouter = layouter;
+            var root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            var path = $"{root}\\TagsCloudContainer\\Texts\\ParsedSong.txt";
+            wordsEntry = parser.GetParsedText(File.ReadAllText(path));
             rectangles = new Dictionary<string, Rectangle>();
         }
 

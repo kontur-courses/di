@@ -6,11 +6,11 @@ namespace TagsCloudContainer
 {
     public class TextParser : ITextParser
     {
-        private readonly HashSet<string> stopWords;
+        private readonly IWordValidator wordValidator;
 
-        public TextParser(HashSet<string> stopWords)
+        public TextParser(IWordValidator wordValidator)
         {
-            this.stopWords = stopWords;
+            this.wordValidator = wordValidator;
         }
 
         public Dictionary<string, int> GetParsedText(string text)
@@ -18,7 +18,7 @@ namespace TagsCloudContainer
             var matches = Regex.Matches(text, @"\b\w+\b");
             var wordsEntry = matches
                 .Select(x => x.Value.ToLower())
-                .Where(x => !stopWords.Contains(x))
+                .Where(x => wordValidator.IsValidWord(x))
                 .GroupBy(x => x)
                 .ToDictionary(x => x.Key, x => x.Count());
 

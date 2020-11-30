@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Autofac;
 using TagsCloudContainer.TagsCloudVisualization;
 
 namespace TagsCloudContainer
@@ -12,20 +12,17 @@ namespace TagsCloudContainer
         [STAThread]
         private static void Main()
         {
-            var writer = new TextWriter();
-            var root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-            var path = $"{root}\\TagsCloudContainer\\Texts";
-            writer.WriteText(File.ReadAllText($"{path}\\Song.txt"), $"{path}\\ParsedSong.txt");
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<ContainerConfig>();
+            var container = containerBuilder.Build();
 
-            var stopWords = new HashSet<string> {"a", "not", "to", "an", "are"};
-            var parser = new TextParser(stopWords);
-            var wordsEntry = parser.GetParsedText(File.ReadAllText($"{path}\\ParsedSong.txt"));
-            var center = new Point(200, 200);
+            var parser = container.Resolve<ITextParser>();
+            var cloudLayouter = container.Resolve<ILayouter>(new NamedParameter("center", new Point(200, 200)));
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TagsCloudForm(wordsEntry, new CircularCloudLayouter(center)));
+            Application.Run(new TagsCloudForm(parser, cloudLayouter));
         }
     }
 }
