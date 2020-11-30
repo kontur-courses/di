@@ -3,12 +3,12 @@
     public class WordInfo
     {
         public string Value { get; private set; }
-        public int Count { get; private set; }
+        public int Frequence { get; private set; }
 
-        public WordInfo(string value, int count)
+        public WordInfo(string value, int frequence)
         {
             Value = value;
-            Count = count;
+            Frequence = frequence;
         }
     }
 }

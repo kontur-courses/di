@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagsCloud.ImageProcessing
+namespace TagsCloud.ImageProcessing.Config
 {
     public interface IImageConfig
     {

@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagsCloud.ImageProcessing
+namespace TagsCloud.ImageProcessing.Config
 {
-    class ImageConfig : IImageConfig
+    public class ImageConfig : IImageConfig
     {
         public Size ImageSize { get; set; }
         public ImageFormat ImageFormat { get; set; }

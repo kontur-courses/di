@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloud
+namespace TagsCloud.Layouter
 {
-    public class Spiral
+    public class Spiral : ISpiral
     {
-        public Point Center { get; }
+        public Point Center { get; private set; }
 
-        public Spiral(Point center)
+        public Spiral()
         {
-            Center = center;
+            Center = new Point();
         }
 
         public IEnumerable<Point> GetPoints()
@@ -22,5 +22,7 @@ namespace TagsCloud
                 yield return new Point(x, y);
             }
         }
+
+        public void SetCenter(Point center) => Center = center;
     }
 }

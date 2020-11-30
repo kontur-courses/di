@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.TextProcessing
+namespace TagsCloud.TextProcessing.WordConfig
 {
     public interface IWordsConfig
     {
         public Font FontName { get; set; }
         public Color Color { get; set; }
         public string Path { get; set; }
+        public string[] FilerNames { get; set; }
+        public string[] ConvertersNames { get; set; }
     }
 }

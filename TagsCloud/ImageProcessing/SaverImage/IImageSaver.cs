@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloud.ImageProcessing.Config;
 
 namespace TagsCloud.ImageProcessing.SaverImage
 {

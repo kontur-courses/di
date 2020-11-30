@@ -8,12 +8,12 @@ namespace TagsCloud.Layouter
     public class CircularCloudLayouter : ILayouter
     {
         private readonly List<Rectangle> rectangles;
-        private Spiral spiral;
+        private ISpiral spiral;
 
-        public CircularCloudLayouter()
+        public CircularCloudLayouter(ISpiral spiral)
         {
             rectangles = new List<Rectangle>();
-            spiral = new Spiral(new Point(0, 0));
+            this.spiral = spiral;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -64,7 +64,7 @@ namespace TagsCloud.Layouter
 
         public void SetCenter(Point center)
         {
-            spiral = new Spiral(center);
+            spiral.SetCenter(center);
         }
     }
 }
