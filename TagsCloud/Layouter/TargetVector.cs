@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloud
+namespace TagsCloud.Layouter
 {
     public class TargetVector
     {

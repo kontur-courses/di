@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloud.TextProcessing
+namespace TagsCloud.TextProcessing.TextReaders
 {
     public interface IWordsReader
     {
