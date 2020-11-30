@@ -11,7 +11,6 @@ namespace TagsCloud
     {
         private const string SamplesDirectory = "Samples";
         private readonly string path;
-        private readonly Brush brush = new HatchBrush(HatchStyle.Cross, Color.Black);
         private readonly IWordLayouter layouter;
         private readonly int width;
         private readonly int height;
@@ -41,7 +40,8 @@ namespace TagsCloud
             graphics.TranslateTransform(-wordsRectangle.X, -wordsRectangle.Y);
             foreach (var word in words)
             {
-                graphics.DrawString(word.Value, word.Font, brush, word.Rectangle.Location);
+                graphics.DrawString(word.Value, word.Font, new HatchBrush(HatchStyle.Cross, word.Color),
+                    word.Rectangle.Location);
             }
             
             graphics.Save();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloud.ColorSelectors;
 using TagsCloud.WordLayouters;
 
 namespace TagsCloud
@@ -11,6 +12,7 @@ namespace TagsCloud
         public List<CloudWord> CloudWords { get; } = new List<CloudWord>();
         
         private readonly IPointsLayout pointsLayout;
+        private readonly IColorSelector colorSelector;
         private readonly FontFamily family;
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
@@ -19,10 +21,11 @@ namespace TagsCloud
         private int Bottom;
         private int Right;
 
-        public WordLayouter(FontFamily family, IPointsLayout pointsLayout)
+        public WordLayouter(FontFamily family, IPointsLayout pointsLayout, IColorSelector colorSelector)
         {
             this.family = family;
             this.pointsLayout = pointsLayout;
+            this.colorSelector = colorSelector;
         }
 
         public void AddWords(Dictionary<string, int> statistic)
@@ -33,7 +36,7 @@ namespace TagsCloud
                 var size = TextRenderer.MeasureText(word.Key, font);
                 var rectangle = PutNextRectangle(size);
 
-                CloudWords.Add(new CloudWord(word.Key, rectangle, font));
+                CloudWords.Add(new CloudWord(word.Key, rectangle, font, colorSelector.Next()));
             }
         }
         

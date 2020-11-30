@@ -7,12 +7,14 @@ namespace TagsCloud
         public readonly string Value;
         public readonly Rectangle Rectangle;
         public readonly Font Font;
+        public readonly Color Color;
 
-        public CloudWord(string value, Rectangle rectangle, Font font)
+        public CloudWord(string value, Rectangle rectangle, Font font, Color color)
         {
             Value = value;
             Rectangle = rectangle;
             Font = font;
+            Color = color;
         }
     }
 }

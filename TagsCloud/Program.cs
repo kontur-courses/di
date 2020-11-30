@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Core;
 using TagsCloud.BoringWordsDetectors;
 using TagsCloud.CloudRenderers;
+using TagsCloud.ColorSelectors;
 using TagsCloud.StatisticProviders;
 using TagsCloud.WordLayouters;
 using TagsCloud.WordReaders;
@@ -64,6 +65,10 @@ namespace TagsCloud
                     new TypedParameter(typeof(FontFamily), font),
                     new TypedParameter(typeof(IPointsLayout), new SpiralPoints()),
                 });
+
+            var colors = new []{Color.Aqua, Color.Black, Color.Red, Color.Yellow, Color.Green};
+            builder.RegisterInstance(colors).SingleInstance();
+            builder.RegisterType<RandomColorSelector>().SingleInstance().As<IColorSelector>();
             
             var width = 4000;//ReadInteger("Image width");
             var height = 2000;//ReadInteger("Image height");
