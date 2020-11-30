@@ -109,7 +109,7 @@ namespace TagCloud
         private Point GetVectorToMove(Rectangle rectangle)
         {
             var centreRectangle = GetCentreRectangle(rectangle);
-            return new Point(center.X - centreRectangle.X, center.Y - centreRectangle.Y);
+            return new Point(Center.X - centreRectangle.X, Center.Y - centreRectangle.Y);
         }
 
         private Point GetCentreRectangle(Rectangle rectangle)

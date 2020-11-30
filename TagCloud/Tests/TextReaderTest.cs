@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using TagCloud.TextConverters;
+using TagCloud.TextConverters.TextReaders;
 
 namespace TagCloud.Tests
 {
