@@ -12,8 +12,6 @@ namespace TagsCloudContainer.Drawer
 
         public void AddRectangles(IEnumerable<WordRectangle> rectangles);
 
-        public void AddCircle(Point center, int radius);
-
         public void Draw();
     }
 }

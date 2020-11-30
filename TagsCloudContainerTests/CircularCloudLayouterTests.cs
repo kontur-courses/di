@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloudContainer;
 using TagsCloudContainer.Drawer;
 using TagsCloudContainer.Layouter;
@@ -29,18 +27,10 @@ namespace TagsCloudContainerTests
                 @"C:\Users\Алишер\Desktop\Kontur\Homework\di\TagsCloudContainer\output.txt");
             center = new Point(options.Width / 2, options.Height / 2);
             layouter = new CircularCloudLayouter();
+            layouter.SetCenter(center.X, center.Y);
             drawer = new LayoutDrawer(options);
             layout = new RectangleLayout(layouter, drawer, options);
         }
-
-        // [TearDown]
-        // public void TearDown()
-        // {
-        //     if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-        //     var testName = TestContext.CurrentContext.Test.Name;
-        //     options.Output = Directory.GetCurrentDirectory() + testName;
-        // }
-
 
         [Test]
         public void FirstRectangle_ShouldBeCentral()
@@ -86,24 +76,24 @@ namespace TagsCloudContainerTests
             }
         }
 
-        // [Test]
-        // public void Rectangles_ShouldBeInsideCircle()
-        // {
-        //     var random = new Random();
-        //     var rectangles = Enumerable
-        //         .Range(0, 200)
-        //         .Select(_ => new Size(random.Next(10, 100), random.Next(10, 100)))
-        //         .Select(size => new WordRectangle(layouter.PutNextRectangle(size), ""))
-        //         .ToList();
-        //
-        //     var radius = GetCircleRadius(rectangles);
-        //
-        //     foreach (var rectangle in rectangles)
-        //     {
-        //         var distanceToCenter = GetMaximumDistance(rectangle, center);
-        //         distanceToCenter.Should().BeLessThan(radius);
-        //     }
-        // }
+        [Test]
+        public void Rectangles_ShouldBeInsideCircle()
+        {
+            var random = new Random();
+            var rectangles = Enumerable
+                .Range(0, 200)
+                .Select(_ => new Size(random.Next(10, 100), random.Next(10, 100)))
+                .Select(size => new WordRectangle(layouter.PutNextRectangle(size), "", 10))
+                .ToList();
+
+            var radius = GetCircleRadius(rectangles);
+
+            foreach (var rectangle in rectangles)
+            {
+                var distanceToCenter = GetMaximumDistance(rectangle.Rectangle, center);
+                distanceToCenter.Should().BeLessThan(radius);
+            }
+        }
 
         private static int GetCircleRadius(IEnumerable<WordRectangle> rectangles)
         {
@@ -114,12 +104,12 @@ namespace TagsCloudContainerTests
             return (int) (Math.Sqrt(square / Math.PI) * radiusMultiplier);
         }
 
-        // private static double GetMaximumDistance(Rectangle rectangle, Point center)
-        // {
-        //     var maxX = Math.Max(Math.Abs(center.X - rectangle.X), Math.Abs(center.X - rectangle.X - rectangle.Width));
-        //     var maxY = Math.Max(Math.Abs(center.Y - rectangle.Y), Math.Abs(center.Y - rectangle.Y - rectangle.Height));
-        //     return Math.Sqrt(maxX * maxX + maxY * maxY);
-        // }
+        private static double GetMaximumDistance(Rectangle rectangle, Point center)
+        {
+            var maxX = Math.Max(Math.Abs(center.X - rectangle.X), Math.Abs(center.X - rectangle.X - rectangle.Width));
+            var maxY = Math.Max(Math.Abs(center.Y - rectangle.Y), Math.Abs(center.Y - rectangle.Y - rectangle.Height));
+            return Math.Sqrt(maxX * maxX + maxY * maxY);
+        }
     }
 
     internal class Options : IOptions
@@ -129,7 +119,7 @@ namespace TagsCloudContainerTests
         public string Font { get; set; }
         public string FilePath { get; set; }
         public string Output { get; set; }
-        
+
         public Options(int width, int height, string font, string path, string output)
         {
             Width = width;
