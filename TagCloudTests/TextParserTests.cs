@@ -11,6 +11,7 @@ namespace TagCloudTests
     public class TextParserTests
     {
         private ContainerBuilder builder;
+        private string myStemPath;
         [SetUp]
         public void Setup()
         {
@@ -21,6 +22,9 @@ namespace TagCloudTests
                 .AsSelf()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            
+            var fileName = "mystem";
+            myStemPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "Release", fileName);
         }
         
         [TestCase(@"привет
@@ -48,11 +52,9 @@ namespace TagCloudTests
             TestName = "Filter base form")]
         public void Parse_Interesting(string text, string[] expected)
         {
-            var fileName = "mystem";
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "TagCloud", "bin", "Debug", "net48", fileName);
             builder.RegisterType<InterestingWordsFilter>()
                 .As<IFilter<string>>()
-                .WithParameter(new TypedParameter(typeof(string), path));
+                .WithParameter(new TypedParameter(typeof(string), myStemPath));
             Parse(text, expected);
         }
         
