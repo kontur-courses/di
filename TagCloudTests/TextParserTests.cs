@@ -43,8 +43,7 @@ namespace TagCloudTests
         public void Parse_Interesting(string text, string[] expected)
         {
             var fileName = "mystem";
-            // var path = Path.Combine(Environment.CurrentDirectory, "..", "TagCloud", "bin", "Debug", "net48", fileName);
-            var path = "/Users/irusland/Documents/work/internship/Контур/ШПОРА/di/TagCloud/bin/Debug/net48/mystem";
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "TagCloud", "bin", "Debug", "net48", fileName);
             builder.RegisterType<InterestingWordsFilter>()
                 .As<IFilter<string>>()
                 .WithParameter(new TypedParameter(typeof(string), path));

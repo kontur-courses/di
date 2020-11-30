@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Autofac;
-using MyStemWrapper;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text;
 using TagCloud.Infrastructure.Text.Filters;
@@ -18,7 +17,7 @@ namespace TagCloud
             
             builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
             var fileName = "mystem";
-            var path = Path.Combine(Environment.SystemDirectory, "bin", "Debug", "net48", fileName);
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             builder.RegisterType<InterestingWordsFilter>()
                 .As<IFilter<string>>()
                 .WithParameter(new TypedParameter(typeof(string), path));
