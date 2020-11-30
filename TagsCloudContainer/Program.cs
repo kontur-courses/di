@@ -21,7 +21,8 @@ namespace TagsCloudContainer
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TagsCloudForm(parser, cloudLayouter));
+            Application.Run(container.Resolve<TagsCloudForm>(new NamedParameter("parser", parser),
+                new NamedParameter("layouter", cloudLayouter)));
         }
     }
 }
