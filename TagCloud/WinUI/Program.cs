@@ -1,8 +1,12 @@
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Autofac;
+using TagsCloudVisualisation.Configuration;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Output;
+using TagsCloudVisualisation.Text;
 
 namespace WinUI
 {
@@ -25,12 +29,27 @@ namespace WinUI
         private static IContainer InitContainer()
         {
             var builder = new ContainerBuilder();
+
             builder.RegisterAssemblyTypes(typeof(ITagCloudLayouter).Assembly, typeof(Program).Assembly)
                 .AsImplementedInterfaces()
                 .AsSelf();
 
             builder.RegisterGeneric(typeof(InputRequester<>))
                 .As(typeof(IConfigEntry<>));
+
+            builder.RegisterType<WordsFileReader>()
+                .As<IWordsReader>()
+                .WithParameter("delimiters", new [] {'\n', ' '});
+
+            builder.RegisterType<CircularTagCloudLayouter>()
+                .As<ITagCloudLayouter>()
+                .WithParameter("cloudCenter", new Point())
+                .WithParameter("minRectangleSize", new Size(3, 3));
+
+            builder.RegisterType<FileResultWriter>()
+                .As<IResultWriter>()
+                .WithParameter("format", ImageFormat.Png);
+
             return builder.Build();
         }
     }

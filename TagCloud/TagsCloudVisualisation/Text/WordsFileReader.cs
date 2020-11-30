@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TagsCloudVisualisation.Configuration;
 
 namespace TagsCloudVisualisation.Text
 {
@@ -11,8 +12,9 @@ namespace TagsCloudVisualisation.Text
         private readonly char[] delimiters;
         private readonly StreamReader reader;
 
-        public WordsFileReader(string path, char[] delimiters)
+        public WordsFileReader(IConfigEntry<string> pathEntry, char[] delimiters)
         {
+            var path = pathEntry.GetValue("Source file path");
             if (!File.Exists(path))
                 throw new FileNotFoundException($"File {path} not found", path);
 

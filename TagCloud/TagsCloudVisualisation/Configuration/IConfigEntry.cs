@@ -1,7 +1,4 @@
-﻿namespace TagsCloudVisualisation.Output
+﻿namespace TagsCloudVisualisation.Configuration
 {
-    public interface IConfigEntry<T>
-    {
-        T GetValue(string description);
-    }
+    public interface IConfigEntry<T> { T GetValue(string description); }
 }

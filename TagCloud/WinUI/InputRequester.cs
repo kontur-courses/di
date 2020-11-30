@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Windows.Forms;
-using TagsCloudVisualisation.Output;
+using TagsCloudVisualisation.Configuration;
 
 namespace WinUI
 {
@@ -8,7 +7,11 @@ namespace WinUI
     {
         public T GetValue(string description)
         {
-            throw new NotImplementedException(); //TODO implement
+            var input = RequestInputForm.RequestInput(description);
+            if (string.IsNullOrEmpty(input))
+                throw new InvalidOperationException($"Requested: [{description}], got null or empty string");
+            var converted = Convert.ChangeType(input, typeof(T));
+            return (T) converted;
         }
     }
 }

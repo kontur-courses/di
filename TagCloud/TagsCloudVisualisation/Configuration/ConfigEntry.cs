@@ -1,12 +1,10 @@
-﻿using TagsCloudVisualisation.Output;
-
-namespace TagsCloudVisualisation.Configuration
+﻿namespace TagsCloudVisualisation.Configuration
 {
-    public class ConfigEntry<T> : IConfigEntry<T>
+    public class ConstantConfigEntry<T> : IConfigEntry<T>
     {
         private readonly T value;
 
-        public ConfigEntry(T value)
+        public ConstantConfigEntry(T value)
         {
             this.value = value;
         }
@@ -14,6 +12,16 @@ namespace TagsCloudVisualisation.Configuration
         public T GetValue(string _)
         {
             return value;
+        }
+
+        public static implicit operator T(ConstantConfigEntry<T> entry)
+        {
+            return entry.value;
+        }
+
+        public static explicit operator ConstantConfigEntry<T>(T value)
+        {
+            return new ConstantConfigEntry<T>(value);
         }
     }
 }
