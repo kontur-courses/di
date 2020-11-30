@@ -4,25 +4,41 @@ using System.Linq;
 
 namespace TagsCloudVisualisation.Visualisation
 {
+    /// <summary>
+    /// Provides algorythm to draw cloud step-by-step with automatically image resizing
+    /// </summary>
     public abstract class BaseCloudVisualiser
     {
         private readonly Point sourceCenterPoint;
-        private Image image;
-        protected Graphics Graphics { get; private set; }
+        private Image? image;
 
         protected BaseCloudVisualiser(Point sourceCenterPoint)
         {
             this.sourceCenterPoint = sourceCenterPoint;
         }
 
-        public Image GetImage() => (Image) image.Clone();
-        protected event Action<RectangleF> OnDraw;
+        public Image? GetImage() => (Image) image?.Clone();
 
+        /// <summary>
+        /// Graphics instance used to draw on result image
+        /// </summary>
+        protected Graphics? Graphics { get; private set; }
+
+        /// <summary>
+        /// Occurs when algorythm is finished and ready to draw on image.
+        /// RectangleF represents final location where image (or something else) need to be placed,
+        /// and computed size of it
+        /// </summary>
+        protected event Action<RectangleF>? OnDraw;
+
+        /// <summary>
+        /// Entry point where drawing starts
+        /// </summary>
         protected void PrepareAndDraw(RectangleF rectangle)
         {
             rectangle.Location = GetPositionToDraw(rectangle.Location);
             EnsureBitmapSize(rectangle);
-            rectangle.Location += image.Size / 2;
+            rectangle.Location += image!.Size / 2;
             OnDraw?.Invoke(rectangle);
         }
 
@@ -40,7 +56,7 @@ namespace TagsCloudVisualisation.Visualisation
             Graphics = Graphics.FromImage(image);
         }
 
-        private static Image EnsureBitmapSize(Image bitmap, Rectangle nextRectangle)
+        private static Image EnsureBitmapSize(Image? bitmap, Rectangle nextRectangle)
         {
             if (bitmap == null)
             {

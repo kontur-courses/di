@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualisation.Layouter
+namespace TagsCloudVisualisation.Layouting
 {
-    public class CircularCloudLayouter : ICircularCloudLayouter
+    public class CircularTagCloudLayouter : ITagCloudLayouter
     {
-        public CircularCloudLayouter(Point cloudCenter, Size minRectangleSize)
+        public CircularTagCloudLayouter(Point cloudCenter, Size minRectangleSize)
         {
             CloudCenter = cloudCenter;
             this.minRectangleSize = minRectangleSize;

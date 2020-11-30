@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudVisualisation.Text;
+using TagsCloudVisualisation.Text.Formatting;
 
-namespace TagsCloudVisualisation.Visualisation.TextVisualisation
+namespace TagsCloudVisualisation.Visualisation
 {
-    public sealed class WordsVisualiser : BaseCloudVisualiser
+    public sealed class WordsCloudVisualiser : BaseCloudVisualiser
     {
-        private WordToDraw? currentWord;
-        private readonly int scale;
+        private FormattedWord? currentWord;
 
-        public WordsVisualiser(Point sourceCenterPoint, int scale) : base(sourceCenterPoint)
+        public WordsCloudVisualiser(Point sourceCenterPoint) : base(sourceCenterPoint)
         {
-            this.scale = scale;
             OnDraw += rect =>
             {
                 var word = currentWord ?? throw new NullReferenceException($"{nameof(currentWord)} is null");
@@ -19,10 +19,9 @@ namespace TagsCloudVisualisation.Visualisation.TextVisualisation
             };
         }
 
-        public void Draw(Rectangle position, WordToDraw toDraw)
+        public void Draw(Rectangle position, FormattedWord toDraw)
         {
-            toDraw = new WordToDraw(toDraw.Word, WordToDraw.MultiplyFontSize(toDraw.Font, scale), toDraw.Brush);
-            var wordSize = MeasureString(toDraw);
+            var wordSize = MeasureString(toDraw.Word, toDraw.Font);
 
             if (wordSize.Height > position.Size.Height || wordSize.Width > position.Size.Width)
                 throw new ArgumentException("Actual word size is larger than computed values");
@@ -35,15 +34,15 @@ namespace TagsCloudVisualisation.Visualisation.TextVisualisation
             PrepareAndDraw(wordPosition);
         }
 
-        public SizeF MeasureString(WordToDraw toDraw, int wordScale = 1)
+        public SizeF MeasureString(string word, Font font)
         {
             if (Graphics != null)
-                return MeasureString(Graphics, toDraw, wordScale);
+                return MeasureString(Graphics, word, font);
             using var graphics = Graphics.FromHwnd(IntPtr.Zero);
-            return MeasureString(graphics, toDraw, wordScale);
+            return MeasureString(graphics, word, font);
         }
 
-        private static SizeF MeasureString(Graphics graphics, WordToDraw toDraw, int scale) =>
-            graphics.MeasureString(toDraw.Word, WordToDraw.MultiplyFontSize(toDraw.Font, scale));
+        private static SizeF MeasureString(Graphics graphics, string word, Font font) =>
+            graphics.MeasureString(word, font);
     }
 }

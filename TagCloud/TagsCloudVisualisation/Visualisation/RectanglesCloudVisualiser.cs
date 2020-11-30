@@ -3,11 +3,11 @@ using System.Drawing;
 
 namespace TagsCloudVisualisation.Visualisation
 {
-    public class RectanglesVisualiser : BaseCloudVisualiser
+    public class RectanglesCloudVisualiser : BaseCloudVisualiser
     {
         private readonly uint scale;
 
-        public RectanglesVisualiser(Point sourceCenterPoint, VisualisationDrawer drawer, uint scale)
+        public RectanglesCloudVisualiser(Point sourceCenterPoint, VisualisationDrawer drawer, uint scale)
             : base(sourceCenterPoint)
         {
             if (drawer == null)

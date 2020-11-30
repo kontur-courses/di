@@ -5,7 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using TagsCloudVisualisation.Extensions;
-using TagsCloudVisualisation.Layouter;
+using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Visualisation;
 using TagsCloudVisualisationTests.Infrastructure;
 
@@ -17,7 +17,7 @@ namespace TagsCloudVisualisationTests
         public override void SetUp()
         {
             base.SetUp();
-            Layouter = new CircularCloudLayouter(new Point(0, 0), new Size(3, 3));
+            Layouter = new CircularTagCloudLayouter(new Point(0, 0), new Size(3, 3));
         }
 
         [Test, MaxTime(1000)]
@@ -67,8 +67,8 @@ namespace TagsCloudVisualisationTests
 
         protected override Image RenderResultImage()
         {
-            var visualiser = new RectanglesVisualiser(scale: 3, sourceCenterPoint: Layouter.CloudCenter,
-                drawer: (g, r) => RectanglesVisualiser.DrawRectangle(g, new Pen(TestingHelpers.RandomColor, 3), r));
+            var visualiser = new RectanglesCloudVisualiser(scale: 3, sourceCenterPoint: Layouter.CloudCenter,
+                drawer: (g, r) => RectanglesCloudVisualiser.DrawRectangle(g, new Pen(TestingHelpers.RandomColor, 3), r));
 
             foreach (var rectangle in ResultRectangles)
                 visualiser.Draw(rectangle);

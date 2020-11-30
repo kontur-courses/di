@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualisation.Layouter
+﻿namespace TagsCloudVisualisation.Layouting
 {
     internal enum PointDirection
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualisation.Layouter
+namespace TagsCloudVisualisation.Layouting
 {
     internal class RectangleLocation
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualisation.Layouter;
+using TagsCloudVisualisation.Layouting;
 
 namespace TagsCloudVisualisationTests.Infrastructure
 {
@@ -27,13 +27,13 @@ namespace TagsCloudVisualisationTests.Infrastructure
         /// <summary>
         /// Test subject
         /// </summary>
-        protected ICircularCloudLayouter Layouter
+        protected ITagCloudLayouter Layouter
         {
             get => layouterHolder;
             set => layouterHolder.Layouter = value;
         }
 
-        private CircularCloudLayouterHolder layouterHolder;
+        private TagCloudLayouterHolder layouterHolder;
 
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
@@ -47,7 +47,7 @@ namespace TagsCloudVisualisationTests.Infrastructure
         [SetUp]
         public virtual void SetUp()
         {
-            layouterHolder = new CircularCloudLayouterHolder();
+            layouterHolder = new TagCloudLayouterHolder();
             testTimeMeasurement = new Measurement("Test", TestContext.Progress);
         }
 
@@ -95,12 +95,12 @@ namespace TagsCloudVisualisationTests.Infrastructure
         protected static void PrintTestingMessage(string message) => TestContext.Progress.WriteLine(message);
         protected ICollection<Rectangle> ResultRectangles => layouterHolder.ResultRectangles;
 
-        private class CircularCloudLayouterHolder : ICircularCloudLayouter
+        private class TagCloudLayouterHolder : ITagCloudLayouter
         {
-            private ICircularCloudLayouter layouter;
+            private ITagCloudLayouter layouter;
             public List<Rectangle> ResultRectangles = new List<Rectangle>();
 
-            public ICircularCloudLayouter Layouter
+            public ITagCloudLayouter Layouter
             {
                 get => layouter;
                 set
