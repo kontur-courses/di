@@ -9,14 +9,15 @@ namespace TagCloud.Core.LayoutAlgorithms
     public class CircularCloudLayouter : ILayoutAlgorithm
     {
         private readonly Point center;
-        private readonly ArchimedeanSpiral spiral;
+        private readonly ISpiral spiral;
         private readonly List<Rectangle> rectangles;
         public IEnumerable<Rectangle> Rectangles => rectangles;
 
-        public CircularCloudLayouter(Point center)
+
+        public CircularCloudLayouter(ISpiral spiral)
         {
-            this.center = center;
-            spiral = new ArchimedeanSpiral(center);
+            center = spiral.Start;
+            this.spiral = spiral;
             rectangles = new List<Rectangle>();
         }
 

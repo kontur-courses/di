@@ -3,27 +3,27 @@ using System.Drawing;
 
 namespace TagCloud.Core.LayoutAlgorithms
 {
-    public class ArchimedeanSpiral
+    public class ArchimedeanSpiral : ISpiral
     {
-        private readonly PointF start;
+        public Point Start { get; }
         private double angle;
         private readonly double deltaAngle;
         private readonly double spiralOffset;
 
-        public ArchimedeanSpiral(PointF start,
+        public ArchimedeanSpiral(Point start,
             int step = 5, double deltaAngle = Math.PI / 360)
         {
-            this.start = start;
-            this.angle = 0d;
+            Start = start;
             this.deltaAngle = deltaAngle;
-            this.spiralOffset = step / (Math.PI * 2);
+            angle = 0d;
+            spiralOffset = step / (Math.PI * 2);
         }
 
         public PointF GetNextPoint()
         {
             var nextPoint = new PointF(
-                (float) (angle * Math.Cos(angle) * spiralOffset + start.X),
-                (float) (angle * Math.Sin(angle) * spiralOffset + start.Y)
+                (float) (angle * Math.Cos(angle) * spiralOffset + Start.X),
+                (float) (angle * Math.Sin(angle) * spiralOffset + Start.Y)
             );
             angle += deltaAngle;
 
