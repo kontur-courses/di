@@ -12,7 +12,7 @@ namespace TagsCloudContainer
         public readonly List<Func<string, string>> PreprocessingFuncions =
             new List<Func<string, string>> {w => w.ToLower()};
         
-        public IWordsLayouter Layouter;
+        public IWordsLayouter Layouter = new CircularCloudLayouter();
         public IWordRenderer Renderer;
 
         public TagsCloudContainer AddSource(IWordsSource source)
