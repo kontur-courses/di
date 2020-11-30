@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using Autofac;
+using Microsoft.SqlServer.Server;
 
 namespace TagCloud
 {
@@ -28,7 +30,7 @@ namespace TagCloud
 
             container.Resolve<ITagCloud>().GenerateTagCloud();
             var bitmap = container.Resolve<IVisualizer>().CreateBitMap(width, height);
-            bitmap.Save("test.png");
+            bitmap.Save("test.png", ImageFormat.Png);
         }
     }
 }
