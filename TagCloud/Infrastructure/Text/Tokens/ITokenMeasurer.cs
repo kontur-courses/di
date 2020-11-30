@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagCloud.Infrastructure.Text.Tokens
 {
-    public interface ITokenMeasurer<in TToken>
+    public interface ITokenMeasurer<TToken>
     {
-        public Size GetSize(int priority, TToken token);
+        public Dictionary<TToken, Size> GetSizes(Dictionary<TToken, int> tokenFontSizes);
     }
 }

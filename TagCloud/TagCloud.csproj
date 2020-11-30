@@ -7,11 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Infrastructure\Graphics" />
-      <Folder Include="Infrastructure\Layout\Tokens" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Autofac" Version="6.0.0" />
       <PackageReference Include="MyStemWrapper" Version="1.0.0" />
     </ItemGroup>
@@ -20,6 +15,14 @@
         <Content Include="bin\Release\**">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Include="bin\Release\input.txt" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Reference Include="System.Windows.Forms" />
     </ItemGroup>
 
 </Project>

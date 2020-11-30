@@ -1,16 +1,15 @@
 using System;
 using System.Drawing;
+using TagCloud.Infrastructure.Settings;
 
 namespace TagCloud.Infrastructure.Layout.Strategies
 {
-    public class SpiralStrategy
+    public class SpiralStrategy : ILayoutStrategy
     {
-        private readonly Point center;
-        private readonly int angleIncrement;
-        public SpiralStrategy(Point center, int angleIncrement)
+        private readonly Func<ISpiralSettingsProvider> settingProvider;
+        public SpiralStrategy(Func<ISpiralSettingsProvider> settingProvider)
         {
-            this.center = center;
-            this.angleIncrement = angleIncrement;
+            this.settingProvider = settingProvider;
         }
 
         public Point GetPoint(Func<Point, bool> isValidPoint)
@@ -20,9 +19,9 @@ namespace TagCloud.Infrastructure.Layout.Strategies
             var obtainedPoint = Point.Empty;
             while (!isValidPoint(obtainedPoint))
             {
-                var possiblePoint = center + new Size((int) (Math.Sin(angle) * angle), (int) (Math.Cos(angle) * angle));
+                var possiblePoint = settingProvider().Center + new Size((int) (Math.Sin(angle) * angle), (int) (Math.Cos(angle) * angle));
                 obtainedPoint = possiblePoint;
-                angle += angleIncrement;
+                angle += settingProvider().Increment;
             }
             return OptimizePoint(obtainedPoint, isValidPoint);;
         }
@@ -34,8 +33,8 @@ namespace TagCloud.Infrastructure.Layout.Strategies
             {
                 obtainedPoint = possiblePosition;
                 var optimizationOffset = new Size(
-                    Math.Sign(center.X - obtainedPoint.X),
-                    Math.Sign(center.Y - obtainedPoint.Y));
+                    Math.Sign(settingProvider().Center.X - obtainedPoint.X),
+                    Math.Sign(settingProvider().Center.Y - obtainedPoint.Y));
                 if (optimizationOffset.IsEmpty)
                     return obtainedPoint;
                 possiblePosition = obtainedPoint + optimizationOffset;
