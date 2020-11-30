@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.WordsParser
 {
-    public class Settings: ISettings
+    public class Settings : ISettings
     {
         public bool ToInitialForm { get; }
 

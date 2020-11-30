@@ -1,26 +1,28 @@
-﻿using System;
+﻿using TagsCloudContainer.Drawer;
 using TagsCloudContainer.WordsParser;
 
 namespace TagsCloudContainer
 {
-    public class TagCloudContainer: ITagCloudContainer
+    public class TagCloudContainer : ITagCloudContainer
     {
-        private IWordsAnalyzer wordsAnalyzer;
-        
-        public TagCloudContainer(IWordsAnalyzer wordsAnalyzer)
+        private readonly IRectangleLayout rectangleLayout;
+        private readonly IWordsAnalyzer wordsAnalyzer;
+
+        public TagCloudContainer(IWordsAnalyzer wordsAnalyzer, IRectangleLayout rectangleLayout)
         {
             this.wordsAnalyzer = wordsAnalyzer;
+            this.rectangleLayout = rectangleLayout;
         }
 
         public void MakeTagCloud()
         {
-            foreach (var (key, value) in wordsAnalyzer.AnalyzeWords())
-                Console.WriteLine($"{key}: {value}");
+            rectangleLayout.PlaceWords(wordsAnalyzer.AnalyzeWords());
+            rectangleLayout.DrawLayout();
         }
 
         public void SaveTagCloud()
         {
-            throw new System.NotImplementedException();
+            rectangleLayout.SaveLayout();
         }
     }
 }

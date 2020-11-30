@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.WordsParser
 {
-    public class WordsAnalyzer: IWordsAnalyzer
+    public class WordsAnalyzer : IWordsAnalyzer
     {
         private readonly ISettings settings;
         private readonly IWordReader wordReader;
