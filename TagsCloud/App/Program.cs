@@ -23,7 +23,7 @@ namespace TagsCloud.App
                 .As<IFontFamilyProvider, IImageColorProvider, IImageSizeProvider>()
                 .SingleInstance();
             builder.RegisterType<TagCloudPainter>();
-            builder.RegisterType<ImageHolder>();
+            builder.RegisterType<ImageHolder>().SingleInstance();
             builder.RegisterType<WordFrequency>();
             builder.RegisterType<TagCloudLayouter>();
             builder.RegisterType<TagCloudPainter>();
