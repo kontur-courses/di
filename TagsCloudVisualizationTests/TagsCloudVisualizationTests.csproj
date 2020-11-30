@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagsCloudVisualizationPicture\TagsCloudVisualizationPicture.csproj" />
       <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
     </ItemGroup>
 
