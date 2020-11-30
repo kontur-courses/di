@@ -12,11 +12,17 @@
 *.userprefs
 
 # Build results
+[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-[Oo]bj/
+x64/
+x86/
 bld/
+[Bb]in/
+[Oo]bj/
+
+!TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1
 
 
 # Visual Studio 2015 cache/options directory
