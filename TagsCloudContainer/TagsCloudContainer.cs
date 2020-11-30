@@ -36,7 +36,8 @@ namespace TagsCloudContainer
             return this;
         }
 
-        public TagsCloudContainer Excluding(string word) => Excluding(w => w == word);
+        public TagsCloudContainer Excluding(params string[] words) => Excluding(words.Contains);
+        public TagsCloudContainer Excluding(HashSet<string> words) => Excluding(words.Contains);
         
         public TagsCloudContainer Layouting(IWordsLayouter layouter)
         {
