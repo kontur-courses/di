@@ -11,9 +11,9 @@ namespace TagsCloud.ClientGUI.Actions
             this.tagsCloudPainter = tagsCloudPainter;
         }
 
-        public string Category => "Облако";
-        public string Name => "Облако тегов";
-        public string Description => "Да";
+        public string Category => "Облако тегов";
+        public string Name => "Нарисовать облако тегов";
+        public string Description => "Рисование облака тегов по спирали";
 
         public void Perform()
         {

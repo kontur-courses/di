@@ -8,7 +8,7 @@ namespace TagsCloud.ClientGUI
     {
         private readonly IObjectSerializer serializer;
         private readonly IBlobStorage storage;
-        private string settingsFilename;
+        private string settingsFileName;
 
         public SettingsManager(IObjectSerializer serializer, IBlobStorage storage)
         {
@@ -20,8 +20,8 @@ namespace TagsCloud.ClientGUI
         {
             try
             {
-                settingsFilename = "app.settings";
-                var data = storage.Get(settingsFilename);
+                settingsFileName = "app.settings";
+                var data = storage.Get(settingsFileName);
                 if (data == null)
                 {
                     var defaultSettings = CreateDefaultSettings();
@@ -48,7 +48,7 @@ namespace TagsCloud.ClientGUI
 
         public void Save(AppSettings settings)
         {
-            storage.Set(settingsFilename, serializer.Serialize(settings));
+            storage.Set(settingsFileName, serializer.Serialize(settings));
         }
     }
 }

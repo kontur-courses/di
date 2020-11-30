@@ -26,8 +26,8 @@ namespace TagsCloud.ClientGUI.Actions
                 CheckFileExists = false,
                 InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
                 DefaultExt = "",
-                FileName = "image.bmp",
-                Filter = "Изображения (*.bmp)|*.bmp"
+                FileName = "image.png",
+                Filter = "Изображения (*.png)|*.png|All files(*.*)|*.*"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

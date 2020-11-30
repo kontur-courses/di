@@ -7,13 +7,15 @@ using TagsCloud.ClientGUI.Infrastructure;
 namespace TagsCloud.ClientGUI
 {
     internal static class Program
-    {
+    { 
         [STAThread]
         private static void Main()
         {
             var service = new ContainerBuilder();
             service.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AsImplementedInterfaces();
 
+            service.RegisterType<SpiralSettings>().AsSelf().InstancePerLifetimeScope();
+            service.RegisterType<FontSetting>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<Palette>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
                 .InstancePerLifetimeScope();

@@ -24,7 +24,7 @@ namespace TagsCloud.ClientGUI
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Text = "Fractal Painter";
+            Text = "Tags Cloud Painter";
         }
     }
 }

@@ -10,14 +10,10 @@ namespace TagsCloud.ClientGUI.Infrastructure
 {
     public class TagsCreator
     {
-        private const int LetterWidth = 30;
-        private const int LetterHeight = 40;
         private const string PathToText = "../../../Texts/SourceText2.txt";
         private const string PathToBoringWords = "../../../Texts/BoringWords.txt";
         private const string PathToDictionary = "../../../Texts/ru_RU.dic";
         private const string PathToAffix = "../../../Texts/ru_RU.aff";
-        private const string FontName = "Times New Roman";
-        private const double SpiralParameter = 0.005;
 
         public List<(string, int)> GetWords()
         {
@@ -33,14 +29,14 @@ namespace TagsCloud.ClientGUI.Infrastructure
                     .ThenBy(y => y.Key, StringComparer.Ordinal));
         }
 
-        public List<Rectangle> GetRectangles(Size imageSize, List<(string, int)> words)
+        public List<Rectangle> GetRectangles(Size imageSize, List<(string, int)> words, double spiralParameter, double letterWidth)
         {
-            var cloud = new CircularCloudLayouter(new Point(imageSize.Width / 2, imageSize.Height / 2), SpiralParameter);
+            var cloud = new CircularCloudLayouter(new Point(imageSize.Width / 2, imageSize.Height / 2), spiralParameter);
 
             return words.Select(word => cloud.PutNextRectangle(
                 new Size(
-                    (int)(LetterWidth * Math.Log(word.Item2 + 1) * word.Item1.Length),
-                    (int)(LetterHeight * Math.Log(word.Item2 + 1))))).ToList();
+                    (int)(letterWidth / 1.4 * Math.Log(word.Item2 + 1) * word.Item1.Length),
+                    (int)(letterWidth * Math.Log(word.Item2 + 1))))).ToList();
         }
     }
 }
