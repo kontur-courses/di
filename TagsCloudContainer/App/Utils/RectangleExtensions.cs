@@ -17,7 +17,7 @@ namespace TagsCloudContainer.App.Utils
             var rectCenter = new Point(
                 rectangle.X + rectangle.Width / 2,
                 rectangle.Y + rectangle.Height / 2);
-            return Math.Sqrt(Math.Pow(point.X - rectangle.X, 2) + Math.Pow(point.Y - rectCenter.Y, 2));
+            return Math.Sqrt(Math.Pow(point.X - rectCenter.X, 2) + Math.Pow(point.Y - rectCenter.Y, 2));
         }
 
         public static Rectangle GetMovedCopy(this Rectangle rectangle, DirectionToMove direction, int shift)

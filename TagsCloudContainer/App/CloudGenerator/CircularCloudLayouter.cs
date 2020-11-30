@@ -102,7 +102,7 @@ namespace TagsCloudContainer.App.CloudGenerator
 
         private Rectangle? GetMovedRectangle(Rectangle rectangle)
         {
-            foreach (var direction in DirectionUtils.GetAllDirections())
+            foreach (var direction in DirectionUtils.Directions)
             {
                 var tempRectangle = rectangle.GetMovedCopy(direction, Shift);
                 if (!tempRectangle.IntersectsWith(currentRectangles)

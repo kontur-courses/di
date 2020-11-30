@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.App.CloudGenerator;
 using TagsCloudContainer.App.Utils;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudGenerator;
 
 namespace TagsCloudContainerTests
 {
@@ -49,7 +49,7 @@ namespace TagsCloudContainerTests
         {
             SetRandomRectangles(30);
             for (var i = 1; i < rectangles.Count; i++)
-                foreach (var direction in DirectionUtils.GetAllDirections())
+                foreach (var direction in DirectionUtils.Directions)
                     CheckDensity(rectangles[i], direction);
         }
 
