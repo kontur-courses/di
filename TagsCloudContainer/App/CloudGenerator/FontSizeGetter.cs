@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.Infrastructure;
+﻿using TagsCloudContainer.Infrastructure.CloudGenerator;
 
 namespace TagsCloudContainer.App.CloudGenerator
 {

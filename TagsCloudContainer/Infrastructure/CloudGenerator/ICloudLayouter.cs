@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudContainer.Infrastructure
+namespace TagsCloudContainer.Infrastructure.CloudGenerator
 {
     public interface ICloudLayouter
     {

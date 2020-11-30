@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Infrastructure
+﻿namespace TagsCloudContainer.Infrastructure.CloudGenerator
 {
     internal interface IFontSizeGetter
     {

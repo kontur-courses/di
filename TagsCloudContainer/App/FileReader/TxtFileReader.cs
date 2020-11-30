@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.FileReader;
 
 namespace TagsCloudContainer.App.FileReader
 {

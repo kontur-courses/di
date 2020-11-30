@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudContainer.App.Settings;
 
-namespace TagsCloudContainer.Infrastructure
+namespace TagsCloudContainer.Infrastructure.CloudVisualizer
 {
     internal interface ICloudVisualizer
     {

@@ -2,7 +2,7 @@
 using System.Drawing;
 using TagsCloudContainer.App.CloudGenerator;
 using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudVisualizer;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {

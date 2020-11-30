@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudGenerator;
+using TagsCloudContainer.Infrastructure.CloudVisualizer;
+using TagsCloudContainer.Infrastructure.DictionaryGenerator;
+using TagsCloudContainer.Infrastructure.FileReader;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {

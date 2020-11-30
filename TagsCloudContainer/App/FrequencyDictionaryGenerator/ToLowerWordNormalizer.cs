@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.Infrastructure;
+﻿using TagsCloudContainer.Infrastructure.DictionaryGenerator;
 
 namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.DictionaryGenerator;
 
 namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
 {

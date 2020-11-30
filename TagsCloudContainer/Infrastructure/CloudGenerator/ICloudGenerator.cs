@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloudContainer.App.CloudGenerator;
 
-namespace TagsCloudContainer.Infrastructure
+namespace TagsCloudContainer.Infrastructure.CloudGenerator
 {
     internal interface ICloudGenerator
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.App.Utils;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudGenerator;
 
 namespace TagsCloudContainer.App.CloudGenerator
 {

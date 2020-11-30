@@ -7,7 +7,9 @@ using TagsCloudContainer.App.CloudVisualizer;
 using TagsCloudContainer.App.FileReader;
 using TagsCloudContainer.App.FrequencyDictionaryGenerator;
 using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudGenerator;
+using TagsCloudContainer.Infrastructure.CloudVisualizer;
+using TagsCloudContainer.Infrastructure.DictionaryGenerator;
 
 namespace TagsCloudContainer.App
 {
