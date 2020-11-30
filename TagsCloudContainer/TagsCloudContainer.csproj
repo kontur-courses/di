@@ -60,6 +60,9 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="System.Xml" />
+        <Reference Include="TagsCloudVisualization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>TagsCloudVisualization.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CircularCloudLayouter.cs" />
