@@ -4,81 +4,111 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using CommandLine;
 using TagCloud.Core;
-using TagCloud.Core.FileReaders;
 using TagCloud.Core.ImageCreators;
 using TagCloud.Core.ImageSavers;
 using TagCloud.Core.LayoutAlgorithms;
 using TagCloud.Core.WordsProcessors;
+using TagCloudUI.Infrastructure;
+using TagCloudUI.Infrastructure.Selectors;
 
 namespace TagCloudUI.UI
 {
     public class ConsoleUI : IUserInterface
     {
-        private readonly List<IFileReader> readers;
+        private readonly IReaderSelector readersSelector;
         private readonly IWordsProcessor wordsProcessor;
-        private readonly ILayoutAlgorithm layoutAlgorithm;
+        private readonly ILayoutAlgorithmSelector layoutAlgorithmSelector;
         private readonly IImageCreator imageCreator;
+        private readonly IColoringAlgorithmSelector coloringAlgorithmSelector;
         private readonly IImageSaver imageSaver;
 
-        public ConsoleUI(IEnumerable<IFileReader> readers,
+        public ConsoleUI(IReaderSelector readersSelector,
             IWordsProcessor wordsProcessor,
-            ILayoutAlgorithm layoutAlgorithm,
+            ILayoutAlgorithmSelector layoutAlgorithmSelector,
             IImageCreator imageCreator,
+            IColoringAlgorithmSelector coloringAlgorithmSelector,
             IImageSaver imageSaver)
         {
-            this.readers = readers.ToList();
+            this.readersSelector = readersSelector;
             this.wordsProcessor = wordsProcessor;
-            this.layoutAlgorithm = layoutAlgorithm;
+            this.layoutAlgorithmSelector = layoutAlgorithmSelector;
             this.imageCreator = imageCreator;
+            this.coloringAlgorithmSelector = coloringAlgorithmSelector;
             this.imageSaver = imageSaver;
         }
 
-        public void Run(IEnumerable<string> args)
+        public void Run(AppSettings options)
         {
-            Parser.Default
-                .ParseArguments<Options>(args)
-                .WithParsed(Run);
-        }
-
-        private void Run(Options options)
-        {
-            var processedWords = wordsProcessor
-                .Process(GetWordsFromFile(options.InputPath), options.WordsCount)
-                .ToList();
-            var tags = CreateTags(processedWords, options.FontName).ToList();
-
-            using var bitmap = imageCreator.Create(tags, options.FontName,
-                layoutAlgorithm.GetLayoutSize());
+            using var bitmap = GetCloudImage(options);
             var savedPath = imageSaver.Save(bitmap, options.OutputPath, options.ImageFormat);
             Console.WriteLine($"Tag cloud visualization saved to: {savedPath}");
         }
 
+        private Bitmap GetCloudImage(AppSettings options)
+        {
+            var allWords = GetWordsFromFile(options.InputPath);
+            var processedWords = GetProcessedWords(allWords, options.WordsCount);
+            var layoutInfo = CreateLayout(processedWords, options.LayoutAlgorithmName, options.FontName);
+
+            ThrowIfSmallSizeForLayout(options.ImageWidth, options.ImageHeight, layoutInfo.Size);
+
+            return CreateImage(layoutInfo, options.ColoringAlgorithmName, options.FontName);
+        }
+
+        private Bitmap CreateImage(LayoutInfo layoutInfo,
+            string coloringAlgorithmName, string fontName)
+        {
+            if (!coloringAlgorithmSelector.TryGetAlgorithm(coloringAlgorithmName, out var algorithm))
+                throw new ArgumentException(
+                    $"There is no such coloring theme: {coloringAlgorithmName}");
+
+            return imageCreator.Create(algorithm, layoutInfo.Tags, fontName, layoutInfo.Size);
+        }
+
+
+        private static void ThrowIfSmallSizeForLayout(int width, int height, Size layoutSize)
+        {
+            if (width < layoutSize.Width || height < layoutSize.Height)
+                throw new ArgumentException(
+                    $"Unable to place TagCloud to this image size: {width}x{height}");
+        }
+
         private IEnumerable<string> GetWordsFromFile(string inputPath)
         {
-            var reader = readers
-                .FirstOrDefault(r => r.IsValidExtension(Path.GetExtension(inputPath)));
-
-            if (reader == null)
+            if (!readersSelector.TryGetReader(Path.GetExtension(inputPath), out var reader))
                 throw new ArgumentException(
                     $"Unable to read file with this extension: {Path.GetExtension(inputPath)}");
 
             return reader.ReadAllWords(inputPath);
         }
 
-        private IEnumerable<Tag> CreateTags(IReadOnlyCollection<string> words, string fontName)
+        private List<string> GetProcessedWords(IEnumerable<string> words,
+            int wordsCount)
         {
-            return words.Select((word, index) => CreateTag(word, index, words.Count, fontName));
+            return wordsProcessor.Process(words, wordsCount).ToList();
         }
 
-        private Tag CreateTag(string word, int index, int wordsCount, string fontName)
+        private LayoutInfo CreateLayout(IReadOnlyCollection<string> words,
+            string algorithmName, string fontName)
+        {
+            if (!layoutAlgorithmSelector.TryGetAlgorithm(algorithmName, out var algorithm))
+                throw new ArgumentException($"There is no such algorithm: {algorithmName}");
+
+            var tags = words.Select((word, index) =>
+                CreateTag(algorithm, word, index, words.Count, fontName)).ToList();
+
+            return new LayoutInfo(tags, algorithm.GetLayoutSize());
+        }
+
+        private static Tag CreateTag(ILayoutAlgorithm algorithm,
+            string word, int index, int wordsCount, string fontName)
         {
             var fontSize = wordsCount + 10 - index;
             using var font = new Font(fontName, fontSize);
             var tagSize = TextRenderer.MeasureText(word, font);
 
-            return new Tag(word, layoutAlgorithm.PutNextRectangle(tagSize), fontSize);
+            return new Tag(word, algorithm.PutNextRectangle(tagSize), fontSize);
         }
     }
 }
