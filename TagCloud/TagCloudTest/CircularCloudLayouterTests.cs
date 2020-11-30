@@ -29,7 +29,9 @@ namespace TagCloudTest
             var fileName = $"{TestContext.CurrentContext.Test.Name}_Failed.jpg";
             var path = $"../../../FailedTests/{fileName}";
             var visualizer = new TagCloudVisualizer(tagCloudWithCenterInZero);
-            var image = visualizer.CreateBitMap(1920, 1080);
+            var image = visualizer.CreateBitMap(1920, 1080, 
+                new[] { Color.Blue, Color.Aqua }, 
+                "Times New Roman");
             image.Save(path);
         }
 
@@ -84,7 +86,16 @@ namespace TagCloudTest
         }
 
         [Test]
-        [Timeout(100)]
+        public void TagCloud_ShouldContainUniqueWords()
+        {
+            tagCloudWithCenterInZero.GenerateTagCloud();
+
+            tagCloudWithCenterInZero.WordRectangles.Select(wordRectangle => wordRectangle.Word).Should()
+                .BeEquivalentTo(wordsFilter.Apply(wordsProvider.GetWords().ToHashSet()));
+        }
+
+        [Test]
+        [Timeout(200)]
         public void Put1000Rectangles_StopsInSufficientTime()
         {
             for (var i = 0; i < 1000; i++)

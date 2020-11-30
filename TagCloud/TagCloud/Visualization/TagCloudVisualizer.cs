@@ -4,36 +4,25 @@ namespace TagCloud
 {
     public class TagCloudVisualizer : IVisualizer
     {
-        private readonly Color[] colors;
         private readonly ITagCloud tagCloud;
 
         public TagCloudVisualizer(ITagCloud tagCloud)
         {
             this.tagCloud = tagCloud;
-            colors = new Color[7];
-            colors[0] = Color.Red;
-            colors[1] = Color.Orange;
-            colors[2] = Color.Yellow;
-            colors[3] = Color.Green;
-            colors[4] = Color.Teal;
-            colors[5] = Color.Blue;
-            colors[6] = Color.Purple;
         }
 
-        public string FontFamily => "Times New Roman";
-
-        public Bitmap CreateBitMap(int width, int height)
+        public Bitmap CreateBitMap(int width, int height, Color[] colors, string fontFamily)
         {
             var bitMap = new Bitmap(width, height);
             var graphics = Graphics.FromImage(bitMap);
             var colorNumber = 0;
-
+            
             foreach (var wordRectangle in tagCloud.WordRectangles)
             {
                 var color = colors[colorNumber];
                 var word = wordRectangle.Word;
                 var rectangle = wordRectangle.Rectangle;
-                var font = GetBiggestFont(wordRectangle, FontFamily);
+                var font = GetBiggestFont(wordRectangle, fontFamily);
                 graphics.FillPolygon(new SolidBrush(Color.Black), RectangleToPointFArray(rectangle));
                 graphics.DrawString(word, font, new SolidBrush(color),
                     new PointF(rectangle.Left, rectangle.Y));
