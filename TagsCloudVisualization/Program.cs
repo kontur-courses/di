@@ -1,48 +1,49 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+using TagsCloudVisualization.Canvases;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Forms;
+using TagsCloudVisualization.AppSettings;
+using TagsCloudVisualization.FormAction;
 using TagsCloudVisualization.PointsGenerators;
-using TagsCloudVisualization.TagCloud;
+using TagsCloudVisualization.TagCloudBuilders;
+using TagsCloudVisualization.TagCloudLayouter;
+using TagsCloudVisualization.TagCloudVisualizers;
 
 namespace TagsCloudVisualization
 {
     static class Program
     {
-        private static int rectCount = 100;
-        private static int maxRectWidth = 80;
-        private static int maxRectHeight = 100;
-        
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            var pointGenerator = new ArchimedesSpiral(new Point(50, 50));
-            var cloudLayouter = new CircularCloudLayouter(pointGenerator);
-            var rectanglesToAdd = GetSortedRectanglesToAdd(rectCount, maxRectWidth, maxRectHeight);
-            var cloudRectangles = rectanglesToAdd
-                .Select(rectangleSize => cloudLayouter.PutNextRectangle(rectangleSize)).ToList();
+            var services = new ServiceCollection();
             
-            TagCloudVisualizer.PrintTagCloud(cloudRectangles, cloudLayouter.Center, 
-                maxRectWidth, maxRectHeight, 
-                fileName: $"TagCloudWith{rectCount}Rects");
-        }
-        
-        private static IEnumerable<Size> GetSortedRectanglesToAdd(int count, int maxWidth, int maxHeight)
-        {
-            var rand = new Random();
-            var rectangleSizes = new List<Size>();
+            services.AddSingleton<ICloudLayouter, CircularCloudLayouter>();
+            services.AddSingleton<ICloudVisualizer, TagCloudVisualizer>();
+            services.AddSingleton<ITagCloudBuilder, TagCloudBuilder>();
+            services.AddSingleton<IPointGenerator, ArchimedesSpiral>();
+            services.AddSingleton<ICanvas, Canvas>();
+            
+            services.AddSingleton<SpiralParams>();
+            services.AddSingleton<FontSettings>();
+            services.AddSingleton<ImageSettings>();
+            services.AddSingleton<Palette>();
 
-            for (var i = 0; i < count; i++)
-            {
-                var width = rand.Next(1, maxWidth);
-                var height = rand.Next(1, maxHeight);
-                rectangleSizes.Add(new Size(width, height));
-            }
-
-            return rectangleSizes.OrderByDescending(rect => rect.Width * rect.Height);
+            services.AddTransient<IFormAction, SaveImageAction>();
+            services.AddTransient<IFormAction, CloudLayouterAction>();
+            services.AddTransient<IFormAction, FontAction>();
+            services.AddTransient<IFormAction, PaletteAction>();
+            services.AddTransient<IFormAction, ImageSettingsAction>();
+            
+            services.AddSingleton<Form, MainForm>();
+            
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(services.BuildServiceProvider().GetService<Form>());
         }
     }
 }
