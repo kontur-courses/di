@@ -34,7 +34,7 @@ namespace TagCloud
             container.Resolve<ITagCloud>().GenerateTagCloud();
             var bitmap = container.Resolve<IVisualizer>()
                 .CreateBitMap(width, height, container.Resolve<Color[]>(), fontFamily);
-            bitmap.Save("test.png", ImageFormat.Png);
+            bitmap.Save("../../../../Examples/test.png", ImageFormat.Png);
         }
     }
 }
