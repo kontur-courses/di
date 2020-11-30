@@ -70,6 +70,7 @@
         <Compile Include="IWordRenderer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TagsCloudContainer.cs" />
+        <Compile Include="WordRendererToImage.cs" />
         <Compile Include="IWordsSource.cs" />
         <Compile Include="WordsSources\WordsSourceFromFile.cs" />
         <Compile Include="WordsSources\WordsSourceFromText.cs" />
