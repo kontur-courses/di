@@ -16,6 +16,8 @@ namespace TagCloud.Coloring
 
         public void DrawString(Rectangle rectangle, string str, string fontFamily, Graphics graphics)
         {
+            if (rectangle.Height < 2)
+                return;
             graphics.DrawString(str, new Font(fontFamily,rectangle.Height/2), textBrush, rectangle);
         }
     }

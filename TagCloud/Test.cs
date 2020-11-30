@@ -9,7 +9,7 @@ namespace TagCloud
         [Test]
         public void OneWordInLineParser_CorrectWorkOnSimpleFile()
         {
-            var parser = new OneWordInLineParser(new PathCreater());
+            var parser = new LiteratureTextParser(new PathCreater());
             var array = parser.GetWords("input.txt");
             array.Should().HaveCount(26);
             array.Should().Contain("кошка")

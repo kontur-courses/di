@@ -24,7 +24,7 @@ namespace TagCloud
             var services = new ServiceCollection();
 
             services.AddSingleton<IPathCreater, PathCreater>();
-            services.AddSingleton<IWordParser, OneWordInLineParser>();
+            services.AddSingleton<IWordParser, LiteratureTextParser>();
             services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer.FrequencyAnalyzer>();
             ConfigureCanvas(services, size);
             services.AddSingleton<ISpiral, Spiral>();
@@ -86,7 +86,7 @@ namespace TagCloud
                 ConfigureServices(size, coloring);
 
                 var visualizer = serviceProvider.GetService<IVisualizer>();
-                var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
+                var filename = optionInput.HasValue() ? optionInput.Value() : "cats2.txt";
                 var fontFamily = optionFont.HasValue() ? optionFont.Value() : "Arial";
                 visualizer.Visualize(filename, fontFamily);
 
