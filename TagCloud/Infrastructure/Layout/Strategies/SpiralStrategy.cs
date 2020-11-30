@@ -16,7 +16,7 @@ namespace TagCloud.Infrastructure.Layout.Strategies
         {
             var angle = 0;
             
-            var obtainedPoint = Point.Empty;
+            var obtainedPoint = settingProvider().Center;
             while (!isValidPoint(obtainedPoint))
             {
                 var possiblePoint = settingProvider().Center + new Size((int) (Math.Sin(angle) * angle), (int) (Math.Cos(angle) * angle));

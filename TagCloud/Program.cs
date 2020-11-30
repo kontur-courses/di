@@ -51,7 +51,7 @@ namespace TagCloud
             settingsFactory().Height = size.Height;
             settingsFactory().MinFontSize = 20;
             settingsFactory().MaxFontSize = 50;
-            settingsFactory().Center = new Point(size.Width/2, size.Height/2);;
+            settingsFactory().Center = new Point(size.Width/2, size.Height/2);
             settingsFactory().ImagePath = Path.Combine(".","drawing.bmp");
             settingsFactory().FontFamily = new FontFamily("Arial");
             settingsFactory().Brush = new SolidBrush(Color.Red);
