@@ -18,11 +18,15 @@ namespace TagsCloud.App
             builder.RegisterType<SetImageSizeCommand>().As<ICommand>();
             builder.RegisterType<TagCloudCommand>().As<ICommand>();
             builder.RegisterInstance(Console.Out).As<TextWriter>();
-            builder.RegisterType<ImageSettings>().As<IFontFamilyProvider, IImageColorProvider, IImageSizeProvider>()
+            builder.RegisterType<ImageSettings>().AsSelf()
+                .As<IFontFamilyProvider, IImageColorProvider, IImageSizeProvider>()
                 .SingleInstance();
             builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<ImageHolder>();
             builder.RegisterType<WordFrequency>();
+            builder.RegisterType<TagCloudLayouter>();
+            builder.RegisterType<TagCloudPainter>();
+            builder.RegisterType<WordChecker>();
             builder.RegisterType<SpiralAlgorithm>().As<ILayoutAlgorithm>();
             var container = builder.Build();
             container.Resolve<IClient>().Run();
