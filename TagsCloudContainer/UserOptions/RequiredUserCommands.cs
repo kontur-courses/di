@@ -7,7 +7,7 @@ namespace TagsCloudContainer.UserOptions
         [Required, Name("in", "myText"), Description("The path to text file")]
         public string PathToCustomText { get; set; }
 
-        [Required, Name("out", "outImage"), Description("The path to save image")]
+        [Required, Name("out", "outImage"), Description("The path to save image without format")]
         public string PathToSave { get; set; }
     }
 }

@@ -51,7 +51,9 @@ namespace TagsCloudContainer
                 _cloudSettings.GetParameterValue<Font>(ParameterType.Font));
             using var bitmap =
                 _visualization.GetBitmapImageCloud(_cloudLayouter.CloudRadius, wordTagsLayouter.ToList());
-            bitmap.Save(_cloudSettings.GetParameterValue<string>(ParameterType.PathToSave), ImageFormat.Png);
+            var pathToSave = _cloudSettings.GetParameterValue<string>(ParameterType.PathToSave);
+            var imageFormat = _cloudSettings.GetParameterValue<ImageFormat>(ParameterType.CloudImageFormat);
+            bitmap.Save($"{pathToSave}.{imageFormat.ToString().ToLower()}", imageFormat);
         }
 
         private void AddValuesInCloudSettings(AllCommands commands)

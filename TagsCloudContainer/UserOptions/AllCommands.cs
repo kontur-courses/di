@@ -18,5 +18,9 @@ namespace TagsCloudContainer.UserOptions
 
         [Name("bw", "boring"), Description("Boring words, underscores separated between words")]
         public string BoringWords { get; set; }
+
+        [Name("if", "imageFormat"),
+         Description("Image format. Supported formats: \"bmp\", \"jpeg\", \"png\", \"gif\", \"tiff\"")]
+        public string CloudImageFormat { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace TagsCloudContainer
                 .AddSingleton<ICommandLineParser<AllCommands>, CommandLineParser<AllCommands>>()
                 .AddSingleton(typeof(string[]), args)
                 .AddSingleton<ICloudSettings, CloudSettings>()
+                .AddSingleton<ICloudParameter, CloudImageFormat>()
                 .AddSingleton<ICloudParameter, BoringWords>()
                 .AddSingleton<ICloudParameter, PathToCustomText>()
                 .AddSingleton<ICloudParameter, PathToSaveCloud>()

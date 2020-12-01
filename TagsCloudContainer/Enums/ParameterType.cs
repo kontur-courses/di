@@ -8,6 +8,7 @@
         Font,
         PathToSave,
         PathToCustomText,
-        BoringWords
+        BoringWords,
+        CloudImageFormat
     }
 }
