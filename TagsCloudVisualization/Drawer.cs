@@ -11,7 +11,8 @@ namespace TagsCloudVisualization
         {
             CheckParameters(rectangles, config.Center);
 
-            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles), config.Center.Y + GetDeltaY(rectangles));
+            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles), 
+                config.Center.Y + GetDeltaY(rectangles));//TODO 
             using var graphics = Graphics.FromImage(image);
 
             foreach (var rectangle in rectangles)
