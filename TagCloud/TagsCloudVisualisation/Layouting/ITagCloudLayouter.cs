@@ -6,5 +6,6 @@ namespace TagsCloudVisualisation.Layouting
     {
         Point CloudCenter { get; }
         Rectangle PutNextRectangle(Size rectangleSize);
+        void Reset();
     }
 }

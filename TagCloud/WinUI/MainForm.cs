@@ -1,40 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using TagsCloudVisualisation.Extensions;
-using TagsCloudVisualisation.Output;
-using TagsCloudVisualisation.Text;
-using TagsCloudVisualisation.Text.Preprocessing;
-using TagsCloudVisualisation.Visualisation;
+﻿using System.Windows.Forms;
 
 namespace WinUI
 {
     public partial class MainForm : Form
     {
-        public MainForm(IWordsReader reader, IWordFilter filter, IWordNormalizer normalizer, WordsCloudDrawer drawer,
-            IResultWriter writer)
+        public MainForm()
         {
             InitializeComponent();
-            var normalizedWords = reader.EnumerateWords()
-                .Where(filter.IsValidWord)
-                .Select(normalizer.Normalize);
-
-            var dictionary = new Dictionary<string, int>();
-            foreach (var word in normalizedWords)
-            {
-                if (dictionary.ContainsKey(word))
-                    dictionary[word] += 1;
-                else dictionary[word] = 0;
-            }
-
-            var words = dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
-                .Where(x => x.Word.Length >= 5)
-                .OrderBy(x => x.Frequency)
-                .Take(500)
-                .ToArray();
-            var resultImage = drawer.DrawWords(words).FillBackground(Color.Black);
-            writer.Save(resultImage);
         }
     }
 }

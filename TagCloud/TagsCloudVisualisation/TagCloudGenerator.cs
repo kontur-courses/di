@@ -1,40 +1,49 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
+using TagsCloudVisualisation.Visualisation;
 
-namespace TagsCloudVisualisation.Visualisation
+namespace TagsCloudVisualisation
 {
-    public class WordsCloudDrawer
+    public sealed class TagCloudGenerator
     {
         private readonly IWordFormatter formatter;
         private readonly ITagCloudLayouter layouter;
-        private readonly WordsCloudVisualiser visualiser;
+        private readonly CloudVisualiser visualiser;
 
-        public WordsCloudDrawer(IWordFormatter formatter, ITagCloudLayouter layouter,
-            Func<Point, WordsCloudVisualiser> visualiserFactory)
+        public TagCloudGenerator(IWordFormatter formatter, ITagCloudLayouter layouter,
+            Func<Point, CloudVisualiser> visualiser)
         {
             this.formatter = formatter;
             this.layouter = layouter;
-            visualiser = visualiserFactory.Invoke(this.layouter.CloudCenter);
+            this.visualiser = visualiser.Invoke(layouter.CloudCenter);
         }
 
-        public Image DrawWords(WordWithFrequency[] wordsCollection)
+        public Task<Image> DrawWordsAsync(WordWithFrequency[] wordsCollection, CancellationToken token)
         {
-            if(wordsCollection.Length == 0)
+            if (wordsCollection.Length == 0)
                 throw new ArgumentException($"{nameof(wordsCollection)} is empty", nameof(wordsCollection));
 
-            foreach (var word in wordsCollection.OrderByDescending(x => x.Frequency))
+            return Task.Run(() =>
             {
-                //TODO apply format to whole collection
-                var (wordPosition, formattedWord) =
-                    GetWordFormatAndPosition(word.Word, wordsCollection.Length, word.Frequency); 
-                visualiser.Draw(wordPosition, formattedWord);
-            }
+                foreach (var word in wordsCollection.OrderByDescending(x => x.Frequency))
+                {
+                    if (token.IsCancellationRequested)
+                        break;
 
-            return visualiser.GetImage()!;
+                    //TODO apply format to whole collection
+                    var (wordPosition, formattedWord) =
+                        GetWordFormatAndPosition(word.Word, wordsCollection.Length, word.Frequency);
+                    visualiser.Draw(wordPosition, formattedWord);
+                }
+
+                return visualiser.GetImage()!;
+            }, token);
         }
 
         private (Rectangle wordPosition, FormattedWord formattedWord) GetWordFormatAndPosition(

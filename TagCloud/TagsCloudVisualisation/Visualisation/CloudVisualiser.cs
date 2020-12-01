@@ -1,50 +1,48 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualisation.Text.Formatting;
 
 namespace TagsCloudVisualisation.Visualisation
 {
     /// <summary>
     /// Provides algorythm to draw cloud step-by-step with automatically image resizing
     /// </summary>
-    public abstract class BaseCloudVisualiser
+    public class CloudVisualiser
     {
-        private readonly Point sourceCenterPoint;
+        private Graphics? graphics;
         private Image? image;
+        private readonly Point centerPointOffset;
 
-        protected BaseCloudVisualiser(Point sourceCenterPoint)
+        public CloudVisualiser(Point centerPointOffset)
         {
-            this.sourceCenterPoint = sourceCenterPoint;
+            this.centerPointOffset = centerPointOffset;
         }
 
         public Image? GetImage() => (Image) image?.Clone();
 
-        /// <summary>
-        /// Graphics instance used to draw on result image
-        /// </summary>
-        protected Graphics? Graphics { get; private set; }
-
-        /// <summary>
-        /// Occurs when algorythm is finished and ready to draw on image.
-        /// RectangleF represents final location where image (or something else) need to be placed,
-        /// and computed size of it
-        /// </summary>
-        protected event Action<RectangleF>? OnDraw;
-
-        /// <summary>
-        /// Entry point where drawing starts
-        /// </summary>
-        protected void PrepareAndDraw(RectangleF rectangle)
+        public void Draw(Rectangle position, FormattedWord toDraw)
         {
-            rectangle.Location = GetPositionToDraw(rectangle.Location);
-            EnsureBitmapSize(rectangle);
-            rectangle.Location += image!.Size / 2;
-            OnDraw?.Invoke(rectangle);
+            var wordSize = MeasureString(toDraw.Word, toDraw.Font);
+            if (wordSize.Height > position.Size.Height || wordSize.Width > position.Size.Width)
+                throw new ArgumentException("Actual word size is larger than computed values");
+
+            var offset = (wordSize - position.Size) / 2;
+            var wordPosition = new RectangleF(position.X - offset.Width, position.Y - offset.Height,
+                wordSize.Width, wordSize.Height);
+
+            wordPosition.Location = FixOffset(wordPosition.Location);
+            EnsureBitmapSize(wordPosition);
+            wordPosition.Location += image!.Size / 2;
+            graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
         }
 
-        private PointF GetPositionToDraw(PointF rectangle) => new PointF(
-            rectangle.X - sourceCenterPoint.X,
-            rectangle.Y - sourceCenterPoint.Y);
+        private static SizeF MeasureString(Graphics graphics, string word, Font font) =>
+            graphics.MeasureString(word, font);
+
+        private PointF FixOffset(PointF rectangle) => new PointF(
+            rectangle.X - centerPointOffset.X,
+            rectangle.Y - centerPointOffset.Y);
 
         private void EnsureBitmapSize(RectangleF nextRectangle)
         {
@@ -52,8 +50,16 @@ namespace TagsCloudVisualisation.Visualisation
             if (newBitmap == image)
                 return;
             image = newBitmap;
-            Graphics?.Dispose();
-            Graphics = Graphics.FromImage(image);
+            graphics?.Dispose();
+            graphics = Graphics.FromImage(image);
+        }
+
+        public SizeF MeasureString(string word, Font font)
+        {
+            if (graphics != null)
+                return MeasureString(graphics, word, font);
+            using var g = Graphics.FromHwnd(IntPtr.Zero);
+            return MeasureString(g, word, font);
         }
 
         private static Image EnsureBitmapSize(Image? bitmap, Rectangle nextRectangle)

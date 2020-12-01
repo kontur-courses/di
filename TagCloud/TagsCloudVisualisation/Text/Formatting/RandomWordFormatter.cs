@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
+    [VisibleName("Случайный формат")]
     public class RandomWordFormatter : IWordFormatter
     {
         private static readonly KnownColor[] colors = Enum.GetValues(typeof(KnownColor)).Cast<KnownColor>().ToArray();

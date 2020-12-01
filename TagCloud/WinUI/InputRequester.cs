@@ -1,9 +1,8 @@
 ﻿using System;
-using TagsCloudVisualisation.Configuration;
 
 namespace WinUI
 {
-    public class InputRequester<T> : IConfigEntry<T>
+    public class InputRequester<T>
     {
         public T GetValue(string description)
         {

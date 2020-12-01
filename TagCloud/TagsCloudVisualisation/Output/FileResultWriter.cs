@@ -1,25 +1,21 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using TagsCloudVisualisation.Configuration;
 
 namespace TagsCloudVisualisation.Output
 {
-    public class FileResultWriter : IResultWriter
+    public class FileResultWriter : IFileResultWriter
     {
         private readonly ImageFormat format;
 
-        public FileResultWriter(ImageFormat format, IConfigEntry<string> configEntry)
+        public FileResultWriter(ImageFormat format)
         {
             this.format = format;
-            Path = configEntry.GetValue("Path of file where result need to be saved");
         }
 
-        public string Path { get; }
-
-        public void Save(Image result)
+        public void Save(Image result, string path)
         {
-            using var writer = new FileStream(Path, FileMode.Create, FileAccess.ReadWrite);
+            using var writer = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
             result.Save(writer, format);
         }
     }

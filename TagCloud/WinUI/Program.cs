@@ -1,54 +1,52 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 using Autofac;
-using TagsCloudVisualisation.Configuration;
+using Autofac.Core;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
+using TagsCloudVisualisation.Visualisation;
 
 namespace WinUI
 {
     static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            var container = InitContainer();
-            Application.Run(container.Resolve<MainForm>());
+            InitContainer().Resolve<App>().Run();
         }
 
         private static IContainer InitContainer()
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterAssemblyTypes(typeof(ITagCloudLayouter).Assembly, typeof(Program).Assembly)
+            builder.RegisterType<FileWordsReader>()
                 .AsImplementedInterfaces()
-                .AsSelf();
-
-            builder.RegisterGeneric(typeof(InputRequester<>))
-                .As(typeof(IConfigEntry<>));
-
-            builder.RegisterType<WordsFileReader>()
-                .As<IWordsReader>()
-                .WithParameter("delimiters", new [] {'\n', ' '});
+                .AsSelf()
+                .WithParameter("delimiters", new[] {'\n', ' '});
 
             builder.RegisterType<CircularTagCloudLayouter>()
-                .As<ITagCloudLayouter>()
+                .AsImplementedInterfaces()
+                .AsSelf()
                 .WithParameter("cloudCenter", new Point())
                 .WithParameter("minRectangleSize", new Size(3, 3));
 
             builder.RegisterType<FileResultWriter>()
-                .As<IResultWriter>()
+                .AsImplementedInterfaces()
+                .AsSelf()
                 .WithParameter("format", ImageFormat.Png);
+
+            builder.RegisterType<CloudVisualiser>()
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .InstancePerDependency();
+
+            builder.RegisterAssemblyTypes(typeof(ITagCloudLayouter).Assembly, typeof(Program).Assembly)
+                .Where(t => !builder.ComponentRegistryBuilder.IsRegistered(new TypedService(t)))
+                .AsImplementedInterfaces()
+                .AsSelf();
 
             return builder.Build();
         }
