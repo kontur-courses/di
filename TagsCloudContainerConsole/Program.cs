@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -32,8 +33,19 @@ namespace TagsCloudContainerConsole
             [Option(Default = "Times New Roman")]
             public string Font { get; set; }
             
-            [Option(Default = 32)]
+            [Option(Default = 16)]
             public int FontSize { get; set; }
+
+            [Option(Default = ScalingMethods.Linear, HelpText = "Scaling method (Linear | Sqrt | LerpTotal | LerpMax)")]
+            public ScalingMethods Scaling { get; set; }
+        }
+        
+        public enum ScalingMethods
+        {
+            Linear,
+            Sqrt,
+            LerpTotal,
+            LerpMax,
         }
         
         public static void Main(string[] args)
@@ -54,10 +66,22 @@ namespace TagsCloudContainerConsole
                     if (File.Exists(excluded))
                         container.Excluding(ReadWordsFromFile(excluded));
                 }
+
+                var scalingMethods =
+                    new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
+                    {
+                        [ScalingMethods.Linear] = (info, word) => word.Count,
+                        [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
+                        [ScalingMethods.LerpTotal] = (info, word) => 1f + 5 * word.Count / (float) info.TotalWordsCount,
+                        [ScalingMethods.LerpMax] = (info, word) => 1f + 5 * word.Count / (float) info.MaxWordCount
+                    };
+
+                var scaling = scalingMethods[options.Scaling];
                 
                 var output = new Bitmap(options.Width, options.Height);
                 container.Rendering(new WordRendererToImage(output)
-                    .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel)));
+                    .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
+                    .WithScale(scaling));
                 container.Render();
                 output.Save(options.OutputFile, ImageFormat.Png);
             });
