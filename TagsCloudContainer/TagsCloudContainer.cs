@@ -31,10 +31,7 @@ namespace TagsCloudContainer
         }
 
         public TagsCloudContainer Excluding(Func<string, bool> wordsPredicate)
-        {
-            Preprocessing(w => wordsPredicate(w) ? null : w);
-            return this;
-        }
+            => Preprocessing(w => wordsPredicate(w) ? null : w);
 
         public TagsCloudContainer Excluding(params string[] words) => Excluding(words.Contains);
         public TagsCloudContainer Excluding(HashSet<string> words) => Excluding(words.Contains);
