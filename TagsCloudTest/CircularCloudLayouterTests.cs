@@ -21,8 +21,7 @@ namespace TagsCloudTest
         public void SetUp()
         {
             center = new Point(100, 100);
-            layout = new CircularCloudLayouter(new Spiral());
-            layout.SetCenter(center);
+            layout = new CircularCloudLayouter(center);
             rectangleSizes = GetRandomSizeSet();
             rectangles = new List<Rectangle>();
             rectangleCount = 10;

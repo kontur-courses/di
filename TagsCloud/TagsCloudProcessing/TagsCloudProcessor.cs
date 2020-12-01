@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Drawing;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.ImageProcessing.ImageBuilders;
 using TagsCloud.ImageProcessing.SaverImage;
-using TagsCloud.Layouter;
+using TagsCloud.Layouter.Factory;
+using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
 using TagsCloud.TextProcessing;
 using TagsCloud.TextProcessing.WordConfig;
 
@@ -13,17 +11,20 @@ namespace TagsCloud.TagsCloudProcessing
 {
     public class TagsCloudProcessor
     {
-        private readonly ILayouter layouter;
+        private readonly ILayouterFactory layouterFactory;
         private readonly IWordsConfig wordsConfig;
         private readonly IImageConfig imageConfig;
-        private readonly TextOperator textOperator;
+        private readonly TextProcessor textOperator;
         private readonly IImageBuilder imageBuilder;
         private readonly IImageSaver imageSaver;
+        private readonly ITagsGeneratorFactory tagsGeneratorFactory;
 
-        public TagsCloudProcessor(ILayouter layouter, IWordsConfig wordsConfig, TextOperator textOperator,
-            IImageBuilder imageBuilder, IImageSaver imageSaver, IImageConfig imageConfig)
+        public TagsCloudProcessor(ILayouterFactory layouterFactory, IWordsConfig wordsConfig, TextProcessor textOperator,
+            IImageBuilder imageBuilder, IImageSaver imageSaver,
+            IImageConfig imageConfig, ITagsGeneratorFactory tagsGeneratorFactory)
         {
-            this.layouter = layouter;
+            this.layouterFactory = layouterFactory;
+            this.tagsGeneratorFactory = tagsGeneratorFactory;
             this.wordsConfig = wordsConfig;
             this.textOperator = textOperator;
             this.imageSaver = imageSaver;
@@ -31,27 +32,17 @@ namespace TagsCloud.TagsCloudProcessing
             this.imageConfig = imageConfig;
         }
 
-        public Bitmap CreateCloud()
+        public void CreateCloud()
         {
             var imageSize = imageConfig.ImageSize;
-            layouter.SetCenter(new Point(imageSize.Width / 2, imageSize.Height / 2));
+            var layouter = layouterFactory.Create(new Point(imageSize.Width / 2, imageSize.Height / 2));
+            var tagsGenerator = tagsGeneratorFactory.Create();
 
-            var words = textOperator.ReadFromFile(wordsConfig.Path).OrderByDescending(info => info.Frequence).ToList();
-            var tags = new List<Tag>();
+            var words = textOperator.ReadFromFile(wordsConfig.Path);
+            var tags = tagsGenerator.CreateTags(words, layouter, wordsConfig.FontName);
 
-            var count = 40;
-            foreach (var word in words.Take(30))
-            {
-                var currentFont = new Font(wordsConfig.FontName.FontFamily, count);
-                var size = TextRenderer.MeasureText(word.Value, currentFont);
-                tags.Add(new Tag(word.Value, layouter.PutNextRectangle(size), currentFont));
-                count--;
-            }
-
-            var image = imageBuilder.BuildImage(tags);
+            using var image = imageBuilder.BuildImage(tags);
             imageSaver.SaveImageWithConfig(image, imageConfig);
-
-            return image;
         }
     }
 }

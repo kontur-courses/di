@@ -2,6 +2,8 @@
 using System;
 using System.Windows.Forms;
 using TagsCloud.ImageProcessing.Config;
+using TagsCloud.Layouter;
+using TagsCloud.Layouter.Factory;
 using TagsCloud.TextProcessing.WordConfig;
 using TagsCloud.UserInterfaces.GUI;
 
@@ -20,18 +22,25 @@ namespace TagsCloud
 
         public static ServiceProvider BuildContainer()
         {
-            var services = new ServiceCollection();
-            services.Scan(scan => scan
-                                    .FromCallingAssembly()
-                                    .AddClasses()
-                                    .AsSelfWithInterfaces());
+            return new ServiceCollection()
+                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces())
 
-            services
                 .AddSingleton<IImageConfig, ImageConfig>()
                 .AddSingleton<IWordsConfig, WordConfig>()
-                .AddScoped<Form, ConfigWindow>();
 
-            return services.BuildServiceProvider();
+                .AddSingleton<ILayouterFactory, LayouterFactory>(s =>
+                RegisterLayouterFactory(new LayouterFactory(s.GetService<IWordsConfig>())))
+
+
+                .AddScoped<Form, ConfigWindow>()
+
+                .BuildServiceProvider();
+        }
+
+        private static LayouterFactory RegisterLayouterFactory(LayouterFactory factory)
+        {
+            factory.Register("По спирали", center => new CircularCloudLayouter(center));
+            return factory;
         }
     }
 }

@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloud.TextProcessing.WordConfig;
 
 namespace TagsCloud.TextProcessing.TextFilters
 {
-    public class FiltersFactory : IFiltersFactory
+    public class FiltersApplier : IFiltersApplier
     {
         private readonly Dictionary<string, ITextFilter> textFilters;
+        private readonly IWordsConfig wordsConfig;
 
-        public FiltersFactory(IEnumerable<ITextFilter> textFilters)
+        public FiltersApplier(IEnumerable<ITextFilter> textFilters, IWordsConfig wordsConfig)
         {
             this.textFilters = textFilters.ToDictionary(filter => filter.Name);
+            this.wordsConfig = wordsConfig;
         }
 
-        public IEnumerable<string> ApplyFilters(IEnumerable<string> text, string[] filterNames)
+        public IEnumerable<string> ApplyFilters(IEnumerable<string> text)
         {
+            var filterNames = wordsConfig.FilerNames;
             return text.Where(word => filterNames.All(name => textFilters[name].CanTake(word)));
         }
 

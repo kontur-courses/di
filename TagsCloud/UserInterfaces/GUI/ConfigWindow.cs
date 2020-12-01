@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.ImageProcessing.Config;
+using TagsCloud.Layouter.Factory;
 using TagsCloud.TagsCloudProcessing;
+using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
 using TagsCloud.TextProcessing.WordConfig;
@@ -13,6 +15,7 @@ namespace TagsCloud.UserInterfaces.GUI
 {
     public partial class ConfigWindow : Form
     {
+        #region Fields
         private readonly FontDialog fontDialog;
         private readonly ColorDialog colorDialog;
         private readonly SaveFileDialog saveFileDialog;
@@ -22,20 +25,29 @@ namespace TagsCloud.UserInterfaces.GUI
         private readonly NumericUpDown heightNumeric;
         private GroupBox filterBox;
         private GroupBox convertBox;
+        private GroupBox tagGeneratorsBox;
+        private GroupBox layouterBox;
 
         private readonly IWordsConfig wordsConfig;
         private readonly IImageConfig imageConfig;
         private readonly TagsCloudProcessor tagsCloudProcessor;
-        private readonly IFiltersFactory filtersFactory;
-        private readonly IConvertersFactory convertersFactory;
+        private readonly IFiltersApplier filtersFactory;
+        private readonly IConvertersApplier convertersFactory;
+        private readonly ITagsGeneratorFactory tagsGeneratorFactory;
+        private readonly ILayouterFactory layouterFactory;
+        #endregion
 
         public ConfigWindow(IWordsConfig wordsConfig, IImageConfig imageConfig,
-           TagsCloudProcessor tagsCloudProcessor, IFiltersFactory filtersFactory, IConvertersFactory convertersFactory)
+           TagsCloudProcessor tagsCloudProcessor, IFiltersApplier filtersFactory,
+           IConvertersApplier convertersFactory, ITagsGeneratorFactory tagsGeneratorFactory,
+           ILayouterFactory layouterFactory)
         {
             InitializeComponent();
 
             this.wordsConfig = wordsConfig;
             this.imageConfig = imageConfig;
+            this.tagsGeneratorFactory = tagsGeneratorFactory;
+            this.layouterFactory = layouterFactory;
             this.tagsCloudProcessor = tagsCloudProcessor;
             this.filtersFactory = filtersFactory;
             this.convertersFactory = convertersFactory;
@@ -43,6 +55,7 @@ namespace TagsCloud.UserInterfaces.GUI
             colorDialog = new ColorDialog();
             fontDialog = new FontDialog();
             saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Изображение (*.png)||Изображение (*.jpg)||Изображение (*.bmp)|";
             openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Текстовые файлы (*.txt)|";
 
@@ -81,8 +94,14 @@ namespace TagsCloud.UserInterfaces.GUI
             convertBox = AddCheckBox("Выберите преобразования", convertersFactory.GetConverterNames());
             AddControl(convertBox, 1, 4, "Выберите преобразования");
 
+            tagGeneratorsBox = AddCheckBox("Выберите алгоритм постоения тега", tagsGeneratorFactory.GetGeneratorNames());
+            AddControl(tagGeneratorsBox, 0, 5, "Выберите алгоритм постоения тега");
+
+            layouterBox = AddCheckBox("Выберите алгоритм формирования облака", layouterFactory.GetLayouterNames());
+            AddControl(layouterBox, 1, 5, "Выберите алгоритм формирования облака");
+
             var sizeImageLabel = new Label();
-            AddControl(sizeImageLabel, 0, 5, "Укажите размер изображения", 1, 2);
+            AddControl(sizeImageLabel, 0, 6, "Укажите размер изображения", 1, 2);
             sizeImageLabel.TextAlign = ContentAlignment.MiddleCenter;
 
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50f));
@@ -90,14 +109,14 @@ namespace TagsCloud.UserInterfaces.GUI
 
             widthNumeric.Maximum = 5000;
             widthNumeric.Value = 500;
-            AddControl(widthNumeric, 0, 6, "");
+            AddControl(widthNumeric, 0, 7, "");
 
             heightNumeric.Maximum = 5000;
             heightNumeric.Value = 500;
-            AddControl(heightNumeric, 1, 6, "");
+            AddControl(heightNumeric, 1, 7, "");
 
             var accept = new Button();
-            AddControl(accept, 0, 7, "Принять настройки", 1, 2);
+            AddControl(accept, 0, 8, "Принять настройки", 1, 2);
             accept.Click += AcceptSettings;
 
             var showButton = new Button();
@@ -140,8 +159,9 @@ namespace TagsCloud.UserInterfaces.GUI
             wordsConfig.Path = openFileDialog.FileName;
             wordsConfig.FilerNames = BindGroupBoxControls(filterBox);
             wordsConfig.ConvertersNames = BindGroupBoxControls(convertBox);
+            wordsConfig.LayoutName = BindGroupBoxControls(layouterBox).First();
+            wordsConfig.TagGeneratorName = BindGroupBoxControls(tagGeneratorsBox).First();
 
-            imageConfig.ImageFormat = ImageFormat.Png;
             imageConfig.ImageSize = imageSize;
             imageConfig.Path = saveFileDialog.FileName;
         }
@@ -159,9 +179,10 @@ namespace TagsCloud.UserInterfaces.GUI
         {
             tableLayoutPanel.Hide();
             Size = imageConfig.ImageSize;
-            using var bitmap = tagsCloudProcessor.CreateCloud();
+            tagsCloudProcessor.CreateCloud();
+            using var image = Image.FromFile(imageConfig.Path);
             using var graphics = CreateGraphics();
-            graphics.DrawImage(bitmap, new PointF(0, 0));
+            graphics.DrawImage(image, new PointF(0, 0));
         }
     }
 }

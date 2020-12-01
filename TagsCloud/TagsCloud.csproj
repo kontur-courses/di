@@ -97,6 +97,12 @@
     <Reference Include="WeCantSpell.Hunspell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCantSpell.Hunspell.3.0.1\lib\net45\WeCantSpell.Hunspell.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Document.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.7.1\lib\net40\Xceed.Document.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.7.1\lib\net40\Xceed.Words.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\RectangleExtension.cs" />
@@ -106,30 +112,36 @@
     <Compile Include="ImageProcessing\Config\ImageConfig.cs" />
     <Compile Include="ImageProcessing\SaverImage\IImageSaver.cs" />
     <Compile Include="ImageProcessing\SaverImage\ImageSaver.cs" />
+    <Compile Include="Layouter\Base\LayouterBase.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
+    <Compile Include="Layouter\Factory\ILayouterFactory.cs" />
+    <Compile Include="Layouter\Factory\LayouterFactory.cs" />
     <Compile Include="Layouter\ILayouter.cs" />
-    <Compile Include="Layouter\ISpiral.cs" />
-    <Compile Include="Layouter\Spiral.cs" />
     <Compile Include="Layouter\TargetVector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagsCloudProcessing\TagsGeneratorFactory\ITagsGeneratorFactory.cs" />
+    <Compile Include="TagsCloudProcessing\TagsGeneratorFactory\TagsGeneratorFactory.cs" />
+    <Compile Include="TagsCloudProcessing\TagsGenerators\ITagsGenerator.cs" />
     <Compile Include="TagsCloudProcessing\Tag.cs" />
     <Compile Include="TagsCloudProcessing\TagsCloudProcessor.cs" />
-    <Compile Include="TextProcessing\Converters\ConvertersFactory.cs" />
-    <Compile Include="TextProcessing\Converters\IConvertersFactory.cs" />
+    <Compile Include="TagsCloudProcessing\TagsGenerators\TagsGenerator.cs" />
+    <Compile Include="TextProcessing\Converters\ConvertersApplier.cs" />
+    <Compile Include="TextProcessing\Converters\IConvertersApplier.cs" />
     <Compile Include="TextProcessing\Converters\LowerCaseConverter.cs" />
-    <Compile Include="TextProcessing\TextFilters\FiltersFactory.cs" />
-    <Compile Include="TextProcessing\TextFilters\IFiltersFactory.cs" />
+    <Compile Include="TextProcessing\TextFilters\FiltersApplier.cs" />
+    <Compile Include="TextProcessing\TextFilters\IFiltersApplier.cs" />
+    <Compile Include="TextProcessing\TextReaders\DocReader.cs" />
     <Compile Include="TextProcessing\TextReaders\IReadersFactory.cs" />
     <Compile Include="TextProcessing\TextReaders\ReadersFactory.cs" />
     <Compile Include="TextProcessing\WordInfo.cs" />
     <Compile Include="TextProcessing\WordConfig\IWordsConfig.cs" />
     <Compile Include="TextProcessing\TextFilters\ITextFilter.cs" />
     <Compile Include="TextProcessing\TextFilters\FunctionWordsFilter.cs" />
-    <Compile Include="TextProcessing\TextOperator.cs" />
+    <Compile Include="TextProcessing\TextProcessor.cs" />
     <Compile Include="TextProcessing\TextReaders\IWordsReader.cs" />
     <Compile Include="TextProcessing\Converters\IWordConverter.cs" />
-    <Compile Include="TextProcessing\TextReaders\TextReader.cs" />
+    <Compile Include="TextProcessing\TextReaders\TxtReader.cs" />
     <Compile Include="TextProcessing\WordConfig\WordConfig.cs" />
     <Compile Include="UserInterfaces\GUI\ConfigWindow.cs">
       <SubType>Form</SubType>

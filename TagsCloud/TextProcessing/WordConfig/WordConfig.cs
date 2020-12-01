@@ -9,5 +9,8 @@ namespace TagsCloud.TextProcessing.WordConfig
         public string Path { get; set; }
         public string[] FilerNames { get; set; }
         public string[] ConvertersNames { get; set; }
+        public string LayoutName { get; set; }
+        public string TagGeneratorName { get; set; }
+
     }
 }

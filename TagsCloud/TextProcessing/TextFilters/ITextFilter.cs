@@ -2,7 +2,7 @@
 {
     public interface ITextFilter
     {
-        public bool CanTake(string word);
-        public string Name { get; }
+        bool CanTake(string word);
+        string Name { get; }
     }
 }
