@@ -3,9 +3,9 @@ using System.IO;
 
 namespace TagsCloudContainer.Reader
 {
-    public class ReadingFile
+    public static class ReadingFile
     {
-        public string GetTextFromFile(string pathToFile)
+        public static string GetTextFromFile(string pathToFile)
         {
             try
             {

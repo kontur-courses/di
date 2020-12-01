@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using MatthiWare.CommandLine;
+using MatthiWare.CommandLine.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using RectanglesCloudLayouter.Core;
-using TagsCloudContainer.Enums;
-using TagsCloudContainer.Extensions;
+using RectanglesCloudLayouter.Interfaces;
 using TagsCloudContainer.Interfaces;
-using TagsCloudContainer.Reader;
 using TagsCloudContainer.SettingsForTagsCloud;
 using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TextProcessing;
 using TagsCloudContainer.UserOptions;
-using TagsCloudContainer.WordTagsCloud;
 
 namespace TagsCloudContainer
 {
@@ -19,41 +16,27 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var cloudSettings = new CloudSettings(new List<ICloudParameter>
-            {
-                new PathToCustomText(), new PathToSaveCloud(), new BackgroundColor(), new TextColor(), new ImageSize(), new TextFont()
-            });
-            var visualization = new Visualization(cloudSettings);
-            var layouter = new CloudLayouter(new Point(0, 0));
-            var analyzer = new TextAnalyzer();
-            TagsCloudProcess(args, cloudSettings, visualization, layouter, analyzer);
+            var serviceCollection = new ServiceCollection();
+            InjectDependencies(serviceCollection, args);
+            serviceCollection.BuildServiceProvider().GetService<AppProcessor>().Run();
         }
 
-        private static void TagsCloudProcess(string[] args, ICloudSettings cloudSettings, Visualization visualization,
-            CloudLayouter layouter, TextAnalyzer analyzer)
+        private static void InjectDependencies(IServiceCollection serviceCollection, string[] args)
         {
-            var parser = new CommandLineParser<AllCommands>();
-            var result = parser.Parse(args);
-            if (result.HasErrors)
-            {
-                return;
-            }
-
-            var programOptions = result.Result;
-            foreach (var option in programOptions.GetType().GetProperties())
-            {
-                var val = option.GetValue(programOptions);
-                if (val == null)
-                    continue;
-                cloudSettings.AddOrUpdateParameter(option.Name, val.ToString());
-            }
-
-            var wordFrequency = analyzer.GetInterestingWords(
-                new ReadingFile().GetTextFromFile(
-                    cloudSettings.GetParameterValue<string>(ParameterType.PathToCustomText))).GetWordsFrequency();
-            var wordTagsLayouter = new WordTagsLayouter(layouter).GetWordTags(wordFrequency,
-                cloudSettings.GetParameterValue<Font>(ParameterType.Font));
-            visualization.GetBitmapImageCloud(layouter.CloudRadius, wordTagsLayouter.ToList());
+            serviceCollection.AddSingleton<AppProcessor, AppProcessor>()
+                .AddSingleton<ICommandLineParser<AllCommands>, CommandLineParser<AllCommands>>()
+                .AddSingleton(typeof(string[]), args)
+                .AddSingleton<ICloudSettings, CloudSettings>()
+                .AddSingleton<ICloudParameter, BoringWords>()
+                .AddSingleton<ICloudParameter, PathToCustomText>()
+                .AddSingleton<ICloudParameter, PathToSaveCloud>()
+                .AddSingleton<ICloudParameter, TextColor>()
+                .AddSingleton<ICloudParameter, BackgroundColor>()
+                .AddSingleton<ICloudParameter, ImageSize>()
+                .AddSingleton<ICloudParameter, TextFont>()
+                .AddSingleton<IVisualization, Visualization>()
+                .AddSingleton<ITextAnalyzer, TextAnalyzer>()
+                .AddSingleton(typeof(ICloudLayouter), new CloudLayouter(new Point()));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace RectanglesCloudLayouter.Core
         private readonly List<Rectangle> _rectangles;
         private readonly ISpiral _spiral;
         public int CloudRadius { get; private set; }
+        public Point Center => _spiral.Center;
 
         public CloudLayouter(Point center)
         {
@@ -27,9 +28,9 @@ namespace RectanglesCloudLayouter.Core
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("Size width and height must be positive");
-            var rectangle = new Rectangle(_spiral.GetNewSpiralPoint(), rectangleSize);
+            var rectangle = new Rectangle(_spiral.GetNewSpiralPoint() - rectangleSize / 2, rectangleSize);
             while (RectanglesIntersection.IsAnyIntersectWithRectangles(rectangle, _rectangles))
-                rectangle = new Rectangle(_spiral.GetNewSpiralPoint(), rectangleSize);
+                rectangle = new Rectangle(_spiral.GetNewSpiralPoint() - rectangleSize / 2, rectangleSize);
             _rectangles.Add(rectangle);
             UpdateCloudRadius(rectangle);
             return rectangle;

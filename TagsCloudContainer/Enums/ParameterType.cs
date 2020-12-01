@@ -7,6 +7,7 @@
         ImageSize,
         Font,
         PathToSave,
-        PathToCustomText
+        PathToCustomText,
+        BoringWords
     }
 }

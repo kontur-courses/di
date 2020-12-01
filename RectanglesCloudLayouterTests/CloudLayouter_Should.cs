@@ -62,14 +62,15 @@ namespace RectanglesCloudLayouterTests
         [TestCase(10, 5)]
         [TestCase(3, 7)]
         [TestCase(23, 23)]
-        public void PutNextRectangle_LocationIsEquivalentToSpiralCenterPosition_WhenPutFirstRectangleAnySize(
-            int widthRectangle, int heightRectangle)
+        public void
+            PutNextRectangle_LocationOfTheRectangleCenterIsEquivalentToSpiralCenterPosition_WhenPutFirstRectangleAnySize(
+                int widthRectangle, int heightRectangle)
         {
             var size = new Size(widthRectangle, heightRectangle);
 
             _rectangles.Add(_sut.PutNextRectangle(size));
 
-            _sut.GetCurrentRectangle.Location.Should().Be(new Point(0, 0));
+            _sut.GetCurrentRectangle.Location.Should().Be(_sut.Center - size / 2);
         }
 
         [TestCase(10)]
@@ -99,7 +100,7 @@ namespace RectanglesCloudLayouterTests
 
             _rectangles.Add(_sut.PutNextRectangle(size));
 
-            _sut.CloudRadius.Should().Be(8);
+            _sut.CloudRadius.Should().Be(5);
         }
     }
 }

@@ -15,5 +15,8 @@ namespace TagsCloudContainer.UserOptions
 
         [Name("bgc", "backColor"), Description("Background color")]
         public string BackgroundColor { get; set; }
+
+        [Name("bw", "boring"), Description("Boring words, underscores separated between words")]
+        public string BoringWords { get; set; }
     }
 }

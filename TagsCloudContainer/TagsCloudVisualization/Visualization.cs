@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using TagsCloudContainer.Enums;
 using TagsCloudContainer.Interfaces;
 using TagsCloudContainer.WordTagsCloud;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class Visualization
+    public class Visualization : IVisualization
     {
         private readonly ICloudSettings _cloudSettings;
 
@@ -17,18 +16,23 @@ namespace TagsCloudContainer.TagsCloudVisualization
             _cloudSettings = cloudSettings;
         }
 
-        public void GetBitmapImageCloud(int cloudRadius, List<WordTag> tags)
+        public Bitmap GetBitmapImageCloud(int cloudRadius, List<WordTag> tags)
         {
             if (tags.Count == 0)
                 throw new Exception("Doesn't contain tags for draw");
             var realImageSize = new Size(cloudRadius * 2, cloudRadius * 2);
             var customImageSize = _cloudSettings.GetParameterValue<Size>(ParameterType.ImageSize);
             if (realImageSize.Height > customImageSize.Height || realImageSize.Width > customImageSize.Width)
-                throw new Exception("Can't draw a cloud of the custom size");
-            using var bitmap =
+            {
+                if (!customImageSize.IsEmpty)
+                    Console.WriteLine("Real cloud sizes are used, but custom ones don't fit");
+                customImageSize = realImageSize;
+            }
+
+            var bitmap =
                 new Bitmap(customImageSize.Width, customImageSize.Height);
             DrawCloud(bitmap, tags, customImageSize);
-            bitmap.Save(_cloudSettings.GetParameterValue<string>(ParameterType.PathToSave), ImageFormat.Png);
+            return bitmap;
         }
 
         private void DrawCloud(Bitmap bitmap, List<WordTag> tags, Size imageSize)

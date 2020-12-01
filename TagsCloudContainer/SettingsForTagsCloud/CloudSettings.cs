@@ -15,7 +15,7 @@ namespace TagsCloudContainer.SettingsForTagsCloud
         private Dictionary<ParameterType, object> _parametersAndValues;
 
 
-        public CloudSettings(List<ICloudParameter> parameters)
+        public CloudSettings(IEnumerable<ICloudParameter> parameters)
         {
             _parametersAndValues = new Dictionary<ParameterType, object>();
             _stringsParameterTypes = new Dictionary<string, ParameterType>();

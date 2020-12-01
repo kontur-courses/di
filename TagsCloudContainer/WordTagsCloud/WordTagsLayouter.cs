@@ -19,7 +19,8 @@ namespace TagsCloudContainer.WordTagsCloud
             var list = new List<WordTag>();
             foreach (var word in wordsAndFrequency.Keys)
             {
-                var wordFont = new Font(font.FontFamily, font.Size * wordsAndFrequency[word]);
+                var wordFont = new Font(font.FontFamily,
+                    font.Size + (float) Math.Log2(wordsAndFrequency[word]) * 7);
                 var wordSize = GetWordSize(Graphics.FromHwnd(IntPtr.Zero).MeasureString(word, wordFont));
                 var rectangle = _cloudLayouter.PutNextRectangle(wordSize);
                 list.Add(new WordTag(word, rectangle, wordFont));

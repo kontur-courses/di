@@ -12,8 +12,8 @@ namespace TagsCloudContainer.SettingsForTagsCloud
 
         private static string GetFilePath(string path)
         {
-            var directoryLength = path.LastIndexOf('\\');
-            if (Directory.Exists(path.Substring(0, directoryLength)))
+            var directoryLength = path.LastIndexOf(Path.DirectorySeparatorChar);
+            if (directoryLength != -1 && Directory.Exists(path.Substring(0, directoryLength)))
                 return path;
             throw new Exception("Doesn't contain the directory to save file");
         }

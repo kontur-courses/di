@@ -13,7 +13,7 @@ namespace TagsCloudContainerTests
             TestName = "When string contains only boring words: pronouns, prepositions, interjections")]
         public void GetInterestingWords_ThrowException(string text)
         {
-            var act = new Action(() => new TextAnalyzer().GetInterestingWords(text));
+            var act = new Action(() => new TextAnalyzer().GetInterestingWords(text, new string [0]));
 
             act.Should().Throw<Exception>();
         }
@@ -22,7 +22,7 @@ namespace TagsCloudContainerTests
             TestName = "Interesting words: nouns, adverbs, verbs, adjectives, numerals")]
         public void GetInterestingWords_NotException_WhenContainsInterestingWords(string text)
         {
-            var act = new Action(() => new TextAnalyzer().GetInterestingWords(text));
+            var act = new Action(() => new TextAnalyzer().GetInterestingWords(text, new string [0]));
 
             act.Should().NotThrow<Exception>();
         }
@@ -31,7 +31,7 @@ namespace TagsCloudContainerTests
             TestName = "Interesting words: nouns, adverbs, verbs, adjectives, numerals")]
         public void GetInterestingWords_InterestingWordsInTheInitialForm_WhenContainsInterestingWords(string text)
         {
-            var act = new TextAnalyzer().GetInterestingWords(text);
+            var act = new TextAnalyzer().GetInterestingWords(text, new string [0]);
 
             act.Should().BeEquivalentTo("ученик", "студент", "первый", "второй", "красивый", "неожиданно", "бегать");
         }
