@@ -38,6 +38,9 @@ namespace TagsCloudContainerConsole
 
             [Option(Default = ScalingMethods.Linear, HelpText = "Scaling method (Linear | Sqrt | LerpTotal | LerpMax)")]
             public ScalingMethods Scaling { get; set; }
+
+            [Option(Default = true)]
+            public bool AutoSize { get; set; }
         }
         
         public enum ScalingMethods
@@ -78,12 +81,14 @@ namespace TagsCloudContainerConsole
 
                 var scaling = scalingMethods[options.Scaling];
                 
-                var output = new Bitmap(options.Width, options.Height);
-                container.Rendering(new WordRendererToImage(output)
+                var renderer = new WordRendererToImage()
                     .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
-                    .WithScale(scaling));
+                    .WithScale(scaling);
+                renderer.AutoSize = options.AutoSize;
+                if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
+                container.Rendering(renderer);
                 container.Render();
-                output.Save(options.OutputFile, ImageFormat.Png);
+                renderer.Output.Save(options.OutputFile, ImageFormat.Png);
             });
         }
 
