@@ -13,12 +13,12 @@ namespace TagsCloud.TextProcessing.TextReaders
             this.textReaders = textReaders.ToArray();
         }
 
-        public IEnumerable<string> ReadText(string path)
+        public IWordsReader CreateReader(string path)
         {
             var reader = textReaders.FirstOrDefault(r => r.CanRead(path));
             if (reader == null)
                 throw new InvalidOperationException("This file type is not supported");
-            return reader.ReadWords(path);
+            return reader;
         }
     }
 }
