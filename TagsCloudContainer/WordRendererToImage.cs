@@ -17,10 +17,27 @@ namespace TagsCloudContainer
         private Func<RenderingInfo, LayoutedWord, Color> colorFunction = DefaultColorFunction;
         private Func<SizingInfo, LayoutedWord, float> scaleFunction = (info, word) => word.Count;
 
+        public bool AutoSize = false;
+
+        public Image Output
+        {
+            get => output;
+            set
+            {
+                output = value;
+                graphics = Graphics.FromImage(output);
+            }
+        }
+
+        public WordRendererToImage()
+        {
+            Output = new Bitmap(1, 1);
+            AutoSize = true;
+        }
+
         public WordRendererToImage(Image output)
         {
-            this.output = output;
-            graphics = Graphics.FromImage(output);
+            Output = output;
         }
 
         public WordRendererToImage WithFont(Func<RenderingInfo, LayoutedWord, Font> fontFunc)
@@ -75,12 +92,16 @@ namespace TagsCloudContainer
         public void Render(IEnumerable<LayoutedWord> words)
         {
             var renderingInfo = new RenderingInfo(this, words.ToArray());
+            if(AutoSize)
+                Output = new Bitmap((int) renderingInfo.WordsBorders.Size.Width, (int) renderingInfo.WordsBorders.Size.Height);
             foreach (var word in renderingInfo.WordsArray)
             {
                 var font = ScaledToRectangle(fontFunction(renderingInfo, word), word.Rectangle);
                 var color = colorFunction(renderingInfo, word);
                 var rect = word.Rectangle;
-                rect.Offset(output.Width / 2f, output.Height / 2f);
+                
+                if (!AutoSize) rect.Offset(Output.Width / 2f, Output.Height / 2f);
+                else rect.Offset(-renderingInfo.WordsBorders.X, -renderingInfo.WordsBorders.Y);
                 
                 graphics.DrawString(word.Word, font, new SolidBrush(color), rect.Location);
             }
