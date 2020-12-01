@@ -24,7 +24,7 @@ namespace TagsCloudVisualization
                 string word;
                 while ((word = sr.ReadLine()) != null)
                 {
-                    words.AddRange(word.Split(' '));//TODO Rewrite normal word parse
+                    words.Add(word);
                 }
             }
 

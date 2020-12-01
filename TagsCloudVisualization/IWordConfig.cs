@@ -4,6 +4,9 @@ namespace TagsCloudVisualization
 {
     public interface IWordConfig //TODo переместить в папку
     {
-        Font font { get; }
+        Font Font { get; }
+        Point Center { get; }
+        
+        Color TextColor { get; }
     }
 }

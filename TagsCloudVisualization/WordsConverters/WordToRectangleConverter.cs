@@ -20,7 +20,7 @@ namespace TagsCloudVisualization
             var graphics = Graphics.FromHwnd(new IntPtr());
             foreach (var word in words)
             {
-                var size = MeasureString(graphics, word, wordConfig.font);
+                var size = MeasureString(graphics, word, wordConfig.Font);
                 var rectangle = cloudLayout.PutNextRectangle(size.ToSize(), word);
                 var cloudTag = new CloudTag(rectangle,word);
                 result.Add(cloudTag);

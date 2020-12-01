@@ -2,13 +2,18 @@
 
 namespace TagsCloudVisualization
 {
-    public class WordConfig : IWordConfig //TODO add center
+    public class WordConfig : IWordConfig //TODO rename
     {
-        public Font font { get; }//toDo rename
+        public Font Font { get; }//toDo rename
+        public Point Center { get; }
+        
+        public Color TextColor { get; }
 
-        public WordConfig(Font font)
+        public WordConfig(Font font, Point center, Color textColor)
         {
-            this.font = font;
+            Font = font;
+            Center = center;
+            TextColor = textColor;
         }
     }
 }

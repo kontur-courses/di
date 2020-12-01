@@ -7,16 +7,18 @@ namespace TagsCloudVisualization
 {
     public static class Drawer
     {
-        public static Bitmap DrawImage(List<ICloudTag> rectangles, Point center)
+        public static Bitmap DrawImage(List<ICloudTag> rectangles, IWordConfig config)
         {
-            CheckParameters(rectangles, center);
+            CheckParameters(rectangles, config.Center);
 
-            var image = new Bitmap(center.X + GetDeltaX(rectangles), center.Y + GetDeltaY(rectangles));
+            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles), config.Center.Y + GetDeltaY(rectangles));
             using var graphics = Graphics.FromImage(image);
 
             foreach (var rectangle in rectangles)
             {
-                graphics.DrawString(rectangle.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Brown), rectangle.Size);//TODO font and size
+                graphics.DrawString(rectangle.Text, config.Font, new SolidBrush(config.TextColor), rectangle.Size);
+                graphics.DrawRectangle(new Pen(config.TextColor),rectangle.Size);//TODO remove
+                Console.WriteLine(rectangle.Text);
             }
 
             return image;

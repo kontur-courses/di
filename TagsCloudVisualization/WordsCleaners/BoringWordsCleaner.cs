@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MyStemWrapper;
 
 namespace TagsCloudVisualization
 {
@@ -14,7 +15,9 @@ namespace TagsCloudVisualization
         
         public List<string> CleanWords(List<string> words)
         {
-            return words.Select(word => word.ToLower())
+            var lemmatizer = new Lemmatizer();
+            var normalizedWords = words.Select(x => lemmatizer.GetText(x)).ToArray();
+            return normalizedWords.Select(word => word.ToLower())
                 .Where(loweredWord => !boringWords.Contains(loweredWord))
                 .ToList();
         }
