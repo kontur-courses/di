@@ -8,33 +8,26 @@ namespace TagsCloudContainer.Drawer
 {
     public class LayoutDrawer : ILayoutDrawer
     {
-        private static Regex colorParser =
-            new Regex(
-                @"argb\((?<alpha>\d{1,3}),(?<red>\d{1,3}),(?<green>\d{1,3}),(?<blue>\d{1,3})\)");
+        private static readonly Regex ColorParser =
+            new Regex(@"argb\((?<alpha>\d{1,3}),(?<red>\d{1,3}),(?<green>\d{1,3}),(?<blue>\d{1,3})\)");
 
-        private readonly Bitmap bitmap;
-        private readonly Graphics graphics;
         private readonly Random random;
         private readonly IOptions options;
-        private IEnumerable<WordRectangle> rectangles;
-
-        Graphics ILayoutDrawer.Graphics => graphics;
-        Bitmap ILayoutDrawer.Bitmap => bitmap;
+        private List<WordRectangle> rectangles;
 
         public LayoutDrawer(IOptions options)
         {
             this.options = options;
-            bitmap = new Bitmap(options.Width, options.Height);
-            graphics = Graphics.FromImage(bitmap);
             random = new Random();
+            rectangles = new List<WordRectangle>();
         }
 
-        public void AddRectangles(IEnumerable<WordRectangle> rectangles)
+        public void AddRectangle(WordRectangle rectangle)
         {
-            this.rectangles = rectangles;
+            rectangles.Add(rectangle);
         }
 
-        public void Draw()
+        public void Draw(Graphics graphics)
         {
             foreach (var rectangle in rectangles)
             {
@@ -48,7 +41,7 @@ namespace TagsCloudContainer.Drawer
         {
             if (s == "random")
                 return Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
-            var match = colorParser.Match(s).Groups;
+            var match = ColorParser.Match(s).Groups;
             return Color.FromArgb(int.Parse(match["alpha"].Value), int.Parse(match["red"].Value),
                 int.Parse(match["green"].Value), int.Parse(match["blue"].Value));
         }

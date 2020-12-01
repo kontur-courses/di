@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer.Drawer
 {
     public interface ILayoutDrawer
     {
-        internal Bitmap Bitmap { get; }
+        public void AddRectangle(WordRectangle rectangles);
 
-        internal Graphics Graphics { get; }
-
-        public void AddRectangles(IEnumerable<WordRectangle> rectangles);
-
-        public void Draw();
+        public void Draw(Graphics graphics);
     }
 }
