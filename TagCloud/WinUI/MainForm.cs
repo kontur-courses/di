@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using WinUI.Helpers;
+using WinUI.InputModels;
+using WinUI.Utils;
 
 namespace WinUI
 {
@@ -24,6 +28,8 @@ namespace WinUI
             StopButton.Enabled = true;
             StopButton.Click += StopButtonClickHandler;
             StopButton.Focus();
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.MarqueeAnimationSpeed = 20;
 
             return new UiLockingOperation(ctSource.Token, progressBar: progressBar,
                 disposer: new ActionDisposable(() =>
@@ -32,14 +38,36 @@ namespace WinUI
                     StopButton.Enabled = false;
                     StopButton.Click -= StopButtonClickHandler;
                     ExecuteButton.Focus();
+                    progressBar.Style = ProgressBarStyle.Blocks;
                 }));
 
             void StopButtonClickHandler(object _, EventArgs __) => ctSource.Cancel();
         }
 
-        public void AddControlToPanel(Panel panel)
+        public void AddUserInput<T>(UserInputSelector<T> inputModel)
         {
-            this.rightPanel.Controls.Add(panel);
+            CreateUserInputContainer(inputModel.Description, () =>
+            {
+                var combobox = new ComboBox();
+
+                combobox.Items.AddRange(inputModel.Available.Select(x => x.Name).Cast<object>().ToArray());
+                combobox.SelectedItem = inputModel.Selected.Name;
+
+                combobox.SelectionChangeCommitted +=
+                    (_, __) => inputModel.SetSelected(combobox.SelectedItem.ToString());
+
+                return combobox;
+            });
+        }
+
+        public void AddUserInput(UserInputField fieldInput)
+        {
+            CreateUserInputContainer(fieldInput.Description, () =>
+            {
+                var textBox = new TextBox();
+                fieldInput.LinkTo(textBox);
+                return textBox;
+            });
         }
 
         public Size PictureBoxSize => pictureBox.Size;
@@ -48,70 +76,34 @@ namespace WinUI
         {
             ExecuteButtonClicked?.Invoke();
         }
-    }
 
-    public class ProgressBarContext : IDisposable
-    {
-        private readonly int previousMax;
-        private readonly int previousMin;
-        private readonly int previousValue;
-        private readonly ProgressBar progressBar;
-
-        public int Value
+        private void CreateUserInputContainer(string showingText, Func<Control> innerCreator)
         {
-            get => progressBar.Value;
-            set => progressBar.Value = value;
-        }
+            var offset = new Size(10, 5);
+            var startY = rightPanel.Controls.Cast<Control>().Select(x => x.Bottom).MaxOrDefault();
 
-        public ProgressBarContext(ProgressBar progressBar, int minValue, int maxValue)
-        {
-            previousMin = progressBar.Minimum;
-            previousMax = progressBar.Maximum;
-            previousValue = progressBar.Value;
+            var panel = new Panel
+            {
+                Location = new Point(0, startY + offset.Height),
+                Width = rightPanel.Width - offset.Width * 2
+            };
+            rightPanel.Controls.Add(panel);
 
-            progressBar.Minimum = minValue;
-            progressBar.Maximum = maxValue;
-            progressBar.Value = minValue;
+            var itemWidth = (panel.Size - offset * 2).Width;
+            var label = new Label
+            {
+                Text = showingText,
+                Location = new Point(offset),
+                Width = itemWidth
+            };
+            panel.Controls.Add(label);
 
-            this.progressBar = progressBar;
-        }
+            var inner = innerCreator.Invoke();
+            inner.Location = new Point(label.Location.X, label.Bottom + offset.Height / 3);
+            inner.Width = itemWidth;
+            panel.Controls.Add(inner);
 
-        public void Increment()
-        {
-            progressBar.Increment(1);
-        }
-
-        public void Dispose()
-        {
-            progressBar.Minimum = previousMin;
-            progressBar.Maximum = previousMax;
-            progressBar.Value = previousValue;
-        }
-    }
-
-    public class UiLockingOperation : IDisposable
-    {
-        private readonly ActionDisposable disposer;
-        private readonly ProgressBar progressBar;
-
-        public UiLockingOperation(CancellationToken cancellationToken, ActionDisposable disposer,
-            ProgressBar progressBar)
-        {
-            CancellationToken = cancellationToken;
-            this.disposer = disposer;
-            this.progressBar = progressBar;
-        }
-
-        public CancellationToken CancellationToken { get; }
-
-        public ProgressBarContext GetProgressBarContext(int minValue, int maxValue)
-        {
-            return new ProgressBarContext(progressBar, minValue, maxValue);
-        }
-
-        public void Dispose()
-        {
-            disposer.Dispose();
+            panel.Height = inner.Bottom;
         }
     }
 }

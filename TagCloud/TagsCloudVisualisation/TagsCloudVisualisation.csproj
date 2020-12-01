@@ -7,9 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MyStemWrapper" Version="1.0.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-      <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+        <PackageReference Include="MyStemWrapper" Version="1.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     </ItemGroup>
 
+    <Target Name="CopyMyStem" AfterTargets="AfterBuild">
+        <Copy SourceFiles="obj/mystem.exe" DestinationFolder="$(OutDir)" />
+    </Target>
 </Project>

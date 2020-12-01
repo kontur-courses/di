@@ -1,4 +1,4 @@
-﻿namespace WinUI
+﻿namespace WinUI.InputModels
 {
     public class UserInputSelectorItem<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace WinUI
+namespace WinUI.InputModels
 {
     public class UserInputSelector<T>
     {

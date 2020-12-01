@@ -13,40 +13,44 @@ using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
 using TagsCloudVisualisation.Text.Preprocessing;
+using WinUI.InputModels;
 
 namespace WinUI
 {
     public class App
     {
         private readonly MainForm mainForm;
-        private readonly IFileWordsReader reader;
-        private readonly IWordFilter filter;
-        private readonly IWordNormalizer normalizer;
-        private readonly UserInputSelector<ITagCloudLayouter> layouters;
+        private readonly UserInputSelector<IFileWordsReader> readers;
+        private readonly UserInputSelector<IWordFilter> filters;
+        private readonly UserInputSelector<IWordNormalizer> normalizers;
         private readonly Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory;
-        private readonly IFileResultWriter writer;
+        private readonly UserInputSelector<IFileResultWriter> writers;
+        private readonly UserInputSelector<ITagCloudLayouter> layouters;
         private readonly UserInputSelector<IColorSource> colorSources;
-        private UserInputSelector<IFontSource> fontSources;
+        private readonly UserInputSelector<IFontSource> fontSources;
+        private readonly UserInputField pathSource;
 
         public App(MainForm mainForm,
-            IFileWordsReader reader,
-            IWordFilter filter,
-            IWordNormalizer normalizer,
+            Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory,
+            IEnumerable<IFileWordsReader> readers,
+            IEnumerable<IWordFilter> filters,
+            IEnumerable<IWordNormalizer> normalizers,
             IEnumerable<ITagCloudLayouter> layouters,
             IEnumerable<IFontSource> fontSources,
             IEnumerable<IColorSource> colorSources,
-            Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory,
-            IFileResultWriter writer)
+            IEnumerable<IFileResultWriter> writers)
         {
             this.mainForm = mainForm;
-            this.reader = reader;
-            this.filter = filter;
-            this.normalizer = normalizer;
             this.cloudGeneratorFactory = cloudGeneratorFactory;
-            this.writer = writer;
+            this.readers = CreateInputFrom(ToDictionaryByName(readers), "Choose words file reader");
+            this.filters = CreateInputFrom(ToDictionaryByName(filters), "Choose words filtering method");
+            this.normalizers = CreateInputFrom(ToDictionaryByName(normalizers), "Choose words normalization method");
+            this.writers = CreateInputFrom(ToDictionaryByName(writers), "Chose result writing method");
             this.layouters = CreateInputFrom(ToDictionaryByName(layouters), "Choose layouting algorithm");
             this.colorSources = CreateInputFrom(ToDictionaryByName(colorSources), "Choose color source");
             this.fontSources = CreateInputFrom(ToDictionaryByName(fontSources), "Choose font source");
+
+            pathSource = new UserInputField {Description = "Enter source file path"};
 
             ConfigureForm();
         }
@@ -59,19 +63,30 @@ namespace WinUI
         private void ConfigureForm()
         {
             mainForm.ExecuteButtonClicked += ExecuteButtonClicked;
+            mainForm.AddUserInput(pathSource);
+
+            mainForm.AddUserInput(readers);
+            mainForm.AddUserInput(filters);
+            mainForm.AddUserInput(normalizers);
+            mainForm.AddUserInput(writers);
+            mainForm.AddUserInput(layouters);
+            mainForm.AddUserInput(colorSources);
+            mainForm.AddUserInput(fontSources);
         }
 
         private async void ExecuteButtonClicked()
         {
-            var sourcePath = RequestInputForm.RequestInput("source path");
             using (var lockingContext = mainForm.StartLockingOperation())
             {
-                var words = ReadWords(sourcePath);
+                var words = await ReadWordsAsync(pathSource.Value, lockingContext.CancellationToken);
+                if (lockingContext.CancellationToken.IsCancellationRequested)
+                    return;
+
                 using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
                 {
                     var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
                     mainForm.SetImage(new Bitmap(image, mainForm.PictureBoxSize));
-                    writer.Save(image, sourcePath + ".png");
+                    writers.Selected.Value.Save(image, pathSource.Value + ".png");
                 }
             }
         }
@@ -94,23 +109,26 @@ namespace WinUI
             return resultImage.FillBackground(Color.Black);
         }
 
-        private WordWithFrequency[] ReadWords(string sourcePath)
+        private async Task<WordWithFrequency[]> ReadWordsAsync(string sourcePath, CancellationToken cancellationToken)
         {
-            var normalizedWords = reader.EnumerateWordsFrom(sourcePath)
-                .Where(filter.IsValidWord)
-                .Select(normalizer.Normalize);
-
-            var dictionary = new Dictionary<string, int>();
-            foreach (var word in normalizedWords)
+            return await Task.Run(() =>
             {
-                if (dictionary.ContainsKey(word))
-                    dictionary[word] += 1;
-                else dictionary[word] = 0;
-            }
+                var words = readers.Selected.Value.EnumerateWordsFrom(sourcePath)
+                    .Where(filters.Selected.Value.IsValidWord);
+                var normalizedWords = normalizers.Selected.Value.Normalize(words);
 
-            return dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
-                .OrderBy(x => x.Frequency)
-                .ToArray();
+                var dictionary = new Dictionary<string, int>();
+                foreach (var word in normalizedWords)
+                {
+                    if (dictionary.ContainsKey(word))
+                        dictionary[word] += 1;
+                    else dictionary[word] = 0;
+                }
+
+                return dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
+                    .OrderBy(x => x.Frequency)
+                    .ToArray();
+            }, cancellationToken);
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
@@ -129,21 +147,6 @@ namespace WinUI
 
             result.Selected = result.Available.FirstOrDefault();
             return result;
-        }
-    }
-
-    public class ActionDisposable : IDisposable
-    {
-        private readonly Action onDispose;
-
-        public ActionDisposable(Action onDispose)
-        {
-            this.onDispose = onDispose;
-        }
-
-        public void Dispose()
-        {
-            onDispose.Invoke();
         }
     }
 }

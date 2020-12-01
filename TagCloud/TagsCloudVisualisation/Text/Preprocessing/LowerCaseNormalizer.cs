@@ -1,7 +1,10 @@
-﻿namespace TagsCloudVisualisation.Text.Preprocessing
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace TagsCloudVisualisation.Text.Preprocessing
 {
     public class LowerCaseNormalizer : IWordNormalizer
     {
-        public string Normalize(string word) => word.ToLower();
+        public IEnumerable<string> Normalize(IEnumerable<string> words) => words.Select(x => x.ToLower());
     }
 }
