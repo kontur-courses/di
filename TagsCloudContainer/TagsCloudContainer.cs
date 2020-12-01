@@ -10,7 +10,7 @@ namespace TagsCloudContainer
 
         public readonly List<Func<string, string>> PreprocessingFuncions =
             new List<Func<string, string>> {w => w.ToLower()};
-        
+
         public IWordsLayouter Layouter = new CircularCloudLayouter();
         public IWordRenderer Renderer;
 
@@ -34,13 +34,13 @@ namespace TagsCloudContainer
 
         public TagsCloudContainer Excluding(params string[] words) => Excluding(words.Contains);
         public TagsCloudContainer Excluding(HashSet<string> words) => Excluding(words.Contains);
-        
+
         public TagsCloudContainer Layouting(IWordsLayouter layouter)
         {
             Layouter = layouter;
             return this;
         }
-        
+
         public TagsCloudContainer Rendering(IWordRenderer renderer)
         {
             Renderer = renderer;
@@ -55,7 +55,7 @@ namespace TagsCloudContainer
                 .Select(w => new LayoutedWord(w.word, w.count));
             var sizedWords = Renderer.SizeWords(convertedWords);
             var layoutedWords = Layouter.LayoutWords(sizedWords);
-            
+
             Renderer.Render(layoutedWords);
         }
 
@@ -67,7 +67,7 @@ namespace TagsCloudContainer
                 .Select(g => (g.Key,
                     g.Sum(gg => gg.count)));
         }
-        
+
         protected string PreprocessWord(string word)
         {
             foreach (var preprocessingFuncion in PreprocessingFuncions)
@@ -78,11 +78,11 @@ namespace TagsCloudContainer
 
             return word;
         }
-        
+
         protected IEnumerable<(string word, int count)> PreprocessWords(IEnumerable<(string word, int count)> words)
         {
             return words
-                .Select(s => (word:PreprocessWord(s.word), s.count))
+                .Select(s => (word: PreprocessWord(s.word), s.count))
                 .Where(w => w.word != null)
                 .GroupBy(w => w.word)
                 .Select(g => (g.Key,

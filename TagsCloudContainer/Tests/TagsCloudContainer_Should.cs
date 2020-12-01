@@ -17,7 +17,7 @@ namespace TagsCloudContainer
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             renderer.Output.Size.Should().Be(renderer.RenderingInfo.WordsBorders.Size.ToSize());
         }
 
@@ -26,7 +26,7 @@ namespace TagsCloudContainer
         {
             var text = GetRandomText(regularWords).WithLowerOrTitleCase().WithOneWordPerLine();
             container.AddFromText(text).Render();
-            
+
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
             foreach (var word in resultWords) word.Should().Be(word.ToLower());
         }
@@ -38,11 +38,11 @@ namespace TagsCloudContainer
             container.AddFromText(text)
                 .Preprocessing(w => w.ToUpper())
                 .Render();
-            
+
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
             foreach (var word in resultWords) word.Should().Be(word.ToUpper());
         }
-        
+
         [Test]
         public void AllowCustomPreprocessing()
         {
@@ -50,7 +50,7 @@ namespace TagsCloudContainer
             container.AddFromText(text)
                 .Preprocessing(w => $"--{w}--")
                 .Render();
-            
+
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
             foreach (var word in resultWords) word.Should().StartWith("--").And.EndWith("--");
         }
@@ -62,7 +62,7 @@ namespace TagsCloudContainer
             container.AddFromText(text)
                 .Excluding(wordsToExclude)
                 .Render();
-            
+
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
             resultWords.Should().NotContain(wordsToExclude);
         }

@@ -10,19 +10,19 @@ namespace TagsCloudContainer
     {
         private TagsCloudContainer container;
         private WordsRendererToImageDebug renderer;
-        
+
         [Test]
         public void NotChangeRatio_WithDefaultScale()
         {
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             foreach (var info in renderer.OutputInfo)
                 GetRatio(GetWordRegularSize(info.Word)).Should()
                     .BeApproximately(GetRatio(info.Word.Rectangle.Size), 0.02f);
         }
-        
+
         [Test]
         public void AllowCustomScaleForWords()
         {
@@ -30,11 +30,11 @@ namespace TagsCloudContainer
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             foreach (var info in renderer.OutputInfo)
                 GetScale(info).Should().BeApproximately(info.Word.Count * 10, 0.02f);
         }
-        
+
         [Test]
         public void NotChangeRatio_WithCustomScale()
         {
@@ -42,12 +42,12 @@ namespace TagsCloudContainer
             renderer.WithScale((info, word) => 100 + word.Count * 10);
             container.AddFromText(text)
                 .Render();
-            
+
             foreach (var info in renderer.OutputInfo)
                 GetRatio(GetWordRegularSize(info.Word)).Should()
                     .BeApproximately(GetRatio(info.Word.Rectangle.Size), 0.02f);
         }
-        
+
         [Test]
         public void AllowCustomFont()
         {
@@ -56,10 +56,10 @@ namespace TagsCloudContainer
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             renderer.OutputInfo.Select(i => i.Font.Name).Should().AllBe(font.Name);
         }
-        
+
         [Test]
         public void AllowCustomFont_ForWords()
         {
@@ -68,13 +68,13 @@ namespace TagsCloudContainer
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             renderer.OutputInfo.Where(i => i.Word.Count > 10).Select(i => i.Font.Name)
                 .Should().AllBe(font.Name);
             renderer.OutputInfo.Where(i => i.Word.Count <= 10).Select(i => i.Font.Name)
                 .Should().AllBe(renderer.DefaultFont.Name);
         }
-        
+
         [Test]
         public void AllowCustomColor()
         {
@@ -86,7 +86,7 @@ namespace TagsCloudContainer
 
             renderer.OutputInfo.Select(i => i.Color).Should().AllBeEquivalentTo(color);
         }
-        
+
         [Test]
         public void AllowCustomColor_ForWords()
         {
@@ -95,7 +95,7 @@ namespace TagsCloudContainer
             var text = GetRandomText(regularWords).WithOneWordPerLine();
             container.AddFromText(text)
                 .Render();
-            
+
             renderer.OutputInfo.Where(i => i.Word.Count > 10).Select(i => i.Color)
                 .Should().AllBeEquivalentTo(color);
             renderer.OutputInfo.Where(i => i.Word.Count <= 10).Select(i => i.Color)
@@ -116,7 +116,7 @@ namespace TagsCloudContainer
         {
             return info.Rectangle.Height / GetWordRegularSize(info.Word).Height;
         }
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -124,7 +124,7 @@ namespace TagsCloudContainer
             container = new TagsCloudContainer()
                 .Rendering(renderer);
         }
-        
+
         private static TextBuilder GetRandomText(params string[][] words) => new TextBuilder(words);
         private string[] regularWords => TextBuilder.regularWords;
         private string[] wordsToExclude => TextBuilder.wordsToExclude;

@@ -18,7 +18,7 @@ namespace TagsCloudContainer
         {
             Rectangle = new RectangleF(PointF.Empty, size);
         }
-        
+
         public LayoutedWord(string word, int count, RectangleF rectangle) : this(word, count)
         {
             Rectangle = rectangle;

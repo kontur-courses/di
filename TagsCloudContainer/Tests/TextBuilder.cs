@@ -10,12 +10,14 @@ namespace TagsCloudContainer
         private List<string> words;
         private int wordsCount = 100;
         private Random random = new Random();
-        
-        public static string[] regularWords = {
+
+        public static string[] regularWords =
+        {
             "массив", "набор", "куча", "обычных", "слов", "существительные", "прилагательные", "глаголы"
         };
 
-        public static string[] wordsToExclude = {
+        public static string[] wordsToExclude =
+        {
             "ты", "вы", "он", "она", "они"
         };
 
@@ -29,7 +31,7 @@ namespace TagsCloudContainer
             this.words.AddRange(words.SelectMany(w => w));
             return this;
         }
-            
+
         public TextBuilder WithWordsCount(int count)
         {
             wordsCount = count;
@@ -41,7 +43,7 @@ namespace TagsCloudContainer
             words = words.Select(w => w.ToLower()).ToList();
             return this;
         }
-            
+
         public TextBuilder WithLowerOrTitleCase()
         {
             words = words.Select(WithLowerOrTitleCase).ToList();
@@ -69,7 +71,7 @@ namespace TagsCloudContainer
 
             return builder.ToString();
         }
-            
+
         public static string ToTitle(string word) => char.ToUpper(word[0]) + word.Substring(1).ToLower();
 
         private IEnumerable<string> GetRandomWords(int count)

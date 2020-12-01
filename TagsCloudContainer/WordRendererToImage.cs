@@ -9,10 +9,10 @@ namespace TagsCloudContainer
     {
         public Font DefaultFont = new Font("Arial", 32, GraphicsUnit.Pixel);
         public Color DefaultColor = Color.Red;
-        
+
         private Image output;
         private Graphics graphics;
-        
+
         private Func<RenderingInfo, LayoutedWord, Font> fontFunction = DefaultFontFunction;
         private Func<RenderingInfo, LayoutedWord, Color> colorFunction = DefaultColorFunction;
         private Func<SizingInfo, LayoutedWord, float> scaleFunction = (info, word) => word.Count;
@@ -45,7 +45,7 @@ namespace TagsCloudContainer
             fontFunction = fontFunc;
             return this;
         }
-        
+
         public WordRendererToImage WithDefaultFont(Font defaultFont)
         {
             DefaultFont = defaultFont;
@@ -55,7 +55,7 @@ namespace TagsCloudContainer
 
         public WordRendererToImage WithFont(Font defaultFont)
             => WithDefaultFont(defaultFont).WithFont((info, word) => info.Renderer.DefaultFont);
-        
+
         public WordRendererToImage WithColor(Func<RenderingInfo, LayoutedWord, Color> colorFunc)
         {
             colorFunction = colorFunc;
@@ -70,7 +70,7 @@ namespace TagsCloudContainer
 
         public WordRendererToImage WithColor(Color defaultColor)
             => WithDefaultColor(defaultColor).WithColor((info, word) => info.Renderer.DefaultColor);
-        
+
         public WordRendererToImage WithScale(Func<SizingInfo, LayoutedWord, float> scaleFunc)
         {
             scaleFunction = scaleFunc;
@@ -92,17 +92,19 @@ namespace TagsCloudContainer
         public virtual void Render(IEnumerable<LayoutedWord> words)
         {
             var renderingInfo = new RenderingInfo(this, words.ToArray());
-            if(AutoSize)
-                Output = new Bitmap((int) renderingInfo.WordsBorders.Size.Width, (int) renderingInfo.WordsBorders.Size.Height);
+            if (AutoSize)
+                Output = new Bitmap(
+                    (int) renderingInfo.WordsBorders.Size.Width,
+                    (int) renderingInfo.WordsBorders.Size.Height);
             foreach (var word in renderingInfo.WordsArray)
             {
                 var font = ScaledToRectangle(fontFunction(renderingInfo, word), word.Rectangle);
                 var color = colorFunction(renderingInfo, word);
                 var rectangle = word.Rectangle;
-                
+
                 if (!AutoSize) rectangle.Offset(Output.Width / 2f, Output.Height / 2f);
                 else rectangle.Offset(-renderingInfo.WordsBorders.X, -renderingInfo.WordsBorders.Y);
-                
+
                 Render(word, font, color, rectangle, renderingInfo);
             }
         }
@@ -130,7 +132,7 @@ namespace TagsCloudContainer
             var scale = rectangle.Height / graphics.MeasureString("h", font).Height;
             return new Font(font.FontFamily, font.Size * scale, font.Style, font.Unit);
         }
-        
+
         private int LerpInt(int a, int b, float t) => (int) (a + (b - a) * t);
         private float Lerp(float a, float b, float t) => a + (b - a) * t;
 
@@ -141,7 +143,7 @@ namespace TagsCloudContainer
             public readonly int MinWordCount;
             public readonly int MaxWordCount;
             public readonly int TotalWordsCount;
-            
+
             public SizingInfo(WordRendererToImage renderer, LayoutedWord[] wordsArray)
             {
                 Renderer = renderer;
