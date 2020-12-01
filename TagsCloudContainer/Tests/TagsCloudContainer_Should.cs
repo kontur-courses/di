@@ -14,9 +14,10 @@ namespace TagsCloudContainer
         public void AutoSizeOutput()
         {
             renderer.AutoSize = true;
-            container
-                .AddFromText(GetRandomText(regularWords).WithOneWordPerLine())
+            var text = GetRandomText(regularWords).WithOneWordPerLine();
+            container.AddFromText(text)
                 .Render();
+            
             renderer.Output.Size.Should().Be(renderer.RenderingInfo.WordsBorders.Size.ToSize());
         }
 
@@ -61,6 +62,7 @@ namespace TagsCloudContainer
             container.AddFromText(text)
                 .Excluding(wordsToExclude)
                 .Render();
+            
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
             resultWords.Should().NotContain(wordsToExclude);
         }
