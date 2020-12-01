@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud.Coloring
+namespace TagCloud.BackgroundPainter
 {
     public interface IBackgroundPainter
     {

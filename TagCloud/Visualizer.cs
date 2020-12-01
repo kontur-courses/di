@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.Coloring;
+using TagCloud.BackgroundPainter;
 
 namespace TagCloud
 {
@@ -19,21 +19,21 @@ namespace TagCloud
             this.backgroundPainter = backgroundPainter;
         }
 
-        public void Visualize(string filename, string fontFamily)
+        public void Visualize(string filename, string fontFamily, Color stringColor)
         {
             var bitmap = new Bitmap(canvas.Width, canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
             var tags = imageInfo.GetTags(filename, canvas.Height);
-
-            DrawAllStrings(tags, fontFamily, graphics);
+            
             backgroundPainter.Draw(tags, canvas, graphics);
+            DrawAllStrings(tags, fontFamily, stringColor, graphics);
             
             bitmap.Save(creater.GetNewPngPath());
         }
         
-        private void DrawAllStrings(List<Tuple<string, Rectangle>> tags, string fontFamily, Graphics graphics)
+        private void DrawAllStrings(List<Tuple<string, Rectangle>> tags, string fontFamily, Color color, Graphics graphics)
         {
-            var textBrush = new SolidBrush(Color.Black);
+            var textBrush = new SolidBrush(color);
             foreach (var (str, rectangle) in tags)
             {
                 DrawString(str, rectangle, fontFamily, textBrush, graphics);
