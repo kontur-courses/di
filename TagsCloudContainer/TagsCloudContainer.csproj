@@ -84,6 +84,7 @@
         <Compile Include="Tests\TagsCloudContainer_Should.cs" />
         <Compile Include="Tests\TextBuilder.cs" />
         <Compile Include="Tests\WordsRendererToImageDebug.cs" />
+        <Compile Include="Tests\WordsRendererToImage_Should.cs" />
         <Compile Include="WordRendererToImage.cs" />
         <Compile Include="IWordsSource.cs" />
         <Compile Include="WordsSources\WordsSourceFromFile.cs" />
