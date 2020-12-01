@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Autofac;
 using Autofac.Core;
+using TagsCloudVisualisation;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
@@ -20,7 +21,11 @@ namespace WinUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            InitContainer().Resolve<App>().Run();
+            var container = InitContainer();
+            container.Resolve<App>().Subscribe();
+            
+            var form = container.Resolve<MainForm>();
+            Application.Run(form);
         }
 
         private static IContainer InitContainer()
@@ -30,7 +35,7 @@ namespace WinUI
             builder.RegisterType<FileWordsReader>()
                 .AsImplementedInterfaces()
                 .AsSelf()
-                .WithParameter("delimiters", new[] {'\n', ' '});
+                .WithParameter("delimiters", new [] {',', '.', ' ', '!', '?', '\n', '\r', '\t', '&', '#', '-'});
 
             builder.RegisterType<CircularTagCloudLayouter>()
                 .AsImplementedInterfaces()
@@ -48,10 +53,16 @@ namespace WinUI
                 .AsSelf()
                 .InstancePerDependency();
 
+            builder.RegisterType<TagCloudGenerator>()
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .InstancePerDependency();
+
             builder.RegisterAssemblyTypes(typeof(ITagCloudLayouter).Assembly, typeof(Program).Assembly)
                 .Where(t => !builder.ComponentRegistryBuilder.IsRegistered(new TypedService(t)))
                 .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf()
+                .SingleInstance();
 
             return builder.Build();
         }

@@ -18,6 +18,11 @@ namespace TagsCloudVisualisation.Text
 
         public IEnumerable<string> EnumerateWordsFrom(string path)
         {
+            return EnumerateRawWords(path).Where(x => !string.IsNullOrEmpty(x));
+        }
+
+        private IEnumerable<string> EnumerateRawWords(string path)
+        {
             if (!File.Exists(path))
                 throw new FileNotFoundException($"File {path} not found", path);
 

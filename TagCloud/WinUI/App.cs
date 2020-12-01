@@ -19,7 +19,7 @@ namespace WinUI
 {
     public class App
     {
-        private readonly MainForm mainForm;
+        private readonly IGui gui;
         private readonly UserInputSelector<IFileWordsReader> readers;
         private readonly UserInputSelector<IWordFilter> filters;
         private readonly UserInputSelector<IWordNormalizer> normalizers;
@@ -30,7 +30,7 @@ namespace WinUI
         private readonly UserInputSelector<IFontSource> fontSources;
         private readonly UserInputField pathSource;
 
-        public App(MainForm mainForm,
+        public App(IGui gui,
             Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory,
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
@@ -40,7 +40,7 @@ namespace WinUI
             IEnumerable<IColorSource> colorSources,
             IEnumerable<IFileResultWriter> writers)
         {
-            this.mainForm = mainForm;
+            this.gui = gui;
             this.cloudGeneratorFactory = cloudGeneratorFactory;
             this.readers = CreateInputFrom(ToDictionaryByName(readers), "Choose words file reader");
             this.filters = CreateInputFrom(ToDictionaryByName(filters), "Choose words filtering method");
@@ -51,33 +51,26 @@ namespace WinUI
             this.fontSources = CreateInputFrom(ToDictionaryByName(fontSources), "Choose font source");
 
             pathSource = new UserInputField("Enter source file path");
-
-            ConfigureForm();
         }
 
-        public void Run()
+        public void Subscribe()
         {
-            Application.Run(mainForm);
+            gui.ExecutionRequested += ExecutionRequested;
+            colorSources.SelectedChanged += x => gui.SetImageBackground(x.Value.BackgroundColor);
+
+            gui.AddUserInput(pathSource);
+            gui.AddUserInput(readers);
+            gui.AddUserInput(filters);
+            gui.AddUserInput(normalizers);
+            gui.AddUserInput(writers);
+            gui.AddUserInput(layouters);
+            gui.AddUserInput(colorSources);
+            gui.AddUserInput(fontSources);
         }
 
-        private void ConfigureForm()
+        private async void ExecutionRequested()
         {
-            mainForm.ExecuteButtonClicked += ExecuteButtonClicked;
-            colorSources.SelectedChanged += x => mainForm.SetImageBackground(x.Value.BackgroundColor);
-
-            mainForm.AddUserInput(pathSource);
-            mainForm.AddUserInput(readers);
-            mainForm.AddUserInput(filters);
-            mainForm.AddUserInput(normalizers);
-            mainForm.AddUserInput(writers);
-            mainForm.AddUserInput(layouters);
-            mainForm.AddUserInput(colorSources);
-            mainForm.AddUserInput(fontSources);
-        }
-
-        private async void ExecuteButtonClicked()
-        {
-            using (var lockingContext = mainForm.StartLockingOperation())
+            using (var lockingContext = gui.StartLockingOperation())
             {
                 var words = await ReadWordsAsync(pathSource.Value, lockingContext.CancellationToken);
                 if (lockingContext.CancellationToken.IsCancellationRequested)
@@ -86,7 +79,7 @@ namespace WinUI
                 using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
                 {
                     var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
-                    mainForm.SetImage(image);
+                    gui.SetImage(image);
                     writers.Selected.Value.Save(
                         image.FillBackground(colorSources.Selected.Value.BackgroundColor),
                         pathSource.Value + ".png");
@@ -135,7 +128,8 @@ namespace WinUI
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
-            source.ToDictionary(x => x.GetType().GetCustomAttribute<VisibleNameAttribute>()?.Name ?? x.GetType().Name);
+            source.Where(x => x != null)
+                .ToDictionary(x => x.GetType().GetCustomAttribute<VisibleNameAttribute>()?.Name ?? x.GetType().Name);
 
         private static UserInputSelector<TService> CreateInputFrom<TService>(IDictionary<string, TService> source,
             string description)

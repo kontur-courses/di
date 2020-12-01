@@ -4,14 +4,24 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using TagsCloudVisualisation.Extensions;
-using TagsCloudVisualisation.Text.Formatting;
 using WinUI.Helpers;
 using WinUI.InputModels;
 using WinUI.Utils;
 
 namespace WinUI
 {
-    public partial class MainForm : Form
+    public interface IGui
+    {
+        void SetImage(Image newImage);
+        UiLockingOperation StartLockingOperation();
+        void AddUserInput<T>(UserInputSelector<T> inputModel);
+        void AddUserInput(UserInputField fieldInput);
+        void SetImageBackground(Color color);
+
+        event Action? ExecutionRequested;
+    }
+
+    public partial class MainForm : Form, IGui
     {
         private FormWindowState previousState;
         private Image? currentResultImage;
@@ -22,7 +32,7 @@ namespace WinUI
             previousState = WindowState;
         }
 
-        public event Action? ExecuteButtonClicked;
+        public event Action? ExecutionRequested;
 
         public void SetImage(Image newImage)
         {
@@ -82,7 +92,7 @@ namespace WinUI
 
         private void ExecuteButton_Click(object sender, EventArgs args)
         {
-            ExecuteButtonClicked?.Invoke();
+            ExecutionRequested?.Invoke();
         }
 
         private void CreateUserInputContainer(string showingText, Func<Control> innerCreator)
