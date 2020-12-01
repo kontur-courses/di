@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Infrastructure.DictionaryGenerator;
+using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 
-namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
+namespace TagsCloudContainer.App.TextParserToFrequencyDictionary
 {
-    internal class FrequencyDictionaryGenerator : IFrequencyDictionaryGenerator
+    internal class TextParserToFrequencyDictionary : ITextParserToFrequencyDictionary
     {
         private readonly ITextParser textParser;
         private readonly IEnumerable<IWordFilter> wordFilters;
         private readonly IEnumerable<IWordNormalizer> wordNormalizers;
 
-        public FrequencyDictionaryGenerator(ITextParser textParser,
+        public TextParserToFrequencyDictionary(ITextParser textParser,
             IEnumerable<IWordNormalizer> wordNormalizers, IEnumerable<IWordFilter> wordFilters)
         {
             this.textParser = textParser;

@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Infrastructure.DictionaryGenerator
+﻿namespace TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary
 {
     internal interface IWordNormalizer
     {

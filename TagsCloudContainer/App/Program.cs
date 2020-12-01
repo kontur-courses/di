@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.App.CloudGenerator;
 using TagsCloudContainer.App.CloudVisualizer;
 using TagsCloudContainer.App.DataReader;
-using TagsCloudContainer.App.FrequencyDictionaryGenerator;
+using TagsCloudContainer.App.TextParserToFrequencyDictionary;
 using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DataReader;
-using TagsCloudContainer.Infrastructure.DictionaryGenerator;
+using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 
 namespace TagsCloudContainer.App
 {
@@ -29,7 +29,7 @@ namespace TagsCloudContainer.App
                 .AddScoped<ITextParser, SimpleTextParser>()
                 .AddScoped<IWordNormalizer, ToLowerWordNormalizer>()
                 .AddScoped<IWordFilter, SimpleWordFilter>()
-                .AddScoped<IFrequencyDictionaryGenerator, FrequencyDictionaryGenerator.FrequencyDictionaryGenerator>()
+                .AddScoped<ITextParserToFrequencyDictionary, TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
                 .AddSingleton<IFontGetter> (new FontGetter(imageSettings.FontName))
                 .AddScoped<ICloudGenerator, CloudGenerator.CloudGenerator>()
                 .AddSingleton<IImageGenerator> (new ImageGenerator(imageSettings))
