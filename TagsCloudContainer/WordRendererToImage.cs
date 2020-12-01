@@ -89,7 +89,7 @@ namespace TagsCloudContainer
             }
         }
 
-        public void Render(IEnumerable<LayoutedWord> words)
+        public virtual void Render(IEnumerable<LayoutedWord> words)
         {
             var renderingInfo = new RenderingInfo(this, words.ToArray());
             if(AutoSize)
@@ -98,13 +98,18 @@ namespace TagsCloudContainer
             {
                 var font = ScaledToRectangle(fontFunction(renderingInfo, word), word.Rectangle);
                 var color = colorFunction(renderingInfo, word);
-                var rect = word.Rectangle;
+                var rectangle = word.Rectangle;
                 
-                if (!AutoSize) rect.Offset(Output.Width / 2f, Output.Height / 2f);
-                else rect.Offset(-renderingInfo.WordsBorders.X, -renderingInfo.WordsBorders.Y);
+                if (!AutoSize) rectangle.Offset(Output.Width / 2f, Output.Height / 2f);
+                else rectangle.Offset(-renderingInfo.WordsBorders.X, -renderingInfo.WordsBorders.Y);
                 
-                graphics.DrawString(word.Word, font, new SolidBrush(color), rect.Location);
+                Render(word, font, color, rectangle, renderingInfo);
             }
+        }
+
+        protected virtual void Render(LayoutedWord word, Font font, Color color, RectangleF rectangle, RenderingInfo info)
+        {
+            graphics.DrawString(word.Word, font, new SolidBrush(color), rectangle.Location);
         }
 
         private static Font DefaultFontFunction(RenderingInfo info, LayoutedWord word) => info.Renderer.DefaultFont;
