@@ -21,8 +21,7 @@ namespace TagsCloudContainer.App.CloudGenerator
         {
             foreach (var pair in frequencyDictionary.OrderByDescending(pair => pair.Value))
             {
-                var word = pair.Key;
-                var frequency = pair.Value;
+                var (word, frequency) = (pair.Key, pair.Value);
                 var font = fontGetter.GetFont(word, frequency);
                 var rectangleSize = GetRectangleSize(word, font);
                 var nextRectangle = layouter.PutNextRectangle(rectangleSize);

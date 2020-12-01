@@ -13,8 +13,7 @@ namespace TagsCloudContainer.App.DataReader
         }
         public IEnumerable<string> ReadLines()
         {
-            using var reader = new StreamReader(filename);
-            while (!reader.EndOfStream) yield return reader.ReadLine();
+            return File.ReadLines(filename);
         }
     }
 }
