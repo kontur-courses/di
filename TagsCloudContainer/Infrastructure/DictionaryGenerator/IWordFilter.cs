@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TagsCloudContainer.Infrastructure.DictionaryGenerator
+﻿namespace TagsCloudContainer.Infrastructure.DictionaryGenerator
 {
     internal interface IWordFilter
     {
-        public IEnumerable<string> FilterOutBoringWords(IEnumerable<string> words);
+        public bool IsBoring(string word);
     }
 }

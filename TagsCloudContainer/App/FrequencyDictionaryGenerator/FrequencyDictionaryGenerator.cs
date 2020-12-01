@@ -7,32 +7,27 @@ namespace TagsCloudContainer.App.FrequencyDictionaryGenerator
     internal class FrequencyDictionaryGenerator : IFrequencyDictionaryGenerator
     {
         private readonly ITextParser textParser;
-        private readonly IWordFilter wordFilter;
-        private readonly IWordNormalizer wordProcessor;
+        private readonly IEnumerable<IWordFilter> wordFilters;
+        private readonly IEnumerable<IWordNormalizer> wordNormalizers;
 
         public FrequencyDictionaryGenerator(ITextParser textParser,
-            IWordNormalizer wordProcessor, IWordFilter wordFilter)
+            IEnumerable<IWordNormalizer> wordNormalizers, IEnumerable<IWordFilter> wordFilters)
         {
             this.textParser = textParser;
-            this.wordProcessor = wordProcessor;
-            this.wordFilter = wordFilter;
+            this.wordNormalizers = wordNormalizers;
+            this.wordFilters = wordFilters;
         }
 
         public Dictionary<string, double> GenerateFrequencyDictionary(IEnumerable<string> lines)
         {
-            var words = textParser.GetWords(lines);
-            var notBoringWords = wordFilter.FilterOutBoringWords(
-                words.Select(word => wordProcessor.NormalizeWord(word))).ToArray();
-            var dictionary = new Dictionary<string, double>();
-            foreach (var word in notBoringWords)
-            {
-                if (!dictionary.ContainsKey(word)) dictionary[word] = 0;
-                dictionary[word] += 1;
-            }
-
-            foreach (var key in dictionary.Keys.ToArray()) dictionary[key] /= notBoringWords.Length;
-
-            return dictionary;
+            var notBoringWords = textParser.GetWords(lines)
+                .NormalizeWords(wordNormalizers)
+                .FilterOutBoringWords(wordFilters);
+            var notBoringWordsCount = notBoringWords.Count();
+            return notBoringWords
+                .GroupBy(word => word)
+                .ToDictionary(group => group.Key,
+                    group => (double) group.Count() / notBoringWordsCount);
         }
     }
 }
