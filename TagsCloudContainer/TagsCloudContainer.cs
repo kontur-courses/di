@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace TagsCloudContainer
@@ -88,29 +87,6 @@ namespace TagsCloudContainer
                 .GroupBy(w => w.word)
                 .Select(g => (g.Key,
                     g.Sum(gg => gg.count)));
-        }
-    }
-
-    public class LayoutedWord
-    {
-        public readonly string Word;
-        public readonly int Count;
-        public RectangleF Rectangle;
-
-        public LayoutedWord(string word, int count)
-        {
-            Word = word;
-            Count = count;
-        }
-
-        public LayoutedWord(string word, int count, SizeF size) : this(word, count)
-        {
-            Rectangle = new RectangleF(PointF.Empty, size);
-        }
-        
-        public LayoutedWord(string word, int count, RectangleF rectangle) : this(word, count)
-        {
-            Rectangle = rectangle;
         }
     }
 }

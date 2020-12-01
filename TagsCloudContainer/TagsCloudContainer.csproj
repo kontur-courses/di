@@ -68,6 +68,7 @@
         <Compile Include="CircularCloudLayouter.cs" />
         <Compile Include="IRectangleLayouter.cs" />
         <Compile Include="IWordRenderer.cs" />
+        <Compile Include="LayoutedWord.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TagsCloudContainer.cs" />
         <Compile Include="WordRendererToImage.cs" />
