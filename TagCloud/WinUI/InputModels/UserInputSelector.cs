@@ -4,9 +4,16 @@ namespace WinUI.InputModels
 {
     public class UserInputSelector<T>
     {
-        public string Description { get; set; }
+        public UserInputSelector(string description, UserInputSelectorItem<T>[] available)
+        {
+            Description = description;
+            Available = available;
+            Selected = Available[0];
+        }
+
+        public string Description { get; }
+        public UserInputSelectorItem<T>[] Available { get; }
         public UserInputSelectorItem<T> Selected { get; set; }
-        public UserInputSelectorItem<T>[] Available { get; set; }
 
         public void SetSelected(string name) =>
             Selected = Available.Single(x => x.Name == name);

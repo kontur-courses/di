@@ -50,7 +50,7 @@ namespace WinUI
             this.colorSources = CreateInputFrom(ToDictionaryByName(colorSources), "Choose color source");
             this.fontSources = CreateInputFrom(ToDictionaryByName(fontSources), "Choose font source");
 
-            pathSource = new UserInputField {Description = "Enter source file path"};
+            pathSource = new UserInputField("Enter source file path");
 
             ConfigureForm();
         }
@@ -92,7 +92,7 @@ namespace WinUI
         }
 
         private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken,
-            Action callback = null)
+            Action? callback = null)
         {
             var cloudGenerator = cloudGeneratorFactory.Invoke(
                 layouters.Selected.Value,
@@ -137,16 +137,11 @@ namespace WinUI
         private static UserInputSelector<TService> CreateInputFrom<TService>(IDictionary<string, TService> source,
             string description)
         {
-            var result = new UserInputSelector<TService>
-            {
-                Description = description,
-                Available = source.Select(x => new UserInputSelectorItem<TService> {Name = x.Key, Value = x.Value})
-                    .OrderBy(x => x.Name)
-                    .ToArray(),
-            };
+            var availableOptions = source.Select(x => new UserInputSelectorItem<TService>(x.Key, x.Value))
+                .OrderBy(x => x.Name)
+                .ToArray();
 
-            result.Selected = result.Available.FirstOrDefault();
-            return result;
+            return new UserInputSelector<TService>(description, availableOptions);
         }
     }
 }

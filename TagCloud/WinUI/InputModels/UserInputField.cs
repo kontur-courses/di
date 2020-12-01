@@ -6,7 +6,12 @@ namespace WinUI.InputModels
     {
         private TextBox? textBox;
 
-        public string Description { get; set; }
+        public UserInputField(string description)
+        {
+            Description = description;
+        }
+
+        public string Description { get; }
 
         public string Value
         {

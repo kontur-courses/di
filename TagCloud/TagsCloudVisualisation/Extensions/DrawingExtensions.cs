@@ -60,7 +60,7 @@ namespace TagsCloudVisualisation.Extensions
         {
             var newImage = new Bitmap(image.Size.Width, image.Size.Height);
             using var g = Graphics.FromImage(newImage);
-            modifier?.Invoke(g);
+            modifier.Invoke(g);
             g.DrawImage(image, new Point(0, 0));
             return newImage;
         }
