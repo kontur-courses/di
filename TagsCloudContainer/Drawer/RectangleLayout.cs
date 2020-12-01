@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using TagsCloudContainer.Layouter;
 
 namespace TagsCloudContainer.Drawer
 {
     public class RectangleLayout : IRectangleLayout
     {
-        public IEnumerable<WordRectangle> Rectangles => rectangles;
         private readonly IOptions options;
         private readonly ILayouter layouter;
         private readonly ILayoutDrawer drawer;
@@ -27,7 +27,7 @@ namespace TagsCloudContainer.Drawer
             foreach (var (word, count) in words)
             {
                 var fontSize = CalculateFontSize(count);
-                var rectangle = layouter.PutNextRectangle(GetWordSize(word, fontSize, options.Font));
+                var rectangle = layouter.PutNextRectangle(GetWordSize(word, fontSize, options.FontFamily));
                 rectangles.Add(new WordRectangle(rectangle, word, fontSize));
             }
 
@@ -51,8 +51,10 @@ namespace TagsCloudContainer.Drawer
 
         public void SaveLayout()
         {
-            drawer.Bitmap.Save(options.Output);
-            Console.WriteLine($"Tag cloud visualization saved to file {options.Output}");
+            var outputDirectory = options.OutputDirectory ?? Directory.GetCurrentDirectory();
+            var fullPath = Path.Combine(outputDirectory, options.OutputFileName + options.OutputFileExtension);
+            drawer.Bitmap.Save(fullPath);
+            Console.WriteLine($"Tag cloud visualization saved to file {fullPath}");
         }
     }
 }

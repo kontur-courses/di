@@ -14,12 +14,11 @@ namespace TagsCloudContainerTests
     {
         private Point center;
         private CircularCloudLayouter layouter;
-        private Options options;
 
         [SetUp]
         public void SetUp()
         {
-            options = new Options(500, 500, "Arial", "", "");
+            var options = new Options(500, 500);
             center = new Point(options.Width / 2, options.Height / 2);
             layouter = new CircularCloudLayouter();
             layouter.SetCenter(center.X, center.Y);
@@ -109,17 +108,17 @@ namespace TagsCloudContainerTests
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public string Font { get; set; }
+        public string FontFamily { get; set; }
         public string FilePath { get; set; }
-        public string Output { get; set; }
+        public string OutputDirectory { get; set; }
+        public string OutputFileName { get; set; }
+        public string OutputFileExtension { get; set; }
+        public string FontColor { get; set; }
 
-        public Options(int width, int height, string font, string path, string output)
+        public Options(int width, int height)
         {
             Width = width;
             Height = height;
-            Font = font;
-            FilePath = path;
-            Output = output;
         }
     }
 }

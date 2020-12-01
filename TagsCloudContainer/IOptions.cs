@@ -6,10 +6,16 @@
 
         public int Height { get; set; }
 
-        public string Font { get; set; }
+        public string FontFamily { get; set; }
 
         public string FilePath { get; set; }
 
-        public string Output { get; set; }
+        public string OutputDirectory { get; set; }
+
+        public string OutputFileName { get; set; }
+
+        public string OutputFileExtension { get; set; }
+
+        public string FontColor { get; set; }
     }
 }
