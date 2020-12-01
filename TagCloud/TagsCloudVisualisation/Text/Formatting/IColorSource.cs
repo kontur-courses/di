@@ -2,9 +2,8 @@
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
-    public interface IWordFormatter
+    public interface IColorSource
     {
-        Font GetFont(string word, int totalWordsCount, int positionInTop);
         Brush GetBrush(string word, double distanceFromCenter);
     }
 }

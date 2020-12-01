@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using Autofac;
 using Autofac.Core;
 using TagsCloudVisualisation.Layouting;
@@ -15,6 +16,10 @@ namespace WinUI
         [STAThread]
         static void Main()
         {
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             InitContainer().Resolve<App>().Run();
         }
 

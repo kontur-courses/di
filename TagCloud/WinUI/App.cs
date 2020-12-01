@@ -23,17 +23,19 @@ namespace WinUI
         private readonly IWordFilter filter;
         private readonly IWordNormalizer normalizer;
         private readonly UserInputSelector<ITagCloudLayouter> layouters;
-        private readonly UserInputSelector<IWordFormatter> formatters;
-        private readonly Func<IWordFormatter, ITagCloudLayouter, TagCloudGenerator> cloudGeneratorFactory;
+        private readonly Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory;
         private readonly IFileResultWriter writer;
+        private readonly UserInputSelector<IColorSource> colorSources;
+        private UserInputSelector<IFontSource> fontSources;
 
         public App(MainForm mainForm,
             IFileWordsReader reader,
             IWordFilter filter,
             IWordNormalizer normalizer,
             IEnumerable<ITagCloudLayouter> layouters,
-            IEnumerable<IWordFormatter> formatters,
-            Func<IWordFormatter, ITagCloudLayouter, TagCloudGenerator> cloudGeneratorFactory,
+            IEnumerable<IFontSource> fontSources,
+            IEnumerable<IColorSource> colorSources,
+            Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory,
             IFileResultWriter writer)
         {
             this.mainForm = mainForm;
@@ -43,32 +45,52 @@ namespace WinUI
             this.cloudGeneratorFactory = cloudGeneratorFactory;
             this.writer = writer;
             this.layouters = CreateInputFrom(ToDictionaryByName(layouters), "Choose layouting algorithm");
-            this.formatters = CreateInputFrom(ToDictionaryByName(formatters), "Choose formatting");
+            this.colorSources = CreateInputFrom(ToDictionaryByName(colorSources), "Choose color source");
+            this.fontSources = CreateInputFrom(ToDictionaryByName(fontSources), "Choose font source");
+
+            ConfigureForm();
         }
 
         public void Run()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(mainForm);
+        }
+
+        private void ConfigureForm()
+        {
+            mainForm.ExecuteButtonClicked += ExecuteButtonClicked;
         }
 
         private async void ExecuteButtonClicked()
         {
             var sourcePath = RequestInputForm.RequestInput("source path");
-            var words = ReadWords(sourcePath);
-            var tokenSource = new CancellationTokenSource();
-            var image = await CreateImageAsync(words, tokenSource.Token);
-            mainForm.PictureBox.Image = image;
-            writer.Save(image, sourcePath + ".png");
+            using (var lockingContext = mainForm.StartLockingOperation())
+            {
+                var words = ReadWords(sourcePath);
+                using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
+                {
+                    var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
+                    mainForm.SetImage(new Bitmap(image, mainForm.PictureBoxSize));
+                    writer.Save(image, sourcePath + ".png");
+                }
+            }
         }
 
-        private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken)
+        private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken,
+            Action callback = null)
         {
-            var cloudGenerator = cloudGeneratorFactory.Invoke(formatters.Selected.Value, layouters.Selected.Value);
+            var cloudGenerator = cloudGeneratorFactory.Invoke(
+                layouters.Selected.Value,
+                fontSources.Selected.Value,
+                colorSources.Selected.Value);
+            if (callback != null)
+                cloudGenerator.AfterWordDrawn += callback;
+
             var resultImage = await cloudGenerator.DrawWordsAsync(words, cancellationToken);
+
             layouters.Selected.Value.Reset();
+            if (callback != null)
+                cloudGenerator.AfterWordDrawn -= callback;
             return resultImage.FillBackground(Color.Black);
         }
 
@@ -107,6 +129,21 @@ namespace WinUI
 
             result.Selected = result.Available.FirstOrDefault();
             return result;
+        }
+    }
+
+    public class ActionDisposable : IDisposable
+    {
+        private readonly Action onDispose;
+
+        public ActionDisposable(Action onDispose)
+        {
+            this.onDispose = onDispose;
+        }
+
+        public void Dispose()
+        {
+            onDispose.Invoke();
         }
     }
 }
