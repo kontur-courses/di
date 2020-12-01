@@ -59,6 +59,9 @@ namespace TagCloud
               case "empty":
                   services.AddSingleton<IBackgroundPainter, BackgroundPainterEmpty>();
                   break;
+              case "circle":
+                  services.AddSingleton<IBackgroundPainter, BackgroundPainterCircle>();
+                  break;
               default:
                   throw new ArgumentException("bad background type");
             }
@@ -96,7 +99,7 @@ namespace TagCloud
             var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleValue);
             var optionFont = app.Option("-f|--font <FONT>", "font family", CommandOptionType.SingleValue);
             var optionSize = app.Option("-s|--size <SIZE>", "size of image width,height", CommandOptionType.SingleValue);
-            var optionBackground = app.Option("-b|--backgound <BACKGROUND_STYLE>", "background style rectangles|empty", CommandOptionType.SingleValue);
+            var optionBackground = app.Option("-b|--backgound <BACKGROUND_STYLE>", "background style rectangles|empty|circle", CommandOptionType.SingleValue);
             var optionStringColor =
                 app.Option("-c|--color <COLOR>", "string color r,g,b", CommandOptionType.SingleValue);
 
