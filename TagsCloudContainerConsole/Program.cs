@@ -73,10 +73,14 @@ namespace TagsCloudContainerConsole
                 var scalingMethods =
                     new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
                     {
-                        [ScalingMethods.Linear] = (info, word) => word.Count,
-                        [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
-                        [ScalingMethods.LerpTotal] = (info, word) => 1f + 5 * word.Count / (float) info.TotalWordsCount,
-                        [ScalingMethods.LerpMax] = (info, word) => 1f + 5 * word.Count / (float) info.MaxWordCount
+                        [ScalingMethods.Linear] =
+                            (info, word) => word.Count,
+                        [ScalingMethods.Sqrt] =
+                            (info, word) => (float) Math.Sqrt(word.Count),
+                        [ScalingMethods.LerpTotal] =
+                            (info, word) => 1f + 5 * word.Count / (float) info.TotalWordsCount,
+                        [ScalingMethods.LerpMax] =
+                            (info, word) => 1f + 5 * word.Count / (float) (info.MaxWordCount - info.MinWordCount)
                     };
 
                 var scaling = scalingMethods[options.Scaling];
