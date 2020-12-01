@@ -31,11 +31,5 @@ namespace TagsCloudVisualisation.Text.Formatting
             var index = random.Next(0, Colors.Length);
             return new SolidBrush(Colors[index]);
         }
-
-        private Color GetRandomColor()
-        {
-            var index = random.Next(0, Colors.Length);
-            return Colors[index];
-        }
     }
 }

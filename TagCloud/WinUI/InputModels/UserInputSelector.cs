@@ -19,9 +19,9 @@ namespace WinUI.InputModels
         public void SetSelected(string name)
         {
             Selected = Available.Single(x => x.Name == name);
-            SelectedChanged.Invoke(Selected);
+            SelectedChanged?.Invoke(Selected);
         }
 
-        public event Action<UserInputSelectorItem<T>> SelectedChanged;
+        public event Action<UserInputSelectorItem<T>>? SelectedChanged;
     }
 }
