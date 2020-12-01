@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
             pointProvider = provider;
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize, string text)
+        public Rectangle PutNextRectangle(Size rectangleSize, string text)//TODO Remove text
         {
             if (rectangleSize.Height < 0 || rectangleSize.Width < 0)
                 throw new ArgumentException("Width or height of rectangle was negative");

@@ -5,11 +5,11 @@ namespace TagsCloudVisualization
 {
     public class TxtWordProvider : IWordProvider
     {
-        private readonly IWordsHandler wordsHandler;
+        private readonly IWordsCleaner wordsCleaner;
         
-        public TxtWordProvider(IWordsHandler wordsHandler)
+        public TxtWordProvider(IWordsCleaner wordsCleaner)
         {
-            this.wordsHandler = wordsHandler;
+            this.wordsCleaner = wordsCleaner;
         }
         
         public List<string> GetWords(string filepath)
@@ -24,11 +24,11 @@ namespace TagsCloudVisualization
                 string word;
                 while ((word = sr.ReadLine()) != null)
                 {
-                    words.Add(word);
+                    words.AddRange(word.Split(' '));//TODO Rewrite normal word parse
                 }
             }
 
-            return wordsHandler.HandleWords(words);
+            return wordsCleaner.CleanWords(words);
         }
     }
 }

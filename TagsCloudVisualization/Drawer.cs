@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
 
             foreach (var rectangle in rectangles)
             {
-                graphics.DrawString(rectangle.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Brown), rectangle.Size);//TODO 
+                graphics.DrawString(rectangle.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Brown), rectangle.Size);//TODO font and size
             }
 
             return image;
