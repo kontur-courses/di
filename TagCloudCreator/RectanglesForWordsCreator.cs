@@ -15,10 +15,13 @@ namespace TagCloudCreator
         {
             var statistic = wordsStatistic.ToList();
             var maxCount = statistic.Max(x => x.Item2);
+            var fonts = new Font[MaximalFontSize-MininalFontSize+1];
             foreach (var (text, count) in statistic)
             {
-                var fontSize = (MaximalFontSize - MininalFontSize) * ((double) count / maxCount) + MininalFontSize;
-                var font = new Font(fontFamily, (float) fontSize);
+                var fontSize = (int) ((MaximalFontSize - MininalFontSize) * ((double) count / maxCount) + MininalFontSize);
+                // ReSharper disable once ConstantNullCoalescingCondition
+                fonts[fontSize - MininalFontSize] ??= new Font(fontFamily, fontSize);
+                var font = fonts[fontSize - 10];
                 var size = Graphics.FromImage(new Bitmap(1, 1))
                     .MeasureString(text, font).ToSize();
                 var word = new DrawingWord(text, font, layouter.PutNextRectangle(size).Location);

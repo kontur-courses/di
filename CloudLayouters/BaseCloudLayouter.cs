@@ -17,12 +17,12 @@ namespace CloudLayouters
 
         public Rectangle[] GetAllRectangles()
         {
-            return Container.GetRectangles().ToArray();
+            return Container.Rectangles.ToArray();
         }
 
         protected bool CouldPutRectangle(Rectangle rectangle)
         {
-            return !(Container.GetRectangles().Count > 0 && Container.GetRectangles().Any(rect =>
+            return !(Container.Rectangles.Count > 0 && Container.Rectangles.Any(rect =>
                 rect.IntersectsWith(rectangle)));
         }
 

@@ -33,9 +33,9 @@ namespace CloudLayouters
         public override Rectangle PutNextRectangle(Size rectangleSize)
         {
             Rectangle result;
-            if (Container.GetFreePoints().Count > 0)
+            if (Container.FreePoints.Count > 0)
             {
-                var pointForRectangle = Container.GetFreePoints().FirstOrDefault(point =>
+                var pointForRectangle = Container.FreePoints.FirstOrDefault(point =>
                     CouldPutRectangle(GetRectangleWithCenterInPoint(point, rectangleSize)));
                 if (pointForRectangle != Point.Empty)
                 {

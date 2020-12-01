@@ -6,35 +6,25 @@ namespace CloudLayouters
 {
     public class CloudObjectsContainer
     {
-        private readonly List<Point> freePoints = new List<Point>();
-        private readonly List<Rectangle> rectangles = new List<Rectangle>();
+        public readonly List<Point> FreePoints = new List<Point>();
+        public readonly List<Rectangle> Rectangles = new List<Rectangle>();
 
         public void AddRectangle(Rectangle rectangle)
         {
-            rectangles.Add(rectangle);
-            freePoints.RemoveAll(rectangle.Contains);
+            Rectangles.Add(rectangle);
+            FreePoints.RemoveAll(rectangle.Contains);
         }
 
         public void AddFreePoint(Point point)
         {
-            if (!rectangles.Any(rectangle => rectangle.Contains(point)))
-                freePoints.Add(point);
-        }
-
-        public List<Point> GetFreePoints()
-        {
-            return freePoints.ToList();
-        }
-
-        public List<Rectangle> GetRectangles()
-        {
-            return rectangles.ToList();
+            if (!Rectangles.Any(rectangle => rectangle.Contains(point)))
+                FreePoints.Add(point);
         }
 
         public void Clear()
         {
-            freePoints.Clear();
-            rectangles.Clear();
+            FreePoints.Clear();
+            Rectangles.Clear();
         }
     }
 }

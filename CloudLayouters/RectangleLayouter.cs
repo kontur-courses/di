@@ -33,7 +33,7 @@ namespace CloudLayouters
 
         public override Rectangle PutNextRectangle(Size rectangleSize)
         {
-            foreach (var point in Container.GetFreePoints().OrderBy(x => Math.Max(x.X, x.Y)))
+            foreach (var point in Container.FreePoints.OrderBy(x => Math.Max(x.X, x.Y)))
             {
                 var rectangle = new Rectangle(point, rectangleSize);
                 if (!CouldPutRectangle(rectangle)) continue;
