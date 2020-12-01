@@ -52,14 +52,11 @@ namespace TagCloud
         {
             switch(coloring)
             {
-              case "location":
-                  services.AddSingleton<IPainter, PainterColoringByLocation>();
+              case "rectangles":
+                  services.AddSingleton<IBackgroundPainter, BackgroundPainterRectangles>();
                   break;
-              case "random":
-                  services.AddSingleton<IPainter, PainterRandomColoring>();
-                  break;
-              case "words":
-                  services.AddSingleton<IPainter>(_ => new PainterWithoutRectangles(Color.Crimson));
+              case "empty":
+                  services.AddSingleton<IBackgroundPainter, BackgroundPainterEmpty>();
                   break;
               default:
                   throw new ArgumentException("bad coloring");
@@ -80,7 +77,7 @@ namespace TagCloud
             app.OnExecute(() =>
             {
                 var size = optionSize.HasValue() ? optionSize.Value() : "1000,800";
-                var coloring = optionColoring.HasValue() ? optionColoring.Value() : "location";
+                var coloring = optionColoring.HasValue() ? optionColoring.Value() : "empty";
                 
                 ConfigureServices(size, coloring);
 

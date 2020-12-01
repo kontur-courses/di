@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Coloring;
 
@@ -9,28 +10,43 @@ namespace TagCloud
         private readonly ICanvas canvas;
         private readonly IPathCreater creater;
         private readonly IImageInfo imageInfo;
-        private readonly IPainter painter;
-        public Visualizer(ICanvas canvas, IPathCreater pathCreator, IImageInfo imageInfo, IPainter painter)
+        private readonly IBackgroundPainter backgroundPainter;
+        public Visualizer(ICanvas canvas, IPathCreater pathCreator, IImageInfo imageInfo, IBackgroundPainter backgroundPainter)
         {
             this.canvas = canvas;
             creater = pathCreator;
             this.imageInfo = imageInfo;
-            this.painter = painter;
+            this.backgroundPainter = backgroundPainter;
         }
 
         public void Visualize(string filename, string fontFamily)
         {
             var bitmap = new Bitmap(canvas.Width, canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
+            var tags = imageInfo.GetTags(filename, canvas.Height);
 
-            foreach (var pair in imageInfo.GetTags(filename, canvas.Height))
-            {
-                var rectangle = pair.Item2;
-                painter.DrawAndFillRectangle(rectangle, graphics);
-                painter.DrawString(rectangle, pair.Item1, fontFamily, graphics);
-            }
+            DrawAllStrings(tags, fontFamily, graphics);
+            backgroundPainter.Draw(tags, canvas, graphics);
             
             bitmap.Save(creater.GetNewPngPath());
+        }
+        
+        private void DrawAllStrings(List<Tuple<string, Rectangle>> tags, string fontFamily, Graphics graphics)
+        {
+            var textBrush = new SolidBrush(Color.Black);
+            foreach (var (str, rectangle) in tags)
+            {
+                DrawString(str, rectangle, fontFamily, textBrush, graphics);
+            }
+        }
+
+        private void DrawString(string str, Rectangle rectangle, string fontFamily, Brush textBrush, Graphics graphics)
+        {
+            var x = rectangle.X - (rectangle.Height / 4);
+            var y = rectangle.Y - (rectangle.Height / 2);
+            if (rectangle.Height < 2)
+                return;
+            graphics.DrawString(str, new Font(fontFamily, rectangle.Height), textBrush, x, y);
         }
     }
 }
