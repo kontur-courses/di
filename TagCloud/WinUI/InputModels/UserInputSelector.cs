@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace WinUI.InputModels
 {
@@ -15,7 +16,12 @@ namespace WinUI.InputModels
         public UserInputSelectorItem<T>[] Available { get; }
         public UserInputSelectorItem<T> Selected { get; set; }
 
-        public void SetSelected(string name) =>
+        public void SetSelected(string name)
+        {
             Selected = Available.Single(x => x.Name == name);
+            SelectedChanged.Invoke(Selected);
+        }
+
+        public event Action<UserInputSelectorItem<T>> SelectedChanged;
     }
 }

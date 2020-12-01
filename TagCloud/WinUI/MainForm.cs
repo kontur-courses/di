@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using TagsCloudVisualisation.Extensions;
+using TagsCloudVisualisation.Text.Formatting;
 using WinUI.Helpers;
 using WinUI.InputModels;
 using WinUI.Utils;
@@ -117,7 +118,7 @@ namespace WinUI
         {
             if (currentResultImage == null)
                 return;
-            pictureBox.Image = currentResultImage.PlaceAtCenter(pictureBox.Size).FillBackground(Color.Black);
+            pictureBox.Image = currentResultImage.PlaceAtCenter(pictureBox.Size);
         }
 
         protected override void OnResizeEnd(EventArgs e)
@@ -135,6 +136,11 @@ namespace WinUI
                 if (WindowState != FormWindowState.Minimized)
                     UpdatePreviewImage();
             }
+        }
+
+        public void SetImageBackground(Color color)
+        {
+            pictureBox.BackColor = color;
         }
     }
 }

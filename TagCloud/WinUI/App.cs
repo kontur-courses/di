@@ -63,8 +63,9 @@ namespace WinUI
         private void ConfigureForm()
         {
             mainForm.ExecuteButtonClicked += ExecuteButtonClicked;
-            mainForm.AddUserInput(pathSource);
+            colorSources.SelectedChanged += x => mainForm.SetImageBackground(x.Value.BackgroundColor);
 
+            mainForm.AddUserInput(pathSource);
             mainForm.AddUserInput(readers);
             mainForm.AddUserInput(filters);
             mainForm.AddUserInput(normalizers);
@@ -86,7 +87,9 @@ namespace WinUI
                 {
                     var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
                     mainForm.SetImage(image);
-                    writers.Selected.Value.Save(image.FillBackground(Color.Black), pathSource.Value + ".png");
+                    writers.Selected.Value.Save(
+                        image.FillBackground(colorSources.Selected.Value.BackgroundColor),
+                        pathSource.Value + ".png");
                 }
             }
         }
