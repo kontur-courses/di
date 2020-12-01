@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace TagsCloud.ColoringAlgorithms
 {
-    interface IColoringAlgorithm
+    public interface IColoringAlgorithm
     {
+        public Color GetNextColor();
     }
 }
