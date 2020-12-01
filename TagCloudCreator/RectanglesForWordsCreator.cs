@@ -18,9 +18,9 @@ namespace TagCloudCreator
             foreach (var (text, count) in statistic)
             {
                 var fontSize = (MaximalFontSize - MininalFontSize) * ((double) count / maxCount) + MininalFontSize;
-                var font = new Font(FontFamily.GenericSerif, (float) fontSize);
+                var font = new Font(fontFamily, (float) fontSize);
                 var size = Graphics.FromImage(new Bitmap(1, 1))
-                    .MeasureString(text, new Font(fontFamily, (float) fontSize)).ToSize();
+                    .MeasureString(text, font).ToSize();
                 var word = new DrawingWord(text, font, layouter.PutNextRectangle(size).Location);
                 yield return word;
             }
