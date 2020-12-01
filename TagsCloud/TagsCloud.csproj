@@ -11,10 +11,4 @@
     <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="System.Drawing.Common">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.1.0\ref\netcoreapp3.1\System.Drawing.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

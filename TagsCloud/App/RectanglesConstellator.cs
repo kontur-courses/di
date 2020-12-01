@@ -28,9 +28,9 @@ namespace TagsCloud.App
         public int MinY { get; private set; }
         public int Width => MaxX - MinX;
         public int Height => MaxY - MinY;
+        public readonly List<Rectangle> Rectangles;
         private readonly Dictionary<AngleDirection, Func<Point, Size, Rectangle>> directionToRectangle;
         private readonly Point center;
-        internal readonly List<Rectangle> Rectangles;
         private readonly List<Angle> angles;
 
         public RectanglesConstellator(Point center)
@@ -75,6 +75,12 @@ namespace TagsCloud.App
                 return firstRectangle;
             }
             return AddNewRectangle(rectangleSize);
+        }
+
+        public void Clear()
+        {
+            Rectangles.Clear();
+            angles.Clear();
         }
 
         public static Point CalculateCenterPosition(Rectangle rectangle)

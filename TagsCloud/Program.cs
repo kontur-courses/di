@@ -16,18 +16,26 @@ namespace TagsCloud
         [STAThread]
         static void Main(string[] args)
         {
-                var builder = new ContainerBuilder();
-                builder.Register(a => new Palette {BackgroundColor = Color.Black, PrimaryColor = Color.Aqua}).AsSelf();
-                builder.Register(a => new ImageSize(500, 500)).AsSelf();
-                builder.Register(a => new Font(FontFamily.GenericSansSerif, 25)).AsSelf();
-                builder.RegisterType<Mainform>().AsSelf();
-                builder.RegisterType<WordsConverter>().As<IWordsConverter>();
-                builder.RegisterType<TagcloudSettings>().AsSelf();
-                builder.Register(a => new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
-                var container = builder.Build();
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(container.Resolve<Mainform>());
+            var builder = new ContainerBuilder();
+            builder.Register(a => new ImageSize(500, 500)).AsSelf();
+            builder.Register(a => new Font(FontFamily.GenericSansSerif, 25)).AsSelf();
+            builder.Register(a => new Palette(Color.Aqua, Color.Black)).AsSelf();
+            builder.Register(a => new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
+            builder.RegisterType<TagscloudDrawer>().As<ITagscloudDrawer>();
+            builder.RegisterType<TagscloudHandler>().AsSelf();
+            builder.Register(a => new HashSet<string>
+            {
+                "и",
+                "a",
+                "в"
+            }).AsSelf();
+            builder.RegisterType<WordsConverter>().As<IWordsConverter>();
+            builder.RegisterType<TagcloudSettings>().AsSelf();
+            builder.RegisterType<Mainform>().AsSelf();
+            var container = builder.Build();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(container.Resolve<Mainform>());
         }
     }
 }

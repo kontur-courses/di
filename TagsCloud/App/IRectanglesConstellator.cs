@@ -15,6 +15,6 @@ namespace TagsCloud.App
         int Width { get; }
         int Height { get; }
         Rectangle PutNextRectangle(Size rectangleSize);
-
+        void Clear();
     }
 }

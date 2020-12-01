@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using TagsCloud.App;
 
@@ -19,7 +15,7 @@ namespace TagsCloud.Infrastructure
         {
             var okButton = new Button
             {
-                Text = "OK",
+                Text = @"OK",
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom
             };
@@ -32,6 +28,7 @@ namespace TagsCloud.Infrastructure
             };
             this.excludedWords = excludedWords;
             okButton.Click += OnOkButtonClick;
+            this.converter = converter;
             Controls.Add(okButton);
             Controls.Add(textBox);
         }

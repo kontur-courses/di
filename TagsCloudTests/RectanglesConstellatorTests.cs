@@ -4,7 +4,7 @@ using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloud.App;;
+using TagsCloud.App;
 
 namespace TagsCloudTests
 {

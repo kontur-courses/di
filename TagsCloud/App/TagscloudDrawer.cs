@@ -5,9 +5,9 @@ using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
-    class TagscloudDrawer
+    class TagscloudDrawer : ITagscloudDrawer
     {
-        private readonly IRectanglesConstellator constellator;
+        private IRectanglesConstellator constellator;
 
         public TagscloudDrawer(IRectanglesConstellator constellator)
         {
@@ -18,7 +18,6 @@ namespace TagsCloud.App
         {
             if (cloudToImageScaleRatio <= 0 || cloudToImageScaleRatio > 1)
                 throw new ArgumentException("ratio should be positive and be less 1");
-            var constellator = new RectanglesConstellator(Point.Empty);
             var tagscloudWords = new List<TagscloudWord>();
             foreach (var word in words)
             {
@@ -36,10 +35,16 @@ namespace TagsCloud.App
                     new Font(tagscloudWords[i].Font.FontFamily, (int)(tagscloudWords[i].Font.Size * newRatio)),
                     new Point((int)(tagscloudWords[i].Position.X * newRatio), (int)(tagscloudWords[i].Position.Y * newRatio)));
             }
+            constellator.Clear();
             return DrawTagscloud(tagscloudWords, settings);
         }
 
-        private static double CalculateRatio(RectanglesConstellator constellator, ImageSize newSize)
+        public void SetNewConstellator(IRectanglesConstellator newConstellator)
+        {
+            constellator = newConstellator;
+        }
+
+        private static double CalculateRatio(IRectanglesConstellator constellator, ImageSize newSize)
         {
             double newRatio;
             if ((double) constellator.Width / newSize.Width > (double) constellator.Height / newSize.Height)
@@ -52,7 +57,7 @@ namespace TagsCloud.App
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             var graphics = Graphics.FromImage(image);
-            graphics.TranslateTransform(image.Width / 2, image.Height / 2);
+            graphics.TranslateTransform((float)image.Width / 2, (float)image.Height / 2);
             graphics.Clear(settings.Palette.BackgroundColor);
             foreach (var word in words)
             {
