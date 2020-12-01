@@ -57,12 +57,12 @@ namespace TagsCloudContainer
         [Test]
         public void AllowExcludingWords()
         {
-            var text = GetRandomText(regularWords, excludedWords).WithOneWordPerLine();
+            var text = GetRandomText(regularWords, wordsToExclude).WithOneWordPerLine();
             container.AddFromText(text)
-                .Excluding(excludedWords)
+                .Excluding(wordsToExclude)
                 .Render();
             var resultWords = renderer.OutputInfo.Select(i => i.Word.Word);
-            resultWords.Should().NotContain(excludedWords);
+            resultWords.Should().NotContain(wordsToExclude);
         }
 
         [SetUp]
@@ -74,13 +74,7 @@ namespace TagsCloudContainer
         }
 
         private static TextBuilder GetRandomText(params string[][] words) => new TextBuilder(words);
-        
-        private string[] regularWords = {
-            "массив", "набор", "куча", "обычных", "слов", "существительные", "прилагательные", "глаголы"
-        };
-
-        private string[] excludedWords = {
-            "ты", "вы", "он", "она", "они"
-        };
+        private string[] regularWords => TextBuilder.regularWords;
+        private string[] wordsToExclude => TextBuilder.wordsToExclude;
     }
 }

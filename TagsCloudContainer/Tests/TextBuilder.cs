@@ -10,6 +10,14 @@ namespace TagsCloudContainer
         private List<string> words;
         private int wordsCount = 100;
         private Random random = new Random();
+        
+        public static string[] regularWords = {
+            "массив", "набор", "куча", "обычных", "слов", "существительные", "прилагательные", "глаголы"
+        };
+
+        public static string[] wordsToExclude = {
+            "ты", "вы", "он", "она", "они"
+        };
 
         public TextBuilder(params string[][] words)
         {
