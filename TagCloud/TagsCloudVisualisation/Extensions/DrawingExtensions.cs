@@ -56,6 +56,21 @@ namespace TagsCloudVisualisation.Extensions
         }
 
         [Pure]
+        public static Image PlaceAtCenter(this Image source, Size newSize)
+        {
+            var resizeCoefficient = Math.Min(
+                (float) newSize.Height / source.Height,
+                (float) newSize.Width / source.Width);
+            var resized = new Bitmap(source, (source.Size * resizeCoefficient).ToSize());
+            var location = new Point((newSize - resized.Size) / 2);
+
+            var result = new Bitmap(newSize.Width, newSize.Height);
+            using (var g = Graphics.FromImage(result))
+                g.DrawImage(resized, location);
+            return result;
+        }
+
+        [Pure]
         private static Bitmap ChangeCloned(this Image image, Action<Graphics> modifier)
         {
             var newImage = new Bitmap(image.Size.Width, image.Size.Height);

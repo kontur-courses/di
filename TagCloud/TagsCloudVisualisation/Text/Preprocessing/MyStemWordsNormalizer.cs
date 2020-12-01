@@ -6,6 +6,7 @@ namespace TagsCloudVisualisation.Text.Preprocessing
 {
     public class MyStemWordsNormalizer : IWordNormalizer
     {
+        //TODO enhance library source code: don't create new Process on each request to MyStem
         private readonly Lemmatizer normalizer;
 
         public MyStemWordsNormalizer()

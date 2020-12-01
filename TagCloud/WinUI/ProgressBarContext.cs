@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace WinUI
@@ -16,7 +17,7 @@ namespace WinUI
             get => progressBar.Value;
             set => progressBar.Value = value;
         }
-        
+
         public bool Disposed { get; private set; }
 
         public ProgressBarContext(ProgressBar progressBar, int minValue, int maxValue)
@@ -36,7 +37,10 @@ namespace WinUI
 
         public void Increment()
         {
-            progressBar.Increment(1);
+            //По какой-то причине Increment() кидает InvalidOperationException только при отладке приложения :\\
+            if (!Debugger.IsAttached)
+                progressBar.Increment(1);
+            progressBar.Value += 1;
         }
 
         public void Dispose()

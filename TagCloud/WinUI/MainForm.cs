@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using TagsCloudVisualisation.Extensions;
 using WinUI.Helpers;
 using WinUI.InputModels;
 using WinUI.Utils;
@@ -11,14 +12,22 @@ namespace WinUI
 {
     public partial class MainForm : Form
     {
+        private FormWindowState previousState;
+        private Image? currentResultImage;
+
         public MainForm()
         {
             InitializeComponent();
+            previousState = WindowState;
         }
 
-        public event Action ExecuteButtonClicked;
+        public event Action? ExecuteButtonClicked;
 
-        public void SetImage(Image newImage) => pictureBox.Image = newImage;
+        public void SetImage(Image newImage)
+        {
+            currentResultImage = newImage;
+            UpdatePreviewImage();
+        }
 
         public UiLockingOperation StartLockingOperation()
         {
@@ -54,7 +63,7 @@ namespace WinUI
                 combobox.SelectedItem = inputModel.Selected.Name;
 
                 combobox.SelectionChangeCommitted +=
-                    (_, __) => inputModel.SetSelected(combobox.SelectedItem.ToString());
+                    (_, __) => inputModel.SetSelected(combobox.SelectedItem.ToString()!);
 
                 return combobox;
             });
@@ -69,8 +78,6 @@ namespace WinUI
                 return textBox;
             });
         }
-
-        public Size PictureBoxSize => pictureBox.Size;
 
         private void ExecuteButton_Click(object sender, EventArgs args)
         {
@@ -104,6 +111,30 @@ namespace WinUI
             panel.Controls.Add(inner);
 
             panel.Height = inner.Bottom;
+        }
+
+        private void UpdatePreviewImage()
+        {
+            if (currentResultImage == null)
+                return;
+            pictureBox.Image = currentResultImage.PlaceAtCenter(pictureBox.Size).FillBackground(Color.Black);
+        }
+
+        protected override void OnResizeEnd(EventArgs e)
+        {
+            base.OnResizeEnd(e);
+            UpdatePreviewImage();
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            if (WindowState != previousState)
+            {
+                previousState = WindowState;
+                if (WindowState != FormWindowState.Minimized)
+                    UpdatePreviewImage();
+            }
         }
     }
 }

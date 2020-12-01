@@ -85,8 +85,8 @@ namespace WinUI
                 using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
                 {
                     var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
-                    mainForm.SetImage(new Bitmap(image, mainForm.PictureBoxSize));
-                    writers.Selected.Value.Save(image, pathSource.Value + ".png");
+                    mainForm.SetImage(image);
+                    writers.Selected.Value.Save(image.FillBackground(Color.Black), pathSource.Value + ".png");
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace WinUI
             layouters.Selected.Value.Reset();
             if (callback != null)
                 cloudGenerator.AfterWordDrawn -= callback;
-            return resultImage.FillBackground(Color.Black);
+            return resultImage;
         }
 
         private async Task<WordWithFrequency[]> ReadWordsAsync(string sourcePath, CancellationToken cancellationToken)
