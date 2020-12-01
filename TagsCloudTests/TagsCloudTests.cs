@@ -1,6 +1,16 @@
-using System;
+using System.Drawing;
 using System.IO;
+using Autofac;
+using Autofac.Core;
 using NUnit.Framework;
+using TagsCloud;
+using TagsCloud.BoringWordsDetectors;
+using TagsCloud.CloudRenderers;
+using TagsCloud.ColorSelectors;
+using TagsCloud.StatisticProviders;
+using TagsCloud.WordLayouters;
+using TagsCloud.WordReaders;
+using TagsCloud.WordSelector;
 
 namespace TagsCloudTests
 {
@@ -8,23 +18,39 @@ namespace TagsCloudTests
     public class TagsCloudTests
     {
         [Test]
-        public void CreateCloud()
+        public void CreateCloud_FromTxt()
         {
             var directoryInfo = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent;
+            if(directoryInfo == null) throw new DirectoryNotFoundException();
             var samplePath = $"{directoryInfo.FullName}\\Samples\\sample.png";
             new FileInfo(samplePath).Delete();
-            var settings = $"{directoryInfo.FullName}\\settings.txt";
-            using var writer = new StreamWriter($"{directoryInfo.FullName}\\settings.txt", false);
-            writer.WriteLine($"{directoryInfo.FullName}\\example.txt");
-            writer.WriteLine("4000");
-            writer.WriteLine("4000");
-            writer.WriteLine("Calibri");
-            writer.Dispose();
             
-            using var reader = new StreamReader(settings);
-            Console.SetIn(reader);
-            TagsCloud.Program.MakeCloud();
+            var builder = new ContainerBuilder();
 
+            builder.RegisterInstance($"{directoryInfo.FullName}\\example.txt");
+            builder.RegisterType<AllWordSelector>().As<IWordSelector>();
+            builder.RegisterType<RegexWordReader>().As<IWordReader>();
+
+            builder.RegisterType<ByCollectionBoringWordsDetector>().As<IBoringWordsDetector>();
+            builder.RegisterType<StatisticProvider>().As<IStatisticProvider>();
+
+            builder.RegisterInstance(new FontFamily("Arial"));
+            builder.RegisterType<SpiralPoints>().As<IPointsLayout>();
+            builder.RegisterType<WordLayouter>().SingleInstance().As<IWordLayouter>();
+
+            builder.RegisterInstance(new[]
+                {Color.Black, Color.Red, Color.Blue, Color.Green, Color.Yellow});
+            builder.RegisterType<RandomColorSelector>().SingleInstance().As<IColorSelector>();
+            
+            builder.RegisterType<CloudRenderer>()
+                .As<ICloudRenderer>()
+                .WithParameters(new Parameter[]
+                {
+                    new NamedParameter("width", 3000),
+                    new NamedParameter("height", 3000), 
+                });
+            
+            Program.MakeCloud(builder.Build());
             var actual = new FileInfo(samplePath);
             Assert.True(actual.Exists);
         }
