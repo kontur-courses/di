@@ -11,8 +11,9 @@ namespace TagCloud
         {
             var parser = new LiteratureTextParser(new PathCreater());
             var array = parser.GetWords("input.txt");
-            array.Should().HaveCount(26);
+            array.Should().HaveCount(24);
             array.Should().Contain("кошка")
+                .And.NotContain("Кошка")
                 .And.Contain("собака")
                 .And.Contain("заяц")
                 .And.Contain("лев")
