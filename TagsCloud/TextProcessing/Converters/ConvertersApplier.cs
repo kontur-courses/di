@@ -9,9 +9,9 @@ namespace TagsCloud.TextProcessing.Converters
         private readonly Dictionary<string, IWordConverter> wordConverters;
         private readonly IWordsConfig wordsConfig;
 
-        public ConvertersApplier(IEnumerable<IWordConverter> wordConverters, IWordsConfig wordsConfig)
+        public ConvertersApplier(IWordsConfig wordsConfig)
         {
-            this.wordConverters = wordConverters.ToDictionary(convert => convert.Name);
+            wordConverters = new Dictionary<string, IWordConverter>();
             this.wordsConfig = wordsConfig;
         }
 
@@ -24,5 +24,8 @@ namespace TagsCloud.TextProcessing.Converters
         }
 
         public IEnumerable<string> GetConverterNames() => wordConverters.Select(pair => pair.Key);
+
+        public void Register(string converterName, IWordConverter wordConverter) =>
+                                                                    wordConverters[converterName] = wordConverter;
     }
 }

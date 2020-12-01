@@ -9,9 +9,9 @@ namespace TagsCloud.TextProcessing.TextFilters
         private readonly Dictionary<string, ITextFilter> textFilters;
         private readonly IWordsConfig wordsConfig;
 
-        public FiltersApplier(IEnumerable<ITextFilter> textFilters, IWordsConfig wordsConfig)
+        public FiltersApplier(IWordsConfig wordsConfig)
         {
-            this.textFilters = textFilters.ToDictionary(filter => filter.Name);
+            textFilters = new Dictionary<string, ITextFilter>();
             this.wordsConfig = wordsConfig;
         }
 
@@ -22,5 +22,8 @@ namespace TagsCloud.TextProcessing.TextFilters
         }
 
         public IEnumerable<string> GetFilerNames() => textFilters.Select(pair => pair.Key);
+
+        public void Register(string filterName, ITextFilter textFilter) =>
+                                                        textFilters[filterName] = textFilter;
     }
 }

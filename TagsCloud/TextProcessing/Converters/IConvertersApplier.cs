@@ -6,5 +6,6 @@ namespace TagsCloud.TextProcessing.Converters
     {
         IEnumerable<string> ApplyConversion(IEnumerable<string> words);
         IEnumerable<string> GetConverterNames();
+        void Register(string converterName, IWordConverter wordConverter);
     }
 }

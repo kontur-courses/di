@@ -4,6 +4,10 @@ using System.Windows.Forms;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.Layouter;
 using TagsCloud.Layouter.Factory;
+using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
+using TagsCloud.TagsCloudProcessing.TegsGenerators;
+using TagsCloud.TextProcessing.Converters;
+using TagsCloud.TextProcessing.TextFilters;
 using TagsCloud.TextProcessing.WordConfig;
 using TagsCloud.UserInterfaces.GUI;
 
@@ -17,7 +21,10 @@ namespace TagsCloud
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(BuildContainer().GetService<Form>());
+            var container = BuildContainer();
+            InitFactories(container);
+
+            Application.Run(container.GetService<Form>());
         }
 
         public static ServiceProvider BuildContainer()
@@ -28,19 +35,29 @@ namespace TagsCloud
                 .AddSingleton<IImageConfig, ImageConfig>()
                 .AddSingleton<IWordsConfig, WordConfig>()
 
-                .AddSingleton<ILayouterFactory, LayouterFactory>(s =>
-                RegisterLayouterFactory(new LayouterFactory(s.GetService<IWordsConfig>())))
-
+                .AddSingleton<ILayouterFactory, LayouterFactory>()
+                .AddSingleton<ITagsGeneratorFactory, TagsGeneratorFactory>()
+                .AddSingleton<IConvertersApplier, ConvertersApplier>()
+                .AddSingleton<IFiltersApplier, FiltersApplier>()
 
                 .AddScoped<Form, ConfigWindow>()
 
                 .BuildServiceProvider();
         }
 
-        private static LayouterFactory RegisterLayouterFactory(LayouterFactory factory)
+        private static void InitFactories(ServiceProvider serviceProvider)
         {
-            factory.Register("По спирали", center => new CircularCloudLayouter(center));
-            return factory;
+            serviceProvider.GetService<ILayouterFactory>()
+                .Register("По спирали", center => new CircularCloudLayouter(center));
+
+            serviceProvider.GetService<ITagsGeneratorFactory>()
+                .Register("Топ 30", () => new TagsGenerator());
+
+            serviceProvider.GetService<IConvertersApplier>()
+                .Register("Перевести в нижний регистр", new LowerCaseConverter());
+
+            serviceProvider.GetService<IFiltersApplier>()
+                .Register("Исключить служебные символы", new FunctionWordsFilter());
         }
     }
 }

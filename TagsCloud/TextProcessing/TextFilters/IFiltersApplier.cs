@@ -6,5 +6,6 @@ namespace TagsCloud.TextProcessing.TextFilters
     {
         IEnumerable<string> ApplyFilters(IEnumerable<string> text);
         IEnumerable<string> GetFilerNames();
+        void Register(string filterName, ITextFilter textFilter);
     }
 }

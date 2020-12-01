@@ -25,7 +25,5 @@ namespace TagsCloud.TagsCloudProcessing.TegsGenerators
 
             return tags;
         }
-
-        public string GetGeneratorName() => "30 самых частотных";
     }
 }

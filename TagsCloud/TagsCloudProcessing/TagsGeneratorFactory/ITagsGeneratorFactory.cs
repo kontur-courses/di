@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TagsCloud.TagsCloudProcessing.TegsGenerators;
 
 namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory
@@ -7,5 +8,6 @@ namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory
     {
         ITagsGenerator Create();
         IEnumerable<string> GetGeneratorNames();
+        void Register(string generatorName, Func<ITagsGenerator> creationFunc);
     }
 }
