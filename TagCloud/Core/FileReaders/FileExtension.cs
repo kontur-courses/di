@@ -2,6 +2,7 @@
 {
     public enum FileExtension
     {
-        Txt
+        Txt,
+        Doc
     }
 }

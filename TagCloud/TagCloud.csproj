@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.0.0" />
+    <PackageReference Include="DocX" Version="1.7.1" />
   </ItemGroup>
 
 </Project>
