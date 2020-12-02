@@ -7,9 +7,9 @@ namespace TagsCloudVisualization
     {
         private double angle, radius;
         private const double SpiralParameter = 0.01;
-        private readonly IWordConfig config;
+        private readonly IConfig config;
 
-        public PointProvider(IWordConfig config)
+        public PointProvider(IConfig config)
         {
             if (config.Center.X < 0 || config.Center.Y < 0)
                 throw new ArgumentException("X or Y of center was negative");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using CloudContainer.ConfigCreators;
 using TagsCloudVisualization;
@@ -11,7 +12,8 @@ namespace CloudContainer
     {
         static void Main(string[] args)
         {
-            var path = "C:\\Users\\ivan0\\Desktop\\di\\CloudContainer\\bin\\Debug\\netcoreapp3.1\\text.txt"; //TODO
+            var directory = Directory.GetCurrentDirectory();
+            var path = directory + "\\text.txt"; //TODO
             var boringWords = new List<string>{"в","под","на"};//TODO
             
             var cleaner = new BoringWordsCleaner(boringWords.ToHashSet());

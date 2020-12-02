@@ -7,11 +7,11 @@ namespace TagsCloudVisualization
     public class WordsToRectanglesConverter : IWordConverter//TODO Rename
     {
         private readonly ICloudLayout cloudLayout;
-        private readonly IWordConfig wordConfig;
-        public WordsToRectanglesConverter(ICloudLayout cloudLayout, IWordConfig wordConfig)
+        private readonly IConfig config;
+        public WordsToRectanglesConverter(ICloudLayout cloudLayout, IConfig config)
         {
             this.cloudLayout = cloudLayout;
-            this.wordConfig = wordConfig;
+            this.config = config;
         }
         
         public List<ICloudTag> ConvertWords(List<string> words)
@@ -20,7 +20,7 @@ namespace TagsCloudVisualization
             var graphics = Graphics.FromHwnd(new IntPtr());
             foreach (var word in words)
             {
-                var size = MeasureString(graphics, word, wordConfig.Font);
+                var size = MeasureString(graphics, word, config.Font);
                 var rectangle = cloudLayout.PutNextRectangle(size.ToSize(), word);
                 var cloudTag = new CloudTag(rectangle,word);
                 result.Add(cloudTag);

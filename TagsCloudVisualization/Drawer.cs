@@ -7,7 +7,7 @@ namespace TagsCloudVisualization
 {
     public static class Drawer
     {
-        public static Bitmap DrawImage(List<ICloudTag> rectangles, IWordConfig config)
+        public static Bitmap DrawImage(List<ICloudTag> rectangles, IConfig config)
         {
             CheckParameters(rectangles, config.Center);
 
@@ -17,8 +17,8 @@ namespace TagsCloudVisualization
 
             foreach (var rectangle in rectangles)
             {
-                graphics.DrawString(rectangle.Text, config.Font, new SolidBrush(config.TextColor), rectangle.Size);
-                graphics.DrawRectangle(new Pen(config.TextColor),rectangle.Size);//TODO remove
+                graphics.DrawString(rectangle.Text, config.Font, new SolidBrush(config.TextColor), rectangle.Rectangle);
+                graphics.DrawRectangle(new Pen(config.TextColor),rectangle.Rectangle);//TODO remove
                 Console.WriteLine(rectangle.Text);
             }
 
@@ -36,12 +36,12 @@ namespace TagsCloudVisualization
 
         private static int GetDeltaX(List<ICloudTag> rectangles)
         {
-            return rectangles.Select(elem => elem.Size.Right).Max();
+            return rectangles.Select(elem => elem.Rectangle.Right).Max();
         }
 
         private static int GetDeltaY(List<ICloudTag> rectangles)
         {
-            return rectangles.Select(elem => elem.Size.Bottom).Max();
+            return rectangles.Select(elem => elem.Rectangle.Bottom).Max();
         }
     }
 }

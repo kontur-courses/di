@@ -4,12 +4,12 @@ namespace TagsCloudVisualization
 {
     public class CloudTag : ICloudTag
     {
-        public Rectangle Size { get; private set; }//TODO fix naming
+        public Rectangle Rectangle { get; private set; }//TODO fix naming
         public string Text { get; private set; }
 
-        public CloudTag(Rectangle size, string text)
+        public CloudTag(Rectangle rectangle, string text)
         {
-            Size = size;
+            Rectangle = rectangle;
             Text = text;
         }
     }

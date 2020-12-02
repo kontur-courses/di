@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    public interface IWordConfig //TODo переместить в папку
+    public interface IConfig //TODo переместить в папку
     {
         Font Font { get; }
         Point Center { get; }

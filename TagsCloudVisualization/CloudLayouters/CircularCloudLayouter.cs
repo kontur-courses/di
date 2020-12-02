@@ -41,7 +41,7 @@ namespace TagsCloudVisualization
 
         private bool IsCollide(Rectangle rectangle)
         {
-            return Rectangles.Select(x => x.Size).Any(rectangle.IntersectsWith) 
+            return Rectangles.Select(x => x.Rectangle).Any(rectangle.IntersectsWith) 
                    || rectangle.X < 0 || rectangle.Y < 0;
             
         }

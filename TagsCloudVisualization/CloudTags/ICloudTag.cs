@@ -4,7 +4,7 @@ namespace TagsCloudVisualization
 {
     public interface ICloudTag
     {
-        public Rectangle Size { get;}
+        public Rectangle Rectangle { get;}
         public string Text { get; }
     }
 }
