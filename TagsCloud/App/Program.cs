@@ -3,7 +3,10 @@ using System.Drawing;
 using System.IO;
 using Autofac;
 using TagsCloud.App.Commands;
+using TagsCloud.App.FileReaders;
+using TagsCloud.App.ImageSavers;
 using TagsCloud.Infrastructure;
+using TextReader = TagsCloud.App.FileReaders.TextReader;
 
 namespace TagsCloud.App
 {
