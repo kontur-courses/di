@@ -142,7 +142,11 @@ namespace TagsCloud
             {
                 var input = Console.ReadLine();
                 if(string.IsNullOrWhiteSpace(input)) break;
-                colors.Add(Color.FromName(input));
+                var color = Color.FromName(input);
+                if(color.IsKnownColor)
+                    colors.Add(Color.FromName(input));
+                else
+                    Console.WriteLine($"Unknown color {input}");
             }
 
             return colors.Count == 0 ? new[] {Color.Black} : colors.ToArray();
