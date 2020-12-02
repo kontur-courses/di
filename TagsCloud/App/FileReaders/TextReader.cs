@@ -2,7 +2,7 @@
 using System.IO;
 using TagsCloud.Infrastructure;
 
-namespace TagsCloud.App
+namespace TagsCloud.App.FileReaders
 {
     public class TextReader : IFileAllLinesReader
     {

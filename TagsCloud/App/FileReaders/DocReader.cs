@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Office.Interop.Word;
 using TagsCloud.Infrastructure;
 
-namespace TagsCloud.App
+namespace TagsCloud.App.FileReaders
 {
     public class DocReader : IFileAllLinesReader
     {
