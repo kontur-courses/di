@@ -4,6 +4,7 @@ using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualization_Should
@@ -11,25 +12,38 @@ namespace TagsCloudVisualization_Should
     public class CircularCloudLayouterShould
     {
         private List<Rectangle> actualRectangles;
-        private Point center;
+
+        private IConfig config;
+
+        [SetUp]
+        public void SetUp()
+        {
+            config = new Config();
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+                new Point(1500, 1500), Color.Blue);
+        }
 
         [Test]
         public void PutNextRectangle_ThrowArgumentException_SizeOfRectangleHaveNegativeValue()
         {
-            center = new Point(100, 100);
-            var pointProvider = new PointProvider(center);
+            var center = new Point(100, 100);
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+                center, Color.Blue);
+            var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
 
-            Action act = () => cloud.PutNextRectangle(new Size(-100, -100));
+            Action act = () => cloud.PutNextRectangle(new Size(-1, -1));
 
-            act.ShouldThrow<ArgumentException>().WithMessage("Width or height of rectangle was negative");
+            act.ShouldThrow<ArgumentException>().WithMessage("Width or height of size was negative");
         }
 
         [Test]
         public void PutNextRectangle_ReturnSameRectangle_OneRectangle()
         {
-            center = new Point(40, 40);
-            var pointProvider = new PointProvider(center);
+            var center = new Point(40, 40);
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+                center, Color.Blue);
+            var pointProvider = new PointProvider(config);
             var expectedRectangle = new Rectangle(new Point(40, 40), new Size(30, 30));
             var cloud = new CircularCloudLayouter(pointProvider);
 
@@ -43,8 +57,10 @@ namespace TagsCloudVisualization_Should
         public void Rectangles_CountIsTen_RandomTenRectangles()
         {
             var rnd = new Random();
-            center = new Point(500, 500);
-            var pointProvider = new PointProvider(center);
+            var center = new Point(500, 500);
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+                center, Color.Blue);
+            var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             const int expectedLength = 10;
 
@@ -54,7 +70,7 @@ namespace TagsCloudVisualization_Should
                 cloud.PutNextRectangle(size);
             }
             var actualLength = cloud.Rectangles.Count;
-            actualRectangles = cloud.Rectangles;
+
 
             actualLength.Should().Be(expectedLength);
         }
@@ -62,8 +78,10 @@ namespace TagsCloudVisualization_Should
         [Test]
         public void Rectangles_SameOrderLikeAdded_ThreeRectangles()
         {
-            center = new Point(500, 500);
-            var pointProvider = new PointProvider(center);
+            var center = new Point(500, 500);
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+                center, Color.Blue);
+            var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             var expectedRectangles = new List<Rectangle>
             {
@@ -85,7 +103,8 @@ namespace TagsCloudVisualization_Should
         public void TearDown()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            var image = Drawer.DrawImage(actualRectangles, center);
+            var image = Drawer.DrawImage(actualRectangles
+                .Select(x => new CloudTag(x, "error")).Cast<ICloudTag>().ToList(), config);
             var saver = new PngSaver();
             var name = TestContext.CurrentContext.Test.Name;
             saver.SaveImage(image, name);

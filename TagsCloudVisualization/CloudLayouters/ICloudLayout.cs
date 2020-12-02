@@ -5,7 +5,8 @@ namespace TagsCloudVisualization
 {
     public interface ICloudLayout
     {
-        Rectangle PutNextRectangle(Size rectangleSize, string text);
-        List<ICloudTag> Rectangles { get; }
+        Rectangle PutNextRectangle(Size rectangleSize);
+        List<Rectangle> Rectangles { get; }
+
     }
 }

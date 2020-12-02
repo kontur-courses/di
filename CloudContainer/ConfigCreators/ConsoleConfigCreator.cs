@@ -6,7 +6,6 @@ namespace CloudContainer.ConfigCreators
 {
     public class ConsoleConfigCreator : IConfigCreator
     {
-        
         public void CreateConfig(string[] args, IConfig config)
         {
             if(args.Length != 6)

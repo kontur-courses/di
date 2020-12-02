@@ -7,34 +7,34 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ICloudLayout
     {
-        public List<ICloudTag> Rectangles { get; }
         private IPointProvider pointProvider;
-        private IConfig config;
+        public List<Rectangle> Rectangles { get; }
 
-        public CircularCloudLayouter(IPointProvider pointProvider, IConfig config)
+        public CircularCloudLayouter(IPointProvider pointProvider)
         {
             this.pointProvider = pointProvider;
-            this.config = config;
-            Rectangles = new List<ICloudTag>();
+            Rectangles = new List<Rectangle>();
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize, string text)//TODO Remove text
+        public Rectangle PutNextRectangle(Size rectangleSize)//TODO Remove text
         {
             if (rectangleSize.Height < 0 || rectangleSize.Width < 0)
-                throw new ArgumentException("Width or height of rectangle was negative");
+                throw new ArgumentException("Width or height of size was negative");
 
-            var rectangle = GetRectangle(rectangleSize, pointProvider, config);
-            Rectangles.Add(new CloudTag(rectangle, text));
+            var rectangle = GetRectangle(rectangleSize);
+            Rectangles.Add(rectangle);
 
             return rectangle;
         }
 
-        private Rectangle GetRectangle(Size rectangleSize, IPointProvider pointProvider, IConfig config)
+        
+
+        private Rectangle GetRectangle(Size rectangleSize)
         {
             Rectangle rectangle;
             do
             {
-                rectangle = new Rectangle(pointProvider.GetPoint(config), rectangleSize);
+                rectangle = new Rectangle(pointProvider.GetPoint(), rectangleSize);
 
             } while (IsCollide(rectangle));
 
@@ -43,7 +43,7 @@ namespace TagsCloudVisualization
 
         private bool IsCollide(Rectangle rectangle)
         {
-            return Rectangles.Select(x => x.Rectangle).Any(rectangle.IntersectsWith) 
+            return Rectangles.Any(rectangle.IntersectsWith) 
                    || rectangle.X < 0 || rectangle.Y < 0;
             
         }

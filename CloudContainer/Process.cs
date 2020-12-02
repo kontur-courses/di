@@ -29,8 +29,7 @@ namespace CloudContainer
         
         public void Run()
         {
-            var directory = Directory.GetCurrentDirectory();
-            var path = directory + "\\text.txt"; //TODO
+            var path = Path.Join(Directory.GetCurrentDirectory(), "text.txt");
 
             var words = provider.GetWords(path);
             var cleanedWords = cleaner.CleanWords(words);

@@ -7,13 +7,16 @@ namespace TagsCloudVisualization
     {
         private double angle, radius;
         private const double SpiralParameter = 0.01;
+        private readonly IConfig config;
 
-        public PointProvider()
+        public PointProvider(IConfig config)
         {
-
+            this.config = config;
+            if(config.Center.X < 0 || config.Center.Y < 0)
+                throw new ArgumentException("X or Y of center was negative");
         }
 
-        public Point GetPoint(IConfig config)
+        public Point GetPoint()//TODO
         {
             var x = (int)Math.Round(radius * Math.Cos(angle));
             var y = (int)Math.Round(radius * Math.Sin(angle));

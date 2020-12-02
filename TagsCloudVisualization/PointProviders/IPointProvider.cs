@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface IPointProvider
     {
-        public Point GetPoint(IConfig config);
+        public Point GetPoint();
     }
 }

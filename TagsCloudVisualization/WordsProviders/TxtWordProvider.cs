@@ -12,14 +12,12 @@ namespace TagsCloudVisualization
             
             if(!File.Exists(filepath))
                 throw new FileNotFoundException();
-            
-            using (var sr = new StreamReader(filepath))
+
+            using var sr = new StreamReader(filepath);
+            string word;
+            while ((word = sr.ReadLine()) != null)
             {
-                string word;
-                while ((word = sr.ReadLine()) != null)
-                {
-                    words.Add(word);
-                }
+                words.Add(word);
             }
 
             return words;

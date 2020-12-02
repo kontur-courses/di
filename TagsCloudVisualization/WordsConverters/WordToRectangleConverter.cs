@@ -17,11 +17,11 @@ namespace TagsCloudVisualization
         public List<ICloudTag> ConvertWords(List<string> words)
         {
             var result = new List<ICloudTag>();
-            var graphics = Graphics.FromHwnd(new IntPtr());
+            var graphics = Graphics.FromHwnd(new IntPtr());//TODO remove method
             foreach (var word in words)
             {
                 var size = MeasureString(graphics, word, config.Font);
-                var rectangle = cloudLayout.PutNextRectangle(size.ToSize(), word);
+                var rectangle = cloudLayout.PutNextRectangle(size.ToSize());
                 var cloudTag = new CloudTag(rectangle,word);
                 result.Add(cloudTag);
             }
