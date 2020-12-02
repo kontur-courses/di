@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloud.ImageProcessing.Config;
-using TagsCloud.ImageProcessing.ImageBuilders;
 using TagsCloud.TagsCloudProcessing;
 using TagsCloud.TextProcessing.WordConfig;
 

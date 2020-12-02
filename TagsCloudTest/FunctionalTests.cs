@@ -1,20 +1,17 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using TagsCloud.ImageProcessing.Config;
-using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TextProcessing.WordConfig;
+using NUnit.Framework;
 using System.Drawing;
-using TagsCloud.TextProcessing.Converters;
-using System.Linq;
-using TagsCloud.TextProcessing.TextFilters;
-using TagsCloud.Layouter.Factory;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
 using System.IO;
-using FluentAssertions;
+using System.Linq;
 using System.Reflection;
+using TagsCloud.ImageProcessing.Config;
+using TagsCloud.Layouter.Factory;
+using TagsCloud.TagsCloudProcessing;
+using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
+using TagsCloud.TextProcessing.Converters;
+using TagsCloud.TextProcessing.TextFilters;
+using TagsCloud.TextProcessing.WordConfig;
 
 namespace TagsCloudTest
 {

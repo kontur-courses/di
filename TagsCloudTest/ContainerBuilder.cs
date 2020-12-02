@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.ImageProcessing.ImageBuilders;
 using TagsCloud.ImageProcessing.SaverImage.Factory;
@@ -16,7 +13,6 @@ using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
 using TagsCloud.TextProcessing.TextReaders;
 using TagsCloud.TextProcessing.WordConfig;
-using TagsCloud.UserInterfaces.GUI;
 
 namespace TagsCloudTest
 {
