@@ -10,6 +10,7 @@ namespace TagsCloud.ClientGUI
     {
         public MainForm(IUiAction[] actions, PictureBoxImageHolder pictureBox, ImageSettings imageSettings)
         {
+            imageSettings.NormalizeSize();
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
             var mainMenu = new MenuStrip();

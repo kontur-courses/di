@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using TagsCloud.ClientGUI.Infrastructure;
+using TagsCloud.Core;
 
 namespace TagsCloud.ClientGUI
 {
@@ -8,29 +9,32 @@ namespace TagsCloud.ClientGUI
         private readonly FontSetting font;
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
+        private readonly PathSettings pathSettings;
         private readonly SpiralSettings spiralSettings;
-        private readonly TagsCreator tagsCreator;
 
         public TagsCloudPainter(IImageHolder imageHolder, Palette palette,
-            TagsCreator tagsCreator, FontSetting font, SpiralSettings spiralSettings)
+            FontSetting font, SpiralSettings spiralSettings, PathSettings pathSettings)
         {
             this.imageHolder = imageHolder;
             this.palette = palette;
-            this.tagsCreator = tagsCreator;
             this.font = font;
             this.spiralSettings = spiralSettings;
+            this.pathSettings = pathSettings;
         }
 
         public void Paint()
         {
             using (var graphics = imageHolder.StartDrawing())
             {
+                var imageSize = imageHolder.GetImageSize();
                 graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0,
-                    imageHolder.GetImageSize().Width, imageHolder.GetImageSize().Height);
+                    imageSize.Width, imageSize.Height);
 
-                var words = tagsCreator.GetWords();
-                var rectangles = tagsCreator.GetRectangles(imageHolder.GetImageSize(), words,
+                var words = TagsHelper.GetWords(pathSettings.PathToText, pathSettings.PathToBoringWords,
+                    pathSettings.PathToDictionary, pathSettings.PathToAffix);
+                var rectangles = TagsHelper.GetRectangles(imageSize, words,
                     spiralSettings.SpiralParameter, font.MainFont.Size);
+
                 for (var i = 0; i < rectangles.Count; ++i)
                 {
                     var drawFormat = new StringFormat
@@ -38,11 +42,15 @@ namespace TagsCloud.ClientGUI
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center
                     };
-                    var currentFont = new Font(font.MainFont.FontFamily, (int) (rectangles[i].Height / 1.3),
-                        font.MainFont.Style);
                     graphics.DrawRectangle(new Pen(Color.White), rectangles[i]);
-                    graphics.DrawString(words[i].Item1, currentFont,
-                        new SolidBrush(palette.ForeColor), rectangles[i], drawFormat);
+
+                    using (var currentFont = new Font(font.MainFont.FontFamily, (int) (rectangles[i].Height / 1.3),
+                        font.MainFont.Style))
+                    {
+                        graphics.DrawString(words[i].Item1, currentFont,
+                            new SolidBrush(palette.ForeColor), rectangles[i], drawFormat);
+                        currentFont.Dispose();
+                    }
                 }
             }
 

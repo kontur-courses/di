@@ -28,6 +28,7 @@ namespace TagsCloud.ClientGUI
 
         public void RecreateImage(ImageSettings imageSettings)
         {
+            imageSettings.NormalizeSize();
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
         }
 

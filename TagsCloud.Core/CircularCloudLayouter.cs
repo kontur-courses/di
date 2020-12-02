@@ -7,7 +7,7 @@ namespace TagsCloud.Core
     public class CircularCloudLayouter : ICircularCloudLayouter
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
-        private readonly ArchimedeanSpiral spiral;
+        private readonly ISpiral spiral;
 
         public CircularCloudLayouter(Point center, double spiralParameter)
         {

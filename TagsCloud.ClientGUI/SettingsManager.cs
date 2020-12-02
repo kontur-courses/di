@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
 
@@ -23,11 +24,7 @@ namespace TagsCloud.ClientGUI
                 settingsFileName = "../../../app.settings";
                 var data = storage.Get(settingsFileName);
                 if (data == null)
-                {
-                    var defaultSettings = CreateDefaultSettings();
-                    Save(defaultSettings);
-                    return defaultSettings;
-                }
+                    return CreateDefaultSettings();
                 return serializer.Deserialize<AppSettings>(data);
             }
             catch (Exception e)
@@ -44,11 +41,6 @@ namespace TagsCloud.ClientGUI
                 ImagesDirectory = ".",
                 ImageSettings = new ImageSettings()
             };
-        }
-
-        public void Save(AppSettings settings)
-        {
-            storage.Set(settingsFileName, serializer.Serialize(settings));
         }
     }
 }
