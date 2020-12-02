@@ -2,6 +2,7 @@
 using TagCloud.TextConverters.TextProcessors;
 using TagCloud.WordsMetrics;
 using TagCloud.PointGetters;
+using TagCloud.Visualization;
 
 namespace TagCloud.Clients
 {

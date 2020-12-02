@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.Visualization
 {
     public static class TagCloudVisualization
     {
