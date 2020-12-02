@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagCloud.Core;
+using TagCloud.Core.ColoringAlgorithms;
+using TagCloud.Core.FileReaders;
 using TagCloud.Core.ImageCreators;
 using TagCloud.Core.ImageSavers;
 using TagCloud.Core.LayoutAlgorithms;
@@ -49,19 +51,19 @@ namespace TagCloudUI.UI
         {
             var allWords = GetWordsFromFile(options.InputPath);
             var processedWords = GetProcessedWords(allWords, options.WordsCount);
-            var layoutInfo = CreateLayout(processedWords, options.LayoutAlgorithmName, options.FontName);
+            var layoutInfo = CreateLayout(processedWords, options.LayoutAlgorithmType, options.FontName);
 
             ThrowIfSmallSizeForLayout(options.ImageWidth, options.ImageHeight, layoutInfo.Size);
 
-            return CreateImage(layoutInfo, options.ColoringAlgorithmName, options.FontName);
+            return CreateImage(layoutInfo, options.ColoringTheme, options.FontName);
         }
 
         private Bitmap CreateImage(LayoutInfo layoutInfo,
-            string coloringAlgorithmName, string fontName)
+            ColoringTheme theme, string fontName)
         {
-            if (!coloringAlgorithmSelector.TryGetAlgorithm(coloringAlgorithmName, out var algorithm))
+            if (!coloringAlgorithmSelector.TryGetAlgorithm(theme, out var algorithm))
                 throw new ArgumentException(
-                    $"There is no such coloring theme: {coloringAlgorithmName}");
+                    $"There is no such coloring theme: {theme}");
 
             return imageCreator.Create(algorithm, layoutInfo.Tags, fontName, layoutInfo.Size);
         }
@@ -76,9 +78,11 @@ namespace TagCloudUI.UI
 
         private IEnumerable<string> GetWordsFromFile(string inputPath)
         {
-            if (!readersSelector.TryGetReader(Path.GetExtension(inputPath), out var reader))
+            var actualExtension = Path.GetExtension(inputPath).TrimStart('.');
+            if (!Enum.TryParse(actualExtension, true, out FileExtension extension) ||
+                !readersSelector.TryGetReader(extension, out var reader))
                 throw new ArgumentException(
-                    $"Unable to read file with this extension: {Path.GetExtension(inputPath)}");
+                    $"Unable to read file with this extension: {actualExtension}");
 
             return reader.ReadAllWords(inputPath);
         }
@@ -90,10 +94,10 @@ namespace TagCloudUI.UI
         }
 
         private LayoutInfo CreateLayout(IReadOnlyCollection<string> words,
-            string algorithmName, string fontName)
+            LayoutAlgorithmType algorithmType, string fontName)
         {
-            if (!layoutAlgorithmSelector.TryGetAlgorithm(algorithmName, out var algorithm))
-                throw new ArgumentException($"There is no such algorithm: {algorithmName}");
+            if (!layoutAlgorithmSelector.TryGetAlgorithm(algorithmType, out var algorithm))
+                throw new ArgumentException($"There is no such algorithm: {algorithmType}");
 
             var tags = words.Select((word, index) =>
                 CreateTag(algorithm, word, index, words.Count, fontName)).ToList();
