@@ -1,15 +1,14 @@
-﻿using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagCloud
+namespace TagCloud.Tests
 {
-    public class Test
+    public class LiteratureTextParser
     {
         [Test]
-        public void OneWordInLineParser_CorrectWorkOnSimpleFile()
+        public void LiteratureTextParser_CorrectWorkOnSimpleFile()
         {
-            var parser = new LiteratureTextParser(new PathCreater());
+            var parser = new TagCloud.LiteratureTextParser(new PathCreater());
             var array = parser.GetWords("input.txt");
             array.Should().HaveCount(24);
             array.Should().Contain("кошка")
@@ -22,13 +21,5 @@ namespace TagCloud
                 .And.Contain("мышь")
                 .And.Contain("волк");
         }
-
-        [Test]
-        public void Canvas_HasCorrectCenter()
-        {
-            var canvas = new Canvas(400, 600);
-            canvas.Center.Should().BeEquivalentTo(new Point(200, 300));
-        }
-        
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.Layout;
 
-namespace TagCloud.Layout
+namespace TagCloud.Tests
 {
     public class LayouterTest
     {

@@ -9,8 +9,8 @@ help
 ...di\TagCloud\bin\Debug\net48> TagCloud.exe -?
 
 со своими аргументами
-...di\TagCloud\bin\Debug\net48> TagCloud.exe -i input.txt -f "Verdana -s 1200,1000 -c random
-...di\TagCloud\bin\Debug\net48> TagCloud.exe --input input.txt --font "Verdana --size 1200,1000 -coloring words
+...di\TagCloud\bin\Debug\net48> TagCloud.exe -i input.txt -f "Verdana -s 1200,1000 -c 255,0,255 -b empty
+...di\TagCloud\bin\Debug\net48> TagCloud.exe --input input.txt --font "Verdana --size 1200,1000 --coloring 255,0,255 -b rectangles
 
 __Где:__
 
@@ -19,5 +19,5 @@ __Где:__
 
 --size width,height
 
--c random|words|location 
-По умолчанию: location 
+-b empty|rectangles|circle 
+По умолчанию: empty 

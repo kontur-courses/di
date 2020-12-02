@@ -20,20 +20,22 @@ namespace TagCloud
         
         public List<Tuple<string, Rectangle>> GetTags(string filename, int canvasHeight)
         {
-            var result = new List<Tuple<string, Rectangle>>();
             var frequencies = frequencyAnalyzer.GetFrequencyDictionary(filename);
-            var orderedPairs = frequencies.OrderByDescending(pair => pair.Value);
-            foreach (var pair in orderedPairs)
-            {
-                var frequency = pair.Value;
-                var tagString = pair.Key;
-                var height = (int)Math.Round(canvasHeight * frequency * Math.Sqrt(orderedPairs.Count()) / (2.5 * Math.PI));
-                var width = (int)Math.Round((double)height * (tagString.Length - 1));
-                var rectangle = layouter.PutNextRectangle(new Size(width, height));
-                result.Add(new Tuple<string, Rectangle>(tagString, rectangle));
-            }
+            var tagsCount = frequencies.Count;
+            return frequencies
+                .OrderByDescending(pair => pair.Value)
+                .Select(pair => GetTag(pair, canvasHeight, tagsCount))
+                .ToList();
+        }
 
-            return result;
+        private Tuple<string, Rectangle> GetTag(KeyValuePair<string, double> pair, int canvasHeight, int tagsCount)
+        {
+            var frequency = pair.Value;
+            var tagString = pair.Key;
+            var height = (int)Math.Round(canvasHeight * frequency * Math.Sqrt(tagsCount) / (2.5 * Math.PI));
+            var width = (int)Math.Round((double)height * (tagString.Length - 1));
+            var rectangle = layouter.PutNextRectangle(new Size(width, height));
+            return new Tuple<string, Rectangle>(tagString, rectangle);
         }
     }
 }
