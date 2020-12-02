@@ -36,8 +36,8 @@
           <HintPath>..\packages\Autofac.6.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="McMaster.Extensions.CommandLineUtils, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6f71cb76b82f055d">
-          <HintPath>..\packages\McMaster.Extensions.CommandLineUtils.3.0.0\lib\net45\McMaster.Extensions.CommandLineUtils.dll</HintPath>
+        <Reference Include="McMaster.Extensions.CommandLineUtils, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6f71cb76b82f055d">
+          <HintPath>..\packages\McMaster.Extensions.CommandLineUtils.3.1.0-rc.371\lib\net45\McMaster.Extensions.CommandLineUtils.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
