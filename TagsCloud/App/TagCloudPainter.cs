@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloud.App
 {
@@ -14,12 +15,12 @@ namespace TagsCloud.App
             this.imageSettings = imageSettings;
         }
 
-        public void Paint(List<Word> words)
+        public void Paint(IEnumerable<Word> words)
         {
-            imageHolder.RecreateImage(imageSettings.ImageSize);
+            var imageSize = imageSettings.ImageSize;
+            imageHolder.RecreateImage(imageSize);
             using var graphics = imageHolder.StartDrawing();
-            foreach (var word in words)
-                //todo check that word can be drawn in image
+            foreach (var word in words.Where(x => x.Rectangle.IsNestedInImage(imageSize)))
                 graphics.DrawString(word.Text, word.Font, new SolidBrush(imageSettings.GetColor()),
                     word.Rectangle.Location);
         }
