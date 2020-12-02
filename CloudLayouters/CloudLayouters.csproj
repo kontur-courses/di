@@ -6,8 +6,4 @@
         <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="SimpleNetNlp.Models.PosTagger" Version="3.8.0" />
-    </ItemGroup>
-
 </Project>

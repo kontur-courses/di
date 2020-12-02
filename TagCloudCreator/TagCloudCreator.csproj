@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SimpleNetNlp.Models.PosTagger" Version="3.8.0" />
+      <PackageReference Include="TikaOnDotnet.TextExtractor" Version="1.17.1" />
     </ItemGroup>
 
     <ItemGroup>

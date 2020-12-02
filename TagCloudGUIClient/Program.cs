@@ -42,6 +42,7 @@ namespace TagCloud
             builder.RegisterType<FullRandomColorSelector>().As<IColorSelector>();
             builder.RegisterType<BlackColorSelector>().As<IColorSelector>();
             builder.RegisterType<RandomFromColorsColorSelector>().As<IColorSelector>();
+            builder.RegisterType<TikaBasedReader>().As<IFileReader>();
             return builder.Build();
         }
     }

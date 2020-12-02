@@ -74,7 +74,7 @@ namespace TagCloud
             openFileButton.Click += (sender, args) =>
             {
                 using OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "txt files (*.txt)|*.txt";
+                openFileDialog.Filter = "files with text|*.txt;*.doc;*.docx;*.html;*.pdf;*.md";
                 if (openFileDialog.ShowDialog() == DialogResult.OK) path.Text = openFileDialog.FileName;
             };
             
