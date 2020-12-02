@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud;
 using TagsCloud.BoringWordsDetectors;
+using TagsCloud.StatisticProviders;
 
 namespace TagsCloudTests
 {

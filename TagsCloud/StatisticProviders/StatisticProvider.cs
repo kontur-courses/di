@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using TagsCloud.BoringWordsDetectors;
-using TagsCloud.StatisticProviders;
 
-namespace TagsCloud
+namespace TagsCloud.StatisticProviders
 {
     public class StatisticProvider : IStatisticProvider
     {

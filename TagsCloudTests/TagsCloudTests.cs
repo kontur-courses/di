@@ -7,10 +7,11 @@ using TagsCloud;
 using TagsCloud.BoringWordsDetectors;
 using TagsCloud.CloudRenderers;
 using TagsCloud.ColorSelectors;
+using TagsCloud.PointsLayouts;
 using TagsCloud.StatisticProviders;
 using TagsCloud.WordLayouters;
 using TagsCloud.WordReaders;
-using TagsCloud.WordSelector;
+using TagsCloud.WordSelectors;
 
 namespace TagsCloudTests
 {

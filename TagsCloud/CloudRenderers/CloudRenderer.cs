@@ -1,11 +1,9 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
-using TagsCloud.CloudRenderers;
 using TagsCloud.WordLayouters;
 
-namespace TagsCloud
+namespace TagsCloud.CloudRenderers
 {
     public class CloudRenderer : ICloudRenderer
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TagsCloud.WordSelector
+namespace TagsCloud.WordSelectors
 {
     public interface IWordSelector
     {

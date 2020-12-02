@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.ColorSelectors;
-using TagsCloud.WordLayouters;
+using TagsCloud.PointsLayouts;
 
-namespace TagsCloud
+namespace TagsCloud.WordLayouters
 {
     public class WordLayouter : IWordLayouter
     {

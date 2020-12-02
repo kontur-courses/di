@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using TagsCloud.WordReaders;
-using TagsCloud.WordSelector;
+using TagsCloud.WordSelectors;
 
-namespace TagsCloud
+namespace TagsCloud.WordReaders
 {
     public class RegexWordReader : IWordReader
     {

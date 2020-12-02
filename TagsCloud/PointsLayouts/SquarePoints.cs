@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloud
+namespace TagsCloud.PointsLayouts
 {
     public class SquarePoints : IPointsLayout
     {
