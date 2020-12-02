@@ -18,10 +18,10 @@ namespace TagCloudUI.UI
         [Option('h', "height", Default = 1200, HelpText = "Image height")]
         public int ImageHeight { get; set; }
 
-        [Option('a', "algo", Default = "Circular", HelpText = "Layout algorithm type")]
+        [Option('a', "algo", Default = LayoutAlgorithmType.Circular, HelpText = "Layout algorithm type")]
         public LayoutAlgorithmType LayoutAlgorithmType { get; set; }
 
-        [Option('t', "theme", Default = "Rainbow", HelpText = "Coloring theme")]
+        [Option('t', "theme", Default = ColoringTheme.Rainbow, HelpText = "Coloring theme")]
         public ColoringTheme ColoringTheme { get; set; }
 
         [Option('f', "font", Default = "Arial", Required = false, HelpText = "Tags font")]
