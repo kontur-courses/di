@@ -30,17 +30,17 @@ namespace TagsCloud.UserInterfaces.GUI
 
         private readonly IWordsConfig wordsConfig;
         private readonly IImageConfig imageConfig;
-        private readonly TagsCloudProcessor tagsCloudProcessor;
+        private readonly TagsCloudCreator tagsCloudProcessor;
         private readonly IFiltersApplier filtersFactory;
         private readonly IConvertersApplier convertersFactory;
         private readonly ITagsGeneratorFactory tagsGeneratorFactory;
-        private readonly ILayouterFactory layouterFactory;
+        private readonly IRectanglesLayoutersFactory layouterFactory;
         #endregion
 
         public ConfigWindow(IWordsConfig wordsConfig, IImageConfig imageConfig,
-           TagsCloudProcessor tagsCloudProcessor, IFiltersApplier filtersFactory,
+           TagsCloudCreator tagsCloudProcessor, IFiltersApplier filtersFactory,
            IConvertersApplier convertersFactory, ITagsGeneratorFactory tagsGeneratorFactory,
-           ILayouterFactory layouterFactory)
+           IRectanglesLayoutersFactory layouterFactory)
         {
             InitializeComponent();
 
@@ -179,7 +179,7 @@ namespace TagsCloud.UserInterfaces.GUI
         {
             tableLayoutPanel.Hide();
             Size = imageConfig.ImageSize;
-            tagsCloudProcessor.CreateCloud();
+            tagsCloudProcessor.CreateCloud(wordsConfig.Path, imageConfig.Path);
             using var image = Image.FromFile(imageConfig.Path);
             using var graphics = CreateGraphics();
             graphics.DrawImage(image, new PointF(0, 0));

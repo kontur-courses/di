@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.ImageProcessing.Config;
 using TagsCloud.ImageProcessing.ImageBuilders;
 using TagsCloud.TagsCloudProcessing;
 using TagsCloud.TextProcessing.WordConfig;
 
-namespace TagsCloud.ImageProcessing.Config.ImageBuilders
+namespace TagsCloud.ImageProcessing.ImageBuilders
 {
     public class ImageBuilder : IImageBuilder
     {

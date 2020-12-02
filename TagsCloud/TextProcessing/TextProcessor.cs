@@ -9,23 +9,22 @@ namespace TagsCloud.TextProcessing
     public class TextProcessor
     {
         private readonly IReadersFactory readersFactory;
-        private readonly IFiltersApplier filtersFactory;
-        private readonly IConvertersApplier convertersFactory;
+        private readonly IFiltersApplier filtersApplier;
+        private readonly IConvertersApplier convertersApplier;
 
         public TextProcessor(IReadersFactory readers, IFiltersApplier filters,
             IConvertersApplier converters)
         {
             readersFactory = readers;
-            filtersFactory = filters;
-            convertersFactory = converters;
+            filtersApplier = filters;
+            convertersApplier = converters;
         }
 
         public IEnumerable<WordInfo> ReadFromFile(string path)
         {
-            var reader = readersFactory.CreateReader(path);
-            var words = reader.ReadWords(path);
-            var filtredWords = filtersFactory.ApplyFilters(words);
-            var convertedWords = convertersFactory.ApplyConversion(filtredWords);
+            var words = readersFactory.CreateReader().ReadWords(path);
+            var filteredWords = filtersApplier.ApplyFilters(words);
+            var convertedWords = convertersApplier.ApplyConversion(filteredWords);
 
             return convertedWords.GroupBy(w => w).Select(g => new WordInfo(g.Key, g.Count()));
         }

@@ -8,6 +8,6 @@ namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory
     {
         ITagsGenerator Create();
         IEnumerable<string> GetGeneratorNames();
-        void Register(string generatorName, Func<ITagsGenerator> creationFunc);
+        ITagsGeneratorFactory Register(string generatorName, Func<ITagsGenerator> creationFunc);
     }
 }

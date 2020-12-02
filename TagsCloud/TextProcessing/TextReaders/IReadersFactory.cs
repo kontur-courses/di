@@ -2,6 +2,6 @@
 {
     public interface IReadersFactory
     {
-        IWordsReader CreateReader(string path);
+        IWordsReader CreateReader();
     }
 }

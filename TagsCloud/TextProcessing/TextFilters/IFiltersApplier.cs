@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TagsCloud.TextProcessing.TextFilters
 {
@@ -6,6 +7,6 @@ namespace TagsCloud.TextProcessing.TextFilters
     {
         IEnumerable<string> ApplyFilters(IEnumerable<string> text);
         IEnumerable<string> GetFilerNames();
-        void Register(string filterName, ITextFilter textFilter);
+        IFiltersApplier Register(string filterName, Func<ITextFilter> textFilter);
     }
 }

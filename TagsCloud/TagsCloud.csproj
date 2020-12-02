@@ -106,17 +106,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\RectangleExtension.cs" />
+    <Compile Include="Extensions\ServiceProviderExtensions.cs" />
     <Compile Include="ImageProcessing\Config\IImageConfig.cs" />
     <Compile Include="ImageProcessing\ImageBuilders\IImageBuilder.cs" />
     <Compile Include="ImageProcessing\ImageBuilders\ImageBuilder.cs" />
     <Compile Include="ImageProcessing\Config\ImageConfig.cs" />
-    <Compile Include="ImageProcessing\SaverImage\IImageSaver.cs" />
-    <Compile Include="ImageProcessing\SaverImage\ImageSaver.cs" />
+    <Compile Include="ImageProcessing\SaverImage\Factory\IImageSaverFactory.cs" />
+    <Compile Include="ImageProcessing\SaverImage\Factory\ImageSaverFactory.cs" />
+    <Compile Include="ImageProcessing\SaverImage\ImageSavers\BmpSaver.cs" />
+    <Compile Include="ImageProcessing\SaverImage\ImageSavers\IImageSaver.cs" />
+    <Compile Include="ImageProcessing\SaverImage\ImageSavers\JpgSaver.cs" />
+    <Compile Include="ImageProcessing\SaverImage\ImageSavers\PngSaver.cs" />
+    <Compile Include="ImageProcessing\SaverImage\SaverBase.cs" />
     <Compile Include="Layouter\Base\LayouterBase.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
-    <Compile Include="Layouter\Factory\ILayouterFactory.cs" />
-    <Compile Include="Layouter\Factory\LayouterFactory.cs" />
-    <Compile Include="Layouter\ILayouter.cs" />
+    <Compile Include="Layouter\Factory\IRectanglesLayoutersFactory.cs" />
+    <Compile Include="Layouter\Factory\RectanglesLayoutersFactory.cs" />
+    <Compile Include="Layouter\IRectanglesLayouter.cs" />
     <Compile Include="Layouter\TargetVector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,7 +130,7 @@
     <Compile Include="TagsCloudProcessing\TagsGeneratorFactory\TagsGeneratorFactory.cs" />
     <Compile Include="TagsCloudProcessing\TagsGenerators\ITagsGenerator.cs" />
     <Compile Include="TagsCloudProcessing\Tag.cs" />
-    <Compile Include="TagsCloudProcessing\TagsCloudProcessor.cs" />
+    <Compile Include="TagsCloudProcessing\TagsCloudCreator.cs" />
     <Compile Include="TagsCloudProcessing\TagsGenerators\TagsGenerator.cs" />
     <Compile Include="TextProcessing\Converters\ConvertersApplier.cs" />
     <Compile Include="TextProcessing\Converters\IConvertersApplier.cs" />
@@ -174,9 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="text.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

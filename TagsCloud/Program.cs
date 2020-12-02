@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
+using TagsCloud.Extensions;
 using TagsCloud.ImageProcessing.Config;
-using TagsCloud.Layouter;
+using TagsCloud.ImageProcessing.SaverImage.Factory;
 using TagsCloud.Layouter.Factory;
 using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
-using TagsCloud.TagsCloudProcessing.TegsGenerators;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
 using TagsCloud.TextProcessing.WordConfig;
@@ -21,43 +21,26 @@ namespace TagsCloud
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var container = BuildContainer();
-            InitFactories(container);
-
-            Application.Run(container.GetService<Form>());
+            Application.Run(BuildContainer().ConfigureFactories().GetService<Form>());
         }
 
-        public static ServiceProvider BuildContainer()
+        private static ServiceProvider BuildContainer()
         {
             return new ServiceCollection()
-                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces())
+                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces().WithTransientLifetime())
 
                 .AddSingleton<IImageConfig, ImageConfig>()
                 .AddSingleton<IWordsConfig, WordConfig>()
 
-                .AddSingleton<ILayouterFactory, LayouterFactory>()
+                .AddSingleton<IRectanglesLayoutersFactory, RectanglesLayoutersFactory>()
                 .AddSingleton<ITagsGeneratorFactory, TagsGeneratorFactory>()
                 .AddSingleton<IConvertersApplier, ConvertersApplier>()
+                .AddSingleton<IImageSaverFactory, ImageSaverFactory>()
                 .AddSingleton<IFiltersApplier, FiltersApplier>()
 
-                .AddScoped<Form, ConfigWindow>()
+                .AddSingleton<Form, ConfigWindow>()
 
                 .BuildServiceProvider();
-        }
-
-        private static void InitFactories(ServiceProvider serviceProvider)
-        {
-            serviceProvider.GetService<ILayouterFactory>()
-                .Register("По спирали", center => new CircularCloudLayouter(center));
-
-            serviceProvider.GetService<ITagsGeneratorFactory>()
-                .Register("Топ 30", () => new TagsGenerator());
-
-            serviceProvider.GetService<IConvertersApplier>()
-                .Register("Перевести в нижний регистр", new LowerCaseConverter());
-
-            serviceProvider.GetService<IFiltersApplier>()
-                .Register("Исключить служебные символы", new FunctionWordsFilter());
         }
     }
 }

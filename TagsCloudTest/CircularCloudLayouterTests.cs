@@ -113,5 +113,12 @@ namespace TagsCloudTest
                     rectangle.TryMoveRectangle(delta, rectangles).Should().BeFalse();
             }
         }
+
+        [Test]
+        [Timeout(100000)]
+        public void PutNextRectanglePerformanceTest()
+        {
+            PutRectangles(1000);
+        }
     }
 }

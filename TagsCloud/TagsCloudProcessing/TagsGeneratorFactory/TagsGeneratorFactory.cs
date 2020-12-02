@@ -21,9 +21,10 @@ namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory
 
         public IEnumerable<string> GetGeneratorNames() => tagsGenerators.Select(g => g.Key);
 
-        public void Register(string generatorName, Func<ITagsGenerator> creationFunc)
+        public ITagsGeneratorFactory Register(string generatorName, Func<ITagsGenerator> creationFunc)
         {
             tagsGenerators[generatorName] = creationFunc;
+            return this;
         }
     }
 }

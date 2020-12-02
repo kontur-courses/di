@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloud.Extensions;
 
 namespace TagsCloud.Layouter.Base
 {
-    public abstract class LayouterBase : ILayouter
+    public abstract class LayouterBase : IRectanglesLayouter
     {
         private readonly List<Rectangle> rectangles;
         private readonly Point center;
@@ -42,19 +41,6 @@ namespace TagsCloud.Layouter.Base
                 rectangle = newRectangle;
             }
             return rectangle;
-        }
-
-        public Size GetLayoutSize()
-        {
-            var size = new Size();
-            foreach (var rect in rectangles)
-            {
-                size.Width = Math.Max(rect.X - center.X + rect.Width, size.Width);
-                size.Height = Math.Max(rect.Y - center.Y + rect.Height, size.Height);
-            }
-            size.Height += center.X * 2;
-            size.Width += center.Y * 2;
-            return size;
         }
 
         protected abstract IEnumerable<Point> GetPoints();

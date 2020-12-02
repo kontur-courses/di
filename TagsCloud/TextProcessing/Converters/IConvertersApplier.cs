@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TagsCloud.TextProcessing.Converters
 {
@@ -6,6 +7,6 @@ namespace TagsCloud.TextProcessing.Converters
     {
         IEnumerable<string> ApplyConversion(IEnumerable<string> words);
         IEnumerable<string> GetConverterNames();
-        void Register(string converterName, IWordConverter wordConverter);
+        IConvertersApplier Register(string converterName, Func<IWordConverter> wordConverter);
     }
 }

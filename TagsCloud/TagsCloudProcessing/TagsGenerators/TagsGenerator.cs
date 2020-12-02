@@ -2,19 +2,31 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloud.Layouter;
+using TagsCloud.Layouter.Factory;
 using TagsCloud.TextProcessing;
+using TagsCloud.TextProcessing.WordConfig;
 
 namespace TagsCloud.TagsCloudProcessing.TegsGenerators
 {
     public class TagsGenerator : ITagsGenerator
     {
-        public IEnumerable<Tag> CreateTags(IEnumerable<WordInfo> words, ILayouter layouter, Font font)
+        private readonly IRectanglesLayoutersFactory layouterFactory;
+        private readonly IWordsConfig wordsConfig;
+
+        public TagsGenerator(IRectanglesLayoutersFactory layouterFactory, IWordsConfig wordsConfig)
         {
+            this.layouterFactory = layouterFactory;
+            this.wordsConfig = wordsConfig;
+        }
+
+        public IEnumerable<Tag> CreateTags(IEnumerable<WordInfo> words)
+        {
+            var layouter = layouterFactory.Create();
             var sortedWords = words.OrderByDescending(info => info.Frequence).ToList();
             var tags = new List<Tag>();
+            var font = wordsConfig.FontName;
 
-            var count = 40;
+            var count = 30;
             foreach (var word in sortedWords.Take(30))
             {
                 var currentFont = new Font(font.FontFamily, count);
