@@ -6,7 +6,6 @@ using TagsCloud.App.Commands;
 using TagsCloud.App.FileReaders;
 using TagsCloud.App.ImageSavers;
 using TagsCloud.Infrastructure;
-using TextReader = TagsCloud.App.FileReaders.TextReader;
 
 namespace TagsCloud.App
 {
@@ -22,7 +21,7 @@ namespace TagsCloud.App
             builder.RegisterType<SetImageSizeCommand>().As<ICommand>();
             builder.RegisterType<TagCloudCommand>().As<ICommand>();
             builder.RegisterType<DocReader>().As<IFileAllLinesReader>();
-            builder.RegisterType<TextReader>().As<IFileAllLinesReader>();
+            builder.RegisterType<TxtReader>().As<IFileAllLinesReader>();
             builder.RegisterType<PngSaver>().As<IImageSaver>();
             builder.RegisterType<BmpSaver>().As<IImageSaver>();
             builder.RegisterType<JpgSaver>().As<IImageSaver>();

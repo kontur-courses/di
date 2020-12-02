@@ -4,7 +4,7 @@ using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App.FileReaders
 {
-    public class TextReader : IFileAllLinesReader
+    public class TxtReader : IFileAllLinesReader
     {
         public HashSet<string> Extensions { get; } = new HashSet<string> {".txt", ".md"};
 
