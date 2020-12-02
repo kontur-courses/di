@@ -37,7 +37,8 @@ namespace TagsCloud
         
         private static readonly Dictionary<string, Type> ColorSelectors = new Dictionary<string, Type>
         {
-            ["Random"] = typeof(RandomColorSelector)
+            ["Random"] = typeof(RandomColorSelector),
+            ["Cyclic"] = typeof(CyclicColorSelector),
         };
         
         public static IContainer Configure()
