@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="UserInterfaces" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Reference Include="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
         <HintPath>..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.1.0\ref\netcoreapp3.1\System.Drawing.Common.dll</HintPath>
       </Reference>

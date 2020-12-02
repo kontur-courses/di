@@ -1,17 +1,14 @@
-﻿using System;
-using System.Drawing;
-
-namespace TagCloud
+﻿namespace TagCloud
 {
     public class TagInfo
     {
         public readonly string Value;
-        public readonly Font Font;
+        public readonly double Proportion;
         
-        public TagInfo(string value, int fontSize)
+        public TagInfo(string value, double proportion)
         {
             Value = value;
-            Font = new Font(FontFamily.GenericMonospace, fontSize);
+            Proportion = proportion;
         }
     }
 }

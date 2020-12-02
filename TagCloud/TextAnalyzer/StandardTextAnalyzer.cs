@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using TagCloud.TextAnalyzer.WordFilters;
 using TagCloud.TextAnalyzer.WordNormalizer;
 
 namespace TagCloud.TextAnalyzer
@@ -8,29 +8,41 @@ namespace TagCloud.TextAnalyzer
     public class StandardAnalyzer : ITextAnalyzer
     {
         private IWordNormalizer normalizer;
-        private HashSet<string> bannedWords = new HashSet<string>();
+        private HashSet<IWordFilter> filters;
         
-        public StandardAnalyzer(IWordNormalizer normalizer, HashSet<string> bannedWords = null)
+        public StandardAnalyzer(IWordNormalizer normalizer, params IWordFilter[] filters)
         {
             this.normalizer = normalizer;
-            if (bannedWords != null)
-                this.bannedWords = bannedWords;
+            this.filters = filters.ToHashSet();
+        }
+        
+        public HashSet<TagInfo> GetTags(List<string> words)
+        {
+            var wordsToCount = GetWordsCounts(words);
+            
+            var minCount = wordsToCount.Values.ToList().Min();
+            var maxCount = wordsToCount.Values.ToList().Max();
+            
+            var tags = wordsToCount
+                .Select(wordToCount => 
+                    new TagInfo(wordToCount.Key, 
+                        GetProportion(wordToCount.Value, minCount, maxCount)))
+                .ToHashSet();
+            return tags;
         }
 
-        public Dictionary<string, int> GetWordsCounts(List<string> words)
+        private Dictionary<string, int> GetWordsCounts(List<string> words)
         {
-            var wordCounts = new Dictionary<string, int>();
-            foreach (var normalizedWord in words.Select(word => normalizer.Normalize(word)))
-            {
-                if (bannedWords.Contains(normalizedWord))
-                    continue;
-                
-                if (!wordCounts.ContainsKey(normalizedWord))
-                    wordCounts[normalizedWord] = 0;
-                wordCounts[normalizedWord]++;
-            }
+            return words.Select(word => normalizer.Normalize(word))
+                    .Where(word => filters.All(f => f.IsWordToExclude(word)))
+                    .GroupBy(word => word)
+                    .ToDictionary(group => group.Key,
+                        group => group.Count());
+        }
 
-            return wordCounts;
+        private static double GetProportion(int value, int minValue, int maxValue)
+        {
+            return (double) (value - minValue) / (maxValue - minValue);
         }
     }
 }
