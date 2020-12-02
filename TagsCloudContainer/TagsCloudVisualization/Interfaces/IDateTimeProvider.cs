@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudContainer.TagsCloudVisualization
+namespace TagsCloudContainer.TagsCloudVisualization.Interfaces
 {
     public interface IDateTimeProvider
     {

@@ -3,12 +3,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class BitmapSaver
+    public class BitmapSaver : IBitmapSaver
     {
-        public static void SaveBitmapToDirectory(Bitmap imageBitmap, string savePath)
+        public void SaveBitmapToDirectory(Bitmap imageBitmap, string savePath)
         {
             if (!PathInRightFormat(savePath))
                 throw new ArgumentException("wrong path format");
@@ -21,7 +22,8 @@ namespace TagsCloudContainer.TagsCloudVisualization
 
         private static bool PathInRightFormat(string path)
         {
-            var pattern = @"((?:[^\\]*\\)*)(.*[.].+)";
+            var separator = Path.DirectorySeparatorChar;
+            var pattern = $@"((?:[^\{separator}]*\{separator})*)(.*[.].+)";
             var match = Regex.Match(path, pattern);
             var directoryPath = match.Groups[1].ToString();
 

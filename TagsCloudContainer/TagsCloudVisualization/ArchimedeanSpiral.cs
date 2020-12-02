@@ -1,44 +1,46 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class ArchimedeanSpiral
+    public class ArchimedeanSpiral : ISpiral
     {
+        private readonly double angleDelta;
+
+        private readonly Point center;
+        private readonly double distanceBetweenLoops;
+        private double angle;
+
         public ArchimedeanSpiral(Point center, double distanceBetweenLoops, double angleDelta)
         {
-            Angle = 0;
-            Center = center;
-            AngleDelta = angleDelta;
-            DistanceBetweenLoops = distanceBetweenLoops;
+            angle = 0;
+            this.center = center;
+            this.angleDelta = angleDelta;
+            this.distanceBetweenLoops = distanceBetweenLoops;
 
             ValidateSpiralParameters();
         }
 
-        private Point Center { get; }
-        private double DistanceBetweenLoops { get; }
-        private double Angle { get; set; }
-        private double AngleDelta { get; }
+        public Point GetNextPoint()
+        {
+            var x = center.X + (int) (distanceBetweenLoops * angle * Math.Cos(angle));
+            var y = center.Y + (int) (distanceBetweenLoops * angle * Math.Sin(angle));
+            angle += angleDelta;
+
+            return new Point(x, y);
+        }
 
         private void ValidateSpiralParameters()
         {
-            if (Center.X < 0 || Center.Y < 0)
+            if (center.X < 0 || center.Y < 0)
                 throw new ArgumentException("center coordinates should not be negative numbers");
 
-            if (AngleDelta <= 0) throw new ArgumentException("angleDelta should not be negative or zero");
+            if (angleDelta <= 0)
+                throw new ArgumentException("angleDelta should not be negative or zero");
 
-            if (DistanceBetweenLoops <= 0)
+            if (distanceBetweenLoops <= 0)
                 throw new ArgumentException("distanceBetweenLoops should not be negative or zero");
-        }
-
-        public Point GetNextPoint()
-        {
-            var x = Center.X + (int) (DistanceBetweenLoops * Angle * Math.Cos(Angle));
-            var y = Center.Y + (int) (DistanceBetweenLoops * Angle * Math.Sin(Angle));
-            Angle += AngleDelta;
-
-            return new Point(x, y);
-            ;
         }
     }
 }

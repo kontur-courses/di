@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class TagsVisualizator
+    public class TagsVisualizator : ITagsVisualizator
     {
-        public static Bitmap GetBitmap(List<Rectangle> rectangles)
+        public Bitmap GetBitmap(List<Rectangle> rectangles)
         {
             var imageSize = GetImageSize(rectangles);
             var pen = new Pen(Color.MediumVioletRed, 4);

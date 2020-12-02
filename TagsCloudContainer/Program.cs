@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloudContainer.TagsCloudVisualization;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -13,10 +13,14 @@ namespace TagsCloudContainer
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<ContainerConfig>();
-            var container = containerBuilder.Build();
 
+            var container = containerBuilder.Build();
             var parser = container.Resolve<ITextParser>();
-            var cloudLayouter = container.Resolve<ILayouter>(new NamedParameter("center", new Point(200, 200)));
+            var spiral = container.Resolve<ISpiral>(new NamedParameter("center", new Point(200, 200)),
+                new NamedParameter("distanceBetweenLoops", 0.2),
+                new NamedParameter("angleDelta", 1.0));
+            var cloudLayouter = container.Resolve<ILayouter>(new NamedParameter("spiral", spiral),
+                new NamedParameter("center", new Point(200, 200)));
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

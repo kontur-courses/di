@@ -9,6 +9,14 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 {
     public class TagsVisualizatorTests
     {
+        private TagsVisualizator TagsVisualizator { get; set; }
+
+        [SetUp]
+        public void SetUp()
+        {
+            TagsVisualizator = new TagsVisualizator();
+        }
+
         [Test]
         public void GetBitmap_GetImageSizeThrowException_WhenRectangleOutOfBoundaries()
         {

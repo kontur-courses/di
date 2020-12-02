@@ -25,7 +25,8 @@ namespace TagsCloudContainer
 
         private static bool PathInRightFormat(string path)
         {
-            var pattern = @"((?:[^\\]*\\)*)(.*[.].+)";
+            var separator = Path.DirectorySeparatorChar;
+            var pattern = $@"((?:[^\{separator}]*\{separator})*)(.*[.].+)";
             var match = Regex.Match(path, pattern);
             var directoryPath = match.Groups[1].ToString();
 

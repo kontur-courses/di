@@ -4,6 +4,6 @@ namespace TagsCloudContainer
 {
     public interface ITextParser
     {
-        public Dictionary<string, int> GetParsedText(string text);
+        public List<string> GetAllWords(string text);
     }
 }

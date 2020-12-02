@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
     public class CircularCloudLayouter : ILayouter
     {
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(ISpiral spiral, Point center)
         {
-            const double distanceBetweenLoops = 0.2;
-            const double angleDelta = 1;
+            Spiral = spiral;
             Center = center;
-            ArchimedeanSpiral = new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta);
             Rectangles = new List<Rectangle>();
         }
 
         private Point Center { get; }
-        private ArchimedeanSpiral ArchimedeanSpiral { get; }
+        private ISpiral Spiral { get; }
         public List<Rectangle> Rectangles { get; }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -34,7 +33,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
 
             do
             {
-                var location = ArchimedeanSpiral.GetNextPoint();
+                var location = Spiral.GetNextPoint();
                 rectangle = new Rectangle(location, rectangleSize);
             } while (Collided(rectangle));
 

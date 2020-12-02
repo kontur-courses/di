@@ -18,9 +18,9 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
         [Test]
         public void GetNewFilePath_ReturnExistingDirectory_WhenCalled()
         {
-            var path = Sut.GetNewFilePath().Split('\\');
+            var path = Sut.GetNewFilePath().Split(Path.DirectorySeparatorChar);
             path[^1] = "";
-            var directoryPath = string.Join('\\', path);
+            var directoryPath = string.Join(Path.DirectorySeparatorChar, path);
 
             Directory.Exists(directoryPath).Should().BeTrue();
         }

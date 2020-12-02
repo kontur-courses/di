@@ -20,7 +20,7 @@ namespace TagsCloudVisualization.Tests
         }
 
         [TestCase(@"<html></html>", TestName = "Directory dont exist")]
-        [TestCase(@"C:/Dir/text.txt", TestName = "Not backslash separator")]
+        [TestCase(@"C:_Dir_text.txt", TestName = "Not backslash separator")]
         [TestCase(@"C:\text txt", TestName = "Doesnt have dot separator")]
         [TestCase(@"C:\text.", TestName = "Doesnt have filename extension")]
         public void ThrowException_When(string path)
@@ -30,10 +30,10 @@ namespace TagsCloudVisualization.Tests
             writeText.Should().Throw<ArgumentException>();
         }
 
-        [TestCase(@"C:\text.txt", TestName = "Relative path")]
-        [TestCase(@"..\text.txt", TestName = "Absolute path")]
-        public void DoesntThrowException_When(string path)
+        [Test]
+        public void DoesntThrowException_When()
         {
+            var path = $"C:{Path.DirectorySeparatorChar}image.png";
             Action writeText = () => Writer.WriteText("text", path);
 
             writeText.Should().NotThrow<ArgumentException>();
@@ -43,7 +43,7 @@ namespace TagsCloudVisualization.Tests
         [TestCaseSource(nameof(TestCases))]
         public void SaveFileInRightFormat_When(string text, string expectedResult)
         {
-            var path = $"{Root}\\TagsCloudContainer\\Texts\\test.txt";
+            var path = Path.Join(Root, "TagsCloudContainer", "Texts", "test.txt");
             Writer.WriteText(text, path);
 
             File.Exists(path).Should().BeTrue();

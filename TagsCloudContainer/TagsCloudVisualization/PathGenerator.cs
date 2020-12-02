@@ -1,8 +1,9 @@
 ﻿using System.IO;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class PathGenerator
+    public class PathGenerator : IPathGenerator
     {
         public PathGenerator(IDateTimeProvider dateTimeProvider)
         {
@@ -16,7 +17,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
         public string GetNewFilePath()
         {
             var dateTime = DateTimeProvider.GetDateTimeNow();
-            return $"{Root}\\{dateTime:MMddyy-HHmmssffffff}.png";
+            return Path.Join(Root, $"{dateTime:MMddyy-HHmmssffffff}.png");
         }
     }
 }

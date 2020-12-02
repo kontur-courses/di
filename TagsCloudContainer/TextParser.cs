@@ -13,14 +13,13 @@ namespace TagsCloudContainer
             this.wordValidator = wordValidator;
         }
 
-        public Dictionary<string, int> GetParsedText(string text)
+        public List<string> GetAllWords(string text)
         {
             var matches = Regex.Matches(text, @"\b\w+\b");
             var wordsEntry = matches
                 .Select(x => x.Value.ToLower())
                 .Where(x => wordValidator.IsValidWord(x))
-                .GroupBy(x => x)
-                .ToDictionary(x => x.Key, x => x.Count());
+                .ToList();
 
             return wordsEntry;
         }

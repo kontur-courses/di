@@ -12,13 +12,18 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
     public class CircularCloudLayouterTests
     {
         private Point Center { get; set; }
+        private TagsVisualizator TagsVisualizator { get; set; }
         private CircularCloudLayouter Sut { get; set; }
 
         [SetUp]
         public void SetUp()
         {
+            const double distanceBetweenLoops = 0.2;
+            const double angleDelta = 1;
+
+            TagsVisualizator = new TagsVisualizator();
             Center = new Point(300, 300);
-            Sut = new CircularCloudLayouter(Center);
+            Sut = new CircularCloudLayouter(new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta), Center);
         }
 
         [TearDown]
@@ -27,7 +32,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 var path = new PathGenerator(new DateTimeProvider()).GetNewFilePath();
-                BitmapSaver.SaveBitmapToDirectory(TagsVisualizator.GetBitmap(Sut.Rectangles), path);
+                new BitmapSaver().SaveBitmapToDirectory(TagsVisualizator.GetBitmap(Sut.Rectangles), path);
 
                 Console.WriteLine($"Tag cloud visualization saved to file {path}");
             }

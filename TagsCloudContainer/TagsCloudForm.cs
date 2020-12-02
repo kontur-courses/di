@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-using TagsCloudContainer.TagsCloudVisualization;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -10,20 +11,25 @@ namespace TagsCloudContainer
     {
         private readonly ILayouter layouter;
         private readonly Dictionary<string, Rectangle> rectangles;
+        private readonly List<string> words;
         private readonly Dictionary<string, int> wordsEntry;
 
         public TagsCloudForm(ITextParser parser, ILayouter layouter)
         {
             this.layouter = layouter;
             var root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-            var path = $"{root}\\TagsCloudContainer\\Texts\\ParsedSong.txt";
-            wordsEntry = parser.GetParsedText(File.ReadAllText(path));
+            var path = Path.Join(root, "TagsCloudContainer", "Texts", "ParsedSong.txt");
+            words = parser.GetAllWords(File.ReadAllText(path));
+            wordsEntry = words
+                .GroupBy(x => x)
+                .ToDictionary(x => x.Key, x => x.Count());
             rectangles = new Dictionary<string, Rectangle>();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            foreach (var key in wordsEntry.Keys) DrawTag(e, key);
+            foreach (var word in words)
+                DrawTag(e, word);
         }
 
         private void DrawTag(PaintEventArgs e, string word)
