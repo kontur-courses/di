@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using TagCloud.Core.FileReaders;
 
 namespace TagCloud
 {
@@ -7,7 +6,7 @@ namespace TagCloud
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(TxtReader).Assembly)
+            builder.RegisterAssemblyTypes(ThisAssembly)
                 .AsImplementedInterfaces();
         }
     }

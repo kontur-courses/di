@@ -9,7 +9,6 @@ using TagCloud.Extensions;
 
 namespace TagCloudTests
 {
-    [TestFixture]
     class CircularCloudLayouterTests
     {
         private Point center;

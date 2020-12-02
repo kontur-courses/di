@@ -4,6 +4,6 @@ namespace TagCloudUI.UI
 {
     public interface IUserInterface
     {
-        public void Run(AppSettings settings);
+        void Run(AppSettings settings);
     }
 }

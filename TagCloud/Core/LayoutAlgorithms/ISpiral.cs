@@ -4,7 +4,7 @@ namespace TagCloud.Core.LayoutAlgorithms
 {
     public interface ISpiral
     {
-        public Point Start { get; }
-        public PointF GetNextPoint();
+        Point Start { get; }
+        PointF GetNextPoint();
     }
 }

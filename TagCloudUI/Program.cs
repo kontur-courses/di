@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using TagCloudUI.Infrastructure;
-using TagCloudUI.Infrastructure.Selectors;
 using TagCloudUI.UI;
 
 namespace TagCloudUI
@@ -28,17 +27,7 @@ namespace TagCloudUI
             var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
             builder.RegisterAssemblyModules(assemblies);
 
-            builder.RegisterType<ReaderSelector>().AsImplementedInterfaces()
-                .SingleInstance();
-            builder.RegisterType<LayoutAlgorithmSelector>().AsImplementedInterfaces()
-                .SingleInstance();
-            builder.RegisterType<ColoringAlgorithmSelector>().AsImplementedInterfaces()
-                .SingleInstance();
-
             builder.RegisterType<AppSettings>().WithParameter("args", args).SingleInstance();
-            builder.RegisterType<SpiralFactory>().AsImplementedInterfaces();
-            builder.Register(b => b.Resolve<ISpiralFactory>().Create())
-                .AsImplementedInterfaces().SingleInstance();
 
             return builder.Build();
         }

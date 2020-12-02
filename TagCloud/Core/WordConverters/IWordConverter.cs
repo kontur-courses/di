@@ -2,6 +2,6 @@
 {
     public interface IWordConverter
     {
-        public string Convert(string word);
+        string Convert(string word);
     }
 }
