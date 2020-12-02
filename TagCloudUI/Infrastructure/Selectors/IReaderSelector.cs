@@ -4,6 +4,6 @@ namespace TagCloudUI.Infrastructure.Selectors
 {
     public interface IReaderSelector
     {
-        public bool TryGetReader(string extension, out IFileReader reader);
+        bool TryGetReader(FileExtension extension, out IFileReader reader);
     }
 }

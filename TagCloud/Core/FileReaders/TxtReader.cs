@@ -5,7 +5,7 @@ namespace TagCloud.Core.FileReaders
 {
     public class TxtReader : IFileReader
     {
-        public string Extension => ".txt";
+        public FileExtension Extension => FileExtension.Txt;
 
         public IEnumerable<string> ReadAllWords(string filePath)
         {
