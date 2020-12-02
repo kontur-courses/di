@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TagCloud.Visualization;
 
 namespace TagCloud.Clients
 {
     internal interface IClient
     {
-        public void Visualizate(string worsPath, string picturePath);
+        public void Run();
+
+        public void Visualization(string wordsPath, string picturePath, VisualizationInfo info);
     }
 }

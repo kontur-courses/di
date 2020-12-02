@@ -4,7 +4,7 @@ namespace TagCloud.Visualization
 {
     public static class TagCloudVisualization
     {
-        internal static void Visualizate(TagCloud cloud, string path, VisualizationInfo info)
+        internal static void Visualization(TagCloud cloud, string path, VisualizationInfo info)
         {
             var bitmap = info.TryGetSize(out var size) ? new Bitmap(size.Width, size.Height) : 
                 new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height);

@@ -21,13 +21,18 @@ namespace TagCloud.Clients
             this.metric = metric;
             this.pointGetter = pointGetter;
         }
-        public void Visualizate(string wordsPath, string picturePath)
+
+        public void Run()
+        {
+
+        }
+        public void Visualization(string wordsPath, string picturePath, VisualizationInfo info)
         {
             if (!wordsPath.EndsWith(reader.Extension))
                 return;
             var text = reader.ReadText(wordsPath);
             var tagCloud = AlgoritmTagCloud.GetTagCloud(text, pointGetter, processor, metric);
-            TagCloudVisualization.Visualizate(tagCloud, picturePath);
+            TagCloudVisualization.Visualization(tagCloud, picturePath, info);
         }
     }
 }
