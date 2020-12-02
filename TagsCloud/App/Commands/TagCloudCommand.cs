@@ -14,6 +14,8 @@ namespace TagsCloud.App.Commands
         private readonly Func<ILayoutAlgorithm, TagCloudLayouter> layouterGenerator;
         private readonly TagCloudPainter tagCloudPainter;
         private readonly WordFrequency wordFrequency;
+        private const int MaxFontSize = 80;
+        private const int MinFontSize = 10;
 
         public TagCloudCommand(
             TagCloudPainter tagCloudPainter,
@@ -38,13 +40,14 @@ namespace TagsCloud.App.Commands
         public void Execute(string[] args)
         {
             var placedWords = new List<Word>();
+            var graphics = Graphics.FromImage(new Bitmap(1, 1));
             var wordFrequencies = wordFrequency.GetFromFile(args[0]);
             var tagCloudLayouter = GetTagCloudLayouter();
             foreach (var (word, frequency) in wordFrequencies
-                .OrderBy(x => x.Value))
+                .OrderByDescending(x => x.Value))
             {
-                var font = new Font(fontFamilyProvider.FontFamily, GetFontSize(frequency, imageSizeProvider.ImageSize));
-                var wordSize = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(word, font).ToSize();
+                var font = new Font(fontFamilyProvider.FontFamily, GetFontSize(frequency));
+                var wordSize = graphics.MeasureString(word, font).ToSize();
                 var wordPoint = tagCloudLayouter.PutNextRectangle(wordSize);
                 placedWords.Add(new Word(word, font, wordPoint));
             }
@@ -52,10 +55,9 @@ namespace TagsCloud.App.Commands
             tagCloudPainter.Paint(placedWords);
         }
 
-        private int GetFontSize(double wordFrequency, ImageSize imageSize)
+        private int GetFontSize(double wordFrequency)
         {
-            //todo
-            return 20;
+            return Math.Max((int) Math.Round(MaxFontSize * wordFrequency), MinFontSize);
         }
 
         private TagCloudLayouter GetTagCloudLayouter()
