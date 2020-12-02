@@ -11,8 +11,9 @@ namespace TagCloud.Core.LayoutAlgorithms
         private readonly Point center;
         private readonly ISpiral spiral;
         private readonly List<Rectangle> rectangles;
+
         public IEnumerable<Rectangle> Rectangles => rectangles;
-        public string Name => "circular";
+        public LayoutAlgorithmType Type => LayoutAlgorithmType.Circular;
 
 
         public CircularCloudLayouter(ISpiral spiral)

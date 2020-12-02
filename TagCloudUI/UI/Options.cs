@@ -1,4 +1,6 @@
 ﻿using CommandLine;
+using TagCloud.Core.ColoringAlgorithms;
+using TagCloud.Core.LayoutAlgorithms;
 
 namespace TagCloudUI.UI
 {
@@ -16,8 +18,8 @@ namespace TagCloudUI.UI
         [Option('h', "height", Default = 1200, HelpText = "Image height")]
         public int ImageHeight { get; set; }
 
-        [Option('a', "algo", Default = "circular", HelpText = "Layout algorithm name")]
-        public string LayoutAlgorithmName { get; set; }
+        [Option('a', "algo", Default = "Circular", HelpText = "Layout algorithm type")]
+        public LayoutAlgorithmType LayoutAlgorithmType { get; set; }
 
         [Option('t', "theme", Default = "rainbow", HelpText = "Coloring theme")]
         public string ColoringAlgorithmName { get; set; }

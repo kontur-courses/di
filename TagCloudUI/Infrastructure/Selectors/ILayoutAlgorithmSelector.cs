@@ -4,6 +4,6 @@ namespace TagCloudUI.Infrastructure.Selectors
 {
     public interface ILayoutAlgorithmSelector
     {
-        public bool TryGetAlgorithm(string name, out ILayoutAlgorithm algorithm);
+        bool TryGetAlgorithm(LayoutAlgorithmType type, out ILayoutAlgorithm algorithm);
     }
 }
