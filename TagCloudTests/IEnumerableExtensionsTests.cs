@@ -13,7 +13,7 @@ namespace TagCloudTests
         [TestCase("a", "b", "c", TestName = "AllElementsHaveSameFrequency")]
         public void MostFrequent_ShouldReturnElementsInDescendingOrder(params string[] words)
         {
-            words.MostFrequent().Should().BeInDescendingOrder(el => el.item);
+            words.MostFrequent().Should().BeInDescendingOrder(el => el.frequency);
         }
 
         [TestCase(new[] {"a"}, new[] {1}, TestName = "OneElement")]
