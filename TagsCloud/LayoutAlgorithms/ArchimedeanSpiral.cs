@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace TagsCloud.LayoutAlgorithms
 {
-    class ArchimedeanSpiral
+    public class ArchimedeanSpiral : IPointGenerator
     {
         private Point _center;
         private readonly double _deltaAngle;
@@ -22,8 +20,8 @@ namespace TagsCloud.LayoutAlgorithms
 
         public Point GetNextPoint()
         {
-            var x = (int)Math.Round(_center.X + (_step * _angle * Math.Cos(_angle)));
-            var y = (int)Math.Round(_center.Y + (_step * _angle * Math.Sin(_angle)));
+            var x = (int) Math.Round(_center.X + (_step * _angle * Math.Cos(_angle)));
+            var y = (int) Math.Round(_center.Y + (_step * _angle * Math.Sin(_angle)));
             var point = new Point(x, y);
             _angle += _deltaAngle;
             return point;

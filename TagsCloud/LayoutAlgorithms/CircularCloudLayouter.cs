@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using TagsCloud.Extensions;
 
 namespace TagsCloud.LayoutAlgorithms
@@ -31,6 +30,7 @@ namespace TagsCloud.LayoutAlgorithms
                 var possiblePoint = _spiral.GetNextPoint();
                 rectangle = RectangleExtensions.CreateRectangleFromMiddlePointAndSize(possiblePoint, rectangleSize);
             } while (rectangle.IntersectsWith(_rectangles));
+
             var result = MoveToCanvasCenter(rectangle);
             _rectangles.Add(result);
             return result;
@@ -63,8 +63,8 @@ namespace TagsCloud.LayoutAlgorithms
                     minY = rect.Top;
             }
 
-            var width = maxX + minX;
-            var height = maxY + minY;
+            var width = maxX - minX;
+            var height = maxY - minY;
 
             return new Size(width, height);
         }

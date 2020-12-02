@@ -19,7 +19,7 @@ namespace TagsCloud.BitmapSaver
 
         private static string CreateFilePath(string directoryPath, ImageFormat format)
         {
-            var fileName = DateTime.Now.ToString("yyyyMMddhhmmss");
+            var fileName = DateTime.Now.ToString("yyyyMMddhhmmss"); 
 
             return $@"{directoryPath}\{fileName}.{format.ToString().ToLower()}";
         }
