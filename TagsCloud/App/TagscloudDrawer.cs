@@ -30,14 +30,18 @@ namespace TagsCloud.App
             var newSize = new ImageSize((int)(settings.ImageSize.Height * cloudToImageScaleRatio), 
                 (int)(settings.ImageSize.Width * cloudToImageScaleRatio));
             var newRatio = CalculateRatio(constellator, newSize);
+            var constellatorCenterDelta = new SizeF((float)(constellator.MaxX + constellator.MinX) / 2, 
+                (float)(constellator.MaxY + constellator.MinY) / 2) * newRatio;
             for (var i = 0; i < tagscloudWords.Count; i++)
             {
                 tagscloudWords[i] = new TagscloudWord(tagscloudWords[i].Value, 
-                    new Font(tagscloudWords[i].Font.FontFamily, (int)(tagscloudWords[i].Font.Size * newRatio)),
+                    new Font(tagscloudWords[i].Font.FontFamily, 
+                        (int)(tagscloudWords[i].Font.Size * newRatio), tagscloudWords[i].Font.Style),
                     new Point((int)(tagscloudWords[i].Position.X * newRatio), (int)(tagscloudWords[i].Position.Y * newRatio)));
             }
             constellator.Clear();
-            return DrawTagscloud(tagscloudWords, settings);
+            return DrawTagscloud(tagscloudWords, settings, 
+                new PointF((float)settings.ImageSize.Width / 2, (float)settings.ImageSize.Height / 2) - constellatorCenterDelta);
         }
 
         public void SetNewConstellator(IRectanglesConstellator newConstellator)
@@ -45,20 +49,18 @@ namespace TagsCloud.App
             constellator = newConstellator;
         }
 
-        private static double CalculateRatio(IRectanglesConstellator constellator, ImageSize newSize)
+        private static float CalculateRatio(IRectanglesConstellator constellator, ImageSize newSize)
         {
-            double newRatio;
-            if ((double) constellator.Width / newSize.Width > (double) constellator.Height / newSize.Height)
-                newRatio = (double) newSize.Width / constellator.Width;
-            else newRatio = (double) newSize.Height / constellator.Height;
-            return newRatio;
+            if ((double) constellator.Width / newSize.Width > (float) constellator.Height / newSize.Height)
+                return (float) newSize.Width / constellator.Width;
+            return (float) newSize.Height / constellator.Height;
         }
 
-        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagscloudSettings settings)
+        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagscloudSettings settings, PointF center)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             var graphics = Graphics.FromImage(image);
-            graphics.TranslateTransform((float)image.Width / 2, (float)image.Height / 2);
+            graphics.TranslateTransform(center.X, center.Y);
             graphics.Clear(settings.Palette.BackgroundColor);
             foreach (var word in words)
             {

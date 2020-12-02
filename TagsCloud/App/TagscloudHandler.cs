@@ -8,7 +8,7 @@ namespace TagsCloud.App
     {
         private string[] words;
         public readonly TagscloudSettings Settings;
-        public HashSet<string> excludedWords { get; private set; }
+        public HashSet<string> ExcludedWords { get; }
         private readonly IWordsConverter wordConverter;
         private readonly ITagscloudDrawer drawer;
 
@@ -17,7 +17,7 @@ namespace TagsCloud.App
         {
             wordConverter = converter;
             this.words = words;
-            this.excludedWords = excludedWords;
+            ExcludedWords = excludedWords;
             Settings = settings;
             this.drawer = drawer;
         }
@@ -30,7 +30,7 @@ namespace TagsCloud.App
         public Image GetNewTagcloud()
         {
             var neededWords = wordConverter.ConvertWords(words)
-                .Where(word => !excludedWords.Contains(word))
+                .Where(word => !ExcludedWords.Contains(word))
                 .ToList();
             var counts = new WordsCounter().CountWords(neededWords);
             return drawer.GetTagscloud(counts, Settings, 0.7d);

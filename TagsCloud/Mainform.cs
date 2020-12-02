@@ -64,7 +64,7 @@ namespace TagsCloud
         private void SetExcludedWordsButton_Click(object sender, EventArgs e)
         {
             var builder = new ContainerBuilder();
-            builder.Register(a => tagscloudHandler.excludedWords).AsSelf();
+            builder.Register(a => tagscloudHandler.ExcludedWords).AsSelf();
             builder.Register(a => wordConverter).AsSelf();
             builder.RegisterType<SetExcludingWordsForm>().AsSelf();
             var container = builder.Build();
@@ -75,6 +75,7 @@ namespace TagsCloud
         {
             tagscloudHandler.Settings.CurrentFontFamily = fontFamilies[(string)FontFamilyChoice.SelectedItem];
         }
+
         private void FontStyleChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
             tagscloudHandler.Settings.CurrentFontStyle = fontStyles[(string) FontStyleChoice.SelectedItem];
