@@ -25,6 +25,7 @@ namespace TagsCloud.ClientGUI
             service.RegisterType<FontSetting>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<PathSettings>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<Palette>().AsSelf().InstancePerLifetimeScope();
+            service.RegisterType<ColorAlgorithm>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<ImageSettings>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
                 .InstancePerLifetimeScope();

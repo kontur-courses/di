@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TagsCloud.ClientGUI.Infrastructure;
+﻿using TagsCloud.ClientGUI.Infrastructure;
 
 namespace TagsCloud.ClientGUI.Actions
 {

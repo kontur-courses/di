@@ -4,13 +4,13 @@ namespace TagsCloud.ClientGUI.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private readonly Palette palette;
         private readonly IImageHolder imageHolder;
         private readonly ImageSettings imageSettings;
+        private readonly Palette palette;
 
-        public PaletteSettingsAction(IImageHolder imageHolder, ImageSettings imageSettings, Palette paletteDependence)
+        public PaletteSettingsAction(IImageHolder imageHolder, ImageSettings imageSettings, Palette palette)
         {
-            palette = paletteDependence;
+            this.palette = palette;
             this.imageHolder = imageHolder;
             this.imageSettings = imageSettings;
         }

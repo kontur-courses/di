@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
@@ -8,20 +9,25 @@ namespace TagsCloud.ClientGUI
 {
     public class TagsCloudPainter
     {
+        private readonly ColorAlgorithm colorAlgorithm;
         private readonly FontSetting font;
-        private readonly PictureBoxImageHolder pictureBox;
+        private readonly Dictionary<char, Color> letterColor = new Dictionary<char, Color>();
         private readonly Palette palette;
         private readonly PathSettings pathSettings;
+        private readonly PictureBoxImageHolder pictureBox;
         private readonly SpiralSettings spiralSettings;
+        private readonly Random random = new Random();
 
         public TagsCloudPainter(PictureBoxImageHolder pictureBox, Palette palette,
-            FontSetting font, SpiralSettings spiralSettings, PathSettings pathSettings)
+            FontSetting font, SpiralSettings spiralSettings,
+            PathSettings pathSettings, ColorAlgorithm colorAlgorithm)
         {
             this.pictureBox = pictureBox;
             this.palette = palette;
             this.font = font;
             this.spiralSettings = spiralSettings;
             this.pathSettings = pathSettings;
+            this.colorAlgorithm = colorAlgorithm;
         }
 
         public void Paint()
@@ -51,7 +57,7 @@ namespace TagsCloud.ClientGUI
                         font.MainFont.Style))
                     {
                         graphics.DrawString(words[i].Item1, currentFont,
-                            new SolidBrush(palette.ForeColor), rectangles[i], drawFormat);
+                            new SolidBrush(GetColor(words[i].Item1[0])), rectangles[i], drawFormat);
                         currentFont.Dispose();
                     }
                 }
@@ -59,6 +65,22 @@ namespace TagsCloud.ClientGUI
 
             pictureBox.Refresh();
             Application.DoEvents();
+        }
+
+        private Color GetColor(char letter)
+        {
+            switch (colorAlgorithm.Type)
+            {
+                case ColorAlgorithmType.MultiColor:
+                    return palette.ForeColors[random.Next(0, palette.ForeColors.Length)];
+                case ColorAlgorithmType.SameFirstLetterHasSameColor:
+                    if (!letterColor.ContainsKey(letter))
+                        letterColor[letter] =
+                            Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
+                    return letterColor[letter];
+                default:
+                    return palette.ForeColor;
+            }
         }
     }
 }
