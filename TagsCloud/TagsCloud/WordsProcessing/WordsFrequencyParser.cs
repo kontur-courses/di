@@ -15,7 +15,8 @@ namespace TagsCloud
         public Dictionary<string, int> ParseWordsFrequency(string fileName)
         {
             var frequencies = new Dictionary<string, int>();
-            foreach (var word in File.ReadLines(fileName).Where(x => !wordsToIgnore.Contains(x)))
+            var words = File.ReadLines(fileName).Where(x => !wordsToIgnore.Contains(x)).Select(x => x.ToLower());
+            foreach (var word in words)
                 if (frequencies.ContainsKey(word))
                     frequencies[word]++;
                 else
