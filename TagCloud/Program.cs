@@ -20,7 +20,9 @@ namespace TagCloud
             ConfigureServices(CLI.CanvasSize, CLI.BackgroundType);
             
             var visualizer = serviceProvider.GetService<IVisualizer>();
-            visualizer.Visualize(CLI.FileName, CLI.StringFont, CLI.StringColor);
+            var pathToPng = visualizer.Visualize(CLI.FileName, CLI.StringFont, CLI.StringColor);
+            
+            Console.WriteLine("Result saved to:\n" + pathToPng);
 
             return 0;
         }

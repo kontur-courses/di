@@ -19,7 +19,7 @@ namespace TagCloud
             this.backgroundPainter = backgroundPainter;
         }
 
-        public void Visualize(string filename, FontFamily fontFamily, Color stringColor)
+        public string Visualize(string filename, FontFamily fontFamily, Color stringColor)
         {
             var bitmap = new Bitmap(canvas.Width, canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
@@ -28,7 +28,9 @@ namespace TagCloud
             backgroundPainter.Draw(tags, canvas, graphics);
             DrawAllStrings(tags, fontFamily, stringColor, graphics);
             
-            bitmap.Save(creater.GetNewPngPath());
+            var path = creater.GetNewPngPath();
+            bitmap.Save(path);
+            return path;
         }
         
         private void DrawAllStrings(List<Tuple<string, Rectangle>> tags, FontFamily fontFamily, Color color, Graphics graphics)
