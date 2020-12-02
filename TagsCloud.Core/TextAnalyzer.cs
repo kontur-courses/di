@@ -29,7 +29,7 @@ namespace TagsCloud.Core
         public static HashSet<string> SplitTextOnUniqueWords(string text, char[] separators = null)
         {
             var words = new HashSet<string>();
-            foreach (var word in text.Split(separators, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var word in text.ToLower().Split(separators, StringSplitOptions.RemoveEmptyEntries))
                 words.Add(word);
             return words;
         }
