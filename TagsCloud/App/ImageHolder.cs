@@ -1,11 +1,17 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
+using System.IO;
 
 namespace TagsCloud.App
 {
     public class ImageHolder
     {
+        private readonly ImageSaverProvider imageSaverProvider;
         private Image image;
+
+        public ImageHolder(ImageSaverProvider imageSaverProvider)
+        {
+            this.imageSaverProvider = imageSaverProvider;
+        }
 
         public Graphics StartDrawing()
         {
@@ -19,7 +25,8 @@ namespace TagsCloud.App
 
         public void SaveImage(string fileName)
         {
-            image.Save(fileName, ImageFormat.Png);
+            var extension = Path.GetExtension(fileName);
+            imageSaverProvider.GetImageSaver(extension).Save(image, fileName);
         }
     }
 }

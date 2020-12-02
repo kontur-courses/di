@@ -20,6 +20,9 @@ namespace TagsCloud.App
             builder.RegisterType<TagCloudCommand>().As<ICommand>();
             builder.RegisterType<DocReader>().As<IFileAllLinesReader>();
             builder.RegisterType<TextReader>().As<IFileAllLinesReader>();
+            builder.RegisterType<PngSaver>().As<IImageSaver>();
+            builder.RegisterType<BmpSaver>().As<IImageSaver>();
+            builder.RegisterType<JpgSaver>().As<IImageSaver>();
             builder.RegisterInstance(Console.Out).As<TextWriter>();
             builder.RegisterType<ImageSettings>().AsSelf()
                 .As<IFontFamilyProvider, IImageColorProvider, IImageSizeProvider>()
@@ -27,6 +30,7 @@ namespace TagsCloud.App
             builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<ImageHolder>().SingleInstance();
             builder.RegisterType<FileReaderProvider>();
+            builder.RegisterType<ImageSaverProvider>();
             builder.RegisterType<WordFrequency>();
             builder.RegisterType<TagCloudLayouter>();
             builder.RegisterType<TagCloudPainter>();
