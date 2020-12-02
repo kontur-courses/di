@@ -1,10 +1,10 @@
-using FluentAssertions;
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FluentAssertions;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualization_Should
@@ -19,7 +19,7 @@ namespace TagsCloudVisualization_Should
         public void SetUp()
         {
             config = new Config();
-            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25),
                 new Point(1500, 1500), Color.Blue);
         }
 
@@ -27,7 +27,7 @@ namespace TagsCloudVisualization_Should
         public void PutNextRectangle_ThrowArgumentException_SizeOfRectangleHaveNegativeValue()
         {
             var center = new Point(100, 100);
-            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25),
                 center, Color.Blue);
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
@@ -41,7 +41,7 @@ namespace TagsCloudVisualization_Should
         public void PutNextRectangle_ReturnSameRectangle_OneRectangle()
         {
             var center = new Point(40, 40);
-            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25),
                 center, Color.Blue);
             var pointProvider = new PointProvider(config);
             var expectedRectangle = new Rectangle(new Point(40, 40), new Size(30, 30));
@@ -50,7 +50,6 @@ namespace TagsCloudVisualization_Should
             var actual = cloud.PutNextRectangle(new Size(30, 30));
 
             actual.ShouldBeEquivalentTo(expectedRectangle);
-
         }
 
         [Test]
@@ -58,7 +57,7 @@ namespace TagsCloudVisualization_Should
         {
             var rnd = new Random();
             var center = new Point(500, 500);
-            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25),
                 center, Color.Blue);
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
@@ -69,6 +68,7 @@ namespace TagsCloudVisualization_Should
                 var size = new Size(rnd.Next(10, 200), rnd.Next(10, 200));
                 cloud.PutNextRectangle(size);
             }
+
             var actualLength = cloud.Rectangles.Count;
 
 
@@ -79,7 +79,7 @@ namespace TagsCloudVisualization_Should
         public void Rectangles_SameOrderLikeAdded_ThreeRectangles()
         {
             var center = new Point(500, 500);
-            config.SetValues(new Font(FontFamily.GenericMonospace, 25), 
+            config.SetValues(new Font(FontFamily.GenericMonospace, 25),
                 center, Color.Blue);
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
@@ -96,7 +96,6 @@ namespace TagsCloudVisualization_Should
             actualRectangles = cloud.Rectangles;
 
             actualRectangles.ShouldAllBeEquivalentTo(expectedRectangles);
-
         }
 
         [TearDown]

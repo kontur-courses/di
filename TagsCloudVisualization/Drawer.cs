@@ -11,15 +11,14 @@ namespace TagsCloudVisualization
         {
             CheckParameters(rectangles, config.Center);
 
-            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles), 
-                config.Center.Y + GetDeltaY(rectangles));//TODO 
+            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles),
+                config.Center.Y + GetDeltaY(rectangles));
             using var graphics = Graphics.FromImage(image);
 
             foreach (var rectangle in rectangles)
             {
                 graphics.DrawString(rectangle.Text, config.Font, new SolidBrush(config.TextColor), rectangle.Rectangle);
-                graphics.DrawRectangle(new Pen(config.TextColor),rectangle.Rectangle);//TODO remove
-                Console.WriteLine(rectangle.Text);
+                graphics.DrawRectangle(new Pen(config.TextColor), rectangle.Rectangle);
             }
 
             return image;

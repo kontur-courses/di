@@ -20,9 +20,7 @@ namespace TagsCloudVisualization
         {
             var invalidSpecialCharacters = "/\\:*?\"<>|".ToCharArray();
             if (name.Any(letter => invalidSpecialCharacters.Contains(letter)))
-            {
                 throw new ArgumentException("File name contains invalid characters");
-            }
         }
     }
 }

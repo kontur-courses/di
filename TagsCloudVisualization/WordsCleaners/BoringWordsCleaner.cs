@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyStemWrapper;
 
 namespace TagsCloudVisualization
 {
     public class BoringWordsCleaner : IWordsCleaner
     {
         private readonly HashSet<string> boringWords;
-        
+
         public BoringWordsCleaner(HashSet<string> boringWords)
         {
             this.boringWords = boringWords;
         }
-        
+
         public List<string> CleanWords(List<string> words)
         {
             /*var lemmatizer = new Lemmatizer();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Drawing;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CloudContainer.ConfigCreators;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,11 +6,11 @@ using TagsCloudVisualization;
 
 namespace CloudContainer
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var boringWords = new List<string>{"в","под","на"};//TODO
+            var boringWords = new List<string> {"в", "под", "на"}; //TODO
             var container = new ServiceCollection();
             container.AddSingleton<IWordProvider, TxtWordProvider>();
             container.AddSingleton<IConfigCreator, ConsoleConfigCreator>();
@@ -22,7 +18,7 @@ namespace CloudContainer
             container.AddSingleton<ICloudLayout, CircularCloudLayouter>();
             container.AddSingleton<ISaver, PngSaver>();
             container.AddSingleton<IConfig, Config>();
-            container.AddSingleton<IWordConverter, WordsToRectanglesConverter>();
+            container.AddSingleton<IWordConverter, WordsToCloudTagConverter>();
             container.AddSingleton(typeof(HashSet<string>), boringWords.ToHashSet());
             container.AddSingleton<IWordsCleaner, BoringWordsCleaner>();
             container.AddSingleton<Process, Process>();

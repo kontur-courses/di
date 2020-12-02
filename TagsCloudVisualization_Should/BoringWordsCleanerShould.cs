@@ -11,9 +11,9 @@ namespace TagsCloudVisualization_Should
         [Test]
         public void CleanWords_NotContainsBoringWords_TextWithBoringWords()
         {
-            var words = new List<string>{"он", "пошел", "на", "встречу"};
-            var expectedWords = new List<string>{"он", "пошел", "встречу"};
-            var boringWords = new List<string>{"в","под","на"};
+            var words = new List<string> {"он", "пошел", "на", "встречу"};
+            var expectedWords = new List<string> {"он", "пошел", "встречу"};
+            var boringWords = new List<string> {"в", "под", "на"};
             var cleaner = new BoringWordsCleaner(boringWords.ToHashSet());
 
             var actualWords = cleaner.CleanWords(words);

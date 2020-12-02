@@ -14,7 +14,7 @@ namespace TagsCloudVisualization_Should
             var provider = new TxtWordProvider();
             var path = Path.Join(Directory.GetCurrentDirectory(), "text.txt");
             var expectedWords = new List<string> {"он", "пошел"};
-            
+
             var actualWords = provider.GetWords(path);
 
             actualWords.Should().BeEquivalentTo(expectedWords);

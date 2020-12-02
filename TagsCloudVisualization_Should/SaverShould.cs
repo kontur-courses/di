@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
+using FluentAssertions;
+using NUnit.Framework;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualization_Should
@@ -19,7 +19,6 @@ namespace TagsCloudVisualization_Should
             Action act = () => saver.SaveImage(bitmap, fileName);
 
             act.ShouldThrow<ArgumentException>().WithMessage("File name contains invalid characters");
-
         }
 
         [Test]

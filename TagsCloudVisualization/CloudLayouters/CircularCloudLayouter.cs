@@ -7,8 +7,7 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ICloudLayout
     {
-        private IPointProvider pointProvider;
-        public List<Rectangle> Rectangles { get; }
+        private readonly IPointProvider pointProvider;
 
         public CircularCloudLayouter(IPointProvider pointProvider)
         {
@@ -16,7 +15,9 @@ namespace TagsCloudVisualization
             Rectangles = new List<Rectangle>();
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)//TODO Remove text
+        public List<Rectangle> Rectangles { get; }
+
+        public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height < 0 || rectangleSize.Width < 0)
                 throw new ArgumentException("Width or height of size was negative");
@@ -27,7 +28,6 @@ namespace TagsCloudVisualization
             return rectangle;
         }
 
-        
 
         private Rectangle GetRectangle(Size rectangleSize)
         {
@@ -35,7 +35,6 @@ namespace TagsCloudVisualization
             do
             {
                 rectangle = new Rectangle(pointProvider.GetPoint(), rectangleSize);
-
             } while (IsCollide(rectangle));
 
             return rectangle;
@@ -43,10 +42,8 @@ namespace TagsCloudVisualization
 
         private bool IsCollide(Rectangle rectangle)
         {
-            return Rectangles.Any(rectangle.IntersectsWith) 
+            return Rectangles.Any(rectangle.IntersectsWith)
                    || rectangle.X < 0 || rectangle.Y < 0;
-            
         }
     }
 }
-
