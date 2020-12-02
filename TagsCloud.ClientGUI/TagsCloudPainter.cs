@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.Core;
 
@@ -7,15 +8,15 @@ namespace TagsCloud.ClientGUI
     public class TagsCloudPainter
     {
         private readonly FontSetting font;
-        private readonly IImageHolder imageHolder;
+        private readonly PictureBoxImageHolder pictureBox;
         private readonly Palette palette;
         private readonly PathSettings pathSettings;
         private readonly SpiralSettings spiralSettings;
 
-        public TagsCloudPainter(IImageHolder imageHolder, Palette palette,
+        public TagsCloudPainter(PictureBoxImageHolder pictureBox, Palette palette,
             FontSetting font, SpiralSettings spiralSettings, PathSettings pathSettings)
         {
-            this.imageHolder = imageHolder;
+            this.pictureBox = pictureBox;
             this.palette = palette;
             this.font = font;
             this.spiralSettings = spiralSettings;
@@ -24,9 +25,9 @@ namespace TagsCloud.ClientGUI
 
         public void Paint()
         {
-            using (var graphics = imageHolder.StartDrawing())
+            using (var graphics = pictureBox.StartDrawing())
             {
-                var imageSize = imageHolder.GetImageSize();
+                var imageSize = pictureBox.GetImageSize();
                 graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0,
                     imageSize.Width, imageSize.Height);
 
@@ -54,7 +55,8 @@ namespace TagsCloud.ClientGUI
                 }
             }
 
-            imageHolder.UpdateUi();
+            pictureBox.Refresh();
+            Application.DoEvents();
         }
     }
 }

@@ -20,14 +20,9 @@ namespace TagsCloud.ClientGUI
             return Graphics.FromImage(Image);
         }
 
-        public void UpdateUi()
-        {
-            Refresh();
-            Application.DoEvents();
-        }
-
         public void RecreateImage(ImageSettings imageSettings)
         {
+            Image?.Dispose();
             imageSettings.NormalizeSize();
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
         }

@@ -6,7 +6,6 @@ namespace TagsCloud.ClientGUI.Infrastructure
     {
         Size GetImageSize();
         Graphics StartDrawing();
-        void UpdateUi();
         void RecreateImage(ImageSettings settings);
         void SaveImage(string fileName);
     }
