@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using TagsCloud.Infrastructure;
 
-namespace TagsCloud.App
+namespace TagsCloud.App.ImageSavers
 {
     public class BmpSaver : IImageSaver
     {

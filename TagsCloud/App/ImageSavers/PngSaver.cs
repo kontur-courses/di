@@ -3,15 +3,15 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using TagsCloud.Infrastructure;
 
-namespace TagsCloud.App
+namespace TagsCloud.App.ImageSavers
 {
-    public class JpgSaver : IImageSaver
+    public class PngSaver : IImageSaver
     {
-        public HashSet<string> Extensions { get; } = new HashSet<string> {".jpg", ".jpeg"};
+        public HashSet<string> Extensions { get; } = new HashSet<string> {".png"};
 
         public void Save(Image image, string fileName)
         {
-            image.Save(fileName, ImageFormat.Jpeg);
+            image.Save(fileName, ImageFormat.Png);
         }
     }
 }
