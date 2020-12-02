@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloud.Core
+namespace TagsCloud.Common
 {
     public class SizeGenerator
     {

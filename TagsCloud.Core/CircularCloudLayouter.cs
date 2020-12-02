@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.Common;
 
 namespace TagsCloud.Core
 {
     public class CircularCloudLayouter : ICircularCloudLayouter
     {
-        private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly ISpiral spiral;
+        private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
-        public CircularCloudLayouter(Point center, double spiralParameter)
+        public CircularCloudLayouter(ISpiral spiral)
         {
-            spiral = new ArchimedeanSpiral(center, spiralParameter);
+            this.spiral = spiral;
         }
 
         public Rectangle PutNextRectangle(Size rectSize)

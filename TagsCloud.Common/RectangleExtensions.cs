@@ -2,11 +2,13 @@
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloud.Core
+namespace TagsCloud.Common
 {
     public static class RectangleExtensions
     {
         public static bool IntersectsWith(this Rectangle rect, IEnumerable<Rectangle> rectangles)
-            => rectangles.Any(rect.IntersectsWith);
+        {
+            return rectangles.Any(rect.IntersectsWith);
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloud.Common;
 using TagsCloud.Core;
 
 namespace TagsCloud.Tests
@@ -16,14 +17,16 @@ namespace TagsCloud.Tests
         public const int ImageHeight = 1080;
         private readonly SizeGenerator generator = new SizeGenerator(10, 40, 10, 20);
         private Point center;
-        private CircularCloudLayouter cloud;
+        private ISpiral spiral;
         private List<Rectangle> rectangles;
+        private ICircularCloudLayouter cloud;
 
         [SetUp]
         public void SetUp()
         {
             center = new Point(ImageWidth / 2, ImageHeight / 2);
-            cloud = new CircularCloudLayouter(center, 0.005);
+            spiral = new ArchimedeanSpiral(center, 0.005);
+            cloud = new CircularCloudLayouter(spiral);
         }
 
         [TestCase(-1, 1, TestName = "WhenNotPositiveWidth")]
@@ -47,7 +50,8 @@ namespace TagsCloud.Tests
         public void PutNextRectangle_FirstRectangleOnCenter()
         {
             center = new Point(1, 2);
-            cloud = new CircularCloudLayouter(center, 0.005);
+            spiral = new ArchimedeanSpiral(center, 0.005);
+            cloud = new CircularCloudLayouter(spiral);
 
             var rect = cloud.PutNextRectangle(new Size(10, 10));
             var rectCenter = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
@@ -102,11 +106,7 @@ namespace TagsCloud.Tests
                 return;
             var path = $"../../../Images/{TestContext.CurrentContext.Test.FullName}.png";
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
-            CircularCloudVisualization.CreateImage(
-                Enumerable.Repeat("", rectangles.Count).ToList(),
-                rectangles,
-                ImageWidth, 
-                ImageHeight).Save(path);
+            CircularCloudVisualization.CreateImage(rectangles, ImageWidth, ImageHeight).Save(path);
         }
 
         private double GetDistanceFromPointToCenter(Point point)

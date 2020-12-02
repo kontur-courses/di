@@ -39,8 +39,8 @@ namespace TagsCloud.Core
         public static List<Rectangle> GetRectangles(Size imageSize, List<(string, int)> words, double spiralParameter,
             double letterWidth)
         {
-            var cloud = new CircularCloudLayouter(new Point(imageSize.Width / 2, imageSize.Height / 2),
-                spiralParameter);
+            var spiral = new ArchimedeanSpiral(new Point(imageSize.Width / 2, imageSize.Height / 2), spiralParameter);
+            var cloud = new CircularCloudLayouter(spiral);
 
             return words.Select(word => cloud.PutNextRectangle(
                 new Size(
