@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -8,16 +7,19 @@ namespace TagsCloud.App
 {
     public class WordFrequency
     {
+        private readonly FileReaderProvider fileReaderProvider;
         private readonly WordChecker wordChecker;
 
-        public WordFrequency(WordChecker wordChecker)
+        public WordFrequency(WordChecker wordChecker, FileReaderProvider fileReaderProvider)
         {
             this.wordChecker = wordChecker;
+            this.fileReaderProvider = fileReaderProvider;
         }
 
         public Dictionary<string, double> GetFromFile(string filePath)
         {
-            var lines = File.ReadAllLines(filePath);
+            var extension = Path.GetExtension(filePath);
+            var lines = fileReaderProvider.GetFileReader(extension).ReadAllLines(filePath);
             var wordFrequencies = new Dictionary<string, double>();
             var words = lines
                 .Select(x => x.ToLower())
@@ -30,8 +32,8 @@ namespace TagsCloud.App
             }
 
             return wordFrequencies
-                .ToDictionary(x=>x.Key,
-                    x=>Math.Round(x.Value / lines.Length, 2));
+                .ToDictionary(x => x.Key,
+                    x => Math.Round(x.Value / lines.Length, 2));
         }
     }
 }
