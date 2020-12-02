@@ -22,11 +22,8 @@ namespace TagCloudTests
             File.Delete(path);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("as dsa")]
-        [TestCase("hjkl\nasdf\n\nsadf asdf fda")]
-        public void ReadTextFromFileDoesntExist_ShouldBeNull(string text)
+        [Test]
+        public void ReadTextFromFileDoesntExist_ShouldBeNull()
         {
             var result = reader.ReadText(path);
             Assert.IsNull(result);

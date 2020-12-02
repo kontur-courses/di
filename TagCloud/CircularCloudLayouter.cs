@@ -19,7 +19,7 @@ namespace TagCloud
         public bool IsEmpty => !rectangles.Any();
 
         public Size Size => new Size(Right - Left, Bottom - Top);
-        internal CircularCloudLayouter(IPointGetter getter)
+        public CircularCloudLayouter(IPointGetter getter)
         {
             getPointer = getter;
             Top = getter.Center.Y;
@@ -28,7 +28,7 @@ namespace TagCloud
             Left = getter.Center.X;
         }
 
-        internal Rectangle PutNextRectangle(Size rectangleSize)
+        public Rectangle PutNextRectangle(Size rectangleSize)
         {
             var result = MoveToCentre(PutRectangleOnCircle(rectangleSize));
             ChangeSize(result);

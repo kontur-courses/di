@@ -9,7 +9,7 @@ namespace TagCloud.PointGetters
         private double angle;
         private int radius;
         private double dangle => Math.PI / (2 * radius);
-        internal CirclePointGetter(Point center) => Center = center;
+        public CirclePointGetter(Point center) => Center = center;
         public Point GetNextPoint()
         {
             var x = (int)(radius * Math.Cos(angle));
