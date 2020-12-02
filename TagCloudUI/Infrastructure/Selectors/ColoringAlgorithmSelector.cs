@@ -6,16 +6,16 @@ namespace TagCloudUI.Infrastructure.Selectors
 {
     public class ColoringAlgorithmSelector : IColoringAlgorithmSelector
     {
-        private readonly Dictionary<string, IColoringAlgorithm> nameToAlgorithm;
+        private readonly Dictionary<ColoringTheme, IColoringAlgorithm> themeToAlgorithm;
 
         public ColoringAlgorithmSelector(IEnumerable<IColoringAlgorithm> algorithms)
         {
-            nameToAlgorithm = algorithms.ToDictionary(al => al.Name);
+            themeToAlgorithm = algorithms.ToDictionary(algorithm => algorithm.Theme);
         }
 
-        public bool TryGetAlgorithm(string name, out IColoringAlgorithm algorithm)
+        public bool TryGetAlgorithm(ColoringTheme theme, out IColoringAlgorithm algorithm)
         {
-            return nameToAlgorithm.TryGetValue(name, out algorithm);
+            return themeToAlgorithm.TryGetValue(theme, out algorithm);
         }
     }
 }

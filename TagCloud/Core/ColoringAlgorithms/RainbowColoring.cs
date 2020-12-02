@@ -7,8 +7,7 @@ namespace TagCloud.Core.ColoringAlgorithms
     {
         private readonly Color[] colors;
         private readonly Random randomizer;
-
-        public string Name => "rainbow";
+        public ColoringTheme Theme => ColoringTheme.Rainbow;
 
         public RainbowColoring()
         {

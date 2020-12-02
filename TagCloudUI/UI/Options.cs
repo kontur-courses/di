@@ -21,8 +21,8 @@ namespace TagCloudUI.UI
         [Option('a', "algo", Default = "Circular", HelpText = "Layout algorithm type")]
         public LayoutAlgorithmType LayoutAlgorithmType { get; set; }
 
-        [Option('t', "theme", Default = "rainbow", HelpText = "Coloring theme")]
-        public string ColoringAlgorithmName { get; set; }
+        [Option('t', "theme", Default = "Rainbow", HelpText = "Coloring theme")]
+        public ColoringTheme ColoringTheme { get; set; }
 
         [Option('f', "font", Default = "Arial", Required = false, HelpText = "Tags font")]
         public string FontName { get; set; }

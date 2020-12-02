@@ -4,6 +4,6 @@ namespace TagCloudUI.Infrastructure.Selectors
 {
     public interface IColoringAlgorithmSelector
     {
-        public bool TryGetAlgorithm(string name, out IColoringAlgorithm algorithm);
+        bool TryGetAlgorithm(ColoringTheme theme, out IColoringAlgorithm algorithm);
     }
 }
