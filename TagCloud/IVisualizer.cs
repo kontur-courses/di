@@ -4,6 +4,6 @@ namespace TagCloud
 {
     public interface IVisualizer
     {
-        void Visualize(string filename, string fontFamily, Color stringColor);
+        void Visualize(string filename, FontFamily fontFamily, Color stringColor);
     }
 }

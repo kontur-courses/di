@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    public interface IImageInfo
+    public interface ITagsCreater
     {
         List<Tuple<String, Rectangle>> GetTags(string filename, int canvasHeight);
     }

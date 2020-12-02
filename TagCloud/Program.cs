@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using FluentAssertions;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using TagCloud.BackgroundPainter;
@@ -15,110 +14,48 @@ namespace TagCloud
         private static CommandLineApplication app = new CommandLineApplication();
         static int Main(string[] args)
         {
-            ConfigureCLI();
-            return app.Execute(args);
+            var CLI = new CommandLineInterface(new PathCreater());
+            CLI.ConfigureCLI(app);
+            app.Execute(args);
+            ConfigureServices(CLI.CanvasSize, CLI.BackgroundType);
+            
+            var visualizer = serviceProvider.GetService<IVisualizer>();
+            visualizer.Visualize(CLI.FileName, CLI.StringFont, CLI.StringColor);
+
+            return 0;
         }
         
-        private static void ConfigureServices(string size, string coloring)
+        private static void ConfigureServices(Size size, Background background)
         {
             var services = new ServiceCollection();
 
             services.AddSingleton<IPathCreater, PathCreater>();
             services.AddSingleton<IWordParser, LiteratureTextParser>();
             services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer.FrequencyAnalyzer>();
-            ConfigureCanvas(services, size);
+            services.AddSingleton<ICanvas>(_ => new Canvas(size.Width, size.Height));
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
-            services.AddSingleton<IImageInfo, ImageInfo>();
-            ConfigureBackgroundPainterService(services, coloring);
+            services.AddSingleton<ITagsCreater, TagsCreater>();
+            ConfigureBackgroundPainterService(services, background);
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
         }
 
-        private static void ConfigureCanvas(ServiceCollection services, string size)
+        private static void ConfigureBackgroundPainterService(ServiceCollection services, Background background)
         {
-            var arr = size.Split(',');
-            if (arr.Length == 2 && int.TryParse(arr[0], out var width) && int.TryParse(arr[1], out var height))
+            switch (background)
             {
-                services.AddSingleton<ICanvas>(_ => new Canvas(width, height));
+                case Background.Circle:
+                    services.AddSingleton<IBackgroundPainter, BackgroundPainterCircle>();
+                    break;
+                case Background.Empty:
+                    services.AddSingleton<IBackgroundPainter, BackgroundPainterEmpty>();
+                    break;
+                case Background.Rectangles:
+                    services.AddSingleton<IBackgroundPainter, BackgroundPainterRectangles>();
+                    break;
             }
-            else
-            {
-                throw new ArgumentException("bad size argument");
-            }
-        }
-
-        private static void ConfigureBackgroundPainterService(ServiceCollection services, string backgroundType)
-        {
-            switch(backgroundType)
-            {
-              case "rectangles":
-                  services.AddSingleton<IBackgroundPainter, BackgroundPainterRectangles>();
-                  break;
-              case "empty":
-                  services.AddSingleton<IBackgroundPainter, BackgroundPainterEmpty>();
-                  break;
-              case "circle":
-                  services.AddSingleton<IBackgroundPainter, BackgroundPainterCircle>();
-                  break;
-              default:
-                  throw new ArgumentException("bad background type");
-            }
-            
-        }
-
-        private static Color ParseColor(string colorInRGB)
-        {
-            var arr = colorInRGB.Split(',');
-            if (arr.Length == 3
-                && TryGetColorComponent(arr[0], out var red)
-                && TryGetColorComponent(arr[1], out var green)
-                && TryGetColorComponent(arr[1], out var blue))
-            {
-                return Color.FromArgb(red, green, blue);
-            }
-            throw new ArgumentException("bad color for string");
-        }
-
-        private static bool TryGetColorComponent(string colorComponent, out int value)
-        {
-            if (int.TryParse(colorComponent, out var intColorComponent))
-            {
-                value = intColorComponent;
-                return intColorComponent >= 0 && intColorComponent <= 255;
-            }
-
-            value = 0;
-            return false;
-        }
-
-        private static void ConfigureCLI()
-        {
-            app.HelpOption();
-            var optionInput = app.Option("-i|--input <INPUT>", "input filename", CommandOptionType.SingleValue);
-            var optionFont = app.Option("-f|--font <FONT>", "font family", CommandOptionType.SingleValue);
-            var optionSize = app.Option("-s|--size <SIZE>", "size of image width,height", CommandOptionType.SingleValue);
-            var optionBackground = app.Option("-b|--backgound <BACKGROUND_STYLE>", "background style rectangles|empty|circle", CommandOptionType.SingleValue);
-            var optionStringColor =
-                app.Option("-c|--color <COLOR>", "string color r,g,b", CommandOptionType.SingleValue);
-
-
-            app.OnExecute(() =>
-            {
-                var size = optionSize.HasValue() ? optionSize.Value() : "1000,800";
-                var coloring = optionBackground.HasValue() ? optionBackground.Value() : "empty";
-                
-                ConfigureServices(size, coloring);
-
-                var visualizer = serviceProvider.GetService<IVisualizer>();
-                var filename = optionInput.HasValue() ? optionInput.Value() : "input.txt";
-                var fontFamily = optionFont.HasValue() ? optionFont.Value() : "Arial";
-                var color = optionStringColor.HasValue() ? ParseColor(optionStringColor.Value()) : Color.Black;
-                visualizer.Visualize(filename, fontFamily, color);
-
-                return 0;
-            });
         }
     }
 }

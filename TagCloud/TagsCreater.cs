@@ -7,12 +7,12 @@ using TagCloud.Layout;
 
 namespace TagCloud
 {
-    public class ImageInfo: IImageInfo
+    public class TagsCreater: ITagsCreater
     {
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
         private readonly ILayouter layouter;
         
-        public ImageInfo(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter)
+        public TagsCreater(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter)
         {
             this.frequencyAnalyzer = frequencyAnalyzer;
             this.layouter = layouter;
@@ -25,10 +25,12 @@ namespace TagCloud
             var orderedPairs = frequencies.OrderByDescending(pair => pair.Value);
             foreach (var pair in orderedPairs)
             {
-                var height = (int)Math.Round(canvasHeight * pair.Value * Math.Sqrt(orderedPairs.Count()) / (3 * Math.PI));
-                var width = (int)Math.Round((double)height * (pair.Key.Length - 1));
+                var frequency = pair.Value;
+                var tagString = pair.Key;
+                var height = (int)Math.Round(canvasHeight * frequency * Math.Sqrt(orderedPairs.Count()) / (2.5 * Math.PI));
+                var width = (int)Math.Round((double)height * (tagString.Length - 1));
                 var rectangle = layouter.PutNextRectangle(new Size(width, height));
-                result.Add(new Tuple<string, Rectangle>(pair.Key, rectangle));
+                result.Add(new Tuple<string, Rectangle>(tagString, rectangle));
             }
 
             return result;
