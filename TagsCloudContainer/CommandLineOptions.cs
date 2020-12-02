@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using CommandLine;
 
 namespace TagsCloudContainer
 {
@@ -30,5 +31,11 @@ namespace TagsCloudContainer
                        "Example: -color argb(0,0,0,0)",
             Default = "random")]
         public string FontColor { get; set; }
+
+        [Option("-mystem", Required = false, HelpText = "Set mystem path.")]
+        public string MystemLocation { get; set; }
+
+        [Option("-boring_words", Required = false, Separator = ' ')]
+        public IEnumerable<string> BoringWords { get; set; }
     }
 }

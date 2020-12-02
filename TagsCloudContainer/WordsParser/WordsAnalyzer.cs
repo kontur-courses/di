@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudContainer.WordsParser
 {
     public class WordsAnalyzer : IWordsAnalyzer
     {
-        private readonly ISettings settings;
+        private readonly IFilter filter;
         private readonly IWordReader wordReader;
 
-        public WordsAnalyzer(ISettings settings, IWordReader wordReader)
+        public WordsAnalyzer(IFilter filter, IWordReader wordReader)
         {
-            this.settings = settings;
+            this.filter = filter;
             this.wordReader = wordReader;
         }
 
@@ -17,21 +18,24 @@ namespace TagsCloudContainer.WordsParser
         {
             var wordsCount = new Dictionary<string, int>();
 
+            var words = new List<string>();
+
             while (true)
             {
                 var word = wordReader.ReadWord();
                 if (word is null)
                     break;
-                word = NormalizeWord(word);
-                wordsCount.SetOrUpdate(word);
+                words.Add(word.NormalizeWord());
+            }
+
+            var filteredWords = filter.RemoveBoringWords(words.ToHashSet());
+            foreach (var word in words)
+            {
+                if (filteredWords.Contains(word))
+                    wordsCount.SetOrUpdate(word);
             }
 
             return wordsCount;
-        }
-
-        private static string NormalizeWord(string word)
-        {
-            return word.ToLower();
         }
     }
 }

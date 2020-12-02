@@ -14,7 +14,7 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
             builder.RegisterType<WordsAnalyzer>().As<IWordsAnalyzer>();
             builder.RegisterType<FileReader>().As<IWordReader>().WithParameter("filePath", options.FilePath);
-            builder.RegisterType<Settings>().As<ISettings>();
+            builder.RegisterType<Filter>().As<IFilter>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
             builder.RegisterType<LayoutDrawer>().As<ILayoutDrawer>();
             builder.RegisterType<RectangleLayout>().As<IRectangleLayout>();

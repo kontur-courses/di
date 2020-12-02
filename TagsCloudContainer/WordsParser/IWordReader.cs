@@ -1,7 +1,7 @@
 ﻿namespace TagsCloudContainer.WordsParser
 {
-    public interface IWordsReader
+    public interface IWordReader
     {
-        public string ReadWords();
+        public string ReadWord();
     }
 }

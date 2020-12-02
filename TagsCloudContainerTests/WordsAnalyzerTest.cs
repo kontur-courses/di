@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer;
 using TagsCloudContainer.WordsParser;
 
 namespace TagsCloudContainerTests
@@ -9,12 +10,14 @@ namespace TagsCloudContainerTests
     {
         private IWordsAnalyzer wordsAnalyzer;
         private WordReaderTest wordReader;
+        private IOptions options;
         
         [SetUp]
         public void SetUp()
         {
+            options = new OptionsStub(0, 0);
             wordReader = new WordReaderTest();
-            wordsAnalyzer = new WordsAnalyzer(new Settings(), wordReader);
+            wordsAnalyzer = new WordsAnalyzer(new Filter(options), wordReader);
         }
 
         [Test]
@@ -42,6 +45,17 @@ namespace TagsCloudContainerTests
             words["first"].Should().Be(1);
             words["second"].Should().Be(2);
             words["third"].Should().Be(3);
+        }
+        
+        [Test]
+        public void AnalyzeWordsShouldIgnoreBoringWords()
+        {
+            options.BoringWords = new[] {"first"};
+            wordsAnalyzer = new WordsAnalyzer(new Filter(options), wordReader);
+            wordReader.AddWords(new []{"first", "second"});
+            var words = wordsAnalyzer.AnalyzeWords();
+
+            words.Count.Should().Be(1);
         }
     }
 

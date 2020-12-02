@@ -6,6 +6,6 @@ namespace TagsCloudContainer.Layouter
     {
         public Rectangle PutNextRectangle(Size rectangleSize);
 
-        public void SetCenter(int x, int y);
+        public void SetCenter(Point center);
     }
 }

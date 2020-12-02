@@ -2,8 +2,8 @@
 
 namespace TagsCloudContainer.WordsParser
 {
-    public interface ISettings
+    public interface IFilter
     {
-        public IEnumerable<string> BoringWords { get; }
+        public HashSet<string> RemoveBoringWords(HashSet<string> words);
     }
 }

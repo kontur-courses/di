@@ -18,9 +18,9 @@ namespace TagsCloudContainer.Layouter
             directions = new List<Direction> {Direction.Top, Direction.Right, Direction.Bottom, Direction.Left};
         }
 
-        public void SetCenter(int x, int y)
+        public void SetCenter(Point center)
         {
-            center = new Point(x, y);
+            this.center = center;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
