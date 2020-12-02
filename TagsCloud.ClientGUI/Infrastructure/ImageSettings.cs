@@ -6,8 +6,8 @@
         private const int MaxWidth = 1920;
         private const int MinHeight = 300;
         private const int MaxHeight = 1080;
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; set; } = 800;
+        public int Height { get; set; } = 800;
 
         public void NormalizeSize()
         {
