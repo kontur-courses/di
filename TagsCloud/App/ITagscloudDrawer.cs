@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
-    public interface ITagscloudDrawer
+    public interface ITagsCloudDrawer
     {
-        Image GetTagscloud(Dictionary<string, int> words, TagscloudSettings settings, double cloudToImageScaleRatio);
-        void SetNewConstellator(IRectanglesConstellator newConstellator);
+        Image GetTagsCloud(Dictionary<string, int> words, TagsCloudSettings settings, double cloudToImageScaleRatio);
+        void SetNewLayouter(IRectanglesLayouter newConstellator);
     }
 }

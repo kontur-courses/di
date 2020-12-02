@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloud.App
 {
-    public class RectanglesConstellator : IRectanglesConstellator
+    public class RectanglesLayouter : IRectanglesLayouter
     {
         private enum AngleDirection
         {
@@ -33,7 +33,7 @@ namespace TagsCloud.App
         private readonly Point center;
         private readonly List<Angle> angles;
 
-        public RectanglesConstellator(Point center)
+        public RectanglesLayouter(Point center)
         {
             this.center = center;
             Rectangles = new List<Rectangle>();

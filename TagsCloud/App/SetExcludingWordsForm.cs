@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TagsCloud.App;
 
-namespace TagsCloud.Infrastructure
+namespace TagsCloud.App
 {
     public partial class SetExcludingWordsForm : Form
     {

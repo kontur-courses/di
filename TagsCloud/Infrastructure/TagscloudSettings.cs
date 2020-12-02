@@ -1,11 +1,9 @@
 ﻿using System.Drawing;
 using System.Linq;
-using TagsCloud.App;
-using TagsCloud.Infrastructure;
 
-namespace TagsCloud.App
+namespace TagsCloud.Infrastructure
 {
-    public class TagscloudSettings
+    public class TagsCloudSettings
     {
         public Palette Palette { get; set; }
         public ImageSize ImageSize { get; set; }
@@ -13,7 +11,7 @@ namespace TagsCloud.App
         public FontFamily CurrentFontFamily { get; set; }
         public FontStyle CurrentFontStyle { get; set; }
 
-        public TagscloudSettings(Palette palette, ImageSize imageSize, PossibleFonts possibleFonts)
+        public TagsCloudSettings(Palette palette, ImageSize imageSize, PossibleFonts possibleFonts)
         {
             Palette = palette;
             ImageSize = imageSize;

@@ -9,15 +9,15 @@ using TagsCloud.App;
 namespace TagsCloudTests
 {
     [TestFixture]
-    public class RectanglesConstellatorTests
+    public class RectanglesLayouterTests
     {
         private Point center = new Point(400, 400);
-        private RectanglesConstellator layouter;
+        private RectanglesLayouter layouter;
 
         [SetUp]
         public void SetUp()
         {
-            layouter = new RectanglesConstellator(center);
+            layouter = new RectanglesLayouter(center);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace TagsCloudTests
 
             var rectangle = layouter.PutNextRectangle(new Size(50, 50));
             var distanceToCenter =
-                RectanglesConstellator.CalculateDistance(center, RectanglesConstellator.CalculateCenterPosition(rectangle));
+                RectanglesLayouter.CalculateDistance(center, RectanglesLayouter.CalculateCenterPosition(rectangle));
             distanceToCenter.Should().Be(50, "because last closest position is near the central rectangle");
         }
 
@@ -74,8 +74,8 @@ namespace TagsCloudTests
                 rectanglesArea += wordSize.Width * wordSize.Height;
                 var newRect = layouter.PutNextRectangle(wordSize);
                 maxRadius = Math.Max(maxRadius,
-                    RectanglesConstellator.CalculateDistance(center,
-                        RectanglesConstellator.CalculateCenterPosition(newRect)));
+                    RectanglesLayouter.CalculateDistance(center,
+                        RectanglesLayouter.CalculateCenterPosition(newRect)));
             }
             var circleArea = Math.PI * maxRadius * maxRadius;
             rectanglesArea.Should().BeGreaterOrEqualTo(circleArea * 0.9f);

@@ -18,9 +18,9 @@ namespace TagsCloud
         {
             var builder = new ContainerBuilder();
             RegisterSettings(builder);
-            builder.RegisterInstance(new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
-            builder.RegisterType<TagscloudDrawer>().As<ITagscloudDrawer>();
-            builder.RegisterType<TagscloudHandler>().AsSelf();
+            builder.RegisterInstance(new RectanglesLayouter(Point.Empty)).As<IRectanglesLayouter>();
+            builder.RegisterType<TagsCloudDrawer>().As<ITagsCloudDrawer>();
+            builder.RegisterType<TagsCloudHandler>().AsSelf();
             builder.RegisterInstance(new HashSet<string>
             {
                 "и",
@@ -37,7 +37,7 @@ namespace TagsCloud
 
         private static void RegisterSettings(ContainerBuilder builder)
         {
-            builder.RegisterType<TagscloudSettings>().AsSelf();
+            builder.RegisterType<TagsCloudSettings>().AsSelf();
             builder.RegisterInstance(new ImageSize(500, 500)).AsSelf();
             builder.RegisterInstance(new Palette(Color.Aqua, Color.Black)).AsSelf();
             builder.RegisterType<PossibleFonts>().AsSelf();

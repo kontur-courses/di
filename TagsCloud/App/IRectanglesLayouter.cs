@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
 namespace TagsCloud.App
 {
-    public interface IRectanglesConstellator
+    public interface IRectanglesLayouter
     {
         string Name { get; }
         int MaxX { get; }

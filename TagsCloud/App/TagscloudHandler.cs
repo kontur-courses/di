@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
-    public class TagscloudHandler
+    public class TagsCloudHandler
     {
         private string[] words;
-        public readonly TagscloudSettings Settings;
+        public readonly TagsCloudSettings Settings;
         public HashSet<string> ExcludedWords { get; }
         private readonly IWordsConverter wordConverter;
-        private readonly ITagscloudDrawer drawer;
+        private readonly ITagsCloudDrawer drawer;
 
-        public TagscloudHandler(IWordsConverter converter, string[] words,
-            HashSet<string> excludedWords, TagscloudSettings settings, ITagscloudDrawer drawer)
+        public TagsCloudHandler(IWordsConverter converter, string[] words,
+            HashSet<string> excludedWords, TagsCloudSettings settings, ITagsCloudDrawer drawer)
         {
             wordConverter = converter;
             this.words = words;
@@ -33,7 +34,7 @@ namespace TagsCloud.App
                 .Where(word => !ExcludedWords.Contains(word))
                 .ToList();
             var counts = new WordsCounter().CountWords(neededWords);
-            return drawer.GetTagscloud(counts, Settings, 0.7d);
+            return drawer.GetTagsCloud(counts, Settings, 0.7d);
         }
     }
 }

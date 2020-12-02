@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TagsCloud.Infrastructure
+namespace TagsCloud.App
 {
     public class SettingsForm<TSettings> : Form
     {
@@ -25,7 +25,7 @@ namespace TagsCloud.Infrastructure
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = "Настройки";
+            Text = @"Настройки";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.Infrastructure
+﻿namespace TagsCloud.App
 {
     partial class SetExcludingWordsForm
     {

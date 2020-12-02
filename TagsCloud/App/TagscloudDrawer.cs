@@ -5,16 +5,16 @@ using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
-    class TagscloudDrawer : ITagscloudDrawer
+    class TagsCloudDrawer : ITagsCloudDrawer
     {
-        private IRectanglesConstellator constellator;
+        private IRectanglesLayouter constellator;
 
-        public TagscloudDrawer(IRectanglesConstellator constellator)
+        public TagsCloudDrawer(IRectanglesLayouter constellator)
         {
             this.constellator = constellator;
         }
 
-        public Image GetTagscloud(Dictionary<string, int> words, TagscloudSettings settings, double cloudToImageScaleRatio)
+        public Image GetTagsCloud(Dictionary<string, int> words, TagsCloudSettings settings, double cloudToImageScaleRatio)
         {
             if (cloudToImageScaleRatio <= 0 || cloudToImageScaleRatio > 1)
                 throw new ArgumentException("ratio should be positive and be less 1");
@@ -44,19 +44,19 @@ namespace TagsCloud.App
                 new PointF((float)settings.ImageSize.Width / 2, (float)settings.ImageSize.Height / 2) - constellatorCenterDelta);
         }
 
-        public void SetNewConstellator(IRectanglesConstellator newConstellator)
+        public void SetNewLayouter(IRectanglesLayouter newConstellator)
         {
             constellator = newConstellator;
         }
 
-        private static float CalculateRatio(IRectanglesConstellator constellator, ImageSize newSize)
+        private static float CalculateRatio(IRectanglesLayouter constellator, ImageSize newSize)
         {
             if ((double) constellator.Width / newSize.Width > (float) constellator.Height / newSize.Height)
                 return (float) newSize.Width / constellator.Width;
             return (float) newSize.Height / constellator.Height;
         }
 
-        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagscloudSettings settings, PointF center)
+        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagsCloudSettings settings, PointF center)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             var graphics = Graphics.FromImage(image);
