@@ -18,13 +18,19 @@ namespace TagCloud.Core.WordsProcessors
             this.filters = filters.ToList();
         }
 
-        public IEnumerable<string> Process(IEnumerable<string> words, int amountToTake)
+        public IEnumerable<string> Process(IEnumerable<string> words)
         {
             return words
                 .Where(IsValid)
                 .Select(Convert)
-                .MostFrequent(amountToTake)
-                .Select(e => e.Item1);
+                .MostFrequent()
+                .Select(e => e.item);
+        }
+
+        public IEnumerable<string> Process(IEnumerable<string> words, int amountToTake)
+        {
+            return Process(words)
+                .Take(amountToTake);
         }
 
         private string Convert(string word)

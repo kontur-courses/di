@@ -4,6 +4,6 @@ namespace TagCloud.Core.WordsProcessors
 {
     public interface IWordsProcessor
     {
-        public IEnumerable<string> Process(IEnumerable<string> words, int amountToTake);
+        IEnumerable<string> Process(IEnumerable<string> words, int amountToTake);
     }
 }
