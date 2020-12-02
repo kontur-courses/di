@@ -6,13 +6,11 @@ namespace TagsCloud.ClientGUI.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private readonly IImageDirectoryProvider imageDirectoryProvider;
         private readonly IImageHolder imageHolder;
 
-        public SaveImageAction(IImageHolder imageHolder, IImageDirectoryProvider imageDirectoryProvider)
+        public SaveImageAction(IImageHolder imageHolder)
         {
             this.imageHolder = imageHolder;
-            this.imageDirectoryProvider = imageDirectoryProvider;
         }
 
         public string Category => "Файл";
@@ -24,7 +22,6 @@ namespace TagsCloud.ClientGUI.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
                 DefaultExt = "",
                 FileName = "image.png",
                 Filter = "Изображения (*.png)|*.png|All files(*.*)|*.*"

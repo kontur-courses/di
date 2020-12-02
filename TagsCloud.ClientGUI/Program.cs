@@ -31,7 +31,7 @@ namespace TagsCloud.ClientGUI
             service.RegisterType<SettingsManager>().InstancePerLifetimeScope();
             service.RegisterType<TagsCloudPainter>().InstancePerLifetimeScope();
 
-            service.Register(c => c.Resolve<SettingsManager>().Load()).As<AppSettings, IImageDirectoryProvider>()
+            service.Register(c => c.Resolve<SettingsManager>().Load()).As<AppSettings>()
                 .InstancePerLifetimeScope();
             service.Register(c => c.Resolve<AppSettings>().ImageSettings).As<ImageSettings>()
                 .InstancePerLifetimeScope();

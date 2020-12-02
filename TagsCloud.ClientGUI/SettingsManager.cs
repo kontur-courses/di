@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using TagsCloud.ClientGUI.Infrastructure;
+﻿using TagsCloud.ClientGUI.Infrastructure;
 
 namespace TagsCloud.ClientGUI
 {
@@ -11,7 +8,6 @@ namespace TagsCloud.ClientGUI
         {
             return new AppSettings
             {
-                ImagesDirectory = ".",
                 ImageSettings = new ImageSettings()
             };
         }

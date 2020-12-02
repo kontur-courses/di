@@ -2,9 +2,8 @@
 
 namespace TagsCloud.ClientGUI
 {
-    public class AppSettings : IImageDirectoryProvider
+    public class AppSettings
     {
         public ImageSettings ImageSettings { get; set; }
-        public string ImagesDirectory { get; set; }
     }
 }
