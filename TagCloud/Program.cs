@@ -14,7 +14,7 @@ namespace TagCloud
         private static CommandLineApplication app = new CommandLineApplication();
         static int Main(string[] args)
         {
-            var CLI = new CommandLineInterface(new PathCreater());
+            var CLI = new CommandLineInterface();
             CLI.ConfigureCLI(app);
             app.Execute(args);
             ConfigureServices(CLI.CanvasSize, CLI.BackgroundType);
