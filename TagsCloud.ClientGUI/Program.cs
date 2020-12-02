@@ -25,16 +25,11 @@ namespace TagsCloud.ClientGUI
             service.RegisterType<FontSetting>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<PathSettings>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<Palette>().AsSelf().InstancePerLifetimeScope();
+            service.RegisterType<ImageSettings>().AsSelf().InstancePerLifetimeScope();
             service.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
                 .InstancePerLifetimeScope();
 
-            service.RegisterType<SettingsManager>().InstancePerLifetimeScope();
             service.RegisterType<TagsCloudPainter>().InstancePerLifetimeScope();
-
-            service.Register(c => c.Resolve<SettingsManager>().Load()).As<AppSettings>()
-                .InstancePerLifetimeScope();
-            service.Register(c => c.Resolve<AppSettings>().ImageSettings).As<ImageSettings>()
-                .InstancePerLifetimeScope();
 
             service.RegisterType<MainForm>(); 
             return service.Build();
