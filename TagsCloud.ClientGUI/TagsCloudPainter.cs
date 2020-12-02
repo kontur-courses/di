@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.Core;
@@ -45,7 +46,8 @@ namespace TagsCloud.ClientGUI
                     };
                     graphics.DrawRectangle(new Pen(Color.White), rectangles[i]);
 
-                    using (var currentFont = new Font(font.MainFont.FontFamily, (int) (rectangles[i].Height / 1.3),
+                    using (var currentFont = new Font(font.MainFont.FontFamily,
+                        (int) (font.MainFont.Height / 2 * Math.Log(words[i].Item2 + 1)),
                         font.MainFont.Style))
                     {
                         graphics.DrawString(words[i].Item1, currentFont,

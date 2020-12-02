@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TagsCloud.ClientGUI.Infrastructure;
+﻿using TagsCloud.ClientGUI.Infrastructure;
 
 namespace TagsCloud.ClientGUI.Actions
 {
