@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 
 namespace TagsCloud
 {
@@ -9,9 +10,19 @@ namespace TagsCloud
             Width = width;
             Height = height;
         }
-        public Palette Palette { get; } = new Palette();
+
+        [Category("Цвета")]
+        [DisplayName("Палитра")]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public Palette Palette { get; set; } = new Palette();
+
+        [DisplayName("Шрифт")]
         public Font Font { get; set; } = new Font(FontFamily.GenericSerif, 14);
+
+        [DisplayName("Ширина")]
         public int Width { get; set; }
+
+        [DisplayName("Высота")]
         public int Height { get; set; }
     }
 }

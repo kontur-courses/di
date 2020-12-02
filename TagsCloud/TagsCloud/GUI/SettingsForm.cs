@@ -16,6 +16,7 @@ namespace TagsCloud
 
             ClientSize = new Size(300, 400);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            AutoSize = true;
 
             var propGrid = new PropertyGrid {SelectedObject = settings, Dock = DockStyle.Fill};
             Controls.Add(propGrid);
