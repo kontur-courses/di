@@ -4,12 +4,12 @@ namespace TagsCloudVisualization
 {
     public class Config : IConfig //TODO rename
     {
-        public Font Font { get; }//toDo rename
-        public Point Center { get; }
+        public Font Font { get; private set; }//toDo rename
+        public Point Center { get; private set; }
         
-        public Color TextColor { get; }
+        public Color TextColor { get; private set; }
 
-        public Config(Font font, Point center, Color textColor)
+        public void SetValues(Font font, Point center, Color textColor)
         {
             Font = font;
             Center = center;

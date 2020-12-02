@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using CloudContainer.ConfigCreators;
+using Microsoft.Extensions.DependencyInjection;
 using TagsCloudVisualization;
 
 namespace CloudContainer
@@ -12,22 +14,20 @@ namespace CloudContainer
     {
         static void Main(string[] args)
         {
-            var directory = Directory.GetCurrentDirectory();
-            var path = directory + "\\text.txt"; //TODO
             var boringWords = new List<string>{"в","под","на"};//TODO
-            
-            var cleaner = new BoringWordsCleaner(boringWords.ToHashSet());
-            var provider = new TxtWordProvider(cleaner);
-            var words = provider.GetWords(path);
-            var configCreator = new ConsoleConfigCreator();
-            var config = configCreator.CreateConfig(args);
-            var pointProvider = new PointProvider(config);
-            var cloudLayouter = new CircularCloudLayouter(pointProvider);
-            var converter = new WordsToRectanglesConverter(cloudLayouter, config);
-            var cloudTags = converter.ConvertWords(words);
-            var image = Drawer.DrawImage(cloudTags,config);
-            var imageSaver = new PngSaver();
-            imageSaver.SaveImage(image, "newfile");
+            var container = new ServiceCollection();
+            container.AddSingleton<IWordProvider, TxtWordProvider>();
+            container.AddSingleton<IConfigCreator, ConsoleConfigCreator>();
+            container.AddSingleton<IPointProvider, PointProvider>();
+            container.AddSingleton<ICloudLayout, CircularCloudLayouter>();
+            container.AddSingleton<ISaver, PngSaver>();
+            container.AddSingleton<IConfig, Config>();
+            container.AddSingleton<IWordConverter, WordsToRectanglesConverter>();
+            container.AddSingleton(typeof(HashSet<string>), boringWords.ToHashSet());
+            container.AddSingleton<IWordsCleaner, BoringWordsCleaner>();
+            container.AddSingleton<Process, Process>();
+            container.AddSingleton(typeof(string[]), args);
+            container.BuildServiceProvider().GetService<Process>().Run();
         }
     }
 }

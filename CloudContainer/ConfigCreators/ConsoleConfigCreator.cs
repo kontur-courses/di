@@ -6,7 +6,8 @@ namespace CloudContainer.ConfigCreators
 {
     public class ConsoleConfigCreator : IConfigCreator
     {
-        public IConfig CreateConfig(string[] args)
+        
+        public void CreateConfig(string[] args, IConfig config)
         {
             if(args.Length != 6)
                 throw new ArgumentException();
@@ -30,7 +31,7 @@ namespace CloudContainer.ConfigCreators
             var color = Color.FromName(colorText);
             var splittedFont = fontText.Split(';');
             var font = new Font(splittedFont[0], Convert.ToInt32(splittedFont[1]));
-            return new Config(font,center,color);
+            config.SetValues(font,center,color);
         }
     }
 }

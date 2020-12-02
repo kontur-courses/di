@@ -5,12 +5,6 @@ namespace TagsCloudVisualization
 {
     public class TxtWordProvider : IWordProvider
     {
-        private readonly IWordsCleaner wordsCleaner;
-        
-        public TxtWordProvider(IWordsCleaner wordsCleaner)
-        {
-            this.wordsCleaner = wordsCleaner;
-        }
         
         public List<string> GetWords(string filepath)
         {
@@ -28,7 +22,7 @@ namespace TagsCloudVisualization
                 }
             }
 
-            return wordsCleaner.CleanWords(words);
+            return words;
         }
     }
 }

@@ -6,8 +6,8 @@ namespace TagsCloudVisualization
 {
     public class WordsToRectanglesConverter : IWordConverter//TODO Rename
     {
-        private readonly ICloudLayout cloudLayout;
-        private readonly IConfig config;
+        private ICloudLayout cloudLayout;
+        private IConfig config;
         public WordsToRectanglesConverter(ICloudLayout cloudLayout, IConfig config)
         {
             this.cloudLayout = cloudLayout;

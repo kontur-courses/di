@@ -4,6 +4,6 @@ namespace CloudContainer.ConfigCreators
 {
     public interface IConfigCreator
     {
-        IConfig CreateConfig(string[] args);
+        void CreateConfig(string[] args, IConfig config);
     }
 }

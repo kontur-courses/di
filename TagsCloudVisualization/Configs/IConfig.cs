@@ -8,5 +8,7 @@ namespace TagsCloudVisualization
         Point Center { get; }
         
         Color TextColor { get; }
+
+        public void SetValues(Font font, Point center, Color textColor);
     }
 }

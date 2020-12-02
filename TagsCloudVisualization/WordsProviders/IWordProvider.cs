@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface IWordProvider
     {
-        public List<string> GetWords(string filepath);
+        List<string> GetWords(string filepath);
     }
 }
