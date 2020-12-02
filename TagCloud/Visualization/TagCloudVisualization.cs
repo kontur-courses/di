@@ -1,26 +1,21 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagCloud.Visualization
 {
     public static class TagCloudVisualization
     {
-        public static void Visualizate(TagCloud cloud, string path, string font = "Arial", Size? size = null)
+        internal static void Visualizate(TagCloud cloud, string path, VisualizationInfo info)
         {
-            var random = new Random();
-            var bitmap = size == null ? new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height) :
-                new Bitmap(size.Value.Width, size.Value.Height);
+            var bitmap = info.TryGetSize(out var size) ? new Bitmap(size.Width, size.Height) : 
+                new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height);
             var vectorShift = new Point(
                 cloud.layouter.Size.Width - cloud.layouter.Center.X, 
                 cloud.layouter.Size.Height - cloud.layouter.Center.Y);
             var graphics = Graphics.FromImage(bitmap);
             foreach (var location in cloud)
             {
-                var randomColor = Color.FromArgb(255, random.Next(255), random.Next(255), random.Next(255));
-                ;
-                var brush = new SolidBrush(randomColor);
-                graphics.DrawString(location.word, new Font(font, location.location.Height), 
-                    brush, ShiftRectangle(location.location));
+                graphics.DrawString(location.word, info.GetFont(location.location.Height), 
+                    info.GetSolidBrush(), ShiftRectangle(location.location));
             }
             bitmap.Save(path);
 
