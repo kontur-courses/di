@@ -19,6 +19,12 @@ namespace TagsCloud
 {
     public static class ContainerConfigurator
     {
+        private static readonly Dictionary<string, Type> WordReaders = new Dictionary<string, Type>
+        {
+            ["Regex"] = typeof(RegexWordReader),
+            ["By line"] = typeof(ByLineWordReader),
+        };
+        
         private static readonly Dictionary<string, IWordSelector> WordSelectors = new Dictionary<string, IWordSelector>
         {
             ["All"] = new AllWordSelector(),
@@ -46,8 +52,8 @@ namespace TagsCloud
             var builder = new ContainerBuilder();
 
             builder.RegisterInstance(ReadType<string>("File path"));
+            builder.RegisterType(ReadInterface("Word reader", WordReaders)).As<IWordReader>();
             builder.RegisterInstance(ReadInterface("Words selector", WordSelectors)).As<IWordSelector>();
-            builder.RegisterType<RegexWordReader>().As<IWordReader>();
 
             builder.RegisterInstance(ReadInterface("Boring words detector", BoringWordsDetectors))
                 .As<IBoringWordsDetector>();
