@@ -9,13 +9,14 @@ namespace TagsCloud.App
     {
         private readonly List<Color> colors = new List<Color>();
         private readonly Random random = new Random();
-        public FontFamily FontFamily { get; set; }
 
         public ImageSettings(ImageSize imageSize, FontFamily fontFamily)
         {
             ImageSize = imageSize;
             FontFamily = fontFamily;
         }
+
+        public FontFamily FontFamily { get; set; }
 
         public Color GetColor()
         {

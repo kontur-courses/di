@@ -7,7 +7,7 @@ namespace TagsCloud.App
 {
     public class PngSaver : IImageSaver
     {
-        public HashSet<string> Extensions { get; } = new HashSet<string>{".png"};
+        public HashSet<string> Extensions { get; } = new HashSet<string> {".png"};
 
         public void Save(Image image, string fileName)
         {

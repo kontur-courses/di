@@ -7,7 +7,8 @@ namespace TagsCloud.App
 {
     public class BmpSaver : IImageSaver
     {
-        public HashSet<string> Extensions { get; } = new HashSet<string>{".bmp"};
+        public HashSet<string> Extensions { get; } = new HashSet<string> {".bmp"};
+
         public void Save(Image image, string fileName)
         {
             image.Save(fileName, ImageFormat.Bmp);
