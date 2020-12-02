@@ -5,7 +5,7 @@ namespace TagsCloud.App
 {
     public interface ITagscloudDrawer
     {
-        Image GetTagscloud(Dictionary<string, int> words, TagcloudSettings settings, double cloudToImageScaleRatio);
+        Image GetTagscloud(Dictionary<string, int> words, TagscloudSettings settings, double cloudToImageScaleRatio);
         void SetNewConstellator(IRectanglesConstellator newConstellator);
     }
 }

@@ -14,17 +14,18 @@ namespace TagsCloud.App
             this.constellator = constellator;
         }
 
-        public Image GetTagscloud(Dictionary<string, int> words, TagcloudSettings settings, double cloudToImageScaleRatio)
+        public Image GetTagscloud(Dictionary<string, int> words, TagscloudSettings settings, double cloudToImageScaleRatio)
         {
             if (cloudToImageScaleRatio <= 0 || cloudToImageScaleRatio > 1)
                 throw new ArgumentException("ratio should be positive and be less 1");
             var tagscloudWords = new List<TagscloudWord>();
             foreach (var word in words)
             {
+                var wordFont = new Font(settings.CurrentFontFamily, word.Value * 10, settings.CurrentFontStyle);
                 tagscloudWords.Add(new TagscloudWord(
-                    word.Key, new Font(settings.WordsFont.FontFamily, word.Value * 10), 
+                    word.Key, wordFont, 
                     constellator.PutNextRectangle(
-                        ConvertWordToSize(word.Key, new Font(settings.WordsFont.FontFamily, word.Value * 10))).Location));
+                        ConvertWordToSize(word.Key, wordFont)).Location));
             }
             var newSize = new ImageSize((int)(settings.ImageSize.Height * cloudToImageScaleRatio), 
                 (int)(settings.ImageSize.Width * cloudToImageScaleRatio));
@@ -53,7 +54,7 @@ namespace TagsCloud.App
             return newRatio;
         }
 
-        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagcloudSettings settings)
+        private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagscloudSettings settings)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
             var graphics = Graphics.FromImage(image);

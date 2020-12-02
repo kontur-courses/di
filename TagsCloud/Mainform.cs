@@ -13,18 +13,24 @@ namespace TagsCloud
     public partial class Mainform : Form
     {
         private readonly IWordsConverter wordConverter;
+        private readonly Dictionary<string, FontFamily> fontFamilies;
+        private readonly Dictionary<string, FontStyle> fontStyles;
         private readonly Dictionary<string, IRectanglesConstellator> constellators;
         private readonly TagscloudHandler tagscloudHandler;
         private readonly ITagscloudDrawer tagscloudDrawer;
 
-        public Mainform( IWordsConverter converter,
-            IRectanglesConstellator[] rectanglesConstellators, TagscloudHandler tagscloudHandler, ITagscloudDrawer drawer)
+        public Mainform( IWordsConverter converter, IRectanglesConstellator[] rectanglesConstellators, 
+            TagscloudHandler tagscloudHandler, ITagscloudDrawer drawer)
         {
             wordConverter = converter;
             this.tagscloudHandler = tagscloudHandler;
             tagscloudDrawer = drawer;
+            fontFamilies = tagscloudHandler.Settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
+            fontStyles = tagscloudHandler.Settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
             constellators = rectanglesConstellators.ToDictionary(c => c.Name);
             InitializeComponent();
+            FontFamilyChoice.DataSource = tagscloudHandler.Settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
+            FontStyleChoice.DataSource = tagscloudHandler.Settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
             AlgorithmChoice.DataSource = rectanglesConstellators.Select(c => c.Name).ToList();
         }
 
@@ -36,11 +42,6 @@ namespace TagsCloud
         private void SetImageSizeButton_Click(object sender, EventArgs e)
         {
             new SettingsForm<ImageSize>(tagscloudHandler.Settings.ImageSize).ShowDialog();
-        }
-
-        private void SetFontButton_Click(object sender, EventArgs e)
-        {
-            new SettingsForm<Font>(tagscloudHandler.Settings.WordsFont).ShowDialog();
         }
 
         private void ImageSaveButton_Click(object sender, EventArgs e)
@@ -68,6 +69,15 @@ namespace TagsCloud
             builder.RegisterType<SetExcludingWordsForm>().AsSelf();
             var container = builder.Build();
             container.Resolve<SetExcludingWordsForm>().ShowDialog();
+        }
+
+        private void FontFamilyChoice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tagscloudHandler.Settings.CurrentFontFamily = fontFamilies[(string)FontFamilyChoice.SelectedItem];
+        }
+        private void FontStyleChoice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tagscloudHandler.Settings.CurrentFontStyle = fontStyles[(string) FontStyleChoice.SelectedItem];
         }
 
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)

@@ -7,13 +7,13 @@ namespace TagsCloud.App
     public class TagscloudHandler
     {
         private string[] words;
-        public readonly TagcloudSettings Settings;
+        public readonly TagscloudSettings Settings;
         public HashSet<string> excludedWords { get; private set; }
         private readonly IWordsConverter wordConverter;
         private readonly ITagscloudDrawer drawer;
 
         public TagscloudHandler(IWordsConverter converter, string[] words,
-            HashSet<string> excludedWords, TagcloudSettings settings, ITagscloudDrawer drawer)
+            HashSet<string> excludedWords, TagscloudSettings settings, ITagscloudDrawer drawer)
         {
             wordConverter = converter;
             this.words = words;

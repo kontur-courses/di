@@ -30,8 +30,10 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.FontFamilyChoice = new System.Windows.Forms.ComboBox();
+            this.FontStyleChoice = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SetExcludedWordsButton = new System.Windows.Forms.Button();
-            this.SetFontButton = new System.Windows.Forms.Button();
             this.ImageSaveButton = new System.Windows.Forms.Button();
             this.TextOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -53,7 +55,6 @@
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -64,8 +65,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.FontFamilyChoice);
+            this.splitContainer1.Panel2.Controls.Add(this.FontStyleChoice);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.SetExcludedWordsButton);
-            this.splitContainer1.Panel2.Controls.Add(this.SetFontButton);
             this.splitContainer1.Panel2.Controls.Add(this.ImageSaveButton);
             this.splitContainer1.Panel2.Controls.Add(this.TextOpenButton);
             this.splitContainer1.Panel2.Controls.Add(this.StartButton);
@@ -75,7 +78,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.SetPaletteButton);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 650;
+            this.splitContainer1.SplitterDistance = 600;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.Text = "splitContainer1";
             // 
@@ -84,35 +87,60 @@
             this.PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox.Location = new System.Drawing.Point(0, 0);
             this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(646, 446);
+            this.PictureBox.Size = new System.Drawing.Size(596, 446);
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
+            // 
+            // FontFamilyChoice
+            // 
+            this.FontFamilyChoice.Items.AddRange(new object[] {
+            "asd",
+            "dfh",
+            "fgh",
+            "jh"});
+            this.FontFamilyChoice.Location = new System.Drawing.Point(0, 88);
+            this.FontFamilyChoice.Name = "FontFamilyChoice";
+            this.FontFamilyChoice.Size = new System.Drawing.Size(192, 23);
+            this.FontFamilyChoice.TabIndex = 2;
+            this.FontFamilyChoice.SelectedIndexChanged += new System.EventHandler(this.FontFamilyChoice_SelectedIndexChanged);
+            // 
+            // FontStyleChoice
+            // 
+            this.FontStyleChoice.Items.AddRange(new object[] {
+            "asd",
+            "dfh",
+            "fgh",
+            "jh"});
+            this.FontStyleChoice.Location = new System.Drawing.Point(0, 117);
+            this.FontStyleChoice.Name = "FontStyleChoice";
+            this.FontStyleChoice.Size = new System.Drawing.Size(192, 23);
+            this.FontStyleChoice.TabIndex = 2;
+            this.FontStyleChoice.SelectedIndexChanged += new System.EventHandler(this.FontStyleChoice_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(0, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Шрифт";
             // 
             // SetExcludedWordsButton
             // 
             this.SetExcludedWordsButton.Location = new System.Drawing.Point(0, 357);
             this.SetExcludedWordsButton.Name = "SetExcludedWordsButton";
-            this.SetExcludedWordsButton.Size = new System.Drawing.Size(144, 23);
+            this.SetExcludedWordsButton.Size = new System.Drawing.Size(192, 23);
             this.SetExcludedWordsButton.TabIndex = 8;
             this.SetExcludedWordsButton.Text = "Задать исключения";
             this.SetExcludedWordsButton.UseVisualStyleBackColor = true;
             this.SetExcludedWordsButton.Click += new System.EventHandler(this.SetExcludedWordsButton_Click);
             // 
-            // SetFontButton
-            // 
-            this.SetFontButton.Location = new System.Drawing.Point(0, 59);
-            this.SetFontButton.Name = "SetFontButton";
-            this.SetFontButton.Size = new System.Drawing.Size(144, 23);
-            this.SetFontButton.TabIndex = 7;
-            this.SetFontButton.Text = "Настроить шрифт";
-            this.SetFontButton.UseVisualStyleBackColor = true;
-            this.SetFontButton.Click += new System.EventHandler(this.SetFontButton_Click);
-            // 
             // ImageSaveButton
             // 
             this.ImageSaveButton.Location = new System.Drawing.Point(0, 293);
             this.ImageSaveButton.Name = "ImageSaveButton";
-            this.ImageSaveButton.Size = new System.Drawing.Size(144, 23);
+            this.ImageSaveButton.Size = new System.Drawing.Size(192, 23);
             this.ImageSaveButton.TabIndex = 6;
             this.ImageSaveButton.Text = "Сохранить в файл";
             this.ImageSaveButton.UseVisualStyleBackColor = true;
@@ -122,7 +150,7 @@
             // 
             this.TextOpenButton.Location = new System.Drawing.Point(0, 264);
             this.TextOpenButton.Name = "TextOpenButton";
-            this.TextOpenButton.Size = new System.Drawing.Size(144, 23);
+            this.TextOpenButton.Size = new System.Drawing.Size(192, 23);
             this.TextOpenButton.TabIndex = 5;
             this.TextOpenButton.Text = "Задать текст";
             this.TextOpenButton.UseVisualStyleBackColor = true;
@@ -132,7 +160,7 @@
             // 
             this.StartButton.Location = new System.Drawing.Point(0, 190);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(144, 58);
+            this.StartButton.Size = new System.Drawing.Size(192, 58);
             this.StartButton.TabIndex = 4;
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -141,7 +169,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 109);
+            this.label1.Location = new System.Drawing.Point(0, 143);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(62, 15);
             this.label1.TabIndex = 3;
@@ -149,15 +177,14 @@
             // 
             // AlgorithmChoice
             // 
-            this.AlgorithmChoice.FormattingEnabled = true;
             this.AlgorithmChoice.Items.AddRange(new object[] {
             "asd",
             "dfh",
             "fgh",
             "jh"});
-            this.AlgorithmChoice.Location = new System.Drawing.Point(0, 127);
+            this.AlgorithmChoice.Location = new System.Drawing.Point(0, 161);
             this.AlgorithmChoice.Name = "AlgorithmChoice";
-            this.AlgorithmChoice.Size = new System.Drawing.Size(142, 23);
+            this.AlgorithmChoice.Size = new System.Drawing.Size(192, 23);
             this.AlgorithmChoice.TabIndex = 2;
             this.AlgorithmChoice.SelectedIndexChanged += new System.EventHandler(this.AlgorithmChoice_SelectedIndexChanged);
             // 
@@ -165,7 +192,7 @@
             // 
             this.SetImageSizeButton.Location = new System.Drawing.Point(0, 29);
             this.SetImageSizeButton.Name = "SetImageSizeButton";
-            this.SetImageSizeButton.Size = new System.Drawing.Size(144, 23);
+            this.SetImageSizeButton.Size = new System.Drawing.Size(192, 23);
             this.SetImageSizeButton.TabIndex = 1;
             this.SetImageSizeButton.Text = "Настроить размер";
             this.SetImageSizeButton.UseVisualStyleBackColor = true;
@@ -176,7 +203,7 @@
             this.SetPaletteButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.SetPaletteButton.Location = new System.Drawing.Point(0, 0);
             this.SetPaletteButton.Name = "SetPaletteButton";
-            this.SetPaletteButton.Size = new System.Drawing.Size(142, 23);
+            this.SetPaletteButton.Size = new System.Drawing.Size(192, 23);
             this.SetPaletteButton.TabIndex = 0;
             this.SetPaletteButton.Text = "Настроить палитру";
             this.SetPaletteButton.UseVisualStyleBackColor = true;
@@ -221,8 +248,10 @@
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.Button ImageSaveButton;
         private System.Windows.Forms.Button TextOpenButton;
-        private System.Windows.Forms.Button SetFontButton;
         private System.Windows.Forms.Button SetExcludedWordsButton;
         private System.Windows.Forms.PictureBox PictureBox;
+        private System.Windows.Forms.ComboBox FontFamilyChoice;
+        private System.Windows.Forms.ComboBox FontStyleChoice;
+        private System.Windows.Forms.Label label2;
     }
 }

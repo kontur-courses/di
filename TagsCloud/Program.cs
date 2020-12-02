@@ -14,28 +14,35 @@ namespace TagsCloud
     class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        private static void Main()
         {
             var builder = new ContainerBuilder();
-            builder.Register(a => new ImageSize(500, 500)).AsSelf();
-            builder.Register(a => new Font(FontFamily.GenericSansSerif, 25)).AsSelf();
-            builder.Register(a => new Palette(Color.Aqua, Color.Black)).AsSelf();
-            builder.Register(a => new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
+            RegisterSettings(builder);
+            builder.RegisterInstance(new RectanglesConstellator(Point.Empty)).As<IRectanglesConstellator>();
             builder.RegisterType<TagscloudDrawer>().As<ITagscloudDrawer>();
             builder.RegisterType<TagscloudHandler>().AsSelf();
-            builder.Register(a => new HashSet<string>
+            builder.RegisterInstance(new HashSet<string>
             {
                 "и",
                 "a",
                 "в"
             }).AsSelf();
             builder.RegisterType<WordsConverter>().As<IWordsConverter>();
-            builder.RegisterType<TagcloudSettings>().AsSelf();
             builder.RegisterType<Mainform>().AsSelf();
             var container = builder.Build();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container.Resolve<Mainform>());
+        }
+
+        private static void RegisterSettings(ContainerBuilder builder)
+        {
+            builder.RegisterType<TagscloudSettings>().AsSelf();
+            builder.RegisterInstance(new ImageSize(500, 500)).AsSelf();
+            builder.RegisterInstance(new Palette(Color.Aqua, Color.Black)).AsSelf();
+            builder.RegisterType<PossibleFonts>().AsSelf();
+            builder.RegisterInstance(FontFamily.Families.ToHashSet()).AsSelf();
+            builder.RegisterInstance(new HashSet<FontStyle> {FontStyle.Regular, FontStyle.Italic, FontStyle.Bold}).AsSelf();
         }
     }
 }
