@@ -5,7 +5,7 @@ using TagCloud.TextConverters.WordExcluders;
 
 namespace TagCloud.TextConverters.TextProcessors
 {
-    internal class TextProcessor : ITextProcessor
+    public class TextProcessor : ITextProcessor
     {
         private readonly IWordExcluder excluder = new WordsExcluder();
         public IEnumerable<string> Process(string text) =>

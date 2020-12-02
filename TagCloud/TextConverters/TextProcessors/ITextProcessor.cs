@@ -2,7 +2,7 @@
 
 namespace TagCloud.TextConverters.TextProcessors
 {
-    internal interface ITextProcessor
+    public interface ITextProcessor
     {
         public IEnumerable<string> Process(string text);
     }

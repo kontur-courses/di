@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TagCloud.TextConverters.WordExcluders
 {
-    internal class WordsExcluder : IWordExcluder
+    public class WordsExcluder : IWordExcluder
     {
         private static readonly HashSet<string> pronouns = new HashSet<string>()
         { 

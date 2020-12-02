@@ -2,7 +2,7 @@
 
 namespace TagCloud.TextConverters.TextReaders
 {
-    internal class TextReaderTxt : ITextReader
+    public class TextReaderTxt : ITextReader
     {
        public string Extension { get => ".txt"; }
 

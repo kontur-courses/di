@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.PointGetters
 {
-    internal class CirclePointGetter : IPointGetter
+    public class CirclePointGetter : IPointGetter
     {
         public Point Center { get; }
         private double angle;

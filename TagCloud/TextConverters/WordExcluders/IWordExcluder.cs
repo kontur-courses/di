@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.TextConverters.WordExcluders
 {
-    internal interface IWordExcluder
+    public interface IWordExcluder
     {
         public bool MustBeExclude(string word);
     }
