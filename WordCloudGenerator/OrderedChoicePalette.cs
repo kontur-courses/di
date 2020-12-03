@@ -2,10 +2,16 @@
 
 namespace WordCloudGenerator
 {
-    public class Palette : IPalette
+    public class OrderedChoicePalette : IPalette
     {
-        private readonly Color[] colors = {Color.Navy, Color.Red, Color.Gold, Color.Green};
+        private readonly Color[] colors;
+
         private int colorIndex = -1;
+
+        public OrderedChoicePalette(Color[] colors)
+        {
+            this.colors = colors;
+        }
 
         public Color GetNextColor()
         {
