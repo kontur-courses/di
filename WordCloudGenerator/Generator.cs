@@ -5,21 +5,27 @@ namespace WordCloudGenerator
 {
     public class Generator
     {
-        private readonly Func<Dictionary<string, int>, Dictionary<string, int>> algorithm;
+        private readonly Func<IEnumerable<WordFrequency>, IEnumerable<GraphicString>> algorithm;
 
-        public Generator(Func<Dictionary<string, int>, Dictionary<string, int>> algorithm = null)
+        public Generator(Func<IEnumerable<WordFrequency>, IEnumerable<GraphicString>> algorithm = null)
         {
-            this.algorithm = algorithm ?? DefaultAlgorithm;
+            this.algorithm = algorithm ?? ExponentialAlgorithm;
         }
 
-        private static Dictionary<string, int> DefaultAlgorithm(Dictionary<string, int> wordsCountDic)
+        private static IEnumerable<GraphicString> ExponentialAlgorithm(IEnumerable<WordFrequency> wordFrequencies)
         {
-            throw new NotImplementedException();
+            var fontSize = 400f;
+
+            foreach (var wordFrequency in wordFrequencies)
+            {
+                yield return new GraphicString(wordFrequency.Word, Math.Max(75, fontSize));
+                fontSize /= 1.1f;
+            }
         }
 
-        public Dictionary<string, int> CalculateFontSizeForWords(Dictionary<string, int> wordsCount)
+        public IEnumerable<GraphicString> CalculateFontSizeForWords(IEnumerable<WordFrequency> wordFrequencies)
         {
-            return algorithm(wordsCount);
+            return algorithm(wordFrequencies);
         }
     }
 }
