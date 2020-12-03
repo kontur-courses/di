@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,22 +8,33 @@ namespace WordCloudGenerator
     public class Preparer
     {
         private readonly HashSet<string> wordsToSkip;
+        private readonly Func<string, bool> filter;
+
+        public Preparer(IEnumerable<string> wordsToSkip, Func<string, bool> filter) 
+        {
+            this.filter = filter;
+            this.wordsToSkip = wordsToSkip == null ? new HashSet<string>() : wordsToSkip.ToHashSet();
+        }
 
         public Preparer(IEnumerable<string> wordsToSkip)
         {
-            this.wordsToSkip = wordsToSkip == null ? new HashSet<string>() : wordsToSkip?.ToHashSet();
+            this.wordsToSkip = wordsToSkip == null ? new HashSet<string>() : wordsToSkip.ToHashSet();
+            filter = s => true;
         }
 
-        public Dictionary<string, int> GetCountedWords(string inputText)
+        public IEnumerable<WordFrequency> CreateWordFreqList(string inputText, int maxWordCount = 100)
         {
             var text = inputText.ToLower();
             var wordsInText = Regex.Matches(text, @"\w+")
                 .Select(match => match.Value)
                 .Where(word => !wordsToSkip.Contains(word)).ToArray();
 
-            return wordsInText.Distinct().ToDictionary(
-                word => word,
-                word => wordsInText.Count(el => el == word));
+            return wordsInText.Distinct()
+                .Where(filter)
+                .Select(word => new WordFrequency(word,
+                    (double) wordsInText.Count(el => el == word) / wordsInText.Length))
+                .OrderByDescending(word => word.Frequency)
+                .Take(maxWordCount);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Tests
             var text = "abc\nabc\nefg";
             var preparer = new Preparer(null);
 
-            preparer.GetCountedWords(text).Should().BeEquivalentTo(
+            preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
                 new Dictionary<string, int> {["abc"] = 2, ["efg"] = 1});
         }
 
@@ -24,7 +24,7 @@ namespace Tests
             var text = "abc\nabc\nefg\nefg\nxyz";
             var preparer = new Preparer(boringWords);
             
-            preparer.GetCountedWords(text).Should().BeEquivalentTo(
+            preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
                 new Dictionary<string, int> {["efg"] = 2, ["xyz"] = 1});
         }
     }
