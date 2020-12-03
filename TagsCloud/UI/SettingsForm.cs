@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TagsCloud.App
+namespace TagsCloud.UI
 {
     public class SettingsForm<TSettings> : Form
     {
@@ -9,7 +9,7 @@ namespace TagsCloud.App
         {
             var okButton = new Button
             {
-                Text = "OK",
+                Text = @"OK",
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom
             };

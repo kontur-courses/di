@@ -4,44 +4,43 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Autofac;
 using TagsCloud.App;
 using TagsCloud.Infrastructure;
 
-namespace TagsCloud
+namespace TagsCloud.UI
 {
     public partial class Mainform : Form
     {
-        private readonly IWordsConverter wordConverter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
         private readonly Dictionary<string, IRectanglesLayouter> constellators;
         private readonly TagsCloudHandler tagsCloudHandler;
         private readonly ITagsCloudDrawer tagsCloudDrawer;
+        private readonly TagsCloudSettings settings;
 
-        public Mainform( IWordsConverter converter, IRectanglesLayouter[] rectanglesConstellators, 
-            TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer)
+        public Mainform(IRectanglesLayouter[] rectanglesConstellators, 
+            TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer, TagsCloudSettings settings)
         {
-            wordConverter = converter;
             this.tagsCloudHandler = tagsCloudHandler;
+            this.settings = settings;
             tagsCloudDrawer = drawer;
-            fontFamilies = tagsCloudHandler.Settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
-            fontStyles = tagsCloudHandler.Settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
+            fontFamilies = settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
+            fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
             constellators = rectanglesConstellators.ToDictionary(c => c.Name);
             InitializeComponent();
-            FontFamilyChoice.DataSource = tagsCloudHandler.Settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
-            FontStyleChoice.DataSource = tagsCloudHandler.Settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
+            FontFamilyChoice.DataSource = settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
+            FontStyleChoice.DataSource = settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
             AlgorithmChoice.DataSource = rectanglesConstellators.Select(c => c.Name).ToList();
         }
 
         private void SetPaletteButton_Click(object sender, EventArgs e)
         {
-            new SettingsForm<Palette>(tagsCloudHandler.Settings.Palette).ShowDialog();
+            new SettingsForm<Palette>(settings.Palette).ShowDialog();
         }
 
         private void SetImageSizeButton_Click(object sender, EventArgs e)
         {
-            new SettingsForm<ImageSize>(tagsCloudHandler.Settings.ImageSize).ShowDialog();
+            new SettingsForm<ImageSize>(settings.ImageSize).ShowDialog();
         }
 
         private void ImageSaveButton_Click(object sender, EventArgs e)
@@ -61,24 +60,14 @@ namespace TagsCloud
             PictureBox.Image = tagsCloudHandler.GetNewTagcloud();
         }
 
-        private void SetExcludedWordsButton_Click(object sender, EventArgs e)
-        {
-            var builder = new ContainerBuilder();
-            builder.Register(a => tagsCloudHandler.ExcludedWords).AsSelf();
-            builder.Register(a => wordConverter).AsSelf();
-            builder.RegisterType<SetExcludingWordsForm>().AsSelf();
-            var container = builder.Build();
-            container.Resolve<SetExcludingWordsForm>().ShowDialog();
-        }
-
         private void FontFamilyChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tagsCloudHandler.Settings.CurrentFontFamily = fontFamilies[(string)FontFamilyChoice.SelectedItem];
+            settings.CurrentFontFamily = fontFamilies[(string)FontFamilyChoice.SelectedItem];
         }
 
         private void FontStyleChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tagsCloudHandler.Settings.CurrentFontStyle = fontStyles[(string) FontStyleChoice.SelectedItem];
+            settings.CurrentFontStyle = fontStyles[(string) FontStyleChoice.SelectedItem];
         }
 
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)

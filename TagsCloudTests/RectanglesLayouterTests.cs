@@ -11,13 +11,13 @@ namespace TagsCloudTests
     [TestFixture]
     public class RectanglesLayouterTests
     {
-        private Point center = new Point(400, 400);
+        private Point imageCenter = new Point(400, 400);
         private RectanglesLayouter layouter;
 
         [SetUp]
         public void SetUp()
         {
-            layouter = new RectanglesLayouter(center);
+            layouter = new RectanglesLayouter(imageCenter);
         }
 
         [Test]
@@ -27,8 +27,8 @@ namespace TagsCloudTests
             firstRectangle
                 .Should()
                 .BeEquivalentTo(new Rectangle(
-                    center.X - firstRectangle.Width / 2, 
-                    center.Y - firstRectangle.Height / 2, 
+                    imageCenter.X - firstRectangle.Width / 2, 
+                    imageCenter.Y - firstRectangle.Height / 2, 
                     firstRectangle.Width,
                     firstRectangle.Height));
         }
@@ -41,7 +41,8 @@ namespace TagsCloudTests
             var firstRectCenterY = firstRect.Y + firstRect.Height / 2;
             var secondRectCenterY = secondRect.Y + secondRect.Height / 2;
             Math.Abs(firstRectCenterY - secondRectCenterY)
-                .Should().Be((firstRect.Height + secondRect.Height) / 2, "because secondhorizontal rectangle should be above or below first");
+                .Should().Be((firstRect.Height + secondRect.Height) / 2, 
+                    "because secondhorizontal rectangle should be above or below first");
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace TagsCloudTests
 
             var rectangle = layouter.PutNextRectangle(new Size(50, 50));
             var distanceToCenter =
-                RectanglesLayouter.CalculateDistance(center, RectanglesLayouter.CalculateCenterPosition(rectangle));
+                RectanglesLayouter.CalculateDistance(imageCenter, RectanglesLayouter.CalculateCenterPosition(rectangle));
             distanceToCenter.Should().Be(50, "because last closest position is near the central rectangle");
         }
 
@@ -74,7 +75,7 @@ namespace TagsCloudTests
                 rectanglesArea += wordSize.Width * wordSize.Height;
                 var newRect = layouter.PutNextRectangle(wordSize);
                 maxRadius = Math.Max(maxRadius,
-                    RectanglesLayouter.CalculateDistance(center,
+                    RectanglesLayouter.CalculateDistance(imageCenter,
                         RectanglesLayouter.CalculateCenterPosition(newRect)));
             }
             var circleArea = Math.PI * maxRadius * maxRadius;
@@ -91,7 +92,7 @@ namespace TagsCloudTests
                 var fileName = $"{context.WorkDirectory}\\{context.Test.Name}.png";
                 var rectangles = layouter.Rectangles;
                 TestContext.WriteLine($"Tag cloud visualization saved to file {fileName}");
-                DrawRectangles(rectangles, center, new Size(800, 800), fileName);
+                DrawRectangles(rectangles, imageCenter, new Size(800, 800), fileName);
             }
         }
 

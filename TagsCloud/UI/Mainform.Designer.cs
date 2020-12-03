@@ -1,4 +1,4 @@
-﻿namespace TagsCloud
+﻿namespace TagsCloud.UI
 {
     partial class Mainform
     {
@@ -33,7 +33,6 @@
             this.FontFamilyChoice = new System.Windows.Forms.ComboBox();
             this.FontStyleChoice = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.SetExcludedWordsButton = new System.Windows.Forms.Button();
             this.ImageSaveButton = new System.Windows.Forms.Button();
             this.TextOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -68,7 +67,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.FontFamilyChoice);
             this.splitContainer1.Panel2.Controls.Add(this.FontStyleChoice);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Panel2.Controls.Add(this.SetExcludedWordsButton);
             this.splitContainer1.Panel2.Controls.Add(this.ImageSaveButton);
             this.splitContainer1.Panel2.Controls.Add(this.TextOpenButton);
             this.splitContainer1.Panel2.Controls.Add(this.StartButton);
@@ -77,7 +75,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.SetImageSizeButton);
             this.splitContainer1.Panel2.Controls.Add(this.SetPaletteButton);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 461);
             this.splitContainer1.SplitterDistance = 600;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.Text = "splitContainer1";
@@ -87,7 +85,8 @@
             this.PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox.Location = new System.Drawing.Point(0, 0);
             this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(596, 446);
+            this.PictureBox.Size = new System.Drawing.Size(596, 457);
+            this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
             // 
@@ -125,16 +124,6 @@
             this.label2.Size = new System.Drawing.Size(46, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Шрифт";
-            // 
-            // SetExcludedWordsButton
-            // 
-            this.SetExcludedWordsButton.Location = new System.Drawing.Point(0, 357);
-            this.SetExcludedWordsButton.Name = "SetExcludedWordsButton";
-            this.SetExcludedWordsButton.Size = new System.Drawing.Size(192, 23);
-            this.SetExcludedWordsButton.TabIndex = 8;
-            this.SetExcludedWordsButton.Text = "Задать исключения";
-            this.SetExcludedWordsButton.UseVisualStyleBackColor = true;
-            this.SetExcludedWordsButton.Click += new System.EventHandler(this.SetExcludedWordsButton_Click);
             // 
             // ImageSaveButton
             // 
@@ -222,7 +211,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 461);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Mainform";
             this.Text = "Mainform";
@@ -248,7 +237,6 @@
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.Button ImageSaveButton;
         private System.Windows.Forms.Button TextOpenButton;
-        private System.Windows.Forms.Button SetExcludedWordsButton;
         private System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.ComboBox FontFamilyChoice;
         private System.Windows.Forms.ComboBox FontStyleChoice;

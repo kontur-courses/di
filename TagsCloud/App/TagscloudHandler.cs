@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using TagsCloud.Infrastructure;
 
@@ -8,18 +7,15 @@ namespace TagsCloud.App
     public class TagsCloudHandler
     {
         private string[] words;
-        public readonly TagsCloudSettings Settings;
-        public HashSet<string> ExcludedWords { get; }
-        private readonly IWordsConverter wordConverter;
+        private readonly IWordNormalizer wordNormalizer;
+        private readonly IWordsFilter wordsFilter;
         private readonly ITagsCloudDrawer drawer;
-
-        public TagsCloudHandler(IWordsConverter converter, string[] words,
-            HashSet<string> excludedWords, TagsCloudSettings settings, ITagsCloudDrawer drawer)
+        
+        public TagsCloudHandler(IWordsFilter filter, IWordNormalizer normalizer, string[] words, ITagsCloudDrawer drawer)
         {
-            wordConverter = converter;
+            wordNormalizer = normalizer;
+            wordsFilter = filter;
             this.words = words;
-            ExcludedWords = excludedWords;
-            Settings = settings;
             this.drawer = drawer;
         }
 
@@ -30,11 +26,13 @@ namespace TagsCloud.App
 
         public Image GetNewTagcloud()
         {
-            var neededWords = wordConverter.ConvertWords(words)
-                .Where(word => !ExcludedWords.Contains(word))
+            var neededWords = wordsFilter.FilterWords(words)
+                .Select(word => wordNormalizer.NormalizeWord(word))
                 .ToList();
-            var counts = new WordsCounter().CountWords(neededWords);
-            return drawer.GetTagsCloud(counts, Settings, 0.7d);
+            var counts = neededWords
+                .GroupBy(word => word)
+                .Select(group => new Tag(group.Key, group.Count()));
+            return drawer.GetTagsCloud(counts);
         }
     }
 }

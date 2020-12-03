@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TagsCloud.App;
 
-namespace TagsCloud.App
+namespace TagsCloud.UI
 {
     public partial class SetExcludingWordsForm : Form
     {
         private readonly HashSet<string> excludedWords;
         private readonly TextBox textBox;
-        private readonly IWordsConverter converter;
+        private readonly IWordNormalizer converter;
 
-        public SetExcludingWordsForm(HashSet<string> excludedWords, IWordsConverter converter)
+        public SetExcludingWordsForm(HashSet<string> excludedWords, IWordNormalizer converter)
         {
             var okButton = new Button
             {
@@ -36,7 +36,7 @@ namespace TagsCloud.App
         private void OnOkButtonClick(object sender, EventArgs e)
         {
             foreach (var word in textBox.Text.Split('\n'))
-                excludedWords.Add(converter.ConvertWord(word));
+                excludedWords.Add(converter.NormalizeWord(word));
         }
     }
 }

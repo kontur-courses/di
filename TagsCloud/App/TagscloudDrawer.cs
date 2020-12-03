@@ -7,55 +7,58 @@ namespace TagsCloud.App
 {
     class TagsCloudDrawer : ITagsCloudDrawer
     {
-        private IRectanglesLayouter constellator;
+        private IRectanglesLayouter layouter;
+        private readonly TagsCloudSettings tagsCloudSettings;
 
-        public TagsCloudDrawer(IRectanglesLayouter constellator)
+        public TagsCloudDrawer(IRectanglesLayouter layouter, TagsCloudSettings tagsCloudSettings)
         {
-            this.constellator = constellator;
+            this.layouter = layouter;
+            this.tagsCloudSettings = tagsCloudSettings;
         }
 
-        public Image GetTagsCloud(Dictionary<string, int> words, TagsCloudSettings settings, double cloudToImageScaleRatio)
+        public Image GetTagsCloud(IEnumerable<Tag> tags)
         {
-            if (cloudToImageScaleRatio <= 0 || cloudToImageScaleRatio > 1)
+            if (tagsCloudSettings.CloudToImageScaleRatio <= 0 || tagsCloudSettings.CloudToImageScaleRatio > 1)
                 throw new ArgumentException("ratio should be positive and be less 1");
-            var tagscloudWords = new List<TagscloudWord>();
-            foreach (var word in words)
+            var tagsCloudWords = new List<TagscloudWord>();
+            var tagsCloudsBounds = Rectangle.Empty;
+            foreach (var tag in tags)
             {
-                var wordFont = new Font(settings.CurrentFontFamily, word.Value * 10, settings.CurrentFontStyle);
-                tagscloudWords.Add(new TagscloudWord(
-                    word.Key, wordFont, 
-                    constellator.PutNextRectangle(
-                        ConvertWordToSize(word.Key, wordFont)).Location));
+                var wordFont = new Font(tagsCloudSettings.CurrentFontFamily, tag.Weight, tagsCloudSettings.CurrentFontStyle);
+                var newRectangle = layouter.PutNextRectangle(ConvertWordToSize(tag.Word, wordFont));
+                tagsCloudWords.Add(new TagscloudWord(tag.Word, wordFont, newRectangle.Location));
+                TryExpandTagsCloud(ref tagsCloudsBounds, newRectangle);
             }
-            var newSize = new ImageSize((int)(settings.ImageSize.Height * cloudToImageScaleRatio), 
-                (int)(settings.ImageSize.Width * cloudToImageScaleRatio));
-            var newRatio = CalculateRatio(constellator, newSize);
-            var constellatorCenterDelta = new SizeF((float)(constellator.MaxX + constellator.MinX) / 2, 
-                (float)(constellator.MaxY + constellator.MinY) / 2) * newRatio;
-            for (var i = 0; i < tagscloudWords.Count; i++)
+            var newSize = new ImageSize((int)(tagsCloudSettings.ImageSize.Width * tagsCloudSettings.CloudToImageScaleRatio), 
+                (int)(tagsCloudSettings.ImageSize.Height * tagsCloudSettings.CloudToImageScaleRatio));
+            var newRatio = CalculateRatio(tagsCloudsBounds.Size, newSize);
+            for (var i = 0; i < tagsCloudWords.Count; i++)
             {
-                tagscloudWords[i] = new TagscloudWord(tagscloudWords[i].Value, 
-                    new Font(tagscloudWords[i].Font.FontFamily, 
-                        (int)(tagscloudWords[i].Font.Size * newRatio), tagscloudWords[i].Font.Style),
-                    new Point((int)(tagscloudWords[i].Position.X * newRatio), (int)(tagscloudWords[i].Position.Y * newRatio)));
+                tagsCloudWords[i] = new TagscloudWord(tagsCloudWords[i].Value, 
+                    new Font(tagsCloudWords[i].Font.FontFamily, 
+                        (int)(tagsCloudWords[i].Font.Size * newRatio), tagsCloudWords[i].Font.Style),
+                    new Point((int)(tagsCloudWords[i].Position.X * newRatio), (int)(tagsCloudWords[i].Position.Y * newRatio)));
             }
-            constellator.Clear();
-            return DrawTagscloud(tagscloudWords, settings, 
-                new PointF((float)settings.ImageSize.Width / 2, (float)settings.ImageSize.Height / 2) - constellatorCenterDelta);
+            layouter.Clear();
+            var layouterCenterDelta = new Size(tagsCloudsBounds.X + tagsCloudsBounds.Width / 2, 
+                tagsCloudsBounds.Y + tagsCloudsBounds.Height / 2) * newRatio;
+            return DrawTagscloud(tagsCloudWords, tagsCloudSettings, 
+                new PointF((float)tagsCloudSettings.ImageSize.Width / 2, 
+                    (float)tagsCloudSettings.ImageSize.Height / 2) - layouterCenterDelta);
         }
 
-        public void SetNewLayouter(IRectanglesLayouter newConstellator)
+        public void SetNewLayouter(IRectanglesLayouter newLayouter)
         {
-            constellator = newConstellator;
+            layouter = newLayouter;
         }
 
-        private static float CalculateRatio(IRectanglesLayouter constellator, ImageSize newSize)
+        private static float CalculateRatio(Size tagsCloudSize, ImageSize imageSize)
         {
-            if ((double) constellator.Width / newSize.Width > (float) constellator.Height / newSize.Height)
-                return (float) newSize.Width / constellator.Width;
-            return (float) newSize.Height / constellator.Height;
+            if ((double)tagsCloudSize.Width / imageSize.Width > (float)tagsCloudSize.Height / imageSize.Height)
+                return (float) imageSize.Width / tagsCloudSize.Width;
+            return (float) imageSize.Height / tagsCloudSize.Height;
         }
-
+        
         private Image DrawTagscloud(IEnumerable<TagscloudWord> words, TagsCloudSettings settings, PointF center)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
@@ -68,6 +71,15 @@ namespace TagsCloud.App
                     new SolidBrush(settings.Palette.PrimaryColor), word.Position);
             }
             return image;
+        }
+
+        private void TryExpandTagsCloud(ref Rectangle bounds, Rectangle newRectangle)
+        {
+            var maxX = Math.Max(bounds.Location.X + bounds.Width, newRectangle.Location.X + newRectangle.Width);
+            var maxY = Math.Max(bounds.Location.Y + bounds.Height, newRectangle.Location.Y + newRectangle.Height);
+            var minX = Math.Min(bounds.Location.X, newRectangle.Location.X);
+            var minY = Math.Min(bounds.Location.Y, newRectangle.Location.Y);
+            bounds = new Rectangle(minX, minY, maxX - minX, maxY - minY);
         }
 
         private Size ConvertWordToSize(string word, Font font)
