@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudVisualization.Configs;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.PointProviders
 {
     public class PointProvider : IPointProvider
     {

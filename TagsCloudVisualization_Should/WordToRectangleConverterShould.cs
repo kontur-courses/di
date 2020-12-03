@@ -3,7 +3,11 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagsCloudVisualization.CloudLayouters;
+using TagsCloudVisualization.CloudTags;
+using TagsCloudVisualization.Configs;
+using TagsCloudVisualization.PointProviders;
+using TagsCloudVisualization.WordsConverters;
 
 namespace TagsCloudVisualization_Should
 {
@@ -14,7 +18,7 @@ namespace TagsCloudVisualization_Should
         {
             var config = new Config();
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(1500, 1500), Color.Blue);
+                new Point(1500, 1500), Color.Blue, new Size(1500, 1500));
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             var converter = new WordsToCloudTagConverter(cloud, config);

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.PointProviders;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudLayouters
 {
     public class CircularCloudLayouter : ICloudLayout
     {

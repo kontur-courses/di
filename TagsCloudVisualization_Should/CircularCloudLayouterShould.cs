@@ -6,6 +6,11 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
+using TagsCloudVisualization.CloudLayouters;
+using TagsCloudVisualization.CloudTags;
+using TagsCloudVisualization.Configs;
+using TagsCloudVisualization.PointProviders;
+using TagsCloudVisualization.Savers;
 
 namespace TagsCloudVisualization_Should
 {
@@ -20,7 +25,7 @@ namespace TagsCloudVisualization_Should
         {
             config = new Config();
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(1500, 1500), Color.Blue);
+                new Point(1500, 1500), Color.Blue, new Size(1500, 1500));
         }
 
         [Test]
@@ -28,7 +33,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(100, 100);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue);
+                center, Color.Blue, new Size(1500, 1500));
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
 
@@ -42,7 +47,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(40, 40);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue);
+                center, Color.Blue, new Size(1500, 1500));
             var pointProvider = new PointProvider(config);
             var expectedRectangle = new Rectangle(new Point(40, 40), new Size(30, 30));
             var cloud = new CircularCloudLayouter(pointProvider);
@@ -58,7 +63,7 @@ namespace TagsCloudVisualization_Should
             var rnd = new Random();
             var center = new Point(500, 500);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue);
+                center, Color.Blue, new Size(1500, 1500));
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             const int expectedLength = 10;
@@ -80,7 +85,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(500, 500);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue);
+                center, Color.Blue, new Size(1500, 1500));
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             var expectedRectangles = new List<Rectangle>

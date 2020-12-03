@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.CloudTags;
+using TagsCloudVisualization.Configs;
 
 namespace TagsCloudVisualization
 {
@@ -11,8 +13,11 @@ namespace TagsCloudVisualization
         {
             CheckParameters(rectangles, config.Center);
 
-            var image = new Bitmap(config.Center.X + GetDeltaX(rectangles),
+            var actualSize = new Size(config.Center.X + GetDeltaX(rectangles),
                 config.Center.Y + GetDeltaY(rectangles));
+            var size = new Size(Math.Max(actualSize.Width, config.ImageSize.Width),
+                Math.Max(actualSize.Height, config.ImageSize.Height));
+            var image = new Bitmap(size.Width, size.Height);
             using var graphics = Graphics.FromImage(image);
 
             foreach (var rectangle in rectangles)

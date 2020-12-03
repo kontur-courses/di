@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization_Shou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudContainer", "CloudContainer\CloudContainer.csproj", "{5EEE3147-0193-41C3-A79A-2786A47E735A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.ClientUI", "Cloud.ClientUI\Cloud.ClientUI.csproj", "{63DFC8B0-4984-4AB6-BB39-889137F9FE70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{5EEE3147-0193-41C3-A79A-2786A47E735A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EEE3147-0193-41C3-A79A-2786A47E735A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EEE3147-0193-41C3-A79A-2786A47E735A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DFC8B0-4984-4AB6-BB39-889137F9FE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DFC8B0-4984-4AB6-BB39-889137F9FE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DFC8B0-4984-4AB6-BB39-889137F9FE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DFC8B0-4984-4AB6-BB39-889137F9FE70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

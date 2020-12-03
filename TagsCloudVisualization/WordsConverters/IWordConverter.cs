@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.CloudTags;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsConverters
 {
     public interface IWordConverter
     {

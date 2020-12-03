@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using NHunspell;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsCleaners
 {
     public class BoringWordsCleaner : IWordsCleaner
     {
@@ -19,8 +19,8 @@ namespace TagsCloudVisualization
             var ruDict = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.dic");
             var ruAff = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.aff");
             var hunspell = new Hunspell(ruAff, ruDict);
-            return words.Select(word => hunspell.Stem(word.ToLower()).FirstOrDefault())
-                .Where(loweredWord => !boringWords.Contains(loweredWord))
+            return words
+                .Where(loweredWord => !boringWords.Contains(hunspell.Stem(loweredWord.ToLower()).FirstOrDefault()))
                 .ToList();
         }
     }

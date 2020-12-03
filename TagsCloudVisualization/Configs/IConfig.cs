@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Configs
 {
     public interface IConfig
     {
@@ -9,6 +9,8 @@ namespace TagsCloudVisualization
 
         Color TextColor { get; }
 
-        public void SetValues(Font font, Point center, Color textColor);
+        Size ImageSize { get; }
+
+        public void SetValues(Font font, Point center, Color textColor, Size size);
     }
 }

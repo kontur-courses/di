@@ -1,6 +1,12 @@
 ﻿using System.IO;
+using CloudContainer.ArgumentParser;
 using CloudContainer.ConfigCreators;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Configs;
+using TagsCloudVisualization.Savers;
+using TagsCloudVisualization.WordsCleaners;
+using TagsCloudVisualization.WordsConverters;
+using TagsCloudVisualization.WordsProviders;
 
 namespace CloudContainer
 {
@@ -11,10 +17,11 @@ namespace CloudContainer
         private readonly IConfig config;
         private readonly IConfigCreator configCreator;
         private readonly IWordConverter converter;
+        private readonly IArgumentParser parser;
         private readonly IWordProvider provider;
 
         public Process(IWordProvider provider, IWordsCleaner cleaner, IConfigCreator configCreator,
-            string[] args, IWordConverter converter, IConfig config)
+            string[] args, IWordConverter converter, IConfig config, IArgumentParser parser)
         {
             this.provider = provider;
             this.cleaner = cleaner;
@@ -23,16 +30,19 @@ namespace CloudContainer
             this.args = args;
             this.converter = converter;
             this.config = config;
+            this.parser = parser;
         }
 
         public void Run()
         {
+            var parserResult = parser.Parse(args);
+
             var path = Path.Join(Directory.GetCurrentDirectory(), "text.txt");
 
             var words = provider.GetWords(path);
             var cleanedWords = cleaner.CleanWords(words);
 
-            configCreator.CreateConfig(args, config);
+            configCreator.CreateConfig(config, parserResult);
 
             var cloudTags = converter.ConvertWords(cleanedWords);
 

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.CloudLayouters;
+using TagsCloudVisualization.CloudTags;
+using TagsCloudVisualization.Configs;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsConverters
 {
     public class WordsToCloudTagConverter : IWordConverter
     {

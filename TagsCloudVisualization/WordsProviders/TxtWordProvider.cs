@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProviders
 {
     public class TxtWordProvider : IWordProvider
     {

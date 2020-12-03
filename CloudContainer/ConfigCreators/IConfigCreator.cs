@@ -1,9 +1,9 @@
-﻿using TagsCloudVisualization;
+﻿using TagsCloudVisualization.Configs;
 
 namespace CloudContainer.ConfigCreators
 {
     public interface IConfigCreator
     {
-        void CreateConfig(string[] args, IConfig config);
+        void CreateConfig(IConfig config, Arguments arguments);
     }
 }

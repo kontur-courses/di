@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagsCloudVisualization.Savers;
 
 namespace TagsCloudVisualization_Should
 {

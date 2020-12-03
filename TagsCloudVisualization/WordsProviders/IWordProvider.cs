@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.WordsProviders
 {
     public interface IWordProvider
     {

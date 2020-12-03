@@ -2,7 +2,7 @@
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagsCloudVisualization.WordsProviders;
 
 namespace TagsCloudVisualization_Should
 {
