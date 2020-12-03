@@ -4,21 +4,19 @@ using TagsCloud.Extensions;
 
 namespace TagsCloud.Layouter.Base
 {
-    public abstract class LayouterBase : IRectanglesLayouter
+    public abstract class RectanglesLayouterBase : IRectanglesLayouter
     {
-        private readonly List<Rectangle> rectangles;
+        private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly Point center;
 
-        public LayouterBase(Point center)
+        public RectanglesLayouterBase(Point center)
         {
             this.center = center;
-            rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            var rectangle = new Rectangle();
-            rectangle.Size = rectangleSize;
+            var rectangle = new Rectangle { Size = rectangleSize };
             foreach (var point in GetPoints())
             {
                 rectangle.Location = point;

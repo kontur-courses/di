@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
-using TagsCloud.Layouter.Factory;
+using TagsCloud.Layouter;
 using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
+using TagsCloud.TagsCloudProcessing.TegsGenerators;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.UserInterfaces.GUI
 {
@@ -28,19 +29,19 @@ namespace TagsCloud.UserInterfaces.GUI
         private GroupBox tagGeneratorsBox;
         private GroupBox layouterBox;
 
-        private readonly IWordsConfig wordsConfig;
-        private readonly IImageConfig imageConfig;
+        private readonly WordConfig wordsConfig;
+        private readonly ImageConfig imageConfig;
         private readonly TagsCloudCreator tagsCloudProcessor;
         private readonly IFiltersApplier filtersFactory;
         private readonly IConvertersApplier convertersFactory;
-        private readonly ITagsGeneratorFactory tagsGeneratorFactory;
-        private readonly IRectanglesLayoutersFactory layouterFactory;
+        private readonly IServiceFactory<ITagsGenerator> tagsGeneratorFactory;
+        private readonly IServiceFactory<IRectanglesLayouter> layouterFactory;
         #endregion
 
-        public ConfigWindow(IWordsConfig wordsConfig, IImageConfig imageConfig,
+        public ConfigWindow(WordConfig wordsConfig, ImageConfig imageConfig,
            TagsCloudCreator tagsCloudProcessor, IFiltersApplier filtersFactory,
-           IConvertersApplier convertersFactory, ITagsGeneratorFactory tagsGeneratorFactory,
-           IRectanglesLayoutersFactory layouterFactory)
+           IConvertersApplier convertersFactory, IServiceFactory<ITagsGenerator> tagsGeneratorFactory,
+          IServiceFactory<IRectanglesLayouter> layouterFactory)
         {
             InitializeComponent();
 
@@ -94,10 +95,10 @@ namespace TagsCloud.UserInterfaces.GUI
             convertBox = AddCheckBox("Выберите преобразования", convertersFactory.GetConverterNames());
             AddControl(convertBox, 1, 4, "Выберите преобразования");
 
-            tagGeneratorsBox = AddCheckBox("Выберите алгоритм постоения тега", tagsGeneratorFactory.GetGeneratorNames());
+            tagGeneratorsBox = AddCheckBox("Выберите алгоритм постоения тега", tagsGeneratorFactory.GetServiceNames());
             AddControl(tagGeneratorsBox, 0, 5, "Выберите алгоритм постоения тега");
 
-            layouterBox = AddCheckBox("Выберите алгоритм формирования облака", layouterFactory.GetLayouterNames());
+            layouterBox = AddCheckBox("Выберите алгоритм формирования облака", layouterFactory.GetServiceNames());
             AddControl(layouterBox, 1, 5, "Выберите алгоритм формирования облака");
 
             var sizeImageLabel = new Label();

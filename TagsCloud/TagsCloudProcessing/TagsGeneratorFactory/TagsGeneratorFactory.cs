@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using TagsCloud.Factory;
 using TagsCloud.TagsCloudProcessing.TegsGenerators;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory
 {
-    public class TagsGeneratorFactory : ITagsGeneratorFactory
+    public class TagsGeneratorFactory : ServiceFactory<ITagsGenerator>
     {
-        private readonly Dictionary<string, Func<ITagsGenerator>> tagsGenerators;
-        private readonly IWordsConfig wordsConfig;
+        private readonly WordConfig wordsConfig;
 
-        public TagsGeneratorFactory(IWordsConfig wordsConfig)
+        public TagsGeneratorFactory(WordConfig wordsConfig)
         {
-            tagsGenerators = new Dictionary<string, Func<ITagsGenerator>>();
             this.wordsConfig = wordsConfig;
         }
 
-        public ITagsGenerator Create() => tagsGenerators[wordsConfig.TagGeneratorName]();
-
-        public IEnumerable<string> GetGeneratorNames() => tagsGenerators.Select(g => g.Key);
-
-        public ITagsGeneratorFactory Register(string generatorName, Func<ITagsGenerator> creationFunc)
-        {
-            tagsGenerators[generatorName] = creationFunc;
-            return this;
-        }
+        public override ITagsGenerator Create() => services[wordsConfig.TagGeneratorName]();
     }
 }

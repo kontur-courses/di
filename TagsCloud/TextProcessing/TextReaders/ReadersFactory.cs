@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.TextProcessing.TextReaders
 {
     public class ReadersFactory : IReadersFactory
     {
         private readonly IWordsReader[] textReaders;
-        private readonly IWordsConfig wordsConfig;
+        private readonly WordConfig wordsConfig;
 
-        public ReadersFactory(IEnumerable<IWordsReader> textReaders, IWordsConfig wordsConfig)
+        public ReadersFactory(IEnumerable<IWordsReader> textReaders, WordConfig wordsConfig)
         {
             this.textReaders = textReaders.ToArray();
             this.wordsConfig = wordsConfig;

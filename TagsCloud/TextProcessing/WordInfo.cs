@@ -2,12 +2,12 @@
 {
     public class WordInfo
     {
-        public string Value { get; private set; }
+        public string Word { get; private set; }
         public int Frequence { get; private set; }
 
         public WordInfo(string value, int frequence)
         {
-            Value = value;
+            Word = value;
             Frequence = frequence;
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.TextProcessing.WordConfig
+namespace TagsCloud.TextProcessing.WordsConfig
 {
-    public class WordConfig : IWordsConfig
+    public class WordConfig
     {
         public Font FontName { get; set; }
         public Color Color { get; set; }

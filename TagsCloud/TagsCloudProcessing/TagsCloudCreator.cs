@@ -1,6 +1,7 @@
-﻿using TagsCloud.ImageProcessing.ImageBuilders;
-using TagsCloud.ImageProcessing.SaverImage.Factory;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
+﻿using TagsCloud.Factory;
+using TagsCloud.ImageProcessing.ImageBuilders;
+using TagsCloud.ImageProcessing.SaverImage.ImageSavers;
+using TagsCloud.TagsCloudProcessing.TegsGenerators;
 using TagsCloud.TextProcessing;
 
 namespace TagsCloud.TagsCloudProcessing
@@ -9,12 +10,12 @@ namespace TagsCloud.TagsCloudProcessing
     {
         private readonly TextProcessor textProcessor;
         private readonly IImageBuilder imageBuilder;
-        private readonly IImageSaverFactory imageSaverFactory;
-        private readonly ITagsGeneratorFactory tagsGeneratorFactory;
+        private readonly IServiceFactory<IImageSaver> imageSaverFactory;
+        private readonly IServiceFactory<ITagsGenerator> tagsGeneratorFactory;
 
         public TagsCloudCreator(TextProcessor textProcessor,
-             IImageBuilder imageBuilder, IImageSaverFactory imageSaverFactory,
-             ITagsGeneratorFactory tagsGeneratorFactory)
+             IImageBuilder imageBuilder, IServiceFactory<IImageSaver> imageSaverFactory,
+             IServiceFactory<ITagsGenerator> tagsGeneratorFactory)
         {
             this.tagsGeneratorFactory = tagsGeneratorFactory;
             this.textProcessor = textProcessor;

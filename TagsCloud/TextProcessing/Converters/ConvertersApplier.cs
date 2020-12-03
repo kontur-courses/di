@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.TextProcessing.Converters
 {
     public class ConvertersApplier : IConvertersApplier
     {
         private readonly Dictionary<string, Func<IWordConverter>> wordConverters;
-        private readonly IWordsConfig wordsConfig;
+        private readonly WordConfig wordsConfig;
 
-        public ConvertersApplier(IWordsConfig wordsConfig)
+        public ConvertersApplier(WordConfig wordsConfig)
         {
             wordConverters = new Dictionary<string, Func<IWordConverter>>();
             this.wordsConfig = wordsConfig;

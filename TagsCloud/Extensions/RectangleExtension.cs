@@ -8,7 +8,7 @@ namespace TagsCloud.Extensions
     {
         public static bool IntersectsWith(this Rectangle rectangle, IEnumerable<Rectangle> rectangles)
         {
-            return rectangles.Any(otherRect => rectangle.IntersectsWith(otherRect));
+            return rectangles.Any(rectangle.IntersectsWith);
         }
 
         public static Rectangle MoveOnTheDelta(this Rectangle rectangle, Point delta)

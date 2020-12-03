@@ -2,16 +2,16 @@
 using System.Drawing;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.ImageProcessing.ImageBuilders
 {
     public class ImageBuilder : IImageBuilder
     {
-        private readonly IImageConfig imageConfig;
-        private readonly IWordsConfig wordsConfig;
+        private readonly ImageConfig imageConfig;
+        private readonly WordConfig wordsConfig;
 
-        public ImageBuilder(IImageConfig imageConfig, IWordsConfig wordsConfig)
+        public ImageBuilder(ImageConfig imageConfig, WordConfig wordsConfig)
         {
             this.imageConfig = imageConfig;
             this.wordsConfig = wordsConfig;

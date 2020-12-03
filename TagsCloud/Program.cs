@@ -2,13 +2,6 @@
 using System;
 using System.Windows.Forms;
 using TagsCloud.Extensions;
-using TagsCloud.ImageProcessing.Config;
-using TagsCloud.ImageProcessing.SaverImage.Factory;
-using TagsCloud.Layouter.Factory;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
-using TagsCloud.TextProcessing.Converters;
-using TagsCloud.TextProcessing.TextFilters;
-using TagsCloud.TextProcessing.WordConfig;
 using TagsCloud.UserInterfaces.GUI;
 
 namespace TagsCloud
@@ -27,16 +20,7 @@ namespace TagsCloud
         private static ServiceProvider BuildContainer()
         {
             return new ServiceCollection()
-                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces().WithTransientLifetime())
-
-                .AddSingleton<IImageConfig, ImageConfig>()
-                .AddSingleton<IWordsConfig, WordConfig>()
-
-                .AddSingleton<IRectanglesLayoutersFactory, RectanglesLayoutersFactory>()
-                .AddSingleton<ITagsGeneratorFactory, TagsGeneratorFactory>()
-                .AddSingleton<IConvertersApplier, ConvertersApplier>()
-                .AddSingleton<IImageSaverFactory, ImageSaverFactory>()
-                .AddSingleton<IFiltersApplier, FiltersApplier>()
+                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces().WithSingletonLifetime())
 
                 .AddSingleton<Form, ConfigWindow>()
 
