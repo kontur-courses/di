@@ -16,4 +16,8 @@
       <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="WordAnalyzer_Tests" />
+    </ItemGroup>
+
 </Project>

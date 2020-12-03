@@ -15,21 +15,21 @@ namespace TagCloud
         static void Main(string[] args)
         {
             var cli = new ConsoleLineInterface(args);
+            
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance(cli.FileReaderSettings)
-                .As<FileReaderSettings>();
-            containerBuilder.RegisterInstance(cli.LayouterSettings)
-                .As<CircularLayouterSettings>();
-            containerBuilder.RegisterInstance(cli.DrawerSettings)
-                .As<DrawerSettings>();
-            containerBuilder.RegisterInstance(cli.SaverSettings)
-                .As<SaverSettings>();
+            
+            containerBuilder.RegisterInstance(cli.FileReaderSettings).As<FileReaderSettings>();
+            containerBuilder.RegisterInstance(cli.LayouterSettings).As<CircularLayouterSettings>();
+            containerBuilder.RegisterInstance(cli.DrawerSettings).As<DrawerSettings>();
+            containerBuilder.RegisterInstance(cli.SaverSettings).As<SaverSettings>();
+            
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             containerBuilder.RegisterType<TextAnalyzer>().As<IWordsAnalyzer>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             containerBuilder.RegisterType<FileReader>().As<ITextReader>();
             containerBuilder.RegisterType<ImageSaver>().As<IImageSaver>();
             containerBuilder.RegisterType<TagDrawer>().As<ITagDrawer>();
+            
             containerBuilder.RegisterType<TagCloud>().AsSelf();
 
             var container = containerBuilder.Build();

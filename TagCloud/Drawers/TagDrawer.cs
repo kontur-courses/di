@@ -46,8 +46,7 @@ namespace TagCloud.Drawers
         
         private Font GetFont(TagInfo tag)
         {
-            var fontSize = (int)((settings.MaxFontSize - settings.MinFontSize) 
-                * tag.Weight + settings.MinFontSize);
+            var fontSize = (int)((settings.MaxFontSize - settings.MinFontSize) * tag.Weight + settings.MinFontSize);
             return new Font(settings.FontFamily, fontSize);
         }
 
@@ -58,8 +57,7 @@ namespace TagCloud.Drawers
 
         private void SetBackGroundColor(Size pictureSize, Color backgroundColor)
         {
-            FillRectangle(new Rectangle(new Point(0, 0), pictureSize),
-                backgroundColor);
+            FillRectangle(new Rectangle(new Point(0, 0), pictureSize), backgroundColor);
         }
         
         private void FillRectangle(Rectangle rectangle, Color? color = null)

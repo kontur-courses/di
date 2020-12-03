@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization_Tests
+namespace TagCloud_Tests.Layouter
 {
     public class SizesGenerator
     {
         public static Size[] GenerateSizes(int count, Size minSize, Size maxSize,
             int? seed = null)
         {
-            if (minSize.Height >= maxSize.Height 
-                || minSize.Width >= maxSize.Width)
+            if (minSize.Height >= maxSize.Height || minSize.Width >= maxSize.Width)
                 throw new ArgumentException("minSizes fields must be less than maxSizes fields");
             
             if (count <= 0)
@@ -21,7 +20,8 @@ namespace TagsCloudVisualization_Tests
             var sizes = new Size[count];
             for (var i = 0; i < count; i++)
             {
-                var newSize = new Size(random.Next(minSize.Width, maxSize.Width),
+                var newSize = new Size(
+                    random.Next(minSize.Width, maxSize.Width),
                     random.Next(minSize.Height, maxSize.Height));
                 sizes[i] = newSize;
             }

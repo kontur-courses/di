@@ -6,8 +6,9 @@ using NUnit.Framework;
 using FluentAssertions;
 using TagCloud.Layouters;
 using TagCloud.Settings;
+using TagCloud_Tests.Layouter;
 
-namespace TagsCloudVisualization_Tests
+namespace TagsCloud_Tests.Layouter
 {
     [TestFixture]
     public class CircularCloudLayouter_Tests
@@ -30,8 +31,7 @@ namespace TagsCloudVisualization_Tests
         public void PutNextRectangle_ShouldReturnRectangleWithSameSize_WhenSomeSizesAdded()
         {
             foreach (var size in SizesGenerator.GenerateSizes(5, minSize, maxSize, seed:128))
-                layouter.PutNextRectangle(size).Size
-                    .Should().BeEquivalentTo(size);
+                layouter.PutNextRectangle(size).Size.Should().BeEquivalentTo(size);
         }
         
         [Test]
@@ -40,8 +40,7 @@ namespace TagsCloudVisualization_Tests
             var sizes = SizesGenerator.GenerateSizes(5, minSize, maxSize, seed:128);
             var rectangles = FillLayoutWithSomeRectangles(layouter, sizes);
 
-            rectangles.Select(rect => rect.Size)
-                .Should().BeEquivalentTo(sizes);
+            rectangles.Select(rect => rect.Size).Should().BeEquivalentTo(sizes);
         }
         
         [Test]
@@ -53,8 +52,7 @@ namespace TagsCloudVisualization_Tests
             var rectangles = new List<Rectangle>();
             foreach (var rectangle in rectangles)
             {
-                IsRectangleIntersectOther(rectangles, rectangle)
-                    .Should().BeFalse("rectangles must not intersect");
+                IsRectangleIntersectOther(rectangles, rectangle).Should().BeFalse("rectangles must not intersect");
             }
         }
         
@@ -64,8 +62,7 @@ namespace TagsCloudVisualization_Tests
             var sizes = SizesGenerator.GenerateSizes(600, minSize, maxSize, seed:128);
             var rectangles = FillLayoutWithSomeRectangles(layouter, sizes);
             
-            var occupiedArea = rectangles
-                .Sum(rectangle => rectangle.Width * rectangle.Height);
+            var occupiedArea = rectangles.Sum(rectangle => rectangle.Width * rectangle.Height);
 
             var maxLayoutRadius = 0.0;
 
@@ -83,10 +80,14 @@ namespace TagsCloudVisualization_Tests
 
         private static double GetMaxDistanceToRectangle(Point center, Rectangle rectangle)
         {
-            var cornerX = GetNumberWithBiggerDistanceFromGiven(center.X, 
-                rectangle.X, rectangle.X + rectangle.Width);
-            var cornerY = GetNumberWithBiggerDistanceFromGiven(center.Y, 
-                rectangle.Y, rectangle.Y + rectangle.Height);
+            var cornerX = GetNumberWithBiggerDistanceFromGiven(
+                center.X, 
+                rectangle.X, 
+                rectangle.X + rectangle.Width);
+            var cornerY = GetNumberWithBiggerDistanceFromGiven(
+                center.Y, 
+                rectangle.Y, 
+                rectangle.Y + rectangle.Height);
             return GetDistance(center, new Point(cornerX, cornerY));
         }
         
@@ -102,8 +103,7 @@ namespace TagsCloudVisualization_Tests
             => Math.PI * Math.Pow(radius, 2);
         
         private static double GetDistance(Point first, Point second)
-            => Math.Sqrt(Math.Pow(first.X - second.X, 2)
-                         + Math.Pow(first.Y - second.Y, 2));
+            => Math.Sqrt(Math.Pow(first.X - second.X, 2) + Math.Pow(first.Y - second.Y, 2));
         
         private static List<Rectangle> FillLayoutWithSomeRectangles(IRectangleLayouter layouter,
             IEnumerable<Size> rectangleSizes)

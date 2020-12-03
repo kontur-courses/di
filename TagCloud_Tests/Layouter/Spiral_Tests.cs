@@ -72,8 +72,7 @@ namespace TagsCloud_Tests.Layouter
 
         private double GetDistance(Point first, Point second)
         {
-            return Math.Sqrt(Math.Pow(first.X - second.X, 2)
-                             + Math.Pow(first.Y - second.Y, 2));
+            return Math.Sqrt(Math.Pow(first.X - second.X, 2) + Math.Pow(first.Y - second.Y, 2));
         }
     }
 }
