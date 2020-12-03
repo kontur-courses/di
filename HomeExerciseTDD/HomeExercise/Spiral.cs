@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Drawing;
+using HomeExerciseTDD.settings;
 
 namespace HomeExerciseTDD
 {
     public class Spiral : ISpiral
     {
-        private Point center;
+        public Point Center { get; }
         private readonly float step;
         private Point? previousPoint;
         private float angle;
-        
-        public Spiral(Point center, float step = 0.0005f, float angle = 0f) 
-        //public Spiral(SpiralSettings settings)
+
+        public Spiral(SpiralSettings settings)
         {
-            this.step = step;
-            this.angle = angle;
+            step = settings.Step;
+            angle = settings.Angle;
             previousPoint = null;
-            this.center = center;
+            Center = settings.Center;
         }
 
         public Point GetNextPoint()
@@ -25,8 +25,8 @@ namespace HomeExerciseTDD
             {
                 if (previousPoint == null)
                 {
-                    previousPoint = center;
-                    return center;
+                    previousPoint = Center;
+                    return Center;
                 }
                 
                 angle++;
@@ -43,8 +43,8 @@ namespace HomeExerciseTDD
         private Point CalculateCurrentPoint()
         {
             var distance = angle * step;
-            var currentX = distance * (float) Math.Cos(angle) + center.X;
-            var currentY = distance * (float) Math.Sin(angle) + center.Y;
+            var currentX = distance * (float) Math.Cos(angle) + Center.X;
+            var currentY = distance * (float) Math.Sin(angle) + Center.Y;
             
             return new Point((int) currentX, (int) currentY);
         }
