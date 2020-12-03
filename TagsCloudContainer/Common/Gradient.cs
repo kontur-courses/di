@@ -29,7 +29,7 @@ namespace TagsCloudContainer.Common
                 RenewGradient();
             var currentR = GetNumberOfColor(currentColor.R + deltaR, ColorTo.R);
             var currentG = GetNumberOfColor(currentColor.G + deltaG, ColorTo.G);
-            var currentB = GetNumberOfColor(currentColor.B + deltaR, ColorTo.B);
+            var currentB = GetNumberOfColor(currentColor.B + deltaB, ColorTo.B);
             currentColor = Color.FromArgb(currentR, currentG, currentB);
             numberOfColor++;
             if (numberOfColor == tagsCount)
@@ -39,17 +39,20 @@ namespace TagsCloudContainer.Common
 
         public int GetNumberOfColor(double calculatedNumber, int colorToNumber)
         {
-            return (int) calculatedNumber < 0 || (int) calculatedNumber > 255
-                ? colorToNumber
-                : (int) calculatedNumber;
+            var intCalculatedNumber = (int)calculatedNumber;
+            if (intCalculatedNumber < 0)
+                return 0;
+            if (intCalculatedNumber > 255)
+                return 255;
+            return intCalculatedNumber;
         }
 
         public void RenewGradient()
         {
             tagsCount = tagCreator.GetTagsForVisualization().Count();
-            deltaR = (double) (ColorTo.R - ColorFrom.R) / tagsCount;
-            deltaG = (double) (ColorTo.G - ColorFrom.G) / tagsCount;
-            deltaB = (double) (ColorTo.B - ColorFrom.B) / tagsCount;
+            deltaR = (double)(ColorTo.R - ColorFrom.R) / tagsCount;
+            deltaG = (double)(ColorTo.G - ColorFrom.G) / tagsCount;
+            deltaB = (double)(ColorTo.B - ColorFrom.B) / tagsCount;
             currentColor = ColorFrom;
         }
     }
