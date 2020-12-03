@@ -1,10 +1,10 @@
 ﻿namespace TagCloud.Settings
 {
-    public class FileTextReaderSettings
+    public class FileReaderSettings
     {
         public string FilePath { get; }
 
-        public FileTextReaderSettings(string filePath)
+        public FileReaderSettings(string filePath)
         {
             FilePath = filePath;
         }

@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.Settings;
 
 namespace TagCloud.Layouters
 {
     public class CircularCloudLayouter : IRectangleLayouter
     {
-        private Point Center { get; }
-
         private List<Rectangle> rectangles;
         private Spiral spiral;
         
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(CircularLayouterSettings settings)
         {
             rectangles = new List<Rectangle>();
-            Center = center;
-            spiral = new Spiral(Center, 4, 0.005);
+            spiral = new Spiral(settings.Center, settings.SpiralPitch, settings.SpiralStep);
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

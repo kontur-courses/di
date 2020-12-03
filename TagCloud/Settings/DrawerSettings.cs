@@ -4,11 +4,13 @@ namespace TagCloud.Settings
 {
     public class DrawerSettings
     {
-        public Color BackGroundColor;
+        public Size ImageSize;
+        public Color BackgroundColor;
 
-        public DrawerSettings(Color backGroundColor)
+        public DrawerSettings(Size imageSize, Color backgroundColor)
         {
-            BackGroundColor = backGroundColor;
+            ImageSize = imageSize;
+            BackgroundColor = backgroundColor;
         }
     }
 }

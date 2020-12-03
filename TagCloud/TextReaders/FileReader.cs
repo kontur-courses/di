@@ -5,11 +5,11 @@ using TagCloud.Settings;
 
 namespace TagCloud.TextReaders
 {
-    public class FileTextReader : ITextReader
+    public class FileReader : ITextReader
     {
         private readonly string filePath;
         
-        public FileTextReader(FileTextReaderSettings settings)
+        public FileReader(FileReaderSettings settings)
         {
             filePath = settings.FilePath;
         }

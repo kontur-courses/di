@@ -11,16 +11,15 @@ namespace TagCloud.Drawers
         private Bitmap bitmap;
         private Graphics graphics;
         private SolidBrush brush = new SolidBrush(Color.Black);
-        private DrawerSettings settings;
 
         private Random random = new Random();
         
-        public TagDrawer(Size pictureSize, DrawerSettings settings)
+        public TagDrawer(DrawerSettings settings)
         {
-            this.settings = settings;
-            bitmap = new Bitmap(pictureSize.Width, pictureSize.Height);
+            var imageSize = settings.ImageSize;
+            bitmap = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(bitmap);
-            SetBackGroundColor(pictureSize);
+            SetBackGroundColor(imageSize, settings.BackgroundColor);
         }
 
         public Size MeasureStringSize(string text, Font font)
@@ -35,10 +34,10 @@ namespace TagCloud.Drawers
             return (Bitmap)bitmap.Clone();
         }
         
-        private void SetBackGroundColor(Size pictureSize)
+        private void SetBackGroundColor(Size pictureSize, Color backgroundColor)
         {
             FillRectangle(new Rectangle(new Point(0, 0), pictureSize),
-                settings.BackGroundColor);
+                backgroundColor);
         }
         
         private void FillRectangle(Rectangle rectangle, Color? color = null)

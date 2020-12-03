@@ -1,7 +1,30 @@
 ﻿# Tag Cloud
 
-На данный момент находится на стадии черновика. Для того, чтобы оно работало, необходимо в классе Program задать путь до файла. 
+##
+Консольное приложение, создающее облако тегов
 
+###
+Usage:
+
+-f FILE 
+
+-out \[FILENAME]
+
+-outpath \[FILEPATH]
+
+-font \[FONT]
+
+-fontsizes \[FONTSIZES]
+
+-imsize \[IMAGESIZE]
+
+-background \[COLOR]
+
+-center \[CENTER]
+
+-step \[STEP]
+
+-pitch \[PITCH]
 
 ## Пример облака тегов, созданного черновой версией 
 

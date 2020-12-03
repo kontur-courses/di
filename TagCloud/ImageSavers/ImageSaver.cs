@@ -5,12 +5,12 @@ using TagCloud.Settings;
 
 namespace TagCloud.ImageSavers
 {
-    public class BmpSaver : IImageSaver
+    public class ImageSaver : IImageSaver
     {
         private string path;
         private string fileName;
         
-        public BmpSaver(SaverSettings settings)
+        public ImageSaver(SaverSettings settings)
         {
             path = settings.Path;
             path ??= Directory.GetCurrentDirectory();
@@ -19,7 +19,7 @@ namespace TagCloud.ImageSavers
 
         public void Save(Bitmap bitmap)
         {
-            var fullPath = $"{path}/{fileName}.bmp";
+            var fullPath = $"{path}/{fileName}";
             bitmap.Save(fullPath);
             Console.WriteLine($"Tag cloud visualization saved to file {fullPath}");
         }

@@ -8,6 +8,7 @@ using TagCloud.Layouters;
 using TagCloud.Settings;
 using TagCloud.TextAnalyzer;
 using TagCloud.TextAnalyzer.WordNormalizer;
+using TagCloud.UserInterfaces;
 
 namespace TagCloud
 {
@@ -15,24 +16,24 @@ namespace TagCloud
     {
         static void Main(string[] args)
         {
+            var cui = new ConsoleUserInterface(args);
             var containerBuilder = new ContainerBuilder();
-            // Временно константы зарегистрировал
-            containerBuilder.Register(_ => new Point(1000, 1000));
-            containerBuilder.Register(_ => new Size(2000, 2000));
-            containerBuilder.RegisterInstance(new FileTextReaderSettings("C:/shpora/food.txt"))
-                .As<FileTextReaderSettings>();
-            containerBuilder.RegisterInstance(new DrawerSettings(Color.Black))
+            containerBuilder.RegisterInstance(cui.FileReaderSettings)
+                .As<FileReaderSettings>();
+            containerBuilder.RegisterInstance(cui.CircularLayouterSettings)
+                .As<CircularLayouterSettings>();
+            containerBuilder.RegisterInstance(cui.DrawerSettings)
                 .As<DrawerSettings>();
-            containerBuilder.RegisterInstance(new LayoutSettings(FontFamily.GenericMonospace, 14, 48))
+            containerBuilder.RegisterInstance(cui.LayoutSettings)
                 .As<LayoutSettings>();
-            containerBuilder.RegisterInstance(new SaverSettings(null, "foodaaa"))
+            containerBuilder.RegisterInstance(cui.SaverSettings)
                 .As<SaverSettings>();
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             containerBuilder.RegisterType<StandardAnalyzer>().As<ITextAnalyzer>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             containerBuilder.RegisterType<TagCloudLayout>().As<ITagCloudLayout>();
-            containerBuilder.RegisterType<FileTextReader>().As<ITextReader>();
-            containerBuilder.RegisterType<BmpSaver>().As<IImageSaver>();
+            containerBuilder.RegisterType<FileReader>().As<ITextReader>();
+            containerBuilder.RegisterType<ImageSaver>().As<IImageSaver>();
             containerBuilder.RegisterType<TagDrawer>().As<ITagDrawer>();
             containerBuilder.RegisterType<TagCloud>().AsSelf();
 
