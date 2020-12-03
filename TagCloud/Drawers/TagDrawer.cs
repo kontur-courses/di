@@ -30,7 +30,7 @@ namespace TagCloud.Drawers
 
         public Bitmap DrawTagCloud(IReadOnlyCollection<TagInfo> tags)
         {
-            foreach (var tag in tags.OrderByDescending(t => t.Proportion))
+            foreach (var tag in tags.OrderByDescending(t => t.Weight))
                 DrawTag(tag);
             return bitmap;
         }
@@ -44,8 +44,8 @@ namespace TagCloud.Drawers
         
         private Font GetFont(TagInfo tag)
         {
-            var fontSize = Convert.ToInt32((settings.MaxFontSize - settings.MinFontSize) 
-                * tag.Proportion + settings.MinFontSize);
+            var fontSize = (int)((settings.MaxFontSize - settings.MinFontSize) 
+                * tag.Weight + settings.MinFontSize);
             return new Font(settings.FontFamily, fontSize);
         }
 

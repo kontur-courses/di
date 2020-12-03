@@ -28,7 +28,7 @@ namespace TagCloud.UserInterfaces
                 arguments.MinFontSize, 
                 arguments.MaxFontSize);
             FileReaderSettings = new FileReaderSettings(arguments.FilePath);
-            SaverSettings = new SaverSettings(arguments.OutputPath, arguments.OutputFileName);
+            SaverSettings = new SaverSettings(arguments.OutputPath, arguments.OutputFileName, arguments.Extention);
         }
 
         private Color ParseColorFromRGBString(string colorAsString)

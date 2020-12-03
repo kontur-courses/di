@@ -3,12 +3,12 @@
     public class TagInfo
     {
         public readonly string Value;
-        public readonly double Proportion;
+        public readonly double Weight;
         
-        public TagInfo(string value, double proportion)
+        public TagInfo(string value, double weight)
         {
             Value = value;
-            Proportion = proportion;
+            Weight = weight;
         }
     }
 }

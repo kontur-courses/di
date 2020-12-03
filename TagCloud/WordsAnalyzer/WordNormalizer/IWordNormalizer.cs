@@ -1,4 +1,4 @@
-﻿namespace TagCloud.TextAnalyzer.WordNormalizer
+﻿namespace TagCloud.WordsAnalyzer.WordNormalizer
 {
     public interface IWordNormalizer
     {

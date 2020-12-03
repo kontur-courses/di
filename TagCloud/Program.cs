@@ -4,8 +4,8 @@ using TagCloud.ImageSavers;
 using TagCloud.TextReaders;
 using TagCloud.Layouters;
 using TagCloud.Settings;
-using TagCloud.TextAnalyzer;
-using TagCloud.TextAnalyzer.WordNormalizer;
+using TagCloud.WordsAnalyzer;
+using TagCloud.WordsAnalyzer.WordNormalizer;
 using TagCloud.UserInterfaces;
 
 namespace TagCloud
@@ -25,7 +25,7 @@ namespace TagCloud
             containerBuilder.RegisterInstance(cli.SaverSettings)
                 .As<SaverSettings>();
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
-            containerBuilder.RegisterType<StandardAnalyzer>().As<ITextAnalyzer>();
+            containerBuilder.RegisterType<TextAnalyzer>().As<IWordsAnalyzer>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             containerBuilder.RegisterType<FileReader>().As<ITextReader>();
             containerBuilder.RegisterType<ImageSaver>().As<IImageSaver>();

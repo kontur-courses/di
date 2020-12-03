@@ -16,7 +16,7 @@ namespace TagCloud.TextReaders
         
         public List<string> ReadWords()
         {
-            return File.ReadLines(filePath).ToList();
+            return File.ReadAllLines(filePath).SelectMany(line => line.Split()).ToList();
         }
     }
 }

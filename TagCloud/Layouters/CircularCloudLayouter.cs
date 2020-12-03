@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagCloud.Settings;
 
 namespace TagCloud.Layouters
 {
     public class CircularCloudLayouter : IRectangleLayouter
     {
-        private List<Rectangle> rectangles;
-        private Spiral spiral;
+        private readonly List<Rectangle> rectangles;
+        private readonly Spiral spiral;
         
         public CircularCloudLayouter(CircularLayouterSettings settings)
         {
@@ -52,11 +53,7 @@ namespace TagCloud.Layouters
 
         private bool IsRectangleIntersectOther(Rectangle rectangle)
         {
-            foreach (var otherRectangle in rectangles)
-                if (rectangle.IntersectsWith(otherRectangle))
-                    return true;
-            
-            return false;
+            return rectangles.Any(otherRectangle => rectangle.IntersectsWith(otherRectangle));
         }
     }
 }

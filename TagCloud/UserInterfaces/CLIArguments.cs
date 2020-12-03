@@ -42,7 +42,10 @@ namespace TagCloud.UserInterfaces
         [Option("outpath", Required = false, HelpText = "Set output file path.")]
         public string OutputPath { get; set; }
 
-        [Option("outname", Required = false, HelpText = "Set output file name.",  Default = "output.png")]
+        [Option("outname", Required = false, HelpText = "Set output file name.",  Default = "output")]
         public string OutputFileName { get; set; }
+
+        [Option("ex", Required = false, HelpText = "Set output file extention.",  Default = "png")]
+        public string Extention { get; set; }
     }
 }

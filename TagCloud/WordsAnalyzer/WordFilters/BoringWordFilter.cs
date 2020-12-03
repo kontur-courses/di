@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.TextAnalyzer.WordFilters
+namespace TagCloud.WordsAnalyzer.WordFilters
 {
     public class BoringWordFilter : IWordFilter
     {
@@ -12,7 +12,7 @@ namespace TagCloud.TextAnalyzer.WordFilters
             this.boringWords = boringWords.ToHashSet();
         }
 
-        public bool IsWordToExclude(string word)
+        public bool ShouldExclude(string word)
         {
             return boringWords.Contains(word);
         }
