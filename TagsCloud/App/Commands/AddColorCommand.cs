@@ -4,16 +4,16 @@ using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App.Commands
 {
-    public class SetColorCommand : ICommand
+    public class AddColorCommand : ICommand
     {
         private readonly IImageColorProvider colorSettingsProvider;
 
-        public SetColorCommand(IImageColorProvider colorSettingsProvider)
+        public AddColorCommand(IImageColorProvider colorSettingsProvider)
         {
             this.colorSettingsProvider = colorSettingsProvider;
         }
 
-        public string Name { get; } = "setcolor";
+        public string Name { get; } = "addcolor";
         public string Description { get; }
 
         public void Execute(string[] args)
