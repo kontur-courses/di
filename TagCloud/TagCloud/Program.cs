@@ -17,7 +17,7 @@ namespace TagCloud
             var colors = new[]
                 {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Aqua, Color.Blue, Color.Purple};
             var fontFamily = "Times New Roman";
-            builder.RegisterType<Spiral>().As<ICurve>()
+            builder.RegisterType<ArchimedeanSpiral>().As<ICurve>()
                 .WithParameter("center", center)
                 .WithParameter("density", density)
                 .WithParameter("angelStep", angelStep);

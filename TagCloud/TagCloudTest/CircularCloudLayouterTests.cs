@@ -14,7 +14,7 @@ namespace TagCloudTest
         [SetUp]
         public void SetUp()
         {
-            spiral = new Spiral(new Point(0, 0));
+            spiral = new ArchimedeanSpiral(new Point(0, 0));
             wordsProvider = new CircularWordsProvider();
             wordsFilter = new WordsFilter().Normalize();
             tagCloudWithCenterInZero =
@@ -66,7 +66,7 @@ namespace TagCloudTest
         public void PutNextRectangle_PutsFirstRectangleInCenter()
         {
             var center = new Point(10, 18);
-            var shiftedTagCloud = new CircularCloudLayouter(new Spiral(center), wordsProvider, wordsFilter);
+            var shiftedTagCloud = new CircularCloudLayouter(new ArchimedeanSpiral(center), wordsProvider, wordsFilter);
             shiftedTagCloud.PutNextWord("dsadsa", new Size(10, 5));
 
             shiftedTagCloud.WordRectangles[0].Rectangle.Location.Should().Be(center);

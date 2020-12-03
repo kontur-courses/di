@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace TagCloud
 {
-    public class Spiral : ICurve
+    public class ArchimedeanSpiral : ICurve
     {
-        public Spiral(Point center, double density = 0.05, int angleStep = 5)
+        public ArchimedeanSpiral(Point center, double density = 0.05, int angleStep = 5)
         {
             Center = center;
             Density = density;

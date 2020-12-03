@@ -11,16 +11,16 @@ namespace TagCloudTest
         [SetUp]
         public void SetUp()
         {
-            curve = new Spiral(new Point(0, 0));
+            curve = new ArchimedeanSpiral(new Point(0, 0));
         }
 
-        private Spiral curve;
+        private ArchimedeanSpiral curve;
 
         [Test]
         public void SpiralStartsAtCenter()
         {
             var startingPoint = new Point(1, 5);
-            var shiftedSpiral = new Spiral(startingPoint);
+            var shiftedSpiral = new ArchimedeanSpiral(startingPoint);
 
             shiftedSpiral.CurrentPoint.Should().Be(startingPoint);
         }
