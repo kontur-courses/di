@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using Autofac;
 using TagsCloud.App.Commands;
@@ -32,13 +31,13 @@ namespace TagsCloud.App
             builder.RegisterType<TagCloudPainter>();
             builder.RegisterType<ImageHolder>().SingleInstance();
             builder.RegisterType<FileReaderProvider>();
+            builder.RegisterType<FileReader>();
+            builder.RegisterType<GrammemeChecker>().As<IWordChecker>();
             builder.RegisterType<ImageSaverProvider>();
             builder.RegisterType<WordFrequency>();
             builder.RegisterType<TagCloudLayouter>();
             builder.RegisterType<TagCloudPainter>();
-            builder.RegisterType<WordChecker>();
-            builder.RegisterType<ImageSize>();
-            builder.RegisterInstance(new FontFamily("Arial")).As<FontFamily>();
+            builder.RegisterType<GrammemeChecker>();
             builder.RegisterType<SpiralAlgorithm>().As<ILayoutAlgorithm>();
             var container = builder.Build();
             container.Resolve<IClient>().Run();
