@@ -7,10 +7,13 @@ namespace WordCloudGenerator
     {
         private readonly Color[] colors;
 
-        public RandomChoicePalette(Color[] colors)
+        public RandomChoicePalette(Color[] colors, Color backgroundColor)
         {
             this.colors = colors;
+            BackgroundColor = backgroundColor;
         }
+
+        public Color BackgroundColor { get; }
 
         public Color GetNextColor()
         {

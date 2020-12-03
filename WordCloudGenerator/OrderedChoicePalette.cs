@@ -8,10 +8,13 @@ namespace WordCloudGenerator
 
         private int colorIndex = -1;
 
-        public OrderedChoicePalette(Color[] colors)
+        public OrderedChoicePalette(Color[] colors, Color backgroundColor)
         {
             this.colors = colors;
+            BackgroundColor = backgroundColor;
         }
+
+        public Color BackgroundColor { get; }
 
         public Color GetNextColor()
         {
