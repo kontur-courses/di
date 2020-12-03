@@ -2,18 +2,18 @@
 
 namespace HomeExerciseTDD
 {
-    public class Word : IWord
+    public class SizedWord : ISizedWord
     {
         public string Text { get; }
-        public int Frequency { get; }
         public FontFamily Font { get; }
+        public Rectangle Rectangle { get; }
         public int Size { get; }
 
-        public Word(string text, int frequency, FontFamily font, int size)
+        public SizedWord(IWord word, int size, FontFamily font, Rectangle rectangle)
         {
-            Text = text;
-            Frequency = frequency;
+            Text = word.Text;
             Font = font;
+            Rectangle = rectangle;
             Size = size;
         }
     }

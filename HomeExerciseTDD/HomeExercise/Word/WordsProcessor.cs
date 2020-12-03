@@ -6,7 +6,7 @@ using HomeExerciseTDD.settings;
 
 namespace HomeExerciseTDD
 {
-    public class WordsProcessor : IWordProcessor
+    public class WordsProcessor : IWordsProcessor
     {
         private IFileProcessor fileProcessor;
         private WordSettings settings;
@@ -16,7 +16,7 @@ namespace HomeExerciseTDD
             this.settings = settings;
         }
         
-        public  List<Word> WordsHandle()
+        public  List<IWord> WordsHandle()
         {
             var words = fileProcessor.GetWords();
             return words
@@ -24,10 +24,11 @@ namespace HomeExerciseTDD
                 .ToList();
         }
    
-        private Word WordHandle(string text, int frequency)//WordSettings?
+        private IWord WordHandle(string text, int frequency)
         {
             return new Word(text, frequency, settings.Font, frequency*settings.Coefficient);
         }
+
         
     }
 }
