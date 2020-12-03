@@ -7,9 +7,9 @@
 
 ## Примеры облака тегов
 
-![RandomExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/random_color_example.jpg)
+![RandomExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/random_color_example.png)
 
-![TwoColorExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/two_color_example.jpg)
+![TwoColorExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/two_color_example.png)
 
 
 ## Шутка длиною в титулы последнего императора
