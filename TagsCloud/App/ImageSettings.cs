@@ -10,13 +10,7 @@ namespace TagsCloud.App
         private readonly List<Color> colors = new List<Color>();
         private readonly Random random = new Random();
 
-        public ImageSettings(ImageSize imageSize, FontFamily fontFamily)
-        {
-            ImageSize = imageSize;
-            FontFamily = fontFamily;
-        }
-
-        public FontFamily FontFamily { get; set; }
+        public FontFamily FontFamily { get; set; } = new FontFamily("Arial");
 
         public Color GetColor()
         {
@@ -30,6 +24,6 @@ namespace TagsCloud.App
             colors.Add(color);
         }
 
-        public ImageSize ImageSize { get; }
+        public ImageSize ImageSize { get; } = new ImageSize();
     }
 }
