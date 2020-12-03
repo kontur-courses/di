@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using WordCloudGenerator;
 
@@ -8,24 +7,24 @@ namespace Tests
     public class PreparerTests
     {
         [Test]
-        public void GetCountedWords_ShouldReturnCountedWord_OneWordInEachLine()
+        public void CreateWordFreqList_ShouldReturnFrequencies_OneWordInEachLine()
         {
             var text = "abc\nabc\nefg";
             var preparer = new Preparer(null);
 
             preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
-                new Dictionary<string, int> {["abc"] = 2, ["efg"] = 1});
+                new[] {new WordFrequency("abc", 2f / 3), new WordFrequency("efg", 1f / 3)});
         }
 
         [Test]
-        public void GetCountedWords_ShouldSkipBoringWords_OneBoringWord()
+        public void CreateWordFreqList_ShouldSkipBoringWords_OneBoringWord()
         {
             var boringWords = new[] {"abc"};
             var text = "abc\nabc\nefg\nefg\nxyz";
             var preparer = new Preparer(boringWords);
-            
+
             preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
-                new Dictionary<string, int> {["efg"] = 2, ["xyz"] = 1});
+                new[] {new WordFrequency("efg", 2f / 3), new WordFrequency("xyz", 1f / 3)});
         }
     }
 }

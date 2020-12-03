@@ -32,7 +32,7 @@ namespace WordCloudGenerator
             return wordsInText.Distinct()
                 .Where(filter)
                 .Select(word => new WordFrequency(word,
-                    (double) wordsInText.Count(el => el == word) / wordsInText.Length))
+                    (float) wordsInText.Count(el => el == word) / wordsInText.Length))
                 .OrderByDescending(word => word.Frequency)
                 .Take(maxWordCount);
         }

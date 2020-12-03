@@ -2,9 +2,9 @@
 
 namespace WordCloudGenerator
 {
-    public class Reader
+    public abstract class Reader
     {
-        public string ReadFile(string path)
+        public static string ReadFile(string path)
         {
             if (!File.Exists(path))
                 throw new FileNotFoundException($"Файл {path} не найден");
