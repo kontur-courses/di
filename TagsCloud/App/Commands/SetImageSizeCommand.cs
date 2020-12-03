@@ -4,13 +4,11 @@ namespace TagsCloud.App.Commands
 {
     public class SetImageSizeCommand : ICommand
     {
-        private readonly ImageHolder imageHolder;
         private readonly IImageSizeProvider imageSizeProvider;
 
-        public SetImageSizeCommand(IImageSizeProvider imageSizeProvider, ImageHolder imageHolder)
+        public SetImageSizeCommand(IImageSizeProvider imageSizeProvider)
         {
             this.imageSizeProvider = imageSizeProvider;
-            this.imageHolder = imageHolder;
         }
 
         public string Name { get; } = "setsize";

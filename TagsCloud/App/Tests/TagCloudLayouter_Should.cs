@@ -10,6 +10,11 @@ namespace TagsCloud.App.Tests
 {
     public class TagCloudLayouter_Should
     {
+        private Point center;
+
+        private TagCloudLayouter layouter;
+        private List<Rectangle> placedRectangles;
+
         [SetUp]
         public void SetUp()
         {
@@ -18,17 +23,13 @@ namespace TagsCloud.App.Tests
             placedRectangles = new List<Rectangle>();
         }
 
-        private TagCloudLayouter layouter;
-        private Point center;
-        private List<Rectangle> placedRectangles;
-
         [Test]
         public void PutRectangleWithCorrectSize()
         {
             var size = new Size(5, 5);
-            
+
             placedRectangles.Add(layouter.PutNextRectangle(size));
-            
+
             placedRectangles[0].Size.Should().Be(size);
         }
 

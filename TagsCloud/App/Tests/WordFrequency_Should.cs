@@ -9,9 +9,9 @@ namespace TagsCloud.App.Tests
 {
     public class WordFrequency_Should
     {
+        private string[] testData;
         private IWordChecker wordChecker;
         private WordFrequency wordFrequency;
-        private string[] testData;
 
         [SetUp]
         public void SetUp()
@@ -40,7 +40,6 @@ namespace TagsCloud.App.Tests
                 ["qwe"] = Math.Round(1.0 / 6, 2)
             };
             wordFrequency.Get(testData).Should().BeEquivalentTo(expected);
-
         }
     }
 }

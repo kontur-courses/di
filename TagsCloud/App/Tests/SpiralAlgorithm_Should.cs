@@ -5,11 +5,10 @@ using NUnit.Framework;
 
 namespace TagsCloud.App.Tests
 {
-
     public class SpiralAlgorithm_Should
     {
-        private SpiralAlgorithm spiral;
         private Point center;
+        private SpiralAlgorithm spiral;
 
         [SetUp]
         public void SetUp()

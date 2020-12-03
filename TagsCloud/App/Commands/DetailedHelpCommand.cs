@@ -8,14 +8,17 @@ namespace TagsCloud.App.Commands
     {
         private readonly Lazy<IClient> client;
         private readonly TextWriter writer;
-        public string Name { get; } = "help";
+
         public DetailedHelpCommand(Lazy<IClient> client, TextWriter writer)
         {
             this.client = client;
             this.writer = writer;
         }
 
+        public string Name { get; } = "help";
+
         public string Description { get; } = "help <command>      # prints help for <command>";
+
         public void Execute(string[] args)
         {
             var commandName = args[0];
