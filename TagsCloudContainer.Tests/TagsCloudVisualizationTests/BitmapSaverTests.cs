@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using FluentAssertions;
@@ -21,10 +22,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
             BitmapSaver = new BitmapSaver();
         }
 
-        [TestCase(@"<html></html>", TestName = "Directory dont exist")]
-        [TestCase(@"C:_Dir_image.png", TestName = "Not backslash separator")]
-        [TestCase(@"C:\image png", TestName = "Doesnt have dot separator")]
-        [TestCase(@"C:\image.", TestName = "Doesnt have filename extension")]
+        [TestCaseSource(nameof(PathTestCases))]
         public void SaveBitmapToDirectory_ThrowException_When(string path)
         {
             Action saveImage = () => BitmapSaver.SaveBitmapToDirectory(ImageBitmap, path);
@@ -39,6 +37,14 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
             Action saveImage = () => BitmapSaver.SaveBitmapToDirectory(ImageBitmap, path);
 
             saveImage.Should().NotThrow<ArgumentException>();
+        }
+
+        private static IEnumerable<TestCaseData> PathTestCases()
+        {
+            yield return new TestCaseData($"<html></html>").SetName("Directory dont exist");
+            yield return new TestCaseData($".. Dir text.txt").SetName("Not platform separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text txt").SetName("Doesnt have dot separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text.").SetName("Doesnt have filename extension");
         }
     }
 }

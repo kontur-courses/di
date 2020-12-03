@@ -19,10 +19,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
             Root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
         }
 
-        [TestCase(@"<html></html>", TestName = "Directory dont exist")]
-        [TestCase(@"C:_Dir_text.txt", TestName = "Not backslash separator")]
-        [TestCase(@"C:\text txt", TestName = "Doesnt have dot separator")]
-        [TestCase(@"C:\text.", TestName = "Doesnt have filename extension")]
+        [TestCaseSource(nameof(PathTestCases))]
         public void ThrowException_When(string path)
         {
             Action writeText = () => Writer.WriteText("text", path);
@@ -33,7 +30,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
         [Test]
         public void DoesntThrowException_When()
         {
-            var path = $"C:{Path.DirectorySeparatorChar}image.png";
+            var path = $"..{Path.DirectorySeparatorChar}image.png";
             Action writeText = () => Writer.WriteText("text", path);
 
             writeText.Should().NotThrow<ArgumentException>();
@@ -51,15 +48,21 @@ namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
             File.Delete(path);
         }
 
+        private static IEnumerable<TestCaseData> PathTestCases()
+        {
+            yield return new TestCaseData($"<html></html>").SetName("Directory dont exist");
+            yield return new TestCaseData($".. Dir text.txt").SetName("Not platform separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text txt").SetName("Doesnt have dot separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text.").SetName("Doesnt have filename extension");
+        }
+
         private static IEnumerable<TestCaseData> TestCases()
         {
-            yield return new TestCaseData("one two three", $"one{Environment.NewLine}two{Environment.NewLine}three")
-                .SetName("Just words");
+            yield return new TestCaseData("one two three", $"one{Environment.NewLine}two{Environment.NewLine}three").SetName("Just words");
             yield return new TestCaseData("", "").SetName("Empty string");
             yield return new TestCaseData("Dot, net.", $"Dot{Environment.NewLine}net").SetName("With delimiters");
             yield return new TestCaseData("12 34", $"12{Environment.NewLine}34").SetName("Digits");
-            yield return new TestCaseData($"New. {Environment.NewLine} line.", $"New{Environment.NewLine}line")
-                .SetName("New line");
+            yield return new TestCaseData($"New. {Environment.NewLine} line.", $"New{Environment.NewLine}line").SetName("New line");
         }
     }
 }
