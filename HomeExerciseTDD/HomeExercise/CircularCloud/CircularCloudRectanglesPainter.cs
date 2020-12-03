@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using HomeExerciseTDD.settings;
 
 
 namespace HomeExerciseTDD
 {
-    public class CircularCloudPainter: IPainter<Rectangle>
+    public class CircularCloudRectanglesPainter: IPainter<Rectangle>
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
@@ -19,27 +20,25 @@ namespace HomeExerciseTDD
         private readonly ImageFormat format;
         private readonly int offsetX;
         private readonly int offsetY;
-        
-      
-        public CircularCloudPainter(int width, int height, List<Rectangle> rectangles, string fileName, ImageFormat format)
-        //public CircularCloudPainter(PainterSettings settings)
+
+        public CircularCloudRectanglesPainter(List<Rectangle> rectangles,PainterSettings settings)
         {
-            offsetX = width/2;
-            offsetY = height/2;
-            this.format = format;
-            this.fileName = fileName;
+            offsetX = settings.Width/2;
+            offsetY = settings.Height/2;
+            this.format = settings.Format;
+            this.fileName = settings.FileName;
             this.rectangles = rectangles;
             randomazer= new Random();
-            color = new Color();
-            bitmap = new Bitmap(width, height);
-            graphics = Graphics.FromImage(bitmap);
+            color = new Color();//??????
+            bitmap = new Bitmap(settings.Width, settings.Height);//???????
+            graphics = Graphics.FromImage(bitmap);//???????
         }
 
         public void DrawFigures()
         {
+            var center = rectangles.First();
             foreach (var rectangle in rectangles)
             {
-                var center = rectangles.First();
                 var newX= rectangle.X + offsetX - center.X;
                 var newY = rectangle.Y + offsetY - center.Y;
                 var point = new Point(newX, newY);
@@ -48,10 +47,6 @@ namespace HomeExerciseTDD
                 color = GetColor();
                 pen = new Pen(color);
                 graphics.DrawRectangle(pen, newRectangle);
-                //ПЕРЕГРУЗКИ
-                //MeasureString(String, Font)
-                var font1 = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Point);
-                graphics.DrawString("sss", font1, Brushes.Blue, newRectangle);
             }
             
             bitmap.Save(fileName, format);

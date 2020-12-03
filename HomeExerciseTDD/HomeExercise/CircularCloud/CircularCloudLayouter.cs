@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using HomeExerciseTDD.settings;
 
 
 namespace HomeExerciseTDD
@@ -11,12 +12,12 @@ namespace HomeExerciseTDD
     {
         private Point center;
         private readonly List<Rectangle> rectanglesInCloud = new List<Rectangle>();
-        private readonly Spiral spiral;
+        private readonly ISpiral spiral;
 
-        public CircularCloudLayouter(Point center, Spiral spiralOut = null)
+        public CircularCloudLayouter(ISpiral spiral)
         {
-            this.center = center;
-            spiral = new Spiral(this.center);
+            this.center = spiral.Center;
+            this.spiral = spiral;
         }
         
         private bool IsIntersect(Rectangle currentRectangle)
@@ -32,11 +33,9 @@ namespace HomeExerciseTDD
             {
                 var rectangleLocation = spiral.GetNextPoint();
                 var currentRectangle = new Rectangle(rectangleLocation, rectangleSize);
-                if (!IsIntersect(currentRectangle))
-                {
-                    rectanglesInCloud.Add(currentRectangle);
-                    return currentRectangle;
-                }
+                if (IsIntersect(currentRectangle)) continue;
+                rectanglesInCloud.Add(currentRectangle);
+                return currentRectangle;
             }
         }
 
