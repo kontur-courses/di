@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Drawing;
 
-namespace WordCloudGenerator.CircularLayouter
+namespace WordCloudGenerator
 {
     public class Spiral
     {
-        private readonly Point center;
+        public Point Center { get; }
         private double angle;
 
         public Spiral(Point center)
         {
-            this.center = center;
+            Center = center;
         }
 
         public Point GetNextPoint()
         {
-            var x = (int) (angle * Math.Cos(angle) + center.X);
-            var y = (int) (angle * Math.Sin(angle) + center.Y);
+            var x = (int) (angle * Math.Cos(angle) + Center.X);
+            var y = (int) (angle * Math.Sin(angle) + Center.Y);
             angle += Math.PI / 180;
             return new Point(x, y);
         }
