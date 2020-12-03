@@ -22,7 +22,7 @@ namespace TagsCloudTest.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace TagsCloudTest.Properties {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TagsCloudTest.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,100 @@ namespace TagsCloudTest.Properties {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap expected {
+            get {
+                object obj = ResourceManager.GetObject("expected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap test {
+            get {
+                object obj = ResourceManager.GetObject("test", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на банкнота
+        ///Байкал
+        ///баба
+        ///ба-ба-ба
+        ///Бабариха
+        ///бабах
+        ///бабаханье
+        ///бабахать
+        ///бабахаться
+        ///бабахнуть
+        ///бабахнуться
+        ///бабашка
+        ///Баба-яга
+        ///баббит
+        ///баббитный
+        ///баббитовый
+        ///бабезия
+        ///бабелевский
+        ///бабёнка
+        ///бабёночка
+        ///бабенция
+        ///бабенька
+        ///бабенькин
+        ///бабёха
+        ///бабец
+        ///бабёшка
+        ///бабидский
+        ///бабиды
+        ///бабизм
+        ///бабий
+        ///бабирусса
+        ///бабиться
+        ///бабища
+        ///бабка
+        ///бабка-ёжка
+        ///бабки
+        ///бабкин
+        ///бабник
+        ///бабничать
+        ///бабонька
+        ///бабочка
+        ///бабочница
+        ///бабр
+        ///бабский
+        ///бабувизм
+        ///бабувист
+        ///бабувистский
+        ///бабуин
+        ///бабуленька
+        ///бабулин
+        ///бабулька
+        ///бабуля
+        ///бабусенька
+        ///бабусин
+        ///бабуся
+        ///бабуши
+        ///бабушка
+        ///бабушкин
+        ///бабы-Настин
+        ///бабьё [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string text {
+            get {
+                return ResourceManager.GetString("text", resourceCulture);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace TagsCloudTest
         }
 
         [Test]
-        public void PartialDeltaAllDeltaMoveToTraget()
+        public void PartialDeltaAllDeltaMoveToTarget()
         {
             var dx = 0;
             var dy = 0;

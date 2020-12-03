@@ -5,40 +5,43 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
-using TagsCloud.Layouter.Factory;
+using TagsCloud.Layouter;
 using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
+using TagsCloud.TagsCloudProcessing.TegsGenerators;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
-using TagsCloud.TextProcessing.WordConfig;
+using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloudTest
 {
-    public class FunctionalTests
+    public class TagsCloudCreatorTests
     {
         private TagsCloudCreator tagsCloudCreator;
-        private IWordsConfig wordsConfig;
-        private IImageConfig imageConfig;
+        private WordConfig wordsConfig;
+        private ImageConfig imageConfig;
         private ServiceProvider container = ContainerBuilder.BuildContainer();
 
         private string textPath;
         private string imagePath;
+        private string expectedImagePath;
 
         [SetUp]
         public void SetUp()
         {
-            var path = Assembly.GetExecutingAssembly().Location;
-            var s = new DirectoryInfo(path).Parent.Parent.Parent.FullName;
-            textPath = Path.Combine(s, "Resources", "text.txt");
-            imagePath = Path.Combine(s, "Resources", "test.png");
+            var path = TestContext.CurrentContext.TestDirectory;
+
+            textPath = Path.Combine(path, "Resources", "text.txt");
+            imagePath = Path.Combine(path, "Resources", "test.png");
+            expectedImagePath = Path.Combine(path, "Resources", "expected.png");
 
             tagsCloudCreator = container.GetService<TagsCloudCreator>();
 
-            wordsConfig = container.GetService<IWordsConfig>();
+            wordsConfig = container.GetService<WordConfig>();
             ConfigureWordsConfig(textPath);
 
-            imageConfig = container.GetService<IImageConfig>();
+            imageConfig = container.GetService<ImageConfig>();
             ConfigureImageConfig(imagePath);
         }
 
@@ -48,8 +51,10 @@ namespace TagsCloudTest
             wordsConfig.ConvertersNames = container.GetService<IConvertersApplier>().GetConverterNames().ToArray();
             wordsConfig.FilerNames = container.GetService<IFiltersApplier>().GetFilerNames().ToArray();
             wordsConfig.FontName = new Font(FontFamily.GenericMonospace, 20);
-            wordsConfig.LayoutName = container.GetService<IRectanglesLayoutersFactory>().GetLayouterNames().First();
-            wordsConfig.TagGeneratorName = container.GetService<ITagsGeneratorFactory>().GetGeneratorNames().First();
+            wordsConfig.LayoutName = container.GetService<IServiceFactory<IRectanglesLayouter>>()
+                .GetServiceNames().First();
+            wordsConfig.TagGeneratorName = container.GetService<IServiceFactory<ITagsGenerator>>()
+                .GetServiceNames().First();
             wordsConfig.Path = path;
         }
 
@@ -60,11 +65,16 @@ namespace TagsCloudTest
         }
 
         [Test]
-        public void FunctionalTest()
+        public void TagsCloudFunctionalTest()
         {
             tagsCloudCreator.CreateCloud(textPath, imagePath);
+
             using var image = Image.FromFile(imagePath);
+            var current = File.ReadAllBytes(imagePath);
+            var expected = File.ReadAllBytes(expectedImagePath);
+
             image.Should().NotBeNull();
+            current.Should().BeEquivalentTo(expected);
         }
     }
 }

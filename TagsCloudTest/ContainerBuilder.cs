@@ -1,18 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Drawing;
+using System.Reflection;
+using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
-using TagsCloud.ImageProcessing.ImageBuilders;
-using TagsCloud.ImageProcessing.SaverImage.Factory;
 using TagsCloud.ImageProcessing.SaverImage.ImageSavers;
 using TagsCloud.Layouter;
-using TagsCloud.Layouter.Factory;
-using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TagsCloudProcessing.TagsGeneratorFactory;
 using TagsCloud.TagsCloudProcessing.TegsGenerators;
-using TagsCloud.TextProcessing;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
-using TagsCloud.TextProcessing.TextReaders;
-using TagsCloud.TextProcessing.WordConfig;
 
 namespace TagsCloudTest
 {
@@ -21,38 +16,24 @@ namespace TagsCloudTest
         public static ServiceProvider BuildContainer()
         {
             var serviceProvider = new ServiceCollection()
-                .Scan(scan => scan.FromCallingAssembly().AddClasses().AsSelfWithInterfaces().WithTransientLifetime())
-
-                .AddSingleton<IImageConfig, ImageConfig>()
-                .AddSingleton<IWordsConfig, WordConfig>()
-
-                .AddSingleton<TagsCloudCreator, TagsCloudCreator>()
-                .AddSingleton<TextProcessor, TextProcessor>()
-
-                .AddSingleton<IWordsReader, DocReader>()
-                .AddSingleton<IWordsReader, TxtReader>()
-
-                .AddSingleton<IImageBuilder, ImageBuilder>()
-                .AddSingleton<IReadersFactory, ReadersFactory>()
-                .AddSingleton<IRectanglesLayoutersFactory, RectanglesLayoutersFactory>()
-                .AddSingleton<ITagsGeneratorFactory, TagsGeneratorFactory>()
-                .AddSingleton<IConvertersApplier, ConvertersApplier>()
-                .AddSingleton<IImageSaverFactory, ImageSaverFactory>()
-                .AddSingleton<IFiltersApplier, FiltersApplier>()
-
-                .AddTransient<TagsGenerator, TagsGenerator>()
-
+                .Scan(scan => scan.FromAssemblyDependencies(Assembly.GetExecutingAssembly())
+                                                                                .AddClasses()
+                                                                                .AsSelfWithInterfaces()
+                                                                                .WithSingletonLifetime())
                 .BuildServiceProvider();
 
-            serviceProvider.GetService<IImageSaverFactory>()
+            serviceProvider.GetService<IServiceFactory<IImageSaver>>()
             .Register(".png", () => new PngSaver())
             .Register(".jpg", () => new JpgSaver())
             .Register(".bmp", () => new BmpSaver());
 
-            serviceProvider.GetService<IRectanglesLayoutersFactory>()
-                .Register("По спирали", center => new CircularCloudLayouter(center));
+            var layouterConfig = serviceProvider.GetService<ImageConfig>();
+            serviceProvider.GetService<IServiceFactory<IRectanglesLayouter>>()
+                .Register("По спирали",
+                () => new CircularCloudLayouter(new Point(layouterConfig.ImageSize.Width / 2,
+                layouterConfig.ImageSize.Height / 2)));
 
-            serviceProvider.GetService<ITagsGeneratorFactory>()
+            serviceProvider.GetService<IServiceFactory<ITagsGenerator>>()
                 .Register("Топ 30", () => serviceProvider.GetService<TagsGenerator>());
 
             serviceProvider.GetService<IConvertersApplier>()

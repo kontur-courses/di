@@ -13,8 +13,6 @@ namespace TagsCloudTest
     {
         private CircularCloudLayouter layout;
         private Point center;
-        private Size[] rectangleSizes;
-        private int rectangleCount;
         private List<Rectangle> rectangles;
 
         [SetUp]
@@ -22,13 +20,15 @@ namespace TagsCloudTest
         {
             center = new Point(100, 100);
             layout = new CircularCloudLayouter(center);
-            rectangleSizes = GetRandomSizeSet();
             rectangles = new List<Rectangle>();
-            rectangleCount = 10;
         }
 
-        private Size[] GetRandomSizeSet(int length = 4, int maxSideSize = 40, int minSideSize = 10)
+        private Size[] GetRandomSizeSet()
         {
+            var length = 4;
+            var maxSideSize = 40;
+            var minSideSize = 10;
+
             var sizes = new Size[length];
             var random = new Random();
             for (int i = 0; i < length; i++)
@@ -36,10 +36,8 @@ namespace TagsCloudTest
             return sizes;
         }
 
-        private void PutRectangles(int rectangleCount = 10, Size[] sizes = null)
+        private void PutRectangles(int rectangleCount, Size[] sizes)
         {
-            sizes ??= rectangleSizes;
-            this.rectangleCount = rectangleCount;
             var sizesLenght = sizes.Length;
             Size size;
             for (int i = 0; i < rectangleCount; i++)
@@ -52,7 +50,7 @@ namespace TagsCloudTest
         [Test]
         public void PutNextRectangleShouldNotIntersect()
         {
-            PutRectangles();
+            PutRectangles(10, GetRandomSizeSet());
 
             var isIntesect = rectangles
                 .Any(rect => rect.IntersectsWith(rectangles.Where(other => other != rect)));
@@ -71,7 +69,8 @@ namespace TagsCloudTest
         public void PutNextRectangleAllRectangleShouldBeLikeACircle()
         {
             var size = new Size(20, 20);
-            PutRectangles(20, new[] { size });
+            var rectangleCount = 20;
+            PutRectangles(rectangleCount, new[] { size });
             var rectCountInRadius = rectangleCount / 4 + 1;
             var radius = Math.Max(size.Height, size.Width) * rectCountInRadius;
             var circumscribedCenter = new Point(center.X - radius, center.Y - radius);
@@ -104,7 +103,7 @@ namespace TagsCloudTest
         [Test]
         public void PutNextRectangleAllRectangleShouldBeDense()
         {
-            PutRectangles(30);
+            PutRectangles(30, GetRandomSizeSet());
 
             foreach (var rectangle in rectangles)
             {
@@ -115,10 +114,10 @@ namespace TagsCloudTest
         }
 
         [Test]
-        [Timeout(100000)]
+        [Timeout(100 * 1000)]
         public void PutNextRectanglePerformanceTest()
         {
-            PutRectangles(1000);
+            PutRectangles(1000, GetRandomSizeSet());
         }
     }
 }
