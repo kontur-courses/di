@@ -26,9 +26,9 @@ namespace TagCloud.Clients
         {
             string answear = null;
             Console.WriteLine("Hello, I'm your personal visualization client");
-            while (answear != "exit")
+            while (true)
             {
-                Console.WriteLine("Please, write path to file with words");
+                Console.WriteLine("Please, write path to file with words or \"exit\" to exit");
                 answear = Console.ReadLine();
                 if (answear == "exit")
                     break;
