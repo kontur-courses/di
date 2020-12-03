@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TagsCloudVisualisation.Extensions;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
@@ -10,20 +11,27 @@ using TagsCloudVisualisation.Visualisation;
 
 namespace TagsCloudVisualisation
 {
-    public sealed class TagCloudGenerator
+    public sealed class TagCloudGenerator : IDisposable
     {
         private readonly IFontSource fontSource;
         private readonly IColorSource colorSource;
         private readonly ITagCloudLayouter layouter;
         private readonly CloudVisualiser visualiser;
 
-        public TagCloudGenerator(ITagCloudLayouter layouter, Func<Point, CloudVisualiser> visualiser,
-            IFontSource fontSource, IColorSource colorSource)
+        private readonly Graphics stubGraphics;
+
+        public TagCloudGenerator(
+            CloudVisualiser visualiser,
+            ITagCloudLayouter layouter,
+            IFontSource fontSource,
+            IColorSource colorSource)
         {
             this.layouter = layouter;
             this.fontSource = fontSource;
             this.colorSource = colorSource;
-            this.visualiser = visualiser.Invoke(layouter.CloudCenter);
+            this.visualiser = visualiser;
+
+            stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
         }
 
         public Task<Image> DrawWordsAsync(WordWithFrequency[] wordsCollection, CancellationToken token)
@@ -33,20 +41,12 @@ namespace TagsCloudVisualisation
 
             return Task.Run(() =>
             {
-                foreach (var word in wordsCollection.OrderByDescending(x => x.Frequency))
-                {
-                    if (token.IsCancellationRequested)
-                        break;
+                var computedWordsEnumerable = wordsCollection.OrderByDescending(x => x.Frequency)
+                    .Select(word => GetWordFormatAndPosition(word.Word, wordsCollection.Length, word.Frequency))
+                    .UntilCanceled(token)
+                    .OnEach(_ => AfterWordDrawn?.Invoke());
 
-                    //TODO apply format to whole collection
-                    var (wordPosition, formattedWord) =
-                        GetWordFormatAndPosition(word.Word, wordsCollection.Length, word.Frequency);
-                    visualiser.Draw(wordPosition, formattedWord);
-
-                    AfterWordDrawn?.Invoke();
-                }
-
-                return visualiser.GetImage()!;
+                return visualiser.DrawWords(layouter.CloudCenter, computedWordsEnumerable);
             }, token);
         }
 
@@ -54,7 +54,7 @@ namespace TagsCloudVisualisation
             string word, int totalWordCount, int index)
         {
             var font = fontSource.GetFont(word, totalWordCount, index);
-            var wordSize = visualiser.MeasureString(word, font);
+            var wordSize = stubGraphics.MeasureString(word, font);
             var wordPosition = layouter.PutNextRectangle(Size.Ceiling(wordSize));
 
             var distanceFromCenter = ComputeDistanceBetween(wordPosition.Location, layouter.CloudCenter);
@@ -72,5 +72,10 @@ namespace TagsCloudVisualisation
         }
 
         public event Action? AfterWordDrawn;
+
+        public void Dispose()
+        {
+            stubGraphics.Dispose();
+        }
     }
 }

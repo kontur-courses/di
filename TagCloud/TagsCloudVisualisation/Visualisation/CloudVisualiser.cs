@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualisation.Text.Formatting;
@@ -10,57 +11,60 @@ namespace TagsCloudVisualisation.Visualisation
     /// </summary>
     public class CloudVisualiser
     {
-        private Graphics? graphics;
-        private Image? image;
-        private readonly Point centerPointOffset;
-
-        public CloudVisualiser(Point centerPointOffset)
+        public Image DrawWords(
+            Point centerPointOffset,
+            IEnumerable<(Rectangle position, FormattedWord toDraw)> words)
         {
-            this.centerPointOffset = centerPointOffset;
+            Graphics? graphics = null;
+            Image? image = null;
+
+            foreach (var (position, toDraw) in words)
+            {
+                var wordPosition = GetWordRectangle(graphics, toDraw, position, centerPointOffset);
+                var resized = EnsureBitmapSize(image, Rectangle.Ceiling(wordPosition));
+                UpdateGraphicsIfRequired(resized);
+                
+                wordPosition.Location += image!.Size / 2;
+                graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
+            }
+
+            return image!;
+
+            void UpdateGraphicsIfRequired(Image newImage)
+            {
+                if (newImage != image)
+                {
+                    graphics?.Dispose();
+                    graphics = Graphics.FromImage(newImage);
+                }
+                image = newImage;
+            }
         }
 
-        public Image? GetImage() => (Image) image?.Clone();
-
-        public void Draw(Rectangle position, FormattedWord toDraw)
+        private static RectangleF GetWordRectangle(Graphics? graphics, FormattedWord toDraw, Rectangle position,
+            Point centerOffset)
         {
-            var wordSize = MeasureString(toDraw.Word, toDraw.Font);
+            var wordSize = MeasureString(graphics, toDraw.Word, toDraw.Font);
             if (wordSize.Height > position.Size.Height || wordSize.Width > position.Size.Width)
                 throw new ArgumentException("Actual word size is larger than computed values");
 
             var offset = (wordSize - position.Size) / 2;
-            var wordPosition = new RectangleF(position.X - offset.Width, position.Y - offset.Height,
-                wordSize.Width, wordSize.Height);
-
-            wordPosition.Location = FixOffset(wordPosition.Location);
-            EnsureBitmapSize(wordPosition);
-            wordPosition.Location += image!.Size / 2;
-            graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
+            var wordPosition = new PointF(position.X - offset.Width, position.Y - offset.Height);
+            var fixedPosition = FixOffset(wordPosition, centerOffset);
+            return new RectangleF(fixedPosition, wordSize);
         }
 
-        private static SizeF MeasureString(Graphics graphics, string word, Font font) =>
-            graphics.MeasureString(word, font);
-
-        private PointF FixOffset(PointF rectangle) => new PointF(
-            rectangle.X - centerPointOffset.X,
-            rectangle.Y - centerPointOffset.Y);
-
-        private void EnsureBitmapSize(RectangleF nextRectangle)
-        {
-            var newBitmap = EnsureBitmapSize(image, Rectangle.Ceiling(nextRectangle));
-            if (newBitmap == image)
-                return;
-            image = newBitmap;
-            graphics?.Dispose();
-            graphics = Graphics.FromImage(image);
-        }
-
-        public SizeF MeasureString(string word, Font font)
+        private static SizeF MeasureString(Graphics? graphics, string? word, Font font)
         {
             if (graphics != null)
-                return MeasureString(graphics, word, font);
+                return graphics.MeasureString(word, font);
             using var g = Graphics.FromHwnd(IntPtr.Zero);
-            return MeasureString(g, word, font);
+            return g.MeasureString(word, font);
         }
+
+        private static PointF FixOffset(PointF rectangleLocation, Point centerPointOffset) => new PointF(
+            rectangleLocation.X - centerPointOffset.X,
+            rectangleLocation.Y - centerPointOffset.Y);
 
         private static Image EnsureBitmapSize(Image? bitmap, Rectangle nextRectangle)
         {
@@ -69,7 +73,6 @@ namespace TagsCloudVisualisation.Visualisation
                 var xSize = MaxAbs(nextRectangle.Right, nextRectangle.Left) + nextRectangle.Width;
                 var ySize = MaxAbs(nextRectangle.Top, nextRectangle.Bottom) + nextRectangle.Height;
                 bitmap = new Bitmap(xSize, ySize);
-                using var g = Graphics.FromImage(bitmap);
             }
             else
             {
