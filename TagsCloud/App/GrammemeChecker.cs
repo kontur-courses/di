@@ -12,13 +12,10 @@ namespace TagsCloud.App
             "CONJ", "INTJ", "PART", "PR", "APRO", "SPRO", "ADVPRO"
         };
 
-        private readonly MyStem myStem;
-
-        public GrammemeChecker(MyStem myStem)
+        private readonly MyStem myStem = new MyStem
         {
-            this.myStem = myStem;
-            myStem.Parameters = "-i";
-        }
+            Parameters = "-i"
+        };
 
         public bool IsWordNotBoring(string word)
         {
