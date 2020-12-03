@@ -12,8 +12,7 @@ namespace TagCloud.ImageSavers
         
         public ImageSaver(SaverSettings settings)
         {
-            path = settings.Path;
-            path ??= Directory.GetCurrentDirectory();
+            path = settings.Path ?? Directory.GetCurrentDirectory();
             fileName = settings.FileName;
         }
 

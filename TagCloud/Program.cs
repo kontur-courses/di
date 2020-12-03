@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-using Autofac;
+﻿using Autofac;
 using TagCloud.Drawers;
 using TagCloud.ImageSavers;
-using TagCloud.Layout;
 using TagCloud.TextReaders;
 using TagCloud.Layouters;
 using TagCloud.Settings;
@@ -16,22 +14,19 @@ namespace TagCloud
     {
         static void Main(string[] args)
         {
-            var cui = new ConsoleUserInterface(args);
+            var cli = new ConsoleLineInterface(args);
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance(cui.FileReaderSettings)
+            containerBuilder.RegisterInstance(cli.FileReaderSettings)
                 .As<FileReaderSettings>();
-            containerBuilder.RegisterInstance(cui.CircularLayouterSettings)
+            containerBuilder.RegisterInstance(cli.LayouterSettings)
                 .As<CircularLayouterSettings>();
-            containerBuilder.RegisterInstance(cui.DrawerSettings)
+            containerBuilder.RegisterInstance(cli.DrawerSettings)
                 .As<DrawerSettings>();
-            containerBuilder.RegisterInstance(cui.LayoutSettings)
-                .As<LayoutSettings>();
-            containerBuilder.RegisterInstance(cui.SaverSettings)
+            containerBuilder.RegisterInstance(cli.SaverSettings)
                 .As<SaverSettings>();
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             containerBuilder.RegisterType<StandardAnalyzer>().As<ITextAnalyzer>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
-            containerBuilder.RegisterType<TagCloudLayout>().As<ITagCloudLayout>();
             containerBuilder.RegisterType<FileReader>().As<ITextReader>();
             containerBuilder.RegisterType<ImageSaver>().As<IImageSaver>();
             containerBuilder.RegisterType<TagDrawer>().As<ITagDrawer>();
