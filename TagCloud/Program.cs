@@ -61,6 +61,8 @@ namespace TagCloud
                 case Background.Rectangles:
                     services.AddSingleton<IBackgroundPainter, BackgroundPainterRectangles>();
                     break;
+                default:
+                    throw new ArgumentException("Unhandled background type " + background);
             }
         }
     }

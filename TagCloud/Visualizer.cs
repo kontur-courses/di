@@ -9,13 +9,13 @@ namespace TagCloud
     {
         private readonly ICanvas canvas;
         private readonly IPathCreater creater;
-        private readonly ITagsCreater imageInfo;
+        private readonly ITagsCreater tagsCreater;
         private readonly IBackgroundPainter backgroundPainter;
         public Visualizer(ICanvas canvas, IPathCreater pathCreator, ITagsCreater tagsCreater, IBackgroundPainter backgroundPainter)
         {
             this.canvas = canvas;
             creater = pathCreator;
-            this.imageInfo = tagsCreater;
+            this.tagsCreater = tagsCreater;
             this.backgroundPainter = backgroundPainter;
         }
 
@@ -23,7 +23,7 @@ namespace TagCloud
         {
             var bitmap = new Bitmap(canvas.Width, canvas.Height);
             var graphics = Graphics.FromImage(bitmap);
-            var tags = imageInfo.GetTags(filename, canvas.Height);
+            var tags = tagsCreater.GetTags(filename, canvas.Height);
             
             backgroundPainter.Draw(tags, canvas, graphics);
             DrawAllStrings(tags, fontFamily, stringColor, graphics);
@@ -44,11 +44,11 @@ namespace TagCloud
 
         private void DrawString(string str, Rectangle rectangle, FontFamily fontFamily, Brush textBrush, Graphics graphics)
         {
-            var x = rectangle.X - (rectangle.Height / 4);
-            var y = rectangle.Y - (rectangle.Height / 2);
+            var x = rectangle.X;
+            var y = rectangle.Y;
             if (rectangle.Height < 2)
                 return;
-            graphics.DrawString(str, new Font(fontFamily, rectangle.Height), textBrush, x, y);
+            graphics.DrawString(str, new Font(fontFamily, rectangle.Height * 2 / 3), textBrush, x, y);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TagCloud
     public class LiteratureTextParser : IWordParser
     {
         private IPathCreater creater;
-        private char[] separators = {' ', '.', ',', ':', '!'};
+        private static readonly char[] separators = {' ', '.', ',', ':', '!'};
         private const int minWordLength = 3;
         
             

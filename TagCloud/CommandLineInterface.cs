@@ -32,6 +32,5 @@ namespace TagCloud
                 return 1;
             });
         }
-
     }
 }
