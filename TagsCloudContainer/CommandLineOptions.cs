@@ -23,7 +23,7 @@ namespace TagsCloudContainer
         [Option("outname", Required = true, HelpText = "Set output file name.")]
         public string OutputFileName { get; set; }
 
-        [Option("-outext", Required = false, HelpText = "Set output file extension.", Default = ".png")]
+        [Option("outext", Required = false, HelpText = "Set output file extension.", Default = ".png")]
         public string OutputFileExtension { get; set; }
 
         [Option("color", Required = false,
