@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using NHunspell;
 
 namespace TagsCloudVisualization
 {
@@ -14,9 +16,10 @@ namespace TagsCloudVisualization
 
         public List<string> CleanWords(List<string> words)
         {
-            /*var lemmatizer = new Lemmatizer();
-            var normalizedWords = words.Select(x => lemmatizer.GetText(x)).ToArray();*/
-            return words.Select(word => word.ToLower())
+            var ruDict = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.dic");
+            var ruAff = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.aff");
+            var hunspell = new Hunspell(ruAff, ruDict);
+            return words.Select(word => hunspell.Stem(word.ToLower()).FirstOrDefault())
                 .Where(loweredWord => !boringWords.Contains(loweredWord))
                 .ToList();
         }
