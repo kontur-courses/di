@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TagsCloudContainer.TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudContainer
 {

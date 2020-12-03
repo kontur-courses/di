@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.TagsCloudContainer
+﻿using TagsCloudContainer.TagsCloudContainer.Interfaces;
+
+namespace TagsCloudContainer.TagsCloudContainer
 {
     public class WordValidator : IWordValidator
     {

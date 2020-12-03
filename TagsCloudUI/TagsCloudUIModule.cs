@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Autofac;
-using TagsCloudContainer;
 using TagsCloudContainer.TagsCloudContainer;
+using TagsCloudContainer.TagsCloudContainer.Interfaces;
 using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
@@ -18,8 +18,11 @@ namespace TagsCloudUI
                 p.Named<double>("distanceBetweenLoops"), p.Named<double>("angleDelta"))).As<ISpiral>();
             builder.Register((c, p) => new CircularCloudLayouter(p.Named<ISpiral>("spiral"), p.Named<Point>("center")))
                 .As<ILayouter>();
-            builder.Register(
-                (c, p) => new TagsCloudForm(p.Named<ITextParser>("parser"), p.Named<ILayouter>("layouter")));
+            builder.Register((c, p) =>
+                new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(p.Named<ITextParser>("parser"),
+                    p.Named<ILayouter>("layouter"))).As<ITagsContainer>();
+            builder.Register((c, p) =>
+                new TagsCloudForm(p.Named<ITagsContainer>("container"), p.Named<string>("text")));
         }
     }
 }

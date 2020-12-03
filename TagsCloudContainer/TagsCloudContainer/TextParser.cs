@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TagsCloudContainer.TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudContainer
 {

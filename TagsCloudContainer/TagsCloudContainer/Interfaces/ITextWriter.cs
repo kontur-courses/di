@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.TagsCloudContainer
+﻿namespace TagsCloudContainer.TagsCloudContainer.Interfaces
 {
     public interface ITextWriter
     {
