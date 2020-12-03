@@ -12,7 +12,6 @@ namespace TagsCloud.App.Commands
             this.fontFamilyProvider = fontFamilyProvider;
         }
 
-        public string Category { get; }
         public string Name { get; } = "setfont";
         public string Description { get; }
 

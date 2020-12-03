@@ -36,7 +36,6 @@ namespace TagsCloud.App.Commands
             this.fileReader = fileReader;
         }
 
-        public string Category { get; }
         public string Name { get; } = "tagcloud";
         public string Description { get; }
 

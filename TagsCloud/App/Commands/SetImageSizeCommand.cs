@@ -13,7 +13,6 @@ namespace TagsCloud.App.Commands
             this.imageHolder = imageHolder;
         }
 
-        public string Category { get; }
         public string Name { get; } = "setsize";
         public string Description { get; }
 

@@ -13,7 +13,6 @@ namespace TagsCloud.App.Commands
             this.colorSettingsProvider = colorSettingsProvider;
         }
 
-        public string Category { get; }
         public string Name { get; } = "setcolor";
         public string Description { get; }
 
