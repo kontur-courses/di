@@ -21,13 +21,17 @@ namespace TagCloud.UserInterfaces
                 new Point(arguments.CenterX, arguments.CenterY),
                 arguments.SpiralPitch,
                 arguments.SpiralStep);
+            
             DrawerSettings = new DrawerSettings(
                 new Size(arguments.Width, arguments.Height), 
                 ParseColorFromRGBString(arguments.BackgroundColor),
                 arguments.FontFamily,
                 arguments.MinFontSize, 
-                arguments.MaxFontSize);
+                arguments.MaxFontSize,
+                arguments.OrderByWeight);
+            
             FileReaderSettings = new FileReaderSettings(arguments.FilePath);
+            
             SaverSettings = new SaverSettings(arguments.OutputPath, arguments.OutputFileName, arguments.Extention);
         }
 

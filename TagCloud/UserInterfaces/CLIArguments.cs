@@ -39,6 +39,9 @@ namespace TagCloud.UserInterfaces
         [Option("maxfont", Required = false, HelpText = "Set max font size.", Default = 48)]
         public int MaxFontSize { get; set; }
 
+        [Option("weightorder", Required = false, HelpText = "Tag cloud place in weight order", Default = true)]
+        public bool OrderByWeight { get; set; }
+
         [Option("outpath", Required = false, HelpText = "Set output file path.")]
         public string OutputPath { get; set; }
 

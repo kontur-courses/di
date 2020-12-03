@@ -14,7 +14,6 @@ namespace TagCloud.Drawers
         
         private Bitmap bitmap;
         private Graphics graphics;
-        private SolidBrush brush = new SolidBrush(Color.Black);
 
         private Random random = new Random();
         
@@ -30,7 +29,10 @@ namespace TagCloud.Drawers
 
         public Bitmap DrawTagCloud(IReadOnlyCollection<TagInfo> tags)
         {
-            foreach (var tag in tags.OrderByDescending(t => t.Weight))
+            var tagsList = tags.ToList();
+            if (settings.OrderByWeight)
+                tagsList = tags.OrderByDescending(t => t.Weight).ToList();
+            foreach (var tag in tagsList)
                 DrawTag(tag);
             return bitmap;
         }
@@ -54,12 +56,6 @@ namespace TagCloud.Drawers
             return graphics.MeasureString(text, font).ToSize();
         }
 
-        private void DrawString(string text, Font font, Point textPosition, Color? color = null)
-        {
-            SetBrushColor(color);
-            graphics.DrawString(text, font, brush, textPosition);
-        }
-        
         private void SetBackGroundColor(Size pictureSize, Color backgroundColor)
         {
             FillRectangle(new Rectangle(new Point(0, 0), pictureSize),
@@ -68,17 +64,22 @@ namespace TagCloud.Drawers
         
         private void FillRectangle(Rectangle rectangle, Color? color = null)
         {
-            SetBrushColor(color);
+            using var brush = new SolidBrush(GetColor(color));
             graphics.FillRectangle(brush, rectangle);
         }
-
-        private void SetBrushColor(Color? color = null)
+        
+        private void DrawString(string text, Font font, Point textPosition, Color? color = null)
         {
-            var brushColor = color ?? GetRandomColor();
-            brush.Color = brushColor;
+            using var brush = new SolidBrush(GetColor(color));
+            graphics.DrawString(text, font, brush, textPosition);
         }
 
-        // TODO: сделать опционально
+        private Color GetColor(Color? color = null)
+        {
+            return color ?? GetRandomColor();
+        }
+
+        // TODO: сделать в Settings
         private Color GetRandomColor()
         {
             return Color.FromArgb(
@@ -92,7 +93,6 @@ namespace TagCloud.Drawers
         {
             bitmap?.Dispose();
             graphics?.Dispose();
-            brush?.Dispose();
         }
     }
 }

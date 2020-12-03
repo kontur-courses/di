@@ -9,19 +9,22 @@ namespace TagCloud.Settings
         public string FontFamily { get; }
         public int MaxFontSize { get; }
         public int MinFontSize { get; }
+        public bool OrderByWeight { get; }
 
         public DrawerSettings(
             Size imageSize, 
             Color backgroundColor, 
             string fontFamily, 
             int minFontSize,
-            int maxFontSize)
+            int maxFontSize,
+            bool orderByWeight)
         {
             ImageSize = imageSize;
             BackgroundColor = backgroundColor;
             FontFamily = fontFamily;
             MinFontSize = minFontSize;
             MaxFontSize = maxFontSize;
+            OrderByWeight = orderByWeight;
         }
     }
 }
