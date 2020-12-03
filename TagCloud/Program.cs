@@ -21,7 +21,7 @@ namespace TagCloud
             {
                 return 0;
             }
-            ConfigureServices(CLI.CanvasSize, CLI.BackgroundType);
+            ConfigureServices(CLI.CanvasSize, CLI.BackgroundType, CLI.FileName);
             
             var visualizer = serviceProvider.GetService<IVisualizer>();
             var pathToPng = visualizer.Visualize(CLI.FileName, CLI.StringFont, CLI.StringColor);
@@ -31,13 +31,14 @@ namespace TagCloud
             return 0;
         }
         
-        private static void ConfigureServices(Size size, Background background)
+        private static void ConfigureServices(Size size, Background background, string filename)
         {
             var services = new ServiceCollection();
 
             services.AddSingleton<IPathCreater, PathCreater>();
+            ConfigureTextReader(services, filename);
             services.AddSingleton<IWordParser, LiteratureTextParser>();
-            services.AddSingleton<IFrequencyAnalyzer, TextProcessing.FrequencyAnalyzer>();
+            services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer>();
             services.AddSingleton<ICanvas>(_ => new Canvas(size.Width, size.Height));
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
@@ -46,6 +47,16 @@ namespace TagCloud
             services.AddSingleton<IVisualizer, Visualizer>();
 
             serviceProvider = services.BuildServiceProvider();
+        }
+
+        private static void ConfigureTextReader(ServiceCollection services, string filename)
+        {
+            if (filename.EndsWith(".txt"))
+                services.AddSingleton<ITextReader, TxtTextReader>();
+            else if (filename.EndsWith(".docx"))
+                services.AddSingleton<ITextReader, DocxTextReader>();
+            else
+                throw new ArgumentException("Unhandled input format");
         }
 
         private static void ConfigureBackgroundPainterService(ServiceCollection services, Background background)

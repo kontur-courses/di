@@ -43,6 +43,10 @@ namespace TagCloud
             {
                 throw new ArgumentException("Input file not found");
             }
+            if (!fileName.EndsWith(".txt") && !fileName.EndsWith(".docx"))
+            {
+                throw new ArgumentException(@"Not supported format. Expected: .txt\.docx");
+            }
             return fileName;
         }
 
