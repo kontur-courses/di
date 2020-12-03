@@ -55,8 +55,8 @@ namespace WinUI
             this.fontSources = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font source");
             this.colorSources = UserInput.SingleChoice(ToDictionaryByName(colorSources), "Color source");
 
-            showVisualisationFrames = new UserInputBoolean("Show every visualisation frame", false);
-            pathSource = new UserInputField("Enter source file path");
+            showVisualisationFrames = UserInput.Boolean("Show every visualisation frame", false);
+            pathSource = UserInput.Field("Enter source file path");
         }
 
         public void Subscribe()
