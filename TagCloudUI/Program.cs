@@ -21,7 +21,6 @@ namespace TagCloudUI
         private static IContainer BuildContainer(IEnumerable<string> args)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<ConsoleUI>().As<IUserInterface>();
 
             var dlls = Directory.GetFiles(Environment.CurrentDirectory, "TagCloud*.dll");
             var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
