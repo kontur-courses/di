@@ -12,9 +12,9 @@ namespace TagCloud
             WordRectangles = new List<WordRectangle>();
         }
 
-        public abstract IWordsProvider WordsProvider { get; }
+        protected abstract IWordsProvider WordsProvider { get; }
 
-        public abstract IWordsFilter WordsFilter { get; }
+        protected abstract IWordsFilter WordsFilter { get; }
 
         public void GenerateTagCloud()
         {

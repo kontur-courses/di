@@ -18,8 +18,8 @@ namespace TagCloud
             WordsFilter = wordsFilter;
         }
 
-        public override IWordsProvider WordsProvider { get; }
-        public override IWordsFilter WordsFilter { get; }
+        protected override IWordsProvider WordsProvider { get; }
+        protected override IWordsFilter WordsFilter { get; }
         public IWordsFilter Filter { get; }
 
         public override WordRectangle PutNextWord(string word, Size rectangleSize)
