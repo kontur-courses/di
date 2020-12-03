@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -8,24 +9,23 @@ namespace WordCloudGenerator
     public class Painter
     {
         private readonly FontFamily fontFamily;
-        private readonly ImageFormat imageFormat;
         private readonly ILayouter layouter;
         private readonly IPalette palette;
         private Size imgSize;
 
-        public Painter(ImageFormat imageFormat, ILayouter layouter, FontFamily fontFamily, IPalette palette,
+        public Painter(ILayouter layouter, FontFamily fontFamily, IPalette palette,
             Size imgSize = default)
         {
-            this.imageFormat = imageFormat;
             this.layouter = layouter;
             this.fontFamily = fontFamily;
             this.palette = palette;
             this.imgSize = imgSize;
         }
 
-        public Bitmap Paint(Dictionary<string, int> words)
+        public Bitmap Paint(IEnumerable<GraphicString> words)
         {
-            FillLayouter(words);
+            var wordsArr = words.ToArray();
+            FillLayouter(wordsArr);
             var layoutRects = layouter.GetRectangles();
 
             if (imgSize == default)
@@ -33,34 +33,33 @@ namespace WordCloudGenerator
 
             var bitmap = new Bitmap(imgSize.Width, imgSize.Height);
             using var g = Graphics.FromImage(bitmap);
+            
             var rectIndex = 0;
             var shiftVector = CalculateShiftVector(layoutRects);
-
-            foreach (var (word, fontSize) in words)
+            var background = new Rectangle{Size = imgSize};
+            g.DrawRectangle(new Pen(palette.BackgroundColor), background );
+            g.FillRectangle(new SolidBrush(palette.BackgroundColor), background);
+            foreach (var word in wordsArr)
             {
-                var font = new Font(fontFamily, fontSize);
+                var font = new Font(fontFamily, word.FontSize);
                 using var brush = new SolidBrush(palette.GetNextColor());
-                g.DrawString(word, font, brush, layoutRects[rectIndex].Shift(shiftVector));
+                g.DrawString(word.Value, font, brush, layoutRects[rectIndex].Shift(shiftVector));
+                
                 rectIndex++;
             }
 
             return bitmap;
         }
 
-        private void FillLayouter(Dictionary<string, int> words)
+        private void FillLayouter(IEnumerable<GraphicString> words)
         {
             using var gForMeasure = Graphics.FromImage(new Bitmap(1, 1));
-            foreach (var (word, fontSize) in words)
+            foreach (var word in words)
             {
-                var font = new Font(fontFamily, fontSize);
-                var size = gForMeasure.MeasureString(word, font);
+                var font = new Font(fontFamily, word.FontSize);
+                var size = gForMeasure.MeasureString(word.Value, font);
                 layouter.PutNextRectangle(size);
             }
-        }
-
-        public void SaveImage(Image img, string path)
-        {
-            img.Save(path, imageFormat);
         }
 
         private static Size CalculateImageSize(RectangleF[] rectangles)
