@@ -14,9 +14,9 @@ namespace TagsCloudContainer.Actions
             this.imageSettings = imageSettings;
         }
 
-        public string Category => "Настройки";
+        public string Category => "Размеры";
         public string Name => "Изображение...";
-        public string Description => "Размеры изображения и шрифта тегов";
+        public string Description => "Размеры изображения";
 
         public void Perform()
         {

@@ -4,15 +4,15 @@ namespace TagsCloudContainer.TextAnalyzing
 {
     public class Tag
     {
-        public readonly int FontSize;
+        public readonly Font Font;
         public readonly Rectangle Rectangle;
         public readonly string Text;
 
-        public Tag(Rectangle rectangle, string text, int fontSize)
+        public Tag(Rectangle rectangle, string text, Font font)
         {
             Rectangle = rectangle;
             Text = text;
-            FontSize = fontSize;
+            Font = font;
         }
     }
 }

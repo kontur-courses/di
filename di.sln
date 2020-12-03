@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{FDFE39A8-442E-4BD9-8F6E-D05D0BCE0DBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{B15A941F-5CEF-43E8-9D81-ED0D1A2BC7E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudTests", "TagsCloudTests\TagsCloudTests.csproj", "{117EFF27-D1E4-438D-B376-F906FE126D4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{FDFE39A8-442E-4BD9-8F6E-D05D0BCE0DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDFE39A8-442E-4BD9-8F6E-D05D0BCE0DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDFE39A8-442E-4BD9-8F6E-D05D0BCE0DBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B15A941F-5CEF-43E8-9D81-ED0D1A2BC7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B15A941F-5CEF-43E8-9D81-ED0D1A2BC7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B15A941F-5CEF-43E8-9D81-ED0D1A2BC7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B15A941F-5CEF-43E8-9D81-ED0D1A2BC7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117EFF27-D1E4-438D-B376-F906FE126D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117EFF27-D1E4-438D-B376-F906FE126D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117EFF27-D1E4-438D-B376-F906FE126D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117EFF27-D1E4-438D-B376-F906FE126D4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,6 +46,10 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -75,18 +80,29 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeCantSpell.Hunspell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCantSpell.Hunspell.3.0.1\lib\net45\WeCantSpell.Hunspell.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\FilesSettingsAction.cs" />
+    <Compile Include="Actions\FontSettingsAction.cs" />
+    <Compile Include="Actions\GradientSettingsAction.cs" />
     <Compile Include="Actions\ImageSettingsAction.cs" />
     <Compile Include="Actions\PaletteSettingsAction.cs" />
+    <Compile Include="Actions\RandomColorsSettingsAction.cs" />
     <Compile Include="Actions\SaveImageAction.cs" />
     <Compile Include="Actions\SpiralTagCloudVisualizationAction.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="CloudLayouter\SpiralCloudLayouter.cs" />
+    <Compile Include="Common\ColorSettingsProvider.cs" />
     <Compile Include="Common\FilesSettings.cs" />
+    <Compile Include="Common\FontSettings.cs" />
+    <Compile Include="Common\Gradient.cs" />
     <Compile Include="Common\IImageHolder.cs" />
+    <Compile Include="Common\IColorSettings.cs" />
     <Compile Include="Common\Palette.cs" />
+    <Compile Include="Common\RandomColors.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,9 +118,12 @@
     <Compile Include="Common\ImageSettings.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="CloudLayouter\Spiral.cs" />
+    <Compile Include="TextAnalyzing\DocFilesReader.cs" />
+    <Compile Include="TextAnalyzing\ITextFileReader.cs" />
     <Compile Include="TextAnalyzing\Tag.cs" />
     <Compile Include="TextAnalyzing\TagCreator.cs" />
     <Compile Include="TextAnalyzing\TextAnalyzer.cs" />
+    <Compile Include="TextAnalyzing\TxtFileReader.cs" />
     <Compile Include="UiActions\IUiAction.cs" />
     <Compile Include="UiActions\UiActionExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -115,6 +134,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -6,20 +6,20 @@ namespace TagsCloudContainer
 {
     public class Painter
     {
+        private readonly ColorSettingsProvider colorSettingsProvider;
         private readonly IImageHolder imageHolder;
-        private readonly Palette palette;
         private readonly TagCreator tagCreator;
 
-        public Painter(Palette palette, IImageHolder imageHolder, TagCreator tagCreator)
+        public Painter(ColorSettingsProvider colorSettingsProvider, IImageHolder imageHolder, TagCreator tagCreator)
         {
             this.imageHolder = imageHolder;
-            this.palette = palette;
+            this.colorSettingsProvider = colorSettingsProvider;
             this.tagCreator = tagCreator;
         }
 
         public void PaintTag(Tag tag, Graphics graphics)
         {
-            graphics.DrawString(tag.Text, new Font("Times New Roman", tag.FontSize), new SolidBrush(palette.TextColor),
+            graphics.DrawString(tag.Text, tag.Font, new SolidBrush(colorSettingsProvider.ColorSettings.GetNextColor()),
                 tag.Rectangle);
             graphics.Save();
         }
@@ -29,7 +29,7 @@ namespace TagsCloudContainer
             var tags = tagCreator.GetTagsForVisualization();
             using (var graphics = imageHolder.StartDrawing())
             {
-                graphics.Clear(palette.BackgroundColor);
+                graphics.Clear(colorSettingsProvider.ColorSettings.BackgroundColor);
                 foreach (var tag in tags) PaintTag(tag, graphics);
             }
 

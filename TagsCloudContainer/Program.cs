@@ -11,9 +11,6 @@ namespace TagsCloudContainer
 {
     internal static class Program
     {
-        /// <summary>
-        ///     Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
         private static void Main()
         {
@@ -21,14 +18,21 @@ namespace TagsCloudContainer
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
                 .InstancePerLifetimeScope();
             builder.RegisterType<ImageSettings>().InstancePerLifetimeScope();
+            builder.RegisterType<FontSettings>().InstancePerLifetimeScope();
             builder.RegisterType<FilesSettings>().InstancePerLifetimeScope();
             builder.RegisterType<SpiralCloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<TextAnalyzer>();
             builder.RegisterType<TagCreator>();
             builder.RegisterType<AppSettings>();
-            builder.RegisterType<Palette>().InstancePerLifetimeScope();
+            builder.RegisterType<Palette>();
+            builder.RegisterType<Gradient>();
+            builder.RegisterType<RandomColors>();
+            builder.RegisterType<ColorSettingsProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
+            builder.RegisterType<FontSettingsAction>().As<IUiAction>();
+            builder.RegisterType<GradientSettingsAction>().As<IUiAction>();
+            builder.RegisterType<RandomColorsSettingsAction>().As<IUiAction>();
             builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
             builder.RegisterType<FilesSettingsAction>().As<IUiAction>();
             builder.RegisterType<SpiralTagCloudVisualizationAction>().As<IUiAction>();

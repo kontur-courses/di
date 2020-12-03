@@ -16,8 +16,8 @@ namespace TagsCloudContainer.Actions
             this.imageHolder = imageHolder;
         }
 
-        public string Category => "Файл";
-        public string Name => "Сохранить...";
+        public string Category => "Файлы";
+        public string Name => "Сохранить облако тегов...";
         public string Description => "Сохранить изображение в файл";
 
         public void Perform()
@@ -25,10 +25,10 @@ namespace TagsCloudContainer.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(settings.Directory),
+                InitialDirectory = Path.GetFullPath(settings.DirectoryToSavePictures),
                 DefaultExt = "png",
                 FileName = settings.PictureFileName,
-                Filter = "Изображения (*.png)|*.png"
+                Filter = "Image Files(*.BMP;*.JPEG;*.JPG;*.PNG;)|*.BMP;*.JPEG;*.JPG;*.PNG|All files (*.*)|*.*"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

@@ -12,9 +12,9 @@ namespace TagsCloudContainer.Actions
             this.filesSettings = filesSettings;
         }
 
-        public string Category => "Настройки";
-        public string Name => "Файлы...";
-        public string Description => "Файлы";
+        public string Category => "Файлы";
+        public string Name => "Данные...";
+        public string Description => "Файлы с данными для облака тегов";
 
         public void Perform()
         {

@@ -9,7 +9,6 @@ namespace TagsCloudContainer.CloudLayouter
     public class SpiralCloudLayouter : ICloudLayouter
     {
         private readonly ImageSettings imageSettings;
-        public List<Rectangle> Rectangles { get; private set; }
         private Spiral spiral;
 
         public SpiralCloudLayouter(ImageSettings imageSettings)
@@ -19,6 +18,8 @@ namespace TagsCloudContainer.CloudLayouter
             spiral = new Spiral(center);
             Rectangles = new List<Rectangle>();
         }
+
+        public List<Rectangle> Rectangles { get; private set; }
 
         public void Dispose()
         {
