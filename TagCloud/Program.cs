@@ -16,7 +16,11 @@ namespace TagCloud
         {
             var CLI = new CommandLineInterface();
             CLI.ConfigureCLI(app);
-            app.Execute(args);
+            var executionResult = app.Execute(args);
+            if (executionResult == 0)
+            {
+                return 0;
+            }
             ConfigureServices(CLI.CanvasSize, CLI.BackgroundType);
             
             var visualizer = serviceProvider.GetService<IVisualizer>();

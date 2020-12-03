@@ -29,7 +29,7 @@ namespace TagCloud
                 StringFont = optionFont.HasValue() ? ArgumentParser.GetFont(optionFont.Value()) : new FontFamily("Arial");
                 StringColor = optionStringColor.HasValue() ? ArgumentParser.ParseColor(optionStringColor.Value()) : Color.Black;
 
-                return 0;
+                return 1;
             });
         }
 
