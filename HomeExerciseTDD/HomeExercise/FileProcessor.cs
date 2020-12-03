@@ -1,30 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Principal;
 
 namespace HomeExerciseTDD
 {
     public class FileProcessor : IFileProcessor
     {
-        private HashSet<string> boringWords;
-
-        public FileProcessor(HashSet<string> boringWords)
+        private readonly string pathWords;
+        private string pathBoringWords;
+        private List<string> exludedWords = new List<string>();
+        
+        public FileProcessor(string pathWords, string pathBoringWords)
         {
-            this.boringWords = boringWords;
+            this.pathWords = pathWords;
+            this.pathBoringWords = pathBoringWords;
         }
         
-        public Dictionary<string, int> GetWords(string path)
+        public Dictionary<string, int> GetWords()
         {
-            //??
             var wordFrequency = new Dictionary<string, int>();
-            var word = string.Empty;
+            var words = File.ReadAllLines(pathWords);
+            if(pathBoringWords!=null)
+                exludedWords = File.ReadAllLines(pathBoringWords).ToList();
 
-            using StreamReader fileReader = new StreamReader(path);
-            word = fileReader.ReadLine().ToLower();
-            if(!boringWords.Contains(word))    
-                wordFrequency[word]++;
-
+            var formattedWords = words
+                .Where(w=>!exludedWords.Contains(w))
+                .Select(w => w.ToLower()).ToList();
+            foreach (var word in formattedWords)
+            {
+                wordFrequency[word] = wordFrequency.ContainsKey(word) ? ++wordFrequency[word] : 1;
+            }
+            
             return wordFrequency;
         }
     }
