@@ -27,9 +27,14 @@ namespace CircularCloudTests
         [Test]
         public void GetNextPoint_Void_ReturnsDifferentPoints()
         {
-            var set = new HashSet<Point>();
-            for (var i = 0; i < 10000; i++) set.Add(spiral.GetNextPoint());
-            set.Count.Should().Be(10000);
+            var next = spiral.GetNextPoint();
+            for (var i = 0; i < 10000; i++)
+            {
+                var current = next;
+                next = spiral.GetNextPoint();
+                GetDistanceBetwenPoints(current, spiral.Center).Should()
+                    .BeLessThan(GetDistanceBetwenPoints(next, spiral.Center));
+            }
         }
 
         [Test]
@@ -39,13 +44,16 @@ namespace CircularCloudTests
             for (var i = 0; i < 10000; i++)
             {
                 var currentPoint = spiral.GetNextPoint();
-                var distance = Math.Sqrt((previousPoint.X - currentPoint.X) * (previousPoint.X - currentPoint.X) +
-                                         (previousPoint.Y - currentPoint.Y) * (previousPoint.Y - currentPoint.Y));
+                var distance = GetDistanceBetwenPoints(previousPoint, currentPoint);
                 distance.Should().BeLessOrEqualTo(5,
                     "distance between points should be less or equal to 5 pixels. " +
                     $"Failed with Point number {i + 1} = {previousPoint} , and point number {i + 2} = {currentPoint}");
                 previousPoint = currentPoint;
             }
         }
+
+        private static double GetDistanceBetwenPoints(Point first, Point second) =>
+            Math.Sqrt((first.X - second.X) * (first.X - second.X) +
+                      (first.Y - second.Y) * (first.Y - second.Y));
     }
 }

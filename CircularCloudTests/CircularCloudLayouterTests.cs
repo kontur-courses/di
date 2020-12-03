@@ -16,7 +16,7 @@ namespace CircularCloudTests
         [SetUp]
         public void SetUp()
         {
-            random = new Random();
+            random = new Random(3559);
             cloud = new CircularCloudLayouter(new Point(1000, 1000));
         }
 
@@ -25,9 +25,9 @@ namespace CircularCloudTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
-            RectanglePainter.DrawRectanglesInFile(cloud.GetAllRectangles());
-            Console.WriteLine("Tag cloud visualization saved to file" + Directory.GetCurrentDirectory() +
-                              "\\visualisation.bmp");
+            var path = Directory.GetCurrentDirectory() + $"\\{TestContext.CurrentContext.Test.Name}.bmp";
+            RectanglePainter.DrawRectanglesInFile(cloud.GetAllRectangles(), path);
+            Console.WriteLine("Tag cloud visualization saved to file " + path);
         }
 
         private CircularCloudLayouter cloud;
@@ -87,14 +87,14 @@ namespace CircularCloudTests
             {
                 var pointsOfCorners = new[]
                 {
-                    new Size(rectangle.Size.Width, 0),
-                    new Size(rectangle.Size.Width, rectangle.Size.Height),
-                    new Size(0, rectangle.Size.Height),
-                    new Size(0, 0)
+                    new Point(rectangle.Right, rectangle.Top),
+                    new Point(rectangle.Right, rectangle.Bottom),
+                    new Point(rectangle.Left, rectangle.Bottom),
+                    new Point(rectangle.Left, rectangle.Top)
                 };
-                return pointsOfCorners.Max(size =>
+                return pointsOfCorners.Max(corner =>
                 {
-                    var point = rectangle.Location + size - new Size(cloud.Center);
+                    var point = corner - (Size) cloud.Center;
                     return Math.Sqrt(point.X * point.X + point.Y * point.Y);
                 });
             });

@@ -16,7 +16,7 @@ namespace CircularCloudTests
         [SetUp]
         public void SetUp()
         {
-            random = new Random();
+            random = new Random(3559);
             cloud = new RectangleLayouter(new Point(1000, 1000));
         }
 
@@ -25,9 +25,9 @@ namespace CircularCloudTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
                 return;
-            RectanglePainter.DrawRectanglesInFile(cloud.GetAllRectangles());
-            Console.WriteLine("Tag cloud visualization saved to file" + Directory.GetCurrentDirectory() +
-                              "\\visualisation.bmp");
+            var path = Directory.GetCurrentDirectory() + $"\\{TestContext.CurrentContext.Test.Name}.bmp";
+            RectanglePainter.DrawRectanglesInFile(cloud.GetAllRectangles(), path);
+            Console.WriteLine("Tag cloud visualization saved to file " + path);
         }
 
         private RectangleLayouter cloud;
