@@ -9,12 +9,11 @@ namespace TagsCloud.App
     public class TagCloudLayouter
     {
         private readonly ILayoutAlgorithm layoutAlgorithm;
-        private readonly List<Rectangle> placedRectangles;
+        private readonly List<Rectangle> placedRectangles = new List<Rectangle>();
 
         public TagCloudLayouter(ILayoutAlgorithm layoutAlgorithm)
         {
             this.layoutAlgorithm = layoutAlgorithm;
-            placedRectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
