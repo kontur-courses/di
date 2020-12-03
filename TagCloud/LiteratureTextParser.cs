@@ -10,6 +10,9 @@ namespace TagCloud
         private IPathCreater creater;
         private static readonly char[] separators = {' ', '.', ',', ':', '!'};
         private const int minWordLength = 3;
+        private static string[] unneccesaryWords = 
+            {"мочь", "этот", "когда", "чтобы", "даже", "между", "если", "несколько", "который", "какой", "только",
+                "очень", "более", "ничто", "кто", "он", "такой", "однако", "либо", "оный", "такой", "него"};
         
             
         public LiteratureTextParser(IPathCreater creater)
@@ -27,8 +30,9 @@ namespace TagCloud
                 .SelectMany(line => line.Split(separators, StringSplitOptions.RemoveEmptyEntries))
                 .Select(word => word.ToLower())
                 .Select(word => GetRootForWord(word, dictionary))
-                .Where(str => !(str is null))
-                .Where(str => str.Length > minWordLength)
+                .Where(word => !(word is null))
+                .Where(word => word.Length > minWordLength)
+                .Where(word => !unneccesaryWords.Contains(word))
                 .ToArray();
         }
 
