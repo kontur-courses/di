@@ -146,7 +146,7 @@ namespace WinUI
                 }
 
                 return dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
-                    .OrderBy(x => x.Frequency)
+                    .OrderByDescending(x => x.Frequency)
                     .ToArray();
             }, cancellationToken);
         }

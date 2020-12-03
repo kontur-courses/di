@@ -40,7 +40,6 @@ namespace WinUI
             //По какой-то причине Increment() кидает InvalidOperationException только при отладке приложения :\\
             if (!Debugger.IsAttached)
                 progressBar.Increment(1);
-            progressBar.Value += 1;
         }
 
         public void Dispose()
