@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.CloudLayouter;
 
-namespace TagsCloudContainerTests.CloudLayouterTests
+namespace TagsCloudTests.CloudLayouterTests
 {
     internal class SpiralTests
     {

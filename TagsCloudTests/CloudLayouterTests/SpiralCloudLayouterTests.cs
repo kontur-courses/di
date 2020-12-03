@@ -6,7 +6,7 @@ using TagsCloudContainer;
 using TagsCloudContainer.CloudLayouter;
 using TagsCloudContainer.Common;
 
-namespace TagsCloudContainerTests.CloudLayouterTests
+namespace TagsCloudTests.CloudLayouterTests
 {
     public class SpiralCloudLayouterTests
     {

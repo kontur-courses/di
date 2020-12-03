@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
 
-namespace TagsCloudContainerTests.CloudLayouterTests
+namespace TagsCloudTests.CloudLayouterTests
 {
     internal class PointExtensionsTests
     {
