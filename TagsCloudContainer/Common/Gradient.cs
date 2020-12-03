@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.TextAnalyzing;
 
@@ -8,9 +9,9 @@ namespace TagsCloudContainer.Common
     {
         private readonly TagCreator tagCreator;
         private Color currentColor;
-        private double deltaB;
-        private double deltaG;
-        private double deltaR;
+        private int deltaB;
+        private int deltaG;
+        private int deltaR;
         private int numberOfColor;
         private int tagsCount;
 
@@ -27,9 +28,9 @@ namespace TagsCloudContainer.Common
         {
             if (numberOfColor == 0)
                 RenewGradient();
-            var currentR = GetNumberOfColor(currentColor.R + deltaR, ColorTo.R);
-            var currentG = GetNumberOfColor(currentColor.G + deltaG, ColorTo.G);
-            var currentB = GetNumberOfColor(currentColor.B + deltaB, ColorTo.B);
+            var currentR = GetNumberOfColor(currentColor.R + deltaR);
+            var currentG = GetNumberOfColor(currentColor.G + deltaG);
+            var currentB = GetNumberOfColor(currentColor.B + deltaB);
             currentColor = Color.FromArgb(currentR, currentG, currentB);
             numberOfColor++;
             if (numberOfColor == tagsCount)
@@ -37,23 +38,24 @@ namespace TagsCloudContainer.Common
             return currentColor;
         }
 
-        public int GetNumberOfColor(double calculatedNumber, int colorToNumber)
-        {
-            var intCalculatedNumber = (int)calculatedNumber;
-            if (intCalculatedNumber < 0)
-                return 0;
-            if (intCalculatedNumber > 255)
-                return 255;
-            return intCalculatedNumber;
-        }
-
         public void RenewGradient()
         {
             tagsCount = tagCreator.GetTagsForVisualization().Count();
-            deltaR = (double)(ColorTo.R - ColorFrom.R) / tagsCount;
-            deltaG = (double)(ColorTo.G - ColorFrom.G) / tagsCount;
-            deltaB = (double)(ColorTo.B - ColorFrom.B) / tagsCount;
+            deltaR = GetDelta(ColorTo.R, ColorFrom.R);
+            deltaG = GetDelta(ColorTo.G, ColorFrom.G);
+            deltaB = GetDelta(ColorTo.B, ColorFrom.B);
             currentColor = ColorFrom;
+        }
+
+        private int GetNumberOfColor(int calculatedNumber)
+        {
+            return Math.Min(Math.Max(calculatedNumber, 0), 255);
+        }
+
+        private int GetDelta(int colorTo, int colorFrom)
+        {
+            var delta = (double) (colorTo - colorFrom) / tagsCount;
+            return (int) (delta > 0 ? Math.Max(delta, 1) : delta < 0 ? Math.Min(delta, -1) : 0);
         }
     }
 }
