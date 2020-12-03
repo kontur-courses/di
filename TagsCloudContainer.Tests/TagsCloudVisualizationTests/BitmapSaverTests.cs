@@ -41,10 +41,12 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 
         private static IEnumerable<TestCaseData> PathTestCases()
         {
-            yield return new TestCaseData($"<html></html>").SetName("Directory dont exist");
-            yield return new TestCaseData($".. Dir text.txt").SetName("Not platform separator");
-            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text txt").SetName("Doesnt have dot separator");
-            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text.").SetName("Doesnt have filename extension");
+            yield return new TestCaseData("<html></html>").SetName("Directory dont exist");
+            yield return new TestCaseData(".. Dir text.txt").SetName("Not platform separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text txt").SetName(
+                "Doesnt have dot separator");
+            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text.").SetName(
+                "Doesnt have filename extension");
         }
     }
 }

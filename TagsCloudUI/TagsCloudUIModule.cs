@@ -11,18 +11,16 @@ namespace TagsCloudUI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<TextWriter>().As<ITextWriter>();
-            builder.RegisterType<TextParser>().As<ITextParser>();
-            builder.RegisterType<WordValidator>().As<IWordValidator>();
-            builder.Register((c, p) => new ArchimedeanSpiral(p.Named<Point>("center"),
-                p.Named<double>("distanceBetweenLoops"), p.Named<double>("angleDelta"))).As<ISpiral>();
-            builder.Register((c, p) => new CircularCloudLayouter(p.Named<ISpiral>("spiral"), p.Named<Point>("center")))
-                .As<ILayouter>();
-            builder.Register((c, p) =>
-                new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(p.Named<ITextParser>("parser"),
-                    p.Named<ILayouter>("layouter"))).As<ITagsContainer>();
-            builder.Register((c, p) =>
-                new TagsCloudForm(p.Named<ITagsContainer>("container"), p.Named<string>("text")));
+            var parser = new TextParser(new WordValidator());
+            var spiral = new ArchimedeanSpiral(new Point(200, 200), 0.2, 1.0);
+            var layouter = new CircularCloudLayouter(spiral, new Point(200, 200));
+            var container = new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(parser, layouter);
+
+            builder.RegisterInstance(parser).As<ITextParser>();
+            builder.RegisterInstance(spiral).As<ISpiral>();
+            builder.RegisterInstance(layouter).As<ILayouter>();
+            builder.RegisterInstance(container).As<ITagsContainer>();
+            builder.RegisterType<TagsCloudForm>();
         }
     }
 }

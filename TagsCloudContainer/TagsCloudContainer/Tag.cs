@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudContainer
 {
