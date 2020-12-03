@@ -39,7 +39,8 @@ namespace WinUI
             builder.RegisterType<FileWordsReader>()
                 .AsImplementedInterfaces()
                 .AsSelf()
-                .WithParameter("delimiters", new[] {',', '.', ' ', '!', '?', '\n', '\r', '\t', '&', '#', '-'});
+                .WithParameter("delimiters",
+                    new[] {',', '.', ' ', '!', '?', '\n', '\r', '\t', '&', '#', '-', '(', ')'});
 
             builder.RegisterType<CircularTagCloudLayouter>()
                 .AsImplementedInterfaces()

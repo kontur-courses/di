@@ -21,14 +21,15 @@ namespace WinUI
     {
         private readonly IGui gui;
         private readonly TagCloudGenerator cloudGenerator;
-        private readonly UserInputSelector<IFileWordsReader> readers;
-        private readonly UserInputSelector<IWordFilter> filters;
-        private readonly UserInputSelector<IWordNormalizer> normalizers;
-        private readonly UserInputSelector<IFileResultWriter> writers;
-        private readonly UserInputSelector<ITagCloudLayouter> layouters;
-        private readonly UserInputSelector<IColorSource> colorSources;
-        private readonly UserInputSelector<IFontSource> fontSources;
+        private readonly UserInputSingleChoice<IFileWordsReader> readers;
+        private readonly UserInputMultipleChoice<IWordFilter> filters;
+        private readonly UserInputSingleChoice<IWordNormalizer> normalizers;
+        private readonly UserInputSingleChoice<IFileResultWriter> writers;
+        private readonly UserInputSingleChoice<ITagCloudLayouter> layouters;
+        private readonly UserInputSingleChoice<IBrushSource> colorSources;
+        private readonly UserInputSingleChoice<IFontSource> fontSources;
         private readonly UserInputField pathSource;
+        private readonly UserInputBoolean showVisualisationFrames;
         private readonly CloudVisualiser visualiser;
 
         public App(IGui gui,
@@ -39,30 +40,32 @@ namespace WinUI
             IEnumerable<IWordNormalizer> normalizers,
             IEnumerable<ITagCloudLayouter> layouters,
             IEnumerable<IFontSource> fontSources,
-            IEnumerable<IColorSource> colorSources,
+            IEnumerable<IBrushSource> colorSources,
             IEnumerable<IFileResultWriter> writers)
         {
             this.gui = gui;
             this.cloudGenerator = cloudGenerator;
             this.visualiser = visualiser;
 
-            this.readers = CreateInputFrom(ToDictionaryByName(readers), "Choose words file reader");
-            this.filters = CreateInputFrom(ToDictionaryByName(filters), "Choose words filtering method");
-            this.normalizers = CreateInputFrom(ToDictionaryByName(normalizers), "Choose words normalization method");
-            this.writers = CreateInputFrom(ToDictionaryByName(writers), "Chose result writing method");
-            this.layouters = CreateInputFrom(ToDictionaryByName(layouters), "Choose layouting algorithm");
-            this.colorSources = CreateInputFrom(ToDictionaryByName(colorSources), "Choose color source");
-            this.fontSources = CreateInputFrom(ToDictionaryByName(fontSources), "Choose font source");
+            this.readers = UserInput.SingleChoice(ToDictionaryByName(readers), "Words file reader");
+            this.filters = UserInput.MultipleChoice(ToDictionaryByName(filters), "Words filtering method");
+            this.writers = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
+            this.layouters = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
+            this.normalizers = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
+            this.fontSources = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font source");
+            this.colorSources = UserInput.SingleChoice(ToDictionaryByName(colorSources), "Color source");
 
+            showVisualisationFrames = new UserInputBoolean("Show every visualisation frame", false);
             pathSource = new UserInputField("Enter source file path");
         }
 
         public void Subscribe()
         {
             gui.ExecutionRequested += ExecutionRequested;
-            colorSources.SelectedChanged += x => gui.SetImageBackground(x.Value.BackgroundColor);
+            colorSources.AfterSelectionChanged += x => gui.SetImageBackground(x.Value.BackgroundColor);
 
             gui.AddUserInput(pathSource);
+            gui.AddUserInput(showVisualisationFrames);
             gui.AddUserInput(readers);
             gui.AddUserInput(filters);
             gui.AddUserInput(normalizers);
@@ -82,7 +85,13 @@ namespace WinUI
 
                 using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
                 {
-                    var image = await CreateImageAsync(words, lockingContext.CancellationToken, pbContext.Increment);
+                    var image = await CreateImageAsync(words, lockingContext.CancellationToken, dc =>
+                    {
+                        pbContext.Increment();
+                        if (showVisualisationFrames.Value && dc.Image != null)
+                            gui.SetImage(dc.Image);
+                    });
+
                     gui.SetImage(image);
                     writers.Selected.Value.Save(
                         image.FillBackground(colorSources.Selected.Value.BackgroundColor),
@@ -92,7 +101,7 @@ namespace WinUI
         }
 
         private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken,
-            Action? callback = null)
+            Action<DrawingContext>? callback = null)
         {
             if (callback != null)
                 cloudGenerator.AfterWordDrawn += callback;
@@ -118,7 +127,7 @@ namespace WinUI
             return await Task.Run(() =>
             {
                 var words = readers.Selected.Value.EnumerateWordsFrom(sourcePath)
-                    .Where(filters.Selected.Value.IsValidWord);
+                    .Where(w => filters.Selected.All(f => f.Value.IsValidWord(w)));
 
                 var normalizedWords = normalizers.Selected.Value.Normalize(words);
 
@@ -145,15 +154,5 @@ namespace WinUI
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
             source.Where(x => x != null)
                 .ToDictionary(x => x.GetType().GetCustomAttribute<VisibleNameAttribute>()?.Name ?? x.GetType().Name);
-
-        private static UserInputSelector<TService> CreateInputFrom<TService>(IDictionary<string, TService> source,
-            string description)
-        {
-            var availableOptions = source.Select(x => new UserInputSelectorItem<TService>(x.Key, x.Value))
-                .OrderBy(x => x.Name)
-                .ToArray();
-
-            return new UserInputSelector<TService>(description, availableOptions);
-        }
     }
 }

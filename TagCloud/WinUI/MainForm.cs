@@ -12,10 +12,12 @@ namespace WinUI
 {
     public interface IGui
     {
-        void SetImage(Image newImage);
+        void SetImage(Image? newImage);
         UiLockingOperation StartLockingOperation();
-        void AddUserInput<T>(UserInputSelector<T> inputModel);
+        void AddUserInput<T>(UserInputSingleChoice<T> inputModel);
+        void AddUserInput<T>(UserInputMultipleChoice<T> inputModel);
         void AddUserInput(UserInputField fieldInput);
+        void AddUserInput(UserInputBoolean booleanInput);
         void SetImageBackground(Color color);
 
         event Action? ExecutionRequested;
@@ -64,7 +66,7 @@ namespace WinUI
             void StopButtonClickHandler(object _, EventArgs __) => ctSource.Cancel();
         }
 
-        public void AddUserInput<T>(UserInputSelector<T> inputModel)
+        public void AddUserInput<T>(UserInputSingleChoice<T> inputModel)
         {
             CreateUserInputContainer(inputModel.Description, () =>
             {
@@ -80,6 +82,23 @@ namespace WinUI
             });
         }
 
+        public void AddUserInput<T>(UserInputMultipleChoice<T> inputModel)
+        {
+            CreateUserInputContainer(inputModel.Description, () =>
+            {
+                var treeView = new TreeView {CheckBoxes = true, AutoSize = true, Scrollable = true};
+
+                treeView.Nodes.AddRange(
+                    inputModel.Available
+                        .Select(x => new TreeNode(x.Name) {Checked = inputModel.IsSelected(x.Name)})
+                        .ToArray()
+                );
+
+                treeView.AfterCheck += (_, args) => inputModel.SetSelection(args.Node.Text, args.Node.Checked);
+                return treeView;
+            });
+        }
+
         public void AddUserInput(UserInputField fieldInput)
         {
             CreateUserInputContainer(fieldInput.Description, () =>
@@ -90,12 +109,22 @@ namespace WinUI
             });
         }
 
+        public void AddUserInput(UserInputBoolean booleanInput)
+        {
+            CreateUserInputContainer(null, () =>
+            {
+                var checkBox = new CheckBox {Text = booleanInput.Description};
+                checkBox.CheckedChanged += (_, __) => booleanInput.SetValue(checkBox.Checked);
+                return checkBox;
+            });
+        }
+
         private void ExecuteButton_Click(object sender, EventArgs args)
         {
             ExecutionRequested?.Invoke();
         }
 
-        private void CreateUserInputContainer(string showingText, Func<Control> innerCreator)
+        private void CreateUserInputContainer(string? showingText, Func<Control> innerCreator)
         {
             var offset = new Size(10, 5);
             var startY = rightPanel.Controls.Cast<Control>().Select(x => x.Bottom).MaxOrDefault();
@@ -108,16 +137,21 @@ namespace WinUI
             rightPanel.Controls.Add(panel);
 
             var itemWidth = (panel.Size - offset * 2).Width;
-            var label = new Label
+            var nextY = offset.Height;
+            if (showingText != null)
             {
-                Text = showingText,
-                Location = new Point(offset),
-                Width = itemWidth
-            };
-            panel.Controls.Add(label);
+                var label = new Label
+                {
+                    Text = showingText,
+                    Location = new Point(offset.Width, nextY),
+                    Width = itemWidth
+                };
+                panel.Controls.Add(label);
+                nextY = label.Bottom + offset.Height / 3;
+            } 
 
             var inner = innerCreator.Invoke();
-            inner.Location = new Point(label.Location.X, label.Bottom + offset.Height / 3);
+            inner.Location = new Point(offset.Width, nextY);
             inner.Width = itemWidth;
             panel.Controls.Add(inner);
 

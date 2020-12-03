@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
     public interface IFontSource
     {
-        Font GetFont(string word, int totalWordsCount, int positionInTop);
+        IDictionary<string, Font> GetFontsForAll(WordWithFrequency[] allWords);
     }
 }

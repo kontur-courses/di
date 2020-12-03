@@ -13,31 +13,38 @@ namespace TagsCloudVisualisation.Visualisation
     {
         public Image DrawWords(
             Point centerPointOffset,
-            IEnumerable<(Rectangle position, FormattedWord toDraw)> words)
+            IEnumerable<(Rectangle position, FormattedWord toDraw)> words,
+            Action<DrawingContext>? callback = null)
         {
-            Graphics? graphics = null;
-            Image? image = null;
+            var context = new DrawingContext();
 
             foreach (var (position, toDraw) in words)
             {
-                var wordPosition = GetWordRectangle(graphics, toDraw, position, centerPointOffset);
-                var resized = EnsureBitmapSize(image, Rectangle.Ceiling(wordPosition));
-                UpdateGraphicsIfRequired(resized);
-                
-                wordPosition.Location += image!.Size / 2;
-                graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
+                DrawNextWord(centerPointOffset, toDraw, position, context);
+                callback?.Invoke(context);
             }
 
-            return image!;
+            return context.Image!;
+        }
+
+        private static void DrawNextWord(Point centerPointOffset, FormattedWord toDraw, Rectangle position,
+            DrawingContext context)
+        {
+            var wordPosition = GetWordRectangle(context.Graphics, toDraw, position, centerPointOffset);
+            var resized = EnsureBitmapSize(context.Image, Rectangle.Ceiling(wordPosition));
+            UpdateGraphicsIfRequired(resized);
+            wordPosition.Location += context.Image!.Size / 2;
+            context.Graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
 
             void UpdateGraphicsIfRequired(Image newImage)
             {
-                if (newImage != image)
+                if (newImage != context.Image)
                 {
-                    graphics?.Dispose();
-                    graphics = Graphics.FromImage(newImage);
+                    context.Graphics?.Dispose();
+                    context.Graphics = Graphics.FromImage(newImage);
                 }
-                image = newImage;
+
+                context.Image = newImage;
             }
         }
 
@@ -97,5 +104,11 @@ namespace TagsCloudVisualisation.Visualisation
         }
 
         private static int MaxAbs(params int[] numbers) => numbers.Select(Math.Abs).Max();
+    }
+
+    public class DrawingContext
+    {
+        public Graphics? Graphics { get; set; }
+        public Image? Image { get; set; }
     }
 }

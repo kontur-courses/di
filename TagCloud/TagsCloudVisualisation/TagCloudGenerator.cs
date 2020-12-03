@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace TagsCloudVisualisation
         private readonly Graphics stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
 
         public Task<Image> DrawWordsAsync(IFontSource fontSource,
-            IColorSource colorSource,
+            IBrushSource brushSource,
             ITagCloudLayouter layouter,
             CloudVisualiser visualiser,
             WordWithFrequency[] wordsCollection,
@@ -27,29 +28,37 @@ namespace TagsCloudVisualisation
 
             return Task.Run(() =>
             {
+                var fontsCollection = fontSource.GetFontsForAll(wordsCollection);
                 var computedWordsEnumerable = wordsCollection.OrderByDescending(x => x.Frequency)
                     .Select(word => GetWordFormatAndPosition(
-                        fontSource, colorSource, layouter,
-                        word.Word, wordsCollection.Length, word.Frequency
+                        fontsCollection,
+                        brushSource,
+                        layouter,
+                        word.Word,
+                        wordsCollection.Length,
+                        word.Frequency
                     ))
-                    .UntilCanceled(token)
-                    .OnEach(_ => AfterWordDrawn?.Invoke());
+                    .UntilCanceled(token);
 
-                return visualiser.DrawWords(layouter.CloudCenter, computedWordsEnumerable);
+                return visualiser.DrawWords(
+                    layouter.CloudCenter, 
+                    computedWordsEnumerable,
+                    x => AfterWordDrawn?.Invoke(x));
             }, token);
         }
 
-        private (Rectangle wordPosition, FormattedWord formattedWord) GetWordFormatAndPosition(IFontSource fontSource,
-            IColorSource colorSource,
+        private (Rectangle wordPosition, FormattedWord formattedWord) GetWordFormatAndPosition(
+            IDictionary<string, Font> fonts,
+            IBrushSource brushSource,
             ITagCloudLayouter layouter,
             string word, int totalWordCount, int index)
         {
-            var font = fontSource.GetFont(word, totalWordCount, index);
+            var font = fonts[word];
             var wordSize = stubGraphics.MeasureString(word, font);
             var wordPosition = layouter.PutNextRectangle(Size.Ceiling(wordSize));
 
             var distanceFromCenter = ComputeDistanceBetween(wordPosition.Location, layouter.CloudCenter);
-            var wordColor = colorSource.GetBrush(word, distanceFromCenter);
+            var wordColor = brushSource.GetBrush(word, distanceFromCenter);
 
             var formattedWord = new FormattedWord(word, font, wordColor);
             return (wordPosition, formattedWord);
@@ -62,7 +71,7 @@ namespace TagsCloudVisualisation
             return Math.Sqrt(xOffset * xOffset + yOffset * yOffset);
         }
 
-        public event Action? AfterWordDrawn;
+        public event Action<DrawingContext>? AfterWordDrawn;
 
         public void Dispose()
         {
