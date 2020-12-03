@@ -26,12 +26,13 @@ namespace TagsCloud.App
 
         public Image GetNewTagcloud()
         {
-            var neededWords = wordsFilter.FilterWords(words)
-                .Select(word => wordNormalizer.NormalizeWord(word))
+            var neededWords = wordsFilter.FilterWords(words
+                    .Select(word => wordNormalizer.NormalizeWord(word))
+                )
                 .ToList();
             var counts = neededWords
                 .GroupBy(word => word)
-                .Select(group => new Tag(group.Key, group.Count()));
+                .Select(group => new Word(group.Key, group.Count()));
             return drawer.GetTagsCloud(counts);
         }
     }

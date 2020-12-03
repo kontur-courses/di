@@ -1,20 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Drawing;
 
 namespace TagsCloud.Infrastructure
 {
     public class Tag
     {
-        public string Word { get; set; }
-        public int Weight { get; set; }
+        public readonly string Value;
+        public readonly Font Font;
+        public Rectangle Rectangle;
 
-        public Tag() {}
-
-        public Tag(string word, int weight)
+        public Tag(string value, Font font, Rectangle rectangle)
         {
-            Word = word;
-            Weight = weight;
+            Value = value;
+            Font = font;
+            Rectangle = rectangle;
+        }
+
+        public Tag RescaleTag(float tagsCloudSizeRatio)
+        {
+            var tagBounds = new Rectangle((int)(Rectangle.X * tagsCloudSizeRatio),
+                (int)(Rectangle.Y * tagsCloudSizeRatio),
+                (int)(Rectangle.Width * tagsCloudSizeRatio),
+                (int)(Rectangle.Height * tagsCloudSizeRatio));
+            var tagFontSize = (int) (Font.Size * tagsCloudSizeRatio);
+            if (tagFontSize == 0)
+                tagFontSize = 1;
+            return new Tag(Value,
+                new Font(Font.FontFamily,
+                    tagFontSize, Font.Style), tagBounds);
         }
     }
 }

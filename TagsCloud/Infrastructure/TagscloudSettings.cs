@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace TagsCloud.Infrastructure
@@ -21,5 +22,10 @@ namespace TagsCloud.Infrastructure
             CurrentFontFamily = possibleFonts.FontFamilies.First();
             CurrentFontStyle = possibleFonts.FontStyles.First();
         }
+
+        public static TagsCloudSettings DefaultSettings => new TagsCloudSettings(new Palette(Color.Aqua, Color.Black),
+            new ImageSize(500, 500),
+            new PossibleFonts(new HashSet<FontStyle> {FontStyle.Regular, FontStyle.Italic, FontStyle.Bold},
+                FontFamily.Families.ToHashSet()), 0.7);
     }
 }

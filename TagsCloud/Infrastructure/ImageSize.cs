@@ -34,5 +34,10 @@
             Width = width;
             Height = height;
         }
+
+        public static ImageSize operator *(ImageSize size, double a)
+        {
+            return new ImageSize((int)(size.Width * a), (int)(size.height * a));
+        }
     }
 }

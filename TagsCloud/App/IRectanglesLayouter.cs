@@ -6,6 +6,6 @@ namespace TagsCloud.App
     {
         string Name { get; }
         Rectangle PutNextRectangle(Size rectangleSize);
-        void Clear();
+        void Reset();
     }
 }

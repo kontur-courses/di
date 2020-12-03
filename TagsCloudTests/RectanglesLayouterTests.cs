@@ -79,7 +79,7 @@ namespace TagsCloudTests
                         RectanglesLayouter.CalculateCenterPosition(newRect)));
             }
             var circleArea = Math.PI * maxRadius * maxRadius;
-            rectanglesArea.Should().BeGreaterOrEqualTo(circleArea * 0.9f);
+            rectanglesArea.Should().BeGreaterOrEqualTo(circleArea * 0.8f);
         }
 
         [TearDown]

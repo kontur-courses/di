@@ -67,7 +67,7 @@ namespace TagsCloud.App
             return AddNewRectangle(rectangleSize);
         }
 
-        public void Clear()
+        public void Reset()
         {
             Rectangles.Clear();
             angles.Clear();
