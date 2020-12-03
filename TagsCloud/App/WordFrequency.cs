@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
     public class WordFrequency
     {
-        private readonly FileReaderProvider fileReaderProvider;
-        private readonly WordChecker wordChecker;
+        private readonly IWordChecker wordChecker;
 
-        public WordFrequency(WordChecker wordChecker, FileReaderProvider fileReaderProvider)
+        public WordFrequency(IWordChecker wordChecker)
         {
             this.wordChecker = wordChecker;
-            this.fileReaderProvider = fileReaderProvider;
         }
 
-        public Dictionary<string, double> GetFromFile(string filePath)
+        public Dictionary<string, double> Get(string[] lines)
         {
-            var extension = Path.GetExtension(filePath);
-            var lines = fileReaderProvider.GetFileReader(extension).ReadAllLines(filePath);
             var wordFrequencies = new Dictionary<string, double>();
             var words = lines
                 .Select(x => x.ToLower())
