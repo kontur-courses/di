@@ -1,12 +1,14 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.TextProcessing;
 
 namespace TagCloud.Tests
 {
     public class FrequencyAnalyzerTest
     {
-        private FrequencyAnalyzer.FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer.FrequencyAnalyzer(new TagCloud.LiteratureTextParser(new PathCreater()));
+        private FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer(
+            new TextProcessing.LiteratureTextParser(new PathCreater(), new TxtTextReader()));
         
         [Test]
         public void FrequencyAnalyzerReturnDictionaryWithCorrectFrequencies()

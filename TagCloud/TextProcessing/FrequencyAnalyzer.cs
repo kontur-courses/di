@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.FrequencyAnalyzer
+namespace TagCloud.TextProcessing
 {
     public class FrequencyAnalyzer: IFrequencyAnalyzer
     {
@@ -15,7 +15,6 @@ namespace TagCloud.FrequencyAnalyzer
         public Dictionary<string, double> GetFrequencyDictionary(string fileName)
         {
             var words = parser.GetWords(fileName);
-            
             return words
                 .GroupBy(str => str)
                 .ToDictionary(group => group.Key,

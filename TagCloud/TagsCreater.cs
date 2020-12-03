@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.FrequencyAnalyzer;
 using TagCloud.Layout;
+using TagCloud.TextProcessing;
 
 namespace TagCloud
 {

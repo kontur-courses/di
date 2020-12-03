@@ -1,13 +1,13 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using WeCantSpell.Hunspell;
 
-namespace TagCloud
+namespace TagCloud.TextProcessing
 {
     public class LiteratureTextParser : IWordParser
     {
         private IPathCreater creater;
+        private ITextReader reader;
         private static readonly char[] separators = {' ', '.', ',', ':', '!'};
         private const int minWordLength = 3;
         private static string[] unneccesaryWords = 
@@ -15,16 +15,17 @@ namespace TagCloud
                 "очень", "более", "ничто", "кто", "он", "такой", "однако", "либо", "оный", "такой", "него"};
         
             
-        public LiteratureTextParser(IPathCreater creater)
+        public LiteratureTextParser(IPathCreater creater, ITextReader reader)
         {
             this.creater = creater;
+            this.reader = reader;
         }
         
         public string[] GetWords(string inputFileName)
         {
             var path = creater.GetCurrentPath();
             var dictionary = GetDictionary(path);
-            var lines = File.ReadLines(path + inputFileName);
+            var lines = reader.ReadStrings(path + inputFileName);
 
             return lines
                 .SelectMany(line => line.Split(separators, StringSplitOptions.RemoveEmptyEntries))

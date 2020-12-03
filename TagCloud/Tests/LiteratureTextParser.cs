@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.TextProcessing;
 
 namespace TagCloud.Tests
 {
@@ -8,7 +9,7 @@ namespace TagCloud.Tests
         [Test]
         public void LiteratureTextParser_CorrectWorkOnSimpleFile()
         {
-            var parser = new TagCloud.LiteratureTextParser(new PathCreater());
+            var parser = new TextProcessing.LiteratureTextParser(new PathCreater(), new TxtTextReader());
             var array = parser.GetWords("input.txt");
             array.Should().HaveCount(22);
             array.Should().Contain("кошка")

@@ -3,8 +3,8 @@ using System.Drawing;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using TagCloud.BackgroundPainter;
-using TagCloud.FrequencyAnalyzer;
 using TagCloud.Layout;
+using TagCloud.TextProcessing;
 
 namespace TagCloud
 {
@@ -37,7 +37,7 @@ namespace TagCloud
 
             services.AddSingleton<IPathCreater, PathCreater>();
             services.AddSingleton<IWordParser, LiteratureTextParser>();
-            services.AddSingleton<IFrequencyAnalyzer, FrequencyAnalyzer.FrequencyAnalyzer>();
+            services.AddSingleton<IFrequencyAnalyzer, TextProcessing.FrequencyAnalyzer>();
             services.AddSingleton<ICanvas>(_ => new Canvas(size.Width, size.Height));
             services.AddSingleton<ISpiral, Spiral>();
             services.AddSingleton<ILayouter, Layouter>();
