@@ -13,7 +13,8 @@ namespace TagCloud
         private readonly ITagCloudLayouter tagCloudLayouter;
         private readonly IColorGenerator colorGenerator;
 
-        public WordsForCloudGenerator(string fontName, int maxFontSize, ITagCloudLayouter tagCloudLayouter, IColorGenerator colorGenerator)
+        public WordsForCloudGenerator(string fontName, int maxFontSize, ITagCloudLayouter tagCloudLayouter,
+            IColorGenerator colorGenerator)
         {
             this.tagCloudLayouter = tagCloudLayouter;
             this.fontName = fontName;
@@ -24,20 +25,20 @@ namespace TagCloud
         public List<WordForCloud> Generate(List<string> words)
         {
             var wordFrequency = GetWordsFrequency(words)
-                                .OrderBy(x => x.Value)
-                                .Reverse()
-                                .ToList();
+                .OrderBy(x => x.Value)
+                .Reverse()
+                .ToList();
 
             var maxFrequency = wordFrequency.FirstOrDefault().Value;
             return wordFrequency
-                   .Select(x =>
-                               GetWordForCloud(fontName,
-                                               maxFontSize,
-                                               colorGenerator.GetNextColor(),
-                                               x.Key,
-                                               x.Value,
-                                               maxFrequency))
-                   .ToList();
+                .Select(x =>
+                    GetWordForCloud(fontName,
+                        maxFontSize,
+                        colorGenerator.GetNextColor(),
+                        x.Key,
+                        x.Value,
+                        maxFrequency))
+                .ToList();
         }
 
         private static Dictionary<string, int> GetWordsFrequency(List<string> words)
@@ -55,7 +56,7 @@ namespace TagCloud
         }
 
         private WordForCloud GetWordForCloud(string font, int maxWordSize, Color color, string word,
-                                             int wordFrequency, int maxFrequency)
+            int wordFrequency, int maxFrequency)
         {
             var wordFontSize = (int) (maxWordSize * ((double) wordFrequency / maxFrequency) + 0.5);
             var wordSize = new Size((int) (word.Length * (wordFontSize * 0.8)), wordFontSize + 12);

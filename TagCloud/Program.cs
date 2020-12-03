@@ -11,6 +11,26 @@ namespace TagCloud
     {
         public static void Main(string[] args)
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>();
+            builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
+            builder.RegisterType<SpiralPointsFactory>().As<IPointsFactory>();
+            builder.RegisterType<ColorGeneratorFactory>().As<IColorGeneratorFactory>();
+            builder.RegisterType<CloudDrawerFactory>().As<ICloudDrawerFactory>();
+            builder.RegisterType<WordsReader>().As<IWordsReader>();
+            builder.RegisterType<TagCloudLayouterFactory>().As<ITagCloudLayouterFactory>();
+            builder.RegisterType<WordsForCloudGeneratorFactory>().As<IWordsForCloudGeneratorFactory>();
+            builder.RegisterType<TagCloudCreatorFactory>().As<ITagCloudCreatorFactory>();
+
+
+            var tagCloudCreatorFactory = builder.Build().Resolve<ITagCloudCreatorFactory>();
+
+
+            ParsArguments(args, tagCloudCreatorFactory);
+        }
+
+        private static void ParsArguments(string[] args, ITagCloudCreatorFactory tagCloudCreatorFactory)
+        {
             var app = new CommandLineApplication();
             app.HelpOption();
 
@@ -64,42 +84,47 @@ namespace TagCloud
                     ? boringWordsFileArg.ParsedValue
                     : "boring.txt";
 
-                var bitmap = GetCloudImage(pictureSize, cloudCenter, colors, fontName, maxFontSize, inputFile,
-                    boringWordsFile);
-                bitmap.Save(outputFile);
+                CreateTagCloud(tagCloudCreatorFactory,
+                    pictureSize,
+                    cloudCenter,
+                    colors,
+                    fontName,
+                    maxFontSize,
+                    inputFile,
+                    boringWordsFile,
+                    outputFile);
             });
             app.Execute(args);
         }
 
-        private static Bitmap GetCloudImage(Size pictureSize, Point cloudCenter, Color[] colors, string fontName,
+        private static void CreateTagCloud(ITagCloudCreatorFactory tagCloudCreatorFactory, Size pictureSize,
+            Point cloudCenter, Color[] colors, string fontName,
+            int maxFontSize, string inputFile, string boringWordsFile, string outputFile)
+        {
+            var bitmap = GetCloudImage(tagCloudCreatorFactory,
+                pictureSize,
+                cloudCenter,
+                colors,
+                fontName,
+                maxFontSize,
+                inputFile,
+                boringWordsFile);
+
+            bitmap.Save(outputFile);
+        }
+
+        private static Bitmap GetCloudImage(ITagCloudCreatorFactory tagCloudCreatorFactory, Size pictureSize,
+            Point cloudCenter, Color[] colors, string fontName,
             int maxFontSize, string inputFile, string boringWordsFile)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<WordsNormalizer>().As<IWordsNormalizer>();
-            builder.RegisterType<CircularCloudLayouter>().As<ITagCloudLayouter>();
-            builder.RegisterType<SpiralPoints>().As<IPoints>()
-                .WithParameter("center", cloudCenter);
-
-            builder.RegisterType<WordsForCloudGenerator>().As<IWordsForCloudGenerator>()
-                .WithParameters(new[]
-                {
-                    new NamedParameter("fontName", fontName),
-                    new NamedParameter("maxFontSize", maxFontSize)
-                });
-
-            builder.RegisterType<ColorGenerator>().As<IColorGenerator>().WithParameter("colors", colors);
-
-            builder.RegisterType<CloudDrawer>().As<ICloudDrawer>().WithParameter("pictureSize", pictureSize);
-
-            builder.RegisterType<WordsReader>().As<IWordsReader>();
-            builder.RegisterType<TagCloudCreator>().As<ITagCloudCreator>()
-                .WithParameters(new[]
-                {
-                    new NamedParameter("inputFile", inputFile),
-                    new NamedParameter("boringWordsFile", boringWordsFile)
-                });
-
-            var tagCloudCreator = builder.Build().Resolve<ITagCloudCreator>();
+            var tagCloudCreator = tagCloudCreatorFactory
+                .Get(pictureSize,
+                    cloudCenter,
+                    colors,
+                    fontName,
+                    maxFontSize,
+                    inputFile,
+                    boringWordsFile);
             var bitmap = tagCloudCreator.GetCloud();
             return bitmap;
         }
