@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TagsCloudContainer.ProgramOptions;
 
 namespace TagsCloudContainer.WordsParser
 {
@@ -15,7 +16,7 @@ namespace TagsCloudContainer.WordsParser
         private readonly HashSet<string> boringWords;
         private readonly string mystemLocation;
 
-        public Filter(IOptions options)
+        public Filter(IFilterOptions options)
         {
             boringWords = options.BoringWords.Select(word => word.Normalize()).ToHashSet();
             mystemLocation = options.MystemLocation;

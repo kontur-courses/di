@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer;
+using TagsCloudContainer.ProgramOptions;
 using TagsCloudContainer.WordsParser;
 
 namespace TagsCloudContainerTests
@@ -10,7 +10,7 @@ namespace TagsCloudContainerTests
     {
         private IWordsAnalyzer wordsAnalyzer;
         private WordReaderTest wordReader;
-        private IOptions options;
+        private IFilterOptions options;
         
         [SetUp]
         public void SetUp()

@@ -12,12 +12,10 @@ namespace TagsCloudContainer.Drawer
             new Regex(@"argb\((?<alpha>\d{1,3}),(?<red>\d{1,3}),(?<green>\d{1,3}),(?<blue>\d{1,3})\)");
 
         private readonly Random random;
-        private readonly IOptions options;
-        private List<WordRectangle> rectangles;
+        private readonly List<WordRectangle> rectangles;
 
-        public LayoutDrawer(IOptions options)
+        public LayoutDrawer()
         {
-            this.options = options;
             random = new Random();
             rectangles = new List<WordRectangle>();
         }
@@ -31,8 +29,8 @@ namespace TagsCloudContainer.Drawer
         {
             foreach (var rectangle in rectangles)
             {
-                var brush = new SolidBrush(StringToArgbColor(options.FontColor));
-                using var arialFont = new Font(options.FontFamily, rectangle.FontSize);
+                var brush = new SolidBrush(StringToArgbColor(rectangle.FontColor));
+                using var arialFont = new Font(rectangle.FontFamily, rectangle.FontSize);
                 graphics.DrawString(rectangle.Text, arialFont, brush, rectangle.Rectangle.Location);
             }
         }
