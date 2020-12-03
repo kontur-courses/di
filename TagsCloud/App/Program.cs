@@ -15,10 +15,12 @@ namespace TagsCloud.App
             var builder = new ContainerBuilder();
             builder.RegisterType<ConsoleClient>().As<IClient>();
             builder.RegisterType<SaveCommand>().As<ICommand>();
-            builder.RegisterType<SetColorCommand>().As<ICommand>();
+            builder.RegisterType<AddColorCommand>().As<ICommand>();
             builder.RegisterType<SetFontCommand>().As<ICommand>();
             builder.RegisterType<SetImageSizeCommand>().As<ICommand>();
             builder.RegisterType<TagCloudCommand>().As<ICommand>();
+            builder.RegisterType<DetailedHelpCommand>().As<ICommand>();
+            builder.RegisterType<HelpCommand>().As<ICommand>();
             builder.RegisterType<DocReader>().As<IFileAllLinesReader>();
             builder.RegisterType<TxtReader>().As<IFileAllLinesReader>();
             builder.RegisterType<PngSaver>().As<IImageSaver>();
