@@ -4,5 +4,6 @@
     {
         string[] GetAvailableCommandName();
         void Run();
+        ICommand FindCommandByName(string name);
     }
 }
