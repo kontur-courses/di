@@ -12,7 +12,7 @@ namespace TagCloud
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
         private readonly ILayouter layouter;
         private const double heightCoefficient = 2.5 * Math.PI;
-        private const double widthCoefficient = 1.5;
+        private const double widthCoefficient = 0.7;
         
         public TagsCreater(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter)
         {

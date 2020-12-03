@@ -12,7 +12,7 @@ namespace TagCloud
     {
         private static IServiceProvider serviceProvider;
         private static CommandLineApplication app = new CommandLineApplication();
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             var CLI = new CommandLineInterface();
             CLI.ConfigureCLI(app);

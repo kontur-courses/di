@@ -11,6 +11,7 @@ namespace TagCloud
         private readonly IPathCreater creater;
         private readonly ITagsCreater tagsCreater;
         private readonly IBackgroundPainter backgroundPainter;
+        private const double fontCoefficient = 0.6;
         public Visualizer(ICanvas canvas, IPathCreater pathCreator, ITagsCreater tagsCreater, IBackgroundPainter backgroundPainter)
         {
             this.canvas = canvas;
@@ -46,9 +47,10 @@ namespace TagCloud
         {
             var x = rectangle.X;
             var y = rectangle.Y;
+            var fontSize = (int)Math.Round(rectangle.Height * fontCoefficient);
             if (rectangle.Height < 2)
                 return;
-            graphics.DrawString(str, new Font(fontFamily, rectangle.Height * 2 / 3), textBrush, x, y);
+            graphics.DrawString(str, new Font(fontFamily, fontSize), textBrush, x, y);
         }
     }
 }

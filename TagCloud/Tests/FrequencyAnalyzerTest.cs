@@ -12,8 +12,8 @@ namespace TagCloud.Tests
         public void FrequencyAnalyzerReturnDictionaryWithCorrectFrequencies()
         {
             var dict = frequencyAnalyzer.GetFrequencyDictionary("input.txt");
-            var wordsCount = 24;
-            dict.Should().HaveCount(13);
+            var wordsCount = 22;
+            dict.Should().HaveCount(12);
             dict["кошка"].Should().BeInRange((double) 6 / wordsCount - Double.Epsilon, (double) 6 / wordsCount + Double.Epsilon);
             dict["собака"].Should().BeInRange((double) 2 / wordsCount - Double.Epsilon, (double) 2 / wordsCount + Double.Epsilon);
             dict["крокодил"].Should().BeInRange((double) 1 / wordsCount - Double.Epsilon, (double) 1 / wordsCount + Double.Epsilon);
