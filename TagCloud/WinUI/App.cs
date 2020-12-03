@@ -12,6 +12,7 @@ using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
 using TagsCloudVisualisation.Text.Preprocessing;
+using TagsCloudVisualisation.Visualisation;
 using WinUI.InputModels;
 
 namespace WinUI
@@ -19,18 +20,20 @@ namespace WinUI
     public class App
     {
         private readonly IGui gui;
+        private readonly TagCloudGenerator cloudGenerator;
         private readonly UserInputSelector<IFileWordsReader> readers;
         private readonly UserInputSelector<IWordFilter> filters;
         private readonly UserInputSelector<IWordNormalizer> normalizers;
-        private readonly Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory;
         private readonly UserInputSelector<IFileResultWriter> writers;
         private readonly UserInputSelector<ITagCloudLayouter> layouters;
         private readonly UserInputSelector<IColorSource> colorSources;
         private readonly UserInputSelector<IFontSource> fontSources;
         private readonly UserInputField pathSource;
+        private readonly CloudVisualiser visualiser;
 
         public App(IGui gui,
-            Func<ITagCloudLayouter, IFontSource, IColorSource, TagCloudGenerator> cloudGeneratorFactory,
+            TagCloudGenerator cloudGenerator,
+            CloudVisualiser visualiser,
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
             IEnumerable<IWordNormalizer> normalizers,
@@ -40,7 +43,9 @@ namespace WinUI
             IEnumerable<IFileResultWriter> writers)
         {
             this.gui = gui;
-            this.cloudGeneratorFactory = cloudGeneratorFactory;
+            this.cloudGenerator = cloudGenerator;
+            this.visualiser = visualiser;
+
             this.readers = CreateInputFrom(ToDictionaryByName(readers), "Choose words file reader");
             this.filters = CreateInputFrom(ToDictionaryByName(filters), "Choose words filtering method");
             this.normalizers = CreateInputFrom(ToDictionaryByName(normalizers), "Choose words normalization method");
@@ -89,16 +94,20 @@ namespace WinUI
         private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken,
             Action? callback = null)
         {
-            var cloudGenerator = cloudGeneratorFactory.Invoke(
-                layouters.Selected.Value,
-                fontSources.Selected.Value,
-                colorSources.Selected.Value);
             if (callback != null)
                 cloudGenerator.AfterWordDrawn += callback;
 
-            var resultImage = await cloudGenerator.DrawWordsAsync(words, cancellationToken);
+            var selectedLayouter = layouters.Selected.Value;
+            var resultImage = await cloudGenerator.DrawWordsAsync(
+                fontSources.Selected.Value,
+                colorSources.Selected.Value,
+                selectedLayouter,
+                visualiser,
+                words,
+                cancellationToken
+            );
 
-            layouters.Selected.Value.Reset();
+            selectedLayouter.Reset();
             if (callback != null)
                 cloudGenerator.AfterWordDrawn -= callback;
             return resultImage;
@@ -110,7 +119,11 @@ namespace WinUI
             {
                 var words = readers.Selected.Value.EnumerateWordsFrom(sourcePath)
                     .Where(filters.Selected.Value.IsValidWord);
+
                 var normalizedWords = normalizers.Selected.Value.Normalize(words);
+
+                if (cancellationToken.IsCancellationRequested)
+                    return new WordWithFrequency[0];
 
                 var dictionary = new Dictionary<string, int>();
                 foreach (var word in normalizedWords)
@@ -118,6 +131,9 @@ namespace WinUI
                     if (dictionary.ContainsKey(word))
                         dictionary[word] += 1;
                     else dictionary[word] = 0;
+
+                    if (cancellationToken.IsCancellationRequested)
+                        break;
                 }
 
                 return dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))

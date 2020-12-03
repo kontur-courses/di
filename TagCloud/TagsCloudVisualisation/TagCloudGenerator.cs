@@ -13,28 +13,14 @@ namespace TagsCloudVisualisation
 {
     public sealed class TagCloudGenerator : IDisposable
     {
-        private readonly IFontSource fontSource;
-        private readonly IColorSource colorSource;
-        private readonly ITagCloudLayouter layouter;
-        private readonly CloudVisualiser visualiser;
+        private readonly Graphics stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
 
-        private readonly Graphics stubGraphics;
-
-        public TagCloudGenerator(
-            CloudVisualiser visualiser,
+        public Task<Image> DrawWordsAsync(IFontSource fontSource,
+            IColorSource colorSource,
             ITagCloudLayouter layouter,
-            IFontSource fontSource,
-            IColorSource colorSource)
-        {
-            this.layouter = layouter;
-            this.fontSource = fontSource;
-            this.colorSource = colorSource;
-            this.visualiser = visualiser;
-
-            stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
-        }
-
-        public Task<Image> DrawWordsAsync(WordWithFrequency[] wordsCollection, CancellationToken token)
+            CloudVisualiser visualiser,
+            WordWithFrequency[] wordsCollection,
+            CancellationToken token)
         {
             if (wordsCollection.Length == 0)
                 throw new ArgumentException($"{nameof(wordsCollection)} is empty", nameof(wordsCollection));
@@ -42,7 +28,10 @@ namespace TagsCloudVisualisation
             return Task.Run(() =>
             {
                 var computedWordsEnumerable = wordsCollection.OrderByDescending(x => x.Frequency)
-                    .Select(word => GetWordFormatAndPosition(word.Word, wordsCollection.Length, word.Frequency))
+                    .Select(word => GetWordFormatAndPosition(
+                        fontSource, colorSource, layouter,
+                        word.Word, wordsCollection.Length, word.Frequency
+                    ))
                     .UntilCanceled(token)
                     .OnEach(_ => AfterWordDrawn?.Invoke());
 
@@ -50,7 +39,9 @@ namespace TagsCloudVisualisation
             }, token);
         }
 
-        private (Rectangle wordPosition, FormattedWord formattedWord) GetWordFormatAndPosition(
+        private (Rectangle wordPosition, FormattedWord formattedWord) GetWordFormatAndPosition(IFontSource fontSource,
+            IColorSource colorSource,
+            ITagCloudLayouter layouter,
             string word, int totalWordCount, int index)
         {
             var font = fontSource.GetFont(word, totalWordCount, index);
