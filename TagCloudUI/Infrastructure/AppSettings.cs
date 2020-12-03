@@ -7,7 +7,7 @@ using TagCloudUI.UI;
 
 namespace TagCloudUI.Infrastructure
 {
-    public class AppSettings
+    public class AppSettings : IAppSettings
     {
         private readonly Options options;
 
@@ -21,13 +21,20 @@ namespace TagCloudUI.Infrastructure
         public string ImageFormat => options.ImageFormat;
         public int WordsCount => options.WordsCount;
 
-        public AppSettings(IEnumerable<string> args)
+        private AppSettings(Options options)
+        {
+            this.options = options;
+        }
+
+        public static AppSettings Create(IEnumerable<string> args)
         {
             var parserResult = Parser.Default.ParseArguments<Options>(args);
-            options = (parserResult as Parsed<Options>)?.Value;
+            var parsedOptions = (parserResult as Parsed<Options>)?.Value;
 
-            if (options == null)
+            if (parsedOptions == null)
                 throw new ArgumentException("An error occurred while parsing the parameters");
+
+            return new AppSettings(parsedOptions);
         }
     }
 }

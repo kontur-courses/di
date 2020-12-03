@@ -15,7 +15,7 @@ namespace TagCloudUI
         {
             var container = BuildContainer(args);
             var ui = container.Resolve<IUserInterface>();
-            ui.Run(container.Resolve<AppSettings>());
+            ui.Run(container.Resolve<IAppSettings>());
         }
 
         private static IContainer BuildContainer(IEnumerable<string> args)
@@ -27,7 +27,8 @@ namespace TagCloudUI
             var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
             builder.RegisterAssemblyModules(assemblies);
 
-            builder.RegisterType<AppSettings>().WithParameter("args", args).SingleInstance();
+            builder.RegisterInstance(AppSettings.Create(args)).AsSelf()
+                .AsImplementedInterfaces().SingleInstance();
 
             return builder.Build();
         }

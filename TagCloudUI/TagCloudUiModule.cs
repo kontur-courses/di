@@ -7,10 +7,9 @@ namespace TagCloudUI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(ThisAssembly)
+            builder.RegisterAssemblyTypes(ThisAssembly).Except<AppSettings>()
                 .AsImplementedInterfaces();
 
-            builder.RegisterType<SpiralFactory>().AsImplementedInterfaces();
             builder.Register(context => context.Resolve<ISpiralFactory>().Create())
                 .AsImplementedInterfaces().SingleInstance();
         }

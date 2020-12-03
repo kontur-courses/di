@@ -40,22 +40,22 @@ namespace TagCloudUI.UI
             this.imageSaver = imageSaver;
         }
 
-        public void Run(AppSettings options)
+        public void Run(IAppSettings settings)
         {
-            using var bitmap = GetCloudImage(options);
-            var savedPath = imageSaver.Save(bitmap, options.OutputPath, options.ImageFormat);
+            using var bitmap = GetCloudImage(settings);
+            var savedPath = imageSaver.Save(bitmap, settings.OutputPath, settings.ImageFormat);
             Console.WriteLine($"Tag cloud visualization saved to: {savedPath}");
         }
 
-        private Bitmap GetCloudImage(AppSettings options)
+        private Bitmap GetCloudImage(IAppSettings settings)
         {
-            var allWords = GetWordsFromFile(options.InputPath);
-            var processedWords = GetProcessedWords(allWords, options.WordsCount);
-            var layoutInfo = CreateLayout(processedWords, options.LayoutAlgorithmType, options.FontName);
+            var allWords = GetWordsFromFile(settings.InputPath);
+            var processedWords = GetProcessedWords(allWords, settings.WordsCount);
+            var layoutInfo = CreateLayout(processedWords, settings.LayoutAlgorithmType, settings.FontName);
 
-            ThrowIfSmallSizeForLayout(options.ImageWidth, options.ImageHeight, layoutInfo.Size);
+            ThrowIfSmallSizeForLayout(settings.ImageWidth, settings.ImageHeight, layoutInfo.Size);
 
-            return CreateImage(layoutInfo, options.ColoringTheme, options.FontName);
+            return CreateImage(layoutInfo, settings.ColoringTheme, settings.FontName);
         }
 
         private Bitmap CreateImage(LayoutInfo layoutInfo,
