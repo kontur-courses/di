@@ -7,18 +7,18 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 {
     public class PathGeneratorTests
     {
-        private PathGenerator Sut { get; set; }
+        private PathGenerator Generator { get; set; }
 
         [SetUp]
         public void SetUp()
         {
-            Sut = new PathGenerator(new DateTimeProvider());
+            Generator = new PathGenerator(new DateTimeProvider());
         }
 
         [Test]
         public void GetNewFilePath_ReturnExistingDirectory_WhenCalled()
         {
-            var path = Sut.GetNewFilePath().Split(Path.DirectorySeparatorChar);
+            var path = Generator.GetNewFilePath().Split(Path.DirectorySeparatorChar);
             path[^1] = "";
             var directoryPath = string.Join(Path.DirectorySeparatorChar, path);
 

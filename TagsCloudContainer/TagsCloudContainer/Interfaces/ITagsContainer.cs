@@ -4,6 +4,6 @@ namespace TagsCloudContainer.TagsCloudContainer.Interfaces
 {
     public interface ITagsContainer
     {
-        public List<ITag> GetTags(string text);
+        public List<Tag> GetTags(string text);
     }
 }

@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.TagsCloudContainer;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
 {
     public class TextParserTests
     {

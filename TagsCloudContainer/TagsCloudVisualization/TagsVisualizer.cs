@@ -5,7 +5,7 @@ using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class TagsVisualizator : ITagsVisualizator
+    public class TagsVisualizer : ITagsVisualizer
     {
         public Bitmap GetBitmap(List<Rectangle> rectangles)
         {

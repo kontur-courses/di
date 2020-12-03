@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudContainer.Interfaces;
 
 namespace TagsCloudUI
 {
     public class TagsCloudForm : Form
     {
-        private readonly List<ITag> tags;
+        private readonly List<Tag> tags;
 
         public TagsCloudForm(ITagsContainer container, string text)
         {

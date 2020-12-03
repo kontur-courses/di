@@ -7,7 +7,7 @@ using NUnit.Framework;
 using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
 {
     public class TagsCloudContainerTests
     {

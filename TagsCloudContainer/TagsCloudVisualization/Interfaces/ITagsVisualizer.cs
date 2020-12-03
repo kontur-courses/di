@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudContainer.TagsCloudVisualization.Interfaces
 {
-    public interface ITagsVisualizator
+    public interface ITagsVisualizer
     {
         public Bitmap GetBitmap(List<Rectangle> rectangles);
     }

@@ -17,10 +17,10 @@ namespace TagsCloudContainer.TagsCloudContainer
             this.layouter = layouter;
         }
 
-        public List<ITag> GetTags(string text)
+        public List<Tag> GetTags(string text)
         {
             var wordEntry = GetWordEntry(text);
-            var tags = new List<ITag>();
+            var tags = new List<Tag>();
             var graphics = Graphics.FromImage(new Bitmap(1, 1));
 
             foreach (var word in wordEntry.Keys.ToList())

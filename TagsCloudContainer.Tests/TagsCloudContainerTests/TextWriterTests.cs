@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TextWriter = TagsCloudContainer.TagsCloudContainer.TextWriter;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
 {
     public class TextWriterTests
     {

@@ -3,7 +3,7 @@ using TagsCloudContainer.TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudContainer
 {
-    public class Tag : ITag
+    public class Tag
     {
         public Tag(string text, Rectangle rectangle, Size size, Font font)
         {
