@@ -19,8 +19,8 @@ namespace TagsCloudUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(
-                container.Resolve<TagsCloudForm>(new TypedParameter(typeof(string), File.ReadAllText(path))));
+            Application.Run(container
+                .Resolve<TagsCloudForm>(new TypedParameter(typeof(string), File.ReadAllText(path))));
         }
     }
 }
