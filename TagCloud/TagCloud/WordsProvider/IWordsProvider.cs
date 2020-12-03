@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud
+namespace TagCloud.WordsProvider
 {
     public interface IWordsProvider
     {

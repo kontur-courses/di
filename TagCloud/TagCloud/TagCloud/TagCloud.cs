@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.WordsFilter;
+using TagCloud.WordsProvider;
 
 namespace TagCloud
 {

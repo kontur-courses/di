@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud
+namespace TagCloud.WordsFilter
 {
     public class WordsFilter : IWordsFilter
     {

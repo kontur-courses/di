@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using TagCloud;
 
-namespace TagCloudTest
+namespace TagCloud.WordsProvider
 {
     public class CircularWordsProvider : IWordsProvider
     {

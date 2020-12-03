@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
+using TagCloud.Curves;
 
 namespace TagCloudTest
 {

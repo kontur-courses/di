@@ -1,5 +1,8 @@
 ﻿using System.Drawing;
 using System.Linq;
+using TagCloud.Curves;
+using TagCloud.WordsFilter;
+using TagCloud.WordsProvider;
 
 namespace TagCloud
 {
@@ -14,13 +17,11 @@ namespace TagCloud
         {
             this.curve = curve;
             WordsProvider = wordsProvider;
-            Filter = wordsFilter;
             WordsFilter = wordsFilter;
         }
 
         protected override IWordsProvider WordsProvider { get; }
         protected override IWordsFilter WordsFilter { get; }
-        public IWordsFilter Filter { get; }
 
         public override WordRectangle PutNextWord(string word, Size rectangleSize)
         {

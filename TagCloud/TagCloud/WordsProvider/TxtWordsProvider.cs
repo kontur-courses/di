@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace TagCloud
+namespace TagCloud.WordsProvider
 {
-    public class TxtWordsProvider : IWordsProvider
+    public class TxtWordsProvider : FileWordsProvider
     {
-        public readonly string filePath;
-
-        public TxtWordsProvider(string filePath)
+        public TxtWordsProvider(string filePath) : base(filePath)
         {
-            if (!filePath.EndsWith(".txt"))
-                throw new ArgumentException("Not a .txt file");
-            this.filePath = filePath;
         }
 
-        public IEnumerable<string> GetWords()
+        protected override bool CheckFile(string filePath)
         {
-            var words = Regex.Split(File.ReadAllText(filePath), @"\W+");
+            return filePath.EndsWith(".txt");
+        }
+
+        public override IEnumerable<string> GetWords()
+        {
+            var words = Regex.Split(File.ReadAllText(FilePath), @"\W+");
             return words;
         }
     }

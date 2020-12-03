@@ -1,6 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using Autofac;
+using TagCloud.Curves;
+using TagCloud.WordsFilter;
+using TagCloud.WordsProvider;
 
 namespace TagCloud
 {
@@ -23,9 +27,10 @@ namespace TagCloud
                 .WithParameter("angelStep", angelStep);
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloud>().SingleInstance();
             builder.RegisterType<TagCloudVisualizer>().As<IVisualizer>();
-            builder.RegisterType<TxtWordsProvider>().As<IWordsProvider>()
-                .WithParameter("filePath", "../../../../words.txt");
-            var wordsFilter = new WordsFilter().Normalize().RemovePrepositions();
+            var wordsFilePath = Path.GetFullPath("../../../../words.doc");
+            builder.RegisterType<MicrosoftWordWordsProvider>().As<IWordsProvider>()
+                .WithParameter("filePath", wordsFilePath);
+            var wordsFilter = new WordsFilter.WordsFilter().Normalize().RemovePrepositions();
             builder.RegisterInstance(wordsFilter).As<IWordsFilter>();
 
             builder.RegisterInstance(colors).As<Color[]>();
