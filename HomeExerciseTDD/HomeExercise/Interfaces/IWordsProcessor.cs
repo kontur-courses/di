@@ -4,6 +4,6 @@ namespace HomeExerciseTDD
 {
     public interface IWordsProcessor
     {
-        public List<Word> WordsHandle();
+        public List<IWord> WordsHandle(); 
     }
 }

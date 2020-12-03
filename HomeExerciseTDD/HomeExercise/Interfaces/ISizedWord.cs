@@ -2,10 +2,11 @@
 
 namespace HomeExerciseTDD
 {
-    public interface IWord
+    public interface ISizedWord
     {
         public string Text { get; }
         public FontFamily Font { get; }
+        public Rectangle Rectangle { get; }
         public int Size { get; }
     }
 }
