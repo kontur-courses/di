@@ -1,43 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using Autofac;
+using Autofac.Core;
 
 namespace WordCloudGenerator
 {
-    public class Program
+    public static class Program
     {
         public static void Main()
         {
-            #region example
+            var container = Configure();
+            container.Resolve<IUserInterface>().Run(container);
+        }
 
-            // //example (not works yet)
-            // var reader = new Reader();
-            // var text = reader.ReadFile("some path");
-            //
-            // var preparer = new Preparer(new []{"abc", "def", "xyz"});
-            // var prepared = preparer.GetCountedWords(text);
-            //
-            // // generator applies custom algorithms
-            // //
-            // // var algo = new Func<Dictionary<string, int>, Dictionary<string, int>>(preparedWords =>
-            // //     new Dictionary<string, int>());
-            // // var customGenerator = new Generator(algo);
-            //
-            // var generator = new Generator();
-            // var generated = generator.CalculateFontSizeForWords(prepared);
-            //
-            // var painter = new Painter(ImageFormat.Png, new CircularLayouter(new Point(600, 600)));
-            // painter.Paint(generated);
-            // painter.SaveImage("path to save");
+        private static IContainer Configure()
+        {
+            var paletteColors = new[]
+            {
+                Color.Indigo, Color.Brown, Color.BlueViolet, Color.ForestGreen,
+                Color.Black, Color.Khaki,  Color.Teal
+            };
+            
+            var builder = new ContainerBuilder();
+            builder.RegisterType<Preparer>().WithParameter("filter", new Func<string, bool>(str => str.Length >= 3));
+            builder.RegisterType<Generator>();
+            builder.RegisterType<Painter>();
+            builder.RegisterInstance(FontFamily.GenericSansSerif).As<FontFamily>();
 
-            #endregion
+            builder.RegisterType<RandomChoicePalette>().As<IPalette>().WithParameters(new[]
+                {new NamedParameter("colors", paletteColors), new NamedParameter("backgroundColor", Color.Bisque)});
+            builder.RegisterInstance(new CircularLayouter(new Point(0,0))).As<ILayouter>();
+            builder.RegisterType<ConsoleUI>().As<IUserInterface>();
 
-            var words = new Dictionary<string, int>
-                {["apple"] = 30, ["ss"] = 20, ["tomatos"] = 15, ["help"] = 10, ["rap"] = 9, ["ss"] = 8};
-            var painter = new Painter(ImageFormat.Png, new CircularLayouter.CircularLayouter(new Point(300, 300)),
-                FontFamily.GenericSansSerif, new Palette());
-            var img = painter.Paint(words);
-            painter.SaveImage(img, "sb.png");
+
+            return builder.Build();
         }
     }
 }
