@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using FluentAssertions;
 using HomeExerciseTDD;
+using HomeExerciseTDD.settings;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -16,14 +17,18 @@ namespace TestProject1
         private CircularCloudLayouter layouter;
         private double radius;
         private List<Rectangle> rectanglesInCloud;
+        private Spiral spiral;
 
         [SetUp]
         public void Init()
         {
+            
             radius = double.MinValue;
             rectanglesInCloud = new List<Rectangle>();
             center = new Point(23,32);
-            layouter = new CircularCloudLayouter(center);
+            spiral = new Spiral(new SpiralSettings(center));
+            layouter = new CircularCloudLayouter(spiral);
+            
         }
         
         [Test]
@@ -107,7 +112,8 @@ namespace TestProject1
                 var indent = 20;
                 var imageSize = cloudDiameter + indent; 
                 var format = ImageFormat.Png;
-                var painter = new CircularCloudPainter(imageSize, imageSize, rectanglesInCloud,$"{testName}.png",format);
+                var settings = new PainterSettings(imageSize, imageSize,$"{testName}.{format}",format, Color.Aqua);
+                var painter = new CircularCloudRectanglesPainter(rectanglesInCloud,settings);
                 painter.DrawFigures();
                 TestContext.Error.WriteLine($"Tag cloud visualization saved to file {testDir}\\{testName}.png");
             }
