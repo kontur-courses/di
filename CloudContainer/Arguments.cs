@@ -1,10 +1,21 @@
-﻿using System.Drawing;
-using MatthiWare.CommandLine.Core.Attributes;
+﻿using MatthiWare.CommandLine.Core.Attributes;
 
 namespace CloudContainer
 {
     public class Arguments
     {
+        public Arguments(string font, string size, string center, string color)
+        {
+            Font = font;
+            ImageSize = size;
+            Center = center;
+            Color = color;
+        }
+
+        public Arguments()
+        {
+        }
+
         [Name("f", "font")]
         [Description("Text font, underscores separated font name and size")]
         public string Font { get; set; }
@@ -20,18 +31,5 @@ namespace CloudContainer
         [Name("c", "color")]
         [Description("Color of words")]
         public string Color { get; set; }
-
-        public Arguments(string font, string size, string center, string color)
-        {
-            Font = font;
-            ImageSize = size;
-            Center = center;
-            Color = color;
-        }
-
-        public Arguments()
-        {
-            
-        }
     }
 }
