@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudContainer
 {
     public interface ITextParser
     {

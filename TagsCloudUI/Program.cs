@@ -2,9 +2,11 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
+using TagsCloudContainer;
+using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsCloudUI
 {
     internal static class Program
     {
@@ -12,7 +14,7 @@ namespace TagsCloudContainer
         private static void Main()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule<ContainerConfig>();
+            containerBuilder.RegisterModule<TagsCloudUIModule>();
 
             var container = containerBuilder.Build();
             var parser = container.Resolve<ITextParser>();

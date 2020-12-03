@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
 using Autofac;
+using TagsCloudContainer;
+using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsCloudUI
 {
-    public class ContainerConfig : Module
+    public class TagsCloudUIModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

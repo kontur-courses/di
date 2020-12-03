@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TagsCloudContainer
 {
     public class TextWriter : ITextWriter
     {

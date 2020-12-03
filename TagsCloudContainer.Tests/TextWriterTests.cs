@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TextWriter = TagsCloudContainer.TextWriter;
+using TextWriter = TagsCloudContainer.TagsCloudContainer.TextWriter;
 
 namespace TagsCloudVisualization.Tests
 {

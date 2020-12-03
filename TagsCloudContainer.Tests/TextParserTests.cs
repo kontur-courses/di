@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
+using TagsCloudContainer.TagsCloudContainer;
 
 namespace TagsCloudVisualization.Tests
 {

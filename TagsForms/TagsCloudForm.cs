@@ -3,9 +3,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudContainer
+namespace TagsForms
 {
     public class TagsCloudForm : Form
     {
