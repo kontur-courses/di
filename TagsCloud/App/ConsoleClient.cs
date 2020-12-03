@@ -18,7 +18,7 @@ namespace TagsCloud.App
 
         public string[] GetAvailableCommandName()
         {
-            throw new NotImplementedException();
+            return commands.Select(x => x.Name).ToArray();
         }
 
         public void Run()
