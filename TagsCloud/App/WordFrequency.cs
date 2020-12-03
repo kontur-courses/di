@@ -23,7 +23,7 @@ namespace TagsCloud.App
             foreach (var word in words)
             {
                 if (!wordFrequencies.ContainsKey(word))
-                    wordFrequencies[word] = 1;
+                    wordFrequencies[word] = 0;
                 wordFrequencies[word]++;
             }
 
