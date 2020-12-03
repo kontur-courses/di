@@ -5,9 +5,11 @@
 
 Аргументы консольной строки приведены в CLIArguments.cs
 
-## Пример облака тегов
+## Примеры облака тегов
 
-![DraftExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/draft_example.jpg)
+![RandomExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/random_color_example.jpg)
+
+![TwoColorExample](https://github.com/CaptainBelyash/di/blob/master/TagCloud/two_color_example.jpg)
 
 
 ## Шутка длиною в титулы последнего императора

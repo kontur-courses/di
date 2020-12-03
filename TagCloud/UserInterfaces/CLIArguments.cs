@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using CommandLine;
 
 namespace TagCloud.UserInterfaces
 {
@@ -12,8 +13,15 @@ namespace TagCloud.UserInterfaces
 
         [Option("height", Required = false, HelpText = "Set output image height.", Default = 1000)]
         public int Height { get; set; }
+        
+        [Option("color", Required = false, HelpText = "Set text colors in format \"xxx,xxx,xxx\"",
+            Separator = ';')]
+        public IEnumerable<string> Colors { get; set; }
 
-        [Option("bgcolor", Required = false, HelpText = "Set background color in format \"xxx xxx xxx\"",
+        [Option("fgcolor", Required = false, HelpText = "Set background color in format \"xxx,xxx,xxx\"")]
+        public string ForegroundColor { get; set; }
+
+        [Option("bgcolor", Required = false, HelpText = "Set background color in format \"xxx,xxx,xxx\"",
             Default = "0 0 0")]
         public string BackgroundColor { get; set; }
         

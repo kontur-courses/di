@@ -41,7 +41,8 @@ namespace TagCloud.Drawers
         {
             var font = GetFont(tag);
             var occupiedRectangle = layouter.PutNextRectangle(MeasureStringSize(tag.Value, font));
-            DrawString(tag.Value, font, occupiedRectangle.Location);
+            FillRectangle(occupiedRectangle, settings.ForegroundColor);
+            DrawString(tag.Value, font, occupiedRectangle.Location, GetFontColor());
         }
         
         private Font GetFont(TagInfo tag)
@@ -71,13 +72,19 @@ namespace TagCloud.Drawers
             using var brush = new SolidBrush(GetColor(color));
             graphics.DrawString(text, font, brush, textPosition);
         }
+        
+        private Color GetFontColor()
+        {
+            if (settings.Colors.Count == 0)
+                return GetRandomColor();
+            return settings.Colors[random.Next(0, settings.Colors.Count)];
+        }
 
         private Color GetColor(Color? color = null)
         {
             return color ?? GetRandomColor();
         }
 
-        // TODO: сделать в Settings
         private Color GetRandomColor()
         {
             return Color.FromArgb(

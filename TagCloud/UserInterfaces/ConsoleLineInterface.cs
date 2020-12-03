@@ -21,10 +21,15 @@ namespace TagCloud.UserInterfaces
                 new Point(arguments.CenterX, arguments.CenterY),
                 arguments.SpiralPitch,
                 arguments.SpiralStep);
-            
+
+            var fgColor = arguments.ForegroundColor != null
+                ? ParseColorFromRGBString(arguments.ForegroundColor)
+                : Color.FromArgb(0,0,0,0);
             DrawerSettings = new DrawerSettings(
                 new Size(arguments.Width, arguments.Height), 
+                arguments.Colors.Select(colorStr => ParseColorFromRGBString(colorStr)).ToList(),
                 ParseColorFromRGBString(arguments.BackgroundColor),
+                fgColor,
                 arguments.FontFamily,
                 arguments.MinFontSize, 
                 arguments.MaxFontSize,

@@ -1,10 +1,14 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagCloud.Settings
 {
     public class DrawerSettings
     {
         public Size ImageSize;
+        public List<Color> Colors;
+        public Color ForegroundColor;
         public Color BackgroundColor;
         public string FontFamily { get; }
         public int MaxFontSize { get; }
@@ -13,13 +17,17 @@ namespace TagCloud.Settings
 
         public DrawerSettings(
             Size imageSize, 
-            Color backgroundColor, 
+            List<Color> colors,
+            Color backgroundColor,
+            Color foregroundColor, 
             string fontFamily, 
             int minFontSize,
             int maxFontSize,
             bool orderByWeight)
         {
             ImageSize = imageSize;
+            Colors = colors;
+            ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;
             FontFamily = fontFamily;
             MinFontSize = minFontSize;
