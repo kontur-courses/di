@@ -14,7 +14,7 @@ namespace TagsCloud.App.Commands
         }
 
         public string Name { get; } = "setsize";
-        public string Description { get; }
+        public string Description { get; } = "setsize <width> <height>      # setting tag cloud size";
 
         public void Execute(string[] args)
         {

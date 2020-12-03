@@ -14,7 +14,7 @@ namespace TagsCloud.App.Commands
         }
 
         public string Name { get; } = "addcolor";
-        public string Description { get; }
+        public string Description { get; } = "addcolor <color>      # Adding color for cloud tag";
 
         public void Execute(string[] args)
         {

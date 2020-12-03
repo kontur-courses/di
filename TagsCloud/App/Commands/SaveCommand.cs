@@ -12,7 +12,7 @@ namespace TagsCloud.App.Commands
         }
 
         public string Name { get; } = "save";
-        public string Description { get; }
+        public string Description { get; } = "save <fileName>      # save tag cloud image";
 
         public void Execute(string[] args)
         {

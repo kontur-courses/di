@@ -13,7 +13,7 @@ namespace TagsCloud.App.Commands
         }
 
         public string Name { get; } = "setfont";
-        public string Description { get; }
+        public string Description { get; } = "setfont      # setting font for tag cloud";
 
         public void Execute(string[] args)
         {

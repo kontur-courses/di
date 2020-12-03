@@ -37,7 +37,7 @@ namespace TagsCloud.App.Commands
         }
 
         public string Name { get; } = "tagcloud";
-        public string Description { get; }
+        public string Description { get; } = "tagcloud <fileName>      # creating tag cloud from file";
 
         public void Execute(string[] args)
         {
