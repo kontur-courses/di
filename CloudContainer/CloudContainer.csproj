@@ -10,10 +10,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
       <PackageReference Include="MatthiWare.CommandLineParser" Version="0.5.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
-      <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+        <HintPath>..\Cloud.ClientUI\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

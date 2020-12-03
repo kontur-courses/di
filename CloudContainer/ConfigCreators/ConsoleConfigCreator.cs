@@ -8,6 +8,13 @@ namespace CloudContainer.ConfigCreators
     {
         public void CreateConfig(IConfig config, Arguments arguments)
         {
+            if (arguments.Center == null || arguments.Color == null || arguments.Font == null ||
+                arguments.ImageSize == null)
+            {
+                DefaultConfig.SetDefault(config);
+                return;
+            }
+
             var splittedCenter = SplitValue(arguments.Center);
             var splittedFont = SplitValue(arguments.Font);
             var splittedSize = SplitValue(arguments.ImageSize);

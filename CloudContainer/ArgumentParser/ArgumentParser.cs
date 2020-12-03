@@ -1,4 +1,5 @@
-﻿using MatthiWare.CommandLine;
+﻿using CloudContainer.ConfigCreators;
+using MatthiWare.CommandLine;
 
 namespace CloudContainer.ArgumentParser
 {
@@ -7,7 +8,7 @@ namespace CloudContainer.ArgumentParser
         public Arguments Parse(string[] args)
         {
             var parser = new CommandLineParser<Arguments>();
-
+            var arguments = parser.Parse(args);
             return parser.Parse(args).Result;
         }
     }
