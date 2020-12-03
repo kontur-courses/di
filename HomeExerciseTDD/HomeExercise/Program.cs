@@ -5,15 +5,13 @@ namespace HomeExerciseTDD
 {
     class Program
     {
-        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: System.Func`2[System.Drawing.Rectangle,System.Boolean]")]
-        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: Enumerator[System.Drawing.Rectangle]")]
         static void Main(string[] args)
         {
-            var wordPath = @"C:\Users\Enot\Desktop\spora\di\HomeExerciseTDD\HomeExercise\1oneWord.txt";
-            var boringPath = @"C:\Users\Enot\Desktop\spora\di\HomeExerciseTDD\HomeExercise\boringWord.txt";
+            //var wordPath = "Word.txt";
+            //var boringPath = "boringWord.txt";
             var console = new ConsoleCloudClient();
             //args = new[] {"options", "--words", wordPath, "--boring", boringPath, "--format", "jpeg", "--color", "23", "-c", "10"};
-            args = new[] {"options", "--words", wordPath};
+            //args = new[] {"options", "--words", wordPath};
             var builder = new ContainerBuilder();
             
             console.ConsoleHandler(args, builder);
