@@ -6,16 +6,15 @@ namespace TagsCloudContainer.TagsCloudVisualization
 {
     public class ArchimedeanSpiral : ISpiral
     {
+        public Point Center { get; }
         private readonly double angleDelta;
-
-        private readonly Point center;
         private readonly double distanceBetweenLoops;
         private double angle;
 
         public ArchimedeanSpiral(Point center, double distanceBetweenLoops, double angleDelta)
         {
             angle = 0;
-            this.center = center;
+            Center = center;
             this.angleDelta = angleDelta;
             this.distanceBetweenLoops = distanceBetweenLoops;
 
@@ -24,8 +23,8 @@ namespace TagsCloudContainer.TagsCloudVisualization
 
         public Point GetNextPoint()
         {
-            var x = center.X + (int) (distanceBetweenLoops * angle * Math.Cos(angle));
-            var y = center.Y + (int) (distanceBetweenLoops * angle * Math.Sin(angle));
+            var x = Center.X + (int) (distanceBetweenLoops * angle * Math.Cos(angle));
+            var y = Center.Y + (int) (distanceBetweenLoops * angle * Math.Sin(angle));
             angle += angleDelta;
 
             return new Point(x, y);
@@ -33,8 +32,8 @@ namespace TagsCloudContainer.TagsCloudVisualization
 
         private void ValidateSpiralParameters()
         {
-            if (center.X < 0 || center.Y < 0)
-                throw new ArgumentException("center coordinates should not be negative numbers");
+            if (Center.X < 0 || Center.Y < 0)
+                throw new ArgumentException("Center coordinates should not be negative numbers");
 
             if (angleDelta <= 0)
                 throw new ArgumentException("angleDelta should not be negative or zero");

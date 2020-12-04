@@ -19,7 +19,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
         {
             var parser = new TextParser(new WordValidator());
             var center = new Point(200, 200);
-            var layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center, 0.2, 1.0), center);
+            var layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center, 0.2, 1.0));
             container = new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(parser, layouter);
         }
 

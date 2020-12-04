@@ -8,10 +8,10 @@ namespace TagsCloudContainer.TagsCloudVisualization
 {
     public class CircularCloudLayouter : ILayouter
     {
-        public CircularCloudLayouter(ISpiral spiral, Point center)
+        public CircularCloudLayouter(ISpiral spiral)
         {
             Spiral = spiral;
-            Center = center;
+            Center = spiral.Center;
             Rectangles = new List<Rectangle>();
         }
 

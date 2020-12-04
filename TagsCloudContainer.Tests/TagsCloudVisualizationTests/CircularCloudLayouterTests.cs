@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 
             TagsVisualizer = new TagsVisualizer();
             Center = new Point(300, 300);
-            Sut = new CircularCloudLayouter(new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta), Center);
+            Sut = new CircularCloudLayouter(new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta));
         }
 
         [TearDown]

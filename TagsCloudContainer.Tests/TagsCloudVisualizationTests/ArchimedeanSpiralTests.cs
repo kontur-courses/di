@@ -29,8 +29,8 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 
         [TestCase(-1, 0, 1, -1, TestName = "angleDelta is negative")]
         [TestCase(-1, 0, 1, 0, TestName = "angleDelta is zero")]
-        [TestCase(-1, 0, 1, 1, TestName = "center X coordinate is negative")]
-        [TestCase(0, -1, 1, 1, TestName = "center Y coordinate is negative")]
+        [TestCase(-1, 0, 1, 1, TestName = "Center X coordinate is negative")]
+        [TestCase(0, -1, 1, 1, TestName = "Center Y coordinate is negative")]
         [TestCase(0, 0, 0, 1, TestName = "distanceBetweenLoops is zero")]
         [TestCase(0, 0, -1, 1, TestName = "distanceBetweenLoops is negative")]
         public void ThrowException_When(

@@ -60,13 +60,13 @@ namespace TagsCloudUI
         {
             using var form = new Form {Width = 400, FormBorderStyle = FormBorderStyle.FixedDialog, MaximizeBox = false};
 
-            var labelWidth = new Label {Text = "width", Width = 50};
-            var textBoxWidth = new NumericUpDown {Width = 200, Left = labelWidth.Right, Maximum = 5000};
+            var labelWidth = new Label {Text = "Width", Width = 50};
+            var textBoxWidth = new NumericUpDown {Width = 200, Left = labelWidth.Right, Maximum = 5000, Value = imageSize.Width};
             textBoxWidth.ValueChanged += (sender, args) => imageSize.Width = int.Parse(textBoxWidth.Text);
 
-            var labelHeight = new Label {Text = "width", Width = 50, Top = textBoxWidth.Bottom};
-            var textBoxHeight = new NumericUpDown {Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000};
-            textBoxHeight.ValueChanged += (sender, args) => imageSize.Width = int.Parse(textBoxHeight.Text);
+            var labelHeight = new Label {Text = "Height", Width = 50, Top = textBoxWidth.Bottom};
+            var textBoxHeight = new NumericUpDown {Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000, Value = imageSize.Height};
+            textBoxHeight.ValueChanged += (sender, args) => imageSize.Height = int.Parse(textBoxHeight.Text);
 
             var button = new Button {Text = "Set", Top = textBoxHeight.Bottom, DialogResult = DialogResult.OK};
             button.Click += (sender, args) => form.Close();

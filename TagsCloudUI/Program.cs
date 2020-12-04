@@ -10,7 +10,7 @@ namespace TagsCloudUI
         private static void Main()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule<TagsCloudUIModule>();
+            containerBuilder.RegisterModule<TagsCloudUiModule>();
             var container = containerBuilder.Build();
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
