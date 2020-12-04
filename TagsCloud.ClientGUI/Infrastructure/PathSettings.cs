@@ -4,18 +4,16 @@ namespace TagsCloud.ClientGUI.Infrastructure
 {
     public class PathSettings
     {
-        private static readonly char Sep = Path.DirectorySeparatorChar;
-
         public string PathToText { get; set; } =
-            Path.Join(Directory.GetCurrentDirectory(), $"..{Sep}..{Sep}..{Sep}", $"Texts{Sep}SourceText2.txt");
+            Path.Join(Directory.GetCurrentDirectory(), "Texts", "SourceText2.txt");
 
         public string PathToBoringWords { get; set; } =
-            Path.Join(Directory.GetCurrentDirectory(), $"..{Sep}..{Sep}..{Sep}", $"Texts{Sep}BoringWords.txt");
+            Path.Join(Directory.GetCurrentDirectory(), "Texts", "BoringWords.txt");
 
         public string PathToDictionary { get; set; } =
-            Path.Join(Directory.GetCurrentDirectory(), $"..{Sep}..{Sep}..{Sep}", $"Texts{Sep}ru_RU.dic");
+            Path.Join(Directory.GetCurrentDirectory(), "Texts", "ru_RU.dic");
 
-        public string PathToAffix { get; set; } =
-            Path.Join(Directory.GetCurrentDirectory(), $"..{Sep}..{Sep}..{Sep}", $"Texts{Sep}ru_RU.aff");
+        public string PathToAffix { get; set; }
+            = Path.Join(Directory.GetCurrentDirectory(), "Texts", "ru_RU.aff");
     }
 }

@@ -12,17 +12,14 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 
-!TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1
 
 
 # Visual Studio 2015 cache/options directory
@@ -258,3 +255,8 @@ _Pvt_Extensions
 /TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/TagsCloud.Core.dll
 /TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll
 /TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/NHunspell.dll
+/TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/DocumentFormat.OpenXml.dll
+/TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/TagsCloud.Common.dll
+/TagsCloud.Common/bin/Debug/netstandard2.0/TagsCloud.Common.deps.json
+/TagsCloud.Common/bin/Debug/netstandard2.0/TagsCloud.Common.dll
+/TagsCloud.Core/bin/Debug/netstandard2.0/TagsCloud.Common.dll

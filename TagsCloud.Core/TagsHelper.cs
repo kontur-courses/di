@@ -53,7 +53,6 @@ namespace TagsCloud.Core
         {
             switch (document.Split(new[] {'.'}, StringSplitOptions.RemoveEmptyEntries).Last())
             {
-                case "html":
                 case "aff":
                 case "dic":
                 case "doc":

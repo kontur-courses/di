@@ -23,7 +23,7 @@ namespace TagsCloud.ClientGUI.Actions
                 CheckFileExists = false,
                 DefaultExt = "",
                 FileName = "image.png",
-                Filter = "Изображения (*.png)|*.png|All files(*.*)|*.*"
+                Filter = "(*.png)|*.png|(*.jpg)|*.jpg|(*.bmp)|*.bmp"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

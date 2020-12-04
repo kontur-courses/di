@@ -23,7 +23,6 @@ namespace TagsCloud.ClientGUI
         public void RecreateImage(ImageSettings imageSettings)
         {
             Image?.Dispose();
-            imageSettings.NormalizeSize();
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
         }
 

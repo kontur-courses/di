@@ -2,19 +2,35 @@
 {
     public class ImageSettings
     {
+        private int width = 800;
+        private int height = 800;
         private const int MinWidth = 300;
         private const int MaxWidth = 1920;
         private const int MinHeight = 300;
         private const int MaxHeight = 1080;
-        public int Width { get; set; } = 800;
-        public int Height { get; set; } = 800;
 
-        public void NormalizeSize()
+        public int Width
         {
-            if (Width > MaxWidth || Width < MinWidth)
-                Width = Width > MaxWidth ? MaxWidth : MinWidth;
-            if (Height > MaxHeight || Height < MinHeight)
-                Height = Height > MaxHeight ? MaxHeight : MinHeight;
+            get => width;
+            set
+            {
+                if (value > MaxWidth)
+                    width = MaxWidth;
+                else if (value < MinWidth)
+                    width = MinWidth;
+            }
+        }
+
+        public int Height
+        {
+            get => height;
+            set
+            {
+                if (value > MaxHeight)
+                    height = MaxHeight;
+                else if (value < MinHeight)
+                    height = MinHeight;
+            }
         }
     }
 }

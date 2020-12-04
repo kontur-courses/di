@@ -58,7 +58,6 @@ namespace TagsCloud.ClientGUI
                     {
                         graphics.DrawString(words[i].Item1, currentFont,
                             new SolidBrush(GetColor(words[i].Item1[0])), rectangles[i], drawFormat);
-                        currentFont.Dispose();
                     }
                 }
             }
