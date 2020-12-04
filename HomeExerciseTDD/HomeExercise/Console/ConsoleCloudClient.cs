@@ -1,33 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using CommandLine;
-using HomeExerciseTDD.Options;
 using HomeExerciseTDD.settings;
 
 namespace HomeExerciseTDD
 {
     public class ConsoleCloudClient
     {
-        public void ConsoleHandler(string[] args, ContainerBuilder builder)
+        public void HandleSettingsFromConsole(string[] args, ContainerBuilder builder)
         {
             Parser.Default
                 .ParseArguments<Options.Options>(args)
                 .WithParsed(options => 
             {
-                FilesOptionHandler(options.WordsPath, options.BoringPath, builder);
-                WordOptionHandler(options.Font, options.Coefficient, builder);
-                SpiralOptionHandler(options.CenterX, options.CenterY, builder);
-                PainterOptionHandler(options.Wight, options.Height, options.ImageName, options.Format, options.Color, builder);
+                HandleFilesOption(options.WordsPath, options.BoringPath, builder);
+                HandleWordOption(options.Font, options.Coefficient, builder);
+                HandleSpiralOption(options.CenterX, options.CenterY, builder);
+                HandlePainterOption(options.Wight, options.Height, options.ImageName, options.Format, options.Color, builder);
             });
         }
 
-        private void FilesOptionHandler(string wordPath, string boringWordPath, ContainerBuilder builder)
+        private void HandleFilesOption(string wordPath, string boringWordPath, ContainerBuilder builder)
         {
             builder.RegisterType<FileProcessor>().As<IFileProcessor>()
                 .WithParameters(new Parameter[] 
@@ -35,7 +32,7 @@ namespace HomeExerciseTDD
                     new NamedParameter("pathBoringWords", boringWordPath) });
         }
 
-        private void WordOptionHandler(string fontText, int coefficient, ContainerBuilder builder)
+        private void HandleWordOption(string fontText, int coefficient, ContainerBuilder builder)
         {
             FontFamily font;
             try
@@ -50,14 +47,14 @@ namespace HomeExerciseTDD
             builder.RegisterInstance(wordSettings).As<WordSettings>();
         }
         
-        private void SpiralOptionHandler(int x, int y, ContainerBuilder builder)
+        private void HandleSpiralOption(int x, int y, ContainerBuilder builder)
         {
             var center = new Point(x,y);
             var spiralSettings = new SpiralSettings(center);
             builder.RegisterInstance(spiralSettings).As<SpiralSettings>();
         }
 
-        private void PainterOptionHandler(int width, int height, string fileName, string format, KnownColor knownColor, ContainerBuilder builder)
+        private void HandlePainterOption(int width, int height, string fileName, string format, KnownColor knownColor, ContainerBuilder builder)
         {
             var resultFormat = GetImageFormat(format);
             var color = Color.FromKnownColor(knownColor);
