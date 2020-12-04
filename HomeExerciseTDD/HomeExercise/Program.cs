@@ -14,7 +14,7 @@ namespace HomeExerciseTDD
             //args = new[] {"options", "--words", wordPath};
             var builder = new ContainerBuilder();
             
-            console.ConsoleHandler(args, builder);
+            console.HandleSettingsFromConsole(args, builder);
             
             builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
             builder.RegisterType<Spiral>().As<ISpiral>();
