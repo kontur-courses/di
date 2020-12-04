@@ -12,6 +12,6 @@ namespace TagsCloudVisualisation.Text.Formatting
             .ToArray();
 
         public IDictionary<string, float> GetFontSizesForAll(WordWithFrequency[] words) =>
-            words.ToDictionary(w => w.Word, _ => (float) Randomized.ItemOf(sizes));
+            words.ToDictionary(w => w.Word, _ => (float) Randomized.ItemFrom(sizes));
     }
 }

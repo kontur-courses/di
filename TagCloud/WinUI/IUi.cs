@@ -12,6 +12,7 @@ namespace WinUI
         void AddUserInput(UserInputField fieldInput);
         void AddUserInput(UserInputSizeField sizeInput);
         void AddUserInput(UserInputColor colorInput);
+        void AddUserInput(UserInputColorPalette colorInput);
         void OnAfterWordDrawn(Image? newImage, Color backgroundColor);
 
         event Action? ExecutionRequested;

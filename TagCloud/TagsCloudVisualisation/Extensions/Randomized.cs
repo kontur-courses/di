@@ -6,6 +6,6 @@ namespace TagsCloudVisualisation.Extensions
     {
         private static readonly Random randomSeed = new Random();
 
-        public static T ItemOf<T>(T[] source) => source[randomSeed.Next(0, source.Length)];
+        public static T ItemFrom<T>(T[] source) => source[randomSeed.Next(0, source.Length)];
     }
 }

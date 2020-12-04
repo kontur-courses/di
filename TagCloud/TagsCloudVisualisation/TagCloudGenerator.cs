@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TagsCloudVisualisation.Extensions;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
@@ -15,7 +16,7 @@ namespace TagsCloudVisualisation
         private readonly Graphics stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
 
         public async Task<Image> DrawWordsAsync(IFontSizeResolver fontSizeResolver,
-            IColorSource colorSource,
+            Color[] palette,
             ITagCloudLayouter layouter,
             WordWithFrequency[] wordsCollection,
             CancellationToken token, FontFamily fontFamily)
@@ -34,7 +35,7 @@ namespace TagsCloudVisualisation
                         var font = new Font(fontFamily, x.FontSize);
                         var wordSize = Size.Ceiling(stubGraphics.MeasureString(x.Word, font));
                         var location = layouter.PutNextRectangle(wordSize);
-                        var brush = new SolidBrush(colorSource.GetWordColor());
+                        var brush = new SolidBrush(Randomized.ItemFrom(palette));
                         return (location, new FormattedWord(x.Word, font, brush));
                     });
 

@@ -24,7 +24,6 @@ namespace WinUI
         private readonly UserInputOneOptionChoice<IWordNormalizer> normalizerPicker;
         private readonly UserInputOneOptionChoice<IFileResultWriter> writerPicker;
         private readonly UserInputOneOptionChoice<ILayouterFactory> layouterPicker;
-        private readonly UserInputOneOptionChoice<IColorSource> brushSourcePicker;
         private readonly UserInputOneOptionChoice<IFontSizeResolver> fontSizeResolverPicker;
         private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
         private readonly UserInputField filePathInput;
@@ -32,6 +31,7 @@ namespace WinUI
         private readonly UserInputSizeField betweenWordsDistancePicker;
         private readonly UserInputOneOptionChoice<ImageFormat> imageFormatPicker;
         private readonly UserInputColor backgroundColorPicker;
+        private readonly UserInputColorPalette colorPalettePicker;
 
         public App(IUi ui,
             TagCloudGenerator cloudGenerator,
@@ -40,7 +40,6 @@ namespace WinUI
             IEnumerable<IWordNormalizer> normalizers,
             IEnumerable<ILayouterFactory> layouters,
             IEnumerable<IFontSizeResolver> fontSources,
-            IEnumerable<IColorSource> colorSources,
             IEnumerable<IFileResultWriter> writers)
         {
             this.ui = ui;
@@ -52,19 +51,19 @@ namespace WinUI
             layouterPicker = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
             normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
             fontSizeResolverPicker = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font size source");
-            brushSourcePicker = UserInput.SingleChoice(ToDictionaryByName(colorSources), "Color source");
 
             filePathInput = UserInput.Field("Enter source file path");
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
             centerOffsetPicker = UserInput.Size("Cloud center offset");
             betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
             backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
+            colorPalettePicker = UserInput.ColorPalette("Words color palette", Color.DarkRed);
 
             var formats = new[]
             {
-                ImageFormat.Bmp, ImageFormat.Emf, ImageFormat.Exif,
-                ImageFormat.Gif, ImageFormat.Icon, ImageFormat.Jpeg,
-                ImageFormat.Png, ImageFormat.Tiff, ImageFormat.Wmf,
+                ImageFormat.Exif, ImageFormat.Gif, 
+                ImageFormat.Jpeg, ImageFormat.Png,
+                ImageFormat.Tiff, ImageFormat.Bmp, 
             };
 
             imageFormatPicker = UserInput.SingleChoice(formats.ToDictionary(x => x.ToString()), "Result image format");
@@ -76,13 +75,13 @@ namespace WinUI
 
             ui.AddUserInput(filePathInput);
             ui.AddUserInput(backgroundColorPicker);
+            ui.AddUserInput(colorPalettePicker);
             ui.AddUserInput(imageFormatPicker);
             ui.AddUserInput(readerPicker);
             ui.AddUserInput(writerPicker);
             ui.AddUserInput(filterPicker);
             ui.AddUserInput(normalizerPicker);
             ui.AddUserInput(layouterPicker);
-            ui.AddUserInput(brushSourcePicker);
             ui.AddUserInput(fontSizeResolverPicker);
             ui.AddUserInput(fontFamilyPicker);
             ui.AddUserInput(centerOffsetPicker);
@@ -97,16 +96,14 @@ namespace WinUI
                 if (lockingContext.CancellationToken.IsCancellationRequested)
                     return;
 
-                var brushSource = brushSourcePicker.Selected.Value;
-                var image = await CreateImageAsync(brushSource, words, lockingContext.CancellationToken);
+                var image = await CreateImageAsync(words, lockingContext.CancellationToken);
 
                 ui.OnAfterWordDrawn(image, backgroundColorPicker.Picked);
                 FillBackgroundAndSave(image, backgroundColorPicker.Picked);
             }
         }
 
-        private async Task<Image> CreateImageAsync(IColorSource colorSource,
-            WordWithFrequency[] words, CancellationToken cancellationToken)
+        private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken)
         {
             var selectedFactory = layouterPicker.Selected.Value;
             var selectedLayouter = selectedFactory.Get(
@@ -118,7 +115,7 @@ namespace WinUI
 
             var resultImage = await cloudGenerator.DrawWordsAsync(
                 fontSizeSource,
-                colorSource,
+                colorPalettePicker.PickedColors.ToArray(), 
                 selectedLayouter,
                 words,
                 cancellationToken,

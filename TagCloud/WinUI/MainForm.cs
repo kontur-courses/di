@@ -106,7 +106,7 @@ namespace WinUI
             {
                 var colorButton = new Button
                 {
-                    Text = colorInput.Description, 
+                    Text = colorInput.Description,
                     BackColor = colorInput.Picked,
                     ForeColor = Color.Black,
                     Size = new Size(30, 30),
@@ -122,6 +122,71 @@ namespace WinUI
                 };
 
                 return colorButton;
+            });
+        }
+
+        public void AddUserInput(UserInputColorPalette colorInput)
+        {
+            CreateUserInputContainer(colorInput.Description, () =>
+            {
+                var table = new TableLayoutPanel
+                {
+                    ColumnCount = 2,
+                    ColumnStyles = {new ColumnStyle(SizeType.Percent, 50), new ColumnStyle(SizeType.Percent, 50)},
+                    RowCount = 2,
+                    RowStyles = {new RowStyle(SizeType.Percent, 100), new RowStyle(SizeType.Absolute, 30)}
+                };
+
+                var colorsList = new ListView {Dock = DockStyle.Fill};
+                colorsList.Items.AddRange(colorInput.PickedColors.Select(c => new ListViewItem
+                    {
+                        Name = c.Name,
+                        Text = c.Name,
+                        ForeColor = c
+                    })
+                    .ToArray()
+                );
+                table.Controls.Add(colorsList, 0, 0);
+                table.SetColumnSpan(colorsList, 2);
+
+                var addColorButton = new Button {Text = "Add", Dock = DockStyle.Fill};
+                addColorButton.Click += (_, __) =>
+                {
+                    using var colorDialog = CreateColorDialog();
+                    colorDialog.ShowDialog();
+                    var pickedColor = colorDialog.Color;
+                    if (colorInput.PickedColors.Contains(pickedColor))
+                        return;
+
+                    colorInput.AddColor(pickedColor);
+                    colorsList.Items.Add(new ListViewItem
+                    {
+                        Name = pickedColor.Name,
+                        Text = pickedColor.Name,
+                        ForeColor = pickedColor
+                    });
+                };
+                table.Controls.Add(addColorButton, 0, 1);
+
+                var removeColorButton = new Button {Text = "Remove", Dock = DockStyle.Fill};
+                removeColorButton.Click += (_, __) =>
+                {
+                    if (colorInput.PickedColors.Count == 0)
+                        return;
+
+                    var selected = colorsList.SelectedItems.Count == 0
+                        ? new[] {colorInput.PickedColors.Last()}
+                        : colorsList.SelectedItems.Cast<ListViewItem>().Select(x => x.ForeColor).ToArray();
+
+                    foreach (var color in selected)
+                    {
+                        colorInput.RemoveColor(color);
+                        colorsList.Items.RemoveByKey(color.Name);
+                    }
+                };
+                table.Controls.Add(removeColorButton, 1, 1);
+
+                return table;
             });
         }
 

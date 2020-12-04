@@ -28,5 +28,8 @@ namespace WinUI
             source.Select(x => new UserInputSelectorItem<T>(x.Key, x.Value))
                 .OrderBy(x => x.Name)
                 .ToArray();
+
+        public static UserInputColorPalette ColorPalette(string description, params Color[] initialValue) => 
+            new UserInputColorPalette(description, initialValue);
     }
 }
