@@ -6,24 +6,20 @@ using TagsCloudContainer.Infrastructure.CloudVisualizer;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {
-    internal class ImageGenerator : IImageGenerator
+    internal class CloudPainter : ICloudPainter
     {
         private readonly ImageSettings settings;
 
-        public ImageGenerator(ImageSettings settings)
+        public CloudPainter(ImageSettings settings)
         {
             this.settings = settings;
         }
 
-        public Bitmap GenerateImage(IEnumerable<Tag> cloud)
+        public void Paint(IEnumerable<Tag> cloud, Graphics g)
         {
-            var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            using var g = Graphics.FromImage(image);
-            using var brush = new SolidBrush(Color.Black);
+            using var brush = new SolidBrush(Color.White);
             foreach (var tag in cloud)
                 g.DrawString(tag.Word, new Font(settings.FontName, (float) tag.FontSize), brush, tag.Location);
-
-            return image;
         }
     }
 }

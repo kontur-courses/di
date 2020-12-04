@@ -1,34 +1,47 @@
-﻿using System.Drawing;
+﻿using System.IO;
 using TagsCloudContainer.App.Settings;
+using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
-using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 using TagsCloudContainer.Infrastructure.DataReader;
+using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {
     internal class CloudVisualizer : ICloudVisualizer
     {
         private readonly ICloudGenerator cloudGenerator;
-        private readonly ITextParserToFrequencyDictionary textParserToTextParserToFrequencyDictionary;
-        private readonly IImageGenerator imageGenerator;
+        private readonly IImageHolder imageHolder;
         private readonly IDataReader inputDataReader;
+        private readonly ICloudLayouterFactory layouterFactory;
+        private readonly ICloudPainter painter;
+        private readonly ITextParserToFrequencyDictionary textParserToFrequencyDictionary;
 
-        public CloudVisualizer(IDataReader inputDataReader, ITextParserToFrequencyDictionary textParserToTextParserToFrequencyDictionary,
-            ICloudGenerator cloudGenerator, IImageGenerator imageGenerator)
+        public CloudVisualizer(IDataReader inputDataReader,
+            ITextParserToFrequencyDictionary textParserToFrequencyDictionary,
+            ICloudGenerator cloudGenerator, ICloudPainter painter, IImageHolder imageHolder,
+            ICloudLayouterFactory layouterFactory)
         {
             this.inputDataReader = inputDataReader;
-            this.textParserToTextParserToFrequencyDictionary = textParserToTextParserToFrequencyDictionary;
+            this.textParserToFrequencyDictionary = textParserToFrequencyDictionary;
             this.cloudGenerator = cloudGenerator;
-            this.imageGenerator = imageGenerator;
+            this.painter = painter;
+            this.imageHolder = imageHolder;
+            this.layouterFactory = layouterFactory;
         }
 
-        public Bitmap Visualize(string inputFileName, ImageSettings imageSettings)
+        public void Visualize(ImageSettings imageSettings)
         {
             var lines = inputDataReader.ReadLines();
-            var frequencyDictionary = textParserToTextParserToFrequencyDictionary.GenerateFrequencyDictionary(lines);
-            var cloud = cloudGenerator.GenerateCloud(frequencyDictionary);
-            return imageGenerator.GenerateImage(cloud);
+            var frequencyDictionary = textParserToFrequencyDictionary.GenerateFrequencyDictionary(lines);
+            var cloud = cloudGenerator.GenerateCloud(layouterFactory.CreateCloudLayouter(
+                imageSettings.LayouterAlgorithm,
+                imageSettings.ImageSize), frequencyDictionary);
+            painter.Paint(cloud, imageHolder.StartDrawing());
+            var outputFile = Path.GetFullPath(Path.Combine(
+                Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.bmp"));
+            imageHolder.UpdateUi();
+            imageHolder.SaveImage(outputFile);
         }
     }
 }

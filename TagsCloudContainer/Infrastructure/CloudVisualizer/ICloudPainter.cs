@@ -4,8 +4,8 @@ using TagsCloudContainer.App.CloudGenerator;
 
 namespace TagsCloudContainer.Infrastructure.CloudVisualizer
 {
-    internal interface IImageGenerator
+    internal interface ICloudPainter
     {
-        public Bitmap GenerateImage(IEnumerable<Tag> cloud);
+        public void Paint(IEnumerable<Tag> cloud, Graphics g);
     }
 }

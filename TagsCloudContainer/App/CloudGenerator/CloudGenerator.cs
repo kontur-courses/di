@@ -9,15 +9,13 @@ namespace TagsCloudContainer.App.CloudGenerator
     internal class CloudGenerator : ICloudGenerator
     {
         private readonly IFontGetter fontGetter;
-        private readonly ICloudLayouter layouter;
 
-        public CloudGenerator(IFontGetter fontGetter, ICloudLayouter layouter)
+        public CloudGenerator(IFontGetter fontGetter)
         {
             this.fontGetter = fontGetter;
-            this.layouter = layouter;
         }
 
-        public IEnumerable<Tag> GenerateCloud(Dictionary<string, double> frequencyDictionary)
+        public IEnumerable<Tag> GenerateCloud(ICloudLayouter layouter, Dictionary<string, double> frequencyDictionary)
         {
             foreach (var pair in frequencyDictionary.OrderByDescending(pair => pair.Value))
             {

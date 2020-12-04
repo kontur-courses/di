@@ -14,7 +14,7 @@ namespace TagsCloudContainer.App.CloudGenerator
         }
 
         public Font GetFont(string word, double frequency)
-        { 
+        {
             var fontSize = defaultFontSize * (1 + frequency * defaultFontSize);
             return new Font(fontName, (float) fontSize);
         }
