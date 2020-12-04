@@ -11,7 +11,7 @@ namespace TagCloud
     {
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
         private readonly ILayouter layouter;
-        private const double heightCoefficient = 2.5 * Math.PI;
+        private const double heightCoefficient = 8;
         private const double widthCoefficient = 0.7;
         
         public TagsCreater(IFrequencyAnalyzer frequencyAnalyzer, ILayouter layouter)
@@ -34,7 +34,7 @@ namespace TagCloud
         {
             var frequency = pair.Value;
             var tagString = pair.Key;
-            var height = (int)Math.Round(canvasHeight * frequency * Math.Sqrt(tagsCount) / heightCoefficient);
+            var height = (int) Math.Round(canvasHeight * Math.Sqrt(frequency / heightCoefficient));
             var width = (int)Math.Round((double)height * (tagString.Length) * widthCoefficient);
             var rectangle = layouter.PutNextRectangle(new Size(width, height));
             return new Tuple<string, Rectangle>(tagString, rectangle);
