@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using TagCloud.TextConverters.TextReaders;
 using TagCloud.TextConverters.TextProcessors;
 using TagCloud.WordsMetrics;
 using TagCloud.PointGetters;
 using TagCloud.Visualization;
+using TagCloud.Visualization.WordsColorings;
 
 namespace TagCloud.Clients
 {
@@ -29,7 +31,7 @@ namespace TagCloud.Clients
             while (true)
             {
                 Console.WriteLine("Please, write path to file with words or \"exit\" to exit");
-                answear = Console.ReadLine();
+                answear = @"C:\Users\Михаил\Desktop\шпора.txt";// Console.ReadLine();
                 if (answear == "exit")
                     break;
                 var text = reader.ReadText(answear);
@@ -40,7 +42,7 @@ namespace TagCloud.Clients
                 }
                 var info = ReadInfo();
                 Console.WriteLine("Please write path to save picture");
-                var path = Console.ReadLine();
+                var path = @"C:\Users\Михаил\Desktop\Misha.bmp"; //Console.ReadLine();
                 Visualization(text, path, info);
                 Console.WriteLine("Picture save");
                 Console.WriteLine();
@@ -52,14 +54,13 @@ namespace TagCloud.Clients
         {
             Console.WriteLine("Write 3 numbers from 0 to 255 between space");
             Console.WriteLine("For example: 255 176 0");
-            var colorRGB = Console.ReadLine();
-            var color = VisualizationInfo.ReadColor(colorRGB);
+            var colorRGB = "";// Console.ReadLine();
             Console.WriteLine("Please write font");
-            var font = Console.ReadLine();
+            var font = "Arial";// Console.ReadLine();
             Console.WriteLine("Please write 2 number for size picture");
-            var sizeString = Console.ReadLine();
+            var sizeString = "";// Console.ReadLine();
             var size = VisualizationInfo.ReadSize(sizeString);
-            return new VisualizationInfo(size, font, color);
+            return new VisualizationInfo(new WordsColoringLineBringhtness(Color.FromArgb(255, 255, 0, 0)), size, font);
         }
 
         public void Visualization(string text, string picturePath, VisualizationInfo info)
