@@ -6,9 +6,6 @@ namespace WinUI
 {
     public static class UserInput
     {
-        public static UserInputBoolean Boolean(string description, bool initialValue = false) =>
-            new UserInputBoolean(description, initialValue);
-
         public static UserInputField Field(string description) => new UserInputField(description);
         
         public static UserInputSizeField Size(string description) => new UserInputSizeField(description);

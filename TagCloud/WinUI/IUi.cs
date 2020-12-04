@@ -10,7 +10,6 @@ namespace WinUI
         void AddUserInput<T>(UserInputOneOptionChoice<T> inputModel);
         void AddUserInput<T>(UserInputMultipleOptionsChoice<T> inputModel);
         void AddUserInput(UserInputField fieldInput);
-        void AddUserInput(UserInputBoolean booleanInput);
         void OnAfterWordDrawn(Image? newImage, Color backgroundColor);
         void AddUserInput(UserInputSizeField betweenWordsDistancePicker);
 

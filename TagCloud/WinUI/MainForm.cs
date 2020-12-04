@@ -100,16 +100,6 @@ namespace WinUI
             });
         }
 
-        public void AddUserInput(UserInputBoolean booleanInput)
-        {
-            CreateUserInputContainer(null, () =>
-            {
-                var checkBox = new CheckBox {Text = booleanInput.Description};
-                checkBox.CheckedChanged += (_, __) => booleanInput.SetValue(checkBox.Checked);
-                return checkBox;
-            });
-        }
-
         public void AddUserInput(UserInputSizeField sizeInput)
         {
             CreateUserInputContainer(sizeInput.Description, () =>
