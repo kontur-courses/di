@@ -39,7 +39,7 @@ namespace TagsCloudContainer.App
         public void SaveImage(string fileName)
         {
             FailIfNotInitialized();
-            Image.Save(fileName);
+            Image.Save(fileName, ImageFormat.Png);
         }
 
         public AppSettings GetAppSettings()

@@ -9,12 +9,16 @@ namespace TagsCloudContainer.App.Settings
         public static readonly string DefaultInputFile = Path.Combine(
             Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt");
 
+        public static readonly string DefaultOutputDirectory = Path.Combine(
+            Directory.GetCurrentDirectory(), "..", "..", "..");
+
         public static AppSettings Default = new AppSettings(FontSettings.Default, ImageFormat.Bmp,
-            ImageSettings.Default, DefaultInputFile, CloudLayouterAlgorithm.CircularCloudLayouter, Palette.Default);
+            ImageSettings.Default, DefaultInputFile, CloudLayouterAlgorithm.CircularCloudLayouter, Palette.Default,
+            DefaultOutputDirectory);
 
         private AppSettings(FontSettings fontSettings, ImageFormat format,
             ImageSettings imageSettings, string inputFileName, CloudLayouterAlgorithm layouterAlgorithm,
-            Palette palette)
+            Palette palette, string outputDirectory)
         {
             FontSettings = fontSettings;
             Format = format;
@@ -22,6 +26,7 @@ namespace TagsCloudContainer.App.Settings
             InputFileName = inputFileName;
             LayouterAlgorithm = layouterAlgorithm;
             Palette = palette;
+            OutputDirectory = outputDirectory;
         }
 
         public FontSettings FontSettings { get; set; }
@@ -30,5 +35,6 @@ namespace TagsCloudContainer.App.Settings
         public string InputFileName { get; set; }
         public CloudLayouterAlgorithm LayouterAlgorithm { get; set; }
         public Palette Palette { get; set; }
+        public string OutputDirectory { get; set; }
     }
 }

@@ -7,7 +7,10 @@ namespace TagsCloudContainer.Infrastructure.UiActions
         [Description("Алгоритмы")] 
         Algorithms = 0,
 
-        [Description("Настройки")]
-        Settings = 1
+        [Description("Настройки")] 
+        Settings = 1,
+
+        [Description("Файл")] 
+        File = 2
     }
 }

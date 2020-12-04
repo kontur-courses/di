@@ -18,6 +18,7 @@ namespace TagsCloudContainer.App
 {
     internal class Program
     {
+        [STAThread]
         private static void Main(string[] args)
         {
             try
@@ -45,6 +46,7 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IUiAction, ImageSettingsAction>()
                     .AddSingleton<IUiAction, PaletteSettingsAction>()
                     .AddSingleton<IUiAction, FontSettingsAction>()
+                    .AddSingleton<IUiAction, SaveImageAction>()
                     .AddSingleton<MainForm, MainForm>();
                 var serviceProvider = services.BuildServiceProvider();
                 var mainForm = serviceProvider.GetService<MainForm>();
