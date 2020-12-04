@@ -18,7 +18,6 @@ namespace TagCloud.Infrastructure.Settings
         public FontFamily FontFamily { get; set; }
         public int MinFontSize { get; set; }
         public int MaxFontSize { get; set; }
-        public Brush Brush { get; set; }
         public int Width { get; set;  }
         public int Height { get; set; }
         public string ImagePath { get; set; }
@@ -37,7 +36,6 @@ namespace TagCloud.Infrastructure.Settings
             Center = settings.Center;
             ImagePath = settings.ImagePath;
             FontFamily = settings.FontFamily;
-            Brush = settings.Brush;
         }
     }
 }

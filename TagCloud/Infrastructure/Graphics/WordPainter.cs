@@ -11,13 +11,16 @@ namespace TagCloud.Infrastructure.Graphics
     {
         private readonly ILayouter<Size, Rectangle> layouter;
         private readonly Func<IImageSettingsProvider> imageSettingsProvider;
+        private readonly ColorPicker colorPicker;
 
         public WordPainter(
             ILayouter<Size, Rectangle> layouter, 
-            Func<IImageSettingsProvider> imageSettingsProvider)
+            Func<IImageSettingsProvider> imageSettingsProvider,
+            ColorPicker colorPicker)
         {
             this.layouter = layouter;
             this.imageSettingsProvider = imageSettingsProvider;
+            this.colorPicker = colorPicker;
         }
         
         public Image GetImage(IEnumerable<(string, TokenInfo)> tokens)
@@ -28,9 +31,9 @@ namespace TagCloud.Infrastructure.Graphics
             foreach (var (word, info) in tokens)
             {
                 var hitbox = layouter.GetPlace(info.Size);
-
                 var font = new Font(settings.FontFamily, info.FontSize);
-                imageGraphics.DrawString(word, font, settings.Brush, hitbox.Location);
+                var brush = new SolidBrush(colorPicker.GetColor(info));
+                imageGraphics.DrawString(word, font, brush, hitbox.Location);
             }
             return image;
         }

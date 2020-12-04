@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using Autofac;
 using TagCloud.App;
@@ -43,7 +44,10 @@ namespace TagCloud
             builder.RegisterType<PlainEnvironment>().AsImplementedInterfaces();
             builder.RegisterType<SpiralStrategy>().As<ILayoutStrategy>();
             builder.RegisterType<TagCloudLayouter>().As<ILayouter<Size, Rectangle>>();
+            
             builder.RegisterType<WordPainter>().As<IPainter<string>>();
+            builder.RegisterType<Random>().SingleInstance();
+            builder.RegisterType<ColorPicker>();
 
             // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
             builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
@@ -70,7 +74,6 @@ namespace TagCloud
                 Center = new Point(size.Width / 2, size.Height / 2),
                 ImagePath = Path.Combine(".", "drawing.bmp"),
                 FontFamily = new FontFamily("Arial"),
-                Brush = new SolidBrush(Color.Wheat)
             };
         }
 
