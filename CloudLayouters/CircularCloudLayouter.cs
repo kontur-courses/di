@@ -17,37 +17,39 @@ namespace CloudLayouters
         public override Point Center
         {
             get => spiral.Center;
-            set
-            {
-                spiral = new ArchimedeanSpiral(value);
-                ClearLayout();
-            }
+            set => ClearLayout(value);
         }
 
         public override void ClearLayout()
         {
+            ClearLayout(Center);
+        }
+
+        private void ClearLayout(Point? center = null)
+        {
+            center ??= spiral.Center;
             base.ClearLayout();
-            spiral = new ArchimedeanSpiral(spiral.Center);
+            spiral = new ArchimedeanSpiral((Point) center);
         }
 
         public override Rectangle PutNextRectangle(Size rectangleSize)
         {
             Rectangle result;
-            if (Container.FreePoints.Count > 0)
+            if (FreePoints.Count > 0)
             {
-                var pointForRectangle = Container.FreePoints.FirstOrDefault(point =>
+                var pointForRectangle = FreePoints.FirstOrDefault(point =>
                     CouldPutRectangle(GetRectangleWithCenterInPoint(point, rectangleSize)));
                 if (pointForRectangle != Point.Empty)
                 {
                     result = GetRectangleWithCenterInPoint(pointForRectangle, rectangleSize);
-                    Container.AddRectangle(result);
+                    AddRectangle(result);
                     return result;
                 }
             }
 
             result = GetRectangleInNextPoint(rectangleSize);
 
-            Container.AddRectangle(result);
+            AddRectangle(result);
             return result;
         }
 
@@ -59,7 +61,7 @@ namespace CloudLayouters
                 var rectangle = GetRectangleWithCenterInPoint(pointForRectangle, rectangleSize);
                 if (CouldPutRectangle(rectangle))
                     return rectangle;
-                Container.AddFreePoint(pointForRectangle);
+                AddFreePoint(pointForRectangle);
             }
         }
     }

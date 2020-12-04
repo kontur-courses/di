@@ -6,9 +6,10 @@ namespace CloudLayouters
 {
     public static class RectanglePainter
     {
-        public static void DrawRectanglesInFile(IEnumerable<Rectangle> rectangles, string path = "")
+        public static void DrawRectanglesInFile(IEnumerable<Rectangle> rectangles, string path = "", Size? imageSize = null)
         {
-            var image = new Bitmap(2000, 2000);
+            imageSize ??= new Size(2000,2000);
+            var image = new Bitmap(imageSize.Value.Width, imageSize.Value.Height);
             var g = Graphics.FromImage(image);
             g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, 2000, 2000));
             foreach (var rectangle in rectangles)

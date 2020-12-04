@@ -14,7 +14,7 @@ namespace CloudLayouters
             Center = center;
             Location = new Point(center.X / 10, center.Y / 10);
             Name = "Прямоугольное облако";
-            Container.AddFreePoint(Location);
+            AddFreePoint(Location);
         }
 
         public Point Location { get; private set; }
@@ -27,19 +27,19 @@ namespace CloudLayouters
                 ClearLayout();
                 center = value;
                 Location = new Point(center.X / 10, center.Y / 10);
-                Container.AddFreePoint(Location);
+                AddFreePoint(Location);
             }
         }
 
         public override Rectangle PutNextRectangle(Size rectangleSize)
         {
-            foreach (var point in Container.FreePoints.OrderBy(x => Math.Max(x.X, x.Y)))
+            foreach (var point in FreePoints.OrderBy(x => Math.Max(x.X, x.Y)))
             {
                 var rectangle = new Rectangle(point, rectangleSize);
                 if (!CouldPutRectangle(rectangle)) continue;
                 AddFreePoints(new Point(point.X + rectangleSize.Width, point.Y));
                 AddFreePoints(new Point(point.X, point.Y + rectangleSize.Height));
-                Container.AddRectangle(rectangle);
+                AddRectangle(rectangle);
                 return rectangle;
             }
 
@@ -49,12 +49,12 @@ namespace CloudLayouters
         public override void ClearLayout()
         {
             base.ClearLayout();
-            Container.AddFreePoint(Location);
+            AddFreePoint(Location);
         }
 
         private void AddFreePoints(Point point)
         {
-            Container.AddFreePoint(point);
+            AddFreePoint(point);
         }
     }
 }

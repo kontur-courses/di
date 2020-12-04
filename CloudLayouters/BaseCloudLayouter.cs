@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -6,23 +6,21 @@ namespace CloudLayouters
 {
     public abstract class BaseCloudLayouter
     {
-        protected readonly CloudObjectsContainer Container = new CloudObjectsContainer();
+        protected readonly List<Point> FreePoints = new List<Point>();
+        protected readonly List<Rectangle> Rectangles = new List<Rectangle>();
         public string? Name { get; protected set; }
         public virtual Point Center { get; set; }
 
-        public virtual Rectangle PutNextRectangle(Size rectangleSize)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Rectangle PutNextRectangle(Size rectangleSize);
 
         public Rectangle[] GetAllRectangles()
         {
-            return Container.Rectangles.ToArray();
+            return Rectangles.ToArray();
         }
 
         protected bool CouldPutRectangle(Rectangle rectangle)
         {
-            return !(Container.Rectangles.Count > 0 && Container.Rectangles.Any(rect =>
+            return !(Rectangles.Count > 0 && Rectangles.Any(rect =>
                 rect.IntersectsWith(rectangle)));
         }
 
@@ -35,7 +33,26 @@ namespace CloudLayouters
 
         public virtual void ClearLayout()
         {
-            Container.Clear();
+            ClearContainer();
+        }
+
+
+        protected void AddRectangle(Rectangle rectangle)
+        {
+            Rectangles.Add(rectangle);
+            FreePoints.RemoveAll(rectangle.Contains);
+        }
+
+        protected void AddFreePoint(Point point)
+        {
+            if (!Rectangles.Any(rectangle => rectangle.Contains(point)))
+                FreePoints.Add(point);
+        }
+
+        protected void ClearContainer()
+        {
+            FreePoints.Clear();
+            Rectangles.Clear();
         }
     }
 }
