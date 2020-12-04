@@ -106,12 +106,20 @@ namespace TagsCloud.Tests
                 return;
             var path = $"../../../Images/{TestContext.CurrentContext.Test.FullName}.png";
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
-            CircularCloudVisualization.CreateImage(rectangles, ImageWidth, ImageHeight).Save(path);
+            CreateImage().Save(path);
         }
 
         private double GetDistanceFromPointToCenter(Point point)
         {
             return Math.Sqrt(Math.Pow(point.X - center.X, 2) + Math.Pow(point.Y - center.Y, 2));
+        }
+
+        private Bitmap CreateImage()
+        {
+            var image = new Bitmap(ImageWidth, ImageHeight);
+            foreach (var rect in rectangles)
+                Graphics.FromImage(image).DrawRectangle(new Pen(Color.Black), rect);
+            return image;
         }
     }
 }

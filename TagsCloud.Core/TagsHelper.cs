@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using NHunspell;
+using TagsCloud.Common;
 
 namespace TagsCloud.Core
 {
@@ -37,12 +38,9 @@ namespace TagsCloud.Core
                     .ThenBy(y => y.Key, StringComparer.Ordinal));
         }
 
-        public static List<Rectangle> GetRectangles(Size imageSize, List<(string, int)> words, double spiralParameter,
+        public static List<Rectangle> GetRectangles(ICircularCloudLayouter cloud, List<(string, int)> words,
             double letterWidth)
         {
-            var spiral = new ArchimedeanSpiral(new Point(imageSize.Width / 2, imageSize.Height / 2), spiralParameter);
-            var cloud = new CircularCloudLayouter(spiral);
-
             return words.Select(word => cloud.PutNextRectangle(
                 new Size(
                     (int) (letterWidth / 1.4 * Math.Log(word.Item2 + 1) * word.Item1.Length),
