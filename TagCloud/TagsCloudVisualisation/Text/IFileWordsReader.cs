@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TagsCloudVisualisation.Text
+﻿namespace TagsCloudVisualisation.Text
 {
     public interface IFileWordsReader
     {
-        IEnumerable<string> EnumerateWordsFrom(string path);
+        string[] GetWordsFrom(string path);
     }
 }

@@ -3,27 +3,13 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using TagsCloudVisualisation.Extensions;
 using WinUI.Helpers;
 using WinUI.InputModels;
 using WinUI.Utils;
 
 namespace WinUI
 {
-    public interface IGui
-    {
-        void SetImage(Image? newImage);
-        UiLockingOperation StartLockingOperation();
-        void AddUserInput<T>(UserInputSingleChoice<T> inputModel);
-        void AddUserInput<T>(UserInputMultipleChoice<T> inputModel);
-        void AddUserInput(UserInputField fieldInput);
-        void AddUserInput(UserInputBoolean booleanInput);
-        void SetImageBackground(Color color);
-
-        event Action? ExecutionRequested;
-    }
-
-    public partial class MainForm : Form, IGui
+    public partial class MainForm : Form, IUi
     {
         private FormWindowState previousState;
         private Image? currentResultImage;
@@ -36,10 +22,15 @@ namespace WinUI
 
         public event Action? ExecutionRequested;
 
-        public void SetImage(Image newImage)
+        public void OnAfterWordDrawn(Image newImage, Color backgroundColor)
         {
-            currentResultImage = newImage;
-            UpdatePreviewImage();
+            pictureBox.BackColor = backgroundColor;
+            if (newImage != currentResultImage)
+            {
+                currentResultImage?.Dispose();
+                currentResultImage = newImage;
+                UpdatePreviewImage();
+            }
         }
 
         public UiLockingOperation StartLockingOperation()
@@ -66,7 +57,7 @@ namespace WinUI
             void StopButtonClickHandler(object _, EventArgs __) => ctSource.Cancel();
         }
 
-        public void AddUserInput<T>(UserInputSingleChoice<T> inputModel)
+        public void AddUserInput<T>(UserInputOneOptionChoice<T> inputModel)
         {
             CreateUserInputContainer(inputModel.Description, () =>
             {
@@ -82,7 +73,7 @@ namespace WinUI
             });
         }
 
-        public void AddUserInput<T>(UserInputMultipleChoice<T> inputModel)
+        public void AddUserInput<T>(UserInputMultipleOptionsChoice<T> inputModel)
         {
             CreateUserInputContainer(inputModel.Description, () =>
             {
@@ -119,50 +110,34 @@ namespace WinUI
             });
         }
 
-        private void ExecuteButton_Click(object sender, EventArgs args)
+        public void AddUserInput(UserInputSizeField sizeInput)
         {
-            ExecutionRequested?.Invoke();
-        }
-
-        private void CreateUserInputContainer(string? showingText, Func<Control> innerCreator)
-        {
-            var offset = new Size(10, 5);
-            var startY = rightPanel.Controls.Cast<Control>().Select(x => x.Bottom).MaxOrDefault();
-
-            var panel = new Panel
+            CreateUserInputContainer(sizeInput.Description, () =>
             {
-                Location = new Point(0, startY + offset.Height),
-                Width = rightPanel.Width - offset.Width * 2
-            };
-            rightPanel.Controls.Add(panel);
-
-            var itemWidth = (panel.Size - offset * 2).Width;
-            var nextY = offset.Height;
-            if (showingText != null)
-            {
-                var label = new Label
+                var table = new TableLayoutPanel
                 {
-                    Text = showingText,
-                    Location = new Point(offset.Width, nextY),
-                    Width = itemWidth
+                    RowCount = 2,
+                    RowStyles = {new RowStyle(SizeType.Percent, 50), new RowStyle(SizeType.Percent, 50)},
+                    ColumnCount = 2,
+                    ColumnStyles = {new ColumnStyle(SizeType.Percent, 20), new ColumnStyle(SizeType.Percent, 80)},
+                    BorderStyle = BorderStyle.None,
+                    CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
+                    Padding = Padding.Empty,
+                    Margin = Padding.Empty,
+                    Height = 100
                 };
-                panel.Controls.Add(label);
-                nextY = label.Bottom + offset.Height / 3;
-            } 
 
-            var inner = innerCreator.Invoke();
-            inner.Location = new Point(offset.Width, nextY);
-            inner.Width = itemWidth;
-            panel.Controls.Add(inner);
+                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Width"}, 0, 0);
+                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Height"}, 0, 1);
 
-            panel.Height = inner.Bottom;
-        }
+                var widthInput = CreateIntInput(i => sizeInput.Width = i, DockStyle.Left);
+                table.Controls.Add(widthInput, 1, 0);
 
-        private void UpdatePreviewImage()
-        {
-            if (currentResultImage == null)
-                return;
-            pictureBox.Image = currentResultImage.PlaceAtCenter(pictureBox.Size);
+                var heightInput = CreateIntInput(i => sizeInput.Height = i, DockStyle.Left);
+                table.Controls.Add(heightInput, 1, 1);
+
+                return table;
+            });
         }
 
         protected override void OnResizeEnd(EventArgs e)
@@ -182,9 +157,79 @@ namespace WinUI
             }
         }
 
-        public void SetImageBackground(Color color)
+        private void ExecuteButton_Click(object sender, EventArgs args)
         {
-            pictureBox.BackColor = color;
+            ExecutionRequested?.Invoke();
+        }
+
+        private void CreateUserInputContainer(string? showingText, Func<Control> innerCreator)
+        {
+            var offset = new Size(10, 5);
+            var startY = rightPanel.Controls.Cast<Control>().Select(x => x.Bottom).MaxOrDefault();
+
+            var panel = new Panel
+            {
+                Location = new Point(0, startY + offset.Height),
+                Width = rightPanel.Width - offset.Width * 2
+            };
+            rightPanel.Controls.Add(panel);
+
+            var itemWidth = (panel.Size - offset * 2).Width;
+            var nextY = offset.Height;
+
+            if (showingText != null)
+            {
+                var label = CreateDescriptionLabel(showingText, new Point(offset.Width, nextY), itemWidth);
+                panel.Controls.Add(label);
+                nextY = label.Bottom + offset.Height / 3;
+            }
+
+            var inner = innerCreator.Invoke();
+            inner.Location = new Point(offset.Width, nextY);
+            inner.Width = itemWidth;
+            panel.Controls.Add(inner);
+
+            panel.Height = inner.Bottom;
+        }
+
+        private static Label CreateDescriptionLabel(string text, Point location, int width) => new Label
+        {
+            Text = text,
+            Location = location,
+            Width = width
+        };
+
+        private static NumericUpDown CreateIntInput(Action<int> onValueChanged, DockStyle dockStyle)
+        {
+            var numericUpDown = new NumericUpDown {Dock = dockStyle};
+            numericUpDown.ValueChanged += (_, __) => onValueChanged.Invoke((int) numericUpDown.Value);
+            numericUpDown.KeyPress += (_, args) =>
+                args.Handled = !(char.IsDigit(args.KeyChar) || args.KeyChar == '\b' || args.KeyChar == '-');
+            return numericUpDown;
+        }
+
+        private void UpdatePreviewImage()
+        {
+            if (currentResultImage == null)
+                return;
+
+            var previous = pictureBox.Image;
+            pictureBox.Image = PlaceAtCenter(currentResultImage, pictureBox.Size);
+            previous?.Dispose();
+        }
+
+        private static Image PlaceAtCenter(Image source, Size newSize)
+        {
+            var resizeCoefficient = Math.Min(
+                (float) newSize.Height / source.Height,
+                (float) newSize.Width / source.Width);
+            var resized = new Bitmap(source, (source.Size * resizeCoefficient).ToSize());
+            var location = new Point((newSize - resized.Size) / 2);
+
+            var result = new Bitmap(newSize.Width, newSize.Height);
+            using (var g = Graphics.FromImage(result))
+                g.DrawImage(resized, location);
+            return result;
         }
     }
 }

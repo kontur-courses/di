@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace WinUI.InputModels
 {
-    public class UserInputMultipleChoice<T> : UserInputChoiceBase<T>
+    public class UserInputMultipleOptionsChoice<T> : UserInputChoiceBase<T>
     {
         private readonly Dictionary<string, bool> selectionByNames;
 
-        public UserInputMultipleChoice(string description, UserInputSelectorItem<T>[] available) 
+        public UserInputMultipleOptionsChoice(string description, UserInputSelectorItem<T>[] available) 
             : base(description, available)
         {
             selectionByNames = Available.ToDictionary(x => x.Name, _ => false);
@@ -16,11 +16,7 @@ namespace WinUI.InputModels
         public IEnumerable<UserInputSelectorItem<T>> Selected => Available.Where(x => IsSelected(x.Name));
         public bool IsSelected(string name) => selectionByNames[name];
 
-        public void ChangeItemSelection(string name)
-        {
-            selectionByNames[name] = !IsSelected(name);
-            OnAfterSelectionChanged(ItemsByNames[name]);
-        }
+        public void ChangeItemSelection(string name) => selectionByNames[name] = !IsSelected(name);
 
         public void SetSelection(string name, bool isSelected)
         {

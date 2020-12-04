@@ -1,124 +1,115 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using TagsCloudVisualisation;
-using TagsCloudVisualisation.Extensions;
 using TagsCloudVisualisation.Layouting;
 using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
 using TagsCloudVisualisation.Text.Preprocessing;
-using TagsCloudVisualisation.Visualisation;
 using WinUI.InputModels;
 
 namespace WinUI
 {
     public class App
     {
-        private readonly IGui gui;
+        private readonly IUi ui;
         private readonly TagCloudGenerator cloudGenerator;
-        private readonly UserInputSingleChoice<IFileWordsReader> readers;
-        private readonly UserInputMultipleChoice<IWordFilter> filters;
-        private readonly UserInputSingleChoice<IWordNormalizer> normalizers;
-        private readonly UserInputSingleChoice<IFileResultWriter> writers;
-        private readonly UserInputSingleChoice<ITagCloudLayouter> layouters;
-        private readonly UserInputSingleChoice<IBrushSource> colorSources;
-        private readonly UserInputSingleChoice<IFontSource> fontSources;
-        private readonly UserInputField pathSource;
-        private readonly UserInputBoolean showVisualisationFrames;
-        private readonly CloudVisualiser visualiser;
+        private readonly UserInputOneOptionChoice<IFileWordsReader> readerPicker;
+        private readonly UserInputMultipleOptionsChoice<IWordFilter> filterPicker;
+        private readonly UserInputOneOptionChoice<IWordNormalizer> normalizerPicker;
+        private readonly UserInputOneOptionChoice<IFileResultWriter> writerPicker;
+        private readonly UserInputOneOptionChoice<ILayouterFactory> layouterPicker;
+        private readonly UserInputOneOptionChoice<IColorSource> brushSourcePicker;
+        private readonly UserInputOneOptionChoice<IFontSizeResolver> fontSizeResolverPicker;
+        private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
+        private readonly UserInputField filePathInput;
+        private readonly UserInputSizeField centerOffsetPicker;
+        private readonly UserInputSizeField betweenWordsDistancePicker;
 
-        public App(IGui gui,
+        public App(IUi ui,
             TagCloudGenerator cloudGenerator,
-            CloudVisualiser visualiser,
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
             IEnumerable<IWordNormalizer> normalizers,
-            IEnumerable<ITagCloudLayouter> layouters,
-            IEnumerable<IFontSource> fontSources,
-            IEnumerable<IBrushSource> colorSources,
+            IEnumerable<ILayouterFactory> layouters,
+            IEnumerable<IFontSizeResolver> fontSources,
+            IEnumerable<IColorSource> colorSources,
             IEnumerable<IFileResultWriter> writers)
         {
-            this.gui = gui;
+            this.ui = ui;
             this.cloudGenerator = cloudGenerator;
-            this.visualiser = visualiser;
 
-            this.readers = UserInput.SingleChoice(ToDictionaryByName(readers), "Words file reader");
-            this.filters = UserInput.MultipleChoice(ToDictionaryByName(filters), "Words filtering method");
-            this.writers = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
-            this.layouters = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
-            this.normalizers = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
-            this.fontSources = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font source");
-            this.colorSources = UserInput.SingleChoice(ToDictionaryByName(colorSources), "Color source");
+            readerPicker = UserInput.SingleChoice(ToDictionaryByName(readers), "Words file reader");
+            filterPicker = UserInput.MultipleChoice(ToDictionaryByName(filters), "Words filtering method");
+            writerPicker = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
+            layouterPicker = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
+            normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
+            fontSizeResolverPicker = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font size source");
+            brushSourcePicker = UserInput.SingleChoice(ToDictionaryByName(colorSources), "Color source");
 
-            showVisualisationFrames = UserInput.Boolean("Show every visualisation frame", false);
-            pathSource = UserInput.Field("Enter source file path");
+            filePathInput = UserInput.Field("Enter source file path");
+            fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
+            centerOffsetPicker = UserInput.Size("Cloud center offset");
+            betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
         }
 
         public void Subscribe()
         {
-            gui.ExecutionRequested += ExecutionRequested;
-            colorSources.AfterSelectionChanged += x => gui.SetImageBackground(x.Value.BackgroundColor);
+            ui.ExecutionRequested += ExecutionRequested;
 
-            gui.AddUserInput(pathSource);
-            gui.AddUserInput(showVisualisationFrames);
-            gui.AddUserInput(readers);
-            gui.AddUserInput(filters);
-            gui.AddUserInput(normalizers);
-            gui.AddUserInput(writers);
-            gui.AddUserInput(layouters);
-            gui.AddUserInput(colorSources);
-            gui.AddUserInput(fontSources);
+            ui.AddUserInput(filePathInput);
+            ui.AddUserInput(readerPicker);
+            ui.AddUserInput(filterPicker);
+            ui.AddUserInput(normalizerPicker);
+            ui.AddUserInput(writerPicker);
+            ui.AddUserInput(layouterPicker);
+            ui.AddUserInput(brushSourcePicker);
+            ui.AddUserInput(fontSizeResolverPicker);
+            ui.AddUserInput(fontFamilyPicker);
+            ui.AddUserInput(centerOffsetPicker);
+            ui.AddUserInput(betweenWordsDistancePicker);
         }
 
         private async void ExecutionRequested()
         {
-            using (var lockingContext = gui.StartLockingOperation())
+            using (var lockingContext = ui.StartLockingOperation())
             {
-                var words = await ReadWordsAsync(pathSource.Value, lockingContext.CancellationToken);
+                var words = await ReadWordsAsync(filePathInput.Value, lockingContext.CancellationToken);
                 if (lockingContext.CancellationToken.IsCancellationRequested)
                     return;
 
-                using (var pbContext = lockingContext.GetProgressBarContext(0, words.Length))
-                {
-                    var image = await CreateImageAsync(words, lockingContext.CancellationToken, dc =>
-                    {
-                        pbContext.Increment();
-                        if (showVisualisationFrames.Value && dc.Image != null)
-                            gui.SetImage(dc.Image);
-                    });
+                var brushSource = brushSourcePicker.Selected.Value;
+                var image = await CreateImageAsync(brushSource, words, lockingContext.CancellationToken);
 
-                    gui.SetImage(image);
-                    writers.Selected.Value.Save(
-                        image.FillBackground(colorSources.Selected.Value.BackgroundColor),
-                        pathSource.Value + ".png");
-                }
+                ui.OnAfterWordDrawn(image, brushSource.Background);
+                FillBackgroundAndSave(image, brushSource.Background);
             }
         }
 
-        private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken,
-            Action<DrawingContext>? callback = null)
+        private async Task<Image> CreateImageAsync(IColorSource colorSource,
+            WordWithFrequency[] words, CancellationToken cancellationToken)
         {
-            if (callback != null)
-                cloudGenerator.AfterWordDrawn += callback;
+            var selectedFactory = layouterPicker.Selected.Value;
+            var selectedLayouter = selectedFactory.Get(
+                centerOffsetPicker.PointFromCurrent(),
+                centerOffsetPicker.SizeFromCurrent());
 
-            var selectedLayouter = layouters.Selected.Value;
+            var fontSizeSource = fontSizeResolverPicker.Selected.Value;
+            var fontFamily = fontFamilyPicker.Selected.Value;
+
             var resultImage = await cloudGenerator.DrawWordsAsync(
-                fontSources.Selected.Value,
-                colorSources.Selected.Value,
+                fontSizeSource,
+                colorSource,
                 selectedLayouter,
-                visualiser,
                 words,
-                cancellationToken
-            );
+                cancellationToken,
+                fontFamily);
 
-            selectedLayouter.Reset();
-            if (callback != null)
-                cloudGenerator.AfterWordDrawn -= callback;
             return resultImage;
         }
 
@@ -126,10 +117,10 @@ namespace WinUI
         {
             return await Task.Run(() =>
             {
-                var words = readers.Selected.Value.EnumerateWordsFrom(sourcePath)
-                    .Where(w => filters.Selected.All(f => f.Value.IsValidWord(w)));
+                var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath)
+                    .Where(w => filterPicker.Selected.All(f => f.Value.IsValidWord(w)));
 
-                var normalizedWords = normalizers.Selected.Value.Normalize(words);
+                var normalizedWords = normalizerPicker.Selected.Value.Normalize(words);
 
                 if (cancellationToken.IsCancellationRequested)
                     return new WordWithFrequency[0];
@@ -149,6 +140,19 @@ namespace WinUI
                     .OrderByDescending(x => x.Frequency)
                     .ToArray();
             }, cancellationToken);
+        }
+
+        private void FillBackgroundAndSave(Image image, Color backgroundColor)
+        {
+            using var newImage = new Bitmap(image.Size.Width, image.Size.Height);
+            using (var g = Graphics.FromImage(newImage))
+            using (var brush = new SolidBrush(backgroundColor))
+            {
+                g.FillRectangle(brush, new Rectangle(Point.Empty, image.Size));
+                g.DrawImage(image, Point.Empty);
+            }
+
+            writerPicker.Selected.Value.Save(newImage, ImageFormat.Png, filePathInput.Value + ".png");
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>

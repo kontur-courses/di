@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WinUI.InputModels
+﻿namespace WinUI.InputModels
 {
     public class UserInputBoolean
     {
@@ -18,9 +16,6 @@ namespace WinUI.InputModels
             if (Value == newValue)
                 return;
             Value = newValue;
-            ValueChanged?.Invoke(Value);
         }
-
-        public event Action<bool>? ValueChanged;
     }
 }

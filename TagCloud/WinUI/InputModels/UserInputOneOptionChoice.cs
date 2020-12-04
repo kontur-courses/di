@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace WinUI.InputModels
 {
-    public class UserInputSingleChoice<T> : UserInputChoiceBase<T>
+    public class UserInputOneOptionChoice<T> : UserInputChoiceBase<T>
     {
-        public UserInputSingleChoice(string description, IEnumerable<UserInputSelectorItem<T>> available)
+        public UserInputOneOptionChoice(string description, IEnumerable<UserInputSelectorItem<T>> available)
             : base(description, available)
         {
             Selected = ItemsByNames.First().Value;
@@ -16,7 +16,6 @@ namespace WinUI.InputModels
         public void SetSelected(string name)
         {
             Selected = ItemsByNames[name];
-            OnAfterSelectionChanged(Selected);
         }
     }
 }

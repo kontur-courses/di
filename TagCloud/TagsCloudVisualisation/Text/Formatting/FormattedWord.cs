@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
-    public class FormattedWord
+    public class FormattedWord : IDisposable
     {
         public FormattedWord(string word, Font font, Brush brush)
         {
@@ -15,14 +16,10 @@ namespace TagsCloudVisualisation.Text.Formatting
         public Font Font { get; }
         public Brush Brush { get; }
 
-        public static FormattedWord MultiplyFontSize(FormattedWord formattedWord, int coefficient) =>
-            new FormattedWord(word: formattedWord.Word, brush: formattedWord.Brush,
-                font: new Font(
-                    formattedWord.Font.FontFamily,
-                    formattedWord.Font.Size * coefficient,
-                    formattedWord.Font.Style,
-                    formattedWord.Font.Unit,
-                    formattedWord.Font.GdiCharSet,
-                    formattedWord.Font.GdiVerticalFont));
+        public void Dispose()
+        {
+            Font.Dispose();
+            Brush.Dispose();
+        }
     }
 }

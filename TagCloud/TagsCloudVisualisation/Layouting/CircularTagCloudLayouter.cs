@@ -4,13 +4,15 @@ using System.Drawing;
 
 namespace TagsCloudVisualisation.Layouting
 {
+    public class CircularTagCloudLayouterFactory : ILayouterFactory
+    {
+        public ITagCloudLayouter Get(Point centerPoint, Size minDistance) =>
+            new CircularTagCloudLayouter(centerPoint, minDistance);
+    }
+
     [VisibleName("Круговая раскладка")]
     public class CircularTagCloudLayouter : ITagCloudLayouter
     {
-        public CircularTagCloudLayouter(Size minRectangleSize) : this(new Point(), minRectangleSize)
-        {
-        }
-
         public CircularTagCloudLayouter(Point cloudCenter, Size minRectangleSize)
         {
             CloudCenter = cloudCenter;
@@ -35,12 +37,6 @@ namespace TagsCloudVisualisation.Layouting
                 points.Remove(point);
 
             return RegisterRectangle(createdRectangle);
-        }
-
-        public void Reset()
-        {
-            rectangles.Clear();
-            points.Clear();
         }
 
         private Rectangle PutRectangleAndGetOutdatedPoints(Size rectangleSize, out IList<RectangleLocation> toRemove)

@@ -1,55 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualisation.Text.Formatting;
 
 namespace TagsCloudVisualisation.Visualisation
 {
-    /// <summary>
-    /// Provides algorythm to draw cloud step-by-step with automatically image resizing
-    /// </summary>
-    public class CloudVisualiser
+    public class CloudVisualiser : IDisposable
     {
-        public Image DrawWords(
-            Point centerPointOffset,
-            IEnumerable<(Rectangle position, FormattedWord toDraw)> words,
-            Action<DrawingContext>? callback = null)
+        private bool disposed;
+        private Graphics? graphics;
+        private Image? image;
+
+        public Image? Current => image;
+
+        public void DrawNextWord(Rectangle position, FormattedWord formattedWord)
         {
-            var context = new DrawingContext();
-
-            foreach (var (position, toDraw) in words)
-            {
-                DrawNextWord(centerPointOffset, toDraw, position, context);
-                callback?.Invoke(context);
-            }
-
-            return context.Image!;
+            ThrowIfDisposed();
+            var wordPosition = GetWordRectangle(graphics, formattedWord, position);
+            var resized = EnsureBitmapSize(image, Rectangle.Ceiling(wordPosition));
+            SetCurrentImage(resized);
+            wordPosition.Location += image!.Size / 2;
+            graphics!.DrawString(formattedWord.Word, formattedWord.Font, formattedWord.Brush, wordPosition);
         }
 
-        private static void DrawNextWord(Point centerPointOffset, FormattedWord toDraw, Rectangle position,
-            DrawingContext context)
+        private void SetCurrentImage(Image newImage)
         {
-            var wordPosition = GetWordRectangle(context.Graphics, toDraw, position, centerPointOffset);
-            var resized = EnsureBitmapSize(context.Image, Rectangle.Ceiling(wordPosition));
-            UpdateGraphicsIfRequired(resized);
-            wordPosition.Location += context.Image!.Size / 2;
-            context.Graphics!.DrawString(toDraw.Word, toDraw.Font, toDraw.Brush, wordPosition);
+            if (newImage == image) return;
 
-            void UpdateGraphicsIfRequired(Image newImage)
-            {
-                if (newImage != context.Image)
-                {
-                    context.Graphics?.Dispose();
-                    context.Graphics = Graphics.FromImage(newImage);
-                }
-
-                context.Image = newImage;
-            }
+            image?.Dispose();
+            graphics?.Dispose();
+            image = newImage;
+            graphics = Graphics.FromImage(newImage);
         }
 
-        private static RectangleF GetWordRectangle(Graphics? graphics, FormattedWord toDraw, Rectangle position,
-            Point centerOffset)
+        private void ThrowIfDisposed()
+        {
+            if (disposed)
+                throw new InvalidOperationException($"{nameof(CloudVisualiser)} is already disposed");
+        }
+
+        private static RectangleF GetWordRectangle(Graphics? graphics, FormattedWord toDraw, Rectangle position)
         {
             var wordSize = MeasureString(graphics, toDraw.Word, toDraw.Font);
             if (wordSize.Height > position.Size.Height || wordSize.Width > position.Size.Width)
@@ -57,8 +47,7 @@ namespace TagsCloudVisualisation.Visualisation
 
             var offset = (wordSize - position.Size) / 2;
             var wordPosition = new PointF(position.X - offset.Width, position.Y - offset.Height);
-            var fixedPosition = FixOffset(wordPosition, centerOffset);
-            return new RectangleF(fixedPosition, wordSize);
+            return new RectangleF(wordPosition, wordSize);
         }
 
         private static SizeF MeasureString(Graphics? graphics, string? word, Font font)
@@ -69,9 +58,6 @@ namespace TagsCloudVisualisation.Visualisation
             return g.MeasureString(word, font);
         }
 
-        private static PointF FixOffset(PointF rectangleLocation, Point centerPointOffset) => new PointF(
-            rectangleLocation.X - centerPointOffset.X,
-            rectangleLocation.Y - centerPointOffset.Y);
 
         private static Image EnsureBitmapSize(Image? bitmap, Rectangle nextRectangle)
         {
@@ -104,11 +90,12 @@ namespace TagsCloudVisualisation.Visualisation
         }
 
         private static int MaxAbs(params int[] numbers) => numbers.Select(Math.Abs).Max();
-    }
 
-    public class DrawingContext
-    {
-        public Graphics? Graphics { get; set; }
-        public Image? Image { get; set; }
+        public void Dispose()
+        {
+            disposed = true;
+            graphics?.Dispose();
+            image?.Dispose();
+        }
     }
 }

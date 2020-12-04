@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace WinUI.InputModels
@@ -16,9 +15,5 @@ namespace WinUI.InputModels
 
         public string Description { get; }
         public UserInputSelectorItem<T>[] Available => ItemsByNames.Select(kvp => kvp.Value).ToArray();
-        public event Action<UserInputSelectorItem<T>>? AfterSelectionChanged;
-        
-        protected virtual void OnAfterSelectionChanged(UserInputSelectorItem<T> changed) => 
-            AfterSelectionChanged?.Invoke(changed);
     }
 }

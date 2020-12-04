@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualisation.Text
+﻿﻿namespace TagsCloudVisualisation.Text
 {
     public readonly struct WordWithFrequency
     {
