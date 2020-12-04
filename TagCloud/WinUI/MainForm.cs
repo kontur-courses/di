@@ -100,6 +100,31 @@ namespace WinUI
             });
         }
 
+        public void AddUserInput(UserInputColor colorInput)
+        {
+            CreateUserInputContainer(null, () =>
+            {
+                var colorButton = new Button
+                {
+                    Text = colorInput.Description, 
+                    BackColor = colorInput.Picked,
+                    ForeColor = Color.Black,
+                    Size = new Size(30, 30),
+                    FlatStyle = FlatStyle.Flat
+                };
+
+                var colorDialog = CreateColorDialog();
+                colorButton.Click += (_, __) =>
+                {
+                    colorDialog.ShowDialog(this);
+                    colorInput.Picked = colorDialog.Color;
+                    colorButton.BackColor = colorDialog.Color;
+                };
+
+                return colorButton;
+            });
+        }
+
         public void AddUserInput(UserInputSizeField sizeInput)
         {
             CreateUserInputContainer(sizeInput.Description, () =>
@@ -215,6 +240,17 @@ namespace WinUI
             var previous = pictureBox.Image;
             pictureBox.Image = PlaceAtCenter(currentResultImage, pictureBox.Size);
             previous?.Dispose();
+        }
+
+        private ColorDialog CreateColorDialog()
+        {
+            return new ColorDialog
+            {
+                AnyColor = false,
+                ShowHelp = false,
+                FullOpen = true,
+                AllowFullOpen = true
+            };
         }
 
         private static Image PlaceAtCenter(Image source, Size newSize)

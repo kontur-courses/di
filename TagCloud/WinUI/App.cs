@@ -31,6 +31,7 @@ namespace WinUI
         private readonly UserInputSizeField centerOffsetPicker;
         private readonly UserInputSizeField betweenWordsDistancePicker;
         private readonly UserInputOneOptionChoice<ImageFormat> imageFormatPicker;
+        private readonly UserInputColor backgroundColorPicker;
 
         public App(IUi ui,
             TagCloudGenerator cloudGenerator,
@@ -57,6 +58,7 @@ namespace WinUI
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
             centerOffsetPicker = UserInput.Size("Cloud center offset");
             betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
+            backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
 
             var formats = new[]
             {
@@ -73,17 +75,18 @@ namespace WinUI
             ui.ExecutionRequested += ExecutionRequested;
 
             ui.AddUserInput(filePathInput);
+            ui.AddUserInput(backgroundColorPicker);
+            ui.AddUserInput(imageFormatPicker);
             ui.AddUserInput(readerPicker);
+            ui.AddUserInput(writerPicker);
             ui.AddUserInput(filterPicker);
             ui.AddUserInput(normalizerPicker);
-            ui.AddUserInput(writerPicker);
             ui.AddUserInput(layouterPicker);
             ui.AddUserInput(brushSourcePicker);
             ui.AddUserInput(fontSizeResolverPicker);
             ui.AddUserInput(fontFamilyPicker);
             ui.AddUserInput(centerOffsetPicker);
             ui.AddUserInput(betweenWordsDistancePicker);
-            ui.AddUserInput(imageFormatPicker);
         }
 
         private async void ExecutionRequested()
@@ -97,8 +100,8 @@ namespace WinUI
                 var brushSource = brushSourcePicker.Selected.Value;
                 var image = await CreateImageAsync(brushSource, words, lockingContext.CancellationToken);
 
-                ui.OnAfterWordDrawn(image, brushSource.Background);
-                FillBackgroundAndSave(image, brushSource.Background);
+                ui.OnAfterWordDrawn(image, backgroundColorPicker.Picked);
+                FillBackgroundAndSave(image, backgroundColorPicker.Picked);
             }
         }
 
