@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagCloudCreator
 {
-    public class WordPrepairer
+    public static class WordPreparer
     {
         private static readonly List<string> BoringPos = new List<string>
             {"CONJ", "INTJ", "PART", "PR", "ADVPRO", "SPRO"};
@@ -23,15 +23,15 @@ namespace TagCloudCreator
             };
             process.Start();
             process.WaitForExit();
-            var preparedWords = File.ReadAllLines("out.txt")
-                .Where(line => !line.Contains("??") && !BoringPos.Contains(line.Split(',')[0].Split('=')[1]))
-                .Select(x => x.Split('=')[0].TrimEnd('?')).ToArray();
+            var correctWordsAnalysis = File.ReadAllLines("out.txt")
+                .Where(line => !line.Contains("??") && !BoringPos.Contains(line.Split(',')[0].Split('=')[1]));
+            var preparedWords = correctWordsAnalysis.Select(x => x.Split('=')[0].TrimEnd('?')).ToArray();
             File.Delete("in.txt");
             File.Delete("out.txt");
             return preparedWords;
         }
 
-        public static List<(string, int)> GetWordsStatistic(IEnumerable<string> words)
+        public static List<WordStatistic> GetWordsStatistic(IEnumerable<string> words)
         {
             var statistic = new Dictionary<string, int>();
             foreach (var word in words)
@@ -40,7 +40,7 @@ namespace TagCloudCreator
                 statistic[word]++;
             }
 
-            return statistic.Select(x => (x.Key, x.Value)).ToList();
+            return statistic.Select(x => new WordStatistic(x.Key,x.Value)).ToList();
         }
     }
 }

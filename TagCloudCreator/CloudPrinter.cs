@@ -35,8 +35,8 @@ namespace TagCloudCreator
                 throw new FileNotFoundException();
             var ext = Path.GetExtension(pathToWordsFile);
             var reader = readers.First(x => x.Types.Contains(ext));
-            var interestingWords = WordPrepairer.GetInterestingWords(reader.ReadAllLinesFromFile(pathToWordsFile));
-            var statistic = WordPrepairer.GetWordsStatistic(interestingWords);
+            var interestingWords = WordPreparer.GetInterestingWords(reader.ReadAllLinesFromFile(pathToWordsFile));
+            var statistic = WordPreparer.GetWordsStatistic(interestingWords);
             return DrawCloud(RectanglesForWordsCreator.GetReadyWords(statistic, layouter, fontFamily), imageSize,
                 colorSelector);
         }
