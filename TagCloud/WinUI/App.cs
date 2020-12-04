@@ -30,6 +30,7 @@ namespace WinUI
         private readonly UserInputField filePathInput;
         private readonly UserInputSizeField centerOffsetPicker;
         private readonly UserInputSizeField betweenWordsDistancePicker;
+        private readonly UserInputOneOptionChoice<ImageFormat> imageFormatPicker;
 
         public App(IUi ui,
             TagCloudGenerator cloudGenerator,
@@ -56,6 +57,15 @@ namespace WinUI
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
             centerOffsetPicker = UserInput.Size("Cloud center offset");
             betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
+
+            var formats = new[]
+            {
+                ImageFormat.Bmp, ImageFormat.Emf, ImageFormat.Exif,
+                ImageFormat.Gif, ImageFormat.Icon, ImageFormat.Jpeg,
+                ImageFormat.Png, ImageFormat.Tiff, ImageFormat.Wmf,
+            };
+
+            imageFormatPicker = UserInput.SingleChoice(formats.ToDictionary(x => x.ToString()), "Result image format");
         }
 
         public void Subscribe()
@@ -73,6 +83,7 @@ namespace WinUI
             ui.AddUserInput(fontFamilyPicker);
             ui.AddUserInput(centerOffsetPicker);
             ui.AddUserInput(betweenWordsDistancePicker);
+            ui.AddUserInput(imageFormatPicker);
         }
 
         private async void ExecutionRequested()
@@ -152,7 +163,10 @@ namespace WinUI
                 g.DrawImage(image, Point.Empty);
             }
 
-            writerPicker.Selected.Value.Save(newImage, ImageFormat.Png, filePathInput.Value + ".png");
+            var selectedFormat = imageFormatPicker.Selected.Value;
+            writerPicker.Selected.Value.Save(newImage,
+                selectedFormat,
+                filePathInput.Value + "." + selectedFormat.ToString().ToLower());
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
