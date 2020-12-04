@@ -6,8 +6,8 @@ namespace TagCloud.TextProcessing
 {
     public class LiteratureTextParser : IWordParser
     {
-        private IPathCreater creater;
-        private ITextReader reader;
+        private readonly IPathCreater creater;
+        private readonly ITextReader reader;
         private static readonly char[] separators = {' ', '.', ',', ':', '!'};
         private const int minWordLength = 3;
         private static string[] unneccesaryWords = 
@@ -37,12 +37,12 @@ namespace TagCloud.TextProcessing
                 .ToArray();
         }
 
-        private string GetRootForWord(string word, WordList dictionary)
+        private static string GetRootForWord(string word, WordList dictionary)
         {
             return dictionary.ContainsEntriesForRootWord(word) ? word : dictionary.CheckDetails(word).Root;
         }
 
-        private WordList GetDictionary(string path)
+        private static WordList GetDictionary(string path)
         {
             return WordList.CreateFromFiles(path + "ru_RU.dic", path + "ru_RU.aff");
         }

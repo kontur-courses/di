@@ -9,7 +9,6 @@ namespace TagCloud.Tests
 {
     public class LayouterTest
     {
-        
         private Point center;
         private Layouter layouter;
         private List<Rectangle> rectangles;

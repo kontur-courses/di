@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -17,9 +16,8 @@ namespace TagCloud.Tests
                 process.StartInfo.RedirectStandardOutput = true;
                 process.Start();
 
-                // Synchronously read the standard output of the spawned process.
-                StreamReader reader = process.StandardOutput;
-                string output = reader.ReadToEnd();
+                var reader = process.StandardOutput;
+                var output = reader.ReadToEnd();
 
                 output.Should()
                     .Contain("Result saved to:\n")

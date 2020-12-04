@@ -8,6 +8,7 @@ namespace TagCloud.Tests
     public class TextReaderTests
     {
         private PathCreater creator = new PathCreater();
+        
         [Test]
         public void TxtReaderTest()
         {

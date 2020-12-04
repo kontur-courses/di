@@ -12,6 +12,7 @@ namespace TagCloud
         private readonly ITagsCreater tagsCreater;
         private readonly IBackgroundPainter backgroundPainter;
         private const double fontCoefficient = 0.6;
+        
         public Visualizer(ICanvas canvas, IPathCreater pathCreator, ITagsCreater tagsCreater, IBackgroundPainter backgroundPainter)
         {
             this.canvas = canvas;

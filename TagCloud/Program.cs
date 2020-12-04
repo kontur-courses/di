@@ -8,10 +8,11 @@ using TagCloud.TextProcessing;
 
 namespace TagCloud
 {
-    class Program
+    static class Program
     {
         private static IServiceProvider serviceProvider;
         private static CommandLineApplication app = new CommandLineApplication();
+        
         public static int Main(string[] args)
         {
             var CLI = new CommandLineInterface();
