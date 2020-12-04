@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Microsoft.Office.Interop.Word;
 using TagCloud.WordsFilter;
 using TagCloud.WordsProvider;
 
@@ -38,18 +39,11 @@ namespace TagCloud
 
         public List<WordRectangle> WordRectangles { get; }
 
-        //TODO вынести в отдельный класс
         private IEnumerable<WordToken> GetTokens(IEnumerable<string> words)
         {
-            var frequencies = new Dictionary<string, int>();
-            foreach (var word in words)
-            {
-                if (!frequencies.ContainsKey(word))
-                    frequencies[word] = 0;
-                frequencies[word]++;
-            }
-
-            return frequencies.Select(x => new WordToken(x.Key, x.Value));
+            return words
+                .GroupBy(x => x)
+                .Select(x => new WordToken(x.Key, x.Count()));
         }
     }
 }
