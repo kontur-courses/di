@@ -11,7 +11,7 @@ namespace TagCloudCreator
         public Color GetColor(DrawingWord word)
         {
             var colors = Enum.GetValues(typeof(KnownColor));
-            return Color.FromKnownColor((KnownColor) colors.GetValue(random.Next(0, colors.Length - 1)));
+            return Color.FromKnownColor((KnownColor) colors.GetValue(random.Next(0, colors.Length - 1))!);
         }
     }
 }

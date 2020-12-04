@@ -1,13 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp5.0</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
-
-        <RootNamespace>TagCloudTests</RootNamespace>
-
-        <LangVersion>9</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
+      <ProjectReference Include="..\CloudLayouters\CloudLayouters.csproj" />
     </ItemGroup>
 
 </Project>

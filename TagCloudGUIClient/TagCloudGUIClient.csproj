@@ -2,35 +2,22 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFramework>netcoreapp5.0</TargetFramework>
+        <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <UseWindowsForms>true</UseWindowsForms>
         <Nullable>enable</Nullable>
-        <LangVersion>9</LangVersion>
+        <LangVersion>8</LangVersion>
         <RootNamespace>TagCloud</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.0.0" />
+      <PackageReference Include="Autofac" Version="5.2.0" />
+      <PackageReference Include="FluentAssertions" Version="5.10.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="dictionaries.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>dictionaries.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="ru_RU.dic" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\CloudLayouters\CloudLayouters.csproj" />
       <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="System.Windows.Forms" />
     </ItemGroup>
 
 </Project>

@@ -5,17 +5,13 @@ namespace CloudLayouters
 {
     public class ArchimedeanSpiral
     {
-        private readonly double anglesDelta = 0.005;
-        private readonly double distance = 0.5;
+        private readonly double anglesDelta;
+        private readonly double distance;
         private double angle;
         private Point? previous;
 
-        public ArchimedeanSpiral(Point center)
-        {
-            Center = center;
-        }
 
-        public ArchimedeanSpiral(Point center, double distance, double anglesDelta)
+        public ArchimedeanSpiral(Point center, double distance = 0.5, double anglesDelta = 0.005)
         {
             Center = center;
             this.distance = distance;

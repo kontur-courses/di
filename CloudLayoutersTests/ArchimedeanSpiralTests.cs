@@ -32,8 +32,8 @@ namespace CircularCloudTests
             {
                 var current = next;
                 next = spiral.GetNextPoint();
-                GetDistanceBetwenPoints(current, spiral.Center).Should()
-                    .BeLessThan(GetDistanceBetwenPoints(next, spiral.Center));
+                Math.Abs(GetDistanceBetwenPoints(current, spiral.Center)-GetDistanceBetwenPoints(next, spiral.Center)).Should()
+                    .BeLessOrEqualTo(1);
             }
         }
 
