@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagCloud.WordsProvider
 {
     public abstract class FileWordsProvider : IWordsProvider
     {
         protected readonly string FilePath;
+        public abstract string[] SupportedExtensions { get; }
 
         protected FileWordsProvider(string filePath)
         {
-            if (!CheckFile(filePath))
-                throw new ArgumentException("File is incorrect");
             FilePath = filePath;
         }
 
         public abstract IEnumerable<string> GetWords();
 
-        protected abstract bool CheckFile(string filePath);
+        protected bool CheckFile(string filePath)
+        {
+            return SupportedExtensions.Any(extension => filePath.EndsWith(extension));
+        }
     }
 }

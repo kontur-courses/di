@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Office.Interop.Word;
 
@@ -8,12 +9,12 @@ namespace TagCloud.WordsProvider
     {
         public MicrosoftWordWordsProvider(string filePath) : base(filePath)
         {
+            SupportedExtensions = new[] {"doc", "docx"};
+            if (!CheckFile(filePath))
+                throw new ArgumentException("File is incorrect");
         }
 
-        protected override bool CheckFile(string filePath)
-        {
-            return filePath.EndsWith(".doc") || filePath.EndsWith(".docx");
-        }
+        public override string[] SupportedExtensions { get; }
 
         public override IEnumerable<string> GetWords()
         {

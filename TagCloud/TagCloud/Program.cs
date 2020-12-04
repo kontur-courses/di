@@ -1,8 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using Autofac;
+using CommandLine;
 using NHunspell;
+using TagCloud.ConsoleAppHelper;
 using TagCloud.Curves;
 using TagCloud.WordsFilter;
 using TagCloud.WordsProvider;
@@ -11,17 +14,17 @@ namespace TagCloud
 {
     public class Program
     {
-        public static void Main()
+        private static IContainer BuildDependencies(
+            int width,
+            int height,
+            string input)
         {
             var builder = new ContainerBuilder();
-            const int width = 1920;
-            const int height = 1080;
             var center = new Point(width / 2, height / 2);
             const double density = 0.05;
             const int angelStep = 5;
             var colors = new[]
                 {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Aqua, Color.Blue, Color.Purple};
-            var fontFamily = "Times New Roman";
             var dictionaryAff = Path.GetFullPath("../../../../dictionaries/en.aff");
             var dictionaryDic = Path.GetFullPath("../../../../dictionaries/en.dic");
             builder.RegisterType<ArchimedeanSpiral>().As<ICurve>()
@@ -32,8 +35,10 @@ namespace TagCloud
             builder.RegisterType<TagCloudVisualizer>().As<IVisualizer>();
 
 
-            var wordsFilePath = Path.GetFullPath("../../../../words.txt");
-            builder.RegisterType<TxtWordsProvider>().As<IWordsProvider>()
+            var wordsFilePath = Path.GetFullPath(input);
+            var wordsFileExtension = Path.GetExtension(wordsFilePath);
+            var wordsProviderType = WordsProviderFinder.FindFileWordsProvider(wordsFileExtension);
+            builder.RegisterType(wordsProviderType).As<IWordsProvider>()
                 .WithParameter("filePath", wordsFilePath);
             var wordsFilter = new WordsFilter.WordsFilter(new Hunspell(dictionaryAff, dictionaryDic))
                 .Normalize()
@@ -41,12 +46,36 @@ namespace TagCloud
             builder.RegisterInstance(wordsFilter).As<IWordsFilter>();
 
             builder.RegisterInstance(colors).As<Color[]>();
-            var container = builder.Build();
+            return builder.Build();
+        }
+
+        private static IContainer BuildDependencies(Options options)
+        {
+            return BuildDependencies(options.Width, options.Height, options.Input);
+        }
+
+        public static void Main(string[] args)
+        {
+            var result = Parser.Default.ParseArguments<Options>(args);
+            Options options;
+            try
+            {
+                options = ((Parsed<Options>) result).Value;
+            }
+            catch
+            {
+                var errors = ((NotParsed<Options>) result).Errors;
+                foreach (var error in errors) Console.WriteLine(error);
+                return;
+            }
+
+            var container = BuildDependencies(options);
 
             container.Resolve<ITagCloud>().GenerateTagCloud();
+
             var bitmap = container.Resolve<IVisualizer>()
-                .CreateBitMap(width, height, container.Resolve<Color[]>(), fontFamily);
-            bitmap.Save("../../../../Examples/test.png", ImageFormat.Png);
+                .CreateBitMap(options.Width, options.Height, container.Resolve<Color[]>(), options.FontFamily);
+            bitmap.Save(Path.GetFullPath(options.Output), ImageFormat.Png);
         }
     }
 }
