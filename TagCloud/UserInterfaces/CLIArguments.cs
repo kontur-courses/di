@@ -59,7 +59,7 @@ namespace TagCloud.UserInterfaces
         [Option("ex", Required = false, HelpText = "Set output file extention.",  Default = "png")]
         public string Extention { get; set; }
         
-        [Option("boringwords", Required = false, HelpText = "Set words to exclude",
+        [Option("boringwords", Required = false, HelpText = "Set words to exclude (only russian words)",
             Separator = ',')]
         public IEnumerable<string> BoringWords { get; set; }
         

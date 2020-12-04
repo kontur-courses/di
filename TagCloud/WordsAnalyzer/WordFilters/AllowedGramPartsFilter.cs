@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using YandexMystem.Wrapper;
 using YandexMystem.Wrapper.Enums;
-using YandexMystem.Wrapper.Models;
 
 namespace TagCloud.WordsAnalyzer.WordFilters
 {

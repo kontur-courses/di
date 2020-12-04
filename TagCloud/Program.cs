@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Autofac;
+﻿using Autofac;
 using TagCloud.Drawers;
 using TagCloud.ImageSavers;
 using TagCloud.TextReaders;
