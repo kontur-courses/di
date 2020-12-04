@@ -14,7 +14,7 @@ namespace TagCloud.UserInterfaces
         [Option("height", Required = false, HelpText = "Set output image height.", Default = 1000)]
         public int Height { get; set; }
         
-        [Option("color", Required = false, HelpText = "Set text colors in format \"xxx,xxx,xxx\"",
+        [Option("colors", Required = false, HelpText = "Set text colors in format \"xxx,xxx,xxx\"",
             Separator = ';')]
         public IEnumerable<string> Colors { get; set; }
 
@@ -58,5 +58,13 @@ namespace TagCloud.UserInterfaces
 
         [Option("ex", Required = false, HelpText = "Set output file extention.",  Default = "png")]
         public string Extention { get; set; }
+        
+        [Option("boringwords", Required = false, HelpText = "Set words to exclude",
+            Separator = ',')]
+        public IEnumerable<string> BoringWords { get; set; }
+        
+        [Option("gramparts", Required = false, HelpText = "Set words to exclude",
+            Separator = ',', Default = new []{"Noun", "Verb", "Adjective", "Adverb", "Conjunction"})]
+        public IEnumerable<string> GramParts { get; set; }
     }
 }

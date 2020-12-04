@@ -19,6 +19,8 @@ namespace TagCloud.WordsAnalyzer
         public HashSet<TagInfo> GetTags(IReadOnlyCollection <string> words)
         {
             var wordsCount = GetWordsCounts(words);
+            if (wordsCount.Count == 0)
+                return new HashSet<TagInfo>();
             
             var minCount = wordsCount.Values.ToList().Min();
             var maxCount = wordsCount.Values.ToList().Max();
@@ -34,7 +36,7 @@ namespace TagCloud.WordsAnalyzer
         private Dictionary<string, int> GetWordsCounts(IReadOnlyCollection <string> words)
         {
             return words.Select(word => normalizer.Normalize(word))
-                    .Where(word => filters.All(f => f.ShouldExclude(word)))
+                    .Where(word => filters.All(f => !f.ShouldExclude(word)))
                     .GroupBy(word => word)
                     .ToDictionary(group => group.Key, group => group.Count());
         }

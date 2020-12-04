@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
 using TagCloud.Drawers;
 using TagCloud.ImageSavers;
 using TagCloud.TextReaders;
@@ -7,6 +8,7 @@ using TagCloud.Settings;
 using TagCloud.WordsAnalyzer;
 using TagCloud.WordsAnalyzer.WordNormalizer;
 using TagCloud.UserInterfaces;
+using TagCloud.WordsAnalyzer.WordFilters;
 
 namespace TagCloud
 {
@@ -22,6 +24,8 @@ namespace TagCloud
             containerBuilder.RegisterInstance(cli.LayouterSettings).As<CircularLayouterSettings>();
             containerBuilder.RegisterInstance(cli.DrawerSettings).As<DrawerSettings>();
             containerBuilder.RegisterInstance(cli.SaverSettings).As<SaverSettings>();
+            containerBuilder.RegisterInstance(new BoringWordFilter(cli.BoringWords)).As<IWordFilter>();
+            containerBuilder.RegisterInstance(new AllowedGramPartsFilter(cli.GramParts)).As<IWordFilter>();
             
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             containerBuilder.RegisterType<TextAnalyzer>().As<IWordsAnalyzer>();

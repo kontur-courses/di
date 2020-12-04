@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CommandLine;
@@ -12,6 +13,8 @@ namespace TagCloud.UserInterfaces
         public DrawerSettings DrawerSettings;
         public FileReaderSettings FileReaderSettings;
         public SaverSettings SaverSettings;
+        public readonly string[] BoringWords;
+        public IEnumerable<string> GramParts;
 
         public ConsoleLineInterface(string[] args)
         {
@@ -38,6 +41,10 @@ namespace TagCloud.UserInterfaces
             FileReaderSettings = new FileReaderSettings(arguments.FilePath);
             
             SaverSettings = new SaverSettings(arguments.OutputPath, arguments.OutputFileName, arguments.Extention);
+
+            GramParts = arguments.GramParts;
+          
+            BoringWords = arguments.BoringWords.ToArray();
         }
 
         private Color ParseColorFromRGBString(string colorAsString)

@@ -15,6 +15,7 @@
       <PackageReference Include="Autofac" Version="6.0.0" />
       <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
       <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+      <PackageReference Include="YandexMystem.Wrapper" Version="1.0.0.18234" />
     </ItemGroup>
 
 </Project>
