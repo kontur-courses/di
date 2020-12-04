@@ -1,5 +1,5 @@
 ﻿using TagsCloud.Factory;
-using TagsCloud.TagsCloudProcessing.TegsGenerators;
+using TagsCloud.TagsCloudProcessing.TagsGenerators;
 using TagsCloud.TextProcessing.WordsConfig;
 
 namespace TagsCloud.TagsCloudProcessing.TagsGeneratorFactory

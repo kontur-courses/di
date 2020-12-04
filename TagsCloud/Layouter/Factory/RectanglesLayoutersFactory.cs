@@ -12,6 +12,6 @@ namespace TagsCloud.Layouter.Factory
             this.wordsConfig = wordsConfig;
         }
 
-        public override IRectanglesLayouter Create() => services[wordsConfig.LayoutName]();
+        public override IRectanglesLayouter Create() => services[wordsConfig.LayouterName]();
     }
 }
