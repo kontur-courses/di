@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.ExcludedWordsSetButton = new System.Windows.Forms.Button();
+            this.CloudSizeSetting = new System.Windows.Forms.NumericUpDown();
             this.FontFamilyChoice = new System.Windows.Forms.ComboBox();
             this.FontStyleChoice = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,6 +49,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloudSizeSetting)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -64,6 +67,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.ExcludedWordsSetButton);
+            this.splitContainer1.Panel2.Controls.Add(this.CloudSizeSetting);
             this.splitContainer1.Panel2.Controls.Add(this.FontFamilyChoice);
             this.splitContainer1.Panel2.Controls.Add(this.FontStyleChoice);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
@@ -89,6 +94,46 @@
             this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
+            // 
+            // ExcludedWordsSetButton
+            // 
+            this.ExcludedWordsSetButton.Location = new System.Drawing.Point(0, 405);
+            this.ExcludedWordsSetButton.Name = "ExcludedWordsSetButton";
+            this.ExcludedWordsSetButton.Size = new System.Drawing.Size(194, 23);
+            this.ExcludedWordsSetButton.TabIndex = 8;
+            this.ExcludedWordsSetButton.Text = "Задать исключения";
+            this.ExcludedWordsSetButton.UseVisualStyleBackColor = true;
+            this.ExcludedWordsSetButton.Click += new System.EventHandler(this.ExcludedWordsSetButton_Click);
+            // 
+            // CloudSizeSetting
+            // 
+            this.CloudSizeSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CloudSizeSetting.DecimalPlaces = 1;
+            this.CloudSizeSetting.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.CloudSizeSetting.Location = new System.Drawing.Point(0, 340);
+            this.CloudSizeSetting.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CloudSizeSetting.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.CloudSizeSetting.Name = "CloudSizeSetting";
+            this.CloudSizeSetting.Size = new System.Drawing.Size(192, 19);
+            this.CloudSizeSetting.TabIndex = 7;
+            this.CloudSizeSetting.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            65536});
+            this.CloudSizeSetting.ValueChanged += new System.EventHandler(this.CloudSizeSetting_ValueChanged);
             // 
             // FontFamilyChoice
             // 
@@ -221,6 +266,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloudSizeSetting)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -241,5 +287,7 @@
         private System.Windows.Forms.ComboBox FontFamilyChoice;
         private System.Windows.Forms.ComboBox FontStyleChoice;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown CloudSizeSetting;
+        private System.Windows.Forms.Button ExcludedWordsSetButton;
     }
 }

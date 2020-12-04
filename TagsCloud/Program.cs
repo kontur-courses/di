@@ -26,7 +26,7 @@ namespace TagsCloud
                 "в"
             }).AsSelf();
             builder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
-            builder.RegisterType<BlackListWordsFilter>().As<IWordsFilter>();
+            builder.RegisterType<BlackListWordsFilter>().As<IWordsFilter>().SingleInstance();
             builder.RegisterType<Mainform>().AsSelf();
             var container = builder.Build();
             Application.EnableVisualStyles();

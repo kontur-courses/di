@@ -17,12 +17,14 @@ namespace TagsCloud.UI
         private readonly TagsCloudHandler tagsCloudHandler;
         private readonly ITagsCloudDrawer tagsCloudDrawer;
         private readonly TagsCloudSettings settings;
+        private readonly IWordsFilter filter;
 
         public Mainform(IRectanglesLayouter[] rectanglesConstellators, 
-            TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer, TagsCloudSettings settings)
+            TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer, TagsCloudSettings settings, IWordsFilter filter)
         {
             this.tagsCloudHandler = tagsCloudHandler;
             this.settings = settings;
+            this.filter = filter;
             tagsCloudDrawer = drawer;
             fontFamilies = settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
@@ -73,6 +75,19 @@ namespace TagsCloud.UI
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
             tagsCloudDrawer.SetNewLayouter(constellators[(string)AlgorithmChoice.SelectedItem]);
+        }
+
+        private void CloudSizeSetting_ValueChanged(object sender, EventArgs e)
+        {
+            settings.CloudToImageScaleRatio = (float)CloudSizeSetting.Value;
+        }
+
+        private void ExcludedWordsSetButton_Click(object sender, EventArgs e)
+        {
+            if (filter is BlackListWordsFilter blackListfilter)
+            {
+                new SetExcludingWordsForm(blackListfilter).ShowDialog();
+            }
         }
     }
 }
