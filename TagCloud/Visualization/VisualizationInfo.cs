@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
-using System;
 using System.Linq;
+using TagCloud.Visualization.WordsColorings;
 
 namespace TagCloud.Visualization
 {
@@ -8,31 +8,13 @@ namespace TagCloud.Visualization
     {
         private readonly Size? size;
         private readonly string font;
-        private readonly Color? color;
-        private readonly Random random = new Random();
+        private readonly IWordsColoring wordsColoring;
 
-        internal VisualizationInfo(Size? size = null, string font = null, Color? color = null)
+        internal VisualizationInfo(IWordsColoring coloring, Size? size = null, string font = null)
         {
             this.size = size;
             this.font = Fonts.GetFont(font);
-            this.color = color;
-        }
-
-        internal static Color? ReadColor(string colorRGB)
-        {
-            try
-            {
-                var result = ParseString(colorRGB);
-                if (result.Length != 3)
-                    return null;
-                if (result.Any(i => i < 0 || i > 255))
-                    return null;
-                return Color.FromArgb(255, result[0], result[1], result[2]);
-            }
-            catch
-            {
-                return null;
-            }
+            wordsColoring = coloring;
         }
 
         internal static Size? ReadSize(string sizeStr)
@@ -65,11 +47,11 @@ namespace TagCloud.Visualization
         }
 
         internal Font GetFont(int emSize) => new Font(font, emSize);
-        
-        internal Color GetColor() => color ?? GetRandomColor();
-        
-        internal SolidBrush GetSolidBrush() => new SolidBrush(GetColor());
 
-        private Color GetRandomColor() => Color.FromArgb(255, random.Next(255), random.Next(255), random.Next(255));
+        internal Color GetColor(string word, Rectangle location, TagCloud cloud) =>
+            wordsColoring.GetColor(word, location, cloud);
+        
+        internal SolidBrush GetSolidBrush(string word, Rectangle location, TagCloud cloud) => 
+            new SolidBrush(GetColor(word, location, cloud));
     }
 }

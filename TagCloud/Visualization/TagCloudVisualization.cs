@@ -14,11 +14,12 @@ namespace TagCloud.Visualization
             var graphics = Graphics.FromImage(bitmap);
             foreach (var location in cloud)
             {
-                var color = info.GetColor();
+                var color = info.GetColor(location.word, location.location, cloud);
                 var pen = new Pen(color);
                 graphics.DrawRectangle(pen, ShiftRectangle(location.location));
                 graphics.DrawString(location.word, info.GetFont(location.location.Height), 
-                    info.GetSolidBrush(), ShiftRectangle(location.location));
+                    info.GetSolidBrush(location.word, location.location, cloud), 
+                    ShiftRectangle(location.location));
             }
             bitmap.Save(path);
 
