@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.App.Actions;
@@ -23,22 +22,21 @@ namespace TagsCloudContainer.App
         {
             try
             {
-                var inputFile = Path.GetFullPath(Path.Combine(
-                    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
+                //var inputFile = Path.GetFullPath(Path.Combine(
+                //    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
                 //var outputFile = Path.GetFullPath(Path.Combine(
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
-                var imageSettings = ImageSettings.GetDefaultSettings();
                 var imageHolder = new PictureBoxImageHolder();
                 var services = new ServiceCollection()
-                    .AddSingleton<IDataReader>(new TxtFileReader(inputFile))
+                    .AddSingleton<IDataReader>(new TxtFileReader(AppSettings.DefaultInputFile))
                     .AddSingleton<ITextParser, SimpleTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
                     .AddSingleton<IWordFilter, SimpleWordFilter>()
                     .AddSingleton<ITextParserToFrequencyDictionary,
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
-                    .AddSingleton<IFontGetter>(new FontGetter(imageSettings.FontName))
+                    .AddSingleton<IFontGetter>(new FontGetter(FontSettings.Default.FontName))
                     .AddSingleton<ICloudGenerator, CloudGenerator.CloudGenerator>()
-                    .AddSingleton<ICloudPainter>(new CloudPainter(imageSettings))
+                    .AddSingleton<ICloudPainter>(new CloudPainter(AppSettings.Default))
                     .AddSingleton<ICloudLayouterFactory, CloudLayouterFactory>()
                     .AddSingleton<ICloudVisualizer, CloudVisualizer.CloudVisualizer>()
                     .AddSingleton(imageHolder)

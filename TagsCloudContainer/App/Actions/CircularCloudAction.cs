@@ -21,8 +21,8 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            circularCloudVisualizer.Visualize(imageHolder
-                .GetImageSettings().Using(CloudLayouterAlgorithm.CircularCloudLayouter));
+            imageHolder.GetAppSettings().LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
+            circularCloudVisualizer.Visualize(imageHolder.GetAppSettings());
         }
     }
 }

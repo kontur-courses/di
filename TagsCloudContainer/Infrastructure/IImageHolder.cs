@@ -5,11 +5,11 @@ namespace TagsCloudContainer.Infrastructure
 {
     public interface IImageHolder
     {
-        ImageSettings GetImageSettings();
+        AppSettings GetAppSettings();
         Size GetImageSize();
         Graphics StartDrawing();
         void UpdateUi();
-        void RecreateImage(ImageSettings settings);
+        void RecreateImage(AppSettings appSettings);
         void SaveImage(string fileName);
     }
 }

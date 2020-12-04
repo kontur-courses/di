@@ -8,9 +8,9 @@ namespace TagsCloudContainer.App.CloudVisualizer
 {
     internal class CloudPainter : ICloudPainter
     {
-        private readonly ImageSettings settings;
+        private readonly AppSettings settings;
 
-        public CloudPainter(ImageSettings settings)
+        public CloudPainter(AppSettings settings)
         {
             this.settings = settings;
         }
@@ -19,7 +19,7 @@ namespace TagsCloudContainer.App.CloudVisualizer
         {
             using var brush = new SolidBrush(Color.White);
             foreach (var tag in cloud)
-                g.DrawString(tag.Word, new Font(settings.FontName, (float) tag.FontSize), brush, tag.Location);
+                g.DrawString(tag.Word, new Font(settings.FontSettings.FontName, (float) tag.FontSize), brush, tag.Location);
         }
     }
 }

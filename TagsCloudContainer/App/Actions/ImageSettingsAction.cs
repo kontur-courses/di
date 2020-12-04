@@ -19,8 +19,8 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            SettingsForm.For(imageHolder.GetImageSettings()).ShowDialog();
-            imageHolder.RecreateImage(imageHolder.GetImageSettings());
+            SettingsForm.For(imageHolder.GetAppSettings().ImageSettings).ShowDialog();
+            imageHolder.RecreateImage(imageHolder.GetAppSettings());
         }
     }
 }

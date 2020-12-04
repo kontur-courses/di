@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
@@ -30,13 +31,13 @@ namespace TagsCloudContainer.App.CloudVisualizer
             this.layouterFactory = layouterFactory;
         }
 
-        public void Visualize(ImageSettings imageSettings)
+        public void Visualize(AppSettings appSettings)
         {
             var lines = inputDataReader.ReadLines();
             var frequencyDictionary = textParserToFrequencyDictionary.GenerateFrequencyDictionary(lines);
             var cloud = cloudGenerator.GenerateCloud(layouterFactory.CreateCloudLayouter(
-                imageSettings.LayouterAlgorithm,
-                imageSettings.ImageSize), frequencyDictionary);
+                appSettings.LayouterAlgorithm,
+                new Size(appSettings.ImageSettings.Width, appSettings.ImageSettings.Height)), frequencyDictionary);
             painter.Paint(cloud, imageHolder.StartDrawing());
             var outputFile = Path.GetFullPath(Path.Combine(
                 Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.bmp"));

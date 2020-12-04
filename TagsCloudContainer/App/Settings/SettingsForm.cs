@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TagsCloudContainer.App.Settings
@@ -21,7 +19,7 @@ namespace TagsCloudContainer.App.Settings
             {
                 Text = "OK",
                 DialogResult = DialogResult.OK,
-                Dock = DockStyle.Bottom,
+                Dock = DockStyle.Bottom
             };
             Controls.Add(okButton);
             Controls.Add(new PropertyGrid

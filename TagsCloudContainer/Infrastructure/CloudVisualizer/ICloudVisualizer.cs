@@ -4,6 +4,6 @@ namespace TagsCloudContainer.Infrastructure.CloudVisualizer
 {
     internal interface ICloudVisualizer
     {
-        public void Visualize(ImageSettings imageSettings);
+        public void Visualize(AppSettings appSettings);
     }
 }
