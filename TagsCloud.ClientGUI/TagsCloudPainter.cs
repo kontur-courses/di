@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.Core;
+using TagsCloud.Visualization;
 
 namespace TagsCloud.ClientGUI
 {

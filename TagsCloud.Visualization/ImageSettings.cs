@@ -1,4 +1,8 @@
-﻿namespace TagsCloud.ClientGUI.Infrastructure
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TagsCloud.Visualization
 {
     public class ImageSettings
     {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud.ClientGUI.Infrastructure
+namespace TagsCloud.Visualization
 {
     public interface IImageHolder
     {

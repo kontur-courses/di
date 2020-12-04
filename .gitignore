@@ -260,3 +260,7 @@ _Pvt_Extensions
 /TagsCloud.Common/bin/Debug/netstandard2.0/TagsCloud.Common.deps.json
 /TagsCloud.Common/bin/Debug/netstandard2.0/TagsCloud.Common.dll
 /TagsCloud.Core/bin/Debug/netstandard2.0/TagsCloud.Common.dll
+/TagsCloud.Visualization/bin/Debug/netstandard2.0/TagsCloud.Visualization.dll
+/TagsCloud.Visualization/bin/Debug/netstandard2.0/TagsCloud.Visualization.deps.json
+/TagsCloud.ClientGUI/bin/Debug/netcoreapp3.1/TagsCloud.Visualization.dll
+/TagsCloud.ClientGUI/app.Designer.cs

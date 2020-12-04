@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
+using TagsCloud.Visualization;
 
 namespace TagsCloud.ClientGUI
 {

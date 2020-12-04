@@ -12,6 +12,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TagsCloud.Core\TagsCloud.Core.csproj" />
+    <ProjectReference Include="..\TagsCloud.Visualization\TagsCloud.Visualization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="app.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>app.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
