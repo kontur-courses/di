@@ -6,14 +6,14 @@ using TagCloud.Infrastructure.Text;
 
 namespace TagCloud
 {
-    public class TagCloudLayouterCLI : IApp
+    public class TagCloudLayouterCli : IApp
     {
         private readonly IReader<string> reader;
         private readonly WordAnalyzer<string> wordAnalyzer;
         private readonly Func<Settings> settingsFactory;
         private readonly IPainter<string> painter;
 
-        public TagCloudLayouterCLI(IReader<string> reader, WordAnalyzer<string> wordAnalyzer, Func<Settings> settingsFactory, IPainter<string> painter)
+        public TagCloudLayouterCli(IReader<string> reader, WordAnalyzer<string> wordAnalyzer, Func<Settings> settingsFactory, IPainter<string> painter)
         {
             this.reader = reader;
             this.wordAnalyzer = wordAnalyzer;

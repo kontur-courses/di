@@ -1,11 +1,21 @@
-﻿using System;
-using Gtk;
+﻿using Gtk;
+using System;
 
-namespace TagCloudGUI
+namespace TagCloud
 {
-    class Test
+    class TagCloudLayouterGui : IApp
     {
-        static void Main()
+        static void conwrite(object obj, EventArgs e)
+        {
+            Console.WriteLine("Button clicked!");
+        }
+
+        static void delete_window(object obj, DeleteEventArgs e)
+        {
+            Application.Quit();
+        }
+
+        public void Run()
         {
             Application.Init();
             Window window = new Window("Test Application");
@@ -15,16 +25,6 @@ namespace TagCloudGUI
             window.Add(button);
             window.ShowAll();
             Application.Run();
-        }
-
-        static void conwrite(object obj, EventArgs e)
-        {
-            Console.WriteLine("Button clicked!");
-        }
-
-        static void delete_window(object obj, DeleteEventArgs e)
-        {
-            Application.Quit();
         }
     }
 }

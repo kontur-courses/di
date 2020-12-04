@@ -43,7 +43,8 @@ namespace TagCloud
             builder.RegisterType<TagCloudLayouter>().As<ILayouter<Size, Rectangle>>();
             builder.RegisterType<WordPainter>().As<IPainter<string>>();
 
-            builder.RegisterType<TagCloudLayouterCLI>().As<IApp>();
+            // builder.RegisterType<TagCloudLayouterCLI>().As<IApp>();
+            builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
 
             var container = builder.Build();
             var app = container.Resolve<IApp>();
