@@ -40,7 +40,7 @@ namespace TagCloudCreator
                 statistic[word]++;
             }
 
-            return statistic.Select(x => new WordStatistic(x.Key,x.Value)).ToList();
+            return statistic.Select(x => new WordStatistic(x.Key, x.Value)).ToList();
         }
     }
 }

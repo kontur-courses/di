@@ -4,7 +4,7 @@ namespace TagCloudCreator
 {
     public class SingleColorSelector : IColorSelector
     {
-        private Color color;
+        private readonly Color color;
 
         public SingleColorSelector(Color color)
         {

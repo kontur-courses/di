@@ -40,7 +40,7 @@ namespace TagCloud
                 return table;
             }).AsSelf();
             builder.RegisterType<FullRandomColorSelector>().As<IColorSelector>();
-            builder.Register(x=> new SingleColorSelector(Color.Black)).As<IColorSelector>();
+            builder.Register(x => new SingleColorSelector(Color.Black)).As<IColorSelector>();
             builder.RegisterType<RandomFromColorsColorSelector>().As<IColorSelector>();
             builder.RegisterType<TextExtractorBasedReader>().As<IFileReader>();
             return builder.Build();

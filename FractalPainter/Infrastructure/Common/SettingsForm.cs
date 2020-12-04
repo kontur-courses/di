@@ -19,7 +19,7 @@ namespace FractalPainting.Infrastructure.Common
             {
                 Text = "OK",
                 DialogResult = DialogResult.OK,
-                Dock = DockStyle.Bottom,
+                Dock = DockStyle.Bottom
             };
             Controls.Add(okButton);
             Controls.Add(new PropertyGrid

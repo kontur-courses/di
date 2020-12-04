@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using CloudLayouters;
 using FluentAssertions;
@@ -32,7 +31,8 @@ namespace CircularCloudTests
             {
                 var current = next;
                 next = spiral.GetNextPoint();
-                Math.Abs(GetDistanceBetwenPoints(current, spiral.Center)-GetDistanceBetwenPoints(next, spiral.Center)).Should()
+                Math.Abs(GetDistanceBetwenPoints(current, spiral.Center) - GetDistanceBetwenPoints(next, spiral.Center))
+                    .Should()
                     .BeLessOrEqualTo(1);
             }
         }
@@ -52,8 +52,10 @@ namespace CircularCloudTests
             }
         }
 
-        private static double GetDistanceBetwenPoints(Point first, Point second) =>
-            Math.Sqrt((first.X - second.X) * (first.X - second.X) +
-                      (first.Y - second.Y) * (first.Y - second.Y));
+        private static double GetDistanceBetwenPoints(Point first, Point second)
+        {
+            return Math.Sqrt((first.X - second.X) * (first.X - second.X) +
+                             (first.Y - second.Y) * (first.Y - second.Y));
+        }
     }
 }
