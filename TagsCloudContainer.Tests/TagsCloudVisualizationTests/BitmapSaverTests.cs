@@ -33,7 +33,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
         [Test]
         public void SaveBitmapToDirectory_DoesntThrowException_WhenRightPath()
         {
-            var path = $"C:{Path.DirectorySeparatorChar}image.png";
+            var path = $"..{Path.DirectorySeparatorChar}image.png";
             Action saveImage = () => BitmapSaver.SaveBitmapToDirectory(ImageBitmap, path);
 
             saveImage.Should().NotThrow<ArgumentException>();
@@ -43,9 +43,9 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
         {
             yield return new TestCaseData("<html></html>").SetName("Directory dont exist");
             yield return new TestCaseData(".. Dir text.txt").SetName("Not platform separator");
-            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text txt").SetName(
+            yield return new TestCaseData($@"..{Path.DirectorySeparatorChar}text txt").SetName(
                 "Doesnt have dot separator");
-            yield return new TestCaseData($@"..\{Path.DirectorySeparatorChar}text.").SetName(
+            yield return new TestCaseData($@"..{Path.DirectorySeparatorChar}text.").SetName(
                 "Doesnt have filename extension");
         }
     }

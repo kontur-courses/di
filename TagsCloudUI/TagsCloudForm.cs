@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudContainer.Interfaces;
@@ -12,12 +11,13 @@ namespace TagsCloudUI
 {
     public class TagsCloudForm : Form
     {
-        private List<Tag> tags;
-        private readonly FormConfig config;
         private readonly IBitmapSaver bitmapSaver;
+        private readonly FormConfig config;
         private readonly ITagsContainer container;
         private string fontFamily;
         private Size imageSize;
+        private List<Tag> tags;
+        private Brush textColor;
 
         public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver)
         {
@@ -34,14 +34,24 @@ namespace TagsCloudUI
             Size = config.FormSize;
             fontFamily = config.FontFamily;
             imageSize = config.FormSize;
+            textColor = config.TextColor;
 
             var menu = new MenuStrip();
             menu.Items.Add(new ToolStripMenuItem("Text", null, (sender, args) => GetText()));
             menu.Items.Add(new ToolStripMenuItem("Save", null, (sender, args) => SaveBitmap()));
             menu.Items.Add(new ToolStripMenuItem("Font", null, (sender, args) => ChangeFont()));
+            menu.Items.Add(new ToolStripMenuItem("Color", null, (sender, args) => ChangeColor()));
             menu.Items.Add(new ToolStripMenuItem("Background", null, (sender, args) => ChangeBackgroundColor()));
             menu.Items.Add(new ToolStripMenuItem("ImageSize", null, (sender, args) => ChangeImageSize()));
             Controls.Add(menu);
+        }
+
+        private void ChangeColor()
+        {
+            var colorDialog = new ColorDialog();
+
+            if (colorDialog.ShowDialog() == DialogResult.OK) textColor = new SolidBrush(colorDialog.Color);
+            Invalidate();
         }
 
         private void GetText()
@@ -55,17 +65,21 @@ namespace TagsCloudUI
             Invalidate();
         }
 
-
         private void ChangeImageSize()
         {
             using var form = new Form {Width = 400, FormBorderStyle = FormBorderStyle.FixedDialog, MaximizeBox = false};
 
             var labelWidth = new Label {Text = "Width", Width = 50};
-            var textBoxWidth = new NumericUpDown {Width = 200, Left = labelWidth.Right, Maximum = 5000, Value = imageSize.Width};
+            var textBoxWidth = new NumericUpDown
+                {Width = 200, Left = labelWidth.Right, Maximum = 5000, Value = imageSize.Width};
             textBoxWidth.ValueChanged += (sender, args) => imageSize.Width = int.Parse(textBoxWidth.Text);
 
             var labelHeight = new Label {Text = "Height", Width = 50, Top = textBoxWidth.Bottom};
-            var textBoxHeight = new NumericUpDown {Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000, Value = imageSize.Height};
+            var textBoxHeight = new NumericUpDown
+            {
+                Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000,
+                Value = imageSize.Height
+            };
             textBoxHeight.ValueChanged += (sender, args) => imageSize.Height = int.Parse(textBoxHeight.Text);
 
             var button = new Button {Text = "Set", Top = textBoxHeight.Bottom, DialogResult = DialogResult.OK};
@@ -95,21 +109,21 @@ namespace TagsCloudUI
         {
             var colorDialog = new ColorDialog();
 
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                BackColor = colorDialog.Color;
-            }
+            if (colorDialog.ShowDialog() == DialogResult.OK) BackColor = colorDialog.Color;
         }
 
         private void SaveBitmap()
         {
-            var path = Path.Join(Directory.GetCurrentDirectory(), "image.jpg");
+            var dialog = new SaveFileDialog();
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            var path = dialog.FileName;
             var bitmap = new Bitmap(Width, Height);
 
             DrawToBitmap(bitmap, new Rectangle(0, 0, Width, Height));
             bitmapSaver.SaveBitmapToDirectory(bitmap, path);
-
-            MessageBox.Show($"saved to: {path}");
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -122,7 +136,8 @@ namespace TagsCloudUI
             foreach (var tag in tags)
             {
                 e.Graphics.DrawRectangle(new Pen(Color.Red, 1), tag.Rectangle);
-                e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), config.TextColor, tag.Rectangle.X, tag.Rectangle.Y);
+                e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X,
+                    tag.Rectangle.Y);
             }
         }
     }

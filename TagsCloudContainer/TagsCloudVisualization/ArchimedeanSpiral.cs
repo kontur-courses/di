@@ -6,7 +6,6 @@ namespace TagsCloudContainer.TagsCloudVisualization
 {
     public class ArchimedeanSpiral : ISpiral
     {
-        public Point Center { get; }
         private readonly double angleDelta;
         private readonly double distanceBetweenLoops;
         private double angle;
@@ -20,6 +19,8 @@ namespace TagsCloudContainer.TagsCloudVisualization
 
             ValidateSpiralParameters();
         }
+
+        public Point Center { get; }
 
         public Point GetNextPoint()
         {
