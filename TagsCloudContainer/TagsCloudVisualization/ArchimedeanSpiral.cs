@@ -16,9 +16,11 @@ namespace TagsCloudContainer.TagsCloudVisualization
             Center = center;
             this.angleDelta = angleDelta;
             this.distanceBetweenLoops = distanceBetweenLoops;
-
+            Type = SpiralType.Archimedean;
             ValidateSpiralParameters();
         }
+
+        public SpiralType Type { get; }
 
         public Point Center { get; }
 

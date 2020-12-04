@@ -6,9 +6,9 @@ using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class CircularCloudLayouter : ILayouter
+    public class CloudLayouter : ILayouter
     {
-        public CircularCloudLayouter(ISpiral spiral)
+        public CloudLayouter(ISpiral spiral)
         {
             Spiral = spiral;
             Center = spiral.Center;

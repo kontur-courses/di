@@ -2,26 +2,28 @@
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.TagsCloudContainer.Interfaces;
+using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudContainer
 {
     public class TagsCloudContainer : ITagsContainer
     {
-        private readonly ILayouter layouter;
+        private readonly ILayouterFactory factory;
         private readonly ITextParser parser;
 
-        public TagsCloudContainer(ITextParser parser, ILayouter layouter)
+        public TagsCloudContainer(ITextParser parser, ILayouterFactory factory)
         {
             this.parser = parser;
-            this.layouter = layouter;
+            this.factory = factory;
         }
 
-        public List<Tag> GetTags(string text)
+        public List<Tag> GetTags(string text, SpiralType type)
         {
             var wordEntry = GetWordEntry(text);
             var tags = new List<Tag>();
             var graphics = Graphics.FromImage(new Bitmap(1, 1));
+            var layouter = factory.GetLayouter(type);
 
             foreach (var word in wordEntry.Keys.ToList())
             {

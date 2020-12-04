@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudContainer.Interfaces;
+using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudUI
@@ -16,6 +17,8 @@ namespace TagsCloudUI
         private readonly ITagsContainer container;
         private string fontFamily;
         private Size imageSize;
+        private string path;
+        private SpiralType spiralType;
         private List<Tag> tags;
         private Brush textColor;
 
@@ -35,6 +38,7 @@ namespace TagsCloudUI
             fontFamily = config.FontFamily;
             imageSize = config.FormSize;
             textColor = config.TextColor;
+            spiralType = SpiralType.Archimedean;
 
             var menu = new MenuStrip();
             menu.Items.Add(new ToolStripMenuItem("Text", null, (sender, args) => GetText()));
@@ -43,7 +47,29 @@ namespace TagsCloudUI
             menu.Items.Add(new ToolStripMenuItem("Color", null, (sender, args) => ChangeColor()));
             menu.Items.Add(new ToolStripMenuItem("Background", null, (sender, args) => ChangeBackgroundColor()));
             menu.Items.Add(new ToolStripMenuItem("ImageSize", null, (sender, args) => ChangeImageSize()));
+            menu.Items.Add(new ToolStripMenuItem("Spiral", null, (sender, args) => ChangeSpiral()));
             Controls.Add(menu);
+        }
+
+        private void ChangeSpiral()
+        {
+            using var form = new Form {Width = 400, FormBorderStyle = FormBorderStyle.FixedDialog, MaximizeBox = false};
+            var comboBox = new ComboBox {Width = 200};
+            comboBox.Items.Insert(0, "Archimedean");
+            comboBox.Items.Insert(1, "UlamSpiral");
+
+            var button = new Button {Text = "Set", DialogResult = DialogResult.OK, Top = comboBox.Bottom};
+            button.Click += (sender, args) =>
+            {
+                spiralType = (SpiralType) comboBox.SelectedIndex;
+                SetTags();
+                form.Close();
+            };
+
+            form.Controls.Add(comboBox);
+            form.Controls.Add(button);
+            form.ShowDialog();
+            Invalidate();
         }
 
         private void ChangeColor()
@@ -61,8 +87,14 @@ namespace TagsCloudUI
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            tags = container.GetTags(File.ReadAllText(dialog.FileName));
+            path = dialog.FileName;
+            SetTags();
             Invalidate();
+        }
+
+        private void SetTags()
+        {
+            tags = container.GetTags(File.ReadAllText(path), spiralType);
         }
 
         private void ChangeImageSize()

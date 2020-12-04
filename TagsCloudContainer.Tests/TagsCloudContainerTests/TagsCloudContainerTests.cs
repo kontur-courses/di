@@ -6,33 +6,36 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization;
+using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudVisualization.Tests.TagsCloudContainerTests
 {
     public class TagsCloudContainerTests
     {
         private TagsCloudContainer.TagsCloudContainer.TagsCloudContainer container;
-        private string newLine = Environment.NewLine;
+        private SpiralType spiralType;
 
         [SetUp]
         public void SetUp()
         {
             var parser = new TextParser(new WordValidator());
             var center = new Point(200, 200);
-            var layouter = new CircularCloudLayouter(new ArchimedeanSpiral(center, 0.2, 1.0));
-            container = new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(parser, layouter);
+            var spiral = new ArchimedeanSpiral(center, 0.2, 1.0);
+            spiralType = SpiralType.Archimedean;
+            var factory = new LayouterFactory(new List<ISpiral> {spiral});
+            container = new TagsCloudContainer.TagsCloudContainer.TagsCloudContainer(parser, factory);
         }
 
         [TestCaseSource(nameof(CountTestCases))]
         public void ShouldContainTags_WhenReturnOnRightText(string text, int expectedCount)
         {
-            container.GetTags(text).Count.Should().Be(expectedCount);
+            container.GetTags(text, spiralType).Count.Should().Be(expectedCount);
         }
 
         [TestCaseSource(nameof(WordsTestCases))]
         public void ShouldContainTags_WhenReturnOnRightText(string text, List<string> expectedWords)
         {
-            container.GetTags(text).Select(x => x.Text).Should().BeEquivalentTo(expectedWords);
+            container.GetTags(text, spiralType).Select(x => x.Text).Should().BeEquivalentTo(expectedWords);
         }
 
         private static IEnumerable<TestCaseData> CountTestCases()

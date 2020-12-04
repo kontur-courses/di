@@ -9,11 +9,11 @@ using TagsCloudContainer.TagsCloudVisualization;
 
 namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 {
-    public class CircularCloudLayouterTests
+    public class CloudLayouterTests
     {
         private Point Center { get; set; }
         private TagsVisualizer TagsVisualizer { get; set; }
-        private CircularCloudLayouter Sut { get; set; }
+        private CloudLayouter Sut { get; set; }
 
         [SetUp]
         public void SetUp()
@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 
             TagsVisualizer = new TagsVisualizer();
             Center = new Point(300, 300);
-            Sut = new CircularCloudLayouter(new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta));
+            Sut = new CloudLayouter(new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta));
         }
 
         [TearDown]
