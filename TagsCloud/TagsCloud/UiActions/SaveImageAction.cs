@@ -17,10 +17,13 @@ namespace TagsCloud
         {
             var dialog = new SaveFileDialog
             {
+                Title = "Сохранить как...",
                 CheckFileExists = false,
-                DefaultExt = "png",
-                FileName = "image.png",
-                Filter = "Изображения (*.png)|*.png"
+                AddExtension = true,
+                FileName = "image",
+                Filter = "Изображения (*.png)|*.png|" + 
+                         "Jpeg (*.jpeg)|*.jpeg|" +
+                         "TIFF (*.tiff)|*.tiff"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

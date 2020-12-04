@@ -27,7 +27,8 @@ namespace TagsCloud
                 CheckPathExists = true,
                 InitialDirectory = Path.GetFullPath(Assembly.GetExecutingAssembly().Location),
                 DefaultExt = "txt",
-                Filter = "Текстовые файлы (*.txt) | *.txt"
+                Filter = "Текстовые файлы (*.txt)|*.txt|"
+                         +"Документы (*.doc;*.docx)|*.doc;*.docx"
             };
 
             var res = dialog.ShowDialog();
