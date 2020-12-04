@@ -36,13 +36,14 @@ namespace TagsCloudContainer.App
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
                     .AddSingleton<IFontGetter>(new FontGetter(FontSettings.Default.FontName))
                     .AddSingleton<ICloudGenerator, CloudGenerator.CloudGenerator>()
-                    .AddSingleton<ICloudPainter>(new CloudPainter(AppSettings.Default))
+                    .AddSingleton<ICloudPainter, CloudPainter>()
                     .AddSingleton<ICloudLayouterFactory, CloudLayouterFactory>()
                     .AddSingleton<ICloudVisualizer, CloudVisualizer.CloudVisualizer>()
                     .AddSingleton(imageHolder)
                     .AddSingleton<IImageHolder>(imageHolder)
                     .AddSingleton<IUiAction, CircularCloudAction>()
                     .AddSingleton<IUiAction, ImageSettingsAction>()
+                    .AddSingleton<IUiAction, PaletteSettingsAction>()
                     .AddSingleton<MainForm, MainForm>();
                 var serviceProvider = services.BuildServiceProvider();
                 var mainForm = serviceProvider.GetService<MainForm>();
