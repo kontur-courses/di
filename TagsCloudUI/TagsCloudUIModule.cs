@@ -13,7 +13,7 @@ namespace TagsCloudUI
         {
             var ulamSpiral = new UlamSpiral(new Point(250, 250));
             var archimedeanSpiral = new ArchimedeanSpiral(new Point(250, 250), 0.2, 1.0);
-            var formConfig = new FormConfig(Color.Tan, Brushes.Black, "Times New Roman", new Size(600, 600));
+            var formConfig = new FormConfig(Color.Tan, Brushes.Black, "Times New Roman", new Size(600, 600), SpiralType.Archimedean);
 
             builder.RegisterInstance(formConfig);
             builder.RegisterInstance(ulamSpiral).As<ISpiral>();

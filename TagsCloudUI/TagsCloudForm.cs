@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudContainer.Interfaces;
@@ -21,12 +22,14 @@ namespace TagsCloudUI
         private SpiralType spiralType;
         private List<Tag> tags;
         private Brush textColor;
+        private HashSet<string> stopWords;
 
         public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver)
         {
             this.config = config;
             this.bitmapSaver = bitmapSaver;
             this.container = container;
+            stopWords = new HashSet<string>();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -38,7 +41,7 @@ namespace TagsCloudUI
             fontFamily = config.FontFamily;
             imageSize = config.FormSize;
             textColor = config.TextColor;
-            spiralType = SpiralType.Archimedean;
+            spiralType = config.SpiralType;
 
             var menu = new MenuStrip();
             menu.Items.Add(new ToolStripMenuItem("Text", null, (sender, args) => GetText()));
@@ -48,7 +51,22 @@ namespace TagsCloudUI
             menu.Items.Add(new ToolStripMenuItem("Background", null, (sender, args) => ChangeBackgroundColor()));
             menu.Items.Add(new ToolStripMenuItem("ImageSize", null, (sender, args) => ChangeImageSize()));
             menu.Items.Add(new ToolStripMenuItem("Spiral", null, (sender, args) => ChangeSpiral()));
+            menu.Items.Add(new ToolStripMenuItem("Set stop words", null, (sender, args) => SetStopWords()));
             Controls.Add(menu);
+        }
+
+        private void SetStopWords()
+        {
+            var dialog = new OpenFileDialog();
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            foreach (var word in File.ReadLines(dialog.FileName))
+            {
+                stopWords.Add(word);
+            }
+            Invalidate();
         }
 
         private void ChangeSpiral()
@@ -165,7 +183,7 @@ namespace TagsCloudUI
             if (tags == null)
                 return;
 
-            foreach (var tag in tags)
+            foreach (var tag in tags.Where(x => !stopWords.Contains(x.Text)))
             {
                 e.Graphics.DrawRectangle(new Pen(Color.Red, 1), tag.Rectangle);
                 e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X,
