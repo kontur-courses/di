@@ -10,22 +10,23 @@ namespace TagsCloud.Core
         private static readonly Random Random = new Random();
         private readonly Dictionary<char, Color> letterColor = new Dictionary<char, Color>();
 
-        private readonly Font font;
         private readonly Image image;
         private readonly Palette palette;
         private readonly List<(string, int)> words;
         private readonly List<Rectangle> rectangles;
         private readonly ColorAlgorithm colorAlgorithm;
+        private readonly List<Font> newFonts;
 
-        public CircularCloudVisualization(Image image, Palette palette, Font font,
-            ColorAlgorithm colorAlgorithm, List<(string, int)> words, List<Rectangle> rectangles)
+        public CircularCloudVisualization(Image image, Palette palette,
+            ColorAlgorithm colorAlgorithm, List<(string, int)> words, 
+            List<Rectangle> rectangles, List<Font> newFonts)
         {
             this.colorAlgorithm = colorAlgorithm;
-            this.font = font;
             this.palette = palette;
             this.words = words;
             this.image = image;
             this.rectangles = rectangles;
+            this.newFonts = newFonts;
         }
 
         public void Paint()
@@ -44,13 +45,8 @@ namespace TagsCloud.Core
                     LineAlignment = StringAlignment.Center
                 };
                 graphics.DrawRectangle(new Pen(Color.White), rectangles[i]);
-
-                using (var currentFont = new Font(font.FontFamily,
-                    (int) (font.Height / 2 * Math.Log(words[i].Item2 + 1)), font.Style))
-                {
-                    graphics.DrawString(words[i].Item1, currentFont,
+                graphics.DrawString(words[i].Item1, newFonts[i],
                         new SolidBrush(GetColor(words[i].Item1[0])), rectangles[i], drawFormat);
-                }
             }
         }
 

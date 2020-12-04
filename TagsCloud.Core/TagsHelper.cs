@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using NHunspell;
 using RTFToTextConverter;
-using TagsCloud.Common;
 
 namespace TagsCloud.Core
 {
@@ -37,15 +35,6 @@ namespace TagsCloud.Core
                 x => x.OrderByDescending(y => y.Value)
                     .ThenByDescending(y => y.Key.Length)
                     .ThenBy(y => y.Key, StringComparer.Ordinal));
-        }
-
-        public static List<Rectangle> GetRectangles(ICircularCloudLayouter cloud, List<(string, int)> words,
-            double letterWidth)
-        {
-            return words.Select(word => cloud.PutNextRectangle(
-                new Size(
-                    (int) (letterWidth / 1.4 * Math.Log(word.Item2 + 1) * word.Item1.Length),
-                    (int) (letterWidth * Math.Log(word.Item2 + 1))))).ToList();
         }
 
         public static string GetTextFromFile(string document)
