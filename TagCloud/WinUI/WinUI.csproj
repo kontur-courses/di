@@ -8,11 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagsCloudVisualisation\TagsCloudVisualisation.csproj" />
+        <ProjectReference Include="..\TagsCloudVisualisation\TagsCloudVisualisation.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.0.0" />
+        <PackageReference Include="Autofac" Version="6.0.0"/>
     </ItemGroup>
 
+    <Target Name="CopyMyStem" AfterTargets="AfterBuild">
+        <Copy SourceFiles="obj/mystem.exe" DestinationFolder="$(OutDir)"/>
+    </Target>
 </Project>
