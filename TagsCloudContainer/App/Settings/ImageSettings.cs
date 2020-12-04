@@ -7,12 +7,12 @@ namespace TagsCloudContainer.App.Settings
 {
     public class ImageSettings
     {
-        public readonly string FontName;
-        public readonly ImageFormat Format;
-        public readonly Size ImageSize;
-        public readonly string InputFileName;
-        public readonly CloudLayouterAlgorithm LayouterAlgorithm;
-        public readonly Color TextColor;
+        public string FontName { get; set; }
+        public ImageFormat Format { get; set; }
+        public Size ImageSize { get; set; }
+        public string InputFileName { get; set; }
+        public CloudLayouterAlgorithm LayouterAlgorithm { get; set; }
+        public Color TextColor { get; set; }
 
         public ImageSettings(Size imageSize, string fontName,
             Color textColor, ImageFormat imageFormat, string inputFileName,

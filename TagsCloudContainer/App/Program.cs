@@ -44,6 +44,7 @@ namespace TagsCloudContainer.App
                     .AddSingleton(imageHolder)
                     .AddSingleton<IImageHolder>(imageHolder)
                     .AddSingleton<IUiAction, CircularCloudAction>()
+                    .AddSingleton<IUiAction, ImageSettingsAction>()
                     .AddSingleton<MainForm, MainForm>();
                 var serviceProvider = services.BuildServiceProvider();
                 var mainForm = serviceProvider.GetService<MainForm>();
