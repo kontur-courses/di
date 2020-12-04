@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Autofac;
-using TagsCloud.UiActions;
 
 namespace TagsCloud
 {
@@ -17,7 +16,7 @@ namespace TagsCloud
             var builder = new ContainerBuilder();
             builder.RegisterType<PictureBoxImageHolder>().AsSelf().As<IImageHolder>().SingleInstance();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().SingleInstance();
-            builder.Register((a, b) => defaultImageSettings).SingleInstance();
+            builder.Register(_ => defaultImageSettings).SingleInstance();
             builder.Register(_ => new WordsFrequencyParser(defaultWordsToIgnore)).As<IWordsFrequencyParser>();
 
             builder.RegisterType<RenderFileAction>().As<IUiAction>();

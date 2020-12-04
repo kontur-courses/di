@@ -10,7 +10,7 @@ namespace TagsCloud
     {
         public ImageSettings Settings { get; set; }
         private ICloudLayouter layouter;
-        private Dictionary<string, int> wordsFreuqencies = new Dictionary<string, int>();
+        private Dictionary<string, int> wordsFreuqencies;
 
         public PictureBoxImageHolder(ImageSettings settings, ICloudLayouter layouter)
         {
@@ -25,13 +25,20 @@ namespace TagsCloud
         {
             layouter.ClearLayouter();
             wordsFreuqencies = frequencyDictionary;
+            var totalWords = frequencyDictionary.Count;
             var graphics = StartDrawing();
+
             foreach (var pair in frequencyDictionary.OrderByDescending(x => x.Value))
             {
-                var label = new Label { AutoSize = true, Text = pair.Key };
-                label.Refresh();
-                var rect = layouter.PutNextRectangle(label.Size);
-                graphics.DrawString(pair.Key, Settings.Font, new SolidBrush(Settings.Palette.TextColor), rect);
+                var fontSize = FontSizeProvider.GetFontSize(Settings.Font.Size, (double)totalWords * pair.Value / 100);
+
+                var label = new Label {AutoSize = true};
+                label.Font = new Font(Settings.Font.FontFamily, fontSize, Settings.Font.Style);
+                label.Text = pair.Key;
+                var size = label.GetPreferredSize(label.GetPreferredSize(Size));
+
+                var rect = layouter.PutNextRectangle(size);
+                graphics.DrawString(pair.Key, label.Font, new SolidBrush(Settings.Palette.TextColor), rect);
                 UpdateUi();
             }
         }
@@ -45,6 +52,7 @@ namespace TagsCloud
         public void RecreateCanvas(ImageSettings imageSettings)
         {
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
+            layouter.UpdateCenterPoint(imageSettings);
             DrawBaseCanvas();
         }
 

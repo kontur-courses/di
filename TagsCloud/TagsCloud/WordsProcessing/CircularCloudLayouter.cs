@@ -9,7 +9,7 @@ namespace TagsCloud
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly List<Point> potentialPosingPoints;
-        private Point Center { get; }
+        private Point Center { get; set; }
         private bool isFirst = true;
 
         public void ClearLayouter()
@@ -20,6 +20,9 @@ namespace TagsCloud
         }
 
         public Point GetCenterPoint() => Center;
+
+        public void UpdateCenterPoint(ImageSettings settings) =>
+            Center = new Point(settings.Width / 2, settings.Height / 2);
 
         public CircularCloudLayouter(ImageSettings settings)
         {

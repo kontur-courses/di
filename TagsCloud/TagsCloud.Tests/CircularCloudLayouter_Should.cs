@@ -5,8 +5,10 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloud.Infrastructure;
+using TagsCloud.WordsProcessing;
 
-namespace TagsCloud
+namespace TagsCloud.Tests
 {
     public class CircularCloudLayouter_Should
     {
@@ -67,6 +69,14 @@ namespace TagsCloud
             for (var i = 0; i < amount; i++)
                 rects.Add(layouter.PutNextRectangle(size));
             return rects;
+        }
+    }
+
+    public static class Program
+    {
+        public static void Main()
+        {
+
         }
     }
 }
