@@ -80,7 +80,6 @@ namespace TagsCloudTest
         {
             tagsCloudCreator.CreateCloud(textPath, imagePath);
 
-            using var image = Image.FromFile(imagePath);
             var current = File.ReadAllBytes(imagePath);
             var expected = File.ReadAllBytes(expectedImagePath);
 
