@@ -62,7 +62,7 @@ namespace TagsCloudUI
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            foreach (var word in File.ReadLines(dialog.FileName))
+            foreach (var word in File.ReadLines(dialog.FileName).Select(x => x.Trim()))
             {
                 stopWords.Add(word);
             }
