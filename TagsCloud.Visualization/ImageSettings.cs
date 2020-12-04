@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TagsCloud.Visualization
+﻿namespace TagsCloud.Visualization
 {
     public class ImageSettings
     {
@@ -22,6 +18,7 @@ namespace TagsCloud.Visualization
                     width = MaxWidth;
                 else if (value < MinWidth)
                     width = MinWidth;
+                else width = value;
             }
         }
 
@@ -34,6 +31,7 @@ namespace TagsCloud.Visualization
                     height = MaxHeight;
                 else if (value < MinHeight)
                     height = MinHeight;
+                else height = value;
             }
         }
     }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using NHunspell;
+using RTFToTextConverter;
 using TagsCloud.Common;
 
 namespace TagsCloud.Core
@@ -53,9 +54,10 @@ namespace TagsCloud.Core
             {
                 case "aff":
                 case "dic":
-                case "doc":
                 case "txt":
                     return File.ReadAllText(document);
+                case "rtf":
+                    return RTFToText.converting().rtfFromFile(document);
                 case "docx":
                     var wordDocument = WordprocessingDocument.Open(document, false);
                     return wordDocument.MainDocumentPart.Document.Body.InnerText;
