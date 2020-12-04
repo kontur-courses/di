@@ -4,7 +4,6 @@ using NUnit.Framework;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.Layouter;
@@ -21,7 +20,7 @@ namespace TagsCloudTest
         private TagsCloudCreator tagsCloudCreator;
         private WordConfig wordsConfig;
         private ImageConfig imageConfig;
-        private ServiceProvider container = ContainerBuilder.BuildContainer();
+        private readonly ServiceProvider container = ContainerBuilder.BuildContainer();
 
         private string textPath;
         private string imagePath;
@@ -85,7 +84,7 @@ namespace TagsCloudTest
             var current = File.ReadAllBytes(imagePath);
             var expected = File.ReadAllBytes(expectedImagePath);
 
-            current.Should().BeEquivalentTo(expected);
+            current.Should().Equal(expected);
         }
     }
 }

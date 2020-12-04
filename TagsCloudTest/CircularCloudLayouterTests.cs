@@ -79,20 +79,9 @@ namespace TagsCloudTest
         [Test]
         public void PutNextRectangleReturnDifferentRectangles()
         {
-            var allRectangles = new List<Rectangle>();
-            var differentRectangles = new HashSet<Rectangle>();
-            Rectangle rectangle;
-            var size = new Size(10, 10);
+            PutRectangles(300, new[] { new Size(10, 10) });
 
-            for (int i = 0; i < 300; i++)
-            {
-                rectangle = layout.PutNextRectangle(size);
-                allRectangles.Add(rectangle);
-                differentRectangles.Add(rectangle);
-            }
-
-            allRectangles.Should().HaveCount(differentRectangles.Count);
-            allRectangles.Should().BeEquivalentTo(differentRectangles);
+            rectangles.Distinct().Should().HaveCount(rectangles.Count);
         }
 
         [Test]

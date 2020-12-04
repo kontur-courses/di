@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Drawing;
 using System.Reflection;
 using TagsCloud.Factory;
-using TagsCloud.ImageProcessing.Config;
 using TagsCloud.ImageProcessing.SaverImage.ImageSavers;
 using TagsCloud.Layouter;
 using TagsCloud.TagsCloudProcessing.TagsGenerators;
