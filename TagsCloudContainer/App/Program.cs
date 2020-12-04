@@ -29,7 +29,7 @@ namespace TagsCloudContainer.App
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
                 var imageHolder = new PictureBoxImageHolder();
                 var services = new ServiceCollection()
-                    .AddSingleton<IDataReader>(new TxtFileReader(AppSettings.DefaultInputFile))
+                    .AddSingleton<IDataReaderFactory, DataReaderFactory>()
                     .AddSingleton<ITextParser, SimpleTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
                     .AddSingleton<IWordFilter, SimpleWordFilter>()
@@ -47,6 +47,7 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IUiAction, PaletteSettingsAction>()
                     .AddSingleton<IUiAction, FontSettingsAction>()
                     .AddSingleton<IUiAction, SaveImageAction>()
+                    .AddSingleton<IUiAction, OpenFileAction>()
                     .AddSingleton<MainForm, MainForm>();
                 var serviceProvider = services.BuildServiceProvider();
                 var mainForm = serviceProvider.GetService<MainForm>();

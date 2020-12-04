@@ -13,17 +13,17 @@ namespace TagsCloudContainer.App.CloudVisualizer
     {
         private readonly ICloudGenerator cloudGenerator;
         private readonly IImageHolder imageHolder;
-        private readonly IDataReader inputDataReader;
+        private readonly IDataReaderFactory inputDataReaderFactory;
         private readonly ICloudLayouterFactory layouterFactory;
         private readonly ICloudPainter painter;
         private readonly ITextParserToFrequencyDictionary textParserToFrequencyDictionary;
 
-        public CloudVisualizer(IDataReader inputDataReader,
+        public CloudVisualizer(IDataReaderFactory inputDataReaderFactory,
             ITextParserToFrequencyDictionary textParserToFrequencyDictionary,
             ICloudGenerator cloudGenerator, ICloudPainter painter, IImageHolder imageHolder,
             ICloudLayouterFactory layouterFactory)
         {
-            this.inputDataReader = inputDataReader;
+            this.inputDataReaderFactory = inputDataReaderFactory;
             this.textParserToFrequencyDictionary = textParserToFrequencyDictionary;
             this.cloudGenerator = cloudGenerator;
             this.painter = painter;
@@ -33,7 +33,7 @@ namespace TagsCloudContainer.App.CloudVisualizer
 
         public void Visualize(AppSettings appSettings)
         {
-            var lines = inputDataReader.ReadLines();
+            var lines = inputDataReaderFactory.CreateDataReader(appSettings).ReadLines();
             var frequencyDictionary = textParserToFrequencyDictionary.GenerateFrequencyDictionary(lines);
             var cloud = cloudGenerator.GenerateCloud(layouterFactory.CreateCloudLayouter(
                 appSettings.LayouterAlgorithm,
