@@ -7,14 +7,14 @@ namespace TagsCloudVisualization.WordsCleaners
 {
     public class BoringWordsCleaner : IWordsCleaner
     {
-        private readonly HashSet<string> boringWords;
+        private HashSet<string> boringWords;
 
-        public BoringWordsCleaner(HashSet<string> boringWords)
+        public void AddBoringWords(HashSet<string> boringWords)
         {
             this.boringWords = boringWords;
         }
 
-        public List<string> CleanWords(List<string> words)
+        public List<string> CleanWords(IEnumerable<string> words)
         {
             var ruDict = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.dic");
             var ruAff = Path.Join(Directory.GetCurrentDirectory(), "ru_RU.aff");

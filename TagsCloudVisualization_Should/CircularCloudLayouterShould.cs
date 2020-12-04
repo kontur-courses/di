@@ -25,7 +25,7 @@ namespace TagsCloudVisualization_Should
         {
             config = new Config();
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(1500, 1500), Color.Blue, new Size(1500, 1500));
+                new Point(1500, 1500), Color.Blue, new Size(1500, 1500), new HashSet<string>());
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(100, 100);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
 
@@ -47,7 +47,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(40, 40);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var pointProvider = new PointProvider(config);
             var expectedRectangle = new Rectangle(new Point(40, 40), new Size(30, 30));
             var cloud = new CircularCloudLayouter(pointProvider);
@@ -63,7 +63,7 @@ namespace TagsCloudVisualization_Should
             var rnd = new Random();
             var center = new Point(500, 500);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             const int expectedLength = 10;
@@ -85,7 +85,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(500, 500);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var pointProvider = new PointProvider(config);
             var cloud = new CircularCloudLayouter(pointProvider);
             var expectedRectangles = new List<Rectangle>

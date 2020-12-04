@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudVisualization.Configs
 {
@@ -9,13 +10,15 @@ namespace TagsCloudVisualization.Configs
 
         public Color TextColor { get; private set; }
         public Size ImageSize { get; private set; }
+        public HashSet<string> BoringWords { get; private set; }
 
-        public void SetValues(Font font, Point center, Color textColor, Size size)
+        public void SetValues(Font font, Point center, Color textColor, Size size, HashSet<string> boringWords)
         {
             Font = font;
             Center = center;
             TextColor = textColor;
             ImageSize = size;
+            BoringWords = boringWords;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace TagsCloudVisualization_Should
         {
             config = new Config();
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(1500, 1500), Color.Blue, new Size(1500, 1500));
+                new Point(1500, 1500), Color.Blue, new Size(1500, 1500), new HashSet<string>());
         }
 
         [Test]
@@ -24,7 +25,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(500, 500);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var pointProvider = new PointProvider(config);
             var expectedPoint = new Point(500, 500);
 
@@ -38,7 +39,7 @@ namespace TagsCloudVisualization_Should
         {
             var center = new Point(-1, -1);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                center, Color.Blue, new Size(1500, 1500));
+                center, Color.Blue, new Size(1500, 1500), new HashSet<string>());
             Action act = () => new PointProvider(config);
 
             act.ShouldThrow<ArgumentException>().WithMessage("X or Y of center was negative");

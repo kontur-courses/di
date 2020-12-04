@@ -1,4 +1,4 @@
-﻿namespace CloudContainer.ArgumentParser
+﻿namespace CloudContainer.ArgumentParsers
 {
     public interface IArgumentParser
     {

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CloudContainer.ArgumentParser;
-using CloudContainer.ConfigCreators;
+﻿using CloudContainer.ArgumentParsers;
+using CloudContainer.ArgumentsConverters;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudVisualization.CloudLayouters;
 using TagsCloudVisualization.Configs;
@@ -15,27 +13,21 @@ namespace CloudContainer
 {
     public class TagCloudContainer
     {
-        public void Run(string[] args)
+        public void CreateTagCloud(string[] args)
         {
-            var boringWords = new List<string>
-            {
-                "в", "без", "до", "для", "за", "через", "над", "по", "из", "у", "около",
-                "под", "о", "про", "на", "к", "перед", "при", "с", "между"
-            };
             var container = new ServiceCollection();
             container.AddSingleton<IWordProvider, TxtWordProvider>();
-            container.AddSingleton<IConfigCreator, ConsoleConfigCreator>();
-            container.AddSingleton<IArgumentParser, ArgumentParser.ArgumentParser>();
+            container.AddSingleton<IArgumentConverter, ArgumentConverter>();
             container.AddSingleton<IPointProvider, PointProvider>();
             container.AddSingleton<ICloudLayout, CircularCloudLayouter>();
             container.AddSingleton<ISaver, PngSaver>();
             container.AddSingleton<IConfig, Config>();
             container.AddSingleton<IWordConverter, WordsToCloudTagConverter>();
-            container.AddSingleton(typeof(HashSet<string>), boringWords.ToHashSet());
             container.AddSingleton<IWordsCleaner, BoringWordsCleaner>();
-            container.AddSingleton<Process, Process>();
+            container.AddSingleton<CloudCreator, CloudCreator>();
+            container.AddSingleton<IArgumentParser, ArgumentParser>();
             container.AddSingleton(typeof(string[]), args);
-            container.BuildServiceProvider().GetService<Process>()?.Run();
+            container.BuildServiceProvider().GetService<CloudCreator>().Run();
         }
     }
 }

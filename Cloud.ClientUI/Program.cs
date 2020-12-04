@@ -2,12 +2,12 @@
 
 namespace Cloud.ClientUI
 {
-    internal class Program
+    public class Program
     {
         private static void Main(string[] args)
         {
             var container = new TagCloudContainer();
-            container.Run(args);
+            container.CreateTagCloud(args);
         }
     }
 }

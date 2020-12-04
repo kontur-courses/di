@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudVisualization.Configs
 {
@@ -11,6 +12,8 @@ namespace TagsCloudVisualization.Configs
 
         Size ImageSize { get; }
 
-        public void SetValues(Font font, Point center, Color textColor, Size size);
+        HashSet<string> BoringWords { get; }
+
+        public void SetValues(Font font, Point center, Color textColor, Size size, HashSet<string> boringWords);
     }
 }

@@ -20,14 +20,14 @@ namespace TagsCloudVisualization_Should
         {
             config = new Config();
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(1500, 1500), Color.Blue, new Size(1500, 1500));
+                new Point(1500, 1500), Color.Blue, new Size(1500, 1500), new HashSet<string>());
         }
 
         [Test]
         public void DrawImage_ThrowArgumentException_CenterWithNegativeXOrY()
         {
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(-1, -1), Color.Blue, new Size(1500, 1500));
+                new Point(-1, -1), Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var cloudTags = new List<ICloudTag> {new CloudTag(new Rectangle(1, 1, 1, 1), "")};
 
             Action act = () => Drawer.DrawImage(cloudTags, config);
@@ -48,7 +48,7 @@ namespace TagsCloudVisualization_Should
         {
             var rectangles = GetRectangles(10);
             config.SetValues(new Font(FontFamily.GenericMonospace, 25),
-                new Point(500, 500), Color.Blue, new Size(1500, 1500));
+                new Point(500, 500), Color.Blue, new Size(1500, 1500), new HashSet<string>());
             var expectedSize = new Size(1500, 1500);
             var cloutTags = rectangles.Select(x => new CloudTag(x, "hello"))
                 .ToList().Cast<ICloudTag>().ToList();

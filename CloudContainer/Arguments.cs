@@ -4,32 +4,36 @@ namespace CloudContainer
 {
     public class Arguments
     {
-        public Arguments(string font, string size, string center, string color)
-        {
-            Font = font;
-            ImageSize = size;
-            Center = center;
-            Color = color;
-        }
+        [Name("fn", "font name")]
+        [Description("Text font name")]
+        public string FontName { get; set; }
 
-        public Arguments()
-        {
-        }
+        [Name("fs", "font size")]
+        [Description("Text font size")]
+        public string FontSize { get; set; }
 
-        [Name("f", "font")]
-        [Description("Text font, underscores separated font name and size")]
-        public string Font { get; set; }
+        [Name("ws", "width size")]
+        [Description("Image width")]
+        public string ImageWidth { get; set; }
 
-        [Name("s", "size")]
-        [Description("Image size with int parameters, underscores separated width and height")]
-        public string ImageSize { get; set; }
+        [Name("hs", "height size")]
+        [Description("Image width")]
+        public string ImageHeight { get; set; }
 
-        [Name("ce", "center")]
-        [Description("Center of the cloud")]
-        public string Center { get; set; }
+        [Name("x", "x value")]
+        [Description("x value of center")]
+        public string XValue { get; set; }
+
+        [Name("y", "y value")]
+        [Description("y value of center")]
+        public string YValue { get; set; }
 
         [Name("c", "color")]
         [Description("Color of words")]
         public string Color { get; set; }
+
+        [Name("b", "boring words")]
+        [Description("Words thas should not be added to cloud")]
+        public string BoringWords { get; set; }
     }
 }
