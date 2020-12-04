@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using RectanglesCloudLayouter.Core;
 
 namespace RectanglesCloudLayouter.SpecialMethods
 {
     public static class GenerateRectangles
     {
-        public static IEnumerable<Rectangle> MakeLayouter(this RectanglesCloudLayouter.Core.CloudLayouter layouter,
+        public static IEnumerable<Rectangle> MakeLayouter(this CloudLayouter layouter,
             int countRectangles,
             int minRectangleWidth, int maxRectangleWidth,
             int minRectangleHeight, int maxRectangleHeight)

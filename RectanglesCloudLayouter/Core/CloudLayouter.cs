@@ -11,13 +11,13 @@ namespace RectanglesCloudLayouter.Core
     {
         private readonly List<Rectangle> _rectangles;
         private readonly ISpiral _spiral;
-        public int CloudRadius { get; private set; }
-        public Point Center => _spiral.Center;
+        private readonly ICloudRadiusCalculator _cloudRadiusCalculator;
 
-        public CloudLayouter(Point center)
+        public CloudLayouter(ISpiral spiral, ICloudRadiusCalculator cloudRadiusCalculator)
         {
             _rectangles = new List<Rectangle>();
-            _spiral = new ArchimedeanSpiral(center);
+            _spiral = spiral;
+            _cloudRadiusCalculator = cloudRadiusCalculator;
         }
 
         public Rectangle GetCurrentRectangle => _rectangles.Last();
@@ -32,26 +32,8 @@ namespace RectanglesCloudLayouter.Core
             while (RectanglesIntersection.IsAnyIntersectWithRectangles(rectangle, _rectangles))
                 rectangle = new Rectangle(_spiral.GetNewSpiralPoint() - rectangleSize / 2, rectangleSize);
             _rectangles.Add(rectangle);
-            UpdateCloudRadius(rectangle);
+            _cloudRadiusCalculator.UpdateCloudRadius(_spiral.Center, rectangle);
             return rectangle;
-        }
-
-        private void UpdateCloudRadius(Rectangle currentRectangle)
-        {
-            var maxDistance = new[]
-            {
-                PointsDistance.GetCeilingDistanceBetweenPoints(currentRectangle.Location, _spiral.Center),
-                PointsDistance.GetCeilingDistanceBetweenPoints(
-                    currentRectangle.Location + new Size(currentRectangle.Width, 0),
-                    _spiral.Center),
-                PointsDistance.GetCeilingDistanceBetweenPoints(
-                    currentRectangle.Location + new Size(0, currentRectangle.Height),
-                    _spiral.Center),
-                PointsDistance.GetCeilingDistanceBetweenPoints(currentRectangle.Location + currentRectangle.Size,
-                    _spiral.Center)
-            }.Max();
-            if (maxDistance > CloudRadius)
-                CloudRadius = maxDistance;
         }
     }
 }

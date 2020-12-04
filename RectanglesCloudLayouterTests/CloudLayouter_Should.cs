@@ -5,6 +5,8 @@ using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using RectanglesCloudLayouter.Core;
+using RectanglesCloudLayouter.Interfaces;
 using RectanglesCloudLayouter.RectanglesCloudVisualization;
 using RectanglesCloudLayouter.SpecialMethods;
 
@@ -12,13 +14,17 @@ namespace RectanglesCloudLayouterTests
 {
     public class CloudLayouterShould
     {
-        private RectanglesCloudLayouter.Core.CloudLayouter _sut;
+        private CloudLayouter _sut;
         private List<Rectangle> _rectangles;
+        private ISpiral _spiral;
+        private ICloudRadiusCalculator _cloudRadiusCalculator;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new RectanglesCloudLayouter.Core.CloudLayouter(new Point(0, 0));
+            _spiral = new ArchimedeanSpiral(new Point(0, 0));
+            _cloudRadiusCalculator = new CloudRadiusCalculator();
+            _sut = new CloudLayouter(_spiral, _cloudRadiusCalculator);
             _rectangles = new List<Rectangle>();
         }
 
@@ -32,7 +38,7 @@ namespace RectanglesCloudLayouterTests
             var fullTestName =
                 $"{testName[0]}.{testName[1]}.{test.MethodName}.{(testName.Length == 3 ? testName[2] : "")}";
             var imageName = $"{DateTime.Now:yyyy.MM.dd HH.mm.ss}_{fullTestName}_failed.bmp";
-            CircularCloudVisualisation.MakeImageCloud(_rectangles, _sut.CloudRadius, imageName,
+            CircularCloudVisualisation.MakeImageCloud(_rectangles, _cloudRadiusCalculator.CloudRadius, imageName,
                 ImageFormat.Bmp);
         }
 
@@ -70,7 +76,7 @@ namespace RectanglesCloudLayouterTests
 
             _rectangles.Add(_sut.PutNextRectangle(size));
 
-            _sut.GetCurrentRectangle.Location.Should().Be(_sut.Center - size / 2);
+            _sut.GetCurrentRectangle.Location.Should().Be(_spiral.Center - size / 2);
         }
 
         [TestCase(10)]
@@ -100,7 +106,7 @@ namespace RectanglesCloudLayouterTests
 
             _rectangles.Add(_sut.PutNextRectangle(size));
 
-            _sut.CloudRadius.Should().Be(5);
+            _cloudRadiusCalculator.CloudRadius.Should().Be(5);
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using TagsCloudContainer.TextProcessing;
 
 namespace TagsCloudContainer.Interfaces
 {
-    public interface IVisualization
+    public interface IWordTagsLayouter
     {
-        Image GetImageCloud(int cloudRadius, List<WordTag> tags);
+        IEnumerable<WordTag> GetWordTags(string text);
     }
 }

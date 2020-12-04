@@ -1,11 +1,14 @@
 ﻿using System.Drawing;
+using System.IO;
 using MatthiWare.CommandLine;
-using MatthiWare.CommandLine.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using RectanglesCloudLayouter.Core;
 using RectanglesCloudLayouter.Interfaces;
+using TagsCloudContainer.ConvertersAndCheckers;
 using TagsCloudContainer.Interfaces;
-using TagsCloudContainer.SettingsForTagsCloud;
+using TagsCloudContainer.Reader;
+using TagsCloudContainer.Saver;
+using TagsCloudContainer.Settings;
 using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TextProcessing;
 using TagsCloudContainer.UserOptions;
@@ -16,28 +19,40 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
+            var parsed = new CommandLineParser<AllUserCommands>().Parse(args);
+            if (parsed.HasErrors)
+                return;
+            var temporarySettingsStorage = new TemporarySettingsStorage(parsed.Result);
             var serviceCollection = new ServiceCollection();
-            InjectDependencies(serviceCollection, args);
-            serviceCollection.BuildServiceProvider().GetService<AppProcessor>().Run();
+            InjectDependencies(serviceCollection, temporarySettingsStorage);
+            serviceCollection.BuildServiceProvider().GetRequiredService<IAppProcessor>().Run();
         }
 
-        private static void InjectDependencies(IServiceCollection serviceCollection, string[] args)
+        private static void InjectDependencies(IServiceCollection serviceCollection,
+            TemporarySettingsStorage settingsStorage)
         {
-            serviceCollection.AddSingleton<AppProcessor, AppProcessor>()
-                .AddSingleton<ICommandLineParser<AllCommands>, CommandLineParser<AllCommands>>()
-                .AddSingleton(typeof(string[]), args)
-                .AddSingleton<ICloudSettings, CloudSettings>()
-                .AddSingleton<ICloudParameter, CloudImageFormat>()
-                .AddSingleton<ICloudParameter, BoringWords>()
-                .AddSingleton<ICloudParameter, PathToCustomText>()
-                .AddSingleton<ICloudParameter, PathToSaveCloud>()
-                .AddSingleton<ICloudParameter, TextColor>()
-                .AddSingleton<ICloudParameter, BackgroundColor>()
-                .AddSingleton<ICloudParameter, ImageSize>()
-                .AddSingleton<ICloudParameter, TextFont>()
+            serviceCollection.AddSingleton<IAppProcessor, AppProcessor>()
+                .AddSingleton<IFileReader, FileReader>()
+                .AddSingleton<IImageSaver, ImageSaver>()
+                .AddSingleton(typeof(IStorageSettings),
+                    new StorageSettings(settingsStorage.PathToCustomText, settingsStorage.PathToSave,
+                        settingsStorage.ImageFormat))
+                .AddSingleton(typeof(IVisualizationSettings),
+                    new VisualizationSettings(settingsStorage.ImageSize, settingsStorage.BackgroundColor,
+                        settingsStorage.TextColor, settingsStorage.Font))
+                .AddSingleton(typeof(ITextProcessingSettings), new TextProcessingSettings(settingsStorage.BoringWords))
                 .AddSingleton<IVisualization, Visualization>()
-                .AddSingleton<ITextAnalyzer, TextAnalyzer>()
-                .AddSingleton(typeof(ICloudLayouter), new CloudLayouter(new Point()));
+                .AddSingleton<ICloudLayouter, CloudLayouter>()
+                .AddSingleton(typeof(ISpiral), new ArchimedeanSpiral(new Point(0, 0)))
+                .AddSingleton<ICloudRadiusCalculator, CloudRadiusCalculator>()
+                .AddSingleton<IWordTagsLayouter, WordTagsLayouter>()
+                .AddSingleton(typeof(Font), settingsStorage.Font)
+                .AddSingleton<IWordsFrequency, WordsFrequency>()
+                .AddSingleton<IWordMeasurer, WordMeasurer>()
+                .AddSingleton<IWordsFilter, WordsFilter>()
+                .AddSingleton<ISpeechPartsParser, SpeechPartsParser>()
+                .AddSingleton(typeof(ITextConverter),
+                    new MyStemConverter(Path.GetFullPath("mystem.exe"), "-ni"));
         }
     }
 }
