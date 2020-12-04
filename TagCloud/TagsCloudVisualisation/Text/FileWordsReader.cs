@@ -17,7 +17,7 @@ namespace TagsCloudVisualisation.Text
             var match = wordsRegex.Match(text);
             while (match.Success)
             {
-                allWords.Add(match.Groups["word"].Value);
+                allWords.Add(string.Intern(match.Groups["word"].Value));
                 match = match.NextMatch();
             }
 

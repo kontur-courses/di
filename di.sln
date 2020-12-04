@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualisation", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUI", "TagCloud\WinUI\WinUI.csproj", "{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualiserTests", "TagCloud\VisualiserTests\VisualiserTests.csproj", "{562143DD-76EA-4C75-811C-E10AE31DC8FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562143DD-76EA-4C75-811C-E10AE31DC8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562143DD-76EA-4C75-811C-E10AE31DC8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562143DD-76EA-4C75-811C-E10AE31DC8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562143DD-76EA-4C75-811C-E10AE31DC8FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2A05FAA8-6D18-4602-87BC-088CF824FCB9} = {82365357-3F9B-42C6-A8BD-48C20F9392BB}
 		{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4} = {82365357-3F9B-42C6-A8BD-48C20F9392BB}
+		{562143DD-76EA-4C75-811C-E10AE31DC8FF} = {82365357-3F9B-42C6-A8BD-48C20F9392BB}
 	EndGlobalSection
 EndGlobal
