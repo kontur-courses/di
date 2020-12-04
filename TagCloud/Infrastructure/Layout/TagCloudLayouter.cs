@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Infrastructure.Layout.Environment;
 using TagCloud.Infrastructure.Layout.Strategies;
-using TagCloud.Infrastructure.Settings;
 
 namespace TagCloud.Infrastructure.Layout
 {
     // ReSharper disable IdentifierTypo
     public class TagCloudLayouter : ILayouter<Size, Rectangle>
     {
-        private readonly Func<ITagCloudSettingsProvider> tagCloudSettingsProvider;
         private readonly IEnvironment<Rectangle> environment;
         private readonly ILayoutStrategy strategy;
 
-        public TagCloudLayouter(IEnvironment<Rectangle> environment, ILayoutStrategy strategy, Func<ITagCloudSettingsProvider> tagCloudSettingsProvider)
+        public TagCloudLayouter(IEnvironment<Rectangle> environment, ILayoutStrategy strategy)
         {
-            this.tagCloudSettingsProvider = tagCloudSettingsProvider;
             this.environment = environment;
             this.strategy = strategy;
         }

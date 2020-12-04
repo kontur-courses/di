@@ -5,7 +5,6 @@ namespace TagCloud.Infrastructure.Settings
 {
     public class Settings : 
         IFileSettingsProvider,
-        ITagCloudSettingsProvider,
         IExcludeTypesSettingsProvider,
         ISpiralSettingsProvider,
         IImageSettingsProvider,
