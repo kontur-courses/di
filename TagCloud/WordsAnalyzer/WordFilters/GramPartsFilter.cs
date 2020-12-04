@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using YandexMystem.Wrapper;
 using YandexMystem.Wrapper.Enums;
@@ -8,22 +10,22 @@ namespace TagCloud.WordsAnalyzer.WordFilters
     public class GramPartsFilter : IWordFilter
     {
         private Regex cyrillicRegex;
-        private Mysteam mysteam;
+        private Mysteam mystem;
 
-        private HashSet<GramPartsEnum> allowedGramParts = new HashSet<GramPartsEnum>();
+        private HashSet<GramPartsEnum> allowedGramParts;
         
-        public GramPartsFilter(params string[] allowedGramParts)
+        public GramPartsFilter(params GramPartsEnum[] allowedGramParts)
         {
-            MakeAllowedGramPartsHashSet(allowedGramParts);
+            this.allowedGramParts = allowedGramParts.ToHashSet();
             cyrillicRegex = new Regex("\\p{IsCyrillic}");
-            mysteam = new Mysteam();
+            mystem = new Mysteam();
         }
         
         public bool ShouldExclude(string word)
         {
             if (!IsCyrillicWord(word))
                 return false;
-            var models = mysteam.GetWords(word);
+            var models = mystem.GetWords(word);
             if (models.Count != 1)
                 return false;
 
@@ -31,31 +33,6 @@ namespace TagCloud.WordsAnalyzer.WordFilters
             return !allowedGramParts.Contains(model.Lexems[0].GramPart);
         }
 
-        private void MakeAllowedGramPartsHashSet(params string[] gramPartsToAllow)
-        {
-            foreach (var gramPart in gramPartsToAllow)
-            {
-                switch (gramPart)
-                {
-                    case "Noun":
-                        allowedGramParts.Add(GramPartsEnum.Noun);
-                        break;
-                    case "Verb":
-                        allowedGramParts.Add(GramPartsEnum.Verb);
-                        break;
-                    case "Adjective":
-                        allowedGramParts.Add(GramPartsEnum.Adjective);
-                        break;
-                    case "Adverb":
-                        allowedGramParts.Add(GramPartsEnum.Adverb);
-                        break;
-                    case "Conjunction":
-                        allowedGramParts.Add(GramPartsEnum.Conjunction);
-                        break;
-                }
-            }
-        }
-        
         private bool IsCyrillicWord(string word)
         {
             return cyrillicRegex.IsMatch(word);

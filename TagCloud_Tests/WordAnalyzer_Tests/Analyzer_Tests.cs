@@ -4,6 +4,7 @@ using NUnit.Framework;
 using TagCloud.WordsAnalyzer;
 using TagCloud.WordsAnalyzer.WordFilters;
 using TagCloud.WordsAnalyzer.WordNormalizer;
+using YandexMystem.Wrapper.Enums;
 
 namespace TagCloud_Tests.WordAnalyzer_Tests
 {
@@ -20,7 +21,7 @@ namespace TagCloud_Tests.WordAnalyzer_Tests
                 
             var normalizer = new WordNormalizer();
             var boringFilter = new BoringWordFilter(new HashSet<string> {"медведь"});
-            var gramPartFilter = new GramPartsFilter("Noun");
+            var gramPartFilter = new GramPartsFilter(GramPartsEnum.Noun);
             analyzer = new WordsAnalyzer(normalizer, boringFilter, gramPartFilter);
         }
         

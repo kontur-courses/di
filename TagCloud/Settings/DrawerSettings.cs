@@ -5,33 +5,13 @@ namespace TagCloud.Settings
 {
     public class DrawerSettings
     {
-        public Size ImageSize;
-        public List<Color> Colors;
-        public Color ForegroundColor;
-        public Color BackgroundColor;
-        public string FontFamily { get; }
-        public int MaxFontSize { get; }
-        public int MinFontSize { get; }
-        public bool OrderByWeight { get; }
-
-        public DrawerSettings(
-            Size imageSize, 
-            List<Color> colors,
-            Color backgroundColor,
-            Color foregroundColor, 
-            string fontFamily, 
-            int minFontSize,
-            int maxFontSize,
-            bool orderByWeight)
-        {
-            ImageSize = imageSize;
-            Colors = colors;
-            ForegroundColor = foregroundColor;
-            BackgroundColor = backgroundColor;
-            FontFamily = fontFamily;
-            MinFontSize = minFontSize;
-            MaxFontSize = maxFontSize;
-            OrderByWeight = orderByWeight;
-        }
+        public Size ImageSize { get; set; } = new Size(1000, 1000);
+        public List<Color> Colors { get; set; } = new List<Color>();
+        public Color ForegroundColor { get; set; } = Color.FromArgb(0, 0, 0, 0);
+        public Color BackgroundColor { get; set; } = Color.Black;
+        public string FontFamily { get; set; } = "Times New Roman";
+        public int MaxFontSize { get; set; } = 24;
+        public int MinFontSize { get; set; } = 48;
+        public bool OrderByWeight { get; set; } = true;
     }
 }

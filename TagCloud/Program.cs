@@ -15,7 +15,7 @@ namespace TagCloud
     {
         static void Main(string[] args)
         {
-            var cli = new ConsoleLineInterface(args);
+            var cli = new CommandLineInterface(args);
             
             var containerBuilder = new ContainerBuilder();
             

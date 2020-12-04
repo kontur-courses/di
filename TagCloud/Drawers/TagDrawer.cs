@@ -9,11 +9,11 @@ namespace TagCloud.Drawers
 {
     public class TagDrawer : IDisposable, ITagDrawer
     {
-        private IRectangleLayouter layouter;
-        private DrawerSettings settings;
+        private readonly IRectangleLayouter layouter;
+        private readonly DrawerSettings settings;
         
-        private Bitmap bitmap;
         private Graphics graphics;
+        private Bitmap bitmap;
 
         private Random random = new Random();
         
@@ -21,19 +21,19 @@ namespace TagCloud.Drawers
         {
             this.layouter = layouter;
             this.settings = settings;
-            var imageSize = settings.ImageSize;
-            bitmap = new Bitmap(imageSize.Width, imageSize.Height);
-            graphics = Graphics.FromImage(bitmap);
-            SetBackGroundColor(imageSize, settings.BackgroundColor);
         }
 
         public Bitmap DrawTagCloud(IReadOnlyCollection<TagInfo> tags)
         {
-            var tagsList = tags.ToList();
+            bitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
+            graphics = Graphics.FromImage(bitmap);
+            SetBackGroundColor(settings.ImageSize, settings.BackgroundColor);
+            
             if (settings.OrderByWeight)
-                tagsList = tags.OrderByDescending(t => t.Weight).ToList();
-            foreach (var tag in tagsList)
+                tags = tags.OrderByDescending(t => t.Weight).ToArray();
+            foreach (var tag in tags)
                 DrawTag(tag);
+            
             return bitmap;
         }
 

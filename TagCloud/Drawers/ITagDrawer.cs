@@ -6,7 +6,5 @@ namespace TagCloud.Drawers
     public interface ITagDrawer
     {
         public Bitmap DrawTagCloud(IReadOnlyCollection<TagInfo> tags);
-
-        public void Dispose();
     }
 }

@@ -36,7 +36,7 @@ namespace TagCloud.WordsAnalyzer
         private Dictionary<string, int> GetWordsCounts(IReadOnlyCollection <string> words)
         {
             return words.Select(word => normalizer.Normalize(word))
-                    .Where(word => filters.All(f => !f.ShouldExclude(word)))
+                    .Where(word => !filters.Any(f => f.ShouldExclude(word)))
                     .GroupBy(word => word)
                     .ToDictionary(group => group.Key, group => group.Count());
         }

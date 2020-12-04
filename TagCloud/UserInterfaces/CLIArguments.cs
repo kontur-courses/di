@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommandLine;
+using YandexMystem.Wrapper.Enums;
 
 namespace TagCloud.UserInterfaces
 {
@@ -57,14 +58,14 @@ namespace TagCloud.UserInterfaces
         public string OutputFileName { get; set; }
 
         [Option("ex", Required = false, HelpText = "Set output file extention.",  Default = "png")]
-        public string Extention { get; set; }
+        public string Extension { get; set; }
         
         [Option("boringwords", Required = false, HelpText = "Set words to exclude (only russian words)",
             Separator = ',')]
         public IEnumerable<string> BoringWords { get; set; }
         
-        [Option("gramparts", Required = false, HelpText = "Set words to exclude",
-            Separator = ',', Default = new []{"Noun", "Verb", "Adjective", "Adverb", "Conjunction"})]
-        public IEnumerable<string> GramParts { get; set; }
+        [Option("gramparts", Required = false, HelpText = "Set gram parts for tag cloud",
+            Separator = ',', Default = new []{GramPartsEnum.Noun, GramPartsEnum.Verb, GramPartsEnum.Adjective})]
+        public IEnumerable<GramPartsEnum> GramParts { get; set; }
     }
 }

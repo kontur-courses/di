@@ -26,7 +26,6 @@ namespace TagCloud
             var tags = wordsAnalyzer.GetTags(words);
             var result = drawer.DrawTagCloud(tags);
             imageSaver.Save(result);
-            drawer.Dispose();
         }
     }
 }

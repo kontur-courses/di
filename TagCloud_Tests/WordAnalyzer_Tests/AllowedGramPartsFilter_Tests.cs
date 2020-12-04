@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using FluentAssertions;
 using TagCloud.WordsAnalyzer.WordFilters;
+using YandexMystem.Wrapper.Enums;
 
 namespace TagCloud_Tests.WordAnalyzer_Tests
 {
@@ -15,9 +16,9 @@ namespace TagCloud_Tests.WordAnalyzer_Tests
         [SetUp]
         public void SetUp()
         {
-            nounFilter = new GramPartsFilter("Noun");
-            verbFilter = new GramPartsFilter("Verb");
-            nounAndVerbFilter = new GramPartsFilter("Noun", "Verb");
+            nounFilter = new GramPartsFilter(GramPartsEnum.Noun);
+            verbFilter = new GramPartsFilter(GramPartsEnum.Verb);
+            nounAndVerbFilter = new GramPartsFilter(GramPartsEnum.Noun, GramPartsEnum.Verb);
         }
         
         [TestCase("торт")]

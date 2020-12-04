@@ -7,20 +7,20 @@ namespace TagCloud.ImageSavers
 {
     public class ImageSaver : IImageSaver
     {
-        private string path;
-        private string fileName;
-        private string ext;
+        private readonly string path;
+        private readonly string fileName;
+        private readonly string extension;
 
         public ImageSaver(SaverSettings settings)
         {
             path = settings.Path ?? Directory.GetCurrentDirectory();
             fileName = settings.FileName;
-            ext = settings.Extention;
+            extension = settings.Extension;
         }
 
         public void Save(Bitmap bitmap)
         {
-            var fullPath = $"{path}/{fileName}.{ext}";
+            var fullPath = $"{path}/{fileName}.{extension}";
             bitmap.Save(fullPath);
             Console.WriteLine($"Tag cloud visualization saved to file {fullPath}");
         }

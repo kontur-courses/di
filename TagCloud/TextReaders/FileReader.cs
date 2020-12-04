@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TagCloud.Settings;
@@ -16,7 +17,9 @@ namespace TagCloud.TextReaders
         
         public List<string> ReadWords()
         {
-            return File.ReadAllLines(filePath).SelectMany(line => line.Split()).ToList();
+            return File.ReadAllLines(filePath)
+                .SelectMany(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                .ToList();
         }
     }
 }
