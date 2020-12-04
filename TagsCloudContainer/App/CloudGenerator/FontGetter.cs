@@ -1,22 +1,25 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 
 namespace TagsCloudContainer.App.CloudGenerator
 {
     internal class FontGetter : IFontGetter
     {
-        private readonly int defaultFontSize = 10;
-        private readonly string fontName;
+        private readonly AppSettings appSettings;
 
-        public FontGetter(string fontName)
+        public FontGetter(AppSettings appSettings)
         {
-            this.fontName = fontName;
+            this.appSettings = appSettings;
         }
 
         public Font GetFont(string word, double frequency)
         {
-            var fontSize = defaultFontSize * (1 + frequency * defaultFontSize);
-            return new Font(fontName, (float) fontSize);
+            var font = appSettings.FontSettings.Font;
+            var fontSize = font.Size * (1 + frequency * font.Size);
+            return new Font(font.FontFamily,
+                (float) fontSize, font.Style,
+                font.Unit, font.GdiCharSet);
         }
     }
 }

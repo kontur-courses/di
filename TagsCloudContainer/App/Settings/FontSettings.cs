@@ -1,14 +1,16 @@
-﻿namespace TagsCloudContainer.App.Settings
+﻿using System.Drawing;
+
+namespace TagsCloudContainer.App.Settings
 {
     public class FontSettings
     {
-        public static readonly FontSettings Default = new FontSettings("Arial");
+        public static readonly FontSettings Default = new FontSettings(new Font("Arial", 10));
 
-        private FontSettings(string fontName)
+        private FontSettings(Font font)
         {
-            FontName = fontName;
+            Font = font;
         }
 
-        public string FontName { get; set; }
+        public Font Font { get; set; }
     }
 }

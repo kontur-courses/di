@@ -34,7 +34,7 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IWordFilter, SimpleWordFilter>()
                     .AddSingleton<ITextParserToFrequencyDictionary,
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
-                    .AddSingleton<IFontGetter>(new FontGetter(FontSettings.Default.FontName))
+                    .AddSingleton<IFontGetter>(new FontGetter(AppSettings.Default))
                     .AddSingleton<ICloudGenerator, CloudGenerator.CloudGenerator>()
                     .AddSingleton<ICloudPainter, CloudPainter>()
                     .AddSingleton<ICloudLayouterFactory, CloudLayouterFactory>()
@@ -44,6 +44,7 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IUiAction, CircularCloudAction>()
                     .AddSingleton<IUiAction, ImageSettingsAction>()
                     .AddSingleton<IUiAction, PaletteSettingsAction>()
+                    .AddSingleton<IUiAction, FontSettingsAction>()
                     .AddSingleton<MainForm, MainForm>();
                 var serviceProvider = services.BuildServiceProvider();
                 var mainForm = serviceProvider.GetService<MainForm>();
