@@ -16,7 +16,7 @@ namespace HomeExerciseTDD
 
         public CircularCloudLayouter(ISpiral spiral)
         {
-            this.center = spiral.Center;
+            center = spiral.Center;
             this.spiral = spiral;
         }
         

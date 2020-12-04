@@ -11,8 +11,6 @@ namespace HomeExerciseTDD
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
-        private Color color;
-        private readonly Random randomazer;
         private readonly List<ISizedWord> words;
         private readonly int offsetX;
         private readonly int offsetY;
@@ -29,9 +27,8 @@ namespace HomeExerciseTDD
 
             offsetX = settings.Width/2;
             offsetY = settings.Height/2;
-            randomazer= new Random();
+            new Random();
 
-            color = settings.Color;
             bitmap = new Bitmap(settings.Width, settings.Height);
             graphics = Graphics.FromImage(bitmap);
         }
