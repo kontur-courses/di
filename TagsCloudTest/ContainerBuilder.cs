@@ -5,9 +5,10 @@ using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.ImageProcessing.SaverImage.ImageSavers;
 using TagsCloud.Layouter;
-using TagsCloud.TagsCloudProcessing.TegsGenerators;
+using TagsCloud.TagsCloudProcessing.TagsGenerators;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
+using TagsCloud.TextProcessing.TextReaders;
 
 namespace TagsCloudTest
 {
@@ -23,24 +24,25 @@ namespace TagsCloudTest
                 .BuildServiceProvider();
 
             serviceProvider.GetService<IServiceFactory<IImageSaver>>()
-            .Register(".png", () => new PngSaver())
-            .Register(".jpg", () => new JpgSaver())
-            .Register(".bmp", () => new BmpSaver());
+                .Register("Сохранить в png", serviceProvider.GetService<PngSaver>)
+                .Register("Сохранить в jpg", serviceProvider.GetService<JpgSaver>)
+                .Register("Сохранить в bmp", serviceProvider.GetService<BmpSaver>);
 
-            var layouterConfig = serviceProvider.GetService<ImageConfig>();
+            serviceProvider.GetService<IServiceFactory<IWordsReader>>()
+                .Register("Файл txt", serviceProvider.GetService<TxtReader>)
+                .Register("Файл doc", serviceProvider.GetService<DocReader>);
+
             serviceProvider.GetService<IServiceFactory<IRectanglesLayouter>>()
-                .Register("По спирали",
-                () => new CircularCloudLayouter(new Point(layouterConfig.ImageSize.Width / 2,
-                layouterConfig.ImageSize.Height / 2)));
+                .Register("По спирали", serviceProvider.GetRequiredService<CircularCloudLayouterCreator>().Create);
 
             serviceProvider.GetService<IServiceFactory<ITagsGenerator>>()
-                .Register("Топ 30", () => serviceProvider.GetService<TagsGenerator>());
+                .Register("Топ 30", serviceProvider.GetService<TagsGenerator>);
 
-            serviceProvider.GetService<IConvertersApplier>()
-                .Register("Перевести в нижний регистр", () => new LowerCaseConverter());
+            serviceProvider.GetService<IServiceFactory<IWordConverter>>()
+                .Register("Перевести в нижний регистр", serviceProvider.GetService<LowerCaseConverter>);
 
-            serviceProvider.GetService<IFiltersApplier>()
-                .Register("Исключить служебные символы", () => new FunctionWordsFilter());
+            serviceProvider.GetService<IServiceFactory<ITextFilter>>()
+                .Register("Исключить служебные символы", serviceProvider.GetService<FunctionWordsFilter>);
 
             return serviceProvider;
         }

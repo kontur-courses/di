@@ -38,13 +38,8 @@ namespace TagsCloudTest
 
         private void PutRectangles(int rectangleCount, Size[] sizes)
         {
-            var sizesLenght = sizes.Length;
-            Size size;
             for (int i = 0; i < rectangleCount; i++)
-            {
-                size = sizes[i % sizesLenght];
-                rectangles.Add(layout.PutNextRectangle(size));
-            }
+                rectangles.Add(layout.PutNextRectangle(sizes[i % sizes.Length]));
         }
 
         [Test]
@@ -52,10 +47,10 @@ namespace TagsCloudTest
         {
             PutRectangles(10, GetRandomSizeSet());
 
-            var isIntesect = rectangles
+            var isIntersect = rectangles
                 .Any(rect => rect.IntersectsWith(rectangles.Where(other => other != rect)));
 
-            isIntesect.Should().BeFalse();
+            isIntersect.Should().BeFalse();
         }
 
         [Test]

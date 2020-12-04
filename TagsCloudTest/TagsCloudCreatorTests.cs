@@ -9,7 +9,7 @@ using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.Config;
 using TagsCloud.Layouter;
 using TagsCloud.TagsCloudProcessing;
-using TagsCloud.TagsCloudProcessing.TegsGenerators;
+using TagsCloud.TagsCloudProcessing.TagsGenerators;
 using TagsCloud.TextProcessing.Converters;
 using TagsCloud.TextProcessing.TextFilters;
 using TagsCloud.TextProcessing.WordsConfig;
@@ -48,13 +48,25 @@ namespace TagsCloudTest
         private void ConfigureWordsConfig(string path)
         {
             wordsConfig.Color = Color.Red;
-            wordsConfig.ConvertersNames = container.GetService<IConvertersApplier>().GetConverterNames().ToArray();
-            wordsConfig.FilerNames = container.GetService<IFiltersApplier>().GetFilerNames().ToArray();
-            wordsConfig.FontName = new Font(FontFamily.GenericMonospace, 20);
-            wordsConfig.LayoutName = container.GetService<IServiceFactory<IRectanglesLayouter>>()
+
+            wordsConfig.ConvertersNames = container
+                .GetService<IServiceFactory<IWordConverter>>()
+                .GetServiceNames().ToArray();
+
+            wordsConfig.FilersNames = container
+                .GetService<IServiceFactory<ITextFilter>>()
+                .GetServiceNames().ToArray();
+
+            wordsConfig.Font = new Font(FontFamily.GenericMonospace, 20);
+
+            wordsConfig.LayouterName = container
+                .GetService<IServiceFactory<IRectanglesLayouter>>()
                 .GetServiceNames().First();
-            wordsConfig.TagGeneratorName = container.GetService<IServiceFactory<ITagsGenerator>>()
+
+            wordsConfig.TagGeneratorName = container
+                .GetService<IServiceFactory<ITagsGenerator>>()
                 .GetServiceNames().First();
+
             wordsConfig.Path = path;
         }
 
@@ -65,7 +77,7 @@ namespace TagsCloudTest
         }
 
         [Test]
-        public void TagsCloudFunctionalTest()
+        public void CreateCloudTest()
         {
             tagsCloudCreator.CreateCloud(textPath, imagePath);
 
@@ -73,7 +85,6 @@ namespace TagsCloudTest
             var current = File.ReadAllBytes(imagePath);
             var expected = File.ReadAllBytes(expectedImagePath);
 
-            image.Should().NotBeNull();
             current.Should().BeEquivalentTo(expected);
         }
     }
