@@ -120,10 +120,10 @@ namespace WinUI
                 table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Width"}, 0, 0);
                 table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Height"}, 0, 1);
 
-                var widthInput = CreateIntInput(i => sizeInput.Width = i, DockStyle.Left);
+                var widthInput = CreateIntInput(sizeInput.Width, i => sizeInput.Width = i, DockStyle.Left);
                 table.Controls.Add(widthInput, 1, 0);
 
-                var heightInput = CreateIntInput(i => sizeInput.Height = i, DockStyle.Left);
+                var heightInput = CreateIntInput(sizeInput.Height, i => sizeInput.Height = i, DockStyle.Left);
                 table.Controls.Add(heightInput, 1, 1);
 
                 return table;
@@ -189,13 +189,22 @@ namespace WinUI
             Width = width
         };
 
-        private static NumericUpDown CreateIntInput(Action<int> onValueChanged, DockStyle dockStyle)
+        private static NumericUpDown CreateIntInput(int initialValue, Action<int> onValueChanged, DockStyle dockStyle)
         {
-            var numericUpDown = new NumericUpDown {Dock = dockStyle};
-            numericUpDown.ValueChanged += (_, __) => onValueChanged.Invoke((int) numericUpDown.Value);
-            numericUpDown.KeyPress += (_, args) =>
+            var numUpDown = new NumericUpDown
+            {
+                Dock = dockStyle,
+                Value = initialValue,
+                Minimum = int.MinValue,
+                Maximum = int.MaxValue
+            };
+
+            numUpDown.KeyPress += (_, args) =>
                 args.Handled = !(char.IsDigit(args.KeyChar) || args.KeyChar == '\b' || args.KeyChar == '-');
-            return numericUpDown;
+            numUpDown.ValueChanged += (_, __) =>
+                onValueChanged.Invoke((int) numUpDown.Value);
+
+            return numUpDown;
         }
 
         private void UpdatePreviewImage()

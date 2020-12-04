@@ -136,7 +136,8 @@ namespace WinUI
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(600, 340);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Tag cloud layouter";
+            this.ShowIcon = false;
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox)).EndInit();
             this.buttonsLayoutPanel.ResumeLayout(false);

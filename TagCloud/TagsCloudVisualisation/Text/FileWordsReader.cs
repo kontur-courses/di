@@ -7,7 +7,7 @@ namespace TagsCloudVisualisation.Text
     public class FileWordsReader : IFileWordsReader
     {
         private static readonly Regex wordsRegex = new Regex(
-            @"(\w+)\W?",
+            @"(?<word>\w+)\W?",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public string[] GetWordsFrom(string path)
@@ -17,7 +17,7 @@ namespace TagsCloudVisualisation.Text
             var match = wordsRegex.Match(text);
             while (match.Success)
             {
-                allWords.Add(match.Captures[0].Value);
+                allWords.Add(match.Groups["word"].Value);
                 match = match.NextMatch();
             }
 

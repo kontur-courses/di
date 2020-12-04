@@ -108,7 +108,7 @@ namespace WinUI
             var selectedFactory = layouterPicker.Selected.Value;
             var selectedLayouter = selectedFactory.Get(
                 centerOffsetPicker.PointFromCurrent(),
-                centerOffsetPicker.SizeFromCurrent());
+                betweenWordsDistancePicker.SizeFromCurrent());
 
             var fontSizeSource = fontSizeResolverPicker.Selected.Value;
             var fontFamily = fontFamilyPicker.Selected.Value;
