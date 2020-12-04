@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 using Autofac;
+using NHunspell;
 using TagCloud.Curves;
 using TagCloud.WordsFilter;
 using TagCloud.WordsProvider;
@@ -21,16 +22,22 @@ namespace TagCloud
             var colors = new[]
                 {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Aqua, Color.Blue, Color.Purple};
             var fontFamily = "Times New Roman";
+            var dictionaryAff = Path.GetFullPath("../../../../dictionaries/en.aff");
+            var dictionaryDic = Path.GetFullPath("../../../../dictionaries/en.dic");
             builder.RegisterType<ArchimedeanSpiral>().As<ICurve>()
                 .WithParameter("center", center)
                 .WithParameter("density", density)
                 .WithParameter("angelStep", angelStep);
             builder.RegisterType<CircularCloudLayouter>().As<ITagCloud>().SingleInstance();
             builder.RegisterType<TagCloudVisualizer>().As<IVisualizer>();
-            var wordsFilePath = Path.GetFullPath("../../../../words.doc");
-            builder.RegisterType<MicrosoftWordWordsProvider>().As<IWordsProvider>()
+
+
+            var wordsFilePath = Path.GetFullPath("../../../../words.txt");
+            builder.RegisterType<TxtWordsProvider>().As<IWordsProvider>()
                 .WithParameter("filePath", wordsFilePath);
-            var wordsFilter = new WordsFilter.WordsFilter().Normalize().RemovePrepositions();
+            var wordsFilter = new WordsFilter.WordsFilter(new Hunspell(dictionaryAff, dictionaryDic))
+                .Normalize()
+                .RemovePrepositions();
             builder.RegisterInstance(wordsFilter).As<IWordsFilter>();
 
             builder.RegisterInstance(colors).As<Color[]>();
