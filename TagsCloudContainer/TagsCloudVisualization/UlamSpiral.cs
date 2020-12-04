@@ -31,6 +31,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
         private IEnumerable<Point> GetPoints()
         {
             var count = 0;
+            yield return currentPoint;
 
             while (true)
             {

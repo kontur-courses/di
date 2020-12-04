@@ -6,19 +6,17 @@ using TagsCloudContainer.TagsCloudVisualization;
 
 namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 {
-    public class ArchimedeanSpiralTests
+    public class UlamSpiralTests
     {
         private Point Center { get; set; }
-        private ArchimedeanSpiral Spiral { get; set; }
+        private UlamSpiral Spiral { get; set; }
 
         [SetUp]
         public void SetUp()
         {
             Center = new Point(500, 500);
-            const double distanceBetweenLoops = 1;
-            const double angleDelta = 1;
 
-            Spiral = new ArchimedeanSpiral(Center, distanceBetweenLoops, angleDelta);
+            Spiral = new UlamSpiral(Center);
         }
 
         [Test]
@@ -27,12 +25,8 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
             Spiral.GetNextPoint().Should().Be(Center);
         }
 
-        [TestCase(-1, 0, 1, -1, TestName = "angleDelta is negative")]
-        [TestCase(-1, 0, 1, 0, TestName = "angleDelta is zero")]
         [TestCase(-1, 0, 1, 1, TestName = "Center X coordinate is negative")]
         [TestCase(0, -1, 1, 1, TestName = "Center Y coordinate is negative")]
-        [TestCase(0, 0, 0, 1, TestName = "distanceBetweenLoops is zero")]
-        [TestCase(0, 0, -1, 1, TestName = "distanceBetweenLoops is negative")]
         public void ThrowException_When(
             int centerX, int centerY, double distanceBetweenLoops, double angleDelta)
         {
