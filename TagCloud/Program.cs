@@ -1,7 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using Autofac;
+using TagCloud.App.CLI;
+using TagCloud.App.GUI;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Layout;
 using TagCloud.Infrastructure.Layout.Environment;

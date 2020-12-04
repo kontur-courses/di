@@ -23,7 +23,7 @@ namespace TagCloud.Infrastructure.Graphics
         public Image GetImage(IEnumerable<(string, TokenInfo)> tokens)
         {
             var settings = imageSettingsProvider(); 
-            using var image = new Bitmap(settings.Width, settings.Height);
+            var image = new Bitmap(settings.Width, settings.Height);
             using var imageGraphics = System.Drawing.Graphics.FromImage(image);
             foreach (var (word, info) in tokens)
             {

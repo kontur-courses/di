@@ -4,7 +4,7 @@ using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text;
 
-namespace TagCloud
+namespace TagCloud.App.CLI
 {
     public class TagCloudLayouterCli : IApp
     {
@@ -31,9 +31,9 @@ namespace TagCloud
             using var image = painter.GetImage(analyzedTokens);
             Console.WriteLine("Layout ready");
             var imagePath = settingsFactory().ImagePath;
+            Console.WriteLine($"Saving into {Path.GetFullPath(imagePath)}");
             image.Save(imagePath);
             Console.WriteLine("Image saved");
-            Console.WriteLine(Path.GetFullPath(imagePath));
         }
     }
 }
