@@ -11,6 +11,7 @@ namespace TagCloud
         internal readonly CircularCloudLayouter layouter;
         private readonly Dictionary<string, double> wordsMetric;
         private readonly (string word, Rectangle location)[] locations;
+        public Point Center => layouter.Center;
 
         internal TagCloud(Dictionary<string, double> wordsMetric, IPointGetter getter)
         {
