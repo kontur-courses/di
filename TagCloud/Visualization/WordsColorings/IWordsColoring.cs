@@ -2,7 +2,7 @@
 
 namespace TagCloud.Visualization.WordsColorings
 {
-    public interface IWordsColoring
+    internal interface IWordsColoring
     {
         public Color GetColor(string word, Rectangle location, TagCloud cloud);
     }
