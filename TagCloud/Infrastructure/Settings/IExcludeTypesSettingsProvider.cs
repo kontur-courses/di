@@ -1,7 +1,9 @@
+using TagCloud.Infrastructure.Text.Information;
+
 namespace TagCloud.Infrastructure.Settings
 {
     public interface IExcludeTypesSettingsProvider
     {
-        public string[] ExcludedTypes { get; }
+        public WordType[] ExcludedTypes { get; }
     }
 }

@@ -1,31 +1,24 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using TagCloud.Infrastructure.Settings;
-using TagCloud.Infrastructure.Text.Filters;
 
 namespace TagCloud.Infrastructure.Text
 {
-    public class LineParser : IParser<string>
+    public class TxtReader : IReader<string>
     {
         private readonly Func<IFileSettingsProvider> fileSettingsProvider;
-        private readonly IEnumerable<IFilter<string>> filters;
 
-        public LineParser(Func<IFileSettingsProvider> fileSettingsProvider, IEnumerable<IFilter<string>> filters)
+        public TxtReader(Func<IFileSettingsProvider> fileSettingsProvider)
         {
             this.fileSettingsProvider = fileSettingsProvider;
-            this.filters = filters;
         }
         
-        public IEnumerable<string> Parse()
+        public IEnumerable<string> ReadTokens()
         {
             var path = fileSettingsProvider().Path;
-            return filters.Aggregate(
-                ReadLines(path), 
-                (current, filter) => filter.Filter(current));
+            return ReadLines(path);
         }
 
         private IEnumerable<string> ReadLines(string path)

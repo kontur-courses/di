@@ -3,39 +3,36 @@ using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Infrastructure.Layout;
 using TagCloud.Infrastructure.Settings;
+using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Graphics
 {
     class WordPainter : IPainter<string>
     {
         private readonly ILayouter<Size, Rectangle> layouter;
-        private readonly Func<IFontSettingProvider> fontProvider;
         private readonly Func<IImageSettingsProvider> imageSettingsProvider;
 
         public WordPainter(
             ILayouter<Size, Rectangle> layouter, 
-            Func<IFontSettingProvider> fontProvider, 
             Func<IImageSettingsProvider> imageSettingsProvider)
         {
             this.layouter = layouter;
-            this.fontProvider = fontProvider;
             this.imageSettingsProvider = imageSettingsProvider;
         }
         
-        public Image GetImage(Dictionary<string, Size> sizedTokens, Dictionary<string, int> tokenFontSizes)
+        public Image GetImage(IEnumerable<(string, TokenInfo)> tokens)
         {
             var settings = imageSettingsProvider(); 
             var image = new Bitmap(settings.Width, settings.Height);
             var imageGraphics = System.Drawing.Graphics.FromImage(image);
-            foreach (var word in sizedTokens.Keys)
+            foreach (var (word, info) in tokens)
             {
-                var hitbox = layouter.GetPlace(sizedTokens[word]);
+                var hitbox = layouter.GetPlace(info.Size);
 
-                var font = new Font(settings.FontFamily, tokenFontSizes[word]);
+                var font = new Font(settings.FontFamily, info.FontSize);
                 imageGraphics.DrawString(word, font, settings.Brush, hitbox.Location);
             }
             return image;
         }
-        
     }
 }

@@ -1,14 +1,16 @@
 using System;
 using System.IO;
+using System.Linq;
 using Autofac;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text;
 using TagCloud.Infrastructure.Text.Filters;
+using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloudTests
 {
-    public class TextParserTests
+    public class TextAnalyzerTests
     {
         private ContainerBuilder builder;
         private string myStemPath;
@@ -16,8 +18,9 @@ namespace TagCloudTests
         public void Setup()
         {
             builder = new ContainerBuilder();
-            builder.RegisterType<LineParser>().As<IParser<string>>();
-            
+            builder.RegisterType<TxtReader>().As<IReader<string>>();
+            builder.RegisterType<WordAnalyzer<string>>();
+
             builder.RegisterType<Settings>()
                 .AsSelf()
                 .AsImplementedInterfaces()
@@ -50,16 +53,13 @@ namespace TagCloudTests
 ",
             new string[] {"бросать", "бросать", "бросать"}, 
             TestName = "Filter base form")]
-        [TestCase(@"фывфывфыв
-",
-            new string[] {}, 
-            TestName = "Filter unknown")]
         public void Parse_Interesting(string text, string[] expected)
         {
-            builder.RegisterType<InterestingWordsFilter>()
+            builder.RegisterType<WordTypeFilter>()
                 .As<IFilter<string>>()
                 .WithParameter(new TypedParameter(typeof(string), myStemPath));
-            Parse(text, expected);
+            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
+            Run(text, expected);
         }
         
         [TestCase(@"СЛОВО
@@ -70,22 +70,24 @@ namespace TagCloudTests
             TestName = "To Lower")]
         public void Parse_ToLower(string text, string[] expected)
         {
-            builder.RegisterType<ToLowerFilter>().As<IFilter<string>>();
-            Parse(text, expected);
+            builder.RegisterType<LowerCaseFilter>().As<IFilter<string>>();
+            Run(text, expected);
         }
 
-        private void Parse(string text, string[] expected)
+        private void Run(string text, string[] expected)
         {
             var container = builder.Build();
-            var parser = container.Resolve<IParser<string>>();
+            var parser = container.Resolve<IReader<string>>();
+            var analyzer = container.Resolve<WordAnalyzer<string>>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
-            settingsFactory().ExcludedTypes = new []{"CONJ", "SPRO", "PR"};
+            settingsFactory().ExcludedTypes = new [] {WordType.CONJ, WordType.SPRO, WordType.PR};
             settingsFactory().Path = path;
             File.WriteAllText(path, text);
+            var tokens = parser.ReadTokens();
 
-            var actual = parser.Parse();
-            
+            var actual = analyzer.Analyze(tokens).Select(pair => pair.Item1);
+
             CollectionAssert.AreEquivalent(expected, actual);
         }
     }
