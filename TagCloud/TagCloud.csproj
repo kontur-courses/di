@@ -18,4 +18,10 @@
       <PackageReference Include="YandexMystem.Wrapper" Version="1.0.0.18234" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="mystem.exe">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
