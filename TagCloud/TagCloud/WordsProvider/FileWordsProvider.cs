@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TagCloud.WordsProvider
@@ -7,12 +6,13 @@ namespace TagCloud.WordsProvider
     public abstract class FileWordsProvider : IWordsProvider
     {
         protected readonly string FilePath;
-        public abstract string[] SupportedExtensions { get; }
 
         protected FileWordsProvider(string filePath)
         {
             FilePath = filePath;
         }
+
+        public abstract string[] SupportedExtensions { get; }
 
         public abstract IEnumerable<string> GetWords();
 

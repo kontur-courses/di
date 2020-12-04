@@ -22,6 +22,9 @@ namespace TagCloud.ConsoleAppHelper
             Default = "Times New Roman", HelpText = "font family")]
         public string FontFamily { get; set; }
 
+        [Option('c', Default = "rgb", HelpText = "colors for words")]
+        public string Colors { get; set; }
+
         [Option('i', "input",
             Required = true, HelpText = "input file path")]
         public string Input { get; set; }

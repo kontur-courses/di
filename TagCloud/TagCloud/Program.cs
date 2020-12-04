@@ -17,14 +17,13 @@ namespace TagCloud
         private static IContainer BuildDependencies(
             int width,
             int height,
+            Color[] colors,
             string input)
         {
             var builder = new ContainerBuilder();
             var center = new Point(width / 2, height / 2);
             const double density = 0.05;
             const int angelStep = 5;
-            var colors = new[]
-                {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Aqua, Color.Blue, Color.Purple};
             var dictionaryAff = Path.GetFullPath("../../../../dictionaries/en.aff");
             var dictionaryDic = Path.GetFullPath("../../../../dictionaries/en.dic");
             builder.RegisterType<ArchimedeanSpiral>().As<ICurve>()
@@ -51,7 +50,9 @@ namespace TagCloud
 
         private static IContainer BuildDependencies(Options options)
         {
-            return BuildDependencies(options.Width, options.Height, options.Input);
+            return BuildDependencies(options.Width, options.Height,
+                ColorsParser.ParseColors(options.Colors),
+                options.Input);
         }
 
         public static void Main(string[] args)
