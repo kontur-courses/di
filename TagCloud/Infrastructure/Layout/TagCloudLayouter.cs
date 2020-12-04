@@ -22,7 +22,7 @@ namespace TagCloud.Infrastructure.Layout
 
             var possiblePoint = strategy.GetPoint(point => CanPlaceRectangle(point - rectangleMiddle, rectangleSize));
             var rectangle = new Rectangle(possiblePoint - rectangleMiddle, rectangleSize);
-            
+
             environment.Add(rectangle);
             return rectangle;
         }

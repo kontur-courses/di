@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TagCloud.Infrastructure.Text.Filters;
@@ -18,9 +17,8 @@ namespace TagCloud.Infrastructure.Text
         public IEnumerable<(TToken, TokenInfo)> Analyze(IEnumerable<TToken> words)
         {
             return filters.Aggregate(
-                words.Select(line => (line, new TokenInfo())), 
+                words.Select(line => (line, new TokenInfo())),
                 (current, filter) => filter.Filter(current).ToArray());
-
         }
     }
 }

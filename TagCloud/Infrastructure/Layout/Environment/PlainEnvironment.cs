@@ -7,21 +7,16 @@ namespace TagCloud.Infrastructure.Layout.Environment
 {
     public class PlainEnvironment : IEnvironment<Rectangle>
     {
-        private List<Rectangle> Elements { get; }
-        
         public PlainEnvironment()
         {
             Elements = new List<Rectangle>();
         }
 
+        private List<Rectangle> Elements { get; }
+
         public void Add(Rectangle element)
         {
             Elements.Add(element);
-        }
-
-        public void Remove(Rectangle element)
-        {
-            Elements.Remove(element);
         }
 
         public bool IsColliding(Rectangle element)
@@ -37,6 +32,11 @@ namespace TagCloud.Infrastructure.Layout.Environment
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public void Remove(Rectangle element)
+        {
+            Elements.Remove(element);
         }
     }
 }

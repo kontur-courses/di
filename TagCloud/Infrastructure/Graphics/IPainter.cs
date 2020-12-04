@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.Infrastructure.Layout;
 using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Graphics

@@ -8,12 +8,13 @@ namespace TagCloud.App.CLI
 {
     public class TagCloudLayouterCli : IApp
     {
-        private readonly IReader<string> reader;
-        private readonly WordAnalyzer<string> wordAnalyzer;
-        private readonly Func<Settings> settingsFactory;
         private readonly IPainter<string> painter;
+        private readonly IReader<string> reader;
+        private readonly Func<Settings> settingsFactory;
+        private readonly WordAnalyzer<string> wordAnalyzer;
 
-        public TagCloudLayouterCli(IReader<string> reader, WordAnalyzer<string> wordAnalyzer, Func<Settings> settingsFactory, IPainter<string> painter)
+        public TagCloudLayouterCli(IReader<string> reader, WordAnalyzer<string> wordAnalyzer,
+            Func<Settings> settingsFactory, IPainter<string> painter)
         {
             this.reader = reader;
             this.wordAnalyzer = wordAnalyzer;

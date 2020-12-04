@@ -7,20 +7,21 @@ namespace TagCloud.Infrastructure.Graphics
 {
     public class ColorPicker
     {
-        private readonly Dictionary<WordType, Color> wordTypeColorMap;
-        private readonly Random random;
         private const int MaxColorValue = 256;
+        private readonly Random random;
+        private readonly Dictionary<WordType, Color> wordTypeColorMap;
+
         public ColorPicker(Random random)
         {
             this.random = random;
             wordTypeColorMap = new Dictionary<WordType, Color>();
         }
-        
+
         public ColorPicker(Random random, Dictionary<WordType, Color> wordTypeColorMap) : this(random)
         {
             this.wordTypeColorMap = wordTypeColorMap;
         }
-        
+
         public Color GetColor(TokenInfo info)
         {
             if (wordTypeColorMap.TryGetValue(info.WordType, out var color))
@@ -30,6 +31,9 @@ namespace TagCloud.Infrastructure.Graphics
             return color;
         }
 
-        private Color GetRandomColor() => Color.FromArgb(random.Next(MaxColorValue), random.Next(MaxColorValue), random.Next(MaxColorValue));
+        private Color GetRandomColor()
+        {
+            return Color.FromArgb(random.Next(MaxColorValue), random.Next(MaxColorValue), random.Next(MaxColorValue));
+        }
     }
 }

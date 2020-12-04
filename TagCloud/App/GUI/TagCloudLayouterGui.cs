@@ -7,27 +7,28 @@ using Settings = TagCloud.Infrastructure.Settings.Settings;
 
 namespace TagCloud.App.GUI
 {
-    class TagCloudLayouterGui : IApp
+    internal class TagCloudLayouterGui : IApp
     {
-    
-
-        private readonly IReader<string> reader;
-        private readonly WordAnalyzer<string> wordAnalyzer;
-        private readonly Func<Settings> settingsFactory;
         private readonly IPainter<string> painter;
 
-        public TagCloudLayouterGui(IReader<string> reader, WordAnalyzer<string> wordAnalyzer, Func<Settings> settingsFactory, IPainter<string> painter)
+
+        private readonly IReader<string> reader;
+        private readonly Func<Settings> settingsFactory;
+        private readonly WordAnalyzer<string> wordAnalyzer;
+
+        public TagCloudLayouterGui(IReader<string> reader, WordAnalyzer<string> wordAnalyzer,
+            Func<Settings> settingsFactory, IPainter<string> painter)
         {
             this.reader = reader;
             this.wordAnalyzer = wordAnalyzer;
             this.settingsFactory = settingsFactory;
             this.painter = painter;
-            
+
             Application.Init();
             var window = new Window("Tag Cloud Layouter");
             var button = new Button("Write to console");
             window.DeleteEvent += Close;
-            button.Clicked += new EventHandler(Click);
+            button.Clicked += Click;
             window.Add(button);
             window.ShowAll();
         }
@@ -36,10 +37,10 @@ namespace TagCloud.App.GUI
         {
             settingsFactory().Import(Program.GetDefaultSettings());
             Console.WriteLine("Default settings imported");
-            
+
             Application.Run();
         }
-        
+
         private void Click(object obj, EventArgs e)
         {
             var tokens = reader.ReadTokens();
@@ -54,7 +55,7 @@ namespace TagCloud.App.GUI
         }
 
         private void Close(object obj, DeleteEventArgs e)
-        {   
+        {
             Console.WriteLine("Closeed!");
             Application.Quit();
         }

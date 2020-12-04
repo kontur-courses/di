@@ -18,7 +18,7 @@ namespace TagCloud.Infrastructure.Text.Filters
         public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var threshold = wordCountThresholdProvider().WordCountThreshold;
-            return tokens.Where((pair) => pair.info.Frequency > threshold);
+            return tokens.Where(pair => pair.info.Frequency > threshold);
         }
     }
 }

@@ -19,7 +19,10 @@ namespace TagCloud.Infrastructure.Text.Filters
         {
             return tokens.Where(pair => IsInteresting(pair.info.WordType));
         }
-        
-        private bool IsInteresting(WordType type) => !excludeTypesSettingsProvider().ExcludedTypes.Contains(type);
+
+        private bool IsInteresting(WordType type)
+        {
+            return !excludeTypesSettingsProvider().ExcludedTypes.Contains(type);
+        }
     }
 }

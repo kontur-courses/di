@@ -21,10 +21,14 @@ namespace TagCloud.Infrastructure.Text.Filters
             var maxCount = tokens.Select(pair => pair.info.Frequency).Aggregate(Math.Max);
             var minCount = tokens.Select(pair => pair.info.Frequency).Aggregate(Math.Min);
 
-            int FontSizeLine(int x) => (x - minCount) 
-                                       * (baseFont.MaxFontSize - baseFont.MinFontSize) 
-                                       / (maxCount - minCount) 
-                                       + baseFont.MinFontSize;
+            int FontSizeLine(int x)
+            {
+                return (x - minCount)
+                       * (baseFont.MaxFontSize - baseFont.MinFontSize)
+                       / (maxCount - minCount)
+                       + baseFont.MinFontSize;
+            }
+
             foreach (var (word, info) in tokens)
             {
                 var count = info.Frequency;

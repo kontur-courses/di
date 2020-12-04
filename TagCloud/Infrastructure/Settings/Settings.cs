@@ -3,24 +3,24 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Settings
 {
-    public class Settings : 
+    public class Settings :
         IFileSettingsProvider,
         IExcludeTypesSettingsProvider,
         ISpiralSettingsProvider,
         IImageSettingsProvider,
         IWordCountThresholdSettingProvider
     {
-        public string Path { get; set; }
-        public Point Center { get; set; }
-        public int Increment { get; set; }
         public WordType[] ExcludedTypes { get; set; }
+        public string Path { get; set; }
         public FontFamily FontFamily { get; set; }
         public int MinFontSize { get; set; }
         public int MaxFontSize { get; set; }
-        public int Width { get; set;  }
+        public int Width { get; set; }
         public int Height { get; set; }
         public string ImagePath { get; set; }
-        public int WordCountThreshold { get; set;  }
+        public Point Center { get; set; }
+        public int Increment { get; set; }
+        public int WordCountThreshold { get; set; }
 
         public void Import(Settings settings)
         {

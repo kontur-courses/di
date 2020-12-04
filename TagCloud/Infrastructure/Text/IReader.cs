@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text
 {

@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace TagCloud.Infrastructure.Settings
 {
     public interface IImageSettingsProvider : IFontSettingProvider

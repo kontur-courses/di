@@ -7,14 +7,14 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Graphics
 {
-    class WordPainter : IPainter<string>
+    internal class WordPainter : IPainter<string>
     {
-        private readonly ILayouter<Size, Rectangle> layouter;
-        private readonly Func<IImageSettingsProvider> imageSettingsProvider;
         private readonly ColorPicker colorPicker;
+        private readonly Func<IImageSettingsProvider> imageSettingsProvider;
+        private readonly ILayouter<Size, Rectangle> layouter;
 
         public WordPainter(
-            ILayouter<Size, Rectangle> layouter, 
+            ILayouter<Size, Rectangle> layouter,
             Func<IImageSettingsProvider> imageSettingsProvider,
             ColorPicker colorPicker)
         {
@@ -22,10 +22,10 @@ namespace TagCloud.Infrastructure.Graphics
             this.imageSettingsProvider = imageSettingsProvider;
             this.colorPicker = colorPicker;
         }
-        
+
         public Image GetImage(IEnumerable<(string, TokenInfo)> tokens)
         {
-            var settings = imageSettingsProvider(); 
+            var settings = imageSettingsProvider();
             var image = new Bitmap(settings.Width, settings.Height);
             using var imageGraphics = System.Drawing.Graphics.FromImage(image);
             foreach (var (word, info) in tokens)
@@ -35,6 +35,7 @@ namespace TagCloud.Infrastructure.Graphics
                 var brush = new SolidBrush(colorPicker.GetColor(info));
                 imageGraphics.DrawString(word, font, brush, hitbox.Location);
             }
+
             return image;
         }
     }

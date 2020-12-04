@@ -16,7 +16,7 @@ namespace TagCloud.Infrastructure.Text.Filters
         {
             this.fontSettingProvider = fontSettingProvider;
         }
-        
+
         public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var result = new Dictionary<string, TokenInfo>();

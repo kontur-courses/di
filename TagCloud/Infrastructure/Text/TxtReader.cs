@@ -14,7 +14,7 @@ namespace TagCloud.Infrastructure.Text
         {
             this.fileSettingsProvider = fileSettingsProvider;
         }
-        
+
         public IEnumerable<string> ReadTokens()
         {
             var path = fileSettingsProvider().Path;
@@ -28,10 +28,7 @@ namespace TagCloud.Infrastructure.Text
                 using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
                 {
                     string line;
-                    while ((line = streamReader.ReadLine()) != null)
-                    {
-                        yield return line;
-                    }
+                    while ((line = streamReader.ReadLine()) != null) yield return line;
                 }
             }
         }

@@ -17,17 +17,17 @@ namespace TagCloud.Infrastructure.Text.Filters
             this.myStemPath = myStemPath;
             wordWithTypeRegex = new Regex(@".+?\{(?<word>.+?)=(?<type>.+?)\W.+?\}");
         }
-        
+
         public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
         {
-            var analyzer = new MyStem() {PathToMyStem = myStemPath, Parameters = "-i"};
+            var analyzer = new MyStem {PathToMyStem = myStemPath, Parameters = "-i"};
             var analysis = analyzer.Analysis(string.Join(" ", tokens.Select(pair => pair.token)));
             foreach (Match match in wordWithTypeRegex.Matches(analysis))
             {
                 var word = match.Groups["word"].Value;
                 if (match.Success)
                 {
-                    if (!Enum.TryParse(match.Groups["type"].Value, out WordType wordType)) 
+                    if (!Enum.TryParse(match.Groups["type"].Value, out WordType wordType))
                         wordType = WordType.UNKNOWN;
                     yield return (word, new TokenInfo(wordType));
                 }
