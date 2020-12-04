@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using TagsCloud.CloudRenderers;
+using TagsCloud.ContainerConfigurators;
 using TagsCloud.StatisticProviders;
 using TagsCloud.WordLayouters;
 using TagsCloud.WordReaders;
@@ -20,7 +21,7 @@ namespace TagsCloud
 
         public static void MakeCloud(IContainer container = null)
         {
-            container ??= ContainerConfigurator.Configure();
+            container ??= new ConsoleContainerConfigurator().Configure();
             
             var words = container.Resolve<IWordReader>().ReadWords();
             if (words == null) return;
@@ -32,6 +33,11 @@ namespace TagsCloud
             
             var path = container.Resolve<ICloudRenderer>().RenderCloud();
             Console.WriteLine($"Cloud saved in {path}");
+        }
+        
+        public static void MakeCloud(IContainerConfigurator configurator)
+        {
+            MakeCloud(configurator.Configure());
         }
     }
 }

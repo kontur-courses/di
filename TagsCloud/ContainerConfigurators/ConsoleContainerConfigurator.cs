@@ -15,56 +15,56 @@ using TagsCloud.WordReaders;
 using TagsCloud.WordSelectors;
 using IContainer = Autofac.IContainer;
 
-namespace TagsCloud
+namespace TagsCloud.ContainerConfigurators
 {
-    public static class ContainerConfigurator
+    public class ConsoleContainerConfigurator : IContainerConfigurator
     {
-        private static readonly Dictionary<string, Type> WordReaders = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> wordReaders = new Dictionary<string, Type>
         {
             ["Regex"] = typeof(RegexWordReader),
             ["By line"] = typeof(ByLineWordReader),
         };
         
-        private static readonly Dictionary<string, IWordSelector> WordSelectors = new Dictionary<string, IWordSelector>
+        private readonly Dictionary<string, IWordSelector> wordSelectors = new Dictionary<string, IWordSelector>
         {
             ["All"] = new AllWordSelector(),
         };
         
-        private static readonly Dictionary<string, IBoringWordsDetector> BoringWordsDetectors = new Dictionary<string, IBoringWordsDetector>
+        private readonly Dictionary<string, IBoringWordsDetector> boringWordsDetectors = new Dictionary<string, IBoringWordsDetector>
         {
             ["By Collection"] = new ByCollectionBoringWordsDetector(),
         };
         
-        private static readonly Dictionary<string, IPointsLayout> PointsLayouts = new Dictionary<string, IPointsLayout>
+        private readonly Dictionary<string, IPointsLayout> pointsLayouts = new Dictionary<string, IPointsLayout>
         {
             ["Spiral"] = new SpiralPoints(),
             ["Square"] = new SquarePoints(),
         };
         
-        private static readonly Dictionary<string, Type> ColorSelectors = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> colorSelectors = new Dictionary<string, Type>
         {
             ["Random"] = typeof(RandomColorSelector),
             ["Cyclic"] = typeof(CyclicColorSelector),
         };
         
-        public static IContainer Configure()
+        public IContainer Configure()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterInstance(ReadType<string>("File path"));
-            builder.RegisterType(ReadInterface("Word reader", WordReaders)).As<IWordReader>();
-            builder.RegisterInstance(ReadInterface("Words selector", WordSelectors)).As<IWordSelector>();
+            builder.RegisterType(ReadInterface("Word reader", wordReaders)).As<IWordReader>();
+            builder.RegisterInstance(ReadInterface("Words selector", wordSelectors)).As<IWordSelector>();
 
-            builder.RegisterInstance(ReadInterface("Boring words detector", BoringWordsDetectors))
+            builder.RegisterInstance(ReadInterface("Boring words detector", boringWordsDetectors))
                 .As<IBoringWordsDetector>();
             builder.RegisterType<StatisticProvider>().As<IStatisticProvider>();
 
             builder.RegisterInstance(ReadFont());
-            builder.RegisterInstance(ReadInterface("Points layout", PointsLayouts)).As<IPointsLayout>();
+            builder.RegisterInstance(ReadInterface("Points layout", pointsLayouts)).As<IPointsLayout>();
             builder.RegisterType<WordLayouter>().SingleInstance().As<IWordLayouter>();
 
             builder.RegisterInstance(ReadColors());
-            builder.RegisterType(ReadInterface("Color selector", ColorSelectors)).SingleInstance().As<IColorSelector>();
+            builder.RegisterType(ReadInterface("Color selector", colorSelectors)).SingleInstance().As<IColorSelector>();
             
             var width = ReadType<int>("Image width");
             var height = ReadType<int>("Image height");
