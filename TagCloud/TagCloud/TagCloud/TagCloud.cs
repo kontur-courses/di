@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Microsoft.Office.Interop.Word;
 using TagCloud.WordsFilter;
 using TagCloud.WordsProvider;
 
