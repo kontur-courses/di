@@ -23,6 +23,8 @@ namespace TagsCloudTests
         {
             var directoryInfo = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent;
             if(directoryInfo == null) throw new DirectoryNotFoundException();
+            if (!new DirectoryInfo($"{directoryInfo.FullName}\\Samples").Exists)
+                directoryInfo.CreateSubdirectory("Samples");
             var samplePath = $"{directoryInfo.FullName}\\Samples\\sample.png";
             new FileInfo(samplePath).Delete();
             
