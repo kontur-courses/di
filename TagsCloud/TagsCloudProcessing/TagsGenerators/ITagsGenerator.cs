@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloud.TextProcessing;
 
-namespace TagsCloud.TagsCloudProcessing.TegsGenerators
+namespace TagsCloud.TagsCloudProcessing.TagsGenerators
 {
     public interface ITagsGenerator
     {

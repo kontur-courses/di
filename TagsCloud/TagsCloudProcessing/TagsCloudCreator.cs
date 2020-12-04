@@ -1,7 +1,7 @@
 ﻿using TagsCloud.Factory;
 using TagsCloud.ImageProcessing.ImageBuilders;
 using TagsCloud.ImageProcessing.SaverImage.ImageSavers;
-using TagsCloud.TagsCloudProcessing.TegsGenerators;
+using TagsCloud.TagsCloudProcessing.TagsGenerators;
 using TagsCloud.TextProcessing;
 
 namespace TagsCloud.TagsCloudProcessing

@@ -7,7 +7,7 @@ using TagsCloud.Layouter;
 using TagsCloud.TextProcessing;
 using TagsCloud.TextProcessing.WordsConfig;
 
-namespace TagsCloud.TagsCloudProcessing.TegsGenerators
+namespace TagsCloud.TagsCloudProcessing.TagsGenerators
 {
     public class TagsGenerator : ITagsGenerator
     {
@@ -23,20 +23,16 @@ namespace TagsCloud.TagsCloudProcessing.TegsGenerators
         public IEnumerable<Tag> CreateTags(IEnumerable<WordInfo> words)
         {
             var layouter = layouterFactory.Create();
-            var sortedWords = words.OrderByDescending(info => info.Frequence).ToList();
-            var tags = new List<Tag>();
-            var font = wordsConfig.FontName;
 
             var count = 30;
-            foreach (var word in sortedWords.Take(30))
-            {
-                var currentFont = new Font(font.FontFamily, count);
-                var size = TextRenderer.MeasureText(word.Word, currentFont);
-                tags.Add(new Tag(word.Word, layouter.PutNextRectangle(size), currentFont));
-                count--;
-            }
-
-            return tags;
+            return words.OrderByDescending(info => info.Frequence)
+                 .Take(count)
+                 .Select((wordInfo, index) =>
+                 {
+                     var font = new Font(wordsConfig.Font.FontFamily, count - index / 2);
+                     var size = TextRenderer.MeasureText(wordInfo.Word, font);
+                     return new Tag(wordInfo.Word, layouter.PutNextRectangle(size), font);
+                 });
         }
     }
 }
