@@ -5,12 +5,12 @@ using TagCloud.WordsAnalyzer.WordNormalizer;
 
 namespace TagCloud.WordsAnalyzer
 {
-    public class TextAnalyzer : IWordsAnalyzer
+    public class WordsAnalyzer : IWordsAnalyzer
     {
         private IWordNormalizer normalizer;
         private HashSet<IWordFilter> filters;
         
-        public TextAnalyzer(IWordNormalizer normalizer, params IWordFilter[] filters)
+        public WordsAnalyzer(IWordNormalizer normalizer, params IWordFilter[] filters)
         {
             this.normalizer = normalizer;
             this.filters = filters.ToHashSet();

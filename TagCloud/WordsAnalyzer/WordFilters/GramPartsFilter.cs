@@ -5,16 +5,16 @@ using YandexMystem.Wrapper.Enums;
 
 namespace TagCloud.WordsAnalyzer.WordFilters
 {
-    public class AllowedGramPartsFilter : IWordFilter
+    public class GramPartsFilter : IWordFilter
     {
         private Regex cyrillicRegex;
         private Mysteam mysteam;
 
         private HashSet<GramPartsEnum> allowedGramParts = new HashSet<GramPartsEnum>();
         
-        public AllowedGramPartsFilter(IEnumerable<string> gramPartsToAllow)
+        public GramPartsFilter(params string[] allowedGramParts)
         {
-            MakeAllowedGramPartsHashSet(gramPartsToAllow);
+            MakeAllowedGramPartsHashSet(allowedGramParts);
             cyrillicRegex = new Regex("\\p{IsCyrillic}");
             mysteam = new Mysteam();
         }
@@ -31,7 +31,7 @@ namespace TagCloud.WordsAnalyzer.WordFilters
             return !allowedGramParts.Contains(model.Lexems[0].GramPart);
         }
 
-        private void MakeAllowedGramPartsHashSet(IEnumerable<string> gramPartsToAllow)
+        private void MakeAllowedGramPartsHashSet(params string[] gramPartsToAllow)
         {
             foreach (var gramPart in gramPartsToAllow)
             {

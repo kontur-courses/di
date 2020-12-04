@@ -24,10 +24,10 @@ namespace TagCloud
             containerBuilder.RegisterInstance(cli.DrawerSettings).As<DrawerSettings>();
             containerBuilder.RegisterInstance(cli.SaverSettings).As<SaverSettings>();
             containerBuilder.RegisterInstance(new BoringWordFilter(cli.BoringWords)).As<IWordFilter>();
-            containerBuilder.RegisterInstance(new AllowedGramPartsFilter(cli.GramParts)).As<IWordFilter>();
+            containerBuilder.RegisterInstance(new GramPartsFilter(cli.GramParts)).As<IWordFilter>();
             
             containerBuilder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
-            containerBuilder.RegisterType<TextAnalyzer>().As<IWordsAnalyzer>();
+            containerBuilder.RegisterType<WordsAnalyzer.WordsAnalyzer>().As<IWordsAnalyzer>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<IRectangleLayouter>();
             containerBuilder.RegisterType<FileReader>().As<ITextReader>();
             containerBuilder.RegisterType<ImageSaver>().As<IImageSaver>();

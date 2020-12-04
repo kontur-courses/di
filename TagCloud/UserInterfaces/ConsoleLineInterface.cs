@@ -14,7 +14,7 @@ namespace TagCloud.UserInterfaces
         public FileReaderSettings FileReaderSettings;
         public SaverSettings SaverSettings;
         public readonly string[] BoringWords;
-        public IEnumerable<string> GramParts;
+        public readonly string[] GramParts;
 
         public ConsoleLineInterface(string[] args)
         {
@@ -42,7 +42,7 @@ namespace TagCloud.UserInterfaces
             
             SaverSettings = new SaverSettings(arguments.OutputPath, arguments.OutputFileName, arguments.Extention);
 
-            GramParts = arguments.GramParts;
+            GramParts = arguments.GramParts.ToArray();
           
             BoringWords = arguments.BoringWords.ToArray();
         }
