@@ -27,13 +27,13 @@ namespace TagsCloudContainer
             var bitmap = new Bitmap(settings.ImageWidth, settings.ImageHeight);
             using var graphics = Graphics.FromImage(bitmap);
             graphics.Clear(settings.BackgroundColor);
-            graphics.TranslateTransform(layouter.Center.X, layouter.Center.Y);
             var maxWordsCount = countedWords.Select(pair => pair.Value).Max();
 
             foreach (var (word, wordsCount) in countedWords)
             {
                 DrawWord(word, wordsCount, maxWordsCount, graphics);
             }
+            DisposeFonts();
 
             return bitmap;
         }
@@ -61,6 +61,14 @@ namespace TagsCloudContainer
             font = new Font(fontName, size);
             fontsCache.Add(font);
             return font;
+        }
+
+        private void DisposeFonts()
+        {
+            foreach (var font in fontsCache)
+            {
+                font.Dispose();
+            }
         }
     }
 }
