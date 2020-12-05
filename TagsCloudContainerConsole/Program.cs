@@ -10,8 +10,33 @@ using TagsCloudContainer;
 
 namespace TagsCloudContainerConsole
 {
-    internal class Program
+    class Program
     {
+        public static void Main(string[] args)
+        {
+            Parser.Default.ParseArguments<Options>(args).WithParsed(options =>
+            {
+                var container = new TagsCloudContainer.TagsCloudContainer();
+                
+                foreach (var inputFile in options.Inputs)
+                    if (File.Exists(inputFile)) container.AddFromFile(inputFile);
+                    else container.AddFromText(inputFile);
+
+                foreach (var excluded in options.Excluding)
+                    if (File.Exists(excluded)) container.Excluding(ReadWordsFromFile(excluded));
+
+                var renderer = new WordRendererToImage()
+                    .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
+                    .WithScale(GetScalingMethod(options))
+                    .WithColor(GetColoringMethod(options));
+                renderer.AutoSize = options.AutoSize;
+                if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
+                container.Rendering(renderer);
+                container.Render();
+                renderer.Output.Save(options.OutputFile, ImageFormat.Png);
+            });
+        }
+
         public class Options
         {
             [Option('i', "input", Required = true, HelpText = "Input files or strings")]
@@ -57,7 +82,7 @@ namespace TagsCloudContainerConsole
             [Option(Default = true)]
             public bool AutoSize { get; set; }
         }
-        
+
         public enum ScalingMethods
         {
             Linear,
@@ -71,86 +96,59 @@ namespace TagsCloudContainerConsole
             LerpTotal,
             LerpMax
         }
-        
-        public static void Main(string[] args)
+
+        private static Func<WordRendererToImage.SizingInfo, LayoutedWord, float> GetScalingMethod(Options option)
         {
-            Parser.Default.ParseArguments<Options>(args).WithParsed(options =>
-            {
-                var coloringFrom = options.ColoringFrom ?? Color.FromArgb(0, 255, 128);
-                var coloringTo = options.ColoringTo ?? Color.FromArgb(255, 0, 128);
-                
-                var container = new TagsCloudContainer.TagsCloudContainer();
-                
-                foreach (var inputFile in options.Inputs)
+            var scalingMethods =
+                new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
                 {
-                    if (File.Exists(inputFile))
-                        container.AddFromFile(inputFile);
-                    else container.AddFromText(inputFile);
-                }
-                
-                foreach (var excluded in options.Excluding)
+                    [ScalingMethods.Linear] = (info, word) => word.Count,
+                    [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
+                    [ScalingMethods.LerpTotal] = (info, word) =>
+                    {
+                        var min = option.ScalingLerpMin;
+                        var amount = option.ScalingLerpMax - min;
+                        return min + amount * word.Count / info.TotalWordsCount;
+                    },
+                    [ScalingMethods.LerpMax] = (info, word) => 
+                    {
+                        var min = option.ScalingLerpMin;
+                        var amount = option.ScalingLerpMax - min;
+                        return min + amount * (word.Count - info.MinWordCount) / (info.MaxWordCount - info.MinWordCount);
+                    }
+                };
+            return scalingMethods[option.Scaling];
+        }
+        
+        private static Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color> GetColoringMethod(Options options)
+        {
+            var from = options.ColoringFrom ?? Color.FromArgb(0, 255, 128);
+            var to = options.ColoringTo ?? Color.FromArgb(255, 0, 128);
+            var coloringMethods =
+                new Dictionary<ColoringMethods, Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color>>
                 {
-                    if (File.Exists(excluded))
-                        container.Excluding(ReadWordsFromFile(excluded));
-                }
+                    [ColoringMethods.LerpTotal] = (info, word)
+                        => Lerp(from, to, word.Count / (float) info.TotalWordsCount),
+                    [ColoringMethods.LerpMax] = (info, word)
+                        => Lerp(from, to, 
+                            (word.Count - info.MinWordCount) / (float) (info.MaxWordCount - info.MinWordCount))
+                };
+            return coloringMethods[options.Coloring];
+            
+            int LerpInt(int a, int b, float t) => (int) (a + (b - a) * t);
 
-                var scalingMethods =
-                    new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
-                    {
-                        [ScalingMethods.Linear] = (info, word) => word.Count,
-                        [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
-                        [ScalingMethods.LerpTotal] = (info, word) =>
-                        {
-                            var min = options.ScalingLerpMin;
-                            var ammount = options.ScalingLerpMax - min;
-                            return min + ammount * word.Count / info.TotalWordsCount;
-                        },
-                        [ScalingMethods.LerpMax] = (info, word) =>
-                        {
-                            var min = options.ScalingLerpMin;
-                            var ammount = options.ScalingLerpMax - min;
-                            return min + ammount * (word.Count - info.MinWordCount) / (info.MaxWordCount - info.MinWordCount);
-                        }
-                    };
-
-                var coloringMethods =
-                    new Dictionary<ColoringMethods, Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color>>
-                    {
-                        [ColoringMethods.LerpTotal] = (info, word)
-                            => Lerp(coloringFrom, coloringTo, word.Count / (float) info.TotalWordsCount),
-                        [ColoringMethods.LerpMax] = (info, word)
-                            => Lerp(coloringFrom, coloringTo, 
-                                (word.Count - info.MinWordCount) / (float) (info.MaxWordCount - info.MinWordCount))
-                    };
-
-                var scaling = scalingMethods[options.Scaling];
-                var coloring = coloringMethods[options.Coloring];
-                
-                var renderer = new WordRendererToImage()
-                    .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
-                    .WithScale(scaling)
-                    .WithColor(coloring);
-                renderer.AutoSize = options.AutoSize;
-                if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
-                container.Rendering(renderer);
-                container.Render();
-                renderer.Output.Save(options.OutputFile, ImageFormat.Png);
-            });
+            Color Lerp(Color a, Color b, float t)
+                => Color.FromArgb(
+                    LerpInt(a.A, b.A, t),
+                    LerpInt(a.R, b.R, t),
+                    LerpInt(a.G, b.G, t),
+                    LerpInt(a.B, b.B, t));
         }
 
-        public static HashSet<string> ReadWordsFromFile(string fileName)
+        private static HashSet<string> ReadWordsFromFile(string fileName)
         {
             var text = File.ReadAllText(fileName);
             return Regex.Matches(text, @"\b\w+\b").Cast<Match>().Select(m => m.Value).ToHashSet();
         }
-
-        public static int Lerp(int from, int to, float progress) => (int) (from + (to - from) * progress);
-
-        public static Color Lerp(Color from, Color to, float progress)
-            => Color.FromArgb(
-                Lerp(from.A, to.A, progress),
-                Lerp(from.R, to.R, progress),
-                Lerp(from.G, to.G, progress),
-                Lerp(from.B, to.B, progress));
     }
 }
