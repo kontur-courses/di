@@ -5,17 +5,17 @@ using WeCantSpell.Hunspell;
 
 namespace TagsCloudContainer
 {
-    public class WordsCounter : IWordsCounter
+    public class MorphologicalWordsCounter : IWordsCounter
     {
         private readonly IEnumerable<PartOfSpeech> excludedPartsOfSpeech = Enumerable.Empty<PartOfSpeech>();
         private readonly WordList wordList;
 
-        public WordsCounter(WordList wordList)
+        public MorphologicalWordsCounter(WordList wordList)
         {
             this.wordList = wordList;
         }
         
-        public WordsCounter(WordList wordList, IEnumerable<PartOfSpeech> excludedPartsOfSpeech)
+        public MorphologicalWordsCounter(WordList wordList, IEnumerable<PartOfSpeech> excludedPartsOfSpeech)
         {
             this.excludedPartsOfSpeech = excludedPartsOfSpeech;
             this.wordList = wordList;

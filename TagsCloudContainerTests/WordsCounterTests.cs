@@ -9,7 +9,7 @@ namespace TagsCloudContainerTests
     [TestFixture]
     public class WordsCounterTests
     {
-        private WordsCounter counter;
+        private MorphologicalWordsCounter counter;
         private WordList wordList;
 
         [OneTimeSetUp]
@@ -23,7 +23,7 @@ namespace TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            counter = new WordsCounter(wordList);
+            counter = new MorphologicalWordsCounter(wordList);
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace TagsCloudContainerTests
         public void CountWords_DoesNotCountWordsOfExcludedPartsOfSpeech(PartOfSpeech[] excludedPartsOfSpeech,
             string[] words, Dictionary<string, int> expectedResult)
         {
-            var counter = new WordsCounter(wordList, excludedPartsOfSpeech);
+            var counter = new MorphologicalWordsCounter(wordList, excludedPartsOfSpeech);
 
             counter.CountWords(words).Should().BeEquivalentTo(expectedResult);
         }
@@ -91,7 +91,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void CountWords_IfPronounIsExcludedPartOfSpeech_ExcludePronounInСontractedForm()
         {
-            var counter = new WordsCounter(wordList, new[] {PartOfSpeech.Pronoun});
+            var counter = new MorphologicalWordsCounter(wordList, new[] {PartOfSpeech.Pronoun});
             var words = new[] {"we'll", "you're", "a"};
 
             counter.CountWords(words).Should().BeEquivalentTo(
