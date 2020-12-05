@@ -22,7 +22,7 @@ namespace WordCloudGenerator
 
         public static void SaveImage(Image img, string path)
         {
-            var format = default (ImageFormat);
+            ImageFormat format;
             switch (GetFormatStr(path))
             {
                 case "png":

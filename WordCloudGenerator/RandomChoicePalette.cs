@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace WordCloudGenerator
 {
@@ -7,10 +9,10 @@ namespace WordCloudGenerator
     {
         private readonly Color[] colors;
 
-        public RandomChoicePalette(Color[] colors, Color backgroundColor)
+        public RandomChoicePalette(IEnumerable<Color> colors, Color bgColor)
         {
-            this.colors = colors;
-            BackgroundColor = backgroundColor;
+            this.colors = colors.ToArray();
+            BackgroundColor = bgColor;
         }
 
         public Color BackgroundColor { get; }

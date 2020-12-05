@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace WordCloudGenerator
 {
@@ -8,10 +10,10 @@ namespace WordCloudGenerator
 
         private int colorIndex = -1;
 
-        public OrderedChoicePalette(Color[] colors, Color backgroundColor)
+        public OrderedChoicePalette(IEnumerable<Color> colors, Color bgColor)
         {
-            this.colors = colors;
-            BackgroundColor = backgroundColor;
+            this.colors = colors.ToArray();
+            BackgroundColor = bgColor;
         }
 
         public Color BackgroundColor { get; }
