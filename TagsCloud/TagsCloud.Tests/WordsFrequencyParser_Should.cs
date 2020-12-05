@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud.WordsProcessing;
@@ -39,6 +37,15 @@ namespace TagsCloud.Tests
             parser.ParseWordsFrequencyFromFile(testFilePath)
                 .Should().NotContainKeys(toIgnore)
                 .And.ContainKeys(words.Where(word => !toIgnore.Contains(word)));
+        }
+
+        [TestCase("not single word in one string")]
+        [TestCase(":3")]
+        public void Throw_WhenIncorrectFileFormat(string wrongFormattedString)
+        {
+            File.AppendAllText(testFilePath, wrongFormattedString);
+            var parser = new WordsFrequencyParser(new List<string>());
+            Assert.Throws<FormatException>(() => parser.ParseWordsFrequencyFromFile(testFilePath));
         }
     }
 }

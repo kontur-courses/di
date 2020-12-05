@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using TagsCloud.Infrastructure;
@@ -40,7 +42,17 @@ namespace TagsCloud.UiActions
                 return;
             holder.RecreateCanvas(holder.Settings);
             layouter.ClearLayouter();
-            var frequencies = parser.ParseWordsFrequencyFromFile(dialog.FileName);
+            Dictionary<string,int> frequencies;
+            try
+            {
+                frequencies = parser.ParseWordsFrequencyFromFile(dialog.FileName);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Неправильный формат файла");
+                return;
+            }
+
             holder.RenderWords(frequencies);
         }
     }
