@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using Autofac;
 using TagCloud.App;
+using TagCloud.App.CLI;
 using TagCloud.App.GUI;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Layout;
@@ -49,7 +50,7 @@ namespace TagCloud
             builder.RegisterType<Random>().SingleInstance();
             builder.RegisterType<ColorPicker>();
 
-            // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
+            builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
             
             builder.RegisterType<FileSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImagePathSettingManager>().AsImplementedInterfaces();
@@ -80,9 +81,9 @@ namespace TagCloud
             };
         }
 
-        private static string GetReleasePath(string filename)
+        public static string GetReleasePath(string filename)
         {
-            return Path.Combine(".", "bin", "Release", filename);
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin", "Release", filename);
         }
     }
 }
