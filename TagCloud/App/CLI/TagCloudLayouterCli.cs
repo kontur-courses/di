@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
@@ -43,7 +44,9 @@ namespace TagCloud.App.CLI
             exitState.Show += OnExit;
             var aboutState = new State("About");
             aboutState.Show += OnAbout;
-            
+            var settingsState = new State("Settings");
+            settingsState.Show += DisplayState;
+            settingsState.Show += OnSettingsState;
 
             automata.Init(mainState);
             automata.Add(new Transition(mainState, "help", helpState));
@@ -51,6 +54,11 @@ namespace TagCloud.App.CLI
             automata.Add(new Transition(mainState, "exit", exitState));
             automata.Add(new Transition(helpState, "about", aboutState));
             automata.Add(new Transition(aboutState, ".*", helpState));
+            
+            automata.Add(new Transition(mainState, "settings", settingsState));
+            automata.Add(new Transition(settingsState, "\\D", settingsState));
+            var managersStates = GetSettingsManagersStates(settingsManagers);
+            AddSettingsManagersTransitions(automata, settingsState, managersStates);
             
             settingsFactory().Import(Program.GetDefaultSettings());
             Console.WriteLine("Default settings imported");
@@ -73,6 +81,45 @@ namespace TagCloud.App.CLI
             }
         }
 
+        private void AddSettingsManagersTransitions(Automata automata, State from,  IEnumerable<State> states)
+        {
+            foreach (var (state, i) in states.Select((state, i) => (state, i)))
+            {
+                automata.Add(new Transition(from, $"{i}", state));
+                automata.Add(new Transition(state, ".*", from));
+            }
+        }
+
+        private IEnumerable<State> GetSettingsManagersStates(IEnumerable<ISettingsManager> managers)
+        {
+            foreach (var manager in managers)
+            {
+                var state = new State(manager.Title);
+                state.Show += (sender, args) =>
+                {
+                    Console.WriteLine(manager.Get());
+                };
+                state.Act += (sender, args) =>
+                {
+                    Console.WriteLine(!manager.TrySet(args.Input)
+                        ? $"Incorrect input: {args.Input}"
+                        : $"{manager.Title} was changed to {args.Input}");
+                };
+                yield return state;
+            }
+        }
+
+        private void OnSettingsState(State sender, EventArgs args)
+        {
+            var i = 0;
+            foreach (var manager in settingsManagers)
+            {
+                Console.WriteLine($"{i}) {manager.Title}\n\t{manager.Help}\n{manager.Get()}\n");
+                i++;
+            }
+            Console.WriteLine($"Choose setting number ");
+        }
+
         private void OnAbout(State sender, EventArgs args)
         {
             Console.WriteLine("I\nAM\nRUS\nLAND");
@@ -86,6 +133,7 @@ namespace TagCloud.App.CLI
             Console.WriteLine("\tquit");
             Console.WriteLine("\tabout");
             Console.WriteLine("\tsettings");
+            Console.WriteLine("Type quit...");
         }
 
         private void OnExit(State state, EventArgs eventArgs)
