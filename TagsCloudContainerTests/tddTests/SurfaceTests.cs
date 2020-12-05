@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -18,51 +17,19 @@ namespace TagsCloudVisualizationTests
             surface = new Surface(new Point(0, 0));
         }
 
-        [Test]
-        public void IsRectangleIntersect_IfRectanglesEquals_ReturnTrue()
+        [TestCaseSource(nameof(IsRectangleIntersectTestCases))]
+        public void IsRectangleIntersectTest(
+            Rectangle rectToMethod, Rectangle[] rectsToSurface, bool expectedResult)
         {
-            var rect = new Rectangle(-1, -1, 2, 2);
-            IsRectangleIntersectTest(
-                rect,
-                new[] {rect},
-                true);
-        }
+            rectsToSurface.ToList().ForEach(surface.AddRectangle);
 
-        [Test]
-        public void IsRectangleIntersect_IfRectanglesIntersect_ReturnTrue()
-        {
-            IsRectangleIntersectTest(
-                new Rectangle(0, 0, 2, 2),
-                new[] {new Rectangle(-1, -1, 2, 2)},
-                true);
-        }
-
-        [Test]
-        public void IsRectangleIntersect_RectIntersectsWithMoreThanOneRect_ReturnTrue()
-        {
-            IsRectangleIntersectTest(
-                new Rectangle(-2, -2, 7, 7),
-                new[]
-                {
-                    new Rectangle(3, 3, 2, 2),
-                    new Rectangle(-3, -3, 2, 2)
-                },
-                true);
-        }
-
-        [Test]
-        public void IsRectangleIntersect_RectanglesInDifferentQuarter_ReturnFalse()
-        {
-            IsRectangleIntersectTest(
-                new Rectangle(-10, -10, 2, 2),
-                new[] {new Rectangle(10, 10, 2, 2)},
-                false);
+            surface.RectangleIntersectsWithOther(rectToMethod).Should().Be(expectedResult);
         }
 
         [TestCaseSource(nameof(FindQuartersForRectangle_WhenRectangleAtOneQuarterCases))]
         public Surface.Quarters FindQuartersForRectangle_WhenRectangleAtOneQuarter(Rectangle rect)
         {
-            return Surface.FindQuartersForRectangle(rect).First();
+            return surface.FindQuartersForRectangle(rect).First();
         }
 
         [TestCaseSource(nameof(FindQuartersForRectangle_RectangleAtSeveralQuartersCases))]
@@ -71,21 +38,13 @@ namespace TagsCloudVisualizationTests
         {
             var rect = new Rectangle(x, y, 10, 10);
 
-            Surface.FindQuartersForRectangle(rect).Should().BeEquivalentTo(expectedQuarters);
-        }
-
-        private void IsRectangleIntersectTest(
-            Rectangle rectToMethod, Rectangle[] rectsToSurface, bool expectedResult)
-        {
-            rectsToSurface.ToList().ForEach(surface.AddRectangle);
-
-            surface.RectangleIntersectsWithOther(rectToMethod).Should().Be(expectedResult);
+            surface.FindQuartersForRectangle(rect).Should().BeEquivalentTo(expectedQuarters);
         }
 
         [Test]
         public void GetShiftedToCenterRectangle_IfRectangleAlreadyAtCenter_ReturnSameRectangle()
         {
-            var rect = new Rectangle(0, 0, 5, 10);
+            var rect = new Rectangle(-2, -5, 5, 10);
 
             surface.GetShiftedToCenterRectangle(rect).Should().Be(rect);
         }
@@ -100,36 +59,67 @@ namespace TagsCloudVisualizationTests
                 .Be(new Rectangle(-2, 2, 4, 2));
         }
 
-        private static IEnumerable FindQuartersForRectangle_WhenRectangleAtOneQuarterCases()
+        private static object[] IsRectangleIntersectTestCases =
         {
-            yield return new TestCaseData(new Rectangle(10, -10, 1, 1))
-                .Returns(Surface.Quarters.First);
+            new TestCaseData(
+                    new Rectangle(-1, -1, 2, 2),
+                    new[] {new Rectangle(-1, -1, 2, 2)},
+                    true)
+                .SetName("IfRectanglesEquals_ReturnTrue"),
 
-            yield return new TestCaseData(new Rectangle(-10, -10, 1, 1))
-                .Returns(Surface.Quarters.Second);
+            new TestCaseData(
+                    new Rectangle(0, 0, 2, 2),
+                    new[] {new Rectangle(-1, -1, 2, 2)},
+                    true)
+                .SetName("IfRectanglesIntersect_ReturnTrue"),
 
-            yield return new TestCaseData(new Rectangle(-10, 10, 1, 1))
-                .Returns(Surface.Quarters.Third);
+            new TestCaseData(
+                    new Rectangle(-2, -2, 6, 6),
+                    new[]
+                    {
+                        new Rectangle(3, 3, 2, 2),
+                        new Rectangle(-3, -3, 2, 2)
+                    },
+                    true)
+                .SetName("RectIntersectsWithMoreThanOneRect_ReturnTrue"),
 
-            yield return new TestCaseData(new Rectangle(10, 10, 1, 1))
-                .Returns(Surface.Quarters.Fourth);
-        }
+            new TestCaseData(
+                    new Rectangle(-10, -10, 2, 2),
+                    new[] {new Rectangle(10, 10, 2, 2)},
+                    false)
+                .SetName("RectanglesInDifferentQuarter_ReturnFalse"),
+        };
 
-        private static IEnumerable FindQuartersForRectangle_RectangleAtSeveralQuartersCases()
+        private static object[] FindQuartersForRectangle_WhenRectangleAtOneQuarterCases =
         {
-            yield return new TestCaseData(-5, -10,
+            new TestCaseData(new Rectangle(10, -10, 1, 1))
+                .Returns(Surface.Quarters.First),
+
+            new TestCaseData(new Rectangle(-10, -10, 1, 1))
+                .Returns(Surface.Quarters.Second),
+
+            new TestCaseData(new Rectangle(-10, 10, 1, 1))
+                .Returns(Surface.Quarters.Third),
+
+            new TestCaseData(new Rectangle(10, 10, 1, 1))
+                .Returns(Surface.Quarters.Fourth)
+        };
+
+        private static object[] FindQuartersForRectangle_RectangleAtSeveralQuartersCases =
+        {
+            new TestCaseData(-5, -10,
                     new[] {Surface.Quarters.First, Surface.Quarters.Second})
-                .SetName("Rectangle at first and second quarter");
+                .SetName("Rectangle at first and second quarter"),
 
-            yield return new TestCaseData(-5, 10,
+            new TestCaseData(-5, 10,
                     new[] {Surface.Quarters.Third, Surface.Quarters.Fourth})
-                .SetName("Rectangle at third and fourth quarter");
+                .SetName("Rectangle at third and fourth quarter"),
 
-            yield return new TestCaseData(-10, -2,
+            new TestCaseData(-10, -2,
                     new[] {Surface.Quarters.Second, Surface.Quarters.Third})
-                .SetName("Rectangle at second and third quarter");
+                .SetName("Rectangle at second and third quarter"),
 
-            yield return new TestCaseData(-5, -5,
+            new TestCaseData(-5, -5,
                     new[]
                     {
                         Surface.Quarters.First,
@@ -137,7 +127,7 @@ namespace TagsCloudVisualizationTests
                         Surface.Quarters.Third,
                         Surface.Quarters.Fourth
                     })
-                .SetName("Rectangle at all four quarters");
-        }
+                .SetName("Rectangle at all four quarters")
+        };
     }
 }
