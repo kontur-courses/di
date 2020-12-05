@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Autofac;
-using Gtk;
 using TagCloud.App;
 using TagCloud.App.GUI;
 using TagCloud.Infrastructure.Graphics;
