@@ -14,6 +14,8 @@ namespace TagCloudCreator
             BaseCloudLayouter layouter, FontFamily fontFamily)
         {
             var statistics = wordsStatistic.ToList();
+            if (statistics.Count == 0)
+                yield break;
             var maxCount = statistics.Max(x => x.Count);
             var fonts = new Font[MaximalFontSize - MininalFontSize + 1];
             var graphics = Graphics.FromImage(new Bitmap(1, 1));
