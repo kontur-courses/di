@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Autofac;
 using CommandLine;
 using TagsCloudContainer;
 
@@ -14,9 +15,14 @@ namespace TagsCloudContainerConsole
     {
         public static void Main(string[] args)
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<TagsCloudContainer.TagsCloudContainer>().AsSelf();
+            builder.RegisterType<WordRendererToImage>().As<IParameterizedWordRendererToImage>();
+            var diConainer = builder.Build();
+            
             Parser.Default.ParseArguments<Options>(args).WithParsed(options =>
             {
-                var container = new TagsCloudContainer.TagsCloudContainer();
+                var container = diConainer.Resolve<TagsCloudContainer.TagsCloudContainer>();
                 
                 foreach (var inputFile in options.Inputs)
                     if (File.Exists(inputFile)) container.AddFromFile(inputFile);
@@ -25,7 +31,7 @@ namespace TagsCloudContainerConsole
                 foreach (var excluded in options.Excluding)
                     if (File.Exists(excluded)) container.Excluding(ReadWordsFromFile(excluded));
 
-                IParameterizedWordRendererToImage renderer = new WordRendererToImage();
+                var renderer = diConainer.Resolve<IParameterizedWordRendererToImage>();
                 var font = new Font(options.Font, options.FontSize, GraphicsUnit.Pixel);
                 renderer.SetFontFunction((info, word) => font);
                 renderer.SetScalingFunction(GetScalingMethod(options));
