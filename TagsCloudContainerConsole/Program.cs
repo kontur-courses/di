@@ -38,6 +38,12 @@ namespace TagsCloudContainerConsole
 
             [Option(Default = ScalingMethods.Linear, HelpText = "Scaling method (Linear | Sqrt | LerpTotal | LerpMax)")]
             public ScalingMethods Scaling { get; set; }
+            
+            [Option(Default = 1f, HelpText = "Min scaling value for LerpTotal/LerpMax scaling methods")]
+            public float ScalingLerpMin { get; set; }
+            
+            [Option(Default = 6f, HelpText = "Max scaling value for LerpTotal/LerpMax scaling methods")]
+            public float ScalingLerpMax { get; set; }
 
             [Option(Default = true)]
             public bool AutoSize { get; set; }
@@ -73,14 +79,20 @@ namespace TagsCloudContainerConsole
                 var scalingMethods =
                     new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
                     {
-                        [ScalingMethods.Linear] =
-                            (info, word) => word.Count,
-                        [ScalingMethods.Sqrt] =
-                            (info, word) => (float) Math.Sqrt(word.Count),
-                        [ScalingMethods.LerpTotal] =
-                            (info, word) => 1f + 5 * word.Count / (float) info.TotalWordsCount,
-                        [ScalingMethods.LerpMax] =
-                            (info, word) => 1f + 5 * word.Count / (float) (info.MaxWordCount - info.MinWordCount)
+                        [ScalingMethods.Linear] = (info, word) => word.Count,
+                        [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
+                        [ScalingMethods.LerpTotal] = (info, word) =>
+                        {
+                            var min = options.ScalingLerpMin;
+                            var ammount = options.ScalingLerpMax - min;
+                            return min + ammount * word.Count / info.TotalWordsCount;
+                        },
+                        [ScalingMethods.LerpMax] = (info, word) =>
+                        {
+                            var min = options.ScalingLerpMin;
+                            var ammount = options.ScalingLerpMax - min;
+                            return min + ammount * (word.Count - info.MinWordCount) / (info.MaxWordCount - info.MinWordCount);
+                        }
                     };
 
                 var scaling = scalingMethods[options.Scaling];
