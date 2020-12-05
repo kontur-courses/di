@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Windows.Forms;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
@@ -31,8 +32,10 @@ namespace TagsCloudVisualization.FormAction
 
         public void Perform()
         {
-            SettingsForm.For(spiralParams).ShowDialog();
-
+            var result = SettingsForm.For(spiralParams).ShowDialog();
+            if (result != DialogResult.OK)
+                return;
+            
             var text = TextReader.ReadAllText(@"..\..\..\Examples\example.txt");
             var wordsFrequency =
                 TextHandler.GetOrderedByFrequencyWords(text, forbiddenWordsSettings.ForbiddenWords.ToHashSet());
