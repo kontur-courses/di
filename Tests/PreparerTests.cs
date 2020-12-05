@@ -26,5 +26,25 @@ namespace Tests
             preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
                 new[] {new WordFrequency("efg", 2f / 3), new WordFrequency("xyz", 1f / 3)});
         }
+
+        [Test]
+        public void CreateWordFreqList_ShouldSplitWords_PlainText()
+        {
+            var text = "abc abc efg\nefg xyz";
+            var preparer = new Preparer(new []{""});
+            preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
+                new[] {new WordFrequency("abc", 2f / 5), new WordFrequency("efg", 2f / 5), new WordFrequency("xyz", 1f / 5)});
+        }
+
+        [Test]
+        public void CreateWordFreqList_ShouldSkipBoringWords_PlainText()
+        {
+            var boringWords = new[] {"abc"};
+            var text = "abc abc efg\nefg xyz";
+            var preparer = new Preparer(boringWords);
+
+            preparer.CreateWordFreqList(text).Should().BeEquivalentTo(
+                new[] {new WordFrequency("efg", 2f / 3), new WordFrequency("xyz", 1f / 3)});
+        }
     }
 }

@@ -7,10 +7,10 @@ namespace WordCloudGenerator
 {
     public class Preparer : IPreparer
     {
-        private readonly HashSet<string> wordsToSkip;
         private readonly Func<string, bool> filter;
+        private readonly HashSet<string> wordsToSkip;
 
-        public Preparer(IEnumerable<string> wordsToSkip, Func<string, bool> filter) 
+        public Preparer(IEnumerable<string> wordsToSkip, Func<string, bool> filter)
         {
             this.filter = filter;
             this.wordsToSkip = wordsToSkip == null ? new HashSet<string>() : wordsToSkip.ToHashSet();

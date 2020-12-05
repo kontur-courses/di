@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -12,11 +11,11 @@ namespace WordCloudGenerator
             var index = path.LastIndexOf('.');
             return path.Substring(index + 1);
         }
-        
+
         public static bool IsPathCorrect(string path)
         {
             var format = GetFormatStr(path);
-            
+
             return format == "png" || format == "jpg" || format == "bmp" || format == "jpeg";
         }
 
@@ -35,10 +34,10 @@ namespace WordCloudGenerator
                 case "jpeg":
                     format = ImageFormat.Jpeg;
                     break;
-                
+
                 default: throw new ArgumentException("Некорректный путь к файлу");
             }
-            
+
             img.Save(path, format);
         }
     }
