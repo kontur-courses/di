@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.AppSettings;
@@ -8,6 +7,7 @@ using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
 using TagsCloudVisualization.TagCloudLayouter;
 using TagsCloudVisualization.Tags;
+using TagsCloudVisualization.Words;
 
 namespace TagsCloudVisualizationTests.TagCloudBuilderTests
 {
@@ -29,7 +29,7 @@ namespace TagsCloudVisualizationTests.TagCloudBuilderTests
         [Test]
         public void Build_ReturnEmptyList_WhenWordsFreqEmpty()
         {
-            var wordsFrequency = new Dictionary<string, int>();
+            var wordsFrequency = new List<Word>();
             
             var result = sut.Build(wordsFrequency);
 
@@ -39,22 +39,11 @@ namespace TagsCloudVisualizationTests.TagCloudBuilderTests
         [Test]
         public void Build_ReturnLocatedTag_WhenWordsFreqContain1Pair()
         {
-            var wordsFrequency = new Dictionary<string, int>{{"hello", 1}};
+            var wordsFrequency = new List<Word> {new Word("hello", 1)};
             
             var result = sut.Build(wordsFrequency);
 
             result.Count.Should().Be(wordsFrequency.Count);
-        }
-        
-        [Test]
-        public void Build_ResultContainCorrectParameters()
-        {
-            var wordsFrequency = new Dictionary<string, int>{{"hello", 1}};
-            
-            var result = sut.Build(wordsFrequency);
-
-            result.First().Font.Should().Be(fontSettings.Font);
-            result.First().Text.Should().Be("hello");
         }
     }
 }

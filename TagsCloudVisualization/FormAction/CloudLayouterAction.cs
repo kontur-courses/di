@@ -42,7 +42,7 @@ namespace TagsCloudVisualization.FormAction
                 return;
             SettingsForm.For(spiralParams).ShowDialog();
             var text = TextReader.ReadAllText(dialog.FileName);
-            var wordsFrequency = TextHandler.GetWordsFrequency(text);
+            var wordsFrequency = TextHandler.GetOrderedByFrequencyWords(text);
             var tagCloud = tagCloudBuilder.Build(wordsFrequency);
             cloudVisualizer.PrintTagCloud(tagCloud);
         }

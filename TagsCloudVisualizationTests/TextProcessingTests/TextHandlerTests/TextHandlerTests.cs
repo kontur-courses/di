@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.TextProcessing.TextHandler;
+using TagsCloudVisualization.Words;
 
 namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
 {
@@ -10,48 +11,63 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
         [Test]
         public void GetWordsFrequency_ContainWordsFromInput_WhenInputContain4NonRepeatingWords()
         {
-            var expected = new Dictionary<string, int>
+            var expected = new List<Word>
             {
-                {"hello", 1},
-                {"world", 1},
-                {"and", 1},
-                {"arina", 1},
+                new Word("hello", 1),
+                new Word("world", 1),
+                new Word("and", 1),
+                new Word("arina", 1)
             };
             
-            var result = TextHandler.GetWordsFrequency("hello world and Arina");
+            var result = TextHandler.GetOrderedByFrequencyWords("hello world and Arina");
 
-            result.Should().Equal(expected);
+            result.Should().BeEquivalentTo(expected);
         }
         
         [Test]
         public void GetWordsFrequency_ContainWordsFromInput_WhenInputContain4RepeatingWords()
         {
-            var expected = new Dictionary<string, int> {{"hello", 4}};
+            var expected = new List<Word> {new Word("hello", 4)};
 
-            var result = TextHandler.GetWordsFrequency("hello hello hello hello");
+            var result = TextHandler.GetOrderedByFrequencyWords("hello hello hello hello");
 
-            result.Should().Equal(expected);
+            result.Should().BeEquivalentTo(expected);
         }
         
                 
         [Test]
         public void GetWordsFrequency_ContainWordsInLowerCase_WhenInputContainsWordInUpperCase()
         {
-            var expected = new Dictionary<string, int> {{"hello", 1}};
+            var expected = new List<Word> {new Word("hello", 1)};
 
-            var result = TextHandler.GetWordsFrequency("HELLO");
+            var result = TextHandler.GetOrderedByFrequencyWords("HELLO");
 
-            result.Should().Equal(expected);
+            result.Should().BeEquivalentTo(expected);
         }
         
         [Test]
-        public void GetWordsFrequencyFromFile_NotContainForbiddenSigns()
+        public void GetWordsFrequency_NotContainForbiddenSigns()
         {
-            var expected = new Dictionary<string, int> {{"hello", 1}};
+            var expected = new List<Word> {new Word("hello", 1)};
             
-            var result = TextHandler.GetWordsFrequency("Hello!,!.+ 21!");
+            var result = TextHandler.GetOrderedByFrequencyWords("Hello!,!.+ 21!");
 
-            result.Should().Equal(expected);
+            result.Should().BeEquivalentTo(expected);
+        }
+        
+        [Test]
+        public void GetWordsFrequency_OrderedByFrequenceDescending()
+        {
+            var expected = new List<Word>
+            {
+                new Word("hello", 3),
+                new Word("world", 2),
+                new Word("all", 1)
+            };
+            
+            var result = TextHandler.GetOrderedByFrequencyWords("Hello hello hello all world world");
+
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

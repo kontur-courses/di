@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using TagsCloudVisualization.Tags;
+using TagsCloudVisualization.Words;
 
 namespace TagsCloudVisualization.TagCloudBuilders
 {
     public interface ITagCloudBuilder
     {
-        List<Tag> Build(Dictionary<string, int> wordsFrequency);
+        List<Tag> Build(IEnumerable<Word> wordsFrequency);
     }
 }

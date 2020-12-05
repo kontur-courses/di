@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization.AppSettings;
+using TagsCloudVisualization.FontHandlers;
+using TagsCloudVisualization.StringExtensions;
 using TagsCloudVisualization.TagCloudLayouter;
 using TagsCloudVisualization.Tags;
+using TagsCloudVisualization.Words;
 
 namespace TagsCloudVisualization.TagCloudBuilders
 {
@@ -10,31 +13,22 @@ namespace TagsCloudVisualization.TagCloudBuilders
     {
         private readonly ICloudLayouter cloudLayouter;
         private readonly FontSettings fontSettings;
-        
+
         public TagCloudBuilder(ICloudLayouter cloudLayouter, FontSettings fontSettings)
         {
             this.cloudLayouter = cloudLayouter;
             this.fontSettings = fontSettings;
         }
 
-        public List<Tag> Build(Dictionary<string, int> wordsFrequency)
+        public List<Tag> Build(IEnumerable<Word> wordsFrequency)
         {
-            var tags = new List<Tag>();
             cloudLayouter.ClearLayout();
-            foreach (var (word, frequency) in wordsFrequency)
-            {
-                var tagSize = GetTagSize(word, frequency);
-                var rectangle = cloudLayouter.PutNextRectangle(tagSize);
-                tags.Add(new Tag(word, rectangle, fontSettings.Font));
-            }
-            
-            return tags;
-        }
 
-        private Size GetTagSize(string word, int freq)
-        {
-            //TODO: размер в зависимости от частоты
-            return new Size((int)(word.Length * fontSettings.Font.Size / 1.5), (int)fontSettings.Font.Size * 2);
+            return (from word in wordsFrequency
+                let font = FontHandler.CalculateFont(word.Frequency, fontSettings)
+                let tagSize = word.Value.MeasureString(font)
+                let rectangle = cloudLayouter.PutNextRectangle(tagSize)
+                select new Tag(word.Value, rectangle, font)).ToList();
         }
     }
 }
