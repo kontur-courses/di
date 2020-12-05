@@ -4,10 +4,9 @@ using TagsCloudVisualisation.Extensions;
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
-    
     public class RandomFontSizeResolver : IFontSizeResolver
     {
-        private static readonly int[] sizes = Enumerable.Range(1, 10)
+        private static readonly int[] sizes = Enumerable.Range(5, 15)
             .Select(i => i * 2)
             .ToArray();
 
