@@ -11,7 +11,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
         public ImageSizeSettingsManager(Func<IImageSettingsProvider> imageSettingsProvider)
         {
             this.imageSettingsProvider = imageSettingsProvider;
-            regex  = new Regex(@"(?<width>\d+) (?<height>\d+)");
+            regex  = new Regex(@"^(?<width>\d+)\s+(?<height>\d+)$");
         }
         public string Title => "Size";
         public string Help => "Input image width and height separated by space";
