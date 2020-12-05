@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.IO;
 using TagCloud.Settings;
 
 namespace TagCloud.Sources
 {
     public class TextSource : ISource
     {
-        private SourceSettings settings;
+        private readonly SourceSettings settings;
 
         public TextSource(SourceSettings settings)
         {
@@ -16,7 +15,14 @@ namespace TagCloud.Sources
 
         public IEnumerable<string> Words()
         {
-            throw new NotImplementedException();
+            var words = File.ReadAllLines(settings.Destination);
+            var ignore = new HashSet<string>(settings.Ignore);
+            foreach (var word in words)
+            {
+                if (ignore.Contains(word))
+                    continue;
+                yield return word;
+            }
         }
     }
 }
