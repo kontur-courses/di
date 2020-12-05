@@ -40,10 +40,12 @@ namespace TagCloud.App.CLI
 
         private void Transfer(string input)
         {
-            var transitions = transitionsMap[currentState];
+            if (!transitionsMap.TryGetValue(currentState, out var transitions))
+                return;
             var possibleTransition = transitions.FirstOrDefault(transition => transition.DoesTransfer(input));
-            if (possibleTransition != null)
-                currentState = possibleTransition.Destination;
+            if (possibleTransition == null) 
+                return;
+            currentState = possibleTransition.Destination;
         }
 
         public bool Show()
