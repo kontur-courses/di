@@ -6,6 +6,6 @@ namespace TagCloud.Clients
     {
         public void Run();
 
-        public void Visualization(string wordsPath, string picturePath, VisualizationInfo info);
+        public void Visualize(string wordsPath, string picturePath, VisualizationInfo info);
     }
 }

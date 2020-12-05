@@ -43,7 +43,7 @@ namespace TagCloud.Clients
                 var info = ReadInfo();
                 Console.WriteLine("Please write path to save picture");
                 var path = @"C:\Users\Михаил\Desktop\Misha.bmp"; //Console.ReadLine();
-                Visualization(text, path, info);
+                Visualize(text, path, info);
                 Console.WriteLine("Picture save");
                 Console.WriteLine();
                 break;
@@ -63,10 +63,10 @@ namespace TagCloud.Clients
             return new VisualizationInfo(new WordsColoringLineBringhtness(Color.FromArgb(255, 255, 0, 0)), size, font);
         }
 
-        public void Visualization(string text, string picturePath, VisualizationInfo info)
+        public void Visualize(string text, string picturePath, VisualizationInfo info)
         {
             var tagCloud = AlgoritmTagCloud.GetTagCloud(text, pointGetter, processor, metric);
-            TagCloudVisualization.Visualization(tagCloud, picturePath, info);
+            TagCloudVisualization.Visualize(tagCloud, picturePath, info);
         }
     }
 }
