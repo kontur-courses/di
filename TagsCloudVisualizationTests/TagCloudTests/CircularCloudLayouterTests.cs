@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 using FluentAssertions;
-using TagsCloudVisualization;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.Canvases;
-using TagsCloudVisualization.FormAction;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudLayouter;
 
@@ -19,9 +17,8 @@ namespace TagsCloudVisualizationTests.TagCloudTests
         [SetUp]
         public void SetUp()
         {
-            var canvas = new Canvas();
-            new MainForm(new IFormAction[0], new ImageSettings{Width = 100, Height = 100}, canvas);
-            pointGenerator = new ArchimedesSpiral(new SpiralParams(), canvas);
+            var canvas = new Canvas(new ImageSettings {Width = 100, Height = 100});
+            pointGenerator = new ArchimedesSpiral(new SpiralParams(), canvas.GetImageCenter());
             sut = new CircularCloudLayouter(pointGenerator);
             addedRectangles = new List<Rectangle>();
         }

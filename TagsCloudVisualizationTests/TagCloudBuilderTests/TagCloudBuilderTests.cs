@@ -2,10 +2,8 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.Canvases;
-using TagsCloudVisualization.FormAction;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
 using TagsCloudVisualization.TagCloudLayouter;
@@ -18,12 +16,11 @@ namespace TagsCloudVisualizationTests.TagCloudBuilderTests
         [SetUp]
         public void SetUp()
         {
-            var canvas = new Canvas();
+            var canvas = new Canvas(new ImageSettings {Width = 100, Height = 100});
             fontSettings = new FontSettings();
-            new MainForm(new IFormAction[0], new ImageSettings {Width = 100, Height = 100}, canvas);
             sut = new TagCloudBuilder(
                 new CircularCloudLayouter(
-                    new ArchimedesSpiral(new SpiralParams(), canvas)), fontSettings);
+                    new ArchimedesSpiral(new SpiralParams(), canvas.GetImageCenter())), fontSettings);
         }
 
         private ITagCloudBuilder sut;

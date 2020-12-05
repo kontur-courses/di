@@ -20,26 +20,28 @@ namespace TagsCloudVisualization
         static void Main()
         {
             var services = new ServiceCollection();
-            
+
             services.AddSingleton<ICloudLayouter, CircularCloudLayouter>();
             services.AddSingleton<ICloudVisualizer, TagCloudVisualizer>();
             services.AddSingleton<ITagCloudBuilder, TagCloudBuilder>();
-            services.AddSingleton<IPointGenerator, ArchimedesSpiral>();
             services.AddSingleton<ICanvas, Canvas>();
-            
+
             services.AddSingleton<SpiralParams>();
             services.AddSingleton<FontSettings>();
             services.AddSingleton<ImageSettings>();
             services.AddSingleton<Palette>();
 
+            services.AddSingleton<IPointGenerator, ArchimedesSpiral>(x =>
+                new ArchimedesSpiral(x.GetService<SpiralParams>(), x.GetService<ICanvas>().GetImageCenter()));
+            
             services.AddTransient<IFormAction, SaveImageAction>();
             services.AddTransient<IFormAction, CloudLayouterAction>();
             services.AddTransient<IFormAction, FontAction>();
             services.AddTransient<IFormAction, PaletteAction>();
             services.AddTransient<IFormAction, ImageSettingsAction>();
-            
+
             services.AddSingleton<Form, MainForm>();
-            
+
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

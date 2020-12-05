@@ -2,10 +2,8 @@
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.Canvases;
-using TagsCloudVisualization.FormAction;
 using TagsCloudVisualization.PointsGenerators;
 
 namespace TagsCloudVisualizationTests.PointsGeneratorsTests
@@ -17,9 +15,8 @@ namespace TagsCloudVisualizationTests.PointsGeneratorsTests
         public void SetUp()
         {
             spiralParams = new SpiralParams();
-            canvas = new Canvas();
-            new MainForm(new IFormAction[0], new ImageSettings {Width = 500, Height = 500}, canvas);
-            sut = new ArchimedesSpiral(spiralParams, canvas);
+            canvas = new Canvas(new ImageSettings {Width = 500, Height = 500});
+            sut = new ArchimedesSpiral(spiralParams, canvas.GetImageCenter());
         }
 
         private IPointGenerator sut;
@@ -35,7 +32,7 @@ namespace TagsCloudVisualizationTests.PointsGeneratorsTests
         {
             var spiralParams = new SpiralParams(spiralParameter, angleStep);
             Assert.Throws<ArgumentException>(
-                () => new ArchimedesSpiral(spiralParams, canvas));
+                () => new ArchimedesSpiral(spiralParams, canvas.GetImageCenter()));
         }
 
         [Test]
@@ -62,7 +59,7 @@ namespace TagsCloudVisualizationTests.PointsGeneratorsTests
             params int[] expectedPointCoordinates)
         {
             var spiralParams = new SpiralParams(spiralParameter, angleStep);
-            var archimedesSpiral = new ArchimedesSpiral(spiralParams, canvas);
+            var archimedesSpiral = new ArchimedesSpiral(spiralParams, canvas.GetImageCenter());
             var expectedPoints = new Point[3];
             for (int i = 0; i < expectedPoints.Length; i++)
                 expectedPoints[i] = new Point(expectedPointCoordinates[i * 2], expectedPointCoordinates[i * 2 + 1]);

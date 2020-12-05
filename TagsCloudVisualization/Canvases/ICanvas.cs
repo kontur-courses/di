@@ -6,6 +6,7 @@ namespace TagsCloudVisualization.Canvases
     public interface ICanvas
     {
         Size GetImageSize();
+        public Point GetImageCenter();
         Graphics StartDrawing();
         void UpdateUi();
         void RecreateImage(ImageSettings settings);

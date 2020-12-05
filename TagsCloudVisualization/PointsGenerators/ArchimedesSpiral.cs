@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization.Canvases;
 
 namespace TagsCloudVisualization.PointsGenerators
 {
     public class ArchimedesSpiral : IPointGenerator
     {
-        public Point Center { get; private set; }
+        public Point Center { get; }
 
         private readonly SpiralParams spiralParams;
         private IEnumerator<Point> spiralPoints;
-        private readonly ICanvas canvas;
 
-        public ArchimedesSpiral(SpiralParams spiralParams, ICanvas canvas)
+        public ArchimedesSpiral(SpiralParams spiralParams, Point center)
         {
             if (Math.Abs(spiralParams.AngleStep) < 1e-3)
                 throw new ArgumentException("Angle step must be not equal zero");
@@ -22,14 +20,12 @@ namespace TagsCloudVisualization.PointsGenerators
                 throw new ArgumentException("Spiral parameter must be not equal zero");
             
             this.spiralParams = spiralParams;
-            this.canvas = canvas;
+            Center = center;
             spiralPoints = GetSpiralPoints().GetEnumerator();
         }
 
         private IEnumerable<Point> GetSpiralPoints()
         {
-            var imageSize = canvas.GetImageSize();
-            Center = new Point(imageSize.Width / 2, imageSize.Height / 2);
             yield return Center;
 
             var angle = 0.0f;
