@@ -65,7 +65,7 @@ namespace TagCloud.Clients
 
         public void Visualize(string text, string picturePath, VisualizationInfo info)
         {
-            var tagCloud = AlgoritmTagCloud.GetTagCloud(text, pointGetter, processor, metric);
+            var tagCloud = AlgorithmTagCloud.GetTagCloud(text, pointGetter, processor, metric);
             TagCloudVisualization.Visualize(tagCloud, picturePath, info);
         }
     }

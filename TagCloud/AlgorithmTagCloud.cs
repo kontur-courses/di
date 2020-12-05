@@ -4,7 +4,7 @@ using TagCloud.TextConverters.TextProcessors;
 
 namespace TagCloud
 {
-    public static class AlgoritmTagCloud
+    public static class AlgorithmTagCloud
     {
         internal static TagCloud GetTagCloud(string text, IPointGetter pointGetter, 
             ITextProcessor textProcessor, IWordsMetric wordsMetric)
