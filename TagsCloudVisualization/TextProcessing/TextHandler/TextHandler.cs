@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
-namespace TagsCloudVisualization.TextHandler
+namespace TagsCloudVisualization.TextProcessing.TextHandler
 {
     public class TextHandler
     {
-        public static Dictionary<string, int> GetWordsFrequencyFromFile(
-            string path, HashSet<string> forbiddenWords = null)
-        {
-            if (!File.Exists(path))
-                throw new IOException("File you specified does not exist");
-
-            var text = File.ReadAllText(path);
-            return GetWordsFrequency(text, forbiddenWords);
-        }
-
-        private static Dictionary<string, int> GetWordsFrequency(string text, HashSet<string> forbiddenWords = null)
+        public static Dictionary<string, int> GetWordsFrequency(string text, HashSet<string> forbiddenWords = null)
         {
             var words = text.Split(new[]
                 {

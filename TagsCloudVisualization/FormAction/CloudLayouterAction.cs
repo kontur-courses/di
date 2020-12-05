@@ -3,6 +3,8 @@ using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
 using TagsCloudVisualization.TagCloudVisualizers;
+using TagsCloudVisualization.TextProcessing.TextHandler;
+using TagsCloudVisualization.TextProcessing.TextReader;
 
 namespace TagsCloudVisualization.FormAction
 {
@@ -39,7 +41,8 @@ namespace TagsCloudVisualization.FormAction
             if (res != DialogResult.OK)
                 return;
             SettingsForm.For(spiralParams).ShowDialog();
-            var wordsFrequency = TextHandler.TextHandler.GetWordsFrequencyFromFile(dialog.FileName);
+            var text = TextReader.ReadAllText(dialog.FileName);
+            var wordsFrequency = TextHandler.GetWordsFrequency(text);
             var tagCloud = tagCloudBuilder.Build(wordsFrequency);
             cloudVisualizer.PrintTagCloud(tagCloud);
         }
