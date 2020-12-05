@@ -1,4 +1,4 @@
-﻿namespace WinUI.ImageResizing
+﻿namespace WinUI
 {
     public interface IUserNotifier
     {

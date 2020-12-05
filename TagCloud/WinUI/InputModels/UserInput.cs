@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using WinUI.InputModels;
 
-namespace WinUI
+namespace WinUI.InputModels
 {
     public static class UserInput
     {
