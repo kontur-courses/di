@@ -32,5 +32,10 @@ namespace TagCloud.Infrastructure.Layout
             var rectangle = new Rectangle(possiblePoint, rectangleSize);
             return !environment.IsColliding(rectangle);
         }
+
+        public void Dispose()
+        {
+            environment?.Dispose();
+        }
     }
 }

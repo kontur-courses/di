@@ -28,14 +28,17 @@ namespace TagCloud.Infrastructure.Graphics
             var settings = imageSettingsProvider();
             var image = new Bitmap(settings.Width, settings.Height);
             using var imageGraphics = System.Drawing.Graphics.FromImage(image);
-            foreach (var (word, info) in tokens)
+            
+            using (layouter)
             {
-                var hitbox = layouter.GetPlace(info.Size);
-                var font = new Font(settings.FontFamily, info.FontSize);
-                var brush = new SolidBrush(colorPicker.GetColor(info));
-                imageGraphics.DrawString(word, font, brush, hitbox.Location);
+                foreach (var (word, info) in tokens)
+                {
+                    var hitbox = layouter.GetPlace(info.Size);
+                    var font = new Font(settings.FontFamily, info.FontSize);
+                    var brush = new SolidBrush(colorPicker.GetColor(info));
+                    imageGraphics.DrawString(word, font, brush, hitbox.Location);
+                }
             }
-
             return image;
         }
     }

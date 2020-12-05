@@ -38,5 +38,10 @@ namespace TagCloud.Infrastructure.Layout.Environment
         {
             Elements.Remove(element);
         }
+
+        public void Dispose()
+        {
+            Elements.Clear();   
+        }
     }
 }
