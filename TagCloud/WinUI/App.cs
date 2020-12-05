@@ -69,16 +69,17 @@ namespace WinUI
             ui.AddUserInput(filePathInput);
             ui.AddUserInput(backgroundColorPicker);
             ui.AddUserInput(colorPalettePicker);
-            ui.AddUserInput(imageFormatPicker);
-            ui.AddUserInput(readerPicker);
-            ui.AddUserInput(writerPicker);
             ui.AddUserInput(filterPicker);
-            ui.AddUserInput(normalizerPicker);
-            ui.AddUserInput(layouterPicker);
-            ui.AddUserInput(fontSizeResolverPicker);
-            ui.AddUserInput(fontFamilyPicker);
-            ui.AddUserInput(centerOffsetPicker); //TODO выбирать как X/Y
+            ui.AddUserInput(centerOffsetPicker);
             ui.AddUserInput(betweenWordsDistancePicker);
+
+            AddUserInputOrUseDefault(fontFamilyPicker);
+            AddUserInputOrUseDefault(normalizerPicker);
+            AddUserInputOrUseDefault(imageFormatPicker);
+            AddUserInputOrUseDefault(readerPicker);
+            AddUserInputOrUseDefault(writerPicker);
+            AddUserInputOrUseDefault(layouterPicker);
+            AddUserInputOrUseDefault(fontSizeResolverPicker);
         }
 
         private async void ExecutionRequested()
@@ -160,6 +161,14 @@ namespace WinUI
             writerPicker.Selected.Value.Save(newImage,
                 selectedFormat,
                 filePathInput.Value + "." + selectedFormat.ToString().ToLower());
+        }
+
+        private void AddUserInputOrUseDefault<T>(UserInputOneOptionChoice<T> input)
+        {
+            if (input.Available.Length > 1)
+                ui.AddUserInput(input);
+            else
+                input.SetSelected(input.Available.Single().Name);
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
