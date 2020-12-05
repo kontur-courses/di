@@ -17,7 +17,7 @@ namespace TagsCloud.App.Commands
 
         public void Execute(string[] args)
         {
-            fontFamilyProvider.FontFamily = new FontFamily(args[0]);
+            fontFamilyProvider.FontFamily = new FontFamily(string.Join(" ", args));
         }
     }
 }
