@@ -1,8 +1,8 @@
 ﻿using MatthiWare.CommandLine.Core.Attributes;
 
-namespace CloudContainer
+namespace Cloud.ClientUI
 {
-    public class Arguments
+    public class Arguments //TODO add file input and file output
     {
         [Name("fn", "font name")]
         [Description("Text font name")]
@@ -35,5 +35,13 @@ namespace CloudContainer
         [Name("b", "boring words")]
         [Description("Words thas should not be added to cloud")]
         public string BoringWords { get; set; }
+
+        [Name("i", "input file")]
+        [Description("Input file name")]
+        public string InputFileName { get; set; }
+
+        [Name("o", "output file")]
+        [Description("Output file name")]
+        public string OutputFileName { get; set; }
     }
 }

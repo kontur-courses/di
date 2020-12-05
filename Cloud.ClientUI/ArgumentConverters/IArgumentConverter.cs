@@ -1,4 +1,4 @@
-﻿namespace CloudContainer.ArgumentsConverters
+﻿namespace Cloud.ClientUI.ArgumentConverters
 {
     public interface IArgumentConverter
     {

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
-namespace CloudContainer
+namespace Cloud.ClientUI
 {
     public static class DefaultConfig
     {
@@ -33,6 +34,16 @@ namespace CloudContainer
                 "в", "без", "до", "для", "за", "через", "над", "по", "из", "у", "около",
                 "под", "о", "про", "на", "к", "перед", "при", "с", "между"
             }.ToHashSet();
+        }
+
+        public static string GetInputFileName()
+        {
+            return "text.txt";
+        }
+
+        public static string GetOutputFileName()
+        {
+            return Path.GetRandomFileName();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MatthiWare.CommandLine;
 
-namespace CloudContainer.ArgumentParsers
+namespace Cloud.ClientUI
 {
     public class ArgumentParser : IArgumentParser
     {

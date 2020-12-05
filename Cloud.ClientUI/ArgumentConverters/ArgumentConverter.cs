@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace CloudContainer.ArgumentsConverters
+namespace Cloud.ClientUI.ArgumentConverters
 {
     public class ArgumentConverter : IArgumentConverter
     {
@@ -11,14 +11,30 @@ namespace CloudContainer.ArgumentsConverters
         {
             var result = new ConvertedArguments
             {
-                center = ParseCenter(arguments),
-                font = ParseFont(arguments),
-                imageSize = ParseImageSize(arguments),
-                textColor = ParseColor(arguments),
-                BoringWords = ParseBoringWords(arguments)
+                Center = ParseCenter(arguments),
+                Font = ParseFont(arguments),
+                ImageSize = ParseImageSize(arguments),
+                TextColor = ParseColor(arguments),
+                BoringWords = ParseBoringWords(arguments),
+                InputFileName = ParseInputFileName(arguments),
+                OutputFileName = ParseOutputFileName(arguments)
             };
             PrintArguments(result);
             return result;
+        }
+
+        private string ParseInputFileName(Arguments arguments)
+        {
+            if (!string.IsNullOrEmpty(arguments.InputFileName)) return arguments.InputFileName;
+            Console.WriteLine("Неверно задано значение имени файла со словами, установлено дефолтное значение");
+            return DefaultConfig.GetInputFileName();
+        }
+
+        private string ParseOutputFileName(Arguments arguments)
+        {
+            if (!string.IsNullOrEmpty(arguments.OutputFileName)) return arguments.OutputFileName;
+            Console.WriteLine("Неверно задано значение имени итогового файла, установлено дефолтное значение");
+            return DefaultConfig.GetOutputFileName();
         }
 
         private HashSet<string> ParseBoringWords(Arguments arguments)
@@ -36,14 +52,20 @@ namespace CloudContainer.ArgumentsConverters
         private void PrintArguments(ConvertedArguments arguments)
         {
             Console.WriteLine("Итоговый конфиг:");
-            var font = $"\tНазвание шрифта: {arguments.font.Name}, размер шрифта: {arguments.font.Size}";
-            var size = $"\tРазмер изображения: {arguments.imageSize.ToString()}";
-            var color = $"\tЦвет слов: {arguments.textColor.ToString()}";
-            var center = $"\tЦентр изображения: {arguments.center.ToString()}";
+            var font = $"\tНазвание шрифта: {arguments.Font.Name}, размер шрифта: {arguments.Font.Size}";
+            var size = $"\tРазмер изображения: {arguments.ImageSize.ToString()}";
+            var color = $"\tЦвет слов: {arguments.TextColor.ToString()}";
+            var center = $"\tЦентр изображения: {arguments.Center.ToString()}";
+            var boringWords = $"\tСкучные слова: {string.Join(", ", arguments.BoringWords)}";
+            var inputFileName = $"\tИмя файла со словами: {arguments.InputFileName}";
+            var outputFileName = $"\tИмя итогового файла: {arguments.OutputFileName}";
             Console.WriteLine(font);
             Console.WriteLine(size);
             Console.WriteLine(color);
             Console.WriteLine(center);
+            Console.WriteLine(boringWords);
+            Console.WriteLine(inputFileName);
+            Console.WriteLine(outputFileName);
         }
 
         private Point ParseCenter(Arguments arguments)

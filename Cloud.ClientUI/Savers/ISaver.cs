@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.Savers
+namespace Cloud.ClientUI
 {
     public interface ISaver
     {

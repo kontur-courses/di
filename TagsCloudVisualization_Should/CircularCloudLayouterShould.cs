@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
 using TagsCloudVisualization.CloudLayouters;
-using TagsCloudVisualization.CloudTags;
 using TagsCloudVisualization.Configs;
 using TagsCloudVisualization.PointProviders;
-using TagsCloudVisualization.Savers;
 
 namespace TagsCloudVisualization_Should
 {
@@ -101,17 +96,6 @@ namespace TagsCloudVisualization_Should
             actualRectangles = cloud.Rectangles;
 
             actualRectangles.ShouldAllBeEquivalentTo(expectedRectangles);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            var image = Drawer.DrawImage(actualRectangles
-                .Select(x => new CloudTag(x, "error")).Cast<ICloudTag>().ToList(), config);
-            var saver = new PngSaver();
-            var name = TestContext.CurrentContext.Test.Name;
-            saver.SaveImage(image, name);
         }
     }
 }
