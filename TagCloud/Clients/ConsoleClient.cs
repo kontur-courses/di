@@ -6,6 +6,7 @@ using TagCloud.WordsMetrics;
 using TagCloud.PointGetters;
 using TagCloud.Visualization;
 using TagCloud.Visualization.WordsColorings;
+using TagCloud.CloudLayoters;
 
 namespace TagCloud.Clients
 {
@@ -14,24 +15,24 @@ namespace TagCloud.Clients
         private readonly ITextReader reader = new TextReaderTxt();
         private readonly ITextProcessor processor;
         private readonly IWordsMetric metric;
-        private readonly IPointGetter pointGetter;
+        private readonly ICloudLayoter layoter;
 
         internal ConsoleClient(ITextProcessor processor, 
-            IWordsMetric metric, IPointGetter pointGetter)
+            IWordsMetric metric, ICloudLayoter layoter)
         {
             this.processor = processor;
             this.metric = metric;
-            this.pointGetter = pointGetter;
+            this.layoter = layoter;
         }
 
         public void Run()
         {
-            string answear = null;
+            string answear;
             Console.WriteLine("Hello, I'm your personal visualization client");
             while (true)
             {
                 Console.WriteLine("Please, write path to file with words or \"exit\" to exit");
-                answear = @"C:\Users\Михаил\Desktop\шпора.txt";// Console.ReadLine();
+                answear = Console.ReadLine();
                 if (answear == "exit")
                     break;
                 var text = reader.ReadText(answear);
@@ -42,11 +43,10 @@ namespace TagCloud.Clients
                 }
                 var info = ReadInfo();
                 Console.WriteLine("Please write path to save picture");
-                var path = @"C:\Users\Михаил\Desktop\Misha.bmp"; //Console.ReadLine();
+                var path = Console.ReadLine();
                 Visualize(text, path, info);
                 Console.WriteLine("Picture save");
                 Console.WriteLine();
-                break;
             }
         }
 
@@ -54,18 +54,18 @@ namespace TagCloud.Clients
         {
             Console.WriteLine("Write 3 numbers from 0 to 255 between space");
             Console.WriteLine("For example: 255 176 0");
-            var colorRGB = "";// Console.ReadLine();
+            var colorRGB = Console.ReadLine();
             Console.WriteLine("Please write font");
-            var font = "Arial";// Console.ReadLine();
+            var font = Console.ReadLine();
             Console.WriteLine("Please write 2 number for size picture");
-            var sizeString = "2000 2000";// Console.ReadLine();
+            var sizeString = Console.ReadLine();
             var size = VisualizationInfo.ReadSize(sizeString);
             return new VisualizationInfo(new WordsColoringLineBringhtness(Color.FromArgb(255, 255, 0, 0)), size, font);
         }
 
         public void Visualize(string text, string picturePath, VisualizationInfo info)
         {
-            var tagCloud = AlgorithmTagCloud.GetTagCloud(text, pointGetter, processor, metric);
+            var tagCloud = AlgorithmTagCloud.GetTagCloud(text, layoter, processor, metric);
             TagCloudVisualization.Visualize(tagCloud, picturePath, info);
         }
     }

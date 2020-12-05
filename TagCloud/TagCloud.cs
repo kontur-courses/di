@@ -18,10 +18,10 @@ namespace TagCloud
         public int Right => layouter.Right;
         public Point Center => layouter.Center();
 
-        internal TagCloud(Dictionary<string, double> wordsMetric, IPointGetter getter)
+        internal TagCloud(Dictionary<string, double> wordsMetric, ICloudLayoter layoter)
         {
             this.wordsMetric = wordsMetric;
-            layouter = new DensityCloudLayouter(getter);
+            this.layouter = layoter;
             locations = GetLocations();
         }
 
