@@ -4,13 +4,12 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.PointGetters;
 
-namespace TagCloud
+namespace TagCloud.CloudLayoters
 {
-    public class CircularCloudLayouter
+    public class DensityCloudLayouter : ICloudLayoter
     {
         internal readonly HashSet<Rectangle> rectangles = new HashSet<Rectangle>();
-        public Point Center => getPointer.Center;
-        private readonly IPointGetter getPointer;
+        public IPointGetter PointGetter { get; }
         public int Top { get; private set; }
         public int Bottom { get; private set; }
         public int Right { get; private set; }
@@ -18,10 +17,9 @@ namespace TagCloud
 
         public bool IsEmpty => !rectangles.Any();
 
-        public Size Size => new Size(Right - Left, Bottom - Top);
-        public CircularCloudLayouter(IPointGetter getter)
+        public DensityCloudLayouter(IPointGetter getter)
         {
-            getPointer = getter;
+            PointGetter = getter;
             Top = getter.Center.Y;
             Bottom = getter.Center.Y;
             Right = getter.Center.X;
@@ -30,7 +28,7 @@ namespace TagCloud
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            var result = MoveToCentre(PutRectangleOnCircle(rectangleSize));
+            var result = MoveToCentre(this.PutRectangleWithoutIntersection(rectangles, rectangleSize));
             ChangeSize(result);
             rectangles.Add(result);
             return result;
@@ -55,25 +53,6 @@ namespace TagCloud
                 Right = rectangle.Right;
         }
 
-        private Rectangle PutRectangleOnCircle(Size size)
-        {
-            Rectangle rectangle;
-            do
-            {
-                var point = getPointer.GetNextPoint();
-                rectangle = GetRectangleFromSizeAndCenter(size, point);
-            } while (HasIntersection(rectangle));
-            return rectangle;
-        }
-
-        private Rectangle GetRectangleFromSizeAndCenter(Size size, Point rectangleCenter)
-        {
-            var location = new Point(
-                rectangleCenter.X - (int)(size.Width / 2), 
-                rectangleCenter.Y - (int)(size.Height / 2));
-            return new Rectangle(location, size);
-        }
-
         private Rectangle MoveToCentre(Rectangle rectangle)
         {
             var previousRectangle = new Rectangle();
@@ -94,22 +73,20 @@ namespace TagCloud
             {
                 var newRectangleX = new Rectangle(rectangle.Location, rectangle.Size);
                 newRectangleX.X += vectorToMove.X > 0 ? 1 : -1;
-                if (!HasIntersection(newRectangleX))
+                if (!rectangles.HasIntersection(newRectangleX))
                     return newRectangleX;
             }
             var newRectangle = new Rectangle(rectangle.Location, rectangle.Size);
             newRectangle.Y += vectorToMove.Y > 0 ? 1 : vectorToMove.Y < 0 ? -1 : 0;
-            if (!HasIntersection(newRectangle))
+            if (!rectangles.HasIntersection(newRectangle))
                 return newRectangle;
             return rectangle;
         }
 
-        private bool HasIntersection(Rectangle rectangle) => rectangles.Any(r => r.IntersectsWith(rectangle));
-
         private Point GetVectorToMove(Rectangle rectangle)
         {
             var centreRectangle = GetCentreRectangle(rectangle);
-            return new Point(Center.X - centreRectangle.X, Center.Y - centreRectangle.Y);
+            return new Point(this.Center().X - centreRectangle.X, this.Center().Y - centreRectangle.Y);
         }
 
         private Point GetCentreRectangle(Rectangle rectangle)

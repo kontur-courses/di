@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.PointGetters;
-using TagCloud;
+using TagCloud.CloudLayoters;
 
 namespace TagCloudTests
 {
     [TestFixture]
     class CircularCloudLayouterTest
     {
-        private CircularCloudLayouter cloud;
+        private DensityCloudLayouter cloud;
 
         [SetUp]
-        public void SetUp() => cloud = new CircularCloudLayouter(new CirclePointGetter(Point.Empty));
+        public void SetUp() => cloud = new DensityCloudLayouter(new CirclePointGetter(Point.Empty));
 
 
         [Test]
@@ -25,7 +25,7 @@ namespace TagCloudTests
             {
                 var center = new Point(random.Next(50), random.Next(50));
                 var size = new Size(random.Next(1, 50), random.Next(1, 50));
-                cloud = new CircularCloudLayouter(new CirclePointGetter(center));
+                cloud = new DensityCloudLayouter(new CirclePointGetter(center));
                 var r = cloud.PutNextRectangle(size);
                 Assert.IsTrue(Math.Abs(center.X - r.X) <= (size.Width + 1) / 2 && Math.Abs(center.Y - r.Y) <= (size.Height + 1) / 2);
             }
@@ -56,7 +56,7 @@ namespace TagCloudTests
             for (var i = 0; i < square; i++)
                 rectangles.Add(cloud.PutNextRectangle(new Size(1, 1)));
             var radius = Math.Sqrt(square / Math.PI);
-            var distance = GetMaxAverageDistanceToPoint(rectangles, cloud.Center);
+            var distance = GetMaxAverageDistanceToPoint(rectangles, cloud.Center());
             Assert.IsTrue(distance <= radius);
         }
 
