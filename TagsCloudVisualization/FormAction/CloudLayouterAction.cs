@@ -39,7 +39,7 @@ namespace TagsCloudVisualization.FormAction
                 Multiselect = false,
                 DefaultExt = "txt",
                 InitialDirectory = @"C:\Users\Public\Documents",
-                Filter = "Текстовый документ (*.txt)|*.txt;"
+                Filter = "Текстовый документ |*.txt;*.doc;*.docx"
             };
             var res = dialog.ShowDialog();
             if (res != DialogResult.OK)
