@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
+using TagsCloudVisualisation;
 
 namespace WinUI
 {
@@ -28,7 +29,7 @@ namespace WinUI
             var builder = new ContainerBuilder();
 
             //TODO modules
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+            builder.RegisterAssemblyTypes(typeof(TagCloudGenerator).Assembly, typeof(App).Assembly)
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .SingleInstance()

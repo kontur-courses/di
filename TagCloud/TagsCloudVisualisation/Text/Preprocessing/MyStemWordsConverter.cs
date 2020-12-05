@@ -25,6 +25,7 @@ namespace TagsCloudVisualisation.Text.Preprocessing
         public IEnumerable<string> Normalize(IEnumerable<string> words) =>
             normalizer.Value.GetWords(string.Join(" ", words))
                 .Where(x => !string.IsNullOrEmpty(x))
+                .Select(x => x.TrimEnd('?'))
                 .ToArray();
     }
 }
