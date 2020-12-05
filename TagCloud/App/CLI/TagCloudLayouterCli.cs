@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings;
@@ -55,23 +56,20 @@ namespace TagCloud.App.CLI
             automata.Add(new Transition(helpState, @".*", mainState));
             automata.Add(new Transition(aboutState, ".*", helpState));
             
+            automata.Add(new Transition(mainState, "set", settingsState));
             automata.Add(new Transition(mainState, "settings", settingsState));
             var managersStates = GetSettingsManagersStates(settingsManagers);
             AddSettingsManagersTransitions(automata, settingsState, managersStates);
             automata.Add(new Transition(settingsState, @"\D*", mainState));
             
-            settingsFactory().Import(Program.GetDefaultSettings());
-            Console.WriteLine("Default settings imported");
-            // var tokens = reader.ReadTokens();
-            // var analyzedTokens = wordAnalyzer.Analyze(tokens);
-            // Console.WriteLine("Tokens analyzed");
-            // using var image = painter.GetImage(analyzedTokens);
-            // Console.WriteLine("Layout ready");
-            // var imagePath = settingsFactory().ImagePath;
-            // Console.WriteLine($"Saving into {Path.GetFullPath(imagePath)}");
-            // image.Save(imagePath);
-            // Console.WriteLine("Image saved");
+            var generateState = new State("Generation");
+            generateState.Show += OnGenerateState;
+            automata.Add(new Transition(mainState, "gen", generateState));
+            automata.Add(new Transition(mainState, "generate", generateState));
+            automata.Add(new Transition(generateState, ".*", mainState));
             
+            settingsFactory().Import(Program.GetDefaultSettings());
+
             while (automata.Show())
             {
                 Console.Write("> ");
@@ -79,6 +77,20 @@ namespace TagCloud.App.CLI
                 Console.Clear();
                 automata.Move(inp);
             }
+        }
+
+        private void OnGenerateState(State sender, EventArgs args)
+        {
+            Console.WriteLine("Default settings imported");
+            var tokens = reader.ReadTokens();
+            var analyzedTokens = wordAnalyzer.Analyze(tokens);
+            Console.WriteLine("Tokens analyzed");
+            using var image = painter.GetImage(analyzedTokens);
+            Console.WriteLine("Layout ready");
+            var imagePath = settingsFactory().ImagePath;
+            Console.WriteLine($"Image will be saved into {Path.GetFullPath(imagePath)}");
+            image.Save(imagePath);
+            Console.WriteLine("Image saved");
         }
 
         private void AddSettingsManagersTransitions(Automata automata, State from,  IEnumerable<State> states)
