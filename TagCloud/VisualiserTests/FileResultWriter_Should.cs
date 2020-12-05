@@ -8,7 +8,8 @@ using TagsCloudVisualisation.Output;
 
 namespace VisualiserTests
 {
-    public class FileResultWriterShould
+    // ReSharper disable once InconsistentNaming
+    public class FileResultWriter_Should
     {
         private string temporaryFilePath;
         private FileResultWriter writer;
