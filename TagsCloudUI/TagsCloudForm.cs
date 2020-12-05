@@ -16,16 +16,14 @@ namespace TagsCloudUI
         private readonly IBitmapSaver bitmapSaver;
         private readonly FormConfig config;
         private readonly ITagsContainer container;
+        private readonly HashSet<string> stopWords;
         private readonly TagsVisualizer visualizer;
-        private string fontFamily;
-        private Size imageSize;
         private string path;
         private SpiralType spiralType;
         private List<Tag> tags;
-        private Brush textColor;
-        private readonly HashSet<string> stopWords;
 
-        public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver, TagsVisualizer visualizer)
+        public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver,
+            TagsVisualizer visualizer)
         {
             this.config = config;
             this.bitmapSaver = bitmapSaver;
@@ -40,9 +38,6 @@ namespace TagsCloudUI
             MaximizeBox = false;
             BackColor = config.BackgroundColor;
             Size = config.FormSize;
-            fontFamily = config.FontFamily;
-            imageSize = config.FormSize;
-            textColor = config.TextColor;
             spiralType = config.SpiralType;
 
             var menu = new MenuStrip();
@@ -64,10 +59,7 @@ namespace TagsCloudUI
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            foreach (var word in File.ReadLines(dialog.FileName).Select(x => x.Trim()))
-            {
-                stopWords.Add(word);
-            }
+            foreach (var word in File.ReadLines(dialog.FileName).Select(x => x.Trim())) stopWords.Add(word);
             Invalidate();
         }
 
@@ -82,7 +74,7 @@ namespace TagsCloudUI
             button.Click += (sender, args) =>
             {
                 spiralType = (SpiralType) comboBox.SelectedIndex;
-                SetTags();
+                tags = container.GetTags(File.ReadAllText(path), spiralType);
                 form.Close();
             };
 
@@ -96,7 +88,13 @@ namespace TagsCloudUI
         {
             var colorDialog = new ColorDialog();
 
-            if (colorDialog.ShowDialog() == DialogResult.OK) textColor = new SolidBrush(colorDialog.Color);
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                var newTags = new List<Tag>();
+                tags.ForEach(x => newTags.Add(x.ChangeTextColor(new SolidBrush(colorDialog.Color))));
+                tags = newTags;
+            }
+
             Invalidate();
         }
 
@@ -108,13 +106,8 @@ namespace TagsCloudUI
                 return;
 
             path = dialog.FileName;
-            SetTags();
-            Invalidate();
-        }
-
-        private void SetTags()
-        {
             tags = container.GetTags(File.ReadAllText(path), spiralType);
+            Invalidate();
         }
 
         private void ChangeWindowSize()
@@ -123,19 +116,19 @@ namespace TagsCloudUI
 
             var labelWidth = new Label {Text = "Width", Width = 50};
             var textBoxWidth = new NumericUpDown
-                {Width = 200, Left = labelWidth.Right, Maximum = 5000, Value = imageSize.Width};
-            textBoxWidth.ValueChanged += (sender, args) => imageSize.Width = int.Parse(textBoxWidth.Text);
+                {Width = 200, Left = labelWidth.Right, Maximum = 5000, Value = Size.Width};
 
             var labelHeight = new Label {Text = "Height", Width = 50, Top = textBoxWidth.Bottom};
             var textBoxHeight = new NumericUpDown
-            {
-                Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000,
-                Value = imageSize.Height
-            };
-            textBoxHeight.ValueChanged += (sender, args) => imageSize.Height = int.Parse(textBoxHeight.Text);
+                {Width = 200, Left = labelWidth.Right, Top = textBoxWidth.Bottom, Maximum = 5000, Value = Size.Height};
 
             var button = new Button {Text = "Set", Top = textBoxHeight.Bottom, DialogResult = DialogResult.OK};
-            button.Click += (sender, args) => form.Close();
+            button.Click += (sender, args) =>
+            {
+                var newSize = new Size(int.Parse(textBoxWidth.Text), int.Parse(textBoxHeight.Text));
+                Size = newSize;
+                form.Close();
+            };
 
             form.Controls.Add(labelWidth);
             form.Controls.Add(labelHeight);
@@ -153,8 +146,9 @@ namespace TagsCloudUI
             if (fontDialog.ShowDialog() != DialogResult.OK)
                 return;
 
-
-            fontFamily = fontDialog.Font.FontFamily.Name;
+            var newTags = new List<Tag>();
+            tags.ForEach(x => newTags.Add(x.ChangeFontFamily(fontDialog.Font.FontFamily.Name)));
+            tags = newTags;
             Invalidate();
         }
 
@@ -172,33 +166,18 @@ namespace TagsCloudUI
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            //var path = dialog.FileName;
-            // using var bitmap = new Bitmap(Width, Height);
-            // DrawToBitmap(bitmap, new Rectangle(0, 0, Width, Height));
-            //
-            // var window = PointToScreen(Point.Empty);
-            // var target = new Bitmap(ClientSize.Width, ClientSize.Height);
-            // using (var graphics = Graphics.FromImage(target))
-            // {
-            //     graphics.DrawImage(bitmap, 0, 0, new Rectangle(window.X - Location.X, window.Y - Location.Y, target.Width, target.Height), GraphicsUnit.Pixel);
-            // }
-
-
-
-            bitmapSaver.SaveBitmapToDirectory(visualizer.GetBitmap(tags, BackColor, fontFamily, textColor), dialog.FileName);
+            bitmapSaver.SaveBitmapToDirectory(visualizer.GetBitmap(tags, BackColor), dialog.FileName);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Size = imageSize;
-
             if (tags == null)
                 return;
 
             foreach (var tag in tags.Where(x => !stopWords.Contains(x.Text)))
             {
                 e.Graphics.DrawRectangle(new Pen(Color.Red, 1), tag.Rectangle);
-                e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X, tag.Rectangle.Y);
+                e.Graphics.DrawString(tag.Text, tag.Font, tag.TextColor, tag.Rectangle.X, tag.Rectangle.Y);
             }
         }
     }

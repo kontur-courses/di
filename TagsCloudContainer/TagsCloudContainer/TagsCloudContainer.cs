@@ -31,7 +31,7 @@ namespace TagsCloudContainer.TagsCloudContainer
                 var wordSize = graphics.MeasureString(word, wordFont).ToSize();
                 var rectangle = layouter.PutNextRectangle(wordSize);
 
-                tags.Add(new Tag(word, rectangle, wordFont));
+                tags.Add(new Tag(word, rectangle, wordFont, Brushes.Black));
             }
 
             return tags;

@@ -2,13 +2,12 @@
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.TagsCloudContainer;
-using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
     public class TagsVisualizer : RectangleVisualizer
     {
-        public Bitmap GetBitmap(List<Tag> tags, Color backgroundColor, string fontFamily, Brush textColor)
+        public Bitmap GetBitmap(List<Tag> tags, Color backgroundColor)
         {
             var imageSize = GetImageSize(tags.Select(x => x.Rectangle));
             var pen = new Pen(Color.MediumVioletRed, 4);
@@ -18,9 +17,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
                 graphics.Clear(backgroundColor);
 
                 foreach (var tag in tags)
-                {
-                    graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X, tag.Rectangle.Y);
-                }
+                    graphics.DrawString(tag.Text, tag.Font, tag.TextColor, tag.Rectangle.X, tag.Rectangle.Y);
             }
 
             return bitmap;
