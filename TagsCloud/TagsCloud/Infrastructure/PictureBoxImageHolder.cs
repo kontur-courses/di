@@ -37,7 +37,7 @@ namespace TagsCloud.Infrastructure
 
             layouter.ClearLayouter();
             wordsFreuqencies = frequencyDictionary;
-            var totalWords = frequencyDictionary.Count;
+            var totalWords = frequencyDictionary.Sum(x => x.Value);
             var graphics = StartDrawing();
 
             foreach (var pair in frequencyDictionary.OrderByDescending(x => x.Value))
