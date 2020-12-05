@@ -9,8 +9,8 @@ namespace TagCloud.Visualization
             var bitmap = info.TryGetSize(out var size) ? new Bitmap(size.Width, size.Height) : 
                 new Bitmap(2 * cloud.layouter.Size.Width, 2 * cloud.layouter.Size.Height);
             var vectorShift = new Point(
-                cloud.layouter.Size.Width - cloud.layouter.Center.X, 
-                cloud.layouter.Size.Height - cloud.layouter.Center.Y);
+                bitmap.Size.Width / 2 - cloud.Center.X, 
+                bitmap.Size.Height / 2 - cloud.Center.Y);
             var graphics = Graphics.FromImage(bitmap);
             foreach (var location in cloud)
             {

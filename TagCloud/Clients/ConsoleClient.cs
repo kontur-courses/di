@@ -58,7 +58,7 @@ namespace TagCloud.Clients
             Console.WriteLine("Please write font");
             var font = "Arial";// Console.ReadLine();
             Console.WriteLine("Please write 2 number for size picture");
-            var sizeString = "";// Console.ReadLine();
+            var sizeString = "2000 2000";// Console.ReadLine();
             var size = VisualizationInfo.ReadSize(sizeString);
             return new VisualizationInfo(new WordsColoringLineBringhtness(Color.FromArgb(255, 255, 0, 0)), size, font);
         }
