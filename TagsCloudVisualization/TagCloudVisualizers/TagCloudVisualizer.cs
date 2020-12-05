@@ -8,13 +8,13 @@ namespace TagsCloudVisualization.TagCloudVisualizers
 {
     public class TagCloudVisualizer : ICloudVisualizer
     {
-        private readonly Palette palette;
+        private readonly PaintingSettings paintingSettings;
         private readonly ICanvas canvas;
 
-        public TagCloudVisualizer(ICanvas canvas, Palette palette)
+        public TagCloudVisualizer(ICanvas canvas, PaintingSettings paintingSettings)
         {
             this.canvas = canvas;
-            this.palette = palette;
+            this.paintingSettings = paintingSettings;
         }
 
         public void PrintTagCloud(List<Tag> tags)
@@ -22,15 +22,13 @@ namespace TagsCloudVisualization.TagCloudVisualizers
             var imageSize = canvas.GetImageSize();
             using (var graphics = canvas.StartDrawing())
             {
-                using (var backgroundBrush = new SolidBrush(palette.BackgroundColor))
+                using (var backgroundBrush = new SolidBrush(paintingSettings.BackgroundColor))
                     graphics.FillRectangle(backgroundBrush, 0, 0, imageSize.Width, imageSize.Height);
 
-                using (var textBrush = new SolidBrush(palette.TextColor))
-                {
+                using (var textBrush = new SolidBrush(paintingSettings.TextColor)) 
                     DrawCloud(tags, textBrush, graphics);
-                }
             }
-
+            
             canvas.UpdateUi();
         }
 
@@ -40,18 +38,20 @@ namespace TagsCloudVisualization.TagCloudVisualizers
             var iterationCount = 0;
             foreach (var tag in tags)
             {
-                if (palette.EnabledMultipleColors)
-                    textBrush.Color = palette.Colors[iterationCount % palette.Colors.Length];
+                if (paintingSettings.EnabledMultipleColors)
+                    textBrush.Color = paintingSettings.Colors[iterationCount % paintingSettings.Colors.Length];
                 
                 graphics.DrawString(tag.Text, tag.Font, textBrush, tag.BoundingZone.Location);
 
-                if (palette.DrawTextBoundingZone)
+                if (paintingSettings.DrawTextBoundingZone)
                 {
                     pen.Color = Color.Beige;
                     graphics.DrawRectangle(pen, tag.BoundingZone);
                 }
 
                 iterationCount++;
+                if (paintingSettings.EnableAnimation)
+                    canvas.UpdateUi();
             }
         }
     }

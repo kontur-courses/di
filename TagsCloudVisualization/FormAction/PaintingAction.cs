@@ -5,19 +5,19 @@ namespace TagsCloudVisualization.FormAction
     public class PaletteAction : IFormAction
     {
         public string Category => "Settings";
-        public string Name => "Colors";
+        public string Name => "Painting";
         public string Description => "Change colors of your cloud visualization";
         
-        private readonly Palette palette;
+        private readonly PaintingSettings paintingSettings;
         
-        public PaletteAction(Palette palette)
+        public PaletteAction(PaintingSettings paintingSettings)
         {
-            this.palette = palette;
+            this.paintingSettings = paintingSettings;
         }
         
         public void Perform()
         {
-            SettingsForm.For(palette).ShowDialog();
+            SettingsForm.For(paintingSettings).ShowDialog();
         }
     }
 }

@@ -2,13 +2,14 @@
 
 namespace TagsCloudVisualization.AppSettings
 {
-    public class Palette
+    public class PaintingSettings
     {
         public Color TextColor { get; set; } = Color.Red;
         public Color BackgroundColor { get; set; } = Color.Black;
 
         public bool EnabledMultipleColors { get; set; } = true;
         public bool DrawTextBoundingZone { get; set; } = false;
+        public bool EnableAnimation { get; set; } = true;
 
         public Color[] Colors { get; set; } = 
         {
