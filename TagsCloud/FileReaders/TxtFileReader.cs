@@ -7,8 +7,7 @@ namespace TagsCloud.FileReaders
     {
         public IEnumerable<string> GetWordsFromFile(string filePath)
         {
-            // TODO делать что-то, если больше одного слова в строке.
-            return File.ReadAllText(filePath).Split();
+            return File.ReadLines(filePath);
         }
     }
 }
