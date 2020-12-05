@@ -4,6 +4,6 @@ namespace TagCloud.TextConverters.TextProcessors
 {
     public interface ITextProcessor
     {
-        public IEnumerable<string> Process(string text);
+        public IEnumerable<string> GetLiterals(string text);
     }
 }

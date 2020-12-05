@@ -4,7 +4,7 @@ namespace TagCloud.WordsMetrics
 {
     public class CountWordMetric : IWordsMetric
     {
-        public Dictionary<string, double> Process(IEnumerable<string> words)
+        public Dictionary<string, double> GetMetric(IEnumerable<string> words)
         {
             var result = new Dictionary<string, double>();
             foreach (var word in words)

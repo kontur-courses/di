@@ -9,7 +9,7 @@ namespace TagCloud
         internal static TagCloud GetTagCloud(string text, IPointGetter pointGetter, 
             ITextProcessor textProcessor, IWordsMetric wordsMetric)
         {
-            var metric = wordsMetric.Process(textProcessor.Process(text));
+            var metric = wordsMetric.GetMetric(textProcessor.GetLiterals(text));
             return new TagCloud(metric, pointGetter);
         }
     }

@@ -16,7 +16,7 @@ namespace TagCloudTests
         [TestCase("a", "b", "a", "c", "b", "a")]
         public void CountWordMetric_ShouldAssosiationWordAndWordPositionsCount(params string[] words)
         {
-            var result = new CountWordMetric().Process(words);
+            var result = new CountWordMetric().GetMetric(words);
             foreach (var word in words)
                 result.Should().Contain(new KeyValuePair<string, double>(word, words.Where(w => w == word).Count()));
         }
@@ -28,7 +28,7 @@ namespace TagCloudTests
         [TestCase("a", "b", "a", "c", "b", "a")]
         public void CountWordMetrix_ShouldContainOnlyWordsFromCollection(params string[] words)
         {
-            var result = new CountWordMetric().Process(words);
+            var result = new CountWordMetric().GetMetric(words);
             result.Keys.Should().BeEquivalentTo(words.ToHashSet());
         }
     }

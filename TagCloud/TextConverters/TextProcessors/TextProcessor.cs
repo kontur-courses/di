@@ -8,7 +8,7 @@ namespace TagCloud.TextConverters.TextProcessors
     public class TextProcessor : ITextProcessor
     {
         private readonly IWordExcluder excluder = new WordsExcluder();
-        public IEnumerable<string> Process(string text) =>
+        public IEnumerable<string> GetLiterals(string text) =>
             text
             .Split('\n')
             .Where(s => s != string.Empty)

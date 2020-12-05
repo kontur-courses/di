@@ -4,6 +4,6 @@ namespace TagCloud.WordsMetrics
 {
     public interface IWordsMetric
     {
-        public Dictionary<string, double> Process(IEnumerable<string> words);
+        public Dictionary<string, double> GetMetric(IEnumerable<string> words);
     }
 }
