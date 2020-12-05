@@ -16,8 +16,8 @@ namespace TagsCloudContainerTests
         public void OneTimeSetUp()
         {
             wordList = WordList.CreateFromFiles(
-                "../../../../TagsCloudContainer/Dictionaries/English (American).dic",
-                "../../../../TagsCloudContainer/Dictionaries/English (American).aff");
+                "../../../../TagsCloudContainerConsole/Dictionaries/English (American).dic",
+                "../../../../TagsCloudContainerConsole/Dictionaries/English (American).aff");
         }
 
         [SetUp]

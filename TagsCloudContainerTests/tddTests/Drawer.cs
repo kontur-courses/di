@@ -6,27 +6,21 @@ namespace TagsCloudVisualization
 {
     public static class Drawer
     {
-        private static Bitmap _bitmap;
-
-        public static void DrawRectangles(Point center, IEnumerable<Rectangle> rectangles)
+        public static Bitmap DrawRectangles(IEnumerable<Rectangle> rectangles)
         {
-            _bitmap = new Bitmap(800, 800);
-            var graph = Graphics.FromImage(_bitmap);
-            graph.TranslateTransform(center.X, center.Y);
+            var bitmap = new Bitmap(800, 800);
+            using var graph = Graphics.FromImage(bitmap);
 
             var random = new Random();
             foreach (var rectangle in rectangles)
             {
-                var pen = new Pen(GetRandomColor(random), 2);
+                using var pen = new Pen(GetRandomColor(random), 2);
                 graph.DrawRectangle(pen, rectangle);
             }
-        }
 
-        public static void SaveImage(string path)
-        {
-            _bitmap.Save(path);
+            return bitmap;
         }
-
+        
         private static Color GetRandomColor(Random random)
         {
             return Color.FromArgb(

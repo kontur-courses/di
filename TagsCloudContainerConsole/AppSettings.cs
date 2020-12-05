@@ -39,5 +39,6 @@ namespace TagsCloudContainer
         public double ShiftFactor { get; set; }
 
         public Color BackgroundColor => Color.FromName(BackgroundColorName);
+        public Color FontColor => Color.FromName(FontColorName);
     }
 }

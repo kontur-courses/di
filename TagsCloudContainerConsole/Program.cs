@@ -13,8 +13,8 @@ namespace TagsCloudContainer
     class Program
     {
         private static AppSettings _appSettings;
-        private static readonly string _relativePathToDict = "../../../../Dictionaries/English (American).dic";
-        private static readonly string _relativePathToAffixFile = "../../../../Dictionaries/English (American).aff";
+        private static readonly string _pathToDict = "Dictionaries/English (American).dic";
+        private static readonly string _pathToAffixFile = "Dictionaries/English (American).aff";
 
         static void Main(string[] args)
         {
@@ -25,10 +25,14 @@ namespace TagsCloudContainer
                     throw new ArgumentException("Incorrect commandline arguments");
 
                 _appSettings = ((Parsed<AppSettings>) settings).Value;
-            
-                var words = GetWords();
+                
+                var loader = GetWordsLoader();
+                var words = loader.GetWords();
+                
                 var countedWords = CountWords(words);
-                var image = GetDrawer().Draw(countedWords);
+                
+                var drawer = GetDrawer();
+                var image = drawer.Draw(countedWords);
                 SaveImage(image);
             }
             catch (Exception e)
@@ -38,9 +42,14 @@ namespace TagsCloudContainer
             }
         }
 
-        private static string[] GetWords()
+        private static IWordsLoader GetWordsLoader()
         {
-            return new FileWordsLoader(_appSettings.PathToFile).GetWords();
+            return Path.GetExtension(_appSettings.PathToFile) switch
+            {
+                ".docx" => new DocxFileWordsLoader(_appSettings.PathToFile),
+                ".txt" => new TxtFileWordsLoader(_appSettings.PathToFile),
+                var format => throw new ArgumentException($"Not supported format: {format}")
+            };
         }
 
         private static Dictionary<string, int> CountWords(string[] words)
@@ -54,21 +63,21 @@ namespace TagsCloudContainer
                     throw new ArgumentException($"Incorrect name of part of speech: {name}");
             }
 
-            var appPath = Assembly.GetExecutingAssembly().Location;
+            var appDirectory = Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().Location);
             var wordList = WordList.CreateFromFiles( 
-                Path.GetFullPath(_relativePathToDict, appPath),
-                Path.GetFullPath(_relativePathToAffixFile, appPath));
+                Path.GetFullPath(_pathToDict, appDirectory),
+                Path.GetFullPath(_pathToAffixFile, appDirectory));
             
-            return new WordsCounter(wordList, excludedPartsOfSpeech).CountWords(words);
+            return new MorphologicalWordsCounter(wordList, excludedPartsOfSpeech).CountWords(words);
         }
 
         private static ITagsCloudDrawer GetDrawer()
         {
             var container = new ServiceContainer();
 
-            var fontColor = Color.FromName(_appSettings.FontColorName);
             container.Register<IFontColorCreator>(factory =>
-                new FontColorCreator(fontColor));
+                new FontColorCreator(_appSettings.FontColor));
             
             container.Register<IFontCreator>(factory =>
                 new FontCreator(_appSettings.FontName));
