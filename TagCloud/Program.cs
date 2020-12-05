@@ -49,13 +49,13 @@ namespace TagCloud
             builder.RegisterType<WordPainter>().As<IPainter<string>>();
             builder.RegisterType<Random>().SingleInstance();
             builder.RegisterType<ColorPicker>();
-
-            builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
             
             builder.RegisterType<FileSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImagePathSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImageSizeSettingsManager>().AsImplementedInterfaces();
-            builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
+            
+            builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
+            // builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
 
             var container = builder.Build();
             var app = container.Resolve<IApp>();
