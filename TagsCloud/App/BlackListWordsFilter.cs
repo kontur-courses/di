@@ -5,26 +5,25 @@ namespace TagsCloud.App
 {
     public class BlackListWordsFilter : IWordsFilter
     {
-        public string[] ExcludedWords => blackList.ToArray();
-        private readonly HashSet<string> blackList;
+        internal readonly HashSet<string> BlackList;
         private readonly IWordNormalizer normalizer;
 
         public BlackListWordsFilter(HashSet<string> excludedWords, IWordNormalizer normalizer)
         {
-            blackList = excludedWords.Select(normalizer.NormalizeWord).ToHashSet();
+            BlackList = excludedWords.Select(normalizer.NormalizeWord).ToHashSet();
             this.normalizer = normalizer;
         }
 
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
-            return words.Where(word => !blackList.Contains(word));
+            return words.Where(word => !BlackList.Contains(word));
         }
 
         public void UpdateBlackList(IEnumerable<string> words)
         {
-            blackList.Clear();
+            BlackList.Clear();
             foreach (var word in words)
-                blackList.Add(normalizer.NormalizeWord(word));
+                BlackList.Add(normalizer.NormalizeWord(word));
         }
     }
 }

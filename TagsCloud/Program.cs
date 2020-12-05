@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using Autofac;
 using TagsCloud.App;
 using TagsCloud.Infrastructure;
@@ -9,7 +9,7 @@ using TagsCloud.UI;
 
 namespace TagsCloud
 {
-    class Program
+    internal class Program
     {
         [STAThread]
         private static void Main()

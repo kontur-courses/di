@@ -8,8 +8,8 @@ namespace TagsCloud.App
 {
     public class TagsCloudDrawer : ITagsCloudDrawer
     {
-        private IRectanglesLayouter layouter;
         private readonly TagsCloudSettings tagsCloudSettings;
+        private IRectanglesLayouter layouter;
 
         public TagsCloudDrawer(IRectanglesLayouter layouter, TagsCloudSettings tagsCloudSettings)
         {
@@ -39,7 +39,6 @@ namespace TagsCloud.App
             return image;
         }
 
-        
 
         public void SetNewLayouter(IRectanglesLayouter newLayouter)
         {
@@ -52,20 +51,22 @@ namespace TagsCloud.App
                 throw new ArgumentException("Collection should not be null");
             foreach (var word in words)
             {
-                var wordFont = new Font(tagsCloudSettings.CurrentFontFamily, word.Weight, tagsCloudSettings.CurrentFontStyle);
+                var wordFont = new Font(tagsCloudSettings.CurrentFontFamily, word.Weight,
+                    tagsCloudSettings.CurrentFontStyle);
                 var newRectangle = layouter.PutNextRectangle(CalculateWordsSize(word.Value, wordFont, graphics));
                 yield return new Tag(word.Value, wordFont, newRectangle);
             }
+
             layouter.Reset();
         }
 
         private static float CalculateRatio(Size tagsCloudSize, ImageSize imageSize)
         {
-            if ((double)tagsCloudSize.Width / imageSize.Width > (float)tagsCloudSize.Height / imageSize.Height)
+            if ((double) tagsCloudSize.Width / imageSize.Width > (float) tagsCloudSize.Height / imageSize.Height)
                 return (float) imageSize.Width / tagsCloudSize.Width;
             return (float) imageSize.Height / tagsCloudSize.Height;
         }
-        
+
         public void DrawTagsCloud(IEnumerable<Tag> tags, PointF center, Graphics graphics)
         {
             if (tags == null)
@@ -73,10 +74,8 @@ namespace TagsCloud.App
             graphics.TranslateTransform(center.X, center.Y);
             graphics.Clear(tagsCloudSettings.Palette.BackgroundColor);
             foreach (var word in tags)
-            {
-                graphics.DrawString(word.Value, word.Font, 
+                graphics.DrawString(word.Value, word.Font,
                     new SolidBrush(tagsCloudSettings.Palette.PrimaryColor), word.Rectangle.Location);
-            }
         }
 
         private Rectangle CalculateTagsCloudBounds(IEnumerable<Rectangle> rectangles)
@@ -92,13 +91,15 @@ namespace TagsCloud.App
                 minX = Math.Min(minX, rectangle.Location.X);
                 minY = Math.Min(minY, rectangle.Location.Y);
             }
+
             return new Rectangle(minX, minY, maxX - minX, maxY - minY);
         }
 
         private Size CalculateWordsSize(string word, Font font, Graphics graphics)
         {
             var floatSize = graphics.MeasureString(word, font);
-            return new Size((int)Math.Ceiling((decimal)floatSize.Width), (int)Math.Ceiling((decimal)floatSize.Height));
+            return new Size((int) Math.Ceiling((decimal) floatSize.Width),
+                (int) Math.Ceiling((decimal) floatSize.Height));
         }
     }
 }

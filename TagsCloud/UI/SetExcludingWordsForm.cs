@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using TagsCloud.App;
 
@@ -14,7 +13,7 @@ namespace TagsCloud.UI
         {
             var okButton = new Button
             {
-                Text = @"OK",
+                Text = "OK",
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom
             };
@@ -23,7 +22,7 @@ namespace TagsCloud.UI
                 Multiline = true,
                 Dock = DockStyle.Fill,
                 ScrollBars = ScrollBars.Vertical,
-                Text = string.Join(Environment.NewLine, filter.ExcludedWords) + Environment.NewLine
+                Text = string.Join(Environment.NewLine, filter.BlackList) + Environment.NewLine
             };
             this.filter = filter;
             okButton.Click += OnOkButtonClick;

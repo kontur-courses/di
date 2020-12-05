@@ -6,9 +6,6 @@ namespace TagsCloud.Infrastructure
 {
     public class PossibleFonts
     {
-        public HashSet<FontFamily> FontFamilies { get; set; }
-        public HashSet<FontStyle> FontStyles { get; set; }
-
         public PossibleFonts(HashSet<FontStyle> fontStyles, HashSet<FontFamily> fontFamilies)
         {
             if (fontStyles.Count == 0 || fontFamilies.Count == 0)
@@ -16,5 +13,8 @@ namespace TagsCloud.Infrastructure
             FontStyles = fontStyles;
             FontFamilies = fontFamilies;
         }
+
+        public HashSet<FontFamily> FontFamilies { get; set; }
+        public HashSet<FontStyle> FontStyles { get; set; }
     }
 }

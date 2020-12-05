@@ -11,15 +11,15 @@ namespace TagsCloud.UI
 {
     public partial class Mainform : Form
     {
+        private readonly Dictionary<string, IRectanglesLayouter> constellators;
+        private readonly IWordsFilter filter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
-        private readonly Dictionary<string, IRectanglesLayouter> constellators;
-        private readonly TagsCloudHandler tagsCloudHandler;
-        private readonly ITagsCloudDrawer tagsCloudDrawer;
         private readonly TagsCloudSettings settings;
-        private readonly IWordsFilter filter;
+        private readonly ITagsCloudDrawer tagsCloudDrawer;
+        private readonly TagsCloudHandler tagsCloudHandler;
 
-        public Mainform(IRectanglesLayouter[] rectanglesConstellators, 
+        public Mainform(IRectanglesLayouter[] rectanglesConstellators,
             TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer, TagsCloudSettings settings, IWordsFilter filter)
         {
             this.tagsCloudHandler = tagsCloudHandler;
@@ -64,7 +64,7 @@ namespace TagsCloud.UI
 
         private void FontFamilyChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            settings.CurrentFontFamily = fontFamilies[(string)FontFamilyChoice.SelectedItem];
+            settings.CurrentFontFamily = fontFamilies[(string) FontFamilyChoice.SelectedItem];
         }
 
         private void FontStyleChoice_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,20 +74,17 @@ namespace TagsCloud.UI
 
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tagsCloudDrawer.SetNewLayouter(constellators[(string)AlgorithmChoice.SelectedItem]);
+            tagsCloudDrawer.SetNewLayouter(constellators[(string) AlgorithmChoice.SelectedItem]);
         }
 
         private void CloudSizeSetting_ValueChanged(object sender, EventArgs e)
         {
-            settings.CloudToImageScaleRatio = (float)CloudSizeSetting.Value;
+            settings.CloudToImageScaleRatio = (float) CloudSizeSetting.Value;
         }
 
         private void ExcludedWordsSetButton_Click(object sender, EventArgs e)
         {
-            if (filter is BlackListWordsFilter blackListfilter)
-            {
-                new SetExcludingWordsForm(blackListfilter).ShowDialog();
-            }
+            if (filter is BlackListWordsFilter blackListfilter) new SetExcludingWordsForm(blackListfilter).ShowDialog();
         }
     }
 }

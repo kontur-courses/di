@@ -4,8 +4,8 @@ namespace TagsCloud.Infrastructure
 {
     public class Tag
     {
-        public readonly string Value;
         public readonly Font Font;
+        public readonly string Value;
         public Rectangle Rectangle;
 
         public Tag(string value, Font font, Rectangle rectangle)
@@ -17,10 +17,10 @@ namespace TagsCloud.Infrastructure
 
         public Tag RescaleTag(float tagsCloudSizeRatio)
         {
-            var tagBounds = new Rectangle((int)(Rectangle.X * tagsCloudSizeRatio),
-                (int)(Rectangle.Y * tagsCloudSizeRatio),
-                (int)(Rectangle.Width * tagsCloudSizeRatio),
-                (int)(Rectangle.Height * tagsCloudSizeRatio));
+            var tagBounds = new Rectangle((int) (Rectangle.X * tagsCloudSizeRatio),
+                (int) (Rectangle.Y * tagsCloudSizeRatio),
+                (int) (Rectangle.Width * tagsCloudSizeRatio),
+                (int) (Rectangle.Height * tagsCloudSizeRatio));
             var tagFontSize = (int) (Font.Size * tagsCloudSizeRatio);
             if (tagFontSize == 0)
                 tagFontSize = 1;

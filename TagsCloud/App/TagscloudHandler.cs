@@ -6,12 +6,13 @@ namespace TagsCloud.App
 {
     public class TagsCloudHandler
     {
-        private string[] words;
+        private readonly ITagsCloudDrawer drawer;
         private readonly IWordNormalizer wordNormalizer;
         private readonly IWordsFilter wordsFilter;
-        private readonly ITagsCloudDrawer drawer;
-        
-        public TagsCloudHandler(IWordsFilter filter, IWordNormalizer normalizer, string[] words, ITagsCloudDrawer drawer)
+        private string[] words;
+
+        public TagsCloudHandler(IWordsFilter filter, IWordNormalizer normalizer, string[] words,
+            ITagsCloudDrawer drawer)
         {
             wordNormalizer = normalizer;
             wordsFilter = filter;

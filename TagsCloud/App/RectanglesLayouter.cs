@@ -7,25 +7,10 @@ namespace TagsCloud.App
 {
     public class RectanglesLayouter : IRectanglesLayouter
     {
-        private enum AngleDirection
-        {
-            LeftBottom,
-            RightBottom,
-            LeftTop,
-            RightTop
-        }
-
-        private class Angle
-        {
-            public Point Pos;
-            public AngleDirection Direction;
-        }
-
-        public string Name { get; } = "По умолчанию";
-        public readonly List<Rectangle> Rectangles;
-        private readonly Dictionary<AngleDirection, Func<Point, Size, Rectangle>> directionToRectangle;
-        private readonly Point center;
         private readonly List<Angle> angles;
+        private readonly Point center;
+        private readonly Dictionary<AngleDirection, Func<Point, Size, Rectangle>> directionToRectangle;
+        public readonly List<Rectangle> Rectangles;
 
         public RectanglesLayouter(Point center)
         {
@@ -53,6 +38,8 @@ namespace TagsCloud.App
             };
         }
 
+        public string Name { get; } = "По умолчанию";
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (Rectangles.Count == 0)
@@ -64,6 +51,7 @@ namespace TagsCloud.App
                 AddAngles(Rectangles[0]);
                 return firstRectangle;
             }
+
             return AddNewRectangle(rectangleSize);
         }
 
@@ -99,14 +87,32 @@ namespace TagsCloud.App
 
         private void AddAngles(Rectangle rect)
         {
-            angles.Add(new Angle { Direction = AngleDirection.LeftBottom, Pos = rect.Location });
-            angles.Add(new Angle { Direction = AngleDirection.RightTop, Pos = rect.Location });
-            angles.Add(new Angle { Direction = AngleDirection.LeftBottom, Pos = rect.Location + rect.Size });
-            angles.Add(new Angle { Direction = AngleDirection.RightTop, Pos = rect.Location + rect.Size });
-            angles.Add(new Angle { Direction = AngleDirection.RightBottom, Pos = rect.Location + new Size(rect.Size.Width, 0) });
-            angles.Add(new Angle { Direction = AngleDirection.LeftTop, Pos = rect.Location + new Size(rect.Size.Width, 0) });
-            angles.Add(new Angle { Direction = AngleDirection.RightBottom, Pos = rect.Location + new Size(0, rect.Size.Height) });
-            angles.Add(new Angle { Direction = AngleDirection.LeftTop, Pos = rect.Location + new Size(0, rect.Size.Height) });
+            angles.Add(new Angle {Direction = AngleDirection.LeftBottom, Pos = rect.Location});
+            angles.Add(new Angle {Direction = AngleDirection.RightTop, Pos = rect.Location});
+            angles.Add(new Angle {Direction = AngleDirection.LeftBottom, Pos = rect.Location + rect.Size});
+            angles.Add(new Angle {Direction = AngleDirection.RightTop, Pos = rect.Location + rect.Size});
+            angles.Add(new Angle
+                {Direction = AngleDirection.RightBottom, Pos = rect.Location + new Size(rect.Size.Width, 0)});
+            angles.Add(new Angle
+                {Direction = AngleDirection.LeftTop, Pos = rect.Location + new Size(rect.Size.Width, 0)});
+            angles.Add(new Angle
+                {Direction = AngleDirection.RightBottom, Pos = rect.Location + new Size(0, rect.Size.Height)});
+            angles.Add(new Angle
+                {Direction = AngleDirection.LeftTop, Pos = rect.Location + new Size(0, rect.Size.Height)});
+        }
+
+        private enum AngleDirection
+        {
+            LeftBottom,
+            RightBottom,
+            LeftTop,
+            RightTop
+        }
+
+        private class Angle
+        {
+            public AngleDirection Direction;
+            public Point Pos;
         }
     }
 }
