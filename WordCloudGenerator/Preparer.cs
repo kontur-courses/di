@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace WordCloudGenerator
 {
-    public class Preparer
+    public class Preparer : IPreparer
     {
         private readonly HashSet<string> wordsToSkip;
         private readonly Func<string, bool> filter;

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using Autofac;
-using Autofac.Core;
 
 namespace WordCloudGenerator
 {
@@ -12,25 +9,17 @@ namespace WordCloudGenerator
         public static void Main()
         {
             var container = Configure();
-            container.Resolve<IUserInterface>().Run(container);
+            container.Resolve<IUserInterface>().Run();
         }
 
         private static IContainer Configure()
         {
-            var paletteColors = new[]
-            {
-                Color.Indigo, Color.Brown, Color.BlueViolet, Color.ForestGreen,
-                Color.Black, Color.Khaki,  Color.Teal
-            };
-            
             var builder = new ContainerBuilder();
-            builder.RegisterType<Preparer>().WithParameter("filter", new Func<string, bool>(str => str.Length >= 3));
-            builder.RegisterType<Generator>();
-            builder.RegisterType<Painter>();
+            builder.RegisterType<Preparer>().As<IPreparer>().WithParameter("filter", new Func<string, bool>(str => str.Length >= 3));
+            builder.RegisterType<Painter>().As<IPainter>();
             builder.RegisterInstance(FontFamily.GenericSansSerif).As<FontFamily>();
 
-            builder.RegisterType<RandomChoicePalette>().As<IPalette>().WithParameters(new[]
-                {new NamedParameter("colors", paletteColors), new NamedParameter("backgroundColor", Color.Bisque)});
+            builder.RegisterType<OrderedChoicePalette>().As<IPalette>();
             builder.RegisterInstance(new CircularLayouter(new Point(0,0))).As<ILayouter>();
             builder.RegisterType<ConsoleUI>().As<IUserInterface>();
 

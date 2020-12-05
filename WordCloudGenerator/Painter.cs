@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
 
 namespace WordCloudGenerator
 {
-    public class Painter
+    public class Painter : IPainter
     {
         private readonly FontFamily fontFamily;
         private readonly ILayouter layouter;
