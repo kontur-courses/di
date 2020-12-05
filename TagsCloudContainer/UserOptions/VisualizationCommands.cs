@@ -5,10 +5,10 @@ namespace TagsCloudContainer.UserOptions
 {
     public class ColorsCommands : StorageCommands
     {
-        [Required, Name("tc", "textColor"), Description("Text color")]
+        [Required, Name("t", "textColor"), Description("Text color")]
         public KnownColor TextColor { get; set; }
 
-        [Required, Name("bgc", "backColor"), Description("Background color")]
+        [Required, Name("b", "backColor"), Description("Background color")]
         public KnownColor BackgroundColor { get; set; }
 
         [Required, Name("f", "font"), Description("Text font, space separated font name and size")]

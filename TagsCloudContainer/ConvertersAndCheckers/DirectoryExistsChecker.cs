@@ -9,7 +9,7 @@ namespace TagsCloudContainer.ConvertersAndCheckers
         public string GetExistingDirectory(string path)
         {
             var directoryLength = path.LastIndexOf(Path.DirectorySeparatorChar);
-            if (directoryLength != -1 && Directory.Exists(path.Substring(0, directoryLength)))
+            if (directoryLength == -1 || Directory.Exists(path.Substring(0, directoryLength)))
                 return path;
             throw new Exception("Doesn't contain the directory to save file");
         }

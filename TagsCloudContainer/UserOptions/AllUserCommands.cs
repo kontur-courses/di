@@ -13,13 +13,19 @@ namespace TagsCloudContainer.UserOptions
          Description("Image size with int parameters, space separated width and height")]
         public int[] ImageSize { get; set; }
 
-        [Name("tc", "textColor"), DefaultValue(KnownColor.Red), Description("Text color")]
+        [Name("t", "textColor"), DefaultValue(KnownColor.Red), Description("Text color")]
         public KnownColor TextColor { get; set; }
 
-        [Name("bgc", "backColor"), DefaultValue(KnownColor.Black), Description("Background color")]
+        [Name("b", "backColor"), DefaultValue(KnownColor.Black), Description("Background color")]
         public KnownColor BackgroundColor { get; set; }
 
-        [Name("bw", "boring"), DefaultValue(new string[0]), Description("Boring words, space separated between words")]
+        [Name("w", "boring"), DefaultValue(new string[0]), Description("Boring words, space separated between words")]
         public string[] BoringWords { get; set; }
+
+        [Name("a", "addingToAngle"), DefaultValue(1), Description("Addition parameter to spiral angle from degrees")]
+        public double AdditionSpiralAngleFromDegrees { get; set; }
+
+        [Name("m", "spiralStep"), DefaultValue(0.5), Description("Spiral step")]
+        public double SpiralStep { get; set; }
     }
 }

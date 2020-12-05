@@ -22,7 +22,7 @@ namespace RectanglesCloudLayouterTests
         [SetUp]
         public void SetUp()
         {
-            _spiral = new ArchimedeanSpiral(new Point(0, 0));
+            _spiral = new ArchimedeanSpiral(new Point(0, 0), new SpiralSettings(1, 0.5));
             _cloudRadiusCalculator = new CloudRadiusCalculator();
             _sut = new CloudLayouter(_spiral, _cloudRadiusCalculator);
             _rectangles = new List<Rectangle>();

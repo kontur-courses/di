@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using TagsCloudContainer.Interfaces;
 
@@ -9,27 +8,31 @@ namespace TagsCloudContainer.TextProcessing
     {
         private readonly ISpeechPartsParser _speechPartsParser;
         private readonly ITextProcessingSettings _textProcessingSettings;
+        private readonly ISpeechPartsFilter _speechPartsFilter;
 
-        private static readonly HashSet<string> _boringPartOfSpeech = new HashSet<string>
-            {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"};
-
-        public WordsFilter(ISpeechPartsParser speechPartsParser, ITextProcessingSettings textProcessingSettings)
+        public WordsFilter(ISpeechPartsParser speechPartsParser,
+            ITextProcessingSettings textProcessingSettings,
+            ISpeechPartsFilter speechPartsFilter)
         {
             _speechPartsParser = speechPartsParser;
             _textProcessingSettings = textProcessingSettings;
+            _speechPartsFilter = speechPartsFilter;
         }
 
         public string[] GetInterestingWords(string text)
         {
             if (text == null)
                 throw new ArgumentException("String must be not null");
-            var interestingWords = _speechPartsParser.ParseToPartSpeechAndWords(text)
-                .Where(keyValuePair => !_boringPartOfSpeech.Contains(keyValuePair.Key))
-                .Select(keyValue => keyValue.Value)
-                .SelectMany(words => words)
+            var speechPartsAndWords = _speechPartsParser.ParseToPartSpeechAndWords(text);
+            var interestingSpeechParts = _speechPartsFilter
+                .GetInterestingSpeechParts(speechPartsAndWords.Keys.ToArray())
+                .ToHashSet();
+            return speechPartsAndWords
+                .Where(keyValuePair => interestingSpeechParts.Contains(keyValuePair.Key))
+                .SelectMany(words => words.Value)
                 .Where(word => !_textProcessingSettings.BoringWords.Contains(word))
                 .ToArray();
-            return interestingWords;
+            ;
         }
     }
 }

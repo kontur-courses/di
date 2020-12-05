@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using RectanglesCloudLayouter.Interfaces;
+﻿using System;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
@@ -8,17 +7,16 @@ namespace TagsCloudContainer
     {
         private readonly IVisualization _visualization;
         private readonly IWordTagsLayouter _wordTagsLayouter;
-        private readonly ICloudRadiusCalculator _cloudRadiusCalculator;
         private readonly IFileReader _fileReader;
         private readonly IImageSaver _imageSaver;
 
         public AppProcessor(IVisualization visualization,
-            IWordTagsLayouter wordTagsLayouter, ICloudRadiusCalculator cloudRadiusCalculator, IFileReader fileReader,
+            IWordTagsLayouter wordTagsLayouter,
+            IFileReader fileReader,
             IImageSaver imageSaver)
         {
             _visualization = visualization;
             _wordTagsLayouter = wordTagsLayouter;
-            _cloudRadiusCalculator = cloudRadiusCalculator;
             _fileReader = fileReader;
             _imageSaver = imageSaver;
         }
@@ -26,9 +24,15 @@ namespace TagsCloudContainer
         public void Run()
         {
             var originalText = _fileReader.GetTextFromFile();
-            var wordTagsLayouter = _wordTagsLayouter.GetWordTags(originalText).ToList();
-            using var cloudImage =
-                _visualization.GetImageCloud(_cloudRadiusCalculator.CloudRadius, wordTagsLayouter.ToList());
+            var (tags, cloudRadius) = _wordTagsLayouter.GetWordTagsAndCloudRadius(originalText);
+            if (tags.Count == 0)
+            {
+                Console.WriteLine("No interesting words for drawing");
+                return;
+            }
+
+            using var cloudImage = _visualization
+                .GetImageCloud(tags, cloudRadius);
             _imageSaver.Save(cloudImage);
         }
     }

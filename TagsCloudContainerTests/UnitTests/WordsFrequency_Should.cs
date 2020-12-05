@@ -18,7 +18,7 @@ namespace TagsCloudContainerTests.UnitTests
         public void SetUp()
         {
             _wordsFilter = A.Fake<IWordsFilter>();
-            _sut = new WordsFrequency(_wordsFilter);
+            _sut = new WordsFrequency(new List<IWordsFilter> {_wordsFilter});
         }
 
         [Test]

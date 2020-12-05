@@ -14,13 +14,15 @@ namespace TagsCloudContainerTests.UnitTests
         private WordsFilter _sut;
         private ISpeechPartsParser _speechPartsParser;
         private ITextProcessingSettings _textProcessingSettings;
+        private ISpeechPartsFilter _speechPartsFilter;
 
         [SetUp]
         public void SetUp()
         {
             _speechPartsParser = A.Fake<ISpeechPartsParser>();
             _textProcessingSettings = A.Fake<ITextProcessingSettings>();
-            _sut = new WordsFilter(_speechPartsParser, _textProcessingSettings);
+            _speechPartsFilter = A.Fake<ISpeechPartsFilter>();
+            _sut = new WordsFilter(_speechPartsParser, _textProcessingSettings, _speechPartsFilter);
         }
 
         [Test]
@@ -36,7 +38,7 @@ namespace TagsCloudContainerTests.UnitTests
         {
             try
             {
-                var act = new Action(() => _sut.GetInterestingWords(null));
+                var _ = new Action(() => _sut.GetInterestingWords(null));
             }
             catch
             {
@@ -44,6 +46,21 @@ namespace TagsCloudContainerTests.UnitTests
             }
 
             A.CallTo(() => _speechPartsParser.ParseToPartSpeechAndWords(A<string>.Ignored)).MustNotHaveHappened();
+        }
+
+        [Test]
+        public void GetInterestingWords_BeNotCalledGetInterestingSpeechParts_WhenStringIsNull()
+        {
+            try
+            {
+                var _ = new Action(() => _sut.GetInterestingWords(null));
+            }
+            catch
+            {
+                // ignored
+            }
+
+            A.CallTo(() => _speechPartsFilter.GetInterestingSpeechParts(A<string[]>.Ignored)).MustNotHaveHappened();
         }
 
         [Test]
@@ -58,6 +75,8 @@ namespace TagsCloudContainerTests.UnitTests
                     ["S"] = new List<string> {words[0], words[1], words.Last()}, ["PR"] = new List<string> {words[2]},
                     ["APRO"] = new List<string> {words[3]}
                 });
+            A.CallTo(() => _speechPartsFilter.GetInterestingSpeechParts(A<string[]>.Ignored))
+                .Returns(new[] {"S"});
             A.CallTo(() => _textProcessingSettings.BoringWords).Returns(new[] {words.Last()});
 
             var act = _sut.GetInterestingWords(text);

@@ -15,7 +15,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
             _visualizationSettings = visualizationSettings;
         }
 
-        public Image GetImageCloud(int cloudRadius, List<WordTag> tags)
+        public Image GetImageCloud(IReadOnlyList<WordTag> tags, int cloudRadius)
         {
             var realImageSize = new Size(cloudRadius * 2, cloudRadius * 2);
             if (realImageSize.Height <= _visualizationSettings.ImageSize.Height &&
@@ -28,7 +28,7 @@ namespace TagsCloudContainer.TagsCloudVisualization
             return bitmap;
         }
 
-        private void DrawCloud(Image image, IEnumerable<WordTag> tags, Size imageSize)
+        private void DrawCloud(Image image, IReadOnlyList<WordTag> tags, Size imageSize)
         {
             using var graphics = Graphics.FromImage(image);
             graphics.Clear(_visualizationSettings.BackgroundColor);

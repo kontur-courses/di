@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Interfaces
 {
     public interface IWordTagsLayouter
     {
-        IEnumerable<WordTag> GetWordTags(string text);
+        (IReadOnlyList<WordTag>, int) GetWordTagsAndCloudRadius(string text);
     }
 }

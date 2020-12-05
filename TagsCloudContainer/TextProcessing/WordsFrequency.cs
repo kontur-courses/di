@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.TextProcessing
 {
     public class WordsFrequency : IWordsFrequency
     {
-        private readonly IWordsFilter _wordsFilter;
+        private readonly IEnumerable<IWordsFilter> _wordsFilter;
 
-        public WordsFrequency(IWordsFilter wordsFilter)
+        public WordsFrequency(IEnumerable<IWordsFilter> wordsFilter)
         {
             _wordsFilter = wordsFilter;
         }
@@ -17,17 +18,23 @@ namespace TagsCloudContainer.TextProcessing
         {
             if (text == null)
                 throw new ArgumentException("String must be not null");
-            var words = _wordsFilter.GetInterestingWords(text);
-            var frequency = new Dictionary<string, int>();
-            foreach (var word in words)
-            {
-                if (frequency.ContainsKey(word))
-                    frequency[word]++;
-                else
-                    frequency[word] = 1;
-            }
 
-            return frequency;
+            return GetInterestingWordsIntersection(_wordsFilter.Select(filter => filter.GetInterestingWords(text))
+                    .ToList())
+                .GroupBy(word => word)
+                .ToDictionary(wordsGroup => wordsGroup.Key,
+                    wordsGroup => wordsGroup.Count());
+        }
+
+        private static IEnumerable<string> GetInterestingWordsIntersection(List<string[]> sequencesWords)
+        {
+            if (sequencesWords.Count == 0)
+                return new List<string>();
+            var intersection = sequencesWords[0].ToList();
+            for (var i = 1; i < sequencesWords.Count; i++)
+                intersection = intersection.Intersect(sequencesWords[i]).ToList();
+
+            return intersection;
         }
     }
 }

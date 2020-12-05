@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.IO;
-using MatthiWare.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using RectanglesCloudLayouter.Core;
 using RectanglesCloudLayouter.Interfaces;
@@ -11,7 +10,6 @@ using TagsCloudContainer.Saver;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.TagsCloudVisualization;
 using TagsCloudContainer.TextProcessing;
-using TagsCloudContainer.UserOptions;
 
 namespace TagsCloudContainer
 {
@@ -19,12 +17,11 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var parsed = new CommandLineParser<AllUserCommands>().Parse(args);
-            if (parsed.HasErrors)
+            var client = new ConsoleClient();
+            if (!client.TryGetUserCommands(args, out var commands))
                 return;
-            var temporarySettingsStorage = new TemporarySettingsStorage(parsed.Result);
             var serviceCollection = new ServiceCollection();
-            InjectDependencies(serviceCollection, temporarySettingsStorage);
+            InjectDependencies(serviceCollection, TemporarySettingsStorage.From(commands));
             serviceCollection.BuildServiceProvider().GetRequiredService<IAppProcessor>().Run();
         }
 
@@ -34,25 +31,27 @@ namespace TagsCloudContainer
             serviceCollection.AddSingleton<IAppProcessor, AppProcessor>()
                 .AddSingleton<IFileReader, FileReader>()
                 .AddSingleton<IImageSaver, ImageSaver>()
-                .AddSingleton(typeof(IStorageSettings),
-                    new StorageSettings(settingsStorage.PathToCustomText, settingsStorage.PathToSave,
-                        settingsStorage.ImageFormat))
-                .AddSingleton(typeof(IVisualizationSettings),
-                    new VisualizationSettings(settingsStorage.ImageSize, settingsStorage.BackgroundColor,
-                        settingsStorage.TextColor, settingsStorage.Font))
-                .AddSingleton(typeof(ITextProcessingSettings), new TextProcessingSettings(settingsStorage.BoringWords))
+                .AddSingleton<IStorageSettings>(new StorageSettings(settingsStorage.PathToCustomText,
+                    settingsStorage.PathToSave,
+                    settingsStorage.ImageFormat))
+                .AddSingleton<IVisualizationSettings>(new VisualizationSettings(settingsStorage.ImageSize,
+                    settingsStorage.BackgroundColor,
+                    settingsStorage.TextColor, settingsStorage.Font))
+                .AddSingleton<ITextProcessingSettings>(new TextProcessingSettings(settingsStorage.BoringWords))
                 .AddSingleton<IVisualization, Visualization>()
-                .AddSingleton<ICloudLayouter, CloudLayouter>()
-                .AddSingleton(typeof(ISpiral), new ArchimedeanSpiral(new Point(0, 0)))
-                .AddSingleton<ICloudRadiusCalculator, CloudRadiusCalculator>()
-                .AddSingleton<IWordTagsLayouter, WordTagsLayouter>()
-                .AddSingleton(typeof(Font), settingsStorage.Font)
+                .AddTransient<ICloudLayouter, CloudLayouter>()
+                .AddSingleton<ISpiral>(new ArchimedeanSpiral(new Point(0, 0),
+                    new SpiralSettings(settingsStorage.AdditionSpiralAngleFromDegrees, settingsStorage.SpiralStep)))
+                .AddTransient<ICloudRadiusCalculator, CloudRadiusCalculator>()
+                .AddTransient<IWordTagsLayouter, WordTagsLayouter>()
+                .AddSingleton(settingsStorage.Font)
                 .AddSingleton<IWordsFrequency, WordsFrequency>()
                 .AddSingleton<IWordMeasurer, WordMeasurer>()
                 .AddSingleton<IWordsFilter, WordsFilter>()
+                .AddSingleton<ISpeechPartsFilter>(new MyStemSpeechPartsFilter(
+                    new[] {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"}))
                 .AddSingleton<ISpeechPartsParser, SpeechPartsParser>()
-                .AddSingleton(typeof(ITextConverter),
-                    new MyStemConverter(Path.GetFullPath("mystem.exe"), "-ni"));
+                .AddSingleton<ITextConverter>(new MyStemConverter(Path.GetFullPath("mystem.exe"), "-ni"));
         }
     }
 }

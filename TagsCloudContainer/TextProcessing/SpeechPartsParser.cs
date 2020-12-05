@@ -21,7 +21,7 @@ namespace TagsCloudContainer.TextProcessing
             var myStemText = _textConverter.ConvertTextToCertainFormat(text);
             var partOfSpeechAndWords = new Dictionary<string, List<string>>();
             var regex = new Regex(@"\w+{(\w+=\w+).*}");
-            foreach (var line in myStemText.Split("\r\n"))
+            foreach (var line in myStemText.Split(Environment.NewLine))
             {
                 var match = regex.Match(line);
                 if (!match.Success) continue;

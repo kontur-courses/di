@@ -6,6 +6,6 @@ namespace TagsCloudContainer.Interfaces
 {
     public interface IVisualization
     {
-        Image GetImageCloud(int cloudRadius, List<WordTag> tags);
+        Image GetImageCloud(IReadOnlyList<WordTag> tags, int cloudRadius);
     }
 }

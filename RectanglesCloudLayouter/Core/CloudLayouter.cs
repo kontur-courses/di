@@ -24,6 +24,8 @@ namespace RectanglesCloudLayouter.Core
 
         public int RectanglesCount => _rectangles.Count;
 
+        public int CloudRadius => _cloudRadiusCalculator.CloudRadius;
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)

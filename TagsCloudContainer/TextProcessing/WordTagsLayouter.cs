@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using RectanglesCloudLayouter.Interfaces;
 using TagsCloudContainer.Interfaces;
 
@@ -22,19 +23,23 @@ namespace TagsCloudContainer.TextProcessing
             _font = font;
         }
 
-        public IEnumerable<WordTag> GetWordTags(string text)
+        public (IReadOnlyList<WordTag>, int) GetWordTagsAndCloudRadius(string text)
         {
             if (text == null)
                 throw new Exception("String must be not null");
-            var wordsAndFrequency = _wordsFrequency.GetWordsFrequency(text);
-            foreach (var word in wordsAndFrequency.Keys)
-            {
-                var wordFont = new Font(_font.FontFamily,
-                    _font.Size + (float) Math.Log2(wordsAndFrequency[word]) * 7);
-                var wordSize = _wordMeasurer.GetWordSize(word, wordFont);
-                var rectangle = _cloudLayouter.PutNextRectangle(wordSize);
-                yield return new WordTag(word, rectangle, wordFont);
-            }
+            var tags = _wordsFrequency
+                .GetWordsFrequency(text)
+                .OrderByDescending(wordAndFrequency => wordAndFrequency.Value)
+                .Select(wordAndFrequency =>
+                {
+                    var wordFont = new Font(_font.FontFamily,
+                        _font.Size + (float) Math.Log2(wordAndFrequency.Value) * 7);
+                    var wordSize = _wordMeasurer.GetWordSize(wordAndFrequency.Key, wordFont);
+                    var rectangle = _cloudLayouter.PutNextRectangle(wordSize);
+                    return new WordTag(wordAndFrequency.Key, rectangle, wordFont);
+                })
+                .ToList();
+            return (tags, _cloudLayouter.CloudRadius);
         }
     }
 }

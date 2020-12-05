@@ -29,8 +29,12 @@ namespace TagsCloudContainer.ConvertersAndCheckers
 
         public string[] BoringWords { get; }
 
+        public double AdditionSpiralAngleFromDegrees { get; }
 
-        public TemporarySettingsStorage(AllUserCommands commands)
+        public double SpiralStep { get; }
+
+
+        private TemporarySettingsStorage(AllUserCommands commands)
         {
             PathToCustomText = _fileExistsСhecker.GetProvenPath(commands.PathToCustomText);
             PathToSave = _directoryChecker.GetExistingDirectory(commands.PathToSave);
@@ -40,6 +44,10 @@ namespace TagsCloudContainer.ConvertersAndCheckers
             TextColor = Color.FromKnownColor(commands.TextColor);
             Font = _fontConverter.ConvertToFont(commands.Font);
             BoringWords = commands.BoringWords;
+            AdditionSpiralAngleFromDegrees = commands.AdditionSpiralAngleFromDegrees;
+            SpiralStep = commands.SpiralStep;
         }
+
+        public static TemporarySettingsStorage From(AllUserCommands commands) => new TemporarySettingsStorage(commands);
     }
 }
