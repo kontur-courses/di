@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TagCloud.Core.Utils;
-using TagCloud.Gui.Helpers;
 
 namespace TagCloud.Gui.ImageResizing
 {

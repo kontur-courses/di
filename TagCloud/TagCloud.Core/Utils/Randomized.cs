@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagCloud.Core.Extensions
+namespace TagCloud.Core.Utils
 {
     internal static class Randomized
     {

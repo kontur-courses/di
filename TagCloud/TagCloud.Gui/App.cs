@@ -111,7 +111,7 @@ namespace TagCloud.Gui
             }
         }
 
-        private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken)
+        private async Task<Image> CreateImageAsync(Dictionary<string, int> words, CancellationToken cancellationToken)
         {
             var selectedFactory = layouterPicker.Selected.Value;
             var selectedLayouter = selectedFactory.Create(
@@ -132,32 +132,17 @@ namespace TagCloud.Gui
             return resultImage;
         }
 
-        private async Task<WordWithFrequency[]> ReadWordsAsync(string sourcePath, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, int>> ReadWordsAsync(string sourcePath,
+            CancellationToken cancellationToken)
         {
             return await Task.Run(() =>
             {
                 var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath)
                     .Where(w => filterPicker.Selected.All(f => f.Value.IsValidWord(w)));
 
-                var convertedWords = normalizerPicker.Selected.Value.Normalize(words);
-
-                if (cancellationToken.IsCancellationRequested)
-                    return new WordWithFrequency[0];
-
-                var dictionary = new Dictionary<string, int>();
-                foreach (var word in convertedWords)
-                {
-                    if (dictionary.ContainsKey(word))
-                        dictionary[word] += 1;
-                    else dictionary[word] = 0;
-
-                    if (cancellationToken.IsCancellationRequested)
-                        break;
-                }
-
-                return dictionary.Select(x => new WordWithFrequency(x.Key, x.Value))
-                    .OrderByDescending(x => x.Frequency)
-                    .ToArray();
+                return normalizerPicker.Selected.Value.Normalize(words)
+                    .ToLookup(x => x)
+                    .ToDictionary(x => x.Key, x => x.Count());
             }, cancellationToken);
         }
 

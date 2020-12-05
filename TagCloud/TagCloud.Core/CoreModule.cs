@@ -2,7 +2,7 @@
 
 namespace TagCloud.Core
 {
-    public class CoreModule : Autofac.Module
+    public class CoreModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

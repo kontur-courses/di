@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TagCloud.Core.Extensions;
 using TagCloud.Core.Layouting;
-using TagCloud.Core.Text;
 using TagCloud.Core.Text.Formatting;
+using TagCloud.Core.Utils;
 using TagCloud.Core.Visualisation;
 
 namespace TagCloud.Core
@@ -18,18 +18,18 @@ namespace TagCloud.Core
         public async Task<Image> DrawWordsAsync(IFontSizeResolver fontSizeResolver,
             Color[] palette,
             ITagCloudLayouter layouter,
-            WordWithFrequency[] wordsCollection,
+            Dictionary<string, int> wordsCollection,
             CancellationToken token, FontFamily fontFamily)
         {
-            if (wordsCollection.Length == 0)
+            if (wordsCollection.Count == 0)
                 throw new ArgumentException($"{nameof(wordsCollection)} is empty", nameof(wordsCollection));
             var fontsCollection = fontSizeResolver.GetFontSizesForAll(wordsCollection);
 
             return await Task.Run(() =>
             {
                 var computedWords = wordsCollection
-                    .OrderByDescending(x => x.Frequency)
-                    .Select(word => new {word.Word, FontSize = fontsCollection[word.Word]})
+                    .OrderByDescending(x => x.Value)
+                    .Select(word => new {Word = word.Key, FontSize = fontsCollection[word.Key]})
                     .Select(x =>
                     {
                         var font = new Font(fontFamily, x.FontSize);

@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using TagCloud.Core.Layouting;
-using TagCloud.Core.Text;
 using TagCloud.Core.Text.Formatting;
 
 namespace TagCloud.Core
@@ -13,7 +13,7 @@ namespace TagCloud.Core
         Task<Image> DrawWordsAsync(IFontSizeResolver fontSizeResolver,
             Color[] palette,
             ITagCloudLayouter layouter,
-            WordWithFrequency[] wordsCollection,
+            Dictionary<string, int> wordsCollection,
             CancellationToken token, FontFamily fontFamily);
     }
 }

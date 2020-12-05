@@ -9,9 +9,9 @@ namespace TagCloud.Core.Text.Formatting
         private const int MinFontSize = 10;
         private const int Step = 3;
 
-        public IDictionary<string, float> GetFontSizesForAll(WordWithFrequency[] allWords)
+        public IDictionary<string, float> GetFontSizesForAll(Dictionary<string, int> allWords)
         {
-            var log = (int) Math.Floor(Math.Log2(allWords.Length));
+            var log = (int) Math.Floor(Math.Log2(allWords.Count));
             var sizes = ToStack(
                 Enumerable.Range(1, log)
                     .Select(i => (int) Math.Pow(2, i))
@@ -24,7 +24,7 @@ namespace TagCloud.Core.Text.Formatting
             var result = new Dictionary<string, float>();
             foreach (var word in allWords)
             {
-                result.Add(word.Word, currentSize.Size);
+                result.Add(word.Key, currentSize.Size);
                 if (++currentSizeUses >= currentSize.Count)
                 {
                     currentSize = sizes.Pop();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloud.Core.Extensions;
+using TagCloud.Core.Utils;
 
 namespace TagCloud.Core.Text.Formatting
 {
@@ -10,7 +10,7 @@ namespace TagCloud.Core.Text.Formatting
             .Select(i => i * 2)
             .ToArray();
 
-        public IDictionary<string, float> GetFontSizesForAll(WordWithFrequency[] words) =>
-            words.ToDictionary(w => w.Word, _ => (float) Randomized.ItemFrom(sizes));
+        public IDictionary<string, float> GetFontSizesForAll(Dictionary<string, int > words) =>
+            words.ToDictionary(w => w.Key, _ => (float) Randomized.ItemFrom(sizes));
     }
 }
