@@ -59,13 +59,7 @@ namespace WinUI
             backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
             colorPalettePicker = UserInput.ColorPalette("Words color palette", Color.DarkRed);
 
-            var formats = new[]
-            {
-                ImageFormat.Exif, ImageFormat.Gif, 
-                ImageFormat.Jpeg, ImageFormat.Png,
-                ImageFormat.Tiff, ImageFormat.Bmp, 
-            };
-
+            var formats = new[] {ImageFormat.Gif, ImageFormat.Png, ImageFormat.Bmp, ImageFormat.Jpeg, ImageFormat.Tiff};
             imageFormatPicker = UserInput.SingleChoice(formats.ToDictionary(x => x.ToString()), "Result image format");
         }
 
@@ -115,7 +109,7 @@ namespace WinUI
 
             var resultImage = await cloudGenerator.DrawWordsAsync(
                 fontSizeSource,
-                colorPalettePicker.PickedColors.ToArray(), 
+                colorPalettePicker.PickedColors.ToArray(),
                 selectedLayouter,
                 words,
                 cancellationToken,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TagsCloudVisualisation.Text.Preprocessing
@@ -6,13 +7,12 @@ namespace TagsCloudVisualisation.Text.Preprocessing
     [VisibleName("Without blacklisted words")]
     public class BlacklistWordFilter : IWordFilter
     {
-        private static readonly string[] blacklistedWords =
+        private static readonly HashSet<string> blacklistedWords = new HashSet<string>
         {
-            "В", "БЕЗ", "ДО", "ДЛЯ", "ЗА", "ЧЕРЕЗ", "НАД", "ПО", "ИЗ", "У", "ОКОЛО", "ПОД", "О", "ПРО", "НА", "К",
-            "ПЕРЕД", "ПРИ", "С", "МЕЖДУ", "КАК", "ЧТО", "ГДЕ", "НЕ", "НИ", "ВОВСЕ", "ВОТ", "ЭТО"
+            "в", "без", "до", "для", "за", "через", "над", "по", "из", "у", "около", "под", "о", "про", "на", "к",
+            "перед", "при", "с", "между", "как", "что", "где", "не", "ни", "вовсе", "вот", "это"
         };
 
-        public bool IsValidWord(string word) =>
-            !blacklistedWords.Any(w => w.Equals(word, StringComparison.CurrentCultureIgnoreCase));
+        public bool IsValidWord(string word) => blacklistedWords.Contains(word.ToUpper());
     }
 }
