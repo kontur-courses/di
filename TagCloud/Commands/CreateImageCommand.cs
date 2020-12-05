@@ -1,4 +1,5 @@
-﻿using TagCloud.Renderers;
+﻿using System;
+using TagCloud.Renderers;
 using TagCloud.Settings;
 
 namespace TagCloud.Commands
@@ -7,11 +8,11 @@ namespace TagCloud.Commands
     {
         private readonly ResultSettings settings;
 
-        private readonly IRender render;
+        private readonly Func<IRender> createRender;
 
-        public CreateImageCommand(IRender render, ResultSettings settings)
+        public CreateImageCommand(Func<IRender> createRender, ResultSettings settings)
         {
-            this.render = render;
+            this.createRender = createRender;
             this.settings = settings;
         }
 
@@ -25,7 +26,7 @@ namespace TagCloud.Commands
                 return new CommandResult(false, "You must specify file name");
 
             settings.Name = args[0];
-            render.Render();
+            createRender().Render();
             return new CommandResult(true, $"Created in {settings.OutputPath}");
         }
     }

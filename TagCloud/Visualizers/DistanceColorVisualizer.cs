@@ -37,9 +37,17 @@ namespace TagCloud.Visualizers
             foreach (var rectangle in VisualizeTarget)
             {
                 var distance = VisualizeTarget.Center.DistanceBetween(rectangle.Center());
-                using var brush = GetBrush(LinearMath.LinearInterpolate(cloudSettings.InnerColorRadius,
-                    cloudSettings.OuterColorRadius, distance));
-                graphics.DrawString(rectangleToWord[rectangle], cloudSettings.Font, brush, rectangle);
+                using var brush = GetBrush(LinearMath.LinearInterpolate(
+                    cloudSettings.InnerColorRadius,
+                    cloudSettings.OuterColorRadius,
+                    distance));
+                var word = rectangleToWord[rectangle];
+                var textSize = graphics.MeasureString(word, cloudSettings.Font);
+                var state = graphics.Save();
+                graphics.TranslateTransform(rectangle.Left, rectangle.Top);
+                graphics.ScaleTransform(rectangle.Width / textSize.Width, rectangle.Height / textSize.Height);
+                graphics.DrawString(word, cloudSettings.Font, brush, PointF.Empty);
+                graphics.Restore(state);
             }
         }
 
