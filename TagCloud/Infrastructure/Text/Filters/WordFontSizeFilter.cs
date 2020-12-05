@@ -20,13 +20,12 @@ namespace TagCloud.Infrastructure.Text.Filters
             var baseFont = fontSettingProvider();
             var maxCount = tokens.Select(pair => pair.info.Frequency).Aggregate(Math.Max);
             var minCount = tokens.Select(pair => pair.info.Frequency).Aggregate(Math.Min);
-
+            var tg1 = Math.Max(baseFont.MaxFontSize - baseFont.MinFontSize, 1);
+            var tg2 = Math.Max(maxCount - minCount, 1);
+            
             int FontSizeLine(int x)
             {
-                return (x - minCount)
-                       * (baseFont.MaxFontSize - baseFont.MinFontSize)
-                       / (maxCount - minCount)
-                       + baseFont.MinFontSize;
+                return (x - minCount) * tg1 / tg2 + baseFont.MinFontSize;
             }
 
             foreach (var (word, info) in tokens)
