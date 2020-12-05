@@ -7,14 +7,14 @@ using TagsCloudContainer.TagsCloudVisualization;
 
 namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
 {
-    public class TagsVisualizerTests
+    public class RectangleVisualizerTests
     {
-        private TagsVisualizer TagsVisualizer { get; set; }
+        private RectangleVisualizer RectangleVisualizer { get; set; }
 
         [SetUp]
         public void SetUp()
         {
-            TagsVisualizer = new TagsVisualizer();
+            RectangleVisualizer = new RectangleVisualizer();
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace TagsCloudVisualization.Tests.TagsCloudVisualizationTests
             var size = new Size(50, 50);
             rectangles.Add(new Rectangle(location, size));
 
-            Action saveImage = () => TagsVisualizer.GetBitmap(rectangles);
+            Action saveImage = () => RectangleVisualizer.GetBitmap(rectangles);
 
             saveImage.Should().Throw<ArgumentException>();
         }

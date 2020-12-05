@@ -16,19 +16,21 @@ namespace TagsCloudUI
         private readonly IBitmapSaver bitmapSaver;
         private readonly FormConfig config;
         private readonly ITagsContainer container;
+        private readonly TagsVisualizer visualizer;
         private string fontFamily;
         private Size imageSize;
         private string path;
         private SpiralType spiralType;
         private List<Tag> tags;
         private Brush textColor;
-        private HashSet<string> stopWords;
+        private readonly HashSet<string> stopWords;
 
-        public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver)
+        public TagsCloudForm(ITagsContainer container, FormConfig config, IBitmapSaver bitmapSaver, TagsVisualizer visualizer)
         {
             this.config = config;
             this.bitmapSaver = bitmapSaver;
             this.container = container;
+            this.visualizer = visualizer;
             stopWords = new HashSet<string>();
         }
 
@@ -49,7 +51,7 @@ namespace TagsCloudUI
             menu.Items.Add(new ToolStripMenuItem("Font", null, (sender, args) => ChangeFont()));
             menu.Items.Add(new ToolStripMenuItem("Color", null, (sender, args) => ChangeColor()));
             menu.Items.Add(new ToolStripMenuItem("Background", null, (sender, args) => ChangeBackgroundColor()));
-            menu.Items.Add(new ToolStripMenuItem("ImageSize", null, (sender, args) => ChangeImageSize()));
+            menu.Items.Add(new ToolStripMenuItem("Window size", null, (sender, args) => ChangeWindowSize()));
             menu.Items.Add(new ToolStripMenuItem("Spiral", null, (sender, args) => ChangeSpiral()));
             menu.Items.Add(new ToolStripMenuItem("Set stop words", null, (sender, args) => SetStopWords()));
             Controls.Add(menu);
@@ -115,7 +117,7 @@ namespace TagsCloudUI
             tags = container.GetTags(File.ReadAllText(path), spiralType);
         }
 
-        private void ChangeImageSize()
+        private void ChangeWindowSize()
         {
             using var form = new Form {Width = 400, FormBorderStyle = FormBorderStyle.FixedDialog, MaximizeBox = false};
 
@@ -151,6 +153,7 @@ namespace TagsCloudUI
             if (fontDialog.ShowDialog() != DialogResult.OK)
                 return;
 
+
             fontFamily = fontDialog.Font.FontFamily.Name;
             Invalidate();
         }
@@ -169,11 +172,20 @@ namespace TagsCloudUI
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            var path = dialog.FileName;
-            var bitmap = new Bitmap(Width, Height);
+            //var path = dialog.FileName;
+            // using var bitmap = new Bitmap(Width, Height);
+            // DrawToBitmap(bitmap, new Rectangle(0, 0, Width, Height));
+            //
+            // var window = PointToScreen(Point.Empty);
+            // var target = new Bitmap(ClientSize.Width, ClientSize.Height);
+            // using (var graphics = Graphics.FromImage(target))
+            // {
+            //     graphics.DrawImage(bitmap, 0, 0, new Rectangle(window.X - Location.X, window.Y - Location.Y, target.Width, target.Height), GraphicsUnit.Pixel);
+            // }
 
-            DrawToBitmap(bitmap, new Rectangle(0, 0, Width, Height));
-            bitmapSaver.SaveBitmapToDirectory(bitmap, path);
+
+
+            bitmapSaver.SaveBitmapToDirectory(visualizer.GetBitmap(tags, BackColor, fontFamily, textColor), dialog.FileName);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -186,8 +198,7 @@ namespace TagsCloudUI
             foreach (var tag in tags.Where(x => !stopWords.Contains(x.Text)))
             {
                 e.Graphics.DrawRectangle(new Pen(Color.Red, 1), tag.Rectangle);
-                e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X,
-                    tag.Rectangle.Y);
+                e.Graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X, tag.Rectangle.Y);
             }
         }
     }

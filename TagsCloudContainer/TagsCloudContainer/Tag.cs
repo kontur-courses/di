@@ -14,5 +14,7 @@ namespace TagsCloudContainer.TagsCloudContainer
         public string Text { get; }
         public Rectangle Rectangle { get; }
         public Font Font { get; }
+
+
     }
 }

@@ -23,6 +23,7 @@ namespace TagsCloudUI
             builder.RegisterType<BitmapSaver>().As<IBitmapSaver>();
             builder.RegisterType<TextParser>().As<ITextParser>();
             builder.RegisterType<CloudLayouter>().As<ILayouter>();
+            builder.RegisterType<TagsVisualizer>();
             builder.RegisterType<TagsCloudContainer.TagsCloudContainer.TagsCloudContainer>().As<ITagsContainer>();
             builder.RegisterType<TagsCloudForm>();
         }

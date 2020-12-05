@@ -1,41 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using TagsCloudContainer.TagsCloudContainer;
 using TagsCloudContainer.TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.TagsCloudVisualization
 {
-    public class TagsVisualizer : ITagsVisualizer
+    public class TagsVisualizer : RectangleVisualizer
     {
-        public Bitmap GetBitmap(List<Rectangle> rectangles)
+        public Bitmap GetBitmap(List<Tag> tags, Color backgroundColor, string fontFamily, Brush textColor)
         {
-            var imageSize = GetImageSize(rectangles);
+            var imageSize = GetImageSize(tags.Select(x => x.Rectangle));
             var pen = new Pen(Color.MediumVioletRed, 4);
-
-            var bitmap = new Bitmap(imageSize.Width + (int) pen.Width,
-                imageSize.Height + (int) pen.Width);
+            var bitmap = new Bitmap(imageSize.Width + (int) pen.Width, imageSize.Height + (int) pen.Width);
             using var graphics = Graphics.FromImage(bitmap);
-
-            if (rectangles.Count != 0) graphics.DrawRectangles(pen, rectangles.ToArray());
-
-            return bitmap;
-        }
-
-        private static Size GetImageSize(IEnumerable<Rectangle> rectangles)
-        {
-            var width = 0;
-            var height = 0;
-
-            foreach (var rectangle in rectangles)
             {
-                if (rectangle.Left < 0 || rectangle.Top < 0)
-                    throw new ArgumentException("rectangle out of image boundaries");
+                graphics.Clear(backgroundColor);
 
-                if (width < rectangle.Right) width = rectangle.Right;
-                if (height < rectangle.Bottom) height = rectangle.Bottom;
+                foreach (var tag in tags)
+                {
+                    graphics.DrawString(tag.Text, new Font(fontFamily, tag.Font.Size), textColor, tag.Rectangle.X, tag.Rectangle.Y);
+                }
             }
 
-            return new Size(width, height);
+            return bitmap;
         }
     }
 }
