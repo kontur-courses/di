@@ -12,7 +12,7 @@ namespace TagsCloud.WordsProcessing
             this.wordsToIgnore = wordsToIgnore.ToHashSet();
         }
 
-        public Dictionary<string, int> ParseWordsFrequency(string fileName)
+        public Dictionary<string, int> ParseWordsFrequencyFromFile(string fileName)
         {
             var frequencies = new Dictionary<string, int>();
             var words = File.ReadLines(fileName).Where(x => !wordsToIgnore.Contains(x)).Select(x => x.ToLower());

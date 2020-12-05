@@ -40,7 +40,7 @@ namespace TagsCloud.UiActions
                 return;
             holder.RecreateCanvas(holder.Settings);
             layouter.ClearLayouter();
-            var frequencies = parser.ParseWordsFrequency(dialog.FileName);
+            var frequencies = parser.ParseWordsFrequencyFromFile(dialog.FileName);
             holder.RenderWords(frequencies);
         }
     }

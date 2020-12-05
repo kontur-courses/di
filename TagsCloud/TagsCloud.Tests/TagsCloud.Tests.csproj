@@ -55,7 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter_Should.cs" />
+    <Compile Include="FontSizeProvider_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsFrequencyParser_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
