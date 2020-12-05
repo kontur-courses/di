@@ -10,6 +10,7 @@ namespace TagCloud.Settings
         public Color OuterColor { get; set; }
         public double InnerColorRadius { get; set; }
         public double OuterColorRadius { get; set; }
+        public Font Font { get; set; }
 
         public static CloudSettings GetDefault()
         {
@@ -20,7 +21,8 @@ namespace TagCloud.Settings
                 InnerColor = Color.Coral,
                 OuterColor = Color.CornflowerBlue,
                 InnerColorRadius = 0,
-                OuterColorRadius = 4000
+                OuterColorRadius = 4000,
+                Font = new Font(FontFamily.GenericMonospace, 24)
             };
         }
     }

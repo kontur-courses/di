@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using TagCloud.Settings;
-using TagCloud.TagClouds;
 
 namespace TagCloud.TagClouds
 {
