@@ -13,17 +13,33 @@ namespace TagCloud.Core
 {
     public sealed class TagCloudGenerator : ITagCloudGenerator
     {
-        private readonly Graphics stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
+        private readonly Graphics stubGraphics;
 
-        public async Task<Image> DrawWordsAsync(IFontSizeResolver fontSizeResolver,
+        private readonly ILayouterFactoryResolver layouterResolver;
+        private readonly IFontSizeSourceResolver sizeSourceResolver;
+
+        public TagCloudGenerator(ILayouterFactoryResolver layouterResolver, IFontSizeSourceResolver sizeSourceResolver)
+        {
+            this.layouterResolver = layouterResolver;
+            this.sizeSourceResolver = sizeSourceResolver;
+
+            stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
+        }
+
+        public async Task<Image> DrawWordsAsync(
+            FontSizeSourceType sizeSourceType,
+            TagCloudLayouterType layouterType,
             Color[] palette,
-            ITagCloudLayouter layouter,
             Dictionary<string, int> wordsCollection,
-            CancellationToken token, FontFamily fontFamily)
+            FontFamily fontFamily,
+            Point centerPoint,
+            Size betweenRectanglesDistance,
+            CancellationToken token)
         {
             if (wordsCollection.Count == 0)
                 throw new ArgumentException($"{nameof(wordsCollection)} is empty", nameof(wordsCollection));
-            var fontsCollection = fontSizeResolver.GetFontSizesForAll(wordsCollection);
+            var fontsCollection = sizeSourceResolver.Get(sizeSourceType).GetFontSizesForAll(wordsCollection);
+            var layouter = layouterResolver.Get(layouterType).Create(centerPoint, betweenRectanglesDistance);
 
             return await Task.Run(() =>
             {

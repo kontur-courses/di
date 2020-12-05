@@ -2,8 +2,9 @@
 
 namespace TagCloud.Core.Text.Formatting
 {
-    public interface IFontSizeResolver
+    public interface IFontSizeSource
     {
+        FontSizeSourceType Type { get; }
         IDictionary<string, float> GetFontSizesForAll(Dictionary<string, int> allWords);
     }
 }

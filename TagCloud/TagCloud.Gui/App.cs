@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -15,7 +16,7 @@ using TagCloud.Gui.InputModels;
 
 namespace TagCloud.Gui
 {
-    public class App
+    public class App : IApp
     {
         private readonly IUi ui;
         private readonly ITagCloudGenerator cloudGenerator;
@@ -23,8 +24,8 @@ namespace TagCloud.Gui
         private readonly UserInputMultipleOptionsChoice<IWordFilter> filterPicker;
         private readonly UserInputOneOptionChoice<IWordConverter> normalizerPicker;
         private readonly UserInputOneOptionChoice<IFileResultWriter> writerPicker;
-        private readonly UserInputOneOptionChoice<ILayouterFactory> layouterPicker;
-        private readonly UserInputOneOptionChoice<IFontSizeResolver> fontSizeResolverPicker;
+        private readonly UserInputOneOptionChoice<TagCloudLayouterType> layouterPicker;
+        private readonly UserInputOneOptionChoice<FontSizeSourceType> fontSizeSourcePicker;
         private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
         private readonly UserInputOneOptionChoice<IImageResizer> imageResizerPicker;
         private readonly UserInputField filePathInput;
@@ -40,8 +41,6 @@ namespace TagCloud.Gui
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
             IEnumerable<IWordConverter> normalizers,
-            IEnumerable<ILayouterFactory> layouters,
-            IEnumerable<IFontSizeResolver> fontSources,
             IEnumerable<IFileResultWriter> writers,
             IEnumerable<IImageResizer> resizers)
         {
@@ -51,10 +50,10 @@ namespace TagCloud.Gui
             readerPicker = UserInput.SingleChoice(ToDictionaryByName(readers), "Words file reader");
             filterPicker = UserInput.MultipleChoice(ToDictionaryByName(filters), "Words filtering method");
             writerPicker = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
-            layouterPicker = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
             normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
-            fontSizeResolverPicker = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font size source");
             imageResizerPicker = UserInput.SingleChoice(ToDictionaryByName(resizers), "Resizing method");
+            layouterPicker = UserInput.SingleChoice(DictionaryFromEnum<TagCloudLayouterType>(), "Layouting algorithm");
+            fontSizeSourcePicker = UserInput.SingleChoice(DictionaryFromEnum<FontSizeSourceType>(), "Font size source");
 
             filePathInput = UserInput.Field("Enter source file path");
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
@@ -78,7 +77,7 @@ namespace TagCloud.Gui
             ui.AddUserInput(backgroundColorPicker);
             ui.AddUserInput(colorPalettePicker);
             AddUserInputOrUseDefault(fontFamilyPicker);
-            AddUserInputOrUseDefault(fontSizeResolverPicker);
+            AddUserInputOrUseDefault(fontSizeSourcePicker);
             ui.AddUserInput(filterPicker);
             AddUserInputOrUseDefault(normalizerPicker);
             ui.AddUserInput(centerOffsetPicker);
@@ -113,21 +112,20 @@ namespace TagCloud.Gui
 
         private async Task<Image> CreateImageAsync(Dictionary<string, int> words, CancellationToken cancellationToken)
         {
-            var selectedFactory = layouterPicker.Selected.Value;
-            var selectedLayouter = selectedFactory.Create(
-                centerOffsetPicker.PointFromCurrent(),
-                betweenWordsDistancePicker.SizeFromCurrent());
-
-            var fontSizeSource = fontSizeResolverPicker.Selected.Value;
+            var selectedLayouterType = layouterPicker.Selected.Value;
+            var selectedSizeSourceType = fontSizeSourcePicker.Selected.Value;
             var fontFamily = fontFamilyPicker.Selected.Value;
 
             var resultImage = await cloudGenerator.DrawWordsAsync(
-                fontSizeSource,
+                selectedSizeSourceType,
+                selectedLayouterType,
                 colorPalettePicker.PickedColors.ToArray(),
-                selectedLayouter,
                 words,
-                cancellationToken,
-                fontFamily);
+                fontFamily,
+                centerOffsetPicker.PointFromCurrent(),
+                betweenWordsDistancePicker.SizeFromCurrent(),
+                cancellationToken
+            );
 
             return resultImage;
         }
@@ -172,5 +170,8 @@ namespace TagCloud.Gui
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
             source.Where(x => x != null).ToDictionary(x => VisibleName.Get(x.GetType()));
+
+        private static Dictionary<string, TEnum> DictionaryFromEnum<TEnum>() where TEnum : struct, Enum =>
+            Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToDictionary(x => x.ToString());
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 
 namespace TagCloud.Core.Text.Formatting
 {
-    public class BiggerAtCenterFontSizeResolver : IFontSizeResolver
+    public class BiggerAtCenterFontSizeSource : IFontSizeSource
     {
         private const int MinFontSize = 10;
         private const int Step = 3;
+
+        public FontSizeSourceType Type => FontSizeSourceType.FrequentIsBigger;
 
         public IDictionary<string, float> GetFontSizesForAll(Dictionary<string, int> allWords)
         {

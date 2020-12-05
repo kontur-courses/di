@@ -10,11 +10,6 @@ namespace TagCloud.Gui
                 .AsImplementedInterfaces()
                 .SingleInstance()
                 .OwnedByLifetimeScope();
-
-            builder.RegisterType<App>()
-                .AsSelf()
-                .SingleInstance()
-                .OwnedByLifetimeScope();
         }
     }
 }

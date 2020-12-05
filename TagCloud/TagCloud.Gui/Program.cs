@@ -18,7 +18,7 @@ namespace TagCloud.Gui
 
             using (var lifetimeScope = InitContainer().BeginLifetimeScope())
             {
-                lifetimeScope.Resolve<App>().Subscribe();
+                lifetimeScope.Resolve<IApp>().Subscribe();
                 lifetimeScope.Resolve<IUi>().Run();
             }
         }

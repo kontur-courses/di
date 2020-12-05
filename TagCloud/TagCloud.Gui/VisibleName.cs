@@ -14,8 +14,8 @@ namespace TagCloud.Gui
         private static readonly Dictionary<Type, string> overridingNames = new Dictionary<Type, string>
         {
             {typeof(CircularTagCloudLayouterFactory), "Circular layout"},
-            {typeof(RandomFontSizeResolver), "Random font size"},
-            {typeof(BiggerAtCenterFontSizeResolver), "Most frequent bigger and closer to center"},
+            {typeof(RandomFontSizeSource), "Random font size"},
+            {typeof(BiggerAtCenterFontSizeSource), "Most frequent bigger and closer to center"},
             {typeof(BlacklistWordFilter), "Without \"boring\" words"},
             {typeof(MyStemWordsConverter), "Yadnex MyStem"},
             {typeof(LengthWordFilter), "Only with length more or equal to 3"},

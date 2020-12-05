@@ -10,10 +10,14 @@ namespace TagCloud.Core
 {
     public interface ITagCloudGenerator : IDisposable
     {
-        Task<Image> DrawWordsAsync(IFontSizeResolver fontSizeResolver,
+        Task<Image> DrawWordsAsync(
+            FontSizeSourceType sizeSourceType,
+            TagCloudLayouterType layouterType,
             Color[] palette,
-            ITagCloudLayouter layouter,
             Dictionary<string, int> wordsCollection,
-            CancellationToken token, FontFamily fontFamily);
+            FontFamily fontFamily,
+            Point centerPoint,
+            Size betweenRectanglesDistance,
+            CancellationToken token);
     }
 }
