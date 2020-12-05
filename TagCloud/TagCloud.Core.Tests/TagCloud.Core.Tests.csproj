@@ -18,6 +18,6 @@
     </ItemGroup>
 
     <Target Name="CopyMyStem" AfterTargets="AfterBuild">
-        <Copy SourceFiles="obj/mystem.exe" DestinationFolder="$(OutDir)" />
+        <Copy SourceFiles="../bin/mystem.exe" DestinationFolder="$(OutDir)" />
     </Target>
 </Project>

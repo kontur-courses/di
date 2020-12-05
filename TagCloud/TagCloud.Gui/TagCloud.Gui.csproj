@@ -14,4 +14,8 @@
     <ItemGroup>
       <ProjectReference Include="..\TagCloud.Core\TagCloud.Core.csproj" />
     </ItemGroup>
+
+    <Target Name="CopyMyStem" AfterTargets="AfterBuild">
+        <Copy SourceFiles="../bin/mystem.exe" DestinationFolder="$(OutDir)" />
+    </Target>
 </Project>
