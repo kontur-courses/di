@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
@@ -17,13 +18,16 @@ namespace TagsCloudVisualization.FormAction
         private readonly ITagCloudBuilder tagCloudBuilder;
         private readonly ICloudVisualizer cloudVisualizer;
         private readonly SpiralParams spiralParams;
+        private readonly ForbiddenWordsSettings forbiddenWordsSettings;
 
         public CloudLayouterAction(
-            ITagCloudBuilder tagCloudBuilder, ICloudVisualizer cloudVisualizer, SpiralParams spiralParams)
+            ITagCloudBuilder tagCloudBuilder, ICloudVisualizer cloudVisualizer, SpiralParams spiralParams,
+            ForbiddenWordsSettings forbiddenWordsSettings)
         {
             this.tagCloudBuilder = tagCloudBuilder;
             this.cloudVisualizer = cloudVisualizer;
             this.spiralParams = spiralParams;
+            this.forbiddenWordsSettings = forbiddenWordsSettings;
         }
 
         public void Perform()
@@ -35,14 +39,17 @@ namespace TagsCloudVisualization.FormAction
                 Multiselect = false,
                 DefaultExt = "txt",
                 InitialDirectory = @"C:\Users\Public\Documents",
-                Filter = "Текстовый документ (*.txt)|*.txt;" 
+                Filter = "Текстовый документ (*.txt)|*.txt;"
             };
             var res = dialog.ShowDialog();
             if (res != DialogResult.OK)
                 return;
+            
             SettingsForm.For(spiralParams).ShowDialog();
+            
             var text = TextReader.ReadAllText(dialog.FileName);
-            var wordsFrequency = TextHandler.GetOrderedByFrequencyWords(text);
+            var wordsFrequency =
+                TextHandler.GetOrderedByFrequencyWords(text, forbiddenWordsSettings.ForbiddenWords.ToHashSet());
             var tagCloud = tagCloudBuilder.Build(wordsFrequency);
             cloudVisualizer.PrintTagCloud(tagCloud);
         }

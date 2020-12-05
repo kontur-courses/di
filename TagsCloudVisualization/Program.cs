@@ -29,7 +29,8 @@ namespace TagsCloudVisualization
             services.AddSingleton<SpiralParams>();
             services.AddSingleton<FontSettings>();
             services.AddSingleton<ImageSettings>();
-            services.AddSingleton<Palette>();
+            services.AddSingleton<PaintingSettings>();
+            services.AddSingleton<ForbiddenWordsSettings>();
 
             services.AddSingleton<IPointGenerator, ArchimedesSpiral>(x =>
                 new ArchimedesSpiral(x.GetService<SpiralParams>(), x.GetService<ICanvas>().GetImageCenter()));
@@ -40,6 +41,7 @@ namespace TagsCloudVisualization
             services.AddTransient<IFormAction, PaletteAction>();
             services.AddTransient<IFormAction, ImageSettingsAction>();
             services.AddTransient<IFormAction, ExampleAction>();
+            services.AddTransient<IFormAction, ForbiddenWordsAction>();
 
             services.AddSingleton<Form, MainForm>();
 
