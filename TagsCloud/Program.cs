@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
@@ -23,7 +24,7 @@ namespace TagsCloud
                 "и",
                 "a",
                 "в"
-            }).AsSelf();
+            }).As<IEnumerable<string>>();
             builder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             builder.RegisterType<BlackListWordsFilter>().As<IWordsFilter>().SingleInstance();
             builder.RegisterType<Mainform>().AsSelf();

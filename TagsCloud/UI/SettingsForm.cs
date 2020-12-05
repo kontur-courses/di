@@ -9,7 +9,7 @@ namespace TagsCloud.UI
         {
             var okButton = new Button
             {
-                Text = @"OK",
+                Text = "OK",
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom
             };
@@ -25,7 +25,7 @@ namespace TagsCloud.UI
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Text = @"Настройки";
+            Text = "Настройки";
         }
     }
 }

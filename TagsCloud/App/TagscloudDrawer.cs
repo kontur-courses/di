@@ -10,6 +10,7 @@ namespace TagsCloud.App
     {
         private readonly TagsCloudSettings tagsCloudSettings;
         private IRectanglesLayouter layouter;
+        private const int MaxFontSize = 100;
 
         public TagsCloudDrawer(IRectanglesLayouter layouter, TagsCloudSettings tagsCloudSettings)
         {
@@ -46,14 +47,15 @@ namespace TagsCloud.App
             layouter = newLayouter;
         }
 
-        public IEnumerable<Tag> GetTagsFromWords(IEnumerable<Word> words, Graphics graphics)
+        private IEnumerable<Tag> GetTagsFromWords(IEnumerable<Word> words, Graphics graphics)
         {
             if (words == null)
                 throw new NullReferenceException("Words collection should not be null");
             foreach (var word in words)
             {
+                var wordFontSize = Math.Max((int)(word.Weight * MaxFontSize), 1);
                 var wordFont = new Font(tagsCloudSettings.CurrentFontFamily,
-                    word.Weight,
+                    wordFontSize,
                     tagsCloudSettings.CurrentFontStyle);
                 var newRectangle = layouter.PutNextRectangle(CalculateWordsSize(word.Value, wordFont, graphics));
                 yield return new Tag(word.Value, wordFont, newRectangle);

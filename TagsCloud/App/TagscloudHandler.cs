@@ -33,7 +33,7 @@ namespace TagsCloud.App
                 .ToList();
             var counts = neededWords
                 .GroupBy(word => word)
-                .Select(group => new Word(group.Key, group.Count()));
+                .Select(group => new Word(group.Key, (double)group.Count() / neededWords.Count));
             return drawer.GetTagsCloud(counts);
         }
     }

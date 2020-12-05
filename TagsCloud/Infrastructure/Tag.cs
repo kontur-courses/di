@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloud.Infrastructure
 {
@@ -21,9 +22,7 @@ namespace TagsCloud.Infrastructure
                 (int) (Rectangle.Y * tagsCloudSizeRatio),
                 (int) (Rectangle.Width * tagsCloudSizeRatio),
                 (int) (Rectangle.Height * tagsCloudSizeRatio));
-            var tagFontSize = (int) (Font.Size * tagsCloudSizeRatio);
-            if (tagFontSize == 0)
-                tagFontSize = 1;
+            var tagFontSize = Math.Max((int)(Font.Size * tagsCloudSizeRatio), 1);
             return new Tag(Value,
                 new Font(Font.FontFamily,
                     tagFontSize, Font.Style), tagBounds);

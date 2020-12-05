@@ -6,13 +6,13 @@
         {
         }
 
-        public Word(string value, int weight)
+        public Word(string value, double weight)
         {
             Value = value;
             Weight = weight;
         }
 
         public string Value { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
     }
 }
