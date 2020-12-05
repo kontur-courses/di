@@ -8,6 +8,8 @@
         <RootNamespace>TagCloudTests</RootNamespace>
 
         <LangVersion>9</LangVersion>
+
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

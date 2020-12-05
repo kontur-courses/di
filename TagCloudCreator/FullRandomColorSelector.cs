@@ -6,7 +6,6 @@ namespace TagCloudCreator
     public class FullRandomColorSelector : IColorSelector
     {
         private readonly Random random = new Random();
-        public string Name => "Full random color";
 
         public Color GetColor(DrawingWord word)
         {

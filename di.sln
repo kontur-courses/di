@@ -4,13 +4,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudLayouters", "CloudLayouters\CloudLayouters.csproj", "{854D1AFE-816D-48A3-8473-9E3B4C83F372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGUIClient", "TagCloudGUIClient\TagCloudGUIClient.csproj", "{9B7CC453-82A9-4475-8E80-534B05F00B0E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreatorTests", "TagCloudCreatorTests\TagCloudCreatorTests.csproj", "{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloudCreator\TagCloudCreator.csproj", "{EDF64D5D-4BB4-4BAC-9177-93B52E63A32D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudLayoutersTests", "CloudLayoutersTests\CloudLayoutersTests.csproj", "{C5907409-C76D-4845-86DA-5E88818A6982}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGUIClient", "TagCloudGUIClient\TagCloudGUIClient.csproj", "{77214E87-FF2B-4A71-885B-86FE6DF91897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,6 @@ Global
 		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{854D1AFE-816D-48A3-8473-9E3B4C83F372}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B7CC453-82A9-4475-8E80-534B05F00B0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B77E5D17-D720-45B2-B182-A5B0A47BC9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,5 +38,9 @@ Global
 		{C5907409-C76D-4845-86DA-5E88818A6982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5907409-C76D-4845-86DA-5E88818A6982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5907409-C76D-4845-86DA-5E88818A6982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77214E87-FF2B-4A71-885B-86FE6DF91897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77214E87-FF2B-4A71-885B-86FE6DF91897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77214E87-FF2B-4A71-885B-86FE6DF91897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77214E87-FF2B-4A71-885B-86FE6DF91897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

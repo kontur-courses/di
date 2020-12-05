@@ -2,22 +2,17 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netcoreapp5.0</TargetFramework>
-        <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <TargetFramework>net5.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <Nullable>enable</Nullable>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>TagCloud</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="5.2.0" />
-      <PackageReference Include="FluentAssertions" Version="5.10.3" />
+      <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
+      <PackageReference Include="Autofac" Version="6.1.0" />
     </ItemGroup>
 
 </Project>

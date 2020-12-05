@@ -11,7 +11,7 @@ namespace TagCloudCreator
         private static readonly int MaximalFontSize = 60;
 
         internal static IEnumerable<DrawingWord> GetReadyWords(IEnumerable<WordStatistic> wordsStatistic,
-            BaseCloudLayouter layouter, FontFamily fontFamily)
+            BaseCloudLayouter layouter, FontFamily fontFamily, IWordPainter wordPainter)
         {
             var statistics = wordsStatistic.ToList();
             if (statistics.Count == 0)
@@ -26,7 +26,7 @@ namespace TagCloudCreator
                 // ReSharper disable once ConstantNullCoalescingCondition
                 fonts[fontSize - MininalFontSize] ??= new Font(fontFamily, fontSize);
                 var font = fonts[fontSize - MininalFontSize];
-                var size = graphics.MeasureString(statistic.Word, font).ToSize();
+                var size = wordPainter.GetWordSize(statistic.Word, font);
                 var word = new DrawingWord(statistic.Word, font, layouter.PutNextRectangle(size).Location);
                 yield return word;
             }
