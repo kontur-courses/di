@@ -8,8 +8,8 @@ namespace TagsCloud.App.Tests
 {
     public class SetImageSizeCommand_Should
     {
-        private IImageSizeProvider imageSizeProvider;
         private SetImageSizeCommand command;
+        private IImageSizeProvider imageSizeProvider;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +26,7 @@ namespace TagsCloud.App.Tests
                 Height = 150,
                 Width = 150
             };
-            command.Execute(new[]{"150", "150"});
+            command.Execute(new[] {"150", "150"});
             imageSizeProvider.ImageSize.Height.Should().Be(newImageSize.Height);
             imageSizeProvider.ImageSize.Width.Should().Be(newImageSize.Width);
         }

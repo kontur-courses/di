@@ -21,7 +21,7 @@ namespace TagsCloud.App.Tests
         [Test]
         public void Execute_CallMethod_AddColor()
         {
-            command.Execute(new[]{"blue"});
+            command.Execute(new[] {"blue"});
             A.CallTo(() => imageColorProvider.AddColor(Color.Blue)).MustHaveHappened();
         }
     }

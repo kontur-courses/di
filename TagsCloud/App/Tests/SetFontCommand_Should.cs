@@ -9,8 +9,8 @@ namespace TagsCloud.App.Tests
 {
     public class SetFontCommand_Should
     {
-        private IFontFamilyProvider fontFamilyProvider;
         private SetFontCommand command;
+        private IFontFamilyProvider fontFamilyProvider;
 
         [SetUp]
         public void SetUp()
@@ -23,9 +23,8 @@ namespace TagsCloud.App.Tests
         public void Execute_Set_FamilyFont()
         {
             var fontName = "Georgia";
-            command.Execute(new[]{fontName});
+            command.Execute(new[] {fontName});
             fontFamilyProvider.FontFamily.Should().Be(new FontFamily(fontName));
-
         }
     }
 }

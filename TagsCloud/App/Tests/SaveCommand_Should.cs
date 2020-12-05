@@ -7,8 +7,8 @@ namespace TagsCloud.App.Tests
 {
     public class SaveCommand_Should
     {
-        private IImageHolder imageHolder;
         private SaveCommand command;
+        private IImageHolder imageHolder;
 
         [SetUp]
         public void SetUp()
@@ -20,7 +20,7 @@ namespace TagsCloud.App.Tests
         [Test]
         public void Execute_CallMethod_SaveImage()
         {
-            command.Execute(new[]{"asd"});
+            command.Execute(new[] {"asd"});
             A.CallTo(() => imageHolder.SaveImage("asd")).MustHaveHappened();
         }
     }

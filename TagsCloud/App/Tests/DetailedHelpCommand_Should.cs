@@ -9,9 +9,9 @@ namespace TagsCloud.App.Tests
 {
     public class DetailedHelpCommand_Should
     {
+        private IClient client;
         private DetailedHelpCommand command;
         private TextWriter writer;
-        private IClient client;
 
         [SetUp]
         public void SetUp()
@@ -24,14 +24,14 @@ namespace TagsCloud.App.Tests
         [Test]
         public void Execute_CallMethod_FindCommandByName()
         {
-            command.Execute(new []{"asd"});
+            command.Execute(new[] {"asd"});
             A.CallTo(() => client.FindCommandByName(A<string>.Ignored)).MustHaveHappened();
         }
-        
+
         [Test]
         public void Execute_CallMethod_WriteLine()
         {
-            command.Execute(new []{"asd"});
+            command.Execute(new[] {"asd"});
             A.CallTo(() => writer.WriteLine(A<string>.Ignored)).MustHaveHappened();
         }
     }
