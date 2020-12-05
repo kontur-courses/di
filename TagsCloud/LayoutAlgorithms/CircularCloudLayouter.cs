@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloud.Extensions;
+using TagsCloud.PointGenerator;
 
 namespace TagsCloud.LayoutAlgorithms
 {
-    class CircularCloudLayouter : ILayoutAlgorithm
+    public class CircularCloudLayouter : ILayoutAlgorithm
     {
         private readonly List<Rectangle> _rectangles;
         private readonly ArchimedeanSpiral _spiral;
@@ -34,11 +35,6 @@ namespace TagsCloud.LayoutAlgorithms
             var result = MoveToCanvasCenter(rectangle);
             _rectangles.Add(result);
             return result;
-        }
-
-        public IEnumerable<Rectangle> GetRectangles()
-        {
-            return _rectangles;
         }
 
         public Size GetSize()
@@ -71,7 +67,7 @@ namespace TagsCloud.LayoutAlgorithms
 
         private Rectangle MoveToCanvasCenter(Rectangle rectangle, int axisStep = 1)
         {
-            if (rectangle.GetMiddlePoint().Equals(_canvasCenter))
+            if (rectangle.GetMiddlePoint() == _canvasCenter)
                 return rectangle;
 
             var currentRectangle = rectangle;

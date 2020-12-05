@@ -2,7 +2,7 @@
 
 namespace TagsCloud.LayoutAlgorithms
 {
-    interface ILayoutAlgorithm
+    public interface ILayoutAlgorithm
     {
         public Rectangle PutNextRectangle(Size size);
         public Size GetSize();
