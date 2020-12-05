@@ -76,6 +76,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CircularCloudLayouter.cs" />
+        <Compile Include="IParameterizedWordRendererToImage.cs" />
         <Compile Include="IRectangleLayouter.cs" />
         <Compile Include="IWordRenderer.cs" />
         <Compile Include="LayoutedWord.cs" />

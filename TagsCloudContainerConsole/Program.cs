@@ -25,11 +25,13 @@ namespace TagsCloudContainerConsole
                 foreach (var excluded in options.Excluding)
                     if (File.Exists(excluded)) container.Excluding(ReadWordsFromFile(excluded));
 
-                var renderer = new WordRendererToImage()
-                    .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
-                    .WithScale(GetScalingMethod(options))
-                    .WithColor(GetColoringMethod(options));
+                IParameterizedWordRendererToImage renderer = new WordRendererToImage();
+                var font = new Font(options.Font, options.FontSize, GraphicsUnit.Pixel);
+                renderer.SetFontFunction((info, word) => font);
+                renderer.SetScalingFunction(GetScalingMethod(options));
+                renderer.SetColorFunction(GetColoringMethod(options));
                 renderer.AutoSize = options.AutoSize;
+                
                 if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
                 container.Rendering(renderer);
                 container.Render();
@@ -97,42 +99,40 @@ namespace TagsCloudContainerConsole
             LerpMax
         }
 
-        private static Func<WordRendererToImage.SizingInfo, LayoutedWord, float> GetScalingMethod(Options option)
+        private static Func<SizingInfo, LayoutedWord, float> GetScalingMethod(Options option)
         {
-            var scalingMethods =
-                new Dictionary<ScalingMethods, Func<WordRendererToImage.SizingInfo, LayoutedWord, float>>
+            var scalingMethods = new Dictionary<ScalingMethods, Func<SizingInfo, LayoutedWord, float>>
+            {
+                [ScalingMethods.Linear] = (info, word) => word.Count,
+                [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
+                [ScalingMethods.LerpTotal] = (info, word) =>
                 {
-                    [ScalingMethods.Linear] = (info, word) => word.Count,
-                    [ScalingMethods.Sqrt] = (info, word) => (float) Math.Sqrt(word.Count),
-                    [ScalingMethods.LerpTotal] = (info, word) =>
-                    {
-                        var min = option.ScalingLerpMin;
-                        var amount = option.ScalingLerpMax - min;
-                        return min + amount * word.Count / info.TotalWordsCount;
-                    },
-                    [ScalingMethods.LerpMax] = (info, word) => 
-                    {
-                        var min = option.ScalingLerpMin;
-                        var amount = option.ScalingLerpMax - min;
-                        return min + amount * (word.Count - info.MinWordCount) / (info.MaxWordCount - info.MinWordCount);
-                    }
-                };
+                    var min = option.ScalingLerpMin;
+                    var amount = option.ScalingLerpMax - min;
+                    return min + amount * word.Count / info.TotalWordsCount;
+                },
+                [ScalingMethods.LerpMax] = (info, word) =>
+                {
+                    var min = option.ScalingLerpMin;
+                    var amount = option.ScalingLerpMax - min;
+                    return min + amount * (word.Count - info.MinWordCount) / (info.MaxWordCount - info.MinWordCount);
+                }
+            };
             return scalingMethods[option.Scaling];
         }
         
-        private static Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color> GetColoringMethod(Options options)
+        private static Func<RenderingInfo, LayoutedWord, Color> GetColoringMethod(Options options)
         {
             var from = options.ColoringFrom ?? Color.FromArgb(0, 255, 128);
             var to = options.ColoringTo ?? Color.FromArgb(255, 0, 128);
-            var coloringMethods =
-                new Dictionary<ColoringMethods, Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color>>
-                {
-                    [ColoringMethods.LerpTotal] = (info, word)
-                        => Lerp(from, to, word.Count / (float) info.TotalWordsCount),
-                    [ColoringMethods.LerpMax] = (info, word)
-                        => Lerp(from, to, 
-                            (word.Count - info.MinWordCount) / (float) (info.MaxWordCount - info.MinWordCount))
-                };
+            var coloringMethods = new Dictionary<ColoringMethods, Func<RenderingInfo, LayoutedWord, Color>>
+            {
+                [ColoringMethods.LerpTotal] = (info, word)
+                    => Lerp(from, to, word.Count / (float) info.TotalWordsCount),
+                [ColoringMethods.LerpMax] = (info, word)
+                    => Lerp(from, to,
+                        (word.Count - info.MinWordCount) / (float) (info.MaxWordCount - info.MinWordCount))
+            };
             return coloringMethods[options.Coloring];
             
             int LerpInt(int a, int b, float t) => (int) (a + (b - a) * t);

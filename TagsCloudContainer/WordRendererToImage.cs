@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class WordRendererToImage : IWordRenderer
+    public class WordRendererToImage : IParameterizedWordRendererToImage
     {
         public Font DefaultFont = new Font("Arial", 32, GraphicsUnit.Pixel);
         public Color DefaultColor = Color.Red;
@@ -17,7 +17,7 @@ namespace TagsCloudContainer
         private Func<RenderingInfo, LayoutedWord, Color> colorFunction = DefaultColorFunction;
         private Func<SizingInfo, LayoutedWord, float> scaleFunction = (info, word) => word.Count;
 
-        public bool AutoSize = false;
+        public bool AutoSize { get; set; }
 
         public Image Output
         {
@@ -77,6 +77,10 @@ namespace TagsCloudContainer
             return this;
         }
 
+        public void SetFontFunction(Func<RenderingInfo, LayoutedWord, Font> fontFunc) => WithFont(fontFunc);
+        public void SetScalingFunction(Func<SizingInfo, LayoutedWord, float> scalingFunc) => WithScale(scalingFunc);
+        public void SetColorFunction(Func<RenderingInfo, LayoutedWord, Color> colorFunc) => WithColor(colorFunc);
+
         public IEnumerable<LayoutedWord> SizeWords(IEnumerable<LayoutedWord> words)
         {
             var sizingInfo = new SizingInfo(this, words.ToArray());
@@ -135,38 +139,5 @@ namespace TagsCloudContainer
 
         private int LerpInt(int a, int b, float t) => (int) (a + (b - a) * t);
         private float Lerp(float a, float b, float t) => a + (b - a) * t;
-
-        public class SizingInfo
-        {
-            public readonly WordRendererToImage Renderer;
-            public readonly LayoutedWord[] WordsArray;
-            public readonly int MinWordCount;
-            public readonly int MaxWordCount;
-            public readonly int TotalWordsCount;
-
-            public SizingInfo(WordRendererToImage renderer, LayoutedWord[] wordsArray)
-            {
-                Renderer = renderer;
-                WordsArray = wordsArray;
-
-                MinWordCount = wordsArray.Min(word => word.Count);
-                MaxWordCount = wordsArray.Max(word => word.Count);
-                TotalWordsCount = wordsArray.Sum(word => word.Count);
-            }
-        }
-
-        public class RenderingInfo : SizingInfo
-        {
-            public RectangleF WordsBorders;
-
-            public RenderingInfo(WordRendererToImage renderer, LayoutedWord[] wordsArray) : base(renderer, wordsArray)
-            {
-                WordsBorders = RectangleF.FromLTRB(
-                    WordsArray.Min(w => w.Rectangle.Left),
-                    WordsArray.Min(w => w.Rectangle.Top),
-                    WordsArray.Max(w => w.Rectangle.Right),
-                    WordsArray.Max(w => w.Rectangle.Bottom));
-            }
-        }
     }
 }
