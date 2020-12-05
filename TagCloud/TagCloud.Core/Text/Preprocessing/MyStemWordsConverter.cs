@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MyStemWrapper;
+using TagCloud.Core.Utils;
 
 namespace TagCloud.Core.Text.Preprocessing
 {
     public class MyStemWordsConverter : IWordConverter
     {
-        private const string ExeName = @"mystem.exe";
+        private const string MyStemExe = @"mystem.exe";
 
         private readonly Lazy<Lemmatizer> normalizer;
 
@@ -16,8 +17,8 @@ namespace TagCloud.Core.Text.Preprocessing
         {
             normalizer = new Lazy<Lemmatizer>(() =>
             {
-                if (!File.Exists(ExeName))
-                    throw new FileNotFoundException($"Missed mystem library on path {Path.GetFullPath(ExeName)}");
+                if (!File.Exists(MyStemExe))
+                    File.Copy(SharedBin.File(MyStemExe), MyStemExe);
                 return new Lemmatizer();
             });
         }
