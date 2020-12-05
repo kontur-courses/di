@@ -4,11 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TagCloud", "TagCloud", "{82365357-3F9B-42C6-A8BD-48C20F9392BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualisation", "TagCloud\TagsCloudVisualisation\TagsCloudVisualisation.csproj", "{2A05FAA8-6D18-4602-87BC-088CF824FCB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Core", "TagCloud\TagCloud.Core\TagCloud.Core.csproj", "{2A05FAA8-6D18-4602-87BC-088CF824FCB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUI", "TagCloud\WinUI\WinUI.csproj", "{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Gui", "TagCloud\TagCloud.Gui\TagCloud.Gui.csproj", "{AFD41C5F-1058-4E6D-AA6D-B40419A02CD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualiserTests", "TagCloud\VisualiserTests\VisualiserTests.csproj", "{562143DD-76EA-4C75-811C-E10AE31DC8FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Core.Tests", "TagCloud\TagCloud.Core.Tests\TagCloud.Core.Tests.csproj", "{562143DD-76EA-4C75-811C-E10AE31DC8FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
