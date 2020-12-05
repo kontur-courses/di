@@ -11,7 +11,6 @@ namespace TagsCloudVisualization.Canvases
         {
             RecreateImage(imageSettings);
             Dock = DockStyle.Fill;
-            
         }
 
         public Size GetImageSize()
@@ -41,9 +40,9 @@ namespace TagsCloudVisualization.Canvases
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
         }
 
-        public void SaveImage(string fileName)
+        public void SaveImage(string fileName, ImageFormat imageFormat)
         {
-            Image.Save(fileName);
+            Image.Save(fileName, imageFormat);
         }
     }
 }
