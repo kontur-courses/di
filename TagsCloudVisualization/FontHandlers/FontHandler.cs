@@ -16,7 +16,13 @@ namespace TagsCloudVisualization.FontHandlers
         
         private static float GetNewFontSize(int frequency, FontSettings fontSettings)
         {
-            var newFontSize = (float) Math.Log(frequency, FontScale) + fontSettings.Font.Size / 10;
+            if (frequency == 1)
+            {
+                var rand = new Random();
+                return rand.Next((int) fontSettings.MinSize, (int) fontSettings.MinSize + 7);
+            }
+            
+            var newFontSize = (float) Math.Log(frequency, FontScale) + fontSettings.Font.Size / 2;
 
             if (newFontSize > fontSettings.MaxSize)
                 newFontSize = fontSettings.MaxSize;

@@ -39,6 +39,7 @@ namespace TagsCloudVisualization
             services.AddTransient<IFormAction, FontAction>();
             services.AddTransient<IFormAction, PaletteAction>();
             services.AddTransient<IFormAction, ImageSettingsAction>();
+            services.AddTransient<IFormAction, ExampleAction>();
 
             services.AddSingleton<Form, MainForm>();
 

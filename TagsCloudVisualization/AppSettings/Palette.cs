@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.AppSettings
         public Color TextColor { get; set; } = Color.Red;
         public Color BackgroundColor { get; set; } = Color.Black;
 
-        public bool EnabledMultipleColors { get; set; } = false;
+        public bool EnabledMultipleColors { get; set; } = true;
         public bool DrawTextBoundingZone { get; set; } = false;
 
         public Color[] Colors { get; set; } = 
