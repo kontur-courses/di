@@ -81,6 +81,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Layouters\Spiral.cs" />
+    <Compile Include="Layouters\SpiralCloudLayouter.cs" />
+    <Compile Include="UiActions\SelectDenseLayouterAction.cs" />
+    <Compile Include="UiActions\SelectSpiralLayouterAction.cs" />
     <Compile Include="WordsProcessing\FontSizeProvider.cs" />
     <Compile Include="GUI\SettingsForm.cs">
       <SubType>Form</SubType>

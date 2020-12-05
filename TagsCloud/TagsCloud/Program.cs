@@ -20,7 +20,8 @@ namespace TagsCloud
 
             var builder = new ContainerBuilder();
             builder.RegisterType<PictureBoxImageHolder>().AsSelf().As<IImageHolder>().SingleInstance();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouter>().AsSelf().As<ICloudLayouter>().SingleInstance();
+            builder.RegisterType<SpiralCloudLayouter>().AsSelf().As<ICloudLayouter>().SingleInstance();
             builder.Register(_ => defaultImageSettings).SingleInstance();
             builder.Register(_ => new WordsFrequencyParser(defaultWordsToIgnore)).As<IWordsFrequencyParser>();
 
@@ -28,6 +29,8 @@ namespace TagsCloud
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<ParserSettingsAction>().As<IUiAction>();
+            builder.RegisterType<SelectDenseLayouterAction>().As<IUiAction>();
+            builder.RegisterType<SelectSpiralLayouterAction>().As<IUiAction>();
             builder.RegisterType<MainForm>().AsSelf();
             var container = builder.Build();
 

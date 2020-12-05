@@ -22,10 +22,19 @@ namespace TagsCloud.Infrastructure
             RecreateCanvas(settings);
         }
 
+        public void ChangeLayouter(ICloudLayouter layouter)
+        {
+            this.layouter = layouter;
+            RedrawCurrentImage();
+        }
+
         public Graphics StartDrawing() => Graphics.FromImage(Image);
 
         public void RenderWords(Dictionary<string, int> frequencyDictionary)
         {
+            if(frequencyDictionary is null)
+                return;
+
             layouter.ClearLayouter();
             wordsFreuqencies = frequencyDictionary;
             var totalWords = frequencyDictionary.Count;
