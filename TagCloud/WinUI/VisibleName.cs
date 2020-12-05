@@ -5,6 +5,7 @@ using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
 using TagsCloudVisualisation.Text.Preprocessing;
+using WinUI.ImageResizing;
 
 namespace WinUI
 {
@@ -20,6 +21,9 @@ namespace WinUI
             {typeof(LowerCaseConverter), "Lower cased"},
             {typeof(FileWordsReader), "Text file"},
             {typeof(FileResultWriter), "Save to file"},
+            {typeof(DontModifyImageResizer), "Save as it is"},
+            {typeof(FitToSizeImageResizer), "Fit to size"},
+            {typeof(StretchImageResizer), "Stretch to size"},
         };
 
         public static string Get(Type type) => 

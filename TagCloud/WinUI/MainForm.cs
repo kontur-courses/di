@@ -196,27 +196,34 @@ namespace WinUI
             {
                 var table = new TableLayoutPanel
                 {
-                    RowCount = 2,
-                    RowStyles = {new RowStyle(SizeType.Percent, 50), new RowStyle(SizeType.Percent, 50)},
-                    ColumnCount = 2,
-                    ColumnStyles = {new ColumnStyle(SizeType.Percent, 20), new ColumnStyle(SizeType.Percent, 80)},
                     BorderStyle = BorderStyle.None,
                     CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
                     Padding = Padding.Empty,
                     Margin = Padding.Empty,
-                    Height = 100
+                    RowCount = 1,
+                    RowStyles = {new RowStyle(SizeType.Percent, 100)},
+                    ColumnCount = 4,
+                    ColumnStyles =
+                    {
+                        new ColumnStyle(SizeType.Percent, 25),
+                        new ColumnStyle(SizeType.Percent, 25),
+                        new ColumnStyle(SizeType.Percent, 25),
+                        new ColumnStyle(SizeType.Percent, 25)
+                    },
+                    Height = 30
                 };
 
                 var isPoint = sizeInput.ShowAsPoint;
-                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = isPoint ? "X coord" : "Width"}, 0, 0);
-                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = isPoint ? "Y coord" : "Height"}, 0, 1);
 
-                var widthInput = CreateIntInput(sizeInput.Width, i => sizeInput.Width = i, DockStyle.Left);
+                table.Controls.Add(
+                    new Label {Dock = DockStyle.Fill, AutoSize = true, Text = isPoint ? "X coord" : "Width"}, 0, 0);
+                var widthInput = CreateIntInput(sizeInput.Width, i => sizeInput.Width = i, DockStyle.Fill);
                 table.Controls.Add(widthInput, 1, 0);
 
-                var heightInput = CreateIntInput(sizeInput.Height, i => sizeInput.Height = i, DockStyle.Left);
-                table.Controls.Add(heightInput, 1, 1);
-
+                table.Controls.Add(
+                    new Label {Dock = DockStyle.Fill, AutoSize = true, Text = isPoint ? "Y coord" : "Height"}, 2, 0);
+                var heightInput = CreateIntInput(sizeInput.Height, i => sizeInput.Height = i, DockStyle.Fill);
+                table.Controls.Add(heightInput, 3, 0);
                 return table;
             });
         }
@@ -304,7 +311,7 @@ namespace WinUI
                 return;
 
             var previous = pictureBox.Image;
-            pictureBox.Image = PlaceAtCenter(currentResultImage, pictureBox.Size);
+            pictureBox.Image = GraphicsUtils.PlaceAtCenter(currentResultImage, pictureBox.Size);
             previous?.Dispose();
         }
 
@@ -317,20 +324,6 @@ namespace WinUI
                 FullOpen = true,
                 AllowFullOpen = true
             };
-        }
-
-        private static Image PlaceAtCenter(Image source, Size newSize)
-        {
-            var resizeCoefficient = Math.Min(
-                (float) newSize.Height / source.Height,
-                (float) newSize.Width / source.Width);
-            var resized = new Bitmap(source, (source.Size * resizeCoefficient).ToSize());
-            var location = new Point((newSize - resized.Size) / 2);
-
-            var result = new Bitmap(newSize.Width, newSize.Height);
-            using (var g = Graphics.FromImage(result))
-                g.DrawImage(resized, location);
-            return result;
         }
     }
 }

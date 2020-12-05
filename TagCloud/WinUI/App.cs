@@ -10,6 +10,7 @@ using TagsCloudVisualisation.Output;
 using TagsCloudVisualisation.Text;
 using TagsCloudVisualisation.Text.Formatting;
 using TagsCloudVisualisation.Text.Preprocessing;
+using WinUI.ImageResizing;
 using WinUI.InputModels;
 
 namespace WinUI
@@ -25,9 +26,11 @@ namespace WinUI
         private readonly UserInputOneOptionChoice<ILayouterFactory> layouterPicker;
         private readonly UserInputOneOptionChoice<IFontSizeResolver> fontSizeResolverPicker;
         private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
+        private readonly UserInputOneOptionChoice<IImageResizer> imageResizerPicker;
         private readonly UserInputField filePathInput;
         private readonly UserInputSizeField centerOffsetPicker;
         private readonly UserInputSizeField betweenWordsDistancePicker;
+        private readonly UserInputSizeField imageSizePicker;
         private readonly UserInputOneOptionChoice<ImageFormat> imageFormatPicker;
         private readonly UserInputColor backgroundColorPicker;
         private readonly UserInputColorPalette colorPalettePicker;
@@ -39,7 +42,8 @@ namespace WinUI
             IEnumerable<IWordConverter> normalizers,
             IEnumerable<ILayouterFactory> layouters,
             IEnumerable<IFontSizeResolver> fontSources,
-            IEnumerable<IFileResultWriter> writers)
+            IEnumerable<IFileResultWriter> writers,
+            IEnumerable<IImageResizer> resizers)
         {
             this.ui = ui;
             this.cloudGenerator = cloudGenerator;
@@ -50,11 +54,13 @@ namespace WinUI
             layouterPicker = UserInput.SingleChoice(ToDictionaryByName(layouters), "Layouting algorithm");
             normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
             fontSizeResolverPicker = UserInput.SingleChoice(ToDictionaryByName(fontSources), "Font size source");
+            imageResizerPicker = UserInput.SingleChoice(ToDictionaryByName(resizers), "Resizing method");
 
             filePathInput = UserInput.Field("Enter source file path");
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
             centerOffsetPicker = UserInput.Size("Cloud center offset", true);
             betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
+            imageSizePicker = UserInput.Size("Result image size");
             backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
             colorPalettePicker = UserInput.ColorPalette("Words color palette", Color.DarkRed);
 
@@ -67,19 +73,21 @@ namespace WinUI
             ui.ExecutionRequested += ExecutionRequested;
 
             ui.AddUserInput(filePathInput);
+            ui.AddUserInput(imageSizePicker);
+            AddUserInputOrUseDefault(imageResizerPicker);
             ui.AddUserInput(backgroundColorPicker);
             ui.AddUserInput(colorPalettePicker);
+            AddUserInputOrUseDefault(fontFamilyPicker);
+            AddUserInputOrUseDefault(fontSizeResolverPicker);
             ui.AddUserInput(filterPicker);
+            AddUserInputOrUseDefault(normalizerPicker);
             ui.AddUserInput(centerOffsetPicker);
             ui.AddUserInput(betweenWordsDistancePicker);
 
-            AddUserInputOrUseDefault(fontFamilyPicker);
-            AddUserInputOrUseDefault(normalizerPicker);
+            AddUserInputOrUseDefault(layouterPicker);
             AddUserInputOrUseDefault(imageFormatPicker);
             AddUserInputOrUseDefault(readerPicker);
             AddUserInputOrUseDefault(writerPicker);
-            AddUserInputOrUseDefault(layouterPicker);
-            AddUserInputOrUseDefault(fontSizeResolverPicker);
         }
 
         private async void ExecutionRequested()
@@ -93,7 +101,13 @@ namespace WinUI
                 var image = await CreateImageAsync(words, lockingContext.CancellationToken);
 
                 ui.OnAfterWordDrawn(image, backgroundColorPicker.Picked);
-                FillBackgroundAndSave(image, backgroundColorPicker.Picked);
+                if (imageSizePicker.Height > 0 && imageSizePicker.Width > 0)
+                {
+                    var selectedResizer = imageResizerPicker.Selected.Value;
+                    using (var resized = selectedResizer.Resize(image, imageSizePicker.SizeFromCurrent()))
+                        FillBackgroundAndSave(resized, backgroundColorPicker.Picked);
+                }
+                else FillBackgroundAndSave(image, backgroundColorPicker.Picked);
             }
         }
 
