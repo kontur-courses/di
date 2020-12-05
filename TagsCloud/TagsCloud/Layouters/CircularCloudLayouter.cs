@@ -10,8 +10,16 @@ namespace TagsCloud.Layouters
     {
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
         private readonly List<Point> potentialPosingPoints;
+        private (int Width, int Height) imageHolderSize;
         private Point Center { get; set; }
         private bool isFirst = true;
+
+        public CircularCloudLayouter(ImageSettings settings)
+        {
+            imageHolderSize = (settings.Width, settings.Height);
+            Center = new Point(settings.Width / 2, settings.Height / 2);
+            potentialPosingPoints = new List<Point> { Center };
+        }
 
         public void ClearLayouter()
         {
@@ -22,13 +30,10 @@ namespace TagsCloud.Layouters
 
         public Point GetCenterPoint() => Center;
 
-        public void UpdateCenterPoint(ImageSettings settings) =>
-            Center = new Point(settings.Width / 2, settings.Height / 2);
-
-        public CircularCloudLayouter(ImageSettings settings)
+        public void UpdateCenterPoint(ImageSettings settings)
         {
+            imageHolderSize = (settings.Width, settings.Height);
             Center = new Point(settings.Width / 2, settings.Height / 2);
-            potentialPosingPoints = new List<Point> {Center};
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -77,7 +82,7 @@ namespace TagsCloud.Layouters
                 foreach (var location in GetLocationVariations(point, rect))
                 {
                     rect.Location = location;
-                    if (rectangles.Any(x => x.IntersectsWith(rect))) 
+                    if (rectangles.Any(x => x.IntersectsWith(rect)) || !InBoundsOfImage(rect)) 
                         continue;
                     isPlaced = true;
                     break;
@@ -86,6 +91,10 @@ namespace TagsCloud.Layouters
                 if (isPlaced)
                     break;
             }
+
+            if (!isPlaced)
+                throw new BadImageFormatException(
+                    "Недостаточно места для размещения слова, увеличьте размер изображения, или уменьшите размер шрифта");
 
             return rect;
         }
@@ -131,6 +140,14 @@ namespace TagsCloud.Layouters
                 new Point(rect.Location.X + rect.Width / 2, rect.Location.Y + rect.Height),
                 new Point(rect.Location.X + rect.Width, rect.Location.Y + rect.Height / 2)
             };
+        }
+
+        private bool InBoundsOfImage(Rectangle rectangle)
+        {
+            return rectangle.Left >= 0 
+                   && rectangle.Right <= imageHolderSize.Width 
+                   && rectangle.Top >= 0 
+                   && rectangle.Bottom <= imageHolderSize.Height;
         }
     }
 }

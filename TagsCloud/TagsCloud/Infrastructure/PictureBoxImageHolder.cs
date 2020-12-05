@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -39,7 +40,17 @@ namespace TagsCloud.Infrastructure
                 label.Text = pair.Key;
                 var size = label.GetPreferredSize(label.GetPreferredSize(Size));
 
-                var rect = layouter.PutNextRectangle(size);
+                Rectangle rect;
+                try
+                {
+                    rect = layouter.PutNextRectangle(size);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK);
+                    return;
+                }
+                
                 graphics.DrawString(pair.Key, label.Font, new SolidBrush(Settings.Palette.TextColor), rect);
                 UpdateUi();
             }
