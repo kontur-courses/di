@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using TagsCloudVisualisation;
@@ -54,7 +53,7 @@ namespace WinUI
 
             filePathInput = UserInput.Field("Enter source file path");
             fontFamilyPicker = UserInput.SingleChoice(FontFamily.Families.ToDictionary(x => x.Name), "Font family");
-            centerOffsetPicker = UserInput.Size("Cloud center offset");
+            centerOffsetPicker = UserInput.Size("Cloud center offset", true);
             betweenWordsDistancePicker = UserInput.Size("Minimal distance between rectangles");
             backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
             colorPalettePicker = UserInput.ColorPalette("Words color palette", Color.DarkRed);

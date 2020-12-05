@@ -207,8 +207,9 @@ namespace WinUI
                     Height = 100
                 };
 
-                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Width"}, 0, 0);
-                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = "Height"}, 0, 1);
+                var isPoint = sizeInput.ShowAsPoint;
+                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = isPoint ? "X coord" : "Width"}, 0, 0);
+                table.Controls.Add(new Label {Dock = DockStyle.Left, Text = isPoint ? "Y coord" : "Height"}, 0, 1);
 
                 var widthInput = CreateIntInput(sizeInput.Width, i => sizeInput.Width = i, DockStyle.Left);
                 table.Controls.Add(widthInput, 1, 0);

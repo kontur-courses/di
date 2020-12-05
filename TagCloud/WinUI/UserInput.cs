@@ -9,7 +9,8 @@ namespace WinUI
     {
         public static UserInputField Field(string description) => new UserInputField(description);
 
-        public static UserInputSizeField Size(string description) => new UserInputSizeField(description);
+        public static UserInputSizeField Size(string description, bool showAsPoint = false) =>
+            new UserInputSizeField(description, showAsPoint);
 
         public static UserInputMultipleOptionsChoice<TService> MultipleChoice<TService>(
             IDictionary<string, TService> source,
@@ -29,7 +30,7 @@ namespace WinUI
                 .OrderBy(x => x.Name)
                 .ToArray();
 
-        public static UserInputColorPalette ColorPalette(string description, params Color[] initialValue) => 
+        public static UserInputColorPalette ColorPalette(string description, params Color[] initialValue) =>
             new UserInputColorPalette(description, initialValue);
     }
 }
