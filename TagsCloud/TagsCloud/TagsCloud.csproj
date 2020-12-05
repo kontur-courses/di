@@ -87,15 +87,15 @@
     </Compile>
     <Compile Include="Infrastructure\Palette.cs" />
     <Compile Include="UiActions\ParserSettingsAction.cs" />
-    <Compile Include="WordsProcessing\CircularCloudLayouter.cs" />
+    <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Infrastructure\IImageHolder.cs" />
     <Compile Include="Infrastructure\ImageSettings.cs" />
-    <Compile Include="Infrastructure\IWordsFrequencyParser.cs" />
-    <Compile Include="GUI\PictureBoxImageHolder.cs">
+    <Compile Include="WordsProcessing\IWordsFrequencyParser.cs" />
+    <Compile Include="Infrastructure\PictureBoxImageHolder.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UiActions\ImageSettingsAction.cs" />
-    <Compile Include="Infrastructure\UiActions\IUiAction.cs" />
+    <Compile Include="UiActions\Infrastructure\IUiAction.cs" />
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +105,11 @@
     <Compile Include="GUI\MainForm_Outdated.Designer.cs">
       <DependentUpon>MainForm_Outdated.cs</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\ICloudLayouter.cs" />
+    <Compile Include="Layouters\ICloudLayouter.cs" />
     <Compile Include="UiActions\RenderFileAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\UiActions\UiActionExtensions.cs" />
+    <Compile Include="UiActions\Infrastructure\UiActionExtensions.cs" />
     <Compile Include="UiActions\SaveImageAction.cs" />
     <Compile Include="WordsProcessing\WordsFrequencyParser.cs" />
     <EmbeddedResource Include="GUI\MainForm.resx">

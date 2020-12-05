@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloud.Infrastructure;
-using TagsCloud.WordsProcessing;
+using TagsCloud.Layouters;
 
 namespace TagsCloud.Tests
 {

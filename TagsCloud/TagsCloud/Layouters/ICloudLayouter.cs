@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloud.Infrastructure;
 
-namespace TagsCloud
+namespace TagsCloud.Layouters
 {
     public interface ICloudLayouter
     {

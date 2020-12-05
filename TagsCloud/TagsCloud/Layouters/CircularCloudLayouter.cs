@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloud.Infrastructure;
 
-namespace TagsCloud
+namespace TagsCloud.Layouters
 {
     public class CircularCloudLayouter : ICloudLayouter
     {

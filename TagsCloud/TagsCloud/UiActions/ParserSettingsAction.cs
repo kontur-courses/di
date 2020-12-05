@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloud
+namespace TagsCloud.UiActions
 {
     class ParserSettingsAction : IUiAction
     {

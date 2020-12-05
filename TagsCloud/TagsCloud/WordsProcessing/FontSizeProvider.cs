@@ -1,4 +1,4 @@
-﻿namespace TagsCloud
+﻿namespace TagsCloud.WordsProcessing
 {
     public static class FontSizeProvider
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace TagsCloud
+namespace TagsCloud.WordsProcessing
 {
     public class WordsFrequencyParser : IWordsFrequencyParser
     {

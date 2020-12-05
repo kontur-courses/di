@@ -1,4 +1,7 @@
-﻿namespace TagsCloud
+﻿using TagsCloud.GUI;
+using TagsCloud.Infrastructure;
+
+namespace TagsCloud.UiActions
 {
     public class ImageSettingsAction : IUiAction
     {

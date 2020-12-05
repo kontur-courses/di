@@ -1,8 +1,11 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using TagsCloud.Infrastructure;
+using TagsCloud.Layouters;
+using TagsCloud.WordsProcessing;
 
-namespace TagsCloud
+namespace TagsCloud.UiActions
 {
     public class RenderFileAction : IUiAction
     {

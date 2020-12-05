@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloud
+namespace TagsCloud.WordsProcessing
 {
     public interface IWordsFrequencyParser
     {

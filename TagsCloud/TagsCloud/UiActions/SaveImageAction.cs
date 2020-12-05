@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
+using TagsCloud.Infrastructure;
 
-namespace TagsCloud
+namespace TagsCloud.UiActions
 {
     public class SaveImageAction : IUiAction
     {

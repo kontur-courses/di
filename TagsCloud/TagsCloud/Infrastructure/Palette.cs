@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 
-namespace TagsCloud
+namespace TagsCloud.Infrastructure
 {
     public class Palette
     {

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Autofac;
+using TagsCloud.GUI;
+using TagsCloud.Infrastructure;
+using TagsCloud.Layouters;
+using TagsCloud.UiActions;
+using TagsCloud.WordsProcessing;
 
 namespace TagsCloud
 {

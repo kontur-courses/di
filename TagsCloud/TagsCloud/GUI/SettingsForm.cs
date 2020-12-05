@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using TagsCloud.Infrastructure;
 
-namespace TagsCloud
+namespace TagsCloud.GUI
 {
     class SettingsForm : Form
     {
