@@ -10,18 +10,20 @@ namespace Cloud.ClientUI
         private readonly IArgumentParser argumentParser;
         private readonly TagCloudContainer container;
         private readonly ISaver saver;
+        private readonly string[] args;
 
         public Program()
         {
         }
 
         public Program(TagCloudContainer container, IArgumentConverter argumentConverter,
-            IArgumentParser argumentParser, ISaver saver)
+            IArgumentParser argumentParser, ISaver saver, string[] args)
         {
             this.container = container;
             this.argumentConverter = argumentConverter;
             this.argumentParser = argumentParser;
             this.saver = saver;
+            this.args = args;
         }
 
         private static void Main(string[] args)
@@ -33,14 +35,16 @@ namespace Cloud.ClientUI
             container.AddSingleton<IArgumentParser, ArgumentParser>();
             container.AddSingleton<Program, Program>();
             container.AddSingleton<IArguments, ConvertedArguments>();
-            container.BuildServiceProvider().GetService<Program>().Run(args);
+            container.AddSingleton(typeof(string[]), args);
+            container.BuildServiceProvider().GetService<Program>().Run();
         }
 
-        private void Run(string[] args)
+        private void Run()
         {
             var parsedArguments = argumentParser.Parse(args);
             var convertedArguments = argumentConverter.ParseArguments(parsedArguments);
-            saver.SaveImage(container.CreateTagCloud(convertedArguments), convertedArguments.OutputFileName);
+            var image = container.CreateTagCloud(convertedArguments);
+            saver.SaveImage(image, convertedArguments.OutputFileName);
         }
     }
 }
