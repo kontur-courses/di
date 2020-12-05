@@ -15,11 +15,30 @@ namespace TagCloud
 {
     public class Program
     {
+        private static readonly string[] defaultBoringWords = {"а", "от", "без", "что", "как", "но"};
+
         private static IContainer container;
 
         public static void Main(string[] args)
         {
+            BuildContainer();
+            Start();
+        }
+
+        private static void BuildContainer()
+        {
             var builder = new ContainerBuilder();
+
+            builder.Register(x => new SourceSettings
+            {
+                Destination = "data/example.txt",
+                Ignore = new List<string>(defaultBoringWords)
+            }).SingleInstance();
+            builder.Register(ctx => new ResultSettings
+            {
+                OutputPath = "created/"
+            }).SingleInstance();
+            builder.Register(ctx => CloudSettings.GetDefault()).SingleInstance();
 
             builder.RegisterType<TextSource>().As<ISource>();
 
@@ -40,28 +59,14 @@ namespace TagCloud
 
             builder.RegisterType<ConsoleController>().As<IController>();
 
-            builder.Register(x => new SourceSettings
-            {
-                Destination = "data/example.txt",
-                Ignore = new List<string> {"дорога"}
-            }).SingleInstance();
-            builder.Register(ctx => new ResultSettings
-            {
-                OutputPath = "created/"
-            }).SingleInstance();
-            builder.Register(ctx => CloudSettings.GetDefault()).SingleInstance();
-
             container = builder.Build();
-            Start();
         }
 
         private static void Start()
         {
-            using (var scope = container.BeginLifetimeScope())
-            {
-                var controller = scope.Resolve<IController>();
-                controller.Start();
-            }
+            using var scope = container.BeginLifetimeScope();
+            var controller = scope.Resolve<IController>();
+            controller.Start();
         }
     }
 }
