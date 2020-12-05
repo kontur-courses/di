@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloud.LayoutAlgorithms
+namespace TagsCloud.PointGenerator
 {
     public class ArchimedeanSpiral : IPointGenerator
     {
-        private Point _center;
+        private readonly Point _center;
         private readonly double _deltaAngle;
         private double _angle;
         private readonly double _step;
