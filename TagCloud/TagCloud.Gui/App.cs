@@ -18,7 +18,7 @@ namespace TagCloud.Gui
     public class App
     {
         private readonly IUi ui;
-        private readonly TagCloudGenerator cloudGenerator;
+        private readonly ITagCloudGenerator cloudGenerator;
         private readonly UserInputOneOptionChoice<IFileWordsReader> readerPicker;
         private readonly UserInputMultipleOptionsChoice<IWordFilter> filterPicker;
         private readonly UserInputOneOptionChoice<IWordConverter> normalizerPicker;
@@ -36,7 +36,7 @@ namespace TagCloud.Gui
         private readonly UserInputColorPalette colorPalettePicker;
 
         public App(IUi ui,
-            TagCloudGenerator cloudGenerator,
+            ITagCloudGenerator cloudGenerator,
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
             IEnumerable<IWordConverter> normalizers,

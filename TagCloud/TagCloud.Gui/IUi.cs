@@ -6,6 +6,8 @@ namespace TagCloud.Gui
 {
     public interface IUi
     {
+        void Run();
+
         UiLockingOperation StartLockingOperation();
         void AddUserInput<T>(UserInputOneOptionChoice<T> inputModel);
         void AddUserInput<T>(UserInputMultipleOptionsChoice<T> inputModel);
