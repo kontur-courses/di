@@ -1,7 +1,9 @@
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
-using TagCloud.Core;
 
 namespace TagCloud.Gui
 {
@@ -14,8 +16,7 @@ namespace TagCloud.Gui
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var container = InitContainer();
-            using (var lifetimeScope = container.BeginLifetimeScope())
+            using (var lifetimeScope = InitContainer().BeginLifetimeScope())
             {
                 lifetimeScope.Resolve<App>().Subscribe();
 
@@ -28,12 +29,9 @@ namespace TagCloud.Gui
         {
             var builder = new ContainerBuilder();
 
-            //TODO modules
-            builder.RegisterAssemblyTypes(typeof(TagCloudGenerator).Assembly, typeof(App).Assembly)
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .SingleInstance()
-                .OwnedByLifetimeScope();
+            var dlls = Directory.EnumerateFiles(Environment.CurrentDirectory, "TagCloud*.dll");
+            var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
+            builder.RegisterAssemblyModules(assemblies);
 
             return builder.Build();
         }
