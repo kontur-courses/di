@@ -27,16 +27,32 @@ namespace TagsCloudVisualization.TagCloudVisualizers
 
                 using (var textBrush = new SolidBrush(palette.TextColor))
                 {
-                    var pen = new Pen(Color.White);
-                    foreach (var tag in tags)
-                    {
-                        pen.Color = Color.Beige;
-                        graphics.DrawString(tag.Text, tag.Font, textBrush, tag.BoundingZone.Location);
-                    }
+                    DrawCloud(tags, textBrush, graphics);
                 }
             }
 
             canvas.UpdateUi();
+        }
+
+        private void DrawCloud(List<Tag> tags, SolidBrush textBrush, Graphics graphics)
+        {
+            var pen = new Pen(Color.White);
+            var iterationCount = 0;
+            foreach (var tag in tags)
+            {
+                if (palette.EnabledMultipleColors)
+                    textBrush.Color = palette.Colors[iterationCount % palette.Colors.Length];
+                
+                graphics.DrawString(tag.Text, tag.Font, textBrush, tag.BoundingZone.Location);
+
+                if (palette.DrawTextBoundingZone)
+                {
+                    pen.Color = Color.Beige;
+                    graphics.DrawRectangle(pen, tag.BoundingZone);
+                }
+
+                iterationCount++;
+            }
         }
     }
 }

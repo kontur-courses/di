@@ -4,7 +4,7 @@ namespace TagsCloudVisualization.AppSettings
 {
     public class FontSettings
     {
-        public Font Font { get; set; } = new Font(FontFamily.GenericSansSerif, 16);
+        public Font Font { get; set; } = new Font("Magneto", 20);
         public float MinSize { get; set; } = 10;
         public float MaxSize { get; set; } = 60;
     }
