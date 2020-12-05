@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Autofac;
@@ -19,7 +18,7 @@ namespace TagsCloud
             builder.RegisterInstance(new RectanglesLayouter(Point.Empty)).As<IRectanglesLayouter>();
             builder.RegisterType<TagsCloudDrawer>().As<ITagsCloudDrawer>();
             builder.RegisterType<TagsCloudHandler>().AsSelf();
-            builder.RegisterInstance(new HashSet<string>
+            builder.RegisterInstance(new[]
             {
                 "и",
                 "a",

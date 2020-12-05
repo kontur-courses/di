@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TagsCloud.Infrastructure;
 
@@ -8,14 +9,14 @@ namespace TagsCloud.App
     {
         private readonly ITagsCloudDrawer drawer;
         private readonly IWordNormalizer wordNormalizer;
-        private readonly IWordsFilter wordsFilter;
+        private readonly IEnumerable<IWordsFilter> wordsFilters;
         private string[] words;
 
-        public TagsCloudHandler(IWordsFilter filter, IWordNormalizer normalizer, string[] words,
+        public TagsCloudHandler(IEnumerable<IWordsFilter> filters, IWordNormalizer normalizer, string[] words,
             ITagsCloudDrawer drawer)
         {
             wordNormalizer = normalizer;
-            wordsFilter = filter;
+            wordsFilters = filters;
             this.words = words;
             this.drawer = drawer;
         }
@@ -27,9 +28,8 @@ namespace TagsCloud.App
 
         public Image GetNewTagcloud()
         {
-            var neededWords = wordsFilter.FilterWords(words
-                    .Select(word => wordNormalizer.NormalizeWord(word))
-                )
+            var neededWords = words.Where(word => wordsFilters.All(filter => filter.Validate(word)))
+                .Select(word => wordNormalizer.Normalize(word))
                 .ToList();
             var counts = neededWords
                 .GroupBy(word => word)

@@ -8,22 +8,22 @@ namespace TagsCloud.App
         internal readonly HashSet<string> BlackList;
         private readonly IWordNormalizer normalizer;
 
-        public BlackListWordsFilter(HashSet<string> excludedWords, IWordNormalizer normalizer)
+        public BlackListWordsFilter(IEnumerable<string> excludedWords, IWordNormalizer normalizer)
         {
-            BlackList = excludedWords.Select(normalizer.NormalizeWord).ToHashSet();
+            BlackList = excludedWords.Select(normalizer.Normalize).ToHashSet();
             this.normalizer = normalizer;
         }
 
-        public IEnumerable<string> FilterWords(IEnumerable<string> words)
+        public bool Validate(string word)
         {
-            return words.Where(word => !BlackList.Contains(word));
+            return !BlackList.Contains(normalizer.Normalize(word));
         }
 
         public void UpdateBlackList(IEnumerable<string> words)
         {
             BlackList.Clear();
             foreach (var word in words)
-                BlackList.Add(normalizer.NormalizeWord(word));
+                BlackList.Add(normalizer.Normalize(word));
         }
     }
 }

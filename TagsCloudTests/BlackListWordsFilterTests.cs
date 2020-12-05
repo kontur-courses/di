@@ -17,8 +17,8 @@ namespace TagsCloudTests
         public void BlacklistWordsFilter_ShouldValidateWords_ThatAreNotInBlackList(IEnumerable<string> blackList,
             IEnumerable<string> words, IEnumerable<string> expectedResult)
         {
-            var filter = new BlackListWordsFilter(blackList.ToHashSet(), normalizer);
-            var filtredWords = filter.FilterWords(words);
+            var filter = new BlackListWordsFilter(blackList, normalizer);
+            var filtredWords = words.Where(word => filter.Validate(word));
             filtredWords.Should().BeEquivalentTo(expectedResult);
         }
     }

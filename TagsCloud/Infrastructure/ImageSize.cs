@@ -2,8 +2,8 @@
 {
     public class ImageSize
     {
-        private readonly int maxWidth = 1920;
         private readonly int maxHeight = 1080;
+        private readonly int maxWidth = 1920;
         private int width, height;
 
         public ImageSize()

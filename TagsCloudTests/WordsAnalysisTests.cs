@@ -7,7 +7,7 @@ using TagsCloud.App;
 namespace TagsCloudTests
 {
     [TestFixture]
-    internal class WordsAnalizationTests
+    internal class WordsAnalysisTests
     {
         [TestCase(new string[0], new string[0], new string[0])]
         [TestCase(new string[0], new[] {"ABC"}, new[] {"abc"})]
@@ -18,7 +18,9 @@ namespace TagsCloudTests
         {
             var normalizer = new WordNormalizer();
             var filter = new BlackListWordsFilter(blackList.ToHashSet(), normalizer);
-            var result = filter.FilterWords(words.Select(word => normalizer.NormalizeWord(word)));
+            var result = words
+                .Select(word => normalizer.Normalize(word))
+                .Where(word => filter.Validate(word));
             result.Should().BeEquivalentTo(expectedResult);
         }
     }

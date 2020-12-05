@@ -20,7 +20,7 @@ namespace TagsCloudTests
             var graphics =
                 Graphics.FromImage(new Bitmap(defaultSettings.ImageSize.Width, defaultSettings.ImageSize.Height));
             Action action = () => drawer.GetTagsFromWords(null, graphics).ToArray();
-            action.Should().Throw<ArgumentException>();
+            action.Should().Throw<NullReferenceException>();
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace TagsCloudTests
             var graphics =
                 Graphics.FromImage(new Bitmap(defaultSettings.ImageSize.Width, defaultSettings.ImageSize.Height));
             Action action = () => drawer.DrawTagsCloud(null, PointF.Empty, graphics);
-            action.Should().Throw<ArgumentException>();
+            action.Should().Throw<NullReferenceException>();
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace TagsCloudTests
         {
             var drawer = new TagsCloudDrawer(new RectanglesLayouter(Point.Empty), TagsCloudSettings.DefaultSettings);
             Action action = () => drawer.GetTagsCloud(null);
-            action.Should().Throw<ArgumentException>();
+            action.Should().Throw<NullReferenceException>();
         }
 
         [Test]

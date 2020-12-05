@@ -2,7 +2,7 @@
 {
     public class WordNormalizer : IWordNormalizer
     {
-        public string NormalizeWord(string word)
+        public string Normalize(string word)
         {
             return word.ToLower();
         }
