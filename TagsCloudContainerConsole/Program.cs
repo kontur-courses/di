@@ -44,6 +44,15 @@ namespace TagsCloudContainerConsole
             
             [Option(Default = 6f, HelpText = "Max scaling value for LerpTotal/LerpMax scaling methods")]
             public float ScalingLerpMax { get; set; }
+            
+            [Option(Default = ColoringMethods.LerpMax, HelpText = "Coloring method (LerpTotal | LerpMax)")]
+            public ColoringMethods Coloring { get; set; }
+            
+            [Option(HelpText = "Color used as first in lerp function in coloring method")]
+            public Color? ColoringFrom { get; set; }
+            
+            [Option(HelpText = "Color used as second in lerp function in coloring method")]
+            public Color? ColoringTo { get; set; }
 
             [Option(Default = true)]
             public bool AutoSize { get; set; }
@@ -56,11 +65,20 @@ namespace TagsCloudContainerConsole
             LerpTotal,
             LerpMax,
         }
+
+        public enum ColoringMethods
+        {
+            LerpTotal,
+            LerpMax
+        }
         
         public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(options =>
             {
+                var coloringFrom = options.ColoringFrom ?? Color.FromArgb(0, 255, 128);
+                var coloringTo = options.ColoringTo ?? Color.FromArgb(255, 0, 128);
+                
                 var container = new TagsCloudContainer.TagsCloudContainer();
                 
                 foreach (var inputFile in options.Inputs)
@@ -95,11 +113,23 @@ namespace TagsCloudContainerConsole
                         }
                     };
 
+                var coloringMethods =
+                    new Dictionary<ColoringMethods, Func<WordRendererToImage.RenderingInfo, LayoutedWord, Color>>
+                    {
+                        [ColoringMethods.LerpTotal] = (info, word)
+                            => Lerp(coloringFrom, coloringTo, word.Count / (float) info.TotalWordsCount),
+                        [ColoringMethods.LerpMax] = (info, word)
+                            => Lerp(coloringFrom, coloringTo, 
+                                (word.Count - info.MinWordCount) / (float) (info.MaxWordCount - info.MinWordCount))
+                    };
+
                 var scaling = scalingMethods[options.Scaling];
+                var coloring = coloringMethods[options.Coloring];
                 
                 var renderer = new WordRendererToImage()
                     .WithFont(new Font(options.Font, options.FontSize, GraphicsUnit.Pixel))
-                    .WithScale(scaling);
+                    .WithScale(scaling)
+                    .WithColor(coloring);
                 renderer.AutoSize = options.AutoSize;
                 if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
                 container.Rendering(renderer);
@@ -113,5 +143,14 @@ namespace TagsCloudContainerConsole
             var text = File.ReadAllText(fileName);
             return Regex.Matches(text, @"\b\w+\b").Cast<Match>().Select(m => m.Value).ToHashSet();
         }
+
+        public static int Lerp(int from, int to, float progress) => (int) (from + (to - from) * progress);
+
+        public static Color Lerp(Color from, Color to, float progress)
+            => Color.FromArgb(
+                Lerp(from.A, to.A, progress),
+                Lerp(from.R, to.R, progress),
+                Lerp(from.G, to.G, progress),
+                Lerp(from.B, to.B, progress));
     }
 }
