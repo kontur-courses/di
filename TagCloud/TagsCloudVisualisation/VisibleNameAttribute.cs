@@ -2,7 +2,8 @@
 
 namespace TagsCloudVisualisation
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
+    [Obsolete("You should generate mapping in UI")]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
     public class VisibleNameAttribute : Attribute
     {
         public string Name { get; }

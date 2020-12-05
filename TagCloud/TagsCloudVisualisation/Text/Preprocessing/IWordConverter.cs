@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualisation.Text.Preprocessing
 {
-    public interface IWordNormalizer
+    public interface IWordConverter
     {
         IEnumerable<string> Normalize(IEnumerable<string> words);
     }

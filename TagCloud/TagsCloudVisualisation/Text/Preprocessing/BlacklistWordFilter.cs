@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace TagsCloudVisualisation.Text.Preprocessing
 {
@@ -13,6 +11,6 @@ namespace TagsCloudVisualisation.Text.Preprocessing
             "перед", "при", "с", "между", "как", "что", "где", "не", "ни", "вовсе", "вот", "это"
         };
 
-        public bool IsValidWord(string word) => blacklistedWords.Contains(word.ToUpper());
+        public bool IsValidWord(string word) => !blacklistedWords.Contains(word);
     }
 }

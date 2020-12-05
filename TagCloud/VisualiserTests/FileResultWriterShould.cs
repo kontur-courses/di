@@ -8,7 +8,6 @@ using TagsCloudVisualisation.Output;
 
 namespace VisualiserTests
 {
-    [TestFixture]
     public class FileResultWriterShould
     {
         private string temporaryFilePath;
@@ -31,8 +30,9 @@ namespace VisualiserTests
         [TearDown]
         public void TearDown()
         {
-            sample.Dispose();
-            File.Delete(temporaryFilePath);
+            sample?.Dispose();
+            if(!string.IsNullOrEmpty(temporaryFilePath))
+                File.Delete(temporaryFilePath);
         }
 
         [Test]

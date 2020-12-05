@@ -4,6 +4,6 @@ namespace TagsCloudVisualisation.Layouting
 {
     public interface ILayouterFactory
     {
-        ITagCloudLayouter Get(Point centerPoint, Size minDistance);
+        ITagCloudLayouter Create(Point centerPoint, Size minDistance);
     }
 }

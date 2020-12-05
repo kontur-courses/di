@@ -1,8 +1,6 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
-using Autofac.Core;
-using TagsCloudVisualisation.Layouting;
 
 namespace WinUI
 {
@@ -29,8 +27,8 @@ namespace WinUI
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterAssemblyTypes(typeof(ITagCloudLayouter).Assembly, typeof(Program).Assembly)
-                .Where(t => !builder.ComponentRegistryBuilder.IsRegistered(new TypedService(t)))
+            //TODO modules
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .SingleInstance()

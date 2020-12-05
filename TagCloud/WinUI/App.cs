@@ -21,7 +21,7 @@ namespace WinUI
         private readonly TagCloudGenerator cloudGenerator;
         private readonly UserInputOneOptionChoice<IFileWordsReader> readerPicker;
         private readonly UserInputMultipleOptionsChoice<IWordFilter> filterPicker;
-        private readonly UserInputOneOptionChoice<IWordNormalizer> normalizerPicker;
+        private readonly UserInputOneOptionChoice<IWordConverter> normalizerPicker;
         private readonly UserInputOneOptionChoice<IFileResultWriter> writerPicker;
         private readonly UserInputOneOptionChoice<ILayouterFactory> layouterPicker;
         private readonly UserInputOneOptionChoice<IFontSizeResolver> fontSizeResolverPicker;
@@ -37,7 +37,7 @@ namespace WinUI
             TagCloudGenerator cloudGenerator,
             IEnumerable<IFileWordsReader> readers,
             IEnumerable<IWordFilter> filters,
-            IEnumerable<IWordNormalizer> normalizers,
+            IEnumerable<IWordConverter> normalizers,
             IEnumerable<ILayouterFactory> layouters,
             IEnumerable<IFontSizeResolver> fontSources,
             IEnumerable<IFileResultWriter> writers)
@@ -78,7 +78,7 @@ namespace WinUI
             ui.AddUserInput(layouterPicker);
             ui.AddUserInput(fontSizeResolverPicker);
             ui.AddUserInput(fontFamilyPicker);
-            ui.AddUserInput(centerOffsetPicker);
+            ui.AddUserInput(centerOffsetPicker); //TODO выбирать как X/Y
             ui.AddUserInput(betweenWordsDistancePicker);
         }
 
@@ -100,7 +100,7 @@ namespace WinUI
         private async Task<Image> CreateImageAsync(WordWithFrequency[] words, CancellationToken cancellationToken)
         {
             var selectedFactory = layouterPicker.Selected.Value;
-            var selectedLayouter = selectedFactory.Get(
+            var selectedLayouter = selectedFactory.Create(
                 centerOffsetPicker.PointFromCurrent(),
                 betweenWordsDistancePicker.SizeFromCurrent());
 
@@ -125,13 +125,13 @@ namespace WinUI
                 var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath)
                     .Where(w => filterPicker.Selected.All(f => f.Value.IsValidWord(w)));
 
-                var normalizedWords = normalizerPicker.Selected.Value.Normalize(words);
+                var convertedWords = normalizerPicker.Selected.Value.Normalize(words);
 
                 if (cancellationToken.IsCancellationRequested)
                     return new WordWithFrequency[0];
 
                 var dictionary = new Dictionary<string, int>();
-                foreach (var word in normalizedWords)
+                foreach (var word in convertedWords)
                 {
                     if (dictionary.ContainsKey(word))
                         dictionary[word] += 1;

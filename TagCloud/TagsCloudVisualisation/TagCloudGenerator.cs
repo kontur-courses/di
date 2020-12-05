@@ -11,7 +11,7 @@ using TagsCloudVisualisation.Visualisation;
 
 namespace TagsCloudVisualisation
 {
-    public sealed class TagCloudGenerator : IDisposable
+    public sealed class TagCloudGenerator : ITagCloudGenerator
     {
         private readonly Graphics stubGraphics = Graphics.FromHwnd(IntPtr.Zero);
 
