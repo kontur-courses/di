@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TagsCloudVisualization.AppSettings
+﻿namespace TagsCloudVisualization.AppSettings
 {
     public class ForbiddenWordsSettings
     {
