@@ -3,7 +3,7 @@ using TagsCloud.Layouters;
 
 namespace TagsCloud.UiActions
 {
-    class SelectSpiralLayouterAction : IUiAction
+    public class SelectSpiralLayouterAction : IUiAction
     {
         public string Category => "Алгоритм построения облака";
         public string Name => "Спиральное построение";

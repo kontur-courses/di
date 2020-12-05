@@ -4,7 +4,7 @@ using TagsCloud.Infrastructure;
 
 namespace TagsCloud.Layouters
 {
-    class SpiralCloudLayouter : ICloudLayouter
+    public class SpiralCloudLayouter : ICloudLayouter
     {
         private Point center;
         private int step;

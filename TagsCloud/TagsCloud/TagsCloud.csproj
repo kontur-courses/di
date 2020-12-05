@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DependenciesContainerProvider.cs" />
     <Compile Include="Layouters\Spiral.cs" />
     <Compile Include="Layouters\SpiralCloudLayouter.cs" />
     <Compile Include="UiActions\SelectDenseLayouterAction.cs" />

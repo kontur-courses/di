@@ -4,9 +4,6 @@ using System.Windows.Forms;
 using Autofac;
 using TagsCloud.GUI;
 using TagsCloud.Infrastructure;
-using TagsCloud.Layouters;
-using TagsCloud.UiActions;
-using TagsCloud.WordsProcessing;
 
 namespace TagsCloud
 {
@@ -17,22 +14,7 @@ namespace TagsCloud
         {
             var defaultImageSettings = new ImageSettings(1280, 720);
             var defaultWordsToIgnore = new List<string> {"а", "и", "да", "но", "как", "то", "либо", "ибо", "ну", "у"};
-
-            var builder = new ContainerBuilder();
-            builder.RegisterType<PictureBoxImageHolder>().AsSelf().As<IImageHolder>().SingleInstance();
-            builder.RegisterType<CircularCloudLayouter>().AsSelf().As<ICloudLayouter>().SingleInstance();
-            builder.RegisterType<SpiralCloudLayouter>().AsSelf().As<ICloudLayouter>().SingleInstance();
-            builder.Register(_ => defaultImageSettings).SingleInstance();
-            builder.Register(_ => new WordsFrequencyParser(defaultWordsToIgnore)).As<IWordsFrequencyParser>();
-
-            builder.RegisterType<RenderFileAction>().As<IUiAction>();
-            builder.RegisterType<SaveImageAction>().As<IUiAction>();
-            builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
-            builder.RegisterType<ParserSettingsAction>().As<IUiAction>();
-            builder.RegisterType<SelectDenseLayouterAction>().As<IUiAction>();
-            builder.RegisterType<SelectSpiralLayouterAction>().As<IUiAction>();
-            builder.RegisterType<MainForm>().AsSelf();
-            var container = builder.Build();
+            var container = DependenciesContainerProvider.GetContainer(defaultImageSettings, defaultWordsToIgnore);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -3,7 +3,7 @@ using TagsCloud.Layouters;
 
 namespace TagsCloud.UiActions
 {
-    class SelectDenseLayouterAction : IUiAction
+    public class SelectDenseLayouterAction : IUiAction
     {
         public string Category => "Алгоритм построения облака";
         public string Name => "Плотное построение";
