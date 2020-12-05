@@ -15,7 +15,7 @@ namespace TagsCloudVisualizationTests
         [SetUp]
         public void SetUp()
         {
-            surface = new Surface();
+            surface = new Surface(new Point(0, 0));
         }
 
         [Test]

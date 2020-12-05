@@ -29,23 +29,23 @@ namespace TagsCloudVisualizationTests
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Failure)
                 return;
 
-            Drawer.DrawRectangles(layouter.Center, rectangles);
-
             var fileName = $"{TestContext.CurrentContext.Test.FullName}.png";
             var path = Path.Combine(Path.GetFullPath(@"..\..\..\"), fileName);
-            Drawer.SaveImage(path);
+            
+            var image = Drawer.DrawRectangles(rectangles);
+            image.Save(path);
 
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 
         [Test]
-        public void PutNextRectangle_LocationOfFirstRectangleIsPointEmpty()
+        public void PutNextRectangle_LocationOfFirstRectangleIsCenter()
         {
             rectangles.Add(
                 layouter.PutNextRectangle(new Size(2, 2)));
 
             rectangles.Should().ContainSingle(rectangle =>
-                rectangle.Location == Point.Empty);
+                rectangle.Location == layouter.Center - rectangle.Size/2);
         }
 
         [Test]

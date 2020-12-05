@@ -11,7 +11,13 @@ namespace TagsCloudVisualization
         private readonly List<Rectangle> secondQuarterRectangles = new List<Rectangle>();
         private readonly List<Rectangle> thirdQuarterRectangles = new List<Rectangle>();
         private readonly List<Rectangle> fourthQuarterRectangles = new List<Rectangle>();
-
+        private readonly Point center;
+        
+        public Surface(Point center)
+        {
+            this.center = center;
+        }
+        
         public void AddRectangle(Rectangle rect)
         {
             var rectQuarters = FindQuartersForRectangle(rect);
@@ -33,7 +39,7 @@ namespace TagsCloudVisualization
 
         public Rectangle GetShiftedToCenterRectangle(Rectangle rect)
         {
-            if (rect.Location == Point.Empty)
+            if (CalculateRectangleCenter(rect) == center)
                 return rect;
 
             while (true)
@@ -45,7 +51,12 @@ namespace TagsCloudVisualization
             }
         }
 
-        public static IEnumerable<Quarters> FindQuartersForRectangle(Rectangle rect)
+        private static Point CalculateRectangleCenter(Rectangle rect)
+        {
+            return rect.Location + rect.Size / 2;
+        }
+
+        public IEnumerable<Quarters> FindQuartersForRectangle(Rectangle rect)
         {
             var rectangleQuarters = new HashSet<Quarters>();
             var decoratedRectangle = new RectangleDecorator(rect);
@@ -74,7 +85,7 @@ namespace TagsCloudVisualization
             };
         }
 
-        private static Rectangle DoStepToCenter(Rectangle rect)
+        private Rectangle DoStepToCenter(Rectangle rect)
         {
             var deltaPoints = FindQuartersForRectangle(rect)
                 .Select(GetDeltaForQuarter)
@@ -113,14 +124,14 @@ namespace TagsCloudVisualization
             };
         }
 
-        private static Quarters GetQuarterForPoint(Point point)
+        private Quarters GetQuarterForPoint(Point point)
         {
             return (point.X, point.Y) switch
             {
-                var (x, y) when x > 0 && y < 0 => Quarters.First,
-                var (x, y) when x < 0 && y < 0 => Quarters.Second,
-                var (x, y) when x < 0 && y > 0 => Quarters.Third,
-                var (x, y) when x > 0 && y > 0 => Quarters.Fourth,
+                var (x, y) when x > center.X && y < center.Y => Quarters.First,
+                var (x, y) when x < center.X && y < center.Y => Quarters.Second,
+                var (x, y) when x < center.X && y > center.Y => Quarters.Third,
+                var (x, y) when x > center.X && y > center.Y => Quarters.Fourth,
                 _ => Quarters.Unknown
             };
         }
