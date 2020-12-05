@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -13,27 +12,17 @@ namespace TagCloudGUIClient
 {
     public partial class Form1 : Form
     {
-        private Size imageSizeContainer;
-        List<IColorSelector>? colorSelectors;
         private CloudPrinter? cloudPrinter;
+        private List<IColorSelector>? colorSelectors;
         private List<BaseCloudLayouter>? layouters;
-        private Bitmap? image;
-
-        private Size ImageSize
-        {
-            get => imageSizeContainer;
-            set
-            {
-                image = new Bitmap(value.Width, value.Height);
-                imageSizeContainer = value;
-            }
-        }
 
         public Form1()
         {
             InitializeComponent();
             fontSelector.Items.AddRange(FontFamily.Families.Select(x => x.Name).ToArray());
         }
+
+        private Size ImageSize { get; set; }
 
         private IContainer InitializeContainer()
         {
@@ -83,7 +72,7 @@ namespace TagCloudGUIClient
 
         private void RedrawImage()
         {
-            if(!AllSelected())
+            if (!AllSelected())
                 return;
             var fontFamily = FontFamily.Families[fontSelector.SelectedIndex];
             var colorSelector = colorSelectors?[colorSelectorSelector.SelectedIndex];
@@ -98,12 +87,12 @@ namespace TagCloudGUIClient
                         colorSelector);
         }
 
-        bool AllSelected()
+        private bool AllSelected()
         {
             return fontSelector.SelectedIndex != -1
                    && layouterSelector.SelectedIndex != -1
-                &&  colorSelectorSelector.SelectedIndex != -1
-                && textBox1.Text != "";
+                   && colorSelectorSelector.SelectedIndex != -1
+                   && textBox1.Text != "";
         }
 
         private void sizeSelector_SelectedIndexChanged(object sender, EventArgs e)

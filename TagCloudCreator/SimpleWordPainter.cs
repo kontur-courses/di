@@ -2,12 +2,13 @@
 
 namespace TagCloudCreator
 {
-    public class SimpleWordPainter:IWordPainter
+    public class SimpleWordPainter : IWordPainter
     {
-        private Graphics graphics = Graphics.FromImage(new Bitmap(1,1));
-        public void DrawWord(string word,Font font, Brush brush, Graphics graphics, Point location)
+        private readonly Graphics graphics = Graphics.FromImage(new Bitmap(1, 1));
+
+        public void DrawWord(string word, Font font, Brush brush, Graphics graphics, Point location)
         {
-            graphics.DrawString(word,font,brush,location);
+            graphics.DrawString(word, font, brush, location);
         }
 
         public Size GetWordSize(string word, Font font)
