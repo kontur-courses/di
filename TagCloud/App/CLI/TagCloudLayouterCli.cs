@@ -50,15 +50,15 @@ namespace TagCloud.App.CLI
 
             automata.Init(mainState);
             automata.Add(new Transition(mainState, "help", helpState));
-            automata.Add(new Transition(helpState, "quit", mainState));
             automata.Add(new Transition(mainState, "exit", exitState));
             automata.Add(new Transition(helpState, "about", aboutState));
+            automata.Add(new Transition(helpState, @".*", mainState));
             automata.Add(new Transition(aboutState, ".*", helpState));
             
             automata.Add(new Transition(mainState, "settings", settingsState));
-            automata.Add(new Transition(settingsState, "\\D", settingsState));
             var managersStates = GetSettingsManagersStates(settingsManagers);
             AddSettingsManagersTransitions(automata, settingsState, managersStates);
+            automata.Add(new Transition(settingsState, @"\D*", mainState));
             
             settingsFactory().Import(Program.GetDefaultSettings());
             Console.WriteLine("Default settings imported");
@@ -97,13 +97,14 @@ namespace TagCloud.App.CLI
                 var state = new State(manager.Title);
                 state.Show += (sender, args) =>
                 {
-                    Console.WriteLine(manager.Get());
+                    Console.WriteLine($"CHANGING\n\t{manager.Title}\ninfo\t{manager.Help}\nvalue\t{manager.Get()}\ninput new value");
+
                 };
                 state.Act += (sender, args) =>
                 {
                     Console.WriteLine(!manager.TrySet(args.Input)
                         ? $"Incorrect input: {args.Input}"
-                        : $"{manager.Title} was changed to {args.Input}");
+                        : $"{manager.Title} was changed to '{manager.Get()}'");
                 };
                 yield return state;
             }
@@ -111,11 +112,9 @@ namespace TagCloud.App.CLI
 
         private void OnSettingsState(State sender, EventArgs args)
         {
-            var i = 0;
-            foreach (var manager in settingsManagers)
+            foreach (var (manager, i) in settingsManagers.Select(((manager, i) => (manager, i))))
             {
-                Console.WriteLine($"{i}) {manager.Title}\n\t{manager.Help}\n{manager.Get()}\n");
-                i++;
+                Console.WriteLine($"{i})\t{manager.Title}\ninfo\t{manager.Help}\nvalue\t{manager.Get()}\n");
             }
             Console.WriteLine($"Choose setting number ");
         }
@@ -127,13 +126,12 @@ namespace TagCloud.App.CLI
 
         private void OnHelp(object sender, EventArgs args)
         {
-            Console.WriteLine("Available commands");
+            Console.WriteLine("Available commands in main");
             Console.WriteLine("\thelp");
             Console.WriteLine("\texit");
-            Console.WriteLine("\tquit");
-            Console.WriteLine("\tabout");
             Console.WriteLine("\tsettings");
-            Console.WriteLine("Type quit...");
+            Console.WriteLine("\tgenerate");
+            Console.WriteLine("press Enter key to go back");
         }
 
         private void OnExit(State state, EventArgs eventArgs)
@@ -148,7 +146,8 @@ namespace TagCloud.App.CLI
 
         private void OnMainInput(object sender, ConsoleInputEventArgs args)
         {
-            Console.WriteLine($"Type help for help");
+            if (!args.IsTransfer)
+                Console.WriteLine($"'{args.Input}' not found. Type help for help");
         }
     }
 }

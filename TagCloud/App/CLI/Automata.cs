@@ -34,18 +34,22 @@ namespace TagCloud.App.CLI
 
         public void Move(string input)
         {
-            currentState.OnAct(new ConsoleInputEventArgs(input));
-            Transfer(input);
+            var isTransfer = TryTransfer(input, out var newState);
+            currentState.OnAct(new ConsoleInputEventArgs(input, isTransfer));
+            if (isTransfer)
+                currentState = newState;
         }
 
-        private void Transfer(string input)
+        private bool TryTransfer(string input, out State newState)
         {
+            newState = null;
             if (!transitionsMap.TryGetValue(currentState, out var transitions))
-                return;
+                return false;
             var possibleTransition = transitions.FirstOrDefault(transition => transition.DoesTransfer(input));
             if (possibleTransition == null) 
-                return;
-            currentState = possibleTransition.Destination;
+                return false;
+            newState = possibleTransition.Destination;
+            return true;
         }
 
         public bool Show()
