@@ -7,8 +7,6 @@ namespace TagsCloud.Infrastructure
     public interface IImageHolder
     {
         ImageSettings Settings { get; set; }
-        Graphics StartDrawing();
-        void UpdateUi();
         void ChangeLayouter(ICloudLayouter layouter);
         void RecreateCanvas(ImageSettings settings);
         void SaveImage(string fileName);

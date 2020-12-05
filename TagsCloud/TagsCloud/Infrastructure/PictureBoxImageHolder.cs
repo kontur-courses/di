@@ -28,7 +28,7 @@ namespace TagsCloud.Infrastructure
             RedrawCurrentImage();
         }
 
-        public Graphics StartDrawing() => Graphics.FromImage(Image);
+        private Graphics StartDrawing() => Graphics.FromImage(Image);
 
         public void RenderWords(Dictionary<string, int> frequencyDictionary)
         {
