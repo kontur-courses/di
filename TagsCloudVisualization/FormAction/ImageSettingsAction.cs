@@ -1,4 +1,5 @@
-﻿using TagsCloudVisualization.AppSettings;
+﻿using System.Drawing;
+using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.Canvases;
 
 namespace TagsCloudVisualization.FormAction
@@ -21,7 +22,9 @@ namespace TagsCloudVisualization.FormAction
         public void Perform()
         {
             SettingsForm.For(imageSettings).ShowDialog();
-            canvas.RecreateImage(imageSettings);
+            var newImageSize = new Size(imageSettings.Width, imageSettings.Height);
+            if (newImageSize != canvas.GetImageSize())
+                canvas.RecreateImage(imageSettings);
         }
     }
 }
