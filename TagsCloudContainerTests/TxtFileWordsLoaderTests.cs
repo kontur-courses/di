@@ -6,27 +6,26 @@ using TagsCloudContainer;
 namespace TagsCloudContainerTests
 {
     [TestFixture]
-    public class FileWordsLoaderTests
+    public class TxtFileWordsLoaderTests
     {
         [Test]
         public void Ctor_IfFileFromPathDoesNotExist_ThrowArgumentException()
         {
-            Action act = () => new FileWordsLoader("doesn't exist");
+            Action act = () => new TxtFileWordsLoader("doesn't exist");
             act.Should().Throw<ArgumentException>();
         }
 
         [Test]
         public void Ctor_IfFileExtensionIsNotSupported_ThrowArgumentException()
         {
-            Action act = () => new FileWordsLoader("../../../TestFiles/test.rtf");
+            Action act = () => new TxtFileWordsLoader("../../../TestFiles/test.rtf");
             act.Should().Throw<ArgumentException>();
         }
-
-        [TestCase("../../../TestFiles/test.txt", TestName = "WithTxtFile")]
-        [TestCase("../../../TestFiles/test.docx", TestName = "WithDocxFile")]
-        public void GetWords_WorkWithDifferentFormatOfFiles(string path)
+        
+        [Test]
+        public void GetWords_CorrectWorkWithTxt()
         {
-            var loader = new FileWordsLoader(path);
+            var loader = new TxtFileWordsLoader("../../../TestFiles/test.txt");
 
             loader.GetWords().Should().BeEquivalentTo(
                 new[] {"1", "2", "3"},
