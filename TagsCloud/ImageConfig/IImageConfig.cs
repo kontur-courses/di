@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
+﻿using System.Drawing;
 using TagsCloud.ColoringAlgorithms;
 
 namespace TagsCloud.ImageConfig
 {
-    interface IImageConfig
+    public interface IImageConfig
     {
         public Size Size { get; }
-        public Font Font { get; }
+        public FontFamily FontFamily { get; }
         public Color BackgroundColor { get; }
         public IColoringAlgorithm ColoringAlgorithm { get; }
     }

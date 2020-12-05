@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
+﻿using System.Drawing;
 using TagsCloud.ColoringAlgorithms;
 
 namespace TagsCloud.ImageConfig
@@ -10,14 +6,14 @@ namespace TagsCloud.ImageConfig
     public class ImageConfig : IImageConfig
     {
         public Size Size { get; }
-        public Font Font { get; }
+        public FontFamily FontFamily { get; }
         public Color BackgroundColor { get; }
         public IColoringAlgorithm ColoringAlgorithm { get; }
 
-        public ImageConfig(Size size, Font font, Color backgroundColor, IColoringAlgorithm coloringAlgorithm)
+        public ImageConfig(Size size, FontFamily fontFamily, Color backgroundColor, IColoringAlgorithm coloringAlgorithm)
         {
             Size = size;
-            Font = font;
+            FontFamily = fontFamily;
             BackgroundColor = backgroundColor;
             ColoringAlgorithm = coloringAlgorithm;
         }
