@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.Gui.Helpers
+namespace TagCloud.Core.Utils
 {
-    internal static class GraphicsUtils
+    public static class GraphicsUtils
     {
-        public static Image PlaceAtCenter(Image source, Size newSize)
+        public static Image FitToSize(Image source, Size newSize)
         {
             var resizeCoefficient = Math.Min(
                 (float) newSize.Height / source.Height,
@@ -18,5 +18,15 @@ namespace TagCloud.Gui.Helpers
                 g.DrawImage(resized, location);
             return result;
         }
+
+        public static Image PlaceAtCenter(Image image, Size newSize)
+        {
+            var newBitmap = new Bitmap(newSize.Width, newSize.Height);
+            using var g = Graphics.FromImage(newBitmap);
+
+            g.DrawImage(image, new Point((newSize - image.Size) / 2));
+            return newBitmap;
+        }
+
     }
 }

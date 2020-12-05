@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using TagCloud.Core.Text.Formatting;
+using TagCloud.Core.Utils;
 
 namespace TagCloud.Core.Visualisation
 {
@@ -74,19 +75,10 @@ namespace TagCloud.Core.Visualisation
                 var yMaxDistance = MaxAbs(nextRectangle.Top, nextRectangle.Bottom, halfSize.Height);
 
                 if (halfSize.Width != xMaxDistance || halfSize.Height != yMaxDistance)
-                    return ExtendBitmap(bitmap, new Size(xMaxDistance * 2, yMaxDistance * 2));
+                    return GraphicsUtils.PlaceAtCenter(bitmap, new Size(xMaxDistance * 2, yMaxDistance * 2));
             }
 
             return bitmap;
-        }
-
-        private static Image ExtendBitmap(Image bitmap, Size newSize)
-        {
-            var newBitmap = new Bitmap(newSize.Width, newSize.Height);
-            using var g = Graphics.FromImage(newBitmap);
-
-            g.DrawImage(bitmap, new Point((newSize - bitmap.Size) / 2));
-            return newBitmap;
         }
 
         private static int MaxAbs(params int[] numbers) => numbers.Select(Math.Abs).Max();

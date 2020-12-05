@@ -25,6 +25,7 @@ namespace TagCloud.Gui
             {typeof(DontModifyImageResizer), "Save as it is"},
             {typeof(FitToSizeImageResizer), "Fit to size"},
             {typeof(StretchImageResizer), "Stretch to size"},
+            {typeof(PlaceAtCenterImageResizer), "Place at center or fit to size"}
         };
 
         public static string Get(Type type) => 

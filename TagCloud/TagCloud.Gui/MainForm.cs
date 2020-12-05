@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using TagCloud.Core.Utils;
 using TagCloud.Gui.Helpers;
 using TagCloud.Gui.InputModels;
 using TagCloud.Gui.Utils;
@@ -311,7 +312,7 @@ namespace TagCloud.Gui
                 return;
 
             var previous = pictureBox.Image;
-            pictureBox.Image = GraphicsUtils.PlaceAtCenter(currentResultImage, pictureBox.Size);
+            pictureBox.Image = GraphicsUtils.FitToSize(currentResultImage, pictureBox.Size);
             previous?.Dispose();
         }
 
