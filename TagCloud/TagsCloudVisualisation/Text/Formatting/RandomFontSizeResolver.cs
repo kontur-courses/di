@@ -4,7 +4,7 @@ using TagsCloudVisualisation.Extensions;
 
 namespace TagsCloudVisualisation.Text.Formatting
 {
-    [VisibleName("Случайный шрифт")]
+    
     public class RandomFontSizeResolver : IFontSizeResolver
     {
         private static readonly int[] sizes = Enumerable.Range(1, 10)

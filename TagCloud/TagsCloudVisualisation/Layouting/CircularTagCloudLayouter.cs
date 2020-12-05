@@ -4,7 +4,6 @@ using System.Drawing;
 
 namespace TagsCloudVisualisation.Layouting
 {
-    [VisibleName("Круговая раскладка")]
     public class CircularTagCloudLayouter : ITagCloudLayouter
     {
         public CircularTagCloudLayouter(Point cloudCenter, Size minRectangleSize)

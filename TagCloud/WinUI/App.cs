@@ -164,7 +164,6 @@ namespace WinUI
         }
 
         private static Dictionary<string, TService> ToDictionaryByName<TService>(IEnumerable<TService> source) =>
-            source.Where(x => x != null)
-                .ToDictionary(x => x.GetType().GetCustomAttribute<VisibleNameAttribute>()?.Name ?? x.GetType().Name);
+            source.Where(x => x != null).ToDictionary(x => VisibleName.Get(x.GetType()));
     }
 }

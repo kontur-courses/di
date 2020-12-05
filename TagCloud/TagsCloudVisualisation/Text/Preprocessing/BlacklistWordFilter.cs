@@ -2,7 +2,6 @@
 
 namespace TagsCloudVisualisation.Text.Preprocessing
 {
-    [VisibleName("Without blacklisted words")]
     public class BlacklistWordFilter : IWordFilter
     {
         private static readonly HashSet<string> blacklistedWords = new HashSet<string>
