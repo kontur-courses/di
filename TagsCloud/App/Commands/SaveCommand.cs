@@ -4,9 +4,9 @@ namespace TagsCloud.App.Commands
 {
     public class SaveCommand : ICommand
     {
-        private readonly ImageHolder imageHolder;
+        private readonly IImageHolder imageHolder;
 
-        public SaveCommand(ImageHolder imageHolder)
+        public SaveCommand(IImageHolder imageHolder)
         {
             this.imageHolder = imageHolder;
         }

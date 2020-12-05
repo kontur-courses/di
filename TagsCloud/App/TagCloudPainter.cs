@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
     public class TagCloudPainter
     {
-        private readonly ImageHolder imageHolder;
+        private readonly IImageHolder imageHolder;
         private readonly ImageSettings imageSettings;
 
-        public TagCloudPainter(ImageHolder imageHolder, ImageSettings imageSettings)
+        public TagCloudPainter(IImageHolder imageHolder, ImageSettings imageSettings)
         {
             this.imageHolder = imageHolder;
             this.imageSettings = imageSettings;

@@ -31,7 +31,7 @@ namespace TagsCloud.App
                 .As<IFontFamilyProvider, IImageColorProvider, IImageSizeProvider>()
                 .SingleInstance();
             builder.RegisterType<TagCloudPainter>();
-            builder.RegisterType<ImageHolder>().SingleInstance();
+            builder.RegisterType<ImageHolder>().As<IImageHolder>().SingleInstance();
             builder.RegisterType<FileReaderProvider>();
             builder.RegisterType<FileReader>();
             builder.RegisterType<GrammemeChecker>().As<IWordChecker>();

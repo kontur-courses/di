@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
 using System.IO;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
-    public class ImageHolder
+    public class ImageHolder : IImageHolder
     {
         private readonly ImageSaverProvider imageSaverProvider;
         private Image image;
