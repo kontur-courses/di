@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public class FileProcessor : IFileProcessor
     {
+        private static char[] punctuationMarks = {'.', ',', '?', '!', ':', ':', '-', '—', '«', '»', '[', ']', '(', ')', '{','}','„','“'};
         private readonly string pathWords;
-        private string pathBoringWords;
+        private readonly string pathBoringWords;
         private List<string> exludedWords = new List<string>();
         
         public FileProcessor(string pathWords, string pathBoringWords)
@@ -20,20 +20,42 @@ namespace HomeExerciseTDD
         
         public Dictionary<string, int> GetWords()
         {
-            var wordFrequency = new Dictionary<string, int>();
-            var words = File.ReadAllLines(pathWords);
+            var words = ExtractTextFromFile(pathWords);
             if(pathBoringWords!=null)
-                exludedWords = File.ReadAllLines(pathBoringWords).ToList();
+                exludedWords = ExtractTextFromFile(pathBoringWords);
+            
+            var formattedWords = FilterWords(words);
+            
+            return GetFrequencyWords(formattedWords);
+        }
 
-            var formattedWords = words
+        private string[] FilterWords(List<string> words)
+        {
+            if (words == null) throw new ArgumentNullException(nameof(words));
+            return words
                 .Where(w=>!exludedWords.Contains(w))
-                .Select(w => w.ToLower()).ToList();
-            foreach (var word in formattedWords)
+                .Select(w => w.ToLower())
+                .ToArray();
+        }
+
+        private Dictionary<string, int> GetFrequencyWords(IEnumerable<string> formattedWords)
+        {
+            return formattedWords
+                .GroupBy(x => x)
+                .OrderByDescending(x => x.Count())
+                .ToDictionary(grouping => grouping.Key, grouping => grouping.Count());
+        }
+
+        private List<string> ExtractTextFromFile(string path)
+        {
+            var result = new List<string>();
+            var lines = File.ReadAllLines(path);
+            foreach (var line in lines)
             {
-                wordFrequency[word] = wordFrequency.ContainsKey(word) ? ++wordFrequency[word] : 1;
+                result.AddRange(line.Split(' ').Select(w => w.Trim(punctuationMarks)));
             }
             
-            return wordFrequency;
+            return result;
         }
     }
 }
