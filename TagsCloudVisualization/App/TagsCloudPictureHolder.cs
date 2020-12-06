@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Common;
 
 namespace TagsCloudVisualization.App

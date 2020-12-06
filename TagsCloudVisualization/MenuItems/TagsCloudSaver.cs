@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using TagsCloudVisualization.App;
 using TagsCloudVisualization.Contracts;
-using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudVisualization.MenuItems
 {

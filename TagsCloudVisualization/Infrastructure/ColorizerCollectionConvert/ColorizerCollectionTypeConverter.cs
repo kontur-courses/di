@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using TagsCloudLayouters.Configuration;
 using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core;
 using TagsCloudLayouters.Core.ColorizeAlgorithms;
 using TagsCloudVisualization.Infrastructure.Common;
 

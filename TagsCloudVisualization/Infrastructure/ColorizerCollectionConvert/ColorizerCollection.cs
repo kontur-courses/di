@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core;
-using TagsCloudLayouters.Core.ColorizeAlgorithms;
 
 namespace TagsCloudVisualization.Infrastructure.ColorizerCollectionConvert
 {

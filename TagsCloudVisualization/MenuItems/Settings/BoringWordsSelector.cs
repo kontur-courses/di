@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using TagsCloudLayouters.Configuration;
 using TagsCloudVisualization.Contracts;
-using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudVisualization.MenuItems.Settings
 {

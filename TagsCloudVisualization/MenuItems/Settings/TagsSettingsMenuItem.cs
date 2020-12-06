@@ -2,9 +2,7 @@
 using System.Windows.Forms;
 using TagsCloudLayouters.Configuration;
 using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core.ColorizeAlgorithms;
 using TagsCloudVisualization.Contracts;
-using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Common;
 
 namespace TagsCloudVisualization.MenuItems.Settings
