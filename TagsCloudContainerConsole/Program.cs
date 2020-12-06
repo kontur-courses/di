@@ -13,6 +13,18 @@ namespace TagsCloudContainerConsole
 {
     class Program
     {
+        private static Dictionary<string, ImageFormat> imageFormats = new Dictionary<string, ImageFormat>()
+        {
+            ["png"] = ImageFormat.Png,
+            ["bmp"] = ImageFormat.Bmp,
+            ["jpg"] = ImageFormat.Jpeg,
+            ["jpeg"] = ImageFormat.Jpeg,
+            ["ico"] = ImageFormat.Icon,
+            ["gif"] = ImageFormat.Gif,
+            ["tif"] = ImageFormat.Tiff,
+            ["tiff"] = ImageFormat.Tiff,
+        };
+        
         public static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
@@ -43,7 +55,12 @@ namespace TagsCloudContainerConsole
                 container.Rendering(renderer);
                 container.Layouting(diConainer.Resolve<IWordsLayouter>());
                 container.Render();
-                renderer.Output.Save(options.OutputFile, ImageFormat.Png);
+
+                var format = options.OutputFile.Split('.').Last();
+                
+                if(!imageFormats.TryGetValue(format, out var imageFormat))
+                    imageFormat = ImageFormat.Bmp;
+                renderer.Output.Save(options.OutputFile, imageFormat);
             });
         }
 
