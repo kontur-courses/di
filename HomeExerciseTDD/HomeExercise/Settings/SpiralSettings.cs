@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace HomeExerciseTDD.settings
+namespace HomeExercise.settings
 {
     public class SpiralSettings
     {
@@ -8,7 +8,6 @@ namespace HomeExerciseTDD.settings
         public Point? PreviousPoint { get; }
         public float Step { get; }
         public float Angle { get; }
-        
         
         public SpiralSettings(Point center, float step = 0.0005f, float angle  = 0f, Point? previousPoint = null)
         {

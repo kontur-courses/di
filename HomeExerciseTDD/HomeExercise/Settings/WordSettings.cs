@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace HomeExerciseTDD.settings
+namespace HomeExercise.settings
 {
     public class WordSettings
     {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace HomeExerciseTDD.settings
+namespace HomeExercise.settings
 {
     public class PainterSettings
     {
@@ -21,6 +20,4 @@ namespace HomeExerciseTDD.settings
             Color = color;
         }
     }
-    
-    
 }
