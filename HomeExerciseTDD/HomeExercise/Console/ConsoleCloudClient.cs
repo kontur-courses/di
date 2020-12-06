@@ -5,11 +5,11 @@ using System.Linq;
 using Autofac;
 using Autofac.Core;
 using CommandLine;
-using HomeExerciseTDD.settings;
+using HomeExercise.settings;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
-    public class ConsoleCloudClient
+    public class ConsoleCloudClient : IConsoleCloudClient
     {
         public void HandleSettingsFromConsole(string[] args, ContainerBuilder builder)
         {
@@ -73,7 +73,6 @@ namespace HomeExerciseTDD
                 : ImageFormat.Png;
     
             return result;  
-        }  
-        
+        }
     }
 }
