@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace TagsCloudVisualization.FormAction
 {
-    public static class FormActionExtensions
+    internal static class FormActionExtensions
     {
         public static ToolStripItem[] ToMenuItems(this IEnumerable<IFormAction> actions)
         {

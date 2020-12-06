@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.StringExtensions
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         public static Size MeasureString(this string line, Font font)
         {
