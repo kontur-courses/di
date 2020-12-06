@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloudContainer.App.Settings;
+using TagsCloudContainer.Infrastructure.Settings;
 using TagsCloudContainer.Infrastructure.UiActions;
 
 namespace TagsCloudContainer.App
@@ -11,10 +12,10 @@ namespace TagsCloudContainer.App
     public class MainForm : Form
     {
         public MainForm(IEnumerable<IUiAction> actions,
-            PictureBoxImageHolder pictureBox, AppSettings appSettings)
+            PictureBoxImageHolder pictureBox, IImageSizeSettingsHolder sizeSettings)
         {
-            ClientSize = new Size(appSettings.ImageSettings.Width,
-                appSettings.ImageSettings.Height);
+            ClientSize = new Size(sizeSettings.Width,
+                sizeSettings.Height);
 
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToArray().ToMenuItems());

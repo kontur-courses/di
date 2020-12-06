@@ -8,12 +8,12 @@ namespace TagsCloudContainer.App.Actions
     internal class CircularCloudAction : IUiAction
     {
         private readonly ICloudVisualizer circularCloudVisualizer;
-        private readonly AppSettings appSettings;
+        private readonly LayouterAlgorithmSettings settings;
 
-        public CircularCloudAction(ICloudVisualizer circularCloudVisualizer, AppSettings appSettings)
+        public CircularCloudAction(ICloudVisualizer circularCloudVisualizer, LayouterAlgorithmSettings settings)
         {
             this.circularCloudVisualizer = circularCloudVisualizer;
-            this.appSettings = appSettings;
+            this.settings = settings;
         }
 
         public MenuCategory Category => MenuCategory.Algorithms;
@@ -22,7 +22,7 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            appSettings.LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
+            settings.LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
             circularCloudVisualizer.Visualize();
         }
     }

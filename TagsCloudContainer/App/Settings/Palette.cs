@@ -1,16 +1,13 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App.Settings
 {
-    public class Palette
+    public class Palette : IPaletteSettingsHolder
     {
+        public static readonly Palette Instance = new Palette();
 
-        public Palette()
-        {
-            SetDefault();
-        }
-
-        private void SetDefault()
+        private Palette()
         {
             TextColor = Color.White;
             BackgroundColor = Color.Black;

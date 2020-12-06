@@ -5,9 +5,9 @@ namespace TagsCloudContainer.App.DataReader
 {
     internal class DataReaderFactory : IDataReaderFactory
     {
-        private readonly AppSettings settings;
+        private readonly InputSettings settings;
 
-        public DataReaderFactory(AppSettings settings)
+        public DataReaderFactory(InputSettings settings)
         {
             this.settings = settings;
         }

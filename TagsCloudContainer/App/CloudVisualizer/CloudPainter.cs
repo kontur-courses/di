@@ -3,26 +3,32 @@ using System.Drawing;
 using TagsCloudContainer.App.CloudGenerator;
 using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
+using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {
     internal class CloudPainter : ICloudPainter
     {
-        private readonly AppSettings settings;
+        private readonly IPaletteSettingsHolder palette;
+        private readonly IFontSettingsHolder fontSettings;
+        private readonly IImageSizeSettingsHolder sizeSettings;
 
-        public CloudPainter(AppSettings settings)
+        public CloudPainter(IPaletteSettingsHolder palette, IFontSettingsHolder fontSettings, 
+            IImageSizeSettingsHolder sizeSettings)
         {
-            this.settings = settings;
+            this.palette = palette;
+            this.fontSettings = fontSettings;
+            this.sizeSettings = sizeSettings;
         }
 
         public void Paint(IEnumerable<Tag> cloud, Graphics g)
         {
-            using var backgroundBush = new SolidBrush(settings.Palette.BackgroundColor);
-            g.FillRectangle(backgroundBush, 0, 0, settings.ImageSettings.Width, settings.ImageSettings.Height);
-            using var textBrush = new SolidBrush(settings.Palette.TextColor);
+            using var backgroundBush = new SolidBrush(palette.BackgroundColor);
+            g.FillRectangle(backgroundBush, 0, 0, sizeSettings.Width, sizeSettings.Height);
+            using var textBrush = new SolidBrush(palette.TextColor);
             foreach (var tag in cloud)
             {
-                var font = settings.FontSettings.Font;
+                var font = fontSettings.Font;
                 g.DrawString(tag.Word, new Font(font.FontFamily,
                         (float) tag.FontSize, font.Style,
                         font.Unit, font.GdiCharSet),

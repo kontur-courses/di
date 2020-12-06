@@ -5,11 +5,11 @@ namespace TagsCloudContainer.App.Actions
 {
     internal class FontSettingsAction : IUiAction
     {
-        private readonly AppSettings appSettings;
+        private readonly FontSettings settings;
 
-        public FontSettingsAction(AppSettings appSettings)
+        public FontSettingsAction(FontSettings settings)
         {
-            this.appSettings = appSettings;
+            this.settings = settings;
         }
 
         public MenuCategory Category => MenuCategory.Settings;
@@ -18,7 +18,7 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            SettingsForm.For(appSettings.FontSettings).ShowDialog();
+            SettingsForm.For(settings).ShowDialog();
         }
     }
 }

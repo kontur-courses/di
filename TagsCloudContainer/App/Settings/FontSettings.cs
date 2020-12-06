@@ -1,15 +1,13 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App.Settings
 {
-    public class FontSettings
+    public class FontSettings : IFontSettingsHolder
     {
-        public FontSettings()
-        {
-            SetDefault();
-        }
+        public static readonly FontSettings Instance = new FontSettings();
 
-        private void SetDefault()
+        private FontSettings()
         {
             Font = new Font("Arial", 10);
         }

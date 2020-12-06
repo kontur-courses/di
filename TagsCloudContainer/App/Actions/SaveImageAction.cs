@@ -8,13 +8,13 @@ namespace TagsCloudContainer.App.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private readonly AppSettings appSettings;
+        private readonly OutputSettings settings;
         private readonly IImageHolder imageHolder;
 
-        public SaveImageAction(IImageHolder imageHolder, AppSettings appSettings)
+        public SaveImageAction(IImageHolder imageHolder, OutputSettings settings)
         {
             this.imageHolder = imageHolder;
-            this.appSettings = appSettings;
+            this.settings = settings;
         }
 
         public MenuCategory Category => MenuCategory.File;
@@ -26,7 +26,7 @@ namespace TagsCloudContainer.App.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(appSettings.OutputDirectory),
+                InitialDirectory = Path.GetFullPath(settings.OutputDirectory),
                 DefaultExt = "png",
                 FileName = "image.png",
                 Filter = "Изображения (*.png)|*.png"

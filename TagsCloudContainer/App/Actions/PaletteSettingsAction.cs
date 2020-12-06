@@ -5,11 +5,11 @@ namespace TagsCloudContainer.App.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private readonly AppSettings appSettings;
+        private readonly Palette palette;
 
-        public PaletteSettingsAction(AppSettings appSettings)
+        public PaletteSettingsAction(Palette palette)
         {
-            this.appSettings = appSettings;
+            this.palette = palette;
         }
 
         public MenuCategory Category => MenuCategory.Settings;
@@ -18,7 +18,7 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            SettingsForm.For(appSettings.Palette).ShowDialog();
+            SettingsForm.For(palette).ShowDialog();
         }
     }
 }

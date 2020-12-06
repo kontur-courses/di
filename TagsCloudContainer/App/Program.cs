@@ -11,6 +11,7 @@ using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DataReader;
+using TagsCloudContainer.Infrastructure.Settings;
 using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 using TagsCloudContainer.Infrastructure.UiActions;
 
@@ -27,10 +28,22 @@ namespace TagsCloudContainer.App
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
                 //var outputFile = Path.GetFullPath(Path.Combine(
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
-                var appSettings = new AppSettings();
-                var imageHolder = new PictureBoxImageHolder(appSettings);
+                var imageHolder = new PictureBoxImageHolder(ImageSizeSettings.Instance, ImageFormatSettings.Instance);
                 var services = new ServiceCollection()
-                    .AddSingleton(appSettings)
+                    .AddSingleton(ImageSizeSettings.Instance)
+                    .AddSingleton<IImageSizeSettingsHolder> (ImageSizeSettings.Instance)
+                    .AddSingleton(FontSettings.Instance)
+                    .AddSingleton<IFontSettingsHolder>(FontSettings.Instance)
+                    .AddSingleton(ImageFormatSettings.Instance)
+                    .AddSingleton<IImageFormatSettingsHolder>(ImageFormatSettings.Instance)
+                    .AddSingleton(InputSettings.Instance)
+                    .AddSingleton<IInputSettingsHolder>(InputSettings.Instance)
+                    .AddSingleton(LayouterAlgorithmSettings.Instance)
+                    .AddSingleton<ILayouterAlgorithmSettingsHolder>(LayouterAlgorithmSettings.Instance)
+                    .AddSingleton(OutputSettings.Instance)
+                    .AddSingleton<IOutputSettingsHolder>(OutputSettings.Instance)
+                    .AddSingleton(Palette.Instance)
+                    .AddSingleton<IPaletteSettingsHolder>(Palette.Instance)
                     .AddSingleton<IDataReaderFactory, DataReaderFactory>()
                     .AddSingleton<ITextParser, SimpleTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()

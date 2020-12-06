@@ -7,11 +7,11 @@ namespace TagsCloudContainer.App.Actions
 {
     internal class OpenFileAction : IUiAction
     {
-        private readonly AppSettings appSettings;
+        private readonly InputSettings settings;
 
-        public OpenFileAction(AppSettings appSettings)
+        public OpenFileAction(InputSettings settings)
         {
-            this.appSettings = appSettings;
+            this.settings = settings;
         }
 
         public MenuCategory Category => MenuCategory.File;
@@ -23,12 +23,12 @@ namespace TagsCloudContainer.App.Actions
             var dialog = new OpenFileDialog
             {
                 CheckFileExists = true,
-                InitialDirectory = Path.GetFullPath(appSettings.InputFileName),
+                InitialDirectory = Path.GetFullPath(settings.InputFileName),
                 Filter = "Текстовые файлы (*.txt)|*.txt"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                appSettings.InputFileName = dialog.FileName;
+                settings.InputFileName = dialog.FileName;
         }
     }
 }

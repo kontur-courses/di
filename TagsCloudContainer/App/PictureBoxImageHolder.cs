@@ -2,18 +2,21 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
-        private readonly AppSettings appSettings;
+        private readonly IImageSizeSettingsHolder sizeSettings;
+        private readonly IImageFormatSettingsHolder formatSettings;
 
-        public PictureBoxImageHolder(AppSettings appSettings)
+        public PictureBoxImageHolder(IImageSizeSettingsHolder sizeSettings, 
+            IImageFormatSettingsHolder formatSettings)
         {
-            this.appSettings = appSettings;
+            this.sizeSettings = sizeSettings;
+            this.formatSettings = formatSettings;
         }
 
         public Graphics StartDrawing()
@@ -30,14 +33,14 @@ namespace TagsCloudContainer.App
 
         public void RecreateImage()
         {
-            Image = new Bitmap(appSettings.ImageSettings.Width,
-                appSettings.ImageSettings.Height, PixelFormat.Format24bppRgb);
+            Image = new Bitmap(sizeSettings.Width,
+                sizeSettings.Height, PixelFormat.Format24bppRgb);
         }
 
         public void SaveImage(string fileName)
         {
             FailIfNotInitialized();
-            Image.Save(fileName, ImageFormat.Png);
+            Image.Save(fileName, formatSettings.Format);
         }
 
         private void FailIfNotInitialized()
