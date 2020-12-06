@@ -9,34 +9,30 @@ namespace TagsCloud.Core
     public class CloudVisualization
     {
         private static readonly Random Random = new Random();
-        private readonly Dictionary<int, Font> newFonts = new Dictionary<int, Font>();
         private readonly Dictionary<char, Color> letterColor = new Dictionary<char, Color>();
 
-        private readonly Image image;
-        private readonly Palette palette;
         private readonly Font font;
-        private readonly List<(string, int)> words;
+        private readonly Palette palette;
+        private readonly IImageHolder imageHolder;
         private readonly ColorAlgorithm colorAlgorithm;
-        private readonly ICircularCloudLayouter cloud;
 
-        public CloudVisualization(Image image, Palette palette, Font font,
-            ColorAlgorithm colorAlgorithm, List<(string, int)> words, ICircularCloudLayouter cloud)
+        public CloudVisualization(IImageHolder imageHolder, Palette palette, FontSetting fontSetting,
+            ColorAlgorithm colorAlgorithm)
         {
             this.colorAlgorithm = colorAlgorithm;
             this.palette = palette;
-            this.words = words;
-            this.image = image;
-            this.cloud = cloud;
-            this.font = font;
+            this.imageHolder = imageHolder;
+            font = fontSetting.MainFont;
         }
 
-        public void Paint()
+        public void Paint(ICircularCloudLayouter cloud, List<(string, int)> words)
         {
+            var newFonts = new Dictionary<int, Font>();
             var rectangles = TagsHelper.GetRectangles(cloud, words, newFonts, font);
 
-            using (var graphics = Graphics.FromImage(image))
+            using (var graphics = imageHolder.StartDrawing())
             {
-                var imageSize = image.Size;
+                var imageSize = imageHolder.GetImageSize();
 
                 using (var brush = new SolidBrush(palette.BackgroundColor))
                     graphics.FillRectangle(brush, 0, 0, imageSize.Width, imageSize.Height);
@@ -55,10 +51,10 @@ namespace TagsCloud.Core
                 }
             }
 
-            DisposeFonts();
+            DisposeFonts(newFonts);
         }
 
-        private void DisposeFonts()
+        private void DisposeFonts(Dictionary<int, Font> newFonts)
         {
             foreach (var currentFont in newFonts)
                 currentFont.Value.Dispose();

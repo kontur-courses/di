@@ -1,29 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.Common;
 using TagsCloud.Core;
-using TagsCloud.Visualization;
 
 namespace TagsCloud.ClientGUI
 {
     public class TagsCloudPainter
     {
-        private readonly ColorAlgorithm colorAlgorithm;
-        private readonly FontSetting font;
-        private readonly Palette palette;
         private readonly PathSettings pathSettings;
+        private readonly CloudVisualization visualizer;
 
-        public TagsCloudPainter(PictureBoxImageHolder pictureBox, Palette palette,
-            FontSetting font, PathSettings pathSettings, ColorAlgorithm colorAlgorithm)
+        public TagsCloudPainter(PictureBoxImageHolder pictureBox, 
+            PathSettings pathSettings, CloudVisualization visualizer)
         {
             PictureBox = pictureBox;
-            this.palette = palette;
-            this.font = font;
             this.pathSettings = pathSettings;
-            this.colorAlgorithm = colorAlgorithm;
+            this.visualizer = visualizer;
         }
 
         public PictureBoxImageHolder PictureBox { get; }
@@ -33,9 +25,7 @@ namespace TagsCloud.ClientGUI
             var words = TagsHelper.GetWords(pathSettings.PathToText, pathSettings.PathToBoringWords,
                 pathSettings.PathToDictionary, pathSettings.PathToAffix);
 
-            var visualizer = new CloudVisualization(PictureBox.Image, palette,
-                font.MainFont, colorAlgorithm, words, cloud);
-            visualizer.Paint();
+            visualizer.Paint(cloud, words);
 
             PictureBox.Refresh();
             Application.DoEvents();
