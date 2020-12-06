@@ -44,7 +44,7 @@ namespace TagsCloud.ClientGUI
                 rectangles.Add(rect);
             }
 
-            var visualizer = new CircularCloudVisualization(PictureBox.Image, palette, 
+            var visualizer = new CloudVisualization(PictureBox.Image, palette, 
                 colorAlgorithm, words, rectangles, correctFonts);
             visualizer.Paint();
 

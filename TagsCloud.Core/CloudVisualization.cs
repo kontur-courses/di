@@ -5,7 +5,7 @@ using TagsCloud.Visualization;
 
 namespace TagsCloud.Core
 {
-    public class CircularCloudVisualization
+    public class CloudVisualization
     {
         private static readonly Random Random = new Random();
         private readonly Dictionary<char, Color> letterColor = new Dictionary<char, Color>();
@@ -17,7 +17,7 @@ namespace TagsCloud.Core
         private readonly ColorAlgorithm colorAlgorithm;
         private readonly List<Font> newFonts;
 
-        public CircularCloudVisualization(Image image, Palette palette,
+        public CloudVisualization(Image image, Palette palette,
             ColorAlgorithm colorAlgorithm, List<(string, int)> words, 
             List<Rectangle> rectangles, List<Font> newFonts)
         {
@@ -31,22 +31,25 @@ namespace TagsCloud.Core
 
         public void Paint()
         {
-            var imageSize = image.Size;
-            var graphics = Graphics.FromImage(image);
-
-            graphics.FillRectangle(new SolidBrush(palette.BackgroundColor), 0, 0,
-                imageSize.Width, imageSize.Height);
-
-            for (var i = 0; i < rectangles.Count; ++i)
+            using (var graphics = Graphics.FromImage(image))
             {
-                var drawFormat = new StringFormat
+                var imageSize = image.Size;
+
+                using (var brush = new SolidBrush(palette.BackgroundColor))
+                    graphics.FillRectangle(brush, 0, 0, imageSize.Width, imageSize.Height);
+                
+                for (var i = 0; i < rectangles.Count; ++i)
                 {
-                    Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center
-                };
-                graphics.DrawRectangle(new Pen(Color.White), rectangles[i]);
-                graphics.DrawString(words[i].Item1, newFonts[i],
-                        new SolidBrush(GetColor(words[i].Item1[0])), rectangles[i], drawFormat);
+                    var drawFormat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center
+                    };
+                    graphics.DrawRectangle(new Pen(Color.White), rectangles[i]);
+
+                    using (var brush = new SolidBrush(GetColor(words[i].Item1[0])))
+                        graphics.DrawString(words[i].Item1, newFonts[i], brush, rectangles[i], drawFormat);
+                }
             }
         }
 
