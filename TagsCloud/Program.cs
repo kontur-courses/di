@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using McMaster.Extensions.CommandLineUtils;
@@ -26,9 +27,30 @@ namespace TagsCloud
         public static int Main(string[] args)
         {
             var app = new CommandLineApplication();
+            ConfigureCommandLineApp(app);
+            try
+            {
+                app.Execute(args);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Введенная вами команда некоректна. Для подробностей --help");
+                Process.GetCurrentProcess().Kill();
+            }
 
-            app.HelpOption();
+            ConfigureServices();
 
+            var text = serviceProvider.GetService<IFileReader>()?.GetWordsFromFile(_pathToInputFile);
+            var words = serviceProvider.GetService<IWordFilter>()?.FilterWords(text).Select(x => x.ToLower()).ToArray();
+            var bitmapCreator = serviceProvider.GetService<IBitmapCreator>();
+            var image = bitmapCreator.Create(words);
+            BitmapSaver.BitmapSaver.Save(image, _format);
+            bitmapCreator.Dispose();
+            return 0;
+        }
+
+        private static void ConfigureCommandLineApp(CommandLineApplication app)
+        {
             var input = app.Option("-i|--input <INPUT>", "Input file path", CommandOptionType.SingleValue);
             var backgroundColor = app.Option<Color>("-b|--bgcolor <BGCOLOR>", "Background color",
                 CommandOptionType.SingleValue);
@@ -39,6 +61,12 @@ namespace TagsCloud
 
             app.OnExecute(() =>
                 {
+                    if (!input.HasValue())
+                    {
+                        Console.WriteLine("ArgumentException: не указан путь к файлу. Для подробностей --help");
+                        Process.GetCurrentProcess().Kill();
+                    }
+
                     _pathToInputFile = ArgumentParser.CheckFilePath(input.Value());
 
                     _backgroundColor = backgroundColor.HasValue()
@@ -64,17 +92,6 @@ namespace TagsCloud
                     return 0;
                 }
             );
-
-            app.Execute(args);
-
-            ConfigureServices();
-
-            var text = serviceProvider.GetService<IFileReader>()?.GetWordsFromFile(_pathToInputFile);
-            var words = serviceProvider.GetService<IWordFilter>()?.FilterWords(text).Select(x => x.ToLower());
-            var image = serviceProvider.GetService<IBitmapCreator>()?.Create(words);
-            BitmapSaver.BitmapSaver.Save(image, _format);
-
-            return 0;
         }
 
         private static void ConfigureServices()
@@ -83,18 +100,19 @@ namespace TagsCloud
 
             services.AddSingleton<IWordFilter>(new PartsOfSpeechFilter(PartsOfSpeech.ADVPRO, PartsOfSpeech.APRO,
                 PartsOfSpeech.CONJ));
+            var coloringAlgorithm = new DefaultColoringAlgorithm(Color.Black);
             services.AddSingleton<ILayoutAlgorithm>(
                 new CircularCloudLayouter(new Point(_size.Width / 2, _size.Height / 2)));
-            services.AddSingleton<IColoringAlgorithm>(new DefaultColoringAlgorithm(_textColor));
+            services.AddSingleton<IColoringAlgorithm>(coloringAlgorithm);
             services.AddSingleton<IImageConfig>(new ImageConfig.ImageConfig(_size, _fontFamily, _backgroundColor,
-                new DefaultColoringAlgorithm(_textColor)));
+                coloringAlgorithm));
             services.AddSingleton<IPointGenerator, ArchimedeanSpiral>();
-            services.AddSingleton(ChooseReader(services));
+            services.AddSingleton(ChooseReader());
             services.AddSingleton<IBitmapCreator, BitmapCreator.BitmapCreator>();
             serviceProvider = services.BuildServiceProvider();
         }
 
-        private static IFileReader ChooseReader(ServiceCollection serviceCollection)
+        private static IFileReader ChooseReader()
         {
             if (_pathToInputFile.EndsWith(".txt"))
                 return new TxtFileReader();
