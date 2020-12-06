@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace TagsCloud.BitmapCreator
 {
-    interface IBitmapCreator
+    public interface IBitmapCreator : IDisposable
     {
         public Bitmap Create(IEnumerable<string> words);
     }
