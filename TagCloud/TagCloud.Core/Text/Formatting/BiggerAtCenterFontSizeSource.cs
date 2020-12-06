@@ -27,7 +27,7 @@ namespace TagCloud.Core.Text.Formatting
             foreach (var word in allWords)
             {
                 result.Add(word.Key, currentSize.Size);
-                if (++currentSizeUses >= currentSize.Count)
+                if (currentSizeUses++ >= currentSize.Count)
                 {
                     currentSize = sizes.Pop();
                     currentSizeUses = 0;
