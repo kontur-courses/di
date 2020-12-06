@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using HomeExerciseTDD.settings;
+using HomeExercise.settings;
 
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
-    public class CircularCloudRectanglesPainter: IPainter<Rectangle>
+    public class CircularCloudRectanglesPainter: IPainter
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
@@ -25,8 +25,8 @@ namespace HomeExerciseTDD
         {
             offsetX = settings.Width/2;
             offsetY = settings.Height/2;
-            this.format = settings.Format;
-            this.fileName = settings.FileName;
+            format = settings.Format;
+            fileName = settings.FileName;
             this.rectangles = rectangles;
             randomazer= new Random();
             color = new Color();//??????

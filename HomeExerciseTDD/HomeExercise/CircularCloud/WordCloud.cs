@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using HomeExerciseTDD.Helpers;
-using HomeExerciseTDD.settings;
+using HomeExercise.Helpers;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public class WordCloud : IWordCloud
     {
         private readonly IWordsProcessor wordsProcessor;
         public List<ISizedWord> SizedWords { get; }
         private ICircularCloudLayouter layouter;
-        public Point Center { get; private set; }
+        public Point Center { get;}
 
         public WordCloud(ICircularCloudLayouter layouter,  IWordsProcessor wordsProcessor)
         {
+            Center = layouter.Center;
             SizedWords = new List<ISizedWord>();
             this.layouter = layouter;
             this.wordsProcessor = wordsProcessor;
@@ -23,31 +22,19 @@ namespace HomeExerciseTDD
 
        public void BuildCloud()
        {
-           var words = wordsProcessor.WordsHandle();
+           var words = wordsProcessor.HandleWords();
            foreach (var word in words)
             {
                 var rectangle = GetRectangle(word, word.Size);
                 Console.WriteLine($"Height:{rectangle.Size.Height}{Environment.NewLine}Width:{rectangle.Size.Width}");
                 SizedWords.Add(new SizedWord(word, word.Size, word.Font, rectangle));
             }
-
-            Center = SizedWords.First().Rectangle.Location;
-        }
+       }
 
         private Rectangle GetRectangle(IWord word, int size)
         {
             return layouter
                 .PutNextRectangle(GraphicsHelper.MeasureString(word.Text, new Font(word.Font, size)));
-        }
-        
-               
-        private Size ToEnlarge(Size size, int coefficient)
-        {
-            var resultSize = size;
-            resultSize.Height += coefficient;
-            resultSize.Width += coefficient;
-
-            return resultSize;
         }
     }
 }

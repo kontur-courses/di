@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
-using HomeExerciseTDD.settings;
 
-
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
-    public class CircularCloudLayouter:ICircularCloudLayouter
+    public class CircularCloudLayouter : ICircularCloudLayouter
     {
-        private Point center;
+        public Point Center { get; }
         private readonly List<Rectangle> rectanglesInCloud = new List<Rectangle>();
         private readonly ISpiral spiral;
 
         public CircularCloudLayouter(ISpiral spiral)
         {
-            center = spiral.Center;
+            Center = spiral.Center;
             this.spiral = spiral;
         }
         
@@ -41,7 +38,7 @@ namespace HomeExerciseTDD
 
         private bool IsSizeValidity(Size size)
         {
-            return size.Height > 0 && size.Width > 0;
+            return size.Height >= 0 && size.Width >= 0;
         }
     }
 }

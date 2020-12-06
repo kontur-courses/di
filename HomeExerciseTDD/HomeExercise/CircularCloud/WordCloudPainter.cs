@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using HomeExerciseTDD.settings;
+using HomeExercise.settings;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
-    public class WordCloudPainter : IPainter<Word>
+    public class WordCloudPainter : IPainter
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
-        private readonly List<ISizedWord> words;
         private readonly int offsetX;
         private readonly int offsetY;
-        
         
         private readonly PainterSettings settings;
         private readonly IWordCloud wordCloud;
@@ -27,7 +22,6 @@ namespace HomeExerciseTDD
 
             offsetX = settings.Width/2;
             offsetY = settings.Height/2;
-            new Random();
 
             bitmap = new Bitmap(settings.Width, settings.Height);
             graphics = Graphics.FromImage(bitmap);
@@ -52,7 +46,7 @@ namespace HomeExerciseTDD
             var newY = word.Rectangle.Y + offsetY - center.Y;
             var point = new Point(newX, newY);
             var newRectangle = new Rectangle(point, word.Rectangle.Size);
-            var wordFont = new Font(word.Font, word.Size, FontStyle.Bold, GraphicsUnit.Point);//????
+            var wordFont = new Font(word.Font, word.Size, FontStyle.Bold, GraphicsUnit.Point);
                 
             var brush = new SolidBrush(settings.Color);
                 
