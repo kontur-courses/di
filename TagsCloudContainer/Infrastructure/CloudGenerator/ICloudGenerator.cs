@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Infrastructure.CloudGenerator
 {
     internal interface ICloudGenerator
     {
-        public IEnumerable<Tag> GenerateCloud(ICloudLayouter layouter, Dictionary<string, double> frequencyDictionary);
+        public IEnumerable<Tag> GenerateCloud(Dictionary<string, double> frequencyDictionary);
     }
 }

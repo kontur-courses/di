@@ -1,4 +1,5 @@
-﻿using TagsCloudContainer.Infrastructure.CloudGenerator;
+﻿using TagsCloudContainer.App.Settings;
+using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.UiActions;
 
@@ -7,12 +8,12 @@ namespace TagsCloudContainer.App.Actions
     internal class CircularCloudAction : IUiAction
     {
         private readonly ICloudVisualizer circularCloudVisualizer;
-        private readonly PictureBoxImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public CircularCloudAction(ICloudVisualizer circularCloudVisualizer, PictureBoxImageHolder imageHolder)
+        public CircularCloudAction(ICloudVisualizer circularCloudVisualizer, AppSettings appSettings)
         {
             this.circularCloudVisualizer = circularCloudVisualizer;
-            this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public MenuCategory Category => MenuCategory.Algorithms;
@@ -21,8 +22,8 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            imageHolder.GetAppSettings().LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
-            circularCloudVisualizer.Visualize(imageHolder.GetAppSettings());
+            appSettings.LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
+            circularCloudVisualizer.Visualize();
         }
     }
 }

@@ -8,7 +8,12 @@ namespace TagsCloudContainer.App.CloudVisualizer
 {
     internal class CloudPainter : ICloudPainter
     {
-        private readonly AppSettings settings = AppSettings.Default;
+        private readonly AppSettings settings;
+
+        public CloudPainter(AppSettings settings)
+        {
+            this.settings = settings;
+        }
 
         public void Paint(IEnumerable<Tag> cloud, Graphics g)
         {

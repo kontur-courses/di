@@ -9,12 +9,11 @@ namespace TagsCloudContainer.App
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
-        private AppSettings appSettings = AppSettings.Default;
+        private readonly AppSettings appSettings;
 
-        public Size GetImageSize()
+        public PictureBoxImageHolder(AppSettings appSettings)
         {
-            FailIfNotInitialized();
-            return Image.Size;
+            this.appSettings = appSettings;
         }
 
         public Graphics StartDrawing()
@@ -29,9 +28,8 @@ namespace TagsCloudContainer.App
             Application.DoEvents();
         }
 
-        public void RecreateImage(AppSettings settings)
+        public void RecreateImage()
         {
-            appSettings = settings;
             Image = new Bitmap(appSettings.ImageSettings.Width,
                 appSettings.ImageSettings.Height, PixelFormat.Format24bppRgb);
         }
@@ -40,11 +38,6 @@ namespace TagsCloudContainer.App
         {
             FailIfNotInitialized();
             Image.Save(fileName, ImageFormat.Png);
-        }
-
-        public AppSettings GetAppSettings()
-        {
-            return appSettings;
         }
 
         private void FailIfNotInitialized()

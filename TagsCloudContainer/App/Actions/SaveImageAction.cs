@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Forms;
+using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.UiActions;
 
@@ -7,11 +8,13 @@ namespace TagsCloudContainer.App.Actions
 {
     public class SaveImageAction : IUiAction
     {
+        private readonly AppSettings appSettings;
         private readonly IImageHolder imageHolder;
 
-        public SaveImageAction(IImageHolder imageHolder)
+        public SaveImageAction(IImageHolder imageHolder, AppSettings appSettings)
         {
             this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public MenuCategory Category => MenuCategory.File;
@@ -23,7 +26,7 @@ namespace TagsCloudContainer.App.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(imageHolder.GetAppSettings().OutputDirectory),
+                InitialDirectory = Path.GetFullPath(appSettings.OutputDirectory),
                 DefaultExt = "png",
                 FileName = "image.png",
                 Filter = "Изображения (*.png)|*.png"

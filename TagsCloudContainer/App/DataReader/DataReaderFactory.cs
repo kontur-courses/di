@@ -5,7 +5,14 @@ namespace TagsCloudContainer.App.DataReader
 {
     internal class DataReaderFactory : IDataReaderFactory
     {
-        public IDataReader CreateDataReader(AppSettings settings)
+        private readonly AppSettings settings;
+
+        public DataReaderFactory(AppSettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public IDataReader CreateDataReader()
         {
             return new TxtFileReader(settings.InputFileName);
         }

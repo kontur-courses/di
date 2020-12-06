@@ -4,12 +4,16 @@ namespace TagsCloudContainer.App.Settings
 {
     public class Palette
     {
-        public static readonly Palette Default = new Palette(Color.White, Color.Black);
 
-        private Palette(Color textColor, Color backgroundColor)
+        public Palette()
         {
-            TextColor = textColor;
-            BackgroundColor = backgroundColor;
+            SetDefault();
+        }
+
+        private void SetDefault()
+        {
+            TextColor = Color.White;
+            BackgroundColor = Color.Black;
         }
 
         public Color TextColor { get; set; }

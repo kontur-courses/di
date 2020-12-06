@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.IO;
-using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.Infrastructure;
+﻿using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DataReader;
@@ -14,35 +11,27 @@ namespace TagsCloudContainer.App.CloudVisualizer
         private readonly ICloudGenerator cloudGenerator;
         private readonly IImageHolder imageHolder;
         private readonly IDataReaderFactory inputDataReaderFactory;
-        private readonly ICloudLayouterFactory layouterFactory;
         private readonly ICloudPainter painter;
         private readonly ITextParserToFrequencyDictionary textParserToFrequencyDictionary;
 
         public CloudVisualizer(IDataReaderFactory inputDataReaderFactory,
             ITextParserToFrequencyDictionary textParserToFrequencyDictionary,
-            ICloudGenerator cloudGenerator, ICloudPainter painter, IImageHolder imageHolder,
-            ICloudLayouterFactory layouterFactory)
+            ICloudGenerator cloudGenerator, ICloudPainter painter, IImageHolder imageHolder)
         {
             this.inputDataReaderFactory = inputDataReaderFactory;
             this.textParserToFrequencyDictionary = textParserToFrequencyDictionary;
             this.cloudGenerator = cloudGenerator;
             this.painter = painter;
             this.imageHolder = imageHolder;
-            this.layouterFactory = layouterFactory;
         }
 
-        public void Visualize(AppSettings appSettings)
+        public void Visualize()
         {
-            var lines = inputDataReaderFactory.CreateDataReader(appSettings).ReadLines();
+            var lines = inputDataReaderFactory.CreateDataReader().ReadLines();
             var frequencyDictionary = textParserToFrequencyDictionary.GenerateFrequencyDictionary(lines);
-            var cloud = cloudGenerator.GenerateCloud(layouterFactory.CreateCloudLayouter(
-                appSettings.LayouterAlgorithm,
-                new Size(appSettings.ImageSettings.Width, appSettings.ImageSettings.Height)), frequencyDictionary);
+            var cloud = cloudGenerator.GenerateCloud(frequencyDictionary);
             painter.Paint(cloud, imageHolder.StartDrawing());
-            var outputFile = Path.GetFullPath(Path.Combine(
-                Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.bmp"));
             imageHolder.UpdateUi();
-            imageHolder.SaveImage(outputFile);
         }
     }
 }

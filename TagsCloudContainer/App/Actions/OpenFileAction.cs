@@ -1,17 +1,17 @@
 ﻿using System.IO;
 using System.Windows.Forms;
-using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.UiActions;
 
 namespace TagsCloudContainer.App.Actions
 {
     internal class OpenFileAction : IUiAction
     {
-        private readonly IImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public OpenFileAction(IImageHolder imageHolder)
+        public OpenFileAction(AppSettings appSettings)
         {
-            this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public MenuCategory Category => MenuCategory.File;
@@ -23,12 +23,12 @@ namespace TagsCloudContainer.App.Actions
             var dialog = new OpenFileDialog
             {
                 CheckFileExists = true,
-                InitialDirectory = Path.GetFullPath(imageHolder.GetAppSettings().InputFileName),
+                InitialDirectory = Path.GetFullPath(appSettings.InputFileName),
                 Filter = "Текстовые файлы (*.txt)|*.txt"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                imageHolder.GetAppSettings().InputFileName = dialog.FileName;
+                appSettings.InputFileName = dialog.FileName;
         }
     }
 }

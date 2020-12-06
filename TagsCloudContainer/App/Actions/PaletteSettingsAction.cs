@@ -1,16 +1,15 @@
 ﻿using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.UiActions;
 
 namespace TagsCloudContainer.App.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private readonly IImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public PaletteSettingsAction(IImageHolder imageHolder)
+        public PaletteSettingsAction(AppSettings appSettings)
         {
-            this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public MenuCategory Category => MenuCategory.Settings;
@@ -19,7 +18,7 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            SettingsForm.For(imageHolder.GetAppSettings().Palette).ShowDialog();
+            SettingsForm.For(appSettings.Palette).ShowDialog();
         }
     }
 }

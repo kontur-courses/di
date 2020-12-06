@@ -4,11 +4,14 @@ namespace TagsCloudContainer.App.Settings
 {
     public class FontSettings
     {
-        public static readonly FontSettings Default = new FontSettings(new Font("Arial", 10));
-
-        private FontSettings(Font font)
+        public FontSettings()
         {
-            Font = font;
+            SetDefault();
+        }
+
+        private void SetDefault()
+        {
+            Font = new Font("Arial", 10);
         }
 
         public Font Font { get; set; }

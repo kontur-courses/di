@@ -5,28 +5,23 @@ using TagsCloudContainer.Infrastructure.CloudGenerator;
 namespace TagsCloudContainer.App.Settings
 {
     public class AppSettings
-    {
-        public static readonly string DefaultInputFile = Path.Combine(
-            Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt");
-
-        public static readonly string DefaultOutputDirectory = Path.Combine(
-            Directory.GetCurrentDirectory(), "..", "..", "..");
-
-        public static AppSettings Default = new AppSettings(FontSettings.Default, ImageFormat.Bmp,
-            ImageSettings.Default, DefaultInputFile, CloudLayouterAlgorithm.CircularCloudLayouter, Palette.Default,
-            DefaultOutputDirectory);
-
-        private AppSettings(FontSettings fontSettings, ImageFormat format,
-            ImageSettings imageSettings, string inputFileName, CloudLayouterAlgorithm layouterAlgorithm,
-            Palette palette, string outputDirectory)
+    { 
+        public AppSettings()
         {
-            FontSettings = fontSettings;
-            Format = format;
-            ImageSettings = imageSettings;
-            InputFileName = inputFileName;
-            LayouterAlgorithm = layouterAlgorithm;
-            Palette = palette;
-            OutputDirectory = outputDirectory;
+            SetDefault();
+        }
+
+        private void SetDefault()
+        {
+            ImageSettings = new ImageSettings();
+            FontSettings = new FontSettings();
+            Palette = new Palette();
+            Format = ImageFormat.Png;
+            InputFileName = Path.Combine(Directory.GetCurrentDirectory(), 
+                "..", "..", "..", "text.txt");
+            OutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), 
+                "..", "..", "..");
+            LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
         }
 
         public FontSettings FontSettings { get; set; }

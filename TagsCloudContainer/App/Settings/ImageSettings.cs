@@ -2,12 +2,15 @@
 {
     public class ImageSettings
     {
-        public static readonly ImageSettings Default = new ImageSettings(500, 500);
-
-        private ImageSettings(int width, int height)
+        public ImageSettings()
         {
-            Width = width;
-            Height = height;
+            SetDefault();
+        }
+
+        private void SetDefault()
+        {
+            Width = 500;
+            Height = 500;
         }
 
         public int Width { get; set; }

@@ -27,15 +27,17 @@ namespace TagsCloudContainer.App
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
                 //var outputFile = Path.GetFullPath(Path.Combine(
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
-                var imageHolder = new PictureBoxImageHolder();
+                var appSettings = new AppSettings();
+                var imageHolder = new PictureBoxImageHolder(appSettings);
                 var services = new ServiceCollection()
+                    .AddSingleton(appSettings)
                     .AddSingleton<IDataReaderFactory, DataReaderFactory>()
                     .AddSingleton<ITextParser, SimpleTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
                     .AddSingleton<IWordFilter, SimpleWordFilter>()
                     .AddSingleton<ITextParserToFrequencyDictionary,
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
-                    .AddSingleton<IFontGetter>(new FontGetter(AppSettings.Default))
+                    .AddSingleton<IFontGetter, FontGetter>()
                     .AddSingleton<ICloudGenerator, CloudGenerator.CloudGenerator>()
                     .AddSingleton<ICloudPainter, CloudPainter>()
                     .AddSingleton<ICloudLayouterFactory, CloudLayouterFactory>()

@@ -7,10 +7,12 @@ namespace TagsCloudContainer.App.Actions
     public class ImageSettingsAction : IUiAction
     {
         private readonly IImageHolder imageHolder;
+        private readonly AppSettings appSettings;
 
-        public ImageSettingsAction(IImageHolder imageHolder)
+        public ImageSettingsAction(IImageHolder imageHolder, AppSettings appSettings)
         {
             this.imageHolder = imageHolder;
+            this.appSettings = appSettings;
         }
 
         public MenuCategory Category => MenuCategory.Settings;
@@ -19,8 +21,8 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            SettingsForm.For(imageHolder.GetAppSettings().ImageSettings).ShowDialog();
-            imageHolder.RecreateImage(imageHolder.GetAppSettings());
+            SettingsForm.For(appSettings.ImageSettings).ShowDialog();
+            imageHolder.RecreateImage();
         }
     }
 }

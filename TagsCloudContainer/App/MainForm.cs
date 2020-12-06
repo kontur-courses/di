@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.UiActions;
 
 namespace TagsCloudContainer.App
@@ -10,16 +11,16 @@ namespace TagsCloudContainer.App
     public class MainForm : Form
     {
         public MainForm(IEnumerable<IUiAction> actions,
-            PictureBoxImageHolder pictureBox)
+            PictureBoxImageHolder pictureBox, AppSettings appSettings)
         {
-            ClientSize = new Size(pictureBox.GetAppSettings().ImageSettings.Width,
-                pictureBox.GetAppSettings().ImageSettings.Height);
+            ClientSize = new Size(appSettings.ImageSettings.Width,
+                appSettings.ImageSettings.Height);
 
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToArray().ToMenuItems());
             Controls.Add(mainMenu);
 
-            pictureBox.RecreateImage(pictureBox.GetAppSettings());
+            pictureBox.RecreateImage();
             pictureBox.Dock = DockStyle.Fill;
             Controls.Add(pictureBox);
         }

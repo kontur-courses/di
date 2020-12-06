@@ -1,9 +1,7 @@
-﻿using System.Drawing;
-
-namespace TagsCloudContainer.Infrastructure.CloudGenerator
+﻿namespace TagsCloudContainer.Infrastructure.CloudGenerator
 {
     internal interface ICloudLayouterFactory
     {
-        public ICloudLayouter CreateCloudLayouter(CloudLayouterAlgorithm algorithm, Size imageSize);
+        public ICloudLayouter CreateCloudLayouter();
     }
 }
