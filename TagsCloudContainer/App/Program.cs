@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.App.Actions;
@@ -14,6 +15,7 @@ using TagsCloudContainer.Infrastructure.DataReader;
 using TagsCloudContainer.Infrastructure.Settings;
 using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
 using TagsCloudContainer.Infrastructure.UiActions;
+using YandexMystem.Wrapper;
 
 namespace TagsCloudContainer.App
 {
@@ -30,6 +32,8 @@ namespace TagsCloudContainer.App
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
                 var imageHolder = new PictureBoxImageHolder(ImageSizeSettings.Instance, ImageFormatSettings.Instance);
                 var services = new ServiceCollection()
+                    .AddSingleton<Mysteam>(new Mysteam(Path.GetFullPath(Path.Combine(
+                        Directory.GetCurrentDirectory(), "..", "..", "..", "mystem.exe"))))
                     .AddSingleton(ImageSizeSettings.Instance)
                     .AddSingleton<IImageSizeSettingsHolder> (ImageSizeSettings.Instance)
                     .AddSingleton(FontSettings.Instance)
@@ -44,10 +48,12 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IOutputSettingsHolder>(OutputSettings.Instance)
                     .AddSingleton(Palette.Instance)
                     .AddSingleton<IPaletteSettingsHolder>(Palette.Instance)
+                    .AddSingleton(FilteringWordsSettings.Instance)
+                    .AddSingleton<IFilteringWordsSettingsHolder>(FilteringWordsSettings.Instance)
                     .AddSingleton<IDataReaderFactory, DataReaderFactory>()
                     .AddSingleton<ITextParser, SimpleTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
-                    .AddSingleton<IWordFilter, SimpleWordFilter>()
+                    .AddSingleton<IWordFilter, PartOfSpeechFilter>()
                     .AddSingleton<ITextParserToFrequencyDictionary,
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
                     .AddSingleton<IFontGetter, FontGetter>()
