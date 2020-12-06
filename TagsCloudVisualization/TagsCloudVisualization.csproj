@@ -4,15 +4,23 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
-        <RootNamespace>TagsCloudContainer</RootNamespace>
+        <RootNamespace>TagsCloudVisualization</RootNamespace>
+        <LangVersion>9</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.0.0" />
+        <PackageReference Include="Autofac" Version="6.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TagsCloudLayouters\TagsCloudLayouters.csproj" />
+        <None Update="appsettings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TagsCloudCreating\TagsCloudCreating.csproj" />
     </ItemGroup>
 
 </Project>
