@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public class Word : IWord
     {

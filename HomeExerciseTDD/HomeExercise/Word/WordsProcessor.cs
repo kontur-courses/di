@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using HomeExerciseTDD.settings;
+using HomeExercise.settings;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public class WordsProcessor : IWordsProcessor
     {
-        private IFileProcessor fileProcessor;
-        private WordSettings settings;
+        private readonly IFileProcessor fileProcessor;
+        private readonly WordSettings settings;
         public WordsProcessor(IFileProcessor fileProcessor, WordSettings settings)
         {
             this.fileProcessor = fileProcessor;
             this.settings = settings;
         }
         
-        public  List<IWord> WordsHandle()
+        public  List<IWord> HandleWords()
         {
             var words = fileProcessor.GetWords();
             return words
@@ -28,7 +26,5 @@ namespace HomeExerciseTDD
         {
             return new Word(text, frequency, settings.Font, frequency*settings.Coefficient);
         }
-
-        
     }
 }
