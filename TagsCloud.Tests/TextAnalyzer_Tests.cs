@@ -25,7 +25,7 @@ namespace TagsCloud.Tests
                 ("конь", 2)
             };
 
-            var actual = TextAnalyzer.GetWordByFrequency(text, new HashSet<string>(), Hunspell, x => x);
+            var actual = TextAnalyzer.GetWordByFrequency(text.Split('\n'), new HashSet<string>(), Hunspell, x => x);
 
             actual.Should().BeEquivalentTo(expected);
         }
@@ -44,7 +44,7 @@ namespace TagsCloud.Tests
             };
 
             var actual = TextAnalyzer.GetWordByFrequency(
-                text,
+                text.Split('\n'),
                 new HashSet<string>(),
                 Hunspell,
                 x => x.OrderByDescending(y => y.Value)
@@ -57,14 +57,14 @@ namespace TagsCloud.Tests
         [Test]
         public void GetWordByFrequency_CorrectFrequencyWithoutBoringWords()
         {
-            var text = "баян\nи\nа\nно\nбаян\nда\nя\n";
+            var text = "баян\nи\nа\nно\nбаян\nда\nя";
             var expected = new List<(string, int)>
             {
                 ("баян", 2)
             };
 
             var actual = TextAnalyzer.GetWordByFrequency(
-                text,
+                text.Split('\n'),
                 new HashSet<string> {"и", "а", "но", "да", "я"},
                 Hunspell,
                 x => x.OrderByDescending(y => y.Value)
@@ -85,7 +85,7 @@ namespace TagsCloud.Tests
                 ("конь", 2)
             };
 
-            var actual = TextAnalyzer.GetWordByFrequency(text, new HashSet<string>(), Hunspell, x => x);
+            var actual = TextAnalyzer.GetWordByFrequency(text.Split('\n'), new HashSet<string>(), Hunspell, x => x);
 
             actual.Should().BeEquivalentTo(expected);
         }

@@ -5,8 +5,9 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagsCloud.CloudLayouters;
 using TagsCloud.Common;
-using TagsCloud.Core;
+using TagsCloud.Spirals;
 
 namespace TagsCloud.Tests
 {
