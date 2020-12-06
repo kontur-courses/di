@@ -17,7 +17,7 @@ namespace TagsCloud.Infrastructure
         public Palette Palette { get; set; } = new Palette();
 
         [DisplayName("Шрифт")]
-        public Font Font { get; set; } = new Font(FontFamily.GenericSerif, 14);
+        public Font Font { get; set; } = new Font(FontFamily.GenericSerif, 10);
 
         [DisplayName("Ширина")]
         public int Width { get; set; }

@@ -42,7 +42,7 @@ namespace TagsCloud.Infrastructure
 
             foreach (var pair in frequencyDictionary.OrderByDescending(x => x.Value))
             {
-                var fontSize = FontSizeProvider.GetFontSize(Settings.Font.Size, (double)totalWords * pair.Value / 100);
+                var fontSize = FontSizeProvider.GetFontSize(Settings.Font.Size, 100 / (double)totalWords * pair.Value / 100);
 
                 var label = new Label {AutoSize = true};
                 label.Font = new Font(Settings.Font.FontFamily, fontSize, Settings.Font.Style);

@@ -9,9 +9,9 @@ namespace TagsCloud.WordsProcessing
     {
         private HashSet<string> wordsToIgnore;
         private string regexWordPattern;
-        public WordsFilter(IEnumerable<string> wordsToIgnore, string regexWordPattern = "^\\w+$")
+        public WordsFilter(HashSet<string> wordsToIgnore, string regexWordPattern = "^\\w+$")
         {
-            this.wordsToIgnore = wordsToIgnore.ToHashSet();
+            this.wordsToIgnore = wordsToIgnore;
             this.regexWordPattern = regexWordPattern;
         }
 
