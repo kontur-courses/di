@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.ClientGUI.Infrastructure
+﻿namespace TagsCloud.Spirals
 {
     public class SpiralSettings
     {

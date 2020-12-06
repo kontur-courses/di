@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloud.ClientGUI", "Tags
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloud.Common", "TagsCloud.Common\TagsCloud.Common.csproj", "{792DC003-4F4F-4FF7-9E65-FB3E2C914C7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Visualization", "TagsCloud.Visualization\TagsCloud.Visualization.csproj", "{1B6B28B3-3F19-4A80-BCD1-DD2208C8C208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloud.Visualization", "TagsCloud.Visualization\TagsCloud.Visualization.csproj", "{1B6B28B3-3F19-4A80-BCD1-DD2208C8C208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Spirals", "TagsCloud.Spirals\TagsCloud.Spirals.csproj", "{A2A14EE3-4844-466A-871C-BCE6674C2ADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{1B6B28B3-3F19-4A80-BCD1-DD2208C8C208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6B28B3-3F19-4A80-BCD1-DD2208C8C208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B6B28B3-3F19-4A80-BCD1-DD2208C8C208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A14EE3-4844-466A-871C-BCE6674C2ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A14EE3-4844-466A-871C-BCE6674C2ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A14EE3-4844-466A-871C-BCE6674C2ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A14EE3-4844-466A-871C-BCE6674C2ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

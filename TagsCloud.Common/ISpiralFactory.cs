@@ -1,6 +1,4 @@
-﻿using TagsCloud.Common;
-
-namespace TagsCloud.ClientGUI.Infrastructure
+﻿namespace TagsCloud.Common
 {
     public interface ISpiralFactory
     {

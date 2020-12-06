@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TagsCloud.Core\TagsCloud.Core.csproj" />
+    <ProjectReference Include="..\TagsCloud.Spirals\TagsCloud.Spirals.csproj" />
     <ProjectReference Include="..\TagsCloud.Visualization\TagsCloud.Visualization.csproj" />
   </ItemGroup>
 

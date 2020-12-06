@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 using TagsCloud.Common;
-using TagsCloud.Core;
 using TagsCloud.Visualization;
 
-namespace TagsCloud.ClientGUI.Infrastructure
+namespace TagsCloud.Spirals
 {
     public class SpiralFactory : ISpiralFactory
     {
