@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TagsCloud.WordFilters
 {
     interface IWordFilter
     {
-        public bool IsValid(string word);
+        public IReadOnlyList<string> FilterWords(IEnumerable<string> words);
     }
 }
