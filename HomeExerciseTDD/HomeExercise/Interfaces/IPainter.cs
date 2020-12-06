@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-
-namespace HomeExerciseTDD
+﻿namespace HomeExercise
 {
-    public interface IPainter<T>
+    public interface IPainter
     {
         void DrawFigures();
     }

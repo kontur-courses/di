@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public interface IWordCloud
     {

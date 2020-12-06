@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public interface IFileProcessor
     {

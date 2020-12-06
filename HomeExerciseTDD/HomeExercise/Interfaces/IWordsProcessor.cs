@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public interface IWordsProcessor
     {
-        public List<IWord> WordsHandle(); 
+        public List<IWord> HandleWords(); 
     }
 }

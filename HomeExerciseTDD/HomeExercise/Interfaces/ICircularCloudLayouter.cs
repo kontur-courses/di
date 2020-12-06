@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public interface ICircularCloudLayouter
     {
+        public Point Center { get; }
         Rectangle PutNextRectangle(Size rectangleSize);
     }
 }
