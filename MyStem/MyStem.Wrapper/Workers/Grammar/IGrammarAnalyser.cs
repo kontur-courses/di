@@ -1,4 +1,6 @@
-﻿namespace MyStem.Wrapper
+﻿using MyStem.Wrapper.Workers.Grammar.Raw;
+
+namespace MyStem.Wrapper.Workers.Grammar
 {
     public interface IGrammarAnalyser
     {

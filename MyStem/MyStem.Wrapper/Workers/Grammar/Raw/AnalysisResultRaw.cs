@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
+﻿using System.Linq;
 using Newtonsoft.Json;
 
-namespace MyStem.Wrapper
+namespace MyStem.Wrapper.Workers.Grammar.Raw
 {
     /// <summary>
     /// Unparsed analysis result for word
     /// </summary>
     public class AnalysisResultRaw
     {
-        [JsonPropertyName("text")] public string Text { get; set; }
+        [JsonProperty("text", Required = Required.DisallowNull)]
+        public string Text { get; set; }
 
         [JsonProperty("analysis", Required = Required.DisallowNull)]
         public AnalysisResultEntryRaw[] Entries { get; set; }

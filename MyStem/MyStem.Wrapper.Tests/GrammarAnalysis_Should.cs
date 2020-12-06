@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using FluentAssertions;
-using MyStem.Wrapper.Impl;
+using MyStem.Wrapper.Workers.Grammar;
+using MyStem.Wrapper.Workers.Grammar.Raw;
+using MyStem.Wrapper.Wrapper;
 using NUnit.Framework;
 
 namespace MyStem.Wrapper.Tests
@@ -36,10 +38,46 @@ namespace MyStem.Wrapper.Tests
                 .HaveCount(2);
         }
 
+        [Test]
+        public void EnglishWord_ReturnResultWithoutEntries()
+        {
+            PerformTest("abc")
+                .Should()
+                .BeEquivalentTo(new AnalysisResultRaw
+                {
+                    Text = "abc",
+                    Entries = new AnalysisResultEntryRaw[0]
+                });
+        }
+
+        [Test]
+        public void DigitsOnly_ReturnNothing()
+        {
+            PerformTest("1234")
+                .Should()
+                .BeEmpty();
+        }
+
+        [Test]
+        public void NonDictWord_ExtractQuality()
+        {
+            PerformTest("баребуха")
+                .Should()
+                .ContainSingle()
+                .Which
+                .Entries
+                .Should()
+                .ContainSingle()
+                .Which
+                .Quality
+                .Should()
+                .NotBeNullOrWhiteSpace();
+        }
+
         private AnalysisResultRaw[] PerformTest(string input)
         {
             var result = analyser.GetRawResult(input);
-            foreach(var entry in result)
+            foreach (var entry in result)
                 TestContext.Progress.WriteLine(entry.ToString());
             return result;
         }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using MyStem.Wrapper.Enums;
 
-namespace MyStem.Wrapper.Impl
+namespace MyStem.Wrapper.Wrapper
 {
     public sealed class MyStemBuilder : IMyStemBuilder
     {

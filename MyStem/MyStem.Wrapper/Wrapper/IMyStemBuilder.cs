@@ -1,4 +1,6 @@
-﻿namespace MyStem.Wrapper.Impl
+﻿using MyStem.Wrapper.Enums;
+
+namespace MyStem.Wrapper.Wrapper
 {
     public interface IMyStemBuilder
     {

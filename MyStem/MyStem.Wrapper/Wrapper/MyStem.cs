@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace MyStem.Wrapper.Impl
+namespace MyStem.Wrapper.Wrapper
 {
     //ТУДУ переписать чтобы каждый раз не стартовать процесс по новой
     internal sealed class MyStem : IMyStem

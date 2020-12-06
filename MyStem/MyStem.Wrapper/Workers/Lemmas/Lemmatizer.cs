@@ -1,9 +1,10 @@
 ﻿using System;
-using MyStem.Wrapper.Impl;
+using MyStem.Wrapper.Enums;
+using MyStem.Wrapper.Wrapper;
 
-namespace MyStem.Wrapper
+namespace MyStem.Wrapper.Workers.Lemmas
 {
-    public class Lemmatizer
+    public class Lemmatizer : ILemmatizer
     {
         private readonly IMyStem myStem;
 

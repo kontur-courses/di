@@ -1,7 +1,8 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using MyStem.Wrapper.Impl;
+using MyStem.Wrapper.Enums;
+using MyStem.Wrapper.Wrapper;
 using NUnit.Framework;
 
 namespace MyStem.Wrapper.Tests

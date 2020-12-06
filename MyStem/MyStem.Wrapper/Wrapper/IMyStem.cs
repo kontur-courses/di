@@ -1,4 +1,4 @@
-﻿namespace MyStem.Wrapper
+﻿namespace MyStem.Wrapper.Wrapper
 {
     public interface IMyStem
     {

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyStem.Wrapper.Impl;
+using MyStem.Wrapper.Enums;
+using MyStem.Wrapper.Workers.Grammar.Raw;
+using MyStem.Wrapper.Wrapper;
 using Newtonsoft.Json;
 
-namespace MyStem.Wrapper
+namespace MyStem.Wrapper.Workers.Grammar
 {
     public class GrammarAnalyser : IGrammarAnalyser
     {

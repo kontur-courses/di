@@ -1,4 +1,4 @@
-﻿namespace MyStem.Wrapper
+﻿namespace MyStem.Wrapper.Enums
 {
     public enum MyStemOutputFormat
     {
