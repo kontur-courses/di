@@ -14,8 +14,8 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
         [SetUp]
         public void SetUp()
         {
-            var filter = new WordFilter(new WordsSettings());
-            textHandler = new FrequencyTextHandler(filter, new FrequencyWordWeigher());
+            var filters = new []{new ForbiddenWordFilter(new WordsSettings())};
+            textHandler = new FrequencyTextHandler(filters, new FrequencyWordWeigher());
         }
 
         private FrequencyTextHandler textHandler;
@@ -91,7 +91,11 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
                 new Word("world", 1)
             };
 
-            var result = textHandler.GetHandledWords("Hello all world");
+            var textHandler2 = new FrequencyTextHandler(
+                new[] {new LengthFilter(new WordsSettings {MinLength = 4})},
+                new FrequencyWordWeigher());
+            
+            var result = textHandler2.GetHandledWords("Hello all world");
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -105,7 +109,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
                 new Word("text", 1)
             };
             var textHandler2 = new FrequencyTextHandler(
-                new WordFilter(new WordsSettings {ForbiddenWords = new[] {"beautiful"}}),
+                new[] {new ForbiddenWordFilter(new WordsSettings {ForbiddenWords = new[] {"beautiful"}})},
                 new FrequencyWordWeigher());
 
             var result = textHandler2.GetHandledWords(
@@ -122,7 +126,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
                 new Word("text", 1)
             };
             var textHandler2 = new FrequencyTextHandler(
-                new WordFilter(new WordsSettings {ForbiddenWords = new[] {"some", "beautiful"}}),
+                new[] {new ForbiddenWordFilter(new WordsSettings {ForbiddenWords = new[] {"some", "beautiful"}})},
                 new FrequencyWordWeigher());
 
             var result = textHandler2.GetHandledWords(
@@ -136,11 +140,32 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextHandlerTests
         {
             var expected = new List<Word>();
             var textHandler2 = new FrequencyTextHandler(
-                new WordFilter(new WordsSettings {ForbiddenWords = new[] {"some", "beautiful", "text"}}),
+                new[]
+                {
+                    new ForbiddenWordFilter(new WordsSettings {ForbiddenWords = new[] {"some", "beautiful", "text"}})
+                },
                 new FrequencyWordWeigher());
-            
+
             var result = textHandler2.GetHandledWords(
                 "Some beautiful text");
+
+            result.Should().BeEquivalentTo(expected);
+        }
+        
+        [Test]
+        public void GetWordsFrequency_ExcludedFilteredWords_WhenExistsTwoFilters()
+        {
+            var expected = new List<Word>{new Word("beautiful", 1)};
+            var wordSettings = new WordsSettings {ForbiddenWords = new[] {"some", "text"}, MinLength = 4};
+            var textHandler2 = new FrequencyTextHandler(
+                new IWordFilter[]
+                {
+                    new ForbiddenWordFilter(wordSettings),
+                    new LengthFilter(wordSettings)
+                },
+                new FrequencyWordWeigher());
+
+            var result = textHandler2.GetHandledWords("Some lin beautiful text");
 
             result.Should().BeEquivalentTo(expected);
         }

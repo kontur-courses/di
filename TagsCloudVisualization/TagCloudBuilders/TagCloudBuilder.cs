@@ -20,7 +20,7 @@ namespace TagsCloudVisualization.TagCloudBuilders
             this.fontSettings = fontSettings;
         }
 
-        public List<Tag> Build(IEnumerable<Word> wordsFrequency)
+        public IReadOnlyList<Tag> Build(IEnumerable<Word> wordsFrequency)
         {
             cloudLayouter.ClearLayout();
 

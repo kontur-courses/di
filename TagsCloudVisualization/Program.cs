@@ -32,11 +32,13 @@ namespace TagsCloudVisualization
             services.AddSingleton<ITagCloudBuilder, TagCloudBuilder>();
             services.AddSingleton<ITextReader, TextReader>();
             services.AddSingleton<ITextHandler, FrequencyTextHandler>();
-            services.AddSingleton<IWordFilter, WordFilter>();
             services.AddSingleton<IWordsWeigher, FrequencyWordWeigher>();
             services.AddSingleton<IImageSaver, ImageSaver>();
             services.AddSingleton<ICanvas, Canvas>();
 
+            services.AddSingleton<IWordFilter, ForbiddenWordFilter>();
+            services.AddSingleton<IWordFilter, LengthFilter>();
+            
             services.AddSingleton<IReader, TxtReader>();
             services.AddSingleton<IReader, MSWordReader>();
             

@@ -17,7 +17,7 @@ namespace TagsCloudVisualization.TagCloudVisualizers
             this.paintingSettings = paintingSettings;
         }
 
-        public void PrintTagCloud(List<Tag> tags)
+        public void PrintTagCloud(IEnumerable<Tag> tags)
         {
             var imageSize = canvas.GetImageSize();
             using (var graphics = canvas.StartDrawing())
@@ -32,7 +32,7 @@ namespace TagsCloudVisualization.TagCloudVisualizers
             canvas.UpdateUi();
         }
 
-        private void DrawCloud(List<Tag> tags, SolidBrush textBrush, Graphics graphics)
+        private void DrawCloud(IEnumerable<Tag> tags, SolidBrush textBrush, Graphics graphics)
         {
             var pen = new Pen(Color.White);
             var iterationCount = 0;

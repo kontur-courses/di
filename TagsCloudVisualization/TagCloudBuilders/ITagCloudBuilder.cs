@@ -6,6 +6,6 @@ namespace TagsCloudVisualization.TagCloudBuilders
 {
     public interface ITagCloudBuilder
     {
-        List<Tag> Build(IEnumerable<Word> wordsFrequency);
+        IReadOnlyList<Tag> Build(IEnumerable<Word> wordsFrequency);
     }
 }

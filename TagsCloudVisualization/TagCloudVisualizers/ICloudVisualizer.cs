@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.TagCloudVisualizers
 {
     public interface ICloudVisualizer
     {
-        void PrintTagCloud(List<Tag> tags);
+        void PrintTagCloud(IEnumerable<Tag> tags);
     }
 }
