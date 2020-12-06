@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>MyStem.Wrapper</RootNamespace>
+        <AssemblyName>MyStem.Wrapper</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="dlls\**" />
+    </ItemGroup>
+
+</Project>
