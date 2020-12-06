@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace TagsCloud.FileReaders
 {
     public class TxtFileReader : IFileReader
     {
-        public IEnumerable<string> GetWordsFromFile(string filePath)
+        public IReadOnlyCollection<string> GetWordsFromFile(string filePath)
         {
-            return File.ReadLines(filePath);
+            if (!File.Exists(filePath))
+                throw new ArgumentException("File not exists");
+
+            return File.ReadLines(filePath).Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x))
+                .ToArray();
         }
     }
 }

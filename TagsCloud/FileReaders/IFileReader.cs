@@ -4,6 +4,6 @@ namespace TagsCloud.FileReaders
 {
     interface IFileReader
     {
-        public IEnumerable<string> GetWordsFromFile(string filePath);
+        public IReadOnlyCollection<string> GetWordsFromFile(string filePath);
     }
 }
