@@ -47,7 +47,8 @@ namespace TagsCloud.App
             var commandName = args[0];
             var cmd = FindCommandByName(commandName);
             if (cmd == null)
-                writer.WriteLine("Sorry. Unknown command {0}", commandName);
+                writer.WriteLine(
+                    "Sorry. Unknown command {0}. Write 'h' to find out the available commands", commandName);
             else
                 cmd.Execute(args.Skip(1).ToArray());
         }
