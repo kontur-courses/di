@@ -18,4 +18,17 @@
     <ProjectReference Include="..\TagsCloud\TagsCloud.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestsResourses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestsResourses\file1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestsResourses\file2.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
