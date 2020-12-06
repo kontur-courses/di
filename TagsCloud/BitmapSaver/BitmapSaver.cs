@@ -29,14 +29,14 @@ namespace TagsCloud.BitmapSaver
             var filePath = Path.GetFullPath(CreateFilePath(directoryPath, format));
 
             bitmap.Save(filePath, imageFormat);
+
             Console.WriteLine($"The file has been saved {filePath}");
         }
 
         private static string CreateFilePath(string directoryPath, string format)
         {
             var fileName = DateTime.Now.ToString("yyyyMMddhhmmss");
-            
-            return $@"{directoryPath}\{fileName}.{format.ToLower()}";
+            return Path.Join(directoryPath, $"{fileName}.{format.ToLower()}");
         }
     }
 }
