@@ -4,6 +4,7 @@ namespace TagCloud.Sources
 {
     public interface ISource
     {
+        string SupportExtension { get; }
         IEnumerable<string> Words();
     }
 }

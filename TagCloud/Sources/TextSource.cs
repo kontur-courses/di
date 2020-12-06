@@ -14,13 +14,15 @@ namespace TagCloud.Sources
             this.settings = settings;
         }
 
+        public string SupportExtension { get; } = "txt";
+
         public IEnumerable<string> Words()
         {
             var words = File.ReadAllLines(settings.Destination);
             var ignore = new HashSet<string>(settings.Ignore);
             foreach (var word in words.Select(w => w.ToLower()))
             {
-                if (ignore.Contains(word))
+                if (string.IsNullOrEmpty(word) || ignore.Contains(word))
                     continue;
                 yield return word;
             }

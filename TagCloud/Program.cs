@@ -41,6 +41,7 @@ namespace TagCloud
             builder.Register(ctx => CloudSettings.GetDefault()).SingleInstance();
 
             builder.RegisterType<TextSource>().As<ISource>();
+            builder.RegisterType<DocxSource>().As<ISource>();
 
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.Layouters;
 using TagCloud.Settings;
@@ -14,11 +15,20 @@ namespace TagCloud.Visualizers
         private static readonly Graphics FakeGraphics = Graphics.FromImage(new Bitmap(1, 1));
         private readonly CloudSettings cloudSettings;
         private readonly Dictionary<Rectangle, string> rectangleToWord = new Dictionary<Rectangle, string>();
+        public static ISource Source { get; set; }
 
-        public DistanceColorVisualizer(ISource source, ILayouter layouter, CircleTagCloud cloud, CloudSettings settings)
+        public DistanceColorVisualizer(ISource[] sources,
+            ILayouter layouter,
+            CircleTagCloud cloud,
+            SourceSettings sourceSettings,
+            CloudSettings cloudSettings)
         {
             VisualizeTarget = cloud;
-            cloudSettings = settings;
+            this.cloudSettings = cloudSettings;
+            // Сомнительная штука этот выбор
+            var source = sources.SelectAppropriateSourceForExtension(sourceSettings);
+            if (source == null)
+                throw new Exception("Document's format doesn't support");
             foreach (var word in source.GetWordsWithWeight())
             {
                 var size = GenerateSize(FakeGraphics, word.Key, word.Value);
