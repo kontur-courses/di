@@ -33,30 +33,12 @@ namespace TagsCloud.ClientGUI
             var words = TagsHelper.GetWords(pathSettings.PathToText, pathSettings.PathToBoringWords,
                 pathSettings.PathToDictionary, pathSettings.PathToAffix);
 
-            var correctFonts = new List<Font>();
-            var rectangles = new List<Rectangle>();
-            foreach (var word in words)
-            {
-                var newFont = new Font(font.MainFont.FontFamily, 
-                    (int) (font.MainFont.Size * Math.Log(word.Item2 + 1)), font.MainFont.Style);
-                correctFonts.Add(newFont);
-                var rect = cloud.PutNextRectangle(new Size((int) newFont.Size * word.Item1.Length, newFont.Height));
-                rectangles.Add(rect);
-            }
-
-            var visualizer = new CloudVisualization(PictureBox.Image, palette, 
-                colorAlgorithm, words, rectangles, correctFonts);
+            var visualizer = new CloudVisualization(PictureBox.Image, palette,
+                font.MainFont, colorAlgorithm, words, cloud);
             visualizer.Paint();
 
-            DisposeFonts(correctFonts);
             PictureBox.Refresh();
             Application.DoEvents();
-        }
-
-        private void DisposeFonts(List<Font> fonts)
-        {
-            foreach (var currentFont in fonts)
-                currentFont.Dispose();
         }
     }
 }

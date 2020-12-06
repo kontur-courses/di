@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using NHunspell;
 using RTFToTextConverter;
+using TagsCloud.Common;
 
 namespace TagsCloud.Core
 {
@@ -53,6 +55,23 @@ namespace TagsCloud.Core
                 default:
                     throw new ArgumentException("not valid path to file");
             }
+        }
+
+        public static List<Rectangle> GetRectangles(ICircularCloudLayouter cloud, 
+            List<(string, int)> words, Dictionary<int, Font> newFonts, Font font)
+        {
+            var rectangles = new List<Rectangle>();
+            foreach (var word in words)
+            {
+                var fontSize = word.Item2;
+                if (!newFonts.ContainsKey(fontSize))
+                    newFonts[fontSize] = new Font(font.FontFamily, (int)(font.Size * Math.Log(word.Item2 + 1)), font.Style);
+
+                var rect = cloud.PutNextRectangle(new Size((int)newFonts[fontSize].Size * word.Item1.Length,
+                    newFonts[fontSize].Height));
+                rectangles.Add(rect);
+            }
+            return rectangles;
         }
     }
 }
