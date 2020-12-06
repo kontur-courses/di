@@ -4,40 +4,31 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
-using Autofac;
-using CloudLayouters;
 using TagCloudCreator;
 
 namespace TagCloudGUIClient
 {
     public partial class Form1 : Form
     {
-        private CloudPrinter? cloudPrinter;
-        private List<IColorSelector>? colorSelectors;
-        private List<BaseCloudLayouter>? layouters;
+        private readonly CloudPrinter cloudPrinter;
+        private readonly List<IColorSelectorFabric> colorSelectors;
+        private readonly List<IBaseCloudLayouterFabric> layouters;
 
-        public Form1()
+
+        public Form1(CloudPrinter cloudPrinter, IEnumerable<IColorSelectorFabric> colorSelectors,
+            IEnumerable<IBaseCloudLayouterFabric> layouters)
         {
             InitializeComponent();
             fontSelector.Items.AddRange(FontFamily.Families.Select(x => x.Name).ToArray());
+            this.colorSelectors = colorSelectors.ToList();
+            this.layouters = layouters.ToList();
+            layouterSelector.Items.AddRange(this.layouters.Select(x => x.Name).ToArray());
+            colorSelectorSelector.Items.AddRange(this.colorSelectors.Select(x => x.Name).ToArray());
+            this.cloudPrinter = cloudPrinter;
         }
 
         private Size ImageSize { get; set; }
 
-        private IContainer InitializeContainer()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<CircularCloudLayouter>().As<BaseCloudLayouter>().AsSelf();
-            builder.RegisterType<RectangleLayouter>().As<BaseCloudLayouter>().AsSelf();
-            builder.Register(context => (Point) (ImageSize / 2)).AsSelf();
-            builder.RegisterType<CloudPrinter>().AsSelf();
-            builder.RegisterType<TxtFileReader>().As<IFileReader>().AsSelf();
-            builder.RegisterType<FullRandomColorSelector>().As<IColorSelector>();
-            builder.RegisterType<RandomFromColorsColorSelector>().As<IColorSelector>();
-            builder.Register(x => new SingleColorSelector(Color.Black)).As<IColorSelector>();
-            builder.RegisterType<TextExtractorBasedReader>().As<IFileReader>();
-            return builder.Build();
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -45,10 +36,6 @@ namespace TagCloudGUIClient
 
         private void drawButton_Click(object sender, EventArgs e)
         {
-            var container = InitializeContainer();
-            cloudPrinter = container.Resolve<CloudPrinter>();
-            layouters = container.Resolve<IEnumerable<BaseCloudLayouter>>().ToList();
-            colorSelectors = container.Resolve<IEnumerable<IColorSelector>>().ToList();
             RedrawImage();
         }
 
@@ -75,16 +62,16 @@ namespace TagCloudGUIClient
             if (!AllSelected())
                 return;
             var fontFamily = FontFamily.Families[fontSelector.SelectedIndex];
-            var colorSelector = colorSelectors?[colorSelectorSelector.SelectedIndex];
-            var layouter = layouters?[layouterSelector.SelectedIndex];
+            var colorSelector = colorSelectors.First(x => x.Name == (string) colorSelectorSelector.SelectedItem)
+                .Create();
+            var layouter = layouters.First(x => x.Name == (string) layouterSelector.SelectedItem)
+                .Create(new Point(ImageSize / 2));
             var path = textBox1.Text;
-            if (layouter != null && colorSelector != null)
-                pictureBox1.Image =
-                    cloudPrinter?.DrawCloud(path,
-                        layouter,
-                        ImageSize,
-                        fontFamily,
-                        colorSelector);
+            pictureBox1.Image = cloudPrinter.DrawCloud(path,
+                layouter,
+                ImageSize,
+                fontFamily,
+                colorSelector);
         }
 
         private bool AllSelected()

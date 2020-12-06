@@ -97,9 +97,6 @@ namespace TagCloudGUIClient
             // 
             this.layouterSelector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layouterSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.layouterSelector.Items.AddRange(new object[] {
-            "Круглое облако",
-            "Квадратное облако"});
             this.layouterSelector.Location = new System.Drawing.Point(3, 3);
             this.layouterSelector.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             this.layouterSelector.Name = "layouterSelector";
@@ -168,10 +165,6 @@ namespace TagCloudGUIClient
             this.colorSelectorSelector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorSelectorSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.colorSelectorSelector.FormattingEnabled = true;
-            this.colorSelectorSelector.Items.AddRange(new object[] {
-            "Full random colors",
-            "Random colors from known",
-            "Black color"});
             this.colorSelectorSelector.Location = new System.Drawing.Point(3, 205);
             this.colorSelectorSelector.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             this.colorSelectorSelector.Name = "colorSelectorSelector";
