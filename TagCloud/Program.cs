@@ -9,11 +9,11 @@ using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Layout;
 using TagCloud.Infrastructure.Layout.Environment;
 using TagCloud.Infrastructure.Layout.Strategies;
+using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using TagCloud.Infrastructure.Text;
 using TagCloud.Infrastructure.Text.Filters;
 using TagCloud.Infrastructure.Text.Information;
-using Settings = TagCloud.Infrastructure.Settings.Settings;
 
 namespace TagCloud
 {
@@ -49,14 +49,15 @@ namespace TagCloud
             builder.RegisterType<WordPainter>().As<IPainter<string>>();
             builder.RegisterType<Random>().SingleInstance();
             builder.RegisterType<ColorPicker>();
-            
+
             builder.RegisterType<FileSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImagePathSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImageSizeSettingsManager>().AsImplementedInterfaces();
             builder.RegisterType<LayoutCenterSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<SpiralIncrementSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<FontSettingManager>().AsImplementedInterfaces();
-            
+
+            //todo use compile options
             // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
             builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
 

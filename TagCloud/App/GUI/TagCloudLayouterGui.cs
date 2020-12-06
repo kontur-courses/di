@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using Gdk;
@@ -8,7 +7,6 @@ using Gtk;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using TagCloud.Infrastructure.Text;
-using Color = System.Drawing.Color;
 using Image = System.Drawing.Image;
 using Settings = TagCloud.Infrastructure.Settings.Settings;
 using Window = Gtk.Window;
@@ -22,9 +20,8 @@ namespace TagCloud.App.GUI
 
         private readonly IReader<string> reader;
         private readonly Func<Settings> settingsFactory;
+        private readonly IEnumerable<ISettingsManager> settingsManagers;
         private readonly WordAnalyzer<string> wordAnalyzer;
-        private static StatusIcon icon;
-        private IEnumerable<ISettingsManager> settingsManagers;
 
         public TagCloudLayouterGui(IReader<string> reader, WordAnalyzer<string> wordAnalyzer,
             Func<Settings> settingsFactory, IPainter<string> painter, IEnumerable<ISettingsManager> settingsManagers)
@@ -37,16 +34,16 @@ namespace TagCloud.App.GUI
 
 
             Application.Init();
-            
+
             var window = new Window("Tag Cloud Layouter");
             window.DeleteEvent += Close;
 
-            window.Resize(200,200);
+            window.Resize(200, 200);
             window.SetPosition(WindowPosition.Center);
-                
+
             var runButton = new Button("Generate");
             runButton.Clicked += OnGenerateButtonClicked;
-            
+
             var settingsButton = new Button("Settings");
             settingsButton.Clicked += OnSettingsButtonClicked;
 
@@ -64,6 +61,14 @@ namespace TagCloud.App.GUI
             window.ShowAll();
         }
 
+        public void Run()
+        {
+            settingsFactory().Import(Program.GetDefaultSettings());
+            Console.WriteLine("Default settings imported");
+
+            Application.Run();
+        }
+
         private void OnSettingsButtonClicked(object sender, EventArgs args)
         {
             var window = new Window("Settings");
@@ -77,14 +82,11 @@ namespace TagCloud.App.GUI
                 box.PackStart(new VSeparator(), false, false, 10);
             }
 
-            
+
             var okBox = new HBox();
             okBox.PackStart(new Arrow(ArrowType.Right, ShadowType.Out), true, true, 10);
             var okButton = new Button("ok");
-            okButton.Pressed += (o, eventArgs) =>
-            {
-                window.Close();
-            };
+            okButton.Pressed += (o, eventArgs) => { window.Close(); };
             okBox.PackStart(okButton, false, false, 0);
             box.PackStart(okBox, true, true, 0);
 
@@ -94,7 +96,7 @@ namespace TagCloud.App.GUI
 
         private Widget GetWidget(ISettingsManager manager)
         {
-            const int padding = 10; 
+            const int padding = 10;
             var settings = new HBox();
             settings.PackStart(new Label(manager.Help), false, false, padding);
             settings.PackStart(new Label(manager.Title), false, false, padding);
@@ -103,10 +105,7 @@ namespace TagCloud.App.GUI
             var buffer = new TextBuffer(table);
             var textBox = new TextView(buffer);
             settings.PackStart(textBox, true, true, padding);
-            textBox.Shown += (o, args) =>
-            {
-                buffer.Text = manager.Get();
-            };
+            textBox.Shown += (o, args) => { buffer.Text = manager.Get(); };
             textBox.FocusOutEvent += (sender, args) =>
             {
                 // todo show some info about wrong input
@@ -116,13 +115,14 @@ namespace TagCloud.App.GUI
             return settings;
         }
 
-        private static Stream ToStream(Image image, ImageFormat format) {
-            var stream = new System.IO.MemoryStream();
+        private static Stream ToStream(Image image, ImageFormat format)
+        {
+            var stream = new MemoryStream();
             image.Save(stream, format);
             stream.Position = 0;
             return stream;
         }
-        
+
         private void OnGenerateButtonClicked(object sender, EventArgs args)
         {
             var window = new Window("Settings");
@@ -135,11 +135,11 @@ namespace TagCloud.App.GUI
             var image = GenerateImage();
             var stream = ToStream(image, ImageFormat.Bmp);
             var buf = new Pixbuf(stream);
-            
+
             buf = buf.ScaleSimple(500, 500, InterpType.Bilinear);
             var img = new Gtk.Image(buf);
             box.PackStart(img, false, false, 0);
-            
+
             var okBox = new HBox();
             okBox.PackStart(new Arrow(ArrowType.None, ShadowType.None), true, true, 10);
             var closeButton = new Button("discard");
@@ -164,22 +164,14 @@ namespace TagCloud.App.GUI
             window.ShowAll();
         }
 
-        static void OnPopup (object sender, EventArgs args)
+        private static void OnPopup(object sender, EventArgs args)
         {
-            Menu pMenu = new Menu();
-            MenuItem menuQuit = new MenuItem ("Выход");
+            var pMenu = new Menu();
+            var menuQuit = new MenuItem("Выход");
             pMenu.Add(menuQuit);
             menuQuit.Activated += delegate { Application.Quit(); };
             pMenu.ShowAll();
             pMenu.Popup();
-        }
-
-        public void Run()
-        {
-            settingsFactory().Import(Program.GetDefaultSettings());
-            Console.WriteLine("Default settings imported");
-            
-            Application.Run();
         }
 
         private Image GenerateImage()

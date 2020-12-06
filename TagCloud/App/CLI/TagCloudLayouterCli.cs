@@ -12,15 +12,15 @@ namespace TagCloud.App.CLI
     public class TagCloudLayouterCli : IApp
     {
         private readonly IPainter<string> painter;
-        private readonly IEnumerable<ISettingsManager> settingsManagers;
         private readonly IReader<string> reader;
         private readonly Func<Settings> settingsFactory;
+        private readonly IEnumerable<ISettingsManager> settingsManagers;
         private readonly WordAnalyzer<string> wordAnalyzer;
 
         public TagCloudLayouterCli(
             IReader<string> reader,
             WordAnalyzer<string> wordAnalyzer,
-            Func<Settings> settingsFactory, 
+            Func<Settings> settingsFactory,
             IPainter<string> painter,
             IEnumerable<ISettingsManager> settingsManagers)
         {
@@ -34,7 +34,7 @@ namespace TagCloud.App.CLI
         public void Run()
         {
             var automata = new Automata();
-            
+
             var mainState = new State("Main");
             mainState.Show += DisplayState;
             mainState.Act += OnMainInput;
@@ -55,19 +55,19 @@ namespace TagCloud.App.CLI
             automata.Add(new Transition(helpState, "about", aboutState));
             automata.Add(new Transition(helpState, @".*", mainState));
             automata.Add(new Transition(aboutState, ".*", helpState));
-            
+
             automata.Add(new Transition(mainState, "set", settingsState));
             automata.Add(new Transition(mainState, "settings", settingsState));
             var managersStates = GetSettingsManagersStates(settingsManagers);
             AddSettingsManagersTransitions(automata, settingsState, managersStates);
             automata.Add(new Transition(settingsState, @"\D*", mainState));
-            
+
             var generateState = new State("Generation");
             generateState.Show += OnGenerateState;
             automata.Add(new Transition(mainState, "gen", generateState));
             automata.Add(new Transition(mainState, "generate", generateState));
             automata.Add(new Transition(generateState, ".*", mainState));
-            
+
             settingsFactory().Import(Program.GetDefaultSettings());
 
             while (automata.Show())
@@ -93,7 +93,7 @@ namespace TagCloud.App.CLI
             Console.WriteLine("Image saved");
         }
 
-        private void AddSettingsManagersTransitions(Automata automata, State from,  IEnumerable<State> states)
+        private void AddSettingsManagersTransitions(Automata automata, State from, IEnumerable<State> states)
         {
             foreach (var (state, i) in states.Select((state, i) => (state, i)))
             {
@@ -109,8 +109,8 @@ namespace TagCloud.App.CLI
                 var state = new State(manager.Title);
                 state.Show += (sender, args) =>
                 {
-                    Console.WriteLine($"CHANGING\n\t{manager.Title}\ninfo\t{manager.Help}\nvalue\t{manager.Get()}\ninput new value");
-
+                    Console.WriteLine(
+                        $"CHANGING\n\t{manager.Title}\ninfo\t{manager.Help}\nvalue\t{manager.Get()}\ninput new value");
                 };
                 state.Act += (sender, args) =>
                 {
@@ -124,11 +124,9 @@ namespace TagCloud.App.CLI
 
         private void OnSettingsState(State sender, EventArgs args)
         {
-            foreach (var (manager, i) in settingsManagers.Select(((manager, i) => (manager, i))))
-            {
+            foreach (var (manager, i) in settingsManagers.Select((manager, i) => (manager, i)))
                 Console.WriteLine($"{i})\t{manager.Title}\ninfo\t{manager.Help}\nvalue\t{manager.Get()}\n");
-            }
-            Console.WriteLine($"Choose setting number ");
+            Console.WriteLine("Choose setting number ");
         }
 
         private void OnAbout(State sender, EventArgs args)

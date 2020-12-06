@@ -4,7 +4,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 {
     public class SpiralIncrementSettingManager : ISettingsManager
     {
-        private Func<ISpiralSettingsProvider> settingProvider;
+        private readonly Func<ISpiralSettingsProvider> settingProvider;
 
         public SpiralIncrementSettingManager(Func<ISpiralSettingsProvider> settingProvider)
         {
@@ -13,6 +13,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 
         public string Title => "Spiral increment";
         public string Help => "Choose increment to change placing strategy";
+
         public bool TrySet(string value)
         {
             if (!int.TryParse(value, out var number))

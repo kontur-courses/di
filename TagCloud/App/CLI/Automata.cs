@@ -5,21 +5,21 @@ namespace TagCloud.App.CLI
 {
     public class Automata
     {
-        private State currentState;
         private readonly Dictionary<State, IEnumerable<Transition>> transitionsMap;
+        private State currentState;
 
         public Automata()
         {
             transitionsMap = new Dictionary<State, IEnumerable<Transition>>();
         }
-        
+
         public Automata(State initialState, IEnumerable<Transition> transitions) : this()
         {
             currentState = initialState;
-            foreach (var transition in transitions) 
+            foreach (var transition in transitions)
                 AddTransition(transition);
         }
-        
+
         public void Add(Transition transition)
         {
             AddTransition(transition);
@@ -46,7 +46,7 @@ namespace TagCloud.App.CLI
             if (!transitionsMap.TryGetValue(currentState, out var transitions))
                 return false;
             var possibleTransition = transitions.FirstOrDefault(transition => transition.DoesTransfer(input));
-            if (possibleTransition == null) 
+            if (possibleTransition == null)
                 return false;
             newState = possibleTransition.Destination;
             return true;

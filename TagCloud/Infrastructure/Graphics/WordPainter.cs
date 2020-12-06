@@ -28,7 +28,7 @@ namespace TagCloud.Infrastructure.Graphics
             var settings = imageSettingsProvider();
             var image = new Bitmap(settings.Width, settings.Height);
             using var imageGraphics = System.Drawing.Graphics.FromImage(image);
-            
+
             using (layouter)
             {
                 foreach (var (word, info) in tokens)
@@ -39,6 +39,7 @@ namespace TagCloud.Infrastructure.Graphics
                     imageGraphics.DrawString(word, font, brush, hitbox.Location);
                 }
             }
+
             return image;
         }
     }

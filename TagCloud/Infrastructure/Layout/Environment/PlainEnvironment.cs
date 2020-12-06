@@ -34,14 +34,14 @@ namespace TagCloud.Infrastructure.Layout.Environment
             return GetEnumerator();
         }
 
+        public void Dispose()
+        {
+            Elements.Clear();
+        }
+
         public void Remove(Rectangle element)
         {
             Elements.Remove(element);
-        }
-
-        public void Dispose()
-        {
-            Elements.Clear();   
         }
     }
 }

@@ -4,8 +4,8 @@ namespace TagCloud.App.CLI
 {
     public class Transition
     {
-        public State Origin;
         public State Destination;
+        public State Origin;
         public Regex Regex;
 
         public Transition(State origin, string pattern, State destination)
@@ -14,7 +14,7 @@ namespace TagCloud.App.CLI
             Destination = destination;
             Regex = new Regex(pattern, RegexOptions.Compiled);
         }
-        
+
         public bool DoesTransfer(string input)
         {
             var match = Regex.Match(input);

@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Cairo;
 
 namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 {
@@ -12,9 +11,10 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
         {
             this.fileSettingsProvider = fileSettingsProvider;
         }
-        
+
         public string Title => "Input file";
         public string Help => "Type path to file to analyze";
+
         public bool TrySet(string value)
         {
             if (!File.Exists(value))
@@ -22,7 +22,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
                 Console.WriteLine($"{value} not found");
                 return false;
             }
-            
+
             fileSettingsProvider().Path = value;
             return true;
         }

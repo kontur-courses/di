@@ -5,7 +5,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 {
     public class FontSettingManager : ISettingsManager
     {
-        private Func<IFontSettingProvider> settingProvider;
+        private readonly Func<IFontSettingProvider> settingProvider;
 
         public FontSettingManager(Func<IFontSettingProvider> settingProvider)
         {
@@ -14,11 +14,11 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 
         public string Title => "Font";
         public string Help => "Choose font family name to write tags";
+
         public bool TrySet(string value)
         {
             try
             {
-
                 settingProvider().FontFamily = new FontFamily(value);
             }
             catch (Exception e)
@@ -26,6 +26,7 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 

@@ -22,7 +22,7 @@ namespace TagCloud.Infrastructure.Text.Filters
             var minCount = tokens.Select(pair => pair.info.Frequency).Aggregate(Math.Min);
             var tg1 = Math.Max(baseFont.MaxFontSize - baseFont.MinFontSize, 1);
             var tg2 = Math.Max(maxCount - minCount, 1);
-            
+
             int FontSizeLine(int x)
             {
                 return (x - minCount) * tg1 / tg2 + baseFont.MinFontSize;

@@ -10,8 +10,10 @@ namespace TagCloud.Infrastructure.Settings.UISettingsManagers
         {
             this.imageSettingsProvider = imageSettingsProvider;
         }
+
         public string Title => "Image path";
         public string Help => "Type image file location to save";
+
         public bool TrySet(string value)
         {
             imageSettingsProvider().ImagePath = value;
