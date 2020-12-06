@@ -1,14 +1,16 @@
-﻿using TagsCloudContainer.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.Settings
 {
     public class TextProcessingSettings : ITextProcessingSettings
     {
-        public string[] BoringWords { get; }
+        public HashSet<string> BoringWords { get; }
 
         public TextProcessingSettings(string[] boringWords)
         {
-            BoringWords = boringWords;
+            BoringWords = boringWords.ToHashSet();
         }
     }
 }

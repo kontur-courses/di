@@ -19,15 +19,17 @@ namespace TagsCloudContainerTests.FunctionalTests
         [SetUp]
         public void SetUp()
         {
-            var frequency = new WordsFrequency(new List<IWordsFilter>
-            {
-                new WordsFilter(
-                    new SpeechPartsParser(
-                        new MyStemConverter(Path.GetFullPath("mystem.exe").Replace($"Tests", ""), "-ni")),
-                    new TextProcessingSettings(new[] {"велосипед", "осень"}),
-                    new MyStemSpeechPartsFilter(new[] {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"}))
-            });
-            var cloudLayouter = new CloudLayouter(new ArchimedeanSpiral(new Point(0, 0), new SpiralSettings(1, 0.5)),
+            var frequency = new WordsFrequency(
+                new MyStemConverter(Path.GetFullPath("mystem.exe").Replace($"Tests", ""), "-ni"),
+                new List<IWordsFilter>
+                {
+                    new SpeechPartsFilter(
+                        new NormalizedWordAndSpeechPartParser(),
+                        new[] {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"}),
+                    new WordsFilter(new TextProcessingSettings(new[] {"велосипед", "осень"}))
+                });
+            var cloudLayouter = new CloudLayouter(
+                new ArchimedeanSpiral(new Point(0, 0), new SpiralSettings(1, 0.5)),
                 new CloudRadiusCalculator());
             var wordMeasurer = new WordMeasurer();
 

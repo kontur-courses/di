@@ -6,11 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="bin\Debug\netcoreapp3.1\wordsForTest.txt" />
+      <None Remove="mystem.exe" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="bin\Debug\netcoreapp3.1\mystem.exe" />
+      <EmbeddedResource Include="mystem.exe">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -37,6 +39,16 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="bin\Debug\netcoreapp3.1\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="wordsForTest.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

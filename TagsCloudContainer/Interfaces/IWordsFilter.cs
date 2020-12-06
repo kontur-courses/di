@@ -2,6 +2,6 @@
 {
     public interface IWordsFilter
     {
-        string[] GetInterestingWords(string text);
+        string[] GetInterestingWords(string[] words);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using RectanglesCloudLayouter.Core;
@@ -21,7 +22,17 @@ namespace TagsCloudContainer
             if (!client.TryGetUserCommands(args, out var commands))
                 return;
             var serviceCollection = new ServiceCollection();
-            InjectDependencies(serviceCollection, TemporarySettingsStorage.From(commands));
+            TemporarySettingsStorage settings;
+            try
+            {
+                settings = TemporarySettingsStorage.From(commands);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+            InjectDependencies(serviceCollection, settings);
             serviceCollection.BuildServiceProvider().GetRequiredService<IAppProcessor>().Run();
         }
 
@@ -48,9 +59,9 @@ namespace TagsCloudContainer
                 .AddSingleton<IWordsFrequency, WordsFrequency>()
                 .AddSingleton<IWordMeasurer, WordMeasurer>()
                 .AddSingleton<IWordsFilter, WordsFilter>()
-                .AddSingleton<ISpeechPartsFilter>(new MyStemSpeechPartsFilter(
-                    new[] {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"}))
-                .AddSingleton<ISpeechPartsParser, SpeechPartsParser>()
+                .AddSingleton<IWordsFilter, SpeechPartsFilter>()
+                .AddSingleton(new[] {"PR", "PART", "INTJ", "CONJ", "ADVPRO", "APRO", "NUM", "SPRO"})
+                .AddSingleton<INormalizedWordAndSpeechPartParser, NormalizedWordAndSpeechPartParser>()
                 .AddSingleton<ITextConverter>(new MyStemConverter(Path.GetFullPath("mystem.exe"), "-ni"));
         }
     }

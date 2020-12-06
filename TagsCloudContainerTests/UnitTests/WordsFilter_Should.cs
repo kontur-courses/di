@@ -12,17 +12,15 @@ namespace TagsCloudContainerTests.UnitTests
     public class WordsFilterShould
     {
         private WordsFilter _sut;
-        private ISpeechPartsParser _speechPartsParser;
+        private INormalizedWordAndSpeechPartParser normalizedWordAndSpeechPartParser;
         private ITextProcessingSettings _textProcessingSettings;
-        private ISpeechPartsFilter _speechPartsFilter;
 
         [SetUp]
         public void SetUp()
         {
-            _speechPartsParser = A.Fake<ISpeechPartsParser>();
+            normalizedWordAndSpeechPartParser = A.Fake<INormalizedWordAndSpeechPartParser>();
             _textProcessingSettings = A.Fake<ITextProcessingSettings>();
-            _speechPartsFilter = A.Fake<ISpeechPartsFilter>();
-            _sut = new WordsFilter(_speechPartsParser, _textProcessingSettings, _speechPartsFilter);
+            _sut = new WordsFilter(_textProcessingSettings);
         }
 
         [Test]
@@ -45,43 +43,19 @@ namespace TagsCloudContainerTests.UnitTests
                 // ignored
             }
 
-            A.CallTo(() => _speechPartsParser.ParseToPartSpeechAndWords(A<string>.Ignored)).MustNotHaveHappened();
-        }
-
-        [Test]
-        public void GetInterestingWords_BeNotCalledGetInterestingSpeechParts_WhenStringIsNull()
-        {
-            try
-            {
-                var _ = new Action(() => _sut.GetInterestingWords(null));
-            }
-            catch
-            {
-                // ignored
-            }
-
-            A.CallTo(() => _speechPartsFilter.GetInterestingSpeechParts(A<string[]>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => normalizedWordAndSpeechPartParser.ParseToNormalizedWordAndPartSpeech(A<string>.Ignored))
+                .MustNotHaveHappened();
         }
 
         [Test]
         public void GetInterestingWords_Words_WhenStringContainsInterestingWords()
         {
-            var text = "собака кот в она подвал";
-            var words = text.Split(' ');
-            A.CallTo(() => _speechPartsParser
-                    .ParseToPartSpeechAndWords(A<string>.Ignored))
-                .Returns(new Dictionary<string, List<string>>
-                {
-                    ["S"] = new List<string> {words[0], words[1], words.Last()}, ["PR"] = new List<string> {words[2]},
-                    ["APRO"] = new List<string> {words[3]}
-                });
-            A.CallTo(() => _speechPartsFilter.GetInterestingSpeechParts(A<string[]>.Ignored))
-                .Returns(new[] {"S"});
-            A.CallTo(() => _textProcessingSettings.BoringWords).Returns(new[] {words.Last()});
+            var words = new[] {"собака", "кот", "в", "она", "подвал"};
+            A.CallTo(() => _textProcessingSettings.BoringWords).Returns(new HashSet<string> {words.Last()});
 
-            var act = _sut.GetInterestingWords(text);
+            var act = _sut.GetInterestingWords(words);
 
-            act.Should().BeEquivalentTo(words[0], words[1]);
+            act.Should().BeEquivalentTo(words[0], words[1], words[2], words[3]);
         }
     }
 }

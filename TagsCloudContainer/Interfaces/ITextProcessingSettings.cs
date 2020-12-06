@@ -1,7 +1,9 @@
-﻿namespace TagsCloudContainer.Interfaces
+﻿using System.Collections.Generic;
+
+namespace TagsCloudContainer.Interfaces
 {
     public interface ITextProcessingSettings
     {
-        string[] BoringWords { get; }
+        HashSet<string> BoringWords { get; }
     }
 }
