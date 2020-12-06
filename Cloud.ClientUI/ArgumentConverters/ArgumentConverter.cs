@@ -7,21 +7,21 @@ namespace Cloud.ClientUI.ArgumentConverters
 {
     public class ArgumentConverter : IArgumentConverter
     {
-        public TagCloudArguments ParseArguments(Arguments arguments)
+        public TagCloudArguments ConvertArguments(Arguments arguments)
         {
             var result = new TagCloudArguments();
-            ParseCenter(arguments, result);
-            ParseFont(arguments, result);
-            ParseImageSize(arguments, result);
-            ParseColor(arguments, result);
-            ParseBoringWords(arguments, result);
-            ParseInputFileName(arguments, result);
-            ParseOutputFileName(arguments, result);
+            SetCenter(arguments, result);
+            SetFont(arguments, result);
+            SetImageSize(arguments, result);
+            SetColor(arguments, result);
+            SetWords(arguments, result);
+            SetInputFileName(arguments, result);
+            SetOutputFileName(arguments, result);
             PrintArguments(result);
             return result;
         }
 
-        private void ParseInputFileName(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetInputFileName(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (!string.IsNullOrEmpty(arguments.InputFileName))
             {
@@ -32,7 +32,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine("Неверно задано значение имени файла со словами, установлено дефолтное значение");
         }
 
-        private void ParseOutputFileName(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetOutputFileName(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (!string.IsNullOrEmpty(arguments.OutputFileName))
                 Convertedarguments.OutputFileName = arguments.OutputFileName;
@@ -40,7 +40,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine("Неверно задано значение имени итогового файла, установлено дефолтное значение");
         }
 
-        private void ParseBoringWords(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetWords(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (arguments.BoringWords == null)
             {
@@ -71,7 +71,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine(outputFileName);
         }
 
-        private void ParseCenter(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetCenter(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (arguments.XValue == null || arguments.YValue == null)
             {
@@ -90,7 +90,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine("Один из параметров центра изображения был неверным, установлено дефолтное значение");
         }
 
-        private void ParseFont(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetFont(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (arguments.FontName == null || arguments.FontSize == null)
             {
@@ -108,7 +108,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine("Один из параметров шрифта был неверным, установлено дефолтное значение");
         }
 
-        private void ParseImageSize(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetImageSize(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (arguments.ImageHeight == null || arguments.ImageWidth == null)
             {
@@ -128,7 +128,7 @@ namespace Cloud.ClientUI.ArgumentConverters
             Console.WriteLine("Один из параметров размера изображения был неверным, установлено дефолтное значение");
         }
 
-        private void ParseColor(Arguments arguments, TagCloudArguments Convertedarguments)
+        private void SetColor(Arguments arguments, TagCloudArguments Convertedarguments)
         {
             if (arguments.Color == null)
                 return;

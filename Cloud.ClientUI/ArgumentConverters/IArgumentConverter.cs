@@ -4,6 +4,6 @@ namespace Cloud.ClientUI.ArgumentConverters
 {
     public interface IArgumentConverter
     {
-        public TagCloudArguments ParseArguments(Arguments arguments);
+        public TagCloudArguments ConvertArguments(Arguments arguments);
     }
 }

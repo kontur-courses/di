@@ -10,8 +10,8 @@ namespace CloudContainer
 {
     public class TagCloudContainer
     {
-        private readonly IConfig config;
         private readonly IWordsCleaner cleaner;
+        private readonly IConfig config;
         private readonly IWordConverter converter;
         private readonly IWordProvider provider;
 

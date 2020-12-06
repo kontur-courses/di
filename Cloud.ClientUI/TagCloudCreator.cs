@@ -1,33 +1,25 @@
-﻿using Cloud.ClientUI.ArgumentConverters;
-using CloudContainer;
+﻿using CloudContainer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cloud.ClientUI
 {
     public class TagCloudCreator
     {
-        private readonly IArgumentConverter argumentConverter;
-        private readonly Arguments arguments;
         private readonly TagCloudContainerBuilder container;
         private readonly ISaver saver;
 
-        public TagCloudCreator(TagCloudContainerBuilder container, IArgumentConverter argumentConverter,
-            Arguments arguments,
-            ISaver saver)
+        public TagCloudCreator(TagCloudContainerBuilder container, ISaver saver)
         {
             this.container = container;
-            this.argumentConverter = argumentConverter;
-            this.arguments = arguments;
             this.saver = saver;
         }
 
-        public void Run()
+        public void Run(TagCloudArguments arguments)
         {
-            var convertedArguments = argumentConverter.ParseArguments(arguments);
-            var visualizationContainer = container.CreateTagCloudContainer(convertedArguments);
+            var visualizationContainer = container.CreateTagCloudContainer(arguments);
             var image = visualizationContainer.BuildServiceProvider().GetService<TagCloudContainer>()
-                .GetImage(convertedArguments);
-            saver.SaveImage(image, convertedArguments.OutputFileName);
+                .GetImage(arguments);
+            saver.SaveImage(image, arguments.OutputFileName);
         }
     }
 }

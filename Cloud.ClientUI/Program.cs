@@ -6,11 +6,10 @@ namespace Cloud.ClientUI
     {
         private static void Main(string[] args)
         {
-            var argumentParser = new ArgumentParser();
-            var parsedArguments = argumentParser.Parse(args);
             var containerBuilder = new ContainerBuilder();
-            var container = containerBuilder.CreateContainer(parsedArguments);
-            container.BuildServiceProvider().GetService<TagCloudCreator>().Run();
+            var container = containerBuilder.CreateContainer().BuildServiceProvider();
+            var arguments = container.GetService<TagCloudArgumentsCreator>().GetArguments(args);
+            container.GetService<TagCloudCreator>().Run(arguments);
         }
     }
 }
