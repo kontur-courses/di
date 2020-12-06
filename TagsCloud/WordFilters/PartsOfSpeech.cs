@@ -4,9 +4,14 @@ namespace TagsCloud.WordFilters
 {
     public enum PartsOfSpeech
     {
-        [Description("Прилагательное")] A,
-        [Description("Наречие")] ADV,
-        [Description("Местоименное наречие")] ADVPRO,
+        [Description("Прилагательное")] 
+        A,
+
+        [Description("Наречие")] 
+        ADV,
+
+        [Description("Местоименное наречие")] 
+        ADVPRO,
 
         [Description("Числительное - прилагательное")]
         ANUM,
@@ -16,15 +21,29 @@ namespace TagsCloud.WordFilters
 
         [Description("Часть композита - сложного слова")]
         COM,
-        [Description("Союз")] CONJ,
-        [Description("Междометие")] INTJ,
-        [Description("Числительное")] NUM,
-        [Description("Частица")] PART,
-        [Description("Предлог")] PR,
-        [Description("Существительное")] S,
+
+        [Description("Союз")] 
+        CONJ,
+
+        [Description("Междометие")]
+        INTJ,
+
+        [Description("Числительное")]
+        NUM,
+
+        [Description("Частица")] 
+        PART,
+
+        [Description("Предлог")]
+        PR,
+
+        [Description("Существительное")]
+        S,
 
         [Description("Местоимение-существительное")]
         SPRO,
-        [Description("Глагол")] V
+
+        [Description("Глагол")]
+        V
     }
 }

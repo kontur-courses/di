@@ -9,7 +9,7 @@ namespace TagsCloud.WordFilters
     public class PartsOfSpeechFilter : IWordFilter
     {
         private readonly HashSet<PartsOfSpeech> _boringPartsOfSpeeches;
-        private readonly Regex _re = new Regex(@"{(?<word>\w+)=(?<partOfSpeech>\w+)", RegexOptions.Compiled);
+        private readonly Regex _partOfSpeechRegex = new Regex(@"{(\w+)=(?<partOfSpeech>\w+)", RegexOptions.Compiled);
 
         public PartsOfSpeechFilter(params PartsOfSpeech[] boringPartsOfSpeeches)
         {
@@ -36,7 +36,12 @@ namespace TagsCloud.WordFilters
             foreach (var word in words)
             {
                 myStemProcess.StandardInput.Write($"{word}\n");
-                var partOfSpeech = _re.Match(myStemProcess.StandardOutput.ReadLine()!).Groups["partOfSpeech"].Value;
+                var wordInfo = myStemProcess.StandardOutput.ReadLine();
+
+                if (wordInfo is null)
+                    continue;
+
+                var partOfSpeech = _partOfSpeechRegex.Match(wordInfo).Groups["partOfSpeech"].Value;
                 if (Enum.TryParse(partOfSpeech, out PartsOfSpeech res) && !_boringPartsOfSpeeches.Contains(res))
                     result.Add(word);
             }
