@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Settings
@@ -8,7 +9,8 @@ namespace TagCloud.Infrastructure.Settings
         IExcludeTypesSettingsProvider,
         ISpiralSettingsProvider,
         IImageSettingsProvider,
-        IWordCountThresholdSettingProvider
+        IWordCountThresholdSettingProvider,
+        IImageFormatSettingProvider
     {
         public WordType[] ExcludedTypes { get; set; }
         public string Path { get; set; }
@@ -21,6 +23,7 @@ namespace TagCloud.Infrastructure.Settings
         public Point Center { get; set; }
         public int Increment { get; set; }
         public int WordCountThreshold { get; set; }
+        public ImageFormat Format { get; set; }
 
         public void Import(Settings settings)
         {
@@ -35,6 +38,7 @@ namespace TagCloud.Infrastructure.Settings
             Center = settings.Center;
             ImagePath = settings.ImagePath;
             FontFamily = settings.FontFamily;
+            Format = settings.Format;
         }
     }
 }

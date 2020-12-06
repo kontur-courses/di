@@ -89,7 +89,7 @@ namespace TagCloud.App.CLI
             Console.WriteLine("Layout ready");
             var imagePath = settingsFactory().ImagePath;
             Console.WriteLine($"Image will be saved into {Path.GetFullPath(imagePath)}");
-            image.Save(imagePath);
+            image.Save(imagePath, settingsFactory().Format);
             Console.WriteLine("Image saved");
         }
 

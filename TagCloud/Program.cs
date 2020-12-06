@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using Autofac;
 using TagCloud.App;
-using TagCloud.App.CLI;
 using TagCloud.App.GUI;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Layout;
@@ -56,6 +56,7 @@ namespace TagCloud
             builder.RegisterType<LayoutCenterSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<SpiralIncrementSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<FontSettingManager>().AsImplementedInterfaces();
+            builder.RegisterType<ImageFormatSettingManager>().AsImplementedInterfaces();
 
             //todo use compile options
             // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
@@ -68,7 +69,7 @@ namespace TagCloud
 
         public static Settings GetDefaultSettings()
         {
-            var size = new Size(1000, 1000);
+            var size = new Size(500, 500);
             return new Settings
             {
                 ExcludedTypes = new[] {WordType.CONJ, WordType.SPRO, WordType.PR},
@@ -81,7 +82,8 @@ namespace TagCloud
                 MaxFontSize = 50,
                 Center = new Point(size.Width / 2, size.Height / 2),
                 ImagePath = Path.Combine(".", "drawing.bmp"),
-                FontFamily = new FontFamily("Arial")
+                FontFamily = new FontFamily("Arial"),
+                Format = ImageFormat.Bmp,
             };
         }
 

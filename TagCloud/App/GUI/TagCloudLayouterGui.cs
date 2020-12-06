@@ -133,7 +133,7 @@ namespace TagCloud.App.GUI
 
 
             var image = GenerateImage();
-            var stream = ToStream(image, ImageFormat.Bmp);
+            var stream = ToStream(image, settingsFactory().Format);
             var buf = new Pixbuf(stream);
 
             buf = buf.ScaleSimple(500, 500, InterpType.Bilinear);
@@ -153,8 +153,9 @@ namespace TagCloud.App.GUI
             {
                 var imagePath = settingsFactory().ImagePath;
                 Console.WriteLine($"Saving into {Path.GetFullPath(imagePath)}");
-                image.Save(imagePath);
+                image.Save(imagePath, settingsFactory().Format);
                 image.Dispose();
+                window.Close();
             };
             okBox.PackStart(closeButton, false, false, 0);
             okBox.PackStart(saveButton, false, false, 0);
