@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
-using Autofac.Builder;
+﻿using Autofac;
 using TagCloud.Commands;
 
 namespace TagCloud.Extensions
@@ -11,7 +7,11 @@ namespace TagCloud.Extensions
     {
         public static void RegisterCommand<T>(this ContainerBuilder builder)
         {
-            builder.RegisterType<T>().As<ICommand>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
+            builder
+                .RegisterType<T>()
+                .As<ICommand>()
+                .InstancePerLifetimeScope()
+                .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
         }
     }
 }

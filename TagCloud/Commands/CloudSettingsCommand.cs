@@ -37,7 +37,7 @@ namespace TagCloud.Commands
                 {
                     "FontName",
                     (settings, fontName) => settings.Font = new Font(new FontFamily(fontName), settings.Font.Size)
-                },
+                }
             };
 
         public CloudSettingsCommand(CloudSettings cloudSettings)

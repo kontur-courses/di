@@ -14,8 +14,9 @@ namespace TagCloud.Commands
             var message = new StringBuilder();
             foreach (var command in Commands)
             {
-                message.AppendLine(command.CommandId);
-                message.AppendLine($"  {command.Description}");
+                message.AppendLine($"{command.CommandId}:");
+                message.AppendLine($"\tDescription: {command.Description}");
+                message.AppendLine($"\tUsage: {command.Usage}");
             }
 
             return new CommandResult(true, message.ToString());

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TagCloud.Settings;
 
 namespace TagCloud.Sources
@@ -17,7 +18,7 @@ namespace TagCloud.Sources
         {
             var words = File.ReadAllLines(settings.Destination);
             var ignore = new HashSet<string>(settings.Ignore);
-            foreach (var word in words)
+            foreach (var word in words.Select(w => w.ToLower()))
             {
                 if (ignore.Contains(word))
                     continue;

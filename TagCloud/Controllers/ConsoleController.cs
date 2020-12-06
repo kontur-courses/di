@@ -43,7 +43,7 @@ namespace TagCloud.Controllers
 
         private ICommand FindCommand(string commandId)
         {
-            return commands.ContainsKey(commandId) ? commands[commandId] : null;
+            return commands.TryGetValue(commandId, out var command) ? command : null;
         }
 
         private void AddCommand(ICommand command)
