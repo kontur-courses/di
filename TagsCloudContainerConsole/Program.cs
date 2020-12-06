@@ -17,6 +17,7 @@ namespace TagsCloudContainerConsole
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TagsCloudContainer.TagsCloudContainer>().AsSelf();
+            builder.RegisterType<CircularCloudLayouter>().As<IWordsLayouter>();
             builder.RegisterType<WordRendererToImage>().As<IParameterizedWordRendererToImage>();
             var diConainer = builder.Build();
             
@@ -40,6 +41,7 @@ namespace TagsCloudContainerConsole
                 
                 if (!options.AutoSize) renderer.Output = new Bitmap(options.Width, options.Height);
                 container.Rendering(renderer);
+                container.Layouting(diConainer.Resolve<IWordsLayouter>());
                 container.Render();
                 renderer.Output.Save(options.OutputFile, ImageFormat.Png);
             });
