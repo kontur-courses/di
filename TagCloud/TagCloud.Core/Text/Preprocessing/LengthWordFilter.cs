@@ -1,7 +1,11 @@
-﻿namespace TagCloud.Core.Text.Preprocessing
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace TagCloud.Core.Text.Preprocessing
 {
     public class LengthWordFilter : IWordFilter
     {
-        public bool IsValidWord(string word) => word.Length >= 3;
+        public IEnumerable<string> GetValidWordsOnly(IEnumerable<string> words) =>
+            words.Where(word => word.Length >= 3);
     }
 }

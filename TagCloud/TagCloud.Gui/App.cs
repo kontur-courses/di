@@ -135,10 +135,10 @@ namespace TagCloud.Gui
         {
             return await Task.Run(() =>
             {
-                var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath)
-                    .Where(w => filterPicker.Selected.All(f => f.Value.IsValidWord(w)));
-
-                return normalizerPicker.Selected.Value.Normalize(words)
+                var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath).AsEnumerable();
+                var validWOrds = filterPicker.Selected
+                    .Aggregate(words, (current, filter) => filter.Value.GetValidWordsOnly(current));
+                return normalizerPicker.Selected.Value.Normalize(validWOrds)
                     .ToLookup(x => x)
                     .ToDictionary(x => x.Key, x => x.Count());
             }, cancellationToken);

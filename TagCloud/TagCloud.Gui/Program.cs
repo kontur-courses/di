@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
+using Autofac.Core;
+using MyStem.Wrapper.Wrapper;
 
 namespace TagCloud.Gui
 {
@@ -27,9 +29,14 @@ namespace TagCloud.Gui
         {
             var builder = new ContainerBuilder();
 
-            var dlls = Directory.EnumerateFiles(Environment.CurrentDirectory, "TagCloud*.dll");
+            var dlls = Directory.EnumerateFiles(Environment.CurrentDirectory, "TagCloud*.dll")
+                .Concat(Directory.EnumerateFiles(Environment.CurrentDirectory, "MyStem*.dll"));
             var assemblies = dlls.Select(Assembly.LoadFrom).ToArray();
             builder.RegisterAssemblyModules(assemblies);
+
+            builder.RegisterType<MyStemBuilder>()
+                .AsImplementedInterfaces()
+                .WithParameter("path", "mystem.exe");
 
             return builder.Build();
         }

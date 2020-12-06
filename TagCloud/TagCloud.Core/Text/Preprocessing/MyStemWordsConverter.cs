@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyStemWrapper;
+using MyStem.Wrapper.Workers.Lemmas;
 
 namespace TagCloud.Core.Text.Preprocessing
 {
     public class MyStemWordsConverter : IWordConverter
     {
-        private readonly Lemmatizer normalizer;
+        private readonly ILemmatizer normalizer;
 
-        public MyStemWordsConverter()
+        public MyStemWordsConverter(ILemmatizer normalizer)
         {
-            normalizer = new Lemmatizer();
+            this.normalizer = normalizer;
         }
 
         public IEnumerable<string> Normalize(IEnumerable<string> words) =>

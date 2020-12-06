@@ -1,7 +1,9 @@
-﻿namespace TagCloud.Core.Text.Preprocessing
+﻿using System.Collections.Generic;
+
+namespace TagCloud.Core.Text.Preprocessing
 {
     public interface IWordFilter
     {
-        bool IsValidWord(string word);
+        IEnumerable<string> GetValidWordsOnly(IEnumerable<string> word);
     }
 }

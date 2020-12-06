@@ -1,6 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using FluentAssertions;
+using MyStem.Wrapper.Workers.Lemmas;
+using MyStem.Wrapper.Wrapper;
 using NUnit.Framework;
 using TagCloud.Core.Text.Preprocessing;
 
@@ -16,25 +17,7 @@ namespace TagCloud.Core.Tests
         public void SetUp()
         {
             executablePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "mystem.exe");
-            converter = new MyStemWordsConverter();
-        }
-
-        [Test]
-        public void MyStemExeMissing_Throw()
-        {
-            var temporaryPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "totally_not_a_mystem.exe");
-            File.Move(executablePath, temporaryPath, true);
-
-            Action test = () => converter.Normalize(new[] {"abc"});
-
-            test.Should()
-                .Throw<FileNotFoundException>()
-                .Which
-                .Message
-                .Should()
-                .Contain("Missed mystem library");
-
-            File.Move(temporaryPath, executablePath);
+            converter = new MyStemWordsConverter(new Lemmatizer(new MyStemBuilder(executablePath)));
         }
 
         [Test]
