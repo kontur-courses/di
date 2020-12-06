@@ -23,7 +23,7 @@ namespace TagCloud.Commands
         public ICommandResult Handle(string[] args)
         {
             if (args.Length == 0)
-                return new CommandResult(false, "You must specify file name");
+                return CommandResult.WithNoArgs();
 
             settings.Name = args[0];
             createRender().Render();

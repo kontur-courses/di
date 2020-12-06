@@ -10,5 +10,10 @@
 
         public bool Success { get; }
         public string Message { get; }
+
+        public static CommandResult WithNoArgs()
+        {
+            return new CommandResult(false, "One or more required parameters not specified");
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace TagCloud.Layouters
         private readonly CircularPositioner positioner;
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
-        public CircularCloudLayouter(CloudSettings settings) : this(settings.Center, 0)
+        public CircularCloudLayouter(CloudSettings settings) : this(settings.Center, settings.StartRadius)
         {
         }
 
