@@ -34,7 +34,7 @@ namespace TagCloud.Infrastructure.Graphics
                 foreach (var (word, info) in tokens)
                 {
                     var hitbox = layouter.GetPlace(info.Size);
-                    var font = new Font(settings.FontFamily, info.FontSize);
+                    using var font = new Font(settings.FontFamily, info.FontSize);
                     var brush = new SolidBrush(colorPicker.GetColor(info));
                     imageGraphics.DrawString(word, font, brush, hitbox.Location);
                 }
