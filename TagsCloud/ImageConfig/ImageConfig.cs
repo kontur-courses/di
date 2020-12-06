@@ -10,7 +10,10 @@ namespace TagsCloud.ImageConfig
         public Color BackgroundColor { get; }
         public IColoringAlgorithm ColoringAlgorithm { get; }
 
-        public ImageConfig(Size size, FontFamily fontFamily, Color backgroundColor,
+        public ImageConfig(
+            Size size,
+            FontFamily fontFamily,
+            Color backgroundColor,
             IColoringAlgorithm coloringAlgorithm)
         {
             Size = size;
