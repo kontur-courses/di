@@ -29,7 +29,7 @@ namespace TagsCloudTests.WordProcessorsTests
         };
 
         [Test]
-        public void ExcludeBoringWords_AllWordsInteresting_ReturnsAllInputWords()
+        public void NormilizeAndExcludeBoringWords_AllWordsInteresting_ReturnsAllInputWords()
         {
             var sentence =
                 "Утром в лесу запели два звонких соловья и защебетали воробьи, чуть-чуть умолкая.".Split(" ");
@@ -52,7 +52,7 @@ namespace TagsCloudTests.WordProcessorsTests
         }
 
         [Test]
-        public void ExcludeBoringWords_AllWordsBoring_ReturnsAllInputWords()
+        public void NormilizeAndExcludeBoringWords_AllWordsBoring_ReturnsAllInputWords()
         {
             var sentence =
                 "Утром в лесу запели два звонких соловья и защебетали воробьи, чуть-чуть умолкая.".Split(" ");
@@ -68,7 +68,7 @@ namespace TagsCloudTests.WordProcessorsTests
         }
 
         [Test]
-        public void ExcludeBoringWords_BoringWordsIsNounAndConjunctions_ReturnsOnlyAdjective()
+        public void NormilizeAndExcludeBoringWords_BoringWordsIsNounAndConjunctions_ReturnsOnlyAdjective()
         {
             var settings = new WordHandlerSettings
             {

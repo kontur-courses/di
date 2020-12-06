@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="ApprovalTests" Version="5.4.5" />
         <PackageReference Include="FluentAssertions" Version="6.0.0-alpha0001" />
         <PackageReference Include="NUnit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
@@ -16,6 +17,17 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TagsCloudCreating\TagsCloudCreating.csproj" />
+      <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="FileForTest.txt" />
+      <EmbeddedResource Include="FileForTest.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Update="TagsCloudCreator_Should.METHOD.approved.txt">
+        <DependentUpon>TagsCloudCreator_Should.cs</DependentUpon>
+      </None>
     </ItemGroup>
 
 </Project>
