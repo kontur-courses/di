@@ -78,7 +78,7 @@ namespace TagCloudTests
         {
             var container = builder.Build();
             var parser = container.Resolve<IReader<string>>();
-            var analyzer = container.Resolve<WordAnalyzer>();
+            var analyzer = container.Resolve<ITokenAnalyzer<string>>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
             settingsFactory().ExcludedTypes = new [] {WordType.CONJ, WordType.SPRO, WordType.PR};

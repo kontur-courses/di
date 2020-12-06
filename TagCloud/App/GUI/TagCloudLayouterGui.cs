@@ -4,7 +4,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using Gdk;
 using Gtk;
-using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using Image = System.Drawing.Image;
 using Settings = TagCloud.Infrastructure.Settings.Settings;
@@ -18,7 +17,7 @@ namespace TagCloud.App.GUI
         private readonly IEnumerable<ISettingsManager> settingsManagers;
         private readonly IImageGenerator imageGenerator;
 
-        public TagCloudLayouterGui(Func<Settings> settingsFactory, IPainter<string> painter, IEnumerable<ISettingsManager> settingsManagers, IImageGenerator imageGenerator)
+        public TagCloudLayouterGui(Func<Settings> settingsFactory, IEnumerable<ISettingsManager> settingsManagers, IImageGenerator imageGenerator)
         {
             this.settingsFactory = settingsFactory;
             this.settingsManagers = settingsManagers;

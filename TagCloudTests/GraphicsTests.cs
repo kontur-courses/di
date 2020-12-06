@@ -98,7 +98,7 @@ namespace TagCloudTests
             var container = builder.Build();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var reader = container.Resolve<IReader<string>>();
-            var wordAnalyzer = container.Resolve<WordAnalyzer>();
+            var wordAnalyzer = container.Resolve<ITokenAnalyzer<string>>();
             var painter = container.Resolve<IPainter<string>>();
             settingsFactory().Import(Program.GetDefaultSettings());
             
