@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using Gdk;
 using Gtk;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using TagCloud.Infrastructure.Text;
+using Color = System.Drawing.Color;
+using Image = System.Drawing.Image;
 using Settings = TagCloud.Infrastructure.Settings.Settings;
 using Window = Gtk.Window;
 
@@ -37,15 +41,7 @@ namespace TagCloud.App.GUI
             var window = new Window("Tag Cloud Layouter");
             window.DeleteEvent += Close;
 
-            icon = new StatusIcon(new Gdk.Pixbuf("drawing.bmp"));
-            icon.Visible = true;
-            icon.PopupMenu += OnPopup;
-            icon.Activate += delegate {
-                window.Visible = !window.Visible;
-            };
-            
             window.Resize(200,200);
-            window.SetDefaultSize(250, 100);
             window.SetPosition(WindowPosition.Center);
                 
             var runButton = new Button("Generate");
@@ -60,8 +56,7 @@ namespace TagCloud.App.GUI
             box.PackStart(settingsButton, false, true, 10);
             box.PackStart(arrow, false, true, 10);
             box.PackStart(runButton, false, true, 10);
-            // box.PackStart(new Image("drawing.bmp"), false, true, 10);
-            
+
             window.BorderWidth = 30;
             window.Resizable = true;
             window.SetDefaultSize(100, 100);
@@ -71,10 +66,10 @@ namespace TagCloud.App.GUI
 
         private void OnSettingsButtonClicked(object sender, EventArgs args)
         {
-            var wind = new Window("Settings");
-            wind.BorderWidth = 30;
-            wind.SetPosition(WindowPosition.Mouse);
-            wind.Resizable = true;
+            var window = new Window("Settings");
+            window.BorderWidth = 30;
+            window.SetPosition(WindowPosition.Mouse);
+            window.Resizable = true;
             var box = new VBox();
             foreach (var manager in settingsManagers)
             {
@@ -86,11 +81,15 @@ namespace TagCloud.App.GUI
             var okBox = new HBox();
             okBox.PackStart(new Arrow(ArrowType.Right, ShadowType.Out), true, true, 10);
             var okButton = new Button("ok");
+            okButton.ButtonPressEvent += (o, eventArgs) =>
+            {
+                window.Close();
+            };
             okBox.PackStart(okButton, false, false, 0);
             box.PackStart(okBox, true, true, 0);
 
-            wind.Add(box);
-            wind.ShowAll();
+            window.Add(box);
+            window.ShowAll();
         }
 
         private Widget GetWidget(ISettingsManager manager)
@@ -117,17 +116,52 @@ namespace TagCloud.App.GUI
             return settings;
         }
 
+        private static Stream ToStream(Image image, ImageFormat format) {
+            var stream = new System.IO.MemoryStream();
+            image.Save(stream, format);
+            stream.Position = 0;
+            return stream;
+        }
+        
         private void OnGenerateButtonClicked(object sender, EventArgs args)
         {
-            var dialog = new AboutDialog();
-            dialog.SetPosition(WindowPosition.Center);
-            var img = new Pixbuf("drawing.bmp");
-            dialog.Resizable = true;
-            dialog.SetDefaultSize(500, 500);
-            dialog.Show();
-            var allocation = dialog.Allocation;
-            var desired_width = allocation.Width;
-            dialog.Logo = img.ScaleSimple(desired_width, desired_width, InterpType.Bilinear);
+            var window = new Window("Settings");
+            window.BorderWidth = 30;
+            window.SetPosition(WindowPosition.Mouse);
+            window.Resizable = true;
+            var box = new VBox();
+
+
+            var image = GenerateImage();
+            var stream = ToStream(image, ImageFormat.Bmp);
+            var buf = new Pixbuf(stream);
+            
+            buf = buf.ScaleSimple(500, 500, InterpType.Bilinear);
+            var img = new Gtk.Image(buf);
+            box.PackStart(img, false, false, 0);
+            
+            var okBox = new HBox();
+            okBox.PackStart(new Arrow(ArrowType.None, ShadowType.None), true, true, 10);
+            var closeButton = new Button("discard");
+            closeButton.Pressed += (o, eventArgs) =>
+            {
+                image.Dispose();
+                window.Close();
+            };
+            var saveButton = new Button("save");
+            saveButton.Pressed += (o, eventArgs) =>
+            {
+                var imagePath = settingsFactory().ImagePath;
+                Console.WriteLine($"Saving into {Path.GetFullPath(imagePath)}");
+                image.Save(imagePath);
+                image.Dispose();
+            };
+            okBox.PackStart(closeButton, false, false, 0);
+            okBox.PackStart(saveButton, false, false, 0);
+            box.PackStart(okBox, true, true, 0);
+
+            window.Add(box);
+            window.ShowAll();
         }
 
         static void OnPopup (object sender, EventArgs args)
@@ -148,17 +182,11 @@ namespace TagCloud.App.GUI
             Application.Run();
         }
 
-        private void Click(object obj, EventArgs e)
+        private Image GenerateImage()
         {
             var tokens = reader.ReadTokens();
             var analyzedTokens = wordAnalyzer.Analyze(tokens);
-            Console.WriteLine("Tokens analyzed");
-            using var image = painter.GetImage(analyzedTokens);
-            Console.WriteLine("Layout ready");
-            var imagePath = settingsFactory().ImagePath;
-            Console.WriteLine($"Saving into {Path.GetFullPath(imagePath)}");
-            image.Save(imagePath);
-            Console.WriteLine("Image saved");
+            return painter.GetImage(analyzedTokens);
         }
 
         private void Close(object obj, DeleteEventArgs e)
