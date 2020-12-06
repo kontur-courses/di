@@ -1,18 +1,16 @@
-﻿using System.Drawing;
-using TagsCloud.ClientGUI.Infrastructure;
-using TagsCloud.Core;
+﻿using TagsCloud.ClientGUI.Infrastructure;
 
 namespace TagsCloud.ClientGUI.Actions
 {
     public class TagsCloudAction : IUiAction
     {
-        private readonly SpiralSettings spiralSettings;
+        private readonly ITagsCloudFactory cloudFactory;
         private readonly TagsCloudPainter tagsCloudPainter;
 
-        public TagsCloudAction(TagsCloudPainter tagsCloudPainter, SpiralSettings spiralSettings)
+        public TagsCloudAction(TagsCloudPainter tagsCloudPainter, ITagsCloudFactory cloudFactory)
         {
             this.tagsCloudPainter = tagsCloudPainter;
-            this.spiralSettings = spiralSettings;
+            this.cloudFactory = cloudFactory;
         }
 
         public string Category => "Облако тегов";
@@ -21,12 +19,7 @@ namespace TagsCloud.ClientGUI.Actions
 
         public void Perform()
         {
-            var imageSize = tagsCloudPainter.PictureBox.GetImageSize();
-            var spiral = new ArchimedeanSpiral(new Point(imageSize.Width / 2, imageSize.Height / 2),
-                spiralSettings.SpiralParameter);
-            var cloud = new CircularCloudLayouter(spiral);
-
-            tagsCloudPainter.Paint(cloud);
+            tagsCloudPainter.Paint(cloudFactory.Create());
         }
     }
 }
