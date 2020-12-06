@@ -23,10 +23,12 @@ namespace TagsCloud
         private static string _format;
         private static Size _size;
         private static IServiceProvider serviceProvider;
+        private static Action _helpFunc;
 
         public static int Main(string[] args)
         {
             var app = new CommandLineApplication();
+            app.ShowHelp(true);
             ConfigureCommandLineApp(app);
             try
             {
@@ -51,6 +53,7 @@ namespace TagsCloud
 
         private static void ConfigureCommandLineApp(CommandLineApplication app)
         {
+            var help = app.Option("-h|--help <HELP>", "Help", CommandOptionType.NoValue);
             var input = app.Option("-i|--input <INPUT>", "Input file path", CommandOptionType.SingleValue);
             var backgroundColor = app.Option<Color>("-b|--bgcolor <BGCOLOR>", "Background color",
                 CommandOptionType.SingleValue);
@@ -61,6 +64,13 @@ namespace TagsCloud
 
             app.OnExecute(() =>
                 {
+                    if (help.HasValue())
+                    {
+                        foreach (var i in app.Options)
+                            Console.WriteLine($"--{i.LongName}, -{i.ShortName} is {i.Description}");
+                        Process.GetCurrentProcess().Kill();
+                    }
+
                     if (!input.HasValue())
                     {
                         Console.WriteLine("ArgumentException: не указан путь к файлу. Для подробностей --help");
@@ -100,7 +110,7 @@ namespace TagsCloud
 
             services.AddSingleton<IWordFilter>(new PartsOfSpeechFilter(PartsOfSpeech.ADVPRO, PartsOfSpeech.APRO,
                 PartsOfSpeech.CONJ));
-            var coloringAlgorithm = new DefaultColoringAlgorithm(Color.Black);
+            var coloringAlgorithm = new DefaultColoringAlgorithm(_textColor);
             services.AddSingleton<ILayoutAlgorithm>(
                 new CircularCloudLayouter(new Point(_size.Width / 2, _size.Height / 2)));
             services.AddSingleton<IColoringAlgorithm>(coloringAlgorithm);
