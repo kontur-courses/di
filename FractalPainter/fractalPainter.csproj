@@ -8,6 +8,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <RootNamespace>FractalPainting</RootNamespace>
         <AssemblyName>FractalPainter</AssemblyName>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,6 +19,7 @@
 
     <ItemGroup>
       <PackageReference Include="Ninject" Version="3.3.4" />
+      <PackageReference Include="Ninject.Extensions.Factory" Version="3.3.3" />
     </ItemGroup>
 
     <ItemGroup>
