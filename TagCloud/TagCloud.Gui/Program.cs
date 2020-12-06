@@ -36,9 +36,13 @@ namespace TagCloud.Gui
 
             builder.RegisterType<MyStemBuilder>()
                 .AsImplementedInterfaces()
-                .WithParameter("path", "mystem.exe");
+                .WithParameter("path", myStemExePath);
 
             return builder.Build();
         }
+
+        private static readonly string myStemExePath = Path.Combine(
+            Environment.CurrentDirectory,
+            "../../../../bin/mystem.exe");
     }
 }

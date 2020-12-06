@@ -15,8 +15,4 @@
     <ItemGroup>
       <ProjectReference Include="..\..\MyStem\MyStem.Wrapper\MyStem.Wrapper.csproj" />
     </ItemGroup>
-
-    <Target Name="CopyMyStem" AfterTargets="AfterBuild">
-        <Copy SourceFiles="../bin/mystem.exe" DestinationFolder="$(OutDir)" />
-    </Target>
 </Project>
