@@ -19,12 +19,11 @@ namespace TagsCloud.App
                 app.Quit();
                 yield break;
             }
+
             for (var i = 1; i <= doc.Paragraphs.Count; i++)
-            {
-                foreach (var word in GetWords(doc.Paragraphs[i].Range.Text.Trim('\r'))) yield return word;
-            }
+                foreach (var word in GetWords(doc.Paragraphs[i].Range.Text.Trim('\r')))
+                    yield return word;
             app.Quit();
         }
-
     }
 }

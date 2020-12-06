@@ -30,6 +30,10 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.MaxWordsCountSetting = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.SplitLinesCheckBox = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.ExcludedWordsSetButton = new System.Windows.Forms.Button();
             this.CloudSizeSetting = new System.Windows.Forms.NumericUpDown();
             this.FontFamilyChoice = new System.Windows.Forms.ComboBox();
@@ -43,13 +47,12 @@
             this.SetPaletteButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label3 = new System.Windows.Forms.Label();
-            this.SplitLinesCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxWordsCountSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CloudSizeSetting)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,6 +71,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.MaxWordsCountSetting);
+            this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.SplitLinesCheckBox);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.ExcludedWordsSetButton);
@@ -97,9 +102,61 @@
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
             // 
+            // MaxWordsCountSetting
+            // 
+            this.MaxWordsCountSetting.Location = new System.Drawing.Point(0, 339);
+            this.MaxWordsCountSetting.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.MaxWordsCountSetting.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.MaxWordsCountSetting.Name = "MaxWordsCountSetting";
+            this.MaxWordsCountSetting.Size = new System.Drawing.Size(192, 23);
+            this.MaxWordsCountSetting.TabIndex = 12;
+            this.MaxWordsCountSetting.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.MaxWordsCountSetting.ValueChanged += new System.EventHandler(this.MaxWordsCountSetting_ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(0, 321);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(157, 15);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Максимальное число слов";
+            // 
+            // SplitLinesCheckBox
+            // 
+            this.SplitLinesCheckBox.AutoSize = true;
+            this.SplitLinesCheckBox.Location = new System.Drawing.Point(0, 283);
+            this.SplitLinesCheckBox.Name = "SplitLinesCheckBox";
+            this.SplitLinesCheckBox.Size = new System.Drawing.Size(159, 19);
+            this.SplitLinesCheckBox.TabIndex = 10;
+            this.SplitLinesCheckBox.Text = "Делить абзацы на слова";
+            this.SplitLinesCheckBox.UseVisualStyleBackColor = true;
+            this.SplitLinesCheckBox.CheckedChanged += new System.EventHandler(this.SplitLinesCheckBox_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 388);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 15);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Размер облака";
+            // 
             // ExcludedWordsSetButton
             // 
-            this.ExcludedWordsSetButton.Location = new System.Drawing.Point(0, 405);
+            this.ExcludedWordsSetButton.Location = new System.Drawing.Point(0, 431);
             this.ExcludedWordsSetButton.Name = "ExcludedWordsSetButton";
             this.ExcludedWordsSetButton.Size = new System.Drawing.Size(194, 23);
             this.ExcludedWordsSetButton.TabIndex = 8;
@@ -116,7 +173,7 @@
             0,
             0,
             65536});
-            this.CloudSizeSetting.Location = new System.Drawing.Point(0, 340);
+            this.CloudSizeSetting.Location = new System.Drawing.Point(0, 406);
             this.CloudSizeSetting.Maximum = new decimal(new int[] {
             1,
             0,
@@ -174,7 +231,7 @@
             // 
             // ImageSaveButton
             // 
-            this.ImageSaveButton.Location = new System.Drawing.Point(0, 293);
+            this.ImageSaveButton.Location = new System.Drawing.Point(0, 254);
             this.ImageSaveButton.Name = "ImageSaveButton";
             this.ImageSaveButton.Size = new System.Drawing.Size(192, 23);
             this.ImageSaveButton.TabIndex = 6;
@@ -244,26 +301,6 @@
             // 
             this.SaveFileDialog.Filter = "Фото|*.png";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(0, 319);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 15);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Размер облака";
-            // 
-            // SplitLinesCheckBox
-            // 
-            this.SplitLinesCheckBox.AutoSize = true;
-            this.SplitLinesCheckBox.Location = new System.Drawing.Point(0, 375);
-            this.SplitLinesCheckBox.Name = "SplitLinesCheckBox";
-            this.SplitLinesCheckBox.Size = new System.Drawing.Size(159, 19);
-            this.SplitLinesCheckBox.TabIndex = 10;
-            this.SplitLinesCheckBox.Text = "Делить абзацы на слова";
-            this.SplitLinesCheckBox.UseVisualStyleBackColor = true;
-            this.SplitLinesCheckBox.CheckedChanged += new System.EventHandler(this.SplitLinesCheckBox_CheckedChanged);
-            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -278,6 +315,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxWordsCountSetting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CloudSizeSetting)).EndInit();
             this.ResumeLayout(false);
 
@@ -302,5 +340,7 @@
         private System.Windows.Forms.Button ExcludedWordsSetButton;
         private System.Windows.Forms.CheckBox SplitLinesCheckBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown MaxWordsCountSetting;
+        private System.Windows.Forms.Label label4;
     }
 }

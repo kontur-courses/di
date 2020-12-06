@@ -10,16 +10,16 @@ namespace TagsCloud.UI
 {
     public partial class Mainform : Form
     {
-        private readonly Dictionary<string, IRectanglesLayouter> constellators;
         private readonly HashSet<FileReader> fileReaders;
         private readonly IWordsFilter filter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
+        private readonly Dictionary<string, IRectanglesLayouter> layouters;
         private readonly TagsCloudSettings settings;
         private readonly ITagsCloudDrawer tagsCloudDrawer;
         private readonly TagsCloudHandler tagsCloudHandler;
 
-        public Mainform(IRectanglesLayouter[] rectanglesConstellators,
+        public Mainform(IRectanglesLayouter[] rectanglesLayouters,
             TagsCloudHandler tagsCloudHandler,
             ITagsCloudDrawer drawer,
             TagsCloudSettings settings,
@@ -33,12 +33,12 @@ namespace TagsCloud.UI
             tagsCloudDrawer = drawer;
             fontFamilies = settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
-            constellators = rectanglesConstellators.ToDictionary(c => c.Name);
+            layouters = rectanglesLayouters.ToDictionary(c => c.Name);
             InitializeComponent();
             SplitLinesCheckBox.Checked = FileReader.SplitLines;
             FontFamilyChoice.DataSource = settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
             FontStyleChoice.DataSource = settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
-            AlgorithmChoice.DataSource = rectanglesConstellators.Select(c => c.Name).ToList();
+            AlgorithmChoice.DataSource = rectanglesLayouters.Select(c => c.Name).ToList();
         }
 
         private void SetPaletteButton_Click(object sender, EventArgs e)
@@ -55,10 +55,6 @@ namespace TagsCloud.UI
         {
             if (PictureBox.Image != null && SaveFileDialog.ShowDialog() == DialogResult.OK)
                 PictureBox.Image.Save(SaveFileDialog.FileName);
-        }
-
-        private void TextOpenButton_Click(object sender, EventArgs e)
-        {
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -86,7 +82,7 @@ namespace TagsCloud.UI
 
         private void AlgorithmChoice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tagsCloudDrawer.SetNewLayouter(constellators[(string) AlgorithmChoice.SelectedItem]);
+            tagsCloudDrawer.SetNewLayouter(layouters[(string) AlgorithmChoice.SelectedItem]);
         }
 
         private void CloudSizeSetting_ValueChanged(object sender, EventArgs e)
@@ -102,6 +98,11 @@ namespace TagsCloud.UI
         private void SplitLinesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             FileReader.SplitLines = SplitLinesCheckBox.Checked;
+        }
+
+        private void MaxWordsCountSetting_ValueChanged(object sender, EventArgs e)
+        {
+            settings.MaxWordsCount = (int) MaxWordsCountSetting.Value;
         }
     }
 }

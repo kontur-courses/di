@@ -11,10 +11,8 @@ namespace TagsCloud.App
         {
             CheckForExceptions(fileName);
             foreach (var line in File.ReadAllLines(fileName))
-            {
-                foreach (var word in GetWords(line)) 
-                    yield return word;
-            }
+            foreach (var word in GetWords(line))
+                yield return word;
         }
     }
 }

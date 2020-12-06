@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud.App;
@@ -15,7 +16,7 @@ namespace TagsCloudTests
         public void TxtFileReader_ShouldThrow_WithWrongFileType()
         {
             var fileName = @"C:\Users\da\Desktop\abc.jpeg";
-            Action action = () => reader.ReadLines(fileName);
+            Action action = () => reader.ReadLines(fileName).ToArray();
             action.Should().Throw<ArgumentException>();
         }
 

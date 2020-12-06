@@ -10,14 +10,16 @@ namespace TagsCloud.Infrastructure
             Palette palette,
             ImageSize imageSize,
             PossibleFonts possibleFonts,
-            double cloudToImageScaleRatio)
+            double cloudToImageScaleRatio,
+            int maxWordsCount)
         {
             Palette = palette;
-            CloudToImageScaleRatio = cloudToImageScaleRatio;
             ImageSize = imageSize;
             FontSettings = possibleFonts;
             CurrentFontFamily = possibleFonts.FontFamilies.First();
             CurrentFontStyle = possibleFonts.FontStyles.First();
+            CloudToImageScaleRatio = cloudToImageScaleRatio;
+            MaxWordsCount = maxWordsCount;
         }
 
         public Palette Palette { get; set; }
@@ -26,6 +28,8 @@ namespace TagsCloud.Infrastructure
         public FontFamily CurrentFontFamily { get; set; }
         public FontStyle CurrentFontStyle { get; set; }
         public double CloudToImageScaleRatio { get; set; }
+        public int MaxWordsCount { get; set; }
+
 
         public static TagsCloudSettings DefaultSettings => new TagsCloudSettings(
             new Palette(Color.Aqua, Color.Black),
@@ -33,6 +37,6 @@ namespace TagsCloud.Infrastructure
             new PossibleFonts(
                 new HashSet<FontStyle> {FontStyle.Regular, FontStyle.Italic, FontStyle.Bold},
                 FontFamily.Families.ToHashSet()),
-            0.7);
+            0.7, 100);
     }
 }

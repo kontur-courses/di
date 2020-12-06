@@ -22,15 +22,16 @@ namespace TagsCloud.App
         {
             if (words == null)
                 throw new NullReferenceException("Words collection should not be null");
-
             var image = new Bitmap(tagsCloudSettings.ImageSize.Width, tagsCloudSettings.ImageSize.Height);
             var graphics = Graphics.FromImage(image);
-
-            var tags = GetTagsFromWords(words, graphics).ToArray();
+            var tags = GetTagsFromWords(
+                words
+                    .OrderBy(word => -word.Weight)
+                    .Take(tagsCloudSettings.MaxWordsCount),
+                graphics).ToArray();
             var cloudBounds = CalculateTagsCloudBounds(tags.Select(tag => tag.Rectangle));
             var cloudExpectedSize = tagsCloudSettings.ImageSize * tagsCloudSettings.CloudToImageScaleRatio;
             var cloudSizeRatio = CalculateRatio(cloudBounds.Size, cloudExpectedSize);
-
             tags = tags.Select(tag => tag.RescaleTag(cloudSizeRatio)).ToArray();
             var layouterCenterDelta = new Size(cloudBounds.X + cloudBounds.Width / 2,
                 cloudBounds.Y + cloudBounds.Height / 2) * cloudSizeRatio;

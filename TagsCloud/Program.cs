@@ -21,12 +21,7 @@ namespace TagsCloud
             builder.RegisterType<TagsCloudHandler>().AsSelf();
             builder.RegisterType<DocFileReader>().As<FileReader>();
             builder.RegisterType<TxtFileReader>().As<FileReader>();
-            builder.RegisterInstance(new[]
-            {
-                "и",
-                "a",
-                "в"
-            }).As<IEnumerable<string>>();
+            builder.RegisterInstance(GetExcludedWords()).As<IEnumerable<string>>();
             builder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             builder.RegisterType<BlackListWordsFilter>().As<IWordsFilter>().SingleInstance();
             builder.RegisterType<Mainform>().AsSelf();
@@ -34,6 +29,39 @@ namespace TagsCloud
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(container.Resolve<Mainform>());
+        }
+
+        private static string[] GetExcludedWords()
+        {
+            return new[]
+            {
+                "и",
+                "a",
+                "в",
+                "о",
+                "от",
+                "да",
+                "нет",
+                "то",
+                "с",
+                "по",
+                "к",
+                "около",
+                "но",
+                "через",
+                "что",
+                "где",
+                "когда",
+                "откуда",
+                "куда",
+                "ну",
+                "до",
+                "эти",
+                "со",
+                "же",
+                "при",
+                "их"
+            };
         }
     }
 }

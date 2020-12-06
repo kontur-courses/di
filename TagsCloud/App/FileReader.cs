@@ -6,9 +6,8 @@ namespace TagsCloud.App
 {
     public abstract class FileReader
     {
-        public virtual HashSet<string> AvailableFileTypes { get; }
-
         public static bool SplitLines;
+        public virtual HashSet<string> AvailableFileTypes { get; }
 
         protected void CheckForExceptions(string fileName)
         {
@@ -26,10 +25,8 @@ namespace TagsCloud.App
         protected IEnumerable<string> GetWords(string line)
         {
             if (SplitLines)
-            {
                 foreach (var word in SplitLine(line))
                     yield return word;
-            }
             else yield return line;
         }
 
