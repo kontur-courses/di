@@ -81,7 +81,7 @@ namespace TagCloud.App.GUI
             var okBox = new HBox();
             okBox.PackStart(new Arrow(ArrowType.Right, ShadowType.Out), true, true, 10);
             var okButton = new Button("ok");
-            okButton.ButtonPressEvent += (o, eventArgs) =>
+            okButton.Pressed += (o, eventArgs) =>
             {
                 window.Close();
             };

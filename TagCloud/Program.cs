@@ -54,6 +54,7 @@ namespace TagCloud
             builder.RegisterType<ImagePathSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImageSizeSettingsManager>().AsImplementedInterfaces();
             builder.RegisterType<LayoutCenterSettingManager>().AsImplementedInterfaces();
+            builder.RegisterType<SpiralIncrementSettingManager>().AsImplementedInterfaces();
             
             // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
             builder.RegisterType<TagCloudLayouterGui>().As<IApp>();
