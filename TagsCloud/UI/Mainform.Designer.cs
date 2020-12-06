@@ -246,7 +246,7 @@
             // OpenFileDialog
             // 
             this.OpenFileDialog.FileName = "File";
-            this.OpenFileDialog.Filter = "Текстовые файлы|*.txt";
+            this.OpenFileDialog.Filter = "Текстовые файлы|*.txt|Документы Word|*.docx;*.doc";
             // 
             // SaveFileDialog
             // 

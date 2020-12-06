@@ -8,9 +8,9 @@ namespace TagsCloud.App
 {
     public class TagsCloudDrawer : ITagsCloudDrawer
     {
+        private const int MaxFontSize = 100;
         private readonly TagsCloudSettings tagsCloudSettings;
         private IRectanglesLayouter layouter;
-        private const int MaxFontSize = 100;
 
         public TagsCloudDrawer(IRectanglesLayouter layouter, TagsCloudSettings tagsCloudSettings)
         {
@@ -53,7 +53,7 @@ namespace TagsCloud.App
                 throw new NullReferenceException("Words collection should not be null");
             foreach (var word in words)
             {
-                var wordFontSize = Math.Max((int)(word.Weight * MaxFontSize), 1);
+                var wordFontSize = Math.Max((int) (word.Weight * MaxFontSize), 1);
                 var wordFont = new Font(tagsCloudSettings.CurrentFontFamily,
                     wordFontSize,
                     tagsCloudSettings.CurrentFontStyle);

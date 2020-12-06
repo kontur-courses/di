@@ -19,6 +19,7 @@ namespace TagsCloud
             builder.RegisterInstance(new RectanglesLayouter(Point.Empty)).As<IRectanglesLayouter>();
             builder.RegisterType<TagsCloudDrawer>().As<ITagsCloudDrawer>();
             builder.RegisterType<TagsCloudHandler>().AsSelf();
+            builder.RegisterInstance(new HashSet<IFileReader> {new DocFileReader(), new TxtFileReader()}).AsSelf();
             builder.RegisterInstance(new[]
             {
                 "и",

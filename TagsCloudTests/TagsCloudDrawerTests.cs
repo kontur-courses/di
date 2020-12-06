@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud.App;

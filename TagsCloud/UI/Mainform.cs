@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.App;
@@ -12,6 +11,7 @@ namespace TagsCloud.UI
     public partial class Mainform : Form
     {
         private readonly Dictionary<string, IRectanglesLayouter> constellators;
+        private readonly HashSet<IFileReader> fileReaders;
         private readonly IWordsFilter filter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
@@ -20,11 +20,16 @@ namespace TagsCloud.UI
         private readonly TagsCloudHandler tagsCloudHandler;
 
         public Mainform(IRectanglesLayouter[] rectanglesConstellators,
-            TagsCloudHandler tagsCloudHandler, ITagsCloudDrawer drawer, TagsCloudSettings settings, IWordsFilter filter)
+            TagsCloudHandler tagsCloudHandler,
+            ITagsCloudDrawer drawer,
+            TagsCloudSettings settings,
+            IWordsFilter filter,
+            HashSet<IFileReader> fileReaders)
         {
             this.tagsCloudHandler = tagsCloudHandler;
             this.settings = settings;
             this.filter = filter;
+            this.fileReaders = fileReaders;
             tagsCloudDrawer = drawer;
             fontFamilies = settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
@@ -54,7 +59,14 @@ namespace TagsCloud.UI
         private void TextOpenButton_Click(object sender, EventArgs e)
         {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
-                tagsCloudHandler.SetWords(File.ReadAllLines(OpenFileDialog.FileName));
+            {
+                var fileName = OpenFileDialog.FileName;
+                var fileType = fileName.Split('.')[^1];
+                var fileReader = fileReaders.First(reader => reader.AvailableFileTypes.Contains(fileType));
+                if (fileReader == null)
+                    throw new InvalidOperationException("Invalid file");
+                tagsCloudHandler.SetWords(fileReader.ReadLines(fileName));
+            }
         }
 
         private void StartButton_Click(object sender, EventArgs e)

@@ -10,7 +10,7 @@ namespace TagsCloud.App
         private readonly ITagsCloudDrawer drawer;
         private readonly IWordNormalizer wordNormalizer;
         private readonly IEnumerable<IWordsFilter> wordsFilters;
-        private string[] words;
+        private IEnumerable<string> words;
 
         public TagsCloudHandler(IEnumerable<IWordsFilter> filters, IWordNormalizer normalizer, string[] words,
             ITagsCloudDrawer drawer)
@@ -21,7 +21,7 @@ namespace TagsCloud.App
             this.drawer = drawer;
         }
 
-        public void SetWords(string[] newWords)
+        public void SetWords(IEnumerable<string> newWords)
         {
             words = newWords;
         }
@@ -33,7 +33,7 @@ namespace TagsCloud.App
                 .ToList();
             var counts = neededWords
                 .GroupBy(word => word)
-                .Select(group => new Word(group.Key, (double)group.Count() / neededWords.Count));
+                .Select(group => new Word(group.Key, (double) group.Count() / neededWords.Count));
             return drawer.GetTagsCloud(counts);
         }
     }
