@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.Core.Layouting
 {
-    public enum TagCloudLayouterType
+    public enum LayouterType
     {
         Circular,
     }

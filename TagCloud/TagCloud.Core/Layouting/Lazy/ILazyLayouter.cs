@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.Core.Layouting
+namespace TagCloud.Core.Layouting.Lazy
 {
-    public interface ITagCloudLayouter
+    public interface ILazyLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
     }

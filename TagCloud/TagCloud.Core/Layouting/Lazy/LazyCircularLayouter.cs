@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud.Core.Layouting
+namespace TagCloud.Core.Layouting.Lazy
 {
-    public class CircularTagCloudLayouter : ITagCloudLayouter
+    public class CircularLazyLayouter : ILazyLayouter
     {
-        public CircularTagCloudLayouter(Point cloudCenter, Size minRectangleSize)
+        public CircularLazyLayouter(Point cloudCenter, Size minRectangleSize)
         {
             CloudCenter = cloudCenter;
             this.minRectangleSize = minRectangleSize;

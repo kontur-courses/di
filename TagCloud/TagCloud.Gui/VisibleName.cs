@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagCloud.Core.Layouting;
 using TagCloud.Core.Output;
 using TagCloud.Core.Text;
 using TagCloud.Core.Text.Formatting;
@@ -13,7 +12,6 @@ namespace TagCloud.Gui
     {
         private static readonly Dictionary<Type, string> overridingNames = new Dictionary<Type, string>
         {
-            {typeof(CircularTagCloudLayouterFactory), "Circular layout"},
             {typeof(RandomFontSizeSource), "Random font size"},
             {typeof(BiggerAtCenterFontSizeSource), "Most frequent bigger and closer to center"},
             {typeof(BlacklistWordFilter), "Without \"boring\" words"},

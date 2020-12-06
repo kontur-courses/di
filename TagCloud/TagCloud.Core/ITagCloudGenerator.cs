@@ -12,7 +12,7 @@ namespace TagCloud.Core
     {
         Task<Image> DrawWordsAsync(
             FontSizeSourceType sizeSourceType,
-            TagCloudLayouterType layouterType,
+            LayouterType layouterType,
             Color[] palette,
             Dictionary<string, int> wordsCollection,
             FontFamily fontFamily,

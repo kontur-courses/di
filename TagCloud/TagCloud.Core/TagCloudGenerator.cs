@@ -15,10 +15,10 @@ namespace TagCloud.Core
     {
         private readonly Graphics stubGraphics;
 
-        private readonly ILayouterFactoryResolver layouterResolver;
+        private readonly ILayouterResolver layouterResolver;
         private readonly IFontSizeSourceResolver sizeSourceResolver;
 
-        public TagCloudGenerator(ILayouterFactoryResolver layouterResolver, IFontSizeSourceResolver sizeSourceResolver)
+        public TagCloudGenerator(ILayouterResolver layouterResolver, IFontSizeSourceResolver sizeSourceResolver)
         {
             this.layouterResolver = layouterResolver;
             this.sizeSourceResolver = sizeSourceResolver;
@@ -28,7 +28,7 @@ namespace TagCloud.Core
 
         public async Task<Image> DrawWordsAsync(
             FontSizeSourceType sizeSourceType,
-            TagCloudLayouterType layouterType,
+            LayouterType layouterType,
             Color[] palette,
             Dictionary<string, int> wordsCollection,
             FontFamily fontFamily,
@@ -39,26 +39,27 @@ namespace TagCloud.Core
             if (wordsCollection.Count == 0)
                 throw new ArgumentException($"{nameof(wordsCollection)} is empty", nameof(wordsCollection));
             var fontsCollection = sizeSourceResolver.Get(sizeSourceType).GetFontSizesForAll(wordsCollection);
-            var layouter = layouterResolver.Get(layouterType).Create(centerPoint, betweenRectanglesDistance);
+            var layouter = layouterResolver.Get(layouterType);
 
             return await Task.Run(() =>
             {
-                var computedWords = wordsCollection
+                var formattedWords = wordsCollection
                     .OrderByDescending(x => x.Value)
                     .Select(word => new {Word = word.Key, FontSize = fontsCollection[word.Key]})
-                    .Select(x =>
-                    {
-                        var font = new Font(fontFamily, x.FontSize);
-                        var wordSize = Size.Ceiling(stubGraphics.MeasureString(x.Word, font));
-                        var location = layouter.PutNextRectangle(wordSize);
-                        var brush = new SolidBrush(Randomized.ItemFrom(palette));
-                        return (location, new FormattedWord(x.Word, font, brush));
-                    });
+                    .Select(x => FormattedWordFrom(x.Word, Randomized.ItemFrom(palette), fontFamily, x.FontSize))
+                    .ToDictionary(fw => fw.Word);
+
+                var wordSizesEnumerable = formattedWords.Select(x =>
+                    Size.Ceiling(stubGraphics.MeasureString(x.Value.Word, x.Value.Font))
+                );
+
+                var putWords = layouter.PutAll(centerPoint, betweenRectanglesDistance, wordSizesEnumerable);
 
                 using var cloudVisualiser = new CloudVisualiser();
-                foreach (var (location, formattedWord) in computedWords)
+                foreach (var (formattedWord, placedWord) in formattedWords.Values.Zip(putWords))
                 {
-                    cloudVisualiser.DrawNextWord(location, formattedWord);
+                    cloudVisualiser.DrawNextWord(placedWord, formattedWord);
+
                     formattedWord.Dispose();
                     if (token.IsCancellationRequested)
                         break;
@@ -66,6 +67,14 @@ namespace TagCloud.Core
 
                 return (Image) cloudVisualiser.Current!.Clone();
             }, token);
+        }
+
+        private static FormattedWord FormattedWordFrom(string word, Color color, FontFamily fontFamily,
+            float wordSize)
+        {
+            return new FormattedWord(word,
+                new Font(fontFamily, wordSize),
+                new SolidBrush(color));
         }
 
         public void Dispose()

@@ -24,7 +24,7 @@ namespace TagCloud.Gui
         private readonly UserInputMultipleOptionsChoice<IWordFilter> filterPicker;
         private readonly UserInputOneOptionChoice<IWordConverter> normalizerPicker;
         private readonly UserInputOneOptionChoice<IFileResultWriter> writerPicker;
-        private readonly UserInputOneOptionChoice<TagCloudLayouterType> layouterPicker;
+        private readonly UserInputOneOptionChoice<LayouterType> layouterPicker;
         private readonly UserInputOneOptionChoice<FontSizeSourceType> fontSizeSourcePicker;
         private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
         private readonly UserInputOneOptionChoice<IImageResizer> imageResizerPicker;
@@ -52,7 +52,7 @@ namespace TagCloud.Gui
             writerPicker = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
             normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
             imageResizerPicker = UserInput.SingleChoice(ToDictionaryByName(resizers), "Resizing method");
-            layouterPicker = UserInput.SingleChoice(DictionaryFromEnum<TagCloudLayouterType>(), "Layouting algorithm");
+            layouterPicker = UserInput.SingleChoice(DictionaryFromEnum<LayouterType>(), "Layouting algorithm");
             fontSizeSourcePicker = UserInput.SingleChoice(DictionaryFromEnum<FontSizeSourceType>(), "Font size source");
 
             filePathInput = UserInput.Field("Enter source file path");
