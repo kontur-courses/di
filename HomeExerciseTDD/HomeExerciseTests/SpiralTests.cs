@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
-using HomeExerciseTDD;
-using HomeExerciseTDD.settings;
+using HomeExercise;
+using HomeExercise.settings;
 using NUnit.Framework;
 
 namespace TestProject1
@@ -15,7 +15,7 @@ namespace TestProject1
         {
             var center = new Point(22, 22);
             var settings = new SpiralSettings(center);
-            Spiral spiral = new Spiral(settings);
+            var spiral = new Spiral(settings);
 
             var nextPoint = spiral.GetNextPoint();
 
@@ -27,7 +27,7 @@ namespace TestProject1
         {
             var center = new Point(22, 22);
             var settings = new SpiralSettings(center);
-            Spiral spiral = new Spiral(settings);
+            var spiral = new Spiral(settings);
 
             var nextPoint = spiral.GetNextPoint();
 
@@ -40,7 +40,7 @@ namespace TestProject1
             var spiralPoints = new List<Point>();
             var center = new Point(22, 22);
             var settings = new SpiralSettings(center);
-            Spiral spiral = new Spiral(settings);
+            var spiral = new Spiral(settings);
             var expectedSpiralPoints = new List<Point>
             {
                 new Point(22, 22),

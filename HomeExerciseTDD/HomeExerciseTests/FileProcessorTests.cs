@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
-using HomeExerciseTDD;
+using HomeExercise;
 using NUnit.Framework;
 
 namespace TestProject1
@@ -11,18 +11,10 @@ namespace TestProject1
     [TestFixture]
     public class FileProcessorTests
     {
-        [SetUp]
-        public void Init()
-        {
-        }
-
         [Test]
         public void GetWord_ReturnCorrectWord_WhenFileContainsOneWord()
         {
-            var DirPath = AppDomain.CurrentDomain.BaseDirectory;
-            var path = "oneWord.txt";
-            var finalPath = Path.Combine(DirPath, path);
-            Console.WriteLine(finalPath);
+            var finalPath = GetWordsPath("oneWord.txt"); ;
             var fileProcessor = new FileProcessor(finalPath, null);
             using (StreamWriter sw = new StreamWriter(finalPath, false, System.Text.Encoding.Default))
             {
@@ -36,10 +28,7 @@ namespace TestProject1
         [Test]
         public void GetWord_ReturnCorrectWords_WhenFileContainsOneWordManyTimes()
         {
-            var DirPath = AppDomain.CurrentDomain.BaseDirectory;
-            var path = "oneWord.txt";
-            var finalPath = Path.Combine(DirPath, path);
-            Console.WriteLine(finalPath);
+            var finalPath = GetWordsPath("ManyWords.txt");
             var fileProcessor = new FileProcessor(finalPath, null);
             using (StreamWriter sw = new StreamWriter(finalPath, false, System.Text.Encoding.Default))
             {
@@ -57,10 +46,7 @@ namespace TestProject1
         [Test]
         public void GetWord_ReturnCorrectWords_WhenFileOneWordWithDifferentRegisters()
         {
-            var DirPath = AppDomain.CurrentDomain.BaseDirectory;
-            var path = "oneWord.txt";
-            var finalPath = Path.Combine(DirPath, path);
-            Console.WriteLine(finalPath);
+            var finalPath = GetWordsPath("TwoWords.txt");
             var fileProcessor = new FileProcessor(finalPath, null);
             using (var sw = new StreamWriter(finalPath, false, System.Text.Encoding.Default))
             {
@@ -71,6 +57,13 @@ namespace TestProject1
             var resultWords = fileProcessor.GetWords();
             var expected = new Dictionary<string, int> {{"word", 2}};
             resultWords.Should().BeEquivalentTo(expected);
+        }
+
+        private string GetWordsPath(string path)
+        {
+            var dirPath = AppDomain.CurrentDomain.BaseDirectory;
+
+            return Path.Combine(dirPath, path);
         }
     }
 }

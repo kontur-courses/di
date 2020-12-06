@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using FluentAssertions;
-using HomeExerciseTDD;
-using HomeExerciseTDD.settings;
+using HomeExercise;
+using HomeExercise.settings;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -22,13 +22,11 @@ namespace TestProject1
         [SetUp]
         public void Init()
         {
-            
             radius = double.MinValue;
             rectanglesInCloud = new List<Rectangle>();
             center = new Point(23,32);
             spiral = new Spiral(new SpiralSettings(center));
             layouter = new CircularCloudLayouter(spiral);
-            
         }
         
         [Test]
