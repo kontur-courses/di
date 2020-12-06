@@ -6,6 +6,7 @@ using TagsCloud.App;
 
 namespace TagsCloudTests
 {
+    [TestFixture]
     public class TxtFileReaderTests
     {
         private readonly TxtFileReader reader = new TxtFileReader();

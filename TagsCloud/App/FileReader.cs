@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace TagsCloud.App
 {
     public abstract class FileReader
     {
         public virtual HashSet<string> AvailableFileTypes { get; }
+
+        public static bool SplitLines;
 
         protected void CheckForExceptions(string fileName)
         {
@@ -14,6 +17,22 @@ namespace TagsCloud.App
                 throw new ArgumentException($"Incorrect type {fileType}");
         }
 
-        public abstract string[] ReadLines(string fileName);
+        protected string[] SplitLine(string line)
+        {
+            return new Regex("\\W+").Split(line);
+        }
+
+
+        protected IEnumerable<string> GetWords(string line)
+        {
+            if (SplitLines)
+            {
+                foreach (var word in SplitLine(line))
+                    yield return word;
+            }
+            else yield return line;
+        }
+
+        public abstract IEnumerable<string> ReadLines(string fileName);
     }
 }

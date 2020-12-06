@@ -43,6 +43,8 @@
             this.SetPaletteButton = new System.Windows.Forms.Button();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.SplitLinesCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,6 +68,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.SplitLinesCheckBox);
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.ExcludedWordsSetButton);
             this.splitContainer1.Panel2.Controls.Add(this.CloudSizeSetting);
             this.splitContainer1.Panel2.Controls.Add(this.FontFamilyChoice);
@@ -240,6 +244,26 @@
             // 
             this.SaveFileDialog.Filter = "Фото|*.png";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 319);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 15);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Размер облака";
+            // 
+            // SplitLinesCheckBox
+            // 
+            this.SplitLinesCheckBox.AutoSize = true;
+            this.SplitLinesCheckBox.Location = new System.Drawing.Point(0, 375);
+            this.SplitLinesCheckBox.Name = "SplitLinesCheckBox";
+            this.SplitLinesCheckBox.Size = new System.Drawing.Size(159, 19);
+            this.SplitLinesCheckBox.TabIndex = 10;
+            this.SplitLinesCheckBox.Text = "Делить абзацы на слова";
+            this.SplitLinesCheckBox.UseVisualStyleBackColor = true;
+            this.SplitLinesCheckBox.CheckedChanged += new System.EventHandler(this.SplitLinesCheckBox_CheckedChanged);
+            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -276,5 +300,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown CloudSizeSetting;
         private System.Windows.Forms.Button ExcludedWordsSetButton;
+        private System.Windows.Forms.CheckBox SplitLinesCheckBox;
+        private System.Windows.Forms.Label label3;
     }
 }

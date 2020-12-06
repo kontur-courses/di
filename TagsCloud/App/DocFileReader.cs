@@ -7,7 +7,7 @@ namespace TagsCloud.App
     {
         public override HashSet<string> AvailableFileTypes { get; } = new HashSet<string> {"doc", "docx"};
 
-        public override string[] ReadLines(string fileName)
+        public override IEnumerable<string> ReadLines(string fileName)
         {
             CheckForExceptions(fileName);
             var app = new MicrosoftWord.Application();
@@ -17,14 +17,14 @@ namespace TagsCloud.App
             if (doc.Paragraphs.Count == 1 && doc.Paragraphs.First.Range.Text == "\r")
             {
                 app.Quit();
-                return new string[0];
+                yield break;
             }
-
-            var words = new string[doc.Paragraphs.Count];
-            for (var i = 1; i <= words.Length; i++)
-                words[i - 1] = doc.Paragraphs[i].Range.Text.Trim('\r');
+            for (var i = 1; i <= doc.Paragraphs.Count; i++)
+            {
+                foreach (var word in GetWords(doc.Paragraphs[i].Range.Text.Trim('\r'))) yield return word;
+            }
             app.Quit();
-            return words;
         }
+
     }
 }

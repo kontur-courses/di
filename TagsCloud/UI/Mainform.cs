@@ -35,6 +35,7 @@ namespace TagsCloud.UI
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
             constellators = rectanglesConstellators.ToDictionary(c => c.Name);
             InitializeComponent();
+            SplitLinesCheckBox.Checked = FileReader.SplitLines;
             FontFamilyChoice.DataSource = settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
             FontStyleChoice.DataSource = settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
             AlgorithmChoice.DataSource = rectanglesConstellators.Select(c => c.Name).ToList();
@@ -96,6 +97,11 @@ namespace TagsCloud.UI
         private void ExcludedWordsSetButton_Click(object sender, EventArgs e)
         {
             if (filter is BlackListWordsFilter blackListfilter) new SetExcludingWordsForm(blackListfilter).ShowDialog();
+        }
+
+        private void SplitLinesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            FileReader.SplitLines = SplitLinesCheckBox.Checked;
         }
     }
 }
