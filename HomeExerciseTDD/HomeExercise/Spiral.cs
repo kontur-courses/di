@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using HomeExerciseTDD.settings;
+using HomeExercise.settings;
 
-namespace HomeExerciseTDD
+namespace HomeExercise
 {
     public class Spiral : ISpiral
     {
