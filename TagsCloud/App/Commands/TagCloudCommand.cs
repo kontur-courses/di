@@ -41,9 +41,10 @@ namespace TagsCloud.App.Commands
 
         public void Execute(string[] args)
         {
+            var filePath = string.Join(" ", args);
             var placedWords = new List<Word>();
             var graphics = Graphics.FromImage(new Bitmap(1, 1));
-            var wordFrequencies = wordFrequency.Get(fileReader.ReadLines(args[0]));
+            var wordFrequencies = wordFrequency.Get(fileReader.ReadLines(filePath));
             var tagCloudLayouter = GetTagCloudLayouter();
             foreach (var (word, frequency) in wordFrequencies
                 .OrderByDescending(x => x.Value))

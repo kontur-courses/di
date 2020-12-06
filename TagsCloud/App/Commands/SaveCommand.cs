@@ -16,7 +16,8 @@ namespace TagsCloud.App.Commands
 
         public void Execute(string[] args)
         {
-            imageHolder.SaveImage(args[0]);
+            var filePath = string.Join(" ", args);
+            imageHolder.SaveImage(filePath);
         }
     }
 }
