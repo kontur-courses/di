@@ -59,8 +59,8 @@ namespace TagsCloud.LayoutAlgorithms
                     minY = rect.Top;
             }
 
-            var width = maxX - minX;
-            var height = maxY - minY;
+            var width = maxX + minX;
+            var height = maxY + minY;
 
             return new Size(width, height);
         }
