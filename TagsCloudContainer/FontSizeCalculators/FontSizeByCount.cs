@@ -6,18 +6,13 @@ using System.Text;
 
 namespace TagsCloudContainer
 {
-    class FontSizeByCount : IFontSizeCalculator
+    public class FontSizeByCount : IFontSizeCalculator
     {
-        private const float maxFontSize = 20;
+        private const float maxFontSize = 25;
         private const float minFontSize = 10;
         public IEnumerable<WordWithFont> CalculateFontSize(IEnumerable<string> words, string fontFamily)
         {
             var wordCounts = CountWords(words);
-            return CalculateFontSizeForWords(wordCounts, fontFamily);
-        }
-
-        private IEnumerable<WordWithFont> CalculateFontSizeForWords(Dictionary<string, int> wordCounts, string fontFamily)
-        {
             var maxCount = wordCounts.Values.Max();
             var minCount = wordCounts.Values.Min();
             foreach (var wordCount in wordCounts)

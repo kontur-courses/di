@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TagsCloudContainer
 {
-    class StopWordsFilter : IWordsFilter
+    public class StopWordsFilter : IWordsFilter
     {
         private HashSet<string> stopWords = new HashSet<string> { "a", "the", "in", "of", "for", "and", "but" };
 

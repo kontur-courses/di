@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TagsCloudContainer
 {
-    class FixedColorProvider : IColorProvider
+    public class FixedColorProvider : IColorProvider
     {
         private Color color;
 

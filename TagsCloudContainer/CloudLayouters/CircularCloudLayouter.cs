@@ -8,7 +8,7 @@ namespace TagsCloudContainer
     class CircularCloudLayouter : ICloudLayouter
     {
         public Point Center { get; set; }
-        public List<Rectangle> Rectangles { get; }
+        public List<Rectangle> Rectangles { get; set; }
         private const int RollBackPixelsCount = 10; // Оптимальное значение величины отката радиуса спирали в пикселях
         private Spiral _spiral;
 
@@ -23,6 +23,12 @@ namespace TagsCloudContainer
         {
             _spiral = new Spiral(newCenter);
             Center = newCenter;
+        }
+
+        public void Reset()
+        {
+            _spiral = new Spiral(Center);
+            Rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

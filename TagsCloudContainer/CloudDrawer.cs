@@ -23,20 +23,22 @@ namespace TagsCloudContainer
             ColorProvider = colorProvider;
         }
 
-        public void DrawCloud(List<WordWithFont> words, string targetPath)
+        public void DrawCloud(List<WordWithFont> words, string targetPath, string imageName)
         {
             var bitmap = new Bitmap(ImageSize, ImageSize);
             var graphics = Graphics.FromImage(bitmap);
             var layout = MakeLayout(words, graphics);
+            graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
             for (var i = 0; i < words.Count; i++)
             {
                 graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()), layout[i].Location);
             }
-            ImageSaver.Save(targetPath, "Cloud", bitmap);
+            ImageSaver.Save(targetPath, imageName, bitmap);
         }
 
         private List<Rectangle> MakeLayout(IEnumerable<WordWithFont> words, Graphics graphics)
         {
+            cloudLayouter.Reset();
             foreach (var word in words)
             {
                 var wordSize = graphics.MeasureString(word.Word, word.Font);

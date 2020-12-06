@@ -4,10 +4,10 @@ namespace TagsCloudContainer
 {
     public interface ICloudDrawer
     {
-        public int ImageSize { get; set; }
-        public IColorProvider ColorProvider { get; set; }
-        public IImageSaver ImageSaver { get; set; }
-        public void DrawCloud(List<WordWithFont> words, string targetPath);
-        public void ChangeImageSize(int newSize);
+        int ImageSize { get; set; }
+        IColorProvider ColorProvider { get; set; }
+        IImageSaver ImageSaver { get; set; }
+        void DrawCloud(List<WordWithFont> words, string targetPath, string imageName);
+        void ChangeImageSize(int newSize);
     }
 }
