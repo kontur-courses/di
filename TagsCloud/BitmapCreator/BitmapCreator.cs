@@ -21,28 +21,56 @@ namespace TagsCloud.BitmapCreator
             _imageConfig = imageConfig;
         }
 
-        public Bitmap Create(IEnumerable<string> words)
+        public Bitmap Create(IReadOnlyCollection<string> words)
         {
-            _bitmap = new Bitmap(_imageConfig.Size.Width, _imageConfig.Size.Height);
+            var width = _imageConfig.Size.Width;
+            var height = _imageConfig.Size.Height;
+
+            _bitmap = new Bitmap(width, height);
             _graphics = Graphics.FromImage(_bitmap);
-            var frequency = words.GetFrequency().OrderByDescending(x => x.Value).ToArray();
-            _graphics.FillRectangle(new SolidBrush(_imageConfig.BackgroundColor), 0,0, _imageConfig.Size.Width, _imageConfig.Size.Height);
-            if (!words.Any())
+
+            _graphics.FillRectangle(new SolidBrush(_imageConfig.BackgroundColor), 0, 0, width, height);
+
+            if (words.Count <= 0)
                 return _bitmap;
-            var a = _imageConfig.Size.Width * 0.76;
+
+            DrawWords(words, width, height);
+
+            return _bitmap;
+        }
+
+        private void DrawWords(IReadOnlyCollection<string> words, int width, int height)
+        {
+            var frequency = words.GetFrequency().OrderByDescending(x => x.Value).ToArray();
+
+            var minFontSize = width / 100;
+            var maxFontSize = width / 30;
+            var maxFreq = frequency.Max(x => x.Value);
+
             foreach (var (word, freq) in frequency)
             {
-                var fontSize = Math.Max((int)(freq * a), 10);
-                var font = new Font(_imageConfig.FontFamily, fontSize);
-                var sizeF = _graphics.MeasureString(word, font);
-                var width = (int) Math.Ceiling(sizeF.Width);
-                var height = (int) Math.Ceiling(sizeF.Height);
-                var rectangle = _algorithm.PutNextRectangle(new Size(width, height));
-                _graphics.DrawRectangle(new Pen(Color.Black), rectangle);
-                _graphics.DrawString(word, font, new SolidBrush(_imageConfig.ColoringAlgorithm.GetNextColor()),
-                    rectangle);
+                var font = GetFont(minFontSize, maxFontSize, freq, maxFreq);
+                var rectangle = GetWordRectangle(font, word);
+                var brush = new SolidBrush(_imageConfig.ColoringAlgorithm.GetNextColor());
+
+                _graphics.DrawString(word, font, brush, rectangle);
             }
-            return _bitmap;
+        }
+
+        private Font GetFont(int minFontSize, int maxFontSize, double currentFreq, double maxFreq)
+        {
+            var fontSize = (int) Math.Ceiling(currentFreq / maxFreq * (maxFontSize - minFontSize) + minFontSize);
+            var font = new Font(_imageConfig.FontFamily, fontSize);
+            return font;
+        }
+
+        private Rectangle GetWordRectangle(Font font, string word)
+        {
+            var stringSize = _graphics.MeasureString(word, font);
+            var rectWidth = (int) Math.Ceiling(stringSize.Width) + 3;
+            var rectHeight = (int) Math.Ceiling(stringSize.Height) + 3;
+            var rectangle = _algorithm.PutNextRectangle(new Size(rectWidth, rectHeight));
+            return rectangle;
         }
 
         public void Dispose()
