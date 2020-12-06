@@ -54,6 +54,7 @@ namespace TagCloud
             builder.RegisterCommand<CreateImageCommand>();
             builder.RegisterCommand<SourceCommand>();
             builder.RegisterCommand<CloudSettingsCommand>();
+            builder.RegisterCommand<IgnoreCommand>();
 
 #if DEBUG
             builder.RegisterCommand<DebugCommand>();

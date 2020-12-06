@@ -15,5 +15,10 @@
         {
             return new CommandResult(false, "One or more required parameters not specified");
         }
+
+        public static CommandResult WithSuccess()
+        {
+            return new CommandResult(true, "Success");
+        }
     }
 }
