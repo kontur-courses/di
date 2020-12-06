@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagsCloud.Layouters;
@@ -14,11 +15,14 @@ namespace TagsCloud.Infrastructure
         public ImageSettings Settings { get; set; }
         private ICloudLayouter layouter;
         private Dictionary<string, int> wordsFreuqencies;
+        private IWordsFrequencyParser parser;
+        private string previousFileName;
 
-        public PictureBoxImageHolder(ImageSettings settings, ICloudLayouter layouter)
+        public PictureBoxImageHolder(IWordsFrequencyParser parser, ImageSettings settings, ICloudLayouter layouter)
         {
             Settings = settings;
             this.layouter = layouter;
+            this.parser = parser;
             RecreateCanvas(settings);
         }
 
@@ -30,17 +34,24 @@ namespace TagsCloud.Infrastructure
 
         private Graphics StartDrawing() => Graphics.FromImage(Image);
 
-        public void RenderWords(Dictionary<string, int> frequencyDictionary)
+        public void RenderWordsFromFile(string fileName)
         {
-            if(frequencyDictionary is null)
+            if (string.IsNullOrEmpty(previousFileName))
+            {
+                if (!File.Exists(fileName))
+                    throw new FileNotFoundException("Запрошенный файл не найден");
+                wordsFreuqencies = parser.ParseWordsFrequencyFromFile(fileName);
+                previousFileName = fileName;
+            }
+
+            if(wordsFreuqencies is null)
                 return;
 
             layouter.ClearLayouter();
-            wordsFreuqencies = frequencyDictionary;
-            var totalWords = frequencyDictionary.Sum(x => x.Value);
+            var totalWords = wordsFreuqencies.Sum(x => x.Value);
             var graphics = StartDrawing();
 
-            foreach (var pair in frequencyDictionary.OrderByDescending(x => x.Value))
+            foreach (var pair in wordsFreuqencies.OrderByDescending(x => x.Value))
             {
                 var fontSize = FontSizeProvider.GetFontSize(Settings.Font.Size, 100 / (double)totalWords * pair.Value / 100);
 
@@ -81,7 +92,7 @@ namespace TagsCloud.Infrastructure
         public void RedrawCurrentImage()
         {
             RecreateCanvas(Settings);
-            RenderWords(wordsFreuqencies);
+            RenderWordsFromFile(previousFileName);
         }
 
         public void SaveImage(string fileName)

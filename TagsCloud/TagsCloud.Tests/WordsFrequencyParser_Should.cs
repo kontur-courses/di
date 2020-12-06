@@ -33,7 +33,7 @@ namespace TagsCloud.Tests
         [TestCase("repeat")]
         public void ProvideCorrectData(params string[] toIgnore)
         {
-            var filter = new WordsFilter(toIgnore);
+            var filter = new WordsFilter(toIgnore.ToHashSet());
             var parser = new WordsFrequencyParser(filter);
             parser.ParseWordsFrequencyFromFile(testFilePath)
                 .Should().NotContainKeys(toIgnore)
@@ -45,7 +45,7 @@ namespace TagsCloud.Tests
         public void Throw_WhenIncorrectFileFormat(string wrongFormattedString)
         {
             File.AppendAllText(testFilePath, wrongFormattedString);
-            var parser = new WordsFrequencyParser(new WordsFilter(new List<string>()));
+            var parser = new WordsFrequencyParser(new WordsFilter(new HashSet<string>()));
             Assert.Throws<FormatException>(() => parser.ParseWordsFrequencyFromFile(testFilePath));
         }
     }

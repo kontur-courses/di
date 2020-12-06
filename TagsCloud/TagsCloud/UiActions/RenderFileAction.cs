@@ -11,14 +11,12 @@ namespace TagsCloud.UiActions
 {
     public class RenderFileAction : IUiAction
     {
-        public RenderFileAction(IWordsFrequencyParser parser, IImageHolder holder, ICloudLayouter layouter)
+        public RenderFileAction(IImageHolder holder, ICloudLayouter layouter)
         {
-            this.parser = parser;
             this.holder = holder;
             this.layouter = layouter;
         }
 
-        private IWordsFrequencyParser parser;
         private IImageHolder holder;
         private ICloudLayouter layouter;
         public string Category => "Файл";
@@ -42,18 +40,14 @@ namespace TagsCloud.UiActions
                 return;
             holder.RecreateCanvas(holder.Settings);
             layouter.ClearLayouter();
-            Dictionary<string,int> frequencies;
             try
             {
-                frequencies = parser.ParseWordsFrequencyFromFile(dialog.FileName);
+                holder.RenderWordsFromFile(dialog.FileName);
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Неправильный формат файла");
-                return;
             }
-
-            holder.RenderWords(frequencies);
         }
     }
 }

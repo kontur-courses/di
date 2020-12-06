@@ -28,31 +28,16 @@ namespace TagsCloud.Tests
         }
 
         [Test]
-        public void LayouterShould_PlaceWords_WhenCalled_RenderWords()
-        {
-            var layouter = A.Fake<ICloudLayouter>();
-            var settings = A.Fake<ImageSettings>(options =>
-                options.WithArgumentsForConstructor(new List<object?> {1920, 1080}));
-
-            var holder = A.Fake<IImageHolder>(o =>
-                o.Wrapping(A.Fake<PictureBoxImageHolder>(opt =>
-                    opt.WithArgumentsForConstructor(new List<object?> {settings, layouter}))));
-
-            var frequencies = new Dictionary<string, int> {{"word", 145}, {"second", 267}, {"third", 78}};
-            holder.RenderWords(frequencies);
-            A.CallTo(() => layouter.PutNextRectangle(Size.Empty)).WithAnyArguments().MustHaveHappened(3, Times.Exactly);
-        }
-
-        [Test]
         public void LayouterShould_UpdateCenterPoint_WhenChangedResolution()
         {
             var layouter = A.Fake<ICloudLayouter>();
             var settings = A.Fake<ImageSettings>(options =>
                 options.WithArgumentsForConstructor(new List<object?> { 1920, 1080 }));
+            var parser = A.Fake<IWordsFrequencyParser>();
 
             var holder = A.Fake<IImageHolder>(o =>
                 o.Wrapping(A.Fake<PictureBoxImageHolder>(opt =>
-                    opt.WithArgumentsForConstructor(new List<object?> { settings, layouter }))));
+                    opt.WithArgumentsForConstructor(new List<object?> { parser, settings, layouter }))));
 
             settings.Width = 1720;
             holder.RecreateCanvas(settings);
@@ -65,7 +50,8 @@ namespace TagsCloud.Tests
             var layouter = A.Fake<ICloudLayouter>();
             var settings = A.Fake<ImageSettings>(options =>
                 options.WithArgumentsForConstructor(new List<object?> {1920, 1080}));
-            var holder = new PictureBoxImageHolder(settings, layouter);
+            var parser = A.Fake<IWordsFrequencyParser>();
+            var holder = new PictureBoxImageHolder(parser, settings, layouter);
             var mainForm = new MainForm(new IUiAction[0], holder, settings);
             mainForm.ClientSize.Should().Be(new Size(settings.Width, settings.Height));
         }
@@ -83,6 +69,39 @@ namespace TagsCloud.Tests
             File.WriteAllText(path, string.Join(Environment.NewLine, words));
             parser.ParseWordsFrequencyFromFile(path);
             A.CallTo(() => filter.GetCorrectWords(words)).WithAnyArguments().MustHaveHappenedOnceExactly();
+        }
+
+        [Test]
+        public void BigTest()
+        {
+            var path = Assembly.GetExecutingAssembly().Location + "testText.txt";
+            File.WriteAllText(path, GetText());
+
+            var filter = new WordsFilter(new HashSet<string>());
+            var parser = new WordsFrequencyParser(filter);
+            var fakeParser = A.Fake<IWordsFrequencyParser>(opts => opts.Wrapping(parser));
+            var settings = A.Fake<ImageSettings>(opts => 
+                opts.WithArgumentsForConstructor(new List<object?> {1920, 1080}));
+            var layouter = A.Fake<ICloudLayouter>();
+            var holder = new PictureBoxImageHolder(fakeParser, settings, layouter);
+
+            holder.RenderWordsFromFile(path);
+            A.CallTo(() => fakeParser.ParseWordsFrequencyFromFile(path)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => layouter.PutNextRectangle(Size.Empty)).WithAnyArguments()
+                .MustHaveHappened(3, Times.Exactly);
+
+        }
+
+        private string GetText()
+        {
+            var words = new List<string>();
+            for (var i = 0; i < 40; i++)
+                words.Add("first");
+            for (var i = 0; i < 20; i++)
+                words.Add("second");
+            for (var i = 0; i < 5; i++)
+                words.Add("third");
+            return string.Join(Environment.NewLine, words);
         }
     }
 }

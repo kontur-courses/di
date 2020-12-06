@@ -10,7 +10,7 @@ namespace TagsCloud.Infrastructure
         void ChangeLayouter(ICloudLayouter layouter);
         void RecreateCanvas(ImageSettings settings);
         void SaveImage(string fileName);
-        void RenderWords(Dictionary<string, int> frequencyDictionary);
+        void RenderWordsFromFile(string fileName);
         void RedrawCurrentImage();
     }
 }
