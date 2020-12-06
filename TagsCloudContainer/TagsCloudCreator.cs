@@ -72,7 +72,7 @@ namespace TagsCloudContainer
         public bool TrySetFontColor(string colorName)
         {
             var color = Color.FromName(colorName);
-            if (color.R == 0 && color.G == 0 && color.B == 0 && color.Name != "Black")
+            if (color.Name.ToLower() != colorName.ToLower())
                 return false;
             cloudDrawer.ColorProvider = new FixedColorProvider(color);
             return true;
