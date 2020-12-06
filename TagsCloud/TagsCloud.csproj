@@ -19,6 +19,9 @@
     <None Update="mystem.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
