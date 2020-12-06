@@ -5,16 +5,16 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text
 {
-    public class WordAnalyzer<TToken>
+    public class WordAnalyzer : ITokenAnalyzer<string>
     {
-        private readonly IEnumerable<IFilter<TToken>> filters;
+        private readonly IEnumerable<IFilter<string>> filters;
 
-        public WordAnalyzer(IEnumerable<IFilter<TToken>> filters)
+        public WordAnalyzer(IEnumerable<IFilter<string>> filters)
         {
             this.filters = filters;
         }
 
-        public IEnumerable<(TToken, TokenInfo)> Analyze(IEnumerable<TToken> words)
+        public IEnumerable<(string, TokenInfo)> Analyze(IEnumerable<string> words)
         {
             return filters.Aggregate(
                 words.Select(line => (line, new TokenInfo())),

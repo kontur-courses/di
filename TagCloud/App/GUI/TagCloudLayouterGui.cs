@@ -6,7 +6,6 @@ using Gdk;
 using Gtk;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
-using TagCloud.Infrastructure.Text;
 using Image = System.Drawing.Image;
 using Settings = TagCloud.Infrastructure.Settings.Settings;
 using Window = Gtk.Window;
@@ -15,23 +14,21 @@ namespace TagCloud.App.GUI
 {
     internal class TagCloudLayouterGui : IApp
     {
-        private readonly IPainter<string> painter;
-
-
-        private readonly IReader<string> reader;
         private readonly Func<Settings> settingsFactory;
         private readonly IEnumerable<ISettingsManager> settingsManagers;
-        private readonly WordAnalyzer<string> wordAnalyzer;
+        private readonly IImageGenerator imageGenerator;
 
-        public TagCloudLayouterGui(IReader<string> reader, WordAnalyzer<string> wordAnalyzer,
-            Func<Settings> settingsFactory, IPainter<string> painter, IEnumerable<ISettingsManager> settingsManagers)
+        public TagCloudLayouterGui(Func<Settings> settingsFactory, IPainter<string> painter, IEnumerable<ISettingsManager> settingsManagers, IImageGenerator imageGenerator)
         {
-            this.reader = reader;
-            this.wordAnalyzer = wordAnalyzer;
             this.settingsFactory = settingsFactory;
-            this.painter = painter;
             this.settingsManagers = settingsManagers;
+            this.imageGenerator = imageGenerator;
+        }
 
+        public void Run()
+        {
+            settingsFactory().Import(Program.GetDefaultSettings());
+            Console.WriteLine("Default settings imported");
 
             Application.Init();
 
@@ -59,13 +56,6 @@ namespace TagCloud.App.GUI
             window.SetDefaultSize(100, 100);
 
             window.ShowAll();
-        }
-
-        public void Run()
-        {
-            settingsFactory().Import(Program.GetDefaultSettings());
-            Console.WriteLine("Default settings imported");
-
             Application.Run();
         }
 
@@ -131,8 +121,7 @@ namespace TagCloud.App.GUI
             window.Resizable = true;
             var box = new VBox();
 
-
-            var image = GenerateImage();
+            var image = imageGenerator.Generate();
             var stream = ToStream(image, settingsFactory().Format);
             var buf = new Pixbuf(stream);
 
@@ -165,24 +154,7 @@ namespace TagCloud.App.GUI
             window.ShowAll();
         }
 
-        private static void OnPopup(object sender, EventArgs args)
-        {
-            var pMenu = new Menu();
-            var menuQuit = new MenuItem("Выход");
-            pMenu.Add(menuQuit);
-            menuQuit.Activated += delegate { Application.Quit(); };
-            pMenu.ShowAll();
-            pMenu.Popup();
-        }
-
-        private Image GenerateImage()
-        {
-            var tokens = reader.ReadTokens();
-            var analyzedTokens = wordAnalyzer.Analyze(tokens);
-            return painter.GetImage(analyzedTokens);
-        }
-
-        private void Close(object obj, DeleteEventArgs e)
+        private static void Close(object obj, DeleteEventArgs e)
         {
             Console.WriteLine("Closed!");
             Application.Quit();

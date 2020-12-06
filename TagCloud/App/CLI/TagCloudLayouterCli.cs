@@ -2,33 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
-using TagCloud.Infrastructure.Text;
 
 namespace TagCloud.App.CLI
 {
     public class TagCloudLayouterCli : IApp
     {
-        private readonly IPainter<string> painter;
-        private readonly IReader<string> reader;
         private readonly Func<Settings> settingsFactory;
         private readonly IEnumerable<ISettingsManager> settingsManagers;
-        private readonly WordAnalyzer<string> wordAnalyzer;
+        private readonly IImageGenerator generator;
 
-        public TagCloudLayouterCli(
-            IReader<string> reader,
-            WordAnalyzer<string> wordAnalyzer,
-            Func<Settings> settingsFactory,
-            IPainter<string> painter,
-            IEnumerable<ISettingsManager> settingsManagers)
+        public TagCloudLayouterCli(Func<Settings> settingsFactory, IEnumerable<ISettingsManager> settingsManagers, IImageGenerator generator)
         {
-            this.reader = reader;
-            this.wordAnalyzer = wordAnalyzer;
             this.settingsFactory = settingsFactory;
-            this.painter = painter;
             this.settingsManagers = settingsManagers;
+            this.generator = generator;
         }
 
         public void Run()
@@ -81,11 +70,7 @@ namespace TagCloud.App.CLI
 
         private void OnGenerateState(State sender, EventArgs args)
         {
-            Console.WriteLine("Default settings imported");
-            var tokens = reader.ReadTokens();
-            var analyzedTokens = wordAnalyzer.Analyze(tokens);
-            Console.WriteLine("Tokens analyzed");
-            using var image = painter.GetImage(analyzedTokens);
+            using var image = generator.Generate();
             Console.WriteLine("Layout ready");
             var imagePath = settingsFactory().ImagePath;
             Console.WriteLine($"Image will be saved into {Path.GetFullPath(imagePath)}");

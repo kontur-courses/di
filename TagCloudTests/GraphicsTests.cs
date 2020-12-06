@@ -42,7 +42,7 @@ namespace TagCloudTests
         public void SetUp()
         {
             builder = new ContainerBuilder();
-            builder.RegisterType<WordAnalyzer<string>>();
+            builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
 
             builder.RegisterType<LowerCaseFilter>().As<IFilter<string>>();
             var myStemPath = Program.GetReleasePath("mystem");
@@ -98,7 +98,7 @@ namespace TagCloudTests
             var container = builder.Build();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var reader = container.Resolve<IReader<string>>();
-            var wordAnalyzer = container.Resolve<WordAnalyzer<string>>();
+            var wordAnalyzer = container.Resolve<WordAnalyzer>();
             var painter = container.Resolve<IPainter<string>>();
             settingsFactory().Import(Program.GetDefaultSettings());
             

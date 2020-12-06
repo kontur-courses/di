@@ -24,7 +24,7 @@ namespace TagCloud
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TxtReader>().As<IReader<string>>();
-            builder.RegisterType<WordAnalyzer<string>>();
+            builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
 
             builder.RegisterType<LowerCaseFilter>().As<IFilter<string>>();
             var myStemPath = GetReleasePath("mystem");
@@ -57,6 +57,8 @@ namespace TagCloud
             builder.RegisterType<SpiralIncrementSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<FontSettingManager>().AsImplementedInterfaces();
             builder.RegisterType<ImageFormatSettingManager>().AsImplementedInterfaces();
+
+            builder.RegisterType<TagCloudGenerator>().As<IImageGenerator>();
 
             //todo use compile options
             // builder.RegisterType<TagCloudLayouterCli>().As<IApp>();
