@@ -10,28 +10,21 @@ namespace TagsCloud.App
         private readonly ITagsCloudDrawer drawer;
         private readonly IWordNormalizer wordNormalizer;
         private readonly IEnumerable<IWordsFilter> wordsFilters;
-        private IEnumerable<string> words;
 
         public TagsCloudHandler(
             IEnumerable<IWordsFilter> filters,
             IWordNormalizer normalizer,
-            IEnumerable<string> words,
             ITagsCloudDrawer drawer)
         {
             wordNormalizer = normalizer;
             wordsFilters = filters;
-            this.words = words;
             this.drawer = drawer;
         }
 
-        public void SetWords(IEnumerable<string> newWords)
+        public Image GetNewTagcloud(IEnumerable<string> words)
         {
-            words = newWords;
-        }
-
-        public Image GetNewTagcloud()
-        {
-            var neededWords = words.Where(word => wordsFilters.All(filter => filter.Validate(word)))
+            var neededWords = words
+                .Where(word => wordsFilters.All(filter => filter.Validate(word)))
                 .Select(word => wordNormalizer.Normalize(word))
                 .ToList();
             var counts = neededWords

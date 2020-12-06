@@ -11,7 +11,7 @@ namespace TagsCloud.UI
     public partial class Mainform : Form
     {
         private readonly Dictionary<string, IRectanglesLayouter> constellators;
-        private readonly HashSet<IFileReader> fileReaders;
+        private readonly HashSet<FileReader> fileReaders;
         private readonly IWordsFilter filter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
@@ -24,7 +24,7 @@ namespace TagsCloud.UI
             ITagsCloudDrawer drawer,
             TagsCloudSettings settings,
             IWordsFilter filter,
-            IEnumerable<IFileReader> fileReaders)
+            IEnumerable<FileReader> fileReaders)
         {
             this.tagsCloudHandler = tagsCloudHandler;
             this.settings = settings;
@@ -58,6 +58,10 @@ namespace TagsCloud.UI
 
         private void TextOpenButton_Click(object sender, EventArgs e)
         {
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var fileName = OpenFileDialog.FileName;
@@ -65,13 +69,8 @@ namespace TagsCloud.UI
                 var fileReader = fileReaders.First(reader => reader.AvailableFileTypes.Contains(fileType));
                 if (fileReader == null)
                     throw new InvalidOperationException("Invalid file");
-                tagsCloudHandler.SetWords(fileReader.ReadLines(fileName));
+                PictureBox.Image = tagsCloudHandler.GetNewTagcloud(fileReader.ReadLines(fileName));
             }
-        }
-
-        private void StartButton_Click(object sender, EventArgs e)
-        {
-            PictureBox.Image = tagsCloudHandler.GetNewTagcloud();
         }
 
         private void FontFamilyChoice_SelectedIndexChanged(object sender, EventArgs e)

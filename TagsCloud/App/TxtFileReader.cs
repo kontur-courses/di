@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace TagsCloud.App
 {
-    public class TxtFileReader : IFileReader
+    public class TxtFileReader : FileReader
     {
-        public HashSet<string> AvailableFileTypes { get; } = new HashSet<string> {"txt"};
+        public override HashSet<string> AvailableFileTypes { get; } = new HashSet<string> {"txt"};
 
-        public string[] ReadLines(string fileName)
+        public override string[] ReadLines(string fileName)
         {
-            var fileType = fileName.Split('.')[^1];
-            if (!AvailableFileTypes.Contains(fileType))
-                throw new ArgumentException($"Incorrect type {fileType}");
+            CheckForExceptions(fileName);
             return File.ReadAllLines(fileName);
         }
     }

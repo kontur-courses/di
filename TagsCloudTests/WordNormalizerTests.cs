@@ -14,7 +14,7 @@ namespace TagsCloudTests
         [TestCase("", "")]
         [TestCase("AbC541", "abc541")]
         [TestCase("kU!@Hg_rug", "ku!@hg_rug")]
-        public void WordNormalizer_ShouldMakeLower_WordsAsParameters(string word, string expectedResult)
+        public void WordNormalizer_ShouldMakeWordsLower(string word, string expectedResult)
         {
             var result = normalizer.Normalize(word);
             result.Should().BeEquivalentTo(expectedResult);

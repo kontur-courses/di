@@ -35,7 +35,7 @@ namespace TagsCloudTests
         private RectanglesLayouter layouter;
 
         [Test]
-        public void FirstRectangle_ShouldBeInCenter()
+        public void RectanglesLayouter_ShouldPlaceFirstRectangle_AtCenter()
         {
             var firstRectangle = layouter.PutNextRectangle(new Size(100, 70));
             firstRectangle
@@ -48,7 +48,7 @@ namespace TagsCloudTests
         }
 
         [Test]
-        public void SecondRectangle_ShouldBeNearCenter()
+        public void RectanglesLayouter_ShouldPlaceSecondRectangle_NearFirst()
         {
             var firstRect = layouter.PutNextRectangle(new Size(100, 70));
             var secondRect = layouter.PutNextRectangle(new Size(70, 50));
@@ -75,7 +75,7 @@ namespace TagsCloudTests
         }
 
         [Test]
-        public void Image_ShouldFormCircle()
+        public void RectanglesLayouter_ShouldFormCircle_FromManyRectangles()
         {
             var rand = new Random();
             var letterSize = new Size(3, 4);
@@ -83,10 +83,7 @@ namespace TagsCloudTests
             var rectanglesArea = 0d;
             for (var i = 0; i < 500; i++)
             {
-                var lettersCount = rand.Next(3, 6);
-                var wordSize = new Size(letterSize.Width * lettersCount, letterSize.Height) * rand.Next(2, 10);
-                if (rand.Next(2) == 0)
-                    wordSize = new Size(wordSize.Height, wordSize.Width);
+                var wordSize = new Size(rand.Next(1, 100), rand.Next(1, 100));
                 rectanglesArea += wordSize.Width * wordSize.Height;
                 var newRect = layouter.PutNextRectangle(wordSize);
                 maxRadius = Math.Max(maxRadius,

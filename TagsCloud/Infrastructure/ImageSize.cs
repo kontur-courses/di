@@ -15,7 +15,7 @@
             get => width;
             set
             {
-                if (value < 0)
+                if (value > 0)
                     width = value;
             }
         }

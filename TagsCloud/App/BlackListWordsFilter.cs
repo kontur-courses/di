@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TagsCloud.App
@@ -21,6 +22,8 @@ namespace TagsCloud.App
 
         public void UpdateBlackList(IEnumerable<string> words)
         {
+            if (words == null)
+                throw new NullReferenceException("Words collection should not be null");
             BlackList.Clear();
             foreach (var word in words)
                 BlackList.Add(normalizer.Normalize(word));

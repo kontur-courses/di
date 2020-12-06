@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloud.App;
@@ -11,15 +11,24 @@ namespace TagsCloudTests
     {
         private readonly WordNormalizer normalizer = new WordNormalizer();
 
-        [TestCase(new[] {"a", "b", "c"}, new string[0], new string[0])]
-        [TestCase(new[] {"a", "b", "c"}, new[] {"d", "d", "a", "a", "a", "c", "f"}, new[] {"d", "d", "f"})]
-        [TestCase(new[] {"a", "b", "c", "d", "e", "f"}, new[] {"d", "d", "a", "a", "a", "c", "f"}, new string[0])]
-        public void BlacklistWordsFilter_ShouldValidateWords_ThatAreNotInBlackList(IEnumerable<string> blackList,
-            IEnumerable<string> words, IEnumerable<string> expectedResult)
+        [TestCase(new[] {"a", "b", "c"}, "a", false)]
+        [TestCase(new[] {"a", "b", "c"}, "A", false)]
+        [TestCase(new[] {"a", "b", "c"}, "d", true)]
+        [TestCase(new[] {"a", "B", "c"}, "b", false)]
+        public void BlacklistWordsFilter_ShouldPassWords_ThatAreNotInBlackList(
+            IEnumerable<string> blackList, string word, bool expectedResult)
         {
             var filter = new BlackListWordsFilter(blackList, normalizer);
-            var filtredWords = words.Where(word => filter.Validate(word));
-            filtredWords.Should().BeEquivalentTo(expectedResult);
+            var wordPassed = filter.Validate(word);
+            wordPassed.Should().Be(expectedResult);
+        }
+
+        [Test]
+        public void BlackListWordsFilter_ShouldThrow_IfCollectionIsNull()
+        {
+            var filter = new BlackListWordsFilter(new string[0], normalizer);
+            Action action = () => filter.Validate(null);
+            action.Should().Throw<NullReferenceException>();
         }
     }
 }

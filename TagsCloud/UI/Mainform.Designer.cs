@@ -36,7 +36,6 @@
             this.FontStyleChoice = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ImageSaveButton = new System.Windows.Forms.Button();
-            this.TextOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.AlgorithmChoice = new System.Windows.Forms.ComboBox();
@@ -73,7 +72,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.FontStyleChoice);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.ImageSaveButton);
-            this.splitContainer1.Panel2.Controls.Add(this.TextOpenButton);
             this.splitContainer1.Panel2.Controls.Add(this.StartButton);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.AlgorithmChoice);
@@ -81,7 +79,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.SetPaletteButton);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.Size = new System.Drawing.Size(800, 461);
-            this.splitContainer1.SplitterDistance = 600;
+            this.splitContainer1.SplitterDistance = 597;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.Text = "splitContainer1";
             // 
@@ -90,7 +88,7 @@
             this.PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox.Location = new System.Drawing.Point(0, 0);
             this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(596, 457);
+            this.PictureBox.Size = new System.Drawing.Size(593, 457);
             this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
@@ -180,16 +178,6 @@
             this.ImageSaveButton.UseVisualStyleBackColor = true;
             this.ImageSaveButton.Click += new System.EventHandler(this.ImageSaveButton_Click);
             // 
-            // TextOpenButton
-            // 
-            this.TextOpenButton.Location = new System.Drawing.Point(0, 264);
-            this.TextOpenButton.Name = "TextOpenButton";
-            this.TextOpenButton.Size = new System.Drawing.Size(192, 23);
-            this.TextOpenButton.TabIndex = 5;
-            this.TextOpenButton.Text = "Задать текст";
-            this.TextOpenButton.UseVisualStyleBackColor = true;
-            this.TextOpenButton.Click += new System.EventHandler(this.TextOpenButton_Click);
-            // 
             // StartButton
             // 
             this.StartButton.Location = new System.Drawing.Point(0, 190);
@@ -237,7 +225,7 @@
             this.SetPaletteButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.SetPaletteButton.Location = new System.Drawing.Point(0, 0);
             this.SetPaletteButton.Name = "SetPaletteButton";
-            this.SetPaletteButton.Size = new System.Drawing.Size(192, 23);
+            this.SetPaletteButton.Size = new System.Drawing.Size(195, 23);
             this.SetPaletteButton.TabIndex = 0;
             this.SetPaletteButton.Text = "Настроить палитру";
             this.SetPaletteButton.UseVisualStyleBackColor = true;
@@ -282,7 +270,6 @@
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SaveFileDialog;
         private System.Windows.Forms.Button ImageSaveButton;
-        private System.Windows.Forms.Button TextOpenButton;
         private System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.ComboBox FontFamilyChoice;
         private System.Windows.Forms.ComboBox FontStyleChoice;

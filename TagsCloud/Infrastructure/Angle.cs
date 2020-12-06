@@ -2,7 +2,7 @@
 
 namespace TagsCloud.Infrastructure
 {
-    class Angle
+    internal class Angle
     {
         public AngleDirection Direction;
         public Point Pos;

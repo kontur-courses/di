@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
+    <PackageReference Include="Bundle.Microsoft.Office.Interop" Version="15.0.4569" />
     <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
   </ItemGroup>
 

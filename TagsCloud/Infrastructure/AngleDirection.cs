@@ -1,7 +1,6 @@
 ﻿namespace TagsCloud.Infrastructure
 {
-
-    enum AngleDirection
+    internal enum AngleDirection
     {
         LeftBottom,
         RightBottom,

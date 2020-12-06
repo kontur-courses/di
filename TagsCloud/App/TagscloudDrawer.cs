@@ -35,8 +35,8 @@ namespace TagsCloud.App
             var layouterCenterDelta = new Size(cloudBounds.X + cloudBounds.Width / 2,
                 cloudBounds.Y + cloudBounds.Height / 2) * cloudSizeRatio;
             var imageCenter = new PointF(
-                                  (float) tagsCloudSettings.ImageSize.Width / 2,
-                                  (float) tagsCloudSettings.ImageSize.Height / 2);
+                (float) tagsCloudSettings.ImageSize.Width / 2,
+                (float) tagsCloudSettings.ImageSize.Height / 2);
             DrawTagsCloud(tags, imageCenter - layouterCenterDelta, graphics);
             return image;
         }
