@@ -2,6 +2,6 @@
 {
     public interface IMyStemBuilder
     {
-        IMyStem Create(params MyStemOptions[] args);
+        IMyStem Create(MyStemOutputFormat outputFormat, params MyStemOptions[] args);
     }
 }

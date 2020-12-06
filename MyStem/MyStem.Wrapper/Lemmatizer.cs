@@ -3,13 +3,14 @@ using MyStem.Wrapper.Impl;
 
 namespace MyStem.Wrapper
 {
-    public class MyStemLemmatizer
+    public class Lemmatizer
     {
         private readonly IMyStem myStem;
 
-        public MyStemLemmatizer(IMyStemBuilder myStemBuilder)
+        public Lemmatizer(IMyStemBuilder myStemBuilder)
         {
-            myStem = myStemBuilder.Create(MyStemOptions.WithoutOriginalForm, MyStemOptions.WithContextualDeHomonymy);
+            myStem = myStemBuilder.Create(MyStemOutputFormat.Text,
+                MyStemOptions.WithoutOriginalForm, MyStemOptions.WithContextualDeHomonymy);
         }
 
         public string[] GetWords(string text)

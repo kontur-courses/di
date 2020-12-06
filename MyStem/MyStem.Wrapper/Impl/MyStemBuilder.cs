@@ -12,9 +12,11 @@ namespace MyStem.Wrapper.Impl
             this.path = path;
         }
 
-        public IMyStem Create(params MyStemOptions[] args)
+        public IMyStem Create(MyStemOutputFormat outputFormat, params MyStemOptions[] args)
         {
-            var launchArgs = string.Join(" ", args.Select(OptionToExecutionArg));
+            var argsEnumerable = args.Select(OptionToExecutionArg)
+                .Prepend(OutputFormatToExecutionArg(outputFormat));
+            var launchArgs = string.Join(" ", argsEnumerable);
             return new MyStem(path, launchArgs);
         }
 
@@ -28,7 +30,17 @@ namespace MyStem.Wrapper.Impl
             MyStemOptions.JoinSingleLemmaWordForms => "-g",
             MyStemOptions.PrintEndOfSentenceMarker => "-s",
             MyStemOptions.WithContextualDeHomonymy => "-d",
-            _ => throw new ArgumentOutOfRangeException(nameof(option), $"Unsupported {nameof(MyStemOptions)} {option}")
+            _ => throw new ArgumentOutOfRangeException(nameof(option),
+                $"Unsupported {nameof(MyStemOptions)} {option}")
+        };
+
+        private static string OutputFormatToExecutionArg(MyStemOutputFormat format) => format switch
+        {
+            MyStemOutputFormat.Json => "--format json",
+            MyStemOutputFormat.Xml => "--format xml",
+            MyStemOutputFormat.Text => "--format text",
+            _ => throw new ArgumentOutOfRangeException(nameof(format),
+                $"Unsupported {nameof(MyStemOutputFormat)} {format}")
         };
     }
 }

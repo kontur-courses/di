@@ -26,7 +26,7 @@ namespace MyStem.Wrapper.Tests
                 overwrite: true
             );
 
-            process = new MyStemBuilder(path).Create();
+            process = new MyStemBuilder(path).Create(MyStemOutputFormat.Text);
         }
 
         [Test]
