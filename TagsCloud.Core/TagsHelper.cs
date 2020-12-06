@@ -1,33 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using DocumentFormat.OpenXml.Packaging;
 using NHunspell;
-using RTFToTextConverter;
 using TagsCloud.Common;
+using TagsCloud.FileReader;
 
 namespace TagsCloud.Core
 {
     public static class TagsHelper
     {
         public static List<(string, int)> GetWords(string pathToFile, string pathToBoringWords,
-            string pathToDictionary, string pathToAffix)
+            string pathToDictionary, string pathToAffix, IReaderFactory readerFactory)
         {
-            string mainText;
+            IEnumerable<string> mainText;
             Hunspell hunspell;
             HashSet<string> boringWords;
 
             try
             {
-                mainText = GetTextFromFile(pathToFile);
+                mainText = GetTextFromFile(pathToFile, readerFactory);
                 hunspell = new Hunspell(pathToAffix, pathToDictionary);
-                boringWords = TextAnalyzer.SplitTextOnUniqueWords(GetTextFromFile(pathToBoringWords));
+                boringWords = TextAnalyzer.GetUniqueWords(GetTextFromFile(pathToBoringWords, readerFactory));
             }
             catch (Exception e)
             {
-                throw new ArgumentException(e.Message);
+                throw new ArgumentException("not valid path to file:\n" + e.Message);
             }
 
             return TextAnalyzer.GetWordByFrequency(
@@ -39,22 +37,10 @@ namespace TagsCloud.Core
                     .ThenBy(y => y.Key, StringComparer.Ordinal));
         }
 
-        public static string GetTextFromFile(string document)
+        private static IEnumerable<string> GetTextFromFile(string document, IReaderFactory readerFactory)
         {
-            switch (document.Split(new[] {'.'}, StringSplitOptions.RemoveEmptyEntries).Last())
-            {
-                case "aff":
-                case "dic":
-                case "txt":
-                    return File.ReadAllText(document);
-                case "rtf":
-                    return RTFToText.converting().rtfFromFile(document);
-                case "docx":
-                    var wordDocument = WordprocessingDocument.Open(document, false);
-                    return wordDocument.MainDocumentPart.Document.Body.InnerText;
-                default:
-                    throw new ArgumentException("not valid path to file");
-            }
+            var extension = document.Split(new[] {'.'}, StringSplitOptions.RemoveEmptyEntries).Last();
+            return readerFactory.GetReader(extension).ReadWords(document);
         }
 
         public static List<Rectangle> GetRectangles(ICircularCloudLayouter cloud, 

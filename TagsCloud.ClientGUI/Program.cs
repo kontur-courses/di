@@ -5,6 +5,7 @@ using Autofac;
 using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.CloudLayouters;
 using TagsCloud.Core;
+using TagsCloud.FileReader;
 using TagsCloud.Spirals;
 using TagsCloud.Visualization;
 
@@ -36,6 +37,7 @@ namespace TagsCloud.ClientGUI
 
             service.RegisterType<SpiralFactory>().AsImplementedInterfaces();
             service.RegisterType<CloudLayouterFactory>().AsImplementedInterfaces();
+            service.RegisterType<ReaderFactory>().AsImplementedInterfaces();
 
             service.RegisterType<CloudVisualization>().InstancePerLifetimeScope();
             service.RegisterType<TagsCloudPainter>().InstancePerLifetimeScope();

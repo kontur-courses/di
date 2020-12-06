@@ -5,14 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
     <PackageReference Include="NHunspell" Version="1.2.5554.16953" />
-    <PackageReference Include="RTFToTextConverter" Version="1.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TagsCloud.Common\TagsCloud.Common.csproj" />
+    <ProjectReference Include="..\TagsCloud.FileReader\TagsCloud.FileReader.csproj" />
     <ProjectReference Include="..\TagsCloud.Visualization\TagsCloud.Visualization.csproj" />
   </ItemGroup>
 
