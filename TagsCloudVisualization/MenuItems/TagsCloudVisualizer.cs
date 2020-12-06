@@ -17,11 +17,9 @@ namespace TagsCloudVisualization.MenuItems
 
         public TagsCloudVisualizer(
             ITagsCloudCreator cloudCreator,
-            ITagsCloudLayouter layouter, 
             IWordsReader reader, 
             TagsCloudPictureHolder pictureHolder)
         {
-            layouter.Recreate();
             CloudCreator = cloudCreator;
             Reader = reader;
             PictureHolder = pictureHolder;
@@ -39,7 +37,7 @@ namespace TagsCloudVisualization.MenuItems
             var tags = CloudCreator.CreateTagsCloud(words);
             var graphics = Graphics.FromImage(PictureHolder.Image);
             
-            graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, PictureHolder.Image.Width, PictureHolder.Image.Height));
+            graphics.FillRectangle(new SolidBrush(PictureHolder.BackColor), new Rectangle(0, 0, PictureHolder.Image.Width, PictureHolder.Image.Height));
 
             foreach (var tag in tags)
             {

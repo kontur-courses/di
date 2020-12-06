@@ -10,18 +10,22 @@ namespace TagsCloudVisualization.App
     {
         private ImageSettings ImageSettings { get; }
 
-        public TagsCloudPictureHolder(ImageSettings imageImageSettings)
+        public TagsCloudPictureHolder(ImageSettings imageSettings)
         {
-            ImageSettings = imageImageSettings;
+            ImageSettings = imageSettings;
             Dock = DockStyle.Fill;
             SizeMode = PictureBoxSizeMode.StretchImage;
-            Image = new Bitmap(imageImageSettings.Width, imageImageSettings.Height, PixelFormat.Format24bppRgb);
+            Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
+            BackColor = imageSettings.BackColor;
         }
 
         public void SaveImage(string fileName) => Image.Save(fileName);
 
-        public void RecreateImage() =>
+        public void RecreateImage()
+        {
             Image = new Bitmap(ImageSettings.Width, ImageSettings.Height, PixelFormat.Format24bppRgb);
+            BackColor = ImageSettings.BackColor;
+        }
 
         public void UpdateUi()
         {
