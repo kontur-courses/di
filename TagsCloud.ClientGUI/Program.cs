@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
 using TagsCloud.ClientGUI.Infrastructure;
+using TagsCloud.CloudLayouters;
 using TagsCloud.Core;
 using TagsCloud.Spirals;
 using TagsCloud.Visualization;
@@ -34,6 +35,8 @@ namespace TagsCloud.ClientGUI
                 .InstancePerLifetimeScope();
 
             service.RegisterType<SpiralFactory>().AsImplementedInterfaces();
+            service.RegisterType<CloudLayouterFactory>().AsImplementedInterfaces();
+
             service.RegisterType<CloudVisualization>().InstancePerLifetimeScope();
             service.RegisterType<TagsCloudPainter>().InstancePerLifetimeScope();
 

@@ -1,13 +1,14 @@
 ﻿using TagsCloud.ClientGUI.Infrastructure;
+using TagsCloud.Common;
 
 namespace TagsCloud.ClientGUI.Actions
 {
     public class TagsCloudAction : IUiAction
     {
-        private readonly ITagsCloudFactory cloudFactory;
+        private readonly ICloudLayouterFactory cloudFactory;
         private readonly TagsCloudPainter tagsCloudPainter;
 
-        public TagsCloudAction(TagsCloudPainter tagsCloudPainter, ITagsCloudFactory cloudFactory)
+        public TagsCloudAction(TagsCloudPainter tagsCloudPainter, ICloudLayouterFactory cloudFactory)
         {
             this.tagsCloudPainter = tagsCloudPainter;
             this.cloudFactory = cloudFactory;

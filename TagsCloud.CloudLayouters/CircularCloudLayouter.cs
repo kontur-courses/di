@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TagsCloud.Common;
 
-namespace TagsCloud.Core
+namespace TagsCloud.CloudLayouters
 {
     public class CircularCloudLayouter : ICircularCloudLayouter
     {

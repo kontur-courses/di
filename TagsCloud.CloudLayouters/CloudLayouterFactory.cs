@@ -1,13 +1,12 @@
 ﻿using TagsCloud.Common;
-using TagsCloud.Core;
 
-namespace TagsCloud.ClientGUI.Infrastructure
+namespace TagsCloud.CloudLayouters
 {
-    public class TagsCloudFactory : ITagsCloudFactory
+    public class CloudLayouterFactory : ICloudLayouterFactory
     {
         private readonly ISpiralFactory spiralFactory;
 
-        public TagsCloudFactory(ISpiralFactory spiralFactory)
+        public CloudLayouterFactory(ISpiralFactory spiralFactory)
         {
             this.spiralFactory = spiralFactory;
         }
