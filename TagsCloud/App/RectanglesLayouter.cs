@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
 {
@@ -99,20 +100,6 @@ namespace TagsCloud.App
                 {Direction = AngleDirection.RightBottom, Pos = rect.Location + new Size(0, rect.Size.Height)});
             angles.Add(new Angle
                 {Direction = AngleDirection.LeftTop, Pos = rect.Location + new Size(0, rect.Size.Height)});
-        }
-
-        private enum AngleDirection
-        {
-            LeftBottom,
-            RightBottom,
-            LeftTop,
-            RightTop
-        }
-
-        private class Angle
-        {
-            public AngleDirection Direction;
-            public Point Pos;
         }
     }
 }

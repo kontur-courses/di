@@ -8,7 +8,6 @@ namespace TagsCloudTests
 {
     public class TxtFileReaderTests
     {
-
         private readonly TxtFileReader reader = new TxtFileReader();
 
         [Test]
@@ -16,7 +15,7 @@ namespace TagsCloudTests
         {
             var fileName = @"C:\Users\da\Desktop\abc.jpeg";
             Action action = () => reader.ReadLines(fileName);
-            action.Should().Throw<InvalidOperationException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]
@@ -25,7 +24,7 @@ namespace TagsCloudTests
             var fileName = Directory.GetCurrentDirectory() + @"\FileReadersTestsFiles\TxtFileReaderTestFile.txt";
             TestContext.WriteLine(fileName);
             var words = reader.ReadLines(fileName);
-            words.Should().BeEquivalentTo(new string[] { "Abc", "Aa", "Abcg", "Def", "Gf" });
+            words.Should().BeEquivalentTo("Abc", "Aa", "Abcg", "Def", "Gf");
         }
 
         [Test]
@@ -34,7 +33,7 @@ namespace TagsCloudTests
             var fileName = Directory.GetCurrentDirectory() + @"\FileReadersTestsFiles\EmptyTxtFile.txt";
             TestContext.WriteLine(fileName);
             var words = reader.ReadLines(fileName);
-            words.Should().BeEquivalentTo(new string[] { });
+            words.Should().BeEquivalentTo();
         }
     }
 }

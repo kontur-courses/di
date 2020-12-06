@@ -23,9 +23,7 @@ namespace TagsCloud.Infrastructure
                 (int) (Rectangle.Width * tagsCloudSizeRatio),
                 (int) (Rectangle.Height * tagsCloudSizeRatio));
             var tagFontSize = Math.Max((int) (Font.Size * tagsCloudSizeRatio), 1);
-            return new Tag(Value,
-                new Font(Font.FontFamily,
-                    tagFontSize, Font.Style), tagBounds);
+            return new Tag(Value, new Font(Font.FontFamily, tagFontSize, Font.Style), tagBounds);
         }
     }
 }

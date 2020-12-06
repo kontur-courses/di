@@ -12,7 +12,10 @@ namespace TagsCloud.App
         private readonly IEnumerable<IWordsFilter> wordsFilters;
         private IEnumerable<string> words;
 
-        public TagsCloudHandler(IEnumerable<IWordsFilter> filters, IWordNormalizer normalizer, string[] words,
+        public TagsCloudHandler(
+            IEnumerable<IWordsFilter> filters,
+            IWordNormalizer normalizer,
+            IEnumerable<string> words,
             ITagsCloudDrawer drawer)
         {
             wordNormalizer = normalizer;

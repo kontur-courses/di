@@ -24,12 +24,12 @@ namespace TagsCloud.UI
             ITagsCloudDrawer drawer,
             TagsCloudSettings settings,
             IWordsFilter filter,
-            HashSet<IFileReader> fileReaders)
+            IEnumerable<IFileReader> fileReaders)
         {
             this.tagsCloudHandler = tagsCloudHandler;
             this.settings = settings;
             this.filter = filter;
-            this.fileReaders = fileReaders;
+            this.fileReaders = fileReaders.ToHashSet();
             tagsCloudDrawer = drawer;
             fontFamilies = settings.FontSettings.FontFamilies.ToDictionary(family => family.Name);
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());

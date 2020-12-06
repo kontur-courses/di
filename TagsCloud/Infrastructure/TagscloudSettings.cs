@@ -6,7 +6,10 @@ namespace TagsCloud.Infrastructure
 {
     public class TagsCloudSettings
     {
-        public TagsCloudSettings(Palette palette, ImageSize imageSize, PossibleFonts possibleFonts,
+        public TagsCloudSettings(
+            Palette palette,
+            ImageSize imageSize,
+            PossibleFonts possibleFonts,
             double cloudToImageScaleRatio)
         {
             Palette = palette;
@@ -24,9 +27,12 @@ namespace TagsCloud.Infrastructure
         public FontStyle CurrentFontStyle { get; set; }
         public double CloudToImageScaleRatio { get; set; }
 
-        public static TagsCloudSettings DefaultSettings => new TagsCloudSettings(new Palette(Color.Aqua, Color.Black),
+        public static TagsCloudSettings DefaultSettings => new TagsCloudSettings(
+            new Palette(Color.Aqua, Color.Black),
             new ImageSize(500, 500),
-            new PossibleFonts(new HashSet<FontStyle> {FontStyle.Regular, FontStyle.Italic, FontStyle.Bold},
-                FontFamily.Families.ToHashSet()), 0.7);
+            new PossibleFonts(
+                new HashSet<FontStyle> {FontStyle.Regular, FontStyle.Italic, FontStyle.Bold},
+                FontFamily.Families.ToHashSet()),
+            0.7);
     }
 }

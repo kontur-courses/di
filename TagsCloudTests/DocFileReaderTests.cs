@@ -9,14 +9,14 @@ namespace TagsCloudTests
     [TestFixture]
     public class DocFileReaderTests
     {
-        private readonly DocFileReader reader = new DocFileReader(); 
+        private readonly DocFileReader reader = new DocFileReader();
 
         [Test]
         public void DocFileReader_ShouldThrow_WithWrongFileType()
         {
             var fileName = @"C:\Users\da\Desktop\abc.txt";
             Action action = () => reader.ReadLines(fileName);
-            action.Should().Throw<InvalidOperationException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace TagsCloudTests
             var fileName = Directory.GetCurrentDirectory() + @"\FileReadersTestsFiles\DocFileReaderTestFile.docx";
             TestContext.WriteLine(fileName);
             var words = reader.ReadLines(fileName);
-            words.Should().BeEquivalentTo(new string[] { "Abc", "Aa", "Abcg", "Def", "Gf"});
+            words.Should().BeEquivalentTo("Abc", "Aa", "Abcg", "Def", "Gf");
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace TagsCloudTests
             var fileName = Directory.GetCurrentDirectory() + @"\FileReadersTestsFiles\EmptyDocFile.docx";
             TestContext.WriteLine(fileName);
             var words = reader.ReadLines(fileName);
-            words.Should().BeEquivalentTo(new string[] {});
+            words.Should().BeEquivalentTo();
         }
     }
 }

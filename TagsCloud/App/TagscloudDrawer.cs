@@ -34,10 +34,10 @@ namespace TagsCloud.App
             tags = tags.Select(tag => tag.RescaleTag(cloudSizeRatio)).ToArray();
             var layouterCenterDelta = new Size(cloudBounds.X + cloudBounds.Width / 2,
                 cloudBounds.Y + cloudBounds.Height / 2) * cloudSizeRatio;
-            var centerPoint = new PointF((float) tagsCloudSettings.ImageSize.Width / 2,
-                                  (float) tagsCloudSettings.ImageSize.Height / 2)
-                              - layouterCenterDelta;
-            DrawTagsCloud(tags, centerPoint, graphics);
+            var imageCenter = new PointF(
+                                  (float) tagsCloudSettings.ImageSize.Width / 2,
+                                  (float) tagsCloudSettings.ImageSize.Height / 2);
+            DrawTagsCloud(tags, imageCenter - layouterCenterDelta, graphics);
             return image;
         }
 
@@ -74,13 +74,14 @@ namespace TagsCloud.App
         public void DrawTagsCloud(IEnumerable<Tag> tags, PointF center, Graphics graphics)
         {
             if (tags == null)
-                throw new NullReferenceException("Words collection should not be null");
+                throw new NullReferenceException("Tags collection should not be null");
             graphics.TranslateTransform(center.X, center.Y);
             graphics.Clear(tagsCloudSettings.Palette.BackgroundColor);
+            var brush = new SolidBrush(tagsCloudSettings.Palette.PrimaryColor);
             foreach (var word in tags)
                 graphics.DrawString(word.Value,
                     word.Font,
-                    new SolidBrush(tagsCloudSettings.Palette.PrimaryColor),
+                    brush,
                     word.Rectangle.Location);
         }
 
@@ -104,8 +105,9 @@ namespace TagsCloud.App
         private Size CalculateWordsSize(string word, Font font, Graphics graphics)
         {
             var floatSize = graphics.MeasureString(word, font);
-            return new Size((int) Math.Ceiling((decimal) floatSize.Width),
-                (int) Math.Ceiling((decimal) floatSize.Height));
+            return new Size(
+                (int) Math.Ceiling(floatSize.Width),
+                (int) Math.Ceiling(floatSize.Height));
         }
     }
 }

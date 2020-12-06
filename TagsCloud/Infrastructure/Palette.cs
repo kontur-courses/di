@@ -4,10 +4,6 @@ namespace TagsCloud.Infrastructure
 {
     public class Palette
     {
-        public Palette()
-        {
-        }
-
         public Palette(Color primaryColor, Color backgroundColor)
         {
             PrimaryColor = primaryColor;

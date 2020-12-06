@@ -2,10 +2,6 @@
 {
     public class Word
     {
-        public Word()
-        {
-        }
-
         public Word(string value, double weight)
         {
             Value = value;
