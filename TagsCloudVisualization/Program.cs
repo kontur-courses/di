@@ -8,6 +8,11 @@ using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
 using TagsCloudVisualization.TagCloudLayouter;
 using TagsCloudVisualization.TagCloudVisualizers;
+using TagsCloudVisualization.TextProcessing.Readers;
+using TagsCloudVisualization.TextProcessing.TextHandler;
+using TagsCloudVisualization.TextProcessing.TextReader;
+using TagsCloudVisualization.WordsProcessing.WordsFilters;
+using TagsCloudVisualization.WordsProcessing.WordsWeighers;
 
 namespace TagsCloudVisualization
 {
@@ -24,16 +29,23 @@ namespace TagsCloudVisualization
             services.AddSingleton<ICloudLayouter, CircularCloudLayouter>();
             services.AddSingleton<ICloudVisualizer, TagCloudVisualizer>();
             services.AddSingleton<ITagCloudBuilder, TagCloudBuilder>();
+            services.AddSingleton<ITextReader, TextReader>();
+            services.AddSingleton<ITextHandler, FrequencyTextHandler>();
+            services.AddSingleton<IWordFilter, WordFilter>();
+            services.AddSingleton<IWordsWeigher, FrequencyWordWeigher>();
             services.AddSingleton<ICanvas, Canvas>();
 
+            services.AddSingleton<IReader, TxtReader>();
+            services.AddSingleton<IReader, MSWordReader>();
+            
             services.AddSingleton<SpiralParams>();
             services.AddSingleton<FontSettings>();
             services.AddSingleton<ImageSettings>();
             services.AddSingleton<PaintingSettings>();
-            services.AddSingleton<ForbiddenWordsSettings>();
+            services.AddSingleton<WordsSettings>();
 
             services.AddSingleton<IPointGenerator, ArchimedesSpiral>(x =>
-                new ArchimedesSpiral(x.GetService<SpiralParams>(), x.GetService<ICanvas>().GetImageCenter()));
+                new ArchimedesSpiral(x.GetRequiredService<SpiralParams>(), x.GetRequiredService<ICanvas>().GetImageCenter()));
             
             services.AddTransient<IFormAction, SaveImageAction>();
             services.AddTransient<IFormAction, CloudLayouterAction>();
@@ -48,7 +60,7 @@ namespace TagsCloudVisualization
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(services.BuildServiceProvider().GetService<Form>());
+            Application.Run(services.BuildServiceProvider().GetRequiredService<Form>());
         }
     }
 }

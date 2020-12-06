@@ -1,35 +1,34 @@
-﻿using System.IO;
-using Xceed.Words.NET;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using TagsCloudVisualization.TextProcessing.Readers;
 
 namespace TagsCloudVisualization.TextProcessing.TextReader
 {
-    public class TextReader
+    public class TextReader : ITextReader
     {
-        public static string ReadAllText(string path)
+        private readonly List<IReader> readers;
+        
+        public TextReader(IEnumerable<IReader> readers)
+        {
+            this.readers = readers.ToList();
+        }
+
+        public string ReadAllText(string path)
         {
             if (!File.Exists(path))
-                throw new IOException("File you specified does not exist");
+                throw new IOException($"File {path} does not exist");
 
-            return GetDocumentText(path);
+            return GetTextFromReader(path);
         }
 
-        private static string GetDocumentText(string fileName)
+        private string GetTextFromReader(string path)
         {
-            var extension = Path.GetExtension(fileName);
-            return extension switch
-            {
-                ".doc" => LoadDocumentWithStream(fileName),
-                ".docx" => LoadDocumentWithStream(fileName),
-                ".txt" => File.ReadAllText(fileName),
-                _ => throw new IOException($"Files with extension {extension} doesn't support")
-            };
-        }
-        
-        private static string LoadDocumentWithStream(string path)
-        {
-            using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using var document = DocX.Load(fs);
-            return document.Text;
+            var reader = readers.FirstOrDefault(rdr => rdr.CanReadFile(path));
+            if (reader == null)
+                throw new IOException($"Extension {Path.GetExtension(path)} doesn't support");
+
+            return reader.ReadText(path);
         }
     }
 }

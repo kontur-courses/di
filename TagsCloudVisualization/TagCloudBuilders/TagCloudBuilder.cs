@@ -25,7 +25,7 @@ namespace TagsCloudVisualization.TagCloudBuilders
             cloudLayouter.ClearLayout();
 
             return (from word in wordsFrequency
-                let font = FontHandler.CalculateFont(word.Frequency, fontSettings)
+                let font = FontHandler.CalculateFont(word.Weight, fontSettings)
                 let tagSize = word.Value.MeasureString(font)
                 let rectangle = cloudLayouter.PutNextRectangle(tagSize)
                 select new Tag(word.Value, rectangle, font)).ToList();

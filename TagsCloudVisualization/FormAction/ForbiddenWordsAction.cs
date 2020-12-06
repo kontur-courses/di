@@ -8,16 +8,16 @@ namespace TagsCloudVisualization.FormAction
         public string Name { get; } = "Forbidden words";
         public string Description { get; } = "Select words that shouldn't appear in the tag cloud";
 
-        private readonly ForbiddenWordsSettings forbiddenWordsSettings;
+        private readonly WordsSettings wordsSettings;
         
-        public ForbiddenWordsAction(ForbiddenWordsSettings forbiddenWordsSettings)
+        public ForbiddenWordsAction(WordsSettings wordsSettings)
         {
-            this.forbiddenWordsSettings = forbiddenWordsSettings;
+            this.wordsSettings = wordsSettings;
         }
 
         public void Perform()
         {
-            SettingsForm.For(forbiddenWordsSettings).ShowDialog();
+            SettingsForm.For(wordsSettings).ShowDialog();
         }
     }
 }

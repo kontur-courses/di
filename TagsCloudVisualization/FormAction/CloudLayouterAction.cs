@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
@@ -17,17 +16,19 @@ namespace TagsCloudVisualization.FormAction
 
         private readonly ITagCloudBuilder tagCloudBuilder;
         private readonly ICloudVisualizer cloudVisualizer;
+        private readonly ITextReader textReader;
+        private readonly ITextHandler textHandler;
         private readonly SpiralParams spiralParams;
-        private readonly ForbiddenWordsSettings forbiddenWordsSettings;
 
         public CloudLayouterAction(
-            ITagCloudBuilder tagCloudBuilder, ICloudVisualizer cloudVisualizer, SpiralParams spiralParams,
-            ForbiddenWordsSettings forbiddenWordsSettings)
+            ITagCloudBuilder tagCloudBuilder, ICloudVisualizer cloudVisualizer, ITextReader textReader,
+            ITextHandler textHandler, SpiralParams spiralParams)
         {
             this.tagCloudBuilder = tagCloudBuilder;
             this.cloudVisualizer = cloudVisualizer;
+            this.textReader = textReader;
+            this.textHandler = textHandler;
             this.spiralParams = spiralParams;
-            this.forbiddenWordsSettings = forbiddenWordsSettings;
         }
 
         public void Perform()
@@ -44,13 +45,12 @@ namespace TagsCloudVisualization.FormAction
             var res = dialog.ShowDialog();
             if (res != DialogResult.OK)
                 return;
-            
+
             SettingsForm.For(spiralParams).ShowDialog();
-            
-            var text = TextReader.ReadAllText(dialog.FileName);
-            var wordsFrequency =
-                TextHandler.GetOrderedByFrequencyWords(text, forbiddenWordsSettings.ForbiddenWords.ToHashSet());
-            var tagCloud = tagCloudBuilder.Build(wordsFrequency);
+
+            var text = textReader.ReadAllText(dialog.FileName);
+            var handledWords = textHandler.GetHandledWords(text);
+            var tagCloud = tagCloudBuilder.Build(handledWords);
             cloudVisualizer.PrintTagCloud(tagCloud);
         }
     }

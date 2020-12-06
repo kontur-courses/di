@@ -11,4 +11,9 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Examples\example.txt" />
+      <Resource Include="Examples\example.txt" />
+    </ItemGroup>
+
 </Project>

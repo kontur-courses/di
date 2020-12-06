@@ -3,12 +3,12 @@
     public class Word
     {
         public string Value { get; }
-        public int Frequency { get; }
+        public int Weight { get; }
         
-        public Word(string value, int frequency)
+        public Word(string value, int weight)
         {
             Value = value;
-            Frequency = frequency;
+            Weight = weight;
         }        
     }
 }

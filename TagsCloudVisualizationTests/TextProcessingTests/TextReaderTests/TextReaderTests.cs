@@ -1,16 +1,33 @@
 ﻿using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudVisualization.TextProcessing.Readers;
 using TextReader = TagsCloudVisualization.TextProcessing.TextReader.TextReader;
 
 namespace TagsCloudVisualizationTests.TextProcessingTests.TextReaderTests
 {
-    public class TestReaderTests
+    public class TextReaderTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            textReader = new TextReader(new IReader[]{new TxtReader(), new MSWordReader()});
+        }
+
+        private TextReader textReader;
+        
         [Test]
         public void ReadAllText_Throws_WhenTxtFileNotExists()
         {
-            Assert.Throws<IOException>(() => TextReader.ReadAllText("sadas"));
+            Assert.Throws<IOException>(() => textReader.ReadAllText("sadas"));
+        }
+        
+        [Test]
+        public void ReadAllText_Throws_WhenFileExtensionDoesNotSupport()
+        {
+            var path = @"..\..\..\TestTexts\file.pdf";
+            
+            Assert.Throws<IOException>(() => textReader.ReadAllText(path));
         }
 
         [Test]
@@ -18,7 +35,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextReaderTests
         {
             var path = @"..\..\..\TestTexts\test1.txt";
             
-            var result = TextReader.ReadAllText(path);
+            var result = textReader.ReadAllText(path);
 
             result.Split(' ').Length.Should().Be(4);
         }
@@ -28,7 +45,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextReaderTests
         {
             var path = @"..\..\..\TestTexts\test1.txt";
             
-            var result = TextReader.ReadAllText(path);
+            var result = textReader.ReadAllText(path);
 
             result.Should().Be("hello world and Arina");
         }
@@ -38,7 +55,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextReaderTests
         {
             var path = @"..\..\..\TestTexts\test2.docx";
             
-            var result = TextReader.ReadAllText(path);
+            var result = textReader.ReadAllText(path);
 
             result.Should().Be("Hello world with this beautiful text!");
         }
@@ -48,7 +65,7 @@ namespace TagsCloudVisualizationTests.TextProcessingTests.TextReaderTests
         {
             var path = @"..\..\..\TestTexts\test3.doc";
             
-            var result = TextReader.ReadAllText(path);
+            var result = textReader.ReadAllText(path);
 
             result.Should().Be("Hello world with this beautiful text!");
         }
