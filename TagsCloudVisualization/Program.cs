@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Forms;
 using TagsCloudVisualization.AppSettings;
 using TagsCloudVisualization.FormAction;
+using TagsCloudVisualization.ImageSavers;
 using TagsCloudVisualization.PointsGenerators;
 using TagsCloudVisualization.TagCloudBuilders;
 using TagsCloudVisualization.TagCloudLayouter;
@@ -33,6 +34,7 @@ namespace TagsCloudVisualization
             services.AddSingleton<ITextHandler, FrequencyTextHandler>();
             services.AddSingleton<IWordFilter, WordFilter>();
             services.AddSingleton<IWordsWeigher, FrequencyWordWeigher>();
+            services.AddSingleton<IImageSaver, ImageSaver>();
             services.AddSingleton<ICanvas, Canvas>();
 
             services.AddSingleton<IReader, TxtReader>();

@@ -13,7 +13,9 @@
 
     <ItemGroup>
       <None Remove="Examples\example.txt" />
-      <Resource Include="Examples\example.txt" />
+      <Resource Include="Examples\example.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
-﻿using System.Drawing.Imaging;
-using System.IO;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using TagsCloudVisualization.Canvases;
+using TagsCloudVisualization.ImageSavers;
 
 namespace TagsCloudVisualization.FormAction
 {
@@ -12,10 +11,12 @@ namespace TagsCloudVisualization.FormAction
         public string Description => "Save your tag cloud to a folder";
 
         private readonly ICanvas canvas;
+        private readonly IImageSaver imageSaver;
 
-        public SaveImageAction(ICanvas canvas)
+        public SaveImageAction(ICanvas canvas, IImageSaver imageSaver)
         {
             this.canvas = canvas;
+            this.imageSaver = imageSaver;
         }
 
         public void Perform()
@@ -30,18 +31,7 @@ namespace TagsCloudVisualization.FormAction
             };
             var dialogResult = dialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
-                canvas.SaveImage(dialog.FileName, GetSaveImageFormat(dialog));
-        }
-
-        private ImageFormat GetSaveImageFormat(SaveFileDialog dialog)
-        {
-            return Path.GetExtension(dialog.FileName) switch
-            {
-                ".BMP" => ImageFormat.Bmp,
-                ".Jpg" => ImageFormat.Jpeg,
-                ".Gif" => ImageFormat.Gif,
-                _ => ImageFormat.Png
-            };
+                imageSaver.SaveImage(canvas, dialog.FileName);
         }
     }
 }
