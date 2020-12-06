@@ -15,7 +15,11 @@ namespace MyStem.Wrapper.Wrapper
             processFactory = () => CreateProcess(exePath, launchArgs);
         }
 
-        public string GetResponse(string text) => GetResults(processFactory.Invoke(), text);
+        public string GetResponse(string text)
+        {
+            using var process = processFactory.Invoke();
+            return GetResults(process, text);
+        }
 
         private static string GetResults(Process executingProcess, string text)
         {
