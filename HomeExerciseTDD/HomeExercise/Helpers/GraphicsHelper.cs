@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace HomeExerciseTDD.Helpers
+namespace HomeExercise.Helpers
 {
     public static class GraphicsHelper
     {
