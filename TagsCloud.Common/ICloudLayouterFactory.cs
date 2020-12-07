@@ -2,6 +2,6 @@
 {
     public interface ICloudLayouterFactory
     {
-        ICircularCloudLayouter Create();
+        ICircularCloudLayouter CreateCircularLayouter();
     }
 }

@@ -3,6 +3,7 @@ using TagsCloud.ClientGUI.Infrastructure;
 using TagsCloud.Common;
 using TagsCloud.Core;
 using TagsCloud.FileReader;
+using TagsCloud.Visualization;
 
 namespace TagsCloud.ClientGUI
 {

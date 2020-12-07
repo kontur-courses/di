@@ -20,7 +20,7 @@ namespace TagsCloud.ClientGUI.Actions
 
         public void Perform()
         {
-            tagsCloudPainter.Paint(cloudFactory.Create());
+            tagsCloudPainter.Paint(cloudFactory.CreateCircularLayouter());
         }
     }
 }

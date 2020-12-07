@@ -11,7 +11,7 @@ namespace TagsCloud.CloudLayouters
             this.spiralFactory = spiralFactory;
         }
 
-        public ICircularCloudLayouter Create()
+        public ICircularCloudLayouter CreateCircularLayouter()
         {
             return new CircularCloudLayouter(spiralFactory.Create());
         }

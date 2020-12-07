@@ -50,11 +50,13 @@ namespace TagsCloud.Core
             foreach (var word in words)
             {
                 var fontSize = word.Item2;
-                if (!newFonts.ContainsKey(fontSize))
-                    newFonts[fontSize] = new Font(font.FontFamily, (int)(font.Size * Math.Log(word.Item2 + 1)), font.Style);
+                if (!newFonts.TryGetValue(fontSize, out var newFont))
+                {
+                    newFont = new Font(font.FontFamily, (int) (font.Size * Math.Log(word.Item2 + 1)), font.Style);
+                    newFonts[fontSize] = newFont;
+                }
 
-                var rect = cloud.PutNextRectangle(new Size((int)newFonts[fontSize].Size * word.Item1.Length,
-                    newFonts[fontSize].Height));
+                var rect = cloud.PutNextRectangle(new Size((int)newFont.Size * word.Item1.Length, newFont.Height));
                 rectangles.Add(rect);
             }
             return rectangles;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloud.Common;
-using TagsCloud.Visualization;
+using TagsCloud.Core;
 
-namespace TagsCloud.Core
+namespace TagsCloud.Visualization
 {
     public class CloudVisualization
     {
