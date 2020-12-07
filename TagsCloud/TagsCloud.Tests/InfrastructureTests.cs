@@ -14,7 +14,7 @@ using TagsCloud.WordsProcessing;
 
 namespace TagsCloud.Tests
 {
-    class IntegrationTests
+    class InfrastructureTests
     {
         [Test]
         public void ImageHolderShould_ChangeLayouter_OnChangeActionCall()
