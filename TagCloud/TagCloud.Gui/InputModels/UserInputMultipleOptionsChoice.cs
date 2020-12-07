@@ -13,7 +13,7 @@ namespace TagCloud.Gui.InputModels
             selectionByNames = Available.ToDictionary(x => x.Name, _ => false);
         }
 
-        public IEnumerable<UserInputSelectorItem<T>> Selected => Available.Where(x => IsSelected(x.Name));
+        public IEnumerable<T> Selected => Available.Where(x => IsSelected(x.Name)).Select(x => x.Value);
         public bool IsSelected(string name) => selectionByNames[name];
 
         public void ChangeItemSelection(string name) => selectionByNames[name] = !IsSelected(name);

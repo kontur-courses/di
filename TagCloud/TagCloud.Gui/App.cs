@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MyStem.Wrapper.Workers.Grammar.Parsing.Models;
 using TagCloud.Core;
 using TagCloud.Core.Layouting;
 using TagCloud.Core.Output;
@@ -28,6 +29,7 @@ namespace TagCloud.Gui
         private readonly UserInputOneOptionChoice<FontSizeSourceType> fontSizeSourcePicker;
         private readonly UserInputOneOptionChoice<FontFamily> fontFamilyPicker;
         private readonly UserInputOneOptionChoice<IImageResizer> imageResizerPicker;
+        private readonly UserInputOneOptionChoice<ISpeechPartWordsFilter> speechPartFilterPicker;
         private readonly UserInputField filePathInput;
         private readonly UserInputSizeField centerOffsetPicker;
         private readonly UserInputSizeField betweenWordsDistancePicker;
@@ -35,6 +37,7 @@ namespace TagCloud.Gui
         private readonly UserInputOneOptionChoice<ImageFormat> imageFormatPicker;
         private readonly UserInputColor backgroundColorPicker;
         private readonly UserInputColorPalette colorPalettePicker;
+        private readonly UserInputMultipleOptionsChoice<MyStemSpeechPart> speechPartPicker;
 
         public App(IUi ui,
             ITagCloudGenerator cloudGenerator,
@@ -42,7 +45,8 @@ namespace TagCloud.Gui
             IEnumerable<IWordFilter> filters,
             IEnumerable<IWordConverter> normalizers,
             IEnumerable<IFileResultWriter> writers,
-            IEnumerable<IImageResizer> resizers)
+            IEnumerable<IImageResizer> resizers,
+            IEnumerable<ISpeechPartWordsFilter> speechFilters)
         {
             this.ui = ui;
             this.cloudGenerator = cloudGenerator;
@@ -52,6 +56,7 @@ namespace TagCloud.Gui
             writerPicker = UserInput.SingleChoice(ToDictionaryByName(writers), "Result writing method");
             normalizerPicker = UserInput.SingleChoice(ToDictionaryByName(normalizers), "Words normalization method");
             imageResizerPicker = UserInput.SingleChoice(ToDictionaryByName(resizers), "Resizing method");
+            speechPartFilterPicker = UserInput.SingleChoice(ToDictionaryByName(speechFilters), "Speech type filter");
             layouterPicker = UserInput.SingleChoice(DictionaryFromEnum<LayouterType>(), "Layouting algorithm");
             fontSizeSourcePicker = UserInput.SingleChoice(DictionaryFromEnum<FontSizeSourceType>(), "Font size source");
 
@@ -62,6 +67,7 @@ namespace TagCloud.Gui
             imageSizePicker = UserInput.Size("Result image size");
             backgroundColorPicker = UserInput.Color(Color.Khaki, "Image background color");
             colorPalettePicker = UserInput.ColorPalette("Words color palette", Color.DarkRed);
+            speechPartPicker = UserInput.MultipleChoice(DictionaryFromEnum<MyStemSpeechPart>(), "Speech parts rules");
 
             var formats = new[] {ImageFormat.Gif, ImageFormat.Png, ImageFormat.Bmp, ImageFormat.Jpeg, ImageFormat.Tiff};
             imageFormatPicker = UserInput.SingleChoice(formats.ToDictionary(x => x.ToString()), "Result image format");
@@ -72,21 +78,31 @@ namespace TagCloud.Gui
             ui.ExecutionRequested += ExecutionRequested;
 
             ui.AddUserInput(filePathInput);
+
             ui.AddUserInput(imageSizePicker);
             AddUserInputOrUseDefault(imageResizerPicker);
+
+            AddUserInputOrUseDefault(layouterPicker);
+
             ui.AddUserInput(backgroundColorPicker);
             ui.AddUserInput(colorPalettePicker);
+
             AddUserInputOrUseDefault(fontFamilyPicker);
             AddUserInputOrUseDefault(fontSizeSourcePicker);
+
+            AddUserInputOrUseDefault(speechPartFilterPicker);
+            if (speechPartFilterPicker.Available.Any()) ui.AddUserInput(speechPartPicker);
+
             ui.AddUserInput(filterPicker);
             AddUserInputOrUseDefault(normalizerPicker);
+
             ui.AddUserInput(centerOffsetPicker);
             ui.AddUserInput(betweenWordsDistancePicker);
 
-            AddUserInputOrUseDefault(layouterPicker);
-            AddUserInputOrUseDefault(imageFormatPicker);
+
             AddUserInputOrUseDefault(readerPicker);
             AddUserInputOrUseDefault(writerPicker);
+            AddUserInputOrUseDefault(imageFormatPicker);
         }
 
         private async void ExecutionRequested()
@@ -135,10 +151,15 @@ namespace TagCloud.Gui
         {
             return await Task.Run(() =>
             {
-                var words = readerPicker.Selected.Value.GetWordsFrom(sourcePath).AsEnumerable();
-                var validWOrds = filterPicker.Selected
-                    .Aggregate(words, (current, filter) => filter.Value.GetValidWordsOnly(current));
-                return normalizerPicker.Selected.Value.Normalize(validWOrds)
+                var rawWords = readerPicker.Selected.Value.GetWordsFrom(sourcePath).AsEnumerable();
+                var words = filterPicker.Selected
+                    .Aggregate(rawWords, (current, filter) => filter.GetValidWordsOnly(current));
+
+                var speechFilter = speechPartFilterPicker.Selected;
+                if (!speechFilter.IsEmpty && speechPartPicker.Selected.Any())
+                    words = speechFilter.Value.OnlyWithSpeechPart(words, speechPartPicker.Selected.ToHashSet());
+
+                return normalizerPicker.Selected.Value.Normalize(words)
                     .ToLookup(x => x)
                     .ToDictionary(x => x.Key, x => x.Count());
             }, cancellationToken);
@@ -172,6 +193,6 @@ namespace TagCloud.Gui
             source.Where(x => x != null).ToDictionary(x => VisibleName.Get(x.GetType()));
 
         private static Dictionary<string, TEnum> DictionaryFromEnum<TEnum>() where TEnum : struct, Enum =>
-            Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToDictionary(x => x.ToString());
+            Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToDictionary(VisibleName.Get);
     }
 }

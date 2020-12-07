@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyStem.Wrapper.Workers.Grammar.Parsing.Models;
 using TagCloud.Core.Output;
 using TagCloud.Core.Text;
 using TagCloud.Core.Text.Formatting;
@@ -26,9 +27,40 @@ namespace TagCloud.Gui
             {typeof(PlaceAtCenterImageResizer), "Place at center or fit to size"}
         };
 
-        public static string Get(Type type) => 
-            overridingNames.TryGetValue(type, out var overriden) 
-                ? overriden 
+        public static string Get(Type type) =>
+            overridingNames.TryGetValue(type, out var overriden)
+                ? overriden
                 : type.Name;
+
+        public static string Get<T>(T enumItem) where T : struct, Enum
+        {
+            return enumItem switch
+            {
+                MyStemSpeechPart speechPart => Get(speechPart),
+                _ => EnumDefaultName(enumItem)
+            };
+        }
+
+        public static string Get(MyStemSpeechPart speechPart) => speechPart switch
+        {
+            MyStemSpeechPart.Unrecognized => "Unrecognized",
+            MyStemSpeechPart.Adjective => "Adjective",
+            MyStemSpeechPart.Adverb => "Adverb",
+            MyStemSpeechPart.PronominalAdverb => "Pronominal Adverb",
+            MyStemSpeechPart.PronounNumeral => "Pronoun Numeral",
+            MyStemSpeechPart.PronounAdjective => "Pronoun Adjective",
+            MyStemSpeechPart.CompositeWordPart => "Part of Composite word",
+            MyStemSpeechPart.Union => "Union",
+            MyStemSpeechPart.Interjection => "Interjection",
+            MyStemSpeechPart.Numeral => "Numeral",
+            MyStemSpeechPart.Particle => "Particle",
+            MyStemSpeechPart.Pretext => "Pretext",
+            MyStemSpeechPart.Noun => "Noun",
+            MyStemSpeechPart.Pronoun => "Pronoun",
+            MyStemSpeechPart.Verb => "Verb",
+            _ => EnumDefaultName(speechPart)
+        };
+
+        private static string EnumDefaultName<T>(T enumItem) where T : struct, Enum => enumItem.ToString();
     }
 }

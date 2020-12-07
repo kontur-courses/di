@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
-using Autofac.Core;
 using MyStem.Wrapper.Wrapper;
 
 namespace TagCloud.Gui

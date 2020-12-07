@@ -27,7 +27,7 @@ namespace TagCloud.Gui
         {
             Application.Run(this);
         }
-        
+
         public void OnAfterWordDrawn(Image newImage, Color backgroundColor)
         {
             pictureBox.BackColor = backgroundColor;
