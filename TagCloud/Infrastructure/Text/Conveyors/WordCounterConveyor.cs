@@ -8,6 +8,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
     {
         public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
+            tokens = tokens.ToList();
             var counts = GetCount(tokens.Select(pair => pair.token));
             foreach (var word in counts.Keys)
             {
