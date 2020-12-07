@@ -37,11 +37,12 @@ namespace TagCloud.Gui
             return enumItem switch
             {
                 MyStemSpeechPart speechPart => Get(speechPart),
+                FontSizeSourceType fontSizeSourceType => Get(fontSizeSourceType),
                 _ => EnumDefaultName(enumItem)
             };
         }
 
-        public static string Get(MyStemSpeechPart speechPart) => speechPart switch
+        private static string Get(MyStemSpeechPart speechPart) => speechPart switch
         {
             MyStemSpeechPart.Unrecognized => "Unrecognized",
             MyStemSpeechPart.Adjective => "Adjective",
@@ -59,6 +60,13 @@ namespace TagCloud.Gui
             MyStemSpeechPart.Pronoun => "Pronoun",
             MyStemSpeechPart.Verb => "Verb",
             _ => EnumDefaultName(speechPart)
+        };
+
+        private static string Get(FontSizeSourceType sizeSourceType) => sizeSourceType switch
+        {
+            FontSizeSourceType.Random => "Randomized",
+            FontSizeSourceType.FrequentIsBigger => "More frequent is bigger",
+            _ => EnumDefaultName(sizeSourceType)
         };
 
         private static string EnumDefaultName<T>(T enumItem) where T : struct, Enum => enumItem.ToString();
