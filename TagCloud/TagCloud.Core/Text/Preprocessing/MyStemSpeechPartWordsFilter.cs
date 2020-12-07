@@ -25,11 +25,4 @@ namespace TagCloud.Core.Text.Preprocessing
                 .Where(r => r.Entries.Any(e => includedSpeechParts.Contains(e.SpeechPart)))
                 .Select(r => r.Text);
     }
-
-    public interface ISpeechPartWordsFilter
-    {
-        IEnumerable<string> OnlyWithSpeechPart(
-            IEnumerable<string> words,
-            ISet<MyStemSpeechPart> speechParts);
-    }
 }

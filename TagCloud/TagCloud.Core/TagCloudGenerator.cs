@@ -66,7 +66,7 @@ namespace TagCloud.Core
                 }
 
                 return (Image) cloudVisualiser.Current!.Clone();
-            }, token);
+            }, token).ConfigureAwait(false);
         }
 
         private static FormattedWord FormattedWordFrom(string word, Color color, FontFamily fontFamily,
