@@ -20,8 +20,8 @@ namespace TagsCloud.App
                 .Select(x => x.ToLower())
                 .Where(x => wordChecker.IsWordNotBoring(x))
                 .GroupBy(x => x)
-                .ToDictionary(x=>x.Key,
-                    x=>Math.Round((double)x.Count() / lines.Length, 2));
+                .ToDictionary(x => x.Key,
+                    x => Math.Round((double) x.Count() / lines.Length, 2));
         }
     }
 }
