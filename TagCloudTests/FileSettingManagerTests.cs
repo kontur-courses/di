@@ -21,7 +21,6 @@ namespace TagCloudTests
         {
             builder = new ContainerBuilder();
             builder.RegisterType<TxtReader>().As<IReader<string>>();
-            builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()

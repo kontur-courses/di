@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Autofac;
@@ -19,7 +20,6 @@ namespace TagCloudTests
         {
             builder = new ContainerBuilder();
             builder.RegisterType<TxtReader>().As<IReader<string>>();
-            builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()
@@ -78,17 +78,23 @@ namespace TagCloudTests
         {
             var container = builder.Build();
             var parser = container.Resolve<IReader<string>>();
-            var analyzer = container.Resolve<ITokenAnalyzer<string>>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
             settingsFactory().ExcludedTypes = new [] {WordType.CONJ, WordType.SPRO, WordType.PR};
             settingsFactory().Path = path;
             File.WriteAllText(path, text);
             var tokens = parser.ReadTokens();
-
-            var actual = analyzer.Analyze(tokens).Select(pair => pair.Item1);
+            var conveyors = container.Resolve<IEnumerable<IConveyor<string>>>();
+            var actual = Analyze(conveyors, tokens).Select(pair => pair.Item1);
 
             CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        private IEnumerable<(string, TokenInfo)> Analyze(IEnumerable<IConveyor<String>> conveyors, IEnumerable<String> tokens)
+        {
+            return conveyors.Aggregate(
+                tokens.Select(line => (line, new TokenInfo())),
+                (current, filter) => filter.Handle(current).ToArray());
         }
     }
 }

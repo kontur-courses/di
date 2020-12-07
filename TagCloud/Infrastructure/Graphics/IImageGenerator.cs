@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace TagCloud.App
+namespace TagCloud.Infrastructure.Graphics
 {
     public interface IImageGenerator
     {

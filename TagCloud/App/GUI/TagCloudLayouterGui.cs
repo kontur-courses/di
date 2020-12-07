@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using Gdk;
 using Gtk;
+using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using Image = System.Drawing.Image;
 using Settings = TagCloud.Infrastructure.Settings.Settings;

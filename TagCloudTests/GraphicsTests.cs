@@ -41,8 +41,7 @@ namespace TagCloudTests
         public void SetUp()
         {
             builder = new ContainerBuilder();
-            builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
-
+            builder.RegisterType<TagCloudGenerator>().As<IImageGenerator>();
             builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
             var myStemPath = Program.GetReleasePath("mystem");
             builder.RegisterType<WordTypeConveyor>()
@@ -96,17 +95,11 @@ namespace TagCloudTests
             builder.RegisterType<MockReader>().WithParameter("words", words).As<IReader<string>>();
             var container = builder.Build();
             var settingsFactory = container.Resolve<Func<Settings>>();
-            var reader = container.Resolve<IReader<string>>();
-            var wordAnalyzer = container.Resolve<ITokenAnalyzer<string>>();
-            var painter = container.Resolve<IPainter<string>>();
+            var generator = container.Resolve<IImageGenerator>();
             settingsFactory().Import(Program.GetDefaultSettings());
             
-            var tokens = reader.ReadTokens();
-            var analyzedTokens = wordAnalyzer.Analyze(tokens);
-            image1 = painter.GetImage(analyzedTokens);
-            tokens = reader.ReadTokens();
-            analyzedTokens = wordAnalyzer.Analyze(tokens);
-            image2 = painter.GetImage(analyzedTokens);
+            image1 = generator.Generate();
+            image2 = generator.Generate();
             
             ImageAssert.AreEqual((Bitmap) image1, (Bitmap) image2);
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 
