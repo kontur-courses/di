@@ -29,8 +29,7 @@ namespace TagsCloudContainer.App
                 //var inputFile = Path.GetFullPath(Path.Combine(
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
                 //var outputFile = Path.GetFullPath(Path.Combine(
-                //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png"));
-                var imageHolder = new PictureBoxImageHolder(ImageSizeSettings.Instance, ImageFormatSettings.Instance);
+                //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png")););
                 var services = new ServiceCollection()
                     .AddSingleton<Mysteam>(new Mysteam(Path.GetFullPath(Path.Combine(
                         Directory.GetCurrentDirectory(), "..", "..", "..", "mystem.exe"))))
@@ -61,8 +60,10 @@ namespace TagsCloudContainer.App
                     .AddSingleton<ICloudPainter, CloudPainter>()
                     .AddSingleton<ICloudLayouterFactory, CloudLayouterFactory>()
                     .AddSingleton<ICloudVisualizer, CloudVisualizer.CloudVisualizer>()
-                    .AddSingleton(imageHolder)
-                    .AddSingleton<IImageHolder>(imageHolder)
+                    .AddSingleton(provider => new Lazy<MainForm>(() => provider.GetRequiredService<MainForm>()))
+                    .AddSingleton<PictureBoxImageHolder, PictureBoxImageHolder>()
+                    .AddSingleton<IImageHolder>(x => x.GetRequiredService<PictureBoxImageHolder>())
+                    .AddSingleton(provider => new Lazy<IImageHolder>(() => provider.GetRequiredService<IImageHolder>()))
                     .AddSingleton<IUiAction, CircularCloudAction>()
                     .AddSingleton<IUiAction, ImageSettingsAction>()
                     .AddSingleton<IUiAction, PaletteSettingsAction>()

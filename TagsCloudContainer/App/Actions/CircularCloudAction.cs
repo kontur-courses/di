@@ -1,18 +1,18 @@
 ﻿using TagsCloudContainer.App.Settings;
+using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
-using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.UiActions;
 
 namespace TagsCloudContainer.App.Actions
 {
     internal class CircularCloudAction : IUiAction
     {
-        private readonly ICloudVisualizer circularCloudVisualizer;
+        private readonly IImageHolder imageHolder;
         private readonly LayouterAlgorithmSettings settings;
 
-        public CircularCloudAction(ICloudVisualizer circularCloudVisualizer, LayouterAlgorithmSettings settings)
+        public CircularCloudAction(IImageHolder imageHolder, LayouterAlgorithmSettings settings)
         {
-            this.circularCloudVisualizer = circularCloudVisualizer;
+            this.imageHolder = imageHolder;
             this.settings = settings;
         }
 
@@ -23,7 +23,7 @@ namespace TagsCloudContainer.App.Actions
         public void Perform()
         {
             settings.LayouterAlgorithm = CloudLayouterAlgorithm.CircularCloudLayouter;
-            circularCloudVisualizer.Visualize();
+            imageHolder.GenerateImage();
         }
     }
 }

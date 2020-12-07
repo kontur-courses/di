@@ -8,5 +8,6 @@ namespace TagsCloudContainer.Infrastructure
         void UpdateUi();
         void RecreateImage();
         void SaveImage(string fileName);
+        void GenerateImage();
     }
 }

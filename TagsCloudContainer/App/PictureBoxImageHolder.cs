@@ -1,22 +1,36 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading;
 using System.Windows.Forms;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App
 {
-    public class PictureBoxImageHolder : PictureBox, IImageHolder
+    internal class PictureBoxImageHolder : PictureBox, IImageHolder
     {
         private readonly IImageSizeSettingsHolder sizeSettings;
         private readonly IImageFormatSettingsHolder formatSettings;
+        private readonly Lazy<MainForm> mainForm;
+        private readonly ICloudVisualizer cloudVisualizer;
 
         public PictureBoxImageHolder(IImageSizeSettingsHolder sizeSettings, 
-            IImageFormatSettingsHolder formatSettings)
+            IImageFormatSettingsHolder formatSettings, Lazy<MainForm> mainForm,
+            ICloudVisualizer cloudVisualizer)
         {
             this.sizeSettings = sizeSettings;
             this.formatSettings = formatSettings;
+            this.mainForm = mainForm;
+            this.cloudVisualizer = cloudVisualizer;
+        }
+
+        public void GenerateImage()
+        {
+            mainForm.Value.SetEnabled(false);
+            var thread = new Thread(cloudVisualizer.Visualize);
+            thread.Start();
         }
 
         public Graphics StartDrawing()
@@ -27,8 +41,16 @@ namespace TagsCloudContainer.App
 
         public void UpdateUi()
         {
-            Refresh();
-            Application.DoEvents();
+            MethodInvoker method = delegate
+            {
+                mainForm.Value.SetEnabled(true);
+                Refresh();
+                Application.DoEvents();
+            };
+            if (mainForm.Value.InvokeRequired)
+                BeginInvoke(method);
+            else
+                method.Invoke();
         }
 
         public void RecreateImage()
