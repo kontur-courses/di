@@ -16,20 +16,12 @@ namespace TagsCloud.App
 
         public Dictionary<string, double> Get(string[] lines)
         {
-            var wordFrequencies = new Dictionary<string, double>();
-            var words = lines
+            return lines
                 .Select(x => x.ToLower())
-                .Where(x => wordChecker.IsWordNotBoring(x));
-            foreach (var word in words)
-            {
-                if (!wordFrequencies.ContainsKey(word))
-                    wordFrequencies[word] = 0;
-                wordFrequencies[word]++;
-            }
-
-            return wordFrequencies
-                .ToDictionary(x => x.Key,
-                    x => Math.Round(x.Value / lines.Length, 2));
+                .Where(x => wordChecker.IsWordNotBoring(x))
+                .GroupBy(x => x)
+                .ToDictionary(x=>x.Key,
+                    x=>Math.Round((double)x.Count() / lines.Length, 2));
         }
     }
 }
