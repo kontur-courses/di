@@ -50,8 +50,9 @@ namespace TagsCloudContainer.App
                     .AddSingleton(FilteringWordsSettings.Instance)
                     .AddSingleton<IFilteringWordsSettingsHolder>(FilteringWordsSettings.Instance)
                     .AddSingleton<IDataReaderFactory, DataReaderFactory>()
-                    .AddSingleton<ITextParser, SimpleTextParser>()
+                    .AddSingleton<ITextParser, LiteratureTextParser>()
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
+                    .AddSingleton<IWordNormalizer, ToInitialFormNormalizer>()
                     .AddSingleton<IWordFilter, PartOfSpeechFilter>()
                     .AddSingleton<ITextParserToFrequencyDictionary,
                         TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
