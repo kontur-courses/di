@@ -18,18 +18,18 @@ namespace TagCloud.Infrastructure.Text.Conveyors
         public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var baseFont = fontSettingProvider();
-            var valueTuples = tokens.ToList();
-            var maxCount = valueTuples.Select(pair => pair.info.Frequency).Aggregate(Math.Max);
-            var minCount = valueTuples.Select(pair => pair.info.Frequency).Aggregate(Math.Min);
-            var tg1 = Math.Max(baseFont.MaxFontSize - baseFont.MinFontSize, 1);
-            var tg2 = Math.Max(maxCount - minCount, 1);
+            var tokensWithInfo = tokens.ToList();
+            var maxCount = tokensWithInfo.Select(pair => pair.info.Frequency).Aggregate(Math.Max);
+            var minCount = tokensWithInfo.Select(pair => pair.info.Frequency).Aggregate(Math.Min);
+            var currentGradient = Math.Max(baseFont.MaxFontSize - baseFont.MinFontSize, 1);
+            var desiredGradient = Math.Max(maxCount - minCount, 1);
 
             int FontSizeLine(int x)
             {
-                return (x - minCount) * tg1 / tg2 + baseFont.MinFontSize;
+                return (x - minCount) * currentGradient / desiredGradient + baseFont.MinFontSize;
             }
 
-            foreach (var (word, info) in valueTuples)
+            foreach (var (word, info) in tokensWithInfo)
             {
                 var count = info.Frequency;
                 info.FontSize = FontSizeLine(count);
