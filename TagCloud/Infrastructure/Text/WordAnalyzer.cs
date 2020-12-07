@@ -18,7 +18,7 @@ namespace TagCloud.Infrastructure.Text
         {
             return filters.Aggregate(
                 words.Select(line => (line, new TokenInfo())),
-                (current, filter) => filter.Filter(current).ToArray());
+                (current, filter) => filter.Handle(current).ToArray());
         }
     }
 }

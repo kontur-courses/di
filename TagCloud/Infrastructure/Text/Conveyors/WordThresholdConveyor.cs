@@ -15,7 +15,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
             this.wordCountThresholdProvider = wordCountThresholdProvider;
         }
 
-        public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var threshold = wordCountThresholdProvider().WordCountThreshold;
             return tokens.Where(pair => pair.info.Frequency > threshold);

@@ -17,7 +17,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
             this.fontSettingProvider = fontSettingProvider;
         }
 
-        public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var result = new Dictionary<string, TokenInfo>();
             foreach (var (word, info) in tokens)

@@ -5,6 +5,6 @@ namespace TagCloud.Infrastructure.Text.Conveyors
 {
     public interface IConveyor<TToken>
     {
-        public IEnumerable<(TToken token, TokenInfo info)> Filter(IEnumerable<(TToken token, TokenInfo info)> tokens);
+        public IEnumerable<(TToken token, TokenInfo info)> Handle(IEnumerable<(TToken token, TokenInfo info)> tokens);
     }
 }

@@ -6,7 +6,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
 {
     public class WordCounterConveyor : IConveyor<string>
     {
-        public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var counts = GetCount(tokens.Select(pair => pair.token));
             foreach (var word in counts.Keys)

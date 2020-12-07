@@ -18,7 +18,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
             wordWithTypeRegex = new Regex(@".+?\{(?<word>.+?)=(?<type>.+?)\W.+?\}");
         }
 
-        public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var analyzer = new MyStem {PathToMyStem = myStemPath, Parameters = "-i"};
             var analysis = analyzer.Analysis(string.Join(" ", tokens.Select(pair => pair.token)));

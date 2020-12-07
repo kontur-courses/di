@@ -15,7 +15,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
             this.fontSettingProvider = fontSettingProvider;
         }
 
-        public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {
             var baseFont = fontSettingProvider();
             var tokensWithInfo = tokens.ToList();
