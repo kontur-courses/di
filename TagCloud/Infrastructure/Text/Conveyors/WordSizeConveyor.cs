@@ -8,7 +8,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordSizeConveyor : IConveyor<string>
+    public class WordSizeConveyor : IConveyor
     {
         private readonly Func<IFontSettingProvider> fontSettingProvider;
 

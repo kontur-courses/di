@@ -3,8 +3,8 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public interface IConveyor<TToken>
+    public interface IConveyor
     {
-        public IEnumerable<(TToken token, TokenInfo info)> Handle(IEnumerable<(TToken token, TokenInfo info)> tokens);
+        public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens);
     }
 }

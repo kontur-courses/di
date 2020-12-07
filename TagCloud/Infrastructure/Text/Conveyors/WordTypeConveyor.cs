@@ -7,7 +7,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordTypeConveyor : IConveyor<string>
+    public class WordTypeConveyor : IConveyor
     {
         private readonly string myStemPath;
         private readonly Regex wordWithTypeRegex;

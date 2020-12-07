@@ -26,16 +26,16 @@ namespace TagCloud
             builder.RegisterType<TxtReader>().As<IReader>();
             builder.RegisterType<TagCloudGenerator>().As<IImageGenerator>();
 
-            builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<LowerCaseConveyor>().As<IConveyor>();
             var myStemPath = GetReleasePath("mystem");
             builder.RegisterType<WordTypeConveyor>()
-                .As<IConveyor<string>>()
+                .As<IConveyor>()
                 .WithParameter(new TypedParameter(typeof(string), myStemPath));
-            builder.RegisterType<WordCounterConveyor>().As<IConveyor<string>>();
-            builder.RegisterType<WordThresholdConveyor>().As<IConveyor<string>>();
-            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor<string>>();
-            builder.RegisterType<WordFontSizeConveyor>().As<IConveyor<string>>();
-            builder.RegisterType<WordSizeConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<WordCounterConveyor>().As<IConveyor>();
+            builder.RegisterType<WordThresholdConveyor>().As<IConveyor>();
+            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor>();
+            builder.RegisterType<WordFontSizeConveyor>().As<IConveyor>();
+            builder.RegisterType<WordSizeConveyor>().As<IConveyor>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()

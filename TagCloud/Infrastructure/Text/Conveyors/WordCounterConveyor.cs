@@ -4,7 +4,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordCounterConveyor : IConveyor<string>
+    public class WordCounterConveyor : IConveyor
     {
         public IEnumerable<(string token, TokenInfo info)> Handle(IEnumerable<(string token, TokenInfo info)> tokens)
         {

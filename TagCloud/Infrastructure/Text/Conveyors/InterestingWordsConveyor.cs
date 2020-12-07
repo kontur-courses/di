@@ -6,7 +6,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class InterestingWordsConveyor : IConveyor<string>
+    public class InterestingWordsConveyor : IConveyor
     {
         private readonly Func<IExcludeTypesSettingsProvider> excludeTypesSettingsProvider;
 

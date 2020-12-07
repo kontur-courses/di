@@ -6,7 +6,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordThresholdConveyor : IConveyor<string>
+    public class WordThresholdConveyor : IConveyor
     {
         private readonly Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider;
 

@@ -56,9 +56,9 @@ namespace TagCloudTests
         public void Parse_Interesting(string text, string[] expected)
         {
             builder.RegisterType<WordTypeConveyor>()
-                .As<IConveyor<string>>()
+                .As<IConveyor>()
                 .WithParameter(new TypedParameter(typeof(string), myStemPath));
-            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor>();
             Run(text, expected);
         }
         
@@ -70,7 +70,7 @@ namespace TagCloudTests
             TestName = "To Lower")]
         public void Parse_ToLower(string text, string[] expected)
         {
-            builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<LowerCaseConveyor>().As<IConveyor>();
             Run(text, expected);
         }
 
@@ -84,13 +84,13 @@ namespace TagCloudTests
             settingsFactory().Path = path;
             File.WriteAllText(path, text);
             var tokens = parser.ReadTokens();
-            var conveyors = container.Resolve<IEnumerable<IConveyor<string>>>();
+            var conveyors = container.Resolve<IEnumerable<IConveyor>>();
             var actual = Analyze(conveyors, tokens).Select(pair => pair.Item1);
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
-        private IEnumerable<(string, TokenInfo)> Analyze(IEnumerable<IConveyor<String>> conveyors, IEnumerable<String> tokens)
+        private IEnumerable<(string, TokenInfo)> Analyze(IEnumerable<IConveyor> conveyors, IEnumerable<string> tokens)
         {
             return conveyors.Aggregate(
                 tokens.Select(line => (line, new TokenInfo())),

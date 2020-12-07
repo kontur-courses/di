@@ -10,10 +10,10 @@ namespace TagCloud.Infrastructure.Graphics
     public class TagCloudGenerator : IImageGenerator
     {
         private readonly IReader reader;
-        private readonly IEnumerable<IConveyor<string>> filters;
+        private readonly IEnumerable<IConveyor> filters;
         private readonly IPainter<string> painter;
 
-        public TagCloudGenerator(IReader reader, IEnumerable<IConveyor<string>> filters, IPainter<string> painter)
+        public TagCloudGenerator(IReader reader, IEnumerable<IConveyor> filters, IPainter<string> painter)
         {
             this.reader = reader;
             this.filters = filters;
