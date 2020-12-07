@@ -1,13 +1,12 @@
 using System;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Reflection;
 
 namespace TagCloud.Infrastructure.Settings.UISettingsManagers
 {
     public class ImageFormatSettingManager : ISettingsManager
     {
-        private Func<IImageFormatSettingProvider> settingsProvider;
+        private readonly Func<IImageFormatSettingProvider> settingsProvider;
 
         public ImageFormatSettingManager(Func<IImageFormatSettingProvider> settingsProvider)
         {

@@ -34,24 +34,24 @@ namespace TagCloudTests
 я
 дом
 ",
-            new string[] {"привет", "дом"}, 
+            new[] {"привет", "дом"}, 
             TestName = "Filter SPRO")]
         [TestCase(@"машины
 и
 машина
 ",
-            new string[] {"машина", "машина"}, 
+            new[] {"машина", "машина"}, 
             TestName = "Filter CONJ")]
         [TestCase(@"в
 машина
 ",
-            new string[] {"машина"}, 
+            new[] {"машина"}, 
             TestName = "Filter PR")]
         [TestCase(@"брошу
 бросил
 бросить
 ",
-            new string[] {"бросать", "бросать", "бросать"}, 
+            new[] {"бросать", "бросать", "бросать"}, 
             TestName = "Filter base form")]
         public void Parse_Interesting(string text, string[] expected)
         {
@@ -66,7 +66,7 @@ namespace TagCloudTests
 Слово
 слово
 ",
-            new string[] {"слово", "слово", "слово"}, 
+            new[] {"слово", "слово", "слово"}, 
             TestName = "To Lower")]
         public void Parse_ToLower(string text, string[] expected)
         {

@@ -5,7 +5,6 @@ using System.IO;
 using Autofac;
 using NUnit.Framework;
 using TagCloud;
-using TagCloud.App;
 using TagCloud.Infrastructure.Graphics;
 using TagCloud.Infrastructure.Layout;
 using TagCloud.Infrastructure.Layout.Environment;
@@ -127,8 +126,7 @@ namespace TagCloudTests
             Directory.CreateDirectory(path);
             path = Path.Combine(path, TestContext.CurrentContext.Test.Name);
             Directory.CreateDirectory(path);
-
-            var a = DateTime.Today;
+            
             image1.Save(Path.Combine(path, GetName(image1)));
             image2.Save(Path.Combine(path, GetName(image1)));
             

@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Autofac;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Settings;

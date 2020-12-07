@@ -12,7 +12,7 @@ namespace TagCloud.Infrastructure.Text.Conveyors
             var counts = GetCount(tokens.Select(pair => pair.token));
             foreach (var word in counts.Keys)
             {
-                var (token, info) = tokens.First(pair => pair.token == word);
+                var (_, info) = tokens.First(pair => pair.token == word);
                 info.Frequency = counts[word];
                 yield return (word, info);
             }

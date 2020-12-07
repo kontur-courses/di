@@ -27,7 +27,6 @@ namespace TagCloud.Infrastructure.Layout.Strategies
             }
 
             return OptimizePoint(obtainedPoint, isValidPoint);
-            ;
         }
 
         private Point OptimizePoint(Point obtainedPoint, Func<Point, bool> isValidPoint)
