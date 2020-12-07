@@ -4,32 +4,20 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloud.App
 {
-    public abstract class FileReader
+    public abstract class FileReader : IFileReader
     {
-        public static bool SplitLines;
+        protected Regex splitRegex = new Regex("\\W+");
         public virtual HashSet<string> AvailableFileTypes { get; }
 
-        protected void CheckForExceptions(string fileName)
+        public IEnumerable<string> ReadWords(string fileName)
         {
             var fileType = fileName.Split('.')[^1];
             if (!AvailableFileTypes.Contains(fileType))
                 throw new ArgumentException($"Incorrect type {fileType}");
+
+            return ReadWordsInternal(fileName);
         }
 
-        protected string[] SplitLine(string line)
-        {
-            return new Regex("\\W+").Split(line);
-        }
-
-
-        protected IEnumerable<string> GetWords(string line)
-        {
-            if (SplitLines)
-                foreach (var word in SplitLine(line))
-                    yield return word;
-            else yield return line;
-        }
-
-        public abstract IEnumerable<string> ReadLines(string fileName);
+        protected abstract IEnumerable<string> ReadWordsInternal(string fileName);
     }
 }

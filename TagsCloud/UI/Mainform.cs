@@ -10,7 +10,7 @@ namespace TagsCloud.UI
 {
     public partial class Mainform : Form
     {
-        private readonly HashSet<FileReader> fileReaders;
+        private readonly HashSet<IFileReader> fileReaders;
         private readonly IWordsFilter filter;
         private readonly Dictionary<string, FontFamily> fontFamilies;
         private readonly Dictionary<string, FontStyle> fontStyles;
@@ -24,7 +24,7 @@ namespace TagsCloud.UI
             ITagsCloudDrawer drawer,
             TagsCloudSettings settings,
             IWordsFilter filter,
-            IEnumerable<FileReader> fileReaders)
+            IEnumerable<IFileReader> fileReaders)
         {
             this.tagsCloudHandler = tagsCloudHandler;
             this.settings = settings;
@@ -35,7 +35,6 @@ namespace TagsCloud.UI
             fontStyles = settings.FontSettings.FontStyles.ToDictionary(style => style.ToString());
             layouters = rectanglesLayouters.ToDictionary(c => c.Name);
             InitializeComponent();
-            SplitLinesCheckBox.Checked = FileReader.SplitLines;
             FontFamilyChoice.DataSource = settings.FontSettings.FontFamilies.Select(f => f.Name).ToList();
             FontStyleChoice.DataSource = settings.FontSettings.FontStyles.Select(f => f.ToString()).ToList();
             AlgorithmChoice.DataSource = rectanglesLayouters.Select(c => c.Name).ToList();
@@ -66,7 +65,7 @@ namespace TagsCloud.UI
                 var fileReader = fileReaders.First(reader => reader.AvailableFileTypes.Contains(fileType));
                 if (fileReader == null)
                     throw new InvalidOperationException("Invalid file");
-                PictureBox.Image = tagsCloudHandler.GetNewTagcloud(fileReader.ReadLines(fileName));
+                PictureBox.Image = tagsCloudHandler.GetNewTagcloud(fileReader.ReadWords(fileName));
             }
         }
 
@@ -93,11 +92,6 @@ namespace TagsCloud.UI
         private void ExcludedWordsSetButton_Click(object sender, EventArgs e)
         {
             if (filter is BlackListWordsFilter blackListfilter) new SetExcludingWordsForm(blackListfilter).ShowDialog();
-        }
-
-        private void SplitLinesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            FileReader.SplitLines = SplitLinesCheckBox.Checked;
         }
 
         private void MaxWordsCountSetting_ValueChanged(object sender, EventArgs e)

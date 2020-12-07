@@ -19,8 +19,8 @@ namespace TagsCloud
             builder.RegisterInstance(new RectanglesLayouter(Point.Empty)).As<IRectanglesLayouter>();
             builder.RegisterType<TagsCloudDrawer>().As<ITagsCloudDrawer>();
             builder.RegisterType<TagsCloudHandler>().AsSelf();
-            builder.RegisterType<DocFileReader>().As<FileReader>();
-            builder.RegisterType<TxtFileReader>().As<FileReader>();
+            builder.RegisterType<DocFileReader>().As<IFileReader>();
+            builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterInstance(GetExcludedWords()).As<IEnumerable<string>>();
             builder.RegisterType<WordNormalizer>().As<IWordNormalizer>();
             builder.RegisterType<BlackListWordsFilter>().As<IWordsFilter>().SingleInstance();
@@ -36,7 +36,7 @@ namespace TagsCloud
             return new[]
             {
                 "и",
-                "a",
+                "а",
                 "в",
                 "о",
                 "от",
@@ -60,7 +60,64 @@ namespace TagsCloud
                 "со",
                 "же",
                 "при",
-                "их"
+                "их",
+                "он",
+                "не",
+                "ни",
+                "ей",
+                "ему",
+                "есть",
+                "мог",
+                "могла",
+                "была",
+                "вы",
+                "за",
+                "я",
+                "был",
+                "быть",
+                "есть",
+                "у",
+                "ты",
+                "бы",
+                "это",
+                "так",
+                "из",
+                "на",
+                "мы",
+                "тут",
+                "во",
+                "ней",
+                "нему",
+                "сам",
+                "него",
+                "неё",
+                "опять",
+                "тем",
+                "или",
+                "для",
+                "мой",
+                "эту",
+                "вам",
+                "про",
+                "без",
+                "им",
+                "ей",
+                "неё",
+                "кто",
+                "над",
+                "уж",
+                "эта",
+                "тот",
+                "этот",
+                "нею",
+                "вот",
+                "его",
+                "ту",
+                "ж",
+                "же",
+                "т",
+                "хоть",
+                "таки"
             };
         }
     }

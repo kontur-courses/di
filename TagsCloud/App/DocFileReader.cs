@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MicrosoftWord = Microsoft.Office.Interop.Word;
 
 namespace TagsCloud.App
@@ -7,9 +8,8 @@ namespace TagsCloud.App
     {
         public override HashSet<string> AvailableFileTypes { get; } = new HashSet<string> {"doc", "docx"};
 
-        public override IEnumerable<string> ReadLines(string fileName)
+        protected override IEnumerable<string> ReadWordsInternal(string fileName)
         {
-            CheckForExceptions(fileName);
             var app = new MicrosoftWord.Application();
             var objFileName = (object) fileName;
             app.Documents.Open(ref objFileName);
@@ -17,13 +17,16 @@ namespace TagsCloud.App
             if (doc.Paragraphs.Count == 1 && doc.Paragraphs.First.Range.Text == "\r")
             {
                 app.Quit();
-                yield break;
+                return new string[0];
             }
 
-            for (var i = 1; i <= doc.Paragraphs.Count; i++)
-                foreach (var word in GetWords(doc.Paragraphs[i].Range.Text.Trim('\r')))
-                    yield return word;
+            var paragraphs = doc
+                .Paragraphs
+                .Cast<MicrosoftWord.Paragraph>()
+                .SelectMany(p => splitRegex.Split(p.Range.Text.Trim('\r')))
+                .ToArray();
             app.Quit();
+            return paragraphs;
         }
     }
 }

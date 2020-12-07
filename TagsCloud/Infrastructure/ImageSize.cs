@@ -1,4 +1,6 @@
-﻿namespace TagsCloud.Infrastructure
+﻿using System.Windows.Forms;
+
+namespace TagsCloud.Infrastructure
 {
     public class ImageSize
     {
@@ -15,8 +17,9 @@
             get => width;
             set
             {
-                if (value > 0)
-                    width = value;
+                if (value <= 0)
+                    MessageBox.Show("Значение должно быть больше 0");
+                else width = value;
             }
         }
 
@@ -25,8 +28,9 @@
             get => height;
             set
             {
-                if (value > 0)
-                    height = value;
+                if (value <= 0)
+                    MessageBox.Show("Значение должно быть больше 0");
+                else height = value;
             }
         }
 

@@ -32,7 +32,6 @@
             this.PictureBox = new System.Windows.Forms.PictureBox();
             this.MaxWordsCountSetting = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.SplitLinesCheckBox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ExcludedWordsSetButton = new System.Windows.Forms.Button();
             this.CloudSizeSetting = new System.Windows.Forms.NumericUpDown();
@@ -73,7 +72,6 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.MaxWordsCountSetting);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
-            this.splitContainer1.Panel2.Controls.Add(this.SplitLinesCheckBox);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.ExcludedWordsSetButton);
             this.splitContainer1.Panel2.Controls.Add(this.CloudSizeSetting);
@@ -133,17 +131,6 @@
             this.label4.Size = new System.Drawing.Size(157, 15);
             this.label4.TabIndex = 11;
             this.label4.Text = "Максимальное число слов";
-            // 
-            // SplitLinesCheckBox
-            // 
-            this.SplitLinesCheckBox.AutoSize = true;
-            this.SplitLinesCheckBox.Location = new System.Drawing.Point(0, 283);
-            this.SplitLinesCheckBox.Name = "SplitLinesCheckBox";
-            this.SplitLinesCheckBox.Size = new System.Drawing.Size(159, 19);
-            this.SplitLinesCheckBox.TabIndex = 10;
-            this.SplitLinesCheckBox.Text = "Делить абзацы на слова";
-            this.SplitLinesCheckBox.UseVisualStyleBackColor = true;
-            this.SplitLinesCheckBox.CheckedChanged += new System.EventHandler(this.SplitLinesCheckBox_CheckedChanged);
             // 
             // label3
             // 
@@ -338,7 +325,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown CloudSizeSetting;
         private System.Windows.Forms.Button ExcludedWordsSetButton;
-        private System.Windows.Forms.CheckBox SplitLinesCheckBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown MaxWordsCountSetting;
         private System.Windows.Forms.Label label4;
