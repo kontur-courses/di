@@ -4,8 +4,8 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Graphics
 {
-    public interface IPainter<TToken>
+    public interface IPainter
     {
-        public Image GetImage(IEnumerable<(TToken, TokenInfo)> tokens);
+        public Image GetImage(IEnumerable<(string, TokenInfo)> tokens);
     }
 }

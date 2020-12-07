@@ -11,9 +11,9 @@ namespace TagCloud.Infrastructure.Graphics
     {
         private readonly IReader reader;
         private readonly IEnumerable<IConveyor> filters;
-        private readonly IPainter<string> painter;
+        private readonly IPainter painter;
 
-        public TagCloudGenerator(IReader reader, IEnumerable<IConveyor> filters, IPainter<string> painter)
+        public TagCloudGenerator(IReader reader, IEnumerable<IConveyor> filters, IPainter painter)
         {
             this.reader = reader;
             this.filters = filters;

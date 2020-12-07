@@ -62,7 +62,7 @@ namespace TagCloudTests
             builder.RegisterType<SpiralStrategy>().As<ILayoutStrategy>();
             builder.RegisterType<TagCloudLayouter>().As<ILayouter<Size, Rectangle>>();
 
-            builder.RegisterType<WordPainter>().As<IPainter<string>>();
+            builder.RegisterType<WordPainter>().As<IPainter>();
             builder.RegisterType<Random>().SingleInstance();
             builder.RegisterType<ColorPicker>();
 

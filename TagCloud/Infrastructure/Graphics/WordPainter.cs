@@ -7,7 +7,7 @@ using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud.Infrastructure.Graphics
 {
-    public class WordPainter : IPainter<string>
+    public class WordPainter : IPainter
     {
         private readonly ColorPicker colorPicker;
         private readonly Func<IImageSettingsProvider> imageSettingsProvider;
