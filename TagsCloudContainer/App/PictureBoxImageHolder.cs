@@ -55,6 +55,8 @@ namespace TagsCloudContainer.App
 
         public void RecreateImage()
         {
+            if (Image != null)
+                mainForm.Value.ClientSize = new Size(sizeSettings.Width, sizeSettings.Height);
             Image = new Bitmap(sizeSettings.Width,
                 sizeSettings.Height, PixelFormat.Format24bppRgb);
         }

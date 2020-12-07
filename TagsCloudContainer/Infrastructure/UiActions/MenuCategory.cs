@@ -4,13 +4,13 @@ namespace TagsCloudContainer.Infrastructure.UiActions
 {
     public enum MenuCategory
     {
-        [Description("Алгоритмы")] 
-        Algorithms = 0,
+        [Description("Файл")]
+        File = 1,
 
         [Description("Настройки")] 
-        Settings = 1,
+        Settings = 2,
 
-        [Description("Файл")] 
-        File = 2
+        [Description("Алгоритмы")]
+        Algorithms = 3
     }
 }

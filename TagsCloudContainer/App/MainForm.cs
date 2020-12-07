@@ -17,7 +17,8 @@ namespace TagsCloudContainer.App
         {
             ClientSize = new Size(sizeSettings.Width,
                 sizeSettings.Height);
-
+            MaximizeBox = false;
+            MinimizeBox = false;
             mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToArray().ToMenuItems());
             Controls.Add(mainMenu);
