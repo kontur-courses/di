@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MyStemWrapper;
 using TagsCloud.Infrastructure;
@@ -14,7 +15,8 @@ namespace TagsCloud.App
 
         private readonly MyStem myStem = new MyStem
         {
-            Parameters = "-i"
+            Parameters = "-i",
+            PathToMyStem = Path.Combine("..", "..", "..", "mystem.exe")
         };
 
         public bool IsWordNotBoring(string word)
