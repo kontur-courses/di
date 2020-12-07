@@ -69,12 +69,4 @@ namespace TagsCloud.Tests
             return rects;
         }
     }
-
-    public static class Program
-    {
-        public static void Main()
-        {
-
-        }
-    }
 }

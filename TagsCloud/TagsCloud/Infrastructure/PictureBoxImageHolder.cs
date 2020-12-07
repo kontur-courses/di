@@ -12,7 +12,7 @@ namespace TagsCloud.Infrastructure
 {
     public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
-        public ImageSettings Settings { get; set; }
+        public ImageSettings Settings { get; }
         private ICloudLayouter layouter;
         private Dictionary<string, int> wordsFreuqencies;
         private IWordsFrequencyParser parser;
@@ -24,6 +24,8 @@ namespace TagsCloud.Infrastructure
             this.layouter = layouter;
             this.parser = parser;
             RecreateCanvas(settings);
+
+            ImageSettings.SettingsIsChanged += (sender, args) => RedrawCurrentImage();
         }
 
         public void ChangeLayouter(ICloudLayouter layouter)
@@ -32,12 +34,16 @@ namespace TagsCloud.Infrastructure
             RedrawCurrentImage();
         }
 
-        private Graphics StartDrawing() => Graphics.FromImage(Image);
-
         public void RenderWordsFromFile(string fileName)
         {
-            if (string.IsNullOrEmpty(previousFileName))
+            if (string.IsNullOrEmpty(previousFileName) && !string.IsNullOrEmpty(fileName))
             {
+                if (previousFileName != fileName)
+                {
+                    RecreateCanvas(Settings);
+                    layouter.ClearLayouter();
+                }
+
                 if (!File.Exists(fileName))
                     throw new FileNotFoundException("Запрошенный файл не найден");
                 wordsFreuqencies = parser.ParseWordsFrequencyFromFile(fileName);
@@ -99,6 +105,8 @@ namespace TagsCloud.Infrastructure
         {
             Image.Save(fileName);
         }
+
+        private Graphics StartDrawing() => Graphics.FromImage(Image);
 
         private void DrawBaseCanvas()
         {

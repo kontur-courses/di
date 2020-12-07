@@ -41,7 +41,7 @@ namespace TagsCloud.Tests
 
             settings.Width = 1720;
             holder.RecreateCanvas(settings);
-            A.CallTo(() => layouter.UpdateCenterPoint(settings)).MustHaveHappenedTwiceExactly();
+            A.CallTo(() => layouter.UpdateCenterPoint(settings)).MustHaveHappened(3, Times.Exactly);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace TagsCloud.Tests
                 options.WithArgumentsForConstructor(new List<object?> {1920, 1080}));
             var parser = A.Fake<IWordsFrequencyParser>();
             var holder = new PictureBoxImageHolder(parser, settings, layouter);
-            var mainForm = new MainForm(new IUiAction[0], holder, settings);
+            var mainForm = new MainForm(new IUiAction[0], holder);
             mainForm.ClientSize.Should().Be(new Size(settings.Width, settings.Height));
         }
 

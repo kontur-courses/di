@@ -38,8 +38,6 @@ namespace TagsCloud.UiActions
 
             if (res != DialogResult.OK) 
                 return;
-            holder.RecreateCanvas(holder.Settings);
-            layouter.ClearLayouter();
             try
             {
                 holder.RenderWordsFromFile(dialog.FileName);

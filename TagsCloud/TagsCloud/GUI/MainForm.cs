@@ -7,16 +7,16 @@ namespace TagsCloud.GUI
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, PictureBoxImageHolder holder, ImageSettings settings)
+        public MainForm(IUiAction[] actions, PictureBoxImageHolder holder)
         {
-            ClientSize = new Size(settings.Width, settings.Height);
+            ClientSize = new Size(holder.Settings.Width, holder.Settings.Height);
 
             var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
 
             holder.Dock = DockStyle.Fill;
-            holder.RecreateCanvas(settings);
+            holder.RecreateCanvas(holder.Settings);
             Controls.Add(holder);
             holder.UpdateUi();
         }

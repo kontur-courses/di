@@ -19,7 +19,7 @@ namespace TagsCloud.UiActions
 
         public void Perform()
         {
-            var dialog = new SettingsForm(settings, holder);
+            var dialog = new SettingsForm(holder);
             dialog.ShowDialog();
         }
     }

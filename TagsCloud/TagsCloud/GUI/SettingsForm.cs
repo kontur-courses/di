@@ -7,8 +7,9 @@ namespace TagsCloud.GUI
 {
     class SettingsForm : Form
     {
-        public SettingsForm(ImageSettings settings, IImageHolder holder)
+        public SettingsForm(IImageHolder holder)
         {
+            var settings = holder.Settings;
             var oldBackgroundColor = settings.Palette.BackgroundColor;
             var oldTextColor = settings.Palette.TextColor;
             var oldFont = settings.Font;
@@ -23,11 +24,7 @@ namespace TagsCloud.GUI
             Controls.Add(propGrid);
 
             var acceptButton = new Button {Text = "Применить", Dock = DockStyle.Bottom, AutoSize = true};
-            acceptButton.Click += (sender, args) =>
-            {
-                holder.RedrawCurrentImage();
-                Close();
-            };
+            acceptButton.Click += (sender, args) => Close();
             Controls.Add(acceptButton);
 
             var abortButton = new Button {Text = "Отмена", Dock = DockStyle.Bottom, AutoSize = true};
