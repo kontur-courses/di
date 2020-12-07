@@ -18,11 +18,6 @@ namespace TagCloud.Infrastructure.Text
         public IEnumerable<string> ReadTokens()
         {
             var path = fileSettingsProvider().Path;
-            return ReadLines(path);
-        }
-
-        private IEnumerable<string> ReadLines(string path)
-        {
             using (var fileStream = File.OpenRead(path))
             {
                 using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
