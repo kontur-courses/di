@@ -16,7 +16,7 @@ using TagCloud.Infrastructure.Text.Conveyors;
 
 namespace TagCloudTests
 {
-    public class MockReader: IReader<string>
+    public class MockReader: IReader
     {
         private readonly IEnumerable<string> words;
 
@@ -92,7 +92,7 @@ namespace TagCloudTests
                 "слон", "слон", "слон", "слон", "слон",
                 "слон", "слон", "слон", "слон", "слон",
             };
-            builder.RegisterType<MockReader>().WithParameter("words", words).As<IReader<string>>();
+            builder.RegisterType<MockReader>().WithParameter("words", words).As<IReader>();
             var container = builder.Build();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var generator = container.Resolve<IImageGenerator>();

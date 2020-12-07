@@ -19,7 +19,7 @@ namespace TagCloudTests
         public void Setup()
         {
             builder = new ContainerBuilder();
-            builder.RegisterType<TxtReader>().As<IReader<string>>();
+            builder.RegisterType<TxtReader>().As<IReader>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()
@@ -77,7 +77,7 @@ namespace TagCloudTests
         private void Run(string text, string[] expected)
         {
             var container = builder.Build();
-            var parser = container.Resolve<IReader<string>>();
+            var parser = container.Resolve<IReader>();
             var settingsFactory = container.Resolve<Func<Settings>>();
             var path = Path.GetTempFileName();
             settingsFactory().ExcludedTypes = new [] {WordType.CONJ, WordType.SPRO, WordType.PR};

@@ -16,7 +16,7 @@ namespace TagCloudTests
         public void SetUp()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<TxtReader>().As<IReader<string>>();
+            builder.RegisterType<TxtReader>().As<IReader>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()

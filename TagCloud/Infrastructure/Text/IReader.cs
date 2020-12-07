@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace TagCloud.Infrastructure.Text
 {
-    public interface IReader<TToken>
+    public interface IReader
     {
-        public IEnumerable<TToken> ReadTokens();
+        public IEnumerable<string> ReadTokens();
     }
 }

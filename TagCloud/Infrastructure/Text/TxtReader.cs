@@ -6,7 +6,7 @@ using TagCloud.Infrastructure.Settings;
 
 namespace TagCloud.Infrastructure.Text
 {
-    public class TxtReader : IReader<string>
+    public class TxtReader : IReader
     {
         private readonly Func<IFileSettingsProvider> fileSettingsProvider;
 

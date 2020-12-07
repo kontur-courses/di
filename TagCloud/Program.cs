@@ -23,7 +23,7 @@ namespace TagCloud
         public static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<TxtReader>().As<IReader<string>>();
+            builder.RegisterType<TxtReader>().As<IReader>();
             builder.RegisterType<TagCloudGenerator>().As<IImageGenerator>();
 
             builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
