@@ -4,13 +4,13 @@ using System.Linq;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordFontSizeFilter : IFilter<string>
+    public class WordFontSizeConveyor : IConveyor<string>
     {
         private readonly Func<IFontSettingProvider> fontSettingProvider;
 
-        public WordFontSizeFilter(Func<IFontSettingProvider> fontSettingProvider)
+        public WordFontSizeConveyor(Func<IFontSettingProvider> fontSettingProvider)
         {
             this.fontSettingProvider = fontSettingProvider;
         }

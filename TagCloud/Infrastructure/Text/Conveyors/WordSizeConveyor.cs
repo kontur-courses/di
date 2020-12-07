@@ -6,13 +6,13 @@ using System.Windows.Forms;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordSizeFilter : IFilter<string>
+    public class WordSizeConveyor : IConveyor<string>
     {
         private readonly Func<IFontSettingProvider> fontSettingProvider;
 
-        public WordSizeFilter(Func<IFontSettingProvider> fontSettingProvider)
+        public WordSizeConveyor(Func<IFontSettingProvider> fontSettingProvider)
         {
             this.fontSettingProvider = fontSettingProvider;
         }

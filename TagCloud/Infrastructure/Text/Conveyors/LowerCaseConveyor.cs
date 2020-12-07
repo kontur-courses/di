@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class LowerCaseFilter : IFilter<string>
+    public class LowerCaseConveyor : IConveyor<string>
     {
         public IEnumerable<(string token, TokenInfo info)> Filter(IEnumerable<(string token, TokenInfo info)> tokens)
         {

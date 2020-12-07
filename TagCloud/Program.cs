@@ -12,7 +12,7 @@ using TagCloud.Infrastructure.Layout.Strategies;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using TagCloud.Infrastructure.Text;
-using TagCloud.Infrastructure.Text.Filters;
+using TagCloud.Infrastructure.Text.Conveyors;
 using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloud
@@ -26,16 +26,16 @@ namespace TagCloud
             builder.RegisterType<TxtReader>().As<IReader<string>>();
             builder.RegisterType<WordAnalyzer>().As<ITokenAnalyzer<string>>();
 
-            builder.RegisterType<LowerCaseFilter>().As<IFilter<string>>();
+            builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
             var myStemPath = GetReleasePath("mystem");
-            builder.RegisterType<WordTypeFilter>()
-                .As<IFilter<string>>()
+            builder.RegisterType<WordTypeConveyor>()
+                .As<IConveyor<string>>()
                 .WithParameter(new TypedParameter(typeof(string), myStemPath));
-            builder.RegisterType<WordCounterFilter>().As<IFilter<string>>();
-            builder.RegisterType<WordThresholdFilter>().As<IFilter<string>>();
-            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
-            builder.RegisterType<WordFontSizeFilter>().As<IFilter<string>>();
-            builder.RegisterType<WordSizeFilter>().As<IFilter<string>>();
+            builder.RegisterType<WordCounterConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<WordThresholdConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<WordFontSizeConveyor>().As<IConveyor<string>>();
+            builder.RegisterType<WordSizeConveyor>().As<IConveyor<string>>();
 
             builder.RegisterType<Settings>()
                 .AsSelf()

@@ -5,14 +5,14 @@ using System.Text.RegularExpressions;
 using MyStemWrapper;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordTypeFilter : IFilter<string>
+    public class WordTypeConveyor : IConveyor<string>
     {
         private readonly string myStemPath;
         private readonly Regex wordWithTypeRegex;
 
-        public WordTypeFilter(string myStemPath)
+        public WordTypeConveyor(string myStemPath)
         {
             this.myStemPath = myStemPath;
             wordWithTypeRegex = new Regex(@".+?\{(?<word>.+?)=(?<type>.+?)\W.+?\}");

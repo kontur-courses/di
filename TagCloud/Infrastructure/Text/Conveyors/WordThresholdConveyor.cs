@@ -4,13 +4,13 @@ using System.Linq;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class WordThresholdFilter : IFilter<string>
+    public class WordThresholdConveyor : IConveyor<string>
     {
         private readonly Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider;
 
-        public WordThresholdFilter(Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider)
+        public WordThresholdConveyor(Func<IWordCountThresholdSettingProvider> wordCountThresholdProvider)
         {
             this.wordCountThresholdProvider = wordCountThresholdProvider;
         }

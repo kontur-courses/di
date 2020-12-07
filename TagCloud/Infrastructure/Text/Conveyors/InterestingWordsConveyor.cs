@@ -4,13 +4,13 @@ using System.Linq;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text.Information;
 
-namespace TagCloud.Infrastructure.Text.Filters
+namespace TagCloud.Infrastructure.Text.Conveyors
 {
-    public class InterestingWordsFilter : IFilter<string>
+    public class InterestingWordsConveyor : IConveyor<string>
     {
         private readonly Func<IExcludeTypesSettingsProvider> excludeTypesSettingsProvider;
 
-        public InterestingWordsFilter(Func<IExcludeTypesSettingsProvider> excludeTypesSettingsProvider)
+        public InterestingWordsConveyor(Func<IExcludeTypesSettingsProvider> excludeTypesSettingsProvider)
         {
             this.excludeTypesSettingsProvider = excludeTypesSettingsProvider;
         }

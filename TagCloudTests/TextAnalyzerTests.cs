@@ -5,7 +5,7 @@ using Autofac;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Text;
-using TagCloud.Infrastructure.Text.Filters;
+using TagCloud.Infrastructure.Text.Conveyors;
 using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloudTests
@@ -55,10 +55,10 @@ namespace TagCloudTests
             TestName = "Filter base form")]
         public void Parse_Interesting(string text, string[] expected)
         {
-            builder.RegisterType<WordTypeFilter>()
-                .As<IFilter<string>>()
+            builder.RegisterType<WordTypeConveyor>()
+                .As<IConveyor<string>>()
                 .WithParameter(new TypedParameter(typeof(string), myStemPath));
-            builder.RegisterType<InterestingWordsFilter>().As<IFilter<string>>();
+            builder.RegisterType<InterestingWordsConveyor>().As<IConveyor<string>>();
             Run(text, expected);
         }
         
@@ -70,7 +70,7 @@ namespace TagCloudTests
             TestName = "To Lower")]
         public void Parse_ToLower(string text, string[] expected)
         {
-            builder.RegisterType<LowerCaseFilter>().As<IFilter<string>>();
+            builder.RegisterType<LowerCaseConveyor>().As<IConveyor<string>>();
             Run(text, expected);
         }
 

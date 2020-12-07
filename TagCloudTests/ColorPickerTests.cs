@@ -12,7 +12,7 @@ using TagCloud.Infrastructure.Layout.Strategies;
 using TagCloud.Infrastructure.Settings;
 using TagCloud.Infrastructure.Settings.UISettingsManagers;
 using TagCloud.Infrastructure.Text;
-using TagCloud.Infrastructure.Text.Filters;
+using TagCloud.Infrastructure.Text.Conveyors;
 using TagCloud.Infrastructure.Text.Information;
 
 namespace TagCloudTests
