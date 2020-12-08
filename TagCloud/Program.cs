@@ -26,10 +26,10 @@ namespace TagCloud
             var tagCloudCreatorFactory = builder.Build().Resolve<ITagCloudCreatorFactory>();
 
 
-            ParsArguments(args, tagCloudCreatorFactory);
+            ParseArguments(args, tagCloudCreatorFactory);
         }
 
-        private static void ParsArguments(string[] args, ITagCloudCreatorFactory tagCloudCreatorFactory)
+        private static void ParseArguments(string[] args, ITagCloudCreatorFactory tagCloudCreatorFactory)
         {
             var app = new CommandLineApplication();
             app.HelpOption();

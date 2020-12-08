@@ -1,7 +1,6 @@
-﻿using TagCloud.Interfaces;
-using TagsCloudVisualization;
+﻿using TagsCloudVisualization;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IWordsForCloudGeneratorFactory
     {

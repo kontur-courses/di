@@ -15,17 +15,12 @@ namespace TagsCloudVisualization
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             var halfRectangleSize = new Size(rectangleSize.Width / 2, rectangleSize.Height / 2);
-            foreach (var point in Points.GetPoints())
-            {
-                var rectangle = new Rectangle(point - halfRectangleSize, rectangleSize);
-                if (rectangles.Any(x => x.IntersectsWith(rectangle)))
-                    continue;
-
-                rectangles.Add(rectangle);
-                return rectangle;
-            }
-
-            return new Rectangle();
+            var currentPoints = Points.GetPoints()
+                                      .First(point => rectangles
+                                                 .All(y => !y.IntersectsWith(new Rectangle(point - halfRectangleSize, rectangleSize))));
+            var rectangle = new Rectangle(currentPoints - halfRectangleSize, rectangleSize);
+            rectangles.Add(rectangle);
+            return rectangle;
         }
     }
 }

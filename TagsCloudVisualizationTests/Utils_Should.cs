@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace TagsCloudVisualizationTests
 {
     [TestFixture]
-    public class Utuls_Should
+    public class Utils_Should
     {
         [TestCase(0, 0, 0, 0, 0)]
         [TestCase(1, 0, 0, 0, 1)]

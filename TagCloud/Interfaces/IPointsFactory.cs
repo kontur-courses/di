@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization;
 
-namespace TagCloud
+namespace TagCloud.Interfaces
 {
     public interface IPointsFactory
     {
