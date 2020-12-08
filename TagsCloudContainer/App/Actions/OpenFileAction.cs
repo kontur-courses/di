@@ -24,7 +24,7 @@ namespace TagsCloudContainer.App.Actions
             {
                 CheckFileExists = true,
                 InitialDirectory = Path.GetFullPath(settings.InputFileName),
-                Filter = "Текстовые файлы (*.txt)|*.txt"
+                Filter = "Текстовые файлы (*.txt;*.docx)|*.txt;*.docx"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
