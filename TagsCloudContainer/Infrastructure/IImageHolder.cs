@@ -7,7 +7,7 @@ namespace TagsCloudContainer.Infrastructure
         Graphics StartDrawing();
         void UpdateUi();
         void RecreateImage();
-        void SaveImage(string fileName);
+        void SaveImage();
         void GenerateImage();
     }
 }

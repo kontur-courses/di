@@ -8,13 +8,13 @@ namespace TagsCloudContainer.App.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private readonly OutputSettings settings;
+        private readonly OutputSettings outputSettings;
         private readonly IImageHolder imageHolder;
 
-        public SaveImageAction(IImageHolder imageHolder, OutputSettings settings)
+        public SaveImageAction(IImageHolder imageHolder, OutputSettings outputSettings)
         {
             this.imageHolder = imageHolder;
-            this.settings = settings;
+            this.outputSettings = outputSettings;
         }
 
         public MenuCategory Category => MenuCategory.File;
@@ -26,14 +26,15 @@ namespace TagsCloudContainer.App.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(settings.OutputDirectory),
-                DefaultExt = "png",
-                FileName = "image.png",
-                Filter = "Изображения (*.png)|*.png"
+                InitialDirectory = Path.GetFullPath(outputSettings.OutputFilePath),
+                Filter = "Изображения (*.png;*.jpeg;*.bmp)|*.png;*.jpeg;*.bmp"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                imageHolder.SaveImage(dialog.FileName);
+            {
+                outputSettings.OutputFilePath = dialog.FileName;
+                imageHolder.SaveImage();
+            }
         }
     }
 }

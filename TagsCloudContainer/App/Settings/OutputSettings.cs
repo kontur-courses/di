@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Drawing.Imaging;
+using System.IO;
+using System.Reflection;
 using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.App.Settings
@@ -9,10 +11,19 @@ namespace TagsCloudContainer.App.Settings
 
         private OutputSettings()
         {
-            OutputDirectory = Path.Combine(Directory.GetCurrentDirectory(),
-                "..", "..", "..");
+            OutputFilePath = Path.Combine(Directory.GetCurrentDirectory(),
+                "..", "..", "..", "image.png");
         }
 
-        public string OutputDirectory { get; set; }
+        public string OutputFilePath { get; set; }
+
+        public ImageFormat ImageFormat => ParseImageFormat(Path.GetExtension(OutputFilePath).Substring(1));
+
+        private static ImageFormat ParseImageFormat(string str)
+        {
+            return (ImageFormat)typeof(ImageFormat)
+                .GetProperty(str, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase)
+                .GetValue(null);
+        }
     }
 }

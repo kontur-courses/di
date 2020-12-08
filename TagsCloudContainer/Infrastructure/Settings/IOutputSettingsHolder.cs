@@ -1,7 +1,10 @@
-﻿namespace TagsCloudContainer.Infrastructure.Settings
+﻿using System.Drawing.Imaging;
+
+namespace TagsCloudContainer.Infrastructure.Settings
 {
     interface IOutputSettingsHolder
     {
-        public string OutputDirectory { get; }
+        public string OutputFilePath { get; }
+        public ImageFormat ImageFormat { get; }
     }
 }

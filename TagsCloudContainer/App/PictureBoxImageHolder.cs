@@ -12,16 +12,16 @@ namespace TagsCloudContainer.App
     internal class PictureBoxImageHolder : PictureBox, IImageHolder
     {
         private readonly IImageSizeSettingsHolder sizeSettings;
-        private readonly IImageFormatSettingsHolder formatSettings;
+        private readonly IOutputSettingsHolder outputSettings;
         private readonly Lazy<MainForm> mainForm;
         private readonly ICloudVisualizer cloudVisualizer;
 
-        public PictureBoxImageHolder(IImageSizeSettingsHolder sizeSettings, 
-            IImageFormatSettingsHolder formatSettings, Lazy<MainForm> mainForm,
+        public PictureBoxImageHolder(IImageSizeSettingsHolder sizeSettings,
+            IOutputSettingsHolder outputSettings, Lazy<MainForm> mainForm,
             ICloudVisualizer cloudVisualizer)
         {
             this.sizeSettings = sizeSettings;
-            this.formatSettings = formatSettings;
+            this.outputSettings = outputSettings;
             this.mainForm = mainForm;
             this.cloudVisualizer = cloudVisualizer;
         }
@@ -61,10 +61,10 @@ namespace TagsCloudContainer.App
                 sizeSettings.Height, PixelFormat.Format24bppRgb);
         }
 
-        public void SaveImage(string fileName)
+        public void SaveImage()
         {
             FailIfNotInitialized();
-            Image.Save(fileName, formatSettings.Format);
+            Image.Save(outputSettings.OutputFilePath, outputSettings.ImageFormat);
         }
 
         private void FailIfNotInitialized()

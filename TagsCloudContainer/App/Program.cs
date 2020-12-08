@@ -31,14 +31,12 @@ namespace TagsCloudContainer.App
                 //var outputFile = Path.GetFullPath(Path.Combine(
                 //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png")););
                 var services = new ServiceCollection()
-                    .AddSingleton<Mysteam>(new Mysteam(Path.GetFullPath(Path.Combine(
+                    .AddSingleton(new Mysteam(Path.GetFullPath(Path.Combine(
                         Directory.GetCurrentDirectory(), "..", "..", "..", "mystem.exe"))))
                     .AddSingleton(ImageSizeSettings.Instance)
                     .AddSingleton<IImageSizeSettingsHolder> (ImageSizeSettings.Instance)
                     .AddSingleton(FontSettings.Instance)
                     .AddSingleton<IFontSettingsHolder>(FontSettings.Instance)
-                    .AddSingleton(ImageFormatSettings.Instance)
-                    .AddSingleton<IImageFormatSettingsHolder>(ImageFormatSettings.Instance)
                     .AddSingleton(InputSettings.Instance)
                     .AddSingleton<IInputSettingsHolder>(InputSettings.Instance)
                     .AddSingleton(LayouterAlgorithmSettings.Instance)
