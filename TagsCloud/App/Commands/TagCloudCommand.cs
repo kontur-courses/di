@@ -60,7 +60,7 @@ namespace TagsCloud.App.Commands
 
         private int GetFontSize(double frequency)
         {
-            return Math.Max((int) Math.Round(MaxFontSize * frequency), MinFontSize);
+            return (int)(frequency * 100 + 10);
         }
 
         private TagCloudLayouter GetTagCloudLayouter()
