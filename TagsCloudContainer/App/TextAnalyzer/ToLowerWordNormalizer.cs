@@ -1,6 +1,6 @@
-﻿using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+﻿using TagsCloudContainer.Infrastructure.TextAnalyzer;
 
-namespace TagsCloudContainer.App.TextParserToFrequencyDictionary
+namespace TagsCloudContainer.App.TextAnalyzer
 {
     internal class ToLowerWordNormalizer : IWordNormalizer
     {

@@ -3,7 +3,7 @@ using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DataReader;
-using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+using TagsCloudContainer.Infrastructure.TextAnalyzer;
 
 namespace TagsCloudContainer.App.CloudVisualizer
 {
@@ -13,10 +13,10 @@ namespace TagsCloudContainer.App.CloudVisualizer
         private readonly Lazy<IImageHolder> imageHolder;
         private readonly IDataReaderFactory inputDataReaderFactory;
         private readonly ICloudPainter painter;
-        private readonly ITextParserToFrequencyDictionary textParserToFrequencyDictionary;
+        private readonly ITextAnalyzer textParserToFrequencyDictionary;
 
         public CloudVisualizer(IDataReaderFactory inputDataReaderFactory,
-            ITextParserToFrequencyDictionary textParserToFrequencyDictionary,
+            ITextAnalyzer textParserToFrequencyDictionary,
             ICloudGenerator cloudGenerator, ICloudPainter painter, Lazy<IImageHolder> imageHolder)
         {
             this.inputDataReaderFactory = inputDataReaderFactory;

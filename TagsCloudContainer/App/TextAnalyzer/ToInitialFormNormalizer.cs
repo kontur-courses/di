@@ -1,7 +1,7 @@
-﻿using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+﻿using TagsCloudContainer.Infrastructure.TextAnalyzer;
 using YandexMystem.Wrapper;
 
-namespace TagsCloudContainer.App.TextParserToFrequencyDictionary
+namespace TagsCloudContainer.App.TextAnalyzer
 {
     class ToInitialFormNormalizer : IWordNormalizer
     {

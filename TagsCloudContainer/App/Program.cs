@@ -7,13 +7,13 @@ using TagsCloudContainer.App.CloudGenerator;
 using TagsCloudContainer.App.CloudVisualizer;
 using TagsCloudContainer.App.DataReader;
 using TagsCloudContainer.App.Settings;
-using TagsCloudContainer.App.TextParserToFrequencyDictionary;
+using TagsCloudContainer.App.TextAnalyzer;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Infrastructure.CloudGenerator;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.DataReader;
 using TagsCloudContainer.Infrastructure.Settings;
-using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+using TagsCloudContainer.Infrastructure.TextAnalyzer;
 using TagsCloudContainer.Infrastructure.UiActions;
 using YandexMystem.Wrapper;
 
@@ -61,8 +61,8 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IWordNormalizer, ToLowerWordNormalizer>()
                     .AddSingleton<IWordNormalizer, ToInitialFormNormalizer>()
                     .AddSingleton<IWordFilter, PartOfSpeechFilter>()
-                    .AddSingleton<ITextParserToFrequencyDictionary,
-                        TextParserToFrequencyDictionary.TextParserToFrequencyDictionary>()
+                    .AddSingleton<ITextAnalyzer,
+                        TextAnalyzer.TextAnalyzer>()
                     .AddSingleton<IFontGetter, FontGetter>()
                     .AddSingleton<ICloudGenerator, CloudGenerator.CloudGenerator>()
                     .AddSingleton<ICloudPainter, CloudPainter>()

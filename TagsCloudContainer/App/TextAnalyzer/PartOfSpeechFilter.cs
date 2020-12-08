@@ -1,8 +1,8 @@
 ﻿using TagsCloudContainer.Infrastructure.Settings;
-using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+using TagsCloudContainer.Infrastructure.TextAnalyzer;
 using YandexMystem.Wrapper;
 
-namespace TagsCloudContainer.App.TextParserToFrequencyDictionary
+namespace TagsCloudContainer.App.TextAnalyzer
 {
     public class PartOfSpeechFilter : IWordFilter
     {

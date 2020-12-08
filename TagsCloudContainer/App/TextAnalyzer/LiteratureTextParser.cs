@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary;
+using TagsCloudContainer.Infrastructure.TextAnalyzer;
 
-namespace TagsCloudContainer.App.TextParserToFrequencyDictionary
+namespace TagsCloudContainer.App.TextAnalyzer
 {
     class LiteratureTextParser : ITextParser
     {

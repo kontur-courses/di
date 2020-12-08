@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.Infrastructure.TextParserToFrequencyDictionary
+namespace TagsCloudContainer.Infrastructure.TextAnalyzer
 {
-    internal interface ITextParserToFrequencyDictionary
+    internal interface ITextAnalyzer
     {
         public Dictionary<string, double> GenerateFrequencyDictionary(IEnumerable<string> lines);
     }
