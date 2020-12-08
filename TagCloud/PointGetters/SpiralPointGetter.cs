@@ -7,15 +7,17 @@ namespace TagCloud.PointGetters
     {
         public Point Center { get; }
 
-        public double Gomotation { get; }
+        public double Gomotation { get; private set; }
 
         private double radius;
 
-        public SpiralPointGetter(Point center, double gomotation)
+        public SpiralPointGetter(Point? center = null, double gomotation = 1.0)
         {
-            Center = center;
+            Center = center == null ? center.Value : Point.Empty;
             Gomotation = gomotation;
         }
+
+        internal void ChangeGomotation(double g) => Gomotation = g;
 
         public Point GetNextPoint()
         {
