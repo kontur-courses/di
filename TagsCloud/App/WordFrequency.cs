@@ -17,7 +17,7 @@ namespace TagsCloud.App
         public Dictionary<string, double> Get(string[] lines)
         {
             return lines
-                .Select(x => x.ToLower())
+                .Select(x => x.ToLower().Trim())
                 .Where(x => wordChecker.IsWordNotBoring(x))
                 .GroupBy(x => x)
                 .ToDictionary(x => x.Key,
