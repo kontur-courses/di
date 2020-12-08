@@ -3,13 +3,15 @@ using TagCloud.PointGetters;
 
 namespace TagCloud.CloudLayoters
 {
-    public static class CloudLayoterAssosiation<T> where T: IPointGetter, new()
+    public static class CloudLayoterAssosiation
     {
+        public const string density = "density";
+        public const string identity = "identity";
         private static readonly Dictionary<string, ICloudLayoter> cloudLayoters =
             new Dictionary<string, ICloudLayoter>
             {
-                ["density"] = new DensityCloudLayouter(),
-                ["identity"] = new IdentityCloudLayoter()
+                [density] = new DensityCloudLayouter(),
+                [identity] = new IdentityCloudLayoter()
             };
 
         public static ICloudLayoter GetCloudLayoter(string nameLayoter, string namePointGetter)
