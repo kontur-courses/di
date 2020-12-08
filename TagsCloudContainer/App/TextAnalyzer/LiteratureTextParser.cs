@@ -5,7 +5,7 @@ using TagsCloudContainer.Infrastructure.TextAnalyzer;
 
 namespace TagsCloudContainer.App.TextAnalyzer
 {
-    class LiteratureTextParser : ITextParser
+    public class LiteratureTextParser : ITextParser
     {
         private readonly Regex wordRegex = new Regex(@"\p{IsCyrillic}+");
         public IEnumerable<string> GetWords(IEnumerable<string> lines)

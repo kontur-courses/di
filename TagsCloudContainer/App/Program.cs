@@ -19,7 +19,7 @@ using YandexMystem.Wrapper;
 
 namespace TagsCloudContainer.App
 {
-    internal class Program
+    public class Program
     {
         [STAThread]
         private static void Main(string[] args)

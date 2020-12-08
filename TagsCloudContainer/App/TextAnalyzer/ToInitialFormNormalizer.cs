@@ -3,7 +3,7 @@ using YandexMystem.Wrapper;
 
 namespace TagsCloudContainer.App.TextAnalyzer
 {
-    class ToInitialFormNormalizer : IWordNormalizer
+    public class ToInitialFormNormalizer : IWordNormalizer
     {
         private readonly Mysteam mysteam;
 

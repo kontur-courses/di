@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Infrastructure.TextAnalyzer
 {
-    internal interface ITextAnalyzer
+    public interface ITextAnalyzer
     {
         public Dictionary<string, double> GenerateFrequencyDictionary(IEnumerable<string> lines);
     }

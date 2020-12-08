@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.App.CloudGenerator;
-using TagsCloudContainer.App.Settings;
 using TagsCloudContainer.Infrastructure.CloudVisualizer;
 using TagsCloudContainer.Infrastructure.Settings;
 

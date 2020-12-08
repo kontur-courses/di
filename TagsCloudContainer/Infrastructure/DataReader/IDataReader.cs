@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Infrastructure.DataReader
 {
-    internal interface IDataReader
+    public interface IDataReader
     {
         public IEnumerable<string> ReadLines();
     }

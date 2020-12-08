@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Infrastructure.TextAnalyzer
 {
-    internal interface ITextParser
+    public interface ITextParser
     {
         public IEnumerable<string> GetWords(IEnumerable<string> lines);
     }

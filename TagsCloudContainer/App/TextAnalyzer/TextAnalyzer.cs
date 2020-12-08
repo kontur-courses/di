@@ -4,7 +4,7 @@ using TagsCloudContainer.Infrastructure.TextAnalyzer;
 
 namespace TagsCloudContainer.App.TextAnalyzer
 {
-    internal class TextAnalyzer : ITextAnalyzer
+    public class TextAnalyzer : ITextAnalyzer
     {
         private readonly ITextParser textParser;
         private readonly IEnumerable<IWordFilter> wordFilters;

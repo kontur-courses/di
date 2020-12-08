@@ -5,7 +5,7 @@ using TagsCloudContainer.Infrastructure.DataReader;
 
 namespace TagsCloudContainer.App.DataReader
 {
-    internal class DataReaderFactory : IDataReaderFactory
+    public class DataReaderFactory : IDataReaderFactory
     {
         private readonly InputSettings settings;
 
