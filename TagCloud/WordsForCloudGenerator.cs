@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.Interfaces;
@@ -49,7 +50,7 @@ namespace TagCloud
         private WordForCloud GetWordForCloud(string font, int maxWordSize, Color color, string word,
                                              int wordFrequency, int maxFrequency)
         {
-            var wordFontSize = (int) (maxWordSize * ((double) wordFrequency / maxFrequency) + 0.5);
+            var wordFontSize = (int) Math.Round(maxWordSize * (double) wordFrequency / maxFrequency);
             var wordSize = new Size((int) (word.Length * (wordFontSize * 0.8)), wordFontSize + 12);
 
             return new WordForCloud(font, wordFontSize, word, tagCloudLayouter.PutNextRectangle(wordSize), color);
