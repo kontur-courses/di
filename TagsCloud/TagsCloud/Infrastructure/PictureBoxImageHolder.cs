@@ -24,8 +24,13 @@ namespace TagsCloud.Infrastructure
             this.layouter = layouter;
             this.parser = parser;
             RecreateCanvas(settings);
+            this.Size = new Size(settings.Width, settings.Height);
 
-            ImageSettings.SettingsIsChanged += (sender, args) => RedrawCurrentImage();
+            ImageSettings.SettingsIsChanged += (sender, args) =>
+            {
+                RedrawCurrentImage();
+                Size = new Size(settings.Width, settings.Height);
+            };
         }
 
         public void ChangeLayouter(ICloudLayouter layouter)
