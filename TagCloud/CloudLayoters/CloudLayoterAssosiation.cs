@@ -19,7 +19,7 @@ namespace TagCloud.CloudLayoters
                 return null;
             if (!cloudLayoters.TryGetValue(nameLayoter, out var layoter))
                 return null;
-            layoter.ChangePointGetter(pointGetter);
+            layoter.SetPointGetterIfNull(pointGetter);
             return layoter;
         } 
     }

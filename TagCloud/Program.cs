@@ -11,7 +11,7 @@ namespace TagCloud
     {
         public static void Main(string[] args)
         {
-            var processor = new TextProcessor();
+            var processor = new ParagraphTextProcessor();
             var metric = new CountWordMetric();
             var getter = new CirclePointGetter(Point.Empty);
             IClient client = new ConsoleClient(processor, metric, new DensityCloudLayouter(getter));

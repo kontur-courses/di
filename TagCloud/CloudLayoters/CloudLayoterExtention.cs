@@ -34,6 +34,6 @@ namespace TagCloud.CloudLayoters
             return rectangle;
         }
 
-        public static void ChangePointGetter(this ICloudLayoter layoter, IPointGetter getter) => layoter.PointGetter = getter;
+        public static void SetPointGetterIfNull(this ICloudLayoter layoter, IPointGetter getter) => layoter.PointGetter ??= getter;
     }
 }

@@ -17,7 +17,7 @@ namespace TagCloudTests
             var text = "I\nam\nBetman\nI\nSpeed\nI\nPower\n\nPower\nRanger\nRed\nPower\nRanger";
             File.WriteAllText(path, text);
             var textReader = new TextReaderTxt();
-            var textProcessor = new TextProcessor();
+            var textProcessor = new ParagraphTextProcessor();
             var wordsMetric = new CountWordMetric();
             var result = wordsMetric.GetMetric(textProcessor.GetLiterals(textReader.ReadText(path)));
             File.Delete(path);

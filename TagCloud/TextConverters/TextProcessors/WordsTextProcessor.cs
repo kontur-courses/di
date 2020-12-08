@@ -1,18 +1,16 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
 using TagCloud.TextConverters.WordExcluders;
 
 namespace TagCloud.TextConverters.TextProcessors
 {
-    public class TextProcessor : ITextProcessor
+    public class WordsTextProcessor : ITextProcessor
     {
         private readonly IWordExcluder excluder = new WordsExcluder();
         public IEnumerable<string> GetLiterals(string text) =>
-            text
-            .Split('\n')
+            Regex.Split(text, @"\W+")
             .Where(s => s != string.Empty)
-            .Select(s => s.ToLower())
             .Where(s => !excluder.MustBeExclude(s));
     }
 }

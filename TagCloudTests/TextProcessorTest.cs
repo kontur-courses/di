@@ -14,7 +14,7 @@ namespace TagCloudTests
         [TestCase("text\nprocessor\ntest", ExpectedResult = new[] { "text", "processor", "test" })]
         public string[] TextProcess_ShouldSplitTextNewLine(string text)
         {
-            return new TextProcessor().GetLiterals(text).ToArray();
+            return new ParagraphTextProcessor().GetLiterals(text).ToArray();
         }
 
         [TestCase("")]
@@ -25,7 +25,7 @@ namespace TagCloudTests
         [TestCase("m\nm\nm")]
         public void TextProcessor_ShouldExludeEmptyString(string text)
         {
-            var result = new TextProcessor().GetLiterals(text);
+            var result = new ParagraphTextProcessor().GetLiterals(text);
             result.Should().NotContain(string.Empty);
         }
 
@@ -36,7 +36,7 @@ namespace TagCloudTests
         [TestCase("TeXt\nProCeSSOR\nSHOULD\nwords\tO\nLoweR\ncASe")]
         public void TextProcessor_ShouldWordsToLowerCase(string text)
         {
-            var result = new TextProcessor().GetLiterals(text);
+            var result = new ParagraphTextProcessor().GetLiterals(text);
             foreach (var word in result)
                 Assert.AreEqual(word.ToLower(), word);
         }
@@ -50,7 +50,7 @@ namespace TagCloudTests
         [TestCase("text\nwothout\nburing\nwords")]
         public void TextProcessor_ShouldExludeBurindWords(string text)
         {
-            var result = new TextProcessor().GetLiterals(text);
+            var result = new ParagraphTextProcessor().GetLiterals(text);
             var wordsExcluder = new WordsExcluder();
             result.Should().NotContain(p => wordsExcluder.MustBeExclude(p));
         }
