@@ -26,15 +26,24 @@ namespace TagsCloudContainer.App
         {
             try
             {
-                //var inputFile = Path.GetFullPath(Path.Combine(
-                //    Directory.GetCurrentDirectory(), "..", "..", "..", "text.txt"));
-                //var outputFile = Path.GetFullPath(Path.Combine(
-                //    Directory.GetCurrentDirectory(), "..", "..", "..", "cloud.png")););
-                var services = new ServiceCollection()
+                var serviceProvider = GetAppServiceProvider();
+                var mainForm = serviceProvider.GetService<MainForm>();
+
+                Application.Run(mainForm);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        public static ServiceProvider GetAppServiceProvider()
+        {
+            return new ServiceCollection()
                     .AddSingleton(new Mysteam(Path.GetFullPath(Path.Combine(
                         Directory.GetCurrentDirectory(), "..", "..", "..", "mystem.exe"))))
                     .AddSingleton(ImageSizeSettings.Instance)
-                    .AddSingleton<IImageSizeSettingsHolder> (ImageSizeSettings.Instance)
+                    .AddSingleton<IImageSizeSettingsHolder>(ImageSizeSettings.Instance)
                     .AddSingleton(FontSettings.Instance)
                     .AddSingleton<IFontSettingsHolder>(FontSettings.Instance)
                     .AddSingleton(InputSettings.Instance)
@@ -69,16 +78,8 @@ namespace TagsCloudContainer.App
                     .AddSingleton<IUiAction, FontSettingsAction>()
                     .AddSingleton<IUiAction, SaveImageAction>()
                     .AddSingleton<IUiAction, OpenFileAction>()
-                    .AddSingleton<MainForm, MainForm>();
-                var serviceProvider = services.BuildServiceProvider();
-                var mainForm = serviceProvider.GetService<MainForm>();
-
-                Application.Run(mainForm);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+                    .AddSingleton<MainForm, MainForm>()
+                    .BuildServiceProvider();
         }
     }
 }
