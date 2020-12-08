@@ -103,7 +103,16 @@ namespace TagsCloud.Infrastructure
 
         public void SaveImage(string fileName)
         {
-            Image.Save(fileName);
+            var extension = Path.GetExtension(fileName);
+            var format = extension switch
+            {
+                ".jpeg" => ImageFormat.Jpeg,
+                ".png" => ImageFormat.Png,
+                ".tiff" => ImageFormat.Tiff,
+                _ => throw new BadImageFormatException("Неподдерживаемое расширение файла")
+            };
+
+            Image.Save(fileName, format);
         }
 
         private Graphics StartDrawing() => Graphics.FromImage(Image);
