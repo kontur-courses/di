@@ -33,5 +33,7 @@ namespace TagCloud.CloudLayoters
             } while (rectangles.HasIntersection(rectangle));
             return rectangle;
         }
+
+        public static void ChangePointGetter(this ICloudLayoter layoter, IPointGetter getter) => layoter.PointGetter = getter;
     }
 }

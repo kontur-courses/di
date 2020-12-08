@@ -7,7 +7,7 @@ namespace TagCloud.CloudLayoters
 {
     public class IdentityCloudLayoter : ICloudLayoter
     {
-        public IPointGetter PointGetter { get; }
+        public IPointGetter PointGetter { get; set; }
 
         public int Top { get; private set; }
 
@@ -21,7 +21,7 @@ namespace TagCloud.CloudLayoters
 
         public bool IsEmpty => !rectangles.Any();
 
-        public IdentityCloudLayoter(IPointGetter getter)
+        public IdentityCloudLayoter(IPointGetter getter = null)
         {
             PointGetter = getter;
             Top = getter.Center.Y;

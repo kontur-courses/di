@@ -9,7 +9,7 @@ namespace TagCloud.CloudLayoters
     public class DensityCloudLayouter : ICloudLayoter
     {
         internal readonly HashSet<Rectangle> rectangles = new HashSet<Rectangle>();
-        public IPointGetter PointGetter { get; }
+        public IPointGetter PointGetter { get; set; }
         public int Top { get; private set; }
         public int Bottom { get; private set; }
         public int Right { get; private set; }
@@ -17,7 +17,7 @@ namespace TagCloud.CloudLayoters
 
         public bool IsEmpty => !rectangles.Any();
 
-        public DensityCloudLayouter(IPointGetter getter)
+        public DensityCloudLayouter(IPointGetter getter = null)
         {
             PointGetter = getter;
             Top = getter.Center.Y;
