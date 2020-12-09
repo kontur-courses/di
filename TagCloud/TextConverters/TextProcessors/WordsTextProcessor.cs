@@ -11,6 +11,7 @@ namespace TagCloud.TextConverters.TextProcessors
         public IEnumerable<string> GetLiterals(string text) =>
             Regex.Split(text, @"\W+")
             .Where(s => s != string.Empty)
+            .Select(s => s.ToLower())
             .Where(s => !excluder.MustBeExclude(s));
     }
 }

@@ -24,10 +24,13 @@ namespace TagCloud.CloudLayoters
         public IdentityCloudLayoter(IPointGetter getter = null)
         {
             PointGetter = getter;
-            Top = getter.Center.Y;
-            Bottom = getter.Center.Y;
-            Right = getter.Center.X;
-            Left = getter.Center.X;
+            if (getter != null)
+            {
+                Top = getter.Center.Y;
+                Bottom = getter.Center.Y;
+                Right = getter.Center.X;
+                Left = getter.Center.X;
+            }
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

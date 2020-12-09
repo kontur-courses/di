@@ -13,7 +13,9 @@ namespace TagCloud.PointGetters
                 [spiral] = new SpiralPointGetter()
             };
 
-        public static IPointGetter GetPointGetter(string name) =>
-            pointGetters.TryGetValue(name, out var getter) ? getter : null;
+        public static IPointGetter GetPointGetter(string name)
+        {
+            return pointGetters.TryGetValue(name, out var getter) ? getter : null;
+        }
     }
 }

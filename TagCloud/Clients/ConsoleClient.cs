@@ -1,72 +1,140 @@
 ﻿using System;
-using System.Drawing;
+using System.Linq;
+using System.Collections.Generic;
+using CommandLine;
 using TagCloud.TextConverters.TextReaders;
 using TagCloud.TextConverters.TextProcessors;
 using TagCloud.WordsMetrics;
-using TagCloud.PointGetters;
 using TagCloud.Visualization;
 using TagCloud.Visualization.WordsColorings;
 using TagCloud.CloudLayoters;
+using TagCloud.PointGetters;
 
 namespace TagCloud.Clients
 {
     internal class ConsoleClient : IClient
     {
-        private readonly ITextReader reader = new TextReaderTxt();
-        private readonly ITextProcessor processor;
-        private readonly IWordsMetric metric;
-        private readonly ICloudLayoter layoter;
+        private ITextProcessor processor;
+        private IWordsMetric metric;
+        private ICloudLayoter layoter;
 
-        internal ConsoleClient(ITextProcessor processor, 
-            IWordsMetric metric, ICloudLayoter layoter)
-        {
-            this.processor = processor;
-            this.metric = metric;
-            this.layoter = layoter;
-        }
+        private VisualizationInfo vizInfo;
 
         public void Run()
         {
-            string answear;
             Console.WriteLine("Hello, I'm your personal visualization client");
             while (true)
             {
-                Console.WriteLine("Please, write path to file with words or \"exit\" to exit");
-                answear = Console.ReadLine();
+                Console.WriteLine("Write path to file with text or \"exit\" to exit");
+                var answear = Console.ReadLine();
                 if (answear == "exit")
                     break;
-                var text = reader.ReadText(answear);
+                var text = TextReaderAssosiation.GetTextReader(answear).ReadText(answear);
                 if (text == null)
                 {
-                    Console.WriteLine("Something was wrong, Please try again");
+                    Console.WriteLine("something was wrong, please, try again");
                     continue;
                 }
-                var info = ReadInfo();
-                Console.WriteLine("Please write path to save picture");
-                var path = Console.ReadLine();
-                Visualize(text, path, info);
-                Console.WriteLine("Picture save");
-                Console.WriteLine();
+                Console.WriteLine("write params cloud configuration");
+                var answears = new List<string>() 
+                { 
+                    Console.ReadLine(), 
+                    Console.ReadLine(), 
+                    Console.ReadLine(), 
+                    Console.ReadLine() 
+                };
+                Parser.Default.ParseArguments<OptionsTagInfo>(answears)
+                    .WithParsed(SetTagInfo);
+                if(processor == null)
+                {
+                    Console.WriteLine("Text Processod didn't set");
+                    continue;
+                }
+                if (metric == null)
+                {
+                    Console.WriteLine("Words Metric didn't set");
+                    continue;
+                }
+                if (layoter == null)
+                {
+                    Console.WriteLine("Cloud Layoter didn't set");
+                    continue;
+                }
+                Console.WriteLine("write Visualizate configuration or 'end' if you finish write");
+                answears.Clear();
+                while (true)
+                {
+                    answear = Console.ReadLine();
+                    if (answear == "end")
+                        break;
+                    answears.Add(answear);
+                }
+                Parser.Default.ParseArguments<OptionsVisualizate>(answears)
+                    .WithParsed(SetVisualizateInfo);
+                Console.WriteLine("write path file to save");
+                answear = Console.ReadLine();
+                Visualize(text, answear);
+                Console.WriteLine("file save");
             }
         }
 
-        private VisualizationInfo ReadInfo()
+        private void SetTagInfo(OptionsTagInfo info)
         {
-            Console.WriteLine("Write 3 numbers from 0 to 255 between space");
-            Console.WriteLine("For example: 255 176 0");
-            var colorRGB = Console.ReadLine();
-            Console.WriteLine("Please write font");
-            var font = Console.ReadLine();
-            Console.WriteLine("Please write 2 number for size picture");
-            var sizeString = Console.ReadLine();
-            var size = VisualizationInfo.ReadSize(sizeString);
-            return new VisualizationInfo(new WordsColoringLineBringhtness(Color.FromArgb(255, 255, 0, 0)), size, font);
+            processor = TextProcessorAssosiation
+                .GetProcessor(SkipSpaces(info.Processor));
+            metric = WordsMetricAssosiation
+                .GetMetric(SkipSpaces(info.Metric));
+            layoter = CloudLayoterAssosiation
+                .GetCloudLayoter(SkipSpaces(info.Layoter), SkipSpaces(info.PointGetter));
         }
 
-        public void Visualize(string text, string picturePath, VisualizationInfo info)
+        private void SetVisualizateInfo(OptionsVisualizate info)
+        {
+            var size = VisualizationInfo.ReadSize(info.Size);
+            var coloring = WordsColoringAssosiation.GetColoring(SkipSpaces(info.Coloring)) ?? 
+                WordsColoringAssosiation.GetColoring("random");
+            vizInfo = new VisualizationInfo(coloring, size, SkipSpaces(info.Font));
+        }
+
+        private string SkipSpaces(string str) => string.Join("", str.SkipWhile(c => c == ' '));
+
+        public void Visualize(string text, string picturePath)
         {
             var tagCloud = AlgorithmTagCloud.GetTagCloud(text, layoter, processor, metric);
-            TagCloudVisualization.Visualize(tagCloud, picturePath, info);
+            TagCloudVisualization.Visualize(tagCloud, picturePath, vizInfo);
+        }
+
+        internal class OptionsTagInfo
+        {
+            [Option('m', "metric", Required = true, HelpText = "Name of metric. Write count")]
+            public string Metric { get; set; }
+
+            [Option('p', "processor", Required = true, 
+                HelpText = "type of text processor, write " + TextProcessorAssosiation.paragraph + " or " + TextProcessorAssosiation.words)]
+            public string Processor { get; set; }
+
+            [Option('g', "getter", Required = true,
+                HelpText = "type of point getter, write " + PointGetterAssosiation.circle + " or " + PointGetterAssosiation.spiral)]
+            public string PointGetter { get; set; }
+
+            [Option('l', "layoter", Required = true,
+                HelpText = "type of layoter, write " + CloudLayoterAssosiation.density + " or " + CloudLayoterAssosiation.identity)]
+            public string Layoter { get; set; }
+        }
+
+        internal class OptionsVisualizate
+        {
+            [Option('s', "size", Required = false, Default = "", 
+                HelpText = "size tu cut picture, write two numbers")]
+            public string Size { get; set; }
+
+            [Option('f', "font", Required = false, Default = "Arial",
+                HelpText = "font of words, write Arial, Calibri, ...")]
+            public string Font { get; set; }
+
+            [Option('c', "coloring", Required = false, Default = "random",
+                HelpText = "coloring text, write red, geen, blue, black, random, multi, line red, line green, line blue, line random")]
+            public string Coloring { get; set; }
         }
     }
 }
