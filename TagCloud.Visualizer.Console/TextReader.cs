@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GemBox.Document;
-using MicrosoftWord = Microsoft.Office.Interop.Word;
 
 namespace TagCloud.Visualizer.Console
 {
@@ -110,7 +109,7 @@ namespace TagCloud.Visualizer.Console
             if (!inputOptions.IsDocOrDocx)
             {
                 words = File.ReadAllLines(Path.Combine(sourceFolderPath,
-                        $"{inputOptions.FileName}.{inputOptions.FileExtension}"))
+                        $"{inputOptions.FileName}"))
                     .Select(word => word.ToLower());
             }
 
@@ -127,7 +126,7 @@ namespace TagCloud.Visualizer.Console
         private static IEnumerable<string> GetWordsFromWordDocument(InputOptions inputOptions, string sourceFolderPath)
         {
             var document = DocumentModel.Load(Path.Combine(sourceFolderPath,
-                $"{inputOptions.FileName}.{inputOptions.FileExtension}"));
+                $"{inputOptions.FileName}"));
             var text = document.Content.ToString();
             return text.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
         }
