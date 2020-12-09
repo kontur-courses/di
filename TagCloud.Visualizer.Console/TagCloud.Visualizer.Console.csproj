@@ -18,7 +18,9 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.0.0" />
+      <PackageReference Include="Bundle.Microsoft.Office.Interop" Version="15.0.4569" />
       <PackageReference Include="CommandLineParser" Version="2.8.0" />
+      <PackageReference Include="GemBox.Document" Version="33.0.1049" />
     </ItemGroup>
 
 </Project>
