@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TagCloud.Visualizer.Console\TagCloud.Visualizer.Console.csproj" />
       <ProjectReference Include="..\TagCloud.Visualizer\TagCloud.Visualizer.csproj" />
       <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
     </ItemGroup>
@@ -27,6 +28,7 @@
 
     <ItemGroup>
       <Folder Include="crash-reports" />
+      <Folder Include="test-files" />
     </ItemGroup>
 
 </Project>

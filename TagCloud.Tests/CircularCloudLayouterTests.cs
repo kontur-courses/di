@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,28 +14,29 @@ namespace TagCloud.Tests
     {
         private Point center;
         private CircularCloudLayouter cloudLayouter;
+        private List<RectangleWithWord> resultRectsWithWord;
+        private SizeWithWord[] sizes;
 
         [SetUp]
         public void SetUp()
         {
-            center = new Point(500, 500);
-            cloudLayouter = new CircularCloudLayouter(center);
+            cloudLayouter = new CircularCloudLayouter(new CenterOptions(center.X, center.Y));
+            sizes = SizesCreator.CreateSizesArray(new[] {"abc", "bca", "cab"}, 12f, "Times New Roman");
         }
 
         [Test]
         public void CircularCloudLayouter_IsFirstRectInCenter()
         {
-            var resultRect = cloudLayouter.PutNextRectangle(new Size(5, 5));
+            var size = new SizeWithWord(new Size(5, 5), new Word(default, default));
+            resultRectsWithWord = cloudLayouter.GetRectangles(new[] {size});
 
-            resultRect.Location.Should().Be(center);
+            resultRectsWithWord[0].Rectangle.Location.Should().Be(center);
         }
 
         [Test]
         public void PutNextRectangle_RectanglesDoNotIntersect_AfterAddition()
         {
-            var sizes = SizesCreator.CreateSizesArray(30, 80, 30, 50, 12);
-
-            foreach (var size in sizes) cloudLayouter.PutNextRectangle(size);
+            resultRectsWithWord = cloudLayouter.GetRectangles(sizes);
 
             cloudLayouter.Rectangles.Any(r => r.IntersectsWith(cloudLayouter.Rectangles.Except(new[] {r}))).Should()
                 .BeFalse();
@@ -43,10 +45,9 @@ namespace TagCloud.Tests
         [Test]
         public void PutNextRectangle_PutRectanglesInCircleForm_AfterAddition()
         {
-            var sizes = SizesCreator.CreateSizesArray(30, 80, 30, 50, 12);
             const int expectedRadius = 150;
 
-            foreach (var size in sizes) cloudLayouter.PutNextRectangle(size);
+            cloudLayouter.GetRectangles(sizes);
             var mostTopRect = cloudLayouter.Rectangles.OrderBy(rect => rect.Top).First();
             var mostDownRect = cloudLayouter.Rectangles.OrderByDescending(rect => rect.Bottom).First();
             var mostLeftRect = cloudLayouter.Rectangles.OrderBy(rect => rect.Left).First();
@@ -64,10 +65,17 @@ namespace TagCloud.Tests
         public void TearDown()
         {
             var testResult = TestContext.CurrentContext.Result.Outcome;
-            if (testResult != ResultState.Failure) return;
+            if (testResult != ResultState.Failure)
+            {
+                return;
+            }
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "crash-reports");
-            var bitmap = BitmapCreator.DrawBitmap(cloudLayouter.Rectangles);
+            var path = Path.Combine(Directory.GetCurrentDirectory(),
+                "..",
+                "..",
+                "..",
+                "crash-reports");
+            var bitmap = BitmapCreator.DrawBitmap(resultRectsWithWord, new ImageOptions());
             bitmap.Save(Path.Combine(path, $"crash-report {TestContext.CurrentContext.Test.FullName}.bmp"));
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
