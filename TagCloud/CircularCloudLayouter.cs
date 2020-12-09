@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TagCloud
 {
@@ -8,23 +9,30 @@ namespace TagCloud
         internal readonly List<Rectangle> Rectangles = new List<Rectangle>();
         private readonly Spiral spiral;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(CenterOptions options)
         {
-            spiral = new Spiral(center);
+            spiral = new Spiral(new Point(options.X, options.Y));
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public List<RectangleWithWord> GetRectangles(IEnumerable<SizeWithWord> sizes)
         {
-            var newRect = FindPlaceForRect(rectangleSize);
+            return sizes.Select(PutNextRectangle).ToList();
+        }
+
+        private RectangleWithWord PutNextRectangle(SizeWithWord rectangleSizeWithWord)
+        {
+            var newRect = FindPlaceForRect(rectangleSizeWithWord.Size);
             Rectangles.Add(newRect);
-            return newRect;
+            return new RectangleWithWord(newRect, rectangleSizeWithWord.Word);
         }
 
         private Rectangle FindPlaceForRect(Size rectangleSize)
         {
             var resultRect = new Rectangle(spiral.GetNextPoint(), rectangleSize);
             while (resultRect.IntersectsWith(Rectangles))
+            {
                 resultRect = new Rectangle(spiral.GetNextPoint(), rectangleSize);
+            }
 
             return resultRect;
         }

@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
 
 namespace TagCloud
 {
     public interface ICloudLayouter
     {
-        public Rectangle PutNextRectangle(Size rectangleSize);
+        public List<RectangleWithWord> GetRectangles(IEnumerable<SizeWithWord> sizes);
     }
 }
