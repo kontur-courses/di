@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using GemBox.Document;
 using MicrosoftWord = Microsoft.Office.Interop.Word;
 
@@ -10,8 +9,6 @@ namespace TagCloud.Visualizer.Console
 {
     public static class TextReader
     {
-        private static readonly Regex WordRegex = new Regex("\\w+");
-
         private static readonly string InputPath = Path.Combine(Directory.GetCurrentDirectory(),
             "..",
             "..",

@@ -15,7 +15,7 @@ namespace TagCloud.Visualizer.Console
             $"{nameof(TagCloud)}.{nameof(Visualizer)}",
             "images");
 
-        public int PrintCloudAndReturnExitCode(ICloudLayouter cloudLayouter, IEnumerable<string> words,
+        public static int PrintCloudAndReturnExitCode(ICloudLayouter cloudLayouter, IEnumerable<string> words,
             ImageOptions imageOptions)
         {
             var sizes = SizesCreator.CreateSizesArray(words, imageOptions.FontSize, imageOptions.FontName);

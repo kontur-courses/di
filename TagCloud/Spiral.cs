@@ -20,9 +20,9 @@ namespace TagCloud
         {
             angle += Math.PI / 180;
             rayLength = 1d / (2 * Math.PI) * angle;
-            var xCoord = (int) (center.X + rayLength * Math.Cos(angle));
-            var yCoord = (int) (center.Y + rayLength * Math.Sin(angle));
-            return new Point(xCoord, yCoord);
+            var xCoordinate = (int) (center.X + rayLength * Math.Cos(angle));
+            var yCoordinate = (int) (center.Y + rayLength * Math.Sin(angle));
+            return new Point(xCoordinate, yCoordinate);
         }
     }
 }

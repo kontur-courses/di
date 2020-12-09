@@ -4,17 +4,17 @@ namespace TagCloud.Visualizer
 {
     public class ImageOptions
     {
-        [Option('s', "fontSize")] public float FontSize { get; set; }
+        [Option('s', "fontSize")] public float FontSize { get; private set; }
 
-        [Option('n', "fontName")] public string FontName { get; set; }
+        [Option('n', "fontName")] public string FontName { get; private set; }
 
-        [Option('h', "height")] public int ImageHeight { get; set; }
+        [Option('h', "height")] public int ImageHeight { get; private set; }
 
-        [Option('w', "width")] public int ImageWidth { get; set; }
+        [Option('w', "width")] public int ImageWidth { get; private set; }
 
-        [Option('c', "color")] public string ColorName { get; set; }
+        [Option('c', "color")] public string ColorName { get; private set; }
 
-        [Option('e', "imageExt")] public string ImageExtension { get; set; }
+        [Option('e', "imageExt")] public string ImageExtension { get; private set; }
 
         public ImageOptions()
         {

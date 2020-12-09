@@ -4,8 +4,8 @@ namespace TagCloud.Visualizer.Console
 {
     public class InputOptions
     {
-        [Option('f', "fileExtension")] public string FileExtension { get; set; }
-        [Option("fileName")] public string FileName { get; set; }
+        [Option('f', "fileExtension")] public string FileExtension { get; private set; }
+        [Option("fileName")] public string FileName { get; private set; }
 
         public bool IsDocOrDocx => FileExtension == "doc" || FileExtension == "docx";
 

@@ -20,7 +20,7 @@ namespace TagCloud.Visualizer.Console
             do
             {
                 args = System.Console.ReadLine()?.Split(' ');
-                var exitCode = ExecuteCommandAndRerurnExitCode(args, cloudLayouterBuilder);
+                var exitCode = ExecuteCommandAndReturnExitCode(args, cloudLayouterBuilder);
                 if (exitCode == 1)
                 {
                     System.Console.WriteLine("Некорректная команда");
@@ -28,12 +28,12 @@ namespace TagCloud.Visualizer.Console
             } while (args?[0] != "exit");
         }
 
-        private static int ExecuteCommandAndRerurnExitCode(string[] args, IContainer cloudLayouterBuilder)
+        private static int ExecuteCommandAndReturnExitCode(string[] args, IContainer cloudLayouterBuilder)
         {
             var exitCode = Parser.Default.ParseArguments<PrintCommand, ImageOptions>(args)
                 .MapResult(
                     (PrintCommand command) =>
-                        command.PrintCloudAndReturnExitCode(cloudLayouterBuilder.Resolve<ICloudLayouter>(),
+                        PrintCommand.PrintCloudAndReturnExitCode(cloudLayouterBuilder.Resolve<ICloudLayouter>(),
                             TextReader.GetWords(InputOptions),
                             ImageOptions),
                     (InputOptions opts) => InputOptions.ChangeInputOptionsAndReturnExitCode(opts),
