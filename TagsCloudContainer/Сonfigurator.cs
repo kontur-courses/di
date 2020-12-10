@@ -9,8 +9,10 @@ namespace TagsCloudContainer
         {
             var assembly = Assembly.GetExecutingAssembly();
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+            containerBuilder.RegisterType<StopWordsFilter>().AsSelf();
+            containerBuilder.RegisterAssemblyTypes(assembly).Where(x => x.Name != "StopWordsFilter").AsImplementedInterfaces();
             containerBuilder.RegisterType<TagsCloudCreator>().AsSelf();
+            containerBuilder.RegisterType<FixedColorProvider>().AsImplementedInterfaces();
             return containerBuilder.Build();
         }
     }

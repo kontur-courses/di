@@ -7,8 +7,11 @@ namespace TagsCloudContainer
 {
     public class FixedColorProvider : IColorProvider
     {
-        private Color color;
-
+        private readonly Color color;
+        public FixedColorProvider()
+        {
+            color = Color.Black;
+        }
         public FixedColorProvider(Color color)
         {
             this.color = color;

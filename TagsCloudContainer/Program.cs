@@ -17,7 +17,7 @@ namespace TagsCloudContainer
                 "C:\\Users\\Никита\\Desktop\\ШПОРА\\di\\TagsCloudContainer", "Cloud");
             creator.AddStopWord("aba");
             creator.Create("C:\\Users\\Никита\\Desktop\\ШПОРА\\di\\TagsCloudContainer\\input.txt",
-                "C:\\Users\\Никита\\Desktop\\ШПОРА\\di\\TagsCloudContainer", "Cloud");
+                "C:\\Users\\Никита\\Desktop\\ШПОРА\\di\\TagsCloudContainer", "Cloud2");
         }
     }
 }

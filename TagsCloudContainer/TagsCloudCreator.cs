@@ -1,78 +1,79 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace TagsCloudContainer
 {
     public class TagsCloudCreator
     {
-        public string FontFamily { get; set; }
-        private ICloudDrawer cloudDrawer;
-        private IFontSizeCalculator fontSizeCalculator;
-        private IFileReader fileReader;
-        private IImageSaver[] availableImages;
-        private IWordsFilter[] wordsFilters;
+        private FontFamily fontFamily;
+        private readonly ICloudDrawer cloudDrawer;
+        private readonly IFontSizeCalculator fontSizeCalculator;
+        private readonly Dictionary<string, IFileReader> fileReaders;
+        private readonly IImageSaver[] availableImages;
+        private readonly List<IWordsFilter> wordsFilters;
+        private StopWords stopWords;
 
-        public TagsCloudCreator(ICloudDrawer cloudDrawer, IFontSizeCalculator fontSizeCalculator, 
-            IFileReader fileReader, IImageSaver[] availableImages, IWordsFilter[] wordsFilters)
+        public TagsCloudCreator(
+            ICloudDrawer cloudDrawer, 
+            IFontSizeCalculator fontSizeCalculator, 
+            IFileReader[] fileReaders, 
+            IImageSaver[] availableImages, 
+            IWordsFilter[] wordsFilters)
         {
             this.cloudDrawer = cloudDrawer;
             this.fontSizeCalculator = fontSizeCalculator;
-            this.fileReader = fileReader;
-            this.wordsFilters = wordsFilters;
+            this.fileReaders = InitializeFileReders(fileReaders);
             this.availableImages = availableImages;
-            FontFamily = "Arial";
-            this.cloudDrawer.ColorProvider = new FixedColorProvider(Color.Black);
+            fontFamily = new FontFamily("Arial");
+            stopWords = new StopWords();
+            this.wordsFilters = new List<IWordsFilter> {new StopWordsFilter(stopWords)};
+            this.wordsFilters.AddRange(wordsFilters);
+        }
+
+        private Dictionary<string, IFileReader> InitializeFileReders(IFileReader[] fileReaders)
+        {
+            return fileReaders.ToDictionary(fr => fr.Format, fr => fr);
         }
 
         public void Create(string filePath, string targetPath, string imageName)
         {
-            IEnumerable<string> words = fileReader.ReadAllLines(filePath); 
+            var fileExtension = Path.GetExtension(filePath).TrimStart('.');
+            var words = fileReaders[fileExtension].ReadAllLines(filePath); 
             words = FilterWords(words);
-            var orderedWordsWithFonts = fontSizeCalculator.CalculateFontSize(words, FontFamily)
+            var orderedWordsWithFonts = fontSizeCalculator.CalculateFontSize(words, fontFamily)
                 .OrderByDescending(word => word.Font.Size).ToList();
             cloudDrawer.DrawCloud(orderedWordsWithFonts, targetPath, imageName);
         }
 
-        private List<string> FilterWords(IEnumerable<string> words)
-        {
-            foreach (var filter in wordsFilters)
-            {
-                words = filter.Filter(words);
-            }
-
-            return words.ToList();
-        }
-
         public void AddStopWord(string stopWord)
         {
-            foreach (var wordsFilter in wordsFilters)
-                if (wordsFilter is StopWordsFilter)
-                    ((StopWordsFilter)wordsFilter).AddStopWord(stopWord);
+            stopWords.Add(stopWord);
         }
 
         public void RemoveStopWord(string stopWord)
         {
-            foreach (var wordsFilter in wordsFilters)
-                if (wordsFilter is StopWordsFilter)
-                    ((StopWordsFilter)wordsFilter).RemoveStopWord(stopWord);
+            stopWords.Remove(stopWord);
         }
 
-        public bool TrySetFontFamily(string fontFamily)
+        public bool TrySetFontFamily(string fontFamilyName)
         {
-            var checkFont = new Font(fontFamily, 10);
-            if (checkFont.Name.ToLower() == fontFamily.ToLower())
+            try
             {
-                this.FontFamily = checkFont.Name;
+                fontFamily = new FontFamily(fontFamilyName);
                 return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         public bool TrySetFontColor(string colorName)
         {
             var color = Color.FromName(colorName);
-            if (color.Name.ToLower() != colorName.ToLower())
+            if (color.R == 0 && color.G == 0 && color.B == 0 && color.Name != "Black")
                 return false;
             cloudDrawer.ColorProvider = new FixedColorProvider(color);
             return true;
@@ -95,7 +96,7 @@ namespace TagsCloudContainer
         {
             foreach (var imageSaver in availableImages)
             {
-                if (imageSaver.Format == imageFormat)
+                if (imageSaver.FormatName == imageFormat)
                 {
                     cloudDrawer.ImageSaver = imageSaver;
                     return true;
@@ -107,7 +108,17 @@ namespace TagsCloudContainer
 
         public string GetImageFormat()
         {
-            return cloudDrawer.ImageSaver.Format;
+            return cloudDrawer.ImageSaver.FormatName;
+        }
+
+        private List<string> FilterWords(IEnumerable<string> words)
+        {
+            foreach (var filter in wordsFilters)
+            {
+                words = filter.Filter(words);
+            }
+
+            return words.ToList();
         }
     }
 }

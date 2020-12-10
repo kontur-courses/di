@@ -6,18 +6,12 @@ using System.Text;
 
 namespace TagsCloudContainer
 {
-    class ImageSaverJpeg : IImageSaver
+    class ImageSaverJpeg : ImageSaver
     {
-        public string Format { get; set; }
-
         public ImageSaverJpeg()
         {
-            Format = "jpeg";
-        }
-
-        public void Save(string path, string name, Bitmap bitmap)
-        {
-            bitmap.Save(path + "\\" + name + "." + Format, ImageFormat.Jpeg);
+            FormatName = "jpeg";
+            Format = ImageFormat.Jpeg;
         }
     }
 }

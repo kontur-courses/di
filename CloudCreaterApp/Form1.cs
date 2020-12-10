@@ -44,7 +44,15 @@ namespace CloudCreaterApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            var project_path = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(
+                Path.GetDirectoryName(Directory.GetCurrentDirectory()))), "TagsCloudContainer");
+            inputFilePath.Text = Path.Combine(project_path, "input.txt");
+            targetImagePath.Text = project_path;
+            textBoxName.Text = "TagCloud";
+            textBoxFontFamily.Text = "Arial";
+            textBoxColor.Text = "Black";
+            textBoxImageSize.Text = "300";
+            textBoxImageFormat.Text = "png";
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -72,20 +80,34 @@ namespace CloudCreaterApp
 
         private void createButton_Click(object sender, EventArgs e)
         {
+            var fullImagePath = Path.Combine(targetImagePath.Text, textBoxName.Text + "." + creator.GetImageFormat());
             if (!Directory.Exists(targetImagePath.Text))
                 MessageBox.Show("Неверный путь назначения", "Ошибка");
             else if (!File.Exists(inputFilePath.Text))
                 MessageBox.Show("Неверный путь исходного файла", "Ошибка");
             else if (textBoxName.Text == "")
                 MessageBox.Show("Введите имя файла", "Ошибка");
-            else if (File.Exists(targetImagePath.Text + "\\" + textBoxName.Text + "." + creator.GetImageFormat()))
-                MessageBox.Show("Такой файл уже существует, введите другое имя или смените директорию", "Ошибка");
-            else
+            else if (File.Exists(fullImagePath))
+                if (!AskForRewriting(fullImagePath))
+                    return;
+            creator.Create(inputFilePath.Text, targetImagePath.Text, textBoxName.Text);
+            imageBox.Image = Image.FromFile(fullImagePath);
+            log.Text = "Облако успешно сгенерировано";
+        }
+
+        private bool AskForRewriting(string fullImagePath)
+        {
+            var result = MessageBox.Show("Изображение с таким именем уже существует, желаете его перезаписать?",
+                "Предупреждение", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                creator.Create(inputFilePath.Text, targetImagePath.Text, textBoxName.Text);
-                imageBox.Image = Image.FromFile(targetImagePath.Text + "\\" + textBoxName.Text + "." + creator.GetImageFormat());
-                log.Text = "Облако успешно сгенерировано";
+                if (imageBox.Image != null)
+                    imageBox.Image.Dispose();
+                File.Delete(fullImagePath);
+                return true;
             }
+
+            return false;
         }
 
         private void RemoveStopWord_Click(object sender, EventArgs e)

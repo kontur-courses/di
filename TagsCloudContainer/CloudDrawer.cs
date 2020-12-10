@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
+using System;
 
 namespace TagsCloudContainer
 {
@@ -13,11 +11,10 @@ namespace TagsCloudContainer
         public IColorProvider ColorProvider { get; set; }
         public int ImageSize { get; set; }
 
-
         public CloudDrawer(ICloudLayouter cloudLayouter, IColorProvider colorProvider, IImageSaver imageSaver)
         {
             this.cloudLayouter = cloudLayouter;
-            ImageSize = 300;
+            ChangeImageSize(300);
             cloudLayouter.ChangeCenter(new Point(ImageSize / 2, ImageSize / 2));
             ImageSaver = imageSaver;
             ColorProvider = colorProvider;
@@ -25,20 +22,23 @@ namespace TagsCloudContainer
 
         public void DrawCloud(List<WordWithFont> words, string targetPath, string imageName)
         {
-            var bitmap = new Bitmap(ImageSize, ImageSize);
-            var graphics = Graphics.FromImage(bitmap);
-            var layout = MakeLayout(words, graphics);
-            graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
-            for (var i = 0; i < words.Count; i++)
+            using (var bitmap = new Bitmap(ImageSize, ImageSize))
             {
-                graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()), layout[i].Location);
+                var graphics = Graphics.FromImage(bitmap);
+                var layout = MakeLayout(words, graphics);
+                graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
+                for (var i = 0; i < words.Count; i++)
+                {
+                    graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()), layout[i].Location);
+                }
+                ImageSaver.Save(targetPath, imageName, bitmap);
             }
-            ImageSaver.Save(targetPath, imageName, bitmap);
         }
 
         private List<Rectangle> MakeLayout(IEnumerable<WordWithFont> words, Graphics graphics)
         {
-            cloudLayouter.Reset();
+            cloudLayouter = (ICloudLayouter)cloudLayouter.GetType().GetConstructor(new Type[0]).Invoke(new object[0]);
+            cloudLayouter.ChangeCenter(new Point(ImageSize / 2, ImageSize / 2));
             foreach (var word in words)
             {
                 var wordSize = graphics.MeasureString(word.Word, word.Font);
@@ -51,7 +51,6 @@ namespace TagsCloudContainer
         public void ChangeImageSize(int newSize)
         {
             ImageSize = newSize;
-            cloudLayouter.ChangeCenter(new Point(ImageSize / 2, ImageSize / 2));
         }
     }
 }

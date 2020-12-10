@@ -2,37 +2,33 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using TagsCloudContainer;
+using FluentAssertions;
 
 namespace TagsCloudContainer_Tests
 {
     [TestFixture]
     class TagsCloudContainer_Tests
     {
-        private TagsCloudCreator creator;
-        [SetUp]
-        public void SetUp()
-        {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            creator = scope.Resolve<TagsCloudCreator>();
-        }
-
         [TestCase("")]
         [TestCase("asasas")]
         [TestCase("Tahomaaa")]
         public void TrySetFontFamily_ReturnsFalse_OnInvalidFontFamily(string fontFamily)
         {
-            Assert.IsFalse(creator.TrySetFontFamily(fontFamily));
-            Assert.AreEqual(creator.FontFamily, "Arial");
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetFontFamily(fontFamily).Should().BeFalse();
         }
 
         [TestCase("times new roman")]
         [TestCase("Tahoma")]
         public void TrySetFontFamily_ReturnsTrue_OnValidFontFamily(string fontFamily)
         {
-            Assert.IsTrue(creator.TrySetFontFamily(fontFamily));
-            Assert.AreEqual(creator.FontFamily.ToLower(), fontFamily.ToLower());
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetFontFamily(fontFamily).Should().BeTrue();
         }
 
         [TestCase("")]
@@ -40,14 +36,18 @@ namespace TagsCloudContainer_Tests
         [TestCase("синий")]
         public void TrySetFontColor_ReturnsFalse_OnInvalidColorName(string color)
         {
-            Assert.IsFalse(creator.TrySetFontColor(color));
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetFontColor(color).Should().BeFalse();
         }
 
         [TestCase("cyan")]
         [TestCase("Blue")]
         public void TrySetFontColor_ReturnsTrue_OnValidColorName(string color)
         {
-            Assert.IsTrue(creator.TrySetFontColor(color));
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetFontColor(color).Should().BeTrue();
         }
 
         [TestCase(0)]
@@ -55,7 +55,9 @@ namespace TagsCloudContainer_Tests
         [TestCase(2001)]
         public void TrySetImageSize_ReturnsFalse_OnInvalidSize(int size)
         {
-            Assert.IsFalse(creator.TrySetImageSize(size));
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetImageSize(size).Should().BeFalse();
         }
 
         [TestCase(1000)]
@@ -63,7 +65,9 @@ namespace TagsCloudContainer_Tests
         [TestCase(100)]
         public void TrySetImageSize_ReturnsTrue_OnValidSize(int size)
         {
-            Assert.IsTrue(creator.TrySetImageSize(size));
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetImageSize(size).Should().BeTrue();
         }
 
         [TestCase("")]
@@ -71,15 +75,19 @@ namespace TagsCloudContainer_Tests
         [TestCase("image")]
         public void TrySetImageFormat_ReturnsFalse_OnInvalidFormat(string imageFormat)
         {
-            Assert.IsFalse(creator.TrySetImageFormat(imageFormat));
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetImageFormat(imageFormat).Should().BeFalse();
         }
 
         [TestCase("png")]
         [TestCase("jpeg")]
         public void TrySetImageFormat_ReturnsTrue_OnValidFormat(string imageFormat)
         {
-            Assert.IsTrue(creator.TrySetImageFormat(imageFormat));
-            Assert.AreEqual(creator.GetImageFormat(), imageFormat);
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetImageFormat(imageFormat).Should().BeTrue();
+            creator.GetImageFormat().Should().Be(imageFormat);
         }
 
         [Test]
@@ -88,26 +96,92 @@ namespace TagsCloudContainer_Tests
             var color = Color.Red;
             var colorProvider = new FixedColorProvider(color);
             for (var i = 0; i < 5; i++)
-                Assert.AreEqual(colorProvider.GetNextColor(), color);
+                colorProvider.GetNextColor().Should().Be(color);
         }
 
         [Test]
         public void StopWordsFilter_FilterAllStopWords_AndMakeLowerCase()
         {
-            var filter = new StopWordsFilter();
+            var filter = new StopWordsFilter(new StopWords());
             var input = new List<string> {"Abc", "of", "cba", "IN", "the", "car"};
-            Assert.AreEqual(filter.Filter(input), new List<string> { "abc", "cba", "car" });
+            filter.Filter(input).Should().BeEquivalentTo(new List<string> { "abc", "cba", "car" });
         }
 
         [Test]
-        public void FontSizeByCount_CalculateFontSizeCorrectly()
+        public void AddStopWord_WorksCorrectly()
+        {
+            var stopwords = new StopWords();
+            var filter = new StopWordsFilter(stopwords);
+            var input = new List<string> { "Abc", "of", "cba", "IN", "the", "car" };
+            stopwords.Add("cAr");
+            filter.Filter(input).Should().BeEquivalentTo(new List<string> { "abc", "cba"});
+        }
+
+        [Test]
+        public void DeleteStopWord_WorksCorrectly()
+        {
+            var stopwords = new StopWords();
+            var filter = new StopWordsFilter(stopwords);
+            var input = new List<string> { "Abc", "of", "cba", "IN", "the", "car" };
+            stopwords.Remove("iN");
+            filter.Filter(input).Should().BeEquivalentTo(new List<string> { "abc", "in", "cba", "car" });
+        }
+
+        [Test]
+        public void FontSizeByCount_CalculatesFontSizeCorrectly()
         {
             var fontSizeByCount = new FontSizeByCount();
             var input = new List<string> { "abc", "abc", "abc", "ab", "ab", "a" };
-            var wordsWithFont = fontSizeByCount.CalculateFontSize(input, "Arial").ToList();
-            Assert.AreEqual(wordsWithFont[0].Font.Size, 35);
-            Assert.AreEqual(wordsWithFont[1].Font.Size, 22.5);
-            Assert.AreEqual(wordsWithFont[2].Font.Size, 10);
+            var wordsWithFont = fontSizeByCount.CalculateFontSize(input, new FontFamily("Arial")).ToList();
+            wordsWithFont[0].Font.Size.Should().Be(35);
+            wordsWithFont[1].Font.Size.Should().Be(22.5f);
+            wordsWithFont[2].Font.Size.Should().Be(10);
+        }
+
+
+        [TestCase(100)]
+        [TestCase(500)]
+        [TestCase(1000)]
+        public void TagCloudCreator_DrawsImageWithCurrectSize(int size)
+        {
+            var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+            creator.TrySetImageSize(size);
+            creator.Create(Path.Combine(project_path, "input.txt"),
+                project_path, "TestCloud");
+
+            var imagePath = Path.Combine(project_path, "TestCloud.png");
+            File.Exists(imagePath).Should().BeTrue();
+            using (var image = Image.FromFile(imagePath))
+            {
+                image.Size.Should().BeEquivalentTo(new Size(size, size));
+            }
+
+            File.Delete(imagePath);
+        }
+
+        public void TagCloudCreator_RewriteExistedImage()
+        {
+            var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            var creator = scope.Resolve<TagsCloudCreator>();
+
+            creator.TrySetImageSize(100);
+            creator.Create(Path.Combine(project_path, "input.txt"),
+                project_path, "TestCloud");
+
+            creator.TrySetImageSize(200);
+            creator.Create(Path.Combine(project_path, "input.txt"),
+                project_path, "TestCloud");
+
+            var imagePath = Path.Combine(project_path, "TestCloud.png");
+            File.Exists(imagePath).Should().BeTrue();
+            using (var image = Image.FromFile(imagePath))
+            {
+                image.Size.Should().BeEquivalentTo(new Size(200, 200));
+            }
+            File.Delete(imagePath);
         }
     }
 }

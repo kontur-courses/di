@@ -10,7 +10,7 @@ namespace TagsCloudContainer
     {
         private const float maxFontSize = 25;
         private const float minFontSize = 10;
-        public IEnumerable<WordWithFont> CalculateFontSize(IEnumerable<string> words, string fontFamily)
+        public IEnumerable<WordWithFont> CalculateFontSize(IEnumerable<string> words, FontFamily fontFamily)
         {
             var wordCounts = CountWords(words);
             var maxCount = wordCounts.Values.Max();

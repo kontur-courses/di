@@ -4,7 +4,6 @@ namespace TagsCloudContainer
 {
     public interface ICloudDrawer
     {
-        int ImageSize { get; set; }
         IColorProvider ColorProvider { get; set; }
         IImageSaver ImageSaver { get; set; }
         void DrawCloud(List<WordWithFont> words, string targetPath, string imageName);
