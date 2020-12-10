@@ -161,6 +161,7 @@ namespace TagsCloudContainer_Tests
             File.Delete(imagePath);
         }
 
+        [Test]
         public void TagCloudCreator_RewriteExistedImage()
         {
             var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
