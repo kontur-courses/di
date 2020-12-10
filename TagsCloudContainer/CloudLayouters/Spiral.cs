@@ -5,31 +5,31 @@ namespace TagsCloudContainer
 {
     class Spiral
     {
-        private double _radius;
-        private double _angle;
-        private readonly double _radiusStep;
+        private double radius;
+        private double angle;
+        private readonly double radiusStep;
         private const double AngleStep = 0.1;
         public Point Center { get; set; }
         private const double RadiusStepCoefficient = 0.06;
         private const int ScaleDivider = 50;
-        private readonly CircularCloudLayouter _cloudDrawer;
+        private readonly CircularCloudLayouter cloudDrawer;
 
 
         public Spiral(Point center, CircularCloudLayouter cloudDrawer)
         {
-            _cloudDrawer = cloudDrawer;
+            this.cloudDrawer = cloudDrawer;
             Center = center;
-            _radius = 0;
-            _radiusStep = RadiusStepCoefficient * center.X / ScaleDivider;
+            radius = 0;
+            radiusStep = RadiusStepCoefficient * center.X / ScaleDivider;
         }
 
         public Point GetNextPosition(Size rectangleSize)
         {
             var position = new Point(
-                (int)(Center.X + _radius * Math.Cos(_angle) - rectangleSize.Width / 2),
-                (int)(Center.Y - _radius * Math.Sin(_angle)) - rectangleSize.Height / 2);
-            _radius += _radiusStep;
-            _angle += AngleStep;
+                (int)(Center.X + radius * Math.Cos(angle) - rectangleSize.Width / 2),
+                (int)(Center.Y - radius * Math.Sin(angle)) - rectangleSize.Height / 2);
+            radius += radiusStep;
+            angle += AngleStep;
             return position;
         }
 
@@ -57,14 +57,14 @@ namespace TagsCloudContainer
                 }
 
                 var checkRectangle = new Rectangle(new Point(rectangle.X + stepX, rectangle.Y + stepY), rectangle.Size);
-                if (!_cloudDrawer.CheckIntersections(checkRectangle))
+                if (!cloudDrawer.CheckIntersections(checkRectangle))
                     rectangle.Offset(stepX, stepY);
             }
         }
 
         public void RollBackRadius(int pixelsValue)
         {
-            _radius = Math.Max(0, _radius - pixelsValue);
+            radius = Math.Max(0, radius - pixelsValue);
         }
     }
 }
