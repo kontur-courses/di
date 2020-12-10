@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer;
 
 namespace TagsCloudContainer
 {
-    class CircularCloudLayouter : ICloudLayouter
+    internal class CircularCloudLayouter : ICloudLayouter
     {
-        public List<Rectangle> Rectangles { get; set; }
         private const int RollBackPixelsCount = 10; // Оптимальное значение величины отката радиуса спирали в пикселях
-        private Spiral _spiral;
         private bool _buildingStarted;
+        private Spiral _spiral;
 
         public CircularCloudLayouter()
         {
@@ -20,6 +18,8 @@ namespace TagsCloudContainer
             _spiral = new Spiral(center, this);
             _buildingStarted = false;
         }
+
+        public List<Rectangle> Rectangles { get; set; }
 
         public void ChangeCenter(Point newCenter)
         {
