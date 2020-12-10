@@ -17,18 +17,14 @@ namespace TagsCloudContainer_Tests
         [TestCase("Tahomaaa")]
         public void TrySetFontFamily_ReturnsFalse_OnInvalidFontFamily(string fontFamily)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetFontFamily(fontFamily).Should().BeFalse();
+            GetCreator().TrySetFontFamily(fontFamily).Should().BeFalse();
         }
 
         [TestCase("times new roman")]
         [TestCase("Tahoma")]
         public void TrySetFontFamily_ReturnsTrue_OnValidFontFamily(string fontFamily)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetFontFamily(fontFamily).Should().BeTrue();
+            GetCreator().TrySetFontFamily(fontFamily).Should().BeTrue();
         }
 
         [TestCase("")]
@@ -36,18 +32,14 @@ namespace TagsCloudContainer_Tests
         [TestCase("синий")]
         public void TrySetFontColor_ReturnsFalse_OnInvalidColorName(string color)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetFontColor(color).Should().BeFalse();
+            GetCreator().TrySetFontColor(color).Should().BeFalse();
         }
 
         [TestCase("cyan")]
         [TestCase("Blue")]
         public void TrySetFontColor_ReturnsTrue_OnValidColorName(string color)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetFontColor(color).Should().BeTrue();
+            GetCreator().TrySetFontColor(color).Should().BeTrue();
         }
 
         [TestCase(0)]
@@ -55,9 +47,7 @@ namespace TagsCloudContainer_Tests
         [TestCase(2001)]
         public void TrySetImageSize_ReturnsFalse_OnInvalidSize(int size)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetImageSize(size).Should().BeFalse();
+            GetCreator().TrySetImageSize(size).Should().BeFalse();
         }
 
         [TestCase(1000)]
@@ -65,9 +55,7 @@ namespace TagsCloudContainer_Tests
         [TestCase(100)]
         public void TrySetImageSize_ReturnsTrue_OnValidSize(int size)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetImageSize(size).Should().BeTrue();
+            GetCreator().TrySetImageSize(size).Should().BeTrue();
         }
 
         [TestCase("")]
@@ -75,17 +63,14 @@ namespace TagsCloudContainer_Tests
         [TestCase("image")]
         public void TrySetImageFormat_ReturnsFalse_OnInvalidFormat(string imageFormat)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
-            creator.TrySetImageFormat(imageFormat).Should().BeFalse();
+            GetCreator().TrySetImageFormat(imageFormat).Should().BeFalse();
         }
 
         [TestCase("png")]
         [TestCase("jpeg")]
         public void TrySetImageFormat_ReturnsTrue_OnValidFormat(string imageFormat)
         {
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
+            var creator = GetCreator();
             creator.TrySetImageFormat(imageFormat).Should().BeTrue();
             creator.GetImageFormat().Should().Be(imageFormat);
         }
@@ -145,8 +130,7 @@ namespace TagsCloudContainer_Tests
         public void TagCloudCreator_DrawsImageWithCurrectSize(int size)
         {
             var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
+            var creator = GetCreator();
             creator.TrySetImageSize(size);
             creator.Create(Path.Combine(project_path, "input.txt"),
                 project_path, "TestCloud");
@@ -165,8 +149,7 @@ namespace TagsCloudContainer_Tests
         public void TagCloudCreator_RewriteExistedImage()
         {
             var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
-            var scope = Configurator.GetContainer().BeginLifetimeScope();
-            var creator = scope.Resolve<TagsCloudCreator>();
+            var creator = GetCreator();
 
             creator.TrySetImageSize(100);
             creator.Create(Path.Combine(project_path, "input.txt"),
@@ -183,6 +166,12 @@ namespace TagsCloudContainer_Tests
                 image.Size.Should().BeEquivalentTo(new Size(200, 200));
             }
             File.Delete(imagePath);
+        }
+
+        private TagsCloudCreator GetCreator()
+        {
+            var scope = Configurator.GetContainer().BeginLifetimeScope();
+            return scope.Resolve<TagsCloudCreator>();
         }
     }
 }
