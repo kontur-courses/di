@@ -10,6 +10,7 @@ namespace TagsCloudContainer
         private const int RollBackPixelsCount = 10; // Оптимальное значение величины отката радиуса спирали в пикселях
         private bool buildingStarted;
         private Spiral spiral;
+        public IReadOnlyCollection<Rectangle> Rectangles { get; set; }
 
         public CircularCloudLayouter()
         {
@@ -18,8 +19,6 @@ namespace TagsCloudContainer
             spiral = new Spiral(center, this);
             buildingStarted = false;
         }
-
-        public List<Rectangle> Rectangles { get; set; }
 
         public void ChangeCenter(Point newCenter)
         {
@@ -47,7 +46,7 @@ namespace TagsCloudContainer
                 if (!CheckIntersections(currentRectangle))
                 {
                     spiral.ShiftRectangle(ref currentRectangle);
-                    Rectangles.Add(currentRectangle);
+                    ((List<Rectangle>)Rectangles).Add(currentRectangle);
                     return currentRectangle;
                 }
             }
