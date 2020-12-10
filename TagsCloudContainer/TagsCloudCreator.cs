@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -39,8 +40,11 @@ namespace TagsCloudContainer
 
         public void Create(string filePath, string targetPath, string imageName)
         {
+            IFileReader reader;
             var fileExtension = Path.GetExtension(filePath).TrimStart('.');
-            var words = fileReaders[fileExtension].ReadAllLines(filePath); 
+            if (!fileReaders.TryGetValue(fileExtension, out reader))
+                throw new ArgumentException();
+            var words = reader.ReadAllLines(filePath); 
             words = FilterWords(words);
             var orderedWordsWithFonts = fontSizeCalculator.CalculateFontSize(words, fontFamily)
                 .OrderByDescending(word => word.Font.Size).ToList();
