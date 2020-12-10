@@ -49,7 +49,7 @@ namespace TagsCloudContainer
                 cloudLayouter.PutNextRectangle(wordSize.ToSize());
             }
 
-            return cloudLayouter.Rectangles;
+            return (List<Rectangle>)cloudLayouter.Rectangles;
         }
 
         public void ChangeImageSize(int newSize)
