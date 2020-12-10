@@ -9,7 +9,7 @@ namespace TagsCloudContainer
         private ICloudLayouter cloudLayouter;
         public IImageSaver ImageSaver { get; set; }
         public IColorProvider ColorProvider { get; set; }
-        public int ImageSize { get; set; }
+        private int ImageSize { get; set; }
 
         public CloudDrawer(ICloudLayouter cloudLayouter, IColorProvider colorProvider, IImageSaver imageSaver)
         {
@@ -24,14 +24,18 @@ namespace TagsCloudContainer
         {
             using (var bitmap = new Bitmap(ImageSize, ImageSize))
             {
-                var graphics = Graphics.FromImage(bitmap);
-                var layout = MakeLayout(words, graphics);
-                graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
-                for (var i = 0; i < words.Count; i++)
+                using (var graphics = Graphics.FromImage(bitmap))
                 {
-                    graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()), layout[i].Location);
+                    var layout = MakeLayout(words, graphics);
+                    graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
+                    for (var i = 0; i < words.Count; i++)
+                    {
+                        graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()),
+                            layout[i].Location);
+                    }
+
+                    ImageSaver.Save(targetPath, imageName, bitmap);
                 }
-                ImageSaver.Save(targetPath, imageName, bitmap);
             }
         }
 
