@@ -21,15 +21,16 @@ namespace TagsCloudContainer
             IFontSizeCalculator fontSizeCalculator, 
             IFileReader[] fileReaders, 
             IImageSaver[] availableImages, 
-            IWordsFilter[] wordsFilters)
+            IWordsFilter[] wordsFilters,
+            StopWordsFilter stopWordsFilter)
         {
             this.cloudDrawer = cloudDrawer;
             this.fontSizeCalculator = fontSizeCalculator;
             this.fileReaders = InitializeFileReders(fileReaders);
             this.availableImages = availableImages;
             fontFamily = new FontFamily("Arial");
-            stopWords = new StopWords();
-            this.wordsFilters = new List<IWordsFilter> {new StopWordsFilter(stopWords)};
+            stopWords = stopWordsFilter.StopWords;
+            this.wordsFilters = new List<IWordsFilter> { stopWordsFilter };
             this.wordsFilters.AddRange(wordsFilters);
         }
 

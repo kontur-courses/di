@@ -5,16 +5,16 @@ namespace TagsCloudContainer
 {
     public class StopWordsFilter : IWordsFilter
     {
-        private StopWords stopWords;
+        public StopWords StopWords { get; set; }
 
         public StopWordsFilter(StopWords stopWords)
         {
-            this.stopWords = stopWords;
+            StopWords = stopWords;
         }
 
         public IEnumerable<string> Filter(IEnumerable<string> words)
         {
-            return words.Select(word => word.ToLower()).Where(word => !stopWords.Contains(word)).ToList();
+            return words.Select(word => word.ToLower()).Where(word => !StopWords.Contains(word)).ToList();
         }
     }
 }
