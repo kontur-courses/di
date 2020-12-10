@@ -23,8 +23,13 @@ namespace TagsCloudContainer
 
         public void ChangeCenter(Point newCenter)
         {
-            if (!buildingStarted)
-                spiral = new Spiral(newCenter, this);
+            if (buildingStarted)
+            {
+                var offset = new Point(newCenter.X - spiral.Center.X, newCenter.Y - spiral.Center.Y);
+                foreach (var rectangle in Rectangles)
+                    rectangle.Offset(offset);
+            }
+            spiral = new Spiral(newCenter, this);
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
