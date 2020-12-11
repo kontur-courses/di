@@ -90,11 +90,13 @@
         <Compile Include="CloudDrawerFactory.cs" />
         <Compile Include="ColorGenerator.cs" />
         <Compile Include="ColorGeneratorFactory.cs" />
+        <Compile Include="ConsoInterface.cs" />
         <Compile Include="Interfaces\ICloudDrawer.cs" />
         <Compile Include="Interfaces\ICloudDrawerFactory.cs" />
         <Compile Include="Interfaces\IColorGenerator.cs" />
         <Compile Include="Interfaces\IColorGeneratorFactory.cs" />
         <Compile Include="Interfaces\IPointsFactory.cs" />
+        <Compile Include="Interfaces\IProgramInterface.cs" />
         <Compile Include="Interfaces\ITagCloudCreator.cs" />
         <Compile Include="Interfaces\ITagCloudCreatorFactory.cs" />
         <Compile Include="Interfaces\ITagCloudLayouterFactory.cs" />
@@ -108,6 +110,7 @@
         <Compile Include="TagCloudCreator.cs" />
         <Compile Include="TagCloudCreatorFactory.cs" />
         <Compile Include="TagCloudLayouterFactory.cs" />
+        <Compile Include="TagCloudSettings.cs" />
         <Compile Include="WordForCloud.cs" />
         <Compile Include="WordsForCloudGenerator.cs" />
         <Compile Include="WordsForCloudGeneratorFactory.cs" />
