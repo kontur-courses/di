@@ -37,7 +37,7 @@ namespace TagsCloudContainer
 
         private List<Rectangle> MakeLayout(IEnumerable<WordWithFont> words, Graphics graphics)
         {
-            cloudLayouter = (ICloudLayouter)cloudLayouter.GetType().GetConstructor(new Type[0]).Invoke(new object[0]);
+            cloudLayouter.Reset();
             cloudLayouter.ChangeCenter(new Point(ImageSize / 2, ImageSize / 2));
             foreach (var word in words)
             {

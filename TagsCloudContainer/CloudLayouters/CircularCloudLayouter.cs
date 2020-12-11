@@ -14,9 +14,13 @@ namespace TagsCloudContainer
 
         public CircularCloudLayouter()
         {
+            Reset();
+        }
+
+        public void Reset()
+        {
             Rectangles = new List<Rectangle>();
-            var center = new Point(100, 100);
-            spiral = new Spiral(center, this);
+            spiral = new Spiral(new Point(100, 100), this);
             buildingStarted = false;
         }
 

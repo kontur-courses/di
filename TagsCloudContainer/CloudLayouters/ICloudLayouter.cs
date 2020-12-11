@@ -8,5 +8,6 @@ namespace TagsCloudContainer
         IReadOnlyCollection<Rectangle> Rectangles { get; set; }
         Rectangle PutNextRectangle(Size rectangleSize);
         void ChangeCenter(Point newCenter);
+        void Reset();
     }
 }
