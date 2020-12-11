@@ -129,7 +129,8 @@ namespace TagsCloudContainer_Tests
         [TestCase(1000)]
         public void TagCloudCreator_DrawsImageWithCurrectSize(int size)
         {
-            var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
+            var project_path = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(
+                Path.GetDirectoryName(Directory.GetCurrentDirectory()))), "TagsCloudContainer");
             var creator = GetCreator();
             creator.TrySetImageSize(size);
             creator.Create(Path.Combine(project_path, "input.txt"),
@@ -148,7 +149,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void TagCloudCreator_RewriteExistedImage()
         {
-            var project_path = Path.Combine(Directory.GetCurrentDirectory(), "TagsCloudContainer");
+            var project_path = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(
+                Path.GetDirectoryName(Directory.GetCurrentDirectory()))), "TagsCloudContainer");
             var creator = GetCreator();
 
             creator.TrySetImageSize(100);
