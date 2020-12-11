@@ -19,14 +19,15 @@ namespace TagsCloud.App.Commands
 
         public string Description { get; } = "help <command>      # prints help for <command>";
 
-        public void Execute(string[] args)
-        {
-            var commandName = args[0];
-            var cmd = client.Value.FindCommandByName(commandName);
-            if (cmd != null)
-                writer.WriteLine(cmd.Description);
-            else
-                writer.WriteLine("Not a command " + commandName);
-        }
+        public Result<None> Execute(string[] args) =>
+            ValidateArgs(args)
+                .Then(x => client.Value.FindCommandByName(x))
+                .Then(x => writer.WriteLine(x.Description));
+
+        private Result<string> ValidateArgs(string[] args) =>
+            args.Length == 0
+                ? Result.Fail<string>(
+                    "Invalid number of arguments. Write 'help help' to see more information")
+                : args[0];
     }
 }

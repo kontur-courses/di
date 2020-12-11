@@ -11,10 +11,13 @@ namespace TagsCloud.App
             this.fileReaderProvider = fileReaderProvider;
         }
 
-        public string[] ReadLines(string filePath)
+        public Result<string[]> ReadLines(string filePath)
         {
             var extension = Path.GetExtension(filePath);
-            return fileReaderProvider.GetFileReader(extension).ReadAllLines(filePath);
+            return extension == string.Empty
+                ? Result.Fail<string[]>("Please write extension of file")
+                : fileReaderProvider.GetFileReader(extension)
+                    .Then(x => x.ReadAllLines(filePath));
         }
     }
 }

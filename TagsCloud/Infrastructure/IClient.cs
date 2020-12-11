@@ -1,9 +1,11 @@
-﻿namespace TagsCloud.Infrastructure
+﻿using TagsCloud.App;
+
+namespace TagsCloud.Infrastructure
 {
     public interface IClient
     {
         string[] GetAvailableCommandName();
         void Run();
-        ICommand FindCommandByName(string name);
+        Result<ICommand> FindCommandByName(string name);
     }
 }

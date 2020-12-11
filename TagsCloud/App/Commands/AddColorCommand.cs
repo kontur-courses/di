@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using TagsCloud.Infrastructure;
 
@@ -16,10 +17,17 @@ namespace TagsCloud.App.Commands
         public string Name { get; } = "addcolor";
         public string Description { get; } = "addcolor params <color>      # Adding colors for cloud tag";
 
-        public void Execute(string[] args)
+        public Result<None> Execute(string[] args) =>
+            Result
+                .Of(() => args.Select(ParseColor))
+                .Then(x => colorSettingsProvider.AddColors(x));
+
+        private Color ParseColor(string name)
         {
-            var colors = args.Select(x => char.ToUpper(x[0]) + x.Substring(1).ToLower());
-            foreach (var color in colors) colorSettingsProvider.AddColor(Color.FromName(color));
+            var color = Color.FromName(name);
+            if (!color.IsKnownColor)
+                throw new InvalidOperationException($"Could not read color {name}");
+            return color;
         }
     }
 }

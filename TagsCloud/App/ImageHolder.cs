@@ -24,10 +24,15 @@ namespace TagsCloud.App
             image = new Bitmap(imageSize.Width, imageSize.Height);
         }
 
-        public void SaveImage(string fileName)
+        public Result<None> SaveImage(string fileName)
         {
             var extension = Path.GetExtension(fileName);
-            imageSaverProvider.GetImageSaver(extension).Save(image, fileName);
+            if (image == null)
+                return Result.Fail<None>("Tag cloud not created. First create tag cloud by command 'tagcloud'");
+            if (extension == string.Empty)
+                return Result.Fail<None>("Please write extension of file");
+            return imageSaverProvider.GetImageSaver(extension)
+                .Then(x => x.Save(image, fileName));
         }
     }
 }

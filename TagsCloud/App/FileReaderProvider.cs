@@ -13,9 +13,8 @@ namespace TagsCloud.App
             this.fileReaders = fileReaders;
         }
 
-        public IFileAllLinesReader GetFileReader(string extension)
-        {
-            return fileReaders.FirstOrDefault(x => x.Extensions.Contains(extension));
-        }
+        public Result<IFileAllLinesReader> GetFileReader(string extension) =>
+            fileReaders.FirstOrDefault(x => x.Extensions.Contains(extension))?.AsResult()
+            ?? Result.Fail<IFileAllLinesReader>("Can't read file in this format");
     }
 }

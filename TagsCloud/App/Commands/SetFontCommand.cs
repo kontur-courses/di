@@ -15,9 +15,9 @@ namespace TagsCloud.App.Commands
         public string Name { get; } = "setfont";
         public string Description { get; } = "setfont      # setting font for tag cloud";
 
-        public void Execute(string[] args)
-        {
-            fontFamilyProvider.FontFamily = new FontFamily(string.Join(" ", args));
-        }
+        public Result<None> Execute(string[] args) =>
+            Result
+                .Of(() => new FontFamily(string.Join(" ", args)), "Could not find this font")
+                .Then(x => { fontFamilyProvider.FontFamily = x; });
     }
 }

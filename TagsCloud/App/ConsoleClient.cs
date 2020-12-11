@@ -31,26 +31,21 @@ namespace TagsCloud.App
             }
         }
 
-        public ICommand FindCommandByName(string name)
-        {
-            return commands.FirstOrDefault(c => string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase));
-        }
+        public Result<ICommand> FindCommandByName(string name) =>
+            commands
+                .FirstOrDefault(c => string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase))?.AsResult()
+            ?? Result.Fail<ICommand>($"Not a command '{name}'. Write 'h' to find out the available commands");
 
-        private void Execute(string[] args)
-        {
-            if (args[0].Length == 0)
-            {
-                writer.WriteLine("Please specify <command> as the first command line argument");
-                return;
-            }
 
-            var commandName = args[0];
-            var cmd = FindCommandByName(commandName);
-            if (cmd == null)
-                writer.WriteLine(
-                    "Sorry. Unknown command {0}. Write 'h' to find out the available commands", commandName);
-            else
-                cmd.Execute(args.Skip(1).ToArray());
-        }
+        private void Execute(string[] args) =>
+            ValidateFirstArg(args)
+                .Then(FindCommandByName)
+                .Then(x => x.Execute(args.Skip(1).ToArray()))
+                .OnFail(writer.WriteLine);
+
+        private Result<string> ValidateFirstArg(string[] args) =>
+            args.Length == 0 || args[0].Length == 0
+                ? Result.Fail<string>("Please specify <command> as the first command line argument")
+                : args[0];
     }
 }

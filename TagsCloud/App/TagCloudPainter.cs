@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
@@ -16,14 +15,20 @@ namespace TagsCloud.App
             this.imageSettings = imageSettings;
         }
 
-        public void Paint(IEnumerable<Word> words)
+        public Result<None> Paint(IEnumerable<Word> words)
         {
             var imageSize = imageSettings.ImageSize;
             imageHolder.RecreateImage(imageSize);
             using var graphics = imageHolder.StartDrawing();
-            foreach (var word in words.Where(x => x.Rectangle.IsNestedInImage(imageSize)))
+            foreach (var word in words)
+            {
+                if (!word.Rectangle.IsNestedInImage(imageSize))
+                    return Result.Fail<None>("Image is too small for tag cloud. Please set more image size");
                 graphics.DrawString(word.Text, word.Font, new SolidBrush(imageSettings.GetColor()),
                     word.Rectangle.Location);
+            }
+
+            return Result.Ok();
         }
     }
 }

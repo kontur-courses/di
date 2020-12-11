@@ -18,9 +18,8 @@ namespace TagsCloud.App.Commands
         public string Name { get; } = "h";
         public string Description { get; } = "h      # prints available commands list";
 
-        public void Execute(string[] args)
-        {
-            writer.WriteLine("Available commands: " + string.Join(", ", client.Value.GetAvailableCommandName()));
-        }
+        public Result<None> Execute(string[] args) =>
+            Result.OfAction(() =>
+                writer.WriteLine("Available commands: " + string.Join(", ", client.Value.GetAvailableCommandName())));
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace TagsCloud.Infrastructure
+﻿using TagsCloud.App;
+
+namespace TagsCloud.Infrastructure
 {
     public interface ICommand
     {
         string Name { get; }
         string Description { get; }
-        void Execute(string[] args);
+        Result<None> Execute(string[] args);
     }
 }

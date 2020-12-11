@@ -9,6 +9,6 @@ namespace TagsCloud.Infrastructure
 
         void RecreateImage(ImageSize imageSize);
 
-        void SaveImage(string fileName);
+        Result<None> SaveImage(string fileName);
     }
 }

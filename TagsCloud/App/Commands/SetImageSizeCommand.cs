@@ -1,4 +1,5 @@
-﻿using TagsCloud.Infrastructure;
+﻿using System.Linq;
+using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App.Commands
 {
@@ -14,11 +15,18 @@ namespace TagsCloud.App.Commands
         public string Name { get; } = "setsize";
         public string Description { get; } = "setsize <width> <height>      # setting tag cloud size";
 
-        public void Execute(string[] args)
-        {
-            var imageSize = imageSizeProvider.ImageSize;
-            imageSize.Width = int.Parse(args[0]);
-            imageSize.Height = int.Parse(args[1]);
-        }
+        public Result<None> Execute(string[] args) =>
+            ValidateArgs(args)
+                .Then(x =>
+                {
+                    imageSizeProvider.ImageSize.Width = x[0];
+                    imageSizeProvider.ImageSize.Height = x[1];
+                });
+
+        private Result<int[]> ValidateArgs(string[] args) =>
+            args.Length < 2
+                ? Result.Fail<int[]>(
+                    "Invalid number of arguments. Write 'help setsize' to see more information")
+                : Result.Of(() => args.Select(int.Parse).ToArray(), "Could not read number");
     }
 }

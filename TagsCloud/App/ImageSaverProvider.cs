@@ -13,10 +13,8 @@ namespace TagsCloud.App
             this.imageSavers = imageSavers;
         }
 
-        public IImageSaver GetImageSaver(string extension)
-        {
-            return imageSavers.FirstOrDefault(x => x.Extensions.Contains(extension))
-                   ?? imageSavers.FirstOrDefault(x => x.Extensions.Contains(".png"));
-        }
+        public Result<IImageSaver> GetImageSaver(string extension) => 
+            imageSavers.FirstOrDefault(x => x.Extensions.Contains(extension))?.AsResult() 
+            ?? Result.Fail<IImageSaver>("Can't save image in this format");
     }
 }
