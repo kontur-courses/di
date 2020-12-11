@@ -30,5 +30,14 @@ namespace TagsCloud.App.Tests
             imageSizeProvider.ImageSize.Height.Should().Be(newImageSize.Height);
             imageSizeProvider.ImageSize.Width.Should().Be(newImageSize.Width);
         }
+
+        [TestCase("asd", "12", ExpectedResult = false, TestName = "when input is not number")]
+        [TestCase("0", "12", ExpectedResult = false, TestName = "when width is zero")]
+        [TestCase("12", "0", ExpectedResult = false, TestName = "when height is zero")]
+        [TestCase("-5", "12", ExpectedResult = false, TestName = "when width is negative")]
+        [TestCase("12", "-5", ExpectedResult = false, TestName = "when height is negative")]
+        [TestCase("12", "13", ExpectedResult = true, TestName = "when arguments is correct")]
+        public bool Execute_ReturnsCorrectResult(string width, string height) =>
+            command.Execute(new[] {width, height}).IsSuccess;
     }
 }

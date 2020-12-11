@@ -19,6 +19,7 @@ namespace TagsCloud.App.Tests
             client = A.Fake<IClient>();
             writer = A.Fake<TextWriter>();
             command = new DetailedHelpCommand(new Lazy<IClient>(client), writer);
+            A.CallTo(() => client.FindCommandByName("help")).Returns(command);
         }
 
         [Test]
@@ -31,9 +32,12 @@ namespace TagsCloud.App.Tests
         [Test]
         public void Execute_CallMethod_WriteLine()
         {
-            A.CallTo(() => client.FindCommandByName("help")).Returns(command);
             command.Execute(new[] {"help"});
             A.CallTo(() => writer.WriteLine(A<string>.Ignored)).MustHaveHappened();
         }
+        
+        [TestCase("help", ExpectedResult = true, TestName = "on known command")]
+        [TestCase("asd", ExpectedResult = false, TestName = "on unknown command")]
+        public bool Execute_ReturnsCorrectResult(string cmdForHelp) => command.Execute(new[] {cmdForHelp}).IsSuccess;
     }
 }

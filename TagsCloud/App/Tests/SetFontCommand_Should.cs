@@ -26,5 +26,9 @@ namespace TagsCloud.App.Tests
             command.Execute(new[] {fontName});
             fontFamilyProvider.FontFamily.Should().Be(new FontFamily(fontName));
         }
+
+        [TestCase("Georgia", ExpectedResult = true, TestName = "on known font")]
+        [TestCase("asd", ExpectedResult = false, TestName = "on unknown font")]
+        public bool Execute_ReturnsCorrectResult(string font) => command.Execute(new[] {font}).IsSuccess;
     }
 }
