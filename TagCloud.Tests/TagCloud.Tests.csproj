@@ -31,4 +31,13 @@
       <Folder Include="test-files" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="test-files\test.docx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="test-files\test.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
