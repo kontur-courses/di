@@ -14,15 +14,9 @@ namespace TagsCloud.App
             this.imageSaverProvider = imageSaverProvider;
         }
 
-        public Graphics StartDrawing()
-        {
-            return Graphics.FromImage(image);
-        }
+        public Graphics StartDrawing() => Graphics.FromImage(image);
 
-        public void RecreateImage(ImageSize imageSize)
-        {
-            image = new Bitmap(imageSize.Width, imageSize.Height);
-        }
+        public void RecreateImage(ImageSize imageSize) => image = new Bitmap(imageSize.Width, imageSize.Height);
 
         public Result<None> SaveImage(string fileName)
         {

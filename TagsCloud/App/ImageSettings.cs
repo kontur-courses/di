@@ -12,12 +12,10 @@ namespace TagsCloud.App
 
         public FontFamily FontFamily { get; set; } = new FontFamily("Arial");
 
-        public Color GetColor()
-        {
-            return colors.Count != 0
+        public Color GetColor() =>
+            colors.Count != 0
                 ? colors[random.Next(colors.Count)]
                 : Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-        }
 
         public void AddColors(IEnumerable<Color> colorsToAdd)
         {

@@ -109,15 +109,9 @@ namespace TagsCloud.App.Tests
             savingDirectory.GetFiles().Select(x => x.Name).Should().Contain("not_default_size.jpg");
         }
 
-        private string GetPathToTestFile(string fileName)
-        {
-            return Path.Combine(sourceDataDirectory.FullName, fileName);
-        }
+        private string GetPathToTestFile(string fileName) => Path.Combine(sourceDataDirectory.FullName, fileName);
 
-        private string GetPathForSavingTagCloud(string fileName)
-        {
-            return Path.Combine(savingDirectory.FullName, fileName);
-        }
+        private string GetPathForSavingTagCloud(string fileName) => Path.Combine(savingDirectory.FullName, fileName);
 
         private void ClearSavingDirectory()
         {

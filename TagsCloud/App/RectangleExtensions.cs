@@ -4,12 +4,10 @@ namespace TagsCloud.App
 {
     public static class RectangleExtensions
     {
-        public static bool IsNestedInImage(this Rectangle rectangle, ImageSize imageSize)
-        {
-            return rectangle.Left >= 0
-                   && rectangle.Right < imageSize.Width
-                   && rectangle.Top >= 0
-                   && rectangle.Bottom < imageSize.Height;
-        }
+        public static bool IsNestedInImage(this Rectangle rectangle, ImageSize imageSize) =>
+            rectangle.Left >= 0
+            && rectangle.Right < imageSize.Width
+            && rectangle.Top >= 0
+            && rectangle.Bottom < imageSize.Height;
     }
 }

@@ -45,14 +45,8 @@ namespace TagsCloud.App
             }
         }
 
-        public void AddUsedPoints(IEnumerable<Point> points)
-        {
-            usedPoints.UnionWith(points);
-        }
+        public void AddUsedPoints(IEnumerable<Point> points) => usedPoints.UnionWith(points);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

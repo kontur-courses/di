@@ -18,10 +18,7 @@ namespace TagsCloud.App.Tests
         }
 
         [Test]
-        public void ReturnsCenterAtFirst()
-        {
-            spiral.First().Should().Be(center);
-        }
+        public void ReturnsCenterAtFirst() => spiral.First().Should().Be(center);
 
         [Test]
         public void NotReturnsCenterAtFirst_IfCenterWasAddedToUsedPoints()

@@ -16,10 +16,7 @@ namespace TagsCloud.App
             this.writer = writer;
         }
 
-        public string[] GetAvailableCommandName()
-        {
-            return commands.Select(x => x.Name).ToArray();
-        }
+        public string[] GetAvailableCommandName() => commands.Select(x => x.Name).ToArray();
 
         public void Run()
         {

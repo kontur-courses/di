@@ -9,9 +9,6 @@ namespace TagsCloud.App.ImageSavers
     {
         public HashSet<string> Extensions { get; } = new HashSet<string> {".png"};
 
-        public void Save(Image image, string fileName)
-        {
-            image.Save(fileName, ImageFormat.Png);
-        }
+        public void Save(Image image, string fileName) => image.Save(fileName, ImageFormat.Png);
     }
 }

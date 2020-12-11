@@ -7,10 +7,7 @@ namespace TagsCloud.App.Tests
         private GrammemeChecker grammemeChecker;
 
         [SetUp]
-        public void SetUp()
-        {
-            grammemeChecker = new GrammemeChecker();
-        }
+        public void SetUp() => grammemeChecker = new GrammemeChecker();
 
         [TestCase("говорить", ExpectedResult = true, TestName = "if word is verb")]
         [TestCase("стол", ExpectedResult = true, TestName = "if word is noun")]
@@ -25,9 +22,6 @@ namespace TagsCloud.App.Tests
         [TestCase("нигде", ExpectedResult = false, TestName = "if word is pronominal adverb")]
         [TestCase("тот", ExpectedResult = false, TestName = "if word is pronoun-adjective")]
         [TestCase("в", ExpectedResult = false, TestName = "if word is preposition ")]
-        public bool ReturnsCorrectValue(string word)
-        {
-            return grammemeChecker.IsWordNotBoring(word);
-        }
+        public bool ReturnsCorrectValue(string word) => grammemeChecker.IsWordNotBoring(word);
     }
 }
