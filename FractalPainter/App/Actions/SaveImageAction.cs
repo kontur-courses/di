@@ -1,27 +1,22 @@
-﻿using System.IO;
-using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
+﻿using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
+using System.IO;
+using System.Windows.Forms;
 
 namespace FractalPainting.App.Actions
 {
-    public class SaveImageAction : IUiAction, INeed<IImageDirectoryProvider>, INeed<IImageHolder>
+    public class SaveImageAction : IUiAction
     {
-        private IImageDirectoryProvider imageDirectoryProvider;
-        private IImageHolder imageHolder;
+        private readonly IImageDirectoryProvider imageDirectoryProvider;
+        private readonly IImageHolder imageHolder;
 
-        public void SetDependency(IImageDirectoryProvider dependency)
+        public SaveImageAction(IImageHolder imageHolder, IImageDirectoryProvider imageDirectoryProvider)
         {
-            imageDirectoryProvider = dependency;
+            this.imageHolder = imageHolder;
+            this.imageDirectoryProvider = imageDirectoryProvider;
         }
 
-        public void SetDependency(IImageHolder dependency)
-        {
-            imageHolder = dependency;
-        }
-
-        public string Category => "Файл";
+        public MenuCategory Category => MenuCategory.File;
         public string Name => "Сохранить...";
         public string Description => "Сохранить изображение в файл";
 

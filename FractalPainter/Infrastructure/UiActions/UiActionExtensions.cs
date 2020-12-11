@@ -9,16 +9,17 @@ namespace FractalPainting.Infrastructure.UiActions
         public static ToolStripItem[] ToMenuItems(this IUiAction[] actions)
         {
             var items = actions.GroupBy(a => a.Category)
+                .OrderBy(g => g.Key.Order)
                 .Select(g => CreateTopLevelMenuItem(g.Key, g.ToList()))
                 .Cast<ToolStripItem>()
                 .ToArray();
             return items;
         }
 
-        private static ToolStripMenuItem CreateTopLevelMenuItem(string name, IList<IUiAction> items)
+        private static ToolStripMenuItem CreateTopLevelMenuItem(MenuCategory category, IList<IUiAction> items)
         {
             var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
-            return new ToolStripMenuItem(name, null, menuItems);
+            return new ToolStripMenuItem(category.Name, null, menuItems);
         }
 
         public static ToolStripItem ToMenuItem(this IUiAction action)
