@@ -31,7 +31,8 @@ namespace TagsCloud.App.Tests
         [Test]
         public void Execute_CallMethod_WriteLine()
         {
-            command.Execute(new[] {"asd"});
+            A.CallTo(() => client.FindCommandByName("help")).Returns(command);
+            command.Execute(new[] {"help"});
             A.CallTo(() => writer.WriteLine(A<string>.Ignored)).MustHaveHappened();
         }
     }

@@ -63,12 +63,8 @@ namespace TagsCloud.App.Tests
         }
 
         [Test]
-        public void ThrowArgumentException_WhenSizeIsEmpty()
-        {
-            Action action = () => layouter.PutNextRectangle(new Size(0, 0));
-
-            action.Should().Throw<ArgumentException>();
-        }
+        public void PutEmptyRectangle_WhenSizeIsEmpty() =>
+            layouter.PutNextRectangle(new Size(0, 0)).Should().Be(Rectangle.Empty);
 
         private Point GetRectangleCenter(Rectangle rectangle)
         {
