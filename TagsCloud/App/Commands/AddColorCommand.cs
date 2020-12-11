@@ -26,7 +26,7 @@ namespace TagsCloud.App.Commands
         {
             var color = Color.FromName(name);
             if (!color.IsKnownColor)
-                throw new InvalidOperationException($"Could not read color {name}");
+                throw new InvalidOperationException($"Could not read color '{name}'");
             return color;
         }
     }
