@@ -18,7 +18,7 @@ namespace TagsCloud.App
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.IsEmpty)
-                return new Rectangle();
+                return Rectangle.Empty;
             foreach (var point in layoutAlgorithm)
             {
                 var topLeftCorner = new Point
@@ -34,7 +34,7 @@ namespace TagsCloud.App
                 return rectangle;
             }
 
-            return new Rectangle();
+            return Rectangle.Empty;
         }
 
         private bool IsRectangleIntersects(Rectangle rectangle) => placedRectangles.Any(rectangle.IntersectsWith);
