@@ -19,9 +19,12 @@ namespace TagsCloud.App
                 : Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
         }
 
-        public void AddColor(Color color)
+        public void AddColors(IEnumerable<Color> colorsToAdd)
         {
-            colors.Add(color);
+            foreach (var color in colorsToAdd)
+            {
+                colors.Add(color);
+            }
         }
 
         public ImageSize ImageSize { get; } = new ImageSize();

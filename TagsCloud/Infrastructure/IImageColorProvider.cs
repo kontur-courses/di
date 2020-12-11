@@ -1,10 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloud.Infrastructure
 {
     public interface IImageColorProvider
     {
         Color GetColor();
-        void AddColor(Color color);
+        void AddColors(IEnumerable<Color> colors);
     }
 }

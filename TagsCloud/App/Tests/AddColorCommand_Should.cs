@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using FakeItEasy;
 using NUnit.Framework;
 using TagsCloud.App.Commands;
@@ -19,10 +20,11 @@ namespace TagsCloud.App.Tests
         }
 
         [Test]
-        public void Execute_CallMethod_AddColor()
+        public void Execute_CallMethod_AddColors()
         {
             command.Execute(new[] {"blue"});
-            A.CallTo(() => imageColorProvider.AddColor(Color.Blue)).MustHaveHappened();
+            A.CallTo(() => imageColorProvider.AddColors(A<IEnumerable<Color>>.Ignored))
+                .MustHaveHappened();
         }
     }
 }
