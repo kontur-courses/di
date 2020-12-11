@@ -8,10 +8,7 @@ namespace TagsCloud.App
 {
     internal class Program
     {
-        private static void Main(string[] args)
-        {
-            GetContainer().Resolve<IClient>().Run();
-        }
+        private static void Main(string[] args) => GetContainer().Resolve<IClient>().Run();
 
         private static IContainer GetContainer()
         {
@@ -30,7 +27,8 @@ namespace TagsCloud.App
                 .AsImplementedInterfaces();
             builder.RegisterInstance(Console.Out).As<TextWriter>();
             builder.RegisterAssemblyTypes(dataAccess)
-                .Where(x => x.GetInterfaces().Length == 0);
+                .Where(x => x.GetInterfaces().Length == 0)
+                .Except<None>();
             return builder.Build();
         }
     }
