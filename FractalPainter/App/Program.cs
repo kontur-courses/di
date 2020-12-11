@@ -53,8 +53,11 @@ namespace FractalPainting.App
             container.Bind<IBlobStorage>().To<FileBlobStorage>()
                 .WhenInjectedInto<SettingsManager>();
 
-            container.Bind<IImageDirectoryProvider>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load());
-            
+            container.Bind<IImageDirectoryProvider, AppSettings>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load())
+                .InSingletonScope();
+            container.Bind<ImageSettings>().ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings)
+                .InSingletonScope();
+
             container.Bind<IDragonPainterFactory>().ToFactory();
 
             return container.Get<MainForm>();
