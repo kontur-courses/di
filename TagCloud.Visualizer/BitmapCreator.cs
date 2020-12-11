@@ -8,13 +8,14 @@ namespace TagCloud.Visualizer
         internal static Bitmap DrawBitmap(List<RectangleWithWord> rectanglesWithWords, ImageOptions opts)
         {
             var bitmap = new Bitmap(opts.ImageWidth, opts.ImageHeight);
-            var graph = Graphics.FromImage(bitmap);
+            using var graph = Graphics.FromImage(bitmap);
             graph.Clear(Color.White);
             var brush = (Brush) typeof(Brushes).GetProperty($"{opts.ColorName}")?.GetValue(null);
             foreach (var rectangleWithWord in rectanglesWithWords)
             {
+                using var font = new Font(opts.FontName, opts.FontSize * (float) rectangleWithWord.Word.Weight);
                 graph.DrawString(rectangleWithWord.Word.Value,
-                    new Font(opts.FontName, opts.FontSize * (float) rectangleWithWord.Word.Weight),
+                    font,
                     brush!,
                     rectangleWithWord.Rectangle);
             }

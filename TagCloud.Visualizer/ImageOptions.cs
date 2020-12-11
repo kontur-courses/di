@@ -14,7 +14,7 @@ namespace TagCloud.Visualizer
 
         [Option('c', "color")] public string ColorName { get; private set; }
 
-        [Option('e', "imageExt")] public string ImageExtension { get; private set; }
+        [Option('i', "imageSaveName")] public string ImageSaveName { get; private set; }
 
         public ImageOptions()
         {
@@ -23,7 +23,7 @@ namespace TagCloud.Visualizer
             ImageHeight = 1000;
             ImageWidth = 1000;
             ColorName = "Black";
-            ImageExtension = "png";
+            ImageSaveName = "result.png";
         }
 
         public int ChangeImageOptionsAndReturnExitCode(ImageOptions opts)
@@ -33,7 +33,7 @@ namespace TagCloud.Visualizer
             ImageHeight = opts.ImageHeight;
             ImageWidth = opts.ImageWidth;
             ColorName = opts.ColorName;
-            ImageExtension = opts.ImageExtension;
+            ImageSaveName = opts.ImageSaveName;
             return 0;
         }
     }

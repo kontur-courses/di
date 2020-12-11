@@ -24,4 +24,11 @@
       <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="source\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CustomToolNamespace>Tag.Cloud.Visualizer.Console</CustomToolNamespace>
+      </None>
+    </ItemGroup>
+
 </Project>
