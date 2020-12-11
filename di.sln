@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Visualizer", "TagC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.Visualizer.Console", "TagCloud.Visualizer.Console\TagCloud.Visualizer.Console.csproj", "{56384FE4-0CC5-476F-AAB0-65B54581645A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.TextFileParser", "TagCloud.TextFileParser\TagCloud.TextFileParser.csproj", "{063D7A7D-30BA-4982-BA3F-A2CCDF4527FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud.ImageSaver", "TagCloud.ImageSaver\TagCloud.ImageSaver.csproj", "{991E3678-024C-4882-BF55-4BBAC8A75321}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{56384FE4-0CC5-476F-AAB0-65B54581645A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56384FE4-0CC5-476F-AAB0-65B54581645A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56384FE4-0CC5-476F-AAB0-65B54581645A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{063D7A7D-30BA-4982-BA3F-A2CCDF4527FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{063D7A7D-30BA-4982-BA3F-A2CCDF4527FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{063D7A7D-30BA-4982-BA3F-A2CCDF4527FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{063D7A7D-30BA-4982-BA3F-A2CCDF4527FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991E3678-024C-4882-BF55-4BBAC8A75321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991E3678-024C-4882-BF55-4BBAC8A75321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991E3678-024C-4882-BF55-4BBAC8A75321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991E3678-024C-4882-BF55-4BBAC8A75321}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
