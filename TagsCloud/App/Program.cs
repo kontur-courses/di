@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Autofac;
-using TagsCloud.App.Commands;
 using TagsCloud.Infrastructure;
 
 namespace TagsCloud.App
@@ -18,7 +17,6 @@ namespace TagsCloud.App
         {
             var dataAccess = Assembly.GetExecutingAssembly();
             var builder = new ContainerBuilder();
-            var a = typeof(SaveCommand);
             builder.RegisterAssemblyTypes(dataAccess)
                 .Where(x => x.GetInterfaces().Length != 0)
                 .Except<ImageSettings>(
