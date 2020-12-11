@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloud.Infrastructure;
@@ -19,7 +18,7 @@ namespace TagsCloud.App
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.IsEmpty)
-                throw new ArgumentException();
+                return new Rectangle();
             foreach (var point in layoutAlgorithm)
             {
                 var topLeftCorner = new Point
