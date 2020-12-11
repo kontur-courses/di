@@ -37,10 +37,7 @@ namespace TagsCloud.App
             return new Rectangle();
         }
 
-        private bool IsRectangleIntersects(Rectangle rectangle)
-        {
-            return placedRectangles.Any(rectangle.IntersectsWith);
-        }
+        private bool IsRectangleIntersects(Rectangle rectangle) => placedRectangles.Any(rectangle.IntersectsWith);
 
         private void AddUsedPointsToAlgorithm(Rectangle rectangle)
         {
