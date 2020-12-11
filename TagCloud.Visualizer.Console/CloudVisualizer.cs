@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using CommandLine;
+using GemBox.Document;
+using TagCloud.ImageSaver;
+using TagCloud.TextFileParser;
 
 namespace TagCloud.Visualizer.Console
 {
@@ -13,9 +16,17 @@ namespace TagCloud.Visualizer.Console
 
         private static void Main(string[] args)
         {
+            ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             var cloudLayouterService = new ContainerBuilder();
             cloudLayouterService.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().WithParameter(
                 new TypedParameter(typeof(CenterOptions), CenterOptions));
+            cloudLayouterService.RegisterType<BitmapSaver>().As<IImageSaver>();
+            cloudLayouterService.RegisterType<PngSaver>().As<IImageSaver>();
+            cloudLayouterService.RegisterComposite<CompositeImageSaver, IImageSaver>();
+            cloudLayouterService.RegisterType<TxtFileParser>().As<ITextFileParser>();
+            cloudLayouterService.RegisterType<WordDocumentParser>().As<ITextFileParser>();
+            cloudLayouterService.RegisterComposite<FileParser, ITextFileParser>();
+            cloudLayouterService.RegisterType<ToLowerCaseProcessor>().As<IWordsHandler>();
             var cloudLayouterBuilder = cloudLayouterService.Build();
             do
             {
@@ -34,8 +45,11 @@ namespace TagCloud.Visualizer.Console
                 .MapResult(
                     (PrintCommand command) =>
                         PrintCommand.PrintCloudAndReturnExitCode(cloudLayouterBuilder.Resolve<ICloudLayouter>(),
-                            TextReader.GetWords(InputOptions),
-                            ImageOptions),
+                            TextReader.GetWords(InputOptions,
+                                cloudLayouterBuilder.Resolve<ITextFileParser>(),
+                                cloudLayouterBuilder.Resolve<IWordsHandler>()),
+                            ImageOptions,
+                            cloudLayouterBuilder.Resolve<IImageSaver>()),
                     (InputOptions opts) => InputOptions.ChangeInputOptionsAndReturnExitCode(opts),
                     (ImageOptions opts) =>
                     {

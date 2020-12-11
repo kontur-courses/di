@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GemBox.Document;
+using TagCloud.TextFileParser;
 
 namespace TagCloud.Visualizer.Console
 {
@@ -103,32 +102,22 @@ namespace TagCloud.Visualizer.Console
             "таки"
         };
 
-        public static IEnumerable<string> GetWords(InputOptions inputOptions, string sourceFolderPath)
+        public static IEnumerable<string> GetWords(InputOptions inputOptions, string sourceFolderPath,
+            ITextFileParser fileParser, IWordsHandler wordsHandler)
         {
-            IEnumerable<string> words;
-            if (!inputOptions.IsDocOrDocx)
-            {
-                words = File.ReadAllLines(Path.Combine(sourceFolderPath,
-                        $"{inputOptions.FileName}"))
-                    .Select(word => word.ToLower());
-            }
-
-            words = GetWordsFromWordDocument(inputOptions, sourceFolderPath);
-            return words
-                .Where(word => !WordsToExclude.Contains(word));
+            return fileParser.TryGetWords(inputOptions.FileName, sourceFolderPath, out var words)
+                ? wordsHandler.ProcessWords(words)
+                    .Where(word => !WordsToExclude.Contains(word))
+                : null;
         }
 
-        public static IEnumerable<string> GetWords(InputOptions inputOption)
+        public static IEnumerable<string> GetWords(InputOptions inputOption, ITextFileParser fileParser,
+            IWordsHandler wordsHandler)
         {
-            return GetWords(inputOption, InputPath);
-        }
-
-        private static IEnumerable<string> GetWordsFromWordDocument(InputOptions inputOptions, string sourceFolderPath)
-        {
-            var document = DocumentModel.Load(Path.Combine(sourceFolderPath,
-                $"{inputOptions.FileName}"));
-            var text = document.Content.ToString();
-            return text.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+            return GetWords(inputOption,
+                InputPath,
+                fileParser,
+                wordsHandler);
         }
     }
 }

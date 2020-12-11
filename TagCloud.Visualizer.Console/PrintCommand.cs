@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CommandLine;
+using TagCloud.ImageSaver;
 
 namespace TagCloud.Visualizer.Console
 {
@@ -16,12 +17,12 @@ namespace TagCloud.Visualizer.Console
             "images");
 
         public static int PrintCloudAndReturnExitCode(ICloudLayouter cloudLayouter, IEnumerable<string> words,
-            ImageOptions imageOptions)
+            ImageOptions imageOptions, IImageSaver imageSaver)
         {
             var sizes = SizesCreator.CreateSizesArray(words, imageOptions.FontSize, imageOptions.FontName);
             var rects = cloudLayouter.GetRectangles(sizes);
-            var bitmap = BitmapCreator.DrawBitmap(rects, imageOptions);
-            bitmap.Save(Path.Combine(SavePath, $"result.{imageOptions.ImageExtension}"));
+            using var bitmap = BitmapCreator.DrawBitmap(rects, imageOptions);
+            imageSaver.TrySaveImage(bitmap, SavePath, imageOptions);
             return 0;
         }
     }
