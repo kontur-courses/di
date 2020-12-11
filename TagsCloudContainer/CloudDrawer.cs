@@ -22,21 +22,17 @@ namespace TagsCloudContainer
 
         public void DrawCloud(List<WordWithFont> words, string targetPath, string imageName)
         {
-            using (var bitmap = new Bitmap(ImageSize, ImageSize))
+            using var bitmap = new Bitmap(ImageSize, ImageSize);
+            using var graphics = Graphics.FromImage(bitmap);
+            var layout = MakeLayout(words, graphics); 
+            graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
+            for (var i = 0; i < words.Count; i++)
             {
-                using (var graphics = Graphics.FromImage(bitmap))
-                {
-                    var layout = MakeLayout(words, graphics);
-                    graphics.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, ImageSize, ImageSize));
-                    for (var i = 0; i < words.Count; i++)
-                    {
-                        graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()),
-                            layout[i].Location);
-                    }
-
-                    ImageSaver.Save(targetPath, imageName, bitmap);
-                }
+                graphics.DrawString(words[i].Word, words[i].Font, new SolidBrush(ColorProvider.GetNextColor()),
+                    layout[i].Location);
             }
+
+            ImageSaver.Save(targetPath, imageName, bitmap);
         }
 
         private List<Rectangle> MakeLayout(IEnumerable<WordWithFont> words, Graphics graphics)
