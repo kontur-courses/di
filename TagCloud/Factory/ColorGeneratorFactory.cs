@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagCloud.Interfaces;
 
-namespace TagCloud
+namespace TagCloud.Factory
 {
     public class ColorGeneratorFactory : IColorGeneratorFactory
     {

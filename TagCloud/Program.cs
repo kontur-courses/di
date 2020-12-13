@@ -2,6 +2,7 @@
 using System.Linq;
 using Autofac;
 using McMaster.Extensions.CommandLineUtils;
+using TagCloud.Factory;
 using TagCloud.Interfaces;
 using TagsCloudVisualization;
 

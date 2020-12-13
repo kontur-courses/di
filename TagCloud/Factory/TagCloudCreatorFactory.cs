@@ -1,8 +1,7 @@
 ﻿using System.Drawing;
 using TagCloud.Interfaces;
-using TagsCloudVisualization;
 
-namespace TagCloud
+namespace TagCloud.Factory
 {
     public class TagCloudCreatorFactory : ITagCloudCreatorFactory
     {

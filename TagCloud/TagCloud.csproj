@@ -87,10 +87,14 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CloudDrawer.cs" />
-        <Compile Include="CloudDrawerFactory.cs" />
         <Compile Include="ColorGenerator.cs" />
-        <Compile Include="ColorGeneratorFactory.cs" />
         <Compile Include="ConsoInterface.cs" />
+        <Compile Include="Factory\CloudDrawerFactory.cs" />
+        <Compile Include="Factory\ColorGeneratorFactory.cs" />
+        <Compile Include="Factory\SpiralPointsFactory.cs" />
+        <Compile Include="Factory\TagCloudCreatorFactory.cs" />
+        <Compile Include="Factory\TagCloudLayouterFactory.cs" />
+        <Compile Include="Factory\WordsForCloudGeneratorFactory.cs" />
         <Compile Include="Interfaces\ICloudDrawer.cs" />
         <Compile Include="Interfaces\ICloudDrawerFactory.cs" />
         <Compile Include="Interfaces\IColorGenerator.cs" />
@@ -105,15 +109,11 @@
         <Compile Include="Interfaces\IWordsNormalizer.cs" />
         <Compile Include="Interfaces\IWordsReader.cs" />
         <Compile Include="Program.cs" />
-        <Compile Include="SpiralPointsFactory.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TagCloudCreator.cs" />
-        <Compile Include="TagCloudCreatorFactory.cs" />
-        <Compile Include="TagCloudLayouterFactory.cs" />
         <Compile Include="TagCloudSettings.cs" />
         <Compile Include="WordForCloud.cs" />
         <Compile Include="WordsForCloudGenerator.cs" />
-        <Compile Include="WordsForCloudGeneratorFactory.cs" />
         <Compile Include="WordsNormalizer.cs" />
         <Compile Include="WordsReader.cs" />
     </ItemGroup>
