@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Core.WordProcessors;
 
-namespace TagsCloudLayouters.Contracts
+namespace TagsCloudCreating.Contracts
 {
     public interface ITagsCloudCreator
     {

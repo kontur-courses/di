@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core.ColorizeAlgorithms;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Contracts;
+using TagsCloudCreating.Core.ColorizeAlgorithms;
 using TagsCloudVisualization.Infrastructure.Common;
 
 namespace TagsCloudVisualization.Infrastructure.ColorizerCollectionConvert

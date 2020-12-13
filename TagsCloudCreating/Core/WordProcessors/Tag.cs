@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using TagsCloudLayouters.Configuration;
+using TagsCloudCreating.Configuration;
 
-namespace TagsCloudLayouters.Core.WordProcessors
+namespace TagsCloudCreating.Core.WordProcessors
 {
     public class Tag
     {

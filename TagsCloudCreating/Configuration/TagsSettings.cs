@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core.ColorizeAlgorithms;
+using TagsCloudCreating.Contracts;
+using TagsCloudCreating.Core.ColorizeAlgorithms;
 
-namespace TagsCloudLayouters.Configuration
+namespace TagsCloudCreating.Configuration
 {
     public class TagsSettings
     {

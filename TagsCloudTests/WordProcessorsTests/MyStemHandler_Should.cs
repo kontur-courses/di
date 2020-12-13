@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Core.WordProcessors;
 
 namespace TagsCloudTests.WordProcessorsTests
 {
@@ -35,7 +35,7 @@ namespace TagsCloudTests.WordProcessorsTests
                 .BeEquivalentTo(expectedPartsOfSpeech);
         }
 
-        public IEnumerable<(string word, string speechPart)> GetProcessedWords(params string[] words) =>
+        private static IEnumerable<(string word, string speechPart)> GetProcessedWords(params string[] words) =>
             MyStemHandler.GetWordsWithPartsOfSpeech(words);
     }
 }

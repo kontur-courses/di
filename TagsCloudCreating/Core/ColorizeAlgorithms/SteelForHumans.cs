@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Contracts;
 
-namespace TagsCloudLayouters.Core.ColorizeAlgorithms
+namespace TagsCloudCreating.Core.ColorizeAlgorithms
 {
     public class SteelForHumans : IColorizer
     {

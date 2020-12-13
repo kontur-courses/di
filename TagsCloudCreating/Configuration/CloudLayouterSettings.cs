@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
-namespace TagsCloudLayouters.Configuration
+namespace TagsCloudCreating.Configuration
 {
     public class CloudLayouterSettings
     {

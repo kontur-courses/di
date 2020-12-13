@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Contracts;
 
 namespace TagsCloudVisualization.Infrastructure.ColorizerCollectionConvert
 {

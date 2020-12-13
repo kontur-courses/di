@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using TagsCloudLayouters.Configuration;
+using TagsCloudCreating.Configuration;
 using TagsCloudVisualization.Contracts;
 
 namespace TagsCloudVisualization.MenuItems.Settings

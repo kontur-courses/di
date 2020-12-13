@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace TagsCloudLayouters.Core.WordProcessors
+namespace TagsCloudCreating.Core.WordProcessors
 {
     public static class MyStemHandler
     {

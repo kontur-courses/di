@@ -1,4 +1,4 @@
-﻿using TagsCloudLayouters.Configuration;
+﻿using TagsCloudCreating.Configuration;
 
 namespace TagsCloudVisualization.Infrastructure.Common
 {

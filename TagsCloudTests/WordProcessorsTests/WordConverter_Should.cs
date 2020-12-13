@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Core.WordProcessors;
 
 namespace TagsCloudTests.WordProcessorsTests
 {

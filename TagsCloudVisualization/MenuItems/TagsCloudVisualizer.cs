@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Contracts;
 using TagsCloudVisualization.App;
 using TagsCloudVisualization.Contracts;
 

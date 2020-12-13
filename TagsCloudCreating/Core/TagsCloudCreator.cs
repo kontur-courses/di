@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Contracts;
+using TagsCloudCreating.Core.WordProcessors;
 
-namespace TagsCloudLayouters.Core
+namespace TagsCloudCreating.Core
 {
     public class TagsCloudCreator : ITagsCloudCreator
     {
@@ -20,7 +20,7 @@ namespace TagsCloudLayouters.Core
 
         public IEnumerable<Tag> CreateTagsCloud(IEnumerable<string> words)
         {
-            var interestingWords = WordHandler.NormilizeAndExcludeBoringWords(words);
+            var interestingWords = WordHandler.NormalizeAndExcludeBoringWords(words);
             var readyTags = WordConverter.ConvertToTags(interestingWords)
                 .Select(InsertTagInFrame)
                 .OrderByDescending(t => t.Frequency);

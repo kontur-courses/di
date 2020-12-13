@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Contracts;
 using TagsCloudLayouters.Infrastructure;
 
-namespace TagsCloudLayouters.Core.CircularCloudLayouter
+namespace TagsCloudCreating.Core.CircularCloudLayouter
 {
     public class CircularCloudLayouter : ITagsCloudLayouter
     {

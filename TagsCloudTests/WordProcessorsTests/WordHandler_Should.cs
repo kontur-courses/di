@@ -2,8 +2,8 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Core.WordProcessors;
 
 namespace TagsCloudTests.WordProcessorsTests
 {
@@ -35,7 +35,7 @@ namespace TagsCloudTests.WordProcessorsTests
                 "Утром в лесу запели два звонких соловья и защебетали воробьи, чуть-чуть умолкая.".Split(" ");
             var wordHandlerSettings = new WordHandlerSettings {SpeechPartsStatuses = defaultSpeechPartsStatuses};
             new WordHandler(wordHandlerSettings)
-                .NormilizeAndExcludeBoringWords(sentence)
+                .NormalizeAndExcludeBoringWords(sentence)
                 .Should()
                 .BeEquivalentTo(
                     "утро",
@@ -62,7 +62,7 @@ namespace TagsCloudTests.WordProcessorsTests
                     .ToDictionary(pair => pair.Key, pair => false)
             };
             new WordHandler(wordHandlerSettings)
-                .NormilizeAndExcludeBoringWords(sentence)
+                .NormalizeAndExcludeBoringWords(sentence)
                 .Should()
                 .BeEquivalentTo();
         }
@@ -78,7 +78,7 @@ namespace TagsCloudTests.WordProcessorsTests
                 }
             };
             var words = "Красивое и сочное яблоко".Split(" ");
-            var interestingWords = new WordHandler(settings).NormilizeAndExcludeBoringWords(words).ToArray();
+            var interestingWords = new WordHandler(settings).NormalizeAndExcludeBoringWords(words).ToArray();
             interestingWords.Should().Contain("красивый", "сочный");
             interestingWords.Should().NotContain("и", "яблоко");
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Contracts;
 using TagsCloudVisualization.Contracts;
 using TagsCloudVisualization.Infrastructure.Common;
 

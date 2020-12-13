@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Contracts;
 
-namespace TagsCloudLayouters.Core.WordProcessors
+namespace TagsCloudCreating.Core.WordProcessors
 {
     public class WordHandler : IWordHandler
     {
@@ -11,7 +11,7 @@ namespace TagsCloudLayouters.Core.WordProcessors
 
         public WordHandler(WordHandlerSettings wordHandlerSettings) => WordHandlerSettings = wordHandlerSettings;
 
-        public IEnumerable<string> NormilizeAndExcludeBoringWords(IEnumerable<string> words)
+        public IEnumerable<string> NormalizeAndExcludeBoringWords(IEnumerable<string> words)
         {
             var boringTypes = WordHandlerSettings.SpeechPartsStatuses
                 .Where(part => !part.Value)

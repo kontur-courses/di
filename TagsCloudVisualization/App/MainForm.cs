@@ -10,9 +10,8 @@ namespace TagsCloudVisualization.App
 {
     public partial class MainForm : Form
     {
-
         public MainForm(
-            ImageSettings imageSettings, 
+            ImageSettings imageSettings,
             TagsCloudPictureHolder tagsCloudPictureHold,
             IEnumerable<IMenuItem> items)
         {
@@ -21,7 +20,7 @@ namespace TagsCloudVisualization.App
 
             MainMenuStrip = new MenuStrip();
             MainMenuStrip.Items.AddRange(items.ToMenuItems());
-            
+
             Controls.Add(MainMenuStrip);
             Controls.Add(tagsCloudPictureHold);
         }

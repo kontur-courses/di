@@ -1,11 +1,11 @@
 ﻿using System.Windows.Forms;
 using Autofac;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Contracts;
-using TagsCloudLayouters.Core;
-using TagsCloudLayouters.Core.CircularCloudLayouter;
-using TagsCloudLayouters.Core.ColorizeAlgorithms;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Contracts;
+using TagsCloudCreating.Core;
+using TagsCloudCreating.Core.CircularCloudLayouter;
+using TagsCloudCreating.Core.ColorizeAlgorithms;
+using TagsCloudCreating.Core.WordProcessors;
 using TagsCloudVisualization.App;
 using TagsCloudVisualization.Contracts;
 using TagsCloudVisualization.Infrastructure.Common;

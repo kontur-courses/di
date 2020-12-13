@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudLayouters.Configuration;
+using TagsCloudCreating.Configuration;
 
-namespace TagsCloudLayouters.Core.WordProcessors
+namespace TagsCloudCreating.Core.WordProcessors
 {
     public class WordConverter
     {

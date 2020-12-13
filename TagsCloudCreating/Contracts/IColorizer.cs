@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudLayouters.Contracts
+namespace TagsCloudCreating.Contracts
 {
     public interface IColorizer
     {

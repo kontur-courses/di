@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using TagsCloudLayouters.Contracts;
+using TagsCloudCreating.Contracts;
 using TagsCloudVisualization.Infrastructure.ColorizerCollectionConvert;
 
 namespace TagsCloudVisualization.Infrastructure.Common

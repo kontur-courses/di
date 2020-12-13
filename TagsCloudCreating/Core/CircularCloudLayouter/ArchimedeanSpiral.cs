@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
-using TagsCloudLayouters.Configuration;
+using TagsCloudCreating.Configuration;
 
-namespace TagsCloudLayouters.Core.CircularCloudLayouter
+namespace TagsCloudCreating.Core.CircularCloudLayouter
 {
     public class ArchimedeanSpiral
     {

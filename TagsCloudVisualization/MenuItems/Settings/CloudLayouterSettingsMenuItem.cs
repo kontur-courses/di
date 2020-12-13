@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using TagsCloudLayouters.Configuration;
+using TagsCloudCreating.Configuration;
 using TagsCloudVisualization.Contracts;
 using TagsCloudVisualization.Infrastructure.Common;
 

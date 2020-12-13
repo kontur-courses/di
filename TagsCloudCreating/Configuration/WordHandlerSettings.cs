@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudLayouters.Configuration
+namespace TagsCloudCreating.Configuration
 {
     public class WordHandlerSettings
     {

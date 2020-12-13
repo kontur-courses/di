@@ -2,10 +2,10 @@
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Core;
-using TagsCloudLayouters.Core.CircularCloudLayouter;
-using TagsCloudLayouters.Core.WordProcessors;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Core;
+using TagsCloudCreating.Core.CircularCloudLayouter;
+using TagsCloudCreating.Core.WordProcessors;
 using TagsCloudVisualization.Infrastructure;
 
 namespace TagsCloudTests

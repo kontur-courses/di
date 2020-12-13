@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudLayouters.Configuration;
-using TagsCloudLayouters.Core.CircularCloudLayouter;
+using TagsCloudCreating.Configuration;
+using TagsCloudCreating.Core.CircularCloudLayouter;
 
 namespace TagsCloudTests.CircularCloudLayouterTests
 {
