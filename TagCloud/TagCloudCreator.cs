@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using TagCloud.Interfaces;
 
@@ -31,7 +32,7 @@ namespace TagCloud
         public Bitmap GetCloud()
         {
             var words = wordsReader.Get(inputFile);
-            var normalizedWords = wordsNormalizer.NormalizeWords(words, wordsReader.Get(boringWordsFile).ToHashSet());
+            var normalizedWords = wordsNormalizer.NormalizeWords(words, wordsReader.Get(boringWordsFile).Select(x=>x.ToLower()).ToHashSet());
             var wordsForCloud = wordsForCloudGenerator.Generate(normalizedWords);
             return cloudDrawer.DrawCloud(wordsForCloud);
         }

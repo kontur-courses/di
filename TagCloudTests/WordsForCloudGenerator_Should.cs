@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud;
+using TagCloud.Factory;
 using TagsCloudVisualization;
 
 namespace TagCloudTests
@@ -52,6 +54,46 @@ namespace TagCloudTests
         {
             var wordsForCloud = wordsForCloudGenerator.Generate(new List<string> {"e", "w", "w"});
             wordsForCloud[0].Font.Size.Should().BeGreaterThan(wordsForCloud[1].Font.Size);
+        }
+
+        [Test]
+        public void PictureCreation()
+        {
+            Directory.SetCurrentDirectory(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        TestContext.CurrentContext.TestDirectory).ToString()) + "\\testFiles");
+            Directory.GetParent(TestContext.CurrentContext.TestDirectory);
+
+            var tagCloudCreatorFactory = new TagCloudCreatorFactory(new WordsForCloudGeneratorFactory(),
+                                                                    new ColorGeneratorFactory(),
+                                                                    new CloudDrawerFactory(),
+                                                                    new TagCloudLayouterFactory(),
+                                                                    new SpiralPointsFactory(),
+                                                                    new WordsReader(),
+                                                                    new WordsNormalizer());
+
+            var tagCloudCreatorWithoutBoringWords = tagCloudCreatorFactory
+                .Get(new Size(2000, 2000),
+                     new Point(1000, 1000),
+                     new[] {Color.Black, Color.Blue,},
+                     "Arial",
+                     50,
+                     "in.txt",
+                     "boringWords.txt");
+
+            var tagCloudCreatorWithBoringWords = tagCloudCreatorFactory
+                .Get(new Size(2000, 2000),
+                     new Point(1000, 1000),
+                     new[] {Color.Black, Color.Blue,},
+                     "Arial",
+                     50,
+                     "in.txt",
+                     null);
+
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            tagCloudCreatorWithBoringWords.GetCloud().Save("WithBoringWords.bmp");
+            tagCloudCreatorWithoutBoringWords.GetCloud().Save("WithoutBoringWords.bmp");
         }
     }
 }
