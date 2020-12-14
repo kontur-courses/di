@@ -18,10 +18,25 @@ namespace TagCloudTests
         private const int MaxFontSize = 10;
         private static readonly Point Center = new Point(500, 500);
         private Color[] colors = new[] {Color.Black};
+        private TagCloudCreatorFactory tagCloudCreatorFactory;
 
         [SetUp]
         public void Setup()
         {
+            Directory.SetCurrentDirectory(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        TestContext.CurrentContext.TestDirectory).ToString()) + "\\testFiles");
+            Directory.GetParent(TestContext.CurrentContext.TestDirectory);
+
+            tagCloudCreatorFactory = new TagCloudCreatorFactory(new WordsForCloudGeneratorFactory(),
+                                                                new ColorGeneratorFactory(),
+                                                                new CloudDrawerFactory(),
+                                                                new TagCloudLayouterFactory(),
+                                                                new SpiralPointsFactory(),
+                                                                new WordsReader(),
+                                                                new WordsNormalizer());
+
             wordsForCloudGenerator = new WordsForCloudGenerator(FontName,
                                                                 MaxFontSize,
                                                                 new CircularCloudLayouter(new SpiralPoints(Center)),
@@ -57,31 +72,8 @@ namespace TagCloudTests
         }
 
         [Test]
-        public void PictureCreation()
+        public void PictureCreation_WithBoringWords()
         {
-            Directory.SetCurrentDirectory(
-                Directory.GetParent(
-                    Directory.GetParent(
-                        TestContext.CurrentContext.TestDirectory).ToString()) + "\\testFiles");
-            Directory.GetParent(TestContext.CurrentContext.TestDirectory);
-
-            var tagCloudCreatorFactory = new TagCloudCreatorFactory(new WordsForCloudGeneratorFactory(),
-                                                                    new ColorGeneratorFactory(),
-                                                                    new CloudDrawerFactory(),
-                                                                    new TagCloudLayouterFactory(),
-                                                                    new SpiralPointsFactory(),
-                                                                    new WordsReader(),
-                                                                    new WordsNormalizer());
-
-            var tagCloudCreatorWithoutBoringWords = tagCloudCreatorFactory
-                .Get(new Size(2000, 2000),
-                     new Point(1000, 1000),
-                     new[] {Color.Black, Color.Blue,},
-                     "Arial",
-                     50,
-                     "in.txt",
-                     "boringWords.txt");
-
             var tagCloudCreatorWithBoringWords = tagCloudCreatorFactory
                 .Get(new Size(2000, 2000),
                      new Point(1000, 1000),
@@ -90,10 +82,23 @@ namespace TagCloudTests
                      50,
                      "in.txt",
                      null);
-
-            Console.WriteLine(Directory.GetCurrentDirectory());
             tagCloudCreatorWithBoringWords.GetCloud().Save("WithBoringWords.bmp");
+            File.Exists("WithBoringWords.bmp").Should().BeTrue();
+        }
+
+        [Test]
+        public void PictureCreation_WithoutBoringWords()
+        {
+            var tagCloudCreatorWithoutBoringWords = tagCloudCreatorFactory
+                .Get(new Size(2000, 2000),
+                     new Point(1000, 1000),
+                     new[] {Color.Black, Color.Blue,},
+                     "Arial",
+                     50,
+                     "in.txt",
+                     "boringWords.txt");
             tagCloudCreatorWithoutBoringWords.GetCloud().Save("WithoutBoringWords.bmp");
+            File.Exists("WithoutBoringWords.bmp").Should().BeTrue();
         }
     }
 }
