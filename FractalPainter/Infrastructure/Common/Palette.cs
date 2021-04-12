@@ -6,6 +6,6 @@ namespace FractalPainting.Infrastructure.Common
     {
         public Color PrimaryColor { get; set; } = Color.Yellow;
         public Color SecondaryColor { get; set; } = Color.Red;
-        public Color BackgroundColor { get; set; } = Color.DarkBlue;
+        public Color BackgroundColor { get; set; } = Color.DarkSlateGray;
     }
 }
