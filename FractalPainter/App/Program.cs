@@ -5,6 +5,7 @@ using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
+using Ninject.Extensions.Factory;
 
 namespace FractalPainting.App
 {
@@ -36,6 +37,8 @@ namespace FractalPainting.App
                 container.Bind<SettingsManager>().ToConstant(settingsManager);
                 container.Bind<Palette>().ToConstant(new Palette());
                 container.Bind<KochPainter>().To<KochPainter>();
+
+                container.Bind<IDragonPainterFactory>().ToFactory();
 
                 container.Bind<Form>().To<MainForm>();
                 container.Bind<IUiAction>().To<SaveImageAction>(); // is it possible to use IUiAction[] here?
