@@ -42,6 +42,8 @@ namespace FractalPainting.App
 
                 container.Bind<ImageSettings>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load().ImageSettings);
 
+                container.Bind<IImageDirectoryProvider>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load());
+
                 container.Bind<Form>().To<MainForm>();
                 container.Bind<IUiAction>().To<SaveImageAction>(); // is it possible to use IUiAction[] here?
                 container.Bind<IUiAction>().To<DragonFractalAction>();
