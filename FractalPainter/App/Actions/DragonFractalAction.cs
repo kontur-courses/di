@@ -22,6 +22,7 @@ namespace FractalPainting.App.Actions
         public string Category => "Фракталы";
         public string Name => "Дракон";
         public string Description => "Дракон Хартера-Хейтуэя";
+        public int Order => 20;
 
         public void Perform()
         {
