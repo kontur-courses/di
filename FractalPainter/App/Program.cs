@@ -6,6 +6,7 @@ using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 using Ninject.Extensions.Factory;
+using Ninject.Extensions.Conventions;
 
 namespace FractalPainting.App
 {
@@ -45,12 +46,11 @@ namespace FractalPainting.App
                 container.Bind<IImageDirectoryProvider>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load());
 
                 container.Bind<Form>().To<MainForm>();
-                container.Bind<IUiAction>().To<SaveImageAction>(); // is it possible to use IUiAction[] here?
-                container.Bind<IUiAction>().To<DragonFractalAction>();
-                container.Bind<IUiAction>().To<KochFractalAction>();
-                container.Bind<IUiAction>().To<ImageSettingsAction>();
-                container.Bind<IUiAction>().To<PaletteSettingsAction>();
 
+                container.Bind(x => x.
+                    FromThisAssembly()
+                    .SelectAllClasses().InNamespaces("FractalPainting.App.Actions")
+                    .BindAllInterfaces());
                 
                 Application.Run(container.Get<Form>());
             }
