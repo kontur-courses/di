@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
 
@@ -16,10 +17,23 @@ namespace FractalPainting.App
         {
             try
             {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
                 var container = new StandardKernel();
 
                 // start here
                 // container.Bind<TService>().To<TImplementation>();
+                var settingsManager = CreateSettingsManager();
+                var imageSettings = settingsManager.Load().ImageSettings;
+
+                var pictureBox = new PictureBoxImageHolder();
+                pictureBox.RecreateImage(imageSettings);
+                pictureBox.Dock = DockStyle.Fill;
+
+                container.Bind<IImageHolder>().ToConstant(pictureBox);
+                container.Bind<SettingsManager>().ToConstant(settingsManager);
+                container.Bind<Palette>().ToConstant(new Palette());
 
                 container.Bind<Form>().To<MainForm>();
                 container.Bind<IUiAction>().To<SaveImageAction>(); // is it possible to use IUiAction[] here?
@@ -28,14 +42,21 @@ namespace FractalPainting.App
                 container.Bind<IUiAction>().To<ImageSettingsAction>();
                 container.Bind<IUiAction>().To<PaletteSettingsAction>();
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+                
                 Application.Run(container.Get<Form>());
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        private static SettingsManager CreateSettingsManager()
+        {
+            var container = new StandardKernel();
+            container.Bind<IObjectSerializer>().To<XmlObjectSerializer>();
+            container.Bind<IBlobStorage>().To<FileBlobStorage>();
+            return container.Get<SettingsManager>();
         }
     }
 }
