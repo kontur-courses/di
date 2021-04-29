@@ -5,7 +5,7 @@ namespace FractalPainting.App.Actions
 {
     public class KochFractalAction : IUiAction
     {
-        private KochPainter kochPainter;
+        private readonly KochPainter kochPainter;
 
         public KochFractalAction(KochPainter kochPainter)
         {

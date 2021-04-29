@@ -7,8 +7,8 @@ namespace FractalPainting.App.Actions
 {
     public class DragonFractalAction : IUiAction
     {
-        private IDragonPainterFactory dragonPainterFactory;
-        private Func<DragonSettingsGenerator> dragonSettingsGenerator;
+        private readonly IDragonPainterFactory dragonPainterFactory;
+        private readonly Func<DragonSettingsGenerator> dragonSettingsGenerator;
 
         public DragonFractalAction(IDragonPainterFactory dragonPainterFactory, Func<DragonSettingsGenerator> dragonSettingsGenerator)
         {
