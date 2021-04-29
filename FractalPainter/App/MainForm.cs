@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, IImageHolder imageHolder, Palette palette, SettingsManager settingsManager)
+        public MainForm(IUiAction[] actions, IImageHolder imageHolder, SettingsManager settingsManager)
         {
             var imageSettings = settingsManager.Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
