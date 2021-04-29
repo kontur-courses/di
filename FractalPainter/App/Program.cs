@@ -35,6 +35,7 @@ namespace FractalPainting.App
                 pictureBox.Dock = DockStyle.Fill;
 
                 container.Bind<IImageHolder>().ToConstant(pictureBox);
+                container.Bind<PictureBox>().ToConstant(pictureBox);
                 container.Bind<SettingsManager>().ToConstant(settingsManager);
                 container.Bind<Palette>().ToConstant(new Palette());
                 container.Bind<KochPainter>().To<KochPainter>();

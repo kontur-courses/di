@@ -8,7 +8,7 @@ namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, IImageHolder imageHolder, SettingsManager settingsManager)
+        public MainForm(IUiAction[] actions, PictureBox imageHolder, SettingsManager settingsManager)
         {
             var imageSettings = settingsManager.Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
@@ -17,7 +17,7 @@ namespace FractalPainting.App
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
 
-            Controls.Add(imageHolder as PictureBox);
+            Controls.Add(imageHolder);
         }
 
         protected override void OnShown(EventArgs e)
