@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App
