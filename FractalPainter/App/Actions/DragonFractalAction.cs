@@ -2,19 +2,16 @@
 using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App.Actions
 {
     public class DragonFractalAction : IUiAction
     {
-        private IImageHolder imageHolder;
-        private IDragonPainterFactory dragonPainterFactory;
-        private Func<DragonSettingsGenerator> dragonSettingsGenerator;
+        private readonly IDragonPainterFactory dragonPainterFactory;
+        private readonly Func<DragonSettingsGenerator> dragonSettingsGenerator;
 
-        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory, Func<DragonSettingsGenerator> dragonSettingsGenerator)
+        public DragonFractalAction(IDragonPainterFactory dragonPainterFactory, Func<DragonSettingsGenerator> dragonSettingsGenerator)
         {
-            this.imageHolder = imageHolder;
             this.dragonPainterFactory = dragonPainterFactory;
             this.dragonSettingsGenerator = dragonSettingsGenerator;
         }

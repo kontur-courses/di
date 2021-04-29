@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.App.Actions;
-using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, IImageHolder imageHolder, Palette palette, SettingsManager settingsManager)
+        public MainForm(IUiAction[] actions, PictureBoxImageHolder imageHolder, SettingsManager settingsManager)
         {
             var imageSettings = settingsManager.Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
@@ -19,7 +16,7 @@ namespace FractalPainting.App
             mainMenu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(mainMenu);
 
-            Controls.Add(imageHolder as PictureBox);
+            Controls.Add(imageHolder);
         }
 
         protected override void OnShown(EventArgs e)

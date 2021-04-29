@@ -5,7 +5,7 @@ namespace FractalPainting.App.Actions
 {
     public class PaletteSettingsAction : IUiAction
     {
-        private Palette palette;
+        private readonly Palette palette;
 
         public PaletteSettingsAction(Palette palette)
         {

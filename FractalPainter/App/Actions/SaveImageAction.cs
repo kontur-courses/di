@@ -7,8 +7,8 @@ namespace FractalPainting.App.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private IImageDirectoryProvider imageDirectoryProvider;
-        private IImageHolder imageHolder;
+        private readonly IImageDirectoryProvider imageDirectoryProvider;
+        private readonly IImageHolder imageHolder;
 
         public SaveImageAction(IImageDirectoryProvider imageDirectoryProvider, IImageHolder imageHolder)
         {
