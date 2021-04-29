@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, PictureBoxImageHolder imageHolder, SettingsManager settingsManager)
+        public MainForm(IUiAction[] actions, PictureBoxImageHolder imageHolder, ImageSettings imageSettings)
         {
-            var imageSettings = settingsManager.Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
             var mainMenu = new MenuStrip();
