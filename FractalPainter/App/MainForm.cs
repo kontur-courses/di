@@ -8,7 +8,7 @@ namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, PictureBox imageHolder, SettingsManager settingsManager)
+        public MainForm(IUiAction[] actions, PictureBoxImageHolder imageHolder, SettingsManager settingsManager)
         {
             var imageSettings = settingsManager.Load().ImageSettings;
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
