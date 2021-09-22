@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App
@@ -19,11 +18,6 @@ namespace FractalPainting.App
             Controls.Add(mainMenu);
             
             Controls.Add(pictureBox);
-
-            DependencyInjector.Inject<IImageHolder>(actions, pictureBox);
-            DependencyInjector.Inject<IImageDirectoryProvider>(actions, settingsManager.Load());
-            DependencyInjector.Inject<IImageSettingsProvider>(actions, settingsManager.Load());
-            DependencyInjector.Inject(actions, palette);
         }
 
         protected override void OnShown(EventArgs e)
