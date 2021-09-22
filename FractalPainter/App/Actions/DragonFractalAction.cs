@@ -29,6 +29,8 @@ namespace FractalPainting.App.Actions
             var painter = dragonPainterFactory.CreateDragonPainter(imageHolder, dragonSettings);
             painter.Paint();
         }
+
+        public int Order => 2;
     }
     
     public interface IDragonPainterFactory

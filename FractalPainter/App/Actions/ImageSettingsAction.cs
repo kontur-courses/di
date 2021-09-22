@@ -24,5 +24,7 @@ namespace FractalPainting.App.Actions
             SettingsForm.For(imageSettings).ShowDialog();
             imageHolder.RecreateImage(imageSettings);
         }
+
+        public int Order => 4;
     }
 }

@@ -20,5 +20,7 @@ namespace FractalPainting.App.Actions
         {
             kochPainter.Paint();
         }
+
+        public int Order => 3;
     }
 }

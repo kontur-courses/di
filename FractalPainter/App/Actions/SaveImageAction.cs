@@ -34,5 +34,7 @@ namespace FractalPainting.App.Actions
             if (res == DialogResult.OK)
                 imageHolder.SaveImage(dialog.FileName);
         }
+
+        public int Order => 1;
     }
 }

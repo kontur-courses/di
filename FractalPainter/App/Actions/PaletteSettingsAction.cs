@@ -20,5 +20,7 @@ namespace FractalPainting.App.Actions
         {
             SettingsForm.For(palette).ShowDialog();
         }
+
+        public int Order => 5;
     }
 }
