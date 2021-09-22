@@ -30,6 +30,7 @@ namespace FractalPainting.App
                 container.Bind<IObjectSerializer>().To<XmlObjectSerializer>();
                 container.Bind<IBlobStorage>().To<FileBlobStorage>();
                 container.Bind<SettingsManager>().ToSelf();
+                container.Bind<ImageSettings>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load().ImageSettings);
                 
                 container.Bind<PictureBoxImageHolder>().ToMethod(ctx =>
                 {
