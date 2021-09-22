@@ -1,21 +1,21 @@
 ﻿using System;
 using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class DragonFractalAction : IUiAction, INeed<IImageHolder>
+    public class DragonFractalAction : IUiAction
     {
-        private IImageHolder imageHolder;
+        private readonly IDragonPainterFactory dragonPainterFactory;
+        private readonly IImageHolder imageHolder;
 
-        public void SetDependency(IImageHolder dependency)
+        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory)
         {
-            imageHolder = dependency;
+            this.imageHolder = imageHolder;
+            this.dragonPainterFactory = dragonPainterFactory;
         }
-
+        
         public string Category => "Фракталы";
         public string Name => "Дракон";
         public string Description => "Дракон Хартера-Хейтуэя";
@@ -23,18 +23,19 @@ namespace FractalPainting.App.Actions
         public void Perform()
         {
             var dragonSettings = CreateRandomSettings();
-            // редактируем настройки:
             SettingsForm.For(dragonSettings).ShowDialog();
-            // создаём painter с такими настройками
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<DragonSettings>().ToConstant(dragonSettings);
-            container.Get<DragonPainter>().Paint();
+            var painter = dragonPainterFactory.CreateDragonPainter(imageHolder, dragonSettings);
+            painter.Paint();
         }
 
         private static DragonSettings CreateRandomSettings()
         {
             return new DragonSettingsGenerator(new Random()).Generate();
         }
+    }
+    
+    public interface IDragonPainterFactory
+    {
+        DragonPainter CreateDragonPainter(IImageHolder imageHolder, DragonSettings settings);
     }
 }
