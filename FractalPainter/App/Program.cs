@@ -15,13 +15,13 @@ namespace FractalPainting.App
             try
             {
                 var container = new StandardKernel();
-
-                // start here
-                // container.Bind<TService>().To<TImplementation>();
+                container.Bind<MainForm>().ToSelf().InSingletonScope();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+
+                var mainForm = container.Get<MainForm>();
+                Application.Run(mainForm);
             }
             catch (Exception e)
             {
