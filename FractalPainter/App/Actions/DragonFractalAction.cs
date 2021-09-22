@@ -8,12 +8,14 @@ namespace FractalPainting.App.Actions
     public class DragonFractalAction : IUiAction
     {
         private readonly IDragonPainterFactory dragonPainterFactory;
+        private readonly Func<DragonSettings> dragonSettingsFactory;
         private readonly IImageHolder imageHolder;
 
-        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory)
+        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory, Func<DragonSettings> dragonSettingsFactory)
         {
             this.imageHolder = imageHolder;
             this.dragonPainterFactory = dragonPainterFactory;
+            this.dragonSettingsFactory = dragonSettingsFactory;
         }
         
         public string Category => "Фракталы";
@@ -22,15 +24,10 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            var dragonSettings = CreateRandomSettings();
+            var dragonSettings = dragonSettingsFactory.Invoke();
             SettingsForm.For(dragonSettings).ShowDialog();
             var painter = dragonPainterFactory.CreateDragonPainter(imageHolder, dragonSettings);
             painter.Paint();
-        }
-
-        private static DragonSettings CreateRandomSettings()
-        {
-            return new DragonSettingsGenerator(new Random()).Generate();
         }
     }
     
