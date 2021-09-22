@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
@@ -11,19 +10,6 @@ namespace FractalPainting.App
 {
     public class MainForm : Form
     {
-        public MainForm()
-            : this(
-                new IUiAction[]
-                {
-                    new SaveImageAction(),
-                    new DragonFractalAction(),
-                    new KochFractalAction(),
-                    new ImageSettingsAction(),
-                    new PaletteSettingsAction()
-                })
-        {
-        }
-
         public MainForm(IUiAction[] actions)
         {
             var imageSettings = CreateSettingsManager().Load().ImageSettings;
