@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
-using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
@@ -37,7 +36,6 @@ namespace FractalPainting.App
                 container.Bind<Palette>().ToSelf().InSingletonScope();
                 
                 container.Bind<IDragonPainterFactory>().ToFactory();
-                container.Bind<DragonSettings>().ToMethod(ctx => new DragonSettingsGenerator(new Random()).Generate());
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
