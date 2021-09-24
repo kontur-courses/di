@@ -32,11 +32,10 @@ namespace FractalPainting.App
                 container.Bind<ImageSettings>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load().ImageSettings);
                 container.Bind<IImageDirectoryProvider>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load());
                 
-                container.Bind<PictureBoxImageHolder>().ToSelf().InSingletonScope();
+                container.Bind<PictureBoxImageHolder, IImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();
 
                 container.Bind<Palette>().ToSelf().InSingletonScope();
                 
-                container.Bind<IImageHolder>().ToMethod(ctx => ctx.Kernel.Get<PictureBoxImageHolder>());
                 container.Bind<IDragonPainterFactory>().ToFactory();
                 container.Bind<DragonSettings>().ToMethod(ctx => new DragonSettingsGenerator(new Random()).Generate());
 
