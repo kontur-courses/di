@@ -32,15 +32,7 @@ namespace FractalPainting.App
                 container.Bind<ImageSettings>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load().ImageSettings);
                 container.Bind<IImageDirectoryProvider>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load());
                 
-                container.Bind<PictureBoxImageHolder>().ToMethod(ctx =>
-                {
-                    var imageSettings = ctx.Kernel.Get<SettingsManager>().Load().ImageSettings;
-                    var pictureBox = new PictureBoxImageHolder();
-                    pictureBox.RecreateImage(imageSettings);
-                    pictureBox.Dock = DockStyle.Fill;
-
-                    return pictureBox;
-                }).InSingletonScope();
+                container.Bind<PictureBoxImageHolder>().ToSelf().InSingletonScope();
 
                 container.Bind<Palette>().ToSelf().InSingletonScope();
                 

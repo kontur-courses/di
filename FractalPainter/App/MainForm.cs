@@ -10,6 +10,9 @@ namespace FractalPainting.App
     {
         public MainForm(IUiAction[] actions, ImageSettings imageSettings, PictureBoxImageHolder pictureBox)
         {
+            pictureBox.RecreateImage(imageSettings);
+            pictureBox.Dock = DockStyle.Fill;
+            
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
 
             var mainMenu = new MenuStrip();
