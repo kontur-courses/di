@@ -21,7 +21,6 @@ namespace FractalPainting.App
             try
             {
                 var container = new StandardKernel();
-                container.Bind<MainForm>().ToSelf().InSingletonScope();
                 
                 container.Bind(x => x.FromThisAssembly()
                     .SelectAllClasses()
@@ -30,7 +29,6 @@ namespace FractalPainting.App
                 
                 container.Bind<IObjectSerializer>().To<XmlObjectSerializer>();
                 container.Bind<IBlobStorage>().To<FileBlobStorage>();
-                container.Bind<SettingsManager>().ToSelf();
                 container.Bind<ImageSettings>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load().ImageSettings);
                 container.Bind<IImageDirectoryProvider>().ToMethod(ctx => ctx.Kernel.Get<SettingsManager>().Load());
                 
