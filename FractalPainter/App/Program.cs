@@ -48,6 +48,7 @@ namespace FractalPainting.App
                 
                 container.Bind<IImageHolder>().ToMethod(ctx => ctx.Kernel.Get<PictureBoxImageHolder>());
                 container.Bind<IDragonPainterFactory>().ToFactory();
+                container.Bind<DragonSettings>().ToMethod(ctx => new DragonSettingsGenerator(new Random()).Generate());
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
