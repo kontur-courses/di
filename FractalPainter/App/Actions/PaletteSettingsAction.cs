@@ -15,6 +15,7 @@ namespace FractalPainting.App.Actions
         public string Category => "Настройки";
         public string Name => "Палитра...";
         public string Description => "Цвета для рисования фракталов";
+        public int Order => 5;
 
         public void Perform()
         {
