@@ -9,11 +9,13 @@ namespace FractalPainting.App.Actions
     {
         private readonly IImageHolder imageHolder;
         private readonly IDragonPainterFactory dragonPainterFactory;
+        private readonly Func<DragonSettingsGenerator> dragonSettingsGenerator;
 
-        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory)
+        public DragonFractalAction(IImageHolder imageHolder, IDragonPainterFactory dragonPainterFactory, Func<DragonSettingsGenerator> dragonSettingsGenerator)
         {
             this.imageHolder = imageHolder;
             this.dragonPainterFactory = dragonPainterFactory;
+            this.dragonSettingsGenerator = dragonSettingsGenerator;
         }
 
 
@@ -23,21 +25,11 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            var dragonSettings = CreateRandomSettings();
+            var dragonSettings = dragonSettingsGenerator().Generate();
             SettingsForm.For(dragonSettings).ShowDialog();
 
             var dragonPainter = dragonPainterFactory.CreateDragonPainter(imageHolder, dragonSettings);
             dragonPainter.Paint();
         }
-
-        private static DragonSettings CreateRandomSettings()
-        {
-            return new DragonSettingsGenerator(new Random()).Generate();
-        }
-    }
-
-    public interface IDragonPainterFactory
-    {
-        DragonPainter CreateDragonPainter(IImageHolder imageHolder, DragonSettings settings);
     }
 }
