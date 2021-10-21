@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using FractalPainting.App.Actions;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
+using Ninject.Extensions.Factory;
 using Ninject;
 
 namespace FractalPainting.App
@@ -34,6 +35,8 @@ namespace FractalPainting.App
                 container.Bind<IImageHolder>().ToMethod(ctx => ctx.Kernel.Get<PictureBoxImageHolder>());
 
                 container.Bind<Palette>().ToSelf().InSingletonScope();
+
+                container.Bind<IDragonPainterFactory>().ToFactory();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
