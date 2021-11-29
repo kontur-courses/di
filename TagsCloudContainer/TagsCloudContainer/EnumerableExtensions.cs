@@ -6,7 +6,7 @@ namespace TagsCloudContainer
 {
     public static class EnumerableExtensions
     {
-        public static IEnumerable<string> ToWords(this IEnumerable<WordInfo> wordInfos) =>
+        public static IEnumerable<string> ToStrings(this IEnumerable<WordInfo> wordInfos) =>
             wordInfos.Select(wordInfo => wordInfo.Word);
     }
 }

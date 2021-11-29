@@ -18,16 +18,21 @@ namespace TagsCloudContainer.Tests
         }
 
         [Test]
+        public void Constructor_WithNull_ThrowsException() =>
+            Assert.That(() => new WordsPreprocessor(null), Throws.InstanceOf<ArgumentException>());
+
+        [Test]
         public void Process_ThrowsException_WordsIsNull() =>
             Assert.That(() => preprocessor.Process(null), Throws.InstanceOf<ArgumentException>());
 
         [Test]
-        public void Process_Delete_DuplicatedWords()
+        public void Process_ConvertWordsToLower()
         {
-            var words = new List<string> {"Мир", "МИР"};
+            var words = new List<string>() {"Привет", "МИР"};
+
             preprocessor.Process(words)
-                .ToWords()
-                .Should().BeEquivalentTo("мир");
+                .ToStrings()
+                .Should().BeEquivalentTo("привет", "мир");
         }
 
         [TestCase("ах", TestName = "Interjection")]
@@ -40,7 +45,7 @@ namespace TagsCloudContainer.Tests
             var prepositions = new List<string> {boringWord};
 
             preprocessor.Process(words.Concat(prepositions))
-                .ToWords()
+                .ToStrings()
                 .Should().BeEquivalentTo(words);
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.Preprocessing
+﻿using System;
+
+namespace TagsCloudContainer.Preprocessing
 {
     public class WordInfo
     {
@@ -7,7 +9,7 @@
 
         public WordInfo(string word, SpeechPart speechPart)
         {
-            Word = word;
+            Word = word ?? throw new ArgumentNullException(nameof(word));
             SpeechPart = speechPart;
         }
     }

@@ -18,7 +18,6 @@ namespace TagsCloudContainer.Preprocessing
             RedirectStandardOutput = true,
         };
 
-
         public IEnumerable<WordInfo> ParseWords(IEnumerable<string> words)
         {
             var wordsInfos = new List<WordInfo>();

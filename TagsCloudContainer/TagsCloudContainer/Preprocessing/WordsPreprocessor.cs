@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,22 +19,17 @@ namespace TagsCloudContainer.Preprocessing
 
         public WordsPreprocessor(IWordInfoParser wordInfoParser)
         {
-            this.wordInfoParser = wordInfoParser;
+            this.wordInfoParser = wordInfoParser ?? throw new ArgumentNullException(nameof(wordInfoParser));
         }
 
-        public HashSet<WordInfo> Process(IEnumerable<string> words)
+        public IEnumerable<WordInfo> Process(IEnumerable<string> words)
         {
             if (words == null)
                 throw new ArgumentNullException(nameof(words));
 
-            var uniqueWords = GetUniqueWords(words);
-            return wordInfoParser.ParseWords(uniqueWords)
-                .Where(wordInfo => !speechPartsToRemove.Contains(wordInfo.SpeechPart))
-                .ToHashSet();
+            var lowerWords = words.Select(word => word.ToLower());
+            return wordInfoParser.ParseWords(lowerWords)
+                .Where(wordInfo => !speechPartsToRemove.Contains(wordInfo.SpeechPart));
         }
-
-        private static IEnumerable<string> GetUniqueWords(IEnumerable<string> words) =>
-            words.Select(word => word.ToLower())
-                .ToHashSet();
     }
 }
