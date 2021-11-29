@@ -3,7 +3,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable IdentifierTypo
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
     public enum SpeechPart
     {

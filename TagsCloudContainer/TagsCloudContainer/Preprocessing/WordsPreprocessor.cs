@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
     public class WordsPreprocessor
     {

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessing
 {
     public class WordInfoParser : IWordInfoParser
     {

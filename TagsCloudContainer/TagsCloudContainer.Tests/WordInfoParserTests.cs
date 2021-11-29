@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer.Preprocessing;
 
 namespace TagsCloudContainer.Tests
 {
