@@ -13,4 +13,8 @@
         <PackageReference Include="NUnit3TestAdapter" Version="3.17.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj"/>
+    </ItemGroup>
+
 </Project>
