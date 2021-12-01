@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.ColorGenerators;
 
 // Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
 // as several methods use windows api

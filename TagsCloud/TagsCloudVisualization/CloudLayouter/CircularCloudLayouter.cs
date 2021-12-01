@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Extensions;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudVisualization.VectorsGenerator;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CloudLayouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly Point _center;
         private readonly List<Rectangle> _rectangles = new();

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using TagsCloudVisualization.Interfaces;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.VectorsGenerator
 {
     public class CircularVectorsGenerator : IVectorsGenerator
     {
