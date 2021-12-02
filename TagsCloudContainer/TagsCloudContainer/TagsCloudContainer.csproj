@@ -10,4 +10,9 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="System.Drawing.Common" Version="6.0.0"/>
+        <PackageReference Include="TagsCloudVisualization" Version="1.0.0"/>
+    </ItemGroup>
+
 </Project>

@@ -4,19 +4,19 @@ using System.IO;
 using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.WordLoading;
+using TagsCloudContainer.WordsLoading;
 
 namespace TagsCloudContainer.Tests
 {
     public class NewLineWordLoaderTests
     {
         private const string testFile = "test.txt";
-        private NewLineWordLoader loader;
+        private Lazy<NewLineWordLoader> loader;
 
         [SetUp]
         public void SetUp()
         {
-            loader = new NewLineWordLoader();
+            loader = new Lazy<NewLineWordLoader>(() => new NewLineWordLoader(testFile));
         }
 
         [Test]
@@ -24,28 +24,28 @@ namespace TagsCloudContainer.Tests
         {
             var words = new List<string> {"привет", "мир", "как", "ты", "поживаешь"};
             File.WriteAllLines(testFile, words);
-            loader.Load(testFile)
+            loader.Value.GetWords()
                 .Should().BeEquivalentTo(words);
         }
 
         [Test]
-        public void Load_WithNotExistingFile_ThrowsApplicationException() =>
-            Assert.That(() => loader.Load("sef"), Throws.InstanceOf<ApplicationException>());
+        public void Constructor_WithNotExistingFile_ThrowsApplicationException() =>
+            Assert.Throws<ApplicationException>(() => new NewLineWordLoader("fefsf"));
 
         [Test]
-        public void Load_WithNull_ThrowsArgumentException() =>
-            Assert.That(() => loader.Load(null), Throws.InstanceOf<ArgumentException>());
+        public void Constructor_WithNull_ThrowsArgumentException() =>
+            Assert.Throws<ArgumentNullException>(() => new NewLineWordLoader(null));
 
-        [TestCaseSource(nameof(LoadFromEncodingTestCases))]
-        public void Load_FromEncoding(Encoding encoding)
+        [TestCaseSource(nameof(GetWordsFromEncodingTestCases))]
+        public void GetWords_FromEncoding(Encoding encoding)
         {
             var words = new List<string> {"привет", "мир", "как", "ты", "поживаешь"};
             File.WriteAllLines(testFile, words, encoding);
-            loader.Load(testFile)
+            loader.Value.GetWords()
                 .Should().BeEquivalentTo(words);
         }
 
-        private static IEnumerable<TestCaseData> LoadFromEncodingTestCases()
+        private static IEnumerable<TestCaseData> GetWordsFromEncodingTestCases()
         {
             yield return new TestCaseData(Encoding.Unicode) {TestName = "Unicode"};
             yield return new TestCaseData(Encoding.BigEndianUnicode) {TestName = "BigEndianUnicode"};

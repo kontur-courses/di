@@ -6,7 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.Preprocessing
 {
-    public class WordInfoParser : IWordInfoParser
+    public interface IWordSpeechPartParser
+    {
+        IEnumerable<(string Word, SpeechPart SpeechPart)> ParseWords(IEnumerable<string> words);
+    }
+
+    public class WordSpeechPartParser : IWordSpeechPartParser
     {
         private static readonly Regex speechPartRegex = new Regex(@".*?=(?'SpeechPart'\w+)");
 
@@ -18,13 +23,13 @@ namespace TagsCloudContainer.Preprocessing
             RedirectStandardOutput = true,
         };
 
-        public IEnumerable<WordInfo> ParseWords(IEnumerable<string> words)
+        public IEnumerable<(string Word, SpeechPart SpeechPart)> ParseWords(IEnumerable<string> words)
         {
-            var wordsInfos = new List<WordInfo>();
             using var myStem = Process.Start(myStemStartInfo);
             if (myStem == null)
-                throw new Exception("Can't start mystem");
+                throw new Exception("Can't start mystem.");
 
+            var wordsInfos = new List<(string, SpeechPart)>();
             foreach (var word in words.Where(word => !string.IsNullOrWhiteSpace(word)))
             {
                 if (!TryGetWordInfo(myStem, word, out var wordInfo))
@@ -34,13 +39,13 @@ namespace TagsCloudContainer.Preprocessing
                 if (!speechPartGroup.Success || !Enum.TryParse<SpeechPart>(speechPartGroup.Value, out var speechPart))
                     throw GenerateSpeechPartParseException(word);
 
-                wordsInfos.Add(new WordInfo(word, speechPart));
+                wordsInfos.Add((word, speechPart));
             }
 
             return wordsInfos;
         }
 
-        private bool TryGetWordInfo(Process myStem, string word, out string wordInfo)
+        private static bool TryGetWordInfo(Process myStem, string word, out string wordInfo)
         {
             wordInfo = null;
 
@@ -55,6 +60,6 @@ namespace TagsCloudContainer.Preprocessing
         }
 
         private static ApplicationException GenerateSpeechPartParseException(string word) =>
-            new($"Can't get speech part of '{word}'");
+            new($"Can't get speech part of '{word}'.");
     }
 }
