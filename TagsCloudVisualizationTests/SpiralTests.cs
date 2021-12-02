@@ -6,63 +6,64 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
 
-namespace TagsCloudVisualizationTests
+namespace TagsCloudVisualizationTests;
+
+public class SpiralTests
 {
-    public class SpiralTests
+    private Spiral sut;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Spiral sut;
+        sut = new Spiral(new Point(0, 0));
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            sut = new Spiral(new Point(0, 0));
-        }
+    [Test]
+    public void Constructor_ThrowArgumentException_WhenSpiralParamLessOrEqualZero()
+    {
+        Action action = () => new Spiral(new Point(), -1);
 
-        [Test]
-        public void Constructor_ThrowArgumentException_WhenSpiralParamLessOrEqualZero()
-        {
-            Action action = () => new Spiral(new Point(), -1);
+        action.Should().Throw<ArgumentException>().WithMessage("Spiral param must be greater than zero");
+    }
 
-            action.Should().Throw<ArgumentException>().WithMessage("Spiral param must be greater than zero");
-        }
+    [Test]
+    public void GetNextPoint_ReturnsCenter_WhenFirstCall()
+    {
+        var center = sut.Center;
 
-        [Test]
-        public void GetNextPoint_ReturnsCenter_WhenFirstCall()
-        {
-            var center = sut.Center;
+        var point = sut.GetNextPoint();
 
-            var point = sut.GetNextPoint();
+        point.Should().BeEquivalentTo(center);
+    }
 
-            point.Should().BeEquivalentTo(center);
-        }
+    [Test]
+    public void GetNextPoint_ShouldIncreaseDistance_WhenManyCalls()
+    {
+        const int pointsCount = 1000;
+        var point = sut.GetNextPoint();
 
-        [Test]
-        public void GetNextPoint_ShouldIncreaseDistance_WhenManyCalls()
-        {
-            const int pointsCount = 1000;
-            var point = sut.GetNextPoint();
+        for (var i = 1; i < pointsCount / 2; i++)
+            point = sut.GetNextPoint();
 
-            for (var i = 1; i < pointsCount / 2; i++) 
-                point = sut.GetNextPoint();
-            var halfDistance = point.GetDistance(sut.Center);
-            for (var i = pointsCount / 2; i < pointsCount; i++) 
-                point = sut.GetNextPoint();
+        var halfDistance = point.GetDistance(sut.Center);
 
-            var fullDistance = point.GetDistance(sut.Center);
-            fullDistance.Should().BeGreaterThan(halfDistance);
-        }
+        for (var i = pointsCount / 2; i < pointsCount; i++)
+            point = sut.GetNextPoint();
 
-        [Test]
-        public void GetNextPoint_ShouldGenerateUniquePoints_WhenManyCalls()
-        {
-            const int pointsCount = 1000;
-            var points = new List<Point>();
+        var fullDistance = point.GetDistance(sut.Center);
+        fullDistance.Should().BeGreaterThan(halfDistance);
+    }
 
-            for (var i = 0; i < pointsCount; i++)
-                points.Add(sut.GetNextPoint());
+    [Test]
+    public void GetNextPoint_ShouldGenerateUniquePoints_WhenManyCalls()
+    {
+        const int pointsCount = 1000;
+        var points = new List<Point>();
 
-            var hasDuplicates = points.GroupBy(x => x).Any(x => x.Count() > 1);
-            hasDuplicates.Should().BeFalse();
-        }
+        for (var i = 0; i < pointsCount; i++)
+            points.Add(sut.GetNextPoint());
+
+        var hasDuplicates = points.GroupBy(x => x).Any(x => x.Count() > 1);
+        hasDuplicates.Should().BeFalse();
     }
 }
