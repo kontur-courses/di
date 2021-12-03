@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 using System.IO;
+using System.Linq;
 using TagsCloudContainer;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Interfaces;
@@ -14,11 +16,25 @@ namespace TagsCloudContainerTests
         private ITagComposer composer;
 
         [OneTimeSetUp]
-        public void SetUp()
+        public void OneTimeSetUp()
         {
             textsFolder = Path.GetFullPath(@"..\..\..\texts");
-            parser = new TxtParser();
+            parser = new TxtParser();            
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             composer = new TagComposer();
+        }
+
+        [Test]
+        public void Should_Throw_OnNoTags()
+        {
+            var path = Path.Combine(textsFolder, "testNoTags.txt");
+            var parsed = parser.Parse(path);
+
+            Assert.Throws<ArgumentException>(() => composer.ComposeTags(parsed).ToArray());
         }
 
         [Test]

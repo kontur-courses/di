@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 using System.IO;
+using System.Linq;
 using TagsCloudContainer;
 using TagsCloudContainer.Interfaces;
 
@@ -16,6 +18,14 @@ namespace TagsCloudContainerTests
         {
             textsFolder = Path.GetFullPath(@"..\..\..\texts");
             parser = new TxtParser();
+        }
+
+        [Test]
+        public void Should_Throw_OnNonExistingFile()
+        {
+            var path = Path.Combine(textsFolder, "amogus.txt");
+
+            Assert.Throws<ArgumentException>(() => parser.Parse(path).ToArray());
         }
 
         [Test]

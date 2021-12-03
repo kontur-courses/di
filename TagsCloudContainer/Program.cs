@@ -16,8 +16,8 @@ namespace TagsCloudContainer
 
             //var imageSize = new Size(1000, 1000);
             //CloudImageGenerator.CreateImage(layouter.Cloud, imageSize);
-            var path = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test.txt");
-            var parseRes = new TxtParser().Parse(path);
+            var path = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test1.txt");
+            var parseRes = new TxtParser().Parse(path).ToArray();
             var composeRes = new TagComposer().ComposeTags(parseRes).ToArray();
         }
     }
