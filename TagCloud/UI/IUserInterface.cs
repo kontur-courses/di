@@ -8,6 +8,6 @@ namespace TagCloud.UI
 {
     public interface IUserInterface
     {
-        void Run();
+        void Run(string filename);
     }
 }

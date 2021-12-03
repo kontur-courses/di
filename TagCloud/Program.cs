@@ -7,7 +7,7 @@ namespace TagCloud
         static void Main(string[] args)
         {
             IUserInterface client = new ConsoleUI();
-            client.Run();
+            client.Run("test.txt");
         }
     }
 }
