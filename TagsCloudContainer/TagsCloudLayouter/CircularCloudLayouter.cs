@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
         public Cloud Cloud { get; }
         private readonly Spiral spiral;
