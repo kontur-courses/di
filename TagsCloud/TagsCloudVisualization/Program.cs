@@ -34,17 +34,17 @@ namespace TagsCloudVisualization
                 Font = new Font(FontFamily.GenericMonospace, 14f),
                 ColorGenerator = new RandomColorGenerator(new Random())
             };
-            var layouter = new CircularLayouter(Point.Empty);
             var drawer = new TagsCloudDrawer.TagsCloudDrawer(drawerSettings);
             var savior = new PngSavior();
             var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
+            var layouter = new CircularLayouter(Point.Empty);
             var transformer = new LayoutWordsTransformer(layouter);
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var words = provider.GetWords();
             var processedWords = preprocessor.Process(words);
             var tags = transformer.Transform(processedWords);
-            creator.Create(GenerateFileName(), tags);
+            creator.Create(Path.Combine(directory, GenerateFileName()), tags);
         }
 
         private static string GenerateFileName() => DateTime.Now.Ticks.ToString();

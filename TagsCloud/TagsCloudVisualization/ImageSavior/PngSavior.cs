@@ -1,5 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace TagsCloudVisualization.ImageSavior
 {
@@ -7,7 +8,7 @@ namespace TagsCloudVisualization.ImageSavior
     {
         public void Save(Image image, string filename)
         {
-            throw new NotImplementedException();
+            image.Save(Path.ChangeExtension(filename, "png"), ImageFormat.Png);
         }
     }
 }
