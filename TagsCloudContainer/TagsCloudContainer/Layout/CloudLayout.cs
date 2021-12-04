@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagsCloudContainer.Layout
@@ -10,7 +11,7 @@ namespace TagsCloudContainer.Layout
 
         public CloudLayout(IEnumerable<WordLayout> wordLayouts, Size imageSize)
         {
-            WordLayouts = wordLayouts;
+            WordLayouts = wordLayouts ?? throw new ArgumentNullException(nameof(wordLayouts));
             ImageSize = imageSize;
         }
     }

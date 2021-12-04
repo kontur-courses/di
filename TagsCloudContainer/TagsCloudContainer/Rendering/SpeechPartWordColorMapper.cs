@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layout;
@@ -15,13 +16,18 @@ namespace TagsCloudContainer.Rendering
         public SpeechPartWordColorMapper(IWordSpeechPartParser wordSpeechPartParser,
             Dictionary<SpeechPart, Color> colorMap, Color defaultColor)
         {
-            this.wordSpeechPartParser = wordSpeechPartParser;
-            this.colorMap = colorMap;
+            this.wordSpeechPartParser =
+                wordSpeechPartParser ?? throw new ArgumentNullException(nameof(wordSpeechPartParser));
+
+            this.colorMap = colorMap ?? throw new ArgumentNullException(nameof(colorMap));
             this.defaultColor = defaultColor;
         }
 
         public Dictionary<WordLayout, Color> GetColorMap(CloudLayout layout)
         {
+            if (layout == null)
+                throw new ArgumentNullException(nameof(layout));
+
             var words = layout.WordLayouts.Select(wordLayout => wordLayout.Word);
             var speechParts = wordSpeechPartParser.ParseWords(words)
                 .Select(speechPartWord => speechPartWord.SpeechPart);

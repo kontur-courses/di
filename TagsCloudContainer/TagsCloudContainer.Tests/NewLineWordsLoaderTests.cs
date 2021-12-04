@@ -8,40 +8,40 @@ using TagsCloudContainer.WordsLoading;
 
 namespace TagsCloudContainer.Tests
 {
-    public class NewLineWordLoaderTests
+    public class NewLineWordsLoaderTests
     {
         private const string testFile = "test.txt";
-        private Lazy<NewLineWordLoader> loader;
+        private NewLineWordsLoader loader;
 
         [SetUp]
         public void SetUp()
         {
-            loader = new Lazy<NewLineWordLoader>(() => new NewLineWordLoader(testFile));
+            loader = new NewLineWordsLoader();
         }
 
         [Test]
-        public void Load_WithExistingFile_LoadWords()
+        public void LoadWords_WithExistingFile_LoadWords()
         {
             var words = new List<string> {"привет", "мир", "как", "ты", "поживаешь"};
             File.WriteAllLines(testFile, words);
-            loader.Value.GetWords()
+            loader.LoadWords(testFile)
                 .Should().BeEquivalentTo(words);
         }
 
         [Test]
-        public void Constructor_WithNotExistingFile_ThrowsApplicationException() =>
-            Assert.Throws<ApplicationException>(() => new NewLineWordLoader("fefsf"));
+        public void LoadWords_WithNotExistingFile_ThrowsApplicationException() =>
+            Assert.Throws<ApplicationException>(() => loader.LoadWords("123"));
 
         [Test]
-        public void Constructor_WithNull_ThrowsArgumentException() =>
-            Assert.Throws<ArgumentNullException>(() => new NewLineWordLoader(null));
+        public void LoadWords_WithNull_ThrowsArgumentException() =>
+            Assert.Throws<ArgumentNullException>(() => loader.LoadWords(null));
 
         [TestCaseSource(nameof(GetWordsFromEncodingTestCases))]
-        public void GetWords_FromEncoding(Encoding encoding)
+        public void LoadWords_FromEncoding(Encoding encoding)
         {
             var words = new List<string> {"привет", "мир", "как", "ты", "поживаешь"};
             File.WriteAllLines(testFile, words, encoding);
-            loader.Value.GetWords()
+            loader.LoadWords(testFile)
                 .Should().BeEquivalentTo(words);
         }
 

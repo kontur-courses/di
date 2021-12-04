@@ -25,9 +25,12 @@ namespace TagsCloudContainer.Preprocessing
 
         public IEnumerable<(string Word, SpeechPart SpeechPart)> ParseWords(IEnumerable<string> words)
         {
+            if (words == null)
+                throw new ArgumentNullException(nameof(words));
+
             using var myStem = Process.Start(myStemStartInfo);
             if (myStem == null)
-                throw new Exception("Can't start mystem.");
+                throw new ApplicationException("Can't start mystem.");
 
             var wordsInfos = new List<(string, SpeechPart)>();
             foreach (var word in words.Where(word => !string.IsNullOrWhiteSpace(word)))
@@ -51,7 +54,7 @@ namespace TagsCloudContainer.Preprocessing
 
             myStem.StandardInput.WriteLine(word);
             var readTask = myStem.StandardOutput.ReadLineAsync();
-            var canProcessWord = readTask.Wait(300);
+            var canProcessWord = readTask.Wait(450);
             if (!canProcessWord)
                 return false;
 

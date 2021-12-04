@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace TagsCloudContainer.Layout
@@ -16,6 +17,9 @@ namespace TagsCloudContainer.Layout
 
         public void Add(T item)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
             if (dictionary.ContainsKey(item))
                 dictionary[item]++;
             else
@@ -26,6 +30,9 @@ namespace TagsCloudContainer.Layout
 
         public void AddRange(IEnumerable<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             foreach (var item in list)
                 Add(item);
         }

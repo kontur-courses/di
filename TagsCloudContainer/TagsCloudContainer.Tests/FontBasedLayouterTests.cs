@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Layout;
+using TagsCloudContainer.Settings;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer.Tests
@@ -16,8 +16,9 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            layouter = new FontBasedLayouter(FontFamily.GenericMonospace,
-                new FrequencyLinearFontSizeSelector(new FontSizeRange(32, 12)), new CircularCloudLayouter());
+            layouter = new FontBasedLayouter(new DefaultFontSettings(),
+                new FrequencyFontSizeSelector(new DefaultFontSettings(), new DefaultWordsScaleSettings()),
+                new CircularCloudLayouter());
 
             words = new List<string>(Enumerable.Repeat("a", 10).Concat(Enumerable.Repeat("b", 5)));
         }
@@ -41,14 +42,6 @@ namespace TagsCloudContainer.Tests
             var size = layouter.GetCloudLayout(words).ImageSize;
             size.Width.Should().BePositive();
             size.Height.Should().BePositive();
-        }
-
-        [Test]
-        public void GetCloudLayout_LeftOnlyUniqueWords()
-        {
-            layouter.GetCloudLayout(words)
-                .WordLayouts.Select(wordLayout => wordLayout.Word)
-                .Should().BeEquivalentTo("a", "b");
         }
     }
 }

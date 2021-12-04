@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Tests
 {
-    public static class Words
+    public static class TestWords
     {
         public static readonly List<string> UniqueWords = new()
         {

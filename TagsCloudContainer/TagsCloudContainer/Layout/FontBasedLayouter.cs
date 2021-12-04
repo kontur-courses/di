@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudContainer.Settings;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer.Layout
@@ -12,22 +14,24 @@ namespace TagsCloudContainer.Layout
 
     public class FontBasedLayouter : ITagsCloudLayouter
     {
-        private readonly FontFamily fontFamily;
+        private readonly IFontFamilySettings fontFamilySettings;
         private readonly IFontSizeSelector fontSizeSelector;
         private readonly ICloudLayouter cloudLayouter;
 
-        public FontBasedLayouter(FontFamily fontFamily, IFontSizeSelector fontSizeSelector,
+        public FontBasedLayouter(IFontFamilySettings fontFamilySettings, IFontSizeSelector fontSizeSelector,
             ICloudLayouter cloudLayouter)
         {
-            this.fontFamily = fontFamily;
-            this.fontSizeSelector = fontSizeSelector;
-            this.cloudLayouter = cloudLayouter;
+            this.fontFamilySettings = fontFamilySettings ?? throw new ArgumentNullException(nameof(fontFamilySettings));
+            this.fontSizeSelector = fontSizeSelector ?? throw new ArgumentNullException(nameof(fontSizeSelector));
+            this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
         }
 
         public CloudLayout GetCloudLayout(IEnumerable<string> words)
         {
-            var fontSizes = fontSizeSelector.GetFontSizes(words);
+            if (words == null)
+                throw new ArgumentNullException(nameof(words));
 
+            var fontSizes = fontSizeSelector.GetFontSizes(words);
             var wordsLayout = GetWordsLayout(fontSizes.OrderByDescending(word => word.FontSize)).ToList();
             var rectangles = wordsLayout.Select(wordLayout => wordLayout.Rectangle).ToList();
             var wordsLocations = wordsLayout.Select(wordLayout => wordLayout.WordLayout);
@@ -46,7 +50,7 @@ namespace TagsCloudContainer.Layout
 
             foreach (var (word, fontSize) in fontSizes)
             {
-                var font = new Font(fontFamily, fontSize);
+                var font = new Font(fontFamilySettings.FontFamily, fontSize);
                 var wordSize = graphics.MeasureString(word, font, PointF.Empty, StringFormat.GenericTypographic)
                     .ToSize();
 
