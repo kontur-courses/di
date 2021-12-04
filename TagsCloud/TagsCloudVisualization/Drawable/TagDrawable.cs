@@ -8,9 +8,9 @@ namespace TagsCloudVisualization.Drawable
     public class TagDrawable : IDrawable
     {
         private readonly Tag _tag;
-        private readonly IDrawerSettingsProvider _settingsProvider;
+        private readonly ITagDrawableSettingsProvider _settingsProvider;
 
-        public TagDrawable(Tag tag, Rectangle bounds, IDrawerSettingsProvider settingsProvider)
+        public TagDrawable(Tag tag, Rectangle bounds, ITagDrawableSettingsProvider settingsProvider)
         {
             Bounds = bounds;
             _tag = tag;
@@ -19,7 +19,7 @@ namespace TagsCloudVisualization.Drawable
 
         public void Draw(Graphics graphics)
         {
-            using var brush = new SolidBrush(_settingsProvider.ColorGenerator.Generate());
+            using var brush = new SolidBrush(_settingsProvider.ColorGenerator.Generate(_tag));
             var fontName = _settingsProvider.Font.Family;
             var fontSize = _tag.Weight * _settingsProvider.Font.MaxSize;
             using var font = new Font(fontName, fontSize);

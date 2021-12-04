@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using TagsCloudDrawer.ColorGenerators;
 using TagsCloudDrawer.Drawer;
 using TagsCloudDrawer.ImageCreator;
 using TagsCloudDrawer.ImageSavior;
@@ -29,14 +28,14 @@ namespace TagsCloudVisualization
                 BackgroundColor = Color.Gray,
                 ImageSize = new Size(1000, 1000)
             };
-            var drawerSettings = new DrawerSettingsProvider.DrawerSettingsProvider
+            var drawerSettings = new TagDrawableSettingsProvider
             {
                 Font = new FontSettings
                 {
                     Family = "Arial",
                     MaxSize = 50
                 },
-                ColorGenerator = new RandomColorGenerator(new Random())
+                ColorGenerator = new StrengthAlphaTagColorGenerator(Color.Red)
             };
             var drawer = new Drawer();
             var savior = new PngSavior();
