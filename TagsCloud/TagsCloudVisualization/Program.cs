@@ -6,6 +6,7 @@ using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.ImageSavior;
 using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
+using TagsCloudVisualization.WordCounter;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
@@ -39,11 +40,13 @@ namespace TagsCloudVisualization
             var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
             var layouter = new CircularLayouter(Point.Empty);
             var transformer = new LayoutWordsTransformer(layouter);
+            var wordCounter = new DictionaryWordCounter();
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var words = provider.GetWords();
             var processedWords = preprocessor.Process(words);
-            var tags = transformer.Transform(processedWords);
+            var countedWords = wordCounter.Count(processedWords);
+            var tags = transformer.Transform(countedWords);
             creator.Create(Path.Combine(directory, GenerateFileName()), tags);
         }
 
