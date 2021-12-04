@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.Utils
 {
     public static class SquareCalculator
     {

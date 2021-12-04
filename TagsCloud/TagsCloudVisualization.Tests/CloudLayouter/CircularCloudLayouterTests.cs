@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.Tests.Extensions;
+using TagsCloudVisualization.Tests.Utils;
 
 namespace TagsCloudVisualization.Tests.CloudLayouter
 {

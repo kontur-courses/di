@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.ImageSavior
+namespace TagsCloudDrawer.ImageSavior
 {
     public interface IImageSavior
     {

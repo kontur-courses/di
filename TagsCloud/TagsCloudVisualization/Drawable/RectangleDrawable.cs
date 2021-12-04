@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.ColorGenerators;
+using TagsCloudDrawer;
+using TagsCloudDrawer.ColorGenerators;
 using TagsCloudVisualization.Extensions;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudVisualization.Drawable
 {
     public class RectangleDrawable : IDrawable
     {

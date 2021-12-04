@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Tests.Extensions;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.Utils
 {
     public class DistantPointFinder
     {

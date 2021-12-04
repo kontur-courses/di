@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudDrawer.Drawer
 {
     public interface IDrawer
     {

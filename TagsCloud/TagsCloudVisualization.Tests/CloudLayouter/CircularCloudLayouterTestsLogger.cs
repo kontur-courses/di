@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using TagsCloudVisualization.ColorGenerators;
-using TagsCloudVisualization.ImageCreator;
-using TagsCloudVisualization.ImageSavior;
-using TagsCloudVisualization.TagsCloudDrawer;
+using TagsCloudDrawer.ColorGenerators;
+using TagsCloudDrawer.Drawer;
+using TagsCloudDrawer.ImageCreator;
+using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSettings;
+using TagsCloudVisualization.Drawable;
 
 // Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
 // as several methods use windows api
@@ -32,7 +34,7 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
             if (string.IsNullOrEmpty(_outputDirectory))
                 throw new Exception($"{nameof(_outputDirectory)} was null or empty");
             var path = Path.Combine(_outputDirectory, testName);
-            var creator = new ImageCreator.ImageCreator(_drawer, _savior, _imageSettingsProvider);
+            var creator = new ImageCreator(_drawer, _savior, _imageSettingsProvider);
             creator.Create(path, rectangles.Select(rect => new RectangleDrawable(rect, _colorGenerator)));
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }

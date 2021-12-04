@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-// Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
-// as several methods use windows api
-#pragma warning disable CA1416
-
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudDrawer.Drawer
 {
     public class Drawer : IDrawer
     {
@@ -28,4 +24,3 @@ namespace TagsCloudVisualization.TagsCloudDrawer
         }
     }
 }
-#pragma warning restore CA1416

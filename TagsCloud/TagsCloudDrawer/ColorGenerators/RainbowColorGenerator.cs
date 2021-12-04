@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.ColorGenerators
+namespace TagsCloudDrawer.ColorGenerators
 {
     public class RainbowColorGenerator : IColorGenerator
     {

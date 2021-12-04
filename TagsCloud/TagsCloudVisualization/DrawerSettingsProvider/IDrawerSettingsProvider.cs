@@ -1,6 +1,6 @@
-﻿using TagsCloudVisualization.ColorGenerators;
+﻿using TagsCloudDrawer.ColorGenerators;
 
-namespace TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider
+namespace TagsCloudVisualization.DrawerSettingsProvider
 {
     public interface IDrawerSettingsProvider
     {

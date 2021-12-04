@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using TagsCloudDrawer;
+using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.Extensions;
-using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudVisualization.Drawable
 {
     public class TagDrawable : IDrawable
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using TagsCloudVisualization.TagsCloudDrawer;
 
-namespace TagsCloudVisualization.ImageCreator
+namespace TagsCloudDrawer.ImageCreator
 {
     public interface IImageCreator
     {

@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider
+﻿namespace TagsCloudVisualization.DrawerSettingsProvider
 {
     public class FontSettings
     {

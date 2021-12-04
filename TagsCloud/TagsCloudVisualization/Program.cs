@@ -2,19 +2,17 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using TagsCloudDrawer.ColorGenerators;
+using TagsCloudDrawer.Drawer;
+using TagsCloudDrawer.ImageCreator;
+using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.ColorGenerators;
-using TagsCloudVisualization.ImageCreator;
-using TagsCloudVisualization.ImageSavior;
-using TagsCloudVisualization.TagsCloudDrawer;
-using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
+using TagsCloudVisualization.Drawable;
+using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
-
-// Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
-// as several methods use windows api
-#pragma warning disable CA1416
 
 namespace TagsCloudVisualization
 {
@@ -31,7 +29,7 @@ namespace TagsCloudVisualization
                 BackgroundColor = Color.Gray,
                 ImageSize = new Size(1000, 1000)
             };
-            var drawerSettings = new DrawerSettingsProvider
+            var drawerSettings = new DrawerSettingsProvider.DrawerSettingsProvider
             {
                 Font = new FontSettings
                 {
@@ -44,7 +42,7 @@ namespace TagsCloudVisualization
             var savior = new PngSavior();
             var layouter = new CircularLayouter(Point.Empty);
             var transformer = new LayoutWordsTransformer();
-            var creator = new ImageCreator.ImageCreator(drawer, savior, imageSettings);
+            var creator = new ImageCreator(drawer, savior, imageSettings);
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var words = provider.GetWords();
@@ -62,4 +60,3 @@ namespace TagsCloudVisualization
         private static string GenerateFileName() => DateTime.Now.Ticks.ToString();
     }
 }
-#pragma warning restore CA1416

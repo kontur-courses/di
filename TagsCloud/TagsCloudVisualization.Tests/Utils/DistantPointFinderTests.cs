@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.Utils
 {
     public class DistantPointFinderTests
     {

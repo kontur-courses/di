@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.ImageCreator
+namespace TagsCloudDrawer.ImageSettings
 {
     public class ImageSettingsProvider : IImageSettingsProvider
     {

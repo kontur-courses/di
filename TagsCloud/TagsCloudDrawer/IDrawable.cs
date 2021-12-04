@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudDrawer
 {
     public interface IDrawable
     {

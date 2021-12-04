@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace TagsCloudVisualization.ImageSavior
+namespace TagsCloudDrawer.ImageSavior
 {
     public class PngSavior : IImageSavior
     {

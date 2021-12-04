@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization.ImageSavior;
-using TagsCloudVisualization.TagsCloudDrawer;
+using TagsCloudDrawer.Drawer;
+using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSettings;
 
-namespace TagsCloudVisualization.ImageCreator
+namespace TagsCloudDrawer.ImageCreator
 {
     public class ImageCreator : IImageCreator
     {
