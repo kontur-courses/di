@@ -2,11 +2,11 @@
 using System.Drawing;
 using TagsCloudVisualization.ColorGenerators;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider
 {
     public class TagsCloudDrawerSettingsProvider : ITagsCloudDrawerSettingsProvider
     {
-        public FontFamily FontFamily { get; init; } = FontFamily.GenericSansSerif;
+        public Font Font { get; init; } = new(FontFamily.GenericMonospace, 14f);
         public IColorGenerator ColorGenerator { get; init; } = new RandomColorGenerator(new Random());
     }
 }

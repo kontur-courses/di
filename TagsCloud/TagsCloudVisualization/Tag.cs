@@ -2,16 +2,16 @@
 
 namespace TagsCloudVisualization
 {
-    public class Tag
+    public readonly struct Tag
     {
+        public readonly string Word;
+        public readonly Rectangle Rectangle;
+
         public Tag(string word, Rectangle rectangle)
         {
             Word = word;
             Rectangle = rectangle;
         }
-
-        public string Word { get; }
-        public Rectangle Rectangle { get; }
 
         public static Tag FromRectangle(Rectangle rectangle) => new(string.Empty, rectangle);
     }

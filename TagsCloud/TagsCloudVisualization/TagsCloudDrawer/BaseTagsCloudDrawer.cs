@@ -9,34 +9,17 @@ using System.Linq;
 
 namespace TagsCloudVisualization.TagsCloudDrawer
 {
-    public class TagsRectanglesCloudDrawer : ITagsCloudDrawer
+    public abstract class BaseTagsCloudDrawer : ITagsCloudDrawer
     {
-        private readonly ITagsCloudDrawerSettingsProvider _drawerSettingsProvider;
-
-        public TagsRectanglesCloudDrawer(ITagsCloudDrawerSettingsProvider drawerSettingsProvider)
-        {
-            _drawerSettingsProvider = drawerSettingsProvider;
-        }
-
         public void Draw(Image bitmap, IEnumerable<Tag> tags)
         {
             if (bitmap == null) throw new ArgumentNullException(nameof(bitmap));
             using var graphics = Graphics.FromImage(bitmap);
             var shifted = GetShiftedTags(tags, Size.Truncate(bitmap.Size / 2f));
-            FillWithRectangles(graphics, shifted, new RectangleF(Point.Empty, bitmap.Size));
+            FillWithRectangles(graphics, shifted, new Rectangle(Point.Empty, bitmap.Size));
         }
 
-        private void FillWithRectangles(Graphics graphics, IEnumerable<Tag> tags, RectangleF bounds)
-        {
-            using var brush = new SolidBrush(new Color());
-            foreach (var tag in tags)
-            {
-                if (!bounds.Contains(tag.Rectangle))
-                    throw new Exception("Image cannot contain all rectangles");
-                brush.Color = _drawerSettingsProvider.ColorGenerator.Generate();
-                graphics.FillRectangle(brush, tag.Rectangle);
-            }
-        }
+        protected abstract void FillWithRectangles(Graphics graphics, IEnumerable<Tag> tags, Rectangle bounds);
 
         private static IEnumerable<Tag> GetShiftedTags(IEnumerable<Tag> tags, Size vector)
         {

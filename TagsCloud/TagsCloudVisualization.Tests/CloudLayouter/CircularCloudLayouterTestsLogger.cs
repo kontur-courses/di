@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.TagsCloudDrawer;
+using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
 
 // Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
 // as several methods use windows api
@@ -15,7 +16,7 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
 {
     public class CircularCloudLayouterTestsLogger
     {
-        private readonly TagsRectanglesCloudDrawer _drawer = new(new TagsCloudDrawerSettingsProvider
+        private readonly RectanglesCloudDrawer _drawer = new(new TagsCloudDrawerSettingsProvider
         {
             ColorGenerator = new RainbowColorGenerator(new Random())
         });

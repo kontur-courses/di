@@ -5,7 +5,7 @@ using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.ImageSavior;
-using TagsCloudVisualization.TagsCloudDrawer;
+using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
@@ -22,12 +22,8 @@ namespace TagsCloudVisualization
         {
             var directory = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedClouds");
             var provider = new WordsFromFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "words.txt"));
-            var preprocessor = new CombinedPreprocessor(new IWordsPreprocessor[]
-            {
-                new ToLowerCasePreprocessor(),
-                new RemoveBoredPreprocessor(Array.Empty<string>())
-            });
-            var savior = new PngSavior();
+            var preprocessor = new CombinedPreprocessor(new ToLowerCasePreprocessor(),
+                                                        new RemoveBoredPreprocessor(Array.Empty<string>()));
             var imageSettings = new ImageSettingsProvider
             {
                 BackgroundColor = Color.Gray,
@@ -35,11 +31,12 @@ namespace TagsCloudVisualization
             };
             var drawerSettings = new TagsCloudDrawerSettingsProvider
             {
-                FontFamily = FontFamily.GenericSerif,
+                Font = new Font(FontFamily.GenericMonospace, 14f),
                 ColorGenerator = new RandomColorGenerator(new Random())
             };
             var layouter = new CircularLayouter(Point.Empty);
-            var drawer = new TagsRectanglesCloudDrawer(drawerSettings);
+            var drawer = new TagsCloudDrawer.TagsCloudDrawer(drawerSettings);
+            var savior = new PngSavior();
             var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
             var transformer = new LayoutWordsTransformer(layouter);
 

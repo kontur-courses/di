@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization.ColorGenerators;
 
-namespace TagsCloudVisualization.TagsCloudDrawer
+namespace TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider
 {
     public interface ITagsCloudDrawerSettingsProvider
     {
-        FontFamily FontFamily { get; }
+        Font Font { get; }
         IColorGenerator ColorGenerator { get; }
     }
 }
