@@ -11,7 +11,7 @@ using TagsCloudVisualization.TagsCloudDrawer;
 // as several methods use windows api
 #pragma warning disable CA1416
 
-namespace TagsCloudVisualization.Tests
+namespace TagsCloudVisualization.Tests.CloudLayouter
 {
     public class CircularCloudLayouterTestsLogger
     {
