@@ -16,14 +16,14 @@ namespace TagsCloudVisualization.Tests
     {
         private readonly CircularCloudLayouterTestsLogger _logger = new();
         private Point _center;
-        private CircularCloudLayouter _layouter;
+        private CircularLayouter _layouter;
         private Rectangle[] _rectangles;
 
         [SetUp]
         public void Setup()
         {
             _center = new Point(0, 0);
-            _layouter = new CircularCloudLayouter(_center);
+            _layouter = new CircularLayouter(_center);
             _rectangles = Array.Empty<Rectangle>();
         }
 

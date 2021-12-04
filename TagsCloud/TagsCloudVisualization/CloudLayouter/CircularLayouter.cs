@@ -7,13 +7,13 @@ using TagsCloudVisualization.VectorsGenerator;
 
 namespace TagsCloudVisualization.CloudLayouter
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    public class CircularLayouter : ILayouter
     {
         private readonly Point _center;
         private readonly List<Rectangle> _rectangles = new();
         private readonly IVectorsGenerator _vectorsGenerator = new CircularVectorsGenerator(0.005, 360);
 
-        public CircularCloudLayouter(Point center)
+        public CircularLayouter(Point center)
         {
             _center = center;
         }
