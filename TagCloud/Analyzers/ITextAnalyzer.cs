@@ -8,6 +8,6 @@ namespace TagCloud.Analyzers
 {
     public interface ITextAnalyzer
     {
-        IEnumerable<string> Analyze(string text);
+        IEnumerable<string> Analyze(string[] words);
     }
 }

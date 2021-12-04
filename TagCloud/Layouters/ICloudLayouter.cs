@@ -10,6 +10,6 @@ namespace TagCloud.Layouters
     public interface ICloudLayouter
     {
         //Rectangle PutNextRectangle(Size rectangleSize);
-        IEnumerable<Tag> PutTags(Dictionary<string, int> wordsWithFrequency);
+        IEnumerable<Tag> PutTags(IEnumerable<Tag> tags);
     }
 }

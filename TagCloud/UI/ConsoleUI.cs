@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using TagCloud.Analyzers;
+using TagCloud.Creators;
 using TagCloud.Layouters;
 using TagCloud.Readers;
 using TagCloud.Visualizers;
@@ -15,13 +17,15 @@ namespace TagCloud.UI
         private readonly ICloudLayouter layouter;
         private readonly IVisualizer visualizer;
         private readonly IFileWriter writer;
+        private readonly ITagCreator tagCreator;
 
         public ConsoleUI(IFileReader reader,
             ITextAnalyzer textAnalyzer,
             IFrequencyAnalyzer frequencyAnalyzer,
             ICloudLayouter layouter,
             IVisualizer visualizer,
-            IFileWriter writer)
+            IFileWriter writer, 
+            ITagCreator tagCreator)
         {
             this.reader = reader;
             this.textAnalyzer = textAnalyzer;
@@ -29,6 +33,7 @@ namespace TagCloud.UI
             this.layouter = layouter;
             this.visualizer = visualizer;
             this.writer = writer;
+            this.tagCreator = tagCreator;
         }
 
         public void Run(string filename)
@@ -36,9 +41,10 @@ namespace TagCloud.UI
             var text = reader.ReadFile(filename);
             var words = textAnalyzer.Analyze(text);
             var wordFrequencies = frequencyAnalyzer.Analyze(words);
-            var tags = layouter.PutTags(wordFrequencies);
-            var image = visualizer.DrawCloud(tags);
-            writer.Write(image);
+            var tags = tagCreator.Create(wordFrequencies);
+            var placedTags = layouter.PutTags(tags);
+            var image = visualizer.DrawCloud(placedTags);
+            writer.Write(image, filename, ImageFormat.Png);
         }
     }
 }
