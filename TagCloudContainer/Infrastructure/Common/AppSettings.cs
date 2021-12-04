@@ -17,7 +17,6 @@ public class AppSettings : IAppSettings
     public string OutputPath { get; set; } = "output.png";
 
     [Option('e', "outputExtension", Default = "png", HelpText = "Extension of output image")]
-
     public string OutputFormat { get; set; } = "png";
 
     [Option('f', "textFont", Default = "Roboto", HelpText = "Font used to display words")]

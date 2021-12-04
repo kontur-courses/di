@@ -14,7 +14,7 @@ public class PlainTextFileReader : IFileReader
     public IEnumerable<string> GetLines()
     {
         if (!File.Exists(settings.InputPath))
-            throw new ArgumentException("The file does not exist");
+            throw new ArgumentException($"The file does not exist {settings.InputPath}");
 
         return File.ReadLines(settings.InputPath);
     }

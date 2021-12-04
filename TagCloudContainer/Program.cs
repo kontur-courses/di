@@ -32,7 +32,7 @@ public static class Program
         builder.RegisterType<WordWeigher>().As<IWordWeigher>();
         builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>();
         builder.RegisterType<ConsoleUI>().As<IUserInterface>();
-        builder.Register(c=> appSettings).As<IAppSettings>().SingleInstance();
+        builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
 
         return builder.Build();
     }
