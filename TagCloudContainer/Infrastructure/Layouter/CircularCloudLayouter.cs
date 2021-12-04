@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
+using TagCloudContainer.Infrastructure.Common;
 
-namespace TagsCloudVisualization;
+namespace TagCloudContainer.Infrastructure.Layouter;
 
-public class CircularCloudLayouter
+public class CircularCloudLayouter : ICloudLayouter
 {
     private readonly List<Rectangle> rectangles;
     private readonly Spiral spiral;
     public Point Center => spiral.Center;
 
-    public CircularCloudLayouter(Point center = default)
+    public CircularCloudLayouter(IAppSettings settings) : this(new Point(settings.ImageWidth / 2, settings.ImageHeight / 2)) { }
+
+    public CircularCloudLayouter(Point center)
     {
         rectangles = new List<Rectangle>();
         spiral = new Spiral(center);
@@ -40,6 +40,12 @@ public class CircularCloudLayouter
     public Rectangle[] GetLayout()
     {
         return rectangles.ToArray();
+    }
+
+    public void SetCenter()
+    {
+        rectangles.Clear();
+        spiral.SetCenter();
     }
 
     private bool IsLayoutIntersectWith(Rectangle rectangle)

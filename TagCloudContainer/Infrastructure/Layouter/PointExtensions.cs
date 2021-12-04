@@ -1,7 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace TagsCloudVisualization;
+namespace TagCloudContainer.Infrastructure.Layouter;
 
 public static class PointExtensions
 {

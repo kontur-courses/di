@@ -1,12 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace TagsCloudVisualization;
+namespace TagCloudContainer.Infrastructure.Layouter;
 
 public class Spiral
 {
     private Point? lastGeneratedPoint;
-    public Point Center { get; }
+    public Point Center { get; private set; }
     public double Phi { get; private set; }
     public double SpiralEquationParam { get; }
     public double DeltaPhi { get; }
@@ -36,6 +35,12 @@ public class Spiral
 
         lastGeneratedPoint = newPoint;
         return newPoint;
+    }
+
+    public void SetCenter()
+    {
+        lastGeneratedPoint = null;
+        Phi = 0;
     }
 
     private static void ValidateParam(double spiralParam)

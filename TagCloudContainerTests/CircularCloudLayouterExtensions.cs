@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization;
+using TagCloudContainer.Infrastructure.Layouter;
 
-namespace TagsCloudVisualizationTests;
+namespace TagsCloudContainerTests;
 
 internal static class CircularCloudLayouterExtensions
 {

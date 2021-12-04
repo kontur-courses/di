@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
+using TagCloudContainer.Infrastructure.Layouter;
 
-namespace TagsCloudVisualizationTests;
+namespace TagsCloudContainerTests;
 
 public class SpiralTests
 {

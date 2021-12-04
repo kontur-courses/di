@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagCloudContainer": {
+      "commandName": "Project",
+      "commandLineArgs": "-i input.txt"
+    }
+  }
+}

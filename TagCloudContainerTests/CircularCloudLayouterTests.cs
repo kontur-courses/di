@@ -1,41 +1,22 @@
 using System;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
+using TagCloudContainer.Infrastructure.Layouter;
 
-namespace TagsCloudVisualizationTests;
+namespace TagsCloudContainerTests;
 
 public class CircularCloudLayouterTests
 {
-    private readonly TagsPainter painter = new();
     private CircularCloudLayouter sut;
-
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
-    {
-        if (!Directory.Exists("FailedTests"))
-            Directory.CreateDirectory("FailedTests");
-    }
-
+    
     [SetUp]
     public void SetUp()
     {
         sut = new CircularCloudLayouter(new Point(0, 0));
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-
-        var filepath = $"{Environment.CurrentDirectory}\\FailedTests\\{TestContext.CurrentContext.Test.Name}.png";
-        painter.SaveToFile(filepath, sut.GetLayout());
-        Console.WriteLine($"Tag cloud visualization saved to file {filepath}");
-    }
 
     [Test]
     public void LayoutIsEmpty_BeforePutNextRectangle()
