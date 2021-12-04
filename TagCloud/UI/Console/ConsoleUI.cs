@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using TagCloud.Analyzers;
 using TagCloud.Creators;
 using TagCloud.Layouters;
@@ -7,7 +6,7 @@ using TagCloud.Readers;
 using TagCloud.Visualizers;
 using TagCloud.Writers;
 
-namespace TagCloud.UI
+namespace TagCloud.UI.Console
 {
     public class ConsoleUI : IUserInterface
     {

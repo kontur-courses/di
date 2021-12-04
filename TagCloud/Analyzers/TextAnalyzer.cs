@@ -8,7 +8,7 @@ namespace TagCloud.Analyzers
 {
     class TextAnalyzer : ITextAnalyzer
     {
-        private HashSet<string> excludedWords;
+        private readonly HashSet<string> excludedWords;
 
         public TextAnalyzer(HashSet<string> excludedWords)
         {
