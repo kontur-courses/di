@@ -1,29 +1,34 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.Versioning;
+using TagCloudContainer.Infrastructure.Common;
 
-namespace TagCloudContainer.Infrastructure.Saver
+namespace TagCloudContainer.Infrastructure.Saver;
+
+public class ImageSaver : IImageSaver
 {
-    [SupportedOSPlatform("windows")]
-    public class ImageSaver : IImageSaver
-    {
-        public static IReadOnlyDictionary<string, ImageFormat> ImageFormats = new Dictionary<string, ImageFormat>
-        {
-            ["png"] = ImageFormat.Png,
-            ["bmp"] = ImageFormat.Bmp,
-            ["jpg"] = ImageFormat.Jpeg,
-            ["tiff"] = ImageFormat.Tiff,
-            ["gif"] = ImageFormat.Gif,
-            ["exif"] = ImageFormat.Exif
-        };
+    private readonly IOutputPathProvider settings;
 
-        public void Save(Bitmap bitmap, string filePath, string format)
-        {
-            if (!ImageFormats.TryGetValue(format.ToLowerInvariant(), out var imageFormat))
-                throw new ArgumentException($"Acceptable formats: {string.Join(',', ImageFormats.Keys)}, but was {format.ToLowerInvariant()}");
+    public static IReadOnlyDictionary<string, ImageFormat> ImageFormats = new Dictionary<string, ImageFormat>
+    {
+        ["png"] = ImageFormat.Png,
+        ["bmp"] = ImageFormat.Bmp,
+        ["jpg"] = ImageFormat.Jpeg,
+        ["tiff"] = ImageFormat.Tiff,
+        ["gif"] = ImageFormat.Gif,
+        ["exif"] = ImageFormat.Exif
+    };
+
+    public ImageSaver(IAppSettings settings)
+    {
+        this.settings = settings;
+    }
+
+    public void Save(Bitmap bitmap)
+    {
+        if (!ImageFormats.TryGetValue(settings.OutputFormat.ToLowerInvariant(), out var imageFormat))
+            throw new ArgumentException($"Acceptable formats: {string.Join(',', ImageFormats.Keys)}, but was {settings.OutputFormat.ToLowerInvariant()}");
             
-            bitmap.Save($"{filePath}.{format.ToLowerInvariant()}", imageFormat);
-            bitmap.Dispose();
-        }
+        bitmap.Save($"{settings.OutputPath}.{settings.OutputFormat.ToLowerInvariant()}", imageFormat);
+        bitmap.Dispose();
     }
 }

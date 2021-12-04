@@ -37,12 +37,6 @@ public class Spiral
         return newPoint;
     }
 
-    public void SetCenter()
-    {
-        lastGeneratedPoint = null;
-        Phi = 0;
-    }
-
     private static void ValidateParam(double spiralParam)
     {
         if (spiralParam <= 0)

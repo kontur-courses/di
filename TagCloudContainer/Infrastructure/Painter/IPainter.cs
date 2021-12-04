@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 using TagCloudContainer.Infrastructure.WordWeigher;
 
-namespace TagCloudContainer.Infrastructure.Painter
+namespace TagCloudContainer.Infrastructure.Painter;
+
+public interface IPainter
 {
-    public interface IPainter
-    {
-        Bitmap CreateImage(IEnumerable<WeightedWord> weightedWords, int imageWidth, int imageHeight, string fontName);
-    }
+    Bitmap CreateImage(ICollection<WeightedWord> weightedWords);
 }

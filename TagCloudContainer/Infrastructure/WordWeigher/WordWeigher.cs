@@ -9,13 +9,15 @@ public class WordWeigher : IWordWeigher
         this.lemmatizer = lemmatizer;
     }
 
-    public IEnumerable<WeightedWord> GetWeightedWords(IEnumerable<string> lines)
+    public ICollection<WeightedWord> GetWeightedWords(IEnumerable<string> lines)
     {
         var wordWithWeight = new Dictionary<string, int>();
 
         foreach (var line in lines)
         {
-            if (!lemmatizer.TryLemmatize(line.ToLower(), out var lemma))
+            var word = line.Trim().ToLower();
+
+            if (!lemmatizer.TryLemmatize(word, out var lemma))
                 continue;
 
             if (wordWithWeight.ContainsKey(lemma))
@@ -26,6 +28,7 @@ public class WordWeigher : IWordWeigher
 
         return wordWithWeight
             .OrderBy(x => x.Value)
-            .Select(x => new WeightedWord(x.Key, x.Value));
+            .Select(x => new WeightedWord(x.Key, x.Value))
+            .ToList();
     }
 }

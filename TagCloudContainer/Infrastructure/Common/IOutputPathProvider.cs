@@ -1,8 +1,7 @@
-﻿namespace TagCloudContainer.Infrastructure.Common
+﻿namespace TagCloudContainer.Infrastructure.Common;
+
+public interface IOutputPathProvider
 {
-    public interface IOutputPathProvider
-    {
-        string OutputPath { get; }
-        public string OutputFormat { get; }
-    }
+    string OutputPath { get; }
+    public string OutputFormat { get; }
 }

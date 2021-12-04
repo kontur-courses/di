@@ -1,7 +1,6 @@
-﻿namespace TagCloudContainer.Infrastructure.FileReader
+﻿namespace TagCloudContainer.Infrastructure.FileReader;
+
+public interface IFileReader
 {
-    public interface IFileReader
-    {
-        IEnumerable<string> GetLines(string filePath);
-    }
+    IEnumerable<string> GetLines();
 }

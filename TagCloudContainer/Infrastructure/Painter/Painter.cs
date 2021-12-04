@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagCloudContainer.Infrastructure.Common;
 using TagCloudContainer.Infrastructure.Layouter;
 using TagCloudContainer.Infrastructure.WordWeigher;
 
@@ -7,52 +8,64 @@ namespace TagCloudContainer.Infrastructure.Painter;
 public class Painter : IPainter
 {
     private readonly ICloudLayouter layouter;
+    private readonly IAppSettings settings;
     private readonly IPalette palette;
 
-    public Painter(IPalette palette, ICloudLayouter layouter)
+    public Painter(IPalette palette, ICloudLayouter layouter, IAppSettings settings)
     {
         this.palette = palette;
         this.layouter = layouter;
+        ValidateSettings(settings);
+        this.settings = settings;
     }
 
-    public Bitmap CreateImage(IEnumerable<WeightedWord> weightedWords, int imageWidth, int imageHeight, string fontName)
+    public Bitmap CreateImage(ICollection<WeightedWord> weightedWords)
     {
-        var bitmap = new Bitmap(imageWidth, imageHeight);
+        if (weightedWords == null || !weightedWords.Any())
+            throw new InvalidOperationException("Impossible to save an empty tag cloud");
+
+        var bitmap = new Bitmap(settings.ImageWidth, settings.ImageHeight);
         using var graphics = Graphics.FromImage(bitmap);
         graphics.Clear(palette.BackgroundColor);
 
-        var positionedWords = GetPositionedWords(weightedWords, fontName, graphics);
-        var scale = CalculateScale(imageWidth, imageHeight, positionedWords);
+        var tags = GetTags(weightedWords, graphics);
+        var scale = CalculateScale(settings.ImageWidth, settings.ImageHeight, tags);
 
-        foreach (var positionedWord in positionedWords)
+        foreach (var tag in tags)
         {
             using var brush = new SolidBrush(palette.MainColor);
-            using var font = new Font(fontName, positionedWord.FontSize * scale);
-            graphics.DrawString(positionedWord.Word, font, brush, RescaleRectangle(positionedWord.Position, scale));
+            using var font = new Font(settings.FontName, tag.FontSize * scale);
+            graphics.DrawString(tag.Word, font, brush, RescaleRectangle(tag.Position, scale));
         }
 
         return bitmap;
     }
 
-    private List<PositionedWord> GetPositionedWords(IEnumerable<WeightedWord> weightedWords, string fontName, Graphics graphics)
+    private List<Tag> GetTags(IEnumerable<WeightedWord> weightedWords, Graphics graphics)
     {
-        var list = new List<PositionedWord>();
+        var positionedWords = new List<Tag>();
 
         foreach (var weightedWord in weightedWords)
         {
             var fontSize = 10 + weightedWord.Weight / 2;
-            using var font = new Font(fontName, fontSize);
+            using var font = new Font(settings.FontName, fontSize);
             var size = graphics.MeasureString(weightedWord.Word, font);
             var rectangle = layouter.PutNextRectangle(Size.Ceiling(size));
-            list.Add(new PositionedWord(weightedWord.Word, rectangle, fontSize));
+            positionedWords.Add(new Tag(weightedWord.Word, rectangle, fontSize));
         }
 
-        return list;
+        return positionedWords;
     }
 
-    private static float CalculateScale(int imageWidth, int imageHeight, IReadOnlyCollection<PositionedWord> positionedWords)
+    private static void ValidateSettings(IImageSettingsProvider settings)
     {
-        var layoutSize = CalculateLayoutSize(positionedWords);
+        if (settings.ImageHeight <= 0 || settings.ImageWidth <= 0)
+            throw new ArgumentException($"Image sizes must be great than zero, but was {settings.ImageWidth}x{settings.ImageHeight}");
+    }
+
+    private static float CalculateScale(int imageWidth, int imageHeight, IReadOnlyCollection<Tag> tags)
+    {
+        var layoutSize = CalculateLayoutSize(tags);
         var scale = Math.Min((float)imageHeight / layoutSize.Height, (float)imageWidth / layoutSize.Width);
 
         return scale < 1 ? scale : 1;
@@ -66,7 +79,7 @@ public class Painter : IPainter
         return new RectangleF(location, size);
     }
 
-    private static Size CalculateLayoutSize(IReadOnlyCollection<PositionedWord> positionedWords)
+    private static Size CalculateLayoutSize(IReadOnlyCollection<Tag> positionedWords)
     {
         var maxX = positionedWords.Max(x => x.Position.X + x.Position.Size.Width);
         var maxY = positionedWords.Max(x => x.Position.Y);

@@ -2,5 +2,5 @@
 
 public interface IWordWeigher
 {
-    IEnumerable<WeightedWord> GetWeightedWords(IEnumerable<string> lines);
+    ICollection<WeightedWord> GetWeightedWords(IEnumerable<string> lines);
 }

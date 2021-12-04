@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloudContainer.Infrastructure.Layouter;
 
-namespace TagsCloudContainerTests;
+namespace TagCloudContainerTests;
 
 public class SpiralTests
 {
@@ -44,13 +44,11 @@ public class SpiralTests
 
         for (var i = 1; i < pointsCount / 2; i++)
             point = sut.GetNextPoint();
-
         var halfDistance = point.GetDistance(sut.Center);
-
         for (var i = pointsCount / 2; i < pointsCount; i++)
             point = sut.GetNextPoint();
-
         var fullDistance = point.GetDistance(sut.Center);
+
         fullDistance.Should().BeGreaterThan(halfDistance);
     }
 

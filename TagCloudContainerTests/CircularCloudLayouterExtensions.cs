@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using TagCloudContainer.Infrastructure.Layouter;
 
-namespace TagsCloudContainerTests;
+namespace TagCloudContainerTests;
 
 internal static class CircularCloudLayouterExtensions
 {

@@ -42,12 +42,6 @@ public class CircularCloudLayouter : ICloudLayouter
         return rectangles.ToArray();
     }
 
-    public void SetCenter()
-    {
-        rectangles.Clear();
-        spiral.SetCenter();
-    }
-
     private bool IsLayoutIntersectWith(Rectangle rectangle)
     {
         return rectangles.Any(rectangle.IntersectsWith);

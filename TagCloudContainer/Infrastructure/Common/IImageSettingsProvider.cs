@@ -1,8 +1,7 @@
-﻿namespace TagCloudContainer.Infrastructure.Common
+﻿namespace TagCloudContainer.Infrastructure.Common;
+
+public interface IImageSettingsProvider
 {
-    public interface IImageSettingsProvider
-    {
-        int ImageWidth { get; }
-        int ImageHeight { get; }
-    }
+    int ImageWidth { get; }
+    int ImageHeight { get; }
 }
