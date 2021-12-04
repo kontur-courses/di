@@ -47,6 +47,5 @@ namespace TagsCloudVisualization.CLI
             container.Resolve<IImageCreator>().Create(filename, drawables);
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
-        
     }
 }

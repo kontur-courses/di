@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.DrawerSettingsProvider
+namespace TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator
 {
     public interface ITagColorGenerator
     {

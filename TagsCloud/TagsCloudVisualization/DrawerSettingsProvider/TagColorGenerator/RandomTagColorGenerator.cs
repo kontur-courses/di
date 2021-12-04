@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloudDrawer.ColorGenerators;
 
-namespace TagsCloudVisualization.DrawerSettingsProvider
+namespace TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator
 {
     public class RandomTagColorGenerator : ITagColorGenerator
     {

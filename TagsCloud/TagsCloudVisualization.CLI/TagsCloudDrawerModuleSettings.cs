@@ -5,8 +5,9 @@ using TagsCloudDrawer.ImageSavior;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
+using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CLI
 {
     public class TagsCloudDrawerModuleSettings
     {

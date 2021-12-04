@@ -1,5 +1,6 @@
 ﻿using System;
 using TagsCloudDrawer.ColorGenerators;
+using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
 
 namespace TagsCloudVisualization.DrawerSettingsProvider
 {

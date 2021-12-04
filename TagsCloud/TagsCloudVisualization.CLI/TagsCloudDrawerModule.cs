@@ -11,7 +11,7 @@ using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.CLI
 {
     public class TagsCloudDrawerModule : Module
     {

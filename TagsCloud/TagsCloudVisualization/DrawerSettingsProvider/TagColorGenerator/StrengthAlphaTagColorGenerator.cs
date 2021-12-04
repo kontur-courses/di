@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.DrawerSettingsProvider
+namespace TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator
 {
     public class StrengthAlphaTagColorGenerator : ITagColorGenerator
     {
