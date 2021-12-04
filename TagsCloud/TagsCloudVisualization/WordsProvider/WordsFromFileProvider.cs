@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TagsCloudVisualization.WordsProvider
 {
@@ -9,9 +10,14 @@ namespace TagsCloudVisualization.WordsProvider
 
         public WordsFromFileProvider(string pathToFile)
         {
-            _pathToFile = pathToFile;
+            _pathToFile = pathToFile ?? throw new ArgumentNullException(nameof(pathToFile));
         }
 
-        public IEnumerable<string> GetWords() => throw new NotImplementedException();
+        public IEnumerable<string> GetWords()
+        {
+            if (!File.Exists(_pathToFile))
+                throw new Exception($"File {_pathToFile} not found");
+            return File.ReadLines(_pathToFile);
+        }
     }
 }
