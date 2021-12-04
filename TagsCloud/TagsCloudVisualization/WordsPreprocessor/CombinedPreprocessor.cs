@@ -8,7 +8,7 @@ namespace TagsCloudVisualization.WordsPreprocessor
     {
         private readonly IEnumerable<IWordsPreprocessor> _preprocessors;
 
-        private CombinedPreprocessor(IEnumerable<IWordsPreprocessor> preprocessors)
+        public CombinedPreprocessor(IEnumerable<IWordsPreprocessor> preprocessors)
         {
             _preprocessors = preprocessors ?? throw new ArgumentNullException(nameof(preprocessors));
         }

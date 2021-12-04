@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using TagsCloudDrawer.Drawer;
+using Autofac;
 using TagsCloudDrawer.ImageCreator;
-using TagsCloudDrawer.ImageSavior;
-using TagsCloudDrawer.ImageSettings;
-using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.Drawable;
-using TagsCloudVisualization.DrawerSettingsProvider;
+using TagsCloudVisualization.DrawableFactory;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
@@ -19,43 +14,24 @@ namespace TagsCloudVisualization
     {
         private static void Main(string[] args)
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new TagsCloudDrawerModule(new TagsCloudDrawerModuleSettings
+            {
+                WordsFile = Path.Combine(Directory.GetCurrentDirectory(), "words.txt")
+            }));
+            var container = builder.Build();
+
             var directory = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedClouds");
-            var provider = new WordsFromFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "words.txt"));
-            var preprocessor = new CombinedPreprocessor(new ToLowerCasePreprocessor(),
-                                                        new RemoveBoredPreprocessor(Array.Empty<string>()));
-            var imageSettings = new ImageSettingsProvider
-            {
-                BackgroundColor = Color.Gray,
-                ImageSize = new Size(1000, 1000)
-            };
-            var drawerSettings = new TagDrawableSettingsProvider
-            {
-                Font = new FontSettings
-                {
-                    Family = "Arial",
-                    MaxSize = 50
-                },
-                ColorGenerator = new StrengthAlphaTagColorGenerator(Color.Red)
-            };
-            var drawer = new Drawer();
-            var savior = new PngSavior();
-            var layouter = new CircularLayouter(Point.Empty);
-            var transformer = new LayoutWordsTransformer();
-            var creator = new ImageCreator(drawer, savior, imageSettings);
-
+            var filename = Path.Combine(directory, DateTime.Now.Ticks.ToString());
+            var preprocessor = container.Resolve<IWordsPreprocessor>();
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-            var words = provider.GetWords();
+            var words = container.Resolve<IWordsProvider>().GetWords();
             var processedWords = preprocessor.Process(words);
-            var tags = transformer.Transform(processedWords);
-            var drawables = tags.OrderByDescending(tag => tag.Weight).Select(tag =>
-            {
-                var height = tag.Weight * drawerSettings.Font.MaxSize;
-                var size = Size.Round(new SizeF(height * tag.Word.Length, height));
-                return new TagDrawable(tag, layouter.PutNextRectangle(size), drawerSettings);
-            });
-            creator.Create(Path.Combine(directory, GenerateFileName()), drawables);
+            var tags = container.Resolve<IWordsToTagsTransformer>().Transform(processedWords);
+            var drawables = tags
+                            .OrderByDescending(tag => tag.Weight)
+                            .Select(container.Resolve<ITagDrawableFactory>().Create);
+            container.Resolve<IImageCreator>().Create(filename, drawables);
         }
-
-        private static string GenerateFileName() => DateTime.Now.Ticks.ToString();
     }
 }
