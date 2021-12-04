@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using TagsCloudVisualization.ColorGenerators;
+using TagsCloudVisualization.ImageCreator;
+using TagsCloudVisualization.ImageSavior;
 using TagsCloudVisualization.TagsCloudDrawer;
 using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
 
@@ -16,22 +17,26 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
 {
     public class CircularCloudLayouterTestsLogger
     {
-        private readonly RectanglesCloudDrawer _drawer = new(new TagsCloudDrawerSettingsProvider
+        private readonly ITagsCloudDrawer _drawer = new RectanglesCloudDrawer(new TagsCloudDrawerSettingsProvider
         {
             ColorGenerator = new RainbowColorGenerator(new Random())
         });
 
-        private readonly Size _imageSize = new(1000, 1000);
+        private readonly IImageSettingsProvider _imageSettingsProvider = new ImageSettingsProvider
+        {
+            ImageSize = new Size(1000, 1000)
+        };
+
+        private readonly IImageSavior _savior = new PngSavior();
         private string _outputDirectory;
 
         public void Log(IEnumerable<Rectangle> rectangles, string testName)
         {
             if (string.IsNullOrEmpty(_outputDirectory))
                 throw new Exception($"{nameof(_outputDirectory)} was null or empty");
-            var path = Path.Combine(_outputDirectory, testName + ".bmp");
-            using var image = new Bitmap(_imageSize.Width, _imageSize.Height);
-            _drawer.Draw(image, rectangles.Select(Tag.FromRectangle));
-            image.Save(path, ImageFormat.Bmp);
+            var path = Path.Combine(_outputDirectory, testName);
+            var creator = new TagsCloudImageCreator(_drawer, _savior, _imageSettingsProvider);
+            creator.Create(path, rectangles.Select(Tag.FromRectangle));
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 

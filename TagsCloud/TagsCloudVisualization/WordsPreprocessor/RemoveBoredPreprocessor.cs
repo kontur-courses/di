@@ -11,6 +11,7 @@ namespace TagsCloudVisualization.WordsPreprocessor
         {
             _boredWords = boredWords.ToHashSet();
         }
+
         public IEnumerable<string> Process(IEnumerable<string> words) => words.Where(w => !IsBored(w));
 
         private bool IsBored(string word) => _boredWords.Contains(word);

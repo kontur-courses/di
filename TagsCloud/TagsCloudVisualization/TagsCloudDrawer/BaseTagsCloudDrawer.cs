@@ -11,12 +11,11 @@ namespace TagsCloudVisualization.TagsCloudDrawer
 {
     public abstract class BaseTagsCloudDrawer : ITagsCloudDrawer
     {
-        public void Draw(Image bitmap, IEnumerable<Tag> tags)
+        public void Draw(Graphics graphics, Size size, IEnumerable<Tag> tags)
         {
-            if (bitmap == null) throw new ArgumentNullException(nameof(bitmap));
-            using var graphics = Graphics.FromImage(bitmap);
-            var shifted = GetShiftedTags(tags, Size.Truncate(bitmap.Size / 2f));
-            FillWithRectangles(graphics, shifted, new Rectangle(Point.Empty, bitmap.Size));
+            if (graphics == null) throw new ArgumentNullException(nameof(graphics));
+            var shifted = GetShiftedTags(tags, Size.Truncate(size / 2f));
+            FillWithRectangles(graphics, shifted, new Rectangle(Point.Empty, size));
         }
 
         protected abstract void FillWithRectangles(Graphics graphics, IEnumerable<Tag> tags, Rectangle bounds);

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using TagsCloudVisualization.ImageSavior;
 using TagsCloudVisualization.TagsCloudDrawer;
 
@@ -19,6 +19,14 @@ namespace TagsCloudVisualization.ImageCreator
             _settingsProvider = settingsProvider;
         }
 
-        public void Create(string filename, IEnumerable<Tag> tags) => throw new NotImplementedException();
+        public void Create(string filename, IEnumerable<Tag> tags)
+        {
+            var size = _settingsProvider.ImageSize;
+            using var bitmap = new Bitmap(size.Width, size.Height);
+            using var graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(_settingsProvider.BackgroundColor);
+            _drawer.Draw(graphics, bitmap.Size, tags);
+            _savior.Save(filename, bitmap);
+        }
     }
 }

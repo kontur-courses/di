@@ -165,8 +165,8 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
         private Rectangle[] GenerateRectangles(int count, Func<Size> sizeFactory)
         {
             return Enumerable.Range(0, count)
-                .Select(_ => _layouter.PutNextRectangle(sizeFactory()))
-                .ToArray();
+                             .Select(_ => _layouter.PutNextRectangle(sizeFactory()))
+                             .ToArray();
         }
 
         private double GetBoundingCircleRadius(IEnumerable<Rectangle> rectangles)

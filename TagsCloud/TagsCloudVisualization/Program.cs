@@ -37,10 +37,10 @@ namespace TagsCloudVisualization
             };
             var drawer = new TagsCloudDrawer.TagsCloudDrawer(drawerSettings);
             var savior = new PngSavior();
-            var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
             var layouter = new CircularLayouter(Point.Empty);
-            var transformer = new LayoutWordsTransformer(layouter);
             var wordCounter = new DictionaryWordCounter();
+            var transformer = new LayoutWordsTransformer(layouter);
+            var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var words = provider.GetWords();

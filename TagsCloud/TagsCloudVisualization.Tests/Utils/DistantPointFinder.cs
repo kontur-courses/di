@@ -17,7 +17,7 @@ namespace TagsCloudVisualization.Tests
         public Point GetDistantPoint(IEnumerable<Point> points)
         {
             return points.Aggregate((best, current) =>
-                _center.DistanceTo(current) > _center.DistanceTo(best) ? current : best);
+                                        _center.DistanceTo(current) > _center.DistanceTo(best) ? current : best);
         }
     }
 }

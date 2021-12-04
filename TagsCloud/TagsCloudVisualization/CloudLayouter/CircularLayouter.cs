@@ -48,13 +48,13 @@ namespace TagsCloudVisualization.CloudLayouter
 
             if (!shiftX.IsEmpty)
                 rectangle = ShiftUntilIntersection(rectangle,
-                    rect => new Rectangle(rect.Location + shiftX, rect.Size),
-                    rect => IsRectangleAtCenterAxis(rect, point => point.X));
+                                                   rect => new Rectangle(rect.Location + shiftX, rect.Size),
+                                                   rect => IsRectangleAtCenterAxis(rect, point => point.X));
 
             if (!shiftY.IsEmpty)
                 rectangle = ShiftUntilIntersection(rectangle,
-                    rect => new Rectangle(rect.Location + shiftY, rect.Size),
-                    rect => IsRectangleAtCenterAxis(rect, point => point.Y));
+                                                   rect => new Rectangle(rect.Location + shiftY, rect.Size),
+                                                   rect => IsRectangleAtCenterAxis(rect, point => point.Y));
 
             return rectangle;
         }

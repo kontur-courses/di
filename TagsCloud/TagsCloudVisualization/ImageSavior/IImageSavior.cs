@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.ImageSavior
 {
     public interface IImageSavior
     {
-        void Save(Image image, string filename);
+        void Save(string filename, Image image);
     }
 }

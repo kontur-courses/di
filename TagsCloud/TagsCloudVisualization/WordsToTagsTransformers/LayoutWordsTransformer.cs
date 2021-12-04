@@ -19,6 +19,6 @@ namespace TagsCloudVisualization.WordsToTagsTransformers
             return words.Select(word => new Tag(word.Word, _layouter.PutNextRectangle(GetSize(word))));
         }
 
-        private static Size GetSize(WordCount wordCount) => new(wordCount.Count, wordCount.Count);
+        private static Size GetSize(WordCount wordCount) => new(wordCount.Count * 20, wordCount.Count * 20);
     }
 }

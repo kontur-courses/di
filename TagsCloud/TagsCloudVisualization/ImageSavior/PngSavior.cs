@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.ImageSavior
 {
     public class PngSavior : IImageSavior
     {
-        public void Save(Image image, string filename)
+        public void Save(string filename, Image image)
         {
             image.Save(Path.ChangeExtension(filename, "png"), ImageFormat.Png);
         }

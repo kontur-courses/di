@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.TagsCloudDrawer
 {
     public interface ITagsCloudDrawer
     {
-        void Draw(Image bitmap, IEnumerable<Tag> tags);
+        void Draw(Graphics graphics, Size size, IEnumerable<Tag> tags);
     }
 }
