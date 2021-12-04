@@ -32,7 +32,7 @@ namespace TagsCloudVisualization
             builder.RegisterInstance(_settings.ImageSettingsProvider).As<IImageSettingsProvider>();
             builder.RegisterInstance(_settings.TagDrawableSettingsProvider).As<ITagDrawableSettingsProvider>();
             builder.RegisterType<Drawer>().As<IDrawer>();
-            builder.RegisterType<PngSavior>().As<IImageSavior>();
+            builder.Register(_ => _settings.ImageSavior()).As<IImageSavior>();
             builder.RegisterInstance(_settings.Layouter).As<ILayouter>();
             builder.RegisterType<ImageCreator>().As<IImageCreator>();
             builder.RegisterType<LayoutWordsTransformer>().As<IWordsToTagsTransformer>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudDrawer.ImageSavior;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
@@ -28,5 +29,6 @@ namespace TagsCloudVisualization
         public ILayouter Layouter { get; init; } = new CircularLayouter(Point.Empty);
         public IEnumerable<string> BoredWords { get; init; } = Array.Empty<string>();
         public string WordsFile { get; init; }
+        public Func<IImageSavior> ImageSavior { get; init; } = () => new PngSavior();
     }
 }
