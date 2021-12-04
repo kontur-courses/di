@@ -6,7 +6,7 @@ using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.ImageSavior;
 using TagsCloudVisualization.TagsCloudDrawer;
-using TagsCloudVisualization.WordPreprocessor;
+using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
 
@@ -25,7 +25,7 @@ namespace TagsCloudVisualization
             var preprocessor = new CombinedPreprocessor(new IWordsPreprocessor[]
             {
                 new ToLowerCasePreprocessor(),
-                new RemoveBoredPreprocessor()
+                new RemoveBoredPreprocessor(Array.Empty<string>())
             });
             var savior = new PngSavior();
             var imageSettings = new ImageSettingsProvider
