@@ -1,18 +1,18 @@
-﻿using System.Drawing;
+﻿using System;
 
 namespace TagsCloudVisualization
 {
     public readonly struct Tag
     {
         public readonly string Word;
-        public readonly Rectangle Rectangle;
+        public readonly float Weight;
 
-        public Tag(string word, Rectangle rectangle)
+        public Tag(string word, float weight)
         {
+            if (weight is <= 0 or > 1)
+                throw new ArgumentException($"{nameof(weight)} expected be in (0, 1]");
             Word = word;
-            Rectangle = rectangle;
+            Weight = weight;
         }
-
-        public static Tag FromRectangle(Rectangle rectangle) => new(string.Empty, rectangle);
     }
 }

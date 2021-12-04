@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using TagsCloudVisualization.CloudLayouter;
 
 namespace TagsCloudVisualization.WordsToTagsTransformers
 {
     public class LayoutWordsTransformer : IWordsToTagsTransformer
     {
-        private readonly ILayouter _layouter;
-
-        public LayoutWordsTransformer(ILayouter layouter)
+        public IEnumerable<Tag> Transform(IEnumerable<string> words)
         {
-            _layouter = layouter;
-        }
+            var counts = new Dictionary<string, int>();
+            var maxCount = 1;
 
-        public IEnumerable<Tag> Transform(IEnumerable<WordCount> words)
-        {
-            return words.Select(word => new Tag(word.Word, _layouter.PutNextRectangle(GetSize(word))));
-        }
+            foreach (var word in words)
+            {
+                counts[word] = counts.GetValueOrDefault(word, 0) + 1;
+                maxCount = Math.Max(maxCount, counts[word]);
+            }
 
-        private static Size GetSize(WordCount wordCount) => new(wordCount.Count * 20, wordCount.Count * 20);
+            return counts.Select(pair => new Tag(pair.Key, pair.Value / (float)maxCount));
+        }
     }
 }

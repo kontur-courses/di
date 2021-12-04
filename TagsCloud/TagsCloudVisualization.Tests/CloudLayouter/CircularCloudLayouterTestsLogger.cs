@@ -7,7 +7,6 @@ using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.ImageSavior;
 using TagsCloudVisualization.TagsCloudDrawer;
-using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
 
 // Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
 // as several methods use windows api
@@ -17,10 +16,8 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
 {
     public class CircularCloudLayouterTestsLogger
     {
-        private readonly ITagsCloudDrawer _drawer = new RectanglesCloudDrawer(new TagsCloudDrawerSettingsProvider
-        {
-            ColorGenerator = new RainbowColorGenerator(new Random())
-        });
+        private readonly IDrawer _drawer = new Drawer();
+        private readonly IColorGenerator _colorGenerator = new RainbowColorGenerator(new Random());
 
         private readonly IImageSettingsProvider _imageSettingsProvider = new ImageSettingsProvider
         {
@@ -35,8 +32,8 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
             if (string.IsNullOrEmpty(_outputDirectory))
                 throw new Exception($"{nameof(_outputDirectory)} was null or empty");
             var path = Path.Combine(_outputDirectory, testName);
-            var creator = new TagsCloudImageCreator(_drawer, _savior, _imageSettingsProvider);
-            creator.Create(path, rectangles.Select(Tag.FromRectangle));
+            var creator = new ImageCreator.ImageCreator(_drawer, _savior, _imageSettingsProvider);
+            creator.Create(path, rectangles.Select(rect => new RectangleDrawable(rect, _colorGenerator)));
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 

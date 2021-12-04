@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.ColorGenerators;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.ImageSavior;
+using TagsCloudVisualization.TagsCloudDrawer;
 using TagsCloudVisualization.TagsCloudDrawer.TagsCloudDrawerSettingsProvider;
-using TagsCloudVisualization.WordCounter;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
@@ -30,24 +31,32 @@ namespace TagsCloudVisualization
                 BackgroundColor = Color.Gray,
                 ImageSize = new Size(1000, 1000)
             };
-            var drawerSettings = new TagsCloudDrawerSettingsProvider
+            var drawerSettings = new DrawerSettingsProvider
             {
-                Font = new Font(FontFamily.GenericMonospace, 14f),
+                Font = new FontSettings
+                {
+                    Family = "Arial",
+                    MaxSize = 50
+                },
                 ColorGenerator = new RandomColorGenerator(new Random())
             };
-            var drawer = new TagsCloudDrawer.TagsCloudDrawer(drawerSettings);
+            var drawer = new Drawer();
             var savior = new PngSavior();
             var layouter = new CircularLayouter(Point.Empty);
-            var wordCounter = new DictionaryWordCounter();
-            var transformer = new LayoutWordsTransformer(layouter);
-            var creator = new TagsCloudImageCreator(drawer, savior, imageSettings);
+            var transformer = new LayoutWordsTransformer();
+            var creator = new ImageCreator.ImageCreator(drawer, savior, imageSettings);
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var words = provider.GetWords();
             var processedWords = preprocessor.Process(words);
-            var countedWords = wordCounter.Count(processedWords);
-            var tags = transformer.Transform(countedWords);
-            creator.Create(Path.Combine(directory, GenerateFileName()), tags);
+            var tags = transformer.Transform(processedWords);
+            var drawables = tags.OrderByDescending(tag => tag.Weight).Select(tag =>
+            {
+                var height = tag.Weight * drawerSettings.Font.MaxSize;
+                var size = Size.Round(new SizeF(height * tag.Word.Length, height));
+                return new TagDrawable(tag, layouter.PutNextRectangle(size), drawerSettings);
+            });
+            creator.Create(Path.Combine(directory, GenerateFileName()), drawables);
         }
 
         private static string GenerateFileName() => DateTime.Now.Ticks.ToString();

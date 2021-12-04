@@ -4,6 +4,6 @@ namespace TagsCloudVisualization.WordsToTagsTransformers
 {
     public interface IWordsToTagsTransformer
     {
-        IEnumerable<Tag> Transform(IEnumerable<WordCount> words);
+        IEnumerable<Tag> Transform(IEnumerable<string> words);
     }
 }
