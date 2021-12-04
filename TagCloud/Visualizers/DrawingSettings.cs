@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace TagCloud.Visualizers
 {
-    public class DrawingSettings
+    public class DrawingSettings : IDrawingSettings
     {
-        public Brush PenColor { get; }
-        public Brush BackgroundColor { get; }
+        public Brush PenBrush { get; }
+        public Color BackgroundColor { get; }
+        public Font Font { get; }
         //public int Width { get; }
         //public int Height { get; }
         public Bitmap Bitmap { get; }
         public Graphics Graphics { get; }
 
-        public DrawingSettings(Color penColor, Color backgroundColor, int width, int height)
+        public DrawingSettings(Color penColor, Color backgroundColor, int width, int height, Font font)
         {
-            PenColor = new SolidBrush(penColor);
-            BackgroundColor = new SolidBrush(backgroundColor);
+            PenBrush = new SolidBrush(penColor);
+            BackgroundColor = backgroundColor;
+            Font = font;
             //Width = width;
             //Height = height;
             if (width < 0 || height < 0)

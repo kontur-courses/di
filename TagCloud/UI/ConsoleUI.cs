@@ -43,8 +43,11 @@ namespace TagCloud.UI
             var wordFrequencies = frequencyAnalyzer.Analyze(words);
             var tags = tagCreator.Create(wordFrequencies);
             var placedTags = layouter.PutTags(tags);
-            var image = visualizer.DrawCloud(placedTags);
-            writer.Write(image, filename, ImageFormat.Png);
+            using (visualizer)
+            {
+                var image = visualizer.DrawCloud(placedTags);
+                writer.Write(image, filename, ImageFormat.Png);
+            }
         }
     }
 }

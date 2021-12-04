@@ -39,8 +39,8 @@ namespace TagCloud.Layouters
 
         private Tag GetNearestTag(Tag tag)
         {
-            var potentialPoints = placedTags.Where(t => usedPoints.Contains(t.ContainingRectangle.Location))
-                .SelectMany(GetNextTagPotentialPoints);
+            var potentialPoints = placedTags
+                .SelectMany(t => GetNextTagPotentialPoints(t, tag));
             
             var potentialRectangles = potentialPoints.Select(p => new Rectangle(p, tag.Size))
                 .Where(rect =>
@@ -61,15 +61,15 @@ namespace TagCloud.Layouters
                     : nearest);
         }
 
-        private IEnumerable<Point> GetNextTagPotentialPoints(Tag tag)
+        private IEnumerable<Point> GetNextTagPotentialPoints(Tag tag, Tag tagToPlace)
         {
             var rectangle = tag.ContainingRectangle;
             var points = new[]
             {
-                new Point(rectangle.Left, rectangle.Top - tag.Size.Height),
+                new Point(rectangle.Left, rectangle.Top - tagToPlace.Size.Height),
                 new Point(rectangle.Right, rectangle.Top),
                 new Point(rectangle.Left, rectangle.Bottom),
-                new Point(rectangle.Left - tag.Size.Width, rectangle.Top)
+                new Point(rectangle.Left - tagToPlace.Size.Width, rectangle.Top)
             };
             return points.Where(p => !usedPoints.Contains(p));
         }
@@ -80,7 +80,7 @@ namespace TagCloud.Layouters
             var rectangleX = center.X - tag.Size.Width / 2;
             var rectangleY = center.Y - tag.Size.Height / 2;
             var upperLeftCorner = new Point(rectangleX, rectangleY);
-            if (usedPoints.Contains(upperLeftCorner))
+            if (placedTags.Any(t => new Rectangle(upperLeftCorner, tag.Size).IntersectsWith(t.ContainingRectangle)))
                 return false;
             var rectangle = new Rectangle(upperLeftCorner, tag.Size);
             placedTag = new Tag(tag, rectangle);

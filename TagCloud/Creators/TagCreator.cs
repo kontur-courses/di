@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 using TagCloud.Layouters;
+using TagCloud.Visualizers;
 
 namespace TagCloud.Creators
 {
     public class TagCreator : ITagCreator
     {
+        private readonly Font font;
+
+        public TagCreator(IDrawingSettings settings)
+        {
+            font = settings.Font;
+        }
+
         public Tag Create(string value, int frequency)
         {
-            var size = new Size(value.Length * 5, frequency * 3);
+            Size size;
+            using (var renderFont = new Font(font.FontFamily, font.Size * frequency))
+                size = TextRenderer.MeasureText(value, renderFont);
+            
             return new Tag(value, frequency, size);
         }
 

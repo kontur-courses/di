@@ -17,7 +17,7 @@ namespace TagCloud.Analyzers
 
         public IEnumerable<string> Analyze(string[] words)
         {
-            return words.Where(w => excludedWords.Contains(w))
+            return words.Where(w => !excludedWords.Contains(w))
                 .Select(w => w.ToLowerInvariant());
         }
     }
