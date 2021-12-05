@@ -7,18 +7,18 @@ namespace TagsCloud.Visualization
 {
     public class WordsService
     {
-        private readonly IFileReadService fileReadService;
+        private readonly IWordsReadService wordsReadService;
         private readonly IWordsParser wordsParser;
 
-        public WordsService(IFileReadService fileReadService, IWordsParser wordsParser)
+        public WordsService(IWordsReadService wordsReadService, IWordsParser wordsParser)
         {
-            this.fileReadService = fileReadService;
+            this.wordsReadService = wordsReadService;
             this.wordsParser = wordsParser;
         }
 
-        public Word[] GetWords(string filename)
+        public Word[] GetWords()
         {
-            var text = fileReadService.Read(filename);
+            var text = wordsReadService.Read();
 
             var parsed = wordsParser.CountWordsFrequency(text);
 

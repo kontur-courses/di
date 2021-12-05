@@ -6,27 +6,32 @@ using TagsCloud.Visualization.WordsReaders.FileReaders;
 
 namespace TagsCloud.Visualization.WordsReaders
 {
-    public class FileReadService : IFileReadService
+    public class FileReadService : IWordsReadService
     {
+        private readonly string fileName;
         private readonly IEnumerable<IFileReader> fileReaders;
-
-        public FileReadService(IEnumerable<IFileReader> fileReaders) => this.fileReaders = fileReaders;
-
-        public string Read(string filename)
+        
+        public FileReadService(string fileName, IEnumerable<IFileReader> fileReaders)
         {
-            if (filename == null)
-                throw new ArgumentNullException(nameof(filename));
+            this.fileName = fileName;
+            this.fileReaders = fileReaders;
+        }
 
-            var fileExtension = Path.GetExtension(filename);
+        public string Read()
+        {
+            if (fileName == null)
+                throw new ArgumentNullException(nameof(fileName));
+
+            var fileExtension = Path.GetExtension(fileName);
             var reader = fileReaders.FirstOrDefault(x => x.Extension == fileExtension);
 
             if (reader == null)
                 throw new ArgumentException($"Unsupported file extension: {fileExtension}");
 
-            if (!File.Exists(filename))
-                throw new ArgumentException($"File {filename} doesn't exists");
+            if (!File.Exists(fileName))
+                throw new ArgumentException($"File {fileName} doesn't exists");
 
-            return reader.Read(filename);
+            return reader.Read(fileName);
         }
     }
 }
