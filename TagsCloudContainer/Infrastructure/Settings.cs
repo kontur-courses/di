@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.Infrastructure
 {
     public class Settings
     {
-        public Color PrimaryColor { get; set; }
-        public Color BackgroundColor { get; set; }
+        public Palette Palette { get; set; }
         public Font TextFont { get; set; }
         public Size ImageSize { get; set; }
+        public IPreprocessor[] Preprocessors { get; set; }
     }
 }
