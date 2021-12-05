@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudVisualization.Layouter
 {
@@ -15,7 +13,6 @@ namespace TagsCloudVisualization.Layouter
 
         private List<RectangleWithWord> RectangleList { get; }
 
-        //private List<Word> WordList { get; }
 
 
         public CircularCloudLayouterForRectanglesWithText(Point center)
@@ -23,7 +20,6 @@ namespace TagsCloudVisualization.Layouter
             Center = center;
             LayouterSpiral = new Spiral();
             RectangleList = new List<RectangleWithWord>();
-            //WordList = words;
         }
 
         public RectangleWithWord PutNextElement(Size rectangleSize, Word word)
@@ -51,7 +47,6 @@ namespace TagsCloudVisualization.Layouter
             var rectangleY = rectangleCenterLocation.Y - Math.Abs(rectangleSize.Height / 2);
             var rectangle = new Rectangle(rectangleX, rectangleY, Math.Abs(rectangleSize.Width), Math.Abs(rectangleSize.Height));
             return new RectangleWithWord(rectangle, word);
-            //return rectangle;
         }
 
         private RectangleWithWord CenterElement(RectangleWithWord inputRectangleWithWord)
@@ -82,6 +77,7 @@ namespace TagsCloudVisualization.Layouter
             rectangleElement.Offset(directionXSign, directionYSign);
 
             inputRectangleWithWord.RectangleElement = rectangleElement;
+
             if (IsIntersect(inputRectangleWithWord.RectangleElement))
                 inputRectangleWithWord.RectangleElement.Offset(-directionXSign, -directionYSign);
 

@@ -1,11 +1,8 @@
 ﻿using Autofac;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagsCloudVisualization.FileReader;
 using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.TextAnalization;
@@ -33,17 +30,20 @@ namespace TagsCloudVisualization
             var layouter = buildContainer.Resolve<ICircularCloudLayouter>();
             var reader = buildContainer.Resolve<ITextFileReader>();
             var lowerCaseMaker = buildContainer.Resolve<ILowerCaseMaker>();
-            var rectangleSize = new Size(1000, 1000);
+
+            var rectangleSize = new Size(100, 200);
             var wordsFromFile = reader.ReadText(textPath); //!!!
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).Select(w => w.ToLower());
             var normalyzedWords = normalizationMaker.MakeNormalization(analyzedWords);
             var lowerCaseWords = lowerCaseMaker.MakeTextLowerCase(normalyzedWords);
             var wordList = lowerCaseWords.ToList();
-            var visualization = new Visualization(layouter.GetElementsList(), new Pen(Color.White, 10));
 
-            
+
+            var visualization = new Visualization(layouter.GetElementsList(), new Pen(Color.White, 10), 
+                new SolidBrush(Color.White), new Font("Times", 15));
 
             layouter.FillInElements(rectangleSize, wordList);
+
             visualization.DrawAndSaveImage(new Size(2500, 2500), path, ImageFormat.Jpeg);
         }
 

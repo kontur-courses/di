@@ -12,18 +12,19 @@ using TagsCloudVisualization.Layouter;
 
 namespace TagsCloudVisualizationTests
 {
-    /*
+    
     [TestFixture]
     public class TestsCircularCloudLayouterShouldCorrectPutNext
     {
-        private List<Rectangle> _rectanglesList = new List<Rectangle>(); 
+        private List<RectangleWithWord> _rectanglesWithNamesList = new List<RectangleWithWord>(); 
         
         [TearDown]
         public void VisualizeError()
         {
-            if (TestContext.CurrentContext.Result.Outcome == ResultState.Failure && _rectanglesList.Count != 0)
+            if (TestContext.CurrentContext.Result.Outcome == ResultState.Failure && _rectanglesWithNamesList.Count != 0)
             {
-                using (var visualization = new Visualization(_rectanglesList, new Pen(Color.White, 3)))
+                using (var visualization = new Visualization(_rectanglesWithNamesList, new Pen(Color.White, 3), 
+                    new SolidBrush(Color.White), new Font("Times", 15)))
                 {
                     var testName = TestContext.CurrentContext.Test.Name;
                     var path = AppDomain.CurrentDomain.BaseDirectory + testName + "." + ImageFormat.Jpeg;
@@ -31,7 +32,7 @@ namespace TagsCloudVisualizationTests
                     visualization.DrawAndSaveImage(new Size(5000, 5000), path, ImageFormat.Jpeg);
                 }
             }
-            _rectanglesList = new List<Rectangle>();
+            _rectanglesWithNamesList = new List<RectangleWithWord>();
         }
 
 
@@ -43,8 +44,8 @@ namespace TagsCloudVisualizationTests
 
             var rectangleSize = new Size(width, height);
             var layouterCenter = new Point(2500, 2500);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
-            Action put = () => layouter.PutNextRectangle(rectangleSize);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
+            Action put = () => layouter.PutNextElement(rectangleSize, new Word(""));
             put.Should().Throw<ArgumentException>();
         }
 
@@ -55,8 +56,8 @@ namespace TagsCloudVisualizationTests
         {
             var rectangleSize = new Size(width, height);
             var layouterCenter = new Point(2500, 2500);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
-            Action put = () =>layouter.PutNextRectangle(rectangleSize);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
+            Action put = () => layouter.PutNextElement(rectangleSize, new Word(""));
             put.Should().NotThrow();
         }
 
@@ -67,17 +68,21 @@ namespace TagsCloudVisualizationTests
         public void ShouldNotIntersectWithSameRectangles(int width, int height)
         {
             var layouterCenter = new Point(width, height);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
             var rectangleSize = new Size(50, 100);
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < 2; i++)
             {
-                _rectanglesList.Add(layouter.PutNextRectangle(rectangleSize));
+                _rectanglesWithNamesList.Add(layouter.PutNextElement(rectangleSize, new Word("")));
             }
-            foreach (var rectangle in _rectanglesList)
+            foreach (var rectangle in _rectanglesWithNamesList)
             {
-                var act = _rectanglesList
+                var z = _rectanglesWithNamesList
+                    .Where(r => r.RectangleElement != rectangle.RectangleElement)
+                    .Where(r => r.RectangleElement.IntersectsWith(rectangle.RectangleElement));
+
+                var act = _rectanglesWithNamesList
                     .Where(r => r != rectangle)
-                    .Any(r => r.IntersectsWith(rectangle));
+                    .Any(r => r.RectangleElement.IntersectsWith(rectangle.RectangleElement));
                 act.Should().BeFalse();
             }
         }
@@ -88,9 +93,9 @@ namespace TagsCloudVisualizationTests
 
             var rectangleSize = new Size(50, 60);
             var layouterCenter = new Point(2500,2500);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
-            var rectangle = layouter.PutNextRectangle(rectangleSize);
-            rectangle.Location.Should().Be(layouterCenter);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
+            var rectangle = layouter.PutNextElement(rectangleSize, new Word(""));
+            rectangle.RectangleElement.Location.Should().Be(layouterCenter);
         }
 
         [TestCase(300, 978043567)]
@@ -101,17 +106,20 @@ namespace TagsCloudVisualizationTests
             var seedRandom = new Random(seed);
             Size rectangleSize = new Size(Point.Empty);
             var layouterCenter = new Point(2500, 2500);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
             for (int i = 0; i < number; i++)
             {
                 while (rectangleSize.Height == 0 || rectangleSize.Width == 0)
                     rectangleSize = new Size(seedRandom.Next(-60, 60), seedRandom.Next(-60, 60));
-                _rectanglesList.Add(layouter.PutNextRectangle(rectangleSize));
+                _rectanglesWithNamesList.Add(layouter.PutNextElement(rectangleSize, new Word("")));
             }
-            var sumArea = GetSumAreaOfRectangles(_rectanglesList);
-            var circleArea = GetCircleArea(GetCircleRadius(layouterCenter, _rectanglesList));
+
+            var listOfRectangles = _rectanglesWithNamesList.Select(r => r.RectangleElement).ToList();
+
+            var sumArea = GetSumAreaOfRectangles(_rectanglesWithNamesList.Select(r => r.RectangleElement).ToList());
+            var circleArea = GetCircleArea(GetCircleRadius(layouterCenter, listOfRectangles));
             
-            var enclosingRectangleArea = GetEnclosingRectangleArea(_rectanglesList);
+            var enclosingRectangleArea = GetEnclosingRectangleArea(listOfRectangles);
             var difCircleAndSum = sumArea/circleArea;
             var difSumAndEnclosingRectangle = sumArea/enclosingRectangleArea;
 
@@ -124,19 +132,19 @@ namespace TagsCloudVisualizationTests
             var seedRandom = new Random(546748576);
             var rectangleSize = new Size(Point.Empty);
             var layouterCenter = new Point(2500, 2500);
-            var layouter = new CircularCloudLayouterForRectangles(layouterCenter);
+            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
             for (int i = 0; i < 300; i++)
             {
                 while(rectangleSize.Width == 0|| rectangleSize.Height == 0)
                     rectangleSize = new Size(seedRandom.Next(-100, 100), seedRandom.Next(-100, 100));
-                _rectanglesList.Add(layouter.PutNextRectangle(rectangleSize));
+                _rectanglesWithNamesList.Add(layouter.PutNextElement(rectangleSize, new Word("")));
             }
 
-            foreach (var rectangle in _rectanglesList)
+            foreach (var rectangle in _rectanglesWithNamesList)
             {
-                var act = _rectanglesList
+                var act = _rectanglesWithNamesList
                     .Where(r => r != rectangle)
-                    .Any(r => r.IntersectsWith(rectangle));
+                    .Any(r => r.RectangleElement.IntersectsWith(rectangle.RectangleElement));
                 act.Should().BeFalse();
             }
         }
@@ -194,5 +202,5 @@ namespace TagsCloudVisualizationTests
             return area;
         }
     }
-    */
 }
+

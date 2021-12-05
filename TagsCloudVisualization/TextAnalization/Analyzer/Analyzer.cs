@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeCantSpell.Hunspell;
+﻿using System.Collections.Generic;
 
 namespace TagsCloudVisualization.TextAnalization.Analyzer
 {
