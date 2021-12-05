@@ -9,9 +9,9 @@ namespace TagsCloud.Visualization.WordsParser
     public class WordsParser : IWordsParser
     {
         private const string WordsPattern = @"\W+";
-        private readonly IWordsFilter[] wordsFilters;
+        private readonly IEnumerable<IWordsFilter> wordsFilters;
 
-        public WordsParser(IWordsFilter[] wordsFilters) => this.wordsFilters = wordsFilters;
+        public WordsParser(IEnumerable<IWordsFilter> wordsFilters) => this.wordsFilters = wordsFilters;
 
         public Dictionary<string, int> CountWordsFrequency(string text)
         {
