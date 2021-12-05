@@ -235,3 +235,8 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+# Exclude Example Images
+Homework/FailedTestsPictures
+Homework/Examples
