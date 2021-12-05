@@ -2,7 +2,7 @@
 
 namespace TagCloud2
 {
-    public class Class1
+    public class Generator
     {
     }
 }

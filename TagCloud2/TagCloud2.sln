@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud2", "TagCloud2.csproj", "{AB547675-2248-4618-9362-C87EDC813BCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud2Tests", "..\TagCloud2Tests\TagCloud2Tests.csproj", "{F414AB83-C100-4E07-9406-D46A041E864A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AB547675-2248-4618-9362-C87EDC813BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB547675-2248-4618-9362-C87EDC813BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB547675-2248-4618-9362-C87EDC813BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F414AB83-C100-4E07-9406-D46A041E864A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F414AB83-C100-4E07-9406-D46A041E864A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F414AB83-C100-4E07-9406-D46A041E864A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F414AB83-C100-4E07-9406-D46A041E864A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
