@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using Autofac;
 using TagCloud.UI;
 using TagCloud.Readers;
 using TagCloud.Analyzers;
@@ -16,21 +15,19 @@ namespace TagCloud
     {
         private static void Main(string[] args)
         {
-            var fileReader = new TextReader();
-            var textAnalyzer = new TextAnalyzer();
-            var frequencyAnalyzer = new FrequencyAnalyzer();
-            var tagCreatorFactory = new TagCreatorFactory();
-            var layouterFactory = new CircularCloudLayouterFactory();
+            var builder = new ContainerBuilder();
 
-            var visualizer = new CloudVisualizer();
-            var writer = new BitmapWriter();
-            IUserInterface client = new ConsoleUI(fileReader, 
-                textAnalyzer, 
-                frequencyAnalyzer, 
-                layouterFactory, 
-                visualizer, 
-                writer,
-                tagCreatorFactory);
+            builder.RegisterType<TextReader>().As<IFileReader>().SingleInstance();
+            builder.RegisterType<TextAnalyzer>().As<ITextAnalyzer>().SingleInstance();
+            builder.RegisterType<FrequencyAnalyzer>().As<IFrequencyAnalyzer>().SingleInstance();
+            builder.RegisterType<TagCreatorFactory>().As<ITagCreatorFactory>().SingleInstance();
+            builder.RegisterType<CircularCloudLayouterFactory>().As<ICloudLayouterFactory>().SingleInstance();
+            builder.RegisterType<CloudVisualizer>().As<IVisualizer>().SingleInstance();
+            builder.RegisterType<BitmapWriter>().As<IFileWriter>().SingleInstance();
+
+            builder.RegisterType<ConsoleUI>().As<IUserInterface>().SingleInstance();
+
+            var client = builder.Build().Resolve<IUserInterface>();
             client.Run(args);
         }
     }
