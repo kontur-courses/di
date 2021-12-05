@@ -5,10 +5,9 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using TagCloud.Extensions;
 
-
 namespace TagCloud
 {
-    public class TagCloudDrawer
+    public class TagCloudDrawer : ITagCloudDrawer
     {
         private readonly Point _center;
         private readonly List<Color> _colors;
@@ -19,6 +18,33 @@ namespace TagCloud
             _colors = colors;
         }
 
+        public Bitmap Draw(List<Word> words)
+        {
+            var rectangles = words.Select(w => w.Rectangle).ToList();
+            var bitmapSize = GetCanvasSize(rectangles, _center);
+            var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
+            var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
+
+            var rnd = new Random(Seed: 100);
+            using var g = Graphics.FromImage(bitmap);
+            g.FillRectangle(Brushes.White, 0, 0, bitmapSize.Width, bitmapSize.Height);
+            foreach (var word in words)
+            {
+                var rect = word.Rectangle;
+                var color = _colors == null
+                    ? Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256))
+                    : _colors[rnd.Next(_colors.Count - 1)];
+                var pen = new Pen(color, 0) { Alignment = PenAlignment.Inset };
+                var brush = new SolidBrush(Color.FromArgb(255, color));
+                rect.Offset(new Point(bitmapCenter.X - _center.X, bitmapCenter.Y - _center.Y));
+                // g.DrawRectangle(pen, rect);
+                // g.FillRectangle(brush, rect);
+                g.DrawString(word.Text, word.Font, brush, rect.Location);
+            }
+
+            return bitmap;
+        }
+        
         public Bitmap Draw(List<Rectangle> rectangles)
         {
             var bitmapSize = GetCanvasSize(rectangles, _center);
@@ -34,7 +60,7 @@ namespace TagCloud
                     ? Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256))
                     : _colors[rnd.Next(_colors.Count - 1)];
                 var pen = new Pen(color, 0) { Alignment = PenAlignment.Inset };
-                var brush = new SolidBrush(Color.FromArgb(25, color));
+                var brush = new SolidBrush(Color.FromArgb(255, color));
                 rect.Offset(new Point(bitmapCenter.X - _center.X, bitmapCenter.Y - _center.Y));
                 g.DrawRectangle(pen, rect);
                 g.FillRectangle(brush, rect);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TagCloud;
+using TagCloud.Extensions;
 
 namespace TagCloud_ConsoleUI
 {
@@ -9,14 +10,30 @@ namespace TagCloud_ConsoleUI
     {
         public static void Main()
         {
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(3000, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(300, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(30, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(
-                new List<int> { 30, 300, 3000 }, 1200), new ArchimedeanSpiral());
+            // DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(3000, 600),
+            //     new ArchimedeanSpiral());
+            // DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(300, 600),
+            //     new ArchimedeanSpiral());
+            // DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(30, 600),
+            //     new ArchimedeanSpiral());
+            // DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(
+            //     new List<int> { 30, 300, 3000 }, 1200), new ArchimedeanSpiral());
+            var processor = new TextProcessor();
+            var words = processor.GetInterestingWords(@"DataSample.txt");
+            var layouter = new CircularCloudLayouter(Point.Empty, new ArchimedeanSpiral());
+            var g = Graphics.FromImage(new Bitmap(1, 1));
+            var listWords = new List<Word>();
+            foreach (var pair in words)
+            {
+                var word = pair.Key;
+                var font = new Font(FontFamily.GenericSerif, pair.Value > 1 ? (int)(pair.Value * 14 * 0.6) : 14);
+                var wordSize = g.MeasureString(word, font).ToSize();
+                var wordRectangle = layouter.PutNextRectangle(wordSize);
+                listWords.Add(new Word(word, font, wordRectangle));
+            }
+
+            var drawer = new TagCloudDrawer(Point.Empty);
+            drawer.Draw(listWords).SaveDefault();
         }
 
         private static List<Size> GetRandomSizesWithArea(int area, int amount) =>
