@@ -3,15 +3,15 @@ using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    public class OvalCloudLayouter : ICloudLayouter
     {
         public Cloud Cloud { get; }
-        private readonly Spiral spiral;
+        private readonly ISpiral spiral;
 
-        public CircularCloudLayouter(Point center)
+        public OvalCloudLayouter(Point center, ISpiral spiral)
         {
             Cloud = new Cloud(center);
-            spiral = Spiral.Create(center);
+            this.spiral = spiral;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

@@ -5,18 +5,14 @@ namespace TagsCloudContainer
 {
     public class TagComposer : ITagComposer
     {
-        private HashSet<string> wordsToExclude = new()
-        {
-            "and",
-            "to",
-            "the",
-            "also",
-            "a",
-            "of"
-        };
-
+        private IPreprocessor[] preprocessors;
         private Dictionary<string, int> wordStatistics = new();
         private int wordCount = 0;
+
+        public TagComposer(Settings settings)
+        {
+            preprocessors = settings.Preprocessors;
+        }
 
         public IEnumerable<Tag> ComposeTags(IEnumerable<string> words)
         {
@@ -27,21 +23,21 @@ namespace TagsCloudContainer
 
             return wordStatistics
                 .Select(statistic 
-                => new Tag((double)statistic.Value / wordCount, statistic.Key));
+                => new Tag((double)statistic.Value / wordCount, 
+                statistic.Key, WordType.Default));
         }
 
         private void CalculateStatistics(IEnumerable<string> words)
         {
-            foreach (var word in words)
-            {               
-                var processedWord = word.Trim().ToLower();
+            var result = words;
+            foreach (var preprocessor in preprocessors)
+                result = preprocessor.Preprocess(result);
 
-                if (!wordsToExclude.Contains(processedWord))
-                {
-                    wordStatistics[processedWord] = 1 +
-                        (wordStatistics.TryGetValue(processedWord, out var count) ? count : 0);
-                    wordCount++;
-                }
+            foreach (var word in result)
+            {
+                wordStatistics[word] = 1 +
+                        (wordStatistics.TryGetValue(word, out var count) ? count : 0);
+                wordCount++;
             }
         }
     }

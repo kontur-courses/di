@@ -7,7 +7,7 @@ namespace TagsCloudContainer
         public IEnumerable<string> Parse(string path)
         {
             if (!File.Exists(path))
-                throw new ArgumentException();
+                throw new ArgumentException("FPassed file doesn't exist!");
             using (var reader = new StreamReader(path))
             {
                 while (!reader.EndOfStream)
