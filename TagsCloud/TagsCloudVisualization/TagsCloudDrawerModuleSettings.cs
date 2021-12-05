@@ -7,10 +7,12 @@ using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
 
-namespace TagsCloudVisualization.CLI
+namespace TagsCloudVisualization
 {
     public class TagsCloudDrawerModuleSettings
     {
+        public string WordsFile { get; init; }
+
         public ImageSettingsProvider ImageSettingsProvider { get; init; } = new()
         {
             BackgroundColor = Color.Gray,
@@ -28,8 +30,9 @@ namespace TagsCloudVisualization.CLI
         };
 
         public ILayouter Layouter { get; init; } = new CircularLayouter(Point.Empty);
+        
         public IEnumerable<string> BoredWords { get; init; } = Array.Empty<string>();
-        public string WordsFile { get; init; }
+        
         public Func<IImageSavior> ImageSavior { get; init; } = () => new PngSavior();
     }
 }

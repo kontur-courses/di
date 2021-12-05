@@ -11,7 +11,7 @@ using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
 
-namespace TagsCloudVisualization.CLI
+namespace TagsCloudVisualization
 {
     public class TagsCloudDrawerModule : Module
     {
@@ -33,10 +33,11 @@ namespace TagsCloudVisualization.CLI
             builder.RegisterInstance(_settings.TagDrawableSettingsProvider).As<ITagDrawableSettingsProvider>();
             builder.RegisterType<Drawer>().As<IDrawer>();
             builder.Register(_ => _settings.ImageSavior()).As<IImageSavior>();
-            builder.RegisterInstance(_settings.Layouter).As<ILayouter>();
+            builder.Register(_ => _settings.Layouter).As<ILayouter>();
             builder.RegisterType<ImageCreator>().As<IImageCreator>();
             builder.RegisterType<LayoutWordsTransformer>().As<IWordsToTagsTransformer>();
             builder.RegisterType<TagDrawableFactory>().As<ITagDrawableFactory>();
+            builder.RegisterType<TagsCloudVisualizer>().AsSelf();
         }
     }
 }

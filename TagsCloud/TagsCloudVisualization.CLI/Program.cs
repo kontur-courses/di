@@ -3,14 +3,11 @@ using System.IO;
 using System.Linq;
 using Autofac;
 using CommandLine;
-using TagsCloudDrawer.ImageCreator;
-using TagsCloudVisualization.DrawableFactory;
-using TagsCloudVisualization.WordsPreprocessor;
-using TagsCloudVisualization.WordsProvider;
-using TagsCloudVisualization.WordsToTagsTransformers;
 
 namespace TagsCloudVisualization.CLI
 {
+
+
     internal class Program
     {
         private static void Main(string[] args)
@@ -37,14 +34,7 @@ namespace TagsCloudVisualization.CLI
             var directory = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedClouds");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var filename = Path.Combine(directory, DateTime.Now.Ticks.ToString());
-            var preprocessor = container.Resolve<IWordsPreprocessor>();
-            var words = container.Resolve<IWordsProvider>().GetWords();
-            var processedWords = preprocessor.Process(words);
-            var tags = container.Resolve<IWordsToTagsTransformer>().Transform(processedWords);
-            var drawables = tags
-                            .OrderByDescending(tag => tag.Weight)
-                            .Select(container.Resolve<ITagDrawableFactory>().Create);
-            container.Resolve<IImageCreator>().Create(filename, drawables);
+            container.Resolve<TagsCloudVisualizer>().Visualize(filename);
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
     }
