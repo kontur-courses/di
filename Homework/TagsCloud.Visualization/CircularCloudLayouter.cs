@@ -8,13 +8,11 @@ namespace TagsCloud.Visualization
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly Point center;
         private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> rectangles = new();
 
-        public CircularCloudLayouter(Point center, IPointGenerator pointGenerator)
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            this.center = center;
             this.pointGenerator = pointGenerator;
         }
 
@@ -48,7 +46,8 @@ namespace TagsCloud.Visualization
         private Rectangle ShiftRectangleToCenter(Rectangle rectangle)
         {
             var rectangleCenter = rectangle.GetCenter();
-            var direction = new Point(center.X - rectangleCenter.X, center.Y - rectangleCenter.Y);
+            var direction = new Point(pointGenerator.Center.X - rectangleCenter.X,
+                pointGenerator.Center.Y - rectangleCenter.Y);
             var offset = new Point(Math.Sign(direction.X), Math.Sign(direction.Y));
 
             return Shift(Shift(rectangle, new Point(offset.X, 0)), new Point(0, offset.Y));
@@ -58,7 +57,7 @@ namespace TagsCloud.Visualization
         {
             var shiftingRectangle = rectangle;
             while (!shiftingRectangle.IntersectsWith(rectangles)
-                   && !shiftingRectangle.GetCenter().IsOnTheSameAxisWith(center))
+                   && !shiftingRectangle.GetCenter().IsOnTheSameAxisWith(pointGenerator.Center))
             {
                 rectangle = shiftingRectangle;
                 shiftingRectangle.Offset(offset);

@@ -27,7 +27,7 @@ namespace TagsCloud.Tests
         {
             rectangles = new List<Rectangle>();
             center = new Point(10, 10);
-            sut = new CircularCloudLayouter(center, new ArchimedesSpiralPointGenerator(center));
+            sut = new CircularCloudLayouter(new ArchimedesSpiralPointGenerator(center));
         }
 
         [TearDown]

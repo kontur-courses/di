@@ -15,7 +15,7 @@ namespace TagsCloud.Tests
         [SetUp]
         public void InitParser()
         {
-            sut = new WordsParser(new IWordsFilter[] {new WordsFilter()});
+            sut = new WordsParser(new IWordsFilter[] {new BoringWordsFilter()});
         }
 
         [TestCaseSource(typeof(TestDataGenerator))]

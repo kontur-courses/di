@@ -7,7 +7,7 @@ namespace TagsCloud.Visualization.PointGenerator
     public class ArchimedesSpiralPointGenerator : IPointGenerator
     {
         private readonly double angleDelta;
-        private readonly Point center;
+        public Point Center { get; }
         private readonly double xAxisCompression;
         private readonly double yAxisCompression;
         private double angle;
@@ -18,7 +18,7 @@ namespace TagsCloud.Visualization.PointGenerator
             double xAxisCompression = 1,
             double yAxisCompression = 1)
         {
-            this.center = center;
+            Center = center;
             this.angleDelta = angleDelta;
             this.xAxisCompression = xAxisCompression;
             this.yAxisCompression = yAxisCompression;
@@ -28,8 +28,8 @@ namespace TagsCloud.Visualization.PointGenerator
         {
             while (true)
             {
-                var x = Convert.ToInt32(xAxisCompression * Math.Cos(angle) * angle + center.X);
-                var y = Convert.ToInt32(yAxisCompression * Math.Sin(angle) * angle + center.Y);
+                var x = Convert.ToInt32(xAxisCompression * Math.Cos(angle) * angle + Center.X);
+                var y = Convert.ToInt32(yAxisCompression * Math.Sin(angle) * angle + Center.Y);
 
                 angle += angleDelta;
 
