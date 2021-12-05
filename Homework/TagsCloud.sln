@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Visualization", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Tests", "TagsCloud.Tests\TagsCloud.Tests.csproj", "{B06D9369-036F-4369-A478-6576EB04414A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Words", "TagsCloud.Words\TagsCloud.Words.csproj", "{5DC7919E-CFE8-4EE4-A9AE-38D4B1323F2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.CLI", "TagsCloud.CLI\TagsCloud.CLI.csproj", "{5DC7919E-CFE8-4EE4-A9AE-38D4B1323F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

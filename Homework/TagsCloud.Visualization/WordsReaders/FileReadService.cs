@@ -23,10 +23,10 @@ namespace TagsCloud.Visualization.WordsReaders
                 throw new ArgumentNullException(nameof(fileName));
 
             var fileExtension = Path.GetExtension(fileName)?.Replace(".", "");
-            
+
             if (fileExtension == null)
                 throw new ArgumentException($"Unknown extension of file: {fileName}");
-                
+
             var reader = fileReaders.FirstOrDefault(x => x.Extension == fileExtension);
 
             if (reader == null)
