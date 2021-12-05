@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CircularCloudLayouter;
+namespace CloudLayouter;
 
 public static class DrawingExtensions
 {

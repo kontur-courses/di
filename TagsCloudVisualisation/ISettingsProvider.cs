@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Abstractions;
 
-public interface IVisualizer
+public interface ISettingsProvider // заготовка на потом
 {
-    Bitmap GetBitmap();
+
 }

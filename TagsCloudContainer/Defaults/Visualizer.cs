@@ -5,19 +5,25 @@ namespace TagsCloudContainer.Defaults;
 
 public class Visualizer : IVisualizer
 {
-    private readonly IBitmapSettingsProvider settingsProvider;
+    private readonly StandartBitmapSettings settingsProvider;
+    private readonly ITagPacker tags;
+    private readonly ILayouter layouter;
+    private readonly IStyler styler;
 
-    public Visualizer(IBitmapSettingsProvider settingsProvider)
+    public Visualizer(StandartBitmapSettings settingsProvider, ITagPacker tags, ILayouter layouter, IStyler styler)
     {
         this.settingsProvider = settingsProvider;
+        this.tags = tags;
+        this.layouter = layouter;
+        this.styler = styler;
     }
 
-    public Bitmap GetBitmap(ITagPacker tags, ILayouter layouter, IStyler styler)
+    public Bitmap GetBitmap()
     {
-        var bitmap = settingsProvider.CreateEmptyBitmap();
+        var bitmap = new Bitmap(settingsProvider.Width, settingsProvider.Height);
         using (var bitmapGraphics = Graphics.FromImage(bitmap))
         {
-            settingsProvider.Apply(bitmapGraphics);
+            bitmapGraphics.SmoothingMode=settingsProvider.SmoothingMode;
             bitmapGraphics.Clear(Color.Black);
             foreach (var tag in tags.GetTags().Select(styler.Style))
             {

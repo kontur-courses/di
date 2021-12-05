@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CircularCloudLayouter.Internals;
+namespace CloudLayouter.Internals;
 
 internal static class CircularCloudLayouterInternals
 {

@@ -3,11 +3,12 @@ using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 
-internal class StyledTag : IStyledTag
+internal class StyledTag : IStyledTag, IDisposable
 {
     private readonly string tag;
     private readonly Font font;
     private readonly Brush brush;
+    private bool disposedValue;
 
     public StyledTag(string tag, Font font, Brush brush)
     {
@@ -24,5 +25,18 @@ internal class StyledTag : IStyledTag
     public Size GetTrueGraphicSize(Graphics graphics)
     {
         return Size.Ceiling(graphics.MeasureString(tag, font));
+    }
+
+    public virtual void Dispose()
+    {
+        if (!disposedValue)
+        {
+            font.Dispose();
+            brush.Dispose();
+
+            disposedValue = true;
+        }
+
+        GC.SuppressFinalize(this);
     }
 }

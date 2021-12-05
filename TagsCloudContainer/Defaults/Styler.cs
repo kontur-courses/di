@@ -2,13 +2,20 @@
 
 namespace TagsCloudContainer.Defaults;
 
-public class Styler : IStyler
+public class Styler : IStyler, IDisposable
+    
 {
-    private readonly IStylerSettings settings;
+    private readonly DefaultStyle settings;
 
-    public Styler(IStylerSettings settings)
+    public Styler(DefaultStyle settings)
     {
         this.settings = settings;
+    }
+
+    public void Dispose()
+    {
+        settings.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     public IStyledTag Style(ITag source)

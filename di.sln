@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualisation\TagsCloudVisualization.csproj", "{204428A3-20DE-4822-9C46-141B71277BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudVisualization", "TagsCloudVisualisation\TagsCloudVisualization.csproj", "{204428A3-20DE-4822-9C46-141B71277BE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularCloudLayouter", "CircularCloudLayouter\CircularCloudLayouter.csproj", "{10FB04D1-28F0-452A-9F60-BB40F2AEDA9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudLayouter", "CircularCloudLayouter\CloudLayouter.csproj", "{10FB04D1-28F0-452A-9F60-BB40F2AEDA9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{ECB81303-6030-45DB-983C-A6BF41FB3964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{ECB81303-6030-45DB-983C-A6BF41FB3964}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

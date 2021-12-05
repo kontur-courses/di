@@ -1,8 +1,8 @@
-﻿using CircularCloudLayouter.Internals;
+﻿using CloudLayouter.Internals;
 using System.Drawing;
 using TagsCloudVisualization.Abstractions;
 
-namespace CircularCloudLayouter;
+namespace CloudLayouter;
 
 public class CircularCloudLayouter : ILayouter
 {

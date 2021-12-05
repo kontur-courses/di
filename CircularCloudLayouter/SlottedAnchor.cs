@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CircularCloudLayouter;
+namespace CloudLayouter;
 
 internal class SlottedAnchor
 {

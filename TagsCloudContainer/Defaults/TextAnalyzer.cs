@@ -9,12 +9,12 @@ public class TextAnalyzer : ITextAnalyzer
     private readonly IWordFilter wordFilter;
     private readonly char[] wordSeparators;
 
-    public TextAnalyzer(ITextReader textReader, IWordNormalizer wordNormalizer, IWordFilter wordFilter, char[] wordSeparators)
+    public TextAnalyzer(ITextReader textReader, IWordNormalizer wordNormalizer, IWordFilter wordFilter, TextAnalyzerSettings settings)
     {
         this.textReader = textReader;
         this.wordNormalizer = wordNormalizer;
         this.wordFilter = wordFilter;
-        this.wordSeparators = wordSeparators;
+        this.wordSeparators = settings.WordSeparators;
     }
 
     public ITextStats AnalyzeText()

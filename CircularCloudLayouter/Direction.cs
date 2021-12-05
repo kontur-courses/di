@@ -1,4 +1,4 @@
-﻿namespace CircularCloudLayouter;
+﻿namespace CloudLayouter;
 
 [Flags]
 internal enum Direction
