@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagCloud.Visualizers
 {
-    public interface IDrawingSettings
+    public interface IDrawingSettings : IDisposable
     {
         public Brush PenBrush { get; }
         public Color BackgroundColor { get; }

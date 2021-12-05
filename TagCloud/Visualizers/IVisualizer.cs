@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using TagCloud.Layouters;
 
 namespace TagCloud.Visualizers
 {
-    public interface IVisualizer : IDisposable
+    public interface IVisualizer
     {
-        Bitmap DrawCloud(IEnumerable<Tag> tags);
+        Bitmap DrawCloud(IEnumerable<Tag> tags, IDrawingSettings drawingSettings);
     }
 }

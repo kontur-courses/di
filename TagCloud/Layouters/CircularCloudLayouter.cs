@@ -14,8 +14,8 @@ namespace TagCloud.Layouters
         public CircularCloudLayouter(Point center)
         {
             placedTags = new List<Tag>();
-            this.center = center;
-            this.usedPoints = new HashSet<Point>();
+            this.center = center; 
+            usedPoints = new HashSet<Point>();
         }
 
         public IEnumerable<Tag> PutTags(IEnumerable<Tag> tags)

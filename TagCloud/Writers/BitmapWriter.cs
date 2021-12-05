@@ -9,7 +9,7 @@ namespace TagCloud.Writers
         public void Write(Bitmap bitmap, string filename, ImageFormat format)
         {
             var env = Environment.CurrentDirectory + "\\";
-            bitmap.Save(env + "out3.png", format);
+            bitmap.Save(env + filename, format);
         }
     }
 }

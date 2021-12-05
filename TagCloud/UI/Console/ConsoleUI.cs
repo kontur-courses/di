@@ -1,4 +1,9 @@
-﻿using System.Drawing.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
+using CommandLine;
 using TagCloud.Analyzers;
 using TagCloud.Creators;
 using TagCloud.Layouters;
@@ -13,39 +18,76 @@ namespace TagCloud.UI.Console
         private readonly IFileReader reader;
         private readonly ITextAnalyzer textAnalyzer;
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
-        private readonly ICloudLayouter layouter;
+        private readonly ICloudLayouterFactory layouterFactory;
         private readonly IVisualizer visualizer;
         private readonly IFileWriter writer;
-        private readonly ITagCreator tagCreator;
+        private readonly ITagCreatorFactory tagCreatorFactory;
 
         public ConsoleUI(IFileReader reader,
             ITextAnalyzer textAnalyzer,
             IFrequencyAnalyzer frequencyAnalyzer,
-            ICloudLayouter layouter,
+            ICloudLayouterFactory layouterFactory,
             IVisualizer visualizer,
             IFileWriter writer, 
-            ITagCreator tagCreator)
+            ITagCreatorFactory tagCreatorFactory)
         {
             this.reader = reader;
             this.textAnalyzer = textAnalyzer;
             this.frequencyAnalyzer = frequencyAnalyzer;
-            this.layouter = layouter;
+            this.layouterFactory = layouterFactory;
             this.visualizer = visualizer;
             this.writer = writer;
-            this.tagCreator = tagCreator;
+            this.tagCreatorFactory = tagCreatorFactory;
         }
 
-        public void Run(string filename)
+        public void Run(string[] args)
         {
-            var text = reader.ReadFile(filename);
-            var words = textAnalyzer.Analyze(text);
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(Run)
+                .WithNotParsed(HandleParseError);
+        }
+
+        private void Run(Options options)
+        {
+            var drawingSettings = GetDrawingSettings(options);
+
+            var text = reader.ReadFile(options.InputFilename);
+            var wordsToExclude = reader.ReadFile(options.ExcludedWordsFile).ToHashSet();
+            var words = textAnalyzer.Analyze(text, wordsToExclude);
             var wordFrequencies = frequencyAnalyzer.Analyze(words);
-            var tags = tagCreator.Create(wordFrequencies);
-            var placedTags = layouter.PutTags(tags);
-            using (visualizer)
+
+            var tags = tagCreatorFactory
+                .Create(drawingSettings.Font)
+                .Create(wordFrequencies);
+
+            var center = new Point(options.Width / 2, options.Height / 2);
+            var placedTags = layouterFactory.Create(center).PutTags(tags);
+            using (drawingSettings)
             {
-                var image = visualizer.DrawCloud(placedTags);
-                writer.Write(image, filename, ImageFormat.Png);
+                var image = visualizer.DrawCloud(placedTags, drawingSettings);
+                writer.Write(image, options.OutputFilename, ImageFormat.Png);
+            }
+        }
+
+        private static DrawingSettings GetDrawingSettings(Options options)
+        {
+            var backgroundColor = Color.FromName(options.BackgroundColor);
+            var penColor = Color.FromName(options.WordColor);
+            var font = new Font(options.FontName, options.FontSize);
+
+            return new DrawingSettings(penColor, 
+                backgroundColor, 
+                options.Width, 
+                options.Height, 
+                font);
+        }
+
+        private static void HandleParseError(IEnumerable<Error> errors)
+        {
+            foreach (var error in errors)
+            {
+                if (error.StopsProcessing)
+                    throw new ArgumentException($"Wrong command-line arguments. {error}");
             }
         }
     }

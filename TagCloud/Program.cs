@@ -17,23 +17,21 @@ namespace TagCloud
         private static void Main(string[] args)
         {
             var fileReader = new TextReader();
-            var textAnalyzer = new TextAnalyzer(new HashSet<string> {"me", "you"});
+            var textAnalyzer = new TextAnalyzer();
             var frequencyAnalyzer = new FrequencyAnalyzer();
-            var drawingSettings = new DrawingSettings(Color.Black, Color.White, 1200, 1200,
-                new Font(FontFamily.GenericSansSerif, 8));
-            var tagCreator = new TagCreator(drawingSettings);
-            var layouter = new CircularCloudLayouter(new Point(600, 600));
+            var tagCreatorFactory = new TagCreatorFactory();
+            var layouterFactory = new CircularCloudLayouterFactory();
 
-            var visualizer = new CloudVisualizer(drawingSettings);
+            var visualizer = new CloudVisualizer();
             var writer = new BitmapWriter();
             IUserInterface client = new ConsoleUI(fileReader, 
                 textAnalyzer, 
                 frequencyAnalyzer, 
-                layouter, 
+                layouterFactory, 
                 visualizer, 
-                writer, 
-                tagCreator);
-            client.Run("test3.txt");
+                writer,
+                tagCreatorFactory);
+            client.Run(args);
         }
     }
 }

@@ -23,5 +23,14 @@ namespace TagCloud.Visualizers
             Bitmap = new Bitmap(width, height);
             Graphics = Graphics.FromImage(Bitmap);
         }
+
+        public void Dispose()
+        {
+            Bitmap?.Dispose();
+            Graphics?.Dispose();
+            PenBrush?.Dispose();
+            Font?.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IUserInterface
     {
-        void Run(string filename);
+        void Run(string[] args);
     }
 }

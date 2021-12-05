@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TagCloud.Layouters;
-using TagCloud.Visualizers;
 
 namespace TagCloud.Creators
 {
@@ -11,9 +10,9 @@ namespace TagCloud.Creators
     {
         private readonly Font font;
 
-        public TagCreator(IDrawingSettings settings)
+        public TagCreator(Font font)
         {
-            font = settings.Font;
+            this.font = font;
         }
 
         public Tag Create(string value, int frequency)
