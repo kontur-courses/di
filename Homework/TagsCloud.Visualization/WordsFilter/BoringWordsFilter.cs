@@ -2,7 +2,7 @@
 
 namespace TagsCloud.Visualization.WordsFilter
 {
-    public class WordsFilter : IWordsFilter
+    public class BoringWordsFilter : IWordsFilter
     {
         // TODO Move to config file and read on init
         private readonly HashSet<string> prepositions =

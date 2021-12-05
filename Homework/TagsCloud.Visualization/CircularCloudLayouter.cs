@@ -11,10 +11,7 @@ namespace TagsCloud.Visualization
         private readonly IPointGenerator pointGenerator;
         private readonly List<Rectangle> rectangles = new();
 
-        public CircularCloudLayouter(IPointGenerator pointGenerator)
-        {
-            this.pointGenerator = pointGenerator;
-        }
+        public CircularCloudLayouter(IPointGenerator pointGenerator) => this.pointGenerator = pointGenerator;
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {

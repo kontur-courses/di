@@ -7,8 +7,8 @@ namespace TagsCloud.Visualization
 {
     public class WordsService
     {
-        private readonly IWordsReadService wordsReadService;
         private readonly IWordsParser wordsParser;
+        private readonly IWordsReadService wordsReadService;
 
         public WordsService(IWordsReadService wordsReadService, IWordsParser wordsParser)
         {

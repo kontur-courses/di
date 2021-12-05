@@ -2,8 +2,8 @@
 {
     public class SaveSettings
     {
-        public string OutputDirectory { get; set; }
-        public string OutputFileName { get; set; }
-        public string Extension { get; set; }
+        public string OutputDirectory { get; init; }
+        public string OutputFileName { get; init; }
+        public string Extension { get; init; }
     }
 }

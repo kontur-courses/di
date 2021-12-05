@@ -10,7 +10,7 @@ namespace TagsCloud.Visualization.WordsReaders
     {
         private readonly string fileName;
         private readonly IEnumerable<IFileReader> fileReaders;
-        
+
         public FileReadService(string fileName, IEnumerable<IFileReader> fileReaders)
         {
             this.fileName = fileName;
@@ -22,7 +22,11 @@ namespace TagsCloud.Visualization.WordsReaders
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            var fileExtension = Path.GetExtension(fileName);
+            var fileExtension = Path.GetExtension(fileName)?.Replace(".", "");
+            
+            if (fileExtension == null)
+                throw new ArgumentException($"Unknown extension of file: {fileName}");
+                
             var reader = fileReaders.FirstOrDefault(x => x.Extension == fileExtension);
 
             if (reader == null)

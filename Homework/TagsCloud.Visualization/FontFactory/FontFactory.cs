@@ -6,10 +6,7 @@ namespace TagsCloud.Visualization.FontFactory
     {
         private readonly FontSettings settings;
 
-        public FontFactory(FontSettings settings)
-        {
-            this.settings = settings;             
-        }
+        public FontFactory(FontSettings settings) => this.settings = settings;
 
         public FontDecorator GetFont(Word word, int minCount, int maxCount)
         {
