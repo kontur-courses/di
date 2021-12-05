@@ -5,7 +5,7 @@ using TagsCloud.Visualization.WordsReaders;
 
 namespace TagsCloud.Visualization
 {
-    public class WordsService
+    public class WordsService : IWordsService
     {
         private readonly IWordsParser wordsParser;
         private readonly IWordsReadService wordsReadService;

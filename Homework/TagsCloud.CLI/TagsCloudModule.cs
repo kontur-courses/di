@@ -7,6 +7,7 @@ using TagsCloud.Visualization.Drawer;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.ImagesSaver;
 using TagsCloud.Visualization.LayoutContainer;
+using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 using TagsCloud.Visualization.PointGenerator;
 using TagsCloud.Visualization.WordsFilter;
 using TagsCloud.Visualization.WordsParser;
@@ -30,14 +31,14 @@ namespace TagsCloud.Words
                     ctx.Resolve<IEnumerable<IFileReader>>()))
                 .As<IWordsReadService>();
 
-            builder.RegisterType<WordsService>().AsSelf();
+            builder.RegisterType<WordsService>().As<IWordsService>();
 
             builder.RegisterType<BoringWordsFilter>().As<IWordsFilter>();
             builder.RegisterType<WordsParser>().As<IWordsParser>();
 
             builder.Register(_ => new FontFactory(settings.FontSettings)).As<IFontFactory>();
             builder.RegisterType<WordsSizeService>().As<IWordsSizeService>();
-            builder.RegisterType<WordsContainerBuilder>().AsSelf();
+            builder.RegisterType<WordsContainerBuilder>().As<IWordsContainerBuilder>();
 
             builder.Register(_ => new ArchimedesSpiralPointGenerator(settings.Center)).As<IPointGenerator>();
             builder.RegisterType(settings.LayouterType).As<ICloudLayouter>();

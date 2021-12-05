@@ -6,6 +6,7 @@ using TagsCloud.Visualization;
 using TagsCloud.Visualization.Drawer;
 using TagsCloud.Visualization.ImagesSaver;
 using TagsCloud.Visualization.LayoutContainer;
+using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 
 namespace TagsCloud.Words
 {
@@ -32,13 +33,13 @@ namespace TagsCloud.Words
 
             using var container = CreateContainer(settings).BeginLifetimeScope();
 
-            var parsedWords = container.Resolve<WordsService>()
+            var parsedWords = container.Resolve<IWordsService>()
                 .GetWords();
 
             var maxCount = parsedWords.Max(x => x.Count);
             var minCount = parsedWords.Min(x => x.Count);
 
-            var wordsContainer = container.Resolve<WordsContainerBuilder>()
+            var wordsContainer = container.Resolve<IWordsContainerBuilder>()
                 .AddWords(parsedWords, minCount, maxCount)
                 .Build();
 

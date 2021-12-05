@@ -3,9 +3,9 @@ using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.Models;
 using TagsCloud.Visualization.WordsSizeService;
 
-namespace TagsCloud.Visualization.LayoutContainer
+namespace TagsCloud.Visualization.LayoutContainer.ContainerBuilder
 {
-    public class WordsContainerBuilder
+    public class WordsContainerBuilder : IWordsContainerBuilder
     {
         private readonly IFontFactory fontFactory;
         private readonly ICloudLayouter layouter;
