@@ -4,7 +4,7 @@ namespace TagsCloudVisualization
 {
     public class Word
     {
-        public string WordText { get; set; }
+        public string WordText { get; }
 
         public Word(string word)
         {
