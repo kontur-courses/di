@@ -17,7 +17,7 @@ namespace TagsCloud.Visualization.Drawer
         public Image Draw<T>(ILayoutContainer<T> layoutContainer)
         {
             if (!layoutContainer.Items.Any())
-                throw new ArgumentException("rectangles array cannot be empty");
+                throw new ArgumentException("rectangles array can't be empty");
 
             var (width, height) = layoutContainer.GetWidthAndHeight();
             var (widthWithOffset, heightWithOffset) = (width + OffsetX, height + OffsetY);
