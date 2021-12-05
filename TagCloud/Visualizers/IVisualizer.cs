@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.Layouters;
+using TagCloud.Creators;
 
 namespace TagCloud.Visualizers
 {

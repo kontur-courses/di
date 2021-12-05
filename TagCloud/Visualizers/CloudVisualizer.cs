@@ -1,26 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.Layouters;
+using TagCloud.Creators;
 
 namespace TagCloud.Visualizers
 {
     public class CloudVisualizer : IVisualizer
     {
-        //private readonly Bitmap bitmap;
-        //private readonly Graphics graph;
-        //private readonly Brush pen;
-        //private readonly Font font;
-        //private readonly Color backgroundBrush;
-
-        //public CloudVisualizer(IDrawingSettings drawingSettings)
-        //{   
-        //    this.font = drawingSettings.Font;
-        //    this.bitmap = drawingSettings.Bitmap;
-        //    this.graph = drawingSettings.Graphics;
-        //    this.pen = drawingSettings.PenBrush;
-        //    this.backgroundBrush = drawingSettings.BackgroundColor;
-        //}
-
         public Bitmap DrawCloud(IEnumerable<Tag> tags, IDrawingSettings drawingSettings)
         {
             var bitmap = drawingSettings.Bitmap;
