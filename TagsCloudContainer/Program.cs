@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using LightInject;
+using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -6,19 +8,15 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            //var center = new Point(500, 500);
-            //var layouter = new CircularCloudLayouter(center);
-            //var minSize = 40;
-            //var maxSize = 100;
-            //var rectanglesCount = 150;
-            //layouter.PutManyRectangles(rectanglesCount, new Random(),
-            //    minSize, maxSize);
+            var container = ContainerProvider.GetContainer();
+            var path = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test.txt");
 
-            //var imageSize = new Size(1000, 1000);
-            //CloudImageGenerator.CreateImage(layouter.Cloud, imageSize);
-            var path = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test1.txt");
-            var parseRes = new TxtParser().Parse(path).ToArray();
-            var composeRes = new TagComposer().ComposeTags(parseRes).ToArray();
+            var parsed = container.GetInstance<IParser>().Parse(path);
+            var tags = container.GetInstance<ITagComposer>().ComposeTags(parsed);
+            var painted = container.GetInstance<ITagPainter>().Paint(tags);
+            var cloudPainter = container.GetInstance<TagCloudPainter>();
+            
+            cloudPainter.Paint(painted);
         }
     }
 }
