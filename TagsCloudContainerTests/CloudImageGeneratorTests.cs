@@ -4,17 +4,24 @@ using System;
 using System.Drawing;
 using System.IO;
 using TagsCloudContainer;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTests
 {
     internal class CloudImageGeneratorTests
     {
         private Point testPoint = new Point(1000, 1000);
+        private OvalCloudLayouter layouter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            layouter = new OvalCloudLayouter(testPoint, ArchimedeanSpiral.Create(testPoint));
+        }
 
         [Test]
         public void Should_Throw_WhenTryingToCreateWithNoRectangles()
         {
-            var layouter = new CircularCloudLayouter(testPoint);
             FluentActions.Invoking(
                 () => CloudImageGenerator.CreateImage(layouter.Cloud, new Size(testPoint)))
                 .Should().Throw<ArgumentException>();
@@ -23,7 +30,6 @@ namespace TagsCloudContainerTests
         [Test]
         public void Should_SaveToFile()
         {
-            var layouter = new CircularCloudLayouter(testPoint);
             layouter.PutNextRectangle(new Size(testPoint));
             var path = CloudImageGenerator.CreateImage(layouter.Cloud, new Size(testPoint));
             File.Exists(path).Should().BeTrue();

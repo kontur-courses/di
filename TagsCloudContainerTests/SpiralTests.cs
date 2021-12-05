@@ -13,7 +13,7 @@ namespace TagsCloudContainerTests
         public void Should_Throw_WhenCreatedWithIncorrectCoefficient(int spiralCoef)
         {
             FluentActions.Invoking(
-                () => Spiral.Create(Point.Empty, spiralCoef))
+                () => ArchimedeanSpiral.Create(Point.Empty, spiralCoef))
                 .Should().Throw<ArgumentException>();
         }
 
@@ -21,7 +21,7 @@ namespace TagsCloudContainerTests
         public void Should_StartAtCenter()
         {
             var center = new Point(500, 500);
-            var spiral = Spiral.Create(center, 1, Math.PI / 90);
+            var spiral = ArchimedeanSpiral.Create(center, 1, Math.PI / 90);
 
             center.Should().BeEquivalentTo(spiral.GetNext());
         }
@@ -30,7 +30,7 @@ namespace TagsCloudContainerTests
         public void Should_IncreaseDistanceFromCenter()
         {
             var center = new Point(500, 500);
-            var spiral = Spiral.Create(center, 1, Math.PI / 90);
+            var spiral = ArchimedeanSpiral.Create(center, 1, Math.PI / 90);
 
             var spiralPoint = spiral.GetNext();
             var distance = center.GetDistance(spiralPoint);

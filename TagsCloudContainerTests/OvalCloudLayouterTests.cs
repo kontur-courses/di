@@ -7,13 +7,14 @@ using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions.Extensions;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTests
 {
     [TestFixture]
-    internal class CircularCloudLayouterTests
+    internal class OvalCloudLayouterTests
     {
-        private CircularCloudLayouter layouter;
+        private OvalCloudLayouter layouter;
         private const int X = 500;
         private const int Y = 500;
         private const int Count = 500;
@@ -21,7 +22,8 @@ namespace TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            layouter = new CircularCloudLayouter(new Point(X, Y));
+            var center = new Point(X, Y);
+            layouter = new OvalCloudLayouter(center, ArchimedeanSpiral.Create(center));
         }
 
         [TearDown]

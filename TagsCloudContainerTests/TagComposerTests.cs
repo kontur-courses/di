@@ -25,7 +25,7 @@ namespace TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            composer = new TagComposer();
+            composer = new TagComposer(SettingsProvider.GetSettings());
         }
 
         [Test]
@@ -45,11 +45,11 @@ namespace TagsCloudContainerTests
 
             var result = composer.ComposeTags(parsed);
             var expected = new [] { 
-                new Tag(0.375, "music"),
-                new Tag(0.250, "guitar"),
-                new Tag(0.125, "piano"),
-                new Tag(0.125, "string"),
-                new Tag(0.125, "banjo")
+                new Tag(0.375, "music", WordType.Default),
+                new Tag(0.250, "guitar", WordType.Default),
+                new Tag(0.125, "piano", WordType.Default),
+                new Tag(0.125, "string", WordType.Default),
+                new Tag(0.125, "banjo", WordType.Default)
             };
 
             result.Should().BeEquivalentTo(expected);
