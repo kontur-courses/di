@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagCloud.Analyzers
 {
-    class TextAnalyzer : ITextAnalyzer
+    public class TextAnalyzer : ITextAnalyzer
     {
         public IEnumerable<string> Analyze(string[] words, HashSet<string> wordsToExclude)
         {

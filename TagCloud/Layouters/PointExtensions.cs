@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace TagCloud.Layouters
 {
-    internal static class PointExtensions
+    public static class PointExtensions
     {
-        internal static double DistanceTo(this Point sourcePoint, Point destinationPoint)
+        public static double DistanceTo(this Point sourcePoint, Point destinationPoint)
         {
             var dx = sourcePoint.X - destinationPoint.X;
             var dy = sourcePoint.Y - destinationPoint.Y;
