@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{F2D38BEF-760E-4983-989F-A73F91ADC0BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer_Tests", "TagsCloudContainer_Tests\TagsCloudContainer_Tests.csproj", "{35235E1E-D3AD-47BA-A7CF-4A2CD4B77F97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F2D38BEF-760E-4983-989F-A73F91ADC0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D38BEF-760E-4983-989F-A73F91ADC0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D38BEF-760E-4983-989F-A73F91ADC0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35235E1E-D3AD-47BA-A7CF-4A2CD4B77F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35235E1E-D3AD-47BA-A7CF-4A2CD4B77F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35235E1E-D3AD-47BA-A7CF-4A2CD4B77F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35235E1E-D3AD-47BA-A7CF-4A2CD4B77F97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
