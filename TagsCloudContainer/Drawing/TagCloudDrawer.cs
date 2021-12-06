@@ -29,13 +29,13 @@ namespace TagsCloudContainer.Drawing
             using var graph = Graphics.FromImage(image);
             graph.Clear(Color.FromName(appSettings.BackgroundColorName));
 
-            using var pen = new SolidBrush(Color.FromName(appSettings.FontColorName));
+            using var brush = new SolidBrush(Color.FromName(appSettings.FontColorName));
 
             graph.TranslateTransform(image.Width / 2 - center.X, image.Height / 2 - center.Y);
 
             foreach (var tag in tagsList)
             {
-                graph.DrawString(tag.Word, tag.Font, pen, tag.Rectangle);
+                graph.DrawString(tag.Word, tag.Font, brush, tag.Rectangle);
             }
 
             return image;
