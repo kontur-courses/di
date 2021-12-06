@@ -36,7 +36,7 @@ namespace TagsCloudVisualizationTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status is TestStatus.Failed or TestStatus.Inconclusive)
             {
-                visualizer.PutRectangles(layouter.rectangles);
+                visualizer.PutRectangles(layouter.PlacedRectangles);
                 var testName = TestContext.CurrentContext.Test.Name;
                 Console.WriteLine($"Tags cloud visualizaton is saved to {visualizer.SaveImage(testName + ".png")}");
             }
@@ -81,7 +81,7 @@ namespace TagsCloudVisualizationTests
         {
             var avgDensity = 0.0;
 
-            for (int i = 0; i < CloudsCount; i++)
+            for (var i = 0; i < CloudsCount; i++)
             {
                 avgDensity += GetCloudDensity(Generators.RectanglesRandomSizeGenerator(RectanglesCount));
             }

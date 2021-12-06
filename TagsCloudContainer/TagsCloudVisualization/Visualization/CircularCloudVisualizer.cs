@@ -49,12 +49,15 @@ namespace TagsCloudVisualization.Visualization
 
         public void PutWordsInRectangles(IEnumerable<string> words, IEnumerable<RectangleF> rectangles)
         {
-            if (words.Count() != rectangles.Count())
+            var wordsArray = words as string[] ?? words.ToArray();
+            var rectanglesArray = rectangles as RectangleF[] ?? rectangles.ToArray();
+            
+            if (wordsArray.Length != rectanglesArray.Length)
             {
                 throw new ArgumentException("Texts and Rectangles counts should be the same");
             }
 
-            foreach (var tuple in words.Zip(rectangles))
+            foreach (var tuple in wordsArray.Zip(rectanglesArray))
             {
                 PutWordInRectangle(tuple.First, tuple.Second);
             }
