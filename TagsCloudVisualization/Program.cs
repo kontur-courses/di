@@ -31,7 +31,7 @@ namespace TagsCloudVisualization
             var reader = buildContainer.Resolve<ITextFileReader>();
             var lowerCaseMaker = buildContainer.Resolve<ILowerCaseMaker>();
 
-            var rectangleSize = new Size(100, 200);
+            var rectangleSize = new Size(100, 100);
             var wordsFromFile = reader.ReadText(textPath); //!!!
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).Select(w => w.ToLower());
             var normalyzedWords = normalizationMaker.MakeNormalization(analyzedWords);
@@ -44,7 +44,7 @@ namespace TagsCloudVisualization
 
             layouter.FillInElements(rectangleSize, wordList);
 
-            visualization.DrawAndSaveImage(new Size(2500, 2500), path, ImageFormat.Jpeg);
+            visualization.DrawAndSaveImage(new Size(5000, 5000), path, ImageFormat.Jpeg);
         }
 
         private static void InitializeRegistration(ContainerBuilder buildContainer)
