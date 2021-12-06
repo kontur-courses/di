@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace TagCloud.WordsReading
+namespace TagCloud.Words.Reading
 {
     public class InitialWordFormReader : IReader
     {

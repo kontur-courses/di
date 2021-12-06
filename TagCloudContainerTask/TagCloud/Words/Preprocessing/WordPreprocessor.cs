@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.WordsPreprocessing
+namespace TagCloud.Words.Preprocessing
 {
     public class WordPreprocessor
     {
