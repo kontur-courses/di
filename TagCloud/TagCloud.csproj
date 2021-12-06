@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp5.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+        <RootNamespace>TagCloud</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="simple_input.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NLog" Version="5.0.0-preview.3" />
+      <PackageReference Include="NLog.Schema" Version="5.0.0-preview.3" />
+    </ItemGroup>
+
+</Project>
