@@ -1,21 +1,12 @@
-﻿using TagCloudContainer.Infrastructure.Common;
-
-namespace TagCloudContainer.Infrastructure.FileReader;
+﻿namespace TagCloudContainer.Infrastructure.FileReader;
 
 public class PlainTextFileReader : IFileReader
 {
-    private readonly IInputPathProvider settings;
-
-    public PlainTextFileReader(IAppSettings settings)
+    public IEnumerable<string> GetLines(string inputPath)
     {
-        this.settings = settings;
-    }
+        if (!File.Exists(inputPath))
+            throw new ArgumentException($"The file does not exist {inputPath}");
 
-    public IEnumerable<string> GetLines()
-    {
-        if (!File.Exists(settings.InputPath))
-            throw new ArgumentException($"The file does not exist {settings.InputPath}");
-
-        return File.ReadLines(settings.InputPath);
+        return File.ReadLines(inputPath);
     }
 }

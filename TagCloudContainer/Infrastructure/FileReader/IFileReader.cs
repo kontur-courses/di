@@ -2,5 +2,5 @@
 
 public interface IFileReader
 {
-    IEnumerable<string> GetLines();
+    IEnumerable<string> GetLines(string inputPath);
 }

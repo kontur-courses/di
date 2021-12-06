@@ -4,5 +4,5 @@ namespace TagCloudContainer.Infrastructure.Saver;
 
 public interface IImageSaver
 {
-    void Save(Bitmap bitmap);
+    void Save(Bitmap bitmap, string outputPath, string outputFormat);
 }

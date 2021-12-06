@@ -25,7 +25,7 @@ internal class ConsoleUITests
         var reader = new MockReader();
         var wordWeigher = new WordWeigher(new RussianLemmatizer());
         var painter = new Painter(new RandomPalette(), new CircularCloudLayouter(settings), settings);
-        sut = new ConsoleUI(reader, painter, wordWeigher, new ImageSaver(settings));
+        sut = new ConsoleUI(reader, painter, wordWeigher, new ImageSaver());
     }
 
     [Test]
@@ -42,7 +42,7 @@ internal class ConsoleUITests
 
     private class MockReader : IFileReader
     {
-        public IEnumerable<string> GetLines()
+        public IEnumerable<string> GetLines(string inputPath)
         {
             yield return "test";
         }

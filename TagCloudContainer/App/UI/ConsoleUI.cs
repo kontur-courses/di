@@ -23,10 +23,10 @@ namespace TagCloudContainer.App.UI
 
         public void Run(IAppSettings settings)
         {
-            var lines = fileReader.GetLines();
+            var lines = fileReader.GetLines(settings.InputPath);
             var weightedWords = weigher.GetWeightedWords(lines);
             using var bitmap = painter.CreateImage(weightedWords);
-            saver.Save(bitmap);
+            saver.Save(bitmap, settings.OutputPath, settings.OutputFormat);
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using TagCloudContainer.Infrastructure.Common;
 
 namespace TagCloudContainer.Infrastructure.Saver;
 
 public class ImageSaver : IImageSaver
 {
-    private readonly IOutputPathProvider settings;
-
     public static IReadOnlyDictionary<string, ImageFormat> ImageFormats = new Dictionary<string, ImageFormat>
     {
         ["png"] = ImageFormat.Png,
@@ -18,17 +15,12 @@ public class ImageSaver : IImageSaver
         ["exif"] = ImageFormat.Exif
     };
 
-    public ImageSaver(IAppSettings settings)
+    public void Save(Bitmap bitmap, string outputPath, string outputFormat)
     {
-        this.settings = settings;
-    }
-
-    public void Save(Bitmap bitmap)
-    {
-        if (!ImageFormats.TryGetValue(settings.OutputFormat.ToLowerInvariant(), out var imageFormat))
-            throw new ArgumentException($"Acceptable formats: {string.Join(',', ImageFormats.Keys)}, but was {settings.OutputFormat.ToLowerInvariant()}");
+        if (!ImageFormats.TryGetValue(outputFormat.ToLowerInvariant(), out var imageFormat))
+            throw new ArgumentException($"Acceptable formats: {string.Join(',', ImageFormats.Keys)}, but was {outputFormat.ToLowerInvariant()}");
             
-        bitmap.Save($"{settings.OutputPath}.{settings.OutputFormat.ToLowerInvariant()}", imageFormat);
+        bitmap.Save($"{outputPath}.{outputFormat.ToLowerInvariant()}", imageFormat);
         bitmap.Dispose();
     }
 }
