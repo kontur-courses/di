@@ -7,6 +7,8 @@ namespace TagCloud
 
     public class ArchimedeanSpiral : ISpiral
     {
+        private CoordinatesConverter _converter;
+        
         /// <summary>
         /// Смещение по X к заданному центру
         /// </summary>
@@ -31,7 +33,7 @@ namespace TagCloud
         /// <summary>
         /// Создает новый объект спирали с центром в точке (0,0)
         /// </summary>
-        public ArchimedeanSpiral() : this(Point.Empty)
+        public ArchimedeanSpiral(CoordinatesConverter converter) : this(Point.Empty, converter)
         {
         }
 
@@ -40,8 +42,9 @@ namespace TagCloud
         /// </summary>
         /// <param name="center">Центр спирали</param>
         /// 
-        public ArchimedeanSpiral(Point center)
+        public ArchimedeanSpiral(Point center, CoordinatesConverter converter)
         {
+            _converter = converter;
             _offsetX = center.X;
             _offsetY = center.Y;
         }
@@ -51,7 +54,7 @@ namespace TagCloud
             while (true)
             {
                 var rho = _phi * _radius / (2 * Math.PI);
-                var cartesian = CoordinatesConverter.ToCartesian(rho, _phi);
+                var cartesian = _converter.ToCartesian(rho, _phi);
                 var point = new Point(cartesian.X + _offsetX, cartesian.Y + _offsetY);
 
                 _phi += deltaAngle;

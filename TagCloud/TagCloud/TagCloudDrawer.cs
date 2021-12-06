@@ -11,11 +11,13 @@ namespace TagCloud
     {
         private readonly Point _center;
         private readonly List<Color> _colors;
+        private readonly IDrawerSettings _settings;
 
-        public TagCloudDrawer(Point center, List<Color> colors = null)
+        public TagCloudDrawer(IDrawerSettings settings)
         {
-            _center = center;
-            _colors = colors;
+            _settings = settings;
+            _center = _settings.Center;
+            _colors = _settings.Colors?.ToList();
         }
 
         public Bitmap Draw(List<Word> words)
