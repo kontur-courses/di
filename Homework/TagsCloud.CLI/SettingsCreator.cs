@@ -14,7 +14,7 @@ namespace TagsCloud.Words
         public TagsCloudModuleSettings Create(Options options)
         {
             Enum.TryParse<FontStyle>(options.FontStyle, true, out var style);
-            return new TagsCloudModuleSettings()
+            return new TagsCloudModuleSettings
             {
                 Center = Point.Empty,
                 InputWordsFile = options.WordsFile ?? GetInputFilename(),

@@ -5,7 +5,6 @@ using CommandLine;
 using TagsCloud.Visualization;
 using TagsCloud.Visualization.Drawer;
 using TagsCloud.Visualization.ImagesSaver;
-using TagsCloud.Visualization.LayoutContainer;
 using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 
 namespace TagsCloud.Words
@@ -39,7 +38,7 @@ namespace TagsCloud.Words
             var maxCount = parsedWords.Max(x => x.Count);
             var minCount = parsedWords.Min(x => x.Count);
 
-            var wordsContainer = container.Resolve<IWordsContainerBuilder>()
+            var wordsContainer = container.Resolve<AbstractWordsContainerBuilder>()
                 .AddWords(parsedWords, minCount, maxCount)
                 .Build();
 

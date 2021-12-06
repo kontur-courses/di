@@ -5,7 +5,7 @@ using TagsCloud.Visualization.WordsSizeService;
 
 namespace TagsCloud.Visualization.LayoutContainer.ContainerBuilder
 {
-    public class WordsContainerBuilder : IWordsContainerBuilder
+    public class WordsContainerBuilder : AbstractWordsContainerBuilder
     {
         private readonly IFontFactory fontFactory;
         private readonly ICloudLayouter layouter;
@@ -22,7 +22,7 @@ namespace TagsCloud.Visualization.LayoutContainer.ContainerBuilder
             this.fontFactory = fontFactory;
         }
 
-        public WordsContainerBuilder AddWord(Word word, int minCount, int maxCount)
+        protected override WordsContainerBuilder AddWord(Word word, int minCount, int maxCount)
         {
             var font = fontFactory.GetFont(word, minCount, maxCount);
             var size = wordsSizeService.CalculateSize(word, font);
@@ -31,13 +31,6 @@ namespace TagsCloud.Visualization.LayoutContainer.ContainerBuilder
             return this;
         }
 
-        public WordsContainerBuilder AddWords(IEnumerable<Word> wordsToBuild, int minCount, int maxCount)
-        {
-            foreach (var word in wordsToBuild)
-                AddWord(word, minCount, maxCount);
-            return this;
-        }
-
-        public WordsContainer Build() => new() {Items = words};
+        public override WordsContainer Build() => new() {Items = words};
     }
 }
