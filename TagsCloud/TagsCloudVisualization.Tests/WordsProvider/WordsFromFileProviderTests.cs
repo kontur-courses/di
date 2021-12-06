@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.Tests.WordsProvider
     public class WordsFromFileProviderTests
     {
         private static readonly string FileName = Path.Combine(Directory.GetCurrentDirectory(), "Temp.txt");
-        private WordsFromFileProvider _provider;
+        private WordsFromTxtFileProvider _provider;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -28,7 +28,7 @@ namespace TagsCloudVisualization.Tests.WordsProvider
         [SetUp]
         public void Setup()
         {
-            _provider = new WordsFromFileProvider(FileName);
+            _provider = new WordsFromTxtFileProvider(FileName);
         }
 
         [TearDown]
@@ -69,7 +69,7 @@ namespace TagsCloudVisualization.Tests.WordsProvider
         [Test]
         public void GetWords_ShouldThrowException_WhenFileNotExists()
         {
-            var provider = new WordsFromFileProvider(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            var provider = new WordsFromTxtFileProvider(DateTime.Now.ToString(CultureInfo.InvariantCulture));
             Assert.Throws<Exception>(() => provider.GetWords());
         }
     }

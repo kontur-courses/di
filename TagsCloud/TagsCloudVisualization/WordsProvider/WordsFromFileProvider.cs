@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 namespace TagsCloudVisualization.WordsProvider
 {
-    public class WordsFromFileProvider : IWordsProvider
+    public abstract class WordsFromFileProvider : IWordsProvider
     {
-        private readonly string _pathToFile;
+        protected readonly string PathToFile;
 
-        public WordsFromFileProvider(string pathToFile)
+        protected WordsFromFileProvider(string pathToFile)
         {
-            _pathToFile = pathToFile ?? throw new ArgumentNullException(nameof(pathToFile));
+            PathToFile = pathToFile ?? throw new ArgumentNullException(nameof(pathToFile));
         }
 
-        public IEnumerable<string> GetWords()
-        {
-            if (!File.Exists(_pathToFile))
-                throw new Exception($"File {_pathToFile} not found");
-            return File.ReadLines(_pathToFile);
-        }
+        public IEnumerable<string> GetWords() => GetText().SelectMany(WordSplitter.Split);
+
+        protected abstract IEnumerable<string> GetText();
     }
 }

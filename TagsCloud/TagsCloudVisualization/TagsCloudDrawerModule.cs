@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Autofac;
 using TagsCloudDrawer.Drawer;
 using TagsCloudDrawer.ImageCreator;
@@ -25,7 +26,7 @@ namespace TagsCloudVisualization
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            builder.RegisterInstance(new WordsFromFileProvider(_settings.WordsFile)).As<IWordsProvider>();
+            builder.RegisterInstance(GetWordsFromFileProviderForFile(_settings.WordsFile)).As<IWordsProvider>();
             builder.RegisterType<ToLowerCasePreprocessor>().As<IWordsPreprocessor>();
             builder.RegisterInstance(new RemoveBoredPreprocessor(_settings.BoredWords)).As<IWordsPreprocessor>();
             builder.RegisterComposite<IWordsPreprocessor>((_, processors) => new CombinedPreprocessor(processors));
@@ -38,6 +39,20 @@ namespace TagsCloudVisualization
             builder.RegisterType<LayoutWordsTransformer>().As<IWordsToTagsTransformer>();
             builder.RegisterType<TagDrawableFactory>().As<ITagDrawableFactory>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
+        }
+
+        private static IWordsProvider GetWordsFromFileProviderForFile(string pathToFile)
+        {
+            if (pathToFile == null) throw new ArgumentNullException(nameof(pathToFile));
+            var extension = Path.GetExtension(pathToFile)[1..];
+            return extension switch
+            {
+                "txt"  => new WordsFromTxtFileProvider(pathToFile),
+                "doc"  => new WordsFromDocFileProvider(pathToFile),
+                "docx" => new WordsFromDocFileProvider(pathToFile),
+                "pdf"  => new WordsFromPdfFileProvider(pathToFile),
+                _      => throw new Exception($"Cannot find file reader for *.{extension} not found")
+            };
         }
     }
 }

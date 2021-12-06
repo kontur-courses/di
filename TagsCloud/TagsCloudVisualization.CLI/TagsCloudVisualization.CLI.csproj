@@ -8,10 +8,15 @@
     <ItemGroup>
         <PackageReference Include="Autofac" Version="6.3.0"/>
         <PackageReference Include="CommandLineParser" Version="2.9.0-preview1"/>
+        <PackageReference Include="System.IO.Packaging" Version="6.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="WordsProvider"/>
     </ItemGroup>
 
 </Project>
