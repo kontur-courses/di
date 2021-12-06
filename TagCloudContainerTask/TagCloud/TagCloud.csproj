@@ -43,11 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsFiltering\WordsFilter.cs" />
+    <Compile Include="WordsPreprocessing\WordPreprocessor.cs" />
     <Compile Include="WordsReading\InitialWordFormReader.cs" />
     <Compile Include="WordsReading\IReader.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WordsPreprocessing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
