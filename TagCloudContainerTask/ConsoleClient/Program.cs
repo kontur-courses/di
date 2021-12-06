@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using TagCloud.Words.Filtering;
+using TagCloud.Words.FrequencyAnalyzing;
 using TagCloud.Words.Preprocessing;
 using TagCloud.Words.Reading;
 
@@ -15,11 +16,14 @@ namespace ConsoleClient
             var wordsReader = new InitialWordFormReader();
             var words = wordsReader.ReadWordsFromFile(testInputFile).ToList();
 
-            var wordPreprocessor = new WordPreprocessor();
-            var wordsToLower = wordPreprocessor.LeadingWordsToLower(words);
+            var wordPreprocessor = new ToLowerCasePreprocessor();
+            var wordsToLower = wordPreprocessor.Preprocess(words);
 
             var wordsFilter = new WordsFilter();
             var filteredWords = wordsFilter.FilterWords(wordsToLower);
+
+            var frequencyAnalyzer = new WordsFrequencyAnalyzer();
+            var wordsFrequencies = frequencyAnalyzer.AnalyzeWordsFrequency(filteredWords);
         }
     }
 }

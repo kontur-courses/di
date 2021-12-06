@@ -55,8 +55,12 @@
     <Compile Include="Visualization\IVisualizer.cs" />
     <Compile Include="Visualization\Visualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Words\Filtering\IFilter.cs" />
     <Compile Include="Words\Filtering\WordsFilter.cs" />
-    <Compile Include="Words\Preprocessing\WordPreprocessor.cs" />
+    <Compile Include="Words\FrequencyAnalyzing\IFrequencyAnalyzer.cs" />
+    <Compile Include="Words\FrequencyAnalyzing\WordsFrequencyAnalyzer.cs" />
+    <Compile Include="Words\Preprocessing\IPreprocessor.cs" />
+    <Compile Include="Words\Preprocessing\ToLowerCasePreprocessor.cs" />
     <Compile Include="Words\Reading\InitialWordFormReader.cs" />
     <Compile Include="Words\Reading\IReader.cs" />
   </ItemGroup>

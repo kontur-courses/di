@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace TagCloud.Words.Filtering
 {
-    public class WordsFilter
+    public class WordsFilter : IFilter
     {
-        public List<string> FilterWords(List<string> words)
+        public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
-            return words.Where(word => word.Length > 3).ToList();
+            return words.Where(word => word.Length > 3);
         }
     }
 }
