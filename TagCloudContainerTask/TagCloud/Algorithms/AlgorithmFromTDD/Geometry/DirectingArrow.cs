@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloudTask.Geometry
+namespace TagCloud.Algorithms.AlgorithmFromTDD.Geometry
 {
     public class DirectingArrow
     {

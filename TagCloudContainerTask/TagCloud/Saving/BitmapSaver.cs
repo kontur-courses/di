@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace TagCloudTask.Saving
+namespace TagCloud.Saving
 {
     public class BitmapSaver : IBitmapSaver
     {
@@ -14,7 +14,7 @@ namespace TagCloudTask.Saving
         private static readonly ImageFormat ImgFormat = ImageFormat.Png;
 
         private static readonly string ProjectDirectory
-            = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
 
         public string Save(Bitmap bitmap, bool openAfterSave)
         {

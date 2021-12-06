@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud.Algorithms.AlgorithmFromTDD.Visualization
+namespace TagCloud.Visualization
 {
     public interface IVisualizer
     {

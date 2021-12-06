@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagCloud.Algorithms.AlgorithmFromTDD.Geometry
+namespace TagCloud.Geometry
 {
     public static class RectangleExtension
     {
@@ -11,7 +11,7 @@ namespace TagCloud.Algorithms.AlgorithmFromTDD.Geometry
         {
             if (rectangles == null)
                 throw new ArgumentException("rectangles list can't be null");
-            return rectangles.Any(rectangle => rect.IntersectsWith(rectangle));
+            return rectangles.Any(rect.IntersectsWith);
         }
 
         public static IEnumerable<Point> GetCorners(this Rectangle rect)

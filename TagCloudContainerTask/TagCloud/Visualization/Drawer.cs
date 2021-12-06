@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloudTask.Visualization
+namespace TagCloud.Visualization
 {
     public class Drawer : IDrawer
     {

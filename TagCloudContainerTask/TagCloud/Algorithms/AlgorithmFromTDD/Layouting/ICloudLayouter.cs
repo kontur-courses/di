@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.Algorithms.AlgorithmFromTDD.Layouting
+namespace TagCloud.Layouting
 {
     public interface ICloudLayouter : ILayouter
     {
