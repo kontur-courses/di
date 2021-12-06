@@ -70,7 +70,7 @@ namespace TagsCloud.Words
             var solutionPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\"));
             if (!Directory.Exists(solutionPath))
                 Directory.CreateDirectory(solutionPath);
-            return Path.Combine(solutionPath + "words.txt");
+            return Path.Combine(solutionPath + "words.doc");
         }
     }
 }

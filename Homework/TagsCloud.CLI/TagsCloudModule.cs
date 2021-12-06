@@ -26,6 +26,7 @@ namespace TagsCloud.Words
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
+            builder.RegisterType<DocFileReader>().As<IFileReader>();
             builder.Register(ctx => new FileReadService(settings.InputWordsFile,
                     ctx.Resolve<IEnumerable<IFileReader>>()))
                 .As<IWordsReadService>();

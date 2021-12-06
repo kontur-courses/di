@@ -22,18 +22,18 @@ namespace TagsCloud.Visualization.WordsReaders
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
 
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException($"File {fileName} doesn't exists");
+
             var fileExtension = Path.GetExtension(fileName)?.Replace(".", "");
 
             if (fileExtension == null)
                 throw new ArgumentException($"Unknown extension of file: {fileName}");
 
-            var reader = fileReaders.FirstOrDefault(x => x.Extension == fileExtension);
+            var reader = fileReaders.FirstOrDefault(x => x.CanRead(fileExtension));
 
             if (reader == null)
                 throw new ArgumentException($"Unsupported file extension: {fileExtension}");
-
-            if (!File.Exists(fileName))
-                throw new ArgumentException($"File {fileName} doesn't exists");
 
             return reader.Read(fileName);
         }

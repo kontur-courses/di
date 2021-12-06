@@ -2,7 +2,7 @@
 {
     public interface IFileReader
     {
-        string Extension { get; }
         string Read(string filename);
+        bool CanRead(string extension);
     }
 }
