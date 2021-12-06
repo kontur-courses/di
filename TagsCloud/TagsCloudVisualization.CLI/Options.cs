@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.CLI
     internal class Options
     {
         public static string DefaultOutputDirectory =>
-            Path.GetFullPath(Directory.GetCurrentDirectory(), "GeneratedClouds");
+            Path.Combine(Directory.GetCurrentDirectory(), "GeneratedClouds");
 
         [Option("words", HelpText = "File with words", Default = "words.txt")]
         public string WordsFile { get; set; }
