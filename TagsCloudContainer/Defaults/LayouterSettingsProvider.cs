@@ -6,7 +6,7 @@ namespace TagsCloudContainer.Defaults;
 
 public class LayouterSettingsProvider : ISettingsProvider
 {
-    public Point Center { get; set; } = new Point(400, 200);
+    public Point Center { get; set; } = new Point(300, 100);
 
     public CircularCloudLayouter Create()
     {

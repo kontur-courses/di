@@ -33,14 +33,23 @@ public partial class Program
         img.Save("img.png", ImageFormat.Png);
     }
 
+    private static void Register<TImpl, TInterface>(ContainerBuilder builder, bool singleton = false)
+        where TImpl : TInterface
+        where TInterface : notnull
+    {
+        var registration = builder.RegisterType<TImpl>().As<TInterface>().AsSelf();
+        if (singleton)
+            registration.SingleInstance();
+    }
+
     private static void RegisterVisualizer(ContainerBuilder builder)
     {
-        builder.RegisterType<Visualizer>().As<IVisualizer>().AsSelf();
+        Register<Visualizer, IVisualizer>(builder);
     }
 
     private static void RegisterStyler(ContainerBuilder builder)
     {
-        builder.RegisterType<Styler>().As<IStyler>().AsSelf();
+        Register<Styler, IStyler>(builder);
     }
 
     private static void RegisterTextReader(ContainerBuilder builder)
@@ -51,30 +60,31 @@ public partial class Program
 
     private static void RegisterSettingsProviders(ContainerBuilder builder)
     {
-        builder.RegisterInstance(new StandartBitmapSettings()).AsSelf().As<ISettingsProvider>().SingleInstance();
-        builder.RegisterInstance(new LayouterSettingsProvider()).AsSelf().As<ISettingsProvider>().SingleInstance();
-        builder.RegisterInstance(new TextAnalyzerSettings()).AsSelf().As<ISettingsProvider>().SingleInstance();
-        builder.RegisterInstance(new DefaultStyle()).AsSelf().As<ISettingsProvider>().SingleInstance();
+        Register<StandartBitmapSettings, ISettingsProvider>(builder, true);
+        Register<LayouterSettingsProvider, ISettingsProvider>(builder, true);
+        Register<TextAnalyzerSettings, ISettingsProvider>(builder, true);
+        Register<DefaultStyle, ISettingsProvider>(builder, true);
     }
 
     private static void RegisterWordFilter(ContainerBuilder builder)
     {
-        builder.RegisterType<NoneFilter>().As<IWordFilter>().AsSelf();
+        Register<NoneFilter, IWordFilter>(builder);
     }
 
     private static void RegisterNormalizer(ContainerBuilder builder)
     {
-        builder.RegisterType<LowerNormalizer>().As<IWordNormalizer>().AsSelf();
+        Register<LowerNormalizer, IWordNormalizer>(builder);
+        Register<Capitalizer, IWordNormalizer>(builder);
     }
 
     private static void RegisterAnalyzer(ContainerBuilder builder)
     {
-        builder.RegisterType<TextAnalyzer>().As<ITextAnalyzer>().AsSelf();
+        Register<TextAnalyzer,ITextAnalyzer>(builder);
     }
 
     private static void RegisterPacker(ContainerBuilder builder)
     {
-        builder.RegisterType<TagPacker>().As<ITagPacker>().AsSelf();
+        Register<TagPacker,ITagPacker>(builder);
     }
 
     private static void RegisterLayouter(ContainerBuilder builder)

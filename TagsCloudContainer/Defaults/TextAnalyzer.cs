@@ -5,15 +5,15 @@ namespace TagsCloudContainer.Defaults;
 public class TextAnalyzer : ITextAnalyzer
 {
     private readonly ITextReader textReader;
-    private readonly IWordNormalizer wordNormalizer;
-    private readonly IWordFilter wordFilter;
+    private readonly IWordNormalizer[] wordNormalizers;
+    private readonly IWordFilter[] wordFilters;
     private readonly char[] wordSeparators;
 
-    public TextAnalyzer(ITextReader textReader, IWordNormalizer wordNormalizer, IWordFilter wordFilter, TextAnalyzerSettings settings)
+    public TextAnalyzer(ITextReader textReader, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, TextAnalyzerSettings settings)
     {
         this.textReader = textReader;
-        this.wordNormalizer = wordNormalizer;
-        this.wordFilter = wordFilter;
+        this.wordNormalizers = wordNormalizers;
+        this.wordFilters = wordFilters;
         this.wordSeparators = settings.WordSeparators;
     }
 
@@ -25,10 +25,8 @@ public class TextAnalyzer : ITextAnalyzer
         {
             var words = line
                 .Split(wordSeparators)
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Select(wordNormalizer.Normalize)
-                .Where(wordFilter.IsValid);
-            foreach (var word in words)
+                .Where(x => !string.IsNullOrWhiteSpace(x));
+            foreach (var word in ApplyNormalizingAndFiltering(words))
             {
                 result.UpdateWord(word);
                 count++;
@@ -38,5 +36,20 @@ public class TextAnalyzer : ITextAnalyzer
         result.SetCount(count);
 
         return result;
+    }
+
+    IEnumerable<string> ApplyNormalizingAndFiltering(IEnumerable<string> words)
+    {
+        foreach (var normalizer in wordNormalizers)
+        {
+            words = words.Select(normalizer.Normalize);
+        }
+
+        foreach (var filter in wordFilters)
+        {
+            words = words.Where(filter.IsValid);
+        }
+
+        return words;
     }
 }
