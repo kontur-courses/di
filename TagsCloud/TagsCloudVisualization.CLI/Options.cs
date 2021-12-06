@@ -1,11 +1,21 @@
-﻿using CommandLine;
+﻿using System.IO;
+using CommandLine;
 
 namespace TagsCloudVisualization.CLI
 {
     internal class Options
     {
+        public static string DefaultOutputDirectory =>
+            Path.GetFullPath(Directory.GetCurrentDirectory(), "GeneratedClouds");
+
         [Option("words", HelpText = "File with words", Default = "words.txt")]
         public string WordsFile { get; set; }
+
+        [Option('d', "directory", HelpText = "Output directory")]
+        public string OutputDirectory { get; set; }
+
+        [Option("name", HelpText = "Output file name")]
+        public string OutputFileName { get; set; }
 
         [Option("exclude", HelpText = "File with words to exclude", Default = "exclude.txt")]
         public string ExcludingWordsFile { get; set; }
