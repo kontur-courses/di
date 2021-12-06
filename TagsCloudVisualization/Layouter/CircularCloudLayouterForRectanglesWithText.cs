@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.Layouter
 
         //private HashSet<RectangleWithWord> RectangleList { get; }
 
-        private Dictionary<Word, RectangleWithWord> RectangleList { get; set; }
+        private Dictionary<string, RectangleWithWord> RectangleList { get; }
 
 
 
@@ -21,7 +21,7 @@ namespace TagsCloudVisualization.Layouter
         {
             Center = center;
             LayouterSpiral = new Spiral();
-            RectangleList = new Dictionary<Word, RectangleWithWord>();
+            RectangleList = new Dictionary<string, RectangleWithWord>();
         }
 
         public RectangleWithWord PutNextElement(Size rectangleSize, Word word)
@@ -29,10 +29,10 @@ namespace TagsCloudVisualization.Layouter
             if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
                 throw new ArgumentException();
 
-            if (RectangleList.ContainsKey(word))
+            if (RectangleList.ContainsKey(word.WordText))
             {
-                RectangleList[word].WordElement.CntOfWords++;
-                return RectangleList[word];
+                RectangleList[word.WordText].WordElement.CntOfWords++;
+                return RectangleList[word.WordText];
             }
 
             var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
@@ -41,7 +41,7 @@ namespace TagsCloudVisualization.Layouter
             if (nextRectangle.RectangleElement.Location != Center)
                 nextRectangle = CenterElement(nextRectangle);
 
-            RectangleList.Add(word, nextRectangle);
+            RectangleList.Add(word.WordText, nextRectangle);
 
 
 

@@ -38,6 +38,8 @@ namespace TagsCloudVisualization
             var lowerCaseWords = lowerCaseMaker.MakeTextLowerCase(normalyzedWords);
             var wordList = lowerCaseWords.ToList();
 
+            var asdfasfd = wordList.Where(w => w.CntOfWords != 1);
+
 
             layouter.FillInElements(rectangleSize, wordList);
             var visualization = new Visualization(layouter.GetElementsList(), new Pen(Color.White, 10),
