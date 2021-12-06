@@ -1,18 +1,25 @@
-﻿using System;
-using FractalPainting.App.Fractals;
+﻿using FractalPainting.App.Fractals;
+using FractalPainting.Infrastructure.Common;
+using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
+using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class KochFractalAction : IUiAction
+    public class KochFractalAction : IUiAction, INeed<IImageHolder>, INeed<Palette>
     {
-        public KochFractalAction(Lazy<KochPainter> painter)
+        private IImageHolder imageHolder;
+        private Palette palette;
+
+        public void SetDependency(IImageHolder dependency)
         {
-            this.painter = painter;
+            imageHolder = dependency;
         }
 
-        private Lazy<KochPainter> painter;
-
+        public void SetDependency(Palette dependency)
+        {
+            palette = dependency;
+        }
 
         public string Category => "Фракталы";
         public string Name => "Кривая Коха";
@@ -20,7 +27,11 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            painter.Value.Paint();
+            var container = new StandardKernel();
+            container.Bind<IImageHolder>().ToConstant(imageHolder);
+            container.Bind<Palette>().ToConstant(palette);
+
+            container.Get<KochPainter>().Paint();
         }
     }
 }
