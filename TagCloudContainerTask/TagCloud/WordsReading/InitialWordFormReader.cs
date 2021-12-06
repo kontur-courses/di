@@ -14,7 +14,9 @@ namespace TagCloud.WordsReading
 
         public IEnumerable<string> ReadWordsFromFile(string pathToFile)
         {
-            using (var initialLeadingFormProcess = CreateInitialLeadingFormProcess(pathToFile))
+            var initialLeadingFormProcess = CreateInitialLeadingFormProcess(pathToFile);
+
+            using (initialLeadingFormProcess)
             {
                 initialLeadingFormProcess.Start();
                 while (!initialLeadingFormProcess.StandardOutput.EndOfStream)
