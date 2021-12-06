@@ -74,7 +74,8 @@ namespace TagsCloudVisualization.Layouter
             }
             rectangleElement.Offset(-directionXSign, 0);
             
-            rectangleElement.Offset(directionXSign, directionYSign);
+            if (RectangleList.Count == 0)
+                rectangleElement.Offset(directionXSign, directionYSign);
 
             inputRectangleWithWord.RectangleElement = rectangleElement;
 
