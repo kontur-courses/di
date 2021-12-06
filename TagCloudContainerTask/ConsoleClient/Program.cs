@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TagCloud.WordsPreprocessing;
 
 namespace ConsoleClient
 {
@@ -6,7 +6,8 @@ namespace ConsoleClient
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello world");
+            var pp = new InitialWordFormReader();
+            var words = pp.ReadWordsFromFile(@"C:/users/sqire/desktop/ss.txt");
         }
     }
 }
