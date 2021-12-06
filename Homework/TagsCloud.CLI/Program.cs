@@ -4,7 +4,7 @@ using Autofac;
 using CommandLine;
 using TagsCloud.Visualization;
 using TagsCloud.Visualization.Drawer;
-using TagsCloud.Visualization.ImagesSaver;
+using TagsCloud.Visualization.ImagesSavior;
 using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 
 namespace TagsCloud.Words
@@ -44,7 +44,7 @@ namespace TagsCloud.Words
 
             var drawer = container.Resolve<IDrawer>();
             using var image = drawer.Draw(wordsContainer);
-            container.Resolve<IImageSaver>().Save(image);
+            container.Resolve<IImageSavior>().Save(image);
         }
 
         private static IContainer CreateContainer(TagsCloudModuleSettings settings)

@@ -5,7 +5,7 @@ using TagsCloud.Visualization;
 using TagsCloud.Visualization.ContainerVisitor;
 using TagsCloud.Visualization.Drawer;
 using TagsCloud.Visualization.FontFactory;
-using TagsCloud.Visualization.ImagesSaver;
+using TagsCloud.Visualization.ImagesSavior;
 using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 using TagsCloud.Visualization.PointGenerator;
 using TagsCloud.Visualization.WordsFilter;
@@ -44,7 +44,7 @@ namespace TagsCloud.Words
 
             builder.Register(_ => settings.LayoutVisitor).As<IContainerVisitor>();
             builder.RegisterType<Drawer>().As<IDrawer>();
-            builder.Register(_ => new ImageSaver(settings.SaveSettings)).As<IImageSaver>();
+            builder.Register(_ => new ImageSavior(settings.SaveSettings)).As<IImageSavior>();
         }
     }
 }

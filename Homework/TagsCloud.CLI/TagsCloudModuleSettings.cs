@@ -2,7 +2,7 @@
 using System.Drawing;
 using TagsCloud.Visualization.ContainerVisitor;
 using TagsCloud.Visualization.FontFactory;
-using TagsCloud.Visualization.ImagesSaver;
+using TagsCloud.Visualization.ImagesSavior;
 
 namespace TagsCloud.Words
 {
