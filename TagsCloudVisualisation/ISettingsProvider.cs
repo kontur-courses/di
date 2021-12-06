@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagsCloudVisualization.Abstractions;
+﻿namespace TagsCloudVisualization.Abstractions;
 
 public interface ISettingsProvider // заготовка на потом
 {

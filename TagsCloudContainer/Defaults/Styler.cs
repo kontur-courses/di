@@ -3,7 +3,7 @@
 namespace TagsCloudContainer.Defaults;
 
 public class Styler : IStyler, IDisposable
-    
+
 {
     private readonly DefaultStyle settings;
 

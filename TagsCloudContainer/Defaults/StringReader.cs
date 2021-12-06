@@ -11,11 +11,6 @@ public class StringReader : ITextReader
 
     private readonly string source;
 
-    public bool IsValid()
-    {
-        return true;
-    }
-
     public IEnumerable<string> ReadLines()
     {
         var newLine = Environment.NewLine;

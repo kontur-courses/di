@@ -13,13 +13,11 @@ internal class TextStats : ITextStats
     public void UpdateWord(string word)
     {
         if (!statistics.ContainsKey(word))
-            statistics[word] = 0;
-        statistics[word]++;
-    }
+            statistics[word] = 1;
+        else
+            statistics[word]++;
 
-    public void SetCount(int count)
-    {
-        TotalWordCount = count;
+        TotalWordCount++;
     }
 
     public IReadOnlyDictionary<string, int> Statistics => statistics;

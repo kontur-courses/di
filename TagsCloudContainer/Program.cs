@@ -1,16 +1,62 @@
 ﻿using Autofac;
 using CloudLayouter;
+using CommandLine;
 using System.Drawing.Imaging;
 using TagsCloudContainer.Defaults;
 using TagsCloudVisualization.Abstractions;
 using StringReader = TagsCloudContainer.Defaults.StringReader;
 
 namespace TagsCloudContainer;
-public partial class Program
+public class Program
 {
-    public static void Main()
+    public class Options
     {
+        private const string inputGroup = "input";
+        [Option('f', "files", HelpText = "Input files to be processed. This takes precedence over '-s' '--string' option", Group = inputGroup)]
+        public IEnumerable<string>? InputFiles { get; set; }
+
+        [Option('s', "string", HelpText = "Input string to be processed.", Group = inputGroup)]
+        public string? InputString { get; set; }
+    }
+    public static void Main(string[] args)
+    {
+        args = new[] { "-s", "tag1 Tag1 tag3 Tag2 tag1 TAG3 tag3 tag4 tag2 tag1" };
         var builder = new ContainerBuilder();
+        RegisterAll(builder);
+        var container = builder.Build();
+
+        Parser.Default.ParseArguments<Options>(args).WithParsed(opts => Run(opts, container));
+    }
+
+    private static void Run(Options obj, IContainer container)
+    {
+        ITextReader? textReader;
+        if (obj.InputFiles != null && obj.InputFiles.Any())
+        {
+            textReader = container.Resolve<FileReader>(TypedParameter.From(obj.InputFiles.ToArray()));
+        }
+        else if (obj.InputString != null && !string.IsNullOrWhiteSpace(obj.InputString))
+        {
+            textReader = container.Resolve<StringReader>(TypedParameter.From(obj.InputString));
+        }
+        else
+        {
+            textReader = new StringReader(string.Empty);
+        }
+
+        var textAnalyzer = container.Resolve<TextAnalyzer>(TypedParameter.From(textReader));
+        var tags = container.Resolve<TagPacker>(TypedParameter.From<ITextAnalyzer>(textAnalyzer));
+        var layouter = container.Resolve<CircularCloudLayouter>();
+        var styler = container.Resolve<Styler>();
+        var visualizerSettings = container.Resolve<BitmapSetting>();
+
+        var vis = new Visualizer(visualizerSettings, tags, layouter, styler);
+        var img = vis.GetBitmap();
+        img.Save("img.png", ImageFormat.Png);
+    }
+
+    private static void RegisterAll(ContainerBuilder builder)
+    {
         RegisterVisualizer(builder);
         RegisterLayouter(builder);
         RegisterPacker(builder);
@@ -20,24 +66,15 @@ public partial class Program
         RegisterSettingsProviders(builder);
         RegisterTextReader(builder);
         RegisterStyler(builder);
-
-        var container = builder.Build();
-
-        var tags = container.Resolve<TagPacker>();
-        var layouter = container.Resolve<CircularCloudLayouter>();
-        var styler = container.Resolve<Styler>();
-        var visualizerSettings = container.Resolve<StandartBitmapSettings>();
-
-        var vis = new Visualizer(visualizerSettings, tags, layouter, styler);
-        var img = vis.GetBitmap();
-        img.Save("img.png", ImageFormat.Png);
     }
 
-    private static void Register<TImpl, TInterface>(ContainerBuilder builder, bool singleton = false)
-        where TImpl : TInterface
+    private static void Register<TImplementation, TInterface>(ContainerBuilder builder, bool singleton = false)
+        where TImplementation : TInterface
         where TInterface : notnull
     {
-        var registration = builder.RegisterType<TImpl>().As<TInterface>().AsSelf();
+        var registration = builder.RegisterType<TImplementation>()
+            .As<TInterface>()
+            .AsSelf();
         if (singleton)
             registration.SingleInstance();
     }
@@ -54,13 +91,15 @@ public partial class Program
 
     private static void RegisterTextReader(ContainerBuilder builder)
     {
-        builder.RegisterInstance(new StringReader("tag1 Tag1 tag2 tag2 tag2 tAg3 tag3 tag3 tag3 taG4 tag4 tag4 tag4 tag4"))
-            .As<ITextReader>().AsSelf();
+        Register<StringReader, ITextReader>(builder);
+        Register<FileReader, ITextReader>(builder);
     }
 
     private static void RegisterSettingsProviders(ContainerBuilder builder)
     {
-        Register<StandartBitmapSettings, ISettingsProvider>(builder, true);
+        Register<BitmapSetting, ISettingsProvider>(builder, true);
+        Register<BigBitmapSetting, ISettingsProvider>(builder, true);
+        Register<BigBitmapSetting, BitmapSetting>(builder, true);
         Register<LayouterSettingsProvider, ISettingsProvider>(builder, true);
         Register<TextAnalyzerSettings, ISettingsProvider>(builder, true);
         Register<DefaultStyle, ISettingsProvider>(builder, true);
@@ -79,12 +118,12 @@ public partial class Program
 
     private static void RegisterAnalyzer(ContainerBuilder builder)
     {
-        Register<TextAnalyzer,ITextAnalyzer>(builder);
+        Register<TextAnalyzer, ITextAnalyzer>(builder);
     }
 
     private static void RegisterPacker(ContainerBuilder builder)
     {
-        Register<TagPacker,ITagPacker>(builder);
+        Register<TagPacker, ITagPacker>(builder);
     }
 
     private static void RegisterLayouter(ContainerBuilder builder)

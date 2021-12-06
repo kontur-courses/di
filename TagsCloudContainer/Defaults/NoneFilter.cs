@@ -9,5 +9,3 @@ public class NoneFilter : IWordFilter
         return true;
     }
 }
-
-

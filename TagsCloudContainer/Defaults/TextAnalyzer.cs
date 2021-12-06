@@ -14,13 +14,12 @@ public class TextAnalyzer : ITextAnalyzer
         this.textReader = textReader;
         this.wordNormalizers = wordNormalizers;
         this.wordFilters = wordFilters;
-        this.wordSeparators = settings.WordSeparators;
+        wordSeparators = settings.WordSeparators;
     }
 
     public ITextStats AnalyzeText()
     {
         var result = new TextStats();
-        var count = 0;
         foreach (var line in textReader.ReadLines())
         {
             var words = line
@@ -29,16 +28,13 @@ public class TextAnalyzer : ITextAnalyzer
             foreach (var word in ApplyNormalizingAndFiltering(words))
             {
                 result.UpdateWord(word);
-                count++;
             }
         }
-
-        result.SetCount(count);
 
         return result;
     }
 
-    IEnumerable<string> ApplyNormalizingAndFiltering(IEnumerable<string> words)
+    private IEnumerable<string> ApplyNormalizingAndFiltering(IEnumerable<string> words)
     {
         foreach (var normalizer in wordNormalizers)
         {
