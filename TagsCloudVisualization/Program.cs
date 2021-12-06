@@ -17,8 +17,8 @@ namespace TagsCloudVisualization
     {
         public static void Main(string[] args)
         {
-            var textPath = "C:/alpha/text.TXT";
-            var path = "C:/alpha/img_words.jpeg";
+            var textPath = "C:/GitHub/di/War and piece words.DOCX";
+            var path = "C:/GitHub/di/img_words.jpeg";
             
             
             

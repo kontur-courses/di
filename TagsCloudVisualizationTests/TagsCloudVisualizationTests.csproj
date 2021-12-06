@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularCloudLayouterShouldCorrectlyPutWords.cs" />
     <Compile Include="TestsCircularCloudLayouterShouldCorrectPutNext.cs" />
     <Compile Include="CircularCloudLayouterConstructorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
