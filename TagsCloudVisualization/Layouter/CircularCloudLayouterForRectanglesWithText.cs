@@ -11,7 +11,9 @@ namespace TagsCloudVisualization.Layouter
 
         private Spiral LayouterSpiral { get; }
 
-        private List<RectangleWithWord> RectangleList { get; }
+        //private HashSet<RectangleWithWord> RectangleList { get; }
+
+        private Dictionary<Word, RectangleWithWord> RectangleList { get; set; }
 
 
 
@@ -19,25 +21,36 @@ namespace TagsCloudVisualization.Layouter
         {
             Center = center;
             LayouterSpiral = new Spiral();
-            RectangleList = new List<RectangleWithWord>();
+            RectangleList = new Dictionary<Word, RectangleWithWord>();
         }
 
         public RectangleWithWord PutNextElement(Size rectangleSize, Word word)
         {
             if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
                 throw new ArgumentException();
+
+            if (RectangleList.ContainsKey(word))
+            {
+                RectangleList[word].WordElement.CntOfWords++;
+                return RectangleList[word];
+            }
+
             var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
-            while (RectangleList.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
+            while (RectangleList.Values.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
                 nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
             if (nextRectangle.RectangleElement.Location != Center)
                 nextRectangle = CenterElement(nextRectangle);
-            RectangleList.Add(nextRectangle);
+
+            RectangleList.Add(word, nextRectangle);
+
+
+
             return nextRectangle;
         }
 
         public List<RectangleWithWord> GetElementsList()
         {
-            return RectangleList;
+            return RectangleList.Values.ToList();
         }
 
         private RectangleWithWord CreateNewRectangleWithWord(Size rectangleSize, Word word)
@@ -94,6 +107,7 @@ namespace TagsCloudVisualization.Layouter
         }
 
         private bool IsIntersect(Rectangle inputRectangle) =>
-            RectangleList.Any(rect => rect.RectangleElement.IntersectsWith(inputRectangle));
+            RectangleList.Select(el => el.Value)
+                .Any(rect => rect.RectangleElement.IntersectsWith(inputRectangle));
     }
 }

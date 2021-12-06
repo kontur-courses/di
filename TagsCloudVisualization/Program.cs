@@ -39,11 +39,9 @@ namespace TagsCloudVisualization
             var wordList = lowerCaseWords.ToList();
 
 
-            var visualization = new Visualization(layouter.GetElementsList(), new Pen(Color.White, 10), 
-                new SolidBrush(Color.White), new Font("Times", 15));
-
             layouter.FillInElements(rectangleSize, wordList);
-
+            var visualization = new Visualization(layouter.GetElementsList(), new Pen(Color.White, 10),
+                new SolidBrush(Color.White), new Font("Times", 15));
             visualization.DrawAndSaveImage(new Size(5000, 5000), path, ImageFormat.Jpeg);
         }
 
