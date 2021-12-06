@@ -42,21 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Geometry\DirectingArrow.cs" />
-    <Compile Include="Geometry\PointExtension.cs" />
-    <Compile Include="Geometry\RectangleExtension.cs" />
-    <Compile Include="ICloud.cs" />
-    <Compile Include="Layouting\CircularLayouter.cs" />
-    <Compile Include="Layouting\ICloudLayouter.cs" />
-    <Compile Include="Layouting\ILayouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Saving\BitmapSaver.cs" />
-    <Compile Include="Saving\IBitmapSaver.cs" />
-    <Compile Include="Cloud.cs" />
-    <Compile Include="Visualization\Drawer.cs" />
-    <Compile Include="Visualization\IDrawer.cs" />
-    <Compile Include="Visualization\IVisualizer.cs" />
-    <Compile Include="Visualization\Visualizer.cs" />
+    <Compile Include="WordsPreprocessing\Preprocessor.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
