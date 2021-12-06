@@ -1,40 +1,34 @@
 ﻿using System;
 using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
 
 namespace FractalPainting.App.Actions
 {
-    public class DragonFractalAction : IUiAction, INeed<IImageHolder>
+    public class DragonFractalAction : IUiAction
     {
-        private IImageHolder imageHolder;
+        private readonly Func<DragonSettingsGenerator> dragonSettingGeneratorFactory;
+        private readonly Func<DragonSettings, DragonPainter> dragonPainterFactory;
 
-        public void SetDependency(IImageHolder dependency)
+        public DragonFractalAction(Func<DragonSettingsGenerator> dragonSettingGeneratorFactory,
+            Func<DragonSettings, DragonPainter> dragonPainterFactory)
         {
-            imageHolder = dependency;
+            this.dragonSettingGeneratorFactory = dragonSettingGeneratorFactory;
+            this.dragonPainterFactory = dragonPainterFactory;
         }
 
-        public string Category => "Фракталы";
+        public string CategoryName => "Фракталы";
+        public Category Category => Category.Fractals;
+
         public string Name => "Дракон";
         public string Description => "Дракон Хартера-Хейтуэя";
 
         public void Perform()
         {
-            var dragonSettings = CreateRandomSettings();
+            var dragonSettings = dragonSettingGeneratorFactory().Generate();
             // редактируем настройки:
             SettingsForm.For(dragonSettings).ShowDialog();
-            // создаём painter с такими настройками
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<DragonSettings>().ToConstant(dragonSettings);
-            container.Get<DragonPainter>().Paint();
-        }
-
-        private static DragonSettings CreateRandomSettings()
-        {
-            return new DragonSettingsGenerator(new Random()).Generate();
+            dragonPainterFactory(dragonSettings).Paint();
         }
     }
 }
