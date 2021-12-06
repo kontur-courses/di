@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{52B8D014-CD33-4421-AB04-13D05D7BEF11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{842999FA-F947-456A-A9D9-DD3798BFDD1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualizationTests", "TagsCloudVisualizationTests\TagsCloudVisualizationTests.csproj", "{47E6B0D4-3A6A-4043-979C-19633F86B45D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B8D014-CD33-4421-AB04-13D05D7BEF11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B8D014-CD33-4421-AB04-13D05D7BEF11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B8D014-CD33-4421-AB04-13D05D7BEF11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B8D014-CD33-4421-AB04-13D05D7BEF11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{842999FA-F947-456A-A9D9-DD3798BFDD1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{842999FA-F947-456A-A9D9-DD3798BFDD1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{842999FA-F947-456A-A9D9-DD3798BFDD1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{842999FA-F947-456A-A9D9-DD3798BFDD1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47E6B0D4-3A6A-4043-979C-19633F86B45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47E6B0D4-3A6A-4043-979C-19633F86B45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47E6B0D4-3A6A-4043-979C-19633F86B45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47E6B0D4-3A6A-4043-979C-19633F86B45D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
