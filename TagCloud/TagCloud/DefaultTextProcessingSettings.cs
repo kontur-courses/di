@@ -4,7 +4,18 @@ namespace TagCloud
 {
     public class DefaultTextProcessingSettings : ITextProcessingSettings
     {
-        public HashSet<string> IncludeWords { get; }
-        public HashSet<string> IncludePos { get; }
+        public HashSet<string> IncludeWords => new();
+        public HashSet<string> ExcludeWords => new() {"быть"};
+        public int Amount => 500;
+        public HashSet<PartOfSpeech> ExcludePartOfSpeeches => new()
+        {
+            PartOfSpeech.CONJ,
+            PartOfSpeech.PART,
+            PartOfSpeech.NUM,
+            PartOfSpeech.PR,
+            PartOfSpeech.ANUM,
+            PartOfSpeech.APRO,
+            PartOfSpeech.SPRO
+        };
     }
 }

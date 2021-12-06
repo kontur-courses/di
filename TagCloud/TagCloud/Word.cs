@@ -4,10 +4,16 @@ namespace TagCloud
 {
     public class Word
     {
-        public readonly Font Font;
-        public readonly Rectangle Rectangle;
+        public Font Font { get; set; }
+        public Rectangle Rectangle { get; set; }
         public readonly string Text;
 
+        public Word(string text, Font font)
+        {
+            Text = text;
+            Font = font;
+        }
+        
         public Word(string text, Font font, Rectangle rectangle)
         {
             Text = text;

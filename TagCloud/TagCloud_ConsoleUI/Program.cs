@@ -5,7 +5,7 @@
         public static void Main()
         {
             var tagCloud = new TagCloud.TagCloud();
-            tagCloud.FromFile("dataSample.txt")
+            tagCloud.FromFile("dataSample_2.txt")
                 .Draw();
         }
     }

@@ -5,6 +5,8 @@ namespace TagCloud
     public interface ITextProcessingSettings
     {
         HashSet<string> IncludeWords { get; }
-        HashSet<string> IncludePos { get; }
+        HashSet<string> ExcludeWords { get; }
+        int Amount { get; }
+        HashSet<PartOfSpeech> ExcludePartOfSpeeches { get; }
     }
 }
