@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
+using TagCloud.TextHandlers;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.PointGenerator;
 

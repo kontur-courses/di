@@ -5,6 +5,9 @@ using System.Drawing;
 using System.Linq;
 using Autofac;
 using DeepMorphy;
+using TagCloud.TextHandlers;
+using TagCloud.TextHandlers.Converters;
+using TagCloud.TextHandlers.Filters;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.PointGenerator;
 using WeCantSpell.Hunspell;
@@ -54,6 +57,14 @@ namespace TagsCloudVisualization
             builder.RegisterType<CloudLayouter.CloudLayouter>().AsSelf().As<ICloudLayouter>();
             builder.RegisterType<WordsHandler>().AsSelf();
             container = builder.Build();
+        }
+
+        private static void RegisterTextHandlers(ContainerBuilder builder)
+        {
+            builder.RegisterType<WordsParser>().As<ITextParser>();
+            builder.RegisterType<BoringWordsFilter>().As<IFilter>();
+            builder.RegisterType<TextFilter>().As<ITextFilter>();
+            builder.RegisterType<WordConverter>().As<IWordConverter>();
         }
     }
 }

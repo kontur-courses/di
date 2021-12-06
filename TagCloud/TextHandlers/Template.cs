@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization;
 
-namespace TagsCloudVisualization
+namespace TagCloud.TextHandlers
 {
     public class Template
     {
-        private readonly List<WordParameter> words = new List<WordParameter>();
+        private readonly List<WordParameter> words = new();
         public Size Size { get; set; }
         public PointF Center { get; set; }
 

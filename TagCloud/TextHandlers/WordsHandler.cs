@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.TextHandlers;
 using TagsCloudVisualization.CloudLayouter;
 
 namespace TagsCloudVisualization
