@@ -6,13 +6,12 @@ using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization.Layouters
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ILayouter
     {
         public readonly HashSet<RectangleF> rectangles;
-        private readonly Point center;
         private readonly IPointPlacer pointPlacer;
 
-        public CircularCloudLayouter(Point center, IPointPlacer pointPlacer)
+        public CircularCloudLayouter(IPointPlacer pointPlacer)
         {
             this.pointPlacer = pointPlacer;
             rectangles = new HashSet<RectangleF>();
@@ -31,14 +30,13 @@ namespace TagsCloudVisualization.Layouters
 
             return rect;
         }
-
-        // ReSharper disable once UnusedMember.Global
+        
         public IEnumerable<RectangleF> PutNextRectangles(IEnumerable<SizeF> rectanglesSizes)
             => rectanglesSizes.Select(PutNextRectangle);
 
         private RectangleF GetNextRectanglePosition(SizeF rectangleSize)
         {
-            var rect = new RectangleF();
+            RectangleF rect;
             do
             {
                 rect = new RectangleF(

@@ -7,14 +7,14 @@ using System.Linq;
 namespace TagsCloudVisualization.Visualization
 {
     #pragma warning disable CA1416
-    public class CircularCloudVisualizator
+    public class CircularCloudVisualizer
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
         private readonly string path;
         private readonly Pen pen;
 
-        public CircularCloudVisualizator(
+        public CircularCloudVisualizer(
             int imageWidth,
             int imageHeight,
             Color penColor,
@@ -23,7 +23,6 @@ namespace TagsCloudVisualization.Visualization
             path = imageSavingPath;
             Directory.CreateDirectory(imageSavingPath);
             
-
             bitmap = new Bitmap(imageWidth, imageHeight);
             graphics = Graphics.FromImage(bitmap);
             pen = new Pen(penColor);

@@ -17,7 +17,7 @@ namespace TagsCloudVisualizationTests
     {
         private const float Epsilon = 1e-5f;
         private CircularCloudLayouter layouter;
-        private CircularCloudVisualizator visualizator;
+        private CircularCloudVisualizer visualizer;
         private readonly Point center = new (300, 400);
         private const int RectanglesCount = 100;
         private const int CloudsCount = 100;
@@ -26,8 +26,8 @@ namespace TagsCloudVisualizationTests
         public void SetUp()
         {
             var pointPlacer = new Spiral(center);
-            layouter = new CircularCloudLayouter(center, pointPlacer);
-            visualizator = new CircularCloudVisualizator(800, 600, Color.Black,
+            layouter = new CircularCloudLayouter(pointPlacer);
+            visualizer = new CircularCloudVisualizer(800, 600, Color.Black,
                 Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
         }
 
@@ -36,9 +36,9 @@ namespace TagsCloudVisualizationTests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status is TestStatus.Failed or TestStatus.Inconclusive)
             {
-                visualizator.PutRectangles(layouter.rectangles);
+                visualizer.PutRectangles(layouter.rectangles);
                 var testName = TestContext.CurrentContext.Test.Name;
-                Console.WriteLine($"Tags cloud visualizaton is saved to {visualizator.SaveImage(testName)}");
+                Console.WriteLine($"Tags cloud visualizaton is saved to {visualizer.SaveImage(testName + ".png")}");
             }
         }
 
@@ -107,8 +107,8 @@ namespace TagsCloudVisualizationTests
 
         private double GetCloudDensity(IEnumerable<SizeF> rectanglesSizes)
         {
-            layouter = new CircularCloudLayouter(center, new Spiral(center));
-
+            layouter = new CircularCloudLayouter(new Spiral(center));
+            
             var rectanglesArea = 0.0f;
 
             var lastRectangle = new RectangleF();
