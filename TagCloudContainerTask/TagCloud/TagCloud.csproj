@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\ProcessExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordsPreprocessing\InitialWordFormReader.cs" />
     <Compile Include="WordsPreprocessing\IReader.cs" />

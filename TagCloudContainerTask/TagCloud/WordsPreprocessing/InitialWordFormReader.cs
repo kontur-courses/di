@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using TagCloud.Extensions;
 
 namespace TagCloud.WordsPreprocessing
 {
@@ -17,9 +16,12 @@ namespace TagCloud.WordsPreprocessing
         {
             var initialLeadingFormProcess = CreateInitialLeadingFormProcess(pathToFile);
 
-            var words = initialLeadingFormProcess.ReadStandardOutput();
-
-            return words;
+            using (initialLeadingFormProcess)
+            {
+                initialLeadingFormProcess.Start();
+                while (!initialLeadingFormProcess.StandardOutput.EndOfStream)
+                    yield return initialLeadingFormProcess.StandardOutput.ReadLine();
+            }
         }
 
         private Process CreateInitialLeadingFormProcess(string pathToFile)

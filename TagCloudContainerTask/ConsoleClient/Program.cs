@@ -1,4 +1,5 @@
-﻿using TagCloud.WordsPreprocessing;
+﻿using System.Linq;
+using TagCloud.WordsPreprocessing;
 
 namespace ConsoleClient
 {
@@ -6,8 +7,10 @@ namespace ConsoleClient
     {
         private static void Main(string[] args)
         {
-            var pp = new InitialWordFormReader();
-            var words = pp.ReadWordsFromFile(@"C:/users/sqire/desktop/ss.txt");
+            var wordsReader = new InitialWordFormReader();
+            //TODO: Подумать, можно ли исправить поведение myStem с кириллицей?
+            var testInputFile = @"C:/users/sqire/desktop/words.txt";
+            var words = wordsReader.ReadWordsFromFile(testInputFile).ToList();
         }
     }
 }
