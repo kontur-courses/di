@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NLog;
-using TagCloud.configurations;
 using TagCloud.file_readers;
-using TagCloud.filters;
-using TagCloud.handlers;
+using Microsoft.Extensions.DependencyInjection;
+using TagCloud.configurations;
+using TagCloud.repositories;
+using TagCloud.selectors;
 
 namespace TagCloud
 {
@@ -13,12 +13,16 @@ namespace TagCloud
         public static void Main(string[] args)
         {
             InitLogger();
-            var reader = new TxtReader("simple_input.txt");
-            var filters = new List<IWordFilter> { new LowerCaseWordFilter() };
-            var configuration = new DefaultWordFilterConfiguration(filters);
-            var wordRepository = new WordRepository(reader, configuration);
-            foreach (var word in wordRepository.words)
-                Console.WriteLine(word);
+            var services = new ServiceCollection()
+                .AddSingleton<IFileReader>(new TxtReader("simple_input.txt"))
+                .AddSingleton(new List<IWordHandler> {new ToLowerCaseHandler()})
+                .AddSingleton(new List<IWordFilter>())
+                .AddScoped<IWordRepositoryConfiguration, WordRepositoryConfiguration>()
+                .AddScoped<WordRepository>();
+            var container = services.BuildServiceProvider();
+            var scope = container.CreateScope();
+            var wordRepository = scope.ServiceProvider.GetRequiredService<WordRepository>();
+            var stat = wordRepository.CalculateWordStatistics();
         }
 
         private static void InitLogger()

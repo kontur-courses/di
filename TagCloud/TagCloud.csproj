@@ -10,12 +10,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="simple_input.txt" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
       <PackageReference Include="NLog" Version="5.0.0-preview.3" />
       <PackageReference Include="NLog.Schema" Version="5.0.0-preview.3" />
+      <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+      <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
     </ItemGroup>
 
 </Project>

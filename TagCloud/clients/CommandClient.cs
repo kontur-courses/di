@@ -1,6 +1,4 @@
-﻿using TagCloud.handlers;
-
-namespace TagCloud.clients
+﻿namespace TagCloud.clients
 {
     public class CommandClient : IClient
     {
