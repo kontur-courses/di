@@ -6,31 +6,23 @@ namespace CloudTagContainer
 {
     public class Visualizer
     {
-        private readonly IFileReader fileReader;
-        private readonly IWordsPreprocessor preprocessor;
         private readonly IWordConverter wordConverter;
         private readonly VisualizerSettings settings;
         private readonly ILayouter layouter;
 
-        public Visualizer(IFileReader fileReader,
-            IWordsPreprocessor preprocessor,
+        public Visualizer(
             IWordConverter wordConverter,
             VisualizerSettings settings,
             ILayouter layouter)
         {
-            this.fileReader = fileReader;
-            this.preprocessor = preprocessor;
             this.wordConverter = wordConverter;
             this.settings = settings;
             this.layouter = layouter;
         }
 
-        public Bitmap Visualize(string path)
+        public Bitmap Visualize(string[] words)
         {
-            fileReader.SetPath(path);
-            var words = fileReader.ReadWords();
-            var preprocessesWords = preprocessor.Preprocess(words);
-            var convertedWords = wordConverter.Convert(preprocessesWords);
+            var convertedWords = wordConverter.Convert(words);
             var image = CreateImage(convertedWords);
             return image;
         }
