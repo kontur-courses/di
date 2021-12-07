@@ -5,12 +5,12 @@ namespace TagCloud.Visualization
 {
     public interface IDrawer
     {
-        void DrawCanvasBoundary(Graphics g, Size imgSize);
+        void DrawCanvasBoundary(Graphics graphics, Size imgSize);
 
-        void DrawAxis(Graphics g, Size imgSize, Point cloudCenter);
+        void DrawAxis(Graphics graphics, Size imgSize, Point cloudCenter);
 
-        void DrawCloudBoundary(Graphics g, Size imgSize, Point cloudCenter, int cloudCircleRadius);
+        void DrawCloudBoundary(Graphics graphics, Size imgSize, Point cloudCenter, int cloudCircleRadius);
 
-        void DrawRectangles(Graphics g, List<Rectangle> rectangles);
+        void DrawRectangles(Graphics graphics, List<Rectangle> rectangles);
     }
 }

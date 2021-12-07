@@ -12,17 +12,17 @@ namespace TagCloud.Visualization
             this.drawer = drawer;
         }
 
-        public void VisualizeCloud(Graphics g, Point cloudCenter, List<Rectangle> rectangles)
+        public void VisualizeCloud(Graphics graphics, Point cloudCenter, List<Rectangle> rectangles)
         {
-            drawer.DrawRectangles(g, rectangles);
+            drawer.DrawRectangles(graphics, rectangles);
         }
 
-        public void VisualizeDebuggingMarkup(Graphics g, Size imgSize,
+        public void VisualizeDebuggingMarkup(Graphics graphics, Size imgSize,
             Point cloudCenter, int cloudCircleRadius)
         {
-            drawer.DrawCanvasBoundary(g, imgSize);
-            drawer.DrawAxis(g, imgSize, cloudCenter);
-            drawer.DrawCloudBoundary(g, imgSize, cloudCenter, cloudCircleRadius);
+            drawer.DrawCanvasBoundary(graphics, imgSize);
+            drawer.DrawAxis(graphics, imgSize, cloudCenter);
+            drawer.DrawCloudBoundary(graphics, imgSize, cloudCenter, cloudCircleRadius);
         }
     }
 }
