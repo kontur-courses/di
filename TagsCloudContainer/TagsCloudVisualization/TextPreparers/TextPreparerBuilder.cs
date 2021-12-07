@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.TextPreparers
 {
     public class TextPreparerBuilder : ITextPreparerBuilder
     {
-        private readonly List<Func<string, bool>> filters;
+        private readonly List<Func<string, bool>> filters = new();
         private readonly List<Func<string, string>> preparations = new();
 
         public ITextPreparerBuilder WithFilter(Func<string, bool> filter)
