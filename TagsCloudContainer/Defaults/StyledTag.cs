@@ -6,37 +6,42 @@ namespace TagsCloudContainer.Defaults;
 internal class StyledTag : IStyledTag, IDisposable
 {
     private readonly string tag;
-    private readonly Font font;
-    private readonly Brush brush;
+    private readonly Style style;
     private bool disposedValue;
 
-    public StyledTag(string tag, Font font, Brush brush)
+    public StyledTag(string tag, Style style)
     {
         this.tag = tag;
-        this.font = font;
-        this.brush = brush;
+        this.style = style;
     }
 
     public void DrawSelf(Graphics graphics, Rectangle position)
     {
-        graphics.DrawString(tag, font, brush, position);
+        graphics.DrawString(tag, style.Font, style.Brush, position);
     }
 
     public Size GetTrueGraphicSize(Graphics graphics)
     {
-        return Size.Ceiling(graphics.MeasureString(tag, font));
+        return Size.Ceiling(graphics.MeasureString(tag, style.Font));
     }
 
-    public virtual void Dispose()
+    protected virtual void Dispose(bool disposing)
     {
         if (!disposedValue)
         {
-            font.Dispose();
-            brush.Dispose();
-
+            style.Dispose();
             disposedValue = true;
         }
+    }
 
+    ~StyledTag()
+    {
+        Dispose(disposing: false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 }

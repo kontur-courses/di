@@ -1,136 +1,84 @@
 ﻿using Autofac;
-using CloudLayouter;
-using CommandLine;
-using System.Drawing.Imaging;
+using Mono.Options;
+using System.Reflection;
 using TagsCloudContainer.Defaults;
+using TagsCloudContainer.Defaults.SettingsProviders;
 using TagsCloudVisualization.Abstractions;
-using StringReader = TagsCloudContainer.Defaults.StringReader;
 
 namespace TagsCloudContainer;
 public class Program
 {
-    public class Options
-    {
-        private const string inputGroup = "input";
-        [Option('f', "files", HelpText = "Input files to be processed. This takes precedence over '-s' '--string' option", Group = inputGroup)]
-        public IEnumerable<string>? InputFiles { get; set; }
-
-        [Option('s', "string", HelpText = "Input string to be processed.", Group = inputGroup)]
-        public string? InputString { get; set; }
-    }
     public static void Main(string[] args)
     {
-        args = new[] { "-s", "tag1 Tag1 tag3 Tag2 tag1 TAG3 tag3 tag4 tag2 tag1" };
+        args = new[] { "-h", "--string", "tag1 Tag1 tag3 Tag2 tag1 TAG3 tag3 tag4 tag2 tag1", "--center", "100, 200", "--color", "red" };
         var builder = new ContainerBuilder();
-        RegisterAll(builder);
+        var assemblies = new[] {Assembly.GetExecutingAssembly() };
+        RegisterServices(builder,assemblies);
+        RegisterSettingsProviders(builder,assemblies);
         var container = builder.Build();
+        ParseSettings(args, container);
 
-        Parser.Default.ParseArguments<Options>(args).WithParsed(opts => Run(opts, container));
+        Run(container);
     }
 
-    private static void Run(Options obj, IContainer container)
+    private static void ParseSettings(string[] args, IContainer container)
     {
-        ITextReader? textReader;
-        if (obj.InputFiles != null && obj.InputFiles.Any())
+        var allSettingsProviders = container.Resolve<IEnumerable<ICliSettingsProvider>>().ToList();
+        var argsList = args.ToList();
+        var allOptions = allSettingsProviders.Select(x => x.GetCliOptions()).ToList();
+        var helperOptions = new OptionSet
         {
-            textReader = container.Resolve<FileReader>(TypedParameter.From(obj.InputFiles.ToArray()));
-        }
-        else if (obj.InputString != null && !string.IsNullOrWhiteSpace(obj.InputString))
-        {
-            textReader = container.Resolve<StringReader>(TypedParameter.From(obj.InputString));
-        }
-        else
-        {
-            textReader = new StringReader(string.Empty);
-        }
+            { "h|?|help", "Show this help", (string v) => ShowHelp(allOptions) }
+        };
+        allOptions.Add(helperOptions);
 
-        var textAnalyzer = container.Resolve<TextAnalyzer>(TypedParameter.From(textReader));
-        var tags = container.Resolve<TagPacker>(TypedParameter.From<ITextAnalyzer>(textAnalyzer));
-        var layouter = container.Resolve<CircularCloudLayouter>();
-        var styler = container.Resolve<Styler>();
-        var visualizerSettings = container.Resolve<BitmapSetting>();
+        foreach (var item in allOptions)
+        {
+            argsList = item.Parse(argsList);
+            if (!argsList.Any())
+                break;
+        }
+    }
 
-        var vis = new Visualizer(visualizerSettings, tags, layouter, styler);
+    private static void ShowHelp(List<OptionSet> allOptions)
+    {
+        foreach (var option in allOptions)
+        {
+            option.WriteOptionDescriptions(Console.Out);
+        }
+    }
+
+    private static void Run(IContainer container)
+    {
+        var vis = container.Resolve<IVisualizer>();
+        var output = container.Resolve<OutputSettings>();
         var img = vis.GetBitmap();
-        img.Save("img.png", ImageFormat.Png);
+        img.Save(output.OutputPath, output.ImageFormat.GetFormat());
     }
 
-    private static void RegisterAll(ContainerBuilder builder)
+    private static void RegisterServices(ContainerBuilder builder, Assembly[] assemblies)
     {
-        RegisterVisualizer(builder);
-        RegisterLayouter(builder);
-        RegisterPacker(builder);
-        RegisterAnalyzer(builder);
-        RegisterNormalizer(builder);
-        RegisterWordFilter(builder);
-        RegisterSettingsProviders(builder);
-        RegisterTextReader(builder);
-        RegisterStyler(builder);
+        var methods = assemblies.SelectMany(
+            assembly => assembly.GetTypes()
+            .SelectMany(
+                type => type.GetMethods()
+                .Where(
+                    method => method.GetCustomAttribute<RegisterAttribute>() != null && method.IsStatic
+                    )
+                 )
+             );
+
+        foreach (var method in methods)
+        {
+            method.Invoke(null, new[] { builder });
+        }
     }
 
-    private static void Register<TImplementation, TInterface>(ContainerBuilder builder, bool singleton = false)
-        where TImplementation : TInterface
-        where TInterface : notnull
+    private static void RegisterSettingsProviders(ContainerBuilder builder, Assembly[] assemblies)
     {
-        var registration = builder.RegisterType<TImplementation>()
-            .As<TInterface>()
-            .AsSelf();
-        if (singleton)
-            registration.SingleInstance();
-    }
-
-    private static void RegisterVisualizer(ContainerBuilder builder)
-    {
-        Register<Visualizer, IVisualizer>(builder);
-    }
-
-    private static void RegisterStyler(ContainerBuilder builder)
-    {
-        Register<Styler, IStyler>(builder);
-    }
-
-    private static void RegisterTextReader(ContainerBuilder builder)
-    {
-        Register<StringReader, ITextReader>(builder);
-        Register<FileReader, ITextReader>(builder);
-    }
-
-    private static void RegisterSettingsProviders(ContainerBuilder builder)
-    {
-        Register<BitmapSetting, ISettingsProvider>(builder, true);
-        Register<BigBitmapSetting, ISettingsProvider>(builder, true);
-        Register<BigBitmapSetting, BitmapSetting>(builder, true);
-        Register<LayouterSettingsProvider, ISettingsProvider>(builder, true);
-        Register<TextAnalyzerSettings, ISettingsProvider>(builder, true);
-        Register<DefaultStyle, ISettingsProvider>(builder, true);
-    }
-
-    private static void RegisterWordFilter(ContainerBuilder builder)
-    {
-        Register<NoneFilter, IWordFilter>(builder);
-    }
-
-    private static void RegisterNormalizer(ContainerBuilder builder)
-    {
-        Register<LowerNormalizer, IWordNormalizer>(builder);
-        Register<Capitalizer, IWordNormalizer>(builder);
-    }
-
-    private static void RegisterAnalyzer(ContainerBuilder builder)
-    {
-        Register<TextAnalyzer, ITextAnalyzer>(builder);
-    }
-
-    private static void RegisterPacker(ContainerBuilder builder)
-    {
-        Register<TagPacker, ITagPacker>(builder);
-    }
-
-    private static void RegisterLayouter(ContainerBuilder builder)
-    {
-        builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
-        builder.RegisterAdapter<LayouterSettingsProvider, CircularCloudLayouter>((cont, p) => cont.Resolve<LayouterSettingsProvider>().Create())
-            .As<CircularCloudLayouter>();
+        builder.RegisterAssemblyTypes(assemblies)
+            .AssignableTo<ICliSettingsProvider>()
+            .AsSelf().As<ICliSettingsProvider>()
+            .SingleInstance();
     }
 }
-

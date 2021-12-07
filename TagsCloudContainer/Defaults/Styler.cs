@@ -1,26 +1,27 @@
-﻿using TagsCloudVisualization.Abstractions;
+﻿using Autofac;
+using TagsCloudContainer.Defaults.SettingsProviders;
+using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 
-public class Styler : IStyler, IDisposable
-
+public class Styler : IStyler
 {
-    private readonly DefaultStyle settings;
+    private readonly StyleProvider settings;
 
-    public Styler(DefaultStyle settings)
+    public Styler(StyleProvider settings)
     {
         this.settings = settings;
     }
 
-    public void Dispose()
+    [Register]
+    public static void Register(ContainerBuilder builder)
     {
-        settings.Dispose();
-        GC.SuppressFinalize(this);
+        builder.RegisterType<Styler>().AsSelf().As<IStyler>();
     }
 
     public IStyledTag Style(ITag source)
     {
-        var (font, brush) = settings.GetStyle(source);
-        return new StyledTag(source.Value, font, brush);
+        var style = settings.GetStyle(source);
+        return new StyledTag(source.Value, style);
     }
 }

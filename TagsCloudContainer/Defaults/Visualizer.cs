@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using Autofac;
+using System.Drawing;
+using TagsCloudContainer.Defaults.SettingsProviders;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
@@ -34,5 +36,11 @@ public class Visualizer : IVisualizer
         }
 
         return bitmap;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<Visualizer>().AsSelf().As<IVisualizer>();
     }
 }

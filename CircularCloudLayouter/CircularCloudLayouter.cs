@@ -1,10 +1,9 @@
 ﻿using CloudLayouter.Internals;
 using System.Drawing;
-using TagsCloudVisualization.Abstractions;
 
 namespace CloudLayouter;
 
-public class CircularCloudLayouter : ILayouter
+public class CircularCloudLayouter
 {
     public Point Center { get; private set; }
 

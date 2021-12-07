@@ -1,4 +1,5 @@
-﻿using TagsCloudVisualization.Abstractions;
+﻿using Autofac;
+using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -23,5 +24,11 @@ public class TagPacker : ITagPacker
 
             yield return tag;
         }
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<TagPacker>().AsSelf().As<ITagPacker>();
     }
 }
