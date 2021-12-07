@@ -6,28 +6,28 @@ namespace CloudTagContainer
 {
     public class Visualizer
     {
-        private readonly IWordConverter wordConverter;
+        private readonly IWordSizer wordSizer;
         private readonly VisualizerSettings settings;
         private readonly ILayouter layouter;
 
         public Visualizer(
-            IWordConverter wordConverter,
+            IWordSizer wordSizer,
             VisualizerSettings settings,
             ILayouter layouter)
         {
-            this.wordConverter = wordConverter;
+            this.wordSizer = wordSizer;
             this.settings = settings;
             this.layouter = layouter;
         }
 
         public Bitmap Visualize(string[] words)
         {
-            var convertedWords = wordConverter.Convert(words);
+            var convertedWords = wordSizer.Convert(words);
             var image = CreateImage(convertedWords);
             return image;
         }
 
-        private Bitmap CreateImage(List<IWord> words)
+        private Bitmap CreateImage(List<SizedWord> words)
         {
             var imageSize = settings.ImageSize;
             using var bmp = new Bitmap(imageSize.Width, imageSize.Height);
@@ -40,11 +40,11 @@ namespace CloudTagContainer
             return bmp;
         }
 
-        private void DrawWord(IWord word, Graphics g)
+        private void DrawWord(SizedWord word, Graphics g)
         {
-            var position = layouter.PutNextRectangle(word.GetSize());
+            var position = layouter.PutNextRectangle(word.WordSize);
             var brush = new SolidBrush(settings.TextColor);
-            g.DrawString(word.GetText(), settings.TextFont, brush, position);
+            g.DrawString(word.Word, settings.TextFont, brush, position);
         }
     }
 }
