@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.WordWeigher;
+using TagCloudContainer.Infrastructure.Lemmatizer;
 
 namespace TagCloudContainerTests;
 
@@ -9,8 +9,7 @@ internal class RussianLemmatizerTests
     private readonly RussianLemmatizer sut = new();
 
     [TestCase(null, false, TestName = "ReturnFalseOnNullString")]
-    [TestCase("", false, TestName = "ReturnTrueOnEmptyString")]
-    [TestCase("под", false, TestName = "ReturnFalseOnAuxiliaryPartOfSpeech")]
+    [TestCase("", false, TestName = "ReturnFalseOnEmptyString")]
     [TestCase("коровы", true, TestName = "ReturnTrueOnSuccessfulLemmatization")]
     public void TryLemmatize_ShouldReturnFalseOnEmptyString(string word, bool expected)
     {
@@ -19,14 +18,11 @@ internal class RussianLemmatizerTests
         isLemmatized.Should().Be(expected);
     }
 
-    [TestCase(null, null, TestName = "OutNullOnNullString")]
-    [TestCase("", null, TestName = "OutNullOnEmptyString")]
-    [TestCase("под", null, TestName = "OutNullOnAuxiliaryPartOfSpeech")]
-    [TestCase("коровы", "корова", TestName = "OutCorrectLemmaOnRussianWord")]
-    public void TryLemmatize_Should(string word, string expected)
+    [TestCaseSource(typeof(RussianLemmatizerTestCases), nameof(RussianLemmatizerTestCases.TestCaseDatas))]
+    public void TryLemmatize_Should(string word, Lemma expected)
     {
         sut.TryLemmatize(word, out var lemma);
 
-        lemma.Should().Be(expected);
+        lemma.Should().BeEquivalentTo(expected);
     }
 }

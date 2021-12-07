@@ -6,7 +6,9 @@ using NUnit.Framework;
 using TagCloudContainer.App.UI;
 using TagCloudContainer.Infrastructure.Common;
 using TagCloudContainer.Infrastructure.FileReader;
+using TagCloudContainer.Infrastructure.Filter;
 using TagCloudContainer.Infrastructure.Layouter;
+using TagCloudContainer.Infrastructure.Lemmatizer;
 using TagCloudContainer.Infrastructure.Painter;
 using TagCloudContainer.Infrastructure.Saver;
 using TagCloudContainer.Infrastructure.WordWeigher;
@@ -22,10 +24,8 @@ internal class ConsoleUITests
     public void OneTimeSetUp()
     {
         settings = new AppSettings { OutputPath = "outputTest" };
-        var reader = new MockReader();
-        var wordWeigher = new WordWeigher(new RussianLemmatizer());
         var painter = new Painter(new RandomPalette(), new CircularCloudLayouter(settings), settings);
-        sut = new ConsoleUI(reader, painter, wordWeigher, new ImageSaver());
+        sut = new ConsoleUI(new MockReader(), painter, new WordWeigher(), new ImageSaver(), new RussianLemmatizer(), new Filter());
     }
 
     [Test]

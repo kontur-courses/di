@@ -7,10 +7,10 @@ namespace TagCloudContainerTests;
 
 internal class WordWeigherTests
 {
-    private readonly WordWeigher sut = new(new RussianLemmatizer());
+    private readonly WordWeigher sut = new();
 
-    [TestCaseSource(typeof(WordWeigherTestCases), nameof(WordWeigherTestCases.WeightedWordsTestCases))]
-    public void GetWeightedWords_Should(IEnumerable<string> lines, IEnumerable<WeightedWord> expected)
+    [TestCaseSource(typeof(WordWeigherTestCases), nameof(WordWeigherTestCases.TestCaseDatas))]
+    public void GetWeightedWords_Should(IEnumerable<string> lines, Dictionary<string, int> expected)
     {
         var actual = sut.GetWeightedWords(lines);
 

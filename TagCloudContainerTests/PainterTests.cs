@@ -5,7 +5,6 @@ using NUnit.Framework;
 using TagCloudContainer.Infrastructure.Common;
 using TagCloudContainer.Infrastructure.Layouter;
 using TagCloudContainer.Infrastructure.Painter;
-using TagCloudContainer.Infrastructure.WordWeigher;
 
 namespace TagCloudContainerTests;
 
@@ -18,7 +17,7 @@ internal class PainterTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        settings = new AppSettings() {ImageWidth = 1000, ImageHeight = 2000};
+        settings = new AppSettings { ImageWidth = 1000, ImageHeight = 2000 };
         layouter = new CircularCloudLayouter(settings);
         palette = new RandomPalette();
     }
@@ -39,7 +38,7 @@ internal class PainterTests
     {
         var painter = new Painter(palette, layouter, settings);
 
-        var bitmap = painter.CreateImage(new List<WeightedWord> { new("test", 1) });
+        var bitmap = painter.CreateImage(new Dictionary<string, int> { { "test", 1 } });
 
         bitmap.Size.Width.Should().Be(settings.ImageWidth);
         bitmap.Size.Height.Should().Be(settings.ImageHeight);
@@ -50,7 +49,7 @@ internal class PainterTests
     {
         var painter = new Painter(palette, layouter, settings);
 
-        var action = () => painter.CreateImage(new List<WeightedWord>());
+        var action = () => painter.CreateImage(new Dictionary<string, int>());
 
         action.Should().Throw<InvalidOperationException>().WithMessage("Impossible to save an empty tag cloud");
     }

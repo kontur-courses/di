@@ -3,7 +3,9 @@ using CommandLine;
 using TagCloudContainer.App.UI;
 using TagCloudContainer.Infrastructure.Common;
 using TagCloudContainer.Infrastructure.FileReader;
+using TagCloudContainer.Infrastructure.Filter;
 using TagCloudContainer.Infrastructure.Layouter;
+using TagCloudContainer.Infrastructure.Lemmatizer;
 using TagCloudContainer.Infrastructure.Painter;
 using TagCloudContainer.Infrastructure.Saver;
 using TagCloudContainer.Infrastructure.WordWeigher;
@@ -24,14 +26,15 @@ public static class Program
     private static IContainer BuildDependencies(IAppSettings appSettings)
     {
         var builder = new ContainerBuilder();
-        builder.RegisterType<RandomPalette>().As<IPalette>();
-        builder.RegisterType<PlainTextFileReader>().As<IFileReader>();
-        builder.RegisterType<Painter>().As<IPainter>();
-        builder.RegisterType<ImageSaver>().As<IImageSaver>();
-        builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-        builder.RegisterType<WordWeigher>().As<IWordWeigher>();
-        builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>();
         builder.RegisterType<ConsoleUI>().As<IUserInterface>();
+        builder.RegisterType<RandomPalette>().As<IPalette>();
+        builder.RegisterType<Painter>().As<IPainter>();
+        builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
+        builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
+        builder.RegisterType<WordWeigher>().As<IWordWeigher>().SingleInstance();
+        builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>().SingleInstance();
+        builder.RegisterType<PlainTextFileReader>().As<IFileReader>().SingleInstance();
+        builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter)).As<IFilter>();
         builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
 
         return builder.Build();

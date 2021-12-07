@@ -1,15 +1,14 @@
 ﻿using System.Drawing;
 using TagCloudContainer.Infrastructure.Common;
 using TagCloudContainer.Infrastructure.Layouter;
-using TagCloudContainer.Infrastructure.WordWeigher;
 
 namespace TagCloudContainer.Infrastructure.Painter;
 
 public class Painter : IPainter
 {
     private readonly ICloudLayouter layouter;
-    private readonly IAppSettings settings;
     private readonly IPalette palette;
+    private readonly IAppSettings settings;
 
     public Painter(IPalette palette, ICloudLayouter layouter, IAppSettings settings)
     {
@@ -19,7 +18,7 @@ public class Painter : IPainter
         this.settings = settings;
     }
 
-    public Bitmap CreateImage(ICollection<WeightedWord> weightedWords)
+    public Bitmap CreateImage(Dictionary<string, int> weightedWords)
     {
         if (weightedWords == null || !weightedWords.Any())
             throw new InvalidOperationException("Impossible to save an empty tag cloud");
@@ -41,17 +40,17 @@ public class Painter : IPainter
         return bitmap;
     }
 
-    private List<Tag> GetTags(IEnumerable<WeightedWord> weightedWords, Graphics graphics)
+    private List<Tag> GetTags(Dictionary<string, int> weightedWords, Graphics graphics)
     {
         var positionedWords = new List<Tag>();
 
-        foreach (var weightedWord in weightedWords)
+        foreach (var (word, weight) in weightedWords)
         {
-            var fontSize = 10 + weightedWord.Weight / 2;
+            var fontSize = 10 + weight / 2;
             using var font = new Font(settings.FontName, fontSize);
-            var size = graphics.MeasureString(weightedWord.Word, font);
+            var size = graphics.MeasureString(word, font);
             var rectangle = layouter.PutNextRectangle(Size.Ceiling(size));
-            positionedWords.Add(new Tag(weightedWord.Word, rectangle, fontSize));
+            positionedWords.Add(new Tag(word, rectangle, fontSize));
         }
 
         return positionedWords;
