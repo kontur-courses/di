@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface ITextParser
     {
-        IEnumerable<string> GetWords();
+        IEnumerable<string> GetWords(string path);
     }
 }

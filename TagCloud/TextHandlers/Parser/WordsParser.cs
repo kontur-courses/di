@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using TagsCloudVisualization;
 
-namespace TagCloud.TextHandlers
+namespace TagCloud.TextHandlers.Parser
 {
     public class WordsParser : ITextParser
     {
-        private readonly string path;
 
         public WordsParser(string path)
         {
-            this.path = path;
         }
 
-        public IEnumerable<string> GetWords()
+        public IEnumerable<string> GetWords(string path)
         {
             return File.ReadAllLines(path);
         }

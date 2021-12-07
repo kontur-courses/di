@@ -1,70 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using Autofac;
-using DeepMorphy;
 using TagCloud.TextHandlers;
 using TagCloud.TextHandlers.Converters;
 using TagCloud.TextHandlers.Filters;
+using TagCloud.TextHandlers.Parser;
+using TagsCloudVisualization;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.PointGenerator;
-using WeCantSpell.Hunspell;
 using IContainer = Autofac.IContainer;
 
-namespace TagsCloudVisualization
+namespace TagCloud
 {
     public class Program
     {
         private static IContainer container;
 
-        public static void Main()
+        public static void Main(string[] args)
         {
-            // var morph = new MorphAnalyzer();
-            // var results = morph.Parse(new string[]
-            // {
-            //     "королёвские",
-            //     "тысячу",
-            //     "миллионных",
-            //     "красотка",
-            //     "1-ый"
-            // }).ToArray();
-            // var morphInfo = results[0];
-            
-            
-            /*try
-            {
-                CompositionRootInitialize();
-                using (container.BeginLifetimeScope())
-                {
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }*/
+            CompositionRootInitialize();
+            var app = container.Resolve<IApp>();
+            app.Run(args);
         }
         
 
         private static void CompositionRootInitialize()
         {
             var builder = new ContainerBuilder();
+            RegisterTextHandlers(builder);
+            builder.RegisterType<ConsoleApp.ConsoleApp>().As<IApp>();
             builder.RegisterType<Cache>().As<ICache>();
             builder.Register(c => new Spiral(0.1f, 0.5, new PointF(0, 0), c.Resolve<ICache>())).As<IPointGenerator>();
             builder.Register(c => new Visualizer(c.Resolve<ICloudLayouter>()));
-            builder.RegisterType<CloudLayouter.CloudLayouter>().AsSelf().As<ICloudLayouter>();
-            builder.RegisterType<WordsHandler>().AsSelf();
+            builder.RegisterType<CloudLayouter>().AsSelf().As<ICloudLayouter>();
             container = builder.Build();
         }
 
         private static void RegisterTextHandlers(ContainerBuilder builder)
         {
+            builder.RegisterType<TextReaderFacade>().As<IReader>();
             builder.RegisterType<WordsParser>().As<ITextParser>();
             builder.RegisterType<BoringWordsFilter>().As<IFilter>();
             builder.RegisterType<TextFilter>().As<ITextFilter>();
             builder.RegisterType<WordConverter>().As<IWordConverter>();
+            builder.RegisterType<WordsCountStatistics>().AsSelf();
         }
     }
 }

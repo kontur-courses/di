@@ -4,7 +4,7 @@
     {
         public bool IsSuit(string word)
         {
-            return true;
+            return word.Length > 3;
         }
     }
 }

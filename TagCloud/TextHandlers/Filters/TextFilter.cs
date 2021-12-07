@@ -13,7 +13,7 @@ namespace TagCloud.TextHandlers.Filters
         {
         }
 
-        public TextFilter(IFilter[] filters)
+        public TextFilter(params IFilter[] filters)
         {
             foreach (var filter in filters)
             {
