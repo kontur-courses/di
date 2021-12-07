@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagCloud.Words.Filtering
 {
-    public class WordsFilter : IFilter
+    public class WordsLengthFilter : IFilter
     {
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
