@@ -10,8 +10,8 @@ namespace TagsCloudContainer.Rendering
 
         public Canvas(Bitmap bitmap, Graphics graphics)
         {
-            Bitmap = bitmap ?? throw new ArgumentNullException(nameof(bitmap));
-            Graphics = graphics ?? throw new ArgumentNullException(nameof(graphics));
+            Bitmap = bitmap;
+            Graphics = graphics;
         }
 
         public void Dispose()

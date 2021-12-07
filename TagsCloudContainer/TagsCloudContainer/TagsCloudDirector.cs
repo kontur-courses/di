@@ -1,45 +1,46 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using TagsCloudContainer.Layout;
+using TagsCloudContainer.Preprocessing;
 using TagsCloudContainer.Rendering;
-using TagsCloudContainer.Settings;
+using TagsCloudContainer.Settings.Interfaces;
 using TagsCloudContainer.WordsLoading;
 
 namespace TagsCloudContainer
 {
-    public class TagsCloudDirector
+    public class TagsCloudDirector : ITagsCloudDirector
     {
         private readonly IFileLoaderFactory fileLoaderFactory;
+        private readonly IEnumerable<IWordsPreprocessor> preprocessors;
         private readonly IFileLoadSettings fileLoadSettings;
-        private readonly IWordsFiltersSettings wordsFiltersSettings;
-        private readonly ITagsCloudLayouterSettings defaultTagsCloudLayouterSettings;
         private readonly IWordsColorSettings wordsColorSettings;
         private readonly ITagsCloudImageSaver tagsCloudImageSaver;
+        private readonly ITagsCloudLayouter tagsCloudLayouter;
 
         public TagsCloudDirector(
             IFileLoaderFactory fileLoaderFactory,
+            IEnumerable<IWordsPreprocessor> preprocessors,
             IFileLoadSettings fileLoadSettings,
-            IWordsFiltersSettings wordsFiltersSettings,
-            ITagsCloudLayouterSettings defaultTagsCloudLayouterSettings,
             IWordsColorSettings wordsColorSettings,
-            ITagsCloudImageSaver tagsCloudImageSaver)
+            ITagsCloudImageSaver tagsCloudImageSaver,
+            ITagsCloudLayouter tagsCloudLayouter)
         {
             this.fileLoaderFactory = fileLoaderFactory;
+            this.preprocessors = preprocessors;
             this.fileLoadSettings = fileLoadSettings;
-            this.wordsFiltersSettings = wordsFiltersSettings;
-            this.defaultTagsCloudLayouterSettings = defaultTagsCloudLayouterSettings;
             this.wordsColorSettings = wordsColorSettings;
             this.tagsCloudImageSaver = tagsCloudImageSaver;
+            this.tagsCloudLayouter = tagsCloudLayouter;
         }
 
         public void Render()
         {
             var fileLoader = fileLoaderFactory.GetByFileName(fileLoadSettings.FileName);
-            var words = fileLoader.LoadWords(fileLoadSettings.FileName).Select(word => word.ToLower());
-            foreach (var wordsFilter in wordsFiltersSettings.Filters)
-                words = wordsFilter.Filter(words);
+            var words = fileLoader.LoadWords(fileLoadSettings.FileName);
+            foreach (var preprocessor in preprocessors)
+                words = preprocessor.Preprocess(words);
 
-            var layout = defaultTagsCloudLayouterSettings.Layouter.GetCloudLayout(words);
+            var layout = tagsCloudLayouter.GetCloudLayout(words);
             var colorMap = wordsColorSettings.ColorMapper.GetColorMap(layout);
 
             var wordsStyles = new List<WordStyle>();
@@ -50,6 +51,11 @@ namespace TagsCloudContainer
             }
 
             tagsCloudImageSaver.Save(wordsStyles, layout.ImageSize);
+        }
+
+        public void Dispose()
+        {
+            tagsCloudImageSaver?.Dispose();
         }
     }
 }

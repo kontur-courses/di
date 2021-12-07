@@ -1,36 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Preprocessing
 {
-    public interface IWordsFilter
-    {
-        IEnumerable<string> Filter(IEnumerable<string> words);
-    }
-
-    public class SpeechPartWordsFilter : IWordsFilter
+    public class SpeechPartWordsFilter : IWordsPreprocessor
     {
         private readonly IWordSpeechPartParser wordSpeechPartParser;
-        private readonly HashSet<SpeechPart> speechPartsToRemove;
+        private readonly ISpeechPartFilterSettings settings;
 
         public SpeechPartWordsFilter(IWordSpeechPartParser wordSpeechPartParser,
-            HashSet<SpeechPart> speechPartsToRemove)
+            ISpeechPartFilterSettings settings)
         {
-            this.wordSpeechPartParser =
-                wordSpeechPartParser ?? throw new ArgumentNullException(nameof(wordSpeechPartParser));
-
-            this.speechPartsToRemove =
-                speechPartsToRemove ?? throw new ArgumentNullException(nameof(speechPartsToRemove));
+            this.wordSpeechPartParser = wordSpeechPartParser;
+            this.settings = settings;
         }
 
-        public IEnumerable<string> Filter(IEnumerable<string> words)
+        public IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
-            if (words == null)
-                throw new ArgumentNullException(nameof(words));
-
             return wordSpeechPartParser.ParseWords(words)
-                .Where(word => !speechPartsToRemove.Contains(word.SpeechPart))
+                .Where(word => !settings.SpeechPartsToRemove.Contains(word.SpeechPart))
                 .Select(word => word.Word);
         }
     }

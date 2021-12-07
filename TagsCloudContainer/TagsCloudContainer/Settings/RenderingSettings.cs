@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Settings
 {
-    public interface IRenderingSettings
-    {
-        Size? DesiredImageSize { get; set; }
-        float Scale { get; set; }
-        Brush Background { get; set; }
-    }
-
-    public class DefaultRenderingSettings : IRenderingSettings
+    public class RenderingSettings : IRenderingSettings
     {
         public Size? DesiredImageSize
         {
             get => desiredImageSize;
-            set
+            init
             {
                 if (value.HasValue)
                     if (value.Value.Height <= 0 || value.Value.Width <= 0)
@@ -28,7 +22,7 @@ namespace TagsCloudContainer.Settings
         public float Scale
         {
             get => scale;
-            set
+            init
             {
                 if (value <= 0)
                     throw new ApplicationException("Scale must be positive.");
@@ -37,9 +31,14 @@ namespace TagsCloudContainer.Settings
             }
         }
 
-        public Brush Background { get; set; } = new SolidBrush(Color.Transparent);
+        public Brush Background { get; init; } = new SolidBrush(Color.Transparent);
 
-        private float scale = 1;
-        private Size? desiredImageSize;
+        private readonly float scale = 1;
+        private readonly Size? desiredImageSize;
+
+        public void Dispose()
+        {
+            Background?.Dispose();
+        }
     }
 }

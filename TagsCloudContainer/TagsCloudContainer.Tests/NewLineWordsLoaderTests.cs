@@ -28,13 +28,10 @@ namespace TagsCloudContainer.Tests
                 .Should().BeEquivalentTo(words);
         }
 
-        [Test]
-        public void LoadWords_WithNotExistingFile_ThrowsApplicationException() =>
-            Assert.Throws<ApplicationException>(() => loader.LoadWords("123"));
-
-        [Test]
-        public void LoadWords_WithNull_ThrowsArgumentException() =>
-            Assert.Throws<ArgumentNullException>(() => loader.LoadWords(null));
+        [TestCase("123", TestName = "File not exist")]
+        [TestCase(null, TestName = "null")]
+        public void LoadWords_WithNotExistingFile_ThrowsApplicationException(string filename) =>
+            Assert.Throws<ApplicationException>(() => loader.LoadWords(filename));
 
         [TestCaseSource(nameof(GetWordsFromEncodingTestCases))]
         public void LoadWords_FromEncoding(Encoding encoding)

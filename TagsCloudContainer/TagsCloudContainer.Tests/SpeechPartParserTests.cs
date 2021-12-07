@@ -28,7 +28,7 @@ namespace TagsCloudContainer.Tests
         {
             var words = new List<string> {input, "мир"};
             parser.ParseWords(words)
-                .Should().BeEquivalentTo(new List<(string, SpeechPart)> {("мир", SpeechPart.S)});
+                .Should().BeEquivalentTo(new List<SpeechPartWord> {new("мир", SpeechPart.S)});
         }
 
         [Timeout(500)]
@@ -40,7 +40,7 @@ namespace TagsCloudContainer.Tests
 
         [TestCaseSource(nameof(ParseWordsReturnWordInfosCases))]
         public void ParseWords_WithNormalizedWords_ReturnWordInfos(List<string> words,
-            List<(string, SpeechPart)> expected)
+            List<SpeechPartWord> expected)
         {
             parser.ParseWords(words)
                 .Should().BeEquivalentTo(expected);
@@ -50,17 +50,17 @@ namespace TagsCloudContainer.Tests
         {
             yield return new TestCaseData(
                 new List<string> {"привет", "в", "этот", "чудесный"},
-                new List<(string, SpeechPart)>
+                new List<SpeechPartWord>
                 {
-                    ("привет", SpeechPart.S),
-                    ("в", SpeechPart.PR),
-                    ("этот", SpeechPart.APRO),
-                    ("чудесный", SpeechPart.A),
+                    new("привет", SpeechPart.S),
+                    new("в", SpeechPart.PR),
+                    new("этот", SpeechPart.APRO),
+                    new("чудесный", SpeechPart.A)
                 }) {TestName = "Normalized words"};
 
             yield return new TestCaseData(
                     new List<string> {"приветик", "чудеснейший"},
-                    new List<(string, SpeechPart)> {("приветик", SpeechPart.S), ("чудеснейший", SpeechPart.A),})
+                    new List<SpeechPartWord> {new("приветик", SpeechPart.S), new("чудеснейший", SpeechPart.A)})
                 {TestName = "Words in different forms"};
         }
     }

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Drawing;
 
 namespace TagsCloudContainer.Layout
@@ -14,9 +13,9 @@ namespace TagsCloudContainer.Layout
 
         public WordLayout(string word, Point location, Font font)
         {
-            Word = word ?? throw new ArgumentNullException(nameof(word));
+            Word = word;
             Location = location;
-            Font = font ?? throw new ArgumentNullException(nameof(font));
+            Font = font;
         }
 
         public override int GetHashCode()

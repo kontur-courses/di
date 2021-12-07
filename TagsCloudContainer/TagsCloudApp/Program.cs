@@ -1,15 +1,24 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 
 namespace TagsCloudApp
 {
-    public class Program
+    public static class Program
     {
-        public static int Main(string[] args)
+        public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<RenderOptions>(args)
-                .WithParsed(RenderOptions.HandleCommand);
-
-            return 1;
+                .WithParsed(options =>
+                {
+                    try
+                    {
+                        new RenderCommand(options).Render();
+                    }
+                    catch (ApplicationException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                });
         }
     }
 }

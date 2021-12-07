@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,8 +17,9 @@ namespace TagsCloudContainer.Tests
         [SetUp]
         public void SetUp()
         {
-            layouter = new FontBasedLayouter(new DefaultFontSettings(),
-                new FrequencyFontSizeSelector(new DefaultFontSettings(), new DefaultWordsScaleSettings()),
+            layouter = new FontBasedLayouter(new FontFamilySettings(FontFamily.GenericMonospace),
+                new FrequencyFontSizeSelector(new FontSizeSettings(32, 10),
+                    new ScalersFactory((start, end) => new LinearScaler(start, end))),
                 new CircularCloudLayouter());
 
             words = new List<string>(Enumerable.Repeat("a", 10).Concat(Enumerable.Repeat("b", 5)));

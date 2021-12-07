@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using CommandLine;
 
@@ -22,26 +22,25 @@ namespace TagsCloudApp
         [Option("minFont", Default = 8)]
         public int MinFontSize { get; set; }
 
-        [Option('s', "size", HelpText = "(Default: auto adjust) (Example: 10, 10) ")]
+        [Option('s', "size", Default = null, HelpText = "Example: 10, 10")]
         public Size? ImageSize { get; set; } = null;
 
         [Option("scale", Default = 1.0f)]
         public float ImageScale { get; set; }
 
-        [Option("background", HelpText = "(Default: Transparent)")]
-        public Color BackgroundColor { get; set; } = Color.Transparent;
+        [Option("background", Default = "0 0 0 0")]
+        public string BackgroundColor { get; set; }
 
+        [Option("colorMapper", HelpText = "Determines how words will be colored", Default = "speechPart")]
+        public string ColorMapperType { get; set; }
 
-        public static void HandleCommand(RenderOptions options)
-        {
-            try
-            {
-                new RenderCommand(options).Render();
-            }
-            catch (ApplicationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
+        [Option("imageFormat", Default = "png")]
+        public string ImageFormat { get; set; }
+
+        [Option("wordsScale", Default = "linear")]
+        public string WordsScale { get; set; }
+
+        [Option("ignoreSpeechParts", Separator = ' ', Default = new[] {"INTJ", "PART", "PR", "CONJ"})]
+        public IEnumerable<string> IgnoredSpeechParts { get; set; }
     }
 }

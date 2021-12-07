@@ -2,11 +2,6 @@
 
 namespace TagsCloudContainer.Layout
 {
-    public interface IScaler
-    {
-        float GetValue(int x);
-    }
-
     public class LinearScaler : IScaler
     {
         private readonly float k;

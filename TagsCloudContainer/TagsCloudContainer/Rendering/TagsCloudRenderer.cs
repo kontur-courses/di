@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using TagsCloudContainer.Settings;
+using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Rendering
 {
-    public interface ITagsCloudRenderer
-    {
-        Bitmap GetBitmap(IEnumerable<WordStyle> words, Size imageSize);
-    }
-
     public class TagsCloudRenderer : ITagsCloudRenderer
     {
         private readonly IRenderingSettings renderingSettings;
 
         public TagsCloudRenderer(IRenderingSettings renderingSettings)
         {
-            this.renderingSettings = renderingSettings ?? throw new ArgumentNullException(nameof(renderingSettings));
+            this.renderingSettings = renderingSettings;
         }
 
         public Bitmap GetBitmap(IEnumerable<WordStyle> words, Size imageSize)
@@ -54,6 +49,11 @@ namespace TagsCloudContainer.Rendering
             var scaleY = (float)renderingSettings.DesiredImageSize.Value.Height / imageSize.Height;
 
             return (scaleX, scaleY);
+        }
+
+        public void Dispose()
+        {
+            renderingSettings?.Dispose();
         }
     }
 }

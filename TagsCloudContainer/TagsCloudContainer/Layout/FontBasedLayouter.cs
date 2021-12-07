@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Settings;
+using TagsCloudContainer.Settings.Interfaces;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer.Layout
 {
-    public interface ITagsCloudLayouter
-    {
-        CloudLayout GetCloudLayout(IEnumerable<string> words);
-    }
-
     public class FontBasedLayouter : ITagsCloudLayouter
     {
         private readonly IFontFamilySettings fontFamilySettings;
@@ -21,9 +16,9 @@ namespace TagsCloudContainer.Layout
         public FontBasedLayouter(IFontFamilySettings fontFamilySettings, IFontSizeSelector fontSizeSelector,
             ICloudLayouter cloudLayouter)
         {
-            this.fontFamilySettings = fontFamilySettings ?? throw new ArgumentNullException(nameof(fontFamilySettings));
-            this.fontSizeSelector = fontSizeSelector ?? throw new ArgumentNullException(nameof(fontSizeSelector));
-            this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
+            this.fontFamilySettings = fontFamilySettings;
+            this.fontSizeSelector = fontSizeSelector;
+            this.cloudLayouter = cloudLayouter;
         }
 
         public CloudLayout GetCloudLayout(IEnumerable<string> words)
@@ -31,8 +26,8 @@ namespace TagsCloudContainer.Layout
             if (words == null)
                 throw new ArgumentNullException(nameof(words));
 
-            var fontSizes = fontSizeSelector.GetFontSizes(words);
-            var wordsLayout = GetWordsLayout(fontSizes.OrderByDescending(word => word.FontSize)).ToList();
+            var fontSizedWords = fontSizeSelector.GetFontSizes(words);
+            var wordsLayout = GetWordsLayout(fontSizedWords.OrderByDescending(word => word.FontSize)).ToList();
             var rectangles = wordsLayout.Select(wordLayout => wordLayout.Rectangle).ToList();
             var wordsLocations = wordsLayout.Select(wordLayout => wordLayout.WordLayout);
 
@@ -43,19 +38,20 @@ namespace TagsCloudContainer.Layout
         }
 
         private IEnumerable<(WordLayout WordLayout, Rectangle Rectangle)> GetWordsLayout(
-            IEnumerable<(string, float)> fontSizes)
+            IEnumerable<FontSizedWord> fontSizedWords)
         {
             using var bitmap = new Bitmap(1, 1);
             using var graphics = Graphics.FromImage(bitmap);
 
-            foreach (var (word, fontSize) in fontSizes)
+            foreach (var fontSizedWord in fontSizedWords)
             {
-                var font = new Font(fontFamilySettings.FontFamily, fontSize);
-                var wordSize = graphics.MeasureString(word, font, PointF.Empty, StringFormat.GenericTypographic)
-                    .ToSize();
+                var font = new Font(fontFamilySettings.FontFamily, fontSizedWord.FontSize);
+                var wordSize = graphics
+                    .MeasureString(fontSizedWord.Word, font, PointF.Empty, StringFormat.GenericTypographic)
+                    .ToSizeCeiling();
 
                 var wordRectangle = cloudLayouter.PutNextRectangle(wordSize);
-                yield return (new WordLayout(word, wordRectangle.Location, font), wordRectangle);
+                yield return (new WordLayout(fontSizedWord.Word, wordRectangle.Location, font), wordRectangle);
             }
         }
 

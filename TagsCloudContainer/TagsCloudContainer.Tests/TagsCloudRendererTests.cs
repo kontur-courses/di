@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Rendering;
 using TagsCloudContainer.Settings;
+using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Tests
 {
@@ -27,7 +28,7 @@ namespace TagsCloudContainer.Tests
         [TestCase(2)]
         public void GetBitmap_WithScale_ScaleImage(float scale)
         {
-            var config = new DefaultRenderingSettings {Scale = scale};
+            var config = new RenderingSettings {Scale = scale};
             using var output = GetOutputBitmap(config, words);
             output.Size
                 .Should().BeEquivalentTo(new Size((int)(width * scale), (int)(height * scale)));
@@ -37,7 +38,7 @@ namespace TagsCloudContainer.Tests
         [TestCase(2000, 2000)]
         public void GetBitmap_WithDesiredImageSize_ScaleImage(int desiredWidth, int desiredHeight)
         {
-            var config = new DefaultRenderingSettings {DesiredImageSize = new Size(desiredWidth, desiredHeight)};
+            var config = new RenderingSettings {DesiredImageSize = new Size(desiredWidth, desiredHeight)};
 
             using var output = GetOutputBitmap(config, words);
             output.Size
@@ -47,7 +48,7 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void GetBitmap_OutputBitmapWithBackground_NotEmpty()
         {
-            var config = new DefaultRenderingSettings {Background = new SolidBrush(Color.Red)};
+            var config = new RenderingSettings {Background = new SolidBrush(Color.Red)};
             using var output = GetOutputBitmap(config, Enumerable.Empty<WordStyle>());
             for (var x = 0; x < output.Width; x++)
             {
