@@ -2,7 +2,7 @@
 
 namespace TagCloudContainer.Infrastructure.Filter;
 
-static class AuxiliaryPartOfSpechCondition
+public static class AuxiliaryPartOfSpechCondition
 {
     public static readonly IReadOnlySet<PartOfSpeech> AuxiliaryParts = new HashSet<PartOfSpeech> 
         { 
