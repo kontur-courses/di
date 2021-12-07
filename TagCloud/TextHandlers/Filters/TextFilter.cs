@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace TagCloud.TextHandlers.Filters
 {
     public class TextFilter : ITextFilter
     {
-        private List<Func<string, bool>> filters = new List<Func<string, bool>>();
+        private List<Func<string, bool>> filters = new();
 
         public TextFilter()
         {

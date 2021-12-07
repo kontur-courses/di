@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TagCloud.TextHandlers.Converters;
 using TagCloud.TextHandlers.Filters;
-using TagsCloudVisualization;
+using TagCloud.TextHandlers.Parser;
 
 namespace TagCloud.TextHandlers
 {

@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 using Autofac;
+using TagCloud.CloudLayouter;
+using TagCloud.PointGenerator;
+using TagCloud.Templates;
 using TagCloud.TextHandlers;
 using TagCloud.TextHandlers.Converters;
 using TagCloud.TextHandlers.Filters;
 using TagCloud.TextHandlers.Parser;
-using TagsCloudVisualization;
-using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.PointGenerator;
 using IContainer = Autofac.IContainer;
 
 namespace TagCloud
@@ -31,7 +31,7 @@ namespace TagCloud
             builder.RegisterType<Cache>().As<ICache>();
             builder.Register(c => new Spiral(0.1f, 0.5, new PointF(0, 0), c.Resolve<ICache>())).As<IPointGenerator>();
             builder.Register(c => new Visualizer(c.Resolve<ICloudLayouter>()));
-            builder.RegisterType<CloudLayouter>().AsSelf().As<ICloudLayouter>();
+            builder.RegisterType<CloudLayouter.CloudLayouter>().AsSelf().As<ICloudLayouter>();
             container = builder.Build();
         }
 

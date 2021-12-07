@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudVisualization
+namespace TagCloud.TextHandlers.Parser
 {
     public interface ITextParser
     {

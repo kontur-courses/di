@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.TextHandlers
+namespace TagCloud.Templates
 {
     public class WordsCountStatistics
     {

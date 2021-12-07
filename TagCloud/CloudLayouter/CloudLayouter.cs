@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization.PointGenerator;
+using TagCloud.PointGenerator;
 
-namespace TagsCloudVisualization.CloudLayouter
+namespace TagCloud.CloudLayouter
 {
     public class CloudLayouter : ICloudLayouter
     {

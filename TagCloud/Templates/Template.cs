@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization;
+using TagCloud.TextHandlers;
 
-namespace TagCloud.TextHandlers
+namespace TagCloud.Templates
 {
     public class Template
     {

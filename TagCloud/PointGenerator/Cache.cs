@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization.PointGenerator
+namespace TagCloud.PointGenerator
 {
     public class Cache : ICache
     {
-        private readonly Dictionary<Size, float> sizeToCircleParameter = new Dictionary<Size, float>();
+        private readonly Dictionary<Size, float> sizeToCircleParameter = new();
 
         public float SafeGetParameter(Size size)
         {

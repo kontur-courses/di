@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace TagCloud
+namespace TagCloud.ConsoleApp
 {
     public class Options
     {

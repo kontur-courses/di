@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualization.PointGenerator
+namespace TagCloud.PointGenerator
 {
     public class Spiral : IPointGenerator
     {

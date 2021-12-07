@@ -1,4 +1,4 @@
-﻿namespace TagCloud.TextHandlers
+﻿namespace TagCloud.TextHandlers.Filters
 {
     public class BoringWordsFilter : IFilter
     {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.PointGenerator
+namespace TagCloud.PointGenerator
 {
     public interface ICache
     {

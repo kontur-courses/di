@@ -3,12 +3,12 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization.PointGenerator;
+using TagCloud.PointGenerator;
 
-namespace TagsCloudVisualization.Tests
+namespace TagCloud.Tests
 {
     [TestFixture]
-    public class Spiral_Tests
+    public class SpiralTests
     {
         [Test]
         public void GetCoordinates_FirstPointInCenter()

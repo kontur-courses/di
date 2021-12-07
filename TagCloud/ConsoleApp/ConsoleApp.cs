@@ -26,6 +26,7 @@ namespace TagCloud.ConsoleApp
                     }
 
                     var words = reader.Read(o.Filename);
+                    //todo ...
                 });
         }
     }

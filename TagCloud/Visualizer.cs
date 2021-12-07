@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Linq;
-using TagCloud.TextHandlers;
-using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.PointGenerator;
+using TagCloud.CloudLayouter;
+using TagCloud.PointGenerator;
+using TagCloud.Templates;
 
-namespace TagsCloudVisualization
+namespace TagCloud
 {
     public class Visualizer
     {
@@ -21,7 +21,7 @@ namespace TagsCloudVisualization
         public Visualizer(Size size, Color backgroundColor)
         {
             cloudLayouter =
-                new CloudLayouter.CloudLayouter(new Spiral(0.01f, 2, new PointF(size.Width / 2f, size.Height / 2f), new Cache()));
+                new TagCloud.CloudLayouter.CloudLayouter(new Spiral(0.01f, 2, new PointF(size.Width / 2f, size.Height / 2f), new Cache()));
             bitmap = new Bitmap(size.Width, size.Height);
             graphics = Graphics.FromImage(bitmap);
             graphics.FillRectangle(new SolidBrush(backgroundColor), 0, 0, size.Width, size.Height);

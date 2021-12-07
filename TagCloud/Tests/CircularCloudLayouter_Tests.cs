@@ -6,15 +6,14 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
-using TagsCloudVisualization.PointGenerator;
+using TagCloud.PointGenerator;
 
 namespace TagCloud.Tests
 {
     [TestFixture]
     class CircularCloudLayouterTests
     {
-        private TagsCloudVisualization.CloudLayouter.CloudLayouter sut;
+        private CloudLayouter.CloudLayouter sut;
         private const string FailedTestsData = "TestsImg";
 
         public CircularCloudLayouterTests()
@@ -28,7 +27,7 @@ namespace TagCloud.Tests
         [SetUp]
         public void SetUp()
         {
-            sut = new TagsCloudVisualization.CloudLayouter.CloudLayouter(new Spiral(0.01f, 1, new PointF(), new Cache()));
+            sut = new CloudLayouter.CloudLayouter(new Spiral(0.01f, 1, new PointF(), new Cache()));
         }
 
         [TearDown]
@@ -79,7 +78,7 @@ namespace TagCloud.Tests
             int width,
             int height)
         {
-            sut = new TagsCloudVisualization.CloudLayouter.CloudLayouter(new Spiral(0.2f, 1, new Point(xCloudPosition, yCloudPosition), new Cache()));
+            sut = new CloudLayouter.CloudLayouter(new Spiral(0.2f, 1, new Point(xCloudPosition, yCloudPosition), new Cache()));
 
             var tag = sut.PutNextRectangle(new Size(width, height));
 
@@ -101,7 +100,7 @@ namespace TagCloud.Tests
             density.Should().BeGreaterThan((Math.PI / 4) * densityCoefficient).And.BeLessThan(Math.PI / 4);
         }
 
-        private double GetDensity(TagsCloudVisualization.CloudLayouter.CloudLayouter cloudLayouter)
+        private double GetDensity(CloudLayouter.CloudLayouter cloudLayouter)
         {
             var union = cloudLayouter.CloudRectangle;
             var unionRectsArea = union.Height * union.Width;

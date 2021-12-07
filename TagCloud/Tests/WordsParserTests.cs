@@ -21,9 +21,9 @@ namespace TagCloud.Tests
         [Test]
         public void GetWords_ShouldReturnAllWordsFromFile()
         {
-            var sut = new WordsParser(filename);
+            var sut = new WordsParser();
 
-            var actualWords = sut.GetWords();
+            var actualWords = sut.GetWords(filename);
 
             actualWords.Should().BeEquivalentTo(words);
         }
