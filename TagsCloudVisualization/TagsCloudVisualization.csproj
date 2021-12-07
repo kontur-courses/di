@@ -14,6 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,13 +66,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IInfinityPointsEnumirable.cs" />
+    <Compile Include="DefaultWordStatisticsToSizeConverter.cs" />
+    <Compile Include="IWordsStatistics.cs" />
+    <Compile Include="IWordStatisticsToSizeConverter.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
+    <Compile Include="Layouters\IInfinityPointsEnumirable.cs" />
     <Compile Include="Layouters\ILayouter.cs" />
-    <Compile Include="PointSpiral.cs" />
+    <Compile Include="Layouters\PointSpiral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtension.cs" />
     <Compile Include="RectanglePainter.cs" />
+    <Compile Include="TagWordInfo.cs" />
+    <Compile Include="WordCount.cs" />
+    <Compile Include="WordReaders\FileWordReader.cs" />
+    <Compile Include="WordReaders\FormatDecoders\IFormatDecoder.cs" />
+    <Compile Include="WordReaders\FormatDecoders\TxtFormatDecoder.cs" />
+    <Compile Include="WordReaders\IWordReader.cs" />
+    <Compile Include="WordReaders\ProcessedWordReader.cs" />
+    <Compile Include="WordReaders\WordProcessors\IWordProcessor.cs" />
+    <Compile Include="WordReaders\WordProcessors\LowerCaseWordProcessor.cs" />
+    <Compile Include="WordReaders\WordValidators\BoringWordsValidator.cs" />
+    <Compile Include="WordReaders\WordValidators\IWordValidator.cs" />
+    <Compile Include="WordStatistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
