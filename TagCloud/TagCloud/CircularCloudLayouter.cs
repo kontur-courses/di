@@ -13,6 +13,10 @@ namespace TagCloud
         private readonly List<Rectangle> _rectangles = new();
         public List<Rectangle> Rectangles => _rectangles.ToList();
 
+        public CircularCloudLayouter(ISpiral spiral) :this(Point.Empty, spiral)
+        {
+        }
+
         public CircularCloudLayouter(Point center, ISpiral spiral)
         {
             Center = center;

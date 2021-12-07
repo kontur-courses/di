@@ -6,7 +6,7 @@ namespace TagCloud
     {
         public HashSet<string> IncludeWords => new();
         public HashSet<string> ExcludeWords => new() {"быть"};
-        public int Amount => 500;
+        public int Amount => 1000;
         public HashSet<PartOfSpeech> ExcludePartOfSpeeches => new()
         {
             PartOfSpeech.CONJ,

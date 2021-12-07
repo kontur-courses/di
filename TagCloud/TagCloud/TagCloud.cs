@@ -1,36 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Autofac;
+﻿using Autofac;
 using TagCloud.Extensions;
 
 namespace TagCloud
 {
     public class TagCloud
     {
-        private ICloudLayouter _layouter;
-        private ITagCloudDrawer _drawer;
-        
-        private IDrawerSettings _drawerSettings;
-        private ITextProcessingSettings _textProcessingSettings;
         private IContainer _container;
-        private TextReader _reader;
-        private TextProcessor _processor;
-
         private string _filePath;
-        private WordLayouter _wordLayouter;
 
-        public TagCloud()
+        public TagCloud(IDrawerSettings drawerSettings, ITextProcessingSettings textProcessingSettings)
         {
-            _drawerSettings = new DefaultDrawerSettings();
-            _textProcessingSettings = new DefaultTextProcessingSettings();
-
-            _layouter = new CircularCloudLayouter(Point.Empty, new ArchimedeanSpiral(new CoordinatesConverter()));
-            _drawer = new TagCloudDrawer(_drawerSettings);
-            _reader = new TextReader();
-            _processor = new TextProcessor(_textProcessingSettings);
-            _wordLayouter = new WordLayouter();
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(drawerSettings).As<IDrawerSettings>();
+            builder.RegisterInstance(textProcessingSettings).As<ITextProcessingSettings>();
+            
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
+            builder.RegisterType<TagCloudDrawer>().As<ITagCloudDrawer>();
+            builder.RegisterType<Rose>().As<ISpiral>();
+            builder.RegisterType<TextProcessor>().AsSelf();
+            builder.RegisterType<WordLayouter>().AsSelf();
+            builder.RegisterType<CoordinatesConverter>().AsSelf();
+            _container = builder.Build();
         }
 
         public TagCloud FromFile(string filePath)
@@ -41,9 +31,9 @@ namespace TagCloud
 
         public void Draw()
         {
-            var wordsWithFrequency = _processor.GetInterestingWords(_filePath);
-            var layoutedWords = _wordLayouter.Layout(_layouter, wordsWithFrequency);
-            _drawer.Draw(layoutedWords).SaveDefault();
+            var wordsWithFrequency = _container.Resolve<TextProcessor>().GetInterestingWords(_filePath);
+            var layoutedWords = _container.Resolve<WordLayouter>().Layout(wordsWithFrequency);
+            _container.Resolve<ITagCloudDrawer>().Draw(layoutedWords).SaveDefault();
         }
     }
 }
