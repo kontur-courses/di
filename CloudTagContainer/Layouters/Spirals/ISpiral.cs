@@ -3,8 +3,8 @@ using System.Drawing;
 
 namespace CloudTagContainer
 {
-    public interface ILayouter
+    public interface ISpiral
     {
-        Rectangle PutNextRectangle(Size size);
+        public IEnumerator<Point> GetEnumerator(Point center);
     }
 }

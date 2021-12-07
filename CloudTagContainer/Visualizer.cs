@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 //https://github.com/MateoMiller/di/blob/master/HomeExercise.md
 namespace CloudTagContainer
