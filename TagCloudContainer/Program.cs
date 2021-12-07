@@ -34,7 +34,8 @@ public static class Program
         builder.RegisterType<WordWeigher>().As<IWordWeigher>().SingleInstance();
         builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>().SingleInstance();
         builder.RegisterType<PlainTextFileReader>().As<IFileReader>().SingleInstance();
-        builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter)).As<IFilter>();
+        builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
+            .As<IFilter>().SingleInstance();
         builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
 
         return builder.Build();
