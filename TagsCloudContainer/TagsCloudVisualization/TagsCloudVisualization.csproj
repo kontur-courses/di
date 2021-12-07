@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Tripletri</Authors>
+        <RepositoryUrl>https://github.com/Tripletri/tdd/tree/TagsCloud</RepositoryUrl>
+        <PackageLicenseUrl>MIT License</PackageLicenseUrl>
+    </PropertyGroup>
+
+</Project>

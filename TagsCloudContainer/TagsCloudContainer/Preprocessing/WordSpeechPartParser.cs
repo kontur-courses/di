@@ -32,9 +32,9 @@ namespace TagsCloudContainer.Preprocessing
             {
                 var wordInfoResult = TryGetWordInfo(myStem, word);
                 if (!wordInfoResult.Success)
-                    throw wordInfoResult.Exception;
+                    throw wordInfoResult.Exception!;
 
-                var speechPartGroup = speechPartRegex.Match(wordInfoResult.Value).Groups["SpeechPart"];
+                var speechPartGroup = speechPartRegex.Match(wordInfoResult.Value!).Groups["SpeechPart"];
                 if (!speechPartGroup.Success || !Enum.TryParse<SpeechPart>(speechPartGroup.Value, out var speechPart))
                     throw GenerateSpeechPartParseException(word);
 
@@ -49,7 +49,7 @@ namespace TagsCloudContainer.Preprocessing
             myStem.StandardInput.WriteLine(word);
             var readTask = myStem.StandardOutput.ReadLineAsync();
             var canProcessWord = readTask.Wait(450);
-            if (!canProcessWord)
+            if (!canProcessWord || readTask.Result == null)
                 return new Result<string>(GenerateSpeechPartParseException(word));
 
             return new Result<string>(readTask.Result);

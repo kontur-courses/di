@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudContainer.Layout
 {
