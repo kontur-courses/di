@@ -14,10 +14,8 @@ namespace TagsCloud.Words
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<Options>(args);
-            if (result.Errors.OfType<HelpRequestedError>().Any())
-                return;
             if (result.Errors.Any())
-                throw new ArgumentException(result.Errors.First().ToString());
+                return;
 
             TagsCloudModuleSettings settings;
             try
