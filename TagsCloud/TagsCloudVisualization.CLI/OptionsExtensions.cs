@@ -7,6 +7,7 @@ using TagsCloudDrawer.ColorGenerators;
 using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
+using TagsCloudVisualization.CloudLayouter.VectorsGenerator;
 using TagsCloudVisualization.Drawable.Tags.Settings;
 using TagsCloudVisualization.Drawable.Tags.Settings.TagColorGenerator;
 using TagsCloudVisualization.Module;
@@ -39,7 +40,7 @@ namespace TagsCloudVisualization.CLI
                         MaxSize = options.MaxFontSize
                     }
                 },
-                Layouter = GetLayouterFromName(options.Algorithm),
+                Layouter = GetLayouter(options),
                 ImageSaveService = GetSaveServiceFromName(options.Extension),
                 WordsPreprocessors = GetWordPreprocessors(options.Languages.DefaultIfEmpty("en"))
             };
@@ -79,12 +80,15 @@ namespace TagsCloudVisualization.CLI
             };
         }
 
-        private static ILayouter GetLayouterFromName(string algorithm)
+        private static ILayouter GetLayouter(Options options)
         {
-            return algorithm switch
+            return options.Algorithm switch
             {
-                "circular" => new CircularLayouter(Point.Empty),
-                _          => throw new ArgumentException($"Layouter {algorithm} not defined")
+                "circular" => new NonIntersectedLayouter(Point.Empty, new CircularVectorsGenerator(0.005, 360)),
+                "random" => new NonIntersectedLayouter(Point.Empty,
+                    new RandomVectorsGenerator(new Random(),
+                        Size.Round(new SizeF(options.Width * 0.5f, options.Height * 0.5f)))),
+                _ => throw new ArgumentException($"Layouter {options.Algorithm} not defined")
             };
         }
 

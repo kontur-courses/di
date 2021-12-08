@@ -2,55 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CloudLayouter;
+using TagsCloudVisualization.CloudLayouter.VectorsGenerator;
 using TagsCloudVisualization.Tests.Extensions;
 using TagsCloudVisualization.Tests.Utils;
 
 namespace TagsCloudVisualization.Tests.CloudLayouter
 {
-    public class CircularCloudLayouterTests
+    public class CircularCloudLayouterTests : LayouterTests
     {
-        private readonly CircularCloudLayouterTestsLogger _logger = new();
         private Point _center;
-        private CircularLayouter _layouter;
-        private Rectangle[] _rectangles;
+        private NonIntersectedLayouter _layouter;
 
         [SetUp]
         public void Setup()
         {
             _center = new Point(0, 0);
-            _layouter = new CircularLayouter(_center);
+            _layouter = new NonIntersectedLayouter(_center, new CircularVectorsGenerator(0.005, 360));
             _rectangles = Array.Empty<Rectangle>();
         }
 
-        [OneTimeSetUp]
-        public void Initialize()
-        {
-            _logger.Init(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFails"));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            var ctx = TestContext.CurrentContext;
-            if (ctx.Result.Outcome.Status == TestStatus.Failed)
-            {
-                var testName = ctx.Test.Name;
-                try
-                {
-                    _logger.Log(_rectangles, testName);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Cannot log test fail image due to exception: {e.Message}");
-                }
-            }
-        }
 
         [TestCase(0, 1)]
         [TestCase(1, 0)]

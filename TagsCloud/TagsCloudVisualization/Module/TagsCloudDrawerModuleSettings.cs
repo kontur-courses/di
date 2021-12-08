@@ -5,6 +5,7 @@ using System.Linq;
 using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
+using TagsCloudVisualization.CloudLayouter.VectorsGenerator;
 using TagsCloudVisualization.Drawable.Tags.Settings;
 using TagsCloudVisualization.Drawable.Tags.Settings.TagColorGenerator;
 using TagsCloudVisualization.WordsPreprocessor;
@@ -31,7 +32,8 @@ namespace TagsCloudVisualization.Module
             ColorGenerator = new StrengthAlphaTagColorGenerator(Color.Red)
         };
 
-        public ILayouter Layouter { get; init; } = new CircularLayouter(Point.Empty);
+        public ILayouter Layouter { get; init; } =
+            new NonIntersectedLayouter(Point.Empty, new CircularVectorsGenerator(0.005, 360));
 
         public IEnumerable<string> BoringWords { get; init; } = Array.Empty<string>();
 

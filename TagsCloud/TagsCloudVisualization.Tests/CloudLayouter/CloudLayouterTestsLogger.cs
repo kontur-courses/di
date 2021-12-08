@@ -16,7 +16,7 @@ using TagsCloudVisualization.Drawable.Rectangles;
 
 namespace TagsCloudVisualization.Tests.CloudLayouter
 {
-    public class CircularCloudLayouterTestsLogger
+    public class CloudLayouterTestsLogger
     {
         private readonly IDrawer _drawer = new Drawer();
         private readonly IColorGenerator _colorGenerator = new RainbowColorGenerator(new Random());

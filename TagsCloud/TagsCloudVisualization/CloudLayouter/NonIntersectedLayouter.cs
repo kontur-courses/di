@@ -7,15 +7,16 @@ using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization.CloudLayouter
 {
-    public class CircularLayouter : ILayouter
+    public class NonIntersectedLayouter : ILayouter
     {
         private readonly Point _center;
         private readonly List<Rectangle> _rectangles = new();
-        private readonly IVectorsGenerator _vectorsGenerator = new CircularVectorsGenerator(0.005, 360);
+        private readonly IVectorsGenerator _vectorsGenerator;
 
-        public CircularLayouter(Point center)
+        public NonIntersectedLayouter(Point center, IVectorsGenerator vectorsGenerator)
         {
             _center = center;
+            _vectorsGenerator = vectorsGenerator ?? throw new ArgumentNullException(nameof(vectorsGenerator));
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -48,13 +49,13 @@ namespace TagsCloudVisualization.CloudLayouter
 
             if (!shiftX.IsEmpty)
                 rectangle = ShiftUntilIntersection(rectangle,
-                                                   rect => new Rectangle(rect.Location + shiftX, rect.Size),
-                                                   rect => IsRectangleAtCenterAxis(rect, point => point.X));
+                    rect => new Rectangle(rect.Location + shiftX, rect.Size),
+                    rect => IsRectangleAtCenterAxis(rect, point => point.X));
 
             if (!shiftY.IsEmpty)
                 rectangle = ShiftUntilIntersection(rectangle,
-                                                   rect => new Rectangle(rect.Location + shiftY, rect.Size),
-                                                   rect => IsRectangleAtCenterAxis(rect, point => point.Y));
+                    rect => new Rectangle(rect.Location + shiftY, rect.Size),
+                    rect => IsRectangleAtCenterAxis(rect, point => point.Y));
 
             return rectangle;
         }
