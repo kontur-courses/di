@@ -2,7 +2,7 @@
 
 namespace TagsCloudDrawer.ImageSaveService
 {
-    public interface IImageSavior
+    public interface IImageSaveService
     {
         void Save(string filename, Image image);
     }

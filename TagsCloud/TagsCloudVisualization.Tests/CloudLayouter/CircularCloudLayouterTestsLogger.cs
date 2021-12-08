@@ -26,7 +26,7 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
             ImageSize = new Size(1000, 1000)
         };
 
-        private readonly IImageSavior _savior = new PngSavior();
+        private readonly IImageSaveService _saveService = new PngSaveService();
         private string _outputDirectory;
 
         public void Log(IEnumerable<Rectangle> rectangles, string testName)
@@ -34,7 +34,7 @@ namespace TagsCloudVisualization.Tests.CloudLayouter
             if (string.IsNullOrEmpty(_outputDirectory))
                 throw new Exception($"{nameof(_outputDirectory)} was null or empty");
             var path = Path.Combine(_outputDirectory, testName);
-            var creator = new ImageCreator(_drawer, _savior, _imageSettingsProvider);
+            var creator = new ImageCreator(_drawer, _saveService, _imageSettingsProvider);
             creator.Create(path, rectangles.Select(rect => new RectangleDrawable(rect, _colorGenerator)));
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }

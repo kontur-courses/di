@@ -9,14 +9,14 @@ namespace TagsCloudDrawer.ImageCreator
     public class ImageCreator : IImageCreator
     {
         private readonly IDrawer _drawer;
-        private readonly IImageSavior _savior;
+        private readonly IImageSaveService _saveService;
         private readonly IImageSettingsProvider _settingsProvider;
 
-        public ImageCreator(IDrawer drawer, IImageSavior savior,
+        public ImageCreator(IDrawer drawer, IImageSaveService saveService,
             IImageSettingsProvider settingsProvider)
         {
             _drawer = drawer;
-            _savior = savior;
+            _saveService = saveService;
             _settingsProvider = settingsProvider;
         }
 
@@ -27,7 +27,7 @@ namespace TagsCloudDrawer.ImageCreator
             using var graphics = Graphics.FromImage(bitmap);
             graphics.Clear(_settingsProvider.BackgroundColor);
             _drawer.Draw(graphics, bitmap.Size, drawables);
-            _savior.Save(filename, bitmap);
+            _saveService.Save(filename, bitmap);
         }
     }
 }

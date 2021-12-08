@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TagsCloudDrawer.ImageSaveService
 {
-    public class PngSavior : IImageSavior
+    public class PngSaveService : IImageSaveService
     {
         public void Save(string filename, Image image)
         {

@@ -40,7 +40,7 @@ namespace TagsCloudVisualization.CLI
                     }
                 },
                 Layouter = GetLayouterFromName(options.Algorithm),
-                ImageSavior = GetSaveServiceFromName(options.Extension),
+                ImageSaveService = GetSaveServiceFromName(options.Extension),
                 WordsPreprocessors = GetWordPreprocessors(options.Languages.DefaultIfEmpty("en"))
             };
         }
@@ -68,11 +68,11 @@ namespace TagsCloudVisualization.CLI
         private static IEnumerable<string> GetExcludedWordsFromFile(string filename) =>
             !File.Exists(filename) ? Array.Empty<string>() : File.ReadLines(filename);
 
-        private static Func<IImageSavior> GetSaveServiceFromName(string extension)
+        private static Func<IImageSaveService> GetSaveServiceFromName(string extension)
         {
             return extension switch
             {
-                "png" => () => new PngSavior(),
+                "png" => () => new PngSaveService(),
                 _     => throw new ArgumentException($"Cannot save file with {extension} extension")
             };
         }
