@@ -6,6 +6,7 @@ namespace CloudTagContainer
     {
         public string Word { get; }
         public Size WordSize { get; }
+
         public SizedWord(string word, Size size)
         {
             this.Word = word;

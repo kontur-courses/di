@@ -2,7 +2,7 @@
 
 namespace CloudTagContainer
 {
-    public class FileStreamFactory: IFileStreamFactory
+    public class FileStreamFactory : IFileStreamFactory
     {
         public Stream OpenOnWriting(string path)
         {

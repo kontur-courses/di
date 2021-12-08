@@ -1,9 +1,9 @@
 ﻿namespace CloudTagContainer
 {
-    public class CombinedPreprocessor: IWordsPreprocessor
+    public class CombinedPreprocessor : IWordsPreprocessor
     {
         private IWordsPreprocessor[] childPreprocessors;
-        
+
         public CombinedPreprocessor(IWordsPreprocessor[] childPreprocessors)
         {
             this.childPreprocessors = childPreprocessors;

@@ -18,7 +18,7 @@ namespace CloudTagContainerTests
         {
             var center = new Point(x, y);
             var square = new ExpandingSquare();
-            
+
             var firstReturnerPoint = square.GetEnumerator(center).First();
 
             firstReturnerPoint.Should().BeEquivalentTo(center);
@@ -46,7 +46,7 @@ namespace CloudTagContainerTests
                 .GetEnumerator(center)
                 .Take(expectedPoints.Count)
                 .ToList();
-            
+
             actualPoints.Should().BeEquivalentTo(
                 expectedPoints,
                 config => config.WithStrictOrdering());
@@ -66,7 +66,7 @@ namespace CloudTagContainerTests
             var firstSquarePoints = firstSquare
                 .GetEnumerator(firstSquareCenter)
                 .Take(takenPointsCount);
-            
+
             var secondSquarePoints = secondSquare
                 .GetEnumerator(secondSquareCenter)
                 .Take(takenPointsCount);

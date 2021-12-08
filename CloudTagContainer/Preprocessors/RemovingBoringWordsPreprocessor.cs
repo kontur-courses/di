@@ -1,21 +1,29 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace CloudTagContainer
 {
-    public class RemovingBoringWordsPreprocessor: IWordsPreprocessor
+    public class RemovingBoringWordsPreprocessor : IWordsPreprocessor
     {
-        private const int WordLowerLength = 2;
+        private readonly int minWordLength;
+
+        public RemovingBoringWordsPreprocessor(int minWordLength)
+        {
+            if (minWordLength <= 0)
+                throw new ArgumentException("Must be positive", nameof(minWordLength));
+            this.minWordLength = minWordLength;
+        }
+
         public string[] Preprocess(string[] rawWords)
         {
             return rawWords
                 .Where(word => !IsBoring(word))
                 .ToArray();
         }
-        
+
         private bool IsBoring(string word)
         {
-            return word.Length <= WordLowerLength ||
-                   word.Any(x => !char.IsLetter(x) && !char.IsDigit(x));
+            return word.Length < minWordLength;
         }
     }
 }

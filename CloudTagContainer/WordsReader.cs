@@ -3,7 +3,7 @@ using System.IO;
 
 namespace CloudTagContainer
 {
-    public class WordsReader: IWordsReader
+    public class WordsReader : IWordsReader
     {
         public string[] Read(Stream inputStream)
         {
@@ -12,5 +12,4 @@ namespace CloudTagContainer
             return allString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         }
     }
-
 }

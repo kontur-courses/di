@@ -35,10 +35,5 @@ namespace CloudTagContainer
 
             throw new Exception("Was not able to find next rectangle");
         }
-
-        private void Reset()
-        {
-            spiralEnumerator = null;
-        }
     }
 }

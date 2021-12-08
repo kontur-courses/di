@@ -10,12 +10,12 @@ namespace CloudTagContainerTests
     [TestFixture]
     public class CountingWordSizer_Should
     {
-        private readonly CountingWordSizer sizer = new ();
-        
-        [TestCase(0, new[]{"abc"}, TestName = "When font size is zero")]
-        [TestCase(-1, new[]{"abc"}, TestName = "When font size is negative")]
-        [TestCase(1, null, TestName = "When words is null")]
-        [TestCase(1, new[]{(string) null}, TestName = "When words contains")]
+        private readonly CountingWordSizer sizer = new();
+
+        [TestCase(0, new[] {"abc"}, TestName = "When font size is zero")]
+        [TestCase(-1, new[] {"abc"}, TestName = "When font size is negative")]
+        [TestCase(1, null, TestName = "When input words array is null")]
+        [TestCase(1, new[] {(string) null}, TestName = "When words contains null")]
         public void Throw_When(float fontSize, string[] words)
         {
             Action action = () => sizer.Convert(words, fontSize);
@@ -29,10 +29,10 @@ namespace CloudTagContainerTests
             var fontSize = 20;
 
             var result = sizer.Convert(words, fontSize);
-            
+
             result.Should().BeEmpty();
         }
-        
+
 
         [Test]
         public void ReturnSizeWithWidthEqualToWordLength()
@@ -49,12 +49,12 @@ namespace CloudTagContainerTests
             };
 
             var result = sizer.Convert(words, fontSize);
-            
+
             result.Should().BeEquivalentTo(
-                expected, 
+                expected,
                 config => config.WithoutStrictOrdering());
         }
-        
+
         [Test]
         public void ScaleSizeHeightDueToTheCountWord()
         {
@@ -69,9 +69,9 @@ namespace CloudTagContainerTests
             };
 
             var result = sizer.Convert(words, fontSize);
-            
+
             result.Should().BeEquivalentTo(
-                expected, 
+                expected,
                 config => config.WithoutStrictOrdering());
         }
     }

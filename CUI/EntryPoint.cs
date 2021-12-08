@@ -12,6 +12,7 @@ namespace CUI
     class EntryPoint
     {
         private static bool IsDebug = true;
+
         static void Main(string[] args)
         {
             if (IsDebug)
@@ -22,7 +23,7 @@ namespace CUI
             var options = GetOptions(args);
             if (options == null)
                 Environment.Exit(1);
-            
+
             var visualizerSettings = new VisualizerSettings(
                 new Size(1920, 1080),
                 new Font("Arial", 24, FontStyle.Bold),
@@ -30,8 +31,8 @@ namespace CUI
                 Color.FromName(options.BackGroundColorName)
             );
 
-            var container = ConfigureContainer(visualizerSettings);
-            
+            var container = ConfigureContainer(visualizerSettings, options);
+
             var cui = container.BuildServiceProvider().GetService<ConsoleInterface>();
             cui.Run(options);
             Console.Write("HELLO");
@@ -45,13 +46,14 @@ namespace CUI
                 .Value;
         }
 
-        static ServiceCollection ConfigureContainer(VisualizerSettings settings)
+        static ServiceCollection ConfigureContainer(VisualizerSettings settings, Options options)
         {
             var container = new ServiceCollection();
             container.AddScoped<IImageSaver, PngSaver>();
             container.AddScoped<ConsoleInterface>();
             container.AddScoped<ToLowerPreprocessor>();
-            container.AddScoped<RemovingBoringWordsPreprocessor>();
+            container.AddScoped<RemovingBoringWordsPreprocessor>(_ => new RemovingBoringWordsPreprocessor(
+                options.MinimalWordLength));
             container.AddScoped<IWordsPreprocessor, CombinedPreprocessor>(
                 provider => new CombinedPreprocessor(
                     new IWordsPreprocessor[]
@@ -66,7 +68,7 @@ namespace CUI
             container.AddScoped<IFileStreamFactory, FileStreamFactory>();
             container.AddScoped<Visualizer>();
             container.AddSingleton<VisualizerSettings>(settings);
-            
+
             return container;
         }
     }

@@ -2,7 +2,7 @@
 
 namespace CloudTagContainer
 {
-    public class ToLowerPreprocessor: IWordsPreprocessor
+    public class ToLowerPreprocessor : IWordsPreprocessor
     {
         public string[] Preprocess(string[] rawWords)
         {

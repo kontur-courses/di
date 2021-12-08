@@ -5,20 +5,20 @@ using System.Linq;
 
 namespace CloudTagContainer
 {
-    public class CountingWordSizer: IWordSizer
+    public class CountingWordSizer : IWordSizer
     {
         public List<SizedWord> Convert(string[] words, float fontSize)
         {
-            if (fontSize <= 0) 
+            if (fontSize <= 0)
                 throw new ArgumentException($"{nameof(fontSize)} must be positive");
             if (words == null)
                 throw new ArgumentNullException($"{nameof(words)} can not be null");
-            
-            var wordToCount = words
+
+            var wordToRepeatingCount = words
                 .GroupBy(x => x)
                 .ToDictionary(x => x.Key, y => y.Count());
 
-            return wordToCount.Select(kv =>
+            return wordToRepeatingCount.Select(kv =>
                     new SizedWord(
                         kv.Key,
                         CalculateSize(kv.Value, fontSize, kv.Key)))
@@ -26,11 +26,9 @@ namespace CloudTagContainer
         }
 
         private Size CalculateSize(int repeatedCount, float fontSize, string word)
-        {
-            return new Size(
-                (int) (1.5d * repeatedCount * word.Length * fontSize),
-                 (int) (1.5d * repeatedCount * fontSize)
+            => new Size(
+                (int) (repeatedCount * word.Length * fontSize),
+                (int) (repeatedCount * fontSize)
             );
-        }
     }
 }

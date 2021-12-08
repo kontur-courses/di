@@ -21,5 +21,11 @@ namespace CUI
             Default = "blue",
             HelpText = "Set color for text")]
         public string TextColorName { get; set; }
+        
+        [Option('m', "minimumWordLength",
+            Required = false,
+            Default = 1,
+            HelpText = "Set minimal length of words")]
+        public int MinimalWordLength { get; set; }
     }
 }
