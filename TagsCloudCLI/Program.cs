@@ -5,15 +5,15 @@ using CommandLine;
 using TagsCloudVisualization;
 
 namespace TagsCloudCLI
-{
+{ 
     class Program
-    {
+    { 
         static void Main(string[] args)
         {
             HandleErrors(() =>
             {
                 var result = Parser.Default.ParseArguments<Options>(args);
-                if (result.Errors.Any()) 
+                if (result.Errors.Any())
                     return;
                 var settings = new SettingProvider().GetSettings(result.Value);
                 var builder = new ContainerBuilder();
@@ -22,7 +22,7 @@ namespace TagsCloudCLI
                 container.Resolve<Visualizer>().Visualize();
             });
         }
-        
+
         private static void HandleErrors(Action action)
         {
             try
