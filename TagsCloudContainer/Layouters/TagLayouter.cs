@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloudContainerTests;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
 
@@ -20,12 +21,12 @@ namespace TagsCloudContainer.Layouters
         }
 
         public abstract ICloud<ITag> PlaceTagsInCloud
-            (Dictionary<string, int> wordsCount, SizeF minSize, float maxScale);
+            (List<SimpleTag> tags, SizeF minSize, float maxScale);
 
-        protected void SetWordsCounts(Dictionary<string, int> wordsCount)
+        protected void SetWordsCounts(List<SimpleTag> tags)
         {
-            MinWordsCount = wordsCount.Values.Min();
-            MaxWordsCount = wordsCount.Values.Max();
+            MinWordsCount = tags.Min(t => t.Count);
+            MaxWordsCount = tags.Max(t => t.Count);
         }
 
         protected SizeF GetSize(SizeF minSize, float maxScale, int wordsCount)

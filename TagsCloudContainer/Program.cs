@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using Autofac;
 using TagsCloudContainer.Common;
 using TagsCloudContainer.Layouters;
@@ -32,8 +33,10 @@ namespace TagsCloudContainer
                 var settings = scope.Resolve<IVisualizatorSettings>();
 
                 var text = reader.Read(textFilename);
-                var wordsCount = parser.Parse(text);
-                var cloud = layouter.PlaceTagsInCloud(wordsCount, minSize, maxScale);
+                var tags = parser.Parse(text);
+                // Подумаю еще как это можно сделать лучше >
+                tags = new Normalizator().Process(new TagsFilter().Process(tags)).ToList();
+                var cloud = layouter.PlaceTagsInCloud(tags, minSize, maxScale);
                 visualizator.Visualize(settings, cloud);
             }
         }

@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagCloudContainerTests;
 using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainer
 {
     public class WordsCountParser
     {
-        public Dictionary<string, int> Parse(string str)
+        public List<SimpleTag> Parse(string str)
         {
             var wordsCount = new Dictionary<string, int>();
-            var words = GetWordsWithoutUseless(str.Split("\n"));
+            var words = str.Split("\n");
             foreach (var word in words) 
                 wordsCount.AddOrIncreaseCount(word);
-            return wordsCount;
-        }
-
-        private IEnumerable<string> GetWordsWithoutUseless(IEnumerable<string> words)
-        {
-            // Extensions -? 
-            // Не уверен как это реализовать, в лоб не хочется, так что пока по минимуму
-            return words.Where(w => w.Length > 2);
+            return wordsCount.Keys
+                .Select(word => new SimpleTag(word, wordsCount[word]))
+                .ToList();
         }
     }
 }
