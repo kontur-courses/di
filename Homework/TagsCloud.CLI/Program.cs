@@ -2,10 +2,6 @@
 using System.Linq;
 using Autofac;
 using CommandLine;
-using TagsCloud.Visualization;
-using TagsCloud.Visualization.Drawer;
-using TagsCloud.Visualization.ImagesSavior;
-using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 
 namespace TagsCloud.Words
 {
@@ -30,19 +26,7 @@ namespace TagsCloud.Words
 
             using var container = CreateContainer(settings).BeginLifetimeScope();
 
-            var parsedWords = container.Resolve<IWordsService>()
-                .GetWords();
-
-            var maxCount = parsedWords.Max(x => x.Count);
-            var minCount = parsedWords.Min(x => x.Count);
-
-            var wordsContainer = container.Resolve<AbstractWordsContainerBuilder>()
-                .AddWords(parsedWords, minCount, maxCount)
-                .Build();
-
-            var drawer = container.Resolve<IDrawer>();
-            using var image = drawer.Draw(wordsContainer);
-            container.Resolve<IImageSavior>().Save(image);
+            container.Resolve<LayouterCore>().Run();
         }
 
         private static IContainer CreateContainer(TagsCloudModuleSettings settings)

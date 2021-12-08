@@ -46,6 +46,8 @@ namespace TagsCloud.Words
             builder.Register(_ => settings.LayoutVisitor).As<IContainerVisitor>();
             builder.RegisterType<Drawer>().As<IDrawer>();
             builder.Register(_ => new ImageSavior(settings.SaveSettings)).As<IImageSavior>();
+
+            builder.RegisterType<LayouterCore>().AsSelf();
         }
     }
 }

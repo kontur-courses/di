@@ -4,7 +4,7 @@ namespace TagsCloud.Words
 {
     public class Options
     {
-        [Option("words", HelpText = "Path to file with words", Required = true)]
+        [Option("words", HelpText = "Path to file with words", Default = null)]
         public string WordsFile { get; set; }
 
         [Option("dir", HelpText = "Output directory", Default = null)]
