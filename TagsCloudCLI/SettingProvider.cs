@@ -5,15 +5,15 @@ namespace TagsCloudCLI
 {
     public class SettingProvider
     {
-        public Settings GetSettings() => new()
+        public Settings GetSettings(Options options) => new()
         {
-            Directory = "ImageExamples",
-            ImageName = "example.bmp",
-            FontFamilyName = "Arial",
-            TagColor = Color.Firebrick,
+            Directory = options.Directory,
+            ImageName = options.ImageName,
+            FontFamilyName = options.FontFamilyName,
+            TagColor = Color.FromName(options.TagColor),
             StartPoint = new Point(0, 0),
-            FileWithWords = "text.txt",
-            MaxFontSize = 100,
+            FileWithWords = options.FileWithWords,
+            MaxFontSize = options.MaxFontSize,
             BoringWords = new[] { "в", "что", "не", "и", "с", "на", "то", "а", "он", "его", "для", "из" }
         };
     }

@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+using Autofac;
+using CommandLine;
 using TagsCloudVisualization;
 
 namespace TagsCloudCLI
@@ -7,11 +10,29 @@ namespace TagsCloudCLI
     {
         static void Main(string[] args)
         {
-            var settings = new SettingProvider().GetSettings();
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new TagsCloudDrawerModule(settings));
-            var container = builder.Build();
-            container.Resolve<Visualizer>().Visualize();
+            HandleErrors(() =>
+            {
+                var result = Parser.Default.ParseArguments<Options>(args);
+                if (result.Errors.Any()) 
+                    return;
+                var settings = new SettingProvider().GetSettings(result.Value);
+                var builder = new ContainerBuilder();
+                builder.RegisterModule(new TagsCloudDrawerModule(settings));
+                var container = builder.Build();
+                container.Resolve<Visualizer>().Visualize();
+            });
+        }
+        
+        private static void HandleErrors(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
