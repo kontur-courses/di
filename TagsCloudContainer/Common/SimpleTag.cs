@@ -2,12 +2,12 @@
 
 namespace TagCloudContainerTests
 {
-    public class Tag
+    public class SimpleTag
     {
         public readonly string Word;
         public readonly int Count;
 
-        public Tag(string word, int count)
+        public SimpleTag(string word, int count)
         {
             Word = word;
             Count = count;

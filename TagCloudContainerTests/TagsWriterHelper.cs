@@ -6,7 +6,7 @@ namespace TagCloudContainerTests
 {
     public class TagsWriterHelper
     {
-        public static void Write(string path, IEnumerable<Tag> tags)
+        public static void Write(string path, IEnumerable<SimpleTag> tags)
         {
             var serializer = new Serializer();
             var storage = new FileBlobStorage();
@@ -15,10 +15,10 @@ namespace TagCloudContainerTests
             storage.Set(path, data);
         }
 
-        private static string GetTagsToString(IEnumerable<Tag> tags)
+        private static string GetTagsToString(IEnumerable<SimpleTag> tags)
             => string.Join("\n", GetWords(tags));
 
-        private static IEnumerable<string> GetWords(IEnumerable<Tag> tags)
+        private static IEnumerable<string> GetWords(IEnumerable<SimpleTag> tags)
             => tags.SelectMany(tag => tag.GetWords());
     }
 }
