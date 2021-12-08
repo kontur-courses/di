@@ -27,9 +27,6 @@ namespace TagsCloudVisualization.CLI
 
         private static void Run(Options options)
         {
-            var container = new ContainerBuilder()
-                            .RegisterTagsClouds(options.ToDrawerSettings())
-                            .Build();
             var directory = Path.GetFullPath(options.OutputDirectory ?? Options.DefaultOutputDirectory);
             if (!Directory.Exists(directory))
             {
@@ -37,7 +34,11 @@ namespace TagsCloudVisualization.CLI
             }
 
             var filename = Path.Combine(directory, options.OutputFileName ?? GenerateName());
-            container.Resolve<TagsCloudImageCreator>().Visualize(filename);
+            var container = new ContainerBuilder()
+                            .RegisterTagsClouds(options.ToDrawerSettings())
+                            .RegisterImageCreation(filename)
+                            .Build();
+            container.Resolve<TagsCloudVisualizer>().Visualize();
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
 

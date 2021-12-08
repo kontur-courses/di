@@ -44,12 +44,13 @@ namespace TagsCloudVisualization.Tests
             var generated = GenerateWordsList(uniqueWords, 1000);
             File.WriteAllLines(_settings.WordsFile, generated);
 
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new TagsCloudDrawerModule(_settings));
-            var container = builder.Build();
+            var container = new ContainerBuilder()
+                            .RegisterTagsClouds(_settings)
+                            .RegisterImageCreation(ImageFile)
+                            .Build();
 
-            var visualizer = container.Resolve<TagsCloudImageCreator>();
-            visualizer.Visualize(ImageFile);
+            var visualizer = container.Resolve<TagsCloudVisualizer>();
+            visualizer.Visualize();
         }
 
         private static IEnumerable<string> GenerateWordsList(IList<string> uniqueWords, int count)

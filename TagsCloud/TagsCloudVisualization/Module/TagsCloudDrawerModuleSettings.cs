@@ -35,7 +35,7 @@ namespace TagsCloudVisualization.Module
 
         public IEnumerable<string> BoringWords { get; init; } = Array.Empty<string>();
 
-        public Func<IImageSaveService> ImageSaveService { get; init; } = () => new PngSaveService();
+        public IImageSaveService ImageSaveService { get; init; } = new PngSaveService();
 
         public IEnumerable<IWordsPreprocessor> WordsPreprocessors { get; init; } =
             Enumerable.Empty<IWordsPreprocessor>();

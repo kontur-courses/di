@@ -68,11 +68,11 @@ namespace TagsCloudVisualization.CLI
         private static IEnumerable<string> GetExcludedWordsFromFile(string filename) =>
             !File.Exists(filename) ? Array.Empty<string>() : File.ReadLines(filename);
 
-        private static Func<IImageSaveService> GetSaveServiceFromName(string extension)
+        private static IImageSaveService GetSaveServiceFromName(string extension)
         {
             return extension switch
             {
-                "png" => () => new PngSaveService(),
+                "png" => new PngSaveService(),
                 _     => throw new ArgumentException($"Cannot save file with {extension} extension")
             };
         }
