@@ -27,9 +27,7 @@ namespace TagsCloudVisualization
         {
             base.Load(builder);
             builder.RegisterInstance(GetWordsFromFileProviderForFile(_settings.WordsFile)).As<IWordsProvider>();
-            builder.RegisterType<ToLowerCasePreprocessor>().As<IWordsPreprocessor>();
-            builder.RegisterInstance(new RemoveBoredPreprocessor(_settings.BoredWords)).As<IWordsPreprocessor>();
-            builder.RegisterComposite<IWordsPreprocessor>((_, processors) => new CombinedPreprocessor(processors));
+            RegisterWordPreprocessors(builder);
             builder.RegisterInstance(_settings.ImageSettingsProvider).As<IImageSettingsProvider>();
             builder.RegisterInstance(_settings.TagDrawableSettingsProvider).As<ITagDrawableSettingsProvider>();
             builder.RegisterType<Drawer>().As<IDrawer>();
@@ -39,6 +37,15 @@ namespace TagsCloudVisualization
             builder.RegisterType<LayoutWordsTransformer>().As<IWordsToTagsTransformer>();
             builder.RegisterType<TagDrawableFactory>().As<ITagDrawableFactory>();
             builder.RegisterType<TagsCloudVisualizer>().AsSelf();
+        }
+
+        private void RegisterWordPreprocessors(ContainerBuilder builder)
+        {
+            builder.RegisterType<ToLowerCasePreprocessor>().As<IWordsPreprocessor>();
+            foreach (var preprocessor in _settings.WordsPreprocessors)
+                builder.RegisterInstance(preprocessor).As<IWordsPreprocessor>();
+            builder.RegisterInstance(new RemoveBoredPreprocessor(_settings.BoredWords)).As<IWordsPreprocessor>();
+            builder.RegisterComposite<IWordsPreprocessor>((_, processors) => new CombinedPreprocessor(processors));
         }
 
         private static IWordsProvider GetWordsFromFileProviderForFile(string pathToFile)

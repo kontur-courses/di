@@ -16,7 +16,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="WordsProvider"/>
+        <Compile Remove="WordsProvider\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="WordsProvider\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="WordsProvider\**"/>
     </ItemGroup>
 
 </Project>

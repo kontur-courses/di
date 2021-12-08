@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using TagsCloudDrawer.ColorGenerators;
 using TagsCloudDrawer.ImageSavior;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
+using TagsCloudVisualization.WordsPreprocessor;
 
 namespace TagsCloudVisualization.CLI
 {
@@ -35,8 +37,30 @@ namespace TagsCloudVisualization.CLI
                     }
                 },
                 Layouter = GetLayouterFromName(options.Algorithm),
-                ImageSavior = GetSaviorFromName(options.Extension)
+                ImageSavior = GetSaviorFromName(options.Extension),
+                WordsPreprocessors = GetWordPreprocessors(options.Languages.DefaultIfEmpty("en"))
             };
+        }
+
+        private static IEnumerable<IWordsPreprocessor> GetWordPreprocessors(IEnumerable<string> optionsLanguages)
+        {
+            return optionsLanguages.Distinct().Select(lang => lang switch
+            {
+                "ru" => CreateFromFiles(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "ru", "index.dic"),
+                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "ru", "index.aff")),
+                "en" => CreateFromFiles(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "en", "index.dic"),
+                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "en", "index.aff")),
+                _ => throw new ArgumentException($"Language not supported {lang}")
+            });
+        }
+
+        private static ToInfinitiveFormProcessor CreateFromFiles(string dictionaryFile, string affixFile)
+        {
+            using var dictionaryStream = File.OpenRead(dictionaryFile);
+            using var affixStream = File.OpenRead(affixFile);
+            return new ToInfinitiveFormProcessor(dictionaryStream, affixStream);
         }
 
         private static IEnumerable<string> GetExcludedWordsFromFile(string filename) =>

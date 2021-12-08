@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using CommandLine;
 
 namespace TagsCloudVisualization.CLI
@@ -40,5 +41,8 @@ namespace TagsCloudVisualization.CLI
 
         [Option("algorithm", HelpText = "Layouter algorithm", Default = "circular")]
         public string Algorithm { get; set; }
+
+        [Option("lang", HelpText = "Using languages", Separator = ',')]
+        public IEnumerable<string> Languages { get; set; }
     }
 }

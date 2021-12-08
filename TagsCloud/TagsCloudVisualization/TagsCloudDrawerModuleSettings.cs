@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudDrawer.ImageSavior;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
+using TagsCloudVisualization.WordsPreprocessor;
 
 namespace TagsCloudVisualization
 {
@@ -34,5 +36,8 @@ namespace TagsCloudVisualization
         public IEnumerable<string> BoredWords { get; init; } = Array.Empty<string>();
         
         public Func<IImageSavior> ImageSavior { get; init; } = () => new PngSavior();
+
+        public IEnumerable<IWordsPreprocessor> WordsPreprocessors { get; init; } =
+            Enumerable.Empty<IWordsPreprocessor>();
     }
 }

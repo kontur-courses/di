@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Autofac;
@@ -31,7 +30,7 @@ namespace TagsCloudVisualization.CLI
             var directory = Path.GetFullPath(options.OutputDirectory ?? Options.DefaultOutputDirectory);
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             var filename =
-                Path.Combine(directory, options.OutputFileName ?? DateTime.Now.ToString(CultureInfo.InvariantCulture));
+                Path.Combine(directory, options.OutputFileName ?? DateTime.Now.Ticks.ToString());
             container.Resolve<TagsCloudVisualizer>().Visualize(filename);
 
             Console.WriteLine($"Tags cloud {filename} generated.");

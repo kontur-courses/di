@@ -10,6 +10,7 @@
         <PackageReference Include="iTextSharp" Version="5.5.13.2"/>
         <PackageReference Include="System.Drawing.Common" Version="6.0.0"/>
         <PackageReference Include="System.Drawing.Primitives" Version="4.3.0"/>
+        <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
