@@ -32,9 +32,9 @@ namespace TagsCloudVisualization
         };
 
         public ILayouter Layouter { get; init; } = new CircularLayouter(Point.Empty);
-        
+
         public IEnumerable<string> BoredWords { get; init; } = Array.Empty<string>();
-        
+
         public Func<IImageSavior> ImageSavior { get; init; } = () => new PngSavior();
 
         public IEnumerable<IWordsPreprocessor> WordsPreprocessors { get; init; } =
