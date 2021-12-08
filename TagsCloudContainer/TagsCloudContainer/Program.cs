@@ -4,6 +4,7 @@
     {
         public static void Main(string[] args)
         {
+            ConsoleApplication.Run();
         }
     }
 }
