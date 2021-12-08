@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Mono.Options;
+using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Registrations;
-using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 

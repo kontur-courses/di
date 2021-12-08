@@ -1,4 +1,4 @@
-﻿using TagsCloudVisualization.Abstractions;
+﻿using TagsCloudContainer.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 

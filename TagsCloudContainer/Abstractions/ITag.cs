@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.Abstractions;
+﻿namespace TagsCloudContainer.Abstractions;
 
 public interface ITag
 {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.Abstractions;
+namespace TagsCloudContainer.Abstractions;
 
 public interface IVisualizer
 {

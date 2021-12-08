@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Mono.Options;
 using System.Drawing;
+using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Registrations;
-using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 

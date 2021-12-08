@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Mono.Options;
 using System.Reflection;
+using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults;
 using TagsCloudContainer.Registrations;
-using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer;
 public class Program

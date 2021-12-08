@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Mono.Options;
+using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.SettingsProviders;
 using TagsCloudContainer.Registrations;
-using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -24,7 +24,7 @@ public class DefaultRunner : IRunner
         img.Save(output.OutputPath, output.ImageFormat.GetFormat());
     }
 
-    [Register(IsKeyed=true)]
+    [Register(IsKeyed = true)]
     public static void Register(ContainerBuilder builder, object key)
     {
         builder.RegisterType<DefaultRunner>().AsSelf().Keyed<IRunner>(key);

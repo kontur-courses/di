@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Registrations;
-using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
 

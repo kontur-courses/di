@@ -1,6 +1,6 @@
 ﻿using Mono.Options;
 
-namespace TagsCloudVisualization.Abstractions;
+namespace TagsCloudContainer.Abstractions;
 
 public interface ICliSettingsProvider
 {
