@@ -6,6 +6,8 @@ using System.Linq;
 
 namespace TagsCloudVisualization.Visualization
 {
+    // Этот класс был временным для задачи TagCloud 
+    // Удаление уже в процессе :)
     #pragma warning disable CA1416
     public class CircularCloudVisualizer
     {
@@ -43,7 +45,7 @@ namespace TagsCloudVisualization.Visualization
 
         public void PutWordInRectangle(string word, RectangleF rectangle)
         {
-            var wordSize = (int) rectangle.Width / word.Length;
+            var wordSize = (int) rectangle.Height / word.Length;
             graphics.DrawString(word, new Font(FontFamily.GenericSansSerif, wordSize), pen.Brush, rectangle);
         }
 

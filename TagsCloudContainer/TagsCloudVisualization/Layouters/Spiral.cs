@@ -24,7 +24,6 @@ namespace TagsCloudVisualization.Layouters
 
         public void GetNextPoint()
         {
-            // ReSharper disable once IntroduceOptionalParameters.Global
             IncreaseSize(0.01f, 0.01f);
         }
 

@@ -17,28 +17,12 @@ namespace TagsCloudVisualization.TextPreparers
 
         public IEnumerable<string> PrepareText(IEnumerable<string> text)
         {
-            var prepared = new List<string>();
-            var frequencyDict = new Dictionary<string, int>();
-
-            foreach (var word in text)
-            {
-                if (IsFiltered(word)) continue;
-
-                if (frequencyDict.ContainsKey(word))
-                {
-                    frequencyDict[word]++;
-                }
-                else
-                {
-                    prepared.Add(PrepareWord(word));
-                    frequencyDict[word] = 1;
-                }
-            }
-
-            return prepared.OrderByDescending(x => frequencyDict[x]);
+            return text
+                .Where(word => !IsFiltered(word))
+                .Select(PrepareWord)
+                .ToList(); // На случай каких-то ошибок из filters или preparations
         }
-
-        // Не знаю как лучше... так или чтобы явно отразить, что preparation - Func, через Invoke
+        
         private string PrepareWord(string word) =>
             preparations.Aggregate(word, (current, preparation) => preparation(current));
 

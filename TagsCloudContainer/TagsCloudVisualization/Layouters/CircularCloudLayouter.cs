@@ -8,10 +8,11 @@ namespace TagsCloudVisualization.Layouters
 {
     public class CircularCloudLayouter : ILayouter
     {
-        public IEnumerable<RectangleF> PlacedRectangles => rectangles;
         private readonly HashSet<RectangleF> rectangles;
         private readonly IPointPlacer pointPlacer;
 
+        public IEnumerable<RectangleF> PlacedRectangles => rectangles;
+        
         public CircularCloudLayouter(IPointPlacer pointPlacer)
         {
             this.pointPlacer = pointPlacer;
