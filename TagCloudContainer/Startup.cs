@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using TagCloud.App.UI;
-using TagCloud.Infrastructure.Common;
+using TagCloud.App.UI.Common;
 using TagCloud.Infrastructure.FileReader;
 using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Layouter;

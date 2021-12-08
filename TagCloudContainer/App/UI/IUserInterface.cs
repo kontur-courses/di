@@ -1,4 +1,4 @@
-﻿using TagCloud.Infrastructure.Common;
+﻿using TagCloud.App.UI.Common;
 
 namespace TagCloud.App.UI;
 

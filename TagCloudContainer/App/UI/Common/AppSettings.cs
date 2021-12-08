@@ -1,7 +1,6 @@
 ﻿using CommandLine;
-using TagCloud.Infrastructure.Common;
 
-namespace TagCloud.App.UI;
+namespace TagCloud.App.UI.Common;
 
 public class AppSettings : IAppSettings
 {
@@ -22,4 +21,14 @@ public class AppSettings : IAppSettings
 
     [Option('f', "fontName", Default = "Roboto", HelpText = "Font used to display words")]
     public string FontName { get; set; } = "Roboto";
+
+    public static AppSettings Parse(string[] args)
+    {
+        var parsed = Parser.Default.ParseArguments<AppSettings>(args) as Parsed<AppSettings>;
+
+        if (parsed == null)
+            Environment.Exit(-1);
+
+        return parsed.Value;
+    }
 }
