@@ -12,9 +12,9 @@ public class Program
     {
         args = new[] { "-h", "--string", "tag1 Tag1 tag3 Tag2 tag1 TAG3 tag3 tag4 tag2 tag1", "--center", "100, 200", "--color", "red" };
         var builder = new ContainerBuilder();
-        var assemblies = new[] {Assembly.GetExecutingAssembly() };
-        RegisterServices(builder,assemblies);
-        RegisterSettingsProviders(builder,assemblies);
+        var assemblies = new[] { Assembly.GetExecutingAssembly() };
+        RegisterServices(builder, assemblies);
+        RegisterSettingsProviders(builder, assemblies);
         var container = builder.Build();
         ParseSettings(args, container);
 
@@ -37,6 +37,15 @@ public class Program
             argsList = item.Parse(argsList);
             if (!argsList.Any())
                 break;
+        }
+
+        if (argsList.Any())
+            throw new ArgumentException($"Unknown arguments encountered: [{string.Join(", ", argsList)}]");
+
+        foreach(var provider in allSettingsProviders.OfType<IRequiredSettingsProvider>())
+        {
+            if (!provider.IsSet)
+                throw new ArgumentException($"One of the required arguments were not provided: {provider.GetType().Name}");
         }
     }
 
