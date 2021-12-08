@@ -24,7 +24,7 @@ namespace TagsCloudVisualization.CLI
             return new TagsCloudDrawerModuleSettings
             {
                 WordsFile = options.WordsFile,
-                BoredWords = GetExcludedWordsFromFile(options.ExcludingWordsFile),
+                BoringWords = GetExcludedWordsFromFile(options.ExcludingWordsFile),
                 ImageSettingsProvider = new ImageSettingsProvider
                 {
                     BackgroundColor = ParseBackgroundColor(options.BackgroundColor),

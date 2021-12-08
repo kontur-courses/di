@@ -44,7 +44,7 @@ namespace TagsCloudVisualization.Module
             builder.RegisterType<ToLowerCasePreprocessor>().As<IWordsPreprocessor>();
             foreach (var preprocessor in _settings.WordsPreprocessors)
                 builder.RegisterInstance(preprocessor).As<IWordsPreprocessor>();
-            builder.RegisterInstance(new RemoveBoredPreprocessor(_settings.BoredWords)).As<IWordsPreprocessor>();
+            builder.RegisterInstance(new RemoveBoringPreprocessor(_settings.BoringWords)).As<IWordsPreprocessor>();
             builder.RegisterComposite<IWordsPreprocessor>((_, processors) => new CombinedPreprocessor(processors));
         }
 

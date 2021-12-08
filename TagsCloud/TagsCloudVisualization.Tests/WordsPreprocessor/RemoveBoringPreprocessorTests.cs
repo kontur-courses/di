@@ -5,16 +5,13 @@ using TagsCloudVisualization.WordsPreprocessor;
 namespace TagsCloudVisualization.Tests.WordsPreprocessor
 {
     [TestFixture]
-    public class CombinedPreprocessorTests
+    public class RemoveBoringPreprocessorTests
     {
         [Test]
         public void Process_ShouldReturnLowerCaseWords()
         {
-            var words = new[] { "WORD1", "WORD2", "B", "WORD3", "A" };
-            var preprocessor = new CombinedPreprocessor(
-                new ToLowerCasePreprocessor(),
-                new RemoveBoringPreprocessor(new[] { "a", "b" })
-            );
+            var words = new[] { "word1", "word2", "a", "word3", "b" };
+            var preprocessor = new RemoveBoringPreprocessor(new[] { "a", "b" });
 
             var processed = preprocessor.Process(words);
 

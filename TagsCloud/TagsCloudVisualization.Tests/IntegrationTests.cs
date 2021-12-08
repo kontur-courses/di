@@ -16,7 +16,7 @@ namespace TagsCloudVisualization.Tests
         private readonly TagsCloudDrawerModuleSettings _settings = new()
         {
             WordsFile = Path.Combine(Directory.GetCurrentDirectory(), "Words.txt"),
-            BoredWords = new[] { "a", "b", "c" }
+            BoringWords = new[] { "a", "b", "c" }
         };
 
         [OneTimeSetUp]

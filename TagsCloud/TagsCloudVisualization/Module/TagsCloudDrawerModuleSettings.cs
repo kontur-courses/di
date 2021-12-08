@@ -33,7 +33,7 @@ namespace TagsCloudVisualization.Module
 
         public ILayouter Layouter { get; init; } = new CircularLayouter(Point.Empty);
 
-        public IEnumerable<string> BoredWords { get; init; } = Array.Empty<string>();
+        public IEnumerable<string> BoringWords { get; init; } = Array.Empty<string>();
 
         public Func<IImageSavior> ImageSavior { get; init; } = () => new PngSavior();
 
