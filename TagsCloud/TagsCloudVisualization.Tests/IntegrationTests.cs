@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Autofac;
 using NUnit.Framework;
+using TagsCloudVisualization.Module;
 
 namespace TagsCloudVisualization.Tests
 {

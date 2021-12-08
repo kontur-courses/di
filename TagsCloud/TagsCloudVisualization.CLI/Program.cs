@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Autofac;
 using CommandLine;
+using TagsCloudVisualization.Module;
 
 namespace TagsCloudVisualization.CLI
 {
@@ -26,7 +27,9 @@ namespace TagsCloudVisualization.CLI
 
         private static void Run(Options options)
         {
-            var container = CreateContainer(options.ToDrawerSettings());
+            var container = new ContainerBuilder()
+                            .RegisterTagsClouds(options.ToDrawerSettings())
+                            .Build();
             var directory = Path.GetFullPath(options.OutputDirectory ?? Options.DefaultOutputDirectory);
             if (!Directory.Exists(directory))
             {
@@ -40,12 +43,5 @@ namespace TagsCloudVisualization.CLI
 
         private static string GenerateName() =>
             $"Cloud_{DateTime.Now:dd-MM-yy}_{DateTime.Now.Subtract(DateTime.Today).TotalSeconds:0}";
-
-        private static IContainer CreateContainer(TagsCloudDrawerModuleSettings settings)
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new TagsCloudDrawerModule(settings));
-            return builder.Build();
-        }
     }
 }

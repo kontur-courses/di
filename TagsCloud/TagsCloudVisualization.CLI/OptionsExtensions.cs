@@ -9,6 +9,7 @@ using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
+using TagsCloudVisualization.Module;
 using TagsCloudVisualization.WordsPreprocessor;
 
 namespace TagsCloudVisualization.CLI

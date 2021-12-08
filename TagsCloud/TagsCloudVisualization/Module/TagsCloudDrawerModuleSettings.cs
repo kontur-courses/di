@@ -9,7 +9,7 @@ using TagsCloudVisualization.DrawerSettingsProvider;
 using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
 using TagsCloudVisualization.WordsPreprocessor;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Module
 {
     public class TagsCloudDrawerModuleSettings
     {

@@ -12,9 +12,9 @@ using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Module
 {
-    public class TagsCloudDrawerModule : Module
+    public class TagsCloudDrawerModule : Autofac.Module
     {
         private readonly TagsCloudDrawerModuleSettings _settings;
 
