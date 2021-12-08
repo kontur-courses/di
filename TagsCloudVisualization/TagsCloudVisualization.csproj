@@ -59,7 +59,8 @@
     <Compile Include="Layouter\RectangularExtensions.cs" />
     <Compile Include="Layouter\Spiral.cs" />
     <Compile Include="RectangleWithWord.cs" />
-    <Compile Include="Settings\ISettingsConfiguration.cs" />
+    <Compile Include="Settings\DefaultSettings.cs" />
+    <Compile Include="Settings\SettingsConfiguration.cs" />
     <Compile Include="TextAnalization\Analyzer\Analyzer.cs" />
     <Compile Include="TextAnalization\Analyzer\IAnalyzer.cs" />
     <Compile Include="TextAnalization\LowerCaseMaker\ILowerCaseMaker.cs" />
