@@ -34,7 +34,7 @@ namespace TagsCloudVisualization.CLI
                     ColorGenerator = GetTagsColorGeneratorFromName(options.TagsColor),
                     Font = new FontSettings
                     {
-                        Family = "Arial",
+                        Family = options.FontFamily,
                         MaxSize = options.MaxFontSize
                     }
                 },

@@ -39,6 +39,9 @@ namespace TagsCloudVisualization.CLI
         [Option("fontsize", HelpText = "Max font size", Default = 50)]
         public int MaxFontSize { get; set; }
 
+        [Option("font", HelpText = "Font family", Default = "Arial")]
+        public string FontFamily { get; set; }
+
         [Option("algorithm", HelpText = "Layouter algorithm", Default = "circular")]
         public string Algorithm { get; set; }
 
