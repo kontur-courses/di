@@ -7,22 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Class1.cs"/>
-        <Compile Remove="TextReader\Parsers\**"/>
-        <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs"/>
+        <Compile Remove="Class1.cs" />
+        <Compile Remove="TextReader\Parsers\**" />
+        <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DeepMorphy" Version="2.0.3"/>
-        <PackageReference Include="System.Drawing.Common" Version="6.0.0"/>
+        <PackageReference Include="DeepMorphy" Version="2.0.3" />
+        <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="TextReader\Parsers\**"/>
+        <EmbeddedResource Remove="TextReader\Parsers\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="TextReader\Parsers\**"/>
+        <None Remove="TextReader\Parsers\**" />
     </ItemGroup>
 
 </Project>
