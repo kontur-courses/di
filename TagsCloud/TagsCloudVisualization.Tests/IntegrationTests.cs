@@ -48,7 +48,7 @@ namespace TagsCloudVisualization.Tests
             builder.RegisterModule(new TagsCloudDrawerModule(_settings));
             var container = builder.Build();
 
-            var visualizer = container.Resolve<TagsCloudVisualizer>();
+            var visualizer = container.Resolve<TagsCloudImageCreator>();
             visualizer.Visualize(ImageFile);
         }
 

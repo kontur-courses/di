@@ -37,7 +37,7 @@ namespace TagsCloudVisualization.CLI
             }
 
             var filename = Path.Combine(directory, options.OutputFileName ?? GenerateName());
-            container.Resolve<TagsCloudVisualizer>().Visualize(filename);
+            container.Resolve<TagsCloudImageCreator>().Visualize(filename);
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
 

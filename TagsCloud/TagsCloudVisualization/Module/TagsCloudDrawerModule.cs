@@ -36,7 +36,7 @@ namespace TagsCloudVisualization.Module
             builder.RegisterType<ImageCreator>().As<IImageCreator>();
             builder.RegisterType<LayoutWordsTransformer>().As<IWordsToTagsTransformer>();
             builder.RegisterType<TagDrawableFactory>().As<ITagDrawableFactory>();
-            builder.RegisterType<TagsCloudVisualizer>().AsSelf();
+            builder.RegisterType<TagsCloudImageCreator>().AsSelf();
         }
 
         private void RegisterWordPreprocessors(ContainerBuilder builder)

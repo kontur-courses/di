@@ -8,7 +8,7 @@ using TagsCloudVisualization.WordsToTagsTransformers;
 
 namespace TagsCloudVisualization
 {
-    public class TagsCloudVisualizer
+    public class TagsCloudImageCreator
     {
         private readonly IWordsProvider _wordsProvider;
         private readonly IWordsPreprocessor _preprocessor;
@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
         private readonly IWordsToTagsTransformer _transformer;
         private readonly IImageCreator _imageCreator;
 
-        public TagsCloudVisualizer(IWordsProvider wordsProvider,
+        public TagsCloudImageCreator(IWordsProvider wordsProvider,
             IWordsPreprocessor preprocessor,
             ITagDrawableFactory tagDrawableFactory,
             IWordsToTagsTransformer transformer,
