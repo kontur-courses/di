@@ -11,13 +11,13 @@ namespace TagsCloudContainer.Layouter
         private readonly IPointsProvider pointsProvider;
         private readonly List<Rectangle> rectangles;
 
-        public IReadOnlyCollection<Rectangle> Rectangles => rectangles;
-
         public CloudLayouter(IPointsProvider pointsProvider)
         {
             this.pointsProvider = pointsProvider;
             rectangles = new List<Rectangle>();
         }
+
+        public IReadOnlyCollection<Rectangle> Rectangles => rectangles;
 
 
         public Rectangle PutNextRectangle(Size size)

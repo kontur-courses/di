@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using DeepMorphy;
 using DeepMorphy.Model;
@@ -8,12 +7,12 @@ namespace TagsCloudContainer.WordsPreparator
 {
     public record RussianWordsPreparator : IWordsPreparator
     {
-        private readonly MorphAnalyzer analyzer;
         private static readonly IReadOnlyDictionary<string, SpeechPart> speechPartsAdapter;
+        private readonly MorphAnalyzer analyzer;
 
         static RussianWordsPreparator()
         {
-            speechPartsAdapter = new Dictionary<string, SpeechPart>()
+            speechPartsAdapter = new Dictionary<string, SpeechPart>
             {
                 ["сущ"] = SpeechPart.Noun,
                 ["прил"] = SpeechPart.Adjective,
@@ -22,7 +21,7 @@ namespace TagsCloudContainer.WordsPreparator
                 ["инф_гл"] = SpeechPart.Verb,
                 ["нареч"] = SpeechPart.Adverbs,
                 ["мест"] = SpeechPart.Pronoun,
-                ["числ"] = SpeechPart.Num,
+                ["числ"] = SpeechPart.Num
             };
         }
 
@@ -30,7 +29,7 @@ namespace TagsCloudContainer.WordsPreparator
         {
             this.analyzer = analyzer;
         }
-        
+
         public IEnumerable<WordInfo> Prepare(IEnumerable<string> words)
         {
             var preparedWords = words
@@ -46,7 +45,10 @@ namespace TagsCloudContainer.WordsPreparator
                 .Select(tag => new WordInfo(tag.Lemma, IdentifySpeechPart(tag)));
         }
 
-        private string ToLowerAndTrim(string line) => line.Trim().ToLower();
+        private string ToLowerAndTrim(string line)
+        {
+            return line.Trim().ToLower();
+        }
 
         private SpeechPart IdentifySpeechPart(Tag tag)
         {
@@ -55,6 +57,5 @@ namespace TagsCloudContainer.WordsPreparator
                 ? speechPartsAdapter[speechPart]
                 : SpeechPart.Unknown;
         }
-
     }
 }

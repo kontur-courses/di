@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using TagsCloudContainer.Layouter.PointsCreators;
 
 namespace TagsCloudContainer_Tests
@@ -42,7 +41,6 @@ namespace TagsCloudContainer_Tests
             for (var i = 1; i <= pointsCount; i++) points.Add(creator.GetNextPoint());
 
             points.Should().HaveCount(pointsCount);
-
         }
     }
 }

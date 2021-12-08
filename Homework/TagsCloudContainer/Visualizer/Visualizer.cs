@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layouter;
@@ -8,8 +7,8 @@ namespace TagsCloudContainer.Visualizer
 {
     public class Visualizer : IVisualizer
     {
-        private readonly IVisualizerSettings settings;
         private readonly ICloudLayouter layouter;
+        private readonly IVisualizerSettings settings;
 
         public Visualizer(IVisualizerSettings settings, ICloudLayouter layouter)
         {
@@ -30,14 +29,13 @@ namespace TagsCloudContainer.Visualizer
             var wordRectanglePairs = layoutRectangles
                 .Zip(wordsOrederedByFreq, (layout, word) => (layout, word.Key));
             foreach (var wordRectPair in wordRectanglePairs)
-            {
                 graphics.DrawString(wordRectPair.Key, settings.Font, brush, wordRectPair.layout);
-            }
 
             return bmp;
         }
 
-        private IReadOnlyCollection<Rectangle> GetLayoutRectangles(IOrderedEnumerable<KeyValuePair<string, int>> wordsOrderedByFreq)
+        private IReadOnlyCollection<Rectangle> GetLayoutRectangles(
+            IOrderedEnumerable<KeyValuePair<string, int>> wordsOrderedByFreq)
         {
             var startLetterWidth = 50;
             var startLetterHight = 50;
@@ -46,7 +44,7 @@ namespace TagsCloudContainer.Visualizer
             {
                 var freqDelta = mostFreq - word.Value;
                 var width = (startLetterWidth - freqDelta) * word.Key.Length;
-                var height = (startLetterHight - freqDelta);
+                var height = startLetterHight - freqDelta;
                 var size = new Size(width, height);
                 layouter.PutNextRectangle(size);
             }

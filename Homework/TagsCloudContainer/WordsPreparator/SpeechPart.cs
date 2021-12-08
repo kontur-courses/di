@@ -8,6 +8,6 @@
         Adjective,
         Adverbs,
         Num,
-        Unknown,
+        Unknown
     }
 }

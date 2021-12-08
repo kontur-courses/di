@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace TagsCloudContainer.WordsFrequencyAnalyzers
 {
@@ -9,12 +8,10 @@ namespace TagsCloudContainer.WordsFrequencyAnalyzers
         {
             var freqDict = new Dictionary<string, int>();
             foreach (var word in words)
-            {
                 if (!freqDict.ContainsKey(word))
                     freqDict[word] = 1;
                 else
                     freqDict[word] += 1;
-            }
 
             return freqDict;
         }

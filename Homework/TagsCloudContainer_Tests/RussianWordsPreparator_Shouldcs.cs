@@ -9,7 +9,7 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class RussianWordsPreparator_Should
     {
-        private RussianWordsPreparator sut = new RussianWordsPreparator(new MorphAnalyzer());
+        private readonly RussianWordsPreparator sut = new(new MorphAnalyzer());
 
         [Test]
         public void Trim()
@@ -17,17 +17,17 @@ namespace TagsCloudContainer_Tests
             var input = new[]
             {
                 " пробел",
-                "пробел ",
+                "пробел "
             };
             var expected = new[]
             {
                 "пробел",
-                "пробел",
+                "пробел"
             };
 
             AssertLemma(input, expected);
         }
-        
+
         [Test]
         public void LowerWords()
         {
@@ -35,14 +35,14 @@ namespace TagsCloudContainer_Tests
             {
                 "Начало",
                 "сеРедина",
-                "конеЦ",
+                "конеЦ"
             };
 
             var expected = new[]
             {
                 "начало",
                 "середина",
-                "конец",
+                "конец"
             };
             AssertLemma(input, expected);
         }
@@ -66,7 +66,7 @@ namespace TagsCloudContainer_Tests
             var input = new[] {"он один"};
             sut.Prepare(input).Should().ContainSingle(wi => wi.Lemma == "он");
         }
-        
+
         private void AssertLemma(string[] input, string[] expected)
         {
             sut.Prepare(input)

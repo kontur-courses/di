@@ -11,7 +11,7 @@ namespace TagsCloudContainer_Tests
     {
         private const string testFilePath = @"..\..\..\TestFiles\testWords.txt";
 
-        private readonly string[] expectedOutput = new[]
+        private readonly string[] expectedOutput =
         {
             "гитара",
             "скрипка",
@@ -21,10 +21,10 @@ namespace TagsCloudContainer_Tests
             "Я",
             "Играл",
             "Смотрел",
-            "снова",
+            "снова"
         };
-        
-        private readonly FileReader sut = new FileReader();
+
+        private readonly FileReader sut = new();
 
         [Test]
         public void ReadFile_WhenExists()

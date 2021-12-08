@@ -11,12 +11,6 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class CloudLayouter_Should
     {
-        private readonly Size testingSize = new Size(10,10);
-        private readonly Point testingCenter = new Point(5,5);
-
-        private CloudLayouter sut;
-        private IPointsProvider pointsProvider;
-        
         [SetUp]
         public void SetUp()
         {
@@ -27,6 +21,12 @@ namespace TagsCloudContainer_Tests
             sut = new CloudLayouter(pointsProvider);
         }
 
+        private readonly Size testingSize = new(10, 10);
+        private readonly Point testingCenter = new(5, 5);
+
+        private CloudLayouter sut;
+        private IPointsProvider pointsProvider;
+
         [TestCase(0, 3, TestName = "width of rectangle is not expected to be zero")]
         [TestCase(3, 0, TestName = "height of rectangle is not expected to be zero")]
         [TestCase(-1, 3, TestName = "width of rectangle is not expected to be negative")]
@@ -36,7 +36,7 @@ namespace TagsCloudContainer_Tests
             var size = new Size(width, height);
             Assert.Throws<ArgumentException>(() => sut.PutNextRectangle(size));
         }
-        
+
         [Test]
         public void PutFirstRectangleInCenter()
         {
@@ -47,7 +47,7 @@ namespace TagsCloudContainer_Tests
         public void AskAnotherPoint_WhenRectangleIntersectsWithOthers()
         {
             A.CallTo(() => pointsProvider.GetNextPoint())
-                .ReturnsNextFromSequence(testingCenter, testingCenter + new Size(1,1), testingCenter + testingSize);
+                .ReturnsNextFromSequence(testingCenter, testingCenter + new Size(1, 1), testingCenter + testingSize);
             sut.PutNextRectangle(testingSize);
             sut.PutNextRectangle(testingSize);
             A.CallTo(() => pointsProvider.GetNextPoint())

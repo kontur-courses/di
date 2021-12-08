@@ -8,7 +8,7 @@ namespace TagsCloudContainer.Layouter.PointsCreators
         private const double AngleDelta = Math.PI / 360;
 
         private readonly Point center;
-        
+
         private double currentAngle;
         private Point? lastPoint;
 

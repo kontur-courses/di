@@ -8,21 +8,21 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class WordsFilterAnalyzer_Should
     {
-        private readonly WordInfo[] testingInput = new[]
-        {
-            new WordInfo("мяч", SpeechPart.Noun),
-            new WordInfo("футбольный", SpeechPart.Adjective),
-            new WordInfo("пинать", SpeechPart.Verb),
-            new WordInfo("ой", SpeechPart.Unknown),
-        };
-        
-        private WordsFilter sut;
-        
         [SetUp]
         public void SetUp()
         {
             sut = new WordsFilter();
         }
+
+        private readonly WordInfo[] testingInput =
+        {
+            new WordInfo("мяч", SpeechPart.Noun),
+            new WordInfo("футбольный", SpeechPart.Adjective),
+            new WordInfo("пинать", SpeechPart.Verb),
+            new WordInfo("ой", SpeechPart.Unknown)
+        };
+
+        private WordsFilter sut;
 
         [Test]
         public void ExcludeSpeechParts_WhenSpecified()
@@ -53,11 +53,10 @@ namespace TagsCloudContainer_Tests
         {
             sut.Excluding(SpeechPart.Noun)
                 .Filter(testingInput);
-            
+
             sut.Filter(testingInput)
                 .Should()
                 .Contain("мяч");
         }
-
     }
 }

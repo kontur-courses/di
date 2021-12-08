@@ -6,7 +6,7 @@ namespace TagsCloudContainer.Visualizer
     {
         public Color WordsColor => Color.White;
         public Color BackgroundColor => Color.Black;
-        public Font Font => new Font("Arial", 50);
-        public Size ImageSize => new Size(1920, 1080);
+        public Font Font => new("Arial", 50);
+        public Size ImageSize => new(1920, 1080);
     }
 }
