@@ -55,5 +55,10 @@
       <Name>TagCloud</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="mystem.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

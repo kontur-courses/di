@@ -63,7 +63,7 @@
     <Compile Include="Words\Preprocessing\ToInitFormPreprocessor.cs" />
     <Compile Include="Words\Preprocessing\ToLowerCasePreprocessor.cs" />
     <Compile Include="Words\Reading\FromConsole\ConsoleReader.cs" />
-    <Compile Include="Words\Reading\FromFile\FileReader.cs" />
+    <Compile Include="Words\Reading\FromFile\TxtFileReader.cs" />
     <Compile Include="Words\Reading\FromConsole\IConsoleReader.cs" />
     <Compile Include="Words\Reading\FromFile\IFileReader.cs" />
     <Compile Include="Words\Reading\IWordsReader.cs" />
@@ -75,6 +75,5 @@
     <Compile Include="Words\Writing\ToFile\IFileWriter.cs" />
     <Compile Include="Words\Writing\WordsWriter.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
