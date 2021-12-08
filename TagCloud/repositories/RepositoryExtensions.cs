@@ -4,7 +4,7 @@ namespace TagCloud.repositories
 {
     public static class WordRepositoryExtensions
     {
-        public static Dictionary<string, int> CalculateWordStatistics(this WordRepository wordRepository)
+        public static Dictionary<string, int> CalculateWordStatistics(this IRepository<string> wordRepository)
         {
             var statistics = new Dictionary<string, int>();
             foreach (var word in wordRepository.Get())
