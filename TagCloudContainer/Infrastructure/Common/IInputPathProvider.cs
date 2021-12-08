@@ -1,4 +1,4 @@
-﻿namespace TagCloudContainer.Infrastructure.Common;
+﻿namespace TagCloud.Infrastructure.Common;
 
 public interface IInputPathProvider
 {

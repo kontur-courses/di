@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Lemmatizer;
+using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class FilterTestCases
 {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Common;
-using TagCloudContainer.Infrastructure.Layouter;
-using TagCloudContainer.Infrastructure.Painter;
+using TagCloud.App.UI;
+using TagCloud.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Painter;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class PainterTests
 {

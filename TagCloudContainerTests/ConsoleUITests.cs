@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.App.UI;
-using TagCloudContainer.Infrastructure.Common;
-using TagCloudContainer.Infrastructure.FileReader;
-using TagCloudContainer.Infrastructure.Filter;
-using TagCloudContainer.Infrastructure.Layouter;
-using TagCloudContainer.Infrastructure.Lemmatizer;
-using TagCloudContainer.Infrastructure.Painter;
-using TagCloudContainer.Infrastructure.Saver;
-using TagCloudContainer.Infrastructure.WordWeigher;
+using TagCloud.App.UI;
+using TagCloud.Infrastructure.Common;
+using TagCloud.Infrastructure.FileReader;
+using TagCloud.Infrastructure.Filter;
+using TagCloud.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Lemmatizer;
+using TagCloud.Infrastructure.Painter;
+using TagCloud.Infrastructure.Saver;
+using TagCloud.Infrastructure.WordWeigher;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class ConsoleUITests
 {
@@ -32,6 +32,7 @@ internal class ConsoleUITests
     public void Run_TransferImageFileToSaver()
     {
         var filepath = $"{Environment.CurrentDirectory}\\{settings.OutputPath}.{settings.OutputFormat}";
+
         if (File.Exists(filepath))
             File.Delete(filepath);
 

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using TagCloudContainer.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Layouter;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal static class CircularCloudLayouterExtensions
 {
-    private static readonly Random Random = new();
+    private static readonly Random Random = new(int.MaxValue);
 
     public static void GenerateRandomLayout(this CircularCloudLayouter layouter, int layoutLength)
     {

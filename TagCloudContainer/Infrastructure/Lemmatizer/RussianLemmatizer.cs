@@ -1,6 +1,6 @@
 ﻿using DeepMorphy;
 
-namespace TagCloudContainer.Infrastructure.Lemmatizer;
+namespace TagCloud.Infrastructure.Lemmatizer;
 
 public class RussianLemmatizer : ILemmatizer
 {

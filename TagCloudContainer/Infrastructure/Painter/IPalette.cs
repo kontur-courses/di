@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloudContainer.Infrastructure.Painter;
+namespace TagCloud.Infrastructure.Painter;
 
 public interface IPalette
 {

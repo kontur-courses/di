@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloudContainer.Infrastructure.Layouter;
+namespace TagCloud.Infrastructure.Layouter;
 
 public static class PointExtensions
 {

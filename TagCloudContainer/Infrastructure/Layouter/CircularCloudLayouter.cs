@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using TagCloudContainer.Infrastructure.Common;
+using TagCloud.Infrastructure.Common;
 
-namespace TagCloudContainer.Infrastructure.Layouter;
+namespace TagCloud.Infrastructure.Layouter;
 
 public class CircularCloudLayouter : ICloudLayouter
 {

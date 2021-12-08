@@ -2,9 +2,9 @@
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.FileReader;
+using TagCloud.Infrastructure.FileReader;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class PlainTextFileReaderTests
 {

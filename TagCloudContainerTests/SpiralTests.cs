@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Layouter;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 public class SpiralTests
 {

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagCloudContainer.Infrastructure.Saver;
+namespace TagCloud.Infrastructure.Saver;
 
 public class ImageSaver : IImageSaver
 {

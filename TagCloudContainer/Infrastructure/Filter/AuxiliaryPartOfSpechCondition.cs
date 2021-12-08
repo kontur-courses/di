@@ -1,6 +1,6 @@
-﻿using TagCloudContainer.Infrastructure.Lemmatizer;
+﻿using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudContainer.Infrastructure.Filter;
+namespace TagCloud.Infrastructure.Filter;
 
 public static class AuxiliaryPartOfSpechCondition
 {

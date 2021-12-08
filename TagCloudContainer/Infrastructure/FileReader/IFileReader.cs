@@ -1,4 +1,4 @@
-﻿namespace TagCloudContainer.Infrastructure.FileReader;
+﻿namespace TagCloud.Infrastructure.FileReader;
 
 public interface IFileReader
 {

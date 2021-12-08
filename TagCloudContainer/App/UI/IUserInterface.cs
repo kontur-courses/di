@@ -1,6 +1,6 @@
-﻿using TagCloudContainer.Infrastructure.Common;
+﻿using TagCloud.Infrastructure.Common;
 
-namespace TagCloudContainer.App.UI;
+namespace TagCloud.App.UI;
 
 public interface IUserInterface
 {

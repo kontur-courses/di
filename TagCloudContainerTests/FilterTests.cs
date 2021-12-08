@@ -2,10 +2,10 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Filter;
-using TagCloudContainer.Infrastructure.Lemmatizer;
+using TagCloud.Infrastructure.Filter;
+using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class FilterTests
 {

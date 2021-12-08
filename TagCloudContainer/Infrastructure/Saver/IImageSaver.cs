@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloudContainer.Infrastructure.Saver;
+namespace TagCloud.Infrastructure.Saver;
 
 public interface IImageSaver
 {

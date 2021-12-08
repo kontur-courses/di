@@ -3,20 +3,19 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Layouter;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 public class CircularCloudLayouterTests
 {
     private CircularCloudLayouter sut;
-    
+
     [SetUp]
     public void SetUp()
     {
         sut = new CircularCloudLayouter(new Point(0, 0));
     }
-
 
     [Test]
     public void LayoutIsEmpty_BeforePutNextRectangle()
@@ -63,6 +62,7 @@ public class CircularCloudLayouterTests
         sut.GenerateRandomLayout(1000);
         var radius = sut.CalculateLayoutRadius();
         var circleArea = Math.PI * radius * radius;
+
         var rectanglesArea = sut.GetLayout()
             .Aggregate(0.0, (current, rectangle) => current + rectangle.Height * rectangle.Width);
 

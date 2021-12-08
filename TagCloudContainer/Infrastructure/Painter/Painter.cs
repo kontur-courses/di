@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using TagCloudContainer.Infrastructure.Common;
-using TagCloudContainer.Infrastructure.Layouter;
+using TagCloud.Infrastructure.Common;
+using TagCloud.Infrastructure.Layouter;
 
-namespace TagCloudContainer.Infrastructure.Painter;
+namespace TagCloud.Infrastructure.Painter;
 
 public class Painter : IPainter
 {

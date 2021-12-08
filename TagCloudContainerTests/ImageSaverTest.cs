@@ -3,9 +3,9 @@ using System.Drawing;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloudContainer.Infrastructure.Saver;
+using TagCloud.Infrastructure.Saver;
 
-namespace TagCloudContainerTests;
+namespace TagCloudTests;
 
 internal class ImageSaverTest
 {
