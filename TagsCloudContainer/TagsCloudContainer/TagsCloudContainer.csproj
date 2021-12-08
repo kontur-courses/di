@@ -107,6 +107,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="input.txt" />
+      <Content Include="README.md" />
       <Content Include="TagsCloudVisualization\FailsImages\TagsCloudVisualization.CircularCloudLayouterTests.PutNextRectangle_PutsThousandRectangles_InOneHundredMilliseconds.png" />
       <Content Include="TagsCloudVisualization\FailsImages\TagsCloudVisualization.CircularCloudLayouterTests.PutNextRectangle_PutsThousandRectangles_InTwoHundredMilliseconds.png" />
       <Content Include="TagsCloudVisualization\FailsImages\TagsCloudVisualization.CircularCloudLayouterTests.PutNextRectangle_ReturnsRectangleFromSpiralPointsGenerator.png" />
