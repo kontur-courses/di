@@ -11,15 +11,19 @@ public static class RegistrationHelper
             assembly => assembly.GetTypes()
             .SelectMany(
                 type => type.GetMethods()
-                .Where(
-                    method => method.GetCustomAttribute<RegisterAttribute>() != null && method.IsStatic
-                    )
+                .Where(method => method.IsStatic)
                  )
              );
 
         foreach (var method in methods)
         {
-            method.Invoke(null, new[] { builder });
+            var attr = method.GetCustomAttribute<RegisterAttribute>();
+            if (attr == null)
+                continue;
+            if (attr.IsKeyed)
+                method.Invoke(null, new object[] { builder, method.DeclaringType!.Name });
+            else
+                method.Invoke(null, new object[] { builder });
         }
     }
 }
