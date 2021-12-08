@@ -1,4 +1,4 @@
-﻿namespace TagCloud.Infrastructure.WordWeigher;
+﻿namespace TagCloud.Infrastructure.Weigher;
 
 public interface IWordWeigher
 {

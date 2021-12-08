@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.Infrastructure.WordWeigher;
+using TagCloud.Infrastructure.Weigher;
 
-namespace TagCloudTests;
+namespace TagCloudTests.WordProcessing;
 
 internal class WordWeigherTests
 {

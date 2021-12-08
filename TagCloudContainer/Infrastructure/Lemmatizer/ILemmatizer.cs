@@ -2,6 +2,6 @@
 
 public interface ILemmatizer
 {
-    bool TryLemmatize(string word, out Lemma lemma);
+    (bool, Lemma) TryLemmatize(string word);
     IEnumerable<Lemma> GetLemmas(IEnumerable<string> words);
 }

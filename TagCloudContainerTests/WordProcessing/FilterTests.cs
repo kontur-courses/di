@@ -5,14 +5,14 @@ using NUnit.Framework;
 using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudTests;
+namespace TagCloudTests.WordProcessing;
 
 internal class FilterTests
 {
     [Test]
     public void FilterWords_ShouldReturnCorrectEnumerable_WhenThereIsNoConditionsAndInputAreStrings()
     {
-        var filter = new Filter();
+        var filter = new TagCloud.Infrastructure.Filter.Filter();
 
         var actual = filter.FilterWords(FilterTestCases.Strings);
 
@@ -22,7 +22,7 @@ internal class FilterTests
     [Test]
     public void FilterWords_ShouldReturnCorrectEnumerable_WhenThereIsNoConditionsAndInputAreLemmas()
     {
-        var filter = new Filter();
+        var filter = new TagCloud.Infrastructure.Filter.Filter();
 
         var actual = filter.FilterWords(FilterTestCases.Lemmas);
 

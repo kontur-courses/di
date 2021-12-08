@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Layouter;
 
-namespace TagCloudTests;
+namespace TagCloudTests.Layouter;
 
 public class CircularCloudLayouterTests
 {

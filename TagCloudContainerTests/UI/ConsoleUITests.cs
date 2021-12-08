@@ -11,9 +11,9 @@ using TagCloud.Infrastructure.Layouter;
 using TagCloud.Infrastructure.Lemmatizer;
 using TagCloud.Infrastructure.Painter;
 using TagCloud.Infrastructure.Saver;
-using TagCloud.Infrastructure.WordWeigher;
+using TagCloud.Infrastructure.Weigher;
 
-namespace TagCloudTests;
+namespace TagCloudTests.UI;
 
 internal class ConsoleUITests
 {

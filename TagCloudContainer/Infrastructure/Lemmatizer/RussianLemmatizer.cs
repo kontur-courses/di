@@ -29,27 +29,27 @@ public class RussianLemmatizer : ILemmatizer
     {
         foreach (var word in words)
         {
-            if (TryLemmatize(word, out var lemma))
+            var (isLemmatized, lemma) = TryLemmatize(word);
+
+            if (isLemmatized)
                 yield return lemma;
         }
     }
 
-    public bool TryLemmatize(string word, out Lemma lemma)
+    public (bool, Lemma) TryLemmatize(string word)
     {
-        lemma = null;
-
         if (string.IsNullOrEmpty(word))
-            return false;
+            return (false, null);
 
         var morphInfo = morph.Parse(word).First();
 
         if (!morphInfo.BestTag.HasLemma)
-        {
-            lemma = new Lemma(word, PartOfSpeech.Unknown);
-            return false;
-        }
+            return (false, new Lemma(word, PartOfSpeech.Unknown));
 
-        lemma = new Lemma(morphInfo.BestTag.Lemma, PartOfSpeeches.TryGetValue(morphInfo.BestTag["post"], out var partOfSpeech) ? partOfSpeech : PartOfSpeech.Unknown);
-        return true;
+        var partOfSpeech = PartOfSpeeches.ContainsKey(morphInfo.BestTag["post"])
+            ? PartOfSpeeches[morphInfo.BestTag["post"]]
+            : PartOfSpeech.Unknown;
+
+        return (true, new Lemma(morphInfo.BestTag.Lemma, partOfSpeech));
     }
 }

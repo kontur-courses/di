@@ -4,7 +4,7 @@ using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Lemmatizer;
 using TagCloud.Infrastructure.Painter;
 using TagCloud.Infrastructure.Saver;
-using TagCloud.Infrastructure.WordWeigher;
+using TagCloud.Infrastructure.Weigher;
 
 namespace TagCloud.App.UI;
 
