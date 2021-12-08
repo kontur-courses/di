@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudCLI
 {
     public class SettingProvider
     {

@@ -1,6 +1,7 @@
 ﻿using Autofac;
+using TagsCloudVisualization;
 
-namespace TagsCloudVisualization
+namespace TagsCloudCLI
 {
     class Program
     {
