@@ -4,6 +4,6 @@ namespace CloudTagContainer
 {
     public interface IWordSizer
     {
-        public List<SizedWord> Convert(string[] words);
+        public List<SizedWord> Convert(string[] words, float fontSize);
     }
 }

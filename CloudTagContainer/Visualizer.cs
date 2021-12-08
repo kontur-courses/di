@@ -22,7 +22,7 @@ namespace CloudTagContainer
 
         public Bitmap Visualize(string[] words)
         {
-            var convertedWords = wordSizer.Convert(words);
+            var convertedWords = wordSizer.Convert(words, settings.TextFont.Size);
             var image = CreateImage(convertedWords);
             return image;
         }
