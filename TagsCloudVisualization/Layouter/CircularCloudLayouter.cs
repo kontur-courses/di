@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Extensions;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layouter
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ILayouter
     {
-        private readonly ArchimedeanSpiralPointGenerator archimedeanSpiralPointGenerator;
+        private readonly IPointGenerator generator;
         private readonly List<Rectangle> rectangles;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(IPointGenerator generator)
         {
-            archimedeanSpiralPointGenerator = new ArchimedeanSpiralPointGenerator(center);
+            this.generator = generator;
             rectangles = new List<Rectangle>();
         }
 
@@ -32,7 +34,7 @@ namespace TagsCloudVisualization
             Rectangle rectangle;
             do 
             {
-                var point = archimedeanSpiralPointGenerator.GetNextPoint();
+                var point = generator.GetNextPoint();
                 var location = new Point(point.X - size.Width / 2, point.Y - size.Height / 2);
                 rectangle = new Rectangle(location, size);
             } while (rectangle.IntersectsWith(rectangles));

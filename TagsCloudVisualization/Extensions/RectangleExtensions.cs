@@ -2,13 +2,10 @@
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Extensions
 {
-    public static class RectangleExtensions
+    public static class RectanglesExtensions
     {
-        public static Point GetCenter(this Rectangle rectangle) => 
-            new(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
-
         public static bool IntersectsWith(this Rectangle rectangle, IEnumerable<Rectangle> rectangles) =>
             rectangles.Any(rectangle.IntersectsWith);
     }
