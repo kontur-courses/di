@@ -33,7 +33,7 @@ namespace TagsCloudVisualization.CLI
         [Option("color", HelpText = "Tags color", Default = "random")]
         public string TagsColor { get; set; }
 
-        [Option("bg", HelpText = "Background color", Default = "gray")]
+        [Option("background", HelpText = "Background color", Default = "gray")]
         public string BackgroundColor { get; set; }
 
         [Option("fontsize", HelpText = "Max font size", Default = 50)]
