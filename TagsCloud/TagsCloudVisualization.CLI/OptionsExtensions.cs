@@ -89,8 +89,14 @@ namespace TagsCloudVisualization.CLI
 
         private static ITagColorGenerator GetTagsColorGeneratorFromName(string name)
         {
-            if (name == "random")
-                return new RandomTagColorGenerator(new RandomColorGenerator(new Random()));
+            switch (name)
+            {
+                case "random":
+                    return new RandomTagColorGenerator(new RandomColorGenerator(new Random()));
+                case "rainbow":
+                    return new RandomTagColorGenerator(new RainbowColorGenerator(new Random()));
+            }
+
             if (Enum.TryParse(name, true, out KnownColor color))
                 return new StrengthAlphaTagColorGenerator(Color.FromKnownColor(color));
             throw new ArgumentException($"Color {name} not defined");
