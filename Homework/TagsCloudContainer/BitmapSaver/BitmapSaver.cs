@@ -11,7 +11,7 @@ namespace TagsCloudContainer.BitmapSaver
         {
             if(!directory.Exists)
                 directory.Create();
-            var fullPath = Path.Combine(directory.FullName, fileName);
+            var fullPath = Path.Combine(directory.FullName, $"{fileName}.{format.ToString().ToLower()}");
             try
             {
                 bmp.Save(fullPath, format);
@@ -19,10 +19,6 @@ namespace TagsCloudContainer.BitmapSaver
             catch (Exception e)
             {
                 throw new Exception("Не удалось сохранить файл", e);
-            }
-            finally
-            {
-                bmp.Dispose();
             }
         }
     }
