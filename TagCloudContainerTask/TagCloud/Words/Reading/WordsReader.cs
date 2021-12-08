@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using TagCloud.Words.Reading.Console;
 using TagCloud.Words.Reading.FromFile;
 
@@ -23,10 +24,10 @@ namespace TagCloud.Words.Reading
                    ?? throw CreateArgumentNullException(nameof(consoleReader));
         }
 
-        public IEnumerable<string> ReadFromFile(string pathToFile)
+        public IEnumerable<string> ReadFromFile(string pathToFile, Encoding encoding)
         {
             return fileReader?
-                       .ReadFromFile(pathToFile)
+                       .ReadFromFile(pathToFile, encoding ?? Encoding.UTF8)
                    ?? throw CreateArgumentNullException(nameof(fileReader));
         }
 
