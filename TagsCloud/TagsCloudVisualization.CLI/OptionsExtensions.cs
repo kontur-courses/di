@@ -72,8 +72,10 @@ namespace TagsCloudVisualization.CLI
         {
             return extension switch
             {
-                "png" => new PngSaveService(),
-                _     => throw new ArgumentException($"Cannot save file with {extension} extension")
+                "png"  => new PngSaveService(),
+                "jpeg" => new JpegSaveService(),
+                "bmp"  => new BmpSaveService(),
+                _      => throw new ArgumentException($"Cannot save file with {extension} extension")
             };
         }
 

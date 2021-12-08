@@ -1,14 +1,10 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
+﻿using System.Drawing.Imaging;
 
 namespace TagsCloudDrawer.ImageSaveService
 {
-    public class PngSaveService : IImageSaveService
+    public class PngSaveService : BaseFormatsImageSaveService
     {
-        public void Save(string filename, Image image)
-        {
-            image.Save(Path.ChangeExtension(filename, "png"), ImageFormat.Png);
-        }
+        protected override string Extensions => "png";
+        protected override ImageFormat Format => ImageFormat.Png;
     }
 }
