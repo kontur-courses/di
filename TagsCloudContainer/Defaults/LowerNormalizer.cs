@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;

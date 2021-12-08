@@ -1,4 +1,6 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -14,11 +16,17 @@ public class TextAnalyzerSettings : ICliSettingsProvider
         {
             {
                 "word-separators",
-                $"Set separators to sparate words, separated by '{separator}'. Defaults to '{string.Join(separator,WordSeparators)}'",
+                $"Set separators to separate words, separated by '{separator}'. Defaults to '{string.Join(separator, WordSeparators)}'",
                 v => WordSeparators = v.Split(separator).Cast<char>().ToArray()
             }
         };
 
         return options;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<TextAnalyzerSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

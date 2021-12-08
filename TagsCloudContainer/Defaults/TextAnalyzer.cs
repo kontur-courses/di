@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using TagsCloudContainer.Defaults.SettingsProviders;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
@@ -11,12 +12,17 @@ public class TextAnalyzer : ITextAnalyzer
     private readonly IWordFilter[] wordFilters;
     private readonly char[] wordSeparators;
 
-    public TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, TextAnalyzerSettings settings)
+    public TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, TextAnalyzerSettings settings) :
+        this(textReaders, wordNormalizers, wordFilters, settings.WordSeparators)
+    {
+    }
+
+    public TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators)
     {
         this.textReaders = textReaders;
         this.wordNormalizers = wordNormalizers;
         this.wordFilters = wordFilters;
-        wordSeparators = settings.WordSeparators;
+        this.wordSeparators = wordSeparators;
     }
 
     public ITextStats AnalyzeText()
@@ -39,7 +45,8 @@ public class TextAnalyzer : ITextAnalyzer
     [Register]
     public static void Register(ContainerBuilder builder)
     {
-        builder.RegisterType<TextAnalyzer>().AsSelf().As<ITextAnalyzer>();
+        builder.RegisterType<TextAnalyzer>().AsSelf().As<ITextAnalyzer>()
+            .UsingConstructor(typeof(ITextReader[]), typeof(IWordNormalizer[]), typeof(IWordFilter[]), typeof(TextAnalyzerSettings));
     }
 
     private IEnumerable<string> ApplyNormalizingAndFiltering(IEnumerable<string> words)

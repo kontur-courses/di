@@ -1,4 +1,6 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -18,5 +20,11 @@ public class OutputSettings : ICliSettingsProvider
             };
 
         return options;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<OutputSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

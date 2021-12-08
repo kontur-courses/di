@@ -1,4 +1,6 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -30,5 +32,11 @@ public class InputSettings : IRequiredSettingsProvider
             };
 
         return options;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<InputSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

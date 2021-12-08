@@ -1,5 +1,7 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
 using System.Drawing;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -28,5 +30,11 @@ public class StyleProvider : ICliSettingsProvider
         };
 
         return options;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<StyleProvider>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

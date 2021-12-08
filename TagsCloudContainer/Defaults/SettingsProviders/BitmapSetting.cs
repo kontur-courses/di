@@ -1,5 +1,7 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
 using System.Drawing.Drawing2D;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -22,5 +24,11 @@ public class BitmapSetting : ICliSettingsProvider
         };
 
         return options;
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<BitmapSetting>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using TagsCloudContainer.Defaults.SettingsProviders;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults;
@@ -8,11 +9,16 @@ public class FileReader : ITextReader
 {
     private readonly List<FileInfo> paths = new();
 
-    public FileReader(InputSettings settings)
+    public FileReader(InputSettings settings) : this(settings.Paths)
     {
-        foreach (var path in settings.Paths)
+
+    }
+
+    public FileReader(string[] paths)
+    {
+        foreach (var path in paths)
         {
-            paths.Add(new(path));
+            this.paths.Add(new(path));
         }
     }
 
@@ -33,6 +39,7 @@ public class FileReader : ITextReader
     [Register]
     public static void Register(ContainerBuilder builder)
     {
-        builder.RegisterType<FileReader>().AsSelf().As<ITextReader>();
+        builder.RegisterType<FileReader>().AsSelf().As<ITextReader>()
+            .UsingConstructor(typeof(InputSettings));
     }
 }

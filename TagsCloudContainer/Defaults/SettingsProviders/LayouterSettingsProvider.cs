@@ -1,5 +1,7 @@
-﻿using Mono.Options;
+﻿using Autofac;
+using Mono.Options;
 using System.Drawing;
+using TagsCloudContainer.Registrations;
 using TagsCloudVisualization.Abstractions;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
@@ -24,5 +26,11 @@ public class LayouterSettingsProvider : ICliSettingsProvider
         if (coords.Length != 2)
             throw new FormatException($"String {v} was in incorrect format, should be two ints separated by ','");
         return new Point(int.Parse(coords[0]), int.Parse(coords[1]));
+    }
+
+    [Register]
+    public static void Register(ContainerBuilder builder)
+    {
+        builder.RegisterType<LayouterSettingsProvider>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }
