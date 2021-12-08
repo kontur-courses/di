@@ -17,7 +17,7 @@ namespace TagsCloudVisualizationTest
             
             try
             {
-                RectanglePainter
+                Painter
                     .GetBitmapWithRectangles(rectangles)  // Throw ArgumentException while creating too big bmp.
                     .Save(SavePath, ImageFormat.Jpeg);
             }

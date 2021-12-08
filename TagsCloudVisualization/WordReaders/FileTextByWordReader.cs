@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using TagsCloudVisualization.WordReaders.FormatDecoders;
 
 namespace TagsCloudVisualization.WordReaders
 {
-    public class FileWordReader : IWordReader
+    public class FileTextByWordReader : IWordReader
     {
         private readonly IFormatDecoder formatDecoder;
-        private string[] text;
-        private uint wordPointer;
+        private string text;
+        private int wordPointer;
         
-        public FileWordReader(string filename, IEnumerable<IFormatDecoder> supportedFormats)
+        public FileTextByWordReader(string filename, IEnumerable<IFormatDecoder> supportedFormats)
         {
             if (!File.Exists(filename)) throw new FileNotFoundException($"file {filename} does not exist");
             Console.WriteLine(filename);
@@ -23,15 +24,20 @@ namespace TagsCloudVisualization.WordReaders
         private void Load(string filename)
         {
             var allText = File.ReadAllText(filename);
-            text = formatDecoder.Decode(allText).Split(new string[2]{"\n", "\r\n"}, StringSplitOptions.None);
+            text = formatDecoder.Decode(allText);
         }
 
         public string Read()
         {
             if (!HasWord()) throw new InvalidOperationException("has no word anymore");
-            var word = text[wordPointer++];
-            if (!word.All(char.IsLetter)) throw new InvalidDataException($"word {word} contain invalid symbols");
-            return word;
+            var word = new StringBuilder();
+            var s = ' ';
+            do
+            {
+                s = text[wordPointer++];
+                if (char.IsLetter(s)) word.Append(s);
+            } while ((word.Length == 0 || char.IsLetter(s)) && HasWord());
+            return word.ToString();
         }
 
         public bool HasWord()

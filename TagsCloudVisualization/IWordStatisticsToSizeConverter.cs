@@ -5,6 +5,6 @@ namespace TagsCloudVisualization
 {
     public interface IWordStatisticsToSizeConverter
     {
-        public IEnumerable<TagWordInfo> Convert(IWordsStatistics statistics);
+        public IEnumerable<TagWordInfo> Convert();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Autofac.Features.AttributeFilters;
 using TagsCloudVisualization.WordReaders.WordProcessors;
 using TagsCloudVisualization.WordReaders.WordValidators;
 
@@ -12,8 +13,10 @@ namespace TagsCloudVisualization.WordReaders
         private readonly IWordValidator[] wordValidators;
         private string? nextWord;
         
-        public ProcessedWordReader(IWordReader inner, IWordProcessor[] wordProcessors, IWordValidator[] wordValidators)
+        public ProcessedWordReader([KeyFilter("CurrentReadMode")]IWordReader inner, IWordProcessor[] wordProcessors, IWordValidator[] wordValidators)
         {
+            Console.WriteLine(wordProcessors.Length);
+            Console.WriteLine(wordValidators.Length);
             this.inner = inner;
             this.wordProcessors = wordProcessors;
             this.wordValidators = wordValidators;
@@ -30,7 +33,7 @@ namespace TagsCloudVisualization.WordReaders
                     return;
                 }
                 nextWord = inner.Read();
-            } while (wordValidators.All(x => x.Validate(nextWord)));
+            } while (!wordValidators.All(x => x.Validate(nextWord)));
         }
 
         public string Read()

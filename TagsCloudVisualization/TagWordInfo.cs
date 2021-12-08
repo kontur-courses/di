@@ -6,9 +6,9 @@ namespace TagsCloudVisualization
     public record TagWordInfo
     {
         public string Word { get; }
-        public double FontSize { get; }
+        public float FontSize { get; }
         
-        public TagWordInfo(string word, double fontSize)
+        public TagWordInfo(string word, float fontSize)
         {
             FontSize = fontSize;
             Word = word;
@@ -17,8 +17,8 @@ namespace TagsCloudVisualization
         public Size GetCollisionSize()
         {
             return new Size(
-                (int) Math.Round(FontSize), 
-                (int) Math.Round(FontSize * Word.Length));
+                (int) Math.Round(FontSize * Word.Length + 5), 
+                (int) Math.Round(FontSize));
         }
     }
 }

@@ -1,36 +1,20 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using CommandLine;
+using TagsCloudVisualization;
+using TagsCloudVisualization.Layouters;
 
 namespace TagCloudUsageSample
 {
-    public class CommandLineCloudOptions
+    public class CommandLineCloudOptions : BaseOptions
     {
-        public bool Validate(out string errorValidationMessage)
-        {
-            var propertiesToCheck = GetType().GetProperties().Where(x => x.GetCustomAttributes(true).OfType<RangeValidatorAttribute>().Any());
-           
-
-            foreach (var propertyInfo in propertiesToCheck)
-            {
-                var validator = propertyInfo.GetCustomAttributes(true).OfType<RangeValidatorAttribute>().First();
-                if (!validator.Validate((int) propertyInfo.GetValue(this), out errorValidationMessage))
-                    return false;
-            }
-            
-            propertiesToCheck = GetType().GetProperties().Where(x => x.GetCustomAttributes(true).OfType<StringValidatorAttribute>().Any());
-
-            foreach (var propertyInfo in propertiesToCheck)
-            {
-                var validator = propertyInfo.GetCustomAttributes(true).OfType<StringValidatorAttribute>().First();
-                if (!validator.Validate((string) propertyInfo.GetValue(this), out errorValidationMessage))
-                    return false;
-            }
-            
-            errorValidationMessage = "";
-            return true;
-        }
-
+        private const int MinimumDegreesValueForVisibleNonIntersection = 5;
+        private const int MinimumDensityValueForVisibleNonIntersection = 5;
+        
         public string GetFullFilenameByNumber(int number)
             => SavePath.TrimEnd(Path.DirectorySeparatorChar) +
                Path.DirectorySeparatorChar +
@@ -53,7 +37,7 @@ namespace TagCloudUsageSample
         [Option('p', "path", Default = "..\\..\\CloudSamples", HelpText = "Set path to save tag clouds.")]
         public string SavePath{ get; private set; }
 
-        [FileNameValidatorAttribute("invalid file name")]
+        [FileValidatorAttribute("invalid file name")]
         [Option('n', "name", Required = true, HelpText = "Set name to save tag clouds.")]
         public string FileName { get; private set; }
 
@@ -64,5 +48,47 @@ namespace TagCloudUsageSample
         [RangeValidatorAttribute(1, 250, nameof(MinimumRectHeight))]
         [Option('m', "minimumRectHeight", Default = 2, HelpText = "Set minimum rectangle height.")]
         public int MinimumRectHeight{ get; private set; }
+        
+        
+        public void CreateTags(out string firstFileName)
+        {
+            firstFileName = null;
+            
+            for (var j = 0; j < CloudCount; j++)
+            {
+                var fullFileName = GetFullFilenameByNumber(j);
+                File.Delete(fullFileName);
+                firstFileName ??= fullFileName;
+                    
+                var rects = GetRectangles(
+                    new CircularCloudLayouter(new PointSpiral(Point.Empty, MinimumDensityValueForVisibleNonIntersection, MinimumDegreesValueForVisibleNonIntersection)),
+                    RectangleCount,
+                    SizeCoefficient,
+                    MinimumRectHeight);
+                        
+                Painter.GetBitmapWithRectangles(rects)
+                    .Save(fullFileName, ImageFormat.Jpeg);
+            }
+        }
+    
+        private static IEnumerable<Rectangle> GetRectangles(
+            CircularCloudLayouter layouter, int count, 
+            int sizeCoefficient, int minimumRectHeight)
+        {
+            var rnd = new Random();
+            
+            for (var i = 0; i < count; i++)
+            {
+                var h = rnd.Next(
+                    minimumRectHeight,
+                    sizeCoefficient - i < minimumRectHeight ? minimumRectHeight : sizeCoefficient - i);
+                
+                var w = rnd.Next(
+                    h,
+                    sizeCoefficient - i < h ? h : sizeCoefficient - i);
+                
+                yield return layouter.PutNextRectangle(new Size(w, h));
+            }
+        }
     }
 }
