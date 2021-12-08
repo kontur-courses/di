@@ -17,8 +17,9 @@ namespace TagCloud.layouter
             (p, s) => new Point(p.X - s.Width, p.Y)
         };
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter()
         {
+            Point center = Point.Empty; //TODO
             rectangles = new List<Rectangle>();
             points = new SortedDistinctSingleLinkedList<Point>(
                 (p1, p2) => center.DistanceTo(p1) < center.DistanceTo(p2)

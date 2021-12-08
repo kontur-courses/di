@@ -6,20 +6,24 @@ namespace TagCloud
     public class Tag
     {
         private readonly string text;
-        private readonly ITagConfiguration configuration;
+        private readonly Color color;
+        private readonly Font font;
         private readonly RectangleF layoutRectangle;
 
-        public Tag(string text, ITagConfiguration tagConfiguration, RectangleF layoutRectangle)
+        public Tag(string text, Color color, Font font, RectangleF layoutRectangle)
         {
             this.text = text;
-            configuration = tagConfiguration;
+            this.color = color;
+            this.font = font;
             this.layoutRectangle = layoutRectangle;
         }
 
         public string GetText() => text;
 
-        public ITagConfiguration GetConfiguration() => configuration;
+        public Color GetColor() => color;
 
+        public Font GetFont() => font;
+        
         public RectangleF GetLayoutRectangle() => layoutRectangle;
     }
 }

@@ -7,28 +7,30 @@ namespace TagCloud.visual
     public class TagVisualizer : IVisualizer
     {
         private readonly IRepository<Tag> tagRepository;
-        private readonly IImageConfiguration imageConfiguration;
 
-        public TagVisualizer(IRepository<Tag> tagRepository, IImageConfiguration imageConfiguration)
+        public TagVisualizer(IRepository<Tag> tagRepository)
         {
             this.tagRepository = tagRepository;
-            this.imageConfiguration = imageConfiguration;
         }
-
-        public Image GetImage()
+        
+        public void FillImage(Image image, IImageConfiguration imageConfiguration)
         {
-            using var bitmap = new Bitmap(imageConfiguration.GetWidth(), imageConfiguration.GetHeight());
-            using var graphics = Graphics.FromImage(bitmap);
-            
+            using var graphics = Graphics.FromImage(image);
+
+            var offset = new Point(imageConfiguration.GetWidth() / 2, imageConfiguration.GetHeight() / 2);
             graphics.Clear(imageConfiguration.GetBackgroundColor());
             foreach (var tag in tagRepository.Get())
             {
-                var brush = new SolidBrush(tag.GetConfiguration().GetColor());
-                //TODO offset
-                graphics.DrawString(tag.GetText(), tag.GetConfiguration().GetFont(), brush, tag.GetLayoutRectangle());
+                var brush = new SolidBrush(tag.GetColor());
+                var layoutRectangle = tag.GetLayoutRectangle();
+                layoutRectangle.Offset(offset);
+                graphics.DrawString(
+                     tag.GetText(), 
+                     tag.GetFont(), 
+                     brush, 
+                     layoutRectangle
+                );
             }
-            
-            return bitmap;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagCloud.configurations;
 using TagCloud.layouter;
 
@@ -8,30 +7,23 @@ namespace TagCloud.repositories
 {
     public class TagRepository : IRepository<Tag>
     {
-        private const int Ext = 100;
-        private readonly IRepository<string> wordRepository;
-        private readonly ICloudLayouter cloudLayouter;
-        private readonly ITagConfiguration tagConfiguration;
+        private readonly List<Tag> tags;
 
         public TagRepository(
             IRepository<string> wordRepository,
-            ICloudLayouter cloudLayouter,
-            ITagConfiguration tagConfiguration
+            ITagRepositoryConfiguration configuration,
+            ICloudLayouter cloudLayouter
         )
         {
-            this.wordRepository = wordRepository;
-            this.cloudLayouter = cloudLayouter;
-            this.tagConfiguration = tagConfiguration;
+            tags = new List<Tag>();
+            foreach (var (word, freq) in wordRepository.CalculateWordStatistics())
+            {
+                var font = new Font(configuration.GetFamilyFont(), freq * configuration.GetSize());
+                var layoutRectangle = cloudLayouter.PutNextRectangle(new Size((int) font.Size * word.Length, font.Height));
+                tags.Add(new Tag(word, configuration.GetColor(), font, layoutRectangle));
+            }
         }
 
-        public IEnumerable<Tag> Get() 
-            => wordRepository.CalculateWordStatistics()
-                .Select(x => new Tag(
-                    x.Key,
-                    tagConfiguration,
-                    cloudLayouter.PutNextRectangle(CalculateTagSize(x.Value))
-                ));
-
-        private static Size CalculateTagSize(int freq) => new Size(Ext * freq, Ext * freq);
+        public IEnumerable<Tag> Get() => tags;
     }
 }

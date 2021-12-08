@@ -19,6 +19,8 @@ namespace TagCloud.configurations
             source.Select(word => handlers.Aggregate(word, (current, handler) => handler.Handle(current)));
 
         public IEnumerable<string> Filter(IEnumerable<string> source) =>
-            source.Where(word => filters.Any(filter => filter.Filter(word)));
+            filters.Count == 0 
+                ? source 
+                : source.Where(word => filters.Any(filter => filter.Filter(word)));
     }
 }
