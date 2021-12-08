@@ -4,7 +4,7 @@ using TagsCloud.Visualization.ContainerVisitor;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.ImagesSavior;
 
-namespace TagsCloud.Words
+namespace TagsCloud.Visualization
 {
     public class TagsCloudModuleSettings
     {

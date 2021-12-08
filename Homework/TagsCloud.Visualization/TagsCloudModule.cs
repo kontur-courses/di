@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using TagsCloud.Visualization;
 using TagsCloud.Visualization.ContainerVisitor;
-using TagsCloud.Visualization.Drawer;
+using TagsCloud.Visualization.Drawers;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.ImagesSavior;
 using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
+using TagsCloud.Visualization.LayouterCores;
 using TagsCloud.Visualization.PointGenerator;
 using TagsCloud.Visualization.WordsFilter;
 using TagsCloud.Visualization.WordsParser;
@@ -14,7 +14,7 @@ using TagsCloud.Visualization.WordsReaders;
 using TagsCloud.Visualization.WordsReaders.FileReaders;
 using TagsCloud.Visualization.WordsSizeService;
 
-namespace TagsCloud.Words
+namespace TagsCloud.Visualization
 {
     public class TagsCloudModule : Module
     {
@@ -27,6 +27,7 @@ namespace TagsCloud.Words
         {
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<DocFileReader>().As<IFileReader>();
+            builder.RegisterType<PdfFileReader>().As<IFileReader>();
             builder.Register(ctx => new FileReadService(settings.InputWordsFile,
                     ctx.Resolve<IEnumerable<IFileReader>>()))
                 .As<IWordsReadService>();
@@ -34,10 +35,10 @@ namespace TagsCloud.Words
             builder.RegisterType<WordsService>().As<IWordsService>();
 
             builder.RegisterType<BoringWordsFilter>().As<IWordsFilter>();
-            builder.RegisterType<WordsParser>().As<IWordsParser>();
+            builder.RegisterType<WordsParser.WordsParser>().As<IWordsParser>();
 
-            builder.Register(_ => new FontFactory(settings.FontSettings)).As<IFontFactory>();
-            builder.RegisterType<WordsSizeService>().As<IWordsSizeService>();
+            builder.Register(_ => new FontFactory.FontFactory(settings.FontSettings)).As<IFontFactory>();
+            builder.RegisterType<WordsSizeService.WordsSizeService>().As<IWordsSizeService>();
             builder.RegisterType<WordsContainerBuilder>().As<AbstractWordsContainerBuilder>();
 
             builder.Register(_ => new ArchimedesSpiralPointGenerator(settings.Center)).As<IPointGenerator>();
@@ -47,7 +48,7 @@ namespace TagsCloud.Words
             builder.RegisterType<Drawer>().As<IDrawer>();
             builder.Register(_ => new ImageSavior(settings.SaveSettings)).As<IImageSavior>();
 
-            builder.RegisterType<LayouterCore>().AsSelf();
+            builder.RegisterType<LayouterCore>().As<ILayouterCore>();
         }
     }
 }

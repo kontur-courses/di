@@ -8,7 +8,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloud.Visualization;
 using TagsCloud.Visualization.ContainerVisitor;
-using TagsCloud.Visualization.Drawer;
+using TagsCloud.Visualization.Drawers;
 using TagsCloud.Visualization.Extensions;
 using TagsCloud.Visualization.LayoutContainer;
 using TagsCloud.Visualization.PointGenerator;

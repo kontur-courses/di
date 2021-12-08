@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using TagsCloud.Visualization;
 using TagsCloud.Visualization.ContainerVisitor;
-using TagsCloud.Visualization.Drawer;
+using TagsCloud.Visualization.Drawers;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.ImagesSavior;
 
@@ -17,7 +17,7 @@ namespace TagsCloud.Words
             return new TagsCloudModuleSettings
             {
                 Center = Point.Empty,
-                InputWordsFile = options.WordsFile ?? GetInputFilename(),
+                InputWordsFile = options.WordsFile,
 
                 FontSettings = new FontSettings
                 {
@@ -63,14 +63,6 @@ namespace TagsCloud.Words
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             return path;
-        }
-
-        private string GetInputFilename()
-        {
-            var solutionPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\"));
-            if (!Directory.Exists(solutionPath))
-                Directory.CreateDirectory(solutionPath);
-            return Path.Combine(solutionPath + "words.doc");
         }
     }
 }

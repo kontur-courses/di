@@ -1,31 +1,27 @@
-﻿using System.Linq;
-using TagsCloud.Visualization;
-using TagsCloud.Visualization.Drawer;
-using TagsCloud.Visualization.ImagesSavior;
+﻿using System.Drawing;
+using System.Linq;
+using TagsCloud.Visualization.Drawers;
 using TagsCloud.Visualization.LayoutContainer.ContainerBuilder;
 
-namespace TagsCloud.Words
+namespace TagsCloud.Visualization.LayouterCores
 {
-    public class LayouterCore
+    public class LayouterCore : ILayouterCore
     {
         private readonly IDrawer drawer;
-        private readonly IImageSavior imageSavior;
         private readonly AbstractWordsContainerBuilder wordsContainerBuilder;
         private readonly IWordsService wordsService;
 
         public LayouterCore(
             IWordsService wordsService,
             AbstractWordsContainerBuilder wordsContainerBuilder,
-            IDrawer drawer,
-            IImageSavior imageSavior)
+            IDrawer drawer)
         {
             this.wordsService = wordsService;
             this.wordsContainerBuilder = wordsContainerBuilder;
             this.drawer = drawer;
-            this.imageSavior = imageSavior;
         }
 
-        public void Run()
+        public Image GenerateImage()
         {
             var parsedWords = wordsService.GetWords();
 
@@ -36,8 +32,7 @@ namespace TagsCloud.Words
                 .AddWords(parsedWords, minCount, maxCount)
                 .Build();
 
-            using var image = drawer.Draw(wordsContainer);
-            imageSavior.Save(image);
+            return drawer.Draw(wordsContainer);
         }
     }
 }

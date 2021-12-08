@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
-using TagsCloud.Visualization.Drawer;
+using TagsCloud.Visualization.Drawers;
 using TagsCloud.Visualization.LayoutContainer;
 
 namespace TagsCloud.Visualization.ContainerVisitor

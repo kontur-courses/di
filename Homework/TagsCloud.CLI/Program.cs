@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Autofac;
 using CommandLine;
+using TagsCloud.Visualization;
 
 namespace TagsCloud.Words
 {
@@ -13,26 +13,18 @@ namespace TagsCloud.Words
             if (result.Errors.Any())
                 return;
 
-            TagsCloudModuleSettings settings;
-            try
-            {
-                settings = new SettingsCreator().Create(result.Value);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return;
-            }
+            var settings = new SettingsCreator().Create(result.Value);
 
             using var container = CreateContainer(settings).BeginLifetimeScope();
 
-            container.Resolve<LayouterCore>().Run();
+            container.Resolve<CliLayouterCore>().Run();
         }
 
         private static IContainer CreateContainer(TagsCloudModuleSettings settings)
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new TagsCloudModule(settings));
+            builder.RegisterType<CliLayouterCore>().AsSelf();
             return builder.Build();
         }
     }

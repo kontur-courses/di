@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using TagsCloud.Visualization.LayoutContainer;
 
-namespace TagsCloud.Visualization.Drawer
+namespace TagsCloud.Visualization.Drawers
 {
     public interface IDrawer
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using TagsCloud.Visualization.ContainerVisitor;
 using TagsCloud.Visualization.LayoutContainer;
 
-namespace TagsCloud.Visualization.Drawer
+namespace TagsCloud.Visualization.Drawers
 {
     public class Drawer : IDrawer
     {
