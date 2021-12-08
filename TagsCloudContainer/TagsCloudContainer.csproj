@@ -17,4 +17,10 @@
     <ProjectReference Include="..\CircularCloudLayouter\CloudLayouter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="mystem.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
