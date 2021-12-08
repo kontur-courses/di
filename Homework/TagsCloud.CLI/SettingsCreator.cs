@@ -18,7 +18,7 @@ namespace TagsCloud.Words
             {
                 Center = Point.Empty,
                 InputWordsFile = options.WordsFile,
-
+                BoringWordsFile = options.BoringWordsFile,
                 FontSettings = new FontSettings
                 {
                     FamilyName = options.FamilyName,

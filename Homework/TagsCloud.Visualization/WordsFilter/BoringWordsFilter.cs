@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TagsCloud.Visualization.WordsReaders;
 
 namespace TagsCloud.Visualization.WordsFilter
 {
     public class BoringWordsFilter : IWordsFilter
     {
         // TODO Move to config file and read on init
-        private readonly HashSet<string> prepositions =
+        private readonly HashSet<string> baseBoringWords =
             new()
             {
                 "a", "and", "or", "to", "in", "into", "on", "for", "by", "during", "the", "our", "is",
@@ -14,6 +17,22 @@ namespace TagsCloud.Visualization.WordsFilter
                 "my", "be", "no", "not", "when", "him", "my", "said", "if", "how", "an"
             };
 
-        public bool IsWordValid(string word) => !prepositions.Contains(word);
+        private readonly HashSet<string> boringWords;
+
+        public BoringWordsFilter() : this(null)
+        {
+        }
+
+        public BoringWordsFilter(IWordsReadService wordsReadService)
+        {
+            if (wordsReadService == null)
+                boringWords = baseBoringWords;
+            else
+                boringWords = wordsReadService.Read()
+                    .Split(new[] {',', ' '}, StringSplitOptions.RemoveEmptyEntries)
+                    .ToHashSet();
+        }
+
+        public bool IsWordValid(string word) => !boringWords.Contains(word);
     }
 }

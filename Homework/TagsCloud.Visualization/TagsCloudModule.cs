@@ -34,7 +34,8 @@ namespace TagsCloud.Visualization
 
             builder.RegisterType<WordsService>().As<IWordsService>();
 
-            builder.RegisterType<BoringWordsFilter>().As<IWordsFilter>();
+            builder.Register(ctx => new BoringWordsFilter(new FileReadService(settings.BoringWordsFile,
+                ctx.Resolve<IEnumerable<IFileReader>>()))).As<IWordsFilter>();
             builder.RegisterType<WordsParser.WordsParser>().As<IWordsParser>();
 
             builder.Register(_ => new FontFactory.FontFactory(settings.FontSettings)).As<IFontFactory>();

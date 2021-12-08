@@ -10,6 +10,8 @@ namespace TagsCloud.Visualization
     {
         public Point Center { get; set; }
         public string InputWordsFile { get; set; }
+
+        public string BoringWordsFile { get; set; }
         public Type LayouterType { get; set; }
         public IContainerVisitor LayoutVisitor { get; set; }
         public SaveSettings SaveSettings { get; set; }
