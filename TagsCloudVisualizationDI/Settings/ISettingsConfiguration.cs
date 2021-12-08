@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using TagsCloudVisualizationDI.FileReader;
 using TagsCloudVisualizationDI.Layouter;
@@ -7,7 +9,7 @@ using TagsCloudVisualizationDI.Layouter.Normalizer;
 using TagsCloudVisualizationDI.TextAnalization;
 using TagsCloudVisualizationDI.TextAnalization.Analyzer;
 using TagsCloudVisualizationDI.TextAnalization.NormalizationMaker;
-using TagsCloudVisualizationDI.TextAnalization.VisualizatorMaker;
+using TagsCloudVisualizationDI.Visualization;
 
 namespace TagsCloudVisualizationDI.Settings
 {
@@ -28,9 +30,24 @@ namespace TagsCloudVisualizationDI.Settings
             get => new DefaultTextFileReader();
         }
 
-        public IVisualizatorMaker Visualizator
+        public string ImagePath
         {
-            get => new DefaultVisualizatorMaker();
+            get => "C:/GitHub/di/TagsCloudVisualizationDI/img_words.jpeg";
+        }
+
+        public Func<List<RectangleWithWord>, IVisualization> Visualizator
+        {
+            get
+            {
+                return elementsForVisualization
+                    => new DefaultVisualization(
+                        elementsForVisualization, new Pen(Color.White, 10),
+                        new SolidBrush(Color.White), new Font("Times", 15), ImageFormat.Jpeg, ImagePath,
+                        new Size(5000, 5000));
+            }
+            //get => new DefaultVisualizatorMaker();
+            //get => new Func<RectangleWithWord, IVisualization>((List<RectangleWithWord> elementsForVisualisation) => new DefaultVisualization(elementsForVisualisation, new Pen(Color.White, 10),
+                //new SolidBrush(Color.White), new Font("Times", 15), ImageFormat.Jpeg, ImagePath, new Size(5000, 5000)));
         }
 
         public IWordNormalizer Normalization
@@ -40,14 +57,27 @@ namespace TagsCloudVisualizationDI.Settings
 
         public IAnalyzer Analyzer
         {
-            get => 
-                new DefaultAnalyzer(Enum.GetValues(typeof(PartsOfSpeech.SpeechPart))
-                    .Cast<PartsOfSpeech.SpeechPart>());
-        }
+            //var excludedTypes = new []{PartsOfSpeech.SpeechPart}
+            get
+            {
+                /*
+                var b = Enum.GetValues(typeof(PartsOfSpeech.SpeechPart))
+                    .Cast<PartsOfSpeech.SpeechPart>();
+                */
+
+                var excludedTypes = new[]
+                {
+                    PartsOfSpeech.SpeechPart.CONJ, PartsOfSpeech.SpeechPart.INTJ,
+                    PartsOfSpeech.SpeechPart.PART, PartsOfSpeech.SpeechPart.PR,
+                };
+                return  new DefaultAnalyzer(excludedTypes);
+            }
+    }
 
         public IContentFiller Filler
         {
             get => new CircularCloudLayouterForRectanglesWithText(LayouterCenter);
         }
+        
     }
 }

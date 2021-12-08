@@ -4,5 +4,6 @@ using System.Text;
 
 namespace TagsCloudVisualizationDI.Settings
 {
-    public class DeffaultSettingsConfiguration : ISettingsConfiguration { }
+    public class DeffaultSettingsConfiguration : ISettingsConfiguration
+    { }
 }

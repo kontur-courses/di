@@ -33,10 +33,12 @@ namespace TagsCloudVisualizationDI.Layouter
             if (RectangleDict.ContainsKey(word.WordText))
             {
                 RectangleDict[word.WordText].WordElement.CntOfWords++;
+                RectangleDict[word.WordText].ChangeSizeOfField();
                 return RectangleDict[word.WordText];
             }
 
             var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
+
             while (RectangleDict.Values.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
                 nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
             if (nextRectangle.RectangleElement.Location != Center)

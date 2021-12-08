@@ -15,22 +15,17 @@ namespace TagsCloudVisualizationDI.FileReader
 
         public string MystemPath => "C:\\GitHub\\di\\TagsCloudVisualizationDI\\mystem.exe";
 
-        public string Arguments => "-lndw";
+        public string Arguments => "-lndw -ig";
 
         public Encoding ReadingEncoding => Encoding.UTF8;
 
         public string[] ReadText(string path, Encoding encoding)
         {
-            if (FileIsExist(path))
+            if (File.Exists(path))
             {
                 return File.ReadAllLines(path, encoding);
             }
             throw new Exception($"Giving path {path} is not valid");
-        }
-
-        private bool FileIsExist(string path)
-        {
-            return true;
         }
     }
 }
