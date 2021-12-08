@@ -1,0 +1,18 @@
+<Project>
+    <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props" />
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+    
+    <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets" />
+    <PropertyGroup>
+        <PostBuildEvent>xcopy "$(ProjectDir)Resources" "$(TargetDir)" /D /S /I /Y</PostBuildEvent>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.3.0" />
+      <PackageReference Include="NHunspell" Version="1.2.5554.16953" />
+    </ItemGroup>
+</Project>
