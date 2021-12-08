@@ -1,9 +1,4 @@
 # Сгенерированные картинки
-
-yield return new TagsCloudDrawer(1000, new CircularCloudLayouter(new Point()),
-() => new Size(rnd.Next(40, 50), rnd.Next(20, 30)), new RainbowColorGenerator(rnd)); yield return new TagsCloudDrawer(
-1000, new CircularCloudLayouter(new Point()),
-() => new Size(rnd.Next(10, 50), rnd.Next(10, 50)), new GrayscaleColorGenerator(rnd));
 _______________________
 
 ## Вариант 1:
