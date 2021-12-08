@@ -22,6 +22,6 @@ namespace TagsCloud.Tests
 
         [Test]
         public void Parse_ThrowsException_WithIncorrectValue() =>
-            Assert.Throws<ApplicationException>(() => parser.Parse("sefse"));
+            Assert.Throws<ApplicationException>(() => parser.Parse("QWE"));
     }
 }

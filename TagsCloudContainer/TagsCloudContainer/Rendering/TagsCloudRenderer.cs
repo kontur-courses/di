@@ -53,7 +53,7 @@ namespace TagsCloudContainer.Rendering
 
         public void Dispose()
         {
-            renderingSettings?.Dispose();
+            renderingSettings.Dispose();
         }
     }
 }

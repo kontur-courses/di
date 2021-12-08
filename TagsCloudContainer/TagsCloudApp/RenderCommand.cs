@@ -45,7 +45,8 @@ namespace TagsCloudApp
                 .AddTransient<IObjectParser<Color>, ArgbColorParser>()
                 .AddTransient<IFontSizeSelector, FrequencyFontSizeSelector>()
                 .AddTransient<IWordsColorSettings, WordsColorSettings>()
-                .AddTransient<IFileLoaderFactory, FileLoaderFactory>()
+                .AddTransient<IFileTextLoaderFactory, FileTextLoaderFactory>()
+                .AddTransient<IWordsParser, WordsParser>()
                 .AddTransient<IWordsPreprocessor, SpeechPartWordsFilter>()
                 .AddTransient<IWordsPreprocessor, LowerCaseWordsPreprocessor>()
                 .AddTransient<ITagsCloudImageSaver, TagsCloudImageSaver>()
@@ -53,6 +54,7 @@ namespace TagsCloudApp
                 .AddTransient<ITagsCloudLayouter, FontBasedLayouter>()
                 .AddTransient<ICloudLayouter, CircularCloudLayouter>()
                 .AddTransient<FrequencyFontSizeSelector>()
+                .AddTransient<IObjectParser<Dictionary<SpeechPart, Color>>, DictionaryObjectParser<SpeechPart, Color>>()
                 .AddTransient<IObjectParser<IScalersFactory>>(_ => new MappedObjectParser<IScalersFactory>(
                     new Dictionary<string, IScalersFactory>
                     {
@@ -63,14 +65,17 @@ namespace TagsCloudApp
                     new Dictionary<string, IWordColorMapper>
                     {
                         ["random"] = s.GetRequiredService<RandomWordColorMapper>(),
-                        ["speechPart"] = s.GetRequiredService<SpeechPartWordColorMapper>()
+                        ["speechPart"] = s.GetRequiredService<SpeechPartWordColorMapper>(),
+                        ["static"] = s.GetRequiredService<StaticWordColorMapper>()
                     }))
-                .AddTransient<ISpeechPartWordColorMapperSettings>(_ => new SpeechPartWordColorMapperSettings(
-                    new Dictionary<SpeechPart, Color>
-                    {
-                        [SpeechPart.S] = Color.Crimson,
-                        [SpeechPart.V] = Color.SlateBlue
-                    }, Color.Aqua))
+                .AddTransient(s => new SpeechPartWordColorMapper(
+                    s.GetRequiredService<IWordSpeechPartParser>(),
+                    s.GetRequiredService<IObjectParser<Dictionary<SpeechPart, Color>>>()
+                        .Parse(renderOptions.SpeechPartColorMap),
+                    s.GetRequiredService<IObjectParser<Color>>().Parse(renderOptions.DefaultColor)))
+                .AddTransient(s =>
+                    new StaticWordColorMapper(s.GetRequiredService<IObjectParser<Color>>()
+                        .Parse(renderOptions.DefaultColor)))
                 .AddTransient(s =>
                     s.GetRequiredService<IObjectParser<IWordColorMapper>>().Parse(renderOptions.ColorMapperType))
                 .AddTransient(s =>

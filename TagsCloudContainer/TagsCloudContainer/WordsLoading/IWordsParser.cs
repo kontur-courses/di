@@ -2,8 +2,8 @@
 
 namespace TagsCloudContainer.WordsLoading
 {
-    public interface IWordsLoader
+    public interface IWordsParser
     {
-        IEnumerable<string> LoadWords(string fileName);
+        IEnumerable<string> Parse(string text);
     }
 }

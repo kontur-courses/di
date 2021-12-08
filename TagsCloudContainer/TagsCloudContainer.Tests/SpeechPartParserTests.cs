@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Preprocessing;
@@ -16,40 +16,39 @@ namespace TagsCloudContainer.Tests
             parser = new WordSpeechPartParser();
         }
 
-        [Test]
-        public void ParseWords_WithNull_ThrowsException() =>
-            Assert.Throws<ArgumentNullException>(() => parser.ParseWords(null));
-
         [Timeout(500)]
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void ParseWord_IgnoreString(string input)
+        [TestCase("1", TestName = "Number")]
+        [TestCase("h", TestName = "Eng letter")]
+        [TestCase("!", TestName = "Sign")]
+        [TestCase(" ", TestName = "Space")]
+        public void ParseWord_SkipWords_ThatContain(string forbiddenPart)
         {
-            var words = new List<string> {input, "мир"};
+            var words = new[]
+                {"привет", forbiddenPart, $"привет{forbiddenPart}", $"{forbiddenPart}привет", $"при{forbiddenPart}вет"};
+
             parser.ParseWords(words)
-                .Should().BeEquivalentTo(new List<SpeechPartWord> {new("мир", SpeechPart.S)});
+                .Should().BeEquivalentTo(new List<SpeechPartWord> {new("привет", SpeechPart.S)});
         }
 
-        [Timeout(500)]
-        [TestCase("12", TestName = "Number")]
-        [TestCase("hello", TestName = "Eng word")]
-        [TestCase("!", TestName = "Sign")]
-        public void ParseWord_ThrowsException(string input) =>
-            Assert.Throws<ApplicationException>(() => parser.ParseWords(new[] {input}));
+        [Test]
+        public void ParseWords_SupportWords_WithHyphen()
+        {
+            var speechPartWord = new SpeechPartWord("красно-синий", SpeechPart.A);
+            parser.ParseWords(new[] {speechPartWord.Word})
+                .Should().BeEquivalentTo(new List<SpeechPartWord> {speechPartWord});
+        }
 
         [TestCaseSource(nameof(ParseWordsReturnWordInfosCases))]
-        public void ParseWords_WithNormalizedWords_ReturnWordInfos(List<string> words,
-            List<SpeechPartWord> expected)
+        public void ParseWords_WithNormalizedWords_ReturnWordInfos(List<SpeechPartWord> speechPartWords)
         {
+            var words = speechPartWords.Select(speechPartWord => speechPartWord.Word);
             parser.ParseWords(words)
-                .Should().BeEquivalentTo(expected);
+                .Should().BeEquivalentTo(speechPartWords);
         }
 
         private static IEnumerable<TestCaseData> ParseWordsReturnWordInfosCases()
         {
             yield return new TestCaseData(
-                new List<string> {"привет", "в", "этот", "чудесный"},
                 new List<SpeechPartWord>
                 {
                     new("привет", SpeechPart.S),
@@ -59,8 +58,11 @@ namespace TagsCloudContainer.Tests
                 }) {TestName = "Normalized words"};
 
             yield return new TestCaseData(
-                    new List<string> {"приветик", "чудеснейший"},
-                    new List<SpeechPartWord> {new("приветик", SpeechPart.S), new("чудеснейший", SpeechPart.A)})
+                    new List<SpeechPartWord>
+                    {
+                        new("приветик", SpeechPart.S),
+                        new("чудеснейший", SpeechPart.A)
+                    })
                 {TestName = "Words in different forms"};
         }
     }

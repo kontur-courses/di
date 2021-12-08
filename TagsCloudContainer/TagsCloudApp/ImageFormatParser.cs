@@ -10,7 +10,7 @@ namespace TagsCloudApp
         public ImageFormat Parse(string value)
         {
             var bindingAttributes = BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase;
-            var format = (ImageFormat)typeof(ImageFormat)
+            var format = (ImageFormat?)typeof(ImageFormat)
                 .GetProperty(value, bindingAttributes)
                 ?.GetValue(null);
 

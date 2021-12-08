@@ -10,7 +10,8 @@ namespace TagsCloudContainer
 {
     public class TagsCloudDirector : ITagsCloudDirector
     {
-        private readonly IFileLoaderFactory fileLoaderFactory;
+        private readonly IFileTextLoaderFactory fileTextLoaderFactory;
+        private readonly IWordsParser wordsParser;
         private readonly IEnumerable<IWordsPreprocessor> preprocessors;
         private readonly IFileLoadSettings fileLoadSettings;
         private readonly IWordsColorSettings wordsColorSettings;
@@ -18,14 +19,16 @@ namespace TagsCloudContainer
         private readonly ITagsCloudLayouter tagsCloudLayouter;
 
         public TagsCloudDirector(
-            IFileLoaderFactory fileLoaderFactory,
+            IFileTextLoaderFactory fileTextLoaderFactory,
+            IWordsParser wordsParser,
             IEnumerable<IWordsPreprocessor> preprocessors,
             IFileLoadSettings fileLoadSettings,
             IWordsColorSettings wordsColorSettings,
             ITagsCloudImageSaver tagsCloudImageSaver,
             ITagsCloudLayouter tagsCloudLayouter)
         {
-            this.fileLoaderFactory = fileLoaderFactory;
+            this.fileTextLoaderFactory = fileTextLoaderFactory;
+            this.wordsParser = wordsParser;
             this.preprocessors = preprocessors;
             this.fileLoadSettings = fileLoadSettings;
             this.wordsColorSettings = wordsColorSettings;
@@ -35,27 +38,36 @@ namespace TagsCloudContainer
 
         public void Render()
         {
-            var fileLoader = fileLoaderFactory.GetByFileName(fileLoadSettings.FileName);
-            var words = fileLoader.LoadWords(fileLoadSettings.FileName);
+            var words = GetWords();
+            var layout = tagsCloudLayouter.GetCloudLayout(words);
+            var colorMap = wordsColorSettings.ColorMapper.GetColorMap(layout);
+            var wordsStyles = GetWordsStyles(layout, colorMap);
+            tagsCloudImageSaver.Save(wordsStyles, layout.ImageSize);
+        }
+
+        private IEnumerable<string> GetWords()
+        {
+            var fileLoader = fileTextLoaderFactory.GetByFileName(fileLoadSettings.FileName);
+            var fileText = fileLoader.LoadText(fileLoadSettings.FileName);
+            var words = wordsParser.Parse(fileText);
             foreach (var preprocessor in preprocessors)
                 words = preprocessor.Preprocess(words);
 
-            var layout = tagsCloudLayouter.GetCloudLayout(words);
-            var colorMap = wordsColorSettings.ColorMapper.GetColorMap(layout);
+            return words;
+        }
 
-            var wordsStyles = new List<WordStyle>();
+        private static IEnumerable<WordStyle> GetWordsStyles(CloudLayout layout, IReadOnlyDictionary<WordLayout, Color> colorMap)
+        {
             foreach (var wordLayout in layout.WordLayouts)
             {
                 var brush = new SolidBrush(colorMap[wordLayout]);
-                wordsStyles.Add(new WordStyle(wordLayout.Word, wordLayout.Font, wordLayout.Location, brush));
+                yield return new WordStyle(wordLayout.Word, wordLayout.Font, wordLayout.Location, brush);
             }
-
-            tagsCloudImageSaver.Save(wordsStyles, layout.ImageSize);
         }
 
         public void Dispose()
         {
-            tagsCloudImageSaver?.Dispose();
+            tagsCloudImageSaver.Dispose();
         }
     }
 }

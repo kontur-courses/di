@@ -28,11 +28,17 @@ namespace TagsCloudApp
         [Option("scale", Default = 1.0f)]
         public float ImageScale { get; set; }
 
-        [Option("background", Default = "0 0 0 0")]
+        [Option("background", Default = "Transparent")]
         public string BackgroundColor { get; set; }
+
+        [Option("color", Default = "Aqua")]
+        public string DefaultColor { get; set; }
 
         [Option("colorMapper", HelpText = "Determines how words will be colored", Default = "speechPart")]
         public string ColorMapperType { get; set; }
+
+        [Option("speechPartColorMap", Default = "(S Aqua)(V Red)(A Blue)")]
+        public string SpeechPartColorMap { get; set; }
 
         [Option("imageFormat", Default = "png")]
         public string ImageFormat { get; set; }

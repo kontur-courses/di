@@ -16,8 +16,8 @@ namespace TagsCloudContainer.Rendering
 
         public void Dispose()
         {
-            Bitmap?.Dispose();
-            Graphics?.Dispose();
+            Bitmap.Dispose();
+            Graphics.Dispose();
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿Водопад
+﻿namespace TagsCloud.Tests
+{
+    public static class TestText
+    {
+        public static string Text =>
+            @"Водопад
 был
 открыт
 французскими
@@ -357,4 +362,6 @@
 от
 до
 человек
-ежегодно
+ежегодно";
+    }
+}

@@ -9,6 +9,7 @@ namespace TagsCloudContainer.Preprocessing
     public class WordSpeechPartParser : IWordSpeechPartParser
     {
         private static readonly Regex speechPartRegex = new(@".*?=(?'SpeechPart'\w+)");
+        private static readonly Regex validWordRegex = new(@"^[а-я-]+$", RegexOptions.IgnoreCase);
 
         private static readonly ProcessStartInfo myStemStartInfo = new()
         {
@@ -20,28 +21,28 @@ namespace TagsCloudContainer.Preprocessing
 
         public IEnumerable<SpeechPartWord> ParseWords(IEnumerable<string> words)
         {
-            if (words == null)
-                throw new ArgumentNullException(nameof(words));
-
             using var myStem = Process.Start(myStemStartInfo);
             if (myStem == null)
-                throw new ApplicationException("Can't start mystem.");
+                throw new ApplicationException($"Can't start mystem. Path: {myStemStartInfo.FileName}.");
 
-            var wordsInfos = new List<SpeechPartWord>();
-            foreach (var word in words.Where(word => !string.IsNullOrWhiteSpace(word)))
+            var filteredWords = words.Where(word => validWordRegex.IsMatch(word));
+            return ParseWords(filteredWords, myStem).ToList();
+        }
+
+        private static IEnumerable<SpeechPartWord> ParseWords(IEnumerable<string> words, Process myStem)
+        {
+            foreach (var word in words.Where(word => validWordRegex.IsMatch(word)))
             {
                 var wordInfoResult = TryGetWordInfo(myStem, word);
                 if (!wordInfoResult.Success)
-                    throw wordInfoResult.Exception!;
+                    throw GenerateSpeechPartParseException(word);
 
-                var speechPartGroup = speechPartRegex.Match(wordInfoResult.Value!).Groups["SpeechPart"];
+                var speechPartGroup = speechPartRegex.Match(wordInfoResult.Value).Groups["SpeechPart"];
                 if (!speechPartGroup.Success || !Enum.TryParse<SpeechPart>(speechPartGroup.Value, out var speechPart))
                     throw GenerateSpeechPartParseException(word);
 
-                wordsInfos.Add(new SpeechPartWord(word, speechPart));
+                yield return new SpeechPartWord(word, speechPart);
             }
-
-            return wordsInfos;
         }
 
         private static Result<string> TryGetWordInfo(Process myStem, string word)
@@ -50,7 +51,7 @@ namespace TagsCloudContainer.Preprocessing
             var readTask = myStem.StandardOutput.ReadLineAsync();
             var canProcessWord = readTask.Wait(450);
             if (!canProcessWord || readTask.Result == null)
-                return new Result<string>(GenerateSpeechPartParseException(word));
+                return new Result<string>(new Exception("Can't get result from mystem."));
 
             return new Result<string>(readTask.Result);
         }

@@ -23,7 +23,10 @@ namespace TagsCloudApp
             {
                 var enumInfo = type.GetMember(enumName)[0];
                 var attributes = enumInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                var description = (attributes.Length > 0) ? ((DescriptionAttribute)attributes[0]).Description : "";
+                var description = attributes.Length > 0
+                    ? ((DescriptionAttribute)attributes[0]).Description
+                    : "";
+
                 yield return $"{enumName}: {description}";
             }
         }

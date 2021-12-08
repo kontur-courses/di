@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,23 +17,27 @@ namespace TagsCloud.Tests
             parser = new ArgbColorParser();
         }
 
-        [TestCase("sef")]
+        [TestCase("#sef")]
         [TestCase("1 1 1 1 1")]
         [TestCase("1 1 1")]
         public void Parse_WithIncorrectValue_ThrowsException(string value) =>
             Assert.Throws<ApplicationException>(() => parser.Parse(value));
 
-        [Test]
-        [Repeat(25)]
-        public void Parse_WithRandomValue_ReturnColor()
+        [TestCaseSource(nameof(ParseReturnColorFromCases))]
+        public void Parse_ReturnColor_From(string value, Color expected)
         {
-            var random = new Random();
-            var colorBytes = new byte[4];
-            random.NextBytes(colorBytes);
-            var value = string.Join(' ', colorBytes);
+            var actual = parser.Parse(value);
+            actual
+                .ToArgb()
+                .Should().Be(expected.ToArgb(), $"actual is: {actual} and expected: {expected}");
+        }
 
-            parser.Parse(value)
-                .Should().Be(Color.FromArgb(colorBytes[0], colorBytes[1], colorBytes[2], colorBytes[3]));
+
+        private static IEnumerable<TestCaseData> ParseReturnColorFromCases()
+        {
+            yield return new TestCaseData("#FFFF0000", Color.Red) {TestName = "ARGB Hex"};
+            yield return new TestCaseData("#FF0000", Color.Red) {TestName = "RGB Hex"};
+            yield return new TestCaseData("AliceBlue", Color.AliceBlue) {TestName = "Html name"};
         }
     }
 }
