@@ -2,19 +2,19 @@
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
-using TagCloud;
+using TagCloud.Layout;
+using TagCloud.Utils;
 
 
 namespace TagsCloudVisualization_Test
 {
-    class ArchimedeanSpiralTest
+    public class ArchimedeanSpiralTest
     {
-
         [Test]
         public void Should_SetCenter_InConstructor_ByConstructorParameter()
         {
             var center = new Point(-10, 10);
-            var spiral = new ArchimedeanSpiral(center);
+            var spiral = new ArchimedeanSpiral(center, new CoordinatesConverter());
             var point = spiral.GetDiscretePoints().First();
             point.Should().Be(center);
         }
@@ -22,7 +22,7 @@ namespace TagsCloudVisualization_Test
         [Test]
         public void Should_SetCenter_InEmptyConstructor_AsEmptyPoint()
         {
-            var spiral = new ArchimedeanSpiral();
+            var spiral = new ArchimedeanSpiral(new CoordinatesConverter());
             var point = spiral.GetDiscretePoints().First();
             point.Should().Be(Point.Empty);
         }

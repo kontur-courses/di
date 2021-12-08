@@ -5,40 +5,37 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace TagCloud
+namespace TagCloud.TextProcessing
 {
-    public class TextProcessor
+    internal class TextProcessor
     {
         private const string UtilFileName = "mystem.exe";
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
-        private readonly ITextProcessingSettings _settings;
 
-        public TextProcessor(ITextProcessingSettings settings)
+        public IEnumerable<Dictionary<string, int>> GetInterestingWords(ITextProcessingOptions options)
         {
-            _settings = settings;
-        }
-
-        public Dictionary<string, int> GetInterestingWords(string filePath)
-        {
-            using (var process = ConfigureProcess(filePath))
+            foreach (var filePath in options.FilesToProcess)
             {
-                process.Start();
-                process.WaitForExit();
+                using (var process = ConfigureProcess(filePath))
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
+
+                var myStemResults = ParseMyStemResult();
+                File.Delete(TempPath);
+
+                yield return myStemResults
+                    .Where(r => !options.ExcludePartOfSpeech.Contains(r.Pos)
+                                || options.IncludeWords.Contains(r.Lemma))
+                    .Select(r => r.Lemma)
+                    .Where(w => !options.ExcludeWords.Contains(w))
+                    .GroupBy(s => s)
+                    .OrderByDescending(g => g.Count())
+                    .Take(options.Amount)
+                    .ToDictionary(g => g.Key, g => g.Count());
             }
-
-            var myStemResults = ParseMyStemResult();
-            File.Delete(TempPath);
-
-            return myStemResults
-                .Where(r => !_settings.ExcludePartOfSpeeches.Contains(r.Pos)
-                            || _settings.IncludeWords.Contains(r.Lemma))
-                .Select(r => r.Lemma)
-                .Where(w => !_settings.ExcludeWords.Contains(w))
-                .GroupBy(s => s)
-                .OrderByDescending(g => g.Count())
-                .Take(_settings.Amount)
-                .ToDictionary(g => g.Key, g => g.Count());
         }
 
         private static IEnumerable<MyStemResult> ParseMyStemResult()

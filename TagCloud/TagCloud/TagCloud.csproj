@@ -9,8 +9,13 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="6.3.0" />
+      <PackageReference Include="CommandLineParser" Version="2.8.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="TextProcessing\TextReader.cs" />
     </ItemGroup>
 
 </Project>

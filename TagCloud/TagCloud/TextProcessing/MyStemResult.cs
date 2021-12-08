@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud
+namespace TagCloud.TextProcessing
 {
-    public class MyStemResult
+    internal class MyStemResult
     {
-        public List<Dictionary<string, string>> analysis;
-        public string Text;
+        public readonly List<Dictionary<string, string>> analysis;
+        public readonly string Text;
 
         public Dictionary<string, string> Analisys => analysis
             .SelectMany(d => d.Select(pair => pair))

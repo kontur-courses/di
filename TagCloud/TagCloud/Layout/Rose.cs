@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.Utils;
 
-namespace TagCloud
+namespace TagCloud.Layout
 {
-
-    public class ArchimedeanSpiral : ISpiral
+    internal class Rose : ICurve
     {
-        private CoordinatesConverter _converter;
+        private readonly CoordinatesConverter _converter;
         
         /// <summary>
         /// Смещение по X к заданному центру
@@ -22,27 +22,18 @@ namespace TagCloud
         /// <summary>
         /// Радиус витков
         /// </summary>
-        private readonly double _radius = 1;
+        private double _radius = 1;
 
         /// <summary>
         /// Текущий угол в радианах
         /// </summary>
-        private double _phi = 0;
+        private double _phi;
         
-        
-        /// <summary>
-        /// Создает новый объект спирали с центром в точке (0,0)
-        /// </summary>
-        public ArchimedeanSpiral(CoordinatesConverter converter) : this(Point.Empty, converter)
+        public Rose(CoordinatesConverter converter) : this(Point.Empty, converter)
         {
         }
-
-        /// <summary>
-        /// Создает новый объект спирали с центром в точке Point center
-        /// </summary>
-        /// <param name="center">Центр спирали</param>
-        /// 
-        public ArchimedeanSpiral(Point center, CoordinatesConverter converter)
+        
+        public Rose(Point center, CoordinatesConverter converter)
         {
             _converter = converter;
             _offsetX = center.X;
@@ -53,11 +44,13 @@ namespace TagCloud
         {
             while (true)
             {
-                var rho = _phi * _radius / (2 * Math.PI);
+                var rho = _radius * Math.Sin(15 * _phi);
                 var cartesian = _converter.ToCartesian(rho, _phi);
                 var point = new Point(cartesian.X + _offsetX, cartesian.Y + _offsetY);
 
                 _phi += deltaAngle;
+                if (Math.Abs(_phi % Math.PI) < 0.1)
+                    _radius++;
                 yield return point;
             }
         }

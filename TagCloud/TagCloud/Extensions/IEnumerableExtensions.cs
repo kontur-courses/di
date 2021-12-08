@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagCloud.Extensions
 {
-    public static class IEnumerableExtensions
+    internal static class IEnumerableExtensions
     {
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> collection)
         {

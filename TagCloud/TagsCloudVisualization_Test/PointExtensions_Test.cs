@@ -6,7 +6,7 @@ using TagCloud.Extensions;
 
 namespace TagsCloudVisualization_Test
 {
-    class PointExtensionsTest
+    public class PointExtensionsTest
     {
         [TestCase(50, 50, 0, 0)]
         [TestCase(0, 0, -50, -50)]

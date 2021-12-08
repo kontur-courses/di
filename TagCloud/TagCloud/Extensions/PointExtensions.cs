@@ -2,7 +2,7 @@
 
 namespace TagCloud.Extensions
 {
-    public static class PointExtensions
+    internal static class PointExtensions
     {
         /// <summary>
         /// Находит координату левого верхнего угла прямоугольника

@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using TagCloud.Extensions;
 
-namespace TagCloud
+[assembly: InternalsVisibleTo("TagsCloudVisualization_Test")]
+namespace TagCloud.Layout
 {
-    public class CircularCloudLayouter : ICloudLayouter
+    internal class CircularCloudLayouter : ICloudLayouter
     {
         public readonly Point Center;
-        private readonly ISpiral _spiral;
+        private readonly ICurve _curve;
         private readonly List<Rectangle> _rectangles = new();
         public List<Rectangle> Rectangles => _rectangles.ToList();
 
-        public CircularCloudLayouter(ISpiral spiral) :this(Point.Empty, spiral)
+        public CircularCloudLayouter(ICurve curve) :this(Point.Empty, curve)
         {
         }
 
-        public CircularCloudLayouter(Point center, ISpiral spiral)
+        public CircularCloudLayouter(Point center, ICurve curve)
         {
             Center = center;
-            _spiral = spiral;
+            _curve = curve;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -39,7 +41,7 @@ namespace TagCloud
         private Rectangle GetNextRectangleWithLocation(Size rectSize)
         {
             var dryRect = new Rectangle(Point.Empty, rectSize);
-            using var pointEnumerator = _spiral.GetDiscretePoints().GetEnumerator();
+            using var pointEnumerator = _curve.GetDiscretePoints().GetEnumerator();
             while (_rectangles.Any(r => r.IntersectsWith(dryRect)))
             {
                 pointEnumerator.MoveNext();

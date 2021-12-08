@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace TagCloud
+namespace TagCloud.TextProcessing
 {
     public class TextReader
     {
@@ -12,4 +12,5 @@ namespace TagCloud
             return text;
         }
     }
+    
 }

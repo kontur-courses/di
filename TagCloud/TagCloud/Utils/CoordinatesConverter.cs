@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.Utils
 {
-    public class CoordinatesConverter
+    internal class CoordinatesConverter
     {
         public Point ToCartesian(double rho, double phi)
         {

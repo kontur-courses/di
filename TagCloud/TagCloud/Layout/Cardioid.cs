@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.Utils;
 
-namespace TagCloud
+namespace TagCloud.Layout
 {
-    public class Cardioid : ISpiral
+    internal class Cardioid : ICurve
     {
-        private CoordinatesConverter _converter;
+        private readonly CoordinatesConverter _converter;
         
         /// <summary>
         /// Смещение по X к заданному центру
@@ -26,21 +27,12 @@ namespace TagCloud
         /// <summary>
         /// Текущий угол в радианах
         /// </summary>
-        private double _phi = 0;
+        private double _phi;
         
-        
-        /// <summary>
-        /// Создает новый объект спирали с центром в точке (0,0)
-        /// </summary>
         public Cardioid(CoordinatesConverter converter) : this(Point.Empty, converter)
         {
         }
-
-        /// <summary>
-        /// Создает новый объект спирали с центром в точке Point center
-        /// </summary>
-        /// <param name="center">Центр спирали</param>
-        /// 
+        
         public Cardioid(Point center, CoordinatesConverter converter)
         {
             _converter = converter;
@@ -52,7 +44,7 @@ namespace TagCloud
         {
             while (true)
             {
-                var rho = _radius + _radius * Math.Sin(_phi);
+                var rho = _radius * (1 + Math.Sin(_phi));
                 var cartesian = _converter.ToCartesian(rho, _phi);
                 var point = new Point(cartesian.X + _offsetX, cartesian.Y + _offsetY);
 

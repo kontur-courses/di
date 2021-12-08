@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.TextProcessing
 {
-    public class Word
+    internal class Word
     {
         public Font Font { get; set; }
         public Rectangle Rectangle { get; set; }
@@ -14,11 +14,11 @@ namespace TagCloud
             Font = font;
         }
         
-        public Word(string text, Font font, Rectangle rectangle)
+        public Word(string text, Font font, Rectangle rectangle) : this (text, font)
         {
-            Text = text;
-            Font = font;
             Rectangle = rectangle;
         }
+
+        public Word WithFontSize(double fontSize) => new(Text, new Font(Font.FontFamily, (float)fontSize));
     }
 }

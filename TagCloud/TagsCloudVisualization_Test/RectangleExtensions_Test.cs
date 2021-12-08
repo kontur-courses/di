@@ -8,7 +8,7 @@ using TagCloud.Extensions;
 
 namespace TagsCloudVisualization_Test
 {
-    class RectangleExtensionsTest
+    public class RectangleExtensionsTest
     {
         [Test]
         public void GetDistancesToInnerPoint_ShouldBeCorrect()

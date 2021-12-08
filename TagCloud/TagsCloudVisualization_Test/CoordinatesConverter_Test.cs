@@ -2,12 +2,14 @@
 using NUnit.Framework;
 using System.Drawing;
 using FluentAssertions;
-using TagCloud;
+using TagCloud.Utils;
 
 namespace TagsCloudVisualization_Test
 {
-    class CoordinatesConverterTest
+    public class CoordinatesConverterTest
     {
+        private readonly CoordinatesConverter _converter = new();
+        
         [TestCase(5, 3, 5.83, 0.54)]
         [TestCase(5, -3, 5.83, -0.54)]
         [TestCase(-5, 3, 5.83, 2.6)]
@@ -15,7 +17,7 @@ namespace TagsCloudVisualization_Test
         [TestCase(50, 30, 58.3, 0.54)]
         public void ToPolar_ShouldBeCorrect(int x, int y, double expectedRho, double expectedPhi)
         {
-            var (rho, phi) = CoordinatesConverter.ToPolar(new Point(x, y));
+            var (rho, phi) = _converter.ToPolar(new Point(x, y));
             using (new AssertionScope())
             {
                 rho.Should().BeApproximately(expectedRho, 0.01d);
@@ -30,7 +32,7 @@ namespace TagsCloudVisualization_Test
         [TestCase(58.3095, 0.5404, 50, 30)]
         public void ToCartesian_ShouldBeCorrect(double rho, double phi, int expectedX, int expectedY)
         {
-            var point = CoordinatesConverter.ToCartesian(rho, phi);
+            var point = _converter.ToCartesian(rho, phi);
             using (new AssertionScope())
             {
                 point.X.Should().Be(expectedX);

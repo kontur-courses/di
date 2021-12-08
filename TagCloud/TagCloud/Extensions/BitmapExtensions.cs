@@ -5,7 +5,7 @@ using System.IO;
 
 namespace TagCloud.Extensions
 {
-    public static class BitmapExtensions
+    internal static class BitmapExtensions
     {
         private static int _count;
 
