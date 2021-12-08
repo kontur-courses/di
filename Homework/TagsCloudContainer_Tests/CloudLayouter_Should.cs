@@ -15,11 +15,12 @@ namespace TagsCloudContainer_Tests
         private readonly Point testingCenter = new Point(5,5);
 
         private CloudLayouter sut;
+        private IPointsProvider pointsProvider;
         
         [SetUp]
         public void SetUp()
         {
-            var pointsProvider = A.Fake<IPointsProvider>();
+            pointsProvider = A.Fake<IPointsProvider>();
             A.CallTo(() => pointsProvider.GetNextPoint())
                 .Returns(testingCenter)
                 .Once();
@@ -40,6 +41,17 @@ namespace TagsCloudContainer_Tests
         public void PutFirstRectangleInCenter()
         {
             sut.PutNextRectangle(testingSize).Should().Be(new Rectangle(testingCenter, testingSize));
+        }
+
+        [Test]
+        public void AskAnotherPoint_WhenRectangleIntersectsWithOthers()
+        {
+            A.CallTo(() => pointsProvider.GetNextPoint())
+                .ReturnsNextFromSequence(testingCenter, testingCenter + new Size(1,1), testingCenter + testingSize);
+            sut.PutNextRectangle(testingSize);
+            sut.PutNextRectangle(testingSize);
+            A.CallTo(() => pointsProvider.GetNextPoint())
+                .MustHaveHappenedANumberOfTimesMatching(i => i == 3);
         }
     }
 }

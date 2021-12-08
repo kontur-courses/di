@@ -24,4 +24,8 @@
       <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="TestFiles\emptyfile" />
+    </ItemGroup>
+
 </Project>

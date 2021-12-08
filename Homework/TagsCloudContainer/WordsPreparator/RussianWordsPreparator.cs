@@ -22,7 +22,7 @@ namespace TagsCloudContainer.WordsPreparator
                 ["инф_гл"] = SpeechPart.Verb,
                 ["нареч"] = SpeechPart.Adverbs,
                 ["мест"] = SpeechPart.Pronoun,
-                ["цифра"] = SpeechPart.Int,
+                ["числ"] = SpeechPart.Num,
             };
         }
 
@@ -33,8 +33,10 @@ namespace TagsCloudContainer.WordsPreparator
         
         public IEnumerable<WordInfo> Prepare(IEnumerable<string> words)
         {
-            var trimmedAndLowWords = words.Select(w => ToLowerAndTrim(w));
-            return CreateWordInfo(analyzer.Parse(trimmedAndLowWords));
+            var preparedWords = words
+                .Select(w => ToLowerAndTrim(w))
+                .Select(w => w.Split()[0]);
+            return CreateWordInfo(analyzer.Parse(preparedWords));
         }
 
         private IEnumerable<WordInfo> CreateWordInfo(IEnumerable<MorphInfo> parsedWords)

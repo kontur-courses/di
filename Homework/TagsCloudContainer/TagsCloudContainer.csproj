@@ -9,6 +9,7 @@
     <ItemGroup>
       <Compile Remove="Class1.cs" />
       <Compile Remove="TextReader\Parsers\**" />
+      <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs" />
     </ItemGroup>
 
     <ItemGroup>

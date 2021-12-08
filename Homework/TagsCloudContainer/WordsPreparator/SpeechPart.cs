@@ -7,7 +7,7 @@
         Pronoun,
         Adjective,
         Adverbs,
-        Int,
+        Num,
         Unknown,
     }
 }
