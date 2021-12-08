@@ -19,57 +19,75 @@ namespace TagsCloudVisualization
     {
         public static void Main(string[] args)
         {
-            //var textPath = "C:/GitHub/di/War and piece words.DOCX";
             var path = "C:/GitHub/di/img_words.jpeg";
             var arguments = "-lndw";
             var filePath = "C:/GitHub/di/TagsCloudVisualization/War_and_piece_words.Docx";
             var savePath =
                 "C:/GitHub/di/TagsCloudVisualization/result.TXT";
-            //"C:\\GitHub\\di\\TagsCloudVisualization\\War_and_piece.Docx C:\\GitHub\\di\\TagsCloudVisualization\\result.TXT";
             var mystemPath = "C:\\GitHub\\di\\TagsCloudVisualization\\mystem.exe";
+
+
 
             Process process = Process.Start(new ProcessStartInfo
             {
                 FileName = mystemPath,
                 Arguments = arguments + ' ' + filePath + ' ' + savePath,
-
-                //FileName = "C:\\GitHub\\di\\TagsCloudVisualization\\mystem.exe",
-                //Arguments = "-lndw C:\\GitHub\\di\\TagsCloudVisualization\\War_and_piece.Docx C:\\GitHub\\di\\TagsCloudVisualization\\result.TXT",
-                //Arguments = "-lndw C:\\GitHub\\di\\TagsCloudVisualization\\War_and_piece.Docx",
-                //UseShellExecute = false, //Отключаем любой инферфейс у процесса, чтобы небыло никаких окон
-                //CreateNoWindow = true, //отключаем также отображение на панеле задач
-                //RedirectStandardOutput = true,
             });
 
-
-
+            
+                //КЛИЕНТЫ
 
 
 
 
             var containerBuilder = new ContainerBuilder();
             InitializeRegistration(containerBuilder);
-
-
             var buildContainer = containerBuilder.Build();
-            var analyzer = buildContainer.Resolve<IAnalyzer>();
-            var filler = buildContainer.Resolve <IContentFiller>();
+
             var reader = buildContainer.Resolve<ITextFileReader>();
-            var normalizer = buildContainer.Resolve<IWordNormalizer>();
-            var rectangleSize = new Size(100, 100);
-
-
             var wordsFromFile = reader.ReadText(savePath, Encoding.UTF8);
 
 
+
+            var analyzer = buildContainer.Resolve<IAnalyzer>();
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
+            //Здесь анализ на часть слова и соответствие строки слову
+            //ИСКЛЮЧИ СКУЧНЫЕ СЛОВА
 
-            var  normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
 
+            var normalizer = buildContainer.Resolve<IWordNormalizer>();
+            var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
+            //Здесь расширение функционала нормализации
+
+
+
+            var rectangleSize = new Size(100, 100);
+
+
+
+
+
+
+            var filler = buildContainer.Resolve<IContentFiller>();
+            
+
+
+
+            
+
+
+
+            
+
+
+            //НЕСКОЛЬКО АЛГОРИТМОВ
             filler.FillInElements(rectangleSize, normalyzedWords);
 
             var elementsForVisualisation = filler.GetElementsList();
 
+
+
+            //ниже добавить параметризацию цветов и другихз настроек
             using (var visualization = new Visualization(elementsForVisualisation, new Pen(Color.White, 10),
                 new SolidBrush(Color.White), new Font("Times", 15)))
             {
