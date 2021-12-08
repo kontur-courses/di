@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Settings.Interfaces;
 using TagsCloudVisualization;
+using TagsCloudVisualizationTests.TestingLibrary;
 
 namespace TagsCloudContainer.Layout
 {
@@ -26,7 +27,7 @@ namespace TagsCloudContainer.Layout
             if (words == null)
                 throw new ArgumentNullException(nameof(words));
 
-            var fontSizedWords = fontSizeSelector.GetFontSizes(words);
+            var fontSizedWords = fontSizeSelector.GetFontSizedWords(words);
             var wordsLayout = GetWordsLayout(fontSizedWords.OrderByDescending(word => word.FontSize)).ToList();
             var rectangles = wordsLayout.Select(wordLayout => wordLayout.Rectangle).ToList();
             var wordsLocations = wordsLayout.Select(wordLayout => wordLayout.WordLayout);

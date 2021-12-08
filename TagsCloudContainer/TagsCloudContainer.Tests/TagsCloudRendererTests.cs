@@ -6,6 +6,7 @@ using NUnit.Framework;
 using TagsCloudContainer.Rendering;
 using TagsCloudContainer.Settings;
 using TagsCloudContainer.Settings.Interfaces;
+using TagsCloudVisualizationTests.TestingLibrary;
 
 namespace TagsCloudContainer.Tests
 {
@@ -39,7 +40,6 @@ namespace TagsCloudContainer.Tests
         public void GetBitmap_WithDesiredImageSize_ScaleImage(int desiredWidth, int desiredHeight)
         {
             var config = new RenderingSettings {DesiredImageSize = new Size(desiredWidth, desiredHeight)};
-
             using var output = GetOutputBitmap(config, words);
             output.Size
                 .Should().BeEquivalentTo(new Size(desiredWidth, desiredHeight));
@@ -50,14 +50,10 @@ namespace TagsCloudContainer.Tests
         {
             var config = new RenderingSettings {Background = new SolidBrush(Color.Red)};
             using var output = GetOutputBitmap(config, Enumerable.Empty<WordStyle>());
-            for (var x = 0; x < output.Width; x++)
+            foreach (var color in output.ToEnumerable())
             {
-                for (var y = 0; y < output.Height; y++)
-                {
-                    var pixel = output.GetPixel(x, y);
-                    pixel.R.Should().Be(255);
-                    pixel.A.Should().BePositive();
-                }
+                color.R.Should().Be(255);
+                color.A.Should().BePositive();
             }
         }
 

@@ -5,7 +5,7 @@ namespace TagsCloudContainer.WordsLoading
 {
     public class WordsParser : IWordsParser
     {
-        private static readonly Regex wordRegex = new (@"[\p{L}-]+");
+        private static readonly Regex wordRegex = new(@"[\p{L}-]+");
 
         public IEnumerable<string> Parse(string text)
         {

@@ -56,7 +56,8 @@ namespace TagsCloudContainer
             return words;
         }
 
-        private static IEnumerable<WordStyle> GetWordsStyles(CloudLayout layout, IReadOnlyDictionary<WordLayout, Color> colorMap)
+        private static IEnumerable<WordStyle> GetWordsStyles(CloudLayout layout,
+            IReadOnlyDictionary<WordLayout, Color> colorMap)
         {
             foreach (var wordLayout in layout.WordLayouts)
             {

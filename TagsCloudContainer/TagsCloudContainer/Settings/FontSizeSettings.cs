@@ -1,5 +1,4 @@
-﻿using System;
-using TagsCloudContainer.Settings.Interfaces;
+﻿using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Settings
 {
@@ -10,19 +9,8 @@ namespace TagsCloudContainer.Settings
 
         public FontSizeSettings(float maxFontSize, float minFontSize)
         {
-            MaxFontSize = ValidateSize(maxFontSize);
-            MinFontSize = ValidateSize(minFontSize);
+            MaxFontSize = Validate.Positive("Max font", maxFontSize);
+            MinFontSize = Validate.Positive("Min font", minFontSize);
         }
-
-        private float ValidateSize(float value)
-        {
-            if (value <= 0)
-                throw fontSizeException;
-
-            return value;
-        }
-
-        private readonly ApplicationException
-            fontSizeException = new("Font size must be positive.");
     }
 }

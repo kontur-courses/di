@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using TagsCloudContainer.Settings.Interfaces;
 
 namespace TagsCloudContainer.Settings
@@ -12,8 +11,10 @@ namespace TagsCloudContainer.Settings
             init
             {
                 if (value.HasValue)
-                    if (value.Value.Height <= 0 || value.Value.Width <= 0)
-                        throw new ApplicationException("Size must be positive.");
+                {
+                    Validate.Positive("Image height", value.Value.Height);
+                    Validate.Positive("Image width", value.Value.Width);
+                }
 
                 desiredImageSize = value;
             }
@@ -22,13 +23,7 @@ namespace TagsCloudContainer.Settings
         public float Scale
         {
             get => scale;
-            init
-            {
-                if (value <= 0)
-                    throw new ApplicationException("Scale must be positive.");
-
-                scale = value;
-            }
+            init => scale = Validate.Positive(nameof(Scale), value);
         }
 
         public Brush Background { get; init; } = new SolidBrush(Color.Transparent);
@@ -38,7 +33,7 @@ namespace TagsCloudContainer.Settings
 
         public void Dispose()
         {
-            Background?.Dispose();
+            Background.Dispose();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using TagsCloudContainer.Settings.Interfaces;
@@ -17,9 +16,6 @@ namespace TagsCloudContainer.Rendering
 
         public Bitmap GetBitmap(IEnumerable<WordStyle> words, Size imageSize)
         {
-            if (words == null)
-                throw new ArgumentNullException(nameof(words));
-
             using var canvas = CreateCanvas(imageSize);
             canvas.Graphics.FillRectangle(renderingSettings.Background, 0, 0, imageSize.Width, imageSize.Height);
             foreach (var word in words)

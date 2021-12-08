@@ -17,7 +17,7 @@ namespace TagsCloudContainer.Layout
             this.scalersFactory = scalersFactory;
         }
 
-        public IEnumerable<FontSizedWord> GetFontSizes(IEnumerable<string> words)
+        public IEnumerable<FontSizedWord> GetFontSizedWords(IEnumerable<string> words)
         {
             if (words == null)
                 throw new ArgumentNullException(nameof(words));

@@ -15,9 +15,8 @@ namespace TagsCloudContainer.Tests
             loader = new Mock<TextFileLoader>().Object;
         }
 
-        [TestCase("123", TestName = "File not exist")]
-        [TestCase(null, TestName = "null")]
-        public void LoadText_ThrowsException_WhenFilename(string filename) =>
-            Assert.Throws<ApplicationException>(() => loader.LoadText(filename));
+        [Test]
+        public void LoadText_ThrowsException_WhenFilename() =>
+            Assert.Throws<ApplicationException>(() => loader.LoadText("notExistingFile"));
     }
 }

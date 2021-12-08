@@ -18,7 +18,7 @@ namespace TagsCloud.Tests
         }
 
         [TestCase("#sef")]
-        [TestCase("1 1 1 1 1")]
+        [TestCase("1 1 1 1")]
         [TestCase("1 1 1")]
         public void Parse_WithIncorrectValue_ThrowsException(string value) =>
             Assert.Throws<ApplicationException>(() => parser.Parse(value));
@@ -37,6 +37,7 @@ namespace TagsCloud.Tests
         {
             yield return new TestCaseData("#FFFF0000", Color.Red) {TestName = "ARGB Hex"};
             yield return new TestCaseData("#FF0000", Color.Red) {TestName = "RGB Hex"};
+            yield return new TestCaseData("#00F", Color.Blue) {TestName = "Short RGB Hex"};
             yield return new TestCaseData("AliceBlue", Color.AliceBlue) {TestName = "Html name"};
         }
     }

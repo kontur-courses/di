@@ -5,9 +5,7 @@ namespace TagsCloudContainer.Layout
     public class WordLayout
     {
         public string Word { get; }
-
         public Point Location { get; }
-
         public Font Font { get; }
 
         public WordLayout(string word, Point location, Font font)
@@ -17,10 +15,8 @@ namespace TagsCloudContainer.Layout
             Font = font;
         }
 
-        public override int GetHashCode()
-        {
-            return Word.GetHashCode() + Location.GetHashCode() + Font.GetHashCode();
-        }
+        public override int GetHashCode() =>
+            Word.GetHashCode() + Location.GetHashCode() + Font.GetHashCode();
 
         public override bool Equals(object? obj)
         {

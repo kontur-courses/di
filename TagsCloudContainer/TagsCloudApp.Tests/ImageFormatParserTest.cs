@@ -21,7 +21,8 @@ namespace TagsCloud.Tests
             Assert.Throws<ApplicationException>(() => parser.Parse("esf"));
 
         [TestCaseSource(nameof(ParseCases))]
-        public ImageFormat Parse_ReturnFormat_WithCorrectValue(string value) => parser.Parse(value);
+        public ImageFormat Parse_ReturnFormat_WithCorrectValue(string value) =>
+            parser.Parse(value);
 
         public static IEnumerable<TestCaseData> ParseCases()
         {
