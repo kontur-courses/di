@@ -5,11 +5,11 @@ using System.IO;
 
 namespace TagCloud.Extensions
 {
-    public static class BitmapExtensions
+    internal static class BitmapExtensions
     {
         private static int _count;
 
-        public static void SaveDefault(this Bitmap bitmap, string filename = null)
+        public static void SaveDefault(this Bitmap bitmap, string? filename = null)
         {
             var currentDir = AppDomain.CurrentDomain.BaseDirectory;
             var imagesDir = Directory.CreateDirectory(Path.Combine(currentDir, "images"));

@@ -5,37 +5,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using NUnit.Framework.Interfaces;
-using System.IO;
-using TagCloud;
-using TagCloud.Extensions;
+using TagCloud.Drawing;
+using TagCloud.Layout;
+using TagCloud.TextProcessing;
+using TagCloud.Utils;
 
 
 namespace TagsCloudVisualization_Test
 {
     public class PutNextRectangleShould
     {
-        private CircularCloudLayouter layout;
-        private int count = 0;
+        private CircularCloudLayouter _layout;
+        private int _count = 0;
+        private IDrawerOptions _drawerOptions;
+        private ITextProcessingOptions _textProcessingOptions;
 
+        [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _drawerOptions = new DrawerOptions();
+            _textProcessingOptions = new TextProcessingOptions();
+        }
+        
         [SetUp]
         public void Setup()
         {
-            count++;
+            _count++;
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed || layout == null) return;
+            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed || _layout == null) return;
             var context = TestContext.CurrentContext;
-            var directory = Directory.GetCurrentDirectory();
-            var path = Path.Combine(directory, $"{count:00.}_{context.Result.Outcome.Status}");
-
-            var drawer = new TagCloudDrawer(layout.Center);
-            using (var bitmap = drawer.Draw(layout.Rectangles))
-                bitmap.SaveDefault(path);
-            layout = null;
-            Console.WriteLine($"{ context.Test.Name} {context.Result.Outcome.Status} - Image Saved");
+            _layout = null;
+            Console.WriteLine($"{ context.Test.Name} {context.Result.Outcome.Status}");
         }
 
         [TestCase(0, 0)]
@@ -162,17 +166,17 @@ namespace TagsCloudVisualization_Test
         }
 
         private CircularCloudLayouter GetLayouter(Point? center) =>
-            new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
+            new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty, new CoordinatesConverter()));
 
         private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes) =>
-            GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty));
+            GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty, new CoordinatesConverter()));
 
-        private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes, ISpiral spiral)
+        private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes, ICurve curve)
         {
-            center = center ?? Point.Empty;
-            var layouter = new CircularCloudLayouter(center.Value, spiral);
+            center ??= Point.Empty;
+            var layouter = new CircularCloudLayouter(center.Value, curve);
             rectSizes.ForEach(s => layouter.PutNextRectangle(s));
-            layout = layouter;
+            _layout = layouter;
             return layouter;
         }
     }

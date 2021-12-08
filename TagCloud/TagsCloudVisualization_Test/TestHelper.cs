@@ -6,7 +6,7 @@ using TagCloud.Extensions;
 
 namespace TagsCloudVisualization_Test
 {
-    static class TestHelper
+    public static class TestHelper
     {
         public static List<Size> GenerateSizes(int tagsCount)
         {

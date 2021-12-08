@@ -1,40 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using TagCloud;
+using System.Linq;
+using CommandLine;
+using TagCloud.Drawing;
+using TagCloud.TextProcessing;
 
 namespace TagCloud_ConsoleUI
 {
-    public static class Program
+    public class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(3000, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(300, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(30, 600),
-                new ArchimedeanSpiral());
-            DemoImageGenerator.GenerateCircularTagCloud(GetRandomSizesWithArea(
-                new List<int> { 30, 300, 3000 }, 1200), new ArchimedeanSpiral());
-        }
+            var tagCloud = new TagCloud.TagCloud();
 
-        private static List<Size> GetRandomSizesWithArea(int area, int amount) =>
-            GetRandomSizesWithArea(new List<int> { area }, amount);
-
-        private static List<Size> GetRandomSizesWithArea(List<int> areas, int amount)
-        {
-            var sizes = new List<Size>();
-            var rnd = new Random();
-
-            for (int i = 0; i < amount; i++)
+            while (!args.Contains("exit"))
             {
-                var area = areas[rnd.Next(areas.Count)];
-                var height = rnd.Next((int)Math.Ceiling(Math.Pow(area, 0.3)), (int)Math.Pow(area, 0.5));
-                var width = area / height;
-                sizes.Add(new Size(width, height));
+                Parser.Default.ParseArguments<DrawerOptions, TextProcessingOptions>(args)
+                    .MapResult(
+                        (DrawerOptions opts) => tagCloud.DrawTagClouds(opts),
+                        (TextProcessingOptions opts) => tagCloud.ProcessText(opts),
+                        _ => 1);
+                args = Console.ReadLine().Split();
             }
-            return sizes;
         }
     }
 }

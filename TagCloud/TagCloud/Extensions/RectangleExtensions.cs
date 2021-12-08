@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagCloud.Extensions
 {
-    public static class RectangleExtensions
+    internal static class RectangleExtensions
     {
         /// <summary>
         /// Находит расстояние от точки внутри прямоугольника до каждой его стороны
