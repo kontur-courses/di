@@ -2,7 +2,6 @@
 using System.Drawing.Imaging;
 using System.IO;
 using TagsCloudContainer.BitmapSaver;
-using TagsCloudContainer.Layouter;
 using TagsCloudContainer.TextReader;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.WordsFilter;
@@ -14,22 +13,23 @@ namespace TagsCloudContainer
     public class TagCloudCreator : ITagCloudCreator
     {
         private readonly IFileReader fileReader;
-        private readonly ICloudLayouter layouter;
         private readonly IWordsPreparator wordsPreparator;
         private readonly IWordsFilter filter;
         private readonly IWordsFrequencyAnalyzer frequencyAnalyzer;
-        private readonly IVisualizerSettings settings;
         private readonly IVisualizer visualizer;
         private readonly IBitmapSaver saver;
 
-        public TagCloudCreator(IFileReader fileReader, ICloudLayouter layouter, IWordsPreparator wordsPreparator, IWordsFilter filter, IWordsFrequencyAnalyzer frequencyAnalyzer, IVisualizerSettings settings, IVisualizer visualizer, IBitmapSaver saver)
+        public TagCloudCreator(IFileReader fileReader,
+            IWordsPreparator wordsPreparator,
+            IWordsFilter filter,
+            IWordsFrequencyAnalyzer frequencyAnalyzer,
+            IVisualizer visualizer, 
+            IBitmapSaver saver)
         {
             this.fileReader = fileReader;
-            this.layouter = layouter;
             this.wordsPreparator = wordsPreparator;
             this.filter = filter;
             this.frequencyAnalyzer = frequencyAnalyzer;
-            this.settings = settings;
             this.visualizer = visualizer;
             this.saver = saver;
         }

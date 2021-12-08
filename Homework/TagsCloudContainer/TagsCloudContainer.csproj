@@ -11,6 +11,7 @@
         <Compile Remove="TextReader\Parsers\**" />
         <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs" />
         <Compile Remove="Visualizer\DefaultVisualizerSettings.cs" />
+        <Compile Remove="FileReader\Parsers\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,10 +21,12 @@
 
     <ItemGroup>
         <EmbeddedResource Remove="TextReader\Parsers\**" />
+        <EmbeddedResource Remove="FileReader\Parsers\**" />
     </ItemGroup>
 
     <ItemGroup>
         <None Remove="TextReader\Parsers\**" />
+        <None Remove="FileReader\Parsers\**" />
     </ItemGroup>
 
 </Project>
