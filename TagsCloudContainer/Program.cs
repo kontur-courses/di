@@ -28,12 +28,13 @@ namespace TagsCloudContainer
                 var reader = scope.Resolve<TagReader>();
                 var parser = scope.Resolve<WordsCountParser>();
                 var layouter = scope.Resolve<TagLayouter>();
-                var visualizator = scope.Resolve<CloudVisualizator>();
+                var visualizator = scope.Resolve<IVisualizator<ITag>>();
+                var settings = scope.Resolve<IVisualizatorSettings>();
 
                 var text = reader.Read(textFilename);
                 var wordsCount = parser.Parse(text);
                 var cloud = layouter.PlaceTagsInCloud(wordsCount, minSize, maxScale);
-                visualizator.Visualize(cloud);
+                visualizator.Visualize(settings, cloud);
             }
         }
 
@@ -85,7 +86,6 @@ namespace TagsCloudContainer
 
             builder.RegisterType<TagReader>().AsSelf();
             builder.RegisterType<WordsCountParser>().AsSelf();
-            builder.RegisterType<CloudVisualizator>().AsSelf();
         }
     }
 }
