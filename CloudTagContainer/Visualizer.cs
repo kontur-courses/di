@@ -33,7 +33,7 @@ namespace CloudTagContainer
             var imageSize = settings.ImageSize;
             using var bmp = new Bitmap(imageSize.Width, imageSize.Height);
             using var g = Graphics.FromImage(bmp);
-            g.FillRectangle(new SolidBrush(settings.StrokeColor), new Rectangle(Point.Empty, settings.ImageSize));
+            g.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(Point.Empty, settings.ImageSize));
             foreach (var word in words)
             {
                 DrawWord(word, g);

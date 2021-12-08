@@ -1,36 +1,65 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using CloudTagContainer;
 using CloudTagContainer.ImageSavers;
+using CommandLine;
 using Ninject;
 
 namespace CUI
 {
     class EntryPoint
     {
+        private static bool IsDebug = false;
         static void Main(string[] args)
         {
-            var container = new StandardKernel();
+            if (IsDebug)
+            {
+                args = new[] {"-t", "input.txt", "-p", "result.png"};
+            }
 
-            var setting = new VisualizerSettings(
+            var options = GetOptions(args);
+            if (options == null)
+                Environment.Exit(1);
+            
+            var visualizerSettings = new VisualizerSettings(
                 new Size(1920, 1080),
                 new Font("Arial", 24, FontStyle.Bold),
-                Color.Blue,
-                Color.Chocolate
+                Color.FromName(options.TextColor),
+                Color.FromName(options.BackGroundColor)
             );
 
-            container.Bind<ConsoleInterface>().ToSelf();
-            container.Bind<IWordsPreprocessor>().To<ToLowerPreprocessor>();
-            container.Bind<IImageSaver>().To<PngSaver>();
-            container.Bind<ILayouter>().To<CircularCloudLayouter>();
-            container.Bind<ISpiral>().To<ExpandingSquare>();
-            container.Bind<IWordSizer>().To<CountingWordSizer>();
-            container.Bind<IFileStreamFactory>().To<FileStreamFactory>();
-            container.Bind<VisualizerSettings>().ToConstant(setting);
-
-            var cui = container.Get<ConsoleInterface>();
-            cui.Run(new Options() {InputTextPath = "input.txt", PathToSaveImage = "result.png"});
+            var container = ConfigureContainer(visualizerSettings);
+            
+            var cui = container.BuildServiceProvider().GetService<ConsoleInterface>();
+            cui.Run(options);
             Console.Write("HELLO");
+        }
+
+        static Options GetOptions(string[] args)
+        {
+            return Parser
+                .Default
+                .ParseArguments<Options>(args)
+                .Value;
+        }
+
+        static ServiceCollection ConfigureContainer(VisualizerSettings settings)
+        {
+            var container = new ServiceCollection();
+            container.AddScoped<IImageSaver, PngSaver>();
+            container.AddScoped<ConsoleInterface>();
+            container.AddScoped<IWordsPreprocessor, ToLowerPreprocessor>();
+            container.AddScoped<ILayouter, CircularCloudLayouter>();
+            container.AddScoped<ISpiral, ExpandingSquare>();
+            container.AddScoped<IWordSizer, CountingWordSizer>();
+            container.AddScoped<IWordsReader, WordsReader>();
+            container.AddScoped<IFileStreamFactory, FileStreamFactory>();
+            container.AddScoped<Visualizer>();
+            container.AddSingleton<VisualizerSettings>(settings);
+            
+            return container;
         }
     }
 }

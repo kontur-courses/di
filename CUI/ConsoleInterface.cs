@@ -8,14 +8,14 @@ namespace CUI
         private readonly Visualizer visualizer;
         private readonly IImageSaver imageSaver;
         private readonly IFileStreamFactory fileStreamFactory;
-        private readonly WordsReader wordsReader;
+        private readonly IWordsReader wordsReader;
         private readonly IWordsPreprocessor preprocessor;
 
         public ConsoleInterface(
             Visualizer visualizer, 
             IImageSaver imageSaver, 
             IFileStreamFactory fileStreamFactory,
-            WordsReader wordsReader,
+            IWordsReader wordsReader,
             IWordsPreprocessor preprocessor)
         {
             this.visualizer = visualizer;
