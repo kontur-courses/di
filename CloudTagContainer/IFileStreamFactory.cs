@@ -4,6 +4,7 @@ namespace CloudTagContainer
 {
     public interface IFileStreamFactory
     {
-        public Stream Open(string path);
+        public Stream OpenOnWriting(string path);
+        public Stream OpenOnReading(string path);
     }
 }

@@ -22,7 +22,8 @@ namespace CloudTagContainer
 
         public Bitmap Visualize(string[] words)
         {
-            var convertedWords = wordSizer.Convert(words, settings.TextFont.Size);
+            var convertedWords = wordSizer.Convert(words, settings.TextFont.SizeInPoints);
+            layouter.Center = (Point) (settings.ImageSize / 2);
             var image = CreateImage(convertedWords);
             return image;
         }
@@ -32,12 +33,13 @@ namespace CloudTagContainer
             var imageSize = settings.ImageSize;
             using var bmp = new Bitmap(imageSize.Width, imageSize.Height);
             using var g = Graphics.FromImage(bmp);
+            g.FillRectangle(new SolidBrush(settings.StrokeColor), new Rectangle(Point.Empty, settings.ImageSize));
             foreach (var word in words)
             {
                 DrawWord(word, g);
             }
 
-            return bmp;
+            return new Bitmap(bmp, bmp.Size);
         }
 
         private void DrawWord(SizedWord word, Graphics g)

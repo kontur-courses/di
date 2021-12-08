@@ -1,7 +1,6 @@
-﻿using System;
-using CloudTagContainer.ImageSavers;
+﻿using CloudTagContainer;
 
-namespace CloudTagContainer.CUI
+namespace CUI
 {
     public class ConsoleInterface
     {
@@ -25,17 +24,15 @@ namespace CloudTagContainer.CUI
             this.preprocessor = preprocessor;
         }
         
-        public void Run()
+        public void Run(Options options)
         {
-            var pathToRead = "input.txt";
-            var pathToSave = "result.png";
-            var inStream = fileStreamFactory.Open(pathToRead);
+            var inStream = fileStreamFactory.OpenOnReading(options.InputTextPath);
             var words = wordsReader.Read(inStream);
             var preprocessesWords = preprocessor.Preprocess(words);
             
             var image = visualizer.Visualize(preprocessesWords);
             
-            var oStream = fileStreamFactory.Open(pathToSave);
+            var oStream = fileStreamFactory.OpenOnWriting(options.PathToSaveImage);
             imageSaver.Save(image, oStream);
         }
     }

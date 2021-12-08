@@ -18,7 +18,6 @@ namespace CloudTagContainer
             this.spiral = spiral;
         }
 
-       
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             spiralEnumerator ??= spiral.GetEnumerator(Center).GetEnumerator();
@@ -35,6 +34,11 @@ namespace CloudTagContainer
             }
 
             throw new Exception("Was not able to find next rectangle");
+        }
+
+        private void Reset()
+        {
+            spiralEnumerator = null;
         }
     }
 }

@@ -21,9 +21,16 @@ namespace CloudTagContainer
             return wordToCount.Select(kv =>
                     new SizedWord(
                         kv.Key,
-                        new Size((int) (kv.Value * kv.Key.Length * fontSize),
-                            (int) (kv.Value * fontSize))))
+                        CalculateSize(kv.Value, fontSize, kv.Key)))
                 .ToList();
+        }
+
+        private Size CalculateSize(int repeatedCount, float fontSize, string word)
+        {
+            return new Size(
+                (int) (1.5d * repeatedCount * word.Length * fontSize),
+                 (int) (1.5d * repeatedCount * fontSize)
+            );
         }
     }
 }
