@@ -4,9 +4,9 @@ namespace TagsCloudContainer.Visualizer
 {
     public interface IVisualizerSettings
     {
-        public Color WordsColor { get; set; }
-        public Color BackgroundColor { get; set; }
-        public Font Font { get; set; }
-        public Size ImageSize { get; set; }
+        public Color WordsColor { get; }
+        public Color BackgroundColor { get; }
+        public Font Font { get; }
+        public Size ImageSize { get; }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Layouter.PointsCreators;
-using TagsCloudContainer.Layouters;
 
 namespace TagsCloudContainer.Layouter
 {
