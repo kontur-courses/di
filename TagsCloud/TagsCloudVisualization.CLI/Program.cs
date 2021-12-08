@@ -12,7 +12,11 @@ namespace TagsCloudVisualization.CLI
         {
             try
             {
-                Run(Parser.Default.ParseArguments<Options>(args));
+                var result = Parser.Default.ParseArguments<Options>(args);
+                if (!result.Errors.Any())
+                {
+                    Run(result.Value);
+                }
             }
             catch (Exception e)
             {
@@ -20,11 +24,8 @@ namespace TagsCloudVisualization.CLI
             }
         }
 
-        private static void Run(ParserResult<Options> result)
+        private static void Run(Options options)
         {
-            if (result.Errors.OfType<HelpRequestedError>().Any()) return;
-            if (result.Errors.Any()) throw new ArgumentException(result.Errors.First().ToString());
-            var options = result.Value;
             var container = CreateContainer(options.ToDrawerSettings());
             var directory = Path.GetFullPath(options.OutputDirectory ?? Options.DefaultOutputDirectory);
             if (!Directory.Exists(directory))
