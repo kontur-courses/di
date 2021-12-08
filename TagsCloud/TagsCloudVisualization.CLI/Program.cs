@@ -25,16 +25,20 @@ namespace TagsCloudVisualization.CLI
             if (result.Errors.OfType<HelpRequestedError>().Any()) return;
             if (result.Errors.Any()) throw new ArgumentException(result.Errors.First().ToString());
             var options = result.Value;
-
             var container = CreateContainer(options.ToDrawerSettings());
             var directory = Path.GetFullPath(options.OutputDirectory ?? Options.DefaultOutputDirectory);
-            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-            var filename =
-                Path.Combine(directory, options.OutputFileName ?? DateTime.Now.Ticks.ToString());
-            container.Resolve<TagsCloudVisualizer>().Visualize(filename);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
+            var filename = Path.Combine(directory, options.OutputFileName ?? GenerateName());
+            container.Resolve<TagsCloudVisualizer>().Visualize(filename);
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
+
+        private static string GenerateName() =>
+            $"Cloud_{DateTime.Now:dd-MM-yy}_{DateTime.Now.Subtract(DateTime.Today).TotalSeconds:0}";
 
         private static IContainer CreateContainer(TagsCloudDrawerModuleSettings settings)
         {
