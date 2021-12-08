@@ -5,6 +5,6 @@ namespace CloudTagContainer
 {
     public interface ISpiral
     {
-        public IEnumerator<Point> GetEnumerator(Point center);
+        public IEnumerable<Point> GetEnumerator(Point center);
     }
 }

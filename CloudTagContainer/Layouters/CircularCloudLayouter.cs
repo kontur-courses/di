@@ -21,7 +21,7 @@ namespace CloudTagContainer
        
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            spiralEnumerator ??= spiral.GetEnumerator(Center);
+            spiralEnumerator ??= spiral.GetEnumerator(Center).GetEnumerator();
             
             while (spiralEnumerator.MoveNext())
             {

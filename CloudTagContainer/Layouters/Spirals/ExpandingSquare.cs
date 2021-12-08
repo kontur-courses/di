@@ -5,32 +5,30 @@ namespace CloudTagContainer
 {
     public class ExpandingSquare : ISpiral
     {
-        private readonly Point center;
-
-        public IEnumerator<Point> GetEnumerator(Point center)
+        public IEnumerable<Point> GetEnumerator(Point center)
         {
             yield return center;
 
             var chebyshevDistance = 1;
             while (true)
             {
-                foreach (var point in GetUpperPoints(chebyshevDistance))
+                foreach (var point in GetUpperPoints(chebyshevDistance, center))
                     yield return point;
 
-                foreach (var point in GetRightPoints(chebyshevDistance))
+                foreach (var point in GetRightPoints(chebyshevDistance, center))
                     yield return point;
 
-                foreach (var point in GetLowerPoints(chebyshevDistance))
+                foreach (var point in GetLowerPoints(chebyshevDistance, center))
                     yield return point;
 
-                foreach (var point in GetLeftPoints(chebyshevDistance))
+                foreach (var point in GetLeftPoints(chebyshevDistance, center))
                     yield return point;
 
                 chebyshevDistance++;
             }
         }
 
-        private IEnumerable<Point> GetUpperPoints(int chebyshevDistance)
+        private IEnumerable<Point> GetUpperPoints(int chebyshevDistance, Point center)
         {
             for (var dx = -chebyshevDistance; dx <= chebyshevDistance; dx++)
             {
@@ -38,7 +36,7 @@ namespace CloudTagContainer
             }
         }
 
-        private IEnumerable<Point> GetRightPoints(int chebyshevDistance)
+        private IEnumerable<Point> GetRightPoints(int chebyshevDistance, Point center)
         {
             for (var dy = -chebyshevDistance + 1; dy <= chebyshevDistance; dy++)
             {
@@ -46,7 +44,7 @@ namespace CloudTagContainer
             }
         }
 
-        private IEnumerable<Point> GetLowerPoints(int chebyshevDistance)
+        private IEnumerable<Point> GetLowerPoints(int chebyshevDistance, Point center)
         {
             for (var dx = -chebyshevDistance + 1; dx <= chebyshevDistance; dx++)
             {
@@ -54,7 +52,7 @@ namespace CloudTagContainer
             }
         }
 
-        private IEnumerable<Point> GetLeftPoints(int chebyshevDistance)
+        private IEnumerable<Point> GetLeftPoints(int chebyshevDistance, Point center)
         {
             for (var dy = -chebyshevDistance + 1; dy < chebyshevDistance; dy++)
             {
