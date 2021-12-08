@@ -47,5 +47,8 @@ namespace TagsCloudVisualization.CLI
 
         [Option("lang", HelpText = "Using languages", Separator = ',')]
         public IEnumerable<string> Languages { get; set; }
+
+        [Option("limit", HelpText = "Max tags", Default = int.MaxValue)]
+        public int MaxTags { get; set; }
     }
 }

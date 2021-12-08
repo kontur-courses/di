@@ -29,14 +29,17 @@ namespace TagsCloudVisualization
             _displayer = displayer ?? throw new ArgumentNullException(nameof(displayer));
         }
 
-        public void Visualize()
+        public void Visualize(int limit = int.MaxValue)
         {
+            if (limit <= 0)
+                throw new ArgumentException($"Expected {nameof(limit)} to be positive, but actual {limit}");
             var words = _wordsProvider.GetWords();
             var processedWords = _preprocessor.Process(words);
             var tags = _transformer.Transform(processedWords);
             var drawables = tags
                             .OrderByDescending(tag => tag.Weight)
-                            .Select(_tagDrawableFactory.Create);
+                            .Select(_tagDrawableFactory.Create)
+                            .Take(limit);
             _displayer.Display(drawables);
         }
     }

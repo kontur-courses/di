@@ -38,7 +38,7 @@ namespace TagsCloudVisualization.CLI
                             .RegisterTagsClouds(options.ToDrawerSettings())
                             .RegisterImageCreation(filename)
                             .Build();
-            container.Resolve<TagsCloudVisualizer>().Visualize();
+            container.Resolve<TagsCloudVisualizer>().Visualize(options.MaxTags);
             Console.WriteLine($"Tags cloud {filename} generated.");
         }
 
