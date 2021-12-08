@@ -11,7 +11,7 @@ namespace CUI
 {
     class EntryPoint
     {
-        private static bool IsDebug = false;
+        private static bool IsDebug = true;
         static void Main(string[] args)
         {
             if (IsDebug)
@@ -26,8 +26,8 @@ namespace CUI
             var visualizerSettings = new VisualizerSettings(
                 new Size(1920, 1080),
                 new Font("Arial", 24, FontStyle.Bold),
-                Color.FromName(options.TextColor),
-                Color.FromName(options.BackGroundColor)
+                Color.FromName(options.TextColorName),
+                Color.FromName(options.BackGroundColorName)
             );
 
             var container = ConfigureContainer(visualizerSettings);
@@ -50,7 +50,15 @@ namespace CUI
             var container = new ServiceCollection();
             container.AddScoped<IImageSaver, PngSaver>();
             container.AddScoped<ConsoleInterface>();
-            container.AddScoped<IWordsPreprocessor, ToLowerPreprocessor>();
+            container.AddScoped<ToLowerPreprocessor>();
+            container.AddScoped<RemovingBoringWordsPreprocessor>();
+            container.AddScoped<IWordsPreprocessor, CombinedPreprocessor>(
+                provider => new CombinedPreprocessor(
+                    new IWordsPreprocessor[]
+                    {
+                        provider.GetService<ToLowerPreprocessor>(),
+                        provider.GetService<RemovingBoringWordsPreprocessor>()
+                    }));
             container.AddScoped<ILayouter, CircularCloudLayouter>();
             container.AddScoped<ISpiral, ExpandingSquare>();
             container.AddScoped<IWordSizer, CountingWordSizer>();

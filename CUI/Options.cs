@@ -10,16 +10,16 @@ namespace CUI
         [Option('p', "pathToSaveImage", Required = true, HelpText = "Set path where image will be saved")]
         public string PathToSaveImage { get; set; }
         
-        [Option('b', "backgroundColor", Group  = "white black red blue",
+        [Option('b', "backgroundColor", Group  = "white black red blue chocolate",
             Required = false,
-            Default = "white",
+            Default = "chocolate",
             HelpText = "Set background color")]
-        public string BackGroundColor { get; set; }
+        public string BackGroundColorName { get; set; }
         
-        [Option('c', "textColor", Group  = "white black red blue",
+        [Option('c', "textColor", Group  = "white black red blue chocolate",
             Required = false,
-            Default = "red",
+            Default = "blue",
             HelpText = "Set color for text")]
-        public string TextColor { get; set; }
+        public string TextColorName { get; set; }
     }
 }
