@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TagsCloudVisualization.FileReader
 {
@@ -11,7 +8,7 @@ namespace TagsCloudVisualization.FileReader
     {
         public string[] ReadText(string path, Encoding encoding)
         {
-            if (PathIsValid(path))
+            if (FileIsExist(path))
             {
                 return File.ReadAllLines(path, encoding);
             }
@@ -23,7 +20,7 @@ namespace TagsCloudVisualization.FileReader
             return ReadText(path, Encoding.UTF8);
         }
 
-        private bool PathIsValid(string path)
+        private bool FileIsExist(string path)
         {
             return true;
         }

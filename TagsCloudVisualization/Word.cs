@@ -4,7 +4,7 @@ namespace TagsCloudVisualization
 {
     public class Word
     {
-        public string WordText { get; }
+        public string WordText { get; set; }
         public int CntOfWords { get; set; }
 
         public Word(string word)
@@ -15,9 +15,9 @@ namespace TagsCloudVisualization
             CntOfWords = 1;
         }
 
-        public Word ToLower()
+        public void ToLower()
         {
-            return new Word(WordText.ToLower());
+            WordText.ToLower();
         }
     }
 }

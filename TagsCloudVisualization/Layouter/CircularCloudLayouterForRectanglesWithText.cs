@@ -5,15 +5,13 @@ using System.Linq;
 
 namespace TagsCloudVisualization.Layouter
 {
-    public class CircularCloudLayouterForRectanglesWithText : ICircularCloudLayouter
+    public class CircularCloudLayouterForRectanglesWithText : ICircularCloudLayouter, IContentFiller
     {
         private Point Center { get; }
 
         private Spiral LayouterSpiral { get; }
 
-        //private HashSet<RectangleWithWord> RectangleList { get; }
-
-        private Dictionary<string, RectangleWithWord> RectangleList { get; }
+        private Dictionary<string, RectangleWithWord> RectangleDict { get; }
 
 
 
@@ -21,37 +19,35 @@ namespace TagsCloudVisualization.Layouter
         {
             Center = center;
             LayouterSpiral = new Spiral();
-            RectangleList = new Dictionary<string, RectangleWithWord>();
+            RectangleDict = new Dictionary<string, RectangleWithWord>();
         }
 
-        public RectangleWithWord PutNextElement(Size rectangleSize, Word word)
+        public RectangleWithWord PutNextElement(RectangleWithWord rectangleWithWord)
         {
+            var rectangleSize = rectangleWithWord.RectangleElement.Size;
+            var word = rectangleWithWord.WordElement;
+
             if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
                 throw new ArgumentException();
 
-            if (RectangleList.ContainsKey(word.WordText))
+            if (RectangleDict.ContainsKey(word.WordText))
             {
-                RectangleList[word.WordText].WordElement.CntOfWords++;
-                return RectangleList[word.WordText];
+                RectangleDict[word.WordText].WordElement.CntOfWords++;
+                return RectangleDict[word.WordText];
             }
 
             var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
-            while (RectangleList.Values.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
+            while (RectangleDict.Values.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
                 nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
             if (nextRectangle.RectangleElement.Location != Center)
                 nextRectangle = CenterElement(nextRectangle);
 
-            RectangleList.Add(word.WordText, nextRectangle);
-
-
+            RectangleDict.Add(word.WordText, nextRectangle);
 
             return nextRectangle;
         }
 
-        public List<RectangleWithWord> GetElementsList()
-        {
-            return RectangleList.Values.ToList();
-        }
+        public List<RectangleWithWord> GetElementsList() => RectangleDict.Values.ToList();
 
         private RectangleWithWord CreateNewRectangleWithWord(Size rectangleSize, Word word)
         {
@@ -64,19 +60,21 @@ namespace TagsCloudVisualization.Layouter
 
         private RectangleWithWord CenterElement(RectangleWithWord inputRectangleWithWord)
         {
+            var centeringRectangleElement = ElementCentering.Centering(inputRectangleWithWord.RectangleElement, Center, RectangleDict);
+            inputRectangleWithWord.RectangleElement = centeringRectangleElement;
+            //var rectangleElement = inputRectangleWithWord.RectangleElement;
+            /*
+            var directionXSign = Math.Sign(Center.X - rectangleElement.X);
+            var directionYSign = Math.Sign(Center.Y - rectangleElement.Y);
 
-            var directionXSign = Math.Sign(Center.X - inputRectangleWithWord.RectangleElement.X);
-            var directionYSign = Math.Sign(Center.Y - inputRectangleWithWord.RectangleElement.Y);
-
-            var rectangleElement = inputRectangleWithWord.RectangleElement;
-
+            
+            
             while (!IsIntersect(rectangleElement))
             {
                 if (rectangleElement.Y == Center.Y)
                     break;
                 rectangleElement.Offset(0, directionYSign);
             }
-
             rectangleElement.Offset(0, -directionYSign);
 
             while (!IsIntersect(rectangleElement))
@@ -86,28 +84,33 @@ namespace TagsCloudVisualization.Layouter
                 rectangleElement.Offset(directionXSign, 0);
             }
             rectangleElement.Offset(-directionXSign, 0);
-            
-            if (RectangleList.Count == 0)
+            if (RectangleDict.Count == 0)
                 rectangleElement.Offset(directionXSign, directionYSign);
+            
+            if (IsIntersect(rectangleElement))
+                rectangleElement.Offset(-directionXSign, -directionYSign);
+            */
 
-            inputRectangleWithWord.RectangleElement = rectangleElement;
+            //inputRectangleWithWord.RectangleElement = rectangleElement;
 
-            if (IsIntersect(inputRectangleWithWord.RectangleElement))
-                inputRectangleWithWord.RectangleElement.Offset(-directionXSign, -directionYSign);
 
             return inputRectangleWithWord;
         }
 
         public void FillInElements(Size elementSize, List<Word> wordList)
         {
+
             foreach (var word in wordList)
             {
-                PutNextElement(elementSize, word);
+                var element = CreateNewRectangleWithWord(elementSize, word);
+                PutNextElement(element);
             }
         }
 
+        /*
         private bool IsIntersect(Rectangle inputRectangle) =>
-            RectangleList.Select(el => el.Value)
+            RectangleDict.Select(el => el.Value)
                 .Any(rect => rect.RectangleElement.IntersectsWith(inputRectangle));
+        */
     }
 }

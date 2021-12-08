@@ -44,11 +44,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\RectangularWithWordExtension.cs" />
     <Compile Include="Layouter\CircularCloudLayouterForRectangles.cs" />
     <Compile Include="FileReader\ITextFileReader.cs" />
     <Compile Include="FileReader\TextFileReader.cs" />
     <Compile Include="Layouter\CircularCloudLayouterForRectanglesWithText.cs" />
+    <Compile Include="Layouter\ElementCentering.cs" />
     <Compile Include="Layouter\ICircularCloudLayouter.cs" />
+    <Compile Include="Layouter\IContentFiller.cs" />
+    <Compile Include="Layouter\Normalizer\IWordNormalizer.cs" />
+    <Compile Include="Layouter\Normalizer\WordNormalizerOrigin.cs" />
     <Compile Include="Layouter\PointExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Layouter\RectangularExtensions.cs" />

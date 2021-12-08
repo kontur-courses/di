@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudVisualization
 {
@@ -11,6 +12,15 @@ namespace TagsCloudVisualization
         {
             WordElement = word;
             RectangleElement = rectangle;
+        }
+
+        public static RectangleWithWord MakeFakeWordRectangle(Size size)
+        {
+            var word = new Word(String.Empty);
+            var fakeLocation = Point.Empty;
+            var rectangle = new Rectangle(fakeLocation, size);
+
+            return new RectangleWithWord(rectangle, word);
         }
     }
 }

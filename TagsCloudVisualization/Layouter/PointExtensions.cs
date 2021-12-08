@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization.Layouter
 {
-    public static class PointExtensions
+    internal static class PointExtensions
     {
         public static double GetDistanceToPoint(this Point thisPoint, Point anotherPoint)
         {

@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Layouter
 {
     public class Visualization : IDisposable
     {
-        private List<RectangleWithWord> RectangleList { get;}
+        private List<RectangleWithWord> RectangleList { get; }
         private Pen ColorPen { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
@@ -48,6 +48,8 @@ namespace TagsCloudVisualization.Layouter
         public void Dispose()
         {
             ColorPen.Dispose();
+            ColorBrush.Dispose();
+            TextFont.Dispose();
         }
     }
 }

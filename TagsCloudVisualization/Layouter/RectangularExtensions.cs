@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.Layouter
 {
     public static class RectangularExtensions
     {
-        public static IEnumerable<Point> GetRectangleNodes(this Rectangle rectangle)
+        internal static IEnumerable<Point> GetRectangleNodes(this Rectangle rectangle)
         {
             yield return new Point(rectangle.X, rectangle.Y);
             yield return new Point(rectangle.X + rectangle.Width, rectangle.Y);

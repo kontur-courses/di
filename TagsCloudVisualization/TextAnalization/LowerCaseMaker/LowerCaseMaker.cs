@@ -9,7 +9,8 @@ namespace TagsCloudVisualization.TextAnalization.LowerCaseMaker
         {
             foreach (var word in words)
             {
-                yield return word.ToLower();
+                word.ToLower();
+                yield return word;
             }
         }
     }

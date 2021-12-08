@@ -8,10 +8,14 @@ namespace TagsCloudVisualization.TextAnalization.NormalizationMaker
         public IEnumerable<Word> MakeNormalization(IEnumerable<Word> words)
         {
             //приводим слово к начальной форме
+            /*
             foreach (var word in words)
             {
                 yield return word;
             }
+            */
+
+            return words;
         }
     }
 }
