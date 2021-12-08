@@ -39,7 +39,7 @@ namespace TagsCloudVisualization.CLI
                     }
                 },
                 Layouter = GetLayouterFromName(options.Algorithm),
-                ImageSavior = GetSaviorFromName(options.Extension),
+                ImageSavior = GetSaveServiceFromName(options.Extension),
                 WordsPreprocessors = GetWordPreprocessors(options.Languages.DefaultIfEmpty("en"))
             };
         }
@@ -67,7 +67,7 @@ namespace TagsCloudVisualization.CLI
         private static IEnumerable<string> GetExcludedWordsFromFile(string filename) =>
             !File.Exists(filename) ? Array.Empty<string>() : File.ReadLines(filename);
 
-        private static Func<IImageSavior> GetSaviorFromName(string extension)
+        private static Func<IImageSavior> GetSaveServiceFromName(string extension)
         {
             return extension switch
             {
