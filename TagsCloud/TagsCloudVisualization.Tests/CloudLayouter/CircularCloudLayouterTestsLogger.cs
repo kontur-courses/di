@@ -6,7 +6,7 @@ using System.Linq;
 using TagsCloudDrawer.ColorGenerators;
 using TagsCloudDrawer.Drawer;
 using TagsCloudDrawer.ImageCreator;
-using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.Drawable;
 

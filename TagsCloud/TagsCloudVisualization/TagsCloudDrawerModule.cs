@@ -3,7 +3,7 @@ using System.IO;
 using Autofac;
 using TagsCloudDrawer.Drawer;
 using TagsCloudDrawer.ImageCreator;
-using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawableFactory;

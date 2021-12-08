@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.DrawerSettingsProvider;

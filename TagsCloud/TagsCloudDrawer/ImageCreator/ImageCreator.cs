@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudDrawer.Drawer;
-using TagsCloudDrawer.ImageSavior;
+using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 
 namespace TagsCloudDrawer.ImageCreator
