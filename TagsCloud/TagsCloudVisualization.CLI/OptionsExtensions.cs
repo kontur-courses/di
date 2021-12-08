@@ -15,6 +15,8 @@ namespace TagsCloudVisualization.CLI
 {
     public static class OptionsExtensions
     {
+        private static string DictionariesDirectory => Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries");
+
         internal static TagsCloudDrawerModuleSettings ToDrawerSettings(this Options options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -42,24 +44,23 @@ namespace TagsCloudVisualization.CLI
             };
         }
 
-        private static IEnumerable<IWordsPreprocessor> GetWordPreprocessors(IEnumerable<string> optionsLanguages)
-        {
-            return optionsLanguages.Distinct().Select(lang => lang switch
+        private static IEnumerable<IWordsPreprocessor> GetWordPreprocessors(IEnumerable<string> optionsLanguages) =>
+            optionsLanguages.Distinct().Select(language =>
             {
-                "ru" => CreateFromFiles(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "ru", "index.dic"),
-                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "ru", "index.aff")),
-                "en" => CreateFromFiles(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "en", "index.dic"),
-                    Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries", "en", "index.aff")),
-                _ => throw new ArgumentException($"Language not supported {lang}")
+                try
+                {
+                    return CreateInfinitiveFormProcessorFromDictionary(language);
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException($"Language '{language}' not supported.");
+                }
             });
-        }
 
-        private static ToInfinitiveFormProcessor CreateFromFiles(string dictionaryFile, string affixFile)
+        private static ToInfinitiveFormProcessor CreateInfinitiveFormProcessorFromDictionary(string language)
         {
-            using var dictionaryStream = File.OpenRead(dictionaryFile);
-            using var affixStream = File.OpenRead(affixFile);
+            using var dictionaryStream = File.OpenRead(Path.Combine(DictionariesDirectory, language, "index.dic"));
+            using var affixStream = File.OpenRead(Path.Combine(DictionariesDirectory, language, "index.aff"));
             return new ToInfinitiveFormProcessor(dictionaryStream, affixStream);
         }
 
