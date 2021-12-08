@@ -7,8 +7,8 @@ using TagsCloudDrawer.ColorGenerators;
 using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
 using TagsCloudVisualization.CloudLayouter;
-using TagsCloudVisualization.DrawerSettingsProvider;
-using TagsCloudVisualization.DrawerSettingsProvider.TagColorGenerator;
+using TagsCloudVisualization.Drawable.Tags.Settings;
+using TagsCloudVisualization.Drawable.Tags.Settings.TagColorGenerator;
 using TagsCloudVisualization.Module;
 using TagsCloudVisualization.WordsPreprocessor;
 

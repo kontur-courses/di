@@ -8,7 +8,7 @@ using TagsCloudDrawer.Drawer;
 using TagsCloudDrawer.ImageCreator;
 using TagsCloudDrawer.ImageSaveService;
 using TagsCloudDrawer.ImageSettings;
-using TagsCloudVisualization.Drawable;
+using TagsCloudVisualization.Drawable.Rectangles;
 
 // Disable warning https://docs.microsoft.com/ru-ru/dotnet/fundamentals/code-analysis/quality-rules/ca1416
 // as several methods use windows api

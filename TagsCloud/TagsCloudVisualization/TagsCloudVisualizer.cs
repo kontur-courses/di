@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using TagsCloudDrawer.ImageCreator;
-using TagsCloudVisualization.DrawableFactory;
+using TagsCloudVisualization.Drawable.Tags.Factory;
 using TagsCloudVisualization.WordsPreprocessor;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagsTransformers;

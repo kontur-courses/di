@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.CloudLayouter.VectorsGenerator;
 using TagsCloudVisualization.Extensions;
-using TagsCloudVisualization.VectorsGenerator;
 
 namespace TagsCloudVisualization.CloudLayouter
 {
