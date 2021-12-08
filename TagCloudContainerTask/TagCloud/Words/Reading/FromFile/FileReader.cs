@@ -6,12 +6,12 @@ namespace TagCloud.Words.Reading.FromFile
 {
     public class FileReader : IFileReader
     {
-        public IEnumerable<string> ReadFromFile(string pathToFile)
+        public IEnumerable<string> ReadFromFile(string pathToFile, Encoding encoding)
         {
             if (!File.Exists(pathToFile))
                 throw new FileNotFoundException($"File {pathToFile} does not exist", pathToFile);
 
-            return File.ReadAllLines(pathToFile, Encoding.UTF8);
+            return File.ReadAllLines(pathToFile, encoding);
         }
     }
 }

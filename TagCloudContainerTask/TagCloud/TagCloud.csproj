@@ -66,9 +66,14 @@
     <Compile Include="Words\Reading\FromFile\FileReader.cs" />
     <Compile Include="Words\Reading\FromConsole\IConsoleReader.cs" />
     <Compile Include="Words\Reading\FromFile\IFileReader.cs" />
-    <Compile Include="Words\Reading\IReader.cs" />
     <Compile Include="Words\Reading\IWordsReader.cs" />
     <Compile Include="Words\Reading\WordsReader.cs" />
+    <Compile Include="Words\Writing\IWordsWriter.cs" />
+    <Compile Include="Words\Writing\ToConsole\ConsoleWriter.cs" />
+    <Compile Include="Words\Writing\ToConsole\IConsoleWriter.cs" />
+    <Compile Include="Words\Writing\ToFile\FileWriter.cs" />
+    <Compile Include="Words\Writing\ToFile\IFileWriter.cs" />
+    <Compile Include="Words\Writing\WordsWriter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
