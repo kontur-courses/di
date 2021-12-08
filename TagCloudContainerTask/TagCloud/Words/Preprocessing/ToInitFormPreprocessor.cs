@@ -3,18 +3,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace TagCloud.Words.Reading
+namespace TagCloud.Words.Preprocessing
 {
-    public class InitialWordFormReader : IReader
+    public class ToInitFormPreprocessor : IPreprocessor
     {
-        private const string DefaultStemArguments = "-nld";
-
-        private readonly string solutionDirectory
-            = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
-
-        public IEnumerable<string> ReadWordsFromFile(string pathToFile)
+        public IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
-            var initialLeadingFormProcess = CreateInitialLeadingFormProcess(pathToFile);
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), "stemInput.txt");
+
+            using (var writer = new StreamWriter(fileName, false, Encoding.UTF8))
+            {
+                foreach (var word in words) writer.WriteLine(word);
+            }
+
+            var initialLeadingFormProcess = CreateInitialLeadingFormProcess(fileName);
 
             using (initialLeadingFormProcess)
             {
@@ -34,12 +36,12 @@ namespace TagCloud.Words.Reading
 
         private ProcessStartInfo BuildStartInfo(string pathToFile)
         {
-            var initialFormLeadingProgramExe = Path.Combine(solutionDirectory, "mystem.exe");
+            var initialFormLeadingProgramExe = Path.Combine(Directory.GetCurrentDirectory(), "mystem.exe");
 
             return new ProcessStartInfo
             {
                 FileName = initialFormLeadingProgramExe,
-                Arguments = $"{DefaultStemArguments} {pathToFile}",
+                Arguments = $"-nld {pathToFile}",
                 CreateNoWindow = false,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,

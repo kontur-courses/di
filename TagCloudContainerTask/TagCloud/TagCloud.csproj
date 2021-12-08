@@ -60,9 +60,15 @@
     <Compile Include="Words\FrequencyAnalyzing\IFrequencyAnalyzer.cs" />
     <Compile Include="Words\FrequencyAnalyzing\WordsFrequencyAnalyzer.cs" />
     <Compile Include="Words\Preprocessing\IPreprocessor.cs" />
+    <Compile Include="Words\Preprocessing\ToInitFormPreprocessor.cs" />
     <Compile Include="Words\Preprocessing\ToLowerCasePreprocessor.cs" />
-    <Compile Include="Words\Reading\InitialWordFormReader.cs" />
+    <Compile Include="Words\Reading\FromConsole\ConsoleReader.cs" />
+    <Compile Include="Words\Reading\FromFile\FileReader.cs" />
+    <Compile Include="Words\Reading\FromConsole\IConsoleReader.cs" />
+    <Compile Include="Words\Reading\FromFile\IFileReader.cs" />
     <Compile Include="Words\Reading\IReader.cs" />
+    <Compile Include="Words\Reading\IWordsReader.cs" />
+    <Compile Include="Words\Reading\WordsReader.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
