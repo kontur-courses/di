@@ -18,6 +18,7 @@ namespace TagsCloudVisualization.Extensions
                 left = Math.Min(left, rectangle.Bounds.Left);
                 top = Math.Min(top, rectangle.Bounds.Top);
             }
+
             return new Size(right - left, bottom - top);
         }
     }

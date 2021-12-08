@@ -7,7 +7,7 @@ namespace TagsCloudVisualization
     {
         static void Main(string[] args)
         {
-            var settings = new Settings()
+            var settings = new Settings
             {
                 Directory = "ImageExamples",
                 ImageName = "example.bmp",
@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
                 StartPoint = new Point(0, 0),
                 FileWithWords = "text.txt",
                 MaxFontSize = 100,
-                BoringWords = new [] { "в", "что", "не", "и", "с", "на", "то", "а", "он", "его", "для", "из" }
+                BoringWords = new[] { "в", "что", "не", "и", "с", "на", "то", "а", "он", "его", "для", "из" }
             };
             var builder = new ContainerBuilder();
             builder.RegisterModule(new TagsCloudDrawerModule(settings));

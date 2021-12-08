@@ -7,11 +7,8 @@ namespace TagsCloudVisualization.WordsPrepare
     {
         private readonly IEnumerable<IWordsPreparer> preparers;
 
-        public WordsPreparer(IEnumerable<IWordsPreparer> preparers)
-        {
-            this.preparers = preparers;
-        }
-        
+        public WordsPreparer(IEnumerable<IWordsPreparer> preparers) => this.preparers = preparers;
+
         public IEnumerable<string> Prepare(IEnumerable<string> words)
         {
             return preparers

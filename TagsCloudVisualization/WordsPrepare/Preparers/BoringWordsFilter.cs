@@ -7,12 +7,9 @@ namespace TagsCloudVisualization.WordsPrepare.Preparers
     {
         private readonly HashSet<string> boringWords;
 
-        public BoringWordsFilter(IEnumerable<string> boringWords)
-        {
-            this.boringWords = boringWords.ToHashSet();
-        }
+        public BoringWordsFilter(IEnumerable<string> boringWords) => this.boringWords = boringWords.ToHashSet();
 
-        public IEnumerable<string> Prepare(IEnumerable<string> words) => 
+        public IEnumerable<string> Prepare(IEnumerable<string> words) =>
             words.Where(word => !IsBoring(word) && word != "");
 
         private bool IsBoring(string word) => boringWords.Contains(word);

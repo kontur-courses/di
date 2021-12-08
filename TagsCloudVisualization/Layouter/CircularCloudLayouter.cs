@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudVisualization.PointGenerators;
 using TagsCloudVisualization.Extensions;
+using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization.Layouter
 {
@@ -32,13 +32,13 @@ namespace TagsCloudVisualization.Layouter
         private Rectangle GetCorrectRectangle(Size size)
         {
             Rectangle rectangle;
-            do 
+            do
             {
                 var point = generator.GetNextPoint();
                 var location = new Point(point.X - size.Width / 2, point.Y - size.Height / 2);
                 rectangle = new Rectangle(location, size);
             } while (rectangle.IntersectsWith(rectangles));
-            
+
             return rectangle;
         }
     }

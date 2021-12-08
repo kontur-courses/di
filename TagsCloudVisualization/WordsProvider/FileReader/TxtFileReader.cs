@@ -6,9 +6,6 @@ namespace TagsCloudVisualization.WordsProvider.FileReader
     {
         public bool CanRead(string extension) => extension == ".txt";
 
-        public string Read(string filename)
-        {
-            return File.ReadAllText(filename);
-        }
+        public string Read(string filename) => File.ReadAllText(filename);
     }
 }

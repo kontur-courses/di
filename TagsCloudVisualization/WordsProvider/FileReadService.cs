@@ -9,9 +9,9 @@ namespace TagsCloudVisualization.WordsProvider
 {
     public class FileReadService : IFileReadService
     {
+        private const string WordsSplitPattern = @"\W+";
         private readonly string path;
         private readonly IEnumerable<IWordsReader> readers;
-        private const string WordsSplitPattern = @"\W+";
 
         public FileReadService(string path, IEnumerable<IWordsReader> readers)
         {
@@ -20,7 +20,7 @@ namespace TagsCloudVisualization.WordsProvider
                 throw new ArgumentException($"File {path} doesn't exists");
             this.readers = readers;
         }
-        
+
         public IEnumerable<string> Read()
         {
             var extension = Path.GetExtension(path);

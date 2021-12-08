@@ -4,8 +4,8 @@ namespace TagsCloudVisualization.FontService
 {
     public class TagFontService : ITagFontService
     {
-        private readonly int maxFontSize;
         private readonly string fontFamilyName;
+        private readonly int maxFontSize;
 
         public TagFontService(int maxFontSize, string fontFamilyName)
         {
@@ -18,8 +18,8 @@ namespace TagsCloudVisualization.FontService
             var fontSize = Normalize(tag.Count, minCount, maxCount);
             return new Font(fontFamilyName, fontSize);
         }
-        
-        private float Normalize(float count, float minCount, float maxCount) => 
+
+        private float Normalize(float count, float minCount, float maxCount) =>
             count <= minCount ? 1 : maxFontSize * (count - minCount) / (maxCount - minCount);
     }
 }

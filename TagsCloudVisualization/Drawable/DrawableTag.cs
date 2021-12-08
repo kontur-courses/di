@@ -4,10 +4,9 @@ namespace TagsCloudVisualization.Drawable
 {
     public class DrawableTag : IDrawable
     {
-        private readonly Tag tag;
-        private readonly Font font;
         private readonly Color color;
-        public Rectangle Bounds { get; }
+        private readonly Font font;
+        private readonly Tag tag;
 
         public DrawableTag(Tag tag, Rectangle bounds, Font font, Color color)
         {
@@ -16,7 +15,9 @@ namespace TagsCloudVisualization.Drawable
             this.color = color;
             Bounds = bounds;
         }
-        
+
+        public Rectangle Bounds { get; }
+
         public void Draw(Graphics graphics)
         {
             using var brush = new SolidBrush(color);

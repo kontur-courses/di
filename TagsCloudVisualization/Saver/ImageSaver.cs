@@ -5,7 +5,7 @@ using System.IO;
 
 namespace TagsCloudVisualization.Saver
 {
-    public class ImageSaver:  IImageSaver
+    public class ImageSaver : IImageSaver
     {
         private readonly string directory;
         private readonly string imageName;

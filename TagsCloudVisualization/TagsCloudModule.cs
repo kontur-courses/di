@@ -20,10 +20,8 @@ namespace TagsCloudVisualization
     {
         private readonly Settings settings;
 
-        public TagsCloudDrawerModule(Settings settings)
-        {
+        public TagsCloudDrawerModule(Settings settings) =>
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -39,7 +37,8 @@ namespace TagsCloudVisualization
             builder.RegisterType<WordsToTagTransformer.WordsToTagTransformer>().As<IWordsToTagTransformer>();
             builder.Register(_ => new ArchimedeanSpiralPointGenerator(settings.StartPoint)).As<IPointGenerator>();
             builder.RegisterType<CircularCloudLayouter>().As<ILayouter>();
-            builder.Register(_ => new TagFontService(settings.MaxFontSize, settings.FontFamilyName)).As<ITagFontService>();
+            builder.Register(_ => new TagFontService(settings.MaxFontSize, settings.FontFamilyName))
+                .As<ITagFontService>();
             builder.RegisterType<TagSizeService>().As<ITagSizeService>();
             builder.RegisterType<TagToDrawableTagTransformer>().AsSelf();
             builder.RegisterInstance(new ImageSaver(settings.Directory, settings.ImageName)).As<IImageSaver>();

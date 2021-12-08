@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TagsCloudVisualization.WordsProvider.FileReader
+﻿namespace TagsCloudVisualization.WordsProvider.FileReader
 {
     public interface IWordsReader
     {

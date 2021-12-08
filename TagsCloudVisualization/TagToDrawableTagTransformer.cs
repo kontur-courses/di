@@ -10,12 +10,12 @@ namespace TagsCloudVisualization
 {
     public class TagToDrawableTagTransformer
     {
+        private readonly ILayouter layouter;
+        private readonly ITagColorService tagColorService;
         private readonly ITagFontService tagFontService;
         private readonly ITagSizeService tagSizeService;
-        private readonly ITagColorService tagColorService;
-        private readonly ILayouter layouter;
 
-        public TagToDrawableTagTransformer(ITagFontService tagFontService, ITagSizeService tagSizeService, 
+        public TagToDrawableTagTransformer(ITagFontService tagFontService, ITagSizeService tagSizeService,
             ITagColorService tagColorService, ILayouter layouter)
         {
             this.tagFontService = tagFontService;
@@ -32,7 +32,7 @@ namespace TagsCloudVisualization
             foreach (var tag in tags.OrderByDescending(x => x.Count))
             {
                 var font = tagFontService.GetFont(tag, min, max);
-                var size = tagSizeService .GetSize(tag, font);
+                var size = tagSizeService.GetSize(tag, font);
                 var bounds = layouter.PutNextRectangle(size);
                 var color = tagColorService.GetColor();
                 drawables.Add(new DrawableTag(tag, bounds, font, color));

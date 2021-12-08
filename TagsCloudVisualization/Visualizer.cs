@@ -10,11 +10,11 @@ namespace TagsCloudVisualization
     public class Visualizer
     {
         private readonly IFileReadService fileReadService;
-        private readonly IWordsPreparer wordsPreparer;
-        private readonly IWordsToTagTransformer wordsToTagTransformer;
-        private readonly TagToDrawableTagTransformer tagToDrawableTagTransformer;
         private readonly IImageCreator imageCreator;
         private readonly IImageSaver imageSaver;
+        private readonly TagToDrawableTagTransformer tagToDrawableTagTransformer;
+        private readonly IWordsPreparer wordsPreparer;
+        private readonly IWordsToTagTransformer wordsToTagTransformer;
 
         public Visualizer(IFileReadService fileReadService, IWordsPreparer wordsPreparer,
             IWordsToTagTransformer wordsToTagTransformer,
