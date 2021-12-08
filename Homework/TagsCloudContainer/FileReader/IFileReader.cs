@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.TextReader
+namespace TagsCloudContainer.FileReader
 {
     public interface IFileReader
     {

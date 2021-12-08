@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.TextReader;
+using TagsCloudContainer.FileReader;
 
 namespace TagsCloudContainer_Tests
 {

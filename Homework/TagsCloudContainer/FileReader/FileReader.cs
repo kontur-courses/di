@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace TagsCloudContainer.TextReader
+namespace TagsCloudContainer.FileReader
 {
     public class FileReader : IFileReader
     {

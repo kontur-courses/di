@@ -18,16 +18,16 @@ namespace TagsCloudContainer.Visualizer
 
         public Bitmap Visualize(Dictionary<string, int> freqDict)
         {
-            var wordsOrederedByFreq = freqDict
+            var wordsOrderedByFreq = freqDict
                 .OrderByDescending(w => w.Value);
-            var layoutRectangles = GetLayoutRectangles(wordsOrederedByFreq);
+            var layoutRectangles = GetLayoutRectangles(wordsOrderedByFreq);
             var imageSize = settings.ImageSize;
             var bmp = new Bitmap(imageSize.Width, imageSize.Height);
             using var graphics = Graphics.FromImage(bmp);
             using var brush = new SolidBrush(settings.WordsColor);
             graphics.Clear(settings.BackgroundColor);
             var wordRectanglePairs = layoutRectangles
-                .Zip(wordsOrederedByFreq, (layout, word) => (layout, word.Key));
+                .Zip(wordsOrderedByFreq, (layout, word) => (layout, word.Key));
             foreach (var wordRectPair in wordRectanglePairs)
                 graphics.DrawString(wordRectPair.Key, settings.Font, brush, wordRectPair.layout);
 

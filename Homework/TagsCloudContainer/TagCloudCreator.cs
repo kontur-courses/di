@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 using TagsCloudContainer.BitmapSaver;
-using TagsCloudContainer.TextReader;
+using TagsCloudContainer.FileReader;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsFrequencyAnalyzers;
@@ -43,12 +43,10 @@ namespace TagsCloudContainer
             return visualizer.Visualize(freqDict);
         }
 
-        public void CreateFromTextFileAndSave(string sourcePath, string fileName, string destinationPath = null, ImageFormat format = null)
+        public void CreateFromTextFileAndSave(string sourcePath, string fileName, string? destinationPath = null, ImageFormat? format = null)
         {
-            if (destinationPath == null)
-                destinationPath = Directory.GetCurrentDirectory();
-            if (format == null)
-                format = ImageFormat.Png;
+            destinationPath ??= Directory.GetCurrentDirectory();
+            format ??= ImageFormat.Png;
             var destinationDirectory = new DirectoryInfo(destinationPath);
             saver.Save(CreateFromTextFile(sourcePath), destinationDirectory, fileName, format);
         }
