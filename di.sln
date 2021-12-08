@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{0034AD71-00BF-4313-B35E-B69268126CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainerTests", "TagCloudContainerTests\TagCloudContainerTests.csproj", "{5B1C990D-9031-4C68-8C92-2C5505290659}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagWriterHelper", "TagWriterHelper\TagWriterHelper.csproj", "{5A43D4A3-307A-4BCB-BD11-1C6DD6DE4D1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudContainerTests", "TagCloudContainerTests\TagCloudContainerTests.csproj", "{5B1C990D-9031-4C68-8C92-2C5505290659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{5B1C990D-9031-4C68-8C92-2C5505290659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B1C990D-9031-4C68-8C92-2C5505290659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B1C990D-9031-4C68-8C92-2C5505290659}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A43D4A3-307A-4BCB-BD11-1C6DD6DE4D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A43D4A3-307A-4BCB-BD11-1C6DD6DE4D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A43D4A3-307A-4BCB-BD11-1C6DD6DE4D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A43D4A3-307A-4BCB-BD11-1C6DD6DE4D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
