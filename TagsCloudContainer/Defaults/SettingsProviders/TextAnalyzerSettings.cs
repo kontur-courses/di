@@ -15,7 +15,7 @@ public class TextAnalyzerSettings : ICliSettingsProvider
         var options = new OptionSet()
         {
             {
-                "word-separators",
+                "word-separators=",
                 $"Set separators to separate words, separated by '{separator}'. Defaults to '{string.Join(separator, WordSeparators)}'",
                 v => WordSeparators = v.Split(separator).Cast<char>().ToArray()
             }
