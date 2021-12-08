@@ -5,7 +5,7 @@ namespace TagsCloudContainer.Registrations;
 
 public static class RegistrationHelper
 {
-    public static void RegisterServices(ContainerBuilder builder, Assembly[] assemblies)
+    public static void RegisterServices(ContainerBuilder builder, IEnumerable<Assembly> assemblies)
     {
         var methods = assemblies.SelectMany(
             assembly => assembly.GetTypes()
