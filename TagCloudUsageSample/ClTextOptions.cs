@@ -12,6 +12,7 @@ using TagsCloudVisualization.WordReaders;
 using TagsCloudVisualization.WordReaders.FormatDecoders;
 using TagsCloudVisualization.WordReaders.WordProcessors;
 using TagsCloudVisualization.WordReaders.WordValidators;
+using WeCantSpell.Hunspell;
 
 namespace TagCloudUsageSample
 {
@@ -45,7 +46,7 @@ namespace TagCloudUsageSample
         [Option('d', "density", Default = 5, HelpText = "Set density")]
         public int Density { get; private set; }
         
-        [RangeValidatorAttribute(1, 10, nameof(MinWordLengthToStatistic))]
+        [RangeValidatorAttribute(1, 50, nameof(MinWordLengthToStatistic))]
         [Option('m', "wordLength", Default = 3, HelpText = "Set min word length to statistic")]
         public int MinWordLengthToStatistic { get; private set; }
         
@@ -88,6 +89,7 @@ namespace TagCloudUsageSample
             {
                 builder.Register(p => new FileTextByWordReader(TextFileName, p.Resolve<IEnumerable<IFormatDecoder>>())).Keyed<IWordReader>("CurrentReadMode");
                 builder.RegisterType<InitialFormWordProcessor>().As<IWordProcessor>();
+                builder.Register(_ => WordList.CreateFromFiles(@"Russian.dic")).As<WordList>();
             }
             
             builder.Register(p => new FileWordReader(TextFileName, p.Resolve<IEnumerable<IFormatDecoder>>())).Keyed<IWordReader>("Word");

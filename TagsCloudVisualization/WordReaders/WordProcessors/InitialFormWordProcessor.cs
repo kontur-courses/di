@@ -1,12 +1,20 @@
-﻿using WeCantSpell.Hunspell;
+﻿using System;
+using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization.WordReaders.WordProcessors
 {
     public class InitialFormWordProcessor : IWordProcessor
     {
+        private readonly WordList wordList;
+        
+        public InitialFormWordProcessor(WordList? wordList)
+        {
+            this.wordList = wordList ?? throw new ArgumentNullException(nameof(wordList));
+        }
+        
         public string ProcessWord(string word)
         {
-            return word;
+            return wordList.CheckDetails(word).Root ?? word;
         }
     }
 }
