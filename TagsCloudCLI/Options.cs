@@ -2,7 +2,7 @@
 
 namespace TagsCloudCLI
 {
-    public class Options
+    internal class Options
     {
         [Option("directory", HelpText = "Path to file with words", Default = "ImageExamples")]
         public string Directory { get; set; }

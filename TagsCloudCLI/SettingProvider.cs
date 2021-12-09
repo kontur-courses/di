@@ -3,7 +3,7 @@ using TagsCloudVisualization;
 
 namespace TagsCloudCLI
 {
-    public class SettingProvider
+    internal class SettingProvider
     {
         public Settings GetSettings(Options options) => new()
         {
