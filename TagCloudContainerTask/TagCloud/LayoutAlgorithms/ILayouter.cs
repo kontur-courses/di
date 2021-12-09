@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagCloud.Algorithms.AlgorithmFromTDD.Layouting
+namespace TagCloud.LayoutAlgorithms.AlgorithmFromTDD.Layouting
 {
     public interface ILayouter
     {

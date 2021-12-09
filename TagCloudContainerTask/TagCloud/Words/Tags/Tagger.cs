@@ -7,8 +7,8 @@ namespace TagCloud.Words.Tags
 {
     public class Tagger : ITagger
     {
-        private const float MinEmSize = 10;
-        private const float MaxEmSize = 30;
+        private const float MinEmSize = 12;
+        private const float MaxEmSize = 36;
 
         public IEnumerable<Tag> CreateRawTags(Dictionary<string, double> wordsFrequencies, string fontName)
         {

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
+using TagCloud.Words.Tags;
 
 namespace TagCloud.Visualization
 {
@@ -55,18 +57,15 @@ namespace TagCloud.Visualization
             }
         }
 
-        public void DrawRectangles(Graphics graphics, List<Rectangle> rectangles)
+        public void DrawTags(Graphics graphics, IEnumerable<Tag> tags)
         {
-            var i = 0;
-            foreach (var rectangle in rectangles)
-            {
-                graphics.DrawRectangle(Pens.Black, rectangle);
+            graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
-                var nextColor = colors[i % colors.Count];
-                graphics.FillRectangle(new SolidBrush(nextColor), rectangle);
-
-                i++;
-            }
+            foreach (var tag in tags)
+                graphics.DrawString(
+                    tag.Word,
+                    new Font("times new roman", tag.WordEmSize),
+                    Brushes.Black, tag.WordOuterRectangle.Location);
         }
     }
 }

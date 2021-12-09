@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.Words.Tags;
 
 namespace TagCloud.Visualization
 {
@@ -12,9 +13,9 @@ namespace TagCloud.Visualization
             this.drawer = drawer;
         }
 
-        public void VisualizeCloud(Graphics graphics, Point cloudCenter, List<Rectangle> rectangles)
+        public void VisualizeCloud(Graphics graphics, Point cloudCenter, IEnumerable<Tag> tags)
         {
-            drawer.DrawRectangles(graphics, rectangles);
+            drawer.DrawTags(graphics, tags);
         }
 
         public void VisualizeDebuggingMarkup(Graphics graphics, Size imgSize,

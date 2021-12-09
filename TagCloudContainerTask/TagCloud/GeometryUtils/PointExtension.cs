@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.Algorithms.AlgorithmFromTDD.Geometry
+namespace TagCloud.GeometryUtils
 {
     public static class PointExtension
     {

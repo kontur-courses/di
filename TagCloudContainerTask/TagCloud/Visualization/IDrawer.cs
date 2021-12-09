@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagCloud.Words.Tags;
 
 namespace TagCloud.Visualization
 {
@@ -11,6 +12,6 @@ namespace TagCloud.Visualization
 
         void DrawCloudBoundary(Graphics graphics, Size imgSize, Point cloudCenter, int cloudCircleRadius);
 
-        void DrawRectangles(Graphics graphics, List<Rectangle> rectangles);
+        void DrawTags(Graphics graphics, IEnumerable<Tag> tags);
     }
 }

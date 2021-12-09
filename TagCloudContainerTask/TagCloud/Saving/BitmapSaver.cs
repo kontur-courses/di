@@ -18,7 +18,7 @@ namespace TagCloud.Saving
 
         public string Save(Bitmap bitmap, bool openAfterSave)
         {
-            var savePath = Path.Combine(ProjectDirectory, BitmapsDirectory);
+            var savePath = @"c:\users\sqire\desktop";
             var fullFileName = GetFileName();
             var absoluteFileName = Path.Combine(savePath, fullFileName);
 
