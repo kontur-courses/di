@@ -10,6 +10,7 @@ internal class FileReaderFactoryTests
     private readonly FileReaderFactory sut = new();
 
     [TestCase("a.txt", typeof(PlainTextFileReader))]
+    [TestCase("a.unknownformat", typeof(PlainTextFileReader))]
     [TestCase("a.doc", typeof(DocFileReader))]
     [TestCase("a.docx", typeof(DocFileReader))]
     public void Create_ShouldReturnCorrectReader(string inputPath, Type expectedType)

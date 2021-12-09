@@ -7,7 +7,6 @@ public class FileReaderFactory : IFileReaderFactory
 {
     public static readonly IReadOnlyDictionary<string, Type> ReaderTypes = new Dictionary<string, Type>
     {
-        { ".txt", typeof(PlainTextFileReader) },
         { ".doc", typeof(DocFileReader) },
         { ".docx", typeof(DocFileReader) }
     };
@@ -23,11 +22,7 @@ public class FileReaderFactory : IFileReaderFactory
         var extension = fileInfo.Extension;
 
         if (ReaderTypes.ContainsKey(extension))
-        {
-            return Expression
-                .Lambda<Func<IFileReader>>(Expression.New(ReaderTypes[extension].GetConstructor(Type.EmptyTypes)))
-                .Compile()();
-        }
+            return (IFileReader) Activator.CreateInstance(ReaderTypes[extension]);
 
         return new PlainTextFileReader();
     }
