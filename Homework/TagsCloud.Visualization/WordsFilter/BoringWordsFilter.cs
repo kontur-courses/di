@@ -7,7 +7,6 @@ namespace TagsCloud.Visualization.WordsFilter
 {
     public class BoringWordsFilter : IWordsFilter
     {
-        // TODO Move to config file and read on init
         private readonly HashSet<string> baseBoringWords =
             new()
             {
