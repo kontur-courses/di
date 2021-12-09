@@ -34,8 +34,7 @@ namespace TagsCloud.Visualization
 
             builder.RegisterType<WordsService>().As<IWordsService>();
 
-            builder.Register(ctx => new BoringWordsFilter(new FileReadService(settings.BoringWordsFile,
-                ctx.Resolve<IEnumerable<IFileReader>>()))).As<IWordsFilter>();
+            RegisterBoringWordsFilter(builder);
             builder.RegisterType<WordsParser.WordsParser>().As<IWordsParser>();
 
             builder.Register(_ => new FontFactory.FontFactory(settings.FontSettings)).As<IFontFactory>();
@@ -50,6 +49,15 @@ namespace TagsCloud.Visualization
             builder.Register(_ => new ImageSavior(settings.SaveSettings)).As<IImageSavior>();
 
             builder.RegisterType<LayouterCore>().As<ILayouterCore>();
+        }
+
+        private void RegisterBoringWordsFilter(ContainerBuilder builder)
+        {
+            if (settings.BoringWordsFile == null)
+                builder.Register(_ => new BoringWordsFilter()).As<IWordsFilter>();
+            else
+                builder.Register(ctx => new BoringWordsFilter(new FileReadService(settings.BoringWordsFile,
+                ctx.Resolve<IEnumerable<IFileReader>>()))).As<IWordsFilter>();
         }
     }
 }

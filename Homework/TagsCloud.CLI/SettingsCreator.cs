@@ -58,8 +58,7 @@ namespace TagsCloud.Words
 
         private string GetDirectoryForSavingExamples()
         {
-            var solutionPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\"));
-            var path = Path.Combine(solutionPath, "Examples");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Examples");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             return path;

@@ -29,12 +29,9 @@ namespace TagsCloud.FunctionalTests
         private TagsCloudModuleSettings GenerateDefaultSettings(string extension) =>
             new()
             {
-                InputWordsFile = Path.Combine(GetTestDataFolderPath(), $"test.{extension}"),
+                InputWordsFile = Path.Combine(Directory.GetCurrentDirectory(), $"test.{extension}"),
                 LayouterType = typeof(CircularCloudLayouter),
                 LayoutVisitor = new RandomColorDrawerVisitor()
             };
-
-        private string GetTestDataFolderPath()
-            => Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\TestData\\"));
     }
 }

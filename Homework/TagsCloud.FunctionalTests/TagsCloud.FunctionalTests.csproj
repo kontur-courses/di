@@ -16,4 +16,10 @@
       <ProjectReference Include="..\TagsCloud.Visualization\TagsCloud.Visualization.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ContentWithTargetPath Include="TestData\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
 </Project>
