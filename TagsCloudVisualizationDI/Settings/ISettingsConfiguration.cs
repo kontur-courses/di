@@ -2,84 +2,61 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using TagsCloudVisualizationDI.FileReader;
 using TagsCloudVisualizationDI.Layouter;
 using TagsCloudVisualizationDI.Layouter.Normalizer;
 using TagsCloudVisualizationDI.TextAnalization;
 using TagsCloudVisualizationDI.TextAnalization.Analyzer;
-using TagsCloudVisualizationDI.TextAnalization.NormalizationMaker;
 using TagsCloudVisualizationDI.Visualization;
 
 namespace TagsCloudVisualizationDI.Settings
 {
     public interface ISettingsConfiguration
     {
-        public Size ElementSize
-        {
-            get => new Size(100, 100);
-        }
+        public List<string> ExcludedWords => new List<string>();
 
-        public Point LayouterCenter
-        {
-            get => new Point(2500, 2500);
-        }
+        public Size ElementSize => new Size(100, 100);
 
-        public ITextFileReader FileReader
-        {
-            get => new DefaultTextFileReader();
-        }
+        public Point LayouterCenter => new Point(2500, 2500);
 
-        public string ImagePath
-        {
-            get => "C:/GitHub/di/TagsCloudVisualizationDI/img_words.jpeg";
-        }
+        public ITextFileReader FileReader => new DefaultTextFileReader();
 
-        public Func<List<RectangleWithWord>, IVisualization> Visualizator
+        public string SavePath => string.Empty;
+
+        //public Pen ColorPen => new Pen(Color.White, 10);
+
+        public SolidBrush Brush => new SolidBrush(Color.White);
+
+        public Font TextFont => new Font("Times", 15);
+
+        public ImageFormat Format => ImageFormat.Jpeg;
+
+        public Size ImageSize => new Size(5000, 5000);
+
+
+        public Func<List<RectangleWithWord>, string, IVisualization> Visualizator
         {
             get
             {
-                return elementsForVisualization
-                    => new DefaultVisualization(elementsForVisualization, ImagePath);
-                /*
-                        elementsForVisualization, new Pen(Color.White, 10),
-                        new SolidBrush(Color.White), new Font("Times", 15), ImageFormat.Jpeg, ImagePath,
-                        new Size(5000, 5000));
-                */
+                return (elementsForVisualization, imageSavePath)
+                    => new DefaultVisualization(elementsForVisualization, imageSavePath, Brush, TextFont, Format, ImageSize);
             }
-            //get => new DefaultVisualizatorMaker();
-            //get => new Func<RectangleWithWord, IVisualization>((List<RectangleWithWord> elementsForVisualisation) => new DefaultVisualization(elementsForVisualisation, new Pen(Color.White, 10),
-                //new SolidBrush(Color.White), new Font("Times", 15), ImageFormat.Jpeg, ImagePath, new Size(5000, 5000)));
-        }
-
-        public IWordNormalizer Normalization
-        {
-            get => new WordNormalizerOrigin();
-        }
-
-        public IAnalyzer Analyzer
-        {
-            //var excludedTypes = new []{PartsOfSpeech.SpeechPart}
-            get
-            {
-                /*
-                var b = Enum.GetValues(typeof(PartsOfSpeech.SpeechPart))
-                    .Cast<PartsOfSpeech.SpeechPart>();
-                */
-
-                var excludedTypes = new[]
-                {
-                    PartsOfSpeech.SpeechPart.CONJ, PartsOfSpeech.SpeechPart.INTJ,
-                    PartsOfSpeech.SpeechPart.PART, PartsOfSpeech.SpeechPart.PR,
-                };
-                return  new DefaultAnalyzer(excludedTypes);
-            }
-    }
-
-        public IContentFiller Filler
-        {
-            get => new CircularCloudLayouterForRectanglesWithText(LayouterCenter, Visualizator);
         }
         
+
+        public IWordNormalizer Normalization => new WordNormalizerOrigin();
+
+        public PartsOfSpeech.SpeechPart[] ExcludedParts
+        { 
+            get => new[]
+            {
+                PartsOfSpeech.SpeechPart.CONJ, PartsOfSpeech.SpeechPart.INTJ,
+                PartsOfSpeech.SpeechPart.PART, PartsOfSpeech.SpeechPart.PR,
+            };
+        }
+
+        public IAnalyzer Analyzer => new DefaultAnalyzer(ExcludedParts, ExcludedWords);
+
+        public IContentFiller Filler => new CircularCloudLayouterForRectanglesWithText(LayouterCenter, Visualizator, SavePath);
     }
 }

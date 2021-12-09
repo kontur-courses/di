@@ -9,7 +9,7 @@ namespace TagsCloudVisualizationDI.Layouter
     public class DefaultVisualization : IDisposable, IVisualization
     {
         private List<RectangleWithWord> Elementslist { get; }
-        private Pen ColorPen { get; }
+        //private Pen ColorPen { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
 
@@ -19,17 +19,19 @@ namespace TagsCloudVisualizationDI.Layouter
         private Size ImageSize { get; }
 
 
-
-        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, string savePath)
+        
+        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, string savePath, 
+            SolidBrush brush, Font font, ImageFormat imageFormat, Size imageSize)
         {
             Elementslist = rectangleWithWordsList;
-            ColorPen = new Pen(Color.White, 10);
-            ColorBrush = new SolidBrush(Color.White);
-            TextFont = new Font("Times", 15);
-            Format = ImageFormat.Jpeg;
-            SavePath = savePath;
-            ImageSize = new Size(5000, 5000);
+            //ColorPen = pen;
+            ColorBrush = brush;
+            TextFont = font;
+            Format = imageFormat;
+            SavePath = savePath + '.'+ imageFormat;
+            ImageSize = imageSize;
         }
+        
 
         public void DrawAndSaveImage()
         {
@@ -46,8 +48,6 @@ namespace TagsCloudVisualizationDI.Layouter
             {
                 foreach (var element in Elementslist)
                 {
-                    //graphics.DrawRectangle(ColorPen, element.RectangleElement);
-
                     var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
                     var font = new Font("Times", fontSize);
 
@@ -61,7 +61,6 @@ namespace TagsCloudVisualizationDI.Layouter
 
         public Size GetStringSize(RectangleWithWord word)
         {
-            //using (var graphics = Graphics.FromImage(image))
             var image = new Bitmap(ImageSize.Width, ImageSize.Height);
             using (var graphics = Graphics.FromImage(image))
             {
@@ -78,7 +77,7 @@ namespace TagsCloudVisualizationDI.Layouter
 
         public void Dispose()
         {
-            ColorPen.Dispose();
+            //ColorPen.Dispose();
             ColorBrush.Dispose();
             TextFont.Dispose();
         }

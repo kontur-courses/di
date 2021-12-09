@@ -104,39 +104,6 @@ namespace TagsCloudVisualizationTests
             rectangle.RectangleElement.Location.Should().Be(layouterCenter);
         }
 
-
-        /*
-        [TestCase(300, 978043567)]
-        [TestCase(500, 984576457)]
-        [TestCase(1000, 756845767)]
-        public void FormShouldBeCloserToCircleThanToSquareWhenManyRectangles(int number, int seed)
-        {
-            var seedRandom = new Random(seed);
-            Size rectangleSize = new Size(Point.Empty);
-            var layouterCenter = new Point(2500, 2500);
-            var layouter = new CircularCloudLayouterForRectanglesWithText(layouterCenter);
-            for (int i = 0; i < number; i++)
-            {
-                while (rectangleSize.Height == 0 || rectangleSize.Width == 0)
-                    rectangleSize = new Size(seedRandom.Next(-60, 60), seedRandom.Next(-60, 60));
-
-                //var rectangle = RectangleWithWord.MakeFakeWordRectangle(rectangleSize);
-                //_rectanglesWithNamesList.Add(layouter.PutNextElement(rectangle));
-            }
-
-            var listOfRectangles = _rectanglesWithNamesList.Select(r => r.RectangleElement).ToList();
-
-            var sumArea = GetSumAreaOfRectangles(_rectanglesWithNamesList.Select(r => r.RectangleElement).ToList());
-            var circleArea = GetCircleArea(GetCircleRadius(layouterCenter, listOfRectangles));
-            
-            var enclosingRectangleArea = GetEnclosingRectangleArea(listOfRectangles);
-            var difCircleAndSum = sumArea/circleArea;
-            var difSumAndEnclosingRectangle = sumArea/enclosingRectangleArea;
-
-            difCircleAndSum.Should().BeGreaterThan(difSumAndEnclosingRectangle);
-        }
-        */
-
         [Test]
         public void RectanglesShouldNotIntersect()
         {
@@ -161,6 +128,9 @@ namespace TagsCloudVisualizationTests
             }
         }
         
+
+
+
 
         private double GetCircleRadius(Point layouterCenter, List<Rectangle> rectangles)
         {

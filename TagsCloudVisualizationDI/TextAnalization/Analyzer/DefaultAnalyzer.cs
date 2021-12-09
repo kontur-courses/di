@@ -6,14 +6,14 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
 {
     public class DefaultAnalyzer : IAnalyzer
     {
-        public readonly IEnumerable<PartsOfSpeech.SpeechPart> ExcludedSpeechParts;
+        private readonly HashSet<PartsOfSpeech.SpeechPart> _excludedSpeechParts;
+        private readonly IEnumerable<string> _excludedWords;
 
-        //public readonly PartsOfSpeech.SpeechPart;
 
-        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts)
+        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts, IEnumerable<string> excludedWords)
         {
-            ExcludedSpeechParts = excludedSpeechParts;
-            //ExcludedSpeechParts = new[] {PartsOfSpeech.SpeechPart.V};
+            _excludedSpeechParts = excludedSpeechParts.ToHashSet();
+            _excludedWords = excludedWords;
         }
 
         private bool CheckWord(string inputWord, out string wordContent, out PartsOfSpeech.SpeechPart enumElementOfCurrentType)
@@ -32,17 +32,13 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
             return (inputWord.Split(' ').Length == 1);
         }
 
-        private bool IsAllowedPartsContains(PartsOfSpeech.SpeechPart enumElementOfCurrentType)
+        private bool IsNotExcludedPart(PartsOfSpeech.SpeechPart enumElementOfCurrentType)
         {
-            var allowedNames = ExcludedSpeechParts.ToHashSet();
-            //Enum.GetNames(typeof(PartsOfSpeech.SpeechPart));
-            //var enumElementOfCurrentType = (PartsOfSpeech.SpeechPart)Enum.Parse(typeof(PartsOfSpeech.SpeechPart), type);
-            if (!allowedNames.Contains(enumElementOfCurrentType))
+            var excludedParts = _excludedSpeechParts;
+            if (!excludedParts.Contains(enumElementOfCurrentType))
                 return true;
 
             return false;
-            //здесь можно проверить часть речи
-            //return PartsOfSpeech.SpeechPart.S;
         }
 
         public IEnumerable<Word> GetAnalyzedWords(IEnumerable<string> words)
@@ -51,17 +47,15 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
             {
                 if (CheckWord(word, out string content, out PartsOfSpeech.SpeechPart type))
                 {
-                    if (IsAllowedPartsContains(type))
+                    if (IsNotExcludedPart(type) && IsNotExcludedWord(content))
                         yield return new Word(content, type);
                 }
-                /*
-                foreach (var colorName in Enum.GetNames(typeof(PartsOfSpeech.SpeechPart)))
-                {
-                    var a = colorName;
-
-                }
-                */
             }
+        }
+
+        private bool IsNotExcludedWord(string word)
+        {
+            return !_excludedWords.Contains(word);
         }
     }
 }

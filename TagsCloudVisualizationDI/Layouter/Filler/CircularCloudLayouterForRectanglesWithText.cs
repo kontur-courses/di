@@ -12,15 +12,18 @@ namespace TagsCloudVisualizationDI.Layouter
 
         private Spiral LayouterSpiral { get; }
 
-        private Func<List<RectangleWithWord>, IVisualization> Visualization { get; }
+        private String SavePath { get; }
+
+        private Func<List<RectangleWithWord>, string, IVisualization> Visualization { get; }
 
         private Dictionary<string, RectangleWithWord> ElementsDict { get; set; }
         private Dictionary<string, RectangleWithWord> PositionedElementsDict { get; }
 
 
 
-        public CircularCloudLayouterForRectanglesWithText(Point center, Func<List<RectangleWithWord>, IVisualization> visualization)
+        public CircularCloudLayouterForRectanglesWithText(Point center, Func<List<RectangleWithWord>,string, IVisualization> visualization, String savePath)
         {
+            SavePath = savePath;
             Center = center;
             LayouterSpiral = new Spiral();
             ElementsDict = new Dictionary<string, RectangleWithWord>();
@@ -41,7 +44,7 @@ namespace TagsCloudVisualizationDI.Layouter
             {
                 ElementsDict[word.WordText].WordElement.CntOfWords++;
 
-                ElementsDict[word.WordText].ChangeSizeOfField(Visualization.Invoke(ElementsDict.Values.ToList()));
+                ElementsDict[word.WordText].ChangeSizeOfField(Visualization.Invoke(ElementsDict.Values.ToList(), SavePath));
 
                 return;
             }

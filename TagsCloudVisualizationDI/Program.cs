@@ -9,6 +9,7 @@ using TagsCloudVisualizationDI.Layouter.Normalizer;
 using TagsCloudVisualizationDI.Settings;
 using TagsCloudVisualizationDI.TextAnalization;
 using TagsCloudVisualizationDI.TextAnalization.Analyzer;
+using TagsCloudVisualizationDI.Visualization;
 
 namespace TagsCloudVisualizationDI
 {
@@ -17,26 +18,47 @@ namespace TagsCloudVisualizationDI
         public static void Main(string[] args)
         {
             var containerBuilder = new ContainerBuilder();
-            InitializeRegistration(containerBuilder);
+
+            
+
+            RegistrationOfSettings(containerBuilder);
             var buildContainer = containerBuilder.Build();
             var settings = buildContainer.Resolve<ISettingsConfiguration>();
+
+
+            var visualization = settings.Visualizator;
             var reader = settings.FileReader;
             var analyzer = settings.Analyzer;
-            var visualizator = settings.Visualizator;
+            var normalizer = settings.Normalization;
+            var filler = settings.Filler;
+            var savePath = settings.SavePath;
+            var elementSize = settings.ElementSize;
+
 
             reader.InvokeProcess();
 
 
-            //var arguments = reader.Arguments;
-            //var mystemPath = reader.MystemPath;
-            //var filePath = reader.FilePath;
-            //var savePath = reader.SavePath;
-            //var readingEncoding = reader.ReadingEncoding;
-            //var analyzer = buildContainer.Resolve<IAnalyzer>();
-            //var filler = buildContainer.Resolve<IContentFiller>();
+            //var settings = buildContainer.Resolve<ISettingsConfiguration>();
+
+            //var visualization = settings.Visualizator;
+
+
+            //InitializeRegistration(containerBuilder, visualization);
+
+
+
+
+
             //var rectangleSize = new Size(100, 100);
+
+            //var filler = buildContainer.Resolve<IContentFiller>();
+            //var reader = buildContainer.Resolve<ITextFileReader>();
+            //var analyzer = buildContainer.Resolve<IAnalyzer>();
             //var normalizer = buildContainer.Resolve<IWordNormalizer>();
-            //var ImagePath = "C:/GitHub/di/TagsCloudVisualizationDI/img_words.jpeg";
+
+
+
+
 
 
             //КЛИЕНТЫ
@@ -44,23 +66,17 @@ namespace TagsCloudVisualizationDI
 
             var wordsFromFile = reader.ReadText(reader.SavePath, reader.ReadingEncoding);
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
-            var normalizer = settings.Normalization;
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
-
             //Здесь расширение функционала нормализации
 
-            var filler = settings.Filler;
-            var rectangleSize = settings.ElementSize;
 
-            filler.FillInElements(rectangleSize, normalyzedWords);
-
+            filler.FillInElements(elementSize, normalyzedWords);
 
 
             var elementsForVisualisation = filler.GetElementsList();
-
-            using (var visualization = visualizator.Invoke(elementsForVisualisation))
+            using (var drawer = visualization.Invoke(elementsForVisualisation, savePath))
             {
-                visualization.DrawAndSaveImage();
+                drawer.DrawAndSaveImage();
             }
         }
 
@@ -70,41 +86,38 @@ namespace TagsCloudVisualizationDI
                 yield return normalizer.NormalizeWord(word);
         }
 
-        private static void InitializeRegistration(ContainerBuilder buildContainer)
+        
+        private static void InitializeRegistration(ContainerBuilder builder, Func<List<RectangleWithWord>, string, IVisualization> visualization)
         {
-            RegistrationOfTextFileReader(buildContainer);
-            RegistrationOfLayouter(buildContainer);
-            RegistrationOfTextAnalyzer(buildContainer);
-            RegistrationOfNormalizer(buildContainer);
+            /*
+            RegistrationOfTextFileReader(builder);
+            RegistrationOfTextAnalyzer(builder);
+            RegistrationOfNormalizer(builder);
+            RegistrationOfFiller(builder, visualization);
+            */
+        }
+        
 
+        private static void RegistrationOfFiller(ContainerBuilder buildContainer, Func<List<RectangleWithWord>, string, IVisualization> visualization)
+        {
 
-            RegistrationOsSettings(buildContainer);
+            buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<IContentFiller>()
+                .WithParameter("center", new Point(2500, 2500))
+                .WithParameter("visualization", visualization);
         }
 
-
-
-        private static void RegistrationOsSettings(ContainerBuilder buildContainer)
+        private static void RegistrationOfSettings(ContainerBuilder buildContainer)
         {
             buildContainer.RegisterType<DeffaultSettingsConfiguration>().As<ISettingsConfiguration>();
         }
 
 
-
+        
         private static void RegistrationOfNormalizer(ContainerBuilder buildContainer)
         {
             buildContainer.RegisterType<WordNormalizerOrigin>().As<IWordNormalizer>();
         }
 
-        private static void RegistrationOfLayouter(ContainerBuilder buildContainer)
-        {
-            /*
-            buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<ICircularCloudLayouter, IContentFiller>()
-                .WithParameter("center", new Point(2500, 2500));
-            */
-
-            buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<IContentFiller>()
-                .WithParameter("center", new Point(2500, 2500));
-        }
 
         private static void RegistrationOfTextAnalyzer(ContainerBuilder buildContainer)
         {
