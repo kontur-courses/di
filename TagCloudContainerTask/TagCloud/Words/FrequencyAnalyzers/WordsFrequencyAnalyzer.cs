@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.Words.FrequencyAnalyzing
+namespace TagCloud.Words.FrequencyAnalyzers
 {
     public class WordsFrequencyAnalyzer : IFrequencyAnalyzer
     {

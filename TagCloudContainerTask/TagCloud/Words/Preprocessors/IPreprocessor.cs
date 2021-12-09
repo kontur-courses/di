@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.Words.Preprocessing
+namespace TagCloud.Words.Preprocessors
 {
     public interface IPreprocessor
     {

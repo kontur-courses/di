@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.Words.FrequencyAnalyzing
+namespace TagCloud.Words.FrequencyAnalyzers
 {
     public interface IFrequencyAnalyzer
     {

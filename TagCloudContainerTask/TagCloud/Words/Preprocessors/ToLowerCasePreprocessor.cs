@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagCloud.Words.Preprocessing
+namespace TagCloud.Words.Preprocessors
 {
     public class ToLowerCasePreprocessor : IPreprocessor
     {

@@ -1,26 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
-using TagCloud.Words.Writing.ToFile;
+using TagCloud.Words.Writers;
 
-namespace TagCloud.Words.Preprocessing
+namespace TagCloud.Words.Preprocessors
 {
     public class ToInitFormPreprocessor : IPreprocessor
     {
-        private readonly IFileWriter fileWriter;
         private readonly string inputFilePath;
         private readonly string pathToInitFormExe;
+        private readonly ILineWriter writer;
 
-        public ToInitFormPreprocessor(IFileWriter fileWriter)
+        public ToInitFormPreprocessor(ILineWriter writer)
         {
-            this.fileWriter = fileWriter;
+            this.writer = writer;
             inputFilePath = ".stem_input";
             pathToInitFormExe = "mystem.exe";
         }
 
         public IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
-            fileWriter.WriteToFile(inputFilePath, words, Encoding.UTF8);
+            writer.WriteLinesTo(new StreamWriter(inputFilePath, false, Encoding.UTF8), words);
 
             var initialLeadingFormProcess = CreateInitialLeadingFormProcess(inputFilePath);
 

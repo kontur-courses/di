@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,17 +56,22 @@
     <Compile Include="Visualization\IVisualizer.cs" />
     <Compile Include="Visualization\Visualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Words\Filtering\IFilter.cs" />
-    <Compile Include="Words\Filtering\WordsLengthFilter.cs" />
-    <Compile Include="Words\FrequencyAnalyzing\IFrequencyAnalyzer.cs" />
-    <Compile Include="Words\FrequencyAnalyzing\WordsFrequencyAnalyzer.cs" />
-    <Compile Include="Words\Preprocessing\IPreprocessor.cs" />
-    <Compile Include="Words\Preprocessing\ToInitFormPreprocessor.cs" />
-    <Compile Include="Words\Preprocessing\ToLowerCasePreprocessor.cs" />
+    <Compile Include="Words\Filters\IFilter.cs" />
+    <Compile Include="Words\Filters\WordsLengthFilter.cs" />
+    <Compile Include="Words\FrequencyAnalyzers\IFrequencyAnalyzer.cs" />
+    <Compile Include="Words\FrequencyAnalyzers\WordsFrequencyAnalyzer.cs" />
+    <Compile Include="Words\Preprocessors\IPreprocessor.cs" />
+    <Compile Include="Words\Preprocessors\ToInitFormPreprocessor.cs" />
+    <Compile Include="Words\Preprocessors\ToLowerCasePreprocessor.cs" />
     <Compile Include="Words\Readers\ILinesReader.cs" />
     <Compile Include="Words\Readers\LinesReader.cs" />
+    <Compile Include="Words\Tags\ITag.cs" />
+    <Compile Include="Words\Tags\ITagger.cs" />
+    <Compile Include="Words\Tags\Tag.cs" />
+    <Compile Include="Words\Tags\Tagger.cs" />
     <Compile Include="Words\Writers\ILineWriter.cs" />
     <Compile Include="Words\Writers\LineWriter.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
