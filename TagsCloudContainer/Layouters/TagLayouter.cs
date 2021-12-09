@@ -21,7 +21,7 @@ namespace TagsCloudContainer.Layouters
         }
 
         public abstract ICloud<ITag> PlaceTagsInCloud
-            (List<SimpleTag> tags, SizeF minSize, float maxScale);
+            (List<SimpleTag> tags, float minHeight, float maxScale);
 
         protected void SetWordsCounts(List<SimpleTag> tags)
         {
@@ -29,8 +29,10 @@ namespace TagsCloudContainer.Layouters
             MaxWordsCount = tags.Max(t => t.Count);
         }
 
-        protected SizeF GetSize(SizeF minSize, float maxScale, int wordsCount)
+        protected SizeF GetSize(string word, float minHeight, float maxScale, int wordsCount)
         {
+            var minWidth = GetMinWidth(word, minHeight);
+            var minSize = new SizeF(minWidth, minHeight);
             if (wordsCount == MinWordsCount)
                 return minSize;
             var scale = wordsCount / MinWordsCount;
@@ -39,7 +41,10 @@ namespace TagsCloudContainer.Layouters
                 GetScaledSize(minSize, scale);
         }
 
-        protected SizeF GetScaledSize(SizeF minSize, float scale)
+        private SizeF GetScaledSize(SizeF minSize, float scale)
             => new SizeF(minSize.Width * scale, minSize.Height * scale);
+
+        private float GetMinWidth(string word, float minHeight) 
+            => word.Length * minHeight * 0.7f;
     }
 }

@@ -8,7 +8,7 @@ namespace TagsCloudContainer
     {
         public IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags)
         {
-            return tags.Select(t => new SimpleTag(t.Word, t.Count));
+            return tags.Select(t => Normalize(t));
         }
 
         private SimpleTag Normalize(SimpleTag tag)

@@ -60,8 +60,21 @@ namespace TagsCloudVisualization.Visualizators
             foreach (var tag in cloud.Elements)
             {
                 var font = new Font(settings.FontFamily, 12);
-                gr.DrawString(tag.Text, font, tag.Palette.TextColor, tag.Layout);
+                font = GetScaledFont(tag.Text, font, tag.Layout.Size, gr);
+                var format = new StringFormat();
+                format.LineAlignment = StringAlignment.Center;
+                format.Alignment = StringAlignment.Center;
+                gr.DrawString(tag.Text, font, tag.Palette.TextColor, tag.Layout, format);
             }
+        }
+
+        private Font GetScaledFont(string text, Font font, SizeF layout, Graphics gr)
+        {
+            var size = gr.MeasureString(text, font);
+            var width = Math.Min(layout.Width, size.Width);
+            var height = Math.Min(layout.Height, size.Height);
+            var fontSizeScale = Math.Min(layout.Width / width, layout.Height / height);
+            return new Font(font.FontFamily, font.Size * fontSizeScale);
         }
     }
 }

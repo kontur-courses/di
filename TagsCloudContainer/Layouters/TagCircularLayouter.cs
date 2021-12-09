@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using TagCloudContainerTests;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
@@ -14,12 +13,12 @@ namespace TagsCloudContainer.Layouters
         }
 
         public override ICloud<ITag> PlaceTagsInCloud
-            (List<SimpleTag> tags, SizeF minSize, float maxScale)
+            (List<SimpleTag> tags, float minHeight, float maxScale)
         {
             SetWordsCounts(tags);
             foreach (var simpleTag in tags)
             {
-                var size = GetSize(minSize, maxScale, simpleTag.Count);
+                var size = GetSize(simpleTag.Word, minHeight, maxScale, simpleTag.Count);
                 var tag = factory(simpleTag.Word, simpleTag.Palette);
                 layouter.PutNextTag(size, tag);
             }

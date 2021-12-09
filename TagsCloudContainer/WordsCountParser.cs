@@ -10,7 +10,7 @@ namespace TagsCloudContainer
         public List<SimpleTag> Parse(string str)
         {
             var wordsCount = new Dictionary<string, int>();
-            var words = str.Split("\n");
+            var words = str.Split("\r\n");
             foreach (var word in words) 
                 wordsCount.AddOrIncreaseCount(word);
             return wordsCount.Keys

@@ -22,7 +22,7 @@ namespace TagsCloudContainer
 
         private static void ResolveContainer(IContainer container)
         {
-            var minSize = new SizeF(20, 10);
+            var minHeight = 12;
             var maxScale = 10;
             using (var scope = container.BeginLifetimeScope())
             {
@@ -38,7 +38,7 @@ namespace TagsCloudContainer
                 // Подумаю еще как это можно сделать лучше >
                 tags = new Normalizator().Process(new TagsFilter().Process(tags)).ToList();
                 var paintedTags = painter.Paint(tags);
-                var cloud = layouter.PlaceTagsInCloud(paintedTags, minSize, maxScale);
+                var cloud = layouter.PlaceTagsInCloud(paintedTags, minHeight, maxScale);
                 visualizator.Visualize(settings, cloud);
             }
         }
