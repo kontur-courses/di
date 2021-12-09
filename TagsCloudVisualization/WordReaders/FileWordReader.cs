@@ -16,7 +16,8 @@ namespace TagsCloudVisualization.WordReaders
         {
             if (!File.Exists(filename)) throw new FileNotFoundException($"file {filename} does not exist");
             Console.WriteLine(filename);
-            formatDecoder = supportedFormats.First(x => x.FormatExtension == Path.GetExtension(filename));
+            formatDecoder = supportedFormats.FirstOrDefault(x => x.FormatExtension == Path.GetExtension(filename)) 
+                            ?? throw new ArgumentException($"no decoder for {Path.GetExtension(filename)} provided");
             Load(filename);
         }
 

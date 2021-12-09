@@ -45,6 +45,10 @@ namespace TagCloudUsageSample
         [Option('d', "density", Default = 5, HelpText = "Set density")]
         public int Density { get; private set; }
         
+        [RangeValidatorAttribute(1, 10, nameof(MinWordLengthToStatistic))]
+        [Option('m', "wordLength", Default = 3, HelpText = "Set min word length to statistic")]
+        public int MinWordLengthToStatistic { get; private set; }
+        
         [RangeValidatorAttribute(25, 400, nameof(MaximumWordFontSize))]
         [Option('f', "font", Default = 60, HelpText = "Set font size for most common word.")]
         public int MaximumWordFontSize{ get; private set; }
@@ -63,7 +67,7 @@ namespace TagCloudUsageSample
             foreach (var info in container.BeginLifetimeScope().Resolve<IWordStatisticsToSizeConverter>().Convert())
                 yield return (info.Word, info.FontSize, layouter.PutNextRectangle(info.GetCollisionSize()));
         }
-        
+
         private void Inject()
         {
             var builder = new ContainerBuilder();
@@ -73,7 +77,7 @@ namespace TagCloudUsageSample
             builder.RegisterType<ProcessedWordReader>().Keyed<IWordReader>("FullProcessed").WithAttributeFiltering();
             builder.RegisterType<TxtFormatDecoder>().As<IFormatDecoder>();
             builder.RegisterType<IgnoredWordsValidator>().As<IWordValidator>().WithAttributeFiltering();
-            builder.RegisterType<TooShortWordValidator>().As<IWordValidator>();
+            builder.Register(_ => new TooShortWordValidator(MinWordLengthToStatistic)).As<IWordValidator>();
             builder.RegisterType<LowerCaseWordProcessor>().As<IWordProcessor>();
 
             if (!IsLiteraryText)
@@ -83,6 +87,7 @@ namespace TagCloudUsageSample
             else
             {
                 builder.Register(p => new FileTextByWordReader(TextFileName, p.Resolve<IEnumerable<IFormatDecoder>>())).Keyed<IWordReader>("CurrentReadMode");
+                builder.RegisterType<InitialFormWordProcessor>().As<IWordProcessor>();
             }
             
             builder.Register(p => new FileWordReader(TextFileName, p.Resolve<IEnumerable<IFormatDecoder>>())).Keyed<IWordReader>("Word");

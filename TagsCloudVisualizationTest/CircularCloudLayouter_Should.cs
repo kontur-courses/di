@@ -6,7 +6,6 @@ using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualizationTest.Builders;
 using static FluentAssertions.FluentActions;

@@ -4,7 +4,7 @@ namespace TagsCloudVisualization
 {
     public record WordCount
     {
-        private WordCount(string word, int count)
+        public WordCount(string word, int count)
         {
             Word = word;
             Count = count;

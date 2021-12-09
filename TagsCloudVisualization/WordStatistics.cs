@@ -22,7 +22,7 @@ namespace TagsCloudVisualization
                 AddWord(reader.Read());
         }
 
-        private void AddWord(string word)
+        public void AddWord(string word)
         {
             if (word == null) throw new ArgumentNullException(nameof(word));
             if (string.IsNullOrWhiteSpace(word)) return;

@@ -16,13 +16,12 @@ using TagsCloudVisualization.WordReaders;
 using TagsCloudVisualization.WordReaders.FormatDecoders;
 using TagsCloudVisualization.WordReaders.WordProcessors;
 using TagsCloudVisualization.WordReaders.WordValidators;
+using WeCantSpell.Hunspell;
 
 namespace TagCloudUsageSample
 {
     internal static class Program
     {
-        private static IContainer container;
-        
         internal static void Main(string[] args)
         {
             Parser.Default

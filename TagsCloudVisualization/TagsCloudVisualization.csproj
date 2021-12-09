@@ -97,6 +97,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeCantSpell.Hunspell, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\WeCantSpell.Hunspell.3.0.1\lib\net45\WeCantSpell.Hunspell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultWordStatisticsToSizeConverter.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="WordReaders\FormatDecoders\TxtFormatDecoder.cs" />
     <Compile Include="WordReaders\IWordReader.cs" />
     <Compile Include="WordReaders\ProcessedWordReader.cs" />
+    <Compile Include="WordReaders\WordProcessors\InitialFormWordProcessor.cs" />
     <Compile Include="WordReaders\WordProcessors\IWordProcessor.cs" />
     <Compile Include="WordReaders\WordProcessors\LowerCaseWordProcessor.cs" />
     <Compile Include="WordReaders\WordValidators\IgnoredWordsValidator.cs" />
