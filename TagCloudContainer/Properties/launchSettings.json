@@ -2,7 +2,7 @@
   "profiles": {
     "TagCloudContainer": {
       "commandName": "Project",
-      "commandLineArgs": "-i input.txt"
+      "commandLineArgs": "-i input.docx"
     }
   }
 }

@@ -10,16 +10,16 @@ namespace TagCloud.App.UI;
 
 public class ConsoleUI : IUserInterface
 {
-    private readonly IFileReader fileReader;
+    private readonly IFileReaderFactory fileReaderFactory;
     private readonly IFilter filter;
     private readonly ILemmatizer lemmatizer;
     private readonly IPainter painter;
     private readonly IImageSaver saver;
     private readonly IWordWeigher weigher;
 
-    public ConsoleUI(IFileReader fileReader, IPainter painter, IWordWeigher weigher, IImageSaver saver, ILemmatizer lemmatizer, IFilter filter)
+    public ConsoleUI(IFileReaderFactory fileReaderFactory, IPainter painter, IWordWeigher weigher, IImageSaver saver, ILemmatizer lemmatizer, IFilter filter)
     {
-        this.fileReader = fileReader;
+        this.fileReaderFactory = fileReaderFactory;
         this.painter = painter;
         this.weigher = weigher;
         this.saver = saver;
@@ -29,7 +29,9 @@ public class ConsoleUI : IUserInterface
 
     public void Run(IAppSettings settings)
     {
-        var lines = fileReader.GetLines(settings.InputPath);
+        var lines = fileReaderFactory
+            .Create(settings)
+            .GetLines(settings.InputPath);
         var lemmas = lemmatizer.GetLemmas(lines);
         var filtered = filter.FilterWords(lemmas);
         var weightedWords = weigher.GetWeightedWords(filtered);

@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Weigher;
 
-namespace TagCloudTests.WordProcessing;
+namespace TagCloudTests.Infrastructure.WordProcessing;
 
 internal class WordWeigherTests
 {

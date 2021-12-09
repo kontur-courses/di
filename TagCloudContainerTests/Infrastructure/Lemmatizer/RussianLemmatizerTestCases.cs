@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudTests.Lemmatizer
+namespace TagCloudTests.Infrastructure.Lemmatizer
 {
     internal class RussianLemmatizerTestCases
     {

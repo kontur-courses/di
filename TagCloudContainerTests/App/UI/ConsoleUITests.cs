@@ -13,7 +13,7 @@ using TagCloud.Infrastructure.Painter;
 using TagCloud.Infrastructure.Saver;
 using TagCloud.Infrastructure.Weigher;
 
-namespace TagCloudTests.UI;
+namespace TagCloudTests.App.UI;
 
 internal class ConsoleUITests
 {
@@ -25,7 +25,7 @@ internal class ConsoleUITests
     {
         settings = new AppSettings { OutputPath = "outputTest" };
         var painter = new Painter(new RandomPalette(), new CircularCloudLayouter(settings), settings);
-        sut = new ConsoleUI(new MockReader(), painter, new WordWeigher(), new ImageSaver(), new RussianLemmatizer(), new Filter());
+        sut = new ConsoleUI(new FakeFileReaderFactory(), painter, new WordWeigher(), new ImageSaver(), new RussianLemmatizer(), new Filter());
     }
 
     [Test]
@@ -41,7 +41,20 @@ internal class ConsoleUITests
         File.Exists(filepath).Should().BeTrue();
     }
 
-    private class MockReader : IFileReader
+    private class FakeFileReaderFactory : IFileReaderFactory
+    {
+        public IFileReader Create(IInputPathProvider inputPathProvider)
+        {
+            return Create(inputPathProvider.InputPath);
+        }
+
+        public IFileReader Create(string filePath)
+        {
+            return new FakeReader();
+        }
+    }
+
+    private class FakeReader : IFileReader
     {
         public IEnumerable<string> GetLines(string inputPath)
         {

@@ -5,7 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Saver;
 
-namespace TagCloudTests;
+namespace TagCloudTests.Infrastructure;
 
 internal class ImageSaverTest
 {

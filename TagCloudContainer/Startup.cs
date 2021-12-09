@@ -23,7 +23,7 @@ internal static class Startup
         builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
         builder.RegisterType<WordWeigher>().As<IWordWeigher>().SingleInstance();
         builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>().SingleInstance();
-        builder.RegisterType<PlainTextFileReader>().As<IFileReader>().SingleInstance();
+        builder.RegisterType<FileReaderFactory>().As<IFileReaderFactory>().SingleInstance();
 
         builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
             .As<IFilter>().SingleInstance();

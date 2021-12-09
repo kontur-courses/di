@@ -6,7 +6,7 @@ using TagCloud.App.UI.Common;
 using TagCloud.Infrastructure.Layouter;
 using TagCloud.Infrastructure.Painter;
 
-namespace TagCloudTests.FileReader;
+namespace TagCloudTests.Infrastructure;
 
 internal class PainterTests
 {

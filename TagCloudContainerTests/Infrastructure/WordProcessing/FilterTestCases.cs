@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using TagCloud.Infrastructure.Lemmatizer;
 
-namespace TagCloudTests.WordProcessing;
+namespace TagCloudTests.Infrastructure.WordProcessing;
 
 internal class FilterTestCases
 {

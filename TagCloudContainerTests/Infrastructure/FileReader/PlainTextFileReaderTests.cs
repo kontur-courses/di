@@ -4,12 +4,12 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure.FileReader;
 
-namespace TagCloudTests.FileReader;
+namespace TagCloudTests.Infrastructure.FileReader;
 
 internal class PlainTextFileReaderTests
 {
     private const string FileName = $"{nameof(PlainTextFileReader)}Test.txt";
-    private readonly IFileReader sut = new PlainTextFileReader();
+    private readonly PlainTextFileReader sut = new();
 
     [OneTimeSetUp]
     public void OneTimeSetup()

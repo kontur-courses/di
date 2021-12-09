@@ -29,7 +29,7 @@ public class RussianLemmatizer : ILemmatizer
     {
         foreach (var word in words)
         {
-            var (isLemmatized, lemma) = TryLemmatize(word);
+            var (isLemmatized, lemma) = TryLemmatize(word.ToLowerInvariant());
 
             if (isLemmatized)
                 yield return lemma;

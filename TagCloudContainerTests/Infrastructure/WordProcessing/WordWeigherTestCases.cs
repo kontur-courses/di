@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace TagCloudTests.WordProcessing;
+namespace TagCloudTests.Infrastructure.WordProcessing;
 
 internal class WordWeigherTestCases
 {
