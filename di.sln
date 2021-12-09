@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudTests", "TagCloudContainerTests\TagCloudTests.csproj", "{72C4755E-EB4E-4E9C-B33B-18B3C1B7CDD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudTests", "TagCloudTests\TagCloudTests.csproj", "{72C4755E-EB4E-4E9C-B33B-18B3C1B7CDD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloud", "TagCloudContainer\TagCloud.csproj", "{0590EE4A-3668-4A40-A34A-B5AD4246E4A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloud", "TagCloud\TagCloud.csproj", "{0590EE4A-3668-4A40-A34A-B5AD4246E4A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
