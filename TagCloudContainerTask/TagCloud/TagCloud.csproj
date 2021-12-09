@@ -62,8 +62,8 @@
     <Compile Include="Words\Preprocessing\IPreprocessor.cs" />
     <Compile Include="Words\Preprocessing\ToInitFormPreprocessor.cs" />
     <Compile Include="Words\Preprocessing\ToLowerCasePreprocessor.cs" />
-    <Compile Include="Words\Reading\IWordsReader.cs" />
-    <Compile Include="Words\Reading\WordsReader.cs" />
+    <Compile Include="Words\Readers\IWordsReader.cs" />
+    <Compile Include="Words\Readers\WordsReader.cs" />
     <Compile Include="Words\Writing\IWordsWriter.cs" />
     <Compile Include="Words\Writing\ToConsole\ConsoleWriter.cs" />
     <Compile Include="Words\Writing\ToConsole\IConsoleWriter.cs" />

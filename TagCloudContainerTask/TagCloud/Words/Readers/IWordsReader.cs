@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TagCloud.Words.Reading
+namespace TagCloud.Words.Readers
 {
     public interface IWordsReader
     {
