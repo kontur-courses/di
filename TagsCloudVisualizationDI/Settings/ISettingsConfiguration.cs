@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using TagsCloudVisualizationDI.FileReader;
 using TagsCloudVisualizationDI.Layouter;
 using TagsCloudVisualizationDI.Layouter.Normalizer;
@@ -19,11 +21,18 @@ namespace TagsCloudVisualizationDI.Settings
 
         public Point LayouterCenter => new Point(2500, 2500);
 
-        public ITextFileReader FileReader => new DefaultTextFileReader();
+        public string SavePath => "C:/GitHub/di/TagsCloudVisualizationDI/img_words";
 
-        public string SavePath => string.Empty;
+        public string FilePath => "C:/GitHub/di/TagsCloudVisualizationDI/War_and_piece.Docx";
 
-        //public Pen ColorPen => new Pen(Color.White, 10);
+        public string MystemPath => "C:/GitHub/di/TagsCloudVisualizationDI/mystem.exe";
+
+        public string Args => "-lndw -ig";
+
+        public Encoding TextEncoding => Encoding.UTF8;
+
+        public ITextFileReader FileReader => new DefaultTextFileReader(FilePath, SavePath, MystemPath, Args, TextEncoding);
+
 
         public SolidBrush Brush => new SolidBrush(Color.White);
 

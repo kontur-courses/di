@@ -15,8 +15,18 @@ namespace TagsCloudVisualizationDI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        //public static void Main(string[] args)
+        public static void Main(string pathToFile, string pathToSave, string pathToMystem)
         {
+            /*
+            Console.WriteLine("A");
+            Console.WriteLine(pathToFile);
+            Console.WriteLine("A");
+            Console.WriteLine(pathToSave);
+            Console.WriteLine("A");
+            Console.WriteLine(pathToMystem);
+            */
+
             var containerBuilder = new ContainerBuilder();
 
             

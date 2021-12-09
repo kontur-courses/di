@@ -8,10 +8,12 @@ namespace TagsCloudVisualizationDI.Settings
 {
     public class DeffaultSettingsConfiguration : ISettingsConfiguration
     {
+        /*
         public string SavePath
         {
             get => "C:/GitHub/di/TagsCloudVisualizationDI/img_words";
         }
+        */
 
         public SolidBrush Brush => new SolidBrush(Color.Black);
 
@@ -20,7 +22,7 @@ namespace TagsCloudVisualizationDI.Settings
 
         public List<string> ExcludedWords
         {
-            get => new List<string> {"к", "с", "он", "она", "в", "как", "что"};
+            get => new List<string> {"к", "с", "он", "она", "в", "как", "что", "это", "то", "этот"};
         }
     }
 }
