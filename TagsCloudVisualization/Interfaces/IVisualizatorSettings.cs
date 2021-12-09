@@ -12,6 +12,5 @@ namespace TagsCloudVisualization.Interfaces
         public Color BackgroundColor { get; }
         public float MinMargin { get; }
         public bool FillTags { get; }
-        public Action<IReadOnlyList<ITag>> SetTagPaletteByColorIndex { get; }
     }
 }

@@ -19,7 +19,6 @@ namespace TagsCloudVisualization.Visualizators
 
             gr.Clear(settings.BackgroundColor);
 
-            settings.SetTagPaletteByColorIndex(cloud.Elements);
             if (settings.FillTags)
                 DrawTagRectangles(cloud, gr);
             VisualizeCenter(cloud, gr);

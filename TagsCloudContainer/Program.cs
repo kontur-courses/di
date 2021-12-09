@@ -28,6 +28,7 @@ namespace TagsCloudContainer
             {
                 var reader = scope.Resolve<TagReader>();
                 var parser = scope.Resolve<WordsCountParser>();
+                var painter = scope.Resolve<TagPainter>();
                 var layouter = scope.Resolve<TagLayouter>();
                 var visualizator = scope.Resolve<IVisualizator<ITag>>();
                 var settings = scope.Resolve<IVisualizatorSettings>();
@@ -36,7 +37,8 @@ namespace TagsCloudContainer
                 var tags = parser.Parse(text);
                 // Подумаю еще как это можно сделать лучше >
                 tags = new Normalizator().Process(new TagsFilter().Process(tags)).ToList();
-                var cloud = layouter.PlaceTagsInCloud(tags, minSize, maxScale);
+                var paintedTags = painter.Paint(tags);
+                var cloud = layouter.PlaceTagsInCloud(paintedTags, minSize, maxScale);
                 visualizator.Visualize(settings, cloud);
             }
         }
@@ -87,7 +89,11 @@ namespace TagsCloudContainer
             builder.RegisterType<TagCircularLayouter>()
                 .As<TagLayouter>();
 
+            builder.RegisterType<PalettesMaker>()
+                .As<IPalettesMaker>();
+
             builder.RegisterType<TagReader>().AsSelf();
+            builder.RegisterType<TagPainter>().AsSelf();
             builder.RegisterType<WordsCountParser>().AsSelf();
         }
     }
