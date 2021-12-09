@@ -8,6 +8,7 @@ using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.PointGenerators;
 using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.SizeService;
+using TagsCloudVisualization.TagToDrawableTransformer;
 using TagsCloudVisualization.WordsPrepare;
 using TagsCloudVisualization.WordsPrepare.Preparers;
 using TagsCloudVisualization.WordsProvider;
@@ -40,7 +41,7 @@ namespace TagsCloudVisualization
             builder.Register(_ => new TagFontService(settings.MaxFontSize, settings.FontFamilyName))
                 .As<ITagFontService>();
             builder.RegisterType<TagSizeService>().As<ITagSizeService>();
-            builder.RegisterType<TagToDrawableTagTransformer>().AsSelf();
+            builder.RegisterType<TagToDrawableTagTransformer>().As<ITagToDrawableTransformer>();
             builder.RegisterInstance(new ImageSaver(settings.Directory, settings.ImageName)).As<IImageSaver>();
             builder.RegisterType<ImageCreator.ImageCreator>().As<IImageCreator>();
             builder.RegisterType<Visualizer>().AsSelf();

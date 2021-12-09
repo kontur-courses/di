@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using TagsCloudVisualization.ImageCreator;
 using TagsCloudVisualization.Saver;
+using TagsCloudVisualization.TagToDrawableTransformer;
 using TagsCloudVisualization.WordsPrepare;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagTransformer;
@@ -12,18 +13,18 @@ namespace TagsCloudVisualization
         private readonly IFileReadService fileReadService;
         private readonly IImageCreator imageCreator;
         private readonly IImageSaver imageSaver;
-        private readonly TagToDrawableTagTransformer tagToDrawableTagTransformer;
+        private readonly ITagToDrawableTransformer tagToDrawableTransformer;
         private readonly IWordsPreparer wordsPreparer;
         private readonly IWordsToTagTransformer wordsToTagTransformer;
 
         public Visualizer(IFileReadService fileReadService, IWordsPreparer wordsPreparer,
             IWordsToTagTransformer wordsToTagTransformer,
-            TagToDrawableTagTransformer tagToDrawableTagTransformer, IImageCreator imageCreator, IImageSaver imageSaver)
+            ITagToDrawableTransformer tagToDrawableTransformer, IImageCreator imageCreator, IImageSaver imageSaver)
         {
             this.fileReadService = fileReadService;
             this.wordsPreparer = wordsPreparer;
             this.wordsToTagTransformer = wordsToTagTransformer;
-            this.tagToDrawableTagTransformer = tagToDrawableTagTransformer;
+            this.tagToDrawableTransformer = tagToDrawableTransformer;
             this.imageCreator = imageCreator;
             this.imageSaver = imageSaver;
         }
@@ -33,7 +34,7 @@ namespace TagsCloudVisualization
             var words = fileReadService.Read();
             var preparedWords = wordsPreparer.Prepare(words);
             var tags = wordsToTagTransformer.Transform(preparedWords);
-            var drawableTags = tagToDrawableTagTransformer.Transform(tags.ToList());
+            var drawableTags = tagToDrawableTransformer.Transform(tags.ToList());
             var image = imageCreator.Draw(drawableTags);
             imageSaver.Save(image);
         }
