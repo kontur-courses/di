@@ -1,40 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TagCloud.Words.Reading.Console;
-using TagCloud.Words.Reading.FromFile;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace TagCloud.Words.Reading
 {
     public class WordsReader : IWordsReader
     {
-        private IConsoleReader consoleReader;
-        private IFileReader fileReader;
-
-        public WordsReader(IFileReader fileReader, IConsoleReader consoleReader)
+        public IEnumerable<string> ReadWordsFrom(StreamReader streamReader)
         {
-            this.fileReader = fileReader;
-            this.consoleReader = consoleReader;
+            return ReadWords(streamReader)
+                .SelectMany(line => Regex.Split(line, @"\P{L}+", RegexOptions.Compiled))
+                .Select(word => word);
         }
 
-        public IEnumerable<string> ReadFromConsole()
+        private IEnumerable<string> ReadWords(StreamReader streamReader)
         {
-            return consoleReader?
-                       .ReadFromConsole()
-                   ?? throw CreateArgumentNullException(nameof(consoleReader));
-        }
+            using (streamReader)
+            {
+                var line = streamReader.ReadLine();
 
-        public IEnumerable<string> ReadFromFile(string pathToFile, Encoding encoding)
-        {
-            return fileReader?
-                       .ReadFromFile(pathToFile, encoding ?? Encoding.UTF8)
-                   ?? throw CreateArgumentNullException(nameof(fileReader));
-        }
-
-        private ArgumentNullException CreateArgumentNullException(
-            string parameterName, string message = "Can not find suitable reader")
-        {
-            return new ArgumentNullException(parameterName, message);
+                while (!string.IsNullOrWhiteSpace(line))
+                {
+                    yield return line;
+                    line = streamReader.ReadLine();
+                }
+            }
         }
     }
 }
