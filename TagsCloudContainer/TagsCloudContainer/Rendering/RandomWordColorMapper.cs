@@ -8,6 +8,8 @@ namespace TagsCloudContainer.Rendering
 {
     public class RandomWordColorMapper : IWordColorMapper
     {
+        public ColorMapperType Type => ColorMapperType.Random;
+
         private readonly Random random;
 
         public RandomWordColorMapper(Random random)
@@ -17,7 +19,8 @@ namespace TagsCloudContainer.Rendering
 
         public Dictionary<WordLayout, Color> GetColorMap(CloudLayout layout)
         {
-            return layout.WordLayouts.ToDictionary(wordLayout => wordLayout,
+            return layout.WordLayouts.ToDictionary(
+                wordLayout => wordLayout,
                 _ => Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)));
         }
     }

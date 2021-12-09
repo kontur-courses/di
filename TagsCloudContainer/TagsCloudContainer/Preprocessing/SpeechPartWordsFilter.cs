@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Settings.Interfaces;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Preprocessing
 {
@@ -9,7 +9,8 @@ namespace TagsCloudContainer.Preprocessing
         private readonly IWordSpeechPartParser wordSpeechPartParser;
         private readonly ISpeechPartFilterSettings settings;
 
-        public SpeechPartWordsFilter(IWordSpeechPartParser wordSpeechPartParser,
+        public SpeechPartWordsFilter(
+            IWordSpeechPartParser wordSpeechPartParser,
             ISpeechPartFilterSettings settings)
         {
             this.wordSpeechPartParser = wordSpeechPartParser;

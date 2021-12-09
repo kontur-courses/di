@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using NUnit.Framework;
-using TagsCloudApp;
+using TagsCloudApp.Parsers;
 
 namespace TagsCloud.Tests
 {

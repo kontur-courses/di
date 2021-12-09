@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudApp;
+using TagsCloudApp.Parsers;
 
 namespace TagsCloud.Tests
 {

@@ -30,7 +30,8 @@ namespace TagsCloudVisualizationTests.Tests
                 return;
 
             var output = new VisualOutput(new RectangleVisualizer(resultingRectangles));
-            var savePath = Path.Combine(Directory.GetCurrentDirectory(),
+            var savePath = Path.Combine(
+                Directory.GetCurrentDirectory(),
                 "CircularCloudLayouter.TestFail.bmp");
 
             output.SaveToBitmap(savePath);
@@ -40,8 +41,9 @@ namespace TagsCloudVisualizationTests.Tests
         [Test]
         public void Constructor_ThrowsException_WithNullSpiralPath()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new CircularCloudLayouter(new Point(), null));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    new CircularCloudLayouter(new Point(), null));
         }
 
         [TestCaseSource(nameof(PutNextRectangleFirstRectanglePlacedInCenterTestCases))]
@@ -72,12 +74,13 @@ namespace TagsCloudVisualizationTests.Tests
         public void PutNextRectangle_RandomRectangles_NotIntersect()
         {
             var rectangles = new List<Rectangle>();
-            LayouterBitmapSaver.CreateRandomRectangles(100).ForEach(rectangle =>
-            {
-                TestContext.WriteLine(rectangle);
-                rectangles.Add(layouter.PutNextRectangle(rectangle));
-                AssertHaveNoIntersection(rectangles);
-            });
+            LayouterBitmapSaver.CreateRandomRectangles(100).ForEach(
+                rectangle =>
+                {
+                    TestContext.WriteLine(rectangle);
+                    rectangles.Add(layouter.PutNextRectangle(rectangle));
+                    AssertHaveNoIntersection(rectangles);
+                });
         }
 
         [TestCase(0, 0)]
@@ -88,8 +91,9 @@ namespace TagsCloudVisualizationTests.Tests
         [TestCase(1, -1)]
         public void PutNextRectangle_ThrowsException_WithNotPositiveSize(int width, int height)
         {
-            Assert.Throws<ArgumentException>(() =>
-                layouter.PutNextRectangle(new Size(width, height)));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    layouter.PutNextRectangle(new Size(width, height)));
         }
 
         [Test]
@@ -140,7 +144,8 @@ namespace TagsCloudVisualizationTests.Tests
         {
             for (var i = 0; i < rectangles.Count; i++)
                 for (var j = i + 1; j < rectangles.Count; j++)
-                    Assert.False(rectangles[i].IntersectsWith(rectangles[j]),
+                    Assert.False(
+                        rectangles[i].IntersectsWith(rectangles[j]),
                         $"{rectangles[i]} intersects with {rectangles[j]}");
         }
 
@@ -149,12 +154,13 @@ namespace TagsCloudVisualizationTests.Tests
             resultingRectangles = new List<Rectangle>();
             var mockLayouter = new Mock<ICloudLayouter>();
             mockLayouter.Setup(mock => mock.PutNextRectangle(It.IsAny<Size>()))
-                .Returns<Size>(size =>
-                {
-                    var rectangle = layouterToMock.PutNextRectangle(size);
-                    resultingRectangles.Add(rectangle);
-                    return rectangle;
-                });
+                .Returns<Size>(
+                    size =>
+                    {
+                        var rectangle = layouterToMock.PutNextRectangle(size);
+                        resultingRectangles.Add(rectangle);
+                        return rectangle;
+                    });
 
             return mockLayouter.Object;
         }

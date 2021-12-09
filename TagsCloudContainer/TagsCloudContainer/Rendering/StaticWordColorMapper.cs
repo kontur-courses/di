@@ -2,19 +2,21 @@
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layout;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Rendering
 {
     public class StaticWordColorMapper : IWordColorMapper
     {
-        private readonly Color color;
+        private readonly IDefaultColorSettings settings;
+        public ColorMapperType Type => ColorMapperType.Static;
 
-        public StaticWordColorMapper(Color color)
+        public StaticWordColorMapper(IDefaultColorSettings settings)
         {
-            this.color = color;
+            this.settings = settings;
         }
 
         public Dictionary<WordLayout, Color> GetColorMap(CloudLayout layout) =>
-            layout.WordLayouts.ToDictionary(wordLayout => wordLayout, _ => color);
+            layout.WordLayouts.ToDictionary(wordLayout => wordLayout, _ => settings.Color);
     }
 }

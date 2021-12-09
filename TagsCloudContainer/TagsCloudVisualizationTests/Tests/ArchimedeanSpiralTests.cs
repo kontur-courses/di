@@ -28,16 +28,18 @@ namespace TagsCloudVisualizationTests.Tests
         [TestCase(-1)]
         public void Constructor_Radius_ShouldBePositive(int radius)
         {
-            Assert.Throws<ArgumentException>(() =>
-                new ArchimedeanSpiral(new Point(0, 0), radius));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    new ArchimedeanSpiral(new Point(0, 0), radius));
         }
 
         [Test]
         public void GetPoint_Degree_CantBeNegative()
         {
             var spiral = new ArchimedeanSpiral();
-            Assert.Throws<ArgumentException>(() =>
-                spiral.GetPoint(-1));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    spiral.GetPoint(-1));
         }
 
         [Test]
@@ -72,7 +74,9 @@ namespace TagsCloudVisualizationTests.Tests
             TestContext.WriteLine($"Saved to '{savePath}'");
         }
 
-        private static void AssertProportionAlongAngle(int angleInDegrees, Func<int, double> getPeriodProportion,
+        private static void AssertProportionAlongAngle(
+            int angleInDegrees,
+            Func<int, double> getPeriodProportion,
             Func<Point, int> selectCoordinateToAssert)
         {
             const int radius = 10;
@@ -86,7 +90,9 @@ namespace TagsCloudVisualizationTests.Tests
 
                 var actual = spiral.GetPoint(degree);
 
-                ((double)selectCoordinateToAssert(actual)).Should().BeApproximately(expected, 1,
+                ((double)selectCoordinateToAssert(actual)).Should().BeApproximately(
+                    expected,
+                    1,
                     $"period is '{period}', and proportion should be '{expectedProportion}'");
             }
         }

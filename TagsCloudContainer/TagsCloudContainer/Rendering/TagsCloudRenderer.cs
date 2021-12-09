@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using TagsCloudContainer.Settings.Interfaces;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Rendering
 {
@@ -20,7 +20,11 @@ namespace TagsCloudContainer.Rendering
             canvas.Graphics.FillRectangle(renderingSettings.Background, 0, 0, imageSize.Width, imageSize.Height);
             foreach (var word in words)
                 canvas.Graphics.DrawString(
-                    word.Value, word.Font, word.Brush, word.Location, StringFormat.GenericTypographic);
+                    word.Value,
+                    word.Font,
+                    word.Brush,
+                    word.Location,
+                    StringFormat.GenericTypographic);
 
             canvas.Graphics.Save();
             return new Bitmap(canvas.Bitmap);

@@ -11,7 +11,8 @@ namespace TagsCloudVisualization
         private readonly Point center;
         private readonly ArchimedeanSpiralPath spiralPath;
 
-        public CircularCloudLayouter(Point center = default) : this(center,
+        public CircularCloudLayouter(Point center = default) : this(
+            center,
             new ArchimedeanSpiralPath(new ArchimedeanSpiral(radius: 0.1))) { }
 
         public CircularCloudLayouter(Point center, ArchimedeanSpiralPath spiralPath)

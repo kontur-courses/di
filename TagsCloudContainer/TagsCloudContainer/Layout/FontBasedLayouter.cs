@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Settings.Interfaces;
+using TagsCloudContainer.Settings;
 using TagsCloudVisualization;
-using TagsCloudVisualizationTests.TestingLibrary;
 
 namespace TagsCloudContainer.Layout
 {
     public class FontBasedLayouter : ITagsCloudLayouter
     {
+        public CloudLayouterType Type => CloudLayouterType.FontBased;
+
         private readonly IFontFamilySettings fontFamilySettings;
         private readonly IFontSizeSelector fontSizeSelector;
         private readonly ICloudLayouter cloudLayouter;
 
-        public FontBasedLayouter(IFontFamilySettings fontFamilySettings, IFontSizeSelector fontSizeSelector,
+        public FontBasedLayouter(
+            IFontFamilySettings fontFamilySettings,
+            IFontSizeSelector fontSizeSelector,
             ICloudLayouter cloudLayouter)
         {
             this.fontFamilySettings = fontFamilySettings;
@@ -59,8 +62,9 @@ namespace TagsCloudContainer.Layout
         private static Size GetOccupiedSize(IReadOnlyCollection<Rectangle> rectangles)
         {
             var topLeft = PointHelper.GetTopLeftCorner(rectangles.Select(rectangle => rectangle.Location));
-            var bottomRight = PointHelper.GetBottomRightCorner(rectangles
-                .Select(rectangle => new Point(rectangle.Right, rectangle.Bottom)));
+            var bottomRight = PointHelper.GetBottomRightCorner(
+                rectangles
+                    .Select(rectangle => new Point(rectangle.Right, rectangle.Bottom)));
 
             return new Size(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
         }
@@ -70,12 +74,13 @@ namespace TagsCloudContainer.Layout
             var wordsPoints = wordsLayouts.Select(wordLocation => wordLocation.Location).ToList();
             var minX = wordsPoints.Select(point => point.X).Min();
             var minY = wordsPoints.Select(point => point.Y).Min();
-            return wordsLayouts.Select(wordLocation =>
-            {
-                var location = wordLocation.Location;
-                location.Offset(-minX, -minY);
-                return new WordLayout(wordLocation.Word, location, wordLocation.Font);
-            });
+            return wordsLayouts.Select(
+                wordLocation =>
+                {
+                    var location = wordLocation.Location;
+                    location.Offset(-minX, -minY);
+                    return new WordLayout(wordLocation.Word, location, wordLocation.Font);
+                });
         }
     }
 }

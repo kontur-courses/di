@@ -2,10 +2,10 @@
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 using TagsCloudContainer.Rendering;
 using TagsCloudContainer.Settings;
-using TagsCloudContainer.Settings.Interfaces;
 using TagsCloudVisualizationTests.TestingLibrary;
 
 namespace TagsCloudContainer.Tests
@@ -15,6 +15,7 @@ namespace TagsCloudContainer.Tests
         private IEnumerable<WordStyle> words;
         private const int width = 100;
         private const int height = 100;
+        private Mock<IRenderingSettings> settings;
 
         [SetUp]
         public void SetUp()
@@ -23,14 +24,18 @@ namespace TagsCloudContainer.Tests
             var brush = new SolidBrush(Color.Blue);
             words = Enumerable.Range(1, 10)
                 .Select(i => new WordStyle(new string('a', i), font, new Point(i, i), brush));
+
+            settings = new Mock<IRenderingSettings>();
+            settings.Setup(s => s.Background).Returns(new SolidBrush(Color.Transparent));
+            settings.Setup(s => s.Scale).Returns(1);
         }
 
         [TestCase(0.5f)]
         [TestCase(2)]
         public void GetBitmap_WithScale_ScaleImage(float scale)
         {
-            var config = new RenderingSettings {Scale = scale};
-            using var output = GetOutputBitmap(config, words);
+            settings.Setup(s => s.Scale).Returns(scale);
+            using var output = GetOutputBitmap(settings.Object, words);
             output.Size
                 .Should().BeEquivalentTo(new Size((int)(width * scale), (int)(height * scale)));
         }
@@ -39,8 +44,8 @@ namespace TagsCloudContainer.Tests
         [TestCase(2000, 2000)]
         public void GetBitmap_WithDesiredImageSize_ScaleImage(int desiredWidth, int desiredHeight)
         {
-            var config = new RenderingSettings {DesiredImageSize = new Size(desiredWidth, desiredHeight)};
-            using var output = GetOutputBitmap(config, words);
+            settings.Setup(s => s.DesiredImageSize).Returns(new Size(desiredWidth, desiredHeight));
+            using var output = GetOutputBitmap(settings.Object, words);
             output.Size
                 .Should().BeEquivalentTo(new Size(desiredWidth, desiredHeight));
         }
@@ -48,8 +53,8 @@ namespace TagsCloudContainer.Tests
         [Test]
         public void GetBitmap_OutputBitmapWithBackground_NotEmpty()
         {
-            var config = new RenderingSettings {Background = new SolidBrush(Color.Red)};
-            using var output = GetOutputBitmap(config, Enumerable.Empty<WordStyle>());
+            settings.Setup(s => s.Background).Returns(new SolidBrush(Color.Red));
+            using var output = GetOutputBitmap(settings.Object, Enumerable.Empty<WordStyle>());
             foreach (var color in output.ToEnumerable())
             {
                 color.R.Should().Be(255);

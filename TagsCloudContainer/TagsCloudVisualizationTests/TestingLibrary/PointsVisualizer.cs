@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization;
 using TagsCloudVisualizationTests.Interfaces;
 
 namespace TagsCloudVisualizationTests.TestingLibrary

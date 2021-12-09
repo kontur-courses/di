@@ -3,60 +3,48 @@ using System.Drawing;
 using TagsCloudContainer.Layout;
 using TagsCloudContainer.Preprocessing;
 using TagsCloudContainer.Rendering;
-using TagsCloudContainer.Settings.Interfaces;
-using TagsCloudContainer.WordsLoading;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer
 {
     public class TagsCloudDirector : ITagsCloudDirector
     {
-        private readonly IFileTextLoaderFactory fileTextLoaderFactory;
-        private readonly IWordsParser wordsParser;
         private readonly IEnumerable<IWordsPreprocessor> preprocessors;
-        private readonly IFileLoadSettings fileLoadSettings;
-        private readonly IWordsColorSettings wordsColorSettings;
-        private readonly ITagsCloudImageSaver tagsCloudImageSaver;
+        private readonly IWordColorMapperSettings colorMapperSettings;
         private readonly ITagsCloudLayouter tagsCloudLayouter;
+        private readonly ITagsCloudRenderer renderer;
 
         public TagsCloudDirector(
-            IFileTextLoaderFactory fileTextLoaderFactory,
-            IWordsParser wordsParser,
             IEnumerable<IWordsPreprocessor> preprocessors,
-            IFileLoadSettings fileLoadSettings,
-            IWordsColorSettings wordsColorSettings,
-            ITagsCloudImageSaver tagsCloudImageSaver,
-            ITagsCloudLayouter tagsCloudLayouter)
+            IWordColorMapperSettings colorMapperSettings,
+            ITagsCloudLayouter tagsCloudLayouter,
+            ITagsCloudRenderer renderer)
         {
-            this.fileTextLoaderFactory = fileTextLoaderFactory;
-            this.wordsParser = wordsParser;
             this.preprocessors = preprocessors;
-            this.fileLoadSettings = fileLoadSettings;
-            this.wordsColorSettings = wordsColorSettings;
-            this.tagsCloudImageSaver = tagsCloudImageSaver;
+            this.colorMapperSettings = colorMapperSettings;
             this.tagsCloudLayouter = tagsCloudLayouter;
+            this.renderer = renderer;
         }
 
-        public void Render()
+        public Bitmap RenderWords(IEnumerable<string> words)
         {
-            var words = GetWords();
-            var layout = tagsCloudLayouter.GetCloudLayout(words);
-            var colorMap = wordsColorSettings.ColorMapper.GetColorMap(layout);
+            var preprocessedWords = PreprocessWords(words);
+            var layout = tagsCloudLayouter.GetCloudLayout(preprocessedWords);
+            var colorMap = colorMapperSettings.ColorMapper.GetColorMap(layout);
             var wordsStyles = GetWordsStyles(layout, colorMap);
-            tagsCloudImageSaver.Save(wordsStyles, layout.ImageSize);
+            return renderer.GetBitmap(wordsStyles, layout.ImageSize);
         }
 
-        private IEnumerable<string> GetWords()
+        private IEnumerable<string> PreprocessWords(IEnumerable<string> words)
         {
-            var fileLoader = fileTextLoaderFactory.GetByFileName(fileLoadSettings.FileName);
-            var fileText = fileLoader.LoadText(fileLoadSettings.FileName);
-            var words = wordsParser.Parse(fileText);
             foreach (var preprocessor in preprocessors)
                 words = preprocessor.Preprocess(words);
 
             return words;
         }
 
-        private static IEnumerable<WordStyle> GetWordsStyles(CloudLayout layout,
+        private static IEnumerable<WordStyle> GetWordsStyles(
+            CloudLayout layout,
             IReadOnlyDictionary<WordLayout, Color> colorMap)
         {
             foreach (var wordLayout in layout.WordLayouts)
@@ -68,7 +56,7 @@ namespace TagsCloudContainer
 
         public void Dispose()
         {
-            tagsCloudImageSaver.Dispose();
+            renderer.Dispose();
         }
     }
 }

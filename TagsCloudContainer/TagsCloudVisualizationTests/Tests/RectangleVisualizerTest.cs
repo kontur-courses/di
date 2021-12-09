@@ -11,8 +11,9 @@ namespace TagsCloudVisualizationTests.Tests
         [Test]
         public void Constructor_ThrowException_WithEmptyCollection()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new RectangleVisualizer(new List<Rectangle>()));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    new RectangleVisualizer(new List<Rectangle>()));
         }
 
         [TestCaseSource(nameof(GetBitmapSizeAssertSizeCases))]
@@ -21,34 +22,39 @@ namespace TagsCloudVisualizationTests.Tests
 
         public static IEnumerable<TestCaseData> GetBitmapSizeAssertSizeCases()
         {
-            yield return new TestCaseData(new List<Rectangle>
-            {
-                new(0, 0, 3, 4)
-            }) {ExpectedResult = new Size(4, 5), TestName = "With single rectangle"};
+            yield return new TestCaseData(
+                new List<Rectangle>
+                {
+                    new(0, 0, 3, 4)
+                }) {ExpectedResult = new Size(4, 5), TestName = "With single rectangle"};
 
-            yield return new TestCaseData(new List<Rectangle>
-            {
-                new(0, 0, 3, 4),
-                new(1, 3, 1, 1)
-            }) {ExpectedResult = new Size(4, 5), TestName = "With one into other"};
+            yield return new TestCaseData(
+                new List<Rectangle>
+                {
+                    new(0, 0, 3, 4),
+                    new(1, 3, 1, 1)
+                }) {ExpectedResult = new Size(4, 5), TestName = "With one into other"};
 
-            yield return new TestCaseData(new List<Rectangle>
-            {
-                new(0, 0, 3, 4),
-                new(1, 3, 4, 2)
-            }) {ExpectedResult = new Size(6, 6), TestName = "With two positive rectangles"};
+            yield return new TestCaseData(
+                new List<Rectangle>
+                {
+                    new(0, 0, 3, 4),
+                    new(1, 3, 4, 2)
+                }) {ExpectedResult = new Size(6, 6), TestName = "With two positive rectangles"};
 
-            yield return new TestCaseData(new List<Rectangle>
-            {
-                new(-1, -2, 3, 4),
-                new(0, 0, 1, 2)
-            }) {ExpectedResult = new Size(4, 5), TestName = "With one negative rectangle"};
+            yield return new TestCaseData(
+                new List<Rectangle>
+                {
+                    new(-1, -2, 3, 4),
+                    new(0, 0, 1, 2)
+                }) {ExpectedResult = new Size(4, 5), TestName = "With one negative rectangle"};
 
-            yield return new TestCaseData(new List<Rectangle>
-            {
-                new(-6, -5, 2, 3),
-                new(-5, -4, 2, 1)
-            }) {ExpectedResult = new Size(4, 4), TestName = "With two negative rectangles"};
+            yield return new TestCaseData(
+                new List<Rectangle>
+                {
+                    new(-6, -5, 2, 3),
+                    new(-5, -4, 2, 1)
+                }) {ExpectedResult = new Size(4, 4), TestName = "With two negative rectangles"};
         }
 
         [TestCaseSource(nameof(DrawAssertBitmapCases))]

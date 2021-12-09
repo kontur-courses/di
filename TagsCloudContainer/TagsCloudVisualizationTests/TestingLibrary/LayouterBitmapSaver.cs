@@ -23,12 +23,13 @@ namespace TagsCloudVisualizationTests.TestingLibrary
         public static List<Size> CreateRandomRectangles(int count)
         {
             var random = new Random();
-            return Enumerable.Range(0, count).Select(_ =>
-            {
-                var width = random.Next(40, 100);
-                var height = width / 5 + random.Next(-5, 5);
-                return new Size(width, height);
-            }).ToList();
+            return Enumerable.Range(0, count).Select(
+                _ =>
+                {
+                    var width = random.Next(40, 100);
+                    var height = width / 5 + random.Next(-5, 5);
+                    return new Size(width, height);
+                }).ToList();
         }
 
         [Test]
@@ -42,7 +43,8 @@ namespace TagsCloudVisualizationTests.TestingLibrary
 
         [TestCaseSource(nameof(RandomRectanglesStyles))]
         [Explicit]
-        public void CircularCloudLayouter_ColoredFillRandomRectangles_SaveToBitmap(IRectangleStyle style,
+        public void CircularCloudLayouter_ColoredFillRandomRectangles_SaveToBitmap(
+            IRectangleStyle style,
             string postfix)
         {
             var rectangles = CreateRandomRectangles(1000)
@@ -58,11 +60,14 @@ namespace TagsCloudVisualizationTests.TestingLibrary
             yield return new TestCaseData(new ColoredFillStyle(), "random-colored-fill");
         }
 
-        private static void SaveRectanglesToBitmap(IEnumerable<Rectangle> rectangles, IRectangleStyle style,
+        private static void SaveRectanglesToBitmap(
+            IEnumerable<Rectangle> rectangles,
+            IRectangleStyle style,
             string filenamePostfix = "")
         {
             var visualizer = new RectangleVisualizer(rectangles) {Style = style};
-            var savePath = Path.Combine(Directory.GetCurrentDirectory(),
+            var savePath = Path.Combine(
+                Directory.GetCurrentDirectory(),
                 $"CircularCloudLayouter.Rectangles-{filenamePostfix}.bmp");
 
             new VisualOutput(visualizer).SaveToBitmap(savePath);

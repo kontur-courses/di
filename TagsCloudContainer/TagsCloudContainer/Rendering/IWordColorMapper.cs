@@ -6,6 +6,7 @@ namespace TagsCloudContainer.Rendering
 {
     public interface IWordColorMapper
     {
+        public ColorMapperType Type { get; }
         public Dictionary<WordLayout, Color> GetColorMap(CloudLayout layout);
     }
 }

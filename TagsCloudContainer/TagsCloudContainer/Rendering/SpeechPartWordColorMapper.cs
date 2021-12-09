@@ -3,20 +3,25 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layout;
 using TagsCloudContainer.Preprocessing;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Rendering
 {
     public class SpeechPartWordColorMapper : IWordColorMapper
     {
-        private readonly IWordSpeechPartParser wordSpeechPartParser;
-        private readonly Dictionary<SpeechPart, Color> colorMap;
-        private readonly Color defaultColor;
+        public ColorMapperType Type => ColorMapperType.SpeechPart;
 
-        public SpeechPartWordColorMapper(IWordSpeechPartParser wordSpeechPartParser,
-            Dictionary<SpeechPart, Color> colorMap, Color defaultColor)
+        private readonly IWordSpeechPartParser wordSpeechPartParser;
+        private readonly ISpeechPartColorMapSettings colorMapSettings;
+        private readonly IDefaultColorSettings defaultColor;
+
+        public SpeechPartWordColorMapper(
+            IWordSpeechPartParser wordSpeechPartParser,
+            ISpeechPartColorMapSettings colorMapSettings,
+            IDefaultColorSettings defaultColor)
         {
             this.wordSpeechPartParser = wordSpeechPartParser;
-            this.colorMap = colorMap;
+            this.colorMapSettings = colorMapSettings;
             this.defaultColor = defaultColor;
         }
 
@@ -30,9 +35,9 @@ namespace TagsCloudContainer.Rendering
             foreach (var (speechPart, wordLayout) in speechParts.Zip(layout.WordLayouts))
             {
                 wordLayoutColorMap[wordLayout] =
-                    colorMap.TryGetValue(speechPart, out var color)
+                    colorMapSettings.ColorMap.TryGetValue(speechPart, out var color)
                         ? color
-                        : defaultColor;
+                        : defaultColor.Color;
             }
 
             return wordLayoutColorMap;

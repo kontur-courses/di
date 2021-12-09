@@ -19,15 +19,17 @@ namespace TagsCloudVisualizationTests.Tests
         [Test]
         public void Constructor_ThrowException_WithNegativeStep()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new ArchimedeanSpiralPath(new ArchimedeanSpiral(), -1));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    new ArchimedeanSpiralPath(new ArchimedeanSpiral(), -1));
         }
 
         [Test]
         public void Constructor_ThrowException_WithNullSpiral()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new ArchimedeanSpiralPath(null));
+            Assert.Throws<ArgumentException>(
+                () =>
+                    new ArchimedeanSpiralPath(null));
         }
 
         [Test]

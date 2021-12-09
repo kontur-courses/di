@@ -29,20 +29,22 @@ namespace TagsCloudContainer.Tests
         public void GetValue_ThrowsException_IfResultNotSucceed()
         {
             var result = new Result<int>(new Exception());
-            Assert.Throws<Exception>(() =>
-            {
-                var _ = result.Value;
-            });
+            Assert.Throws<Exception>(
+                () =>
+                {
+                    var _ = result.Value;
+                });
         }
 
         [Test]
         public void GetException_ThrowsException_IfResultSucceed()
         {
             var result = new Result<int>(1);
-            Assert.Throws<Exception>(() =>
-            {
-                var _ = result.Exception;
-            });
+            Assert.Throws<Exception>(
+                () =>
+                {
+                    var _ = result.Exception;
+                });
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization;
 using TagsCloudVisualizationTests.Interfaces;
 using TagsCloudVisualizationTests.TestingLibrary.RectangleStyles;
 
@@ -26,8 +27,9 @@ namespace TagsCloudVisualizationTests.TestingLibrary
         {
             var offset = PointHelper.GetTopLeftCorner(rectangles.Select(rectangle => rectangle.Location));
             rectangles
-                .Select(rectangle =>
-                    new Rectangle(new Point(rectangle.Left - offset.X, rectangle.Top - offset.Y), rectangle.Size))
+                .Select(
+                    rectangle =>
+                        new Rectangle(new Point(rectangle.Left - offset.X, rectangle.Top - offset.Y), rectangle.Size))
                 .ToList()
                 .ForEach(rectangle => Style.Draw(graphics, rectangle));
         }
@@ -35,8 +37,9 @@ namespace TagsCloudVisualizationTests.TestingLibrary
         public Size GetBitmapSize()
         {
             var topLeft = PointHelper.GetTopLeftCorner(rectangles.Select(rectangle => rectangle.Location));
-            var bottomRight = PointHelper.GetBottomRightCorner(rectangles
-                .Select(rectangle => new Point(rectangle.Right, rectangle.Bottom)));
+            var bottomRight = PointHelper.GetBottomRightCorner(
+                rectangles
+                    .Select(rectangle => new Point(rectangle.Right, rectangle.Bottom)));
 
             return new Size(
                 bottomRight.X - topLeft.X + 1,

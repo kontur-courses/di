@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudContainer.Settings.Interfaces;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.Layout
 {
     public class FrequencyFontSizeSelector : IFontSizeSelector
     {
         private readonly IFontSizeSettings fontSizeSettings;
-        private readonly IScalersFactory scalersFactory;
+        private readonly IWordsScaleSettings wordsScaleSettings;
 
-        public FrequencyFontSizeSelector(IFontSizeSettings fontSizeSettings, IScalersFactory scalersFactory)
+        public FrequencyFontSizeSelector(IFontSizeSettings fontSizeSettings, IWordsScaleSettings wordsScaleSettings)
         {
             this.fontSizeSettings = fontSizeSettings;
-            this.scalersFactory = scalersFactory;
+            this.wordsScaleSettings = wordsScaleSettings;
         }
 
         public IEnumerable<FontSizedWord> GetFontSizedWords(IEnumerable<string> words)
@@ -25,11 +25,14 @@ namespace TagsCloudContainer.Layout
             var wordsFrequencies = words.GroupBy(word => word).ToDictionary(group => group.Key, group => group.Count());
             var maxFrequency = wordsFrequencies.Values.Max();
             var minFrequency = wordsFrequencies.Values.Min();
-            var scaler = scalersFactory.GetScaler(new PointF(minFrequency, fontSizeSettings.MinFontSize),
-                new PointF(maxFrequency, fontSizeSettings.MaxFontSize));
+            var firstPoint = new PointF(minFrequency, fontSizeSettings.MinFontSize);
+            var secondPoint = new PointF(maxFrequency, fontSizeSettings.MaxFontSize);
 
-            foreach (var (word, frequency) in wordsFrequencies)
-                yield return new FontSizedWord(word, scaler.GetValue(frequency));
+            return wordsFrequencies.Select(
+                pair =>
+                    new FontSizedWord(
+                        pair.Key,
+                        wordsScaleSettings.Function.GetValue(firstPoint, secondPoint, pair.Value)));
         }
     }
 }
