@@ -4,7 +4,6 @@
     {
         public enum SpeechPart
         {
-            //Noun,
             A,
             ADV,
             ADVPRO,

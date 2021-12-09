@@ -40,10 +40,12 @@ namespace TagsCloudVisualizationDI.Settings
             get
             {
                 return elementsForVisualization
-                    => new DefaultVisualization(
+                    => new DefaultVisualization(elementsForVisualization, ImagePath);
+                /*
                         elementsForVisualization, new Pen(Color.White, 10),
                         new SolidBrush(Color.White), new Font("Times", 15), ImageFormat.Jpeg, ImagePath,
                         new Size(5000, 5000));
+                */
             }
             //get => new DefaultVisualizatorMaker();
             //get => new Func<RectangleWithWord, IVisualization>((List<RectangleWithWord> elementsForVisualisation) => new DefaultVisualization(elementsForVisualisation, new Pen(Color.White, 10),
@@ -76,7 +78,7 @@ namespace TagsCloudVisualizationDI.Settings
 
         public IContentFiller Filler
         {
-            get => new CircularCloudLayouterForRectanglesWithText(LayouterCenter);
+            get => new CircularCloudLayouterForRectanglesWithText(LayouterCenter, Visualizator);
         }
         
     }

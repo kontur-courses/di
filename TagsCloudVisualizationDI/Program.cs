@@ -46,12 +46,15 @@ namespace TagsCloudVisualizationDI
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalizer = settings.Normalization;
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
+
             //Здесь расширение функционала нормализации
 
             var filler = settings.Filler;
             var rectangleSize = settings.ElementSize;
 
             filler.FillInElements(rectangleSize, normalyzedWords);
+
+
 
             var elementsForVisualisation = filler.GetElementsList();
 
@@ -71,7 +74,6 @@ namespace TagsCloudVisualizationDI
         {
             RegistrationOfTextFileReader(buildContainer);
             RegistrationOfLayouter(buildContainer);
-            //RegistrationOfVisualizator(buildContainer);
             RegistrationOfTextAnalyzer(buildContainer);
             RegistrationOfNormalizer(buildContainer);
 
@@ -93,16 +95,14 @@ namespace TagsCloudVisualizationDI
             buildContainer.RegisterType<WordNormalizerOrigin>().As<IWordNormalizer>();
         }
 
-        /*
-        private static void RegistrationOfVisualizator(ContainerBuilder buildContainer)
-        {
-            buildContainer.RegisterType<DefaultVisualizatorMaker>().As<IVisualizatorMaker>();
-        }
-        */
-
         private static void RegistrationOfLayouter(ContainerBuilder buildContainer)
         {
+            /*
             buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<ICircularCloudLayouter, IContentFiller>()
+                .WithParameter("center", new Point(2500, 2500));
+            */
+
+            buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<IContentFiller>()
                 .WithParameter("center", new Point(2500, 2500));
         }
 

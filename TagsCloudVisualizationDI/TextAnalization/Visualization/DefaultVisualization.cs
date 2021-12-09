@@ -8,7 +8,7 @@ namespace TagsCloudVisualizationDI.Layouter
 {
     public class DefaultVisualization : IDisposable, IVisualization
     {
-        private List<RectangleWithWord> RectangleList { get; }
+        private List<RectangleWithWord> Elementslist { get; }
         private Pen ColorPen { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
@@ -20,16 +20,15 @@ namespace TagsCloudVisualizationDI.Layouter
 
 
 
-        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, Pen colorPen, Brush colorBrush, 
-            Font textFont, ImageFormat format, string savePath, Size imageSize)
+        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, string savePath)
         {
-            RectangleList = rectangleWithWordsList;
-            ColorPen = colorPen;
-            ColorBrush = colorBrush;
-            TextFont = textFont;
-            Format = format;
+            Elementslist = rectangleWithWordsList;
+            ColorPen = new Pen(Color.White, 10);
+            ColorBrush = new SolidBrush(Color.White);
+            TextFont = new Font("Times", 15);
+            Format = ImageFormat.Jpeg;
             SavePath = savePath;
-            ImageSize = imageSize;
+            ImageSize = new Size(5000, 5000);
         }
 
         public void DrawAndSaveImage()
@@ -45,14 +44,35 @@ namespace TagsCloudVisualizationDI.Layouter
         {
             using (var graphics = Graphics.FromImage(image))
             {
-                foreach (var rectangle in RectangleList)
+                foreach (var element in Elementslist)
                 {
-                    graphics.DrawRectangle(ColorPen, rectangle.RectangleElement);
-                    graphics.DrawString(rectangle.WordElement.WordText, TextFont, ColorBrush, 
-                        rectangle.RectangleElement.Location.X, rectangle.RectangleElement.Location.Y);
+                    //graphics.DrawRectangle(ColorPen, element.RectangleElement);
+
+                    var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
+                    var font = new Font("Times", fontSize);
+
+                    graphics.DrawString(element.WordElement.WordText, font, ColorBrush, 
+                        element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
                 }
 
                 return image;
+            }
+        }
+
+        public Size GetStringSize(RectangleWithWord word)
+        {
+            //using (var graphics = Graphics.FromImage(image))
+            var image = new Bitmap(ImageSize.Width, ImageSize.Height);
+            using (var graphics = Graphics.FromImage(image))
+            {
+                var fontSize = TextFont.Size + 3 * word.WordElement.CntOfWords;
+                var font = new Font("Times", fontSize);
+
+                var stringSize = graphics.MeasureString(word.WordElement.WordText, font);
+
+                var rectSize = new Size((int)stringSize.Width, (int)stringSize.Height);
+
+                return rectSize;
             }
         }
 

@@ -2,27 +2,34 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualizationDI.Visualization;
 
 namespace TagsCloudVisualizationDI.Layouter
 {
-    public class CircularCloudLayouterForRectanglesWithText : ICircularCloudLayouter, IContentFiller
+    public class CircularCloudLayouterForRectanglesWithText : IContentFiller
     {
         private Point Center { get; }
 
         private Spiral LayouterSpiral { get; }
 
-        private Dictionary<string, RectangleWithWord> RectangleDict { get; }
+        private Func<List<RectangleWithWord>, IVisualization> Visualization { get; }
+
+        private Dictionary<string, RectangleWithWord> ElementsDict { get; set; }
+        private Dictionary<string, RectangleWithWord> PositionedElementsDict { get; }
 
 
 
-        public CircularCloudLayouterForRectanglesWithText(Point center)
+        public CircularCloudLayouterForRectanglesWithText(Point center, Func<List<RectangleWithWord>, IVisualization> visualization)
         {
             Center = center;
             LayouterSpiral = new Spiral();
-            RectangleDict = new Dictionary<string, RectangleWithWord>();
+            ElementsDict = new Dictionary<string, RectangleWithWord>();
+            PositionedElementsDict = new Dictionary<string, RectangleWithWord>();
+            Visualization = visualization;
         }
 
-        public RectangleWithWord PutNextElement(RectangleWithWord rectangleWithWord)
+        
+        private void PutNextElement(RectangleWithWord rectangleWithWord)
         {
             var rectangleSize = rectangleWithWord.RectangleElement.Size;
             var word = rectangleWithWord.WordElement;
@@ -30,88 +37,125 @@ namespace TagsCloudVisualizationDI.Layouter
             if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
                 throw new ArgumentException();
 
-            if (RectangleDict.ContainsKey(word.WordText))
+            if (ElementsDict.ContainsKey(word.WordText))
             {
-                RectangleDict[word.WordText].WordElement.CntOfWords++;
-                RectangleDict[word.WordText].ChangeSizeOfField();
-                return RectangleDict[word.WordText];
+                ElementsDict[word.WordText].WordElement.CntOfWords++;
+
+                ElementsDict[word.WordText].ChangeSizeOfField(Visualization.Invoke(ElementsDict.Values.ToList()));
+
+                return;
             }
 
             var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
 
-            while (RectangleDict.Values.Any(rectangle => rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
+            while (ElementsDict.Values.Any(rectangle =>
+                rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
                 nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
-            if (nextRectangle.RectangleElement.Location != Center)
+            if(nextRectangle.RectangleElement.Location != Center)
                 nextRectangle = CenterElement(nextRectangle);
 
-            RectangleDict.Add(word.WordText, nextRectangle);
+            ElementsDict.Add(word.WordText, nextRectangle);
 
-            return nextRectangle;
+
         }
+        
+        
+        /*
+        private void PutNextElement(RectangleWithWord rectangleWithWord)
+        {
+            if (rectangleWithWord.RectangleElement.Width == 0 
+                || rectangleWithWord.RectangleElement.Height == 0)
+                throw new ArgumentException();
 
-        public List<RectangleWithWord> GetElementsList() => RectangleDict.Values.ToList();
+            var text = rectangleWithWord.WordElement.WordText;
 
-        private RectangleWithWord CreateNewRectangleWithWord(Size rectangleSize, Word word)
+            if (ElementsDict.ContainsKey(text))
+            {
+                ElementsDict[text].WordElement.CntOfWords++;
+                ElementsDict[text].ChangeSizeOfField();    //ЗДЕСЬ ИЗМЕНИТЬ АДЕКВАТНО РАЗМЕР
+            }
+            else
+            {
+                ElementsDict[text] = rectangleWithWord;
+            }
+        }
+        */
+        
+
+        //public RectangleWithWord
+
+        public List<RectangleWithWord> GetElementsList() => ElementsDict.Values.ToList();
+
+        private RectangleWithWord CreateNewRectangleWithWord(Size rectangleSize, Word inputWord)
         {
             var rectangleCenterLocation = LayouterSpiral.GetNextPoint(Center);
             var rectangleX = rectangleCenterLocation.X - Math.Abs(rectangleSize.Width / 2);
             var rectangleY = rectangleCenterLocation.Y - Math.Abs(rectangleSize.Height / 2);
             var rectangle = new Rectangle(rectangleX, rectangleY, Math.Abs(rectangleSize.Width), Math.Abs(rectangleSize.Height));
-            return new RectangleWithWord(rectangle, word);
+            return new RectangleWithWord(rectangle, inputWord);
+        }
+
+        
+
+        public void FillInElements(Size elementSize, List<Word> wordList)
+        {
+            /*
+            
+            foreach (var word in wordList)
+            {
+                var element = CreateNewRectangleWithWord(elementSize, word); //!!!
+
+                PutNextElement(element);
+            }
+
+            foreach (var key in ElementsDict.Keys)
+            {
+                var value = ElementsDict[key];
+
+                var positionedElement = MakePositionForElement(value);
+
+                PositionedElementsDict[key] = positionedElement;
+
+            }
+            ElementsDict = PositionedElementsDict;
+            */
+
+            
+            foreach (var word in wordList)
+            {
+                var element = CreateNewRectangleWithWord(elementSize, word); //!!!
+
+                PutNextElement(element);
+            }
+            
+
+        }
+
+        private RectangleWithWord MakePositionForElement(RectangleWithWord inputElement)
+        {
+            var rectangleSize = inputElement.RectangleElement.Size;
+            //var nextElement = CreateNewRectangleWithWord(rectangleSize, inputElement.WordElement);
+            var nextElement = inputElement;
+
+            while (PositionedElementsDict.Values.Any(el => el.RectangleElement.IntersectsWith(nextElement.RectangleElement)))
+                nextElement = CreateNewRectangleWithWord(rectangleSize, inputElement.WordElement);
+            if (nextElement.RectangleElement.Location != Center)
+                nextElement = CenterElement(nextElement);
+
+
+            return nextElement;
         }
 
         private RectangleWithWord CenterElement(RectangleWithWord inputRectangleWithWord)
         {
-            var centeringRectangleElement = ElementCentering.Centering(inputRectangleWithWord.RectangleElement, Center, RectangleDict);
+            var centeringRectangleElement = ElementCentering.Centering(inputRectangleWithWord.RectangleElement, Center, ElementsDict);
             inputRectangleWithWord.RectangleElement = centeringRectangleElement;
-            //var rectangleElement = inputRectangleWithWord.RectangleElement;
-            /*
-            var directionXSign = Math.Sign(Center.X - rectangleElement.X);
-            var directionYSign = Math.Sign(Center.Y - rectangleElement.Y);
-
-            
-            
-            while (!IsIntersect(rectangleElement))
-            {
-                if (rectangleElement.Y == Center.Y)
-                    break;
-                rectangleElement.Offset(0, directionYSign);
-            }
-            rectangleElement.Offset(0, -directionYSign);
-
-            while (!IsIntersect(rectangleElement))
-            {
-                if (rectangleElement.X == Center.X)
-                    break;
-                rectangleElement.Offset(directionXSign, 0);
-            }
-            rectangleElement.Offset(-directionXSign, 0);
-            if (RectangleDict.Count == 0)
-                rectangleElement.Offset(directionXSign, directionYSign);
-            
-            if (IsIntersect(rectangleElement))
-                rectangleElement.Offset(-directionXSign, -directionYSign);
-            */
-
-            //inputRectangleWithWord.RectangleElement = rectangleElement;
-
-
             return inputRectangleWithWord;
-        }
-
-        public void FillInElements(Size elementSize, List<Word> wordList)
-        {
-
-            foreach (var word in wordList)
-            {
-                var element = CreateNewRectangleWithWord(elementSize, word);
-                PutNextElement(element);
-            }
         }
 
         /*
         private bool IsIntersect(Rectangle inputRectangle) =>
-            RectangleDict.Select(el => el.Value)
+            ElementsDict.Select(el => el.Value)
                 .Any(rect => rect.RectangleElement.IntersectsWith(inputRectangle));
         */
     }
