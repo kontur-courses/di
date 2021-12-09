@@ -23,12 +23,16 @@ internal static class Startup
         builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
         builder.RegisterType<WordWeigher>().As<IWordWeigher>().SingleInstance();
         builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>().SingleInstance();
-        builder.RegisterType<FileReaderFactory>().As<IFileReaderFactory>().SingleInstance();
-
-        builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
-            .As<IFilter>().SingleInstance();
+        builder.RegisterType<DocFileReader>().As<IFileReader>().SingleInstance();
+        builder.RegisterType<PlainTextFileReader>().As<IFileReader>().AsSelf().SingleInstance();
 
         builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
+        builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
+            .As<IFilter>().SingleInstance();
+        builder.Register(c => 
+                new FileReaderFactory(c.Resolve<IEnumerable<IFileReader>>(), c.Resolve<PlainTextFileReader>()))
+            .As<IFileReaderFactory>()
+            .SingleInstance();
 
         return builder.Build();
     }

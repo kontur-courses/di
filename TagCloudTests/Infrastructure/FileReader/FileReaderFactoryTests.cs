@@ -7,7 +7,16 @@ namespace TagCloudTests.Infrastructure.FileReader;
 
 internal class FileReaderFactoryTests
 {
-    private readonly FileReaderFactory sut = new();
+    private FileReaderFactory sut;
+
+    [OneTimeSetUp]
+    public void OneTimeetUp()
+    {
+        var docReader = new DocFileReader();
+        var plainReader = new PlainTextFileReader();
+
+        sut = new FileReaderFactory(new IFileReader[] { docReader, plainReader }, plainReader);
+    }
 
     [TestCase("a.txt", typeof(PlainTextFileReader))]
     [TestCase("a.unknownformat", typeof(PlainTextFileReader))]

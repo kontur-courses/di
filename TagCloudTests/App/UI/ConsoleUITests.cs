@@ -60,5 +60,10 @@ internal class ConsoleUITests
         {
             yield return "test";
         }
+
+        public IReadOnlySet<string> GetSupportedExtensions()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,15 +1,18 @@
-﻿using System.Linq.Expressions;
-using TagCloud.App.UI.Common;
+﻿using TagCloud.App.UI.Common;
 
 namespace TagCloud.Infrastructure.FileReader;
 
 public class FileReaderFactory : IFileReaderFactory
 {
-    public static readonly IReadOnlyDictionary<string, Type> ReaderTypes = new Dictionary<string, Type>
+    private readonly IFileReader defaultFileReader;
+
+    public readonly IReadOnlyDictionary<string, IFileReader> FileReaders;
+
+    public FileReaderFactory(IEnumerable<IFileReader> fileReaders, IFileReader defaultFileReader)
     {
-        { ".doc", typeof(DocFileReader) },
-        { ".docx", typeof(DocFileReader) }
-    };
+        this.defaultFileReader = defaultFileReader;
+        FileReaders = CreateExtensionsDictionary(fileReaders);
+    }
 
     public IFileReader Create(IInputPathProvider inputPathProvider)
     {
@@ -21,9 +24,23 @@ public class FileReaderFactory : IFileReaderFactory
         var fileInfo = new FileInfo(filePath);
         var extension = fileInfo.Extension;
 
-        if (ReaderTypes.ContainsKey(extension))
-            return (IFileReader) Activator.CreateInstance(ReaderTypes[extension]);
+        return FileReaders.ContainsKey(extension)
+            ? FileReaders[extension]
+            : defaultFileReader;
+    }
 
-        return new PlainTextFileReader();
+    private Dictionary<string, IFileReader> CreateExtensionsDictionary(IEnumerable<IFileReader> fileReaders)
+    {
+        var dictionary = new Dictionary<string, IFileReader>();
+
+        foreach (var fileReader in fileReaders)
+        {
+            foreach (var extension in fileReader.GetSupportedExtensions())
+            {
+                dictionary[extension] = fileReader;
+            }
+        }
+
+        return dictionary;
     }
 }
