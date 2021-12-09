@@ -26,8 +26,6 @@ namespace TagsCloudVisualization
         {
             if (word == null) throw new ArgumentNullException(nameof(word));
             if (string.IsNullOrWhiteSpace(word)) return;
-            if (word.Length > 10)
-                word = word.Substring(0, 10);
             statistics[word.ToLower()] = 1 + (statistics.TryGetValue(word.ToLower(), out var count) ? count : 0);
         }
 

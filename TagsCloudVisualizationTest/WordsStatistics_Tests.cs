@@ -119,33 +119,6 @@ namespace TagsCloudVisualizationTest
         }
 
         [Test]
-        public void AddWord_CutsWords_LongerThan10()
-        {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("12345678901"));
-            wordsStatistics.Load();
-            wordsStatistics.GetStatistics().Select(t => t.Word)
-                .Should().BeEquivalentTo("1234567890");
-        }
-
-        [Test]
-        public void AddWord_CutsWordsJoined()
-        {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("12345678901", "1234567890"));
-            wordsStatistics.Load();
-            wordsStatistics.GetStatistics().Select(t => t.Count).First()
-                .Should().Be(2);
-        }
-
-        [Test]
-        public void AddWord_AllowsWordAndCutItToWhitespaces_WhenWordPrecededByWhitespaces()
-        {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("          a"));
-            wordsStatistics.Load();
-            wordsStatistics.GetStatistics().Select(t => t.Word)
-                .Should().BeEquivalentTo("          ");
-        }
-
-        [Test]
         public void AddWord_IsCaseInsensitive()
         {
             var counter = 0;

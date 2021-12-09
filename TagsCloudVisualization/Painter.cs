@@ -65,9 +65,11 @@ namespace TagsCloudVisualization
             foreach (var (word, size, rectangle) in rectangles)
             {
                 var rf = new RectangleF(rectangle.X, rectangle.Y - rectangle.Height / 2, rectangle.Width, rectangle.Height * 2);
+                Console.WriteLine(word);
                 graphics.DrawString(word, 
                     new Font(SystemFonts.DefaultFont.FontFamily, size, FontStyle.Regular), 
                     new SolidBrush(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))), rf);
+                graphics.DrawRectangle(new Pen(Color.Blue), new Rectangle((int)rf.X, (int)rf.Y, (int)rf.Width, (int)rf.Height));
             }
         }
 
