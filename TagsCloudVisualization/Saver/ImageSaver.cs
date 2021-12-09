@@ -22,7 +22,7 @@ namespace TagsCloudVisualization.Saver
         {
             var pathToDirectory = Path.Combine(Directory.GetCurrentDirectory(), directory);
             var path = Path.Combine(pathToDirectory, imageName);
-            image.Save(path, ImageFormat.Bmp);
+            image.Save(path, ImageFormat.Png);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace TagsCloudCLI
         [Option("directory", HelpText = "Path to file with words", Default = "ImageExamples")]
         public string Directory { get; set; }
 
-        [Option("image_name", HelpText = "Image name", Default = "example.bmp")]
+        [Option("image_name", HelpText = "Image name", Default = "example.png")]
         public string ImageName { get; set; }
 
         [Option("font_family", HelpText = "Family name of the words", Default = "Arial")]
