@@ -5,16 +5,16 @@ using System.Text.RegularExpressions;
 
 namespace TagCloud.Words.Readers
 {
-    public class WordsReader : IWordsReader
+    public class LinesReader : ILinesReader
     {
-        public IEnumerable<string> ReadWordsFrom(StreamReader streamReader)
+        public IEnumerable<string> ReadLinesFrom(StreamReader streamReader)
         {
-            return ReadWords(streamReader)
+            return ReadLines(streamReader)
                 .SelectMany(line => Regex.Split(line, @"\P{L}+", RegexOptions.Compiled))
                 .Select(word => word);
         }
 
-        private IEnumerable<string> ReadWords(StreamReader streamReader)
+        private IEnumerable<string> ReadLines(StreamReader streamReader)
         {
             using (streamReader)
             {
