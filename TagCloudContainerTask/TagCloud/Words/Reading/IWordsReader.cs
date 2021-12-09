@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace TagCloud.Words.Reading
 {
     public interface IWordsReader
     {
-        IEnumerable<string> ReadFromFile(string pathToFile, Encoding encoding);
-        IEnumerable<string> ReadFromConsole();
+        IEnumerable<string> ReadWordsFrom(StreamReader streamReader);
     }
 }
