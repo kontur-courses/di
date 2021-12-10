@@ -1,22 +1,15 @@
-﻿using TagCloud.App.UI.Common;
-
-namespace TagCloud.Infrastructure.FileReader;
+﻿namespace TagCloud.Infrastructure.FileReader;
 
 public class FileReaderFactory : IFileReaderFactory
 {
     private readonly IFileReader defaultFileReader;
 
-    public readonly IReadOnlyDictionary<string, IFileReader> FileReaders;
+    private readonly IReadOnlyDictionary<string, IFileReader> FileReaders;
 
     public FileReaderFactory(IEnumerable<IFileReader> fileReaders, IFileReader defaultFileReader)
     {
         this.defaultFileReader = defaultFileReader;
         FileReaders = CreateExtensionsDictionary(fileReaders);
-    }
-
-    public IFileReader Create(IInputPathProvider inputPathProvider)
-    {
-        return Create(inputPathProvider.InputPath);
     }
 
     public IFileReader Create(string filePath)
@@ -29,7 +22,7 @@ public class FileReaderFactory : IFileReaderFactory
             : defaultFileReader;
     }
 
-    private Dictionary<string, IFileReader> CreateExtensionsDictionary(IEnumerable<IFileReader> fileReaders)
+    private static Dictionary<string, IFileReader> CreateExtensionsDictionary(IEnumerable<IFileReader> fileReaders)
     {
         var dictionary = new Dictionary<string, IFileReader>();
 

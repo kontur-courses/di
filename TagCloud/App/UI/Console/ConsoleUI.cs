@@ -1,4 +1,4 @@
-﻿using TagCloud.App.UI.Common;
+﻿using TagCloud.App.UI.Console.Common;
 using TagCloud.Infrastructure.FileReader;
 using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Lemmatizer;
@@ -6,7 +6,7 @@ using TagCloud.Infrastructure.Painter;
 using TagCloud.Infrastructure.Saver;
 using TagCloud.Infrastructure.Weigher;
 
-namespace TagCloud.App.UI;
+namespace TagCloud.App.UI.Console;
 
 public class ConsoleUI : IUserInterface
 {
@@ -30,7 +30,7 @@ public class ConsoleUI : IUserInterface
     public void Run(IAppSettings settings)
     {
         var lines = fileReaderFactory
-            .Create(settings)
+            .Create(settings.InputPath)
             .GetLines(settings.InputPath);
         var lemmas = lemmatizer.GetLemmas(lines);
         var filtered = filter.FilterWords(lemmas);

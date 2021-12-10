@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace TagCloud.App.UI.Common;
+namespace TagCloud.App.UI.Console.Common;
 
 public class AppSettings : IAppSettings
 {

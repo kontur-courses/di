@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Infrastructure.Lemmatizer;
 
@@ -9,11 +10,10 @@ internal class RussianLemmatizerTests
     private readonly RussianLemmatizer sut = new();
 
     [TestCaseSource(typeof(RussianLemmatizerTestCases), nameof(RussianLemmatizerTestCases.TestCaseDatas))]
-    public void TryLemmatize_Should(string word, bool expectedBool, Lemma expectedLemma)
+    public void TryLemmatize_Should(IEnumerable<string> words, IEnumerable<Lemma> expected)
     {
-        var (isLemmatized, lemma) = sut.TryLemmatize(word);
+        var actual = sut.GetLemmas(words);
 
-        isLemmatized.Should().Be(expectedBool);
-        lemma.Should().BeEquivalentTo(expectedLemma);
+        actual.Should().BeEquivalentTo(expected);
     }
 }

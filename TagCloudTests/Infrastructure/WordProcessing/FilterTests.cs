@@ -12,7 +12,7 @@ internal class FilterTests
     [Test]
     public void FilterWords_ShouldReturnCorrectEnumerable_WhenThereIsNoConditionsAndInputAreStrings()
     {
-        var filter = new TagCloud.Infrastructure.Filter.Filter();
+        var filter = new Filter();
 
         var actual = filter.FilterWords(FilterTestCases.Strings);
 
@@ -22,7 +22,7 @@ internal class FilterTests
     [Test]
     public void FilterWords_ShouldReturnCorrectEnumerable_WhenThereIsNoConditionsAndInputAreLemmas()
     {
-        var filter = new TagCloud.Infrastructure.Filter.Filter();
+        var filter = new Filter();
 
         var actual = filter.FilterWords(FilterTestCases.Lemmas);
 

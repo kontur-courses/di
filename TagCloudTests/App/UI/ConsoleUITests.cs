@@ -4,7 +4,8 @@ using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.App.UI;
-using TagCloud.App.UI.Common;
+using TagCloud.App.UI.Console;
+using TagCloud.App.UI.Console.Common;
 using TagCloud.Infrastructure.FileReader;
 using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Layouter;
@@ -63,7 +64,7 @@ internal class ConsoleUITests
 
         public IReadOnlySet<string> GetSupportedExtensions()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //ignored
         }
     }
 }

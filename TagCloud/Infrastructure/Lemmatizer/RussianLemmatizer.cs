@@ -4,7 +4,7 @@ namespace TagCloud.Infrastructure.Lemmatizer;
 
 public class RussianLemmatizer : ILemmatizer
 {
-    public static readonly IReadOnlyDictionary<string, PartOfSpeech> PartOfSpeeches = new Dictionary<string, PartOfSpeech>
+    private static readonly IReadOnlyDictionary<string, PartOfSpeech> PartOfSpeeches = new Dictionary<string, PartOfSpeech>
     {
         { "noun", PartOfSpeech.Noun },
         { "adjf", PartOfSpeech.Adjective },
@@ -29,6 +29,9 @@ public class RussianLemmatizer : ILemmatizer
     {
         foreach (var word in words)
         {
+            if (string.IsNullOrEmpty(word))
+                continue;
+
             var (isLemmatized, lemma) = TryLemmatize(word.ToLowerInvariant());
 
             if (isLemmatized)
@@ -36,11 +39,8 @@ public class RussianLemmatizer : ILemmatizer
         }
     }
 
-    public (bool, Lemma) TryLemmatize(string word)
+    private (bool, Lemma) TryLemmatize(string word)
     {
-        if (string.IsNullOrEmpty(word))
-            return (false, null);
-
         var morphInfo = morph.Parse(word).First();
 
         if (!morphInfo.BestTag.HasLemma)

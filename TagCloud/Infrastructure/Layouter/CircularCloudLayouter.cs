@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagCloud.App.UI.Common;
+using TagCloud.App.UI.Console.Common;
 
 namespace TagCloud.Infrastructure.Layouter;
 

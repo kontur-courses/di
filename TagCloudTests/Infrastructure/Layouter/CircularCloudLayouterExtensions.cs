@@ -9,13 +9,13 @@ internal static class CircularCloudLayouterExtensions
 {
     private static readonly Random Random = new(int.MaxValue);
 
-    public static void GenerateRandomLayout(this TagCloud.Infrastructure.Layouter.CircularCloudLayouter layouter, int layoutLength)
+    public static void GenerateRandomLayout(this CircularCloudLayouter layouter, int layoutLength)
     {
         for (var i = 0; i < layoutLength; i++)
             layouter.PutNextRectangle(GetRandomSize());
     }
 
-    public static void GenerateLayoutOfSquares(this TagCloud.Infrastructure.Layouter.CircularCloudLayouter layouter, int layoutLength)
+    public static void GenerateLayoutOfSquares(this CircularCloudLayouter layouter, int layoutLength)
     {
         var size = new Size(10, 10);
 
@@ -23,7 +23,7 @@ internal static class CircularCloudLayouterExtensions
             layouter.PutNextRectangle(size);
     }
 
-    public static double CalculateLayoutRadius(this TagCloud.Infrastructure.Layouter.CircularCloudLayouter layouter)
+    public static double CalculateLayoutRadius(this CircularCloudLayouter layouter)
     {
         var layout = layouter.GetLayout();
         var layoutRadius = layout.Max(x => (x.Location + x.Size / 2).GetDistance(layouter.Center));

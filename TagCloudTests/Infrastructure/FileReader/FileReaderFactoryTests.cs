@@ -10,7 +10,7 @@ internal class FileReaderFactoryTests
     private FileReaderFactory sut;
 
     [OneTimeSetUp]
-    public void OneTimeetUp()
+    public void OneTimeSetUp()
     {
         var docReader = new DocFileReader();
         var plainReader = new PlainTextFileReader();

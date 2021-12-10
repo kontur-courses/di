@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using TagCloud.App.UI;
-using TagCloud.App.UI.Common;
+using TagCloud.App.UI.Console;
+using TagCloud.App.UI.Console.Common;
 using TagCloud.Infrastructure.FileReader;
 using TagCloud.Infrastructure.Filter;
 using TagCloud.Infrastructure.Layouter;
@@ -13,9 +14,8 @@ namespace TagCloud;
 
 internal static class Startup
 {
-    public static IContainer BuildDependencies(IAppSettings appSettings)
+    public static ContainerBuilder ConfigureConsoleClient(this ContainerBuilder builder, IAppSettings appSettings)
     {
-        var builder = new ContainerBuilder();
         builder.RegisterType<ConsoleUI>().As<IUserInterface>();
         builder.RegisterType<RandomPalette>().As<IPalette>();
         builder.RegisterType<Painter>().As<IPainter>();
@@ -34,6 +34,6 @@ internal static class Startup
             .As<IFileReaderFactory>()
             .SingleInstance();
 
-        return builder.Build();
+        return builder;
     }
 }

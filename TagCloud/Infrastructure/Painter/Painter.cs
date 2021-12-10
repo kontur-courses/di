@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagCloud.App.UI.Common;
+using TagCloud.App.UI.Console.Common;
 using TagCloud.Infrastructure.Layouter;
 
 namespace TagCloud.Infrastructure.Painter;
@@ -12,9 +12,9 @@ public class Painter : IPainter
 
     public Painter(IPalette palette, ICloudLayouter layouter, IAppSettings settings)
     {
+        ValidateSettings(settings);
         this.palette = palette;
         this.layouter = layouter;
-        ValidateSettings(settings);
         this.settings = settings;
     }
 

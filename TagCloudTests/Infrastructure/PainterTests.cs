@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.App.UI.Common;
+using TagCloud.App.UI.Console.Common;
 using TagCloud.Infrastructure.Layouter;
 using TagCloud.Infrastructure.Painter;
 
