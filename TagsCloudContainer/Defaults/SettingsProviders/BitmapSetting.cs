@@ -1,19 +1,18 @@
-﻿using Autofac;
-using Mono.Options;
+﻿using Mono.Options;
 using System.Drawing.Drawing2D;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class BitmapSetting : ICliSettingsProvider
 {
-    public int Width { get; set; } = 800;
+    private static int width = 800;
+    private static int height = 400;
+    private static SmoothingMode smoothingMode = SmoothingMode.AntiAlias;
 
-    public int Height { get; set; } = 400;
-
-    public SmoothingMode SmoothingMode { get; set; } = SmoothingMode.AntiAlias;
-
+    public int Width { get => width; private set => width = value; }
+    public int Height { get => height; private set => height = value; }
+    public SmoothingMode SmoothingMode { get => smoothingMode; private set => smoothingMode = value; }
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()
@@ -24,11 +23,5 @@ public class BitmapSetting : ICliSettingsProvider
         };
 
         return options;
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<BitmapSetting>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

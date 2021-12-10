@@ -1,7 +1,5 @@
-﻿using Autofac;
-using TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.SettingsProviders;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -11,7 +9,7 @@ public class StringReader : ITextReader
     {
     }
 
-    public StringReader(string source)
+    protected StringReader(string source)
     {
         this.source = source;
     }
@@ -33,12 +31,5 @@ public class StringReader : ITextReader
         }
 
         yield return source[previous..];
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<StringReader>().AsSelf().As<ITextReader>()
-            .UsingConstructor(typeof(InputSettings));
     }
 }

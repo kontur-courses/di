@@ -1,15 +1,14 @@
-﻿using Autofac;
-using Mono.Options;
+﻿using Mono.Options;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class TextAnalyzerSettings : ICliSettingsProvider
 {
-    public char[] WordSeparators { get; set; } = { ' ', ',', '.' };
-
+    public char[] WordSeparators { get => wordSeparators; private set => wordSeparators = value; }
     private const char separator = '/';
+    private static char[] wordSeparators = { ' ', ',', '.' };
+
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()
@@ -22,11 +21,5 @@ public class TextAnalyzerSettings : ICliSettingsProvider
         };
 
         return options;
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<TextAnalyzerSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

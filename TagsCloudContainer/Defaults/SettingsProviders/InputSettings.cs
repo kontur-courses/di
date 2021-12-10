@@ -1,17 +1,17 @@
-﻿using Autofac;
-using Mono.Options;
+﻿using Mono.Options;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class InputSettings : IRequiredSettingsProvider
 {
-    public string[] Paths { get; private set; } = Array.Empty<string>();
+    private static string[] paths = Array.Empty<string>();
+    private static string source = string.Empty;
+    private static bool isSet;
 
-    public string Source { get; private set; } = string.Empty;
-
-    public bool IsSet { get; private set; }
+    public string[] Paths { get => paths; private set => paths = value; }
+    public string Source { get => source; private set => source = value; }
+    public bool IsSet { get => isSet; private set => isSet = value; }
 
     public OptionSet GetCliOptions()
     {
@@ -32,11 +32,5 @@ public class InputSettings : IRequiredSettingsProvider
             };
 
         return options;
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<InputSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

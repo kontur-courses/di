@@ -1,20 +1,13 @@
-﻿using Autofac;
-using Mono.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mono.Options;
 using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.MyStem;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class SpeechPartFilterSettings : ICliSettingsProvider
 {
-    private HashSet<SpeechPart> toFilterOut = new() 
-    { 
+    private static readonly HashSet<SpeechPart> toFilterOut = new()
+    {
         SpeechPart.CONJ,
         SpeechPart.INTJ,
         SpeechPart.PART,
@@ -34,13 +27,7 @@ public class SpeechPartFilterSettings : ICliSettingsProvider
         return options;
     }
 
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<SpeechPartFilterSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
-    }
-
-    private void AddParts(string v)
+    private static void AddParts(string v)
     {
         foreach (var part in v.Split())
         {
@@ -48,7 +35,7 @@ public class SpeechPartFilterSettings : ICliSettingsProvider
         }
     }
 
-    private void RemoveParts(string v)
+    private static void RemoveParts(string v)
     {
         foreach (var part in v.Split())
         {

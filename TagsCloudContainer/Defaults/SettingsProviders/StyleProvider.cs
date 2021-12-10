@@ -1,19 +1,18 @@
-﻿using Autofac;
-using Mono.Options;
+﻿using Mono.Options;
 using System.Drawing;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class StyleProvider : ICliSettingsProvider
 {
-    public string FontFamilyName { get; set; } = "Comic Sans MS";
+    private static string fontFamilyName = "Comic Sans MS";
+    private static double maxSize = 50;
+    private static Color brushColor = Color.White;
 
-    public double MaxSize { get; set; } = 50;
-
-    public Color BrushColor { get; set; } = Color.White;
-
+    public string FontFamilyName { get => fontFamilyName; private set => fontFamilyName = value; }
+    public double MaxSize { get => maxSize; private set => maxSize = value; }
+    public Color BrushColor { get => brushColor; private set => brushColor = value; }
     public Style GetStyle(ITag tag)
     {
         var font = new Font(new FontFamily(FontFamilyName), (float)(tag.RelativeSize * MaxSize));
@@ -30,11 +29,5 @@ public class StyleProvider : ICliSettingsProvider
         };
 
         return options;
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<StyleProvider>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

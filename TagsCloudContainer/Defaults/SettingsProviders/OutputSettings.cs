@@ -1,16 +1,15 @@
-﻿using Autofac;
-using Mono.Options;
+﻿using Mono.Options;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class OutputSettings : ICliSettingsProvider
 {
-    public string OutputPath { get; set; } = "image.png";
+    private static string outputPath = "image.png";
+    private static ImageFormatType imageFormat = ImageFormatType.Png;
 
-    public ImageFormatType ImageFormat { get; set; } = ImageFormatType.Png;
-
+    public string OutputPath { get => outputPath; private set => outputPath = value; }
+    public ImageFormatType ImageFormat { get => imageFormat; private set => imageFormat = value; }
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()
@@ -20,11 +19,5 @@ public class OutputSettings : ICliSettingsProvider
             };
 
         return options;
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<OutputSettings>().AsSelf().As<ICliSettingsProvider>().SingleInstance();
     }
 }

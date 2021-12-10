@@ -1,7 +1,5 @@
-﻿using Autofac;
-using TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.SettingsProviders;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -18,13 +16,7 @@ public class SpeechPartFilter : IWordFilter
 
     public bool IsValid(string word)
     {
-        var part = myStem.AnalyzeWord(word).SpeechPart;
-        return !settings.ToFilterOut.Contains(part);
-    }
-
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<SpeechPartFilter>().AsSelf().As<IWordFilter>();
+        var part = myStem.AnalyzeWord(word)?.SpeechPart;
+        return part.HasValue && !settings.ToFilterOut.Contains(part.Value);
     }
 }

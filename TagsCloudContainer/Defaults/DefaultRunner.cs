@@ -2,7 +2,6 @@
 using Mono.Options;
 using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.SettingsProviders;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -22,12 +21,6 @@ public class DefaultRunner : IRunner
         var output = container.Resolve<OutputSettings>();
         var img = vis.GetBitmap();
         img.Save(output.OutputPath, output.ImageFormat.GetFormat());
-    }
-
-    [Register(IsKeyed = true)]
-    public static void Register(ContainerBuilder builder, object key)
-    {
-        builder.RegisterType<DefaultRunner>().AsSelf().Keyed<IRunner>(key);
     }
 
     private void ParseSettings(string[] args)

@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using TagsCloudContainer.Abstractions;
 using TagsCloudContainer.Defaults.SettingsProviders;
-using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults;
 
@@ -17,7 +16,7 @@ public class TextAnalyzer : ITextAnalyzer
     {
     }
 
-    public TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators)
+    protected TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators)
     {
         this.textReaders = textReaders;
         this.wordNormalizers = wordNormalizers;
@@ -42,18 +41,11 @@ public class TextAnalyzer : ITextAnalyzer
         return result;
     }
 
-    [Register]
-    public static void Register(ContainerBuilder builder)
-    {
-        builder.RegisterType<TextAnalyzer>().AsSelf().As<ITextAnalyzer>()
-            .UsingConstructor(typeof(ITextReader[]), typeof(IWordNormalizer[]), typeof(IWordFilter[]), typeof(TextAnalyzerSettings));
-    }
-
     private IEnumerable<string> ApplyNormalizingAndFiltering(IEnumerable<string> words)
     {
         foreach (var normalizer in wordNormalizers)
         {
-            words = words.Select(normalizer.Normalize);
+            words = words.Select(normalizer.Normalize).Where(x => string.IsNullOrEmpty(x))!;
         }
 
         foreach (var filter in wordFilters)
