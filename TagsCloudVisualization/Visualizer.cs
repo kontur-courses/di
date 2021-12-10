@@ -31,7 +31,7 @@ namespace TagsCloudVisualization
 
         public void Visualize()
         {
-            var words = fileReadService.Read();
+            var words = fileReadService.GetFileContent();
             var preparedWords = wordsPreparer.Prepare(words);
             var tags = wordsToTagTransformer.Transform(preparedWords);
             var drawableTags = tagToDrawableTransformer.Transform(tags.ToList());

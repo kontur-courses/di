@@ -2,7 +2,7 @@
 {
     public interface IWordsReader
     {
-        bool CanRead(string extension);
-        string Read(string filename);
+        bool IsSupportedFileExtension(string extension);
+        string GetFileContent(string path);
     }
 }

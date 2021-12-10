@@ -10,25 +10,33 @@ namespace TagsCloudVisualization.WordsProvider
     public class FileReadService : IFileReadService
     {
         private const string WordsSplitPattern = @"\W+";
+        private readonly Regex wordsSplit = new Regex(WordsSplitPattern);
         private readonly string path;
         private readonly IEnumerable<IWordsReader> readers;
+        private readonly string extension;
 
         public FileReadService(string path, IEnumerable<IWordsReader> readers)
         {
             this.path = path;
-            if (!File.Exists(path))
-                throw new ArgumentException($"File {path} doesn't exists");
+            CheckFileExistsAndThrowArgumentExceptionIfNot();
             this.readers = readers;
+            extension = Path.GetExtension(path);
         }
 
-        public IEnumerable<string> Read()
+        public IEnumerable<string> GetFileContent()
         {
-            var extension = Path.GetExtension(path);
-            var reader = readers.FirstOrDefault(reader => reader.CanRead(extension));
+            var reader = readers.FirstOrDefault(reader => reader.IsSupportedFileExtension(extension));
             if (reader == null)
                 throw new ArgumentException($"Unsupported file extension: {extension}");
-            var text = reader.Read(path);
-            return Regex.Split(text, WordsSplitPattern);
+            CheckFileExistsAndThrowArgumentExceptionIfNot();
+            var text = reader.GetFileContent(path);
+            return wordsSplit.Split(text);
+        }
+
+        private void CheckFileExistsAndThrowArgumentExceptionIfNot()
+        {
+            if (!File.Exists(path))
+                throw new ArgumentException($"File {path} doesn't exists");
         }
     }
 }
