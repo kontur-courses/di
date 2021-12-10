@@ -6,8 +6,8 @@ namespace TagCloud.Visualization
 {
     public interface IVisualizer
     {
-        void VisualizeCloud(Graphics graphics, Point cloudCenter, IEnumerable<Tag> tags);
+        void VisualizeCloudOnImage(Image image, Point cloudCenter, IEnumerable<Tag> tags);
 
-        void VisualizeDebuggingMarkup(Graphics graphics, Size imgSize, Point cloudCenter, int cloudCircleRadius);
+        void VisualizeDebuggingMarkupOnImage(Image image, Point cloudCenter, int cloudCircleRadius);
     }
 }
