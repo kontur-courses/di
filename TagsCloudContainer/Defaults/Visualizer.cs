@@ -6,12 +6,12 @@ namespace TagsCloudContainer.Defaults;
 
 public class Visualizer : IVisualizer
 {
-    private readonly BitmapSetting settingsProvider;
+    private readonly VisualizerSettings settingsProvider;
     private readonly ITagPacker tags;
     private readonly ILayouter layouter;
     private readonly IStyler styler;
 
-    public Visualizer(BitmapSetting settingsProvider, ITagPacker tags, ILayouter layouter, IStyler styler)
+    public Visualizer(VisualizerSettings settingsProvider, ITagPacker tags, ILayouter layouter, IStyler styler)
     {
         this.settingsProvider = settingsProvider;
         this.tags = tags;
@@ -26,11 +26,15 @@ public class Visualizer : IVisualizer
         {
             bitmapGraphics.SmoothingMode = settingsProvider.SmoothingMode;
             bitmapGraphics.Clear(Color.Black);
+            var count = 0;
             foreach (var tag in tags.GetTags().Select(styler.Style))
             {
                 var size = tag.GetTrueGraphicSize(bitmapGraphics);
                 var rectangle = layouter.PutNextRectangle(size);
                 tag.DrawSelf(bitmapGraphics, rectangle);
+                count++;
+                if (settingsProvider.WordLimit != 0 && count >= settingsProvider.WordLimit)
+                    break;
             }
         }
 
