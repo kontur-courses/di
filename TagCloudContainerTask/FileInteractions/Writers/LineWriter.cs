@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TagCloud.Words.Writers
+namespace FileInteractions.Writers
 {
     public class LineWriter : ILineWriter
     {

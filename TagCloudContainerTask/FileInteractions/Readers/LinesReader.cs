@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TagCloud.Words.Readers
+namespace FileInteractions.Readers
 {
     public class LinesReader : ILinesReader
     {

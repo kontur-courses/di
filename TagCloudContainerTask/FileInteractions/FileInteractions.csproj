@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{714B2344-1B3F-4BE1-B878-E783E6CDDD07}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ConsoleClient</RootNamespace>
-    <AssemblyName>ConsoleClient</AssemblyName>
+    <ProjectGuid>{BE374E9B-FFAE-4BB0-8C8D-1E41BDB289E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FileInteractions</RootNamespace>
+    <AssemblyName>FileInteractions</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -44,26 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FileInteractions\FileInteractions.csproj">
-      <Project>{BE374E9B-FFAE-4BB0-8C8D-1E41BDB289E4}</Project>
-      <Name>FileInteractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TagCloud\TagCloud.csproj">
-      <Project>{31ACEB8C-2408-42BD-A5CC-97D0F8D9DC4D}</Project>
-      <Name>TagCloud</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="mystem.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="Readers\ILinesReader.cs" />
+    <Compile Include="Readers\LinesReader.cs" />
+    <Compile Include="Savers\BitmapSaver.cs" />
+    <Compile Include="Savers\IBitmapSaver.cs" />
+    <Compile Include="Writers\ILineWriter.cs" />
+    <Compile Include="Writers\LineWriter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

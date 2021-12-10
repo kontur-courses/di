@@ -49,8 +49,6 @@
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\CircularLayouter.cs" />
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\ICloudLayouter.cs" />
     <Compile Include="LayoutAlgorithms\ILayouter.cs" />
-    <Compile Include="Savers\BitmapSaver.cs" />
-    <Compile Include="Savers\IBitmapSaver.cs" />
     <Compile Include="Visualization\Drawer.cs" />
     <Compile Include="Visualization\IDrawer.cs" />
     <Compile Include="Visualization\IVisualizer.cs" />
@@ -63,15 +61,16 @@
     <Compile Include="Words\Preprocessors\IPreprocessor.cs" />
     <Compile Include="Words\Preprocessors\ToInitFormPreprocessor.cs" />
     <Compile Include="Words\Preprocessors\ToLowerCasePreprocessor.cs" />
-    <Compile Include="Words\Readers\ILinesReader.cs" />
-    <Compile Include="Words\Readers\LinesReader.cs" />
     <Compile Include="Words\Tags\ITag.cs" />
     <Compile Include="Words\Tags\ITagger.cs" />
     <Compile Include="Words\Tags\Tag.cs" />
     <Compile Include="Words\Tags\Tagger.cs" />
-    <Compile Include="Words\Writers\ILineWriter.cs" />
-    <Compile Include="Words\Writers\LineWriter.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FileInteractions\FileInteractions.csproj">
+      <Project>{be374e9b-ffae-4bb0-8c8d-1e41bdb289e4}</Project>
+      <Name>FileInteractions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

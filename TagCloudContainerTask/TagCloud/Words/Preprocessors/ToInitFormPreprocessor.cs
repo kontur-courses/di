@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using TagCloud.Words.Writers;
+using FileInteractions.Writers;
 
 namespace TagCloud.Words.Preprocessors
 {
