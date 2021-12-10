@@ -26,9 +26,9 @@ public class FileReader : ITextReader
         {
             using var fileStream = file.OpenText();
             var line = fileStream.ReadLine();
-            while (!string.IsNullOrEmpty(line))
+            while (!fileStream.EndOfStream)
             {
-                yield return line;
+                yield return line!;
                 line = fileStream.ReadLine();
             }
         }
