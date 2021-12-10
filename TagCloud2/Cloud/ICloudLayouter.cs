@@ -9,7 +9,7 @@ namespace TagCloud2
 {
     public interface ICloudLayouter
     {
-        public Rectangle PutNewRectangle();
+        public Rectangle PutNewRectangle(Size rectangleSize);
 
         public IEnumerable<Rectangle> GetRectangles();
 

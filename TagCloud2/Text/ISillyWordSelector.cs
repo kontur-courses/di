@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TagCloud2
 {
-    public interface ISillyWordsSelector
+    public interface ISillyWordSelector
     {
+        public bool IsWordSilly(string word);
     }
 }

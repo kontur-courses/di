@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TagCloud2
 {
-    public interface ISillyWordsRemover
+    public interface ISillyWordRemover
     {
-        string RemoveSillyWords(string input, ISillyWordsSelector selector);
+        string RemoveSillyWords(string input, ISillyWordSelector selector);
     }
 }

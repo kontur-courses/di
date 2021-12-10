@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagCloudVisualisation
+namespace TagCloud2
 {
-    public interface ICloudLayouter
+    public interface IColoringAlgorithm
     {
-        Rectangle PutNewRectangle(Size rectangleSize);
+        public Color GetColor(Rectangle rectangle);
     }
 }

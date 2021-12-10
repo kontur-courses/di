@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagCloud2;
 
 namespace TagCloudVisualisation
 {
@@ -36,10 +37,20 @@ namespace TagCloudVisualisation
             return rectangle;
         }
 
+        public void SetSettings(ICloudSettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
         private Rectangle CreateRectangleFromSpiral(Size rectangleSize)
         {
             var currentPoint = spiral.GetNextPoint();
             return currentPoint.GetRectangleWithCenterInPoint(rectangleSize);
+        }
+
+        IEnumerable<Rectangle> ICloudLayouter.GetRectangles()
+        {
+            return GetRectangles();
         }
     }
 }
