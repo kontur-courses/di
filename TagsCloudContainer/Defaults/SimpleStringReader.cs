@@ -3,13 +3,13 @@ using TagsCloudContainer.Defaults.SettingsProviders;
 
 namespace TagsCloudContainer.Defaults;
 
-public class StringReader : ITextReader
+public class SimpleStringReader : ITextReader
 {
-    public StringReader(InputSettings settings) : this(settings.Source)
+    public SimpleStringReader(InputSettings settings) : this(settings.Source)
     {
     }
 
-    protected StringReader(string source)
+    protected SimpleStringReader(string source)
     {
         this.source = source;
     }
