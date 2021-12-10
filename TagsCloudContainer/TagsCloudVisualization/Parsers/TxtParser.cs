@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TagsCloudVisualization.Parsers
@@ -7,20 +8,10 @@ namespace TagsCloudVisualization.Parsers
     {
         public IEnumerable<string> ParseWords(string filePath)
         {
-            var reader = new StreamReader(filePath);
-            
-            var words = new List<string>();
+            using var reader = new StreamReader(filePath);
 
-            var line = "";
-
-            while (line is not null)
-            {
-                line = reader.ReadLine();
-                
-                words.Add(line);
-            }
-
-            return words;
+            return reader.ReadToEnd()
+                .Split(new[] {Environment.NewLine, " "}, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

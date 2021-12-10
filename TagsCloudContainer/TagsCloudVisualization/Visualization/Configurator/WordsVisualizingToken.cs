@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Visualization.Configurator
 {
-    public class WordVisualizingToken : IVisualizingToken<string>
+    public class WordVisualizingToken : IVisualizingToken
     {
         public string Value { get; }
         public SizeF RectangleSize { get; }

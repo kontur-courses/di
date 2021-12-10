@@ -3,8 +3,8 @@ using System.Drawing;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public interface IVisualizer<in T>
+    public interface IVisualizer
     {
-        public Bitmap Visualize(IEnumerable<T> visualizingValues);
+        public Bitmap Visualize(IEnumerable<string> visualizingValues);
     }
 }

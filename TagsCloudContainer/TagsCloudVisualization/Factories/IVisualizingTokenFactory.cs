@@ -3,8 +3,8 @@ using TagsCloudVisualization.Visualization.Configurator;
 
 namespace TagsCloudVisualization.Factories
 {
-    public interface IVisualizingTokenFactory<T>
+    public interface IVisualizingTokenFactory
     {
-        public IVisualizingToken<T> NewToken(T value, SizeF rectangleSize, Color color);
+        public IVisualizingToken NewToken(string value, SizeF rectangleSize, Color color);
     }
 }

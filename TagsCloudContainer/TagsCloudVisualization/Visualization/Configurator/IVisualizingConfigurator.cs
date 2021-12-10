@@ -2,8 +2,8 @@
 
 namespace TagsCloudVisualization.Visualization.Configurator
 {
-    public interface IVisualizingConfigurator<T>
+    public interface IVisualizingConfigurator
     {
-        public IEnumerable<IVisualizingToken<T>> Configure(IEnumerable<T> visualizingValues);
+        public IEnumerable<IVisualizingToken> Configure(IEnumerable<string> visualizingValues);
     }
 }

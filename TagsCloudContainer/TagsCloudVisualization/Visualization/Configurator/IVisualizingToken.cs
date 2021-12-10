@@ -2,9 +2,9 @@
 
 namespace TagsCloudVisualization.Visualization.Configurator
 {
-    public interface IVisualizingToken<out T>
+    public interface IVisualizingToken
     {
-        public T Value { get; }
+        public string Value { get; }
 
         public SizeF RectangleSize { get; }
 

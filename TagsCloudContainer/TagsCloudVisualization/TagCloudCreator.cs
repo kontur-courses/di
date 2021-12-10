@@ -7,9 +7,9 @@ namespace TagsCloudVisualization
     public class TagCloudCreator : ITagCloudCreator
     {
         private readonly ITextHandler handler;
-        private readonly IVisualizer<string> visualizer;
+        private readonly IVisualizer visualizer;
 
-        public TagCloudCreator(IVisualizer<string> visualizer, ITextHandler handler)
+        public TagCloudCreator(IVisualizer visualizer, ITextHandler handler)
         {
             this.visualizer = visualizer;
             this.handler = handler;

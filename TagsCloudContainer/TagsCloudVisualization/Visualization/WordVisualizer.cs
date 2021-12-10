@@ -5,12 +5,12 @@ using TagsCloudVisualization.Visualization.Configurator;
 
 namespace TagsCloudVisualization.Visualization
 {
-    public class WordVisualizer : IVisualizer<string>
+    public class WordVisualizer : IVisualizer
     {
-        private readonly IVisualizingConfigurator<string> configurator;
+        private readonly IVisualizingConfigurator configurator;
         private readonly ILayouter layouter;
 
-        public WordVisualizer(ILayouter layouter, IVisualizingConfigurator<string> configurator)
+        public WordVisualizer(ILayouter layouter, IVisualizingConfigurator configurator)
         {
             this.layouter = layouter;
             this.configurator = configurator;

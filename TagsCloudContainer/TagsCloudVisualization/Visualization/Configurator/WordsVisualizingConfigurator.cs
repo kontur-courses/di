@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualization.Factories;
 
 namespace TagsCloudVisualization.Visualization.Configurator
 {
-    public class WordsVisualizingConfigurator : IVisualizingConfigurator<string>
+    public class WordsVisualizingConfigurator : IVisualizingConfigurator
     {
-        public IEnumerable<IVisualizingToken<string>> Configure(IEnumerable<string> visualizingValues)
+        private readonly IVisualizingTokenFactory tokenFactory;
+
+        public WordsVisualizingConfigurator(IVisualizingTokenFactory tokenFactory)
+        {
+            this.tokenFactory = tokenFactory;
+        }
+        
+        public IEnumerable<IVisualizingToken> Configure(IEnumerable<string> visualizingValues)
         {
             throw new System.NotImplementedException();
         }

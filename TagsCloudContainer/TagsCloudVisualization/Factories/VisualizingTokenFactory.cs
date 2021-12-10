@@ -3,9 +3,9 @@ using TagsCloudVisualization.Visualization.Configurator;
 
 namespace TagsCloudVisualization.Factories
 {
-    public class WordsVisualizingTokenFactory : IVisualizingTokenFactory<string>
+    public class WordsVisualizingTokenFactory : IVisualizingTokenFactory
     {
-        public IVisualizingToken<string> NewToken(string value, SizeF rectangleSize, Color color)
+        public IVisualizingToken NewToken(string value, SizeF rectangleSize, Color color)
         {
             return new WordVisualizingToken(value, rectangleSize, color);
         }
