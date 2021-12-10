@@ -9,17 +9,6 @@ namespace TagCloud.Visualization
     {
         private const int LineWidth = 2;
 
-        private readonly List<Color> colors = new List<Color>
-        {
-            Color.Green,
-            Color.Red,
-            Color.CadetBlue,
-            Color.Orange,
-            Color.DeepPink,
-            Color.Black,
-            Color.Chartreuse
-        };
-
         public void DrawCanvasBoundary(Graphics graphics, Size imgSize)
         {
             var boundary = new Rectangle(Point.Empty,
@@ -63,8 +52,7 @@ namespace TagCloud.Visualization
 
             foreach (var tag in tags)
                 graphics.DrawString(
-                    tag.Word,
-                    new Font("times new roman", tag.WordEmSize),
+                    tag.Word, new Font(Tag.WordFontName, tag.WordEmSize),
                     Brushes.Black, tag.WordOuterRectangle.Location);
         }
     }

@@ -12,6 +12,8 @@ namespace TagCloud.Words.Tags
 
         public IEnumerable<Tag> CreateRawTags(Dictionary<string, double> wordsFrequencies, string fontName)
         {
+            Tag.WordFontName = fontName;
+
             foreach (var word in wordsFrequencies.Keys)
             {
                 var wordEmSize = GetScaledWordEmSize(wordsFrequencies[word]);

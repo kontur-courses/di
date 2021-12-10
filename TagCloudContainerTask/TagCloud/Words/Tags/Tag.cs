@@ -11,6 +11,8 @@ namespace TagCloud.Words.Tags
             WordOuterRectangle = wordOuterRectangle;
         }
 
+        public static string WordFontName { get; set; }
+
         public string Word { get; }
 
         public float WordEmSize { get; }
