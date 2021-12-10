@@ -4,8 +4,10 @@ using System.IO;
 
 namespace TagsCloudContainer.FileReader
 {
-    public class FileReader : IFileReader
+    public class TxtFileReader : IFileReader
     {
+        public TextFileFormat Format => TextFileFormat.Txt;
+
         public IEnumerable<string> ReadWords(string path)
         {
             if (!File.Exists(path))
