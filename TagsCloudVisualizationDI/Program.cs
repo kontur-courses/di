@@ -1,90 +1,40 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using TagsCloudVisualizationDI.FileReader;
-using TagsCloudVisualizationDI.Layouter;
-using TagsCloudVisualizationDI.Layouter.Normalizer;
 using TagsCloudVisualizationDI.Settings;
-using TagsCloudVisualizationDI.TextAnalization;
-using TagsCloudVisualizationDI.TextAnalization.Analyzer;
-using TagsCloudVisualizationDI.Visualization;
+using TagsCloudVisualizationDI.TextAnalization.Normalizer;
+using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
 namespace TagsCloudVisualizationDI
 {
     public class Program
     {
-        //public static void Main(string[] args)
-        public static void Main(string pathToFile, string pathToSave, string pathToMystem)
+        public static void Main(string pathToFile, string pathToSave)
         {
-            /*
-            Console.WriteLine("A");
-            Console.WriteLine(pathToFile);
-            Console.WriteLine("A");
-            Console.WriteLine(pathToSave);
-            Console.WriteLine("A");
-            Console.WriteLine(pathToMystem);
-            */
-
             var containerBuilder = new ContainerBuilder();
-
-            
-
-            RegistrationOfSettings(containerBuilder);
+            RegistrationOfSettings(containerBuilder, pathToFile, pathToSave);
             var buildContainer = containerBuilder.Build();
+
             var settings = buildContainer.Resolve<ISettingsConfiguration>();
-
-
             var visualization = settings.Visualizator;
             var reader = settings.FileReader;
             var analyzer = settings.Analyzer;
             var normalizer = settings.Normalization;
             var filler = settings.Filler;
-            var savePath = settings.SavePath;
+            var pictureSavePath = settings.SavePath;
             var elementSize = settings.ElementSize;
-
 
             reader.InvokeProcess();
 
-
-            //var settings = buildContainer.Resolve<ISettingsConfiguration>();
-
-            //var visualization = settings.Visualizator;
-
-
-            //InitializeRegistration(containerBuilder, visualization);
-
-
-
-
-
-            //var rectangleSize = new Size(100, 100);
-
-            //var filler = buildContainer.Resolve<IContentFiller>();
-            //var reader = buildContainer.Resolve<ITextFileReader>();
-            //var analyzer = buildContainer.Resolve<IAnalyzer>();
-            //var normalizer = buildContainer.Resolve<IWordNormalizer>();
-
-
-
-
-
-
-            //КЛИЕНТЫ
-
-
-            var wordsFromFile = reader.ReadText(reader.SavePath, reader.ReadingEncoding);
+            var wordsFromFile = reader.ReadText(reader.SaveAnalizationPath, reader.ReadingEncoding);
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
-            //Здесь расширение функционала нормализации
-
 
             filler.FillInElements(elementSize, normalyzedWords);
 
-
             var elementsForVisualisation = filler.GetElementsList();
-            using (var drawer = visualization.Invoke(elementsForVisualisation, savePath))
+            using (var drawer = visualization.Invoke(elementsForVisualisation, pictureSavePath))
             {
                 drawer.DrawAndSaveImage();
             }
@@ -96,7 +46,16 @@ namespace TagsCloudVisualizationDI
                 yield return normalizer.NormalizeWord(word);
         }
 
-        
+        private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, string pathToSave)
+        {
+            buildContainer.RegisterType<DeffaultSettingsConfiguration>().As<ISettingsConfiguration>()
+                .WithParameter("pathToFile", pathToFile)
+                .WithParameter("pathToSave", pathToSave);
+            //.WithParameter("format", format)
+            //.WithParameter("encoding", encoding);
+        }
+
+
         private static void InitializeRegistration(ContainerBuilder builder, Func<List<RectangleWithWord>, string, IVisualization> visualization)
         {
             /*
@@ -108,6 +67,8 @@ namespace TagsCloudVisualizationDI
         }
         
 
+
+        /*
         private static void RegistrationOfFiller(ContainerBuilder buildContainer, Func<List<RectangleWithWord>, string, IVisualization> visualization)
         {
 
@@ -115,19 +76,13 @@ namespace TagsCloudVisualizationDI
                 .WithParameter("center", new Point(2500, 2500))
                 .WithParameter("visualization", visualization);
         }
+        */
 
-        private static void RegistrationOfSettings(ContainerBuilder buildContainer)
-        {
-            buildContainer.RegisterType<DeffaultSettingsConfiguration>().As<ISettingsConfiguration>();
-        }
-
-
-        
+        /*
         private static void RegistrationOfNormalizer(ContainerBuilder buildContainer)
         {
             buildContainer.RegisterType<WordNormalizerOrigin>().As<IWordNormalizer>();
         }
-
 
         private static void RegistrationOfTextAnalyzer(ContainerBuilder buildContainer)
         {
@@ -139,6 +94,6 @@ namespace TagsCloudVisualizationDI
         private static void RegistrationOfTextFileReader(ContainerBuilder buildContainer)
         {
             buildContainer.RegisterType<DefaultTextFileReader>().As<ITextFileReader>();
-        }
+        }*/
     }
 }

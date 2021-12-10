@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudVisualizationDI.Visualization;
+using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
 namespace TagsCloudVisualizationDI
 {
@@ -16,12 +16,8 @@ namespace TagsCloudVisualizationDI
 
         public void ChangeSizeOfField(IVisualization visualization)
         {
-
             var stringSize = visualization.GetStringSize(this);
-
             var newSize = new Size(stringSize.Width, stringSize.Height);
-
-
             RectangleElement = new Rectangle(RectangleElement.Location, newSize);
         }
     }

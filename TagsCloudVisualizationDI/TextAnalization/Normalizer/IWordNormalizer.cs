@@ -1,5 +1,4 @@
-﻿
-namespace TagsCloudVisualizationDI.Layouter.Normalizer
+﻿namespace TagsCloudVisualizationDI.TextAnalization.Normalizer
 {
     public interface IWordNormalizer
     {

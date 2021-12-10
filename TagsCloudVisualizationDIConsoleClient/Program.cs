@@ -1,34 +1,40 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace TagsCloudVisualizationDIConsoleClient
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            if (args[0] == "-h" || args[0] == "--help")
+
+            if (args.Contains("-h") || args.Contains("--help"))
             {
                 Console.WriteLine("HELP");
                 return;
             }
 
-            if (args.Length < 2)
-                throw new Exception("Not enough arguments");
-            if (args.Length > 3)
-                throw new Exception("Too many arguments");
+            if (args.Length != 2)
+                throw new ArgumentException("Incorrect Number Of Arguments");
 
-            var pathToFile = args[0];
+            var pathToFile = args.ElementAtOrDefault(0);
+            var pathToSave = args.ElementAtOrDefault(1);
 
+            var safeDirectory = pathToSave.Remove(pathToSave.LastIndexOf('\\'));
 
-            var pathToSave = args[1];
+            CheckArguments(pathToFile, safeDirectory);
 
-            string pathToMystem = null;
-            if (args.Length == 3)
-                pathToMystem = args[2];
+            TagsCloudVisualizationDI.Program.Main(pathToFile, pathToSave);
+        }
 
+        private static void CheckArguments(string pathToFile, string pathToSafeFile)
+        {
+            if (!File.Exists(pathToFile))
+                throw new Exception($"Giving path to file: {pathToFile} is not valid, EXC");
 
-            TagsCloudVisualizationDI.Program.Main(pathToFile, pathToSave, pathToMystem);
+            if (!Directory.Exists(pathToSafeFile))
+                throw new Exception($"Giving path to safefile: {pathToSafeFile} is not valid, EXC");
         }
     }
 }

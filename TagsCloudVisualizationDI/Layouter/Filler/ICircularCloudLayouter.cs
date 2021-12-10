@@ -1,5 +1,4 @@
-﻿
-namespace TagsCloudVisualizationDI.Layouter
+﻿namespace TagsCloudVisualizationDI.Layouter.Filler
 {
     public interface ICircularCloudLayouter
     {

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using TagsCloudVisualizationDI.Visualization;
 
-namespace TagsCloudVisualizationDI.Layouter
+namespace TagsCloudVisualizationDI.TextAnalization.Visualization
 {
-    public class DefaultVisualization : IDisposable, IVisualization
+    public class DefaultVisualization : IVisualization
     {
         private List<RectangleWithWord> Elementslist { get; }
-        //private Pen ColorPen { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
 
@@ -24,7 +21,6 @@ namespace TagsCloudVisualizationDI.Layouter
             SolidBrush brush, Font font, ImageFormat imageFormat, Size imageSize)
         {
             Elementslist = rectangleWithWordsList;
-            //ColorPen = pen;
             ColorBrush = brush;
             TextFont = font;
             Format = imageFormat;
@@ -77,7 +73,6 @@ namespace TagsCloudVisualizationDI.Layouter
 
         public void Dispose()
         {
-            //ColorPen.Dispose();
             ColorBrush.Dispose();
             TextFont.Dispose();
         }

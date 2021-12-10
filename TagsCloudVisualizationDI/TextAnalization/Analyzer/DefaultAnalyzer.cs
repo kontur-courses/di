@@ -18,7 +18,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
 
         private bool CheckWord(string inputWord, out string wordContent, out PartsOfSpeech.SpeechPart enumElementOfCurrentType)
         {
-            var wordAndPart = inputWord.Split(new []{' ', ',', '='}, 3);
+            var wordAndPart = inputWord.Split(new []{' ', ',', '='}, 3, StringSplitOptions.RemoveEmptyEntries);
             if (wordAndPart.Length < 2)
             {
                 wordContent = default;
@@ -48,7 +48,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
                 if (CheckWord(word, out string content, out PartsOfSpeech.SpeechPart type))
                 {
                     if (IsNotExcludedPart(type) && IsNotExcludedWord(content))
-                        yield return new Word(content, type);
+                        yield return new Word(content);
                 }
             }
         }

@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
 
 namespace TagsCloudVisualizationDI.Settings
 {
     public class DeffaultSettingsConfiguration : ISettingsConfiguration
     {
-        /*
-        public string SavePath
+        
+        public DeffaultSettingsConfiguration(string pathToFile, string pathToSave)
         {
-            get => "C:/GitHub/di/TagsCloudVisualizationDI/img_words";
-        }
-        */
+            SavePath = pathToSave;
+            FilePath = pathToFile;
+        } 
+
+        public string SavePath { get; }
+        public string FilePath { get; }
 
         public SolidBrush Brush => new SolidBrush(Color.Black);
-
-
-        public ImageFormat Format => ImageFormat.Png;
 
         public List<string> ExcludedWords
         {

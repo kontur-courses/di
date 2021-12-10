@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualizationDI.Visualization;
+using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
-namespace TagsCloudVisualizationDI.Layouter
+namespace TagsCloudVisualizationDI.Layouter.Filler
 {
     public class CircularCloudLayouterForRectanglesWithText : IContentFiller
     {
@@ -12,22 +12,20 @@ namespace TagsCloudVisualizationDI.Layouter
 
         private Spiral LayouterSpiral { get; }
 
-        private String SavePath { get; }
+        private string SavePath { get; }
 
         private Func<List<RectangleWithWord>, string, IVisualization> Visualization { get; }
 
-        private Dictionary<string, RectangleWithWord> ElementsDict { get; set; }
-        private Dictionary<string, RectangleWithWord> PositionedElementsDict { get; }
+        private Dictionary<string, RectangleWithWord> ElementsDict { get;}
 
 
 
-        public CircularCloudLayouterForRectanglesWithText(Point center, Func<List<RectangleWithWord>,string, IVisualization> visualization, String savePath)
+        public CircularCloudLayouterForRectanglesWithText(Point center, Func<List<RectangleWithWord>,string, IVisualization> visualization, string savePath)
         {
             SavePath = savePath;
             Center = center;
             LayouterSpiral = new Spiral();
             ElementsDict = new Dictionary<string, RectangleWithWord>();
-            PositionedElementsDict = new Dictionary<string, RectangleWithWord>();
             Visualization = visualization;
         }
 
@@ -61,31 +59,6 @@ namespace TagsCloudVisualizationDI.Layouter
 
 
         }
-        
-        
-        /*
-        private void PutNextElement(RectangleWithWord rectangleWithWord)
-        {
-            if (rectangleWithWord.RectangleElement.Width == 0 
-                || rectangleWithWord.RectangleElement.Height == 0)
-                throw new ArgumentException();
-
-            var text = rectangleWithWord.WordElement.WordText;
-
-            if (ElementsDict.ContainsKey(text))
-            {
-                ElementsDict[text].WordElement.CntOfWords++;
-                ElementsDict[text].ChangeSizeOfField();    //ЗДЕСЬ ИЗМЕНИТЬ АДЕКВАТНО РАЗМЕР
-            }
-            else
-            {
-                ElementsDict[text] = rectangleWithWord;
-            }
-        }
-        */
-        
-
-        //public RectangleWithWord
 
         public List<RectangleWithWord> GetElementsList() => ElementsDict.Values.ToList();
 
@@ -102,51 +75,11 @@ namespace TagsCloudVisualizationDI.Layouter
 
         public void FillInElements(Size elementSize, List<Word> wordList)
         {
-            /*
-            
             foreach (var word in wordList)
             {
-                var element = CreateNewRectangleWithWord(elementSize, word); //!!!
-
+                var element = CreateNewRectangleWithWord(elementSize, word);
                 PutNextElement(element);
             }
-
-            foreach (var key in ElementsDict.Keys)
-            {
-                var value = ElementsDict[key];
-
-                var positionedElement = MakePositionForElement(value);
-
-                PositionedElementsDict[key] = positionedElement;
-
-            }
-            ElementsDict = PositionedElementsDict;
-            */
-
-            
-            foreach (var word in wordList)
-            {
-                var element = CreateNewRectangleWithWord(elementSize, word); //!!!
-
-                PutNextElement(element);
-            }
-            
-
-        }
-
-        private RectangleWithWord MakePositionForElement(RectangleWithWord inputElement)
-        {
-            var rectangleSize = inputElement.RectangleElement.Size;
-            //var nextElement = CreateNewRectangleWithWord(rectangleSize, inputElement.WordElement);
-            var nextElement = inputElement;
-
-            while (PositionedElementsDict.Values.Any(el => el.RectangleElement.IntersectsWith(nextElement.RectangleElement)))
-                nextElement = CreateNewRectangleWithWord(rectangleSize, inputElement.WordElement);
-            if (nextElement.RectangleElement.Location != Center)
-                nextElement = CenterElement(nextElement);
-
-
-            return nextElement;
         }
 
         private RectangleWithWord CenterElement(RectangleWithWord inputRectangleWithWord)
@@ -155,11 +88,5 @@ namespace TagsCloudVisualizationDI.Layouter
             inputRectangleWithWord.RectangleElement = centeringRectangleElement;
             return inputRectangleWithWord;
         }
-
-        /*
-        private bool IsIntersect(Rectangle inputRectangle) =>
-            ElementsDict.Select(el => el.Value)
-                .Any(rect => rect.RectangleElement.IntersectsWith(inputRectangle));
-        */
     }
 }
