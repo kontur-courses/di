@@ -45,7 +45,7 @@ public class TextAnalyzer : ITextAnalyzer
     {
         foreach (var normalizer in wordNormalizers)
         {
-            words = words.Select(normalizer.Normalize).Where(x => string.IsNullOrEmpty(x))!;
+            words = words.Select(normalizer.Normalize).Where(x => !string.IsNullOrEmpty(x))!;
         }
 
         foreach (var filter in wordFilters)

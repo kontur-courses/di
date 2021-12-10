@@ -2,5 +2,5 @@
 
 public interface IWordNormalizer
 {
-    string Normalize(string word);
+    string? Normalize(string word);
 }
