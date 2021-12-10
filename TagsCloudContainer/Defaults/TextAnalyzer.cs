@@ -31,7 +31,7 @@ public class TextAnalyzer : ITextAnalyzer
         {
             var words = line
                 .Split(wordSeparators)
-                .Where(x => !string.IsNullOrWhiteSpace(x));
+                .Where(x => !string.IsNullOrWhiteSpace(x) && !x.All(y=>!char.IsLetter(y)));
             foreach (var word in ApplyNormalizingAndFiltering(words))
             {
                 result.UpdateWord(word);
