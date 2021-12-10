@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Painting
 {
     public class TagPainter
     {

@@ -3,6 +3,8 @@ using System.Linq;
 using Autofac;
 using TagsCloudContainer.Common;
 using TagsCloudContainer.Layouters;
+using TagsCloudContainer.Painting;
+using TagsCloudContainer.Preprocessors;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
 using TagsCloudVisualization.Visualizators;
@@ -36,7 +38,7 @@ namespace TagsCloudContainer
                 var text = reader.Read(textFilename);
                 var tags = parser.Parse(text);
                 // Подумаю еще как это можно сделать лучше >
-                tags = new Normalizator().Process(new TagsFilter().Process(tags)).ToList();
+                tags = new ToLowerPreprocessor().Process(new ShortTagsFilter().Process(tags)).ToList();
                 var paintedTags = painter.Paint(tags);
                 var cloud = layouter.PlaceTagsInCloud(paintedTags, minHeight, maxScale);
                 visualizator.Visualize(settings, cloud);

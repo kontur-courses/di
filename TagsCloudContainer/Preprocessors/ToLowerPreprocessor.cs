@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessors
 {
-    public class Normalizator : IPreprocessor
+    public class ToLowerPreprocessor : IPreprocessor
     {
         public IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags)
         {
-            return tags.Select(t => Normalize(t));
+            return tags.Select(Normalize);
         }
 
         private SimpleTag Normalize(SimpleTag tag)

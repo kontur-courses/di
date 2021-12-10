@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 using TagsCloudContainer.Extensions;
 
 namespace TagsCloudContainer

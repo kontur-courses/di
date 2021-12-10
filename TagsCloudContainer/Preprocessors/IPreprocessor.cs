@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Preprocessors
 {
     public interface IPreprocessor
     {

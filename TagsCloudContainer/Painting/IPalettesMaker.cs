@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloudVisualization;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Painting
 {
     public interface IPalettesMaker
     {

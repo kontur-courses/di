@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
 

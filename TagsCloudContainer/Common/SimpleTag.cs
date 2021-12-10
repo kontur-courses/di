@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using TagsCloudVisualization;
 
-namespace TagCloudContainerTests
+namespace TagsCloudContainer.Common
 {
     public class SimpleTag
     {
         public readonly string Word;
         public readonly int Count;
-        public Palette  Palette { get; set; }
+        public Palette Palette { get; set; }
 
         public SimpleTag(string word, int count)
         {

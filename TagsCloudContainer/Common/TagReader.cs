@@ -1,7 +1,6 @@
 ﻿using System;
-using TagsCloudContainer.Common;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Common
 {
     public class TagReader
     {

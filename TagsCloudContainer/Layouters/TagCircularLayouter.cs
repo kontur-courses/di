@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TagCloudContainerTests;
+using TagsCloudContainer.Common;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
 

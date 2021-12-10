@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Painting
 {
     public class PalettesMaker : IPalettesMaker
     {
