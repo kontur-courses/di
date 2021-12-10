@@ -26,15 +26,12 @@ internal static class Startup
         builder.RegisterType<DocFileReader>().As<IFileReader>().SingleInstance();
         builder.RegisterType<PlainTextFileReader>().As<IFileReader>().AsSelf().SingleInstance();
 
-        builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
+        builder.Register(c => appSettings).AsImplementedInterfaces().SingleInstance();
         builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
             .As<IFilter>().SingleInstance();
-
         builder.Register(c => 
                 new FileReaderFactory(c.Resolve<IEnumerable<IFileReader>>(), c.Resolve<PlainTextFileReader>()))
-            .As<IFileReaderFactory>()
-            .SingleInstance();
-
+            .As<IFileReaderFactory>().SingleInstance();
         builder.Register(c =>
                 new CloudLayouterFactory(c.Resolve<IEnumerable<ICloudLayouter>>(), c.Resolve<CircularCloudLayouter>()))
             .As<ICloudLayouterFactory>();

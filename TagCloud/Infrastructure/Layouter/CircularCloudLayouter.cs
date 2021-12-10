@@ -9,7 +9,7 @@ public class CircularCloudLayouter : ICloudLayouter
     private readonly Spiral spiral;
     public Point Center => spiral.Center;
 
-    public CircularCloudLayouter(IAppSettings settings) : this(new Point(settings.ImageWidth / 2, settings.ImageHeight / 2)) { }
+    public CircularCloudLayouter(IImageSettingsProvider settings) : this(new Point(settings.ImageWidth / 2, settings.ImageHeight / 2)) { }
 
     public CircularCloudLayouter(Point center)
     {
