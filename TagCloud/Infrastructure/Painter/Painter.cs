@@ -6,15 +6,15 @@ namespace TagCloud.Infrastructure.Painter;
 
 public class Painter : IPainter
 {
-    private readonly ICloudLayouter layouter;
+    private readonly ICloudLayouterFactory layouterFactory;
     private readonly IPalette palette;
     private readonly IAppSettings settings;
 
-    public Painter(IPalette palette, ICloudLayouter layouter, IAppSettings settings)
+    public Painter(IPalette palette, ICloudLayouterFactory layouterFactory, IAppSettings settings)
     {
         ValidateSettings(settings);
         this.palette = palette;
-        this.layouter = layouter;
+        this.layouterFactory = layouterFactory;
         this.settings = settings;
     }
 
@@ -43,6 +43,7 @@ public class Painter : IPainter
     private List<Tag> GetTags(Dictionary<string, int> weightedWords, Graphics graphics)
     {
         var positionedWords = new List<Tag>();
+        var layouter = layouterFactory.Create(settings.LayouterName);
 
         foreach (var (word, weight) in weightedWords)
         {

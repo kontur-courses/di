@@ -4,12 +4,12 @@ public class FileReaderFactory : IFileReaderFactory
 {
     private readonly IFileReader defaultFileReader;
 
-    private readonly IReadOnlyDictionary<string, IFileReader> FileReaders;
+    private readonly IReadOnlyDictionary<string, IFileReader> fileReaders;
 
     public FileReaderFactory(IEnumerable<IFileReader> fileReaders, IFileReader defaultFileReader)
     {
         this.defaultFileReader = defaultFileReader;
-        FileReaders = CreateExtensionsDictionary(fileReaders);
+        this.fileReaders = CreateExtensionsDictionary(fileReaders);
     }
 
     public IFileReader Create(string filePath)
@@ -17,8 +17,8 @@ public class FileReaderFactory : IFileReaderFactory
         var fileInfo = new FileInfo(filePath);
         var extension = fileInfo.Extension;
 
-        return FileReaders.ContainsKey(extension)
-            ? FileReaders[extension]
+        return fileReaders.ContainsKey(extension)
+            ? fileReaders[extension]
             : defaultFileReader;
     }
 

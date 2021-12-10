@@ -25,7 +25,9 @@ internal class ConsoleUITests
     public void OneTimeSetUp()
     {
         settings = new AppSettings { OutputPath = "outputTest" };
-        var painter = new Painter(new RandomPalette(), new CircularCloudLayouter(settings), settings);
+        var layouter = new CircularCloudLayouter(settings);
+        var factory = new CloudLayouterFactory(new ICloudLayouter[] { layouter }, layouter);
+        var painter = new Painter(new RandomPalette(), factory, settings);
         sut = new ConsoleUI(new FakeFileReaderFactory(), painter, new WordWeigher(), new ImageSaver(), new RussianLemmatizer(), new Filter());
     }
 
@@ -44,14 +46,14 @@ internal class ConsoleUITests
 
     private class FakeFileReaderFactory : IFileReaderFactory
     {
-        public IFileReader Create(IInputPathProvider inputPathProvider)
-        {
-            return Create(inputPathProvider.InputPath);
-        }
-
         public IFileReader Create(string filePath)
         {
             return new FakeReader();
+        }
+
+        public IFileReader Create(IInputPathProvider inputPathProvider)
+        {
+            return Create(inputPathProvider.InputPath);
         }
     }
 

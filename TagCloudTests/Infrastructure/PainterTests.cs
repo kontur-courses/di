@@ -10,7 +10,7 @@ namespace TagCloudTests.Infrastructure;
 
 internal class PainterTests
 {
-    private CircularCloudLayouter layouter;
+    private CloudLayouterFactory layouterFactory;
     private IPalette palette;
     private AppSettings settings;
 
@@ -18,7 +18,8 @@ internal class PainterTests
     public void OneTimeSetUp()
     {
         settings = new AppSettings { ImageWidth = 1000, ImageHeight = 2000 };
-        layouter = new CircularCloudLayouter(settings);
+        var layouter = new CircularCloudLayouter(settings);
+        layouterFactory = new CloudLayouterFactory(new ICloudLayouter[] {layouter}, layouter);
         palette = new RandomPalette();
     }
 
@@ -27,7 +28,7 @@ internal class PainterTests
     {
         var invalidSettings = new AppSettings { ImageHeight = -1, ImageWidth = -1 };
 
-        var action = () => new Painter(palette, layouter, invalidSettings);
+        var action = () => new Painter(palette, layouterFactory, invalidSettings);
 
         action.Should().Throw<ArgumentException>()
             .WithMessage("Image sizes must be great than zero, but was -1x-1");
@@ -36,7 +37,7 @@ internal class PainterTests
     [Test]
     public void CreateImage_ShouldCreateImageWithSizeFromSettings()
     {
-        var painter = new Painter(palette, layouter, settings);
+        var painter = new Painter(palette, layouterFactory, settings);
 
         var bitmap = painter.CreateImage(new Dictionary<string, int> { { "test", 1 } });
 
@@ -47,7 +48,7 @@ internal class PainterTests
     [Test]
     public void CreateImage_ShouldThrowArgumentException_WhenInputIsEmptyCollection()
     {
-        var painter = new Painter(palette, layouter, settings);
+        var painter = new Painter(palette, layouterFactory, settings);
 
         var action = () => painter.CreateImage(new Dictionary<string, int>());
 

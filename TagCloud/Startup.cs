@@ -19,7 +19,7 @@ internal static class Startup
         builder.RegisterType<ConsoleUI>().As<IUserInterface>();
         builder.RegisterType<RandomPalette>().As<IPalette>();
         builder.RegisterType<Painter>().As<IPainter>();
-        builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
+        builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>().AsSelf();
         builder.RegisterType<ImageSaver>().As<IImageSaver>().SingleInstance();
         builder.RegisterType<WordWeigher>().As<IWordWeigher>().SingleInstance();
         builder.RegisterType<RussianLemmatizer>().As<ILemmatizer>().SingleInstance();
@@ -29,10 +29,15 @@ internal static class Startup
         builder.Register(c => appSettings).As<IAppSettings>().SingleInstance();
         builder.Register(c => new Filter().AddCondition(AuxiliaryPartOfSpechCondition.Filter))
             .As<IFilter>().SingleInstance();
+
         builder.Register(c => 
                 new FileReaderFactory(c.Resolve<IEnumerable<IFileReader>>(), c.Resolve<PlainTextFileReader>()))
             .As<IFileReaderFactory>()
             .SingleInstance();
+
+        builder.Register(c =>
+                new CloudLayouterFactory(c.Resolve<IEnumerable<ICloudLayouter>>(), c.Resolve<CircularCloudLayouter>()))
+            .As<ICloudLayouterFactory>();
 
         return builder;
     }

@@ -22,6 +22,9 @@ public class AppSettings : IAppSettings
     [Option('f', "fontName", Default = "Roboto", HelpText = "Font used to display words")]
     public string FontName { get; set; } = "Roboto";
 
+    [Option('l', "layouterName", Default = "Circular", HelpText = "Layouter used to place words")]
+    public string LayouterName { get; set; } = "Circular";
+
     public static AppSettings Parse(string[] args)
     {
         var parsed = Parser.Default.ParseArguments<AppSettings>(args) as Parsed<AppSettings>;
