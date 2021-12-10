@@ -13,21 +13,21 @@ namespace TagsCloudContainer
     public class TagCloudCreator : ITagCloudCreator
     {
         private readonly IFileReader fileReader;
-        private readonly IWordsPreparator wordsPreparator;
+        private readonly IWordsConverter wordsConverter;
         private readonly IWordsFilter filter;
         private readonly IWordsFrequencyAnalyzer frequencyAnalyzer;
         private readonly IVisualizer visualizer;
         private readonly IBitmapSaver saver;
 
         public TagCloudCreator(IFileReader fileReader,
-            IWordsPreparator wordsPreparator,
+            IWordsConverter wordsConverter,
             IWordsFilter filter,
             IWordsFrequencyAnalyzer frequencyAnalyzer,
             IVisualizer visualizer, 
             IBitmapSaver saver)
         {
             this.fileReader = fileReader;
-            this.wordsPreparator = wordsPreparator;
+            this.wordsConverter = wordsConverter;
             this.filter = filter;
             this.frequencyAnalyzer = frequencyAnalyzer;
             this.visualizer = visualizer;
@@ -37,7 +37,7 @@ namespace TagsCloudContainer
         public Bitmap CreateFromTextFile(string sourcePath)
         {
             var content = fileReader.ReadWords(sourcePath);
-            var preparedWords = wordsPreparator.Prepare(content);
+            var preparedWords = wordsConverter.Convert(content);
             var filteredWords = filter.Filter(preparedWords);
             var freqDict = frequencyAnalyzer.GetWordsFrequency(filteredWords);
             return visualizer.Visualize(freqDict);

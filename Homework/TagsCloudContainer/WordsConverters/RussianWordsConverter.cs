@@ -5,7 +5,7 @@ using DeepMorphy.Model;
 
 namespace TagsCloudContainer.WordsPreparator
 {
-    public record RussianWordsPreparator : IWordsPreparator
+    public record RussianWordsConverter : IWordsConverter
     {
         private const string SpeechPartKey = "чр";
         
@@ -24,12 +24,12 @@ namespace TagsCloudContainer.WordsPreparator
         private readonly MorphAnalyzer analyzer;
         
 
-        public RussianWordsPreparator(MorphAnalyzer analyzer)
+        public RussianWordsConverter(MorphAnalyzer analyzer)
         {
             this.analyzer = analyzer;
         }
 
-        public IEnumerable<WordInfo> Prepare(IEnumerable<string> words)
+        public IEnumerable<WordInfo> Convert(IEnumerable<string> words)
         {
             var preparedWords = words
                 .Select(ToLowerAndTrim)

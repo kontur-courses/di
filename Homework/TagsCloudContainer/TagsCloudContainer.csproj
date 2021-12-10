@@ -13,6 +13,8 @@
         <Compile Remove="Visualizer\DefaultVisualizerSettings.cs" />
         <Compile Remove="FileReader\Parsers\**" />
         <Compile Remove="Visualizer\IWordAppearanceSettings.cs" />
+        <Compile Remove="WordsFilter\ToLowerFilter.cs" />
+        <Compile Remove="WordsFilter\WordsFilter.cs" />
     </ItemGroup>
 
     <ItemGroup>

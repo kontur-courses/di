@@ -5,6 +5,7 @@ namespace TagsCloudContainer.WordsFilter
 {
     public interface IWordsFilter
     {
-        public IEnumerable<string> Filter(IEnumerable<WordInfo> words);
+        public FilterType FilterType { get; }
+        public ICollection<WordInfo> Filter(ICollection<WordInfo> words);
     }
 }

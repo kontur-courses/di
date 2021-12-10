@@ -12,7 +12,7 @@ namespace TagsCloudContainer.WordsFilter
         private Predicate<WordInfo> isBoring = wi => wi.Lemma.Length <= 2;
 
 
-        public IEnumerable<string> Filter(IEnumerable<WordInfo> words)
+        public IEnumerable<WordInfo> Filter(IEnumerable<WordInfo> words)
         {
             return words
                 .Where(word => !excludedSpeechParts.Contains(word.SpeechPart) && !isBoring(word))

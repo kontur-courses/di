@@ -9,7 +9,7 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class RussianWordsPreparator_Should
     {
-        private readonly RussianWordsPreparator sut = new(new MorphAnalyzer());
+        private readonly RussianWordsConverter sut = new(new MorphAnalyzer());
 
         [Test]
         public void Trim()
@@ -57,20 +57,20 @@ namespace TagsCloudContainer_Tests
         public SpeechPart IdentifySpeechParts(string word)
         {
             var input = new[] {word};
-            return sut.Prepare(input).First().SpeechPart;
+            return sut.Convert(input).First().SpeechPart;
         }
 
         [Test]
         public void ParseLines_WhenSeveralWords()
         {
             var input = new[] {"он один"};
-            var result = sut.Prepare(input);
+            var result = sut.Convert(input);
             result.Should().HaveCount(2);
         }
 
         private void AssertLemma(string[] input, string[] expected)
         {
-            sut.Prepare(input)
+            sut.Convert(input)
                 .Select(wi => wi.Lemma)
                 .Should().BeEquivalentTo(expected);
         }
