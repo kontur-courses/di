@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.DependencyInjection;
 
 namespace TagsCloudContainer.MathFunctions
 {
-    public interface IMathFunction
+    public interface IMathFunction : IService<MathFunctionType>
     {
-        MathFunctionType Type { get; }
         float GetValue(PointF firstPoint, PointF secondPoint, int x);
     }
 }

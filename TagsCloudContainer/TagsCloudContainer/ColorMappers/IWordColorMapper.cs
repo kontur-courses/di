@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.DependencyInjection;
 using TagsCloudContainer.Layout;
 
-namespace TagsCloudContainer.Rendering
+namespace TagsCloudContainer.ColorMappers
 {
-    public interface IWordColorMapper
+    public interface IWordColorMapper : IService<WordColorMapperType>
     {
-        public ColorMapperType Type { get; }
         public Dictionary<WordLayout, Color> GetColorMap(CloudLayout layout);
     }
 }

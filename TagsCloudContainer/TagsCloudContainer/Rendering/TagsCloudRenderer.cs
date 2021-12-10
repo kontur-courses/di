@@ -19,12 +19,14 @@ namespace TagsCloudContainer.Rendering
             using var canvas = CreateCanvas(imageSize);
             canvas.Graphics.FillRectangle(renderingSettings.Background, 0, 0, imageSize.Width, imageSize.Height);
             foreach (var word in words)
+            {
                 canvas.Graphics.DrawString(
                     word.Value,
                     word.Font,
                     word.Brush,
                     word.Location,
                     StringFormat.GenericTypographic);
+            }
 
             canvas.Graphics.Save();
             return new Bitmap(canvas.Bitmap);

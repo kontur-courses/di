@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using TagsCloudApp.Parsers;
+﻿using TagsCloudApp.Parsers;
 using TagsCloudApp.RenderCommand;
-using TagsCloudContainer.Rendering;
+using TagsCloudContainer.ColorMappers;
+using TagsCloudContainer.DependencyInjection;
 using TagsCloudContainer.Settings;
 
 namespace TagsCloudApp.Settings
@@ -12,12 +11,12 @@ namespace TagsCloudApp.Settings
         public IWordColorMapper ColorMapper { get; }
 
         public WordColorMapperSettings(
-            IEnumerable<IWordColorMapper> colorMappers,
+            IServiceResolver<WordColorMapperType, IWordColorMapper> colorMapperResolver,
             IRenderOptions renderOptions,
             IEnumParser enumParser)
         {
-            var type = enumParser.Parse<ColorMapperType>(renderOptions.ColorMapperType);
-            ColorMapper = colorMappers.First(mapper => mapper.Type == type);
+            var type = enumParser.Parse<WordColorMapperType>(renderOptions.ColorMapperType);
+            ColorMapper = colorMapperResolver.GetService(type);
         }
     }
 }

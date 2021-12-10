@@ -10,6 +10,9 @@ namespace TagsCloudApp
         public static void Main(string[] args)
         {
             var options = Parser.Default.ParseArguments<RenderOptions>(args).Value;
+            if (options == null)
+                return;
+
             var services = new RenderServicesConfigurator(options);
             var provider = services.ConfigureServices().BuildServiceProvider();
             try

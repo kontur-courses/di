@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layout;
 
-namespace TagsCloudContainer.Rendering
+namespace TagsCloudContainer.ColorMappers
 {
     public class RandomWordColorMapper : IWordColorMapper
     {
-        public ColorMapperType Type => ColorMapperType.Random;
+        public WordColorMapperType Type => WordColorMapperType.Random;
 
         private readonly Random random;
 

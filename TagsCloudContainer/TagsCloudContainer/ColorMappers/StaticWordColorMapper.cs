@@ -4,12 +4,12 @@ using System.Linq;
 using TagsCloudContainer.Layout;
 using TagsCloudContainer.Settings;
 
-namespace TagsCloudContainer.Rendering
+namespace TagsCloudContainer.ColorMappers
 {
     public class StaticWordColorMapper : IWordColorMapper
     {
         private readonly IDefaultColorSettings settings;
-        public ColorMapperType Type => ColorMapperType.Static;
+        public WordColorMapperType Type => WordColorMapperType.Static;
 
         public StaticWordColorMapper(IDefaultColorSettings settings)
         {

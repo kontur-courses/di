@@ -4,6 +4,8 @@ using TagsCloudApp.Parsers;
 using TagsCloudApp.Settings;
 using TagsCloudApp.WordsLoading;
 using TagsCloudContainer;
+using TagsCloudContainer.ColorMappers;
+using TagsCloudContainer.DependencyInjection;
 using TagsCloudContainer.Layout;
 using TagsCloudContainer.MathFunctions;
 using TagsCloudContainer.Preprocessing;
@@ -31,7 +33,6 @@ namespace TagsCloudApp.RenderCommand
                 .AddSingleton<IWordColorMapper, SpeechPartWordColorMapper>()
                 .AddSingleton<IWordsPreprocessor, LowerCaseWordsPreprocessor>()
                 .AddSingleton<IWordsPreprocessor, SpeechPartWordsFilter>()
-                .AddSingleton<IFileTextLoaderResolver, FileTextLoaderResolver>()
                 .AddSingleton<IFileTextLoader, TxtFileTextLoader>()
                 .AddSingleton<IWordsScaleSettings, WordsScaleSettings>()
                 .AddSingleton<IMathFunction, LinearFunction>()
@@ -49,10 +50,9 @@ namespace TagsCloudApp.RenderCommand
                 .AddSingleton<IImageFormatParser, ImageFormatParser>()
                 .AddSingleton<IWordSpeechPartParser, WordSpeechPartParser>()
                 .AddSingleton<IEnumParser, EnumParser>()
-                .AddSingleton<IMathFunctionResolver, MathFunctionResolver>()
-                .AddSingleton(
-                    s =>
-                        new Lazy<IMathFunctionResolver>(() => new MathFunctionResolver(s.GetServices<IMathFunction>())))
+                .AddSingleton(typeof(IServiceResolver<,>), typeof(ServiceResolver<,>))
+                .AddSingleton(typeof(Lazy<>), typeof(LazyResolver<>))
+                .AddSingleton<IFileTextLoaderResolver, FileTextLoaderResolver>()
                 .AddSingleton<IWordsProvider, FileWordsProvider>()
                 .AddSingleton<IBitmapSaver, BitmapSaver>()
                 .AddSingleton<IRenderCommand, RenderCommand>()

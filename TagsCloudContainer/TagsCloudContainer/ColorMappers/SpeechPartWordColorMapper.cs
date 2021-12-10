@@ -5,11 +5,11 @@ using TagsCloudContainer.Layout;
 using TagsCloudContainer.Preprocessing;
 using TagsCloudContainer.Settings;
 
-namespace TagsCloudContainer.Rendering
+namespace TagsCloudContainer.ColorMappers
 {
     public class SpeechPartWordColorMapper : IWordColorMapper
     {
-        public ColorMapperType Type => ColorMapperType.SpeechPart;
+        public WordColorMapperType Type => WordColorMapperType.SpeechPart;
 
         private readonly IWordSpeechPartParser wordSpeechPartParser;
         private readonly ISpeechPartColorMapSettings colorMapSettings;

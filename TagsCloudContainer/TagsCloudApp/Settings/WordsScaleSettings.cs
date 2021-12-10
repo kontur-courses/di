@@ -1,5 +1,6 @@
 ﻿using TagsCloudApp.Parsers;
 using TagsCloudApp.RenderCommand;
+using TagsCloudContainer.DependencyInjection;
 using TagsCloudContainer.MathFunctions;
 using TagsCloudContainer.Settings;
 
@@ -10,12 +11,12 @@ namespace TagsCloudApp.Settings
         public IMathFunction Function { get; }
 
         public WordsScaleSettings(
-            IMathFunctionResolver functionResolver,
+            IServiceResolver<MathFunctionType, IMathFunction> functionResolver,
             IRenderOptions renderOptions,
             IEnumParser parser)
         {
             var type = parser.Parse<MathFunctionType>(renderOptions.WordsScale);
-            Function = functionResolver.GetFunction(type);
+            Function = functionResolver.GetService(type);
         }
     }
 }

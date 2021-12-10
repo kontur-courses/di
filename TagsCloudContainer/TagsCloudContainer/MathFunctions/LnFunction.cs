@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using TagsCloudContainer.DependencyInjection;
 
 namespace TagsCloudContainer.MathFunctions
 {
@@ -7,9 +8,10 @@ namespace TagsCloudContainer.MathFunctions
     {
         public MathFunctionType Type => MathFunctionType.Ln;
 
-        private readonly Lazy<IMathFunctionResolver> functionResolver;
+        private readonly Lazy<IServiceResolver<MathFunctionType, IMathFunction>> functionResolver;
 
-        public LnFunction(Lazy<IMathFunctionResolver> functionResolver)
+        public LnFunction(
+            Lazy<IServiceResolver<MathFunctionType, IMathFunction>> functionResolver)
         {
             this.functionResolver = functionResolver;
         }
@@ -17,7 +19,7 @@ namespace TagsCloudContainer.MathFunctions
         public float GetValue(PointF firstPoint, PointF secondPoint, int x) =>
             MathF.Log(
                 functionResolver.Value
-                    .GetFunction(MathFunctionType.Linear)
+                    .GetService(MathFunctionType.Linear)
                     .GetValue(firstPoint, secondPoint, x));
     }
 }

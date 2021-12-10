@@ -1,4 +1,4 @@
-﻿using TagsCloudContainer.Rendering;
+﻿using TagsCloudContainer.ColorMappers;
 
 namespace TagsCloudContainer.Settings
 {
