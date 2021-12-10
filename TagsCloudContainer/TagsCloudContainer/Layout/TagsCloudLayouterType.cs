@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer.Layout
 {
-    public enum CloudLayouterType
+    public enum TagsCloudLayouterType
     {
         FontBased
     }

@@ -44,6 +44,7 @@ namespace TagsCloudApp.RenderCommand
                 .AddSingleton<ISpeechPartFilterSettings, SpeechPartFilterSettings>()
                 .AddSingleton<IDefaultColorSettings, DefaultColorSettings>()
                 .AddSingleton<ISpeechPartColorMapSettings, SpeechPartColorMapSettings>()
+                .AddSingleton<ITagsCloudLayouterSettings, TagsCloudLayouterSettings>()
                 .AddSingleton<IKeyValueParser, KeyValueParser>()
                 .AddSingleton<IWordsParser, WordsParser>()
                 .AddSingleton<IArgbColorParser, ArgbColorParser>()

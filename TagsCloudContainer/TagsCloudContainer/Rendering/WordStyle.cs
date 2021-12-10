@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudContainer.Rendering
 {
-    public class WordStyle
+    public class WordStyle : IDisposable
     {
         public string Value { get; }
         public Font Font { get; }
@@ -15,6 +16,12 @@ namespace TagsCloudContainer.Rendering
             Font = font;
             Location = location;
             Brush = brush;
+        }
+
+        public void Dispose()
+        {
+            Font.Dispose();
+            Brush.Dispose();
         }
     }
 }

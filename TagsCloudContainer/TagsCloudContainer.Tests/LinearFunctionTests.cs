@@ -5,7 +5,7 @@ using TagsCloudContainer.MathFunctions;
 
 namespace TagsCloudContainer.Tests
 {
-    public class LinearScalerTests
+    public class LinearFunctionTests
     {
         private LinearFunction function;
 

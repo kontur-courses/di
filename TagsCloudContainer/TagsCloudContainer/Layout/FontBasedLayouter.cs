@@ -9,7 +9,7 @@ namespace TagsCloudContainer.Layout
 {
     public class FontBasedLayouter : ITagsCloudLayouter
     {
-        public CloudLayouterType Type => CloudLayouterType.FontBased;
+        public TagsCloudLayouterType Type => TagsCloudLayouterType.FontBased;
 
         private readonly IFontFamilySettings fontFamilySettings;
         private readonly IFontSizeSelector fontSizeSelector;

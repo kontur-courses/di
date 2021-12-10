@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudContainer.Layout;
 using TagsCloudContainer.Preprocessing;
 using TagsCloudContainer.Rendering;
@@ -11,28 +12,30 @@ namespace TagsCloudContainer
     {
         private readonly IEnumerable<IWordsPreprocessor> preprocessors;
         private readonly IWordColorMapperSettings colorMapperSettings;
-        private readonly ITagsCloudLayouter tagsCloudLayouter;
+        private readonly ITagsCloudLayouterSettings tagsCloudLayouterSettings;
         private readonly ITagsCloudRenderer renderer;
 
         public TagsCloudDirector(
             IEnumerable<IWordsPreprocessor> preprocessors,
             IWordColorMapperSettings colorMapperSettings,
-            ITagsCloudLayouter tagsCloudLayouter,
+            ITagsCloudLayouterSettings tagsCloudLayouterSettings,
             ITagsCloudRenderer renderer)
         {
             this.preprocessors = preprocessors;
             this.colorMapperSettings = colorMapperSettings;
-            this.tagsCloudLayouter = tagsCloudLayouter;
+            this.tagsCloudLayouterSettings = tagsCloudLayouterSettings;
             this.renderer = renderer;
         }
 
         public Bitmap RenderWords(IEnumerable<string> words)
         {
             var preprocessedWords = PreprocessWords(words);
-            var layout = tagsCloudLayouter.GetCloudLayout(preprocessedWords);
+            var layout = tagsCloudLayouterSettings.TagsCloudLayouter.GetCloudLayout(preprocessedWords);
             var colorMap = colorMapperSettings.ColorMapper.GetColorMap(layout);
-            var wordsStyles = GetWordsStyles(layout, colorMap);
-            return renderer.GetBitmap(wordsStyles, layout.ImageSize);
+            var wordsStyles = GetWordsStyles(layout, colorMap).ToList();
+            var bitmap = renderer.GetBitmap(wordsStyles, layout.ImageSize);
+            wordsStyles.ForEach(x => x.Dispose());
+            return bitmap;
         }
 
         private IEnumerable<string> PreprocessWords(IEnumerable<string> words)
