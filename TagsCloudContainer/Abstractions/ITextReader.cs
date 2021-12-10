@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface ITextReader
+namespace TagsCloudContainer.Abstractions;
+
+public interface ITextReader : IService
 {
     IEnumerable<string> ReadLines();
 }

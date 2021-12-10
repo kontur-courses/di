@@ -1,9 +1,9 @@
-﻿using Autofac;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer.Defaults.MyStem;
 
-public class MyStem : IDisposable
+public class MyStem : ISingletonService, IDisposable
 {
     private static bool disposedValue;
     private static readonly ProcessStartInfo startInfo = new()
@@ -15,16 +15,17 @@ public class MyStem : IDisposable
         FileName = "mystem.exe",
         Arguments = "-nil -e cp866 - -"
     };
-    private static readonly Process myStemProccess = new()
-    {
-        StartInfo = startInfo
-    };
-    private static bool isStarted = false;
-    private static readonly Dictionary<string, WordStat> cache = new();
-    private static readonly Dictionary<string, WordStat[]> complexWordCache = new();
+    private readonly Process myStemProccess;
+    private bool isStarted = false;
+    private readonly Dictionary<string, WordStat> cache = new();
+    private readonly Dictionary<string, WordStat[]> complexWordCache = new();
 
     public MyStem()
     {
+        myStemProccess = new()
+        {
+            StartInfo = startInfo
+        };
     }
 
     public WordStat? AnalyzeWord(string word)

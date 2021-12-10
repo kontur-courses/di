@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface ITagPacker
+namespace TagsCloudContainer.Abstractions;
+
+public interface ITagPacker : IService
 {
     IEnumerable<ITag> GetTags();
 }

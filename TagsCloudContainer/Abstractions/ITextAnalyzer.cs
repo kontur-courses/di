@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface ITextAnalyzer
+namespace TagsCloudContainer.Abstractions;
+
+public interface ITextAnalyzer : IService
 {
     ITextStats AnalyzeText();
 }

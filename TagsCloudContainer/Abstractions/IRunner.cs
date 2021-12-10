@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface IRunner
+namespace TagsCloudContainer.Abstractions;
+
+public interface IRunner : IService
 {
     void Run(params string[] args);
 }

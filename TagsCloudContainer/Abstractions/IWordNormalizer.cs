@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface IWordNormalizer
+namespace TagsCloudContainer.Abstractions;
+
+public interface IWordNormalizer : IService
 {
     string? Normalize(string word);
 }

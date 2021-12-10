@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.Abstractions;
+﻿using TagsCloudContainer.Registrations;
 
-public interface IWordFilter
+namespace TagsCloudContainer.Abstractions;
+
+public interface IWordFilter : IService
 {
     bool IsValid(string word);
 }
