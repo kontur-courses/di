@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using TagsCloudVisualizationDI.Settings;
 using TagsCloudVisualizationDI.TextAnalization.Normalizer;
@@ -10,10 +11,11 @@ namespace TagsCloudVisualizationDI
 {
     public class Program
     {
-        public static void Main(string pathToFile, string pathToSave)
+        public static void Main(string pathToFile, string pathToSave, ImageFormat imageFormat, List<string> excludedWordsList)
         {
+
             var containerBuilder = new ContainerBuilder();
-            RegistrationOfSettings(containerBuilder, pathToFile, pathToSave);
+            RegistrationOfSettings(containerBuilder, pathToFile, pathToSave, imageFormat, excludedWordsList);
             var buildContainer = containerBuilder.Build();
 
             var settings = buildContainer.Resolve<ISettingsConfiguration>();
@@ -46,13 +48,14 @@ namespace TagsCloudVisualizationDI
                 yield return normalizer.NormalizeWord(word);
         }
 
-        private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, string pathToSave)
+        private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, 
+            string pathToSave, ImageFormat imageFormat, List<string> excludedWordsList)
         {
             buildContainer.RegisterType<DeffaultSettingsConfiguration>().As<ISettingsConfiguration>()
                 .WithParameter("pathToFile", pathToFile)
-                .WithParameter("pathToSave", pathToSave);
-            //.WithParameter("format", format)
-            //.WithParameter("encoding", encoding);
+                .WithParameter("pathToSave", pathToSave)
+                .WithParameter("format", imageFormat)
+                .WithParameter("excludedWords", excludedWordsList);
         }
 
 

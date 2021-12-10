@@ -13,7 +13,6 @@ namespace TagsCloudVisualizationDI.FileReader
             MystemPath = mystemPath;
             Arguments = arguments;
             ReadingEncoding = enconding;
-
         }
 
 
@@ -24,16 +23,6 @@ namespace TagsCloudVisualizationDI.FileReader
         public string MystemPath { get; }
         public string Arguments { get; }
         public Encoding ReadingEncoding { get; }
-
-        //!!!!!
-
-        //public string SaveAnalizationPath => "C:/GitHub/di/TagsCloudVisualizationDI/result.TXT";
-
-        //public string MystemPath => "C:/GitHub/di/TagsCloudVisualizationDI/mystem.exe";
-
-        //public string Arguments => "-lndw -ig";
-        //public Encoding ReadingEncoding => Encoding.UTF8;
-        //!!!!!!!
 
 
 
