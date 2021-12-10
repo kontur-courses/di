@@ -5,9 +5,8 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class TextAnalyzerSettings : ICliSettingsProvider
 {
-    public char[] WordSeparators { get => wordSeparators; private set => wordSeparators = value; }
+    public char[] WordSeparators { get; private set; } = { ' ', ',', '.' };
     private const char separator = '/';
-    private static char[] wordSeparators = { ' ', ',', '.' };
 
     public OptionSet GetCliOptions()
     {

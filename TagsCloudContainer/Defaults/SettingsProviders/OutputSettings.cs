@@ -5,11 +5,8 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class OutputSettings : ICliSettingsProvider
 {
-    private static string outputPath = "image.png";
-    private static ImageFormatType imageFormat = ImageFormatType.Png;
-
-    public string OutputPath { get => outputPath; private set => outputPath = value; }
-    public ImageFormatType ImageFormat { get => imageFormat; private set => imageFormat = value; }
+    public string OutputPath { get; private set; } = "image.png";
+    public ImageFormatType ImageFormat { get; private set; } = ImageFormatType.Png;
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()

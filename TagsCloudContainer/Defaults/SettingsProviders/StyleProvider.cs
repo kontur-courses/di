@@ -6,16 +6,12 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class StyleProvider : ICliSettingsProvider
 {
-    private static string fontFamilyName = "Comic Sans MS";
-    private static double maxSize = 50;
-    private static Color brushColor = Color.White;
-
-    public string FontFamilyName { get => fontFamilyName; private set => fontFamilyName = value; }
-    public double MinSize { get => maxSize; private set => maxSize = value; }
-    public Color BrushColor { get => brushColor; private set => brushColor = value; }
+    public string FontFamilyName { get; private set; } = "Comic Sans MS";
+    public double MinSize { get; private set; } = 50;
+    public Color BrushColor { get; private set; } = Color.White;
     public Style GetStyle(ITag tag)
     {
-        var font = new Font(new FontFamily(FontFamilyName), (float)((1+tag.RelativeSize) * MinSize));
+        var font = new Font(new FontFamily(FontFamilyName), (float)((1 + tag.RelativeSize) * MinSize));
         return new(font, new SolidBrush(BrushColor));
     }
 

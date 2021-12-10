@@ -5,13 +5,9 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class InputSettings : IRequiredSettingsProvider
 {
-    private static string[] paths = Array.Empty<string>();
-    private static string source = string.Empty;
-    private static bool isSet;
-
-    public string[] Paths { get => paths; private set => paths = value; }
-    public string Source { get => source; private set => source = value; }
-    public bool IsSet { get => isSet; private set => isSet = value; }
+    public string[] Paths { get; private set; } = Array.Empty<string>();
+    public string Source { get; private set; } = string.Empty;
+    public bool IsSet { get; private set; }
 
     public OptionSet GetCliOptions()
     {

@@ -6,7 +6,7 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class SpeechPartFilterSettings : ICliSettingsProvider
 {
-    private static readonly HashSet<SpeechPart> toFilterOut = new()
+    private readonly HashSet<SpeechPart> toFilterOut = new()
     {
         SpeechPart.CONJ,
         SpeechPart.INTJ,
@@ -27,7 +27,7 @@ public class SpeechPartFilterSettings : ICliSettingsProvider
         return options;
     }
 
-    private static void AddParts(string v)
+    private void AddParts(string v)
     {
         foreach (var part in v.Split())
         {
@@ -35,7 +35,7 @@ public class SpeechPartFilterSettings : ICliSettingsProvider
         }
     }
 
-    private static void RemoveParts(string v)
+    private void RemoveParts(string v)
     {
         foreach (var part in v.Split())
         {

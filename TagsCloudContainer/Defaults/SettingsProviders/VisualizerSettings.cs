@@ -6,15 +6,11 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class VisualizerSettings : ICliSettingsProvider
 {
-    private static int width = 800;
-    private static int height = 400;
-    private static SmoothingMode smoothingMode = SmoothingMode.AntiAlias;
-    private static int wordLimit = 0;
+    public int Width { get; private set; } = 800;
+    public int Height { get; private set; } = 400;
+    public SmoothingMode SmoothingMode { get; private set; } = SmoothingMode.AntiAlias;
+    public int WordLimit { get; private set; } = 0;
 
-    public int Width { get => width; private set => width = value; }
-    public int Height { get => height; private set => height = value; }
-    public SmoothingMode SmoothingMode { get => smoothingMode; private set => smoothingMode = value; }
-    public int WordLimit { get => wordLimit; private set => wordLimit = value; }
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()

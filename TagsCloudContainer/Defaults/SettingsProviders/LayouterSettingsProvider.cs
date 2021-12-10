@@ -6,9 +6,7 @@ namespace TagsCloudContainer.Defaults.SettingsProviders;
 
 public class LayouterSettingsProvider : ICliSettingsProvider
 {
-    private static Point center = new(300, 100);
-
-    public Point Center { get => center; private set => center = value; }
+    public Point Center { get; private set; } = new(300, 100);
     public OptionSet GetCliOptions()
     {
         var options = new OptionSet()
