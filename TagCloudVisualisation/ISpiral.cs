@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagCloud2
+namespace TagCloudVisualisation
 {
-    public interface IWordReader
+    public interface ISpiral
     {
-        string[] GetWords(string input);
+        Point GetNextPoint();
     }
 }

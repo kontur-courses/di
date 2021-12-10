@@ -8,6 +8,6 @@ namespace TagCloud2
 {
     public interface IStringPreprocessor
     {
-        string PreprocessString(String input);
+        string PreprocessString(string input);
     }
 }

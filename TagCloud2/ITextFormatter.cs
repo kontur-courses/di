@@ -8,5 +8,6 @@ namespace TagCloud2
 {
     public interface ITextFormatter
     {
+
     }
 }

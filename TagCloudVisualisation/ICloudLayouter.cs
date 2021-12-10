@@ -5,14 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagCloud2
+namespace TagCloudVisualisation
 {
     public interface ICloudLayouter
     {
-        public Rectangle PutNewRectangle();
-
-        public IEnumerable<Rectangle> GetRectangles();
-
-        public void SetSettings(ICloudSettings settings);
+        Rectangle PutNewRectangle(Size rectangleSize);
     }
 }
