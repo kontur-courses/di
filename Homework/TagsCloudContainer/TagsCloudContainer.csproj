@@ -12,6 +12,7 @@
         <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs" />
         <Compile Remove="Visualizer\DefaultVisualizerSettings.cs" />
         <Compile Remove="FileReader\Parsers\**" />
+        <Compile Remove="Visualizer\IWordAppearanceSettings.cs" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudContainer.WordsFrequencyAnalyzers
 {
@@ -6,14 +7,7 @@ namespace TagsCloudContainer.WordsFrequencyAnalyzers
     {
         public Dictionary<string, int> GetWordsFrequency(IEnumerable<string> words)
         {
-            var freqDict = new Dictionary<string, int>();
-            foreach (var word in words)
-                if (!freqDict.ContainsKey(word))
-                    freqDict[word] = 1;
-                else
-                    freqDict[word] += 1;
-
-            return freqDict;
+            return words.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
         }
     }
 }

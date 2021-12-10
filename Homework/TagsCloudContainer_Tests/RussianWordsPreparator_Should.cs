@@ -61,10 +61,11 @@ namespace TagsCloudContainer_Tests
         }
 
         [Test]
-        public void TakeFirstWord_IfSeveralInLine()
+        public void ParseLines_WhenSeveralWords()
         {
             var input = new[] {"он один"};
-            sut.Prepare(input).Should().ContainSingle(wi => wi.Lemma == "он");
+            var result = sut.Prepare(input);
+            result.Should().HaveCount(2);
         }
 
         private void AssertLemma(string[] input, string[] expected)

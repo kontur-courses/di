@@ -7,23 +7,22 @@ namespace TagsCloudContainer.WordsPreparator
 {
     public record RussianWordsPreparator : IWordsPreparator
     {
-        private static readonly IReadOnlyDictionary<string, SpeechPart> speechPartsAdapter;
-        private readonly MorphAnalyzer analyzer;
-
-        static RussianWordsPreparator()
+        private const string SpeechPartKey = "чр";
+        
+        private static readonly IReadOnlyDictionary<string, SpeechPart> SpeechPartsAdapter = new Dictionary<string, SpeechPart>
         {
-            speechPartsAdapter = new Dictionary<string, SpeechPart>
-            {
-                ["сущ"] = SpeechPart.Noun,
-                ["прил"] = SpeechPart.Adjective,
-                ["кр_прил"] = SpeechPart.Adjective,
-                ["гл"] = SpeechPart.Verb,
-                ["инф_гл"] = SpeechPart.Verb,
-                ["нареч"] = SpeechPart.Adverbs,
-                ["мест"] = SpeechPart.Pronoun,
-                ["числ"] = SpeechPart.Num
-            };
-        }
+            ["сущ"] = SpeechPart.Noun,
+            ["прил"] = SpeechPart.Adjective,
+            ["кр_прил"] = SpeechPart.Adjective,
+            ["гл"] = SpeechPart.Verb,
+            ["инф_гл"] = SpeechPart.Verb,
+            ["нареч"] = SpeechPart.Adverbs,
+            ["мест"] = SpeechPart.Pronoun,
+            ["числ"] = SpeechPart.Num
+        };
+        
+        private readonly MorphAnalyzer analyzer;
+        
 
         public RussianWordsPreparator(MorphAnalyzer analyzer)
         {
@@ -33,15 +32,15 @@ namespace TagsCloudContainer.WordsPreparator
         public IEnumerable<WordInfo> Prepare(IEnumerable<string> words)
         {
             var preparedWords = words
-                .Select(w => ToLowerAndTrim(w))
-                .Select(w => w.Split()[0]);
+                .Select(ToLowerAndTrim)
+                .SelectMany(s => s.Split());
             return CreateWordInfo(analyzer.Parse(preparedWords));
         }
 
         private IEnumerable<WordInfo> CreateWordInfo(IEnumerable<MorphInfo> parsedWords)
         {
             return parsedWords
-                .Select(mi => mi.BestTag)
+                .Select(morphInfo => morphInfo.BestTag)
                 .Select(tag => new WordInfo(tag.Lemma, IdentifySpeechPart(tag)));
         }
 
@@ -52,9 +51,9 @@ namespace TagsCloudContainer.WordsPreparator
 
         private SpeechPart IdentifySpeechPart(Tag tag)
         {
-            var speechPart = tag.GramsDic["чр"];
-            return speechPartsAdapter.ContainsKey(speechPart)
-                ? speechPartsAdapter[speechPart]
+            var speechPart = tag.GramsDic[SpeechPartKey];
+            return SpeechPartsAdapter.ContainsKey(speechPart)
+                ? SpeechPartsAdapter[speechPart]
                 : SpeechPart.Unknown;
         }
     }

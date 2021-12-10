@@ -44,7 +44,7 @@ namespace TagsCloudContainer_Tests
             newDirectory.Delete(recursive:true);
         }
 
-        [TestCase]
+        [Test]
         public void ThrowWithMessage_WhenDisposedBitmap()
         {
             testingBmp.Dispose();

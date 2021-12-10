@@ -21,12 +21,12 @@ namespace TagsCloudContainer.WordsFilter
 
         public WordsFilter Excluding(SpeechPart speechPart)
         {
-            return new WordsFilter() with {excludedSpeechParts = excludedSpeechParts.Add(speechPart)};
+            return new WordsFilter {excludedSpeechParts = excludedSpeechParts.Add(speechPart)};
         }
 
         public WordsFilter Excluding(Predicate<WordInfo> boringWords)
         {
-            return new WordsFilter() with {isBoring = boringWords};
+            return new WordsFilter {isBoring = boringWords};
         }
     }
 }

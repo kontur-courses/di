@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
+[assembly:InternalsVisibleToAttribute("TagsCloudContainer_Tests")]
 
 namespace TagsCloudContainer.Extensions
 {
@@ -12,7 +15,7 @@ namespace TagsCloudContainer.Extensions
             return rectangles.Any(r => r.IntersectsWith(rectangle));
         }
 
-        internal static Rectangle GetRectanglesContainer(this IEnumerable<Rectangle> rectangles)
+        internal static Rectangle GetRectanglesContainer(this ICollection<Rectangle> rectangles)
         {
             if (rectangles == null)
                 throw new ArgumentNullException(nameof(rectangles));
