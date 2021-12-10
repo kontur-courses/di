@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace TagCloud.Saving
+namespace TagCloud.Savers
 {
     public interface IBitmapSaver
     {

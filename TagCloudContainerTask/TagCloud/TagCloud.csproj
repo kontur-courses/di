@@ -49,8 +49,8 @@
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\CircularLayouter.cs" />
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\ICloudLayouter.cs" />
     <Compile Include="LayoutAlgorithms\ILayouter.cs" />
-    <Compile Include="Saving\BitmapSaver.cs" />
-    <Compile Include="Saving\IBitmapSaver.cs" />
+    <Compile Include="Savers\BitmapSaver.cs" />
+    <Compile Include="Savers\IBitmapSaver.cs" />
     <Compile Include="Visualization\Drawer.cs" />
     <Compile Include="Visualization\IDrawer.cs" />
     <Compile Include="Visualization\IVisualizer.cs" />

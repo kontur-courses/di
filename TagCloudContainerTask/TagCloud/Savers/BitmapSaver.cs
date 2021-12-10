@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace TagCloud.Saving
+namespace TagCloud.Savers
 {
     public class BitmapSaver : IBitmapSaver
     {
