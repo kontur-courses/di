@@ -5,10 +5,17 @@ using TagCloud.TextHandlers;
 
 namespace TagCloud.Templates
 {
-    public class Template
+    public class Template : ITemplate
     {
         private readonly List<WordParameter> words = new();
         public Size Size { get; set; }
+        public Color BackgroundColor { get; set; }
+
+        public bool IsEmpty()
+        {
+            return words.Count == 0;
+        }
+
         public PointF Center { get; set; }
 
         public Template()
@@ -25,7 +32,7 @@ namespace TagCloud.Templates
             words.Add(wordParameter);
         }
 
-        public IEnumerable<WordParameter> GetWords()
+        public IEnumerable<WordParameter> GetWordParameters()
         {
             return words;
         }

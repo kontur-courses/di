@@ -34,9 +34,9 @@ namespace TagCloud.Tests
         public void CreateBitmapImageOnFail()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            var visualizer = new Visualizer(sut);
+            var visualizer = new Visualizer();
             var fileToSave = FailedTestsData + "/" + TestContext.CurrentContext.Test.FullName + ".png";
-            visualizer.DrawRectangles(fileToSave);
+           // visualizer.DrawRectangles(fileToSave); //todo ...
             var path = Path.GetFullPath(fileToSave);
             Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }

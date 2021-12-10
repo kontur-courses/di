@@ -6,7 +6,7 @@ namespace TagCloud.CloudLayouter
     {
         SizeF SizeF { get;}
         PointF Center { get; }
-        RectangleF PutNextRectangle(Size rectangleSize);
+        RectangleF PutNextRectangle(SizeF rectangleSize);
         RectangleF[] GetCloud();
     }
 }

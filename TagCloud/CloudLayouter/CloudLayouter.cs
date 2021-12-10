@@ -20,7 +20,7 @@ namespace TagCloud.CloudLayouter
             this.pointGenerator = pointGenerator;
         }
 
-        public RectangleF PutNextRectangle(Size rectangleSize)
+        public RectangleF PutNextRectangle(SizeF rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("Size parameters should be positive");
@@ -37,7 +37,7 @@ namespace TagCloud.CloudLayouter
             CloudRectangle = RectangleF.Union(CloudRectangle, newTag);
         }
 
-        private RectangleF GetNextRectangle(Size size)
+        private RectangleF GetNextRectangle(SizeF size)
         {
             var points = pointGenerator.GetPoints(size);
             var rectangles = points.Select(p => p.GetRectangle(size));

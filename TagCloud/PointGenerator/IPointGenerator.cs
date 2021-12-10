@@ -5,7 +5,7 @@ namespace TagCloud.PointGenerator
 {
     public interface IPointGenerator
     {
-        IEnumerable<PointF> GetPoints(Size size);
+        IEnumerable<PointF> GetPoints(SizeF size);
         PointF Center { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace TagCloud.PointGenerator
             pitchCoefficient = 20 * densityCoefficient * densityCoefficient;
         }
 
-        public IEnumerable<PointF> GetPoints(Size size)
+        public IEnumerable<PointF> GetPoints(SizeF size)
         {
             spiralPitch = Math.Min(size.Height, size.Width)/pitchCoefficient;
             foreach (var (radius, angle) in GetArchimedeanSpiral(cache.SafeGetParameter(size)))

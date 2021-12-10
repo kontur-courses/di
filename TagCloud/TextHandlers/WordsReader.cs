@@ -5,13 +5,13 @@ using TagCloud.TextHandlers.Parser;
 
 namespace TagCloud.TextHandlers
 {
-    public class TextReaderFacade : IReader
+    public class WordsReader : IReader
     {
         private readonly ITextParser parser;
         private readonly IWordConverter converter;
         private readonly ITextFilter filter;
 
-        public TextReaderFacade(ITextParser parser, IWordConverter converter, ITextFilter filter)
+        public WordsReader(ITextParser parser, IWordConverter converter, ITextFilter filter)
         {
             this.parser = parser;
             this.converter = converter;

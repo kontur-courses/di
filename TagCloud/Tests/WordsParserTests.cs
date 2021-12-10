@@ -10,7 +10,7 @@ namespace TagCloud.Tests
     public class WordsParserTests
     {
         private static string[] words = { "abc", "abcd", "1234", "test" };
-        private static string filename = "TestWords.txt";
+        private static string filename = "TestWords.doc";
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -21,6 +21,19 @@ namespace TagCloud.Tests
         [Test]
         public void GetWords_ShouldReturnAllWordsFromFile()
         {
+            var sut = new WordsParser();
+
+            var actualWords = sut.GetWords(filename);
+
+            actualWords.Should().BeEquivalentTo(words);
+        }
+
+        [TestCase("doc")]
+        [TestCase("docx")]
+        [TestCase("txt")]
+        public void GetWords_CanReadOtherFormats(string fileExtension)
+        {
+            File.WriteAllText($"test.{fileExtension}", string.Join(Environment.NewLine, words));
             var sut = new WordsParser();
 
             var actualWords = sut.GetWords(filename);

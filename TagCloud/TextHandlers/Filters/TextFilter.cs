@@ -6,7 +6,7 @@ namespace TagCloud.TextHandlers.Filters
 {
     public class TextFilter : ITextFilter
     {
-        private List<Func<string, bool>> filters = new();
+        private readonly List<Func<string, bool>> filters = new();
 
         public TextFilter()
         {
