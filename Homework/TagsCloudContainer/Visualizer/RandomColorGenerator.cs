@@ -6,11 +6,13 @@ namespace TagsCloudContainer.Visualizer
 {
     public class RandomColorGenerator : IColorGenerator
     {
-        public IEnumerable<Color> GetColor()
+        public Stack<Color> GetColors(int count)
         {
+            var colors = new Stack<Color>();
             var rnd = new Random();
-            while (true)
-                yield return Color.FromArgb(rnd.Next(255), rnd.Next(255), rnd.Next(255));
+            for(var i = 0; i < count; i++)
+                colors.Push(Color.FromArgb(rnd.Next(255), rnd.Next(255), rnd.Next(255)));
+            return colors;
         }
     }
 }

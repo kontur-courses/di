@@ -5,7 +5,7 @@ namespace TagsCloudContainer.Visualizer
 {
     public interface IColorGenerator
     {
-        public IEnumerable<Color> GetColor();
+        public Stack<Color> GetColors(int count);
 
     }
 }

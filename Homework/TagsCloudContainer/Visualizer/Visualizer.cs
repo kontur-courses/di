@@ -1,55 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layouter;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer.Visualizer
 {
-    public class Visualizer : IVisualizer
+    public class Visualizer : IVisualizer, IDisposable
     {
         private readonly ICloudLayouter layouter;
-        private readonly IVisualizerSettings settings;
+        
+        private readonly Size imageSize;
+        private readonly IColorGenerator wordsColorsGenerator;
+        private readonly Font font;
+        private readonly Bitmap bmp;
+        private readonly Graphics graphics;
+        private readonly Brush brush;
 
         public Visualizer(IVisualizerSettings settings, ICloudLayouter layouter)
         {
-            this.settings = settings;
+            imageSize = settings.ImageSize;
+            bmp = new Bitmap(imageSize.Width, imageSize.Height);
+            graphics = Graphics.FromImage(bmp);
+            graphics.Clear(settings.BackgroundColor);
+            brush = new SolidBrush(Color.White);
+            wordsColorsGenerator = settings.WordsColorGenerator;
+            font = settings.Font;
             this.layouter = layouter;
         }
 
         public Bitmap Visualize(Dictionary<string, int> freqDict)
         {
-            var wordsOrderedByFreq = freqDict
-                .OrderByDescending(w => w.Value);
-            var layoutRectangles = GetLayoutRectangles(wordsOrderedByFreq);
-            var imageSize = settings.ImageSize;
-            var bmp = new Bitmap(imageSize.Width, imageSize.Height);
-            using var graphics = Graphics.FromImage(bmp);
-            using var brush = new SolidBrush(settings.WordsColor);
-            graphics.Clear(settings.BackgroundColor);
-            var wordRectanglePairs = layoutRectangles
-                .Zip(wordsOrderedByFreq, (layout, word) => (layout, word.Key));
-            foreach (var wordRectPair in wordRectanglePairs)
-                graphics.DrawString(wordRectPair.Key, settings.Font, brush, wordRectPair.layout);
-
+            var wordsCount = freqDict.Count;
+            var wordsColors = wordsColorsGenerator.GetColors(wordsCount);
+            var orderedFreqPairs = freqDict
+                .OrderByDescending(kv => kv.Value)
+                .ToArray();
+            var mostFreq = orderedFreqPairs.First().Value;
+            foreach (var (word, freq) in orderedFreqPairs)
+                VisualizeWord(word, freq, mostFreq, wordsColors.Pop());
             return bmp;
         }
 
-        private IReadOnlyCollection<Rectangle> GetLayoutRectangles(
-            IOrderedEnumerable<KeyValuePair<string, int>> wordsOrderedByFreq)
+        public void Dispose()
         {
-            var startLetterWidth = 50;
-            var startLetterHight = 50;
-            var mostFreq = wordsOrderedByFreq.First().Value;
-            foreach (var word in wordsOrderedByFreq)
-            {
-                var freqDelta = mostFreq - word.Value;
-                var width = (startLetterWidth - freqDelta) * word.Key.Length;
-                var height = startLetterHight - freqDelta;
-                var size = new Size(width, height);
-                layouter.PutNextRectangle(size);
-            }
-
-            return layouter.Rectangles;
+            font.Dispose();
+            graphics.Dispose();
+            brush.Dispose();
         }
+
+        private void VisualizeWord(string word, int freq, int mostFreq, Color color)
+        {
+            var freqDelta = mostFreq - freq;
+            using var newFont = new Font(font.FontFamily, Math.Min(font.Size - freqDelta, 5));
+            var rectSize = new Size((int)newFont.Size * word.Length, newFont.Height);
+            var layoutRectangle = layouter.PutNextRectangle(rectSize);
+            using var brush = new SolidBrush(color);
+            graphics.DrawString(word, newFont, brush, layoutRectangle);
+        }
+        
     }
 }
