@@ -1,10 +1,7 @@
 ﻿using Autofac;
 using Mono.Options;
-using System.Diagnostics;
 using System.Reflection;
 using TagsCloudContainer.Abstractions;
-using TagsCloudContainer.Defaults;
-using TagsCloudContainer.Defaults.MyStem;
 using TagsCloudContainer.Registrations;
 
 namespace TagsCloudContainer;
@@ -12,36 +9,96 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        args = new[] { "--string", @"Повседневная практика показывает, что реализация намеченных плановых заданий в значительной степени обуславливает создание модели развития. Повседневная практика показывает, что укрепление и развитие структуры обеспечивает широкому кругу (специалистов) участие в формировании дальнейших направлений развития.
-Идейные соображения высшего порядка, а также рамки и место обучения кадров обеспечивает широкому кругу (специалистов) участие в формировании новых предложений. Не следует, однако забывать, что дальнейшее развитие различных форм деятельности способствует подготовки и реализации форм развития.
-Товарищи! сложившаяся структура организации представляет собой интересный эксперимент проверки направлений прогрессивного развития. Равным образом рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.", "--max-size","1000","--height","1000","--width","1400","--center", "500, 300", "--color", "red" };
-
-        var assemblies = new List<Assembly>() { Assembly.GetExecutingAssembly() };
-        var assemblyAdder = new OptionSet()
-        {
-            {"assemblies=",$"Specifies additional assemblies to use.",v => AddAssembliesFrom(assemblies,v.Split()) }
-        };
-        var leftAgrs = assemblyAdder.Parse(args);
+        args = new[] { "--files", "bigbook.txt", "--height", "10000", "--width", "10000", "--center", "5000, 5000", "--word-limit", "3000", "--color", "red" };
+        var registeredServices = new HashSet<Type>();
+        var serviceIndex = new ServiceIndex();
         var builder = new ContainerBuilder();
-        RegistrationHelper.RegisterServices(builder, assemblies.ToArray());
+
+        serviceIndex.AddAssemblyServices(Assembly.GetExecutingAssembly());
+        var leftArgs = ParseAssemblies(serviceIndex, args);
+        leftArgs = ParseImplementations(serviceIndex, builder, registeredServices, leftArgs);
+
+        foreach (var type in serviceIndex.AvailableServices)
+        {
+            var registration = builder.RegisterType(type).AsSelf();
+            if (type.IsAssignableTo<ISingletonService>())
+                registration.SingleInstance();
+            foreach (var possibleService in type.GetInterfaces().Where(x => x.IsAssignableTo<IService>() && x != typeof(IService) && x != typeof(ISingletonService)))
+            {
+                if (registeredServices.Contains(possibleService))
+                    continue;
+                registration.As(possibleService);
+            }
+        }
         var container = builder.Build();
 
-        IRunner runner = container.Resolve<DefaultRunner>();
-        var runnerSelector = new OptionSet()
-        {
-            {"runner=",$"Select runner to use. Defaults to {nameof(DefaultRunner)}",v => runner = container.ResolveKeyed<IRunner>(v) }
-        };
+        var runner = container.Resolve<IRunner>();
 
-        leftAgrs = runnerSelector.Parse(leftAgrs);
-
-        runner.Run(leftAgrs.ToArray());
+        runner.Run(leftArgs.ToArray());
     }
 
-    private static void AddAssembliesFrom(List<Assembly> assemblies, IEnumerable<string> assemblyNames)
+    private static List<string> ParseImplementations(ServiceIndex serviceIndex, ContainerBuilder builder, HashSet<Type> registeredServices, List<string> leftArgs)
     {
-        foreach (var assembly in assemblyNames)
+        var implementationsOptions = new OptionSet()
         {
-            assemblies.Add(Assembly.LoadFrom(assembly));
+            {"implement-with=",$"Specifies which implementations to register for later use. " +
+            $"Example: '--implement-with IService FirstImpl SecondImpl' will register class FirstImpl and SecondImpl as implementations for IService. " +
+            $"'--implement-with IService all' will register all available implementations. " +
+            $"All services without specific implemetation will register all available implementations", v => RegisterFromArgs(builder,serviceIndex, registeredServices, v) }
+        };
+        leftArgs = implementationsOptions.Parse(leftArgs);
+        return leftArgs;
+    }
+
+    private static List<string> ParseAssemblies(ServiceIndex serviceIndex, string[] args)
+    {
+        var assembliesOptions = new OptionSet()
+        {
+            {"assemblies=",$"Specifies additional assemblies to use.",v => AddAssembliesFrom(serviceIndex,v.Split()) }
+        };
+        var leftArgs = assembliesOptions.Parse(args);
+        return leftArgs;
+    }
+
+    private static void RegisterFromArgs(ContainerBuilder builder, ServiceIndex serviceIndex, HashSet<Type> registeredServices, string argString)
+    {
+        var types = argString.Split(' ');
+        if (types.Length < 2)
+            throw new ArgumentException($"{argString} did not provide enough types to register. Should be at least 2: Service and it's Implementation");
+        var service = GetType(serviceIndex, types[0]);
+        var impls = types.Skip(1).Select(x => GetType(serviceIndex, x)).ToArray();
+        Register(builder, service, impls);
+        registeredServices.Add(service);
+    }
+
+    private static Type GetType(ServiceIndex serviceIndex, string typeName)
+    {
+        if (!serviceIndex.TryGetByName(typeName, out var type))
+        {
+            if (!serviceIndex.TryGetByFullName(typeName, out type))
+                throw new ArgumentException($"Could not find type with name '{typeName}'. Make sure required assembly is provided and requested service implements '{nameof(IService)}' interface");
+        }
+
+        return type;
+    }
+
+    private static void Register(ContainerBuilder builder, Type service, Type[] implemetations)
+    {
+        foreach (var impl in implemetations)
+        {
+            if (!service.IsAssignableFrom(impl))
+                continue;
+            var registration = builder.RegisterType(impl).AsSelf().As(service);
+            if (impl.IsAssignableTo<ISingletonService>())
+                registration.SingleInstance();
+        }
+    }
+
+    private static void AddAssembliesFrom(ServiceIndex serviceIndex, IEnumerable<string> assemblyNames)
+    {
+        foreach (var assembly in assemblyNames.Select(Assembly.LoadFrom))
+        {
+            serviceIndex.AddAssemblyServices(assembly);
         }
     }
 }
