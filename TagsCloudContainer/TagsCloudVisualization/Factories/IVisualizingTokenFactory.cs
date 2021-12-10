@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.Factories
 {
     public interface IVisualizingTokenFactory
     {
-        public IVisualizingToken NewToken(string value, SizeF rectangleSize, Color color);
+        public IVisualizingToken NewToken(string value, int fontSize, Color color);
     }
 }

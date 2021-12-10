@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.Visualization.Configurator
     {
         public string Value { get; }
 
-        public SizeF RectangleSize { get; }
+        public int FontSize { get; }
 
         public Color Color { get; }
     }

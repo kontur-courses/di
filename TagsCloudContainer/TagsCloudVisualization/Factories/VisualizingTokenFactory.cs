@@ -5,9 +5,9 @@ namespace TagsCloudVisualization.Factories
 {
     public class WordsVisualizingTokenFactory : IVisualizingTokenFactory
     {
-        public IVisualizingToken NewToken(string value, SizeF rectangleSize, Color color)
+        public IVisualizingToken NewToken(string value, int fontSize, Color color)
         {
-            return new WordVisualizingToken(value, rectangleSize, color);
+            return new WordVisualizingToken(value, fontSize, color);
         }
     }
 }
