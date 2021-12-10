@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Autofac;
 using TagsCloudContainer.Common;
@@ -30,6 +31,7 @@ namespace TagsCloudContainer
             {
                 var reader = scope.Resolve<TagReader>();
                 var parser = scope.Resolve<WordsCountParser>();
+                var preprocessor = scope.Resolve<TagsPreprocessor>();
                 var painter = scope.Resolve<TagPainter>();
                 var layouter = scope.Resolve<TagLayouter>();
                 var visualizator = scope.Resolve<IVisualizator<ITag>>();
@@ -37,8 +39,7 @@ namespace TagsCloudContainer
 
                 var text = reader.Read(textFilename);
                 var tags = parser.Parse(text);
-                // Подумаю еще как это можно сделать лучше >
-                tags = new ToLowerPreprocessor().Process(new ShortTagsFilter().Process(tags)).ToList();
+                tags = preprocessor.Process(tags);
                 var paintedTags = painter.Paint(tags);
                 var cloud = layouter.PlaceTagsInCloud(paintedTags, minHeight, maxScale);
                 visualizator.Visualize(settings, cloud);
@@ -50,7 +51,7 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
             RegisterLibraryDependencies(builder);
             RegisterProjectDependencies(builder);
-            
+            RegisterPreprocessors(builder);
             return builder.Build();
         }
 
@@ -97,6 +98,18 @@ namespace TagsCloudContainer
             builder.RegisterType<TagReader>().AsSelf();
             builder.RegisterType<TagPainter>().AsSelf();
             builder.RegisterType<WordsCountParser>().AsSelf();
+        }
+
+        private static void RegisterPreprocessors(ContainerBuilder builder)
+        {
+            var preprocessor = typeof(IPreprocessor);
+            var preprocessors = AppDomain.CurrentDomain.GetAssemblies()
+                .First(a => a.FullName.Contains("TagsCloudContainer"))
+                .GetTypes()
+                .Where(t => preprocessor.IsAssignableFrom(t))
+                .ToArray();
+            builder.RegisterTypes(preprocessors).As<IPreprocessor>();
+            builder.RegisterType<TagsPreprocessor>().AsSelf();
         }
     }
 }
