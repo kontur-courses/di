@@ -5,16 +5,23 @@ using System.Text.RegularExpressions;
 
 namespace FileInteractions.Readers
 {
-    public class LinesReader : ILinesReader
+    public class FromStreamReader : ILinesReader
     {
-        public IEnumerable<string> ReadLinesFrom(StreamReader streamReader)
+        private readonly StreamReader streamReader;
+
+        public FromStreamReader(StreamReader streamReader)
         {
-            return ReadLines(streamReader)
+            this.streamReader = streamReader;
+        }
+
+        public IEnumerable<string> ReadLines()
+        {
+            return ReadFromStream()
                 .SelectMany(line => Regex.Split(line, @"\P{L}+", RegexOptions.Compiled))
                 .Select(word => word);
         }
 
-        private IEnumerable<string> ReadLines(StreamReader streamReader)
+        private IEnumerable<string> ReadFromStream()
         {
             using (streamReader)
             {
