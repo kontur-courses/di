@@ -51,9 +51,11 @@ namespace TagCloud.Visualization
             graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
             foreach (var tag in tags)
-                graphics.DrawString(
-                    tag.Word, new Font(Tag.WordFontName, tag.WordEmSize),
-                    Brushes.Black, tag.WordOuterRectangle.Location);
+                using (var font = new Font(Tag.WordFontName, tag.WordEmSize))
+                {
+                    graphics.DrawString(tag.Word, font,
+                        Brushes.Black, tag.WordOuterRectangle.Location);
+                }
         }
     }
 }
