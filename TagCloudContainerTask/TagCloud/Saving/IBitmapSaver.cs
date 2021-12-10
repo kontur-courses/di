@@ -1,9 +1,13 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagCloud.Saving
 {
     public interface IBitmapSaver
     {
-        string Save(Bitmap bitmap, bool openAfterSave);
+        void SaveBitmapTo(
+            Bitmap bitmap,
+            string directory, string file, ImageFormat imageFormat,
+            bool openAfterSave = false);
     }
 }

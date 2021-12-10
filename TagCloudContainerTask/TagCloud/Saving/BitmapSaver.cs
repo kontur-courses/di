@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -8,40 +7,25 @@ namespace TagCloud.Saving
 {
     public class BitmapSaver : IBitmapSaver
     {
-        private const string BitmapsDirectory = "layouts";
-        private const string FileExt = ".png";
-        private const string FileNamePrefix = "TagCloud_";
-        private static readonly ImageFormat ImgFormat = ImageFormat.Png;
-
-        private static readonly string ProjectDirectory
-            = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
-
-        public string Save(Bitmap bitmap, bool openAfterSave)
+        public void SaveBitmapTo(
+            Bitmap bitmap,
+            string directory, string file, ImageFormat imageFormat,
+            bool openAfterSave = false)
         {
-            var savePath = @"c:\users\sqire\desktop";
-            var fullFileName = GetFileName();
-            var absoluteFileName = Path.Combine(savePath, fullFileName);
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
 
-            if (!Directory.Exists(savePath))
-                Directory.CreateDirectory(savePath);
+            var fileAbsoluteName = Path.Combine(directory, file);
 
-            bitmap.Save(absoluteFileName, ImgFormat);
+            bitmap.Save(fileAbsoluteName, imageFormat);
 
             if (openAfterSave)
-                OpenImage(absoluteFileName);
-
-            return absoluteFileName;
+                OpenImage(fileAbsoluteName);
         }
 
-        private static string GetFileName()
+        private static void OpenImage(string fileAbsoluteName)
         {
-            var currentTime = DateTime.Now.ToString("hh-mm-ss-fff");
-            return string.Join("", FileNamePrefix, currentTime, FileExt);
-        }
-
-        private static void OpenImage(string absoluteFileName)
-        {
-            var info = new ProcessStartInfo(absoluteFileName);
+            var info = new ProcessStartInfo(fileAbsoluteName);
             using (var process = new Process())
             {
                 process.StartInfo = info;
