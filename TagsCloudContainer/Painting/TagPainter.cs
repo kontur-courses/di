@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TagCloudContainerTests;
 
 namespace TagsCloudContainer
@@ -15,14 +16,8 @@ namespace TagsCloudContainer
 
         public List<SimpleTag> Paint(List<SimpleTag> tags)
         {
-            var enumerator = maker.GetPalettes().GetEnumerator();
-            foreach (var simpleTag in tags)
-            {
-                if (!enumerator.MoveNext())
-                    throw new ArgumentException("Palettes should not ends before tags");
-                var palette = enumerator.Current;
-                simpleTag.Palette = palette;
-            }
+            foreach (var (tag, palette) in tags.Zip(maker.GetPalettes()))
+                tag.Palette = palette;
             return tags;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer
@@ -22,16 +23,8 @@ namespace TagsCloudContainer
 
         public IEnumerable<Palette> GetPalettes()
         {
-            var colorEnumerator = GetNextColor(colors).GetEnumerator();
-            var backgroundEnumerator = GetNextColor(backgroundColors).GetEnumerator();
-            while (true)
-            {
-                colorEnumerator.MoveNext();
-                backgroundEnumerator.MoveNext();
-                var color = colorEnumerator.Current;
-                var background = backgroundEnumerator.Current;
+            foreach (var (color, background) in GetNextColor(colors).Zip(GetNextColor(backgroundColors)))
                 yield return new Palette(color, background);
-            }
         }
 
         private IEnumerable<Color> GetNextColor(List<Color> colors)
