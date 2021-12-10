@@ -10,9 +10,9 @@ public class DocFileReader : IFileReader
     public IEnumerable<string> GetLines(string inputPath)
     {
         using var document = WordprocessingDocument.Open(inputPath, false);
-        var parapgraphs = document.MainDocumentPart.RootElement;
+        var paragraphs = document.MainDocumentPart.RootElement;
 
-        return parapgraphs
+        return paragraphs
             .Descendants<Paragraph>()
             .Select(x => x.InnerText);
     }
