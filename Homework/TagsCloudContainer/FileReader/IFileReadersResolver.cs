@@ -4,7 +4,7 @@ namespace TagsCloudContainer.FileReader
 {
     public interface IFileReadersResolver
     {
-        IFileReader Get(TextFileFormat format);
+        IFileReader Get(string fileExt);
 
     }
 }

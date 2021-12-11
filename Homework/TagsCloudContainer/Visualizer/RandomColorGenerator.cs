@@ -6,6 +6,8 @@ namespace TagsCloudContainer.Visualizer
 {
     public class RandomColorGenerator : IColorGenerator
     {
+        public PalleteType PalleteType => PalleteType.Random;
+
         public Stack<Color> GetColors(int count)
         {
             var colors = new Stack<Color>();

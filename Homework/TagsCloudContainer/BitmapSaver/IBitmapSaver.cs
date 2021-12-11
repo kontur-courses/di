@@ -6,6 +6,6 @@ namespace TagsCloudContainer.BitmapSaver
 {
     public interface IBitmapSaver
     {
-        public void Save(Bitmap bmp, DirectoryInfo directory, string fileName, ImageFormat format);
+        public void Save(Bitmap bmp, string fullPathWithExt);
     }
 }

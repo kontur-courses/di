@@ -7,7 +7,7 @@ using TagsCloudContainer.FileReader;
 namespace TagsCloudContainer_Tests
 {
     [TestFixture]
-    public class FileReader_Should
+    public class TxtFileReader_Should
     {
         private const string testFilePath = @"..\..\..\TestFiles\testWords.txt";
 
@@ -24,7 +24,7 @@ namespace TagsCloudContainer_Tests
             "снова"
         };
 
-        private readonly FileReader sut = new();
+        private readonly TxtFileReader sut = new();
 
         [Test]
         public void ReadFile_WhenExists()

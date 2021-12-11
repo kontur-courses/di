@@ -1,8 +1,11 @@
-﻿namespace TagsCloudContainer.FileReader
+﻿using System;
+
+namespace TagsCloudContainer.FileReader
 {
+    [Flags]
     public enum TextFileFormat
     {
-        Txt,
+        Txt = 0x0,
         Json,
         Csv,
         Xml,

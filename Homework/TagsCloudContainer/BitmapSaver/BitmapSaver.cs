@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,14 +8,27 @@ namespace TagsCloudContainer.BitmapSaver
 {
     public class BitmapSaver : IBitmapSaver
     {
-        public void Save(Bitmap bmp, DirectoryInfo directory, string fileName,ImageFormat format)
+        private readonly HashSet<string> allowedExt = new()
         {
-            if(!directory.Exists)
-                directory.Create();
-            var fullPath = Path.Combine(directory.FullName, $"{fileName}.{format.ToString().ToLower()}");
+            ".png",
+            ".jpeg",
+            ".jpg",
+            ".gif",
+            ".bmp",
+            ".icon",
+        };
+
+        public void Save(Bitmap bmp, string fullPathWithExt)
+        {
+            var ext = Path.GetExtension(fullPathWithExt);
+            var directory = Path.GetDirectoryName(fullPathWithExt);
+            if (!allowedExt.Contains(ext))
+                throw new ArgumentException($"file {fullPathWithExt} has wrong image extension {ext}");
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
             try
             {
-                bmp.Save(fullPath, format);
+                bmp.Save(fullPathWithExt);
             }
             catch (Exception e)
             {

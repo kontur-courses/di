@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudContainer.WordsPreparator
+namespace TagsCloudContainer.WordsConverters
 {
     public interface IWordsConverter
     {
-        public IEnumerable<WordInfo> Convert(IEnumerable<string> words);
+        public ICollection<WordInfo> Convert(IEnumerable<string> words);
     }
 }

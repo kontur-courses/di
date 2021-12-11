@@ -4,21 +4,21 @@ using System.Linq;
 
 namespace TagsCloudContainer.FileReader
 {
-    public class FileReadersesResolver : IFileReadersResolver
+    public class FileReadersResolver : IFileReadersResolver
     {
-        private readonly Dictionary<TextFileFormat, IFileReader> fileReadersResolver;
+        private readonly Dictionary<string, IFileReader> fileReadersResolver;
 
 
-        public FileReadersesResolver(IFileReader[] readers)
+        public FileReadersResolver(IFileReader[] readers)
         {
-            fileReadersResolver = readers.ToDictionary(x => x.Format);
+            fileReadersResolver = readers.ToDictionary(x => x.Extension);
         }
 
-        public IFileReader Get(TextFileFormat format)
+        public IFileReader Get(string extension)
         {
-            if (fileReadersResolver.ContainsKey(format))
-                return fileReadersResolver[format];
-            throw new ArgumentException("Формат не поддерживается");
+            if (fileReadersResolver.ContainsKey(extension))
+                return fileReadersResolver[extension];
+            throw new ArgumentException($"Формат {extension} не поддерживается");
         }
 
     }

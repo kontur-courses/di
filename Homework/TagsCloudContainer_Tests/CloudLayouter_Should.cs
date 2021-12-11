@@ -4,7 +4,7 @@ using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Layouter;
-using TagsCloudContainer.Layouter.PointsCreators;
+using TagsCloudContainer.Layouter.PointsProviders;
 
 namespace TagsCloudContainer_Tests
 {

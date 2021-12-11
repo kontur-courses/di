@@ -2,12 +2,12 @@
 using DeepMorphy;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.WordsPreparator;
+using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloudContainer_Tests
 {
     [TestFixture]
-    public class RussianWordsPreparator_Should
+    public class RussianWordsConverter_Should
     {
         private readonly RussianWordsConverter sut = new(new MorphAnalyzer());
 

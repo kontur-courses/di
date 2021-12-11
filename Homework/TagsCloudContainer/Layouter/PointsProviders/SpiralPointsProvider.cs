@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudContainer.Layouter.PointsCreators
+namespace TagsCloudContainer.Layouter.PointsProviders
 {
     public class SpiralPointsProvider : IPointsProvider
     {
@@ -16,6 +16,8 @@ namespace TagsCloudContainer.Layouter.PointsCreators
         {
             this.center = center;
         }
+
+        public LayoutAlrogorithm AlghorithmName => LayoutAlrogorithm.Circular;
 
         public Point GetNextPoint()
         {

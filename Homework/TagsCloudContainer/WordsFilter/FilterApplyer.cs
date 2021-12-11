@@ -3,30 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualBasic;
-using TagsCloudContainer.WordsPreparator;
+using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloudContainer.WordsFilter
 {
     public class FilterApplyer : IFilterApplyer
     {
-        private readonly Dictionary<FilterType, IWordsFilter> wordsFilterResolver;
+        private readonly IWordsFilter[] wordsFilters;
 
         public FilterApplyer(IWordsFilter[] wordsFilters)
         {
-            wordsFilterResolver = wordsFilters.ToDictionary(x => x.FilterType);
+            this.wordsFilters = wordsFilters;
         }
 
-        public IWordsFilter Get(FilterType type)
+        public ICollection<string> Apply(ICollection<WordInfo> words)
         {
-            if (wordsFilterResolver.ContainsKey(type))
-                return wordsFilterResolver[type];
-            throw new ArgumentException($"Фильтр '{type.ToString()}' не существует");
-        }
-
-        public ICollection<string> Apply(ICollection<WordInfo> words, FilterType[] filters)
-        {
-            return filters
-                .Select(Get)
+            return wordsFilters
                 .Aggregate(words, (current, implementation) => implementation.Filter(current))
                 .Select(wordInfo => wordInfo.Lemma)
                 .ToArray();

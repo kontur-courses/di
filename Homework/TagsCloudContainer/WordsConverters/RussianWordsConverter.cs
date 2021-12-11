@@ -3,7 +3,7 @@ using System.Linq;
 using DeepMorphy;
 using DeepMorphy.Model;
 
-namespace TagsCloudContainer.WordsPreparator
+namespace TagsCloudContainer.WordsConverters
 {
     public record RussianWordsConverter : IWordsConverter
     {
@@ -29,19 +29,20 @@ namespace TagsCloudContainer.WordsPreparator
             this.analyzer = analyzer;
         }
 
-        public IEnumerable<WordInfo> Convert(IEnumerable<string> words)
+        public ICollection<WordInfo> Convert(IEnumerable<string> words)
         {
             var preparedWords = words
                 .Select(ToLowerAndTrim)
                 .SelectMany(s => s.Split());
-            return CreateWordInfo(analyzer.Parse(preparedWords));
+            return CreateWordInfo(analyzer.Parse(preparedWords))
+                .ToArray();
         }
 
         private IEnumerable<WordInfo> CreateWordInfo(IEnumerable<MorphInfo> parsedWords)
         {
             return parsedWords
-                .Select(morphInfo => morphInfo.BestTag)
-                .Select(tag => new WordInfo(tag.Lemma, IdentifySpeechPart(tag)));
+                .Select(morphInfo => new WordInfo(morphInfo.BestTag.Lemma ?? morphInfo.Text,
+                    IdentifySpeechPart(morphInfo.BestTag)));
         }
 
         private string ToLowerAndTrim(string line)

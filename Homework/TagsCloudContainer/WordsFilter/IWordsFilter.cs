@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using TagsCloudContainer.WordsPreparator;
+using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloudContainer.WordsFilter
 {
     public interface IWordsFilter
     {
-        public FilterType FilterType { get; }
         public ICollection<WordInfo> Filter(ICollection<WordInfo> words);
     }
 }

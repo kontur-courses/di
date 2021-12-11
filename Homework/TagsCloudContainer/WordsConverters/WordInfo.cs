@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.WordsPreparator
+﻿namespace TagsCloudContainer.WordsConverters
 {
     public class WordInfo
     {

@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.WordsPreparator;
+using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloudContainer.WordsFilter
 {
     public class LengthFilter : IWordsFilter
     {
         private readonly int minLength;
-        
-        public FilterType FilterType => FilterType.Length;
 
         public LengthFilter(int minLength)
         {
+            if (minLength < 0)
+                throw new ArgumentException($"{nameof(minLength)} cannot be negative");
             this.minLength = minLength;
         }
 

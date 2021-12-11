@@ -1,8 +1,11 @@
-﻿namespace TagsCloudContainer.WordsFilter
+﻿using System;
+
+namespace TagsCloudContainer.WordsFilter
 {
+    [Flags]
     public enum FilterType
     {
-        SpeechPart,
-        Length,
+        SpeechPart = 0x0,
+        Length = 0x1,
     }
 }

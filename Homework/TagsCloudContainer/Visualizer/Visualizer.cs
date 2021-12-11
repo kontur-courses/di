@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layouter;
-using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer.Visualizer
 {
@@ -16,7 +15,6 @@ namespace TagsCloudContainer.Visualizer
         private readonly Font font;
         private readonly Bitmap bmp;
         private readonly Graphics graphics;
-        private readonly Brush brush;
 
         public Visualizer(IVisualizerSettings settings, ICloudLayouter layouter)
         {
@@ -24,7 +22,6 @@ namespace TagsCloudContainer.Visualizer
             bmp = new Bitmap(imageSize.Width, imageSize.Height);
             graphics = Graphics.FromImage(bmp);
             graphics.Clear(settings.BackgroundColor);
-            brush = new SolidBrush(Color.White);
             wordsColorsGenerator = settings.WordsColorGenerator;
             font = settings.Font;
             this.layouter = layouter;
@@ -46,19 +43,25 @@ namespace TagsCloudContainer.Visualizer
         public void Dispose()
         {
             font.Dispose();
-            graphics.Dispose();
-            brush.Dispose();
+            graphics.Dispose(); 
         }
 
         private void VisualizeWord(string word, int freq, int mostFreq, Color color)
         {
             var freqDelta = mostFreq - freq;
-            using var newFont = new Font(font.FontFamily, Math.Min(font.Size - freqDelta, 5));
+            using var newFont = new Font(font.FontFamily, Math.Max(font.Size - freqDelta, 5));
             var rectSize = new Size((int)newFont.Size * word.Length, newFont.Height);
             var layoutRectangle = layouter.PutNextRectangle(rectSize);
+            if (IsRectangleOutsideImage(layoutRectangle))
+                throw new Exception("word was outside the image");
             using var brush = new SolidBrush(color);
             graphics.DrawString(word, newFont, brush, layoutRectangle);
         }
-        
+
+        private bool IsRectangleOutsideImage(Rectangle rect)
+            => rect.Left < 0 
+               || rect.Right > imageSize.Width 
+               || rect.Top < 0 
+               || rect.Bottom > imageSize.Height;
     }
 }

@@ -10,7 +10,7 @@ using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer
 {
-    public class TagCloudCreator : ITagCloudCreator
+    public class TagCloudCreator
     {
         private readonly IFileReader fileReader;
         private readonly IWordsConverter wordsConverter;

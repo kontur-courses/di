@@ -4,7 +4,7 @@ namespace TagsCloudContainer.FileReader
 {
     public interface IFileReader
     {
-        public TextFileFormat Format { get; }
-        public IEnumerable<string> ReadWords(string path);
+        public string Extension { get; }
+        public ICollection<string> ReadWords(string path);
     }
 }

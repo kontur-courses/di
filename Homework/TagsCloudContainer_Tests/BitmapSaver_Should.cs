@@ -12,7 +12,7 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class BitmapSaver_Should
     {
-        private readonly DirectoryInfo currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
+        private readonly string currentDirectory = Environment.CurrentDirectory;
         private readonly BitmapSaver sut = new BitmapSaver();
 
         private Bitmap testingBmp;
@@ -27,43 +27,41 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void Save_WhenCorrectPath()
         {
-            sut.Save(testingBmp, currentDirectory, $"test", ImageFormat.Png);
-            IsFileExisting(currentDirectory, "test.png").Should().BeTrue();
+            var testPath = Path.Combine(currentDirectory, "test.png");
+            sut.Save(testingBmp, testPath);
+            File.Exists(testPath).Should().BeTrue();
+            File.Delete(testPath);
         }
 
         [Test]
         public void CreateDirectory_WhenDirectoryNotExist()
         {
-            var directoryPath = Path.Combine(currentDirectory.FullName, "notexistingdirectory");
-            var newDirectory = new DirectoryInfo(directoryPath);
-            if(newDirectory.Exists)
-                newDirectory.Delete(recursive:true);
-            newDirectory.Exists.Should().BeFalse();
-            sut.Save(testingBmp, new DirectoryInfo(directoryPath), "test", ImageFormat.Png);
-            Directory.Exists(directoryPath).Should().BeTrue();
-            newDirectory.Delete(recursive:true);
+            var testPath = Path.Combine(currentDirectory, "notexistingdirectory");
+            if(Directory.Exists(testPath))
+                Directory.Delete(testPath,true);
+            Directory.Exists(testPath).Should().BeFalse();
+            sut.Save(testingBmp, Path.Combine(testPath, "test.png"));
+            Directory.Exists(testPath).Should().BeTrue();
+            Directory.Delete(testPath, recursive:true);
         }
 
         [Test]
         public void ThrowWithMessage_WhenDisposedBitmap()
         {
             testingBmp.Dispose();
-            Action act = () => sut.Save(testingBmp, currentDirectory, "test", ImageFormat.Png);
+            Action act = () => sut.Save(testingBmp, "test.png");
             act.Should().Throw<Exception>().WithMessage("Не удалось сохранить файл");
         }
 
-        private bool IsFileExisting(DirectoryInfo directory, string fileNameWithExt)
+        private bool IsFileExisting(string fullPath)
         {
-            var file = directory
-                .GetFiles()
-                .SingleOrDefault(f => f.Name == fileNameWithExt);
-            if (file != null)
-            {
-                file.Delete();
-                return true;
-            }
+            var file = Directory
+                .GetFiles(fullPath)
+                .SingleOrDefault(f => f == Path.GetFileName(fullPath));
+            if (file == null) return false;
+            File.Delete(file);
+            return true;
 
-            return false;
         }
     }
 }

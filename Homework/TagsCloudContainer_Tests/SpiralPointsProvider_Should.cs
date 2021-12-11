@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.Layouter.PointsCreators;
+using TagsCloudContainer.Layouter.PointsProviders;
 
 namespace TagsCloudContainer_Tests
 {

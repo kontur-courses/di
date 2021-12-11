@@ -1,25 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.WordsPreparator;
+using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloudContainer.WordsFilter
 {
     public class SpeechPartsFilter : IWordsFilter
     {
-        private readonly SpeechPart[] excludedSpeechParts;
-
-        public FilterType FilterType => FilterType.SpeechPart;
-
+        private readonly SpeechPart[] selectedSpeechParts;
         
-        public SpeechPartsFilter(params SpeechPart[] excludedSpeechParts)
+        public SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
         {
-            this.excludedSpeechParts = excludedSpeechParts;
+            this.selectedSpeechParts = selectedSpeechParts;
         }
         
         public ICollection<WordInfo> Filter(ICollection<WordInfo> words)
         {
+            if (selectedSpeechParts.Length == 0)
+                return words;
             return words
-                .Where(word => !excludedSpeechParts.Contains(word.SpeechPart))
+                .Where(word => selectedSpeechParts.Contains(word.SpeechPart))
                 .ToArray();
         }
     }
