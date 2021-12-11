@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Text;
 using App.Implementation.Words.Tags;
+using App.Infrastructure.SettingsHolders;
 using App.Infrastructure.Visualization;
 
 namespace App.Implementation.Visualization
@@ -9,6 +10,17 @@ namespace App.Implementation.Visualization
     public class Drawer : IDrawer
     {
         private const int LineWidth = 2;
+        private readonly IImageSizeSettingsHolder imageSizeSettings;
+
+        private readonly IPaletteSettingsHolder paletteSettings;
+
+        public Drawer(
+            IPaletteSettingsHolder paletteSettings,
+            IImageSizeSettingsHolder imageSizeSettings)
+        {
+            this.paletteSettings = paletteSettings;
+            this.imageSizeSettings = imageSizeSettings;
+        }
 
         public void DrawCanvasBoundary(Graphics graphics, Size imgSize)
         {
@@ -51,12 +63,23 @@ namespace App.Implementation.Visualization
         {
             graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
-            foreach (var tag in tags)
-                using (var font = new Font(Tag.WordFont.Name, tag.WordEmSize))
-                {
-                    graphics.DrawString(tag.Word, font,
-                        Brushes.Black, tag.WordOuterRectangle.Location);
-                }
+            using (var backgroundBrush = new SolidBrush(paletteSettings.BackgroundColor))
+            {
+                var backgroundRectangle = new RectangleF(PointF.Empty, new Size(
+                    imageSizeSettings.Size.Width,
+                    imageSizeSettings.Size.Height));
+
+                graphics.FillRectangle(backgroundBrush, backgroundRectangle);
+            }
+
+            using (var brush = new SolidBrush(paletteSettings.WordColor))
+            {
+                foreach (var tag in tags)
+                    using (var font = new Font(Tag.WordFont.Name, tag.WordEmSize))
+                    {
+                        graphics.DrawString(tag.Word, font, brush, tag.WordOuterRectangle.Location);
+                    }
+            }
         }
     }
 }
