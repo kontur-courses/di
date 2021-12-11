@@ -54,6 +54,7 @@
     <Compile Include="Implementation\GeometryUtils\DirectingArrow.cs" />
     <Compile Include="Implementation\GeometryUtils\PointExtension.cs" />
     <Compile Include="Implementation\GeometryUtils\RectangleExtension.cs" />
+    <Compile Include="Implementation\LayoutingAlgorithms\AlgorithmFromTDD\CircularLayouter.cs" />
     <Compile Include="Implementation\Visualization\Drawer.cs" />
     <Compile Include="Implementation\Visualization\Visualizer.cs" />
     <Compile Include="Implementation\Words\Filters\WordsLengthFilter.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Infrastructure\FileInteractions\Readers\ILinesReader.cs" />
     <Compile Include="Infrastructure\FileInteractions\Savers\IBitmapSaver.cs" />
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
+    <Compile Include="Infrastructure\LayoutingAlgorithms\AlgorithmFromTDD\ICloudLayouter.cs" />
+    <Compile Include="Infrastructure\LayoutingAlgorithms\ILayouter.cs" />
     <Compile Include="Infrastructure\Visualization\IDrawer.cs" />
     <Compile Include="Infrastructure\Visualization\IVisualizer.cs" />
     <Compile Include="Infrastructure\Words\Filters\IFilter.cs" />

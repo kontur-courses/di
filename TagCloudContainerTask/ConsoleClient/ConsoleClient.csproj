@@ -55,12 +55,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TagCloud\TagCloud.csproj">
-      <Project>{31ACEB8C-2408-42BD-A5CC-97D0F8D9DC4D}</Project>
-      <Name>TagCloud</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="mystem.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

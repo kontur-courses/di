@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.GeometryUtils;
+using App.Implementation.GeometryUtils;
+using App.Infrastructure.LayoutingAlgorithms.AlgorithmFromTDD;
 
-namespace TagCloud.LayoutAlgorithms.AlgorithmFromTDD.Layouting
+namespace App.Implementation.LayoutingAlgorithms.AlgorithmFromTDD
 {
     public class CircularLayouter : ICloudLayouter
     {
