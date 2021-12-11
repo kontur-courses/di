@@ -50,16 +50,18 @@
     <Compile Include="Implementation\CloudGenerator.cs" />
     <Compile Include="Implementation\FileInteractions\Readers\FromDocReader.cs" />
     <Compile Include="Implementation\FileInteractions\Readers\FromStreamReader.cs" />
+    <Compile Include="Implementation\FileInteractions\Readers\ReaderFactory.cs" />
     <Compile Include="Implementation\FileInteractions\Savers\BitmapSaver.cs" />
     <Compile Include="Implementation\FileInteractions\Writers\LineWriter.cs" />
     <Compile Include="Implementation\GeometryUtils\DirectingArrow.cs" />
     <Compile Include="Implementation\GeometryUtils\PointExtension.cs" />
     <Compile Include="Implementation\GeometryUtils\RectangleExtension.cs" />
     <Compile Include="Implementation\LayoutingAlgorithms\AlgorithmFromTDD\CircularLayouter.cs" />
+    <Compile Include="Implementation\LayoutingAlgorithms\LayouterFactory.cs" />
     <Compile Include="Implementation\SettingsHolders\FontSettings.cs" />
     <Compile Include="Implementation\SettingsHolders\ImageSizeSettings.cs" />
     <Compile Include="Implementation\SettingsHolders\InputFileSettings.cs" />
-    <Compile Include="Implementation\SettingsHolders\OutputResultSettingHolder.cs" />
+    <Compile Include="Implementation\SettingsHolders\OutputResultSettings.cs" />
     <Compile Include="Implementation\SettingsHolders\PaletteSettings.cs" />
     <Compile Include="Implementation\Visualization\Drawer.cs" />
     <Compile Include="Implementation\Visualization\Visualizer.cs" />
@@ -70,11 +72,13 @@
     <Compile Include="Implementation\Words\Tags\Tag.cs" />
     <Compile Include="Implementation\Words\Tags\Tagger.cs" />
     <Compile Include="Infrastructure\FileInteractions\Readers\ILinesReader.cs" />
+    <Compile Include="Infrastructure\FileInteractions\Readers\IReaderFactory.cs" />
     <Compile Include="Infrastructure\FileInteractions\Savers\IBitmapSaver.cs" />
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
     <Compile Include="Infrastructure\ICloudGenerator.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\AlgorithmFromTDD\ICloudLayouter.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\ILayouter.cs" />
+    <Compile Include="Infrastructure\LayoutingAlgorithms\ILayouterFactory.cs" />
     <Compile Include="Infrastructure\SettingsHolders\IFontSettingsHolder.cs" />
     <Compile Include="Infrastructure\SettingsHolders\IImageSizeSettingsHolder.cs" />
     <Compile Include="Infrastructure\SettingsHolders\IInputFileSettingsHolder.cs" />
@@ -97,5 +101,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

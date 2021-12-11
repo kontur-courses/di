@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using App.Infrastructure;
 using App.Infrastructure.FileInteractions.Readers;
-using App.Infrastructure.LayoutingAlgorithms.AlgorithmFromTDD;
+using App.Infrastructure.LayoutingAlgorithms;
 using App.Infrastructure.SettingsHolders;
 using App.Infrastructure.Visualization;
 using App.Infrastructure.Words.Filters;
@@ -15,28 +15,28 @@ namespace App.Implementation
 {
     public class CloudGenerator : ICloudGenerator
     {
-        private readonly ICloudLayouter cloudLayouter;
         private readonly IEnumerable<IFilter> filters;
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
         private readonly IImageSizeSettingsHolder imageSizeSettings;
+        private readonly ILayouterFactory layouterFactory;
         private readonly IEnumerable<IPreprocessor> preprocessors;
-        private readonly ILinesReader reader;
+        private readonly IReaderFactory readerFactory;
         private readonly ITagger tagger;
         private readonly IVisualizer visualizer;
 
         public CloudGenerator(
-            ILinesReader reader,
+            IReaderFactory readerFactory,
             ITagger tagger,
             IFrequencyAnalyzer frequencyAnalyzer,
             IVisualizer visualizer,
-            ICloudLayouter cloudLayouter,
+            ILayouterFactory layouterFactory,
             IImageSizeSettingsHolder imageSizeSettings,
             IEnumerable<IPreprocessor> preprocessors,
             IEnumerable<IFilter> filters)
         {
-            this.reader = reader;
+            this.readerFactory = readerFactory;
             this.tagger = tagger;
-            this.cloudLayouter = cloudLayouter;
+            this.layouterFactory = layouterFactory;
             this.frequencyAnalyzer = frequencyAnalyzer;
             this.visualizer = visualizer;
             this.preprocessors = preprocessors;
@@ -46,6 +46,8 @@ namespace App.Implementation
 
         public Bitmap GenerateCloud()
         {
+            var reader = readerFactory.CreateReader();
+
             var words = reader.ReadLines();
 
             foreach (var preprocessor in preprocessors) words = preprocessor.Preprocess(words);
@@ -55,16 +57,16 @@ namespace App.Implementation
             var wordsFrequencies = frequencyAnalyzer.AnalyzeWordsFrequency(words);
             var tags = tagger.CreateRawTags(wordsFrequencies).ToArray();
 
-
+            var layouter = layouterFactory.CreateLayouter();
             foreach (var tag in tags)
             {
                 var outerRectangle = tag.WordOuterRectangle;
-                outerRectangle = cloudLayouter.PutNextRectangle(outerRectangle.Size);
+                outerRectangle = layouter.PutNextRectangle(outerRectangle.Size);
                 tag.WordOuterRectangle = outerRectangle;
             }
 
             var bitmap = new Bitmap(imageSizeSettings.Size.Width, imageSizeSettings.Size.Height);
-            return visualizer.VisualizeCloud(bitmap, cloudLayouter.Center, tags);
+            return visualizer.VisualizeCloud(bitmap, layouter.Center, tags);
         }
     }
 }
