@@ -9,7 +9,7 @@ namespace TagsCloudContainer
         private readonly string path;
         private readonly HashSet<string> boringWords;
         private readonly Dictionary<string, int> wordsQuantities;
-
+        private int quantitiesSum;
         public WordsGetter(string path, IEnumerable<string> boringWords)
         {
             this.path = path;
@@ -22,6 +22,9 @@ namespace TagsCloudContainer
 
         public int GetDistinctWordsCount()
             => wordsQuantities.Count;
+
+        public int GetQuantitiesSum()
+            => quantitiesSum;
 
         private Dictionary<string, int> GetWordsFromFile(string path)
         {
@@ -36,6 +39,7 @@ namespace TagsCloudContainer
                     if (!words.TryGetValue(line,  out _))
                         words.Add(line, 0);
                     words[line]++;
+                    quantitiesSum++;
                 }
             }
 
