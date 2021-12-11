@@ -18,7 +18,6 @@ namespace TagsCloudContainer.Infrastructure
             container.Register<TagCloudPainter>();
             container.RegisterInstance(SettingsProvider.GetSettings());
             container.Register<ConsoleUI>();
-            //container.Register<Settings>(factory);
             return container;
         }
     }

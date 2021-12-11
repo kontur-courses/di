@@ -7,20 +7,6 @@ namespace TagsCloudContainer
     {
         private readonly char[] separators = { ' ', '\t', '\r', '\n' };
 
-        //public IEnumerable<string> Parse(string path)
-        //{
-        //    if (!File.Exists(path))
-        //        throw new ArgumentException("Passed file doesn't exist!");
-
-        //    var application = new Application();
-        //    var document = application.Documents.Open(path);
-
-        //    for (int i = 1; i <= document.Words.Count; i++)
-        //        yield return document.Words[i].Text;
-
-        //    application.Quit();
-        //}
-
         public IEnumerable<string> Parse(string path)
         {
             if (!File.Exists(path))
