@@ -5,6 +5,7 @@ using NUnit.Framework;
 using TagCloud.Analyzers;
 using TagCloud.Creators;
 using TagCloud.Layouters;
+using TagCloud.Readers;
 using TagCloud.UI.Console;
 using TagCloud.Visualizers;
 using TagCloud.Writers;
@@ -18,7 +19,7 @@ namespace TagCloudTests
         public void ClientRun_ShouldCreateFileWithTagCloud()
         {
             var args = new[] {"-i", "test.txt", "-o", "test.png"};
-            var fileReader = new TextReader();
+            var fileReader = new FileReaderFactory();
             var textAnalyzer = new TextAnalyzer();
             var freqAnalyzer = new FrequencyAnalyzer();
             var tagCreator = new TagCreatorFactory();

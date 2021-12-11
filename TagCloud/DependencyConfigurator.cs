@@ -16,7 +16,7 @@ namespace TagCloud
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<TextReader>().As<IFileReader>().SingleInstance();
+            builder.RegisterType<FileReaderFactory>().As<IFileReaderFactory>().SingleInstance();
             builder.RegisterType<TextAnalyzer>().As<ITextAnalyzer>().SingleInstance();
             builder.RegisterType<FrequencyAnalyzer>().As<IFrequencyAnalyzer>().SingleInstance();
             builder.RegisterType<TagCreatorFactory>().As<ITagCreatorFactory>().SingleInstance();

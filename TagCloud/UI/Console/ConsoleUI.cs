@@ -15,7 +15,7 @@ namespace TagCloud.UI.Console
 {
     public class ConsoleUI : IUserInterface
     {
-        private readonly IFileReader reader;
+        private readonly IFileReaderFactory readerFactory;
         private readonly ITextAnalyzer textAnalyzer;
         private readonly IFrequencyAnalyzer frequencyAnalyzer;
         private readonly ICloudLayouterFactory layouterFactory;
@@ -23,7 +23,7 @@ namespace TagCloud.UI.Console
         private readonly IFileWriter writer;
         private readonly ITagCreatorFactory tagCreatorFactory;
 
-        public ConsoleUI(IFileReader reader,
+        public ConsoleUI(IFileReaderFactory readerFactory,
             ITextAnalyzer textAnalyzer,
             IFrequencyAnalyzer frequencyAnalyzer,
             ICloudLayouterFactory layouterFactory,
@@ -31,7 +31,7 @@ namespace TagCloud.UI.Console
             IFileWriter writer, 
             ITagCreatorFactory tagCreatorFactory)
         {
-            this.reader = reader;
+            this.readerFactory = readerFactory;
             this.textAnalyzer = textAnalyzer;
             this.frequencyAnalyzer = frequencyAnalyzer;
             this.layouterFactory = layouterFactory;
@@ -50,6 +50,9 @@ namespace TagCloud.UI.Console
         private void Run(Options options)
         {
             var drawingSettings = GetDrawingSettings(options);
+            var fileExtension = GetExtensionsFromFileName(options.InputFilename);
+            
+            var reader = readerFactory.Create(fileExtension);
 
             var text = reader.ReadFile(options.InputFilename);
             var wordsToExclude = reader.ReadFile(options.ExcludedWordsFile).ToHashSet();
@@ -67,6 +70,12 @@ namespace TagCloud.UI.Console
                 var image = visualizer.DrawCloud(placedTags, drawingSettings);
                 writer.Write(image, options.OutputFilename, ImageFormat.Png);
             }
+        }
+
+        private string GetExtensionsFromFileName(string filename)
+        {
+            var lastDotIndex = filename.LastIndexOf('.');
+            return filename[lastDotIndex..];
         }
 
         private static DrawingSettings GetDrawingSettings(Options options)
