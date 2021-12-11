@@ -26,8 +26,8 @@ public class SimpleStringReader : ITextReader
             if (i == -1)
                 break;
 
-            yield return source[previous..];
-            previous = i;
+            yield return source[previous..i];
+            previous = i+newLine.Length;
         }
 
         yield return source[previous..];

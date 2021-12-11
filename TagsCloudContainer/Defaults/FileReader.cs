@@ -31,6 +31,8 @@ public class FileReader : ITextReader
                 yield return line!;
                 line = fileStream.ReadLine();
             }
+
+            yield return line!;
         }
     }
 }
