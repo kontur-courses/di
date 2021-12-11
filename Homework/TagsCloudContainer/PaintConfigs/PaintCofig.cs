@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class CustomizedPaintCofig : IPaintConfig
+    public class PaintCofig : IPaintConfig
     {
         public List<Brush> WordsColors { get; }
         public string FontName { get; }
         public int FontSize { get; }
         public Size ImageSize { get; }
 
-        public CustomizedPaintCofig(IEnumerable<Brush> wordsColors, 
+        public PaintCofig(IEnumerable<Brush> wordsColors, 
             string fontName, int fontSize, Size imageSize)
         {
             WordsColors = wordsColors.ToList();

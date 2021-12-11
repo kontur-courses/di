@@ -14,7 +14,7 @@ namespace TagsCloudContainer
         private const int wordsBorder = 2;
 
         public CloudPainter(ICloudLayouter cloudLayouter, IPaintConfig config,
-            TextParser parser)
+            ITextParser parser)
         {
             this.cloudLayouter = cloudLayouter;
             this.config = config;
