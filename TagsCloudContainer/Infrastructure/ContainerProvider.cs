@@ -10,14 +10,15 @@ namespace TagsCloudContainer.Infrastructure
             var container = new ServiceContainer();
             container.Register<IParser, TxtParser>();
             container.Register<ITagComposer, TagComposer>();
-            container.Register<ITagPainter, TagPainter>();
+            container.Register<ITagPainter, GradientTagPainter>();
 
-            container.RegisterInstance(new System.Drawing.Point(500, 500));
-            container.Register<ISpiral, ArchimedeanSpiral>();
+            container.Register<ISpiral, OvalSpiral>();
             container.Register<ICloudLayouter, OvalCloudLayouter>();
 
             container.Register<TagCloudPainter>();
             container.RegisterInstance(SettingsProvider.GetSettings());
+            container.Register<ConsoleUI>();
+            //container.Register<Settings>(factory);
             return container;
         }
     }
