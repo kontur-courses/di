@@ -15,10 +15,11 @@ namespace App.Implementation.Visualization
             this.drawer = drawer;
         }
 
-        public void VisualizeCloudOnImage(Image image, Point cloudCenter, IEnumerable<Tag> tags)
+        public Bitmap VisualizeCloud(Bitmap image, Point cloudCenter, IEnumerable<Tag> tags)
         {
             var relocatedRectangles = RelocateRectanglesToImageCenter(image.Size, tags);
             drawer.DrawTags(Graphics.FromImage(image), relocatedRectangles);
+            return image;
         }
 
         public void VisualizeDebuggingMarkupOnImage(Image image, Point cloudCenter, int cloudCircleRadius)

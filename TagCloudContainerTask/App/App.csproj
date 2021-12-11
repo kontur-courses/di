@@ -47,6 +47,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\CloudGenerator.cs" />
     <Compile Include="Implementation\FileInteractions\Readers\FromDocReader.cs" />
     <Compile Include="Implementation\FileInteractions\Readers\FromStreamReader.cs" />
     <Compile Include="Implementation\FileInteractions\Savers\BitmapSaver.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Infrastructure\FileInteractions\Readers\ILinesReader.cs" />
     <Compile Include="Infrastructure\FileInteractions\Savers\IBitmapSaver.cs" />
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
+    <Compile Include="Infrastructure\ICloudGenerator.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\AlgorithmFromTDD\ICloudLayouter.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\ILayouter.cs" />
     <Compile Include="Infrastructure\SettingsHolders\IFontSettingsHolder.cs" />
