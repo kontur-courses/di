@@ -9,25 +9,6 @@ using TagsCloudContainer.Registrations;
 
 namespace ContainerTests;
 
-public class ThrowingRunner : IRunner
-{
-    public const string ExceptionText = "tried to use throwing runner";
-    public void Run(params string[] args)
-    {
-        throw new Exception(ExceptionText);
-    }
-}
-
-public interface ITotallyLegitimateService : IService
-{
-
-}
-
-public class TotallyLegitimateService : ITotallyLegitimateService
-{
-
-}
-
 public class ContainerTests
 {
 
@@ -35,23 +16,23 @@ public class ContainerTests
     public void CanChangeUsableImplementations()
     {
         var args = new[] { "--assemblies", Assembly.GetExecutingAssembly().Location, "--implement-with", $"{nameof(IRunner)} {nameof(ThrowingRunner)}" };
-        var action = () => Program.Main(args);
+        var action = () => InitializationHelper.RunWithArgs(args);
 
         action.Should().Throw<Exception>().Match(x => x.Any(e => e.Message.Contains(ThrowingRunner.ExceptionText)));
     }
 
     [Test]
-    public void Main_ShouldNotThrow_WhenAtLeastRequiredSettingsProvided()
+    public void ShouldNotThrow_WhenAtLeastRequiredSettingsProvided()
     {
-        var action = () => Program.Main(new[] { "--string", "òýãåð òýã òýãè" });
+        var action = () => InitializationHelper.RunWithArgs(new[] { "--string", "Ñ‚ÑÐ³ÐµÑ€ Ñ‚ÑÐ³ Ñ‚ÑÐ³Ð¸" });
 
         action.Should().NotThrow();
     }
 
     [Test]
-    public void Main_ShouldThrow_WhenNoRequiredSettingsProvided()
+    public void ShouldThrow_WhenNoRequiredSettingsProvided()
     {
-        var action = () => Program.Main(Array.Empty<string>());
+        var action = () => InitializationHelper.RunWithArgs(Array.Empty<string>());
 
         action.Should().Throw<ArgumentException>();
     }
@@ -62,12 +43,31 @@ public class ContainerTests
         var serviceIndex = new ServiceIndex();
 
         serviceIndex.AddAssemblyTypes(Assembly.GetExecutingAssembly());
-        var implemetation = serviceIndex.GetImplementation(nameof(TotallyLegitimateService));
+        var implementation = serviceIndex.GetImplementation(nameof(TotallyLegitimateService));
         var service = serviceIndex.GetService(nameof(ITotallyLegitimateService));
 
-        implemetation.Implementation.Should().Be(typeof(TotallyLegitimateService));
+        implementation.Implementation.Should().Be(typeof(TotallyLegitimateService));
         service.Should().Be(typeof(ITotallyLegitimateService));
-        implemetation.ImplementedServices.Should().BeEquivalentTo(new[] { service });
+        implementation.ImplementedServices.Should().BeEquivalentTo(new[] { service });
+    }
+
+    private class ThrowingRunner : IRunner
+    {
+        public const string ExceptionText = "tried to use throwing runner";
+        public void Run(params string[] args)
+        {
+            throw new Exception(ExceptionText);
+        }
+    }
+
+    private interface ITotallyLegitimateService : IService
+    {
+
+    }
+
+    private class TotallyLegitimateService : ITotallyLegitimateService
+    {
+
     }
 }
 

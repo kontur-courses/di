@@ -37,7 +37,7 @@ public class DefaultsTests
     public void FileReader_Should_CorrectlyReadText()
     {
         var text = $"abcd{Environment.NewLine}efg{Environment.NewLine}hkl";
-        var path = "test.txt";
+        var path = Path.GetTempFileName();
         File.WriteAllText(path, text);
 
         var expectedResult = text.Split(Environment.NewLine, StringSplitOptions.TrimEntries);
