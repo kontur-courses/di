@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.Common;
+using TagsCloudVisualization.Interfaces;
 
 namespace TagsCloudContainer.Painting
 {
@@ -13,11 +13,10 @@ namespace TagsCloudContainer.Painting
             this.maker = maker;
         }
 
-        public List<SimpleTag> Paint(List<SimpleTag> tags)
+        public void SetPalettes(IReadOnlyList<ITag> tags)
         {
             foreach (var (tag, palette) in tags.Zip(maker.GetPalettes()))
                 tag.Palette = palette;
-            return tags;
         }
     }
 }

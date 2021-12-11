@@ -8,6 +8,8 @@ namespace TagsCloudVisualization
         public readonly Brush BackgroundColor;
         public readonly bool FillRectangles;
 
+        internal static Palette DefaultPalette = new Palette(Color.Black);
+
         public Palette(Color textColors)
         {
             TextColor = new SolidBrush(textColors);

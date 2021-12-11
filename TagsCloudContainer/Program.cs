@@ -32,16 +32,16 @@ namespace TagsCloudContainer
                 var reader = scope.Resolve<TagReader>();
                 var parser = scope.Resolve<WordsCountParser>();
                 var preprocessor = scope.Resolve<TagsPreprocessor>();
-                var painter = scope.Resolve<TagPainter>();
                 var layouter = scope.Resolve<TagLayouter>();
+                var painter = scope.Resolve<TagPainter>();
                 var visualizator = scope.Resolve<IVisualizator<ITag>>();
                 var settings = scope.Resolve<IVisualizatorSettings>();
 
                 var text = reader.Read(textFilename);
                 var tags = parser.Parse(text);
                 tags = preprocessor.Process(tags);
-                var paintedTags = painter.Paint(tags);
-                var cloud = layouter.PlaceTagsInCloud(paintedTags, minHeight, maxScale);
+                var cloud = layouter.PlaceTagsInCloud(tags, minHeight, maxScale);
+                painter.SetPalettes(cloud.Elements);
                 visualizator.Visualize(settings, cloud);
             }
         }

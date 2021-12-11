@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TagsCloudVisualization;
 
 namespace TagsCloudContainer.Common
 {
@@ -7,7 +6,6 @@ namespace TagsCloudContainer.Common
     {
         public readonly string Word;
         public readonly int Count;
-        public Palette Palette { get; set; }
 
         public SimpleTag(string word, int count)
         {

@@ -6,15 +6,14 @@ namespace TagsCloudVisualization
     public class Tag : ITag
     {
         public RectangleF Layout { get; private set; }
-        public Palette Palette { get; }
+        public Palette Palette { get; set; } = Palette.DefaultPalette;
         public string Text { get; }
 
-        public delegate Tag Factory(string text, Palette palette);
+        public delegate Tag Factory(string text);
 
-        public Tag(string text, Palette palette)
+        public Tag(string text)
         {
             Text = text;
-            Palette = palette;
         }
 
         public void ReplaceTagLayout(RectangleF layout)

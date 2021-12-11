@@ -19,7 +19,7 @@ namespace TagsCloudContainer.Layouters
             foreach (var simpleTag in tags)
             {
                 var size = GetSize(simpleTag.Word, minHeight, maxScale, simpleTag.Count);
-                var tag = factory(simpleTag.Word, simpleTag.Palette);
+                var tag = factory(simpleTag.Word);
                 layouter.PutNextTag(size, tag);
             }
             return layouter.Cloud;
