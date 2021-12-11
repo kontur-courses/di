@@ -4,27 +4,29 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class WordsGetter
+    public class TextParser : ITextParser
     {
         private readonly string path;
         private readonly HashSet<string> boringWords;
-        private readonly Dictionary<string, int> wordsQuantities;
-        private int quantitiesSum;
-        public WordsGetter(string path, IEnumerable<string> boringWords)
+        private readonly Dictionary<string, int> wordsCount;
+        private int totalWords;
+
+        public TextParser(string path, IEnumerable<string> boringWords)
         {
             this.path = path;
             this.boringWords = boringWords.ToHashSet();
-            wordsQuantities = GetWordsFromFile(path);
+            this.totalWords = 0;
+            wordsCount = GetWordsFromFile(path);
         }
 
-        public IReadOnlyDictionary<string, int> GetWordsQuantities()
-            => wordsQuantities;
+        public IReadOnlyDictionary<string, int> GetWordsCounts()
+            => wordsCount;
 
-        public int GetDistinctWordsCount()
-            => wordsQuantities.Count;
+        public int GetDistinctWordsAmount()
+            => wordsCount.Count;
 
-        public int GetQuantitiesSum()
-            => quantitiesSum;
+        public int GetTotalWordsCount()
+            => totalWords;
 
         private Dictionary<string, int> GetWordsFromFile(string path)
         {
@@ -39,7 +41,7 @@ namespace TagsCloudContainer
                     if (!words.TryGetValue(line,  out _))
                         words.Add(line, 0);
                     words[line]++;
-                    quantitiesSum++;
+                    totalWords++;
                 }
             }
 

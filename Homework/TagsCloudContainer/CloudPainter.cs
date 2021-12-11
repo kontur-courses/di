@@ -10,15 +10,15 @@ namespace TagsCloudContainer
     {
         private readonly ICloudLayouter cloudLayouter;
         private readonly IPaintConfig config;
-        private readonly TextParser wordsGetter;
+        private readonly ITextParser parser;
         private const int wordsBorder = 2;
 
         public CloudPainter(ICloudLayouter cloudLayouter, IPaintConfig config,
-            TextParser wordsGetter)
+            TextParser parser)
         {
             this.cloudLayouter = cloudLayouter;
             this.config = config;
-            this.wordsGetter = wordsGetter;
+            this.parser = parser;
         }
 
         public void Draw(string pathToSaving)
@@ -27,7 +27,7 @@ namespace TagsCloudContainer
             var image = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(image);
             graphics.Clear(Color.Black);
-            foreach (var wordCount in wordsGetter.GetWordsCounts())
+            foreach (var wordCount in parser.GetWordsCounts())
                 DrawWord(wordCount, graphics);
             image.Save(pathToSaving, ImageFormat.Png);
         }

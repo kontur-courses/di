@@ -8,7 +8,7 @@ using TagsCloudContainer;
 namespace TagCloudContainerTests
 {
     [TestFixture]
-    public class WordsGetterShould
+    public class TextParserShould
     {
         private HashSet<string> boringWords;
         [SetUp]
@@ -22,7 +22,7 @@ namespace TagCloudContainerTests
         {
             string incorrectPath = "words";
             Action wordsGetterCreationWithIncorrectPath =
-                () => new WordsGetter(incorrectPath, boringWords);
+                () => new TextParser(incorrectPath, boringWords);
 
             wordsGetterCreationWithIncorrectPath.Should().Throw<FileNotFoundException>();
         }
@@ -31,7 +31,7 @@ namespace TagCloudContainerTests
         public void Throw_ArgumentNullException_WhenPathIsNull()
         {
             Action wordsGetterCreationWithIncorrectPath =
-                () => new WordsGetter(null, boringWords);
+                () => new TextParser(null, boringWords);
 
             wordsGetterCreationWithIncorrectPath.Should().Throw<ArgumentNullException>();
         }
@@ -42,8 +42,8 @@ namespace TagCloudContainerTests
             var path = @"D:\di\Homework\TagsCloudContainer\words.txt";
             boringWords = new HashSet<string>() { "I", "" };
 
-            var wordsGetter = new WordsGetter(path, boringWords);
-            var distinctWordsCount = wordsGetter.GetDistinctWordsCount();
+            var wordsGetter = new TextParser(path, boringWords);
+            var distinctWordsCount = wordsGetter.GetDistinctWordsAmount();
 
             distinctWordsCount.Should().Be(19);
         }
