@@ -3,7 +3,7 @@ using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class GenerateImageAction
+    public class GenerateImageAction : IUIAction
     {
         private Settings settings;
         private IParser parser;
@@ -24,6 +24,8 @@ namespace TagsCloudContainer
             this.creator = creator;
             this.cloudSettings = cloudSettings;
         }
+
+        public string GetDescription() => "Generate image";
 
         public void Handle()
         {

@@ -1,9 +1,10 @@
 ﻿using System.Drawing.Imaging;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class ImageSettingsAction
+    public class ImageSettingsAction : IUIAction
     {
         private Settings settings;
 
@@ -11,6 +12,8 @@ namespace TagsCloudContainer
         {
             this.settings = settings;
         }
+
+        public string GetDescription() => "Image settings";
 
         public void Handle()
         {

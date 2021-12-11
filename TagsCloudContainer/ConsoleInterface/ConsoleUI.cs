@@ -4,45 +4,28 @@ namespace TagsCloudContainer;
 
 public class ConsoleUI : IUI
 {
-    private ImageSettingsAction imageSettingsAction;
-    private CloudSettingsAction cloudSettingsAction;
-    private GenerateImageAction generateImageAction;
+    private Dictionary<string, IUIAction> actions;
 
-    public ConsoleUI(
-        ImageSettingsAction imageSettingsAction,
-        CloudSettingsAction cloudSettingsAction,
-        GenerateImageAction generateImageAction)
+    public ConsoleUI(IUIAction[] uiActions)
     {
-        this.imageSettingsAction = imageSettingsAction;
-        this.cloudSettingsAction = cloudSettingsAction;
-        this.generateImageAction = generateImageAction;
+        actions = new Dictionary<string, IUIAction>();
+        for (var i = 1; i <= uiActions.Length; i++)
+            actions.Add(i.ToString(), uiActions[i - 1]);
     }
 
     public void Run()
     {
         while (true)
         {
-            Console.WriteLine("1 - Image settings");
-            Console.WriteLine("2 - Cloud settings");
-            Console.WriteLine("3 - Generate image");
-            Console.WriteLine("4 - Exit");
-            var answer = Console.ReadKey();
+            foreach (var (key, action) in actions.OrderBy(pair => pair.Key))
+                Console.WriteLine($"{key} - {action.GetDescription()}");
+            Console.WriteLine($"{actions.Count + 1} - Exit");
+            var answer = Console.ReadLine() ?? "";
             Console.WriteLine();
             Console.WriteLine();
-            switch (answer.KeyChar)
-            {
-                case '1':
-                    imageSettingsAction.Handle();
-                    break;
-                case '2':
-                    cloudSettingsAction.Handle();
-                    break;
-                case '3':
-                    generateImageAction.Handle();
-                    break;
-                default:
-                    return;
-            }
+            if (!actions.ContainsKey(answer))
+                return;
+            actions[answer].Handle();
         }
     }
 }

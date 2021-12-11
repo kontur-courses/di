@@ -1,8 +1,9 @@
 ﻿using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class CloudSettingsAction
+    public class CloudSettingsAction : IUIAction
     {
         private Settings settings;
         private CloudSettings cloudSettings;
@@ -12,6 +13,8 @@ namespace TagsCloudContainer
             this.settings = settings;
             this.cloudSettings = cloudSettings;
         }
+
+        public string GetDescription() => "Cloud settings";
 
         public void Handle()
         {

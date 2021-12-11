@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -8,7 +9,7 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             var container = ContainerProvider.GetContainer();
-            var ui = container.GetInstance<ConsoleUI>();
+            var ui = container.GetInstance<IUI>();
             ui.Run();
         }
     }
