@@ -17,10 +17,26 @@ namespace TagCloud2.TextGeometry
 
         private Font font;
 
+        public void SetSize(Rectangle rect)
+        {
+            size = rect;
+        } 
+
+        public void SetColor(Color c)
+        {
+            color = c;
+        }
+
         public ColoredSizedWord(Color color, Rectangle size, string word, Font font)
         {
             this.color = color;
             this.size = size;
+            this.word = word;
+            this.font = font;
+        }
+
+        public ColoredSizedWord(string word, Font font)
+        {
             this.word = word;
             this.font = font;
         }

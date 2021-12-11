@@ -27,14 +27,18 @@ namespace TagCloud2
         {
             var input = reader.ReadFile(fileName);
             var lines = wordReader.GetWords(input);
-            lines = lines.Select(x => preprocessor.PreprocessString(x)).Where(x => x != "").ToArray();
-            var rectangles = lines.Select(x => sizeConverter.Convert(x, font)).ToArray();
+            var words = lines
+                .Select(x => preprocessor.PreprocessString(x))
+                .Where(x => x != "")
+                .Select(x => new ColoredSizedWord(x, font))
+                .ToArray();
+            var rectangles = words.Select(x => sizeConverter.Convert(x.GetWord(), x.GetFont())).ToArray();
             foreach (var size in rectangles)
             {
                 var currentRectangle = layouter.PutNewRectangle(size);
             }
 
-            var colored = coloredCloud.GetFromCloudLayouter(lines, layouter, coloringAlgorithm, font);
+            var colored = coloredCloud.GetFromCloudLayouter(words, layouter, coloringAlgorithm);
             var image = converterToImage.GetImage(colored);
             fileGenerator.GenerateFile(outputName, formatter, image);
         }

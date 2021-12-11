@@ -18,13 +18,13 @@ namespace TagCloud2
             return coloredSizedWords;
         }
 
-        public IColoredCloud GetFromCloudLayouter(string[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm, Font font)
+        public IColoredCloud GetFromCloudLayouter(IColoredSizedWord[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm)
         {
             var rectangles = cloud.GetRectangles().ToList();
             for (int i = 0; i < words.Length; i++)
             {
                 var color = coloringAlgorithm.GetColor(rectangles[i]);
-                coloredSizedWords.Add(new ColoredSizedWord(color, rectangles[i], words[i], font));
+                coloredSizedWords.Add(new ColoredSizedWord(color, rectangles[i], words[i].GetWord(), words[i].GetFont()));
             }
             
             return this;

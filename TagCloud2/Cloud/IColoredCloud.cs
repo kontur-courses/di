@@ -11,7 +11,7 @@ namespace TagCloud2
 {
     public interface IColoredCloud
     {
-        IColoredCloud GetFromCloudLayouter(string[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm, Font font);
+        IColoredCloud GetFromCloudLayouter(IColoredSizedWord[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm);
 
         List<IColoredSizedWord> GetColoredWords();
     }
