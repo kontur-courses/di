@@ -6,8 +6,10 @@ namespace TagsCloudContainer
     public interface IPaintConfig
     {
         List<Brush> WordsColors { get;}
-        Font Font { get;}
-
+        string FontName { get; }
+        int FontSize { get; }
         Size ImageSize { get; }
+
+        Brush GetRandomBrush();
     }
 }
