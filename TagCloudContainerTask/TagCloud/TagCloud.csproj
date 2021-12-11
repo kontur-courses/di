@@ -66,11 +66,5 @@
     <Compile Include="Words\Tags\Tag.cs" />
     <Compile Include="Words\Tags\Tagger.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FileInteractions\FileInteractions.csproj">
-      <Project>{be374e9b-ffae-4bb0-8c8d-1e41bdb289e4}</Project>
-      <Name>FileInteractions</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
