@@ -15,19 +15,8 @@ namespace TagCloud
     {
         private static void Main(string[] args)
         {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<TextReader>().As<IFileReader>().SingleInstance();
-            builder.RegisterType<TextAnalyzer>().As<ITextAnalyzer>().SingleInstance();
-            builder.RegisterType<FrequencyAnalyzer>().As<IFrequencyAnalyzer>().SingleInstance();
-            builder.RegisterType<TagCreatorFactory>().As<ITagCreatorFactory>().SingleInstance();
-            builder.RegisterType<CircularCloudLayouterFactory>().As<ICloudLayouterFactory>().SingleInstance();
-            builder.RegisterType<CloudVisualizer>().As<IVisualizer>().SingleInstance();
-            builder.RegisterType<BitmapWriter>().As<IFileWriter>().SingleInstance();
-
-            builder.RegisterType<ConsoleUI>().As<IUserInterface>().SingleInstance();
-
-            var client = builder.Build().Resolve<IUserInterface>();
+            using var container = DependencyConfigurator.GetConfiguredContainer();
+            var client = container.Resolve<IUserInterface>();
             client.Run(args);
         }
     }
