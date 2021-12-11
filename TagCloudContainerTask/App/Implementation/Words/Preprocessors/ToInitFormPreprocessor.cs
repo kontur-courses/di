@@ -48,7 +48,7 @@ namespace App.Implementation.Words.Preprocessors
             {
                 FileName = pathToInitFormExe,
                 Arguments = $"-nld {pathToFile}",
-                CreateNoWindow = false,
+                CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 StandardOutputEncoding = Encoding.UTF8
