@@ -6,19 +6,19 @@ namespace TagsCloudContainer.Defaults;
 
 public class TextAnalyzer : ITextAnalyzer
 {
-    private readonly ITextReader[] textReaders;
+    private readonly ITextReader textReader;
     private readonly IWordNormalizer[] wordNormalizers;
     private readonly IWordFilter[] wordFilters;
     private readonly char[] wordSeparators;
 
-    public TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, TextAnalyzerSettings settings) :
-        this(textReaders, wordNormalizers, wordFilters, settings.WordSeparators)
+    public TextAnalyzer(TextReaderSelector textReader, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, TextAnalyzerSettings settings) :
+        this(textReader.GetReader(), wordNormalizers, wordFilters, settings.WordSeparators)
     {
     }
 
-    protected TextAnalyzer(ITextReader[] textReaders, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators)
+    protected TextAnalyzer(ITextReader textReader, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators)
     {
-        this.textReaders = textReaders;
+        this.textReader = textReader;
         this.wordNormalizers = wordNormalizers;
         this.wordFilters = wordFilters;
         this.wordSeparators = wordSeparators;
@@ -27,7 +27,7 @@ public class TextAnalyzer : ITextAnalyzer
     public ITextStats AnalyzeText()
     {
         var result = new TextStats();
-        foreach (var line in textReaders.SelectMany(x => x.ReadLines()))
+        foreach (var line in textReader.ReadLines())
         {
             var words = line
                 .Split(wordSeparators)

@@ -58,8 +58,7 @@ public class DefaultsTests
         var fakeReader = A.Fake<ITextReader>();
         A.CallTo(() => fakeReader.ReadLines()).Returns(text);
 
-        var textAnalyzerSettings = new TextAnalyzerSettings();
-        var textAnalyzer = new TextAnalyzer(new[] { fakeReader }, Array.Empty<IWordNormalizer>(), Array.Empty<IWordFilter>(), textAnalyzerSettings);
+        var textAnalyzer = new AnalyzerWrapper(fakeReader, Array.Empty<IWordNormalizer>(), Array.Empty<IWordFilter>(), new[] { ' ', ',', '.' });
 
         var actualResult = textAnalyzer.AnalyzeText();
 
@@ -127,5 +126,12 @@ public class DefaultsTests
         var actualResult = packer.GetTags();
 
         actualResult.Should().BeEquivalentTo(fakeTags);
+    }
+
+    private class AnalyzerWrapper : TextAnalyzer
+    {
+        public AnalyzerWrapper(ITextReader textReader, IWordNormalizer[] wordNormalizers, IWordFilter[] wordFilters, char[] wordSeparators) : base(textReader, wordNormalizers, wordFilters, wordSeparators)
+        {
+        }
     }
 }
