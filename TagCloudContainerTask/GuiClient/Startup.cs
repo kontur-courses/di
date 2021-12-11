@@ -65,6 +65,7 @@ namespace GuiClient
                 .AddSingleton<IUiAction, FontSettingsAction>()
                 .AddSingleton<IUiAction, SaveImageAction>()
                 .AddSingleton<IUiAction, OpenFileAction>()
+                .AddSingleton<IUiAction, RedrawImageAction>()
                 .AddSingleton<MainForm, MainForm>()
                 .BuildServiceProvider();
         }

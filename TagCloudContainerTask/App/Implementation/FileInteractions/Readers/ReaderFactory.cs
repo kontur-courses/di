@@ -20,6 +20,7 @@ namespace App.Implementation.FileInteractions.Readers
             {
                 case ".txt":
                     return new FromStreamReader(new StreamReader(inputFileSettings.InputFileName));
+                case ".doc":
                 case ".docx":
                     return new FromDocReader(inputFileSettings.InputFileName);
             }

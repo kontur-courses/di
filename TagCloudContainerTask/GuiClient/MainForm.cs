@@ -8,8 +8,6 @@ namespace GuiClient
 {
     public class MainForm : Form
     {
-        private readonly MenuStrip mainMenu;
-
         public MainForm(
             IEnumerable<IUiAction> actions,
             PictureBoxImageHolder pictureBox,
@@ -18,12 +16,33 @@ namespace GuiClient
             ClientSize = imageSizeSettings.Size;
             MaximizeBox = false;
             MinimizeBox = false;
-            mainMenu = new MenuStrip();
+
+            SetMainMenu(actions);
+            SetPictureBox(pictureBox);
+            SetRedrawButton();
+        }
+
+        private void SetMainMenu(IEnumerable<IUiAction> actions)
+        {
+            var mainMenu = new MenuStrip();
             mainMenu.Items.AddRange(actions.ToArray().ToMenuItems());
             Controls.Add(mainMenu);
-            pictureBox.RecreateImage();
+        }
+
+        private void SetPictureBox(PictureBoxImageHolder pictureBox)
+        {
             pictureBox.Dock = DockStyle.Fill;
+            pictureBox.RecreateImage();
             Controls.Add(pictureBox);
+        }
+
+        private void SetRedrawButton()
+        {
+            var redrawButton = new Button();
+            redrawButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            redrawButton.Text = "Redraw";
+            redrawButton.Show();
+            Controls.Add(redrawButton);
         }
     }
 }

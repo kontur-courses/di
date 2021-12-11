@@ -50,9 +50,11 @@ namespace App.Implementation
 
             var words = reader.ReadLines();
 
-            foreach (var preprocessor in preprocessors) words = preprocessor.Preprocess(words);
+            foreach (var preprocessor in preprocessors)
+                words = preprocessor.Preprocess(words);
 
-            foreach (var filter in filters) words = filter.FilterWords(words);
+            foreach (var filter in filters)
+                words = filter.FilterWords(words);
 
             var wordsFrequencies = frequencyAnalyzer.AnalyzeWordsFrequency(words);
             var tags = tagger.CreateRawTags(wordsFrequencies).ToArray();
