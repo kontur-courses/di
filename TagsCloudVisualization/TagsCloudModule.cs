@@ -7,7 +7,6 @@ using TagsCloudVisualization.FontService;
 using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.PointGenerators;
-using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.SizeService;
 using TagsCloudVisualization.WordsPreprocessors;
 using TagsCloudVisualization.WordsPreprocessors.Filters;
@@ -78,12 +77,6 @@ namespace TagsCloudVisualization
             
             
             builder.RegisterType<TagSizeService>().As<ITagSizeService>();
-
-            builder.Register(ctx =>
-            {
-                var settings = ctx.ResolveSettings();
-                return new ImageSaver(settings.Directory, settings.ImageName);
-            }).As<IImageSaver>();
 
             builder.RegisterType<ImageCreator>().As<IImageCreator>();
             builder.RegisterType<Visualizer>().AsSelf();
