@@ -12,7 +12,7 @@ namespace TagCloud
 {
     public static class DependencyConfigurator
     {
-        public static ContainerBuilder GetConfiguredBuilder()
+        public static IContainer GetConfiguredContainer()
         {
             var builder = new ContainerBuilder();
 
@@ -25,7 +25,7 @@ namespace TagCloud
             builder.RegisterType<BitmapWriter>().As<IFileWriter>().SingleInstance();
 
             builder.RegisterType<ConsoleUI>().As<IUserInterface>().SingleInstance();
-            return builder;
+            return builder.Build();
         }
     }
 }
