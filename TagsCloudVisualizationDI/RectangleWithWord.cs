@@ -20,5 +20,11 @@ namespace TagsCloudVisualizationDI
             var newSize = new Size(stringSize.Width, stringSize.Height);
             RectangleElement = new Rectangle(RectangleElement.Location, newSize);
         }
+
+        public static RectangleWithWord MakeFakeWordRectangle(Size rectangleSize)
+        {
+            var rectangle = new Rectangle(new Point(0, 0), rectangleSize);
+            return new RectangleWithWord(rectangle, new Word(""));
+        }
     }
 }

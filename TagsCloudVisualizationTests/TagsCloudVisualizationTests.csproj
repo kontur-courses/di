@@ -44,7 +44,8 @@
       <HintPath>..\TagsCloudVisualization\packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=6.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\TagsCloudVisualization\packages\FluentAssertions.6.2.0\lib\net47\FluentAssertions.dll</HintPath>
+      <HintPath>..\TagsCloudVisualizationDI\packages\FluentAssertions.6.2.0\lib\net47\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\TagsCloudVisualization\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -98,6 +99,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TagsCloudVisualizationDI\TagsCloudVisualizationDI.csproj">
+      <Project>{f40f214e-8d01-4b01-9c63-3ed9d766379f}</Project>
+      <Name>TagsCloudVisualizationDI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
       <Project>{5e116e51-fa2a-4906-9fb1-67baa4aeb3e1}</Project>
       <Name>TagsCloudVisualization</Name>
