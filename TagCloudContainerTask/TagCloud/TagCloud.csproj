@@ -54,17 +54,6 @@
     <Compile Include="Visualization\IVisualizer.cs" />
     <Compile Include="Visualization\Visualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Words\Filters\IFilter.cs" />
-    <Compile Include="Words\Filters\WordsLengthFilter.cs" />
-    <Compile Include="Words\FrequencyAnalyzers\IFrequencyAnalyzer.cs" />
-    <Compile Include="Words\FrequencyAnalyzers\WordsFrequencyAnalyzer.cs" />
-    <Compile Include="Words\Preprocessors\IPreprocessor.cs" />
-    <Compile Include="Words\Preprocessors\ToInitFormPreprocessor.cs" />
-    <Compile Include="Words\Preprocessors\ToLowerCasePreprocessor.cs" />
-    <Compile Include="Words\Tags\ITag.cs" />
-    <Compile Include="Words\Tags\ITagger.cs" />
-    <Compile Include="Words\Tags\Tag.cs" />
-    <Compile Include="Words\Tags\Tagger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

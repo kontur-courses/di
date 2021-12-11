@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using App.Infrastructure.Words.FrequencyAnalyzers;
 
-namespace TagCloud.Words.FrequencyAnalyzers
+namespace App.Implementation.Words.FrequencyAnalyzers
 {
     public class WordsFrequencyAnalyzer : IFrequencyAnalyzer
     {

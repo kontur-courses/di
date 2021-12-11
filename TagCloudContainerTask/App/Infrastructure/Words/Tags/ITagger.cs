@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using App.Implementation.Words.Tags;
 
-namespace TagCloud.Words.Tags
+namespace App.Infrastructure.Words.Tags
 {
     public interface ITagger
     {

@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,13 +51,25 @@
     <Compile Include="Implementation\FileInteractions\Readers\FromStreamReader.cs" />
     <Compile Include="Implementation\FileInteractions\Savers\BitmapSaver.cs" />
     <Compile Include="Implementation\FileInteractions\Writers\LineWriter.cs" />
+    <Compile Include="Implementation\Words\Filters\WordsLengthFilter.cs" />
+    <Compile Include="Implementation\Words\FrequencyAnalyzers\WordsFrequencyAnalyzer.cs" />
+    <Compile Include="Implementation\Words\Preprocessors\ToInitFormPreprocessor.cs" />
+    <Compile Include="Implementation\Words\Preprocessors\ToLowerCasePreprocessor.cs" />
+    <Compile Include="Implementation\Words\Tags\Tag.cs" />
+    <Compile Include="Implementation\Words\Tags\Tagger.cs" />
     <Compile Include="Infrastructure\FileInteractions\Readers\ILinesReader.cs" />
     <Compile Include="Infrastructure\FileInteractions\Savers\IBitmapSaver.cs" />
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
+    <Compile Include="Infrastructure\Words\Filters\IFilter.cs" />
+    <Compile Include="Infrastructure\Words\FrequencyAnalyzers\IFrequencyAnalyzer.cs" />
+    <Compile Include="Infrastructure\Words\Preprocessors\IPreprocessor.cs" />
+    <Compile Include="Infrastructure\Words\Tags\ITag.cs" />
+    <Compile Include="Infrastructure\Words\Tags\ITagger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

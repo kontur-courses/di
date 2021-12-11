@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.Words.Tags
+namespace App.Infrastructure.Words.Tags
 {
     public interface ITag
     {

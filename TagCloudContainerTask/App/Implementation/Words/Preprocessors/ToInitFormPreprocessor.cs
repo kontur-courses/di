@@ -2,9 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using FileInteractions.Writers;
+using App.Infrastructure.FileInteractions.Writers;
+using App.Infrastructure.Words.Preprocessors;
 
-namespace TagCloud.Words.Preprocessors
+namespace App.Implementation.Words.Preprocessors
 {
     public class ToInitFormPreprocessor : IPreprocessor
     {

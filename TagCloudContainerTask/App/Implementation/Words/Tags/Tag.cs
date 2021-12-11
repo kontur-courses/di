@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using App.Infrastructure.Words.Tags;
 
-namespace TagCloud.Words.Tags
+namespace App.Implementation.Words.Tags
 {
     public class Tag : ITag
     {

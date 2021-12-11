@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.Words.Filters
+namespace App.Infrastructure.Words.Filters
 {
     public interface IFilter
     {
