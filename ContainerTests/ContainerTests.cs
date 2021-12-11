@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using TagsCloudContainer;
 using TagsCloudContainer.Abstractions;
+using TagsCloudContainer.Registrations;
 
 namespace ContainerTests;
 
@@ -15,6 +16,16 @@ public class ThrowingRunner : IRunner
     {
         throw new Exception(ExceptionText);
     }
+}
+
+public interface ITotallyLegitimateService : IService
+{
+
+}
+
+public class TotallyLegitimateService : ITotallyLegitimateService
+{
+
 }
 
 public class ContainerTests
@@ -30,7 +41,7 @@ public class ContainerTests
     }
 
     [Test]
-    public void MainShould_NotThrow_WhenAtLeastRequiredSettingsProvided()
+    public void Main_ShouldNotThrow_WhenAtLeastRequiredSettingsProvided()
     {
         var action = () => Program.Main(new[] { "--string", "тэгер тэг тэги" });
 
@@ -38,11 +49,25 @@ public class ContainerTests
     }
 
     [Test]
-    public void MainShould_Throw_WhenNoRequiredSettingsProvided()
+    public void Main_ShouldThrow_WhenNoRequiredSettingsProvided()
     {
         var action = () => Program.Main(Array.Empty<string>());
 
         action.Should().Throw<ArgumentException>();
+    }
+
+    [Test]
+    public void ServiceIndex_Should_CorrectlyIndexAvailableServicesAndImplementationsFromAssemblies()
+    {
+        var serviceIndex = new ServiceIndex();
+
+        serviceIndex.AddAssemblyTypes(Assembly.GetExecutingAssembly());
+        var implemetation = serviceIndex.GetImplementation(nameof(TotallyLegitimateService));
+        var service = serviceIndex.GetService(nameof(ITotallyLegitimateService));
+
+        implemetation.Implementation.Should().Be(typeof(TotallyLegitimateService));
+        service.Should().Be(typeof(ITotallyLegitimateService));
+        implemetation.ImplementedServices.Should().BeEquivalentTo(new[] { service });
     }
 }
 

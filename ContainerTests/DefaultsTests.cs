@@ -53,9 +53,7 @@ public class DefaultsTests
     public void TextAnalyzer_Should_CorrectlyCollectTextStats()
     {
         var text = new[] { "abcd", "efg", "hkl" };
-        var fakeStats = A.Fake<ITextStats>();
-        A.CallTo(() => fakeStats.Statistics).Returns(text.ToDictionary(x => x, x => 1));
-        A.CallTo(() => fakeStats.TotalWordCount).Returns(text.Length);
+        var fakeStats = GetTextStats(text);
 
         var fakeReader = A.Fake<ITextReader>();
         A.CallTo(() => fakeReader.ReadLines()).Returns(text);
@@ -67,6 +65,14 @@ public class DefaultsTests
 
         actualResult.Statistics.Should().BeEquivalentTo(fakeStats.Statistics);
         actualResult.TotalWordCount.Should().Be(fakeStats.TotalWordCount);
+    }
+
+    private static ITextStats GetTextStats(string[] text)
+    {
+        var fakeStats = A.Fake<ITextStats>();
+        A.CallTo(() => fakeStats.Statistics).Returns(text.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count()));
+        A.CallTo(() => fakeStats.TotalWordCount).Returns(text.Length);
+        return fakeStats;
     }
 
     [Test]
@@ -96,5 +102,30 @@ public class DefaultsTests
         var actualResult = text.Where(filter.IsValid);
 
         actualResult.Should().BeEquivalentTo(expectedReuslt);
+    }
+
+    [Test]
+    public void TagPacker_Should_CorrectlyAssembleTags()
+    {
+        var text = new[] { "кот", "коты", "котов" };
+
+        var fakeStats = GetTextStats(text);
+
+        var fakeAnalyzer = A.Fake<ITextAnalyzer>();
+        A.CallTo(() => fakeAnalyzer.AnalyzeText()).Returns(fakeStats);
+
+        var fakeTags = fakeStats.Statistics.Select(x =>
+        {
+            var tag = A.Fake<ITag>();
+            A.CallTo(() => tag.Value).Returns(x.Key);
+            A.CallTo(() => tag.RelativeSize).Returns((double)x.Value / fakeStats.TotalWordCount);
+            return tag;
+        });
+
+        var packer = new TagPacker(fakeAnalyzer);
+
+        var actualResult = packer.GetTags();
+
+        actualResult.Should().BeEquivalentTo(fakeTags);
     }
 }
