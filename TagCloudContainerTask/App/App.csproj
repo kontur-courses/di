@@ -55,6 +55,11 @@
     <Compile Include="Implementation\GeometryUtils\PointExtension.cs" />
     <Compile Include="Implementation\GeometryUtils\RectangleExtension.cs" />
     <Compile Include="Implementation\LayoutingAlgorithms\AlgorithmFromTDD\CircularLayouter.cs" />
+    <Compile Include="Implementation\SettingsHolders\FontSettings.cs" />
+    <Compile Include="Implementation\SettingsHolders\ImageSizeSettings.cs" />
+    <Compile Include="Implementation\SettingsHolders\InputFileSettings.cs" />
+    <Compile Include="Implementation\SettingsHolders\OutputResultSettingHolder.cs" />
+    <Compile Include="Implementation\SettingsHolders\PaletteSettings.cs" />
     <Compile Include="Implementation\Visualization\Drawer.cs" />
     <Compile Include="Implementation\Visualization\Visualizer.cs" />
     <Compile Include="Implementation\Words\Filters\WordsLengthFilter.cs" />
@@ -68,6 +73,11 @@
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\AlgorithmFromTDD\ICloudLayouter.cs" />
     <Compile Include="Infrastructure\LayoutingAlgorithms\ILayouter.cs" />
+    <Compile Include="Infrastructure\SettingsHolders\IFontSettingsHolder.cs" />
+    <Compile Include="Infrastructure\SettingsHolders\IImageSizeSettingsHolder.cs" />
+    <Compile Include="Infrastructure\SettingsHolders\IInputFileSettingsHolder.cs" />
+    <Compile Include="Infrastructure\SettingsHolders\IOutputResultSettingsHolder.cs" />
+    <Compile Include="Infrastructure\SettingsHolders\IPaletteSettingsHolder.cs" />
     <Compile Include="Infrastructure\Visualization\IDrawer.cs" />
     <Compile Include="Infrastructure\Visualization\IVisualizer.cs" />
     <Compile Include="Infrastructure\Words\Filters\IFilter.cs" />
