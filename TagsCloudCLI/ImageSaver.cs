@@ -25,9 +25,9 @@ namespace TagsCloudCLI
             var extension = Path.GetExtension(imageName);
             return extension switch
             {
-                "png" => ImageFormat.Png,
-                "jpeg" or "jpg" => ImageFormat.Jpeg,
-                "bmp" => ImageFormat.Bmp,
+                ".png" => ImageFormat.Png,
+                ".jpeg" or ".jpg" => ImageFormat.Jpeg,
+                ".bmp" => ImageFormat.Bmp,
                 _ => throw new ArgumentException($"Cant save image in this {extension} format.")
             };
         }
