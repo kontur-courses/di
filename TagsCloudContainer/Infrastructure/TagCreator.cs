@@ -20,17 +20,16 @@ namespace TagsCloudContainer
                 throw new ArgumentException("No tags created!");
 
             return wordStatistics
-                .Select(statistic 
-                => new Tag((double)statistic.Value / wordCount, 
-                statistic.Key, WordType.Default));
+                .Select(statistic
+                => new Tag(
+                    (double)statistic.Value / wordCount, statistic.Key));
         }
 
         private void CalculateStatistics(IEnumerable<string> words)
         {
             foreach (var word in words)
             {
-                wordStatistics[word] = 1 +
-                        (wordStatistics.TryGetValue(word, out var count) ? count : 0);
+                wordStatistics.Increment(word);
                 wordCount++;
             }
         }

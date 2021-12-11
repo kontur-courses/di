@@ -16,14 +16,14 @@ public class TagCloudPainter
     }
 
     public string Paint(IEnumerable<PaintedTag> tags)
-    {    
+    {
         var bm = new Bitmap(settings.ImageSize.Height, settings.ImageSize.Width);
         var graphics = Graphics.FromImage(bm);
         graphics.Clear(settings.Palette.Background);
 
         foreach (var tag in PutCloudTags(tags))
         {
-            graphics.DrawString(tag.Text, tag.Label.Font, 
+            graphics.DrawString(tag.Text, tag.Label.Font,
                 new SolidBrush(tag.Color), tag.Rectangle);
         }
 
@@ -35,15 +35,18 @@ public class TagCloudPainter
 
     public IEnumerable<CloudTag> PutCloudTags(IEnumerable<PaintedTag> tags)
     {
+        var averageFrequency = tags.Select(tag => tag.Frequency).Sum()
+            / tags.Count();
+
         foreach (var tag in tags)
         {
-            var fontSize = ((float)tag.Frequency) * settings.Font.Size * 28;
+            var fontSize = (float)(tag.Frequency / averageFrequency) * settings.Font.Size;
             var label = new Label { AutoSize = true };
             label.Font = new Font(settings.Font.FontFamily, fontSize, settings.Font.Style);
             label.Text = tag.Text;
             var size = label.GetPreferredSize(new Size(1000, 1000));
             var rectangle = layouter.PutNextRectangle(size);
-            yield return new CloudTag(tag, label, rectangle);            
+            yield return new CloudTag(tag, label, rectangle);
         }
     }
 }
