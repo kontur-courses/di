@@ -51,13 +51,15 @@ namespace TagCloud.UI.Console
         {
             var drawingSettings = GetDrawingSettings(options);
             var fileExtension = GetExtensionsFromFileName(options.InputFilename);
-            
+            var outputExtension = GetExtensionsFromFileName(options.OutputFilename);
+            var boringWordsFileExtension = GetExtensionsFromFileName(options.ExcludedWordsFile);
+
             var reader = readerFactory.Create(fileExtension);
 
             var text = reader.ReadFile(options.InputFilename);
-            var wordsToExclude = reader.ReadFile(options.ExcludedWordsFile).ToHashSet();
-            //var words = textAnalyzer.Analyze(text, wordsToExclude);
-            //var wordFrequencies = frequencyAnalyzer.Analyze(words);
+            var wordsToExclude = readerFactory.Create(boringWordsFileExtension)
+                .ReadFile(options.ExcludedWordsFile).ToHashSet();
+
             boringWordsFilter.AddWords(wordsToExclude);
             var wordFrequencies = textAnalyzer.Analyze(text);
 
@@ -70,14 +72,14 @@ namespace TagCloud.UI.Console
             using (drawingSettings)
             {
                 var image = visualizer.DrawCloud(placedTags, drawingSettings);
-                writer.Write(image, options.OutputFilename, ImageFormat.Png);
+                writer.Write(image, options.OutputFilename, outputExtension);
             }
         }
 
         private string GetExtensionsFromFileName(string filename)
         {
             var lastDotIndex = filename.LastIndexOf('.');
-            return filename[lastDotIndex..];
+            return filename[(lastDotIndex + 1)..];
         }
 
         private static DrawingSettings GetDrawingSettings(Options options)
