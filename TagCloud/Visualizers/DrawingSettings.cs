@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagCloud.Visualizers
 {
     public class DrawingSettings : IDrawingSettings
     {
-        public Brush PenBrush { get; }
+        public IEnumerable<Color> PenColors { get; }
         public Color BackgroundColor { get; }
         public Font Font { get; }
         public Bitmap Bitmap { get; }
         public Graphics Graphics { get; }
 
-        public DrawingSettings(Color penColor, Color backgroundColor, int width, int height, Font font)
+        public DrawingSettings(IEnumerable<Color> penColor, Color backgroundColor, int width, int height, Font font)
         {
-            PenBrush = new SolidBrush(penColor);
+            PenColors = penColor;
             BackgroundColor = backgroundColor;
             Font = font;
             if (width < 0 || height < 0)
@@ -28,7 +29,6 @@ namespace TagCloud.Visualizers
         {
             Bitmap?.Dispose();
             Graphics?.Dispose();
-            PenBrush?.Dispose();
             Font?.Dispose();
             GC.SuppressFinalize(this);
         }

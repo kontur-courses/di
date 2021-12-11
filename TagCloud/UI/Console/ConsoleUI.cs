@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
 using CommandLine;
 using TagCloud.Analyzers;
@@ -22,6 +21,7 @@ namespace TagCloud.UI.Console
         private readonly IVisualizer visualizer;
         private readonly IFileWriter writer;
         private readonly ITagCreatorFactory tagCreatorFactory;
+        private readonly ITagColoringFactory tagColoringFactory;
 
         public ConsoleUI(IFileReaderFactory readerFactory,
             ITextAnalyzer textAnalyzer,
@@ -29,7 +29,8 @@ namespace TagCloud.UI.Console
             ICloudLayouterFactory layouterFactory,
             IVisualizer visualizer,
             IFileWriter writer, 
-            ITagCreatorFactory tagCreatorFactory)
+            ITagCreatorFactory tagCreatorFactory,
+            ITagColoringFactory tagColoringFactory)
         {
             this.readerFactory = readerFactory;
             this.textAnalyzer = textAnalyzer;
@@ -37,6 +38,7 @@ namespace TagCloud.UI.Console
             this.visualizer = visualizer;
             this.writer = writer;
             this.tagCreatorFactory = tagCreatorFactory;
+            this.tagColoringFactory = tagColoringFactory;
             this.boringWordsFilter = boringWordsFilter;
         }
 
@@ -71,7 +73,8 @@ namespace TagCloud.UI.Console
             var placedTags = layouterFactory.Create(center).PutTags(tags);
             using (drawingSettings)
             {
-                var image = visualizer.DrawCloud(placedTags, drawingSettings);
+                var tagColoringAlgorithm = tagColoringFactory.Create(options.TagColoring, drawingSettings.PenColors);
+                var image = visualizer.DrawCloud(placedTags, drawingSettings, tagColoringAlgorithm);
                 writer.Write(image, options.OutputFilename, outputExtension);
             }
         }
@@ -85,14 +88,20 @@ namespace TagCloud.UI.Console
         private static DrawingSettings GetDrawingSettings(Options options)
         {
             var backgroundColor = Color.FromName(options.BackgroundColor);
-            var penColor = Color.FromName(options.WordColor);
+            var penColors = ParseColors(options.WordColors);
             var font = new Font(options.FontName, options.FontSize);
 
-            return new DrawingSettings(penColor, 
+            return new DrawingSettings(penColors, 
                 backgroundColor, 
                 options.Width, 
                 options.Height, 
                 font);
+        }
+
+        private static IEnumerable<Color> ParseColors(IEnumerable<string> colors)
+        {
+            foreach (var color in colors)
+                yield return Color.FromName(color);
         }
 
         private static void HandleParseError(IEnumerable<Error> errors)

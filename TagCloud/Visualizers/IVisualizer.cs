@@ -6,6 +6,8 @@ namespace TagCloud.Visualizers
 {
     public interface IVisualizer
     {
-        Bitmap DrawCloud(IEnumerable<Tag> tags, IDrawingSettings drawingSettings);
+        Bitmap DrawCloud(IEnumerable<Tag> tags, 
+            IDrawingSettings drawingSettings, 
+            ITagColoring tagColoringAlgorithm);
     }
 }

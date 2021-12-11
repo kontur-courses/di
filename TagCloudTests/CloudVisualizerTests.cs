@@ -16,7 +16,7 @@ namespace TagCloudTests
         [SetUp]
         public void SetUp()
         {
-            drawingSettings = new DrawingSettings(Color.Blue, Color.CornflowerBlue, 1200, 1200,
+            drawingSettings = new DrawingSettings(new[] {Color.Blue}, Color.CornflowerBlue, 1200, 1200,
                 new Font(FontFamily.GenericSansSerif, 8));
             visualizer = new CloudVisualizer();
         }
@@ -35,19 +35,21 @@ namespace TagCloudTests
         [TestCase(-1, -1, TestName = "When Negative Width And Height")]
         public void DrawingSettingsCtor_ShouldThrows(int width, int height)
         {
-            Assert.Throws<ArgumentException>(() => new DrawingSettings(Color.Blue, Color.CornflowerBlue, width, height,
+            Assert.Throws<ArgumentException>(() => new DrawingSettings(new[] { Color.Blue },
+                Color.CornflowerBlue, width, height,
                 new Font(FontFamily.GenericSansSerif, 8)));
         }
 
         [TestCaseSource(nameof(CasesForDrawRectangle))]
         public void DrawRectangle_Should(int pixelX, int pixelY, int expectedARGBColor)
         {
-            var settings = new DrawingSettings(Color.Blue, Color.CornflowerBlue, 200, 200,
+            var settings = new DrawingSettings(new[] { Color.Blue },
+                Color.CornflowerBlue, 200, 200,
                 new Font(FontFamily.GenericSansSerif, 8));
             var tag = new Tag("bbbbbbb", 1, new Size(50, 50));
             var tags = new[] { new Tag(tag, new Rectangle(new Point(50, 50), new Size()))};
 
-            visualizer.DrawCloud(tags, settings);
+            visualizer.DrawCloud(tags, settings, new AlternatingTagColoring(drawingSettings.PenColors));
 
             settings.Bitmap.GetPixel(pixelX, pixelY).ToArgb()
                 .Should().Be(expectedARGBColor);

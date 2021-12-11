@@ -6,7 +6,9 @@ namespace TagCloud.Visualizers
 {
     public class CloudVisualizer : IVisualizer
     {
-        public Bitmap DrawCloud(IEnumerable<Tag> tags, IDrawingSettings drawingSettings)
+        public Bitmap DrawCloud(IEnumerable<Tag> tags, 
+            IDrawingSettings drawingSettings, 
+            ITagColoring tagColoringAlgorithm)
         {
             var bitmap = drawingSettings.Bitmap;
             var graph = drawingSettings.Graphics;
@@ -15,7 +17,11 @@ namespace TagCloud.Visualizers
             graph.Clear(backgroundBrush);
 
             foreach (var tag in tags)
-                DrawTag(tag, graph, drawingSettings.Font, drawingSettings.PenBrush);
+            {
+                var color = tagColoringAlgorithm.GetNextColor();
+                using var brush = new SolidBrush(color);
+                DrawTag(tag, graph, drawingSettings.Font, brush);
+            }
 
             return bitmap;
         }

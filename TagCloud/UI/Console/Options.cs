@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using CommandLine;
 
 namespace TagCloud.UI.Console
 {
@@ -8,9 +9,9 @@ namespace TagCloud.UI.Console
             HelpText = "specify the file that contains the words to be excluded")]
         public string ExcludedWordsFile { get; set; }
 
-        [Option('c', "word-color", Default = "Black",
+        [Option('c', "word-color", Default = new[] {"Black"},
             HelpText = "specify the word color")]
-        public string WordColor { get; set; }
+        public IEnumerable<string> WordColors { get; set; }
 
         [Option('b', "background-color", Default = "White",
             HelpText = "specify the background color")]
@@ -34,5 +35,9 @@ namespace TagCloud.UI.Console
 
         [Option('s', "font-size", Default = 8, HelpText = "basic font size for words")]
         public int FontSize { get; set; }
+
+        [Option('a', "tag-coloring", Default = "alt", HelpText = "Tag coloring algorithm." +
+                                                                 "Possible variants: alt, random")]
+        public string TagColoring { get; set; }
     }
 }

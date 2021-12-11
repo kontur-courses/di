@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
@@ -25,6 +26,7 @@ namespace TagCloudTests
                 new [] {new WordsToLowerConverter()},
                 new FrequencyAnalyzer());
             var tagCreator = new TagCreatorFactory();
+            var tagColoringFactory = new TagColoringFactory();
             var layouterFactory = new CircularCloudLayouterFactory();
             var visualizer = new CloudVisualizer();
             var fileWriter = new BitmapWriter();
@@ -42,7 +44,8 @@ namespace TagCloudTests
                 layouterFactory, 
                 visualizer, 
                 fileWriter, 
-                tagCreator);
+                tagCreator,
+                tagColoringFactory);
             client.Run(args);
 
             var image = new FileInfo(Environment.CurrentDirectory + "\\test.txt");

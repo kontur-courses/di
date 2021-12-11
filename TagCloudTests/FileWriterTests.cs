@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
@@ -23,7 +22,7 @@ namespace TagCloudTests
         {
             var bitmap = new Bitmap(300, 300);
 
-            writer.Write(bitmap, "test.png", ImageFormat.Png);
+            writer.Write(bitmap, "test.png", "png");
 
             var fileInfo = new FileInfo(Environment.CurrentDirectory + "\\test.png");
             fileInfo.Exists.Should().BeTrue();

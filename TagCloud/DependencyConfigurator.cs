@@ -28,6 +28,7 @@ namespace TagCloud
                 .As<IWordFilter>()
                 .As<BoringWordsFilter>()
                 .SingleInstance();
+            builder.RegisterType<TagColoringFactory>().As<ITagColoringFactory>().SingleInstance();
 
             builder.RegisterType<ConsoleUI>().As<IUserInterface>().SingleInstance();
             return builder.Build();
