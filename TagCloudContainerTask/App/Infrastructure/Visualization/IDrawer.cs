@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.Words.Tags;
+using App.Implementation.Words.Tags;
 
-namespace TagCloud.Visualization
+namespace App.Infrastructure.Visualization
 {
     public interface IDrawer
     {

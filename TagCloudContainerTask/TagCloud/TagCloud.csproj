@@ -43,16 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeometryUtils\DirectingArrow.cs" />
-    <Compile Include="GeometryUtils\PointExtension.cs" />
-    <Compile Include="GeometryUtils\RectangleExtension.cs" />
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\CircularLayouter.cs" />
     <Compile Include="LayoutAlgorithms\AlgorithmFromTDD\Layouting\ICloudLayouter.cs" />
     <Compile Include="LayoutAlgorithms\ILayouter.cs" />
-    <Compile Include="Visualization\Drawer.cs" />
-    <Compile Include="Visualization\IDrawer.cs" />
-    <Compile Include="Visualization\IVisualizer.cs" />
-    <Compile Include="Visualization\Visualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

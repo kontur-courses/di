@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.GeometryUtils;
-using TagCloud.Words.Tags;
+using App.Implementation.GeometryUtils;
+using App.Implementation.Words.Tags;
+using App.Infrastructure.Visualization;
 
-namespace TagCloud.Visualization
+namespace App.Implementation.Visualization
 {
     public class Visualizer : IVisualizer
     {

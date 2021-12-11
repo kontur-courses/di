@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagCloud.GeometryUtils
+namespace App.Implementation.GeometryUtils
 {
     public static class RectangleExtension
     {

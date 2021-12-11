@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud.GeometryUtils
+namespace App.Implementation.GeometryUtils
 {
     public class DirectingArrow
     {

@@ -51,6 +51,11 @@
     <Compile Include="Implementation\FileInteractions\Readers\FromStreamReader.cs" />
     <Compile Include="Implementation\FileInteractions\Savers\BitmapSaver.cs" />
     <Compile Include="Implementation\FileInteractions\Writers\LineWriter.cs" />
+    <Compile Include="Implementation\GeometryUtils\DirectingArrow.cs" />
+    <Compile Include="Implementation\GeometryUtils\PointExtension.cs" />
+    <Compile Include="Implementation\GeometryUtils\RectangleExtension.cs" />
+    <Compile Include="Implementation\Visualization\Drawer.cs" />
+    <Compile Include="Implementation\Visualization\Visualizer.cs" />
     <Compile Include="Implementation\Words\Filters\WordsLengthFilter.cs" />
     <Compile Include="Implementation\Words\FrequencyAnalyzers\WordsFrequencyAnalyzer.cs" />
     <Compile Include="Implementation\Words\Preprocessors\ToInitFormPreprocessor.cs" />
@@ -60,6 +65,8 @@
     <Compile Include="Infrastructure\FileInteractions\Readers\ILinesReader.cs" />
     <Compile Include="Infrastructure\FileInteractions\Savers\IBitmapSaver.cs" />
     <Compile Include="Infrastructure\FileInteractions\Writers\ILineWriter.cs" />
+    <Compile Include="Infrastructure\Visualization\IDrawer.cs" />
+    <Compile Include="Infrastructure\Visualization\IVisualizer.cs" />
     <Compile Include="Infrastructure\Words\Filters\IFilter.cs" />
     <Compile Include="Infrastructure\Words\FrequencyAnalyzers\IFrequencyAnalyzer.cs" />
     <Compile Include="Infrastructure\Words\Preprocessors\IPreprocessor.cs" />
