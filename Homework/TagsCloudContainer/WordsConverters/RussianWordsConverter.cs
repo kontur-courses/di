@@ -8,21 +8,22 @@ namespace TagsCloudContainer.WordsConverters
     public record RussianWordsConverter : IWordsConverter
     {
         private const string SpeechPartKey = "чр";
-        
-        private static readonly IReadOnlyDictionary<string, SpeechPart> SpeechPartsAdapter = new Dictionary<string, SpeechPart>
-        {
-            ["сущ"] = SpeechPart.Noun,
-            ["прил"] = SpeechPart.Adjective,
-            ["кр_прил"] = SpeechPart.Adjective,
-            ["гл"] = SpeechPart.Verb,
-            ["инф_гл"] = SpeechPart.Verb,
-            ["нареч"] = SpeechPart.Adverbs,
-            ["мест"] = SpeechPart.Pronoun,
-            ["числ"] = SpeechPart.Num
-        };
-        
+
+        private static readonly IReadOnlyDictionary<string, SpeechPart> SpeechPartsAdapter =
+            new Dictionary<string, SpeechPart>
+            {
+                ["сущ"] = SpeechPart.Noun,
+                ["прил"] = SpeechPart.Adjective,
+                ["кр_прил"] = SpeechPart.Adjective,
+                ["гл"] = SpeechPart.Verb,
+                ["инф_гл"] = SpeechPart.Verb,
+                ["нареч"] = SpeechPart.Adverbs,
+                ["мест"] = SpeechPart.Pronoun,
+                ["числ"] = SpeechPart.Num
+            };
+
         private readonly MorphAnalyzer analyzer;
-        
+
 
         public RussianWordsConverter(MorphAnalyzer analyzer)
         {

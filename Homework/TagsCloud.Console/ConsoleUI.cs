@@ -1,11 +1,6 @@
-﻿using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using Autofac;
+﻿using System.IO;
 using TagsCloudContainer.BitmapSaver;
 using TagsCloudContainer.FileReader;
-using TagsCloudContainer.Layouter;
-using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.WordsConverters;
 using TagsCloudContainer.WordsFilter;
@@ -16,11 +11,11 @@ namespace TagsCloud.Console
     public class ConsoleUI : IConsoleUI
     {
         private readonly IFileReadersResolver fileReadersResolver;
-        private readonly IWordsConverter wordsConverter;
         private readonly IFilterApplyer filterApplyer;
         private readonly IWordsFrequencyAnalyzer frequencyAnalyzer;
-        private readonly IVisualizer visualizer;
         private readonly IBitmapSaver saver;
+        private readonly IVisualizer visualizer;
+        private readonly IWordsConverter wordsConverter;
 
         public ConsoleUI(IFileReadersResolver fileReadersResolver,
             IWordsConverter wordsConverter,
@@ -43,7 +38,7 @@ namespace TagsCloud.Console
             var convertedWords = wordsConverter.Convert(content);
             var filteredWords = filterApplyer.Apply(convertedWords);
             var freqDict = frequencyAnalyzer.GetWordsFrequency(filteredWords);
-            using var visualization = visualizer.Visualize(freqDict); 
+            using var visualization = visualizer.Visualize(freqDict);
             saver.Save(visualization, settings.OutputPath);
         }
     }

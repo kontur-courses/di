@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 
 namespace TagsCloudContainer.BitmapSaver
@@ -15,7 +14,7 @@ namespace TagsCloudContainer.BitmapSaver
             ".jpg",
             ".gif",
             ".bmp",
-            ".icon",
+            ".icon"
         };
 
         public void Save(Bitmap bmp, string fullPathWithExt)

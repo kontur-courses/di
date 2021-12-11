@@ -11,7 +11,7 @@ namespace TagsCloudContainer.Layouter.PointsProviders
 
         public PointsProvidersResolver(IPointsProvider[] pointsProvider)
         {
-            this.resolver = pointsProvider.ToDictionary(x => x.AlghorithmName);
+            resolver = pointsProvider.ToDictionary(x => x.AlghorithmName);
         }
 
         public IPointsProvider Get(LayoutAlrogorithm algorithm)

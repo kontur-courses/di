@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using CommandLine;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
@@ -25,10 +23,10 @@ namespace TagsCloud.Console
 
         [Option('s', "fontSize", Default = 20, HelpText = "Set font size")]
         public int FontSize { get; set; }
-        
+
         [Option('l', "minWordsLength", Default = 2, HelpText = "Filter words by length")]
         public int MinWordLength { get; set; }
-        
+
         [Option('p', "excludingSpeechParts", Separator = ',', HelpText = "Speech parts to exclude(separated by comma)")]
         public ICollection<SpeechPart> SelectedSpeechParts { get; set; } = null!;
 
@@ -51,8 +49,9 @@ namespace TagsCloud.Console
             if (parsed == null)
             {
                 System.Console.WriteLine("Input is incorrect");
-                Environment.Exit(-1); 
+                Environment.Exit(-1);
             }
+
             return parsed.Value;
         }
     }

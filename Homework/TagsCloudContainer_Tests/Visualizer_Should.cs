@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
@@ -13,16 +12,6 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class Visualizer_Should
     {
-        private Visualizer sut;
-        private Dictionary<string, int> freqDict = new Dictionary<string, int>()
-        {
-            {"а", 1}
-        }; 
-        private Stack<Color> testingColors;
-        private ICloudLayouter layouter;
-        private IVisualizerSettings settings;
-        private IColorGenerator colorGenerator;
-
         [SetUp]
         public void SetUp()
         {
@@ -35,6 +24,18 @@ namespace TagsCloudContainer_Tests
             A.CallTo(() => colorGenerator.GetColors(A<int>.Ignored)).Returns(FakeColors(freqDict.Count));
             sut = new Visualizer(settings, layouter);
         }
+
+        private Visualizer sut;
+
+        private readonly Dictionary<string, int> freqDict = new()
+        {
+            {"а", 1}
+        };
+
+        private Stack<Color> testingColors;
+        private ICloudLayouter layouter;
+        private IVisualizerSettings settings;
+        private IColorGenerator colorGenerator;
 
         [Test]
         public void CreateImage_WithSetSize()
@@ -56,17 +57,16 @@ namespace TagsCloudContainer_Tests
         public void Throw_WhenEmptySize()
         {
             A.CallTo(() => settings.ImageSize).Returns(new Size());
-            A.CallTo(() => layouter.PutNextRectangle(A<Size>.Ignored)).Returns(new Rectangle(0,0,2,2));
+            A.CallTo(() => layouter.PutNextRectangle(A<Size>.Ignored)).Returns(new Rectangle(0, 0, 2, 2));
             Assert.Throws<ArgumentException>(() => new Visualizer(settings, layouter));
         }
 
         private Stack<Color> FakeColors(int count)
         {
             var faked = new Stack<Color>();
-            for(var i = 0; i < count; i ++)
+            for (var i = 0; i < count; i++)
                 faked.Push(Color.Aqua);
             return faked;
         }
-
     }
 }

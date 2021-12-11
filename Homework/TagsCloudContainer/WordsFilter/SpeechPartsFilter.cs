@@ -7,12 +7,12 @@ namespace TagsCloudContainer.WordsFilter
     public class SpeechPartsFilter : IWordsFilter
     {
         private readonly SpeechPart[] selectedSpeechParts;
-        
+
         public SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
         {
             this.selectedSpeechParts = selectedSpeechParts;
         }
-        
+
         public ICollection<WordInfo> Filter(ICollection<WordInfo> words)
         {
             if (selectedSpeechParts.Length == 0)

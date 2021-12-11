@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
@@ -12,16 +11,16 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class BitmapSaver_Should
     {
-        private readonly string currentDirectory = Environment.CurrentDirectory;
-        private readonly BitmapSaver sut = new BitmapSaver();
-
-        private Bitmap testingBmp;
-
         [SetUp]
         public void SetUp()
         {
             testingBmp = new Bitmap(1920, 1080);
         }
+
+        private readonly string currentDirectory = Environment.CurrentDirectory;
+        private readonly BitmapSaver sut = new();
+
+        private Bitmap testingBmp;
 
 
         [Test]
@@ -37,12 +36,12 @@ namespace TagsCloudContainer_Tests
         public void CreateDirectory_WhenDirectoryNotExist()
         {
             var testPath = Path.Combine(currentDirectory, "notexistingdirectory");
-            if(Directory.Exists(testPath))
-                Directory.Delete(testPath,true);
+            if (Directory.Exists(testPath))
+                Directory.Delete(testPath, true);
             Directory.Exists(testPath).Should().BeFalse();
             sut.Save(testingBmp, Path.Combine(testPath, "test.png"));
             Directory.Exists(testPath).Should().BeTrue();
-            Directory.Delete(testPath, recursive:true);
+            Directory.Delete(testPath, true);
         }
 
         [Test]
@@ -61,7 +60,6 @@ namespace TagsCloudContainer_Tests
             if (file == null) return false;
             File.Delete(file);
             return true;
-
         }
     }
 }

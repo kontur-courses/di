@@ -11,6 +11,6 @@ namespace TagsCloudContainer.FileReader
         Xml,
         Doc,
         Docx,
-        Rtf,
+        Rtf
     }
 }

@@ -1,6 +1,4 @@
-﻿using Autofac;
-
-namespace TagsCloud.Console
+﻿namespace TagsCloud.Console
 {
     public interface IConsoleUI
     {

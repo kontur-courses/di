@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.WordsFrequencyAnalyzers;
 
@@ -7,12 +8,12 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class WordsFrequencyAnalyzer_Should
     {
-        private IWordsFrequencyAnalyzer sut = new WordsFrequencyAnalyzer();
+        private readonly IWordsFrequencyAnalyzer sut = new WordsFrequencyAnalyzer();
 
         [Test]
         public void ReturnEmptyDict_WhenEmptyInput()
         {
-            var input = System.Array.Empty<string>();
+            var input = Array.Empty<string>();
             sut.GetWordsFrequency(input).Should().BeEmpty();
         }
 
@@ -39,7 +40,7 @@ namespace TagsCloudContainer_Tests
             {
                 "привет",
                 "привет",
-                "мир",
+                "мир"
             };
             var result = sut.GetWordsFrequency(input);
             result.Should()

@@ -20,6 +20,5 @@ namespace TagsCloudContainer.FileReader
                 return fileReadersResolver[extension];
             throw new ArgumentException($"Формат {extension} не поддерживается");
         }
-
     }
 }

@@ -5,6 +5,6 @@ namespace TagsCloudContainer.Visualizer
     [Flags]
     public enum PalleteType
     {
-        Random = 0x0,
+        Random = 0x0
     }
 }

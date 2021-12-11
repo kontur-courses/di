@@ -7,6 +7,5 @@ namespace TagsCloudContainer.Visualizer
     {
         public PalleteType PalleteType { get; }
         public Stack<Color> GetColors(int count);
-
     }
 }

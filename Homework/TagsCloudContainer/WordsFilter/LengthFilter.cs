@@ -16,9 +16,11 @@ namespace TagsCloudContainer.WordsFilter
             this.minLength = minLength;
         }
 
-        public ICollection<WordInfo> Filter(ICollection<WordInfo> words) =>
-            words
+        public ICollection<WordInfo> Filter(ICollection<WordInfo> words)
+        {
+            return words
                 .Where(word => word.Lemma.Length >= minLength)
                 .ToArray();
+        }
     }
 }

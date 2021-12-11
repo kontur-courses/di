@@ -61,5 +61,4 @@ namespace TagsCloud.Console
             return new CloudLayouter(context.Resolve<IPointsProvidersResolver>().Get(settings.LayoutAlgorythm));
         }
     }
-    
 }

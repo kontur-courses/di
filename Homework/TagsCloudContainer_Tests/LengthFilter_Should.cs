@@ -11,11 +11,12 @@ namespace TagsCloudContainer_Tests
     {
         private readonly WordInfo[] testingInput =
         {
-            new WordInfo("мяч", SpeechPart.Noun),
-            new WordInfo("футбольный", SpeechPart.Adjective),
-            new WordInfo("пинать", SpeechPart.Verb),
-            new WordInfo("ой", SpeechPart.Unknown)
+            new("мяч", SpeechPart.Noun),
+            new("футбольный", SpeechPart.Adjective),
+            new("пинать", SpeechPart.Verb),
+            new("ой", SpeechPart.Unknown)
         };
+
         private LengthFilter sut;
 
         [Test]

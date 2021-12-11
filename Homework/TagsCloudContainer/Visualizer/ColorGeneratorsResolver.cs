@@ -10,7 +10,7 @@ namespace TagsCloudContainer.Visualizer
 
         public ColorGeneratorsResolver(IColorGenerator[] colorGenerators)
         {
-            this.resolver = colorGenerators.ToDictionary(x => x.PalleteType);
+            resolver = colorGenerators.ToDictionary(x => x.PalleteType);
         }
 
         public IColorGenerator Get(PalleteType palleteType)
