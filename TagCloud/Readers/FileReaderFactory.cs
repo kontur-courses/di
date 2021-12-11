@@ -7,7 +7,9 @@ namespace TagCloud.Readers
         private static readonly Dictionary<string, IFileReader> fileReadersFactory =
             new()
             {
-                {"txt", new TextReader()}
+                {"txt", new TextReader()},
+                {"xml", new XmlFileReader()},
+                {"docx", new DocFileReader()}
             };
         
         public IFileReader Create(string fileExtension)
