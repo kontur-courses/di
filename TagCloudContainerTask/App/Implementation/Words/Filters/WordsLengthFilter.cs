@@ -6,9 +6,16 @@ namespace App.Implementation.Words.Filters
 {
     public class WordsLengthFilter : IFilter
     {
+        private readonly int minLength;
+
+        public WordsLengthFilter(int minLength = 3)
+        {
+            this.minLength = minLength;
+        }
+
         public IEnumerable<string> FilterWords(IEnumerable<string> words)
         {
-            return words.Where(word => word.Length > 3);
+            return words.Where(word => word.Length > minLength);
         }
     }
 }
