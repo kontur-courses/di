@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using TagsCloudVisualization.Drawable;
+﻿using System.Drawing;
+using TagsCloudVisualization.DrawableContainers;
 
 namespace TagsCloudVisualization.ImageCreators
 {
     public interface IImageCreator
     {
-        Image Draw(IEnumerable<IDrawable> layout);
+        Image Draw(IDrawableContainer drawableContainer);
     }
 }

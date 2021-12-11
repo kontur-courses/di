@@ -5,6 +5,6 @@ namespace TagsCloudVisualization.TagToDrawableTransformer
 {
     public interface ITagToDrawableTransformer
     {
-        public IEnumerable<IDrawable> Transform(List<Tag> tags);
+        public IEnumerable<IDrawable> Transform(IEnumerable<Tag> tags);
     }
 }

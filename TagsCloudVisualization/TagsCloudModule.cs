@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Autofac;
 using TagsCloudVisualization.ColorService;
+using TagsCloudVisualization.DrawableContainers.Builders;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.FontService;
 using TagsCloudVisualization.ImageCreators;
@@ -9,7 +9,6 @@ using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.PointGenerators;
 using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.SizeService;
-using TagsCloudVisualization.TagToDrawableTransformer;
 using TagsCloudVisualization.WordsPreprocessors;
 using TagsCloudVisualization.WordsPreprocessors.Filters;
 using TagsCloudVisualization.WordsPreprocessors.Preparers;
@@ -61,6 +60,7 @@ namespace TagsCloudVisualization
             }).As<ITagColorService>();
             
             builder.RegisterType<WordsToTagTransformer>().As<IWordsToTagTransformer>();
+            builder.RegisterType<DrawableContainerBuilder>().As<IDrawableContainerBuilder>();
             
             builder.Register(ctx =>
             {
@@ -78,8 +78,7 @@ namespace TagsCloudVisualization
             
             
             builder.RegisterType<TagSizeService>().As<ITagSizeService>();
-            builder.RegisterType<TagToDrawableTagTransformer>().As<ITagToDrawableTransformer>();
-            
+
             builder.Register(ctx =>
             {
                 var settings = ctx.ResolveSettings();

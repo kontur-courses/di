@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using TagsCloudVisualization.DrawableContainers.Builders;
 using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Saver;
-using TagsCloudVisualization.TagToDrawableTransformer;
 using TagsCloudVisualization.WordsPreprocessors;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagTransformers;
@@ -13,18 +12,18 @@ namespace TagsCloudVisualization
         private readonly IFileReadService fileReadService;
         private readonly IImageCreator imageCreator;
         private readonly IImageSaver imageSaver;
-        private readonly ITagToDrawableTransformer tagToDrawableTransformer;
         private readonly IWordsPreprocessor wordsProcessor;
         private readonly IWordsToTagTransformer wordsToTagTransformer;
+        private readonly IDrawableContainerBuilder drawableContainerBuilder;
 
         public Visualizer(IFileReadService fileReadService, IWordsPreprocessor wordsProcessor,
-            IWordsToTagTransformer wordsToTagTransformer,
-            ITagToDrawableTransformer tagToDrawableTransformer, IImageCreator imageCreator, IImageSaver imageSaver)
+            IWordsToTagTransformer wordsToTagTransformer, IDrawableContainerBuilder drawableContainerBuilder, 
+            IImageCreator imageCreator, IImageSaver imageSaver)
         {
             this.fileReadService = fileReadService;
             this.wordsProcessor = wordsProcessor;
             this.wordsToTagTransformer = wordsToTagTransformer;
-            this.tagToDrawableTransformer = tagToDrawableTransformer;
+            this.drawableContainerBuilder = drawableContainerBuilder;
             this.imageCreator = imageCreator;
             this.imageSaver = imageSaver;
         }
@@ -34,8 +33,14 @@ namespace TagsCloudVisualization
             var words = fileReadService.GetFileContent();
             var preparedWords = wordsProcessor.Preprocess(words);
             var tags = wordsToTagTransformer.Transform(preparedWords);
-            var drawableTags = tagToDrawableTransformer.Transform(tags.ToList());
-            var image = imageCreator.Draw(drawableTags);
+            
+            foreach (var tag in tags)
+            {
+                drawableContainerBuilder.AddTag(tag);
+            }
+
+            var drawableContainer = drawableContainerBuilder.Build();
+            var image = imageCreator.Draw(drawableContainer);
             imageSaver.Save(image);
         }
     }
