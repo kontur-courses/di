@@ -25,10 +25,10 @@ namespace TagCloud.Drawing
         }
 
         [Option('f', "font-family", Required = false, HelpText = "Set font family of cloud")]
-        public FontFamily FontFamily { get; set; }
-        
+        public FontFamily FontFamily { get; set; } = FontFamily.GenericSansSerif;
+
         [Option('s', "font-size", Required = false, HelpText = "Set base font size of cloud", Default = 20)]
-        public float BaseFontSize { get; set; }
+        public float BaseFontSize { get; set; } = 20;
         
         [Option( "picture-size", Required = false, HelpText = "Set picture size of cloud")]
         public Size Size { get; set; }

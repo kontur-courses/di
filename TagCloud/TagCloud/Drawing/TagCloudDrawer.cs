@@ -19,7 +19,7 @@ namespace TagCloud.Drawing
 
             var rectangles = words.Select(w => w.Rectangle).ToList();
             var bitmapSize = GetCanvasSize(rectangles, center);
-            using var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
+            var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
 
             var rnd = new Random(Seed: 100);

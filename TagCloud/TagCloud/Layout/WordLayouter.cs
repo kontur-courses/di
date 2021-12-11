@@ -30,8 +30,8 @@ namespace TagCloud.Layout
                 var font = new Font(options.FontFamily, (float)fontSize);
                 listWords.Add(new Word(word, font));
             }
-            
-            foreach (var word in NormalizeFontSize(minFontSize, listWords))
+            listWords = NormalizeFontSize(minFontSize, listWords);
+            foreach (var word in listWords)
             {
                 var wordSize = g.MeasureString(word.Text, word.Font).ToSize();
                 word.Rectangle = _layouter.PutNextRectangle(wordSize);
@@ -40,10 +40,11 @@ namespace TagCloud.Layout
             return listWords;
         }
 
-        private IEnumerable<Word> NormalizeFontSize(double minSize, List<Word> words)
+        private List<Word> NormalizeFontSize(double minSize, List<Word> words)
         {
             return words
-                .Select(w => w.WithFontSize(w.Font.Size / minSize * 14));
+                .Select(w => w.WithFontSize(w.Font.Size / minSize * 14))
+                .ToList();
         }
     }
 }

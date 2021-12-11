@@ -23,7 +23,7 @@ namespace TagCloud.TextProcessing
         private HashSet<PartOfSpeech> _excludePartOfSpeech;
 
 
-        [Option('p',"path", Required = true, HelpText = "Set file paths", Separator = ':')]
+        [Option('p',"path", Required = true, HelpText = "Set file paths")]
         public IEnumerable<string> FilesToProcess { get; set; }
         
         [Option('i', "include", Required = false, HelpText = "Set include words", Separator = ':')]
