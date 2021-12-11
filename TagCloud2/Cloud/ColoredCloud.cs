@@ -4,25 +4,30 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagCloud2.TextGeometry;
+using TagCloudVisualisation;
 
 namespace TagCloud2
 {
     public class ColoredCloud : IColoredCloud
     {
-        Dictionary<Rectangle, Color> colorDict = new();
-        public IColoredCloud GetFromCloudLayouter(ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm)
+        List<IColoredSizedWord> coloredSizedWords = new();
+
+        public List<IColoredSizedWord> GetColoredWords()
         {
-            var rectangles = cloud.GetRectangles();
-            foreach (var rect in rectangles)
-            {
-                colorDict.Add(rect, coloringAlgorithm.GetColor(rect));
-            }
-            return this;
+            return coloredSizedWords;
         }
 
-        Dictionary<Rectangle, Color> IColoredCloud.GetColoredRectangles()
+        public IColoredCloud GetFromCloudLayouter(string[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm, Font font)
         {
-            return colorDict;
+            var rectangles = cloud.GetRectangles().ToList();
+            for (int i = 0; i < words.Length; i++)
+            {
+                var color = coloringAlgorithm.GetColor(rectangles[i]);
+                coloredSizedWords.Add(new ColoredSizedWord(color, rectangles[i], words[i], font));
+            }
+            
+            return this;
         }
     }
 }

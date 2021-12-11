@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagCloud2
+namespace TagCloudVisualisation
 {
     public interface ICloudLayouter
     {

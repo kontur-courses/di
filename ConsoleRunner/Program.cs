@@ -1,4 +1,5 @@
 ﻿using System;
+using TagCloud2;
 
 namespace ConsoleRunner
 {
@@ -6,7 +7,8 @@ namespace ConsoleRunner
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var g = new Generator();
+            g.Generate();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TagCloud2
     {
         public string[] GetWords(string input)
         {
-            return input.Split(Environment.NewLine);
+            return input.Split('\r');
         }
     }
 }

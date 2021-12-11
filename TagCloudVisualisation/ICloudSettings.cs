@@ -1,4 +1,4 @@
-﻿namespace TagCloud2
+﻿namespace TagCloudVisualisation
 {
     public interface ICloudSettings
     {

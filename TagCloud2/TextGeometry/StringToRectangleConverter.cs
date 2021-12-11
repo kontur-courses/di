@@ -13,7 +13,10 @@ namespace TagCloud2.TextGeometry
         {
 #pragma warning disable CA1416 // Validate platform compatibility
             var g = Graphics.FromImage(new Bitmap(100, 100));
-            return g.MeasureString(input, font).ToSize();
+            var s = g.MeasureString(input, font).ToSize();
+            s.Width++;
+            s.Height++;
+            return s;
         }
     }
 }
