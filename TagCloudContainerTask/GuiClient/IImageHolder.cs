@@ -1,13 +1,8 @@
-﻿using System.Drawing;
-
-namespace GuiClient
+﻿namespace GuiClient
 {
     public interface IImageHolder
     {
-        Graphics StartDrawing();
-        void UpdateUi();
-        void RecreateImage();
-        void SaveImage();
         void GenerateImage();
+        void SaveImage();
     }
 }

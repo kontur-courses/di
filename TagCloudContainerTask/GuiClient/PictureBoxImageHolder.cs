@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using App.Infrastructure;
 using App.Infrastructure.SettingsHolders;
@@ -28,23 +27,6 @@ namespace GuiClient
 
         public void GenerateImage()
         {
-            Image = cloudGenerator.GenerateCloud();
-        }
-
-        public Graphics StartDrawing()
-        {
-            FailIfNotInitialized();
-            return Graphics.FromImage(Image);
-        }
-
-        public void UpdateUi()
-        {
-            Refresh();
-            Application.DoEvents();
-        }
-
-        public void RecreateImage()
-        {
             if (Image != null)
                 mainForm.Value.ClientSize = sizeSettings.Size;
 
@@ -61,7 +43,7 @@ namespace GuiClient
         {
             if (Image == null)
                 throw new InvalidOperationException(
-                    "Call PictureBoxImageHolder.RecreateImage before other method call!");
+                    "Call PictureBoxImageHolder.GenerateImage before other method call!");
         }
     }
 }

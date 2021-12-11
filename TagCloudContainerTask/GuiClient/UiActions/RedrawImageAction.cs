@@ -17,7 +17,7 @@
 
         public void Perform()
         {
-            imageHolder.RecreateImage();
+            imageHolder.GenerateImage();
         }
     }
 }
