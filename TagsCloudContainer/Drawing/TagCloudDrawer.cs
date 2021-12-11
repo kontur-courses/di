@@ -19,11 +19,11 @@ namespace TagsCloudContainer.Drawing
         {
             var tagsList = tags.ToList();
             if (tagsList.Count == 0)
-                throw new ArgumentException("Sequence does not contain any elements");
+                throw new ArgumentException("Tag cloud doesn't contain any tags");
 
             var center = tagsList.First().Rectangle.Location;
 
-            CheckIfRectanglesFitInImage(tagsList.Select(x => x.Rectangle).ToList(), center);
+            var upscaleRatio = CalclulateUpscaleRatio(tagsList, appSettings.ImageHeight, appSettings.ImageHeight);
 
             var image = new Bitmap(appSettings.ImageWidth, appSettings.ImageHeight);
             using var graph = Graphics.FromImage(image);
@@ -35,7 +35,9 @@ namespace TagsCloudContainer.Drawing
 
             foreach (var tag in tagsList)
             {
-                graph.DrawString(tag.Word, tag.Font, brush, tag.Rectangle);
+                using var upscaledFont = new Font(tag.Font.Name, tag.Font.Size * upscaleRatio);
+                var upscaledRectangle = UpscaleRectangle(tag.Rectangle, upscaleRatio);
+                graph.DrawString(tag.Word, upscaledFont, brush, upscaledRectangle);
             }
 
             return image;
@@ -44,18 +46,37 @@ namespace TagsCloudContainer.Drawing
         private static Color GetRandomColor(Random random) =>
             Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
 
-        private void CheckIfRectanglesFitInImage(IReadOnlyCollection<Rectangle> rectangles, Point center)
+        private static float CalclulateUpscaleRatio(IReadOnlyCollection<Tag> tags, int imageWidth, int imageHeight)
         {
-            var distanceFromTopToCenter = Math.Abs(rectangles.Max(rect => rect.Top) - center.Y);
-            var distanceFromRightToCenter = Math.Abs(rectangles.Max(rect => rect.Right) - center.X);
-            var distanceFromBottomToCenter = Math.Abs(rectangles.Min(rect => rect.Bottom) - center.Y);
-            var distanceFromLeftToCenter = Math.Abs(rectangles.Min(rect => rect.Left) - center.X);
-
-            if (distanceFromBottomToCenter >= appSettings.ImageHeight / 2d ||
-                distanceFromTopToCenter >= appSettings.ImageHeight / 2d ||
-                distanceFromLeftToCenter >= appSettings.ImageWidth / 2d ||
-                distanceFromRightToCenter >= appSettings.ImageWidth / 2d)
+            var cloudSize = CalculateCurrentCloudSize(tags);
+            var widthRatio = (double)cloudSize.Width / imageWidth;
+            var heightRatio = (double)cloudSize.Height / imageHeight;
+            if (widthRatio > 1 || heightRatio > 1)
                 throw new ArgumentException("Tags do not fit in image size");
+
+            var upscaleRatio = Math.Pow(Math.Max(widthRatio, heightRatio), -1) * 0.9;
+            return (float)upscaleRatio;
+        }
+
+        private static RectangleF UpscaleRectangle(Rectangle rectangle, float scaleRatio)
+        {
+            var location = new PointF(rectangle.X * scaleRatio, rectangle.Y * scaleRatio);
+            var size = new SizeF(rectangle.Size.Width * scaleRatio, rectangle.Size.Height * scaleRatio);
+
+            return new RectangleF(location, size);
+        }
+
+        private static Size CalculateCurrentCloudSize(IReadOnlyCollection<Tag> tags)
+        {
+            var maxX = tags.Max(x => x.Rectangle.X + x.Rectangle.Size.Width);
+            var minX = tags.Min(x => x.Rectangle.X);
+            var maxY = tags.Max(x => x.Rectangle.Y);
+            var minY = tags.Min(x => x.Rectangle.Y - x.Rectangle.Size.Height);
+
+            var width = maxX - minX;
+            var height = maxY - minY;
+
+            return new Size(width, height);
         }
     }
 }
