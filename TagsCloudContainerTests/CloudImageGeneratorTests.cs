@@ -1,37 +1,27 @@
 ﻿using FluentAssertions;
+using LightInject;
 using NUnit.Framework;
-using System;
-using System.Drawing;
 using System.IO;
 using TagsCloudContainer;
+using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTests
 {
     internal class CloudImageGeneratorTests
     {
-        private Point testPoint = new Point(1000, 1000);
-        private OvalCloudLayouter layouter;
-
-        [SetUp]
-        public void SetUp()
-        {
-            layouter = new OvalCloudLayouter(testPoint, ArchimedeanSpiral.Create(testPoint));
-        }
-
-        [Test]
-        public void Should_Throw_WhenTryingToCreateWithNoRectangles()
-        {
-            FluentActions.Invoking(
-                () => CloudImageGenerator.CreateImage(layouter.Cloud, new Size(testPoint)))
-                .Should().Throw<ArgumentException>();
-        }
-
         [Test]
         public void Should_SaveToFile()
         {
-            layouter.PutNextRectangle(new Size(testPoint));
-            var path = CloudImageGenerator.CreateImage(layouter.Cloud, new Size(testPoint));
+            var container = ContainerProvider.GetContainer();
+            var textPath = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test.txt");
+            var parsed = container.GetInstance<IParser>().Parse(textPath);
+            var tags = container.GetInstance<ITagComposer>().ComposeTags(parsed);
+            var painted = container.GetInstance<ITagPainter>().Paint(tags);
+            var cloudPainter = container.GetInstance<TagCloudPainter>();
+
+            var path = cloudPainter.Paint(painted);
+
             File.Exists(path).Should().BeTrue();
             File.Delete(path);
         }

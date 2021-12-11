@@ -3,11 +3,9 @@ using FluentAssertions;
 using System.Drawing;
 using TagsCloudContainer;
 using System;
-using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions.Extensions;
-using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTests
 {
@@ -22,19 +20,10 @@ namespace TagsCloudContainerTests
         [SetUp]
         public void SetUp()
         {
-            var center = new Point(X, Y);
-            layouter = new OvalCloudLayouter(center, ArchimedeanSpiral.Create(center));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (layouter.Cloud.Rectangles.Count > 0
-                && TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                var path = CloudImageGenerator.CreateImage(layouter.Cloud, new Size(1000, 1000));
-                Console.WriteLine($"Tag cloud visualization saved to file {path}");
-            }
+            var settings = SettingsProvider.GetSettings();
+            settings.ImageSize = new Size(X * 2, Y * 2);
+            var spiral = new ArchimedeanSpiral(settings);
+            layouter = new OvalCloudLayouter(settings, spiral);
         }
 
         [Test]
