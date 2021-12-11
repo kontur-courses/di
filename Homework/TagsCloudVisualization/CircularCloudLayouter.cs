@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     { 
         private readonly List<Rectangle> _rectangles;
         public IReadOnlyCollection<Rectangle> Rectangles

@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
+    <Compile Include="ICloudLayouter.cs" />
     <Compile Include="PointExtensions.cs" />
     <Compile Include="CloudLayouterPainter.cs" />
     <Compile Include="Tests\CircularCloudLayouterShould.cs" />
