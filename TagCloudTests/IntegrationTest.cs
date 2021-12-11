@@ -9,7 +9,6 @@ using TagCloud.Readers;
 using TagCloud.UI.Console;
 using TagCloud.Visualizers;
 using TagCloud.Writers;
-using TextReader = TagCloud.Readers.TextReader;
 
 namespace TagCloudTests
 {
@@ -20,8 +19,11 @@ namespace TagCloudTests
         {
             var args = new[] {"-i", "test.txt", "-o", "test.png"};
             var fileReader = new FileReaderFactory();
-            var textAnalyzer = new TextAnalyzer();
-            var freqAnalyzer = new FrequencyAnalyzer();
+            var boringWordsFilter = new BoringWordsFilter();
+            var textAnalyzer = new TextAnalyzer(
+                new [] {boringWordsFilter}, 
+                new [] {new WordsToLowerConverter()},
+                new FrequencyAnalyzer());
             var tagCreator = new TagCreatorFactory();
             var layouterFactory = new CircularCloudLayouterFactory();
             var visualizer = new CloudVisualizer();
@@ -35,8 +37,8 @@ namespace TagCloudTests
 
 
             var client = new ConsoleUI(fileReader, 
-                textAnalyzer, 
-                freqAnalyzer, 
+                textAnalyzer,
+                boringWordsFilter,
                 layouterFactory, 
                 visualizer, 
                 fileWriter, 

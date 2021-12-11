@@ -4,7 +4,7 @@ namespace TagCloud.Readers
 {
     public class FileReaderFactory : IFileReaderFactory
     {
-        private static Dictionary<string, IFileReader> fileReadersFactory =
+        private static readonly Dictionary<string, IFileReader> fileReadersFactory =
             new()
             {
                 {".txt", new TextReader()}

@@ -17,7 +17,7 @@ namespace TagCloud.UI.Console
     {
         private readonly IFileReaderFactory readerFactory;
         private readonly ITextAnalyzer textAnalyzer;
-        private readonly IFrequencyAnalyzer frequencyAnalyzer;
+        private readonly BoringWordsFilter boringWordsFilter;
         private readonly ICloudLayouterFactory layouterFactory;
         private readonly IVisualizer visualizer;
         private readonly IFileWriter writer;
@@ -25,7 +25,7 @@ namespace TagCloud.UI.Console
 
         public ConsoleUI(IFileReaderFactory readerFactory,
             ITextAnalyzer textAnalyzer,
-            IFrequencyAnalyzer frequencyAnalyzer,
+            BoringWordsFilter boringWordsFilter,
             ICloudLayouterFactory layouterFactory,
             IVisualizer visualizer,
             IFileWriter writer, 
@@ -33,11 +33,11 @@ namespace TagCloud.UI.Console
         {
             this.readerFactory = readerFactory;
             this.textAnalyzer = textAnalyzer;
-            this.frequencyAnalyzer = frequencyAnalyzer;
             this.layouterFactory = layouterFactory;
             this.visualizer = visualizer;
             this.writer = writer;
             this.tagCreatorFactory = tagCreatorFactory;
+            this.boringWordsFilter = boringWordsFilter;
         }
 
         public void Run(string[] args)
@@ -56,8 +56,10 @@ namespace TagCloud.UI.Console
 
             var text = reader.ReadFile(options.InputFilename);
             var wordsToExclude = reader.ReadFile(options.ExcludedWordsFile).ToHashSet();
-            var words = textAnalyzer.Analyze(text, wordsToExclude);
-            var wordFrequencies = frequencyAnalyzer.Analyze(words);
+            //var words = textAnalyzer.Analyze(text, wordsToExclude);
+            //var wordFrequencies = frequencyAnalyzer.Analyze(words);
+            boringWordsFilter.AddWords(wordsToExclude);
+            var wordFrequencies = textAnalyzer.Analyze(text);
 
             var tags = tagCreatorFactory
                 .Create(drawingSettings.Font)

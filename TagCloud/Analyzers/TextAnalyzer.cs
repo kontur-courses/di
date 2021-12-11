@@ -5,10 +5,26 @@ namespace TagCloud.Analyzers
 {
     public class TextAnalyzer : ITextAnalyzer
     {
-        public IEnumerable<string> Analyze(string[] words, HashSet<string> wordsToExclude)
+        private readonly IEnumerable<IWordFilter> wordFilters;
+        private readonly IEnumerable<IWordConverter> wordConverters;
+        private readonly IFrequencyAnalyzer frequencyAnalyzer;
+
+        public TextAnalyzer(IEnumerable<IWordFilter> wordFilters, IEnumerable<IWordConverter> wordConverters, IFrequencyAnalyzer frequencyAnalyzer)
         {
-            return words.Where(w => !wordsToExclude.Contains(w))
-                .Select(w => w.ToLowerInvariant());
+            this.wordFilters = wordFilters;
+            this.wordConverters = wordConverters;
+            this.frequencyAnalyzer = frequencyAnalyzer;
+        }
+
+        public Dictionary<string, int> Analyze(IEnumerable<string> words)
+        {
+            var convertedWords = wordConverters.Aggregate(words, 
+                (current, converter) => converter.Convert(current));
+            
+            var filteredWords = wordFilters.Aggregate(convertedWords,
+                (current, filter) => filter.Analyze(current));
+            
+            return frequencyAnalyzer.Analyze(filteredWords);
         }
     }
 }

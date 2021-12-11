@@ -4,6 +4,6 @@ namespace TagCloud.Analyzers
 {
     public interface ITextAnalyzer
     {
-        IEnumerable<string> Analyze(string[] words, HashSet<string> wordsToExclude);
+        Dictionary<string, int> Analyze(IEnumerable<string> words);
     }
 }

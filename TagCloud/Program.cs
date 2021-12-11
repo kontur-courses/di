@@ -1,12 +1,5 @@
 ﻿using Autofac;
 using TagCloud.UI;
-using TagCloud.Readers;
-using TagCloud.Analyzers;
-using TagCloud.Creators;
-using TagCloud.Layouters;
-using TagCloud.UI.Console;
-using TagCloud.Visualizers;
-using TagCloud.Writers;
 
 
 namespace TagCloud

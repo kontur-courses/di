@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TagCloud.Layouters;
 
 namespace TagCloud.Creators
 {

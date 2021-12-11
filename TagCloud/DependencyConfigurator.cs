@@ -23,6 +23,11 @@ namespace TagCloud
             builder.RegisterType<CircularCloudLayouterFactory>().As<ICloudLayouterFactory>().SingleInstance();
             builder.RegisterType<CloudVisualizer>().As<IVisualizer>().SingleInstance();
             builder.RegisterType<BitmapWriter>().As<IFileWriter>().SingleInstance();
+            builder.RegisterType<WordsToLowerConverter>().As<IWordConverter>().SingleInstance();
+            builder.RegisterType<BoringWordsFilter>()
+                .As<IWordFilter>()
+                .As<BoringWordsFilter>()
+                .SingleInstance();
 
             builder.RegisterType<ConsoleUI>().As<IUserInterface>().SingleInstance();
             return builder.Build();
