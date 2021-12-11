@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
@@ -8,9 +9,9 @@ namespace TagsCloudContainer
         public Cloud Cloud { get; }
         private readonly ISpiral spiral;
 
-        public OvalCloudLayouter(Point center, ISpiral spiral)
+        public OvalCloudLayouter(Settings settings, ISpiral spiral)
         {
-            Cloud = new Cloud(center);
+            Cloud = new Cloud(settings.Center);
             this.spiral = spiral;
         }
 
