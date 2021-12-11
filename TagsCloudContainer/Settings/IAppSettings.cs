@@ -9,5 +9,8 @@
         string BackgroundColorName { get; }
         string ImagePath { get; }
         string InputPath { get; }
+        string BoringWordsPath { get; }
+        double AngleStep { get; }
+        double Density { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 
 namespace TagsCloudContainer.Settings
 {
@@ -24,5 +25,14 @@ namespace TagsCloudContainer.Settings
 
         [Option("inputPath", Default = "input.txt")]
         public string InputPath { get; set; }
+        
+        [Option("boringWordsPath", Default = "../../../BoringWords.txt")]
+        public string BoringWordsPath { get; set; }
+        
+        [Option("angleStep", Default = Math.PI / 45)]
+        public double AngleStep { get; set; }
+        
+        [Option("density", Default = 0.5)]
+        public double Density { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.CloudLayouter
 {
@@ -8,13 +9,16 @@ namespace TagsCloudContainer.CloudLayouter
     {
         private readonly Point center;
         private readonly double angleStep;
+        private readonly double density;
         private readonly HashSet<Point> points;
         private double angle;
+        private double Radius => angle * density;
 
-        public ArchimedeanSpiral(Point center, double angleStep = Math.PI / 90)
+        public ArchimedeanSpiral(IAppSettings appSettings)
         {
-            this.center = center;
-            this.angleStep = angleStep;
+            center = Point.Empty;
+            angleStep = appSettings.AngleStep;
+            density = appSettings.Density;
             points = new HashSet<Point>();
         }
 
@@ -32,8 +36,8 @@ namespace TagsCloudContainer.CloudLayouter
 
         private Point CalculateNextPoint()
         {
-            var x = (int)Math.Round(angle * Math.Cos(angle));
-            var y = (int)Math.Round(angle * Math.Sin(angle));
+            var x = (int)Math.Round(Radius * Math.Cos(angle));
+            var y = (int)Math.Round(Radius * Math.Sin(angle));
 
             angle += angleStep;
             return new Point(center.X + x, center.Y + y);
