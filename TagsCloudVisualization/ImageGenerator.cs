@@ -1,15 +1,18 @@
-﻿using System;
+﻿#region
+
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Interfaces;
+
+#endregion
 
 namespace TagsCloudVisualization
 {
     public class ImageGenerator : IImageGenerator
     {
-        private Bitmap image;
-        private Pen pen;
-        private Font font;
+        private readonly Font font;
+        private readonly Bitmap image;
+        private readonly Pen pen;
 
         public ImageGenerator(Bitmap image, Pen pen, Font font)
         {
@@ -30,28 +33,6 @@ namespace TagsCloudVisualization
             }
 
             return image;
-        }
-
-        public void SetImageSize(Size imageSize)
-        {
-            if (imageSize.Width <= 0 || imageSize.Height <= 0)
-                throw new ArgumentException(
-                    $"imageSize was empty! width: {imageSize.Width}, height: {imageSize.Height}");
-
-            image = new Bitmap(imageSize.Width, imageSize.Height);
-        }
-
-        public void SetFont(Font newFont)
-        {
-            font = newFont;
-        }
-
-        public void SetColors(Color color)
-        {
-            if (color == null) 
-                throw new ArgumentException("Colors was null");
-
-            pen = new Pen(color);
         }
     }
 }

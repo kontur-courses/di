@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
 using DeepMorphy;
 using DeepMorphy.Model;
 using TagsCloudVisualization.Enums;
 using TagsCloudVisualization.Interfaces;
 
+#endregion
+
 namespace TagsCloudVisualization
 {
     public class WordPreparator : IWordPreparator
     {
+        private readonly HashSet<string> excludedSpeechParts = new();
         private readonly MorphAnalyzer morphAnalyzer;
 
         private readonly Dictionary<SpeechPart, string> speechPartsDictionary = new()
@@ -20,8 +25,6 @@ namespace TagsCloudVisualization
             { SpeechPart.Preposition, "предл" }
         };
 
-        private readonly HashSet<string> excludedSpeechParts = new();
-
         public WordPreparator(MorphAnalyzer morphAnalyzer)
         {
             this.morphAnalyzer = morphAnalyzer;
@@ -32,11 +35,6 @@ namespace TagsCloudVisualization
             var words = morphAnalyzer.Parse(unpreparedWords).ToArray();
 
             return words.Where(info => !IsMorphInfoExcluded(info)).Select(t => t.BestTag.Lemma).ToList();
-        }
-
-        private bool IsMorphInfoExcluded(MorphInfo morphInfo)
-        {
-            return excludedSpeechParts.Contains(morphInfo.BestTag.GramsDic["чр"]);
         }
 
         public WordPreparator Exclude(IEnumerable<SpeechPart> speechParts)
@@ -52,6 +50,11 @@ namespace TagsCloudVisualization
             excludedSpeechParts.Add(speechPartsDictionary[speechPart]);
 
             return this;
+        }
+
+        private bool IsMorphInfoExcluded(MorphInfo morphInfo)
+        {
+            return excludedSpeechParts.Contains(morphInfo.BestTag.GramsDic["чр"]);
         }
     }
 }

@@ -1,17 +1,21 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Interfaces;
 
+#endregion
+
 namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly List<Rectangle> rectangles = new();
         private readonly Point center;
-        private int angle;
+        private readonly List<Rectangle> rectangles = new();
         private readonly int step;
+        private int angle;
 
         public CircularCloudLayouter(Point center, int step = 10)
         {
@@ -40,6 +44,7 @@ namespace TagsCloudVisualization
             return words.Select(word => PutNextRectangle(word, fontSize));
         }
 
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
@@ -67,6 +72,11 @@ namespace TagsCloudVisualization
             return rectangles.Any(x => x.IntersectsWith(rectangle));
         }
 
+        private static bool CanMadeMoveOnDistance(int distance)
+        {
+            return distance > 0 && distance != int.MaxValue;
+        }
+
         private double GetDistanceFromCenter(Point? point)
         {
             if (!point.HasValue)
@@ -82,49 +92,19 @@ namespace TagsCloudVisualization
 
             while (true)
             {
-                var maxPossibleDistanceUp = int.MaxValue;
-                var maxPossibleDistanceDown = int.MaxValue;
-                var maxPossibleDistanceRight = int.MaxValue;
-                var maxPossibleDistanceLeft = int.MaxValue;
+                var possibleMovement = GetPossibleMovement(newRectangle);
 
-                foreach (var rect in rectangles)
+                if (possibleMovement == null)
+                    break;
+
+                Point? newPoint = possibleMovement.MovementDirection switch
                 {
-                    if (DoesSegmentsIntersect(rect.Left, rect.Right,
-                        newRectangle.Left, newRectangle.Right))
-                    {
-                        if (rect.Bottom <= newRectangle.Top)
-                            maxPossibleDistanceUp =
-                                Math.Min(newRectangle.Top - rect.Bottom, maxPossibleDistanceUp);
-                        else if (rect.Top >= newRectangle.Bottom)
-                            maxPossibleDistanceDown =
-                                Math.Min(rect.Top - newRectangle.Bottom, maxPossibleDistanceDown);
-                    }
-
-                    if (DoesSegmentsIntersect(rect.Top, rect.Bottom,
-                        newRectangle.Top, newRectangle.Bottom))
-                    {
-                        if (rect.Right <= newRectangle.Left)
-                            maxPossibleDistanceLeft =
-                                Math.Min(newRectangle.Left - rect.Right, maxPossibleDistanceLeft);
-                        else if (rect.Left >= newRectangle.Right)
-                            maxPossibleDistanceRight = Math.Min(rect.Left - newRectangle.Right,
-                                maxPossibleDistanceRight);
-                    }
-                }
-
-                Point? newPoint = null;
-
-                if (CanMadeMoveOnDistance(maxPossibleDistanceDown))
-                    newPoint = new Point(newRectangle.X, newRectangle.Y + maxPossibleDistanceDown);
-
-                else if (CanMadeMoveOnDistance(maxPossibleDistanceUp))
-                    newPoint = new Point(newRectangle.X, newRectangle.Y - maxPossibleDistanceUp);
-
-                else if (CanMadeMoveOnDistance(maxPossibleDistanceLeft))
-                    newPoint = new Point(newRectangle.X - maxPossibleDistanceLeft, newRectangle.Y);
-
-                else if (CanMadeMoveOnDistance(maxPossibleDistanceRight))
-                    newPoint = new Point(newRectangle.X + maxPossibleDistanceRight, newRectangle.Y);
+                    MovementDirection.Down => new Point(newRectangle.X, newRectangle.Y + possibleMovement.Distance),
+                    MovementDirection.Up => new Point(newRectangle.X, newRectangle.Y - possibleMovement.Distance),
+                    MovementDirection.Left => new Point(newRectangle.X - possibleMovement.Distance, newRectangle.Y),
+                    MovementDirection.Right => new Point(newRectangle.X + possibleMovement.Distance, newRectangle.Y),
+                    _ => null
+                };
 
                 if (newPoint == null || GetDistanceFromCenter(newPoint) >= GetDistanceFromCenter(newRectangle.Location))
                     break;
@@ -135,10 +115,50 @@ namespace TagsCloudVisualization
             return newRectangle;
         }
 
-        private static bool CanMadeMoveOnDistance(int distance)
+        private Movement GetPossibleMovement(Rectangle newRectangle)
         {
-            return distance > 0 && distance != int.MaxValue;
+            var maxPossibleDistanceUp = int.MaxValue;
+            var maxPossibleDistanceDown = int.MaxValue;
+            var maxPossibleDistanceRight = int.MaxValue;
+            var maxPossibleDistanceLeft = int.MaxValue;
+
+            foreach (var rect in rectangles)
+            {
+                if (DoesSegmentsIntersect(rect.Left, rect.Right,
+                    newRectangle.Left, newRectangle.Right))
+                {
+                    if (rect.Bottom <= newRectangle.Top)
+                        maxPossibleDistanceUp =
+                            Math.Min(newRectangle.Top - rect.Bottom, maxPossibleDistanceUp);
+                    else if (rect.Top >= newRectangle.Bottom)
+                        maxPossibleDistanceDown =
+                            Math.Min(rect.Top - newRectangle.Bottom, maxPossibleDistanceDown);
+                }
+
+                if (DoesSegmentsIntersect(rect.Top, rect.Bottom,
+                    newRectangle.Top, newRectangle.Bottom))
+                {
+                    if (rect.Right <= newRectangle.Left)
+                        maxPossibleDistanceLeft =
+                            Math.Min(newRectangle.Left - rect.Right, maxPossibleDistanceLeft);
+                    else if (rect.Left >= newRectangle.Right)
+                        maxPossibleDistanceRight = Math.Min(rect.Left - newRectangle.Right,
+                            maxPossibleDistanceRight);
+                }
+            }
+
+            if (CanMadeMoveOnDistance(maxPossibleDistanceDown))
+                return new Movement(maxPossibleDistanceDown, MovementDirection.Down);
+            if (CanMadeMoveOnDistance(maxPossibleDistanceUp))
+                return new Movement(maxPossibleDistanceUp, MovementDirection.Up);
+            if (CanMadeMoveOnDistance(maxPossibleDistanceLeft))
+                return new Movement(maxPossibleDistanceLeft, MovementDirection.Left);
+            if (CanMadeMoveOnDistance(maxPossibleDistanceRight))
+                return new Movement(maxPossibleDistanceRight, MovementDirection.Right);
+
+            return null;
         }
+
 
         private Rectangle GetNextPossibleRectangle(Size size)
         {

@@ -1,20 +1,28 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿#region
+
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using TagsCloudVisualization.Interfaces;
+
+#endregion
 
 namespace TagsCloudVisualization
 {
     public class TagCloudCreator : ITagCloudCreator
     {
-        private readonly IFileReader fileReader;
-        private readonly IWordPreparator wordPreparator;
         private readonly ICloudLayouter cloudLayouter;
-        private readonly IImageGenerator imageGenerator;
+        private readonly IFileReader fileReader;
         private readonly IFrequencyCounter frequencyCounter;
+        private readonly IImageGenerator imageGenerator;
+        private readonly IWordPreparator wordPreparator;
 
-        public TagCloudCreator(IFileReader fileReader, IWordPreparator wordPreparator, ICloudLayouter cloudLayouter,
-            IImageGenerator imageGenerator, IFrequencyCounter frequencyCounter)
+        public TagCloudCreator(IFileReader fileReader,
+            IWordPreparator wordPreparator,
+            ICloudLayouter cloudLayouter,
+            IImageGenerator imageGenerator,
+            IFrequencyCounter frequencyCounter)
         {
             this.fileReader = fileReader;
             this.wordPreparator = wordPreparator;
@@ -23,9 +31,9 @@ namespace TagsCloudVisualization
             this.frequencyCounter = frequencyCounter;
         }
 
-        public void CreateAndSaveCloudFromTo(string inputPath, string outputPath)
+        public Bitmap CreateAndSaveCloudFromTextFile(string inputPath)
         {
-            var words = fileReader.GetWordsFromFile(new StreamReader(inputPath), new[] { ' ' });
+            var words = fileReader.GetWordsFromFile(inputPath, new[] { ' ' });
             var preparedWords = wordPreparator.GetPreparedWords(words.ToList()).ToList();
             var freqDictionary = frequencyCounter.GetFrequencyDictionary(preparedWords);
 
@@ -38,7 +46,12 @@ namespace TagsCloudVisualization
 
             var image = imageGenerator.GenerateTagCloudBitmap(tags.OrderByDescending(tag => tag.Frequency));
 
-            image.Save(outputPath);
+            return image;
+        }
+
+        public static Assembly GetAssemblyInfo()
+        {
+            return Assembly.GetExecutingAssembly();
         }
     }
 }

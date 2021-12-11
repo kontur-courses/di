@@ -1,5 +1,9 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using TagsCloudVisualization.Interfaces;
+
+#endregion
 
 namespace TagsCloudVisualization
 {

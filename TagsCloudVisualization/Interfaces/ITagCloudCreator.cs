@@ -1,7 +1,13 @@
-﻿namespace TagsCloudVisualization.Interfaces
+﻿#region
+
+using System.Drawing;
+
+#endregion
+
+namespace TagsCloudVisualization.Interfaces
 {
     public interface ITagCloudCreator
     {
-        void CreateAndSaveCloudFromTo(string inputPath, string outputPath);
+        Bitmap CreateAndSaveCloudFromTextFile(string inputPath);
     }
 }

@@ -1,13 +1,14 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using System.Linq;
+
+#endregion
 
 namespace TagsCloudVisualization.Interfaces
 {
     public interface IImageGenerator
     {
         Bitmap GenerateTagCloudBitmap(IOrderedEnumerable<ITag> tags);
-        void SetImageSize(Size imageSize);
-        void SetFont(Font newFont);
-        void SetColors(Color color);
     }
 }

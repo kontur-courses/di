@@ -1,7 +1,12 @@
-﻿using System.IO;
+﻿#region
+
+using System;
+using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
+
+#endregion
 
 namespace TagCloudVisualizationTests
 {
@@ -22,7 +27,7 @@ namespace TagCloudVisualizationTests
             writer.WriteLine("Line");
             writer.Close();
 
-            var actual = fileReader.GetWordsFromFile(new StreamReader(filePath), new[] { ' ' });
+            var actual = fileReader.GetWordsFromFile(filePath, new[] { ' ' });
 
             actual.Should().BeEquivalentTo("One", "Word", "On", "Line");
         }
@@ -39,9 +44,30 @@ namespace TagCloudVisualizationTests
             writer.WriteLine("Line Clear");
             writer.Close();
 
-            var actual = fileReader.GetWordsFromFile(new StreamReader(filePath), new[] { ' ' });
+            var actual = fileReader.GetWordsFromFile(filePath, new[] { ' ' });
 
             actual.Should().BeEquivalentTo("One", "Two", "Three", "Words", "Where", "On", "Where", "Line", "Clear");
+        }
+
+        [Test]
+        public void FileReader_ShouldReturnEmptyCollection_WhenFileIsEmpty()
+        {
+            const string filePath = "EmptyFile.txt";
+
+            var writer = new StreamWriter(filePath);
+            writer.Close();
+
+            var actual = fileReader.GetWordsFromFile(filePath, new[] { ' ' });
+
+            actual.Should().BeEmpty();
+        }
+
+        [Test]
+        public void FileReader_ShouldThrowArgumentException_WhenFileDoesNotExist()
+        {
+            Action act = () => fileReader.GetWordsFromFile("dasdadaasdsadasdsadasads.txt", new[] { ' ' });
+
+            act.Should().Throw<ArgumentException>();
         }
     }
 }

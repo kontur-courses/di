@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,13 +9,13 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization;
 
+#endregion
+
 namespace TagCloudVisualizationTests
 {
     [TestFixture]
     public class CircularCloudLayouterTests
     {
-        private CircularCloudLayouter cloudLayouter;
-
         [SetUp]
         public void SetUp()
         {
@@ -39,12 +41,14 @@ namespace TagCloudVisualizationTests
             }
         }
 
+        private CircularCloudLayouter cloudLayouter;
+
         private static void DrawRectangles(IReadOnlyList<Rectangle> rectangles, Graphics brush)
         {
             for (var i = 0; i < rectangles.Count; i++)
             {
                 var rectangle = rectangles[i];
-                brush.FillRectangle(new SolidBrush(Color.Green), rectangle);
+                //brush.FillRectangle(new SolidBrush(Color.Green), rectangle);
                 brush.DrawRectangle(new Pen(Color.Black), rectangle);
                 brush.DrawString(i.ToString(), new Font(FontFamily.GenericMonospace, 12),
                     new SolidBrush(Color.Red), rectangle);
@@ -80,7 +84,7 @@ namespace TagCloudVisualizationTests
         [Test]
         public void CloudLayouter_ShouldMustLeaveLessThan20PercentsEmptySpace_WhenSizesRandom()
         {
-            var random = new Random();
+            var random = new Random(10);
             var center = cloudLayouter.GetCenter();
 
             for (var i = 0; i < 100; i++)

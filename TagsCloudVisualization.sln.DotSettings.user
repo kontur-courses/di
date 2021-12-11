@@ -1,5 +1,15 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bbc3f9c0_002D159d_002D4307_002D8281_002D617aeac06177/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WordPreparatorTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Users\nikov\RiderProjects\TagsCloudVisualization\TagCloudVisualizationTests" Presentation="&amp;lt;TagCloudVisualizationTests&amp;gt;" /&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.CircularCloudLayouterTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FileReaderTests.FileReader_ShouldReturnEmptyCollection_WhenFileIsEmpty&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FileReaderTests.FileReader_ShouldThrowArgumentException_WhenFileDoesNotExist&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FrequencyCounterTests.FrequencyCounter_ShouldCountFrequency_WhenInputIsCorrect&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FrequencyCounterTests.FrequencyCounter_ShouldReturnEmptyDictionary_WhenInputIsEmpty&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FrequencyCounterTests.FrequencyCounter_ShouldThrowArgumentException_WhenInputIsNull&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FrequencyCounterTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.WordPreparatorTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::116A0A52-AA11-4030-BD17-DEB6BA90A61D::net6.0-windows7.0::TagCloudVisualizationTests.FileReaderTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

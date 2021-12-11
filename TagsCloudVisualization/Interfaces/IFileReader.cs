@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿#region
+
+using System.Collections.Generic;
+
+#endregion
 
 namespace TagsCloudVisualization.Interfaces
 {
     public interface IFileReader
     {
-        IEnumerable<string> GetWordsFromFile(StreamReader reader, char[] separators);
+        IEnumerable<string> GetWordsFromFile(string path, char[] separators);
     }
 }

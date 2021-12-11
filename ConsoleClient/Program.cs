@@ -1,22 +1,24 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using Autofac;
 using DeepMorphy;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Interfaces;
 
+#endregion
+
 namespace ConsoleClient
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<FileReader>().As<IFileReader>();
-            builder.RegisterType<WordPreparator>().As<IWordPreparator>();
-            builder.RegisterType<ImageGenerator>().As<IImageGenerator>();
-            builder.RegisterType<FrequencyCounter>().As<IFrequencyCounter>();
-            builder.RegisterType<TagCloudCreator>().As<ITagCloudCreator>();
+            var assemblyInfo = TagCloudCreator.GetAssemblyInfo();
+            builder.RegisterAssemblyTypes(assemblyInfo)
+                .AsImplementedInterfaces();
 
             var cloudLayouter = new CircularCloudLayouter(new Point(800, 800));
             builder.RegisterInstance(cloudLayouter).As<ICloudLayouter>();
@@ -29,7 +31,8 @@ namespace ConsoleClient
             var container = builder.Build();
 
             var cloudCreator = container.Resolve<ITagCloudCreator>();
-            cloudCreator.CreateAndSaveCloudFromTo("Sample.txt", "Sample.png");
+            var image = cloudCreator.CreateAndSaveCloudFromTextFile("Sample.txt");
+            image.Save("Sample.png");
         }
     }
 }
