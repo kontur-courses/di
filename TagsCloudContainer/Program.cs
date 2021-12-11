@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Common;
 using TagsCloudContainer.Layouters;
@@ -51,7 +49,7 @@ namespace TagsCloudContainer
             var builder = new ContainerBuilder();
             RegisterLibraryDependencies(builder);
             RegisterProjectDependencies(builder);
-            RegisterPreprocessors(builder);
+            PreprocessorsRegistrator.RegisterPreprocessors(builder);
             return builder.Build();
         }
 
@@ -99,17 +97,6 @@ namespace TagsCloudContainer
             builder.RegisterType<TagPainter>().AsSelf();
             builder.RegisterType<WordsCountParser>().AsSelf();
         }
-
-        private static void RegisterPreprocessors(ContainerBuilder builder)
-        {
-            var preprocessor = typeof(IPreprocessor);
-            var preprocessors = AppDomain.CurrentDomain.GetAssemblies()
-                .First(a => a.FullName.Contains("TagsCloudContainer"))
-                .GetTypes()
-                .Where(t => preprocessor.IsAssignableFrom(t))
-                .ToArray();
-            builder.RegisterTypes(preprocessors).As<IPreprocessor>();
-            builder.RegisterType<TagsPreprocessor>().AsSelf();
-        }
+        
     }
 }

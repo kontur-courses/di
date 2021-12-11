@@ -15,8 +15,8 @@ namespace TagCloudContainerTests
             storage.Set(path, data);
         }
 
-        private static string GetTagsToString(IEnumerable<SimpleTag> tags)
-            => string.Join("\n", GetWords(tags));
+        public static string GetTagsToString(IEnumerable<SimpleTag> tags)
+            => string.Join("\r\n", GetWords(tags));
 
         private static IEnumerable<string> GetWords(IEnumerable<SimpleTag> tags)
             => tags.SelectMany(tag => tag.GetWords());

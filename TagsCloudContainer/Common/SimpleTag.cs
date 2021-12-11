@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TagsCloudContainer.Common
 {
@@ -9,7 +10,11 @@ namespace TagsCloudContainer.Common
 
         public SimpleTag(string word, int count)
         {
+            if(word.Length < 1)
+                throw new ArgumentException("Word length can`t be less than 1");
             Word = word;
+            if (count < 1)
+                throw new ArgumentException("Word count can`t be less than 1");
             Count = count;
         }
 
