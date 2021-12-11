@@ -44,8 +44,8 @@ namespace TagsCloudVisualization.Layouters
                 rect = new RectangleF(
                     pointPlacer.CurrentPoint.X - rectangleSize.Width / 2,
                     pointPlacer.CurrentPoint.Y - rectangleSize.Height / 2,
-                    rectangleSize.Height,
-                    rectangleSize.Width);
+                    rectangleSize.Width,
+                    rectangleSize.Height);
                 pointPlacer.GetNextPoint();
             } while (rect.IntersectsWithAnyOf(rectangles));
 

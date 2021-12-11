@@ -3,19 +3,16 @@ using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Visualization.Configurator;
-
+#pragma warning disable CA1416
 namespace TagsCloudVisualization.Visualization
 {
-#pragma warning disable CA1416
-    public class WordVisualizer : IVisualizer
+    public class WordsVisualizer : IVisualizer
     {
         private readonly IVisualizingConfigurator configurator;
         private readonly ILayouter layouter;
         private readonly ScreenConfig screenConfig;
-        private const int OneLetterPixelWidth = 7;
-        private const int OneLetterPixelHeight = 8;
 
-        public WordVisualizer(ILayouter layouter, IVisualizingConfigurator configurator, ScreenConfig screenConfig)
+        public WordsVisualizer(ILayouter layouter, IVisualizingConfigurator configurator, ScreenConfig screenConfig)
         {
             this.layouter = layouter;
             this.configurator = configurator;
@@ -24,30 +21,27 @@ namespace TagsCloudVisualization.Visualization
 
         public Bitmap Visualize(IEnumerable<string> visualizingValues)
         {
-            var configured = configurator.Configure(visualizingValues);
-            var placed = configured
-                .Select(token => (layouter.PutNextRectangle(GetStrokeRectangleSize(token.FontSize)), token));
-            
             var bitmap = new Bitmap(screenConfig.Size.Width, screenConfig.Size.Height);
+            
             using var graphics = Graphics.FromImage(bitmap);
-            graphics.DrawRectangle(new Pen(screenConfig.BackgroundColor),
+            graphics.FillRectangle(new SolidBrush(screenConfig.BackgroundColor), 
                 new Rectangle(new Point(0, 0), bitmap.Size));
             
+            var configured = configurator.Configure(visualizingValues);
+            
+            var placed = configured
+                .Select(token => (
+                    layouter.PutNextRectangle(graphics.MeasureString(token.Value, token.Font)),
+                    token));
+
             foreach (var (rectangle, token) in placed)
             {
-                graphics.DrawString(token.Value,
-                    new Font(FontFamily.GenericSansSerif, token.FontSize),
+                graphics.DrawString(token.Value, token.Font,
                     new SolidBrush(token.Color),
                     rectangle);
             }
 
             return bitmap;
         }
-
-        private SizeF GetStrokeRectangleSize(int fontSize)
-        {
-            return new SizeF(OneLetterPixelWidth * fontSize, OneLetterPixelHeight * fontSize);
-        }
     }
-#pragma warning restore CA1416
 }

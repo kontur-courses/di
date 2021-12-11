@@ -5,13 +5,13 @@ namespace TagsCloudVisualization.Visualization.Configurator
     public class WordVisualizingToken : IVisualizingToken
     {
         public string Value { get; }
-        public int FontSize { get; }
+        public Font Font { get; }
         public Color Color { get; }
         
-        public WordVisualizingToken(string value, int fontSize, Color color)
+        public WordVisualizingToken(string value, Font font, Color color)
         {
             Value = value;
-            FontSize = fontSize;
+            Font = font;
             Color = color;
         }
     }

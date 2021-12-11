@@ -22,13 +22,11 @@ namespace TagsCloudVisualization.Visualization.Configurator
         
         public IEnumerable<IVisualizingToken> Configure(IEnumerable<string> visualizingValues)
         {
-            var values = visualizingValues as string[] ?? visualizingValues.ToArray();
+            var frequencyDict = GetFrequencyDict(visualizingValues);
             
-            var frequencyDict = GetFrequencyDict(values);
-            
-            return values.Select(
+            return frequencyDict.Keys.Select(
                     value => tokenFactory.NewToken(value,
-                        fontSize + frequencyDict[value] - 1,
+                        new Font(FontFamily.GenericSansSerif, fontSize + 2 * (frequencyDict[value] - 1)),
                         colorizer(value)))
                 .ToArray();
         }
@@ -38,7 +36,7 @@ namespace TagsCloudVisualization.Visualization.Configurator
             var frequencyDict = new Dictionary<string, int>();
             foreach (var value in visualizingValues)
             {
-                if (!frequencyDict.TryGetValue(value, out _))
+                if (!frequencyDict.ContainsKey(value))
                 {
                     frequencyDict[value] = 0;
                 }
