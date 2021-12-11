@@ -1,9 +1,10 @@
 ﻿using Autofac;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Extensions
 {
     internal static class AutofacExtensions
     {
-        public static Settings ResolveSettings(this IComponentContext ctx) => ctx.Resolve<Settings>();
+        public static GeneralSettings ResolveSettings(this IComponentContext ctx) => ctx.Resolve<GeneralSettings>();
     }
 }

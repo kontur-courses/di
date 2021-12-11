@@ -7,6 +7,7 @@ using TagsCloudVisualization.FontService;
 using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.PointGenerators;
+using TagsCloudVisualization.Settings;
 using TagsCloudVisualization.SizeService;
 using TagsCloudVisualization.WordsPreprocessors;
 using TagsCloudVisualization.WordsPreprocessors.Filters;
@@ -19,22 +20,22 @@ namespace TagsCloudVisualization
 {
     public class TagsCloudModule : Module
     {
-        private readonly Settings visualizationSettings;
+        private readonly GeneralSettings generalSettings;
 
-        public TagsCloudModule(Settings settings) =>
-            visualizationSettings = settings;
+        public TagsCloudModule(GeneralSettings settings) =>
+            generalSettings = settings;
 
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            builder.RegisterInstance(visualizationSettings).As<Settings>();
+            builder.RegisterInstance(generalSettings).As<GeneralSettings>();
             builder.RegisterType<TxtFileReader>().As<IWordsReader>();
             
             builder.Register(ctx =>
             {
                 var settings = ctx.ResolveSettings();
                 var readers = ctx.Resolve<IEnumerable<IWordsReader>>();
-                return new FileReadService(settings.FileWithWords, readers);
+                return new FileReadService(settings.Reader.FileWithWords, readers);
             }).As<IFileReadService>();
             
             builder.RegisterType<WordsToLowerPrepare>().As<IWordsPreparer>();
@@ -42,7 +43,7 @@ namespace TagsCloudVisualization
             builder.Register(ctx => 
             {
                 var settings = ctx.ResolveSettings();
-                return new BoringWordsFilter(settings.BoringWords);
+                return new BoringWordsFilter(settings.WordsPreprocessor.BoringWords);
             }).As<IWordsFilter>();
             
             builder.Register(ctx =>
@@ -55,7 +56,7 @@ namespace TagsCloudVisualization
             builder.Register( ctx =>
             {
                 var settings = ctx.ResolveSettings();
-                return new TagColorService(settings.TagColor);
+                return new TagColorService(settings.Drawer.TagColor);
             }).As<ITagColorService>();
             
             builder.RegisterType<WordsToTagTransformer>().As<IWordsToTagTransformer>();
@@ -72,7 +73,7 @@ namespace TagsCloudVisualization
             builder.Register(ctx =>
             {
                 var settings = ctx.ResolveSettings();
-                return new TagFontService(settings.MaxFontSize, settings.FontFamilyName);
+                return new TagFontService(settings.Font.MaxSize, settings.Font.Family);
             }).As<ITagFontService>();
             
             

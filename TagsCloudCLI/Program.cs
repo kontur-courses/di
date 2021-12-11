@@ -16,7 +16,7 @@ namespace TagsCloudCLI
                 if (result.Errors.Any())
                     return;
                 var settings = new SettingProvider().GetSettings(result.Value);
-                var imageSaver = new ImageSaver(settings.Directory, settings.ImageName);
+                var imageSaver = new ImageSaver(settings.Saver.Directory, settings.Saver.ImageName);
                 var builder = new ContainerBuilder();
                 builder.RegisterModule(new TagsCloudModule(settings));
                 var container = builder.Build();
