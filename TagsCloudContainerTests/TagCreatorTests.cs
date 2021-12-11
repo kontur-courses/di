@@ -35,9 +35,9 @@ namespace TagsCloudContainerTests
         {
             var result = tagCreator.CreateTags(words);
             var expected = new [] { 
-                new Tag(0.5, "music", WordType.Default),
-                new Tag(0.25, "guitar", WordType.Default),
-                new Tag(0.25, "string", WordType.Default)
+                new Tag(0.5, "music"),
+                new Tag(0.25, "guitar"),
+                new Tag(0.25, "string")
             };
 
             result.Should().BeEquivalentTo(expected);

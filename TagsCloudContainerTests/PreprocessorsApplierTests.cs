@@ -7,18 +7,21 @@ using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTests
 {
-    internal class PreprocessorsApplierTests
+    internal class ApplierTests
     {
         private string textsFolder;
         private IParser parser;
-        private IPreprocessorsApplier applier;
+        private IPreprocessorsApplier preprocessorsApplier;
+        private IFiltersApplier filtersApplier;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             textsFolder = Path.GetFullPath(@"..\..\..\texts");
             parser = new TxtParser();
-            applier = new PreprocessorsApplier(SettingsProvider.GetSettings());
+            var settings = SettingsProvider.GetSettings();
+            preprocessorsApplier = new PreprocessorsApplier(settings);
+            filtersApplier = new FiltersApplier(settings);
         }
 
         [Test]
@@ -26,8 +29,9 @@ namespace TagsCloudContainerTests
         {
             var path = Path.Combine(textsFolder, "test.txt");
             var parsed = parser.Parse(path);
+            var preprocessed = preprocessorsApplier.ApplyPreprocessors(parsed);
 
-            var result = applier.ApplyPreprocessors(parsed).ToList();
+            var result = filtersApplier.ApplyFilters(preprocessed).ToArray();
 
             var expected = new[] {
                 "music",
