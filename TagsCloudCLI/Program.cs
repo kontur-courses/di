@@ -17,7 +17,7 @@ namespace TagsCloudCLI
                     return;
                 var settings = new SettingProvider().GetSettings(result.Value);
                 var builder = new ContainerBuilder();
-                builder.RegisterModule(new TagsCloudDrawerModule(settings));
+                builder.RegisterModule(new TagsCloudModule(settings));
                 var container = builder.Build();
                 container.Resolve<Visualizer>().Visualize();
             });

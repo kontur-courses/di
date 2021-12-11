@@ -18,11 +18,11 @@ using TagsCloudVisualization.WordsToTagTransformers;
 
 namespace TagsCloudVisualization
 {
-    public class TagsCloudDrawerModule : Module
+    public class TagsCloudModule : Module
     {
         private readonly Settings visualizationSettings;
 
-        public TagsCloudDrawerModule(Settings settings) =>
+        public TagsCloudModule(Settings settings) =>
             visualizationSettings = settings;
 
         protected override void Load(ContainerBuilder builder)
