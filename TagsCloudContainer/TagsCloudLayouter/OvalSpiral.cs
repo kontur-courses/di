@@ -25,5 +25,10 @@ namespace TagsCloudContainer
             currentAngle += angleDelta;
             return new Point((int)x, (int)y);
         }
+
+        public void Reset()
+        {
+            currentAngle = 0;
+        }
     }
 }

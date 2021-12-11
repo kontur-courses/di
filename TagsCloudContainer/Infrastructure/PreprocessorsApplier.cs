@@ -20,9 +20,8 @@ namespace TagsCloudContainer
                 foreach (var preprocessor in preprocessors)
                     processed = preprocessor.Preprocess(processed);
 
-                if (processed != string.Empty)
-                    yield return processed;
-            }           
+                yield return processed;
+            }
         }
     }
 }

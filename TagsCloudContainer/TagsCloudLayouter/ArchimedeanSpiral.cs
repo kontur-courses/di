@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TagsCloudContainer.Infrastructure;
+﻿using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
@@ -25,6 +24,11 @@ namespace TagsCloudContainer
             var y = Math.Round(spiralCoef * currentAngle * Math.Sin(currentAngle)) + center.Y;
             currentAngle += angleDelta;
             return new Point((int)x, (int)y);
+        }
+
+        public void Reset()
+        {
+            currentAngle = 0;
         }
     }
 }

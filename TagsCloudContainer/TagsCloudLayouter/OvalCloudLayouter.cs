@@ -13,6 +13,7 @@ namespace TagsCloudContainer
         {
             Cloud = new Cloud(settings.Center);
             this.spiral = spiral;
+            spiral.Reset();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

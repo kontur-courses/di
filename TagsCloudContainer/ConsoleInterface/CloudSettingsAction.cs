@@ -1,0 +1,86 @@
+﻿using TagsCloudContainer.Infrastructure;
+
+namespace TagsCloudContainer
+{
+    public class CloudSettingsAction
+    {
+        private Settings settings;
+        private CloudSettings cloudSettings;
+
+        public CloudSettingsAction(Settings settings, CloudSettings cloudSettings)
+        {
+            this.settings = settings;
+            this.cloudSettings = cloudSettings;
+        }
+
+        public void Handle()
+        {
+            Console.WriteLine("1 - Tag painting");
+            Console.WriteLine("2 - Cloud view");
+            Console.WriteLine("3 - Back");
+            var answer = Console.ReadKey();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            switch (answer.KeyChar)
+            {
+                case '1':
+                    TagPaintingKey();
+                    break;
+                case '2':
+                    CloudViewKey();
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private void TagPaintingKey()
+        {
+            Console.WriteLine("1 - Primary");
+            Console.WriteLine("2 - Frequency");
+            Console.WriteLine("3 - Gradient");
+            Console.WriteLine("4 - Back");
+            var answer = Console.ReadKey();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            switch (answer.KeyChar)
+            {
+                case '1':
+                    cloudSettings.Painter = new PrimaryTagPainter(settings);
+                    break;
+                case '2':
+                    cloudSettings.Painter = new FrequencyTagPainter(settings);
+                    break;
+                case '3':
+                    cloudSettings.Painter = new GradientTagPainter(settings);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private void CloudViewKey()
+        {
+            Console.WriteLine("1 - Circle");
+            Console.WriteLine("2 - Oval");
+            Console.WriteLine("3 - Back");
+            var answer = Console.ReadKey();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            switch (answer.KeyChar)
+            {
+                case '1':
+                    cloudSettings.Spiral = new ArchimedeanSpiral(settings);
+                    break;
+                case '2':
+                    cloudSettings.Spiral = new OvalSpiral(settings);
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+}

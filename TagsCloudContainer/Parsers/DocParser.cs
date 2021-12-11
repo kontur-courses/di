@@ -5,7 +5,7 @@ namespace TagsCloudContainer
 {
     public class DocParser : IParser
     {
-        private readonly char[] separators = { ' ', '\t', '\r', '\n' };
+        private readonly char[] separators = { '\r', '\n' };
 
         public IEnumerable<string> Parse(string path)
         {
