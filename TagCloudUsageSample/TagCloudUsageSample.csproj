@@ -11,7 +11,7 @@
         <AssemblyName>TagCloudUsageSample</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>9</LangVersion>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -116,9 +116,6 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="mystem_c_binding.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <Content Include="Russian.aff">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>

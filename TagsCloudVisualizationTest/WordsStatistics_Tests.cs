@@ -1,44 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
+using TagsCloudVisualization.WordProcessors;
 
 namespace TagsCloudVisualizationTest
 {
     [TestFixture]
-    public class WordsStatistics_Tests
+    public class WordsStatisticsTests
     {
+        private IContainer container;
+        private IWordsStatistics wordsStatistics;
+        
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<WordsStatistics>().As<IWordsStatistics>();
+            builder.Register(_ =>
+            {
+                var processor = A.Fake<ITextProcessor>();
+                A.CallTo(() => processor.ProcessWords(A<IEnumerable<string>>.Ignored)).ReturnsLazily((IEnumerable<string> text) => text);
+                return processor;
+            }).As<ITextProcessor>();
+            container = builder.Build();
+        }
+        
+        [SetUp]
+        public void SetUp()
+        {
+            wordsStatistics = container.Resolve<IWordsStatistics>();
+        }
+        
         [Test]
         public void GetStatistics_IsEmpty_AfterCreation()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader());
-            wordsStatistics.Load();
             wordsStatistics.GetStatistics().Should().BeEmpty();
         }
 
         [Test]
         public void GetStatistics_ContainsItem_AfterAddition()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("abc"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "abc" });
             wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
         }
 
         [Test]
         public void GetStatistics_ContainsManyItems_AfterAdditionOfDifferentWords()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("abc", "def"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "abc", "def" });
             wordsStatistics.GetStatistics().Should().HaveCount(2);
         }
 
         [Test]
         public void GetStatistics_SortsWordsByFrequency()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("aaaaaaaaaa", "bbbbbbbbbb", "bbbbbbbbbb"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "bbbbbbbbbb", "bbbbbbbbbb" });
             wordsStatistics.GetStatistics().Select(t => t.Word)
                 .Should().BeEquivalentTo(new[] {"bbbbbbbbbb", "aaaaaaaaaa"},
                     options => options.WithStrictOrdering());
@@ -47,8 +68,7 @@ namespace TagsCloudVisualizationTest
         [Test]
         public void GetStatistics_SortsWordsByAbc_WhenFrequenciesAreSame()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("cccccccccc", "aaaaaaaaaa", "bbbbbbbbbb"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "cccccccccc", "aaaaaaaaaa", "bbbbbbbbbb" });
             wordsStatistics.GetStatistics().Select(t => t.Word)
                 .Should().ContainInOrder("aaaaaaaaaa", "bbbbbbbbbb", "cccccccccc");
         }
@@ -56,65 +76,42 @@ namespace TagsCloudVisualizationTest
         [Test]
         public void GetStatistics_ReturnsSameResult_OnSecondCall()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("abc"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "abc" });
             wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
             wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
-        }
-
-        [Test]
-        public void GetStatistics_BuildsResult_OnEveryCall()
-        {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("abc"));
-            wordsStatistics.Load();
-            wordsStatistics.GetStatistics().Should().HaveCount(1);
-            wordsStatistics.AddWord("def");
-            wordsStatistics.GetStatistics().Should().HaveCount(2);
         }
 
         [Test]
         public void AddWord_AllowsShortWords()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("aaa"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "aaa" });
         }
 
         [Test]
         public void AddWord_CountsOnce_WhenSameWord()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("aaaaaaaaaa", "aaaaaaaaaa"));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "aaaaaaaaaa" });
             wordsStatistics.GetStatistics().Should().HaveCount(1);
         }
 
         [Test]
         public void AddWord_IncrementsCounter_WhenSameWord()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader("aaaaaaaaaa", "aaaaaaaaaa"));
-            wordsStatistics.Load();
-            wordsStatistics.GetStatistics().Select(t => t.Count).First()
-                .Should().Be(2);
-        }
-
-        [Test]
-        public void AddWordThrows_WhenWordIsNull()
-        {
-            Assert.Throws<ArgumentNullException>(() => _ = new WordsStatistics(new MockWordReader(null)));
+            wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "aaaaaaaaaa" });
+            wordsStatistics.GetStatistics().Select(t => t.Count).First().Should().Be(2);
         }
 
         [Test]
         public void AddWord_Ignores_EmptyWord()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader(""));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { "" });
             wordsStatistics.GetStatistics().Should().BeEmpty();
         }
 
         [Test]
         public void AddWord_Ignores_WhitespaceWord()
         {
-            var wordsStatistics = new WordsStatistics(new MockWordReader(" "));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(new[] { " " });
             wordsStatistics.GetStatistics().Should().BeEmpty();
         }
 
@@ -129,15 +126,14 @@ namespace TagsCloudVisualizationTest
                 words.Add(c.ToString().ToUpper());
                 counter++;
             }
-            for (var c = 'а'; c <= 'я' || c <= 'ё'; c++)
+            for (var c = 'а'; c is <= 'я' or <= 'ё'; c++)
             {
                 words.Add(c.ToString());
                 words.Add(c.ToString().ToUpper());
                 counter++;
             }
 
-            var wordsStatistics = new WordsStatistics(new MockWordReader(words.ToArray()));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(words);
             wordsStatistics.GetStatistics().Should().HaveCount(counter);
         }
 
@@ -151,8 +147,7 @@ namespace TagsCloudVisualizationTest
                 words.Add(i.ToString());
             }
             
-            var wordsStatistics = new WordsStatistics(new MockWordReader(words.ToArray()));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(words);
             wordsStatistics.GetStatistics().Should().HaveCount(wordCount);
         }
 
@@ -165,8 +160,7 @@ namespace TagsCloudVisualizationTest
                 words.Add(i.ToString());
             }
             
-            var wordsStatistics = new WordsStatistics(new MockWordReader(words.ToArray()));
-            wordsStatistics.Load();
+            wordsStatistics.AddWords(words);
             wordsStatistics.GetStatistics();
         }
     }

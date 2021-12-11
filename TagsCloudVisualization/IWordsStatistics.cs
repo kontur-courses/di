@@ -4,7 +4,7 @@ namespace TagsCloudVisualization
 {
     public interface IWordsStatistics
     {
-        void Load();
-        IEnumerable<WordCount> GetStatistics();
+        public void AddWords(IEnumerable<string> word);
+        IEnumerable<WordCount> GetStatistics(int topWordCount = -1);
     }
 }

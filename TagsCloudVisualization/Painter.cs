@@ -53,7 +53,6 @@ namespace TagsCloudVisualization
 
             using var graphics = Graphics.FromImage(bmp);
             DrawText(graphics, rects.Select(x => (x.Item1, x.Item2, x.Item3.Move(-centersDelta.Width, -centersDelta.Height))));
-            // DrawRectangles(graphics, rects.Select(x => x.Item3.Move(-centersDelta.Width, -centersDelta.Height)));
 
             return bmp;
         }

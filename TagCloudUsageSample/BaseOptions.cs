@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace TagCloudUsageSample
 {
@@ -11,7 +12,7 @@ namespace TagCloudUsageSample
             foreach (var propertyInfo in propertiesToCheck)
             {
                 var validator = propertyInfo.GetCustomAttributes(true).OfType<RangeValidatorAttribute>().First();
-                if (!validator.Validate((int) propertyInfo.GetValue(this), out errorValidationMessage))
+                if (!validator.Validate((IComparable) propertyInfo.GetValue(this), out errorValidationMessage))
                     return false;
             }
             

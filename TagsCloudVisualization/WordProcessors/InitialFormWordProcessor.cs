@@ -1,7 +1,7 @@
 ﻿using System;
 using WeCantSpell.Hunspell;
 
-namespace TagsCloudVisualization.WordReaders.WordProcessors
+namespace TagsCloudVisualization.WordProcessors
 {
     public class InitialFormWordProcessor : IWordProcessor
     {

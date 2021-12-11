@@ -1,27 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudVisualization.WordReaders;
+using TagsCloudVisualization.WordProcessors;
 
 namespace TagsCloudVisualizationTest
 {
-    public class MockWordReader : IWordReader
+    public class MockWordReader : ITextProcessor
     {
-        private readonly List<string> words;
-        private int pointer;
-        
-        public MockWordReader(params string[] words)
+        public IEnumerable<string> ProcessWords(IEnumerable<string> text)
         {
-            this.words = words.ToList();
-        }
-        
-        public string Read()
-        {
-            return words[pointer++];
-        }
-
-        public bool HasWord()
-        {
-            return pointer < words.Count();
+            return text;
         }
     }
 }

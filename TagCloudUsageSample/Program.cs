@@ -1,22 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Reflection;
-using Autofac;
-using Autofac.Core.Registration;
-using Autofac.Features.AttributeFilters;
 using CommandLine;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using TagsCloudVisualization;
-using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.WordReaders;
-using TagsCloudVisualization.WordReaders.FormatDecoders;
-using TagsCloudVisualization.WordReaders.WordProcessors;
-using TagsCloudVisualization.WordReaders.WordValidators;
-using WeCantSpell.Hunspell;
 
 namespace TagCloudUsageSample
 {

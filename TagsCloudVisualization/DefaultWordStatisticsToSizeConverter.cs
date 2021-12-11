@@ -7,26 +7,25 @@ namespace TagsCloudVisualization
     public class DefaultWordStatisticsToSizeConverter : IWordStatisticsToSizeConverter
     {
         private readonly float maxFontSize;
-        private readonly IWordsStatistics statistics;
 
-        public DefaultWordStatisticsToSizeConverter(float maxFontSize, IWordsStatistics statistics)
+        public DefaultWordStatisticsToSizeConverter(float maxFontSize)
         {
             this.maxFontSize = maxFontSize;
-            this.statistics = statistics;
         }
         
-        public IEnumerable<TagWordInfo> Convert()
+        public IEnumerable<TagWordInfo> Convert(IWordsStatistics statistics, int topWordCount)
         {
             var words = statistics.GetStatistics().ToList();
 
             var maxTagWeight = (double)words.First().Count;
             var minTagWeight = (double)words.Last().Count;
 
-            foreach (var (word, count) in words)
+            foreach (var (word, count) in words.Take(topWordCount < 0 ? words.Count() : topWordCount))
             {
                 var fontSize = count <= minTagWeight
                     ? 1f
                     : (float)Math.Ceiling(maxFontSize * (count - minTagWeight) / (maxTagWeight - minTagWeight));
+                if (words.First().Count == 1) fontSize = maxFontSize;
                 yield return new TagWordInfo(word, fontSize);
             }
         }

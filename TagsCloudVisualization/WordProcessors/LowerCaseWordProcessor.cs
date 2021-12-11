@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.WordReaders.WordProcessors
+﻿namespace TagsCloudVisualization.WordProcessors
 {
     public class LowerCaseWordProcessor : IWordProcessor
     {
