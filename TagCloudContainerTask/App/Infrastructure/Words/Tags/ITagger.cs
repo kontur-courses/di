@@ -5,6 +5,6 @@ namespace App.Infrastructure.Words.Tags
 {
     public interface ITagger
     {
-        IEnumerable<Tag> CreateRawTags(Dictionary<string, double> wordsFrequencies, string fontName);
+        IEnumerable<Tag> CreateRawTags(Dictionary<string, double> wordsFrequencies);
     }
 }

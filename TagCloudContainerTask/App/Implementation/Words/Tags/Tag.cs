@@ -12,7 +12,7 @@ namespace App.Implementation.Words.Tags
             WordOuterRectangle = wordOuterRectangle;
         }
 
-        public static string WordFontName { get; set; }
+        public static Font WordFont { get; set; }
 
         public string Word { get; }
 

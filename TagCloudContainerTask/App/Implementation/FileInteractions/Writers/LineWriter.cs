@@ -10,7 +10,8 @@ namespace App.Implementation.FileInteractions.Writers
         {
             using (streamWriter)
             {
-                streamWriter.WriteLine(words);
+                foreach (var word in words)
+                    streamWriter.WriteLine(word);
             }
         }
     }

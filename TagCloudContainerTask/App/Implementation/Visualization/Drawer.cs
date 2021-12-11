@@ -52,7 +52,7 @@ namespace App.Implementation.Visualization
             graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
             foreach (var tag in tags)
-                using (var font = new Font(Tag.WordFontName, tag.WordEmSize))
+                using (var font = new Font(Tag.WordFont.Name, tag.WordEmSize))
                 {
                     graphics.DrawString(tag.Word, font,
                         Brushes.Black, tag.WordOuterRectangle.Location);
