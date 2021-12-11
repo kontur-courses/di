@@ -6,7 +6,7 @@ namespace TagsCloudContainer
     {
         public readonly string Word;
         public readonly Rectangle Rectangle;
-        public Font Font;
+        public readonly Font Font;
 
         public Tag(string word, Rectangle rectangle, Font font)
         {

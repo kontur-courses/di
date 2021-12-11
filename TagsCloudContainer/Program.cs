@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.CloudLayouter;
@@ -18,30 +17,33 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             var parsedArgs = Parser.Default.ParseArguments<AppSettings>(args);
-            if (parsedArgs.Errors.Any())
-            {
-                throw new ArgumentException("Errors occured while parsing arguments");
-            }
-
             var appSettings = parsedArgs.Value;
 
-            var container = GetConfiguredContainer(appSettings);
-            var tagCloudCreator = container.GetService<TagCloudCreator>();
-            tagCloudCreator.CreateTagCloudImage();
+            try
+            {
+                var container = GetConfiguredContainer(appSettings);
+                var tagCloudCreator = container.GetService<TagCloudCreator>();
+                tagCloudCreator.CreateTagCloudImage();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static ServiceProvider GetConfiguredContainer(IAppSettings appSettings)
         {
             var container = new ServiceCollection();
-            container.AddSingleton<IFileReader, TxtReader>();
+            container.AddSingleton<IFileReader, TxtFileReader>();
+            container.AddSingleton<IFileReader, DocFileReader>();
             container.AddSingleton<IDrawer, TagCloudDrawer>();
             container.AddSingleton<IWordsFilter, BoringWordsFilter>();
             container.AddSingleton<IWordConverter, WordToTagConverter>();
             container.AddSingleton<IImageSaver, ImageSaver.ImageSaver>();
             container.AddSingleton<TagCloudCreator, TagCloudCreator>();
             container.AddSingleton<ICloudLayouter, CircularCloudLayouter>();
-            container.AddSingleton<IFontCreator>(new FontCreator(appSettings.FontName));
-            container.AddSingleton<ISpiral>(new ArchimedeanSpiral(Point.Empty));
+            container.AddSingleton<IFontCreator, FontCreator>();
+            container.AddSingleton<ISpiral, ArchimedeanSpiral>();
             container.AddSingleton(appSettings);
 
             return container.BuildServiceProvider();

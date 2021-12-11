@@ -1,21 +1,23 @@
-﻿namespace TagsCloudContainer.WordsConverter
+﻿using TagsCloudContainer.Settings;
+
+namespace TagsCloudContainer.WordsConverter
 {
     public class FontCreator : IFontCreator
     {
-        public string FontName { get; }
+        public string FontName => appSettings.FontName;
 
+        private readonly IAppSettings appSettings;
         private const int MinFontSize = 8;
-        private const int MaxFontSize = 32;
+        private const int MaxFontSize = 28;
 
-        public FontCreator(string fontName)
+        public FontCreator(IAppSettings appSettings)
         {
-            FontName = fontName;
+            this.appSettings = appSettings;
         }
 
         public float GetFontSize(int wordFrequency, int maxWordFrequency)
         {
             var size = MaxFontSize * (wordFrequency / (float)maxWordFrequency);
-
             if (size < MinFontSize)
                 return MinFontSize;
 

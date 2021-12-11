@@ -4,6 +4,6 @@ namespace TagsCloudContainer.ImageSaver
 {
     public interface IImageSaver
     {
-        void Save(Bitmap bitmap);
+        void Save(Bitmap bitmap, string imagePath);
     }
 }

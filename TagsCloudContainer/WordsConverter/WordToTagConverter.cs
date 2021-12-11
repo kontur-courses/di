@@ -17,22 +17,19 @@ namespace TagsCloudContainer.WordsConverter
             this.fontCreator = fontCreator;
         }
 
-        public IEnumerable<Tag> ConvertWords(IEnumerable<string> words)
+        public IEnumerable<Tag> ConvertWords(List<string> words)
         {
-            var wordsFrequency = GetWordsFrequency(words).OrderByDescending(pair => pair.Value);
+            var wordsFrequency = GetWordsFrequency(words).OrderByDescending(pair => pair.Value).ToList();
             var maxFrequency = wordsFrequency.First().Value;
-            using var graphics = Graphics.FromHwnd(new IntPtr());
-            var tags = new List<Tag>();
+            using var graphics = Graphics.FromHwnd(IntPtr.Zero);
 
             foreach (var (word, frequency) in wordsFrequency)
             {
                 var tagFont = GetFont(frequency, maxFrequency);
                 var tagRectangleSize = Size.Ceiling(graphics.MeasureString(word, tagFont));
                 var tagRectangle = cloudLayouter.PutNextRectangle(tagRectangleSize);
-                tags.Add(new Tag(word, tagRectangle, tagFont));
+                yield return new Tag(word, tagRectangle, tagFont);
             }
-
-            return tags;
         }
 
         private Font GetFont(int wordFrequency, int maxFrequency)
@@ -44,17 +41,8 @@ namespace TagsCloudContainer.WordsConverter
 
         private static Dictionary<string, int> GetWordsFrequency(IEnumerable<string> words)
         {
-            var frequency = new Dictionary<string, int>();
-
-            foreach (var word in words)
-            {
-                if (frequency.ContainsKey(word))
-                    frequency[word] += 1;
-                else
-                    frequency[word] = 1;
-            }
-
-            return frequency;
+            return words.GroupBy(word => word)
+                .ToDictionary(group => group.Key, group => group.Count());
         }
     }
 }

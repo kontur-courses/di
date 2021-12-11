@@ -2,24 +2,15 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using TagsCloudContainer.Settings;
 
 namespace TagsCloudContainer.ImageSaver
 {
     public class ImageSaver : IImageSaver
     {
-        private readonly IAppSettings appSettings;
-        private readonly ImageFormat imageFormat;
-
-        public ImageSaver(IAppSettings appSettings)
+        public void Save(Bitmap bitmap, string imagePath)
         {
-            this.appSettings = appSettings;
-            imageFormat = GetImageFormat(Path.GetExtension(appSettings.ImagePath));
-        }
-
-        public void Save(Bitmap bitmap)
-        {
-            bitmap.Save($"{appSettings.ImagePath}", imageFormat);
+            var imageFormat = GetImageFormat(Path.GetExtension(imagePath));
+            bitmap.Save($"{imagePath}", imageFormat);
         }
 
         private static ImageFormat GetImageFormat(string format)
