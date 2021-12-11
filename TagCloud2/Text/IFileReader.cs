@@ -8,6 +8,6 @@ namespace TagCloud2
 {
     public interface IFileReader
     {
-        string ReadFile(string path, ITextFormatter formatter);
+        string ReadFile(string path);
     }
 }
