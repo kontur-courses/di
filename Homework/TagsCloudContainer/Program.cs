@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
+using TagsCloudContainer.PaintConfigs;
+using TagsCloudContainer.TextParsers;
 using TagsCloudVisualization;
 
 namespace TagsCloudContainer

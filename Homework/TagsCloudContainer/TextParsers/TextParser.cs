@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TextParsers
 {
     public class TextParser : ITextParser
     {
