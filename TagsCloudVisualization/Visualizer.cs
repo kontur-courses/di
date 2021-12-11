@@ -2,7 +2,7 @@
 using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.TagToDrawableTransformer;
-using TagsCloudVisualization.WordsPrepares;
+using TagsCloudVisualization.WordsPreprocessors;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsToTagTransformers;
 
@@ -14,15 +14,15 @@ namespace TagsCloudVisualization
         private readonly IImageCreator imageCreator;
         private readonly IImageSaver imageSaver;
         private readonly ITagToDrawableTransformer tagToDrawableTransformer;
-        private readonly IWordsPreparer wordsPreparer;
+        private readonly IWordsPreprocessor wordsProcessor;
         private readonly IWordsToTagTransformer wordsToTagTransformer;
 
-        public Visualizer(IFileReadService fileReadService, IWordsPreparer wordsPreparer,
+        public Visualizer(IFileReadService fileReadService, IWordsPreprocessor wordsProcessor,
             IWordsToTagTransformer wordsToTagTransformer,
             ITagToDrawableTransformer tagToDrawableTransformer, IImageCreator imageCreator, IImageSaver imageSaver)
         {
             this.fileReadService = fileReadService;
-            this.wordsPreparer = wordsPreparer;
+            this.wordsProcessor = wordsProcessor;
             this.wordsToTagTransformer = wordsToTagTransformer;
             this.tagToDrawableTransformer = tagToDrawableTransformer;
             this.imageCreator = imageCreator;
@@ -32,7 +32,7 @@ namespace TagsCloudVisualization
         public void Visualize()
         {
             var words = fileReadService.GetFileContent();
-            var preparedWords = wordsPreparer.Prepare(words);
+            var preparedWords = wordsProcessor.Preprocess(words);
             var tags = wordsToTagTransformer.Transform(preparedWords);
             var drawableTags = tagToDrawableTransformer.Transform(tags.ToList());
             var image = imageCreator.Draw(drawableTags);

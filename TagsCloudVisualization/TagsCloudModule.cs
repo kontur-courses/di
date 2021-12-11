@@ -10,8 +10,9 @@ using TagsCloudVisualization.PointGenerators;
 using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.SizeService;
 using TagsCloudVisualization.TagToDrawableTransformer;
-using TagsCloudVisualization.WordsPrepares;
-using TagsCloudVisualization.WordsPrepares.Preparers;
+using TagsCloudVisualization.WordsPreprocessors;
+using TagsCloudVisualization.WordsPreprocessors.Filters;
+using TagsCloudVisualization.WordsPreprocessors.Preparers;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsProvider.FileReader;
 using TagsCloudVisualization.WordsToTagTransformers;
@@ -44,10 +45,15 @@ namespace TagsCloudVisualization
             {
                 var settings = ctx.ResolveSettings();
                 return new BoringWordsFilter(settings.BoringWords);
-            }).As<IWordsPreparer>();
+            }).As<IWordsFilter>();
             
-            builder.RegisterComposite<IWordsPreparer>((_, processors) => new WordsPreparer(processors));
-            
+            builder.Register(ctx =>
+            {
+                var preparers = ctx.Resolve<IEnumerable<IWordsPreparer>>();
+                var filters = ctx.Resolve<IEnumerable<IWordsFilter>>();
+                return new WordsPreprocessor(preparers, filters);
+            }).As<IWordsPreprocessor>();
+
             builder.Register( ctx =>
             {
                 var settings = ctx.ResolveSettings();

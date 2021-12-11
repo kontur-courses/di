@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization.WordsPrepares.Preparers
+namespace TagsCloudVisualization.WordsPreprocessors.Filters
 {
-    public class BoringWordsFilter : IWordsPreparer
+    public class BoringWordsFilter : IWordsFilter
     {
         private readonly HashSet<string> boringWords;
 
         public BoringWordsFilter(IEnumerable<string> boringWords) => this.boringWords = boringWords.ToHashSet();
 
-        public IEnumerable<string> Prepare(IEnumerable<string> words) =>
-            words.Where(word => !IsBoring(word) && word != "");
+        public IEnumerable<string> Filter(IEnumerable<string> words) =>
+            words.Where(word => !string.IsNullOrWhiteSpace(word) && !IsBoring(word));
 
         private bool IsBoring(string word) => boringWords.Contains(word);
     }
