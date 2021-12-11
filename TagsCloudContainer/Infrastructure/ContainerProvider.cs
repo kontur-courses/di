@@ -9,7 +9,8 @@ namespace TagsCloudContainer.Infrastructure
         {
             var container = new ServiceContainer();
             container.Register<IParser, TxtParser>();
-            container.Register<ITagComposer, TagComposer>();
+            container.Register<IPreprocessorsApplier, PreprocessorsApplier>();
+            container.Register<ITagCreator, TagCreator>();
             container.Register<ITagPainter, GradientTagPainter>();
 
             container.Register<ISpiral, OvalSpiral>();

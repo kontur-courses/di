@@ -2,5 +2,5 @@
 
 public interface IPreprocessor
 {
-    IEnumerable<string> Preprocess(IEnumerable<string> words);
+    string Preprocess(string word);
 }

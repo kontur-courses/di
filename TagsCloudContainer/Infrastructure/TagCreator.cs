@@ -3,23 +3,21 @@ using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    public class TagComposer : ITagComposer
+    public class TagCreator : ITagCreator
     {
-        private IPreprocessor[] preprocessors;
         private Dictionary<string, int> wordStatistics = new();
         private int wordCount = 0;
 
-        public TagComposer(Settings settings)
+        public TagCreator()
         {
-            preprocessors = settings.Preprocessors;
         }
 
-        public IEnumerable<Tag> ComposeTags(IEnumerable<string> words)
+        public IEnumerable<Tag> CreateTags(IEnumerable<string> words)
         {
             CalculateStatistics(words);
 
             if (wordCount < 1)
-                throw new ArgumentException("No tags composed!");
+                throw new ArgumentException("No tags created!");
 
             return wordStatistics
                 .Select(statistic 
@@ -29,9 +27,6 @@ namespace TagsCloudContainer
 
         private void CalculateStatistics(IEnumerable<string> words)
         {
-            foreach (var preprocessor in preprocessors)
-                words = preprocessor.Preprocess(words);
-
             foreach (var word in words)
             {
                 wordStatistics[word] = 1 +

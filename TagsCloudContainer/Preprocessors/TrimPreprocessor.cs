@@ -4,9 +4,8 @@ namespace TagsCloudContainer;
 
 public class TrimPreprocessor : IPreprocessor
 {
-    public IEnumerable<string> Preprocess(IEnumerable<string> words)
+    public string Preprocess(string word)
     {
-        foreach (var word in words)
-            yield return word.Trim();
+        return word.Trim();
     }
 }

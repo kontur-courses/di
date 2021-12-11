@@ -14,12 +14,10 @@ public class WordFilterPreprocessor : IPreprocessor
         "of"
     };
 
-    public IEnumerable<string> Preprocess(IEnumerable<string> words)
+    public string Preprocess(string word)
     {
-        foreach (var word in words)
-        {
-            if (!wordsToExclude.Contains(word))
-                yield return word;
-        }
+        if (!wordsToExclude.Contains(word))
+            return word;
+        return string.Empty;
     }
 }

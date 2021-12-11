@@ -16,7 +16,9 @@ namespace TagsCloudContainerTests
             var container = ContainerProvider.GetContainer();
             var textPath = Path.Combine(Path.GetFullPath(@"..\..\..\texts"), "test.txt");
             var parsed = container.GetInstance<IParser>().Parse(textPath);
-            var tags = container.GetInstance<ITagComposer>().ComposeTags(parsed);
+            var preprocessed = container.GetInstance<IPreprocessorsApplier>()
+                .ApplyPreprocessors(parsed);
+            var tags = container.GetInstance<ITagCreator>().CreateTags(preprocessed);
             var painted = container.GetInstance<ITagPainter>().Paint(tags);
             var cloudPainter = container.GetInstance<TagCloudPainter>();
 

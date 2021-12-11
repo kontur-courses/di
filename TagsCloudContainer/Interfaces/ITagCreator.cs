@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Interfaces;
 
-public interface ITagComposer
+public interface ITagCreator
 {
-    IEnumerable<Tag> ComposeTags(IEnumerable<string> words);
+    IEnumerable<Tag> CreateTags(IEnumerable<string> words);
 }

@@ -8,16 +8,19 @@ public class ConsoleUI : IUI
 {
     private Settings settings;
     private IParser parser;
-    private ITagComposer composer;
+    private IPreprocessorsApplier applier;
+    private ITagCreator creator;
     private ITagPainter painter;
     private ISpiral spiral;
     
     public ConsoleUI(Settings settings, IParser parser,
-        ITagComposer composer, ITagPainter painter, ISpiral spiral)
+        IPreprocessorsApplier applier, ITagCreator creator, 
+        ITagPainter painter, ISpiral spiral)
     {
         this.settings = settings;
         this.parser = parser;
-        this.composer = composer;
+        this.applier = applier;
+        this.creator = creator;
         this.painter = painter;
         this.spiral = spiral;
     }
@@ -330,7 +333,8 @@ public class ConsoleUI : IUI
     {
         var path = Path.Combine(textsPath, answer);
         var parsed = parser.Parse(path);
-        var tags = composer.ComposeTags(parsed);
+        var preprocessed = applier.ApplyPreprocessors(parsed);
+        var tags = creator.CreateTags(preprocessed);
         var painted = painter.Paint(tags);
 
         var layouter = new OvalCloudLayouter(settings, spiral);
