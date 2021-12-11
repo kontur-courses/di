@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization.WordsToTagTransformer
+namespace TagsCloudVisualization.WordsToTagTransformers
 {
     public class WordsToTagTransformer : IWordsToTagTransformer
     {

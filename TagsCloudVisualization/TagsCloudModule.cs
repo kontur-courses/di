@@ -4,7 +4,7 @@ using Autofac;
 using TagsCloudVisualization.ColorService;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.FontService;
-using TagsCloudVisualization.ImageCreator;
+using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Layouter;
 using TagsCloudVisualization.PointGenerators;
 using TagsCloudVisualization.Saver;
@@ -14,7 +14,7 @@ using TagsCloudVisualization.WordsPrepares;
 using TagsCloudVisualization.WordsPrepares.Preparers;
 using TagsCloudVisualization.WordsProvider;
 using TagsCloudVisualization.WordsProvider.FileReader;
-using TagsCloudVisualization.WordsToTagTransformer;
+using TagsCloudVisualization.WordsToTagTransformers;
 
 namespace TagsCloudVisualization
 {
@@ -54,7 +54,7 @@ namespace TagsCloudVisualization
                 return new TagColorService(settings.TagColor);
             }).As<ITagColorService>();
             
-            builder.RegisterType<WordsToTagTransformer.WordsToTagTransformer>().As<IWordsToTagTransformer>();
+            builder.RegisterType<WordsToTagTransformer>().As<IWordsToTagTransformer>();
             
             builder.Register(ctx =>
             {
@@ -80,7 +80,7 @@ namespace TagsCloudVisualization
                 return new ImageSaver(settings.Directory, settings.ImageName);
             }).As<IImageSaver>();
 
-            builder.RegisterType<ImageCreator.ImageCreator>().As<IImageCreator>();
+            builder.RegisterType<ImageCreator>().As<IImageCreator>();
             builder.RegisterType<Visualizer>().AsSelf();
         }
     }

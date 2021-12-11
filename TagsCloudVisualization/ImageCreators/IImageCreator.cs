@@ -2,7 +2,7 @@
 using System.Drawing;
 using TagsCloudVisualization.Drawable;
 
-namespace TagsCloudVisualization.ImageCreator
+namespace TagsCloudVisualization.ImageCreators
 {
     public interface IImageCreator
     {

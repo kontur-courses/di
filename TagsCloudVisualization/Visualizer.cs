@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using TagsCloudVisualization.ImageCreator;
+using TagsCloudVisualization.ImageCreators;
 using TagsCloudVisualization.Saver;
 using TagsCloudVisualization.TagToDrawableTransformer;
-using TagsCloudVisualization.WordsPrepare;
+using TagsCloudVisualization.WordsPrepares;
 using TagsCloudVisualization.WordsProvider;
-using TagsCloudVisualization.WordsToTagTransformer;
+using TagsCloudVisualization.WordsToTagTransformers;
 
 namespace TagsCloudVisualization
 {

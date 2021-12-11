@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization.WordsPrepare.Preparers
+namespace TagsCloudVisualization.WordsPrepares.Preparers
 {
     public class BoringWordsFilter : IWordsPreparer
     {
