@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using App.Implementation.SettingsHolders;
 
 namespace GuiClient.UiActions
@@ -22,7 +21,6 @@ namespace GuiClient.UiActions
             var dialog = new OpenFileDialog
             {
                 CheckFileExists = true,
-                InitialDirectory = Path.GetFullPath(settings.InputFileName),
                 Filter = "Текстовые файлы (*.txt;*.docx)|*.txt;*.docx"
             };
             var res = dialog.ShowDialog();

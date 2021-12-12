@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiClient", "GuiClient\GuiC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{7561D921-776D-49A5-9221-E52030A61402}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainerTaskTests", "TagCloudContainerTaskTests\TagCloudContainerTaskTests.csproj", "{5DBF5952-5E49-44A4-9148-3CF4616AA5EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7561D921-776D-49A5-9221-E52030A61402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7561D921-776D-49A5-9221-E52030A61402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7561D921-776D-49A5-9221-E52030A61402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DBF5952-5E49-44A4-9148-3CF4616AA5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DBF5952-5E49-44A4-9148-3CF4616AA5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DBF5952-5E49-44A4-9148-3CF4616AA5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DBF5952-5E49-44A4-9148-3CF4616AA5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

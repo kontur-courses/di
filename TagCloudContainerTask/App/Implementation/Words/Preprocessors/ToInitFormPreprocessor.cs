@@ -22,6 +22,7 @@ namespace App.Implementation.Words.Preprocessors
 
         public IEnumerable<string> Preprocess(IEnumerable<string> words)
         {
+            var cwd = Directory.GetCurrentDirectory();
             writer.WriteLinesTo(new StreamWriter(inputFilePath, false, Encoding.UTF8), words);
 
             var initialLeadingFormProcess = CreateInitialLeadingFormProcess(inputFilePath);
