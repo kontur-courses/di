@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using TagsCloudVisualization.Default;
 
 namespace TagsCloudVisualization
 {
@@ -11,24 +12,18 @@ namespace TagsCloudVisualization
     {
         static void Main(string[] args)
         {
-            var maker = new CircularCloudMaker(new Point());
-            var random = new Random();
-            var sizes = new List<Size>();
-            for(var i = 0; i < 1000; i++)
-            {
-                var height = random.Next(1, 5);
-                sizes.Add(new Size(random.Next(1, 5), height));
-                //sizes.Add(new Size(1,1));
-            }
-            var n = 0;
-            foreach (var size in sizes)
-            {
-                maker.PutRectangle(size);
-                Console.WriteLine(n++);
-            }
-            var image = TagsCloudVisualiser.DrawCloud(maker, new Size(1000, 1000));
+            var text = "Tag cloud cloud cloud cloud penis vulva suka 4len";
+            var cloudMaker = new CircularCloudMaker(Point.Empty);
+            var generator = new TokenGenerator(new WordSelector(), new WordCounter(), 
+                new TokenOrdererByDescendingWeight());
+            var colorer = new TagSingleColor(Color.Crimson);
+            var maker = new TagCloudMaker(cloudMaker, colorer, generator);
+            var renderer = new TagCloudVisualiser();
+            var tags = maker.CreateTagCloud(text, new Font("Comic Sans MS", 1));
+            var image = renderer.Render(tags, new Size(1280, 720));
             image.Save("testimage.png", ImageFormat.Png);
-            Process.Start(new ProcessStartInfo(Directory.GetCurrentDirectory() + "\\testimage.png") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(Directory.GetCurrentDirectory() + "\\testimage.png") 
+            { UseShellExecute = true });
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization
 {
-    interface ITokenOrderer
+    public interface ITokenOrderer
     {
         IEnumerable<Token> OrderTokens(Token[] tokens);
     }
