@@ -3,7 +3,7 @@ using System.Drawing;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.Models;
 
-namespace TagsCloud.Visualization.WordsSizeService
+namespace TagsCloud.Visualization.WordsSizeServices
 {
     public class WordsSizeService : IWordsSizeService
     {

@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.CLI", "TagsCloud.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.FunctionalTests", "TagsCloud.FunctionalTests\TagsCloud.FunctionalTests.csproj", "{EEBBF111-7D52-46F8-B8C8-B7A2587D17EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.WebApi", "TagsCloud.WebApi\TagsCloud.WebApi.csproj", "{AF9E2EEB-B06A-4820-9B2C-AE873AC68A45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{EEBBF111-7D52-46F8-B8C8-B7A2587D17EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEBBF111-7D52-46F8-B8C8-B7A2587D17EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEBBF111-7D52-46F8-B8C8-B7A2587D17EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9E2EEB-B06A-4820-9B2C-AE873AC68A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9E2EEB-B06A-4820-9B2C-AE873AC68A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9E2EEB-B06A-4820-9B2C-AE873AC68A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9E2EEB-B06A-4820-9B2C-AE873AC68A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

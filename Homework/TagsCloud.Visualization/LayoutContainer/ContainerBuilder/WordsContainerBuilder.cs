@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagsCloud.Visualization.FontFactory;
 using TagsCloud.Visualization.Models;
-using TagsCloud.Visualization.WordsSizeService;
+using TagsCloud.Visualization.WordsSizeServices;
 
 namespace TagsCloud.Visualization.LayoutContainer.ContainerBuilder
 {
