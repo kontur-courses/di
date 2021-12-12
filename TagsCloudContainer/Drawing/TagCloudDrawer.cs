@@ -23,7 +23,7 @@ namespace TagsCloudContainer.Drawing
 
             var center = tagsList.First().Rectangle.Location;
 
-            var upscaleRatio = CalclulateUpscaleRatio(tagsList, appSettings.ImageHeight, appSettings.ImageHeight);
+            var upscaleRatio = CalclulateUpscaleRatio(tagsList, appSettings.ImageWidth, appSettings.ImageHeight);
 
             var image = new Bitmap(appSettings.ImageWidth, appSettings.ImageHeight);
             using var graph = Graphics.FromImage(image);
@@ -68,10 +68,10 @@ namespace TagsCloudContainer.Drawing
 
         private static Size CalculateCurrentCloudSize(IReadOnlyCollection<Tag> tags)
         {
-            var maxX = tags.Max(x => x.Rectangle.X + x.Rectangle.Size.Width);
+            var maxX = tags.Max(x => x.Rectangle.X + x.Rectangle.Width);
             var minX = tags.Min(x => x.Rectangle.X);
             var maxY = tags.Max(x => x.Rectangle.Y);
-            var minY = tags.Min(x => x.Rectangle.Y - x.Rectangle.Size.Height);
+            var minY = tags.Min(x => x.Rectangle.Y - x.Rectangle.Height);
 
             var width = maxX - minX;
             var height = maxY - minY;

@@ -20,7 +20,7 @@ namespace TagsCloudContainerTests
         }
         
         [Test]
-        public void ReadWordsFromFile_WorksCorrectlyWithTxt()
+        public void ReadWordsFromFile_WorksCorrectlyWithDoc()
         {
             var expectedWords = new[] { "firstWord", "secondWord", "thirdWord" };
             

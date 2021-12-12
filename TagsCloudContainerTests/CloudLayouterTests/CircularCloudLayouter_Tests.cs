@@ -82,10 +82,10 @@ namespace TagsCloudContainerTests.CloudLayouterTests
         {
             rectangles = generator.GenerateSizes(count).Select(size => layouter.PutNextRectangle(size)).ToList();
 
-            var top = rectangles.Max(rect => rect.Top);
-            var right = rectangles.Max(rect => rect.Right);
-            var bottom = Math.Abs(rectangles.Min(rect => rect.Bottom));
-            var left = Math.Abs(rectangles.Min(rect => rect.Left));
+            var top = rectangles.Max(rect => rect.Y);
+            var right = rectangles.Max(rect => rect.X + rect.Width);
+            var bottom = Math.Abs(rectangles.Min(rect => rect.Y - rect.Height));
+            var left = Math.Abs(rectangles.Min(rect => rect.X));
 
             var radius = Math.Max(Math.Max(top, bottom), Math.Max(left, right));
 

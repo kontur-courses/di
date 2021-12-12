@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using TagsCloudContainer.CloudLayouter;
@@ -17,6 +18,10 @@ namespace TagsCloudContainer
         static void Main(string[] args)
         {
             var parsedArgs = Parser.Default.ParseArguments<AppSettings>(args);
+            if (parsedArgs.Errors.Any())
+            {
+                Environment.Exit(-1);
+            }
             var appSettings = parsedArgs.Value;
 
             try
