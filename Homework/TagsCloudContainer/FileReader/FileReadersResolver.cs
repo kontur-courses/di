@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace TagsCloudContainer.FileReader
@@ -14,11 +15,12 @@ namespace TagsCloudContainer.FileReader
             fileReadersResolver = readers.ToDictionary(x => x.Extension);
         }
 
-        public IFileReader Get(string extension)
+        public IFileReader Get(string path)
         {
-            if (fileReadersResolver.ContainsKey(extension))
-                return fileReadersResolver[extension];
-            throw new ArgumentException($"Формат {extension} не поддерживается");
+            var ext = Path.GetExtension(path);
+            if (fileReadersResolver.ContainsKey(ext))
+                return fileReadersResolver[ext];
+            throw new ArgumentException($"Формат {path} не поддерживается");
         }
     }
 }

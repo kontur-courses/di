@@ -2,6 +2,6 @@
 {
     public interface IFileReadersResolver
     {
-        IFileReader Get(string fileExt);
+        IFileReader Get(string path);
     }
 }

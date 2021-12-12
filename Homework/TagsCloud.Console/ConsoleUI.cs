@@ -34,7 +34,7 @@ namespace TagsCloud.Console
 
         public void Run(IAppSettings settings)
         {
-            var content = fileReadersResolver.Get(Path.GetExtension(settings.InputPath)).ReadWords(settings.InputPath);
+            var content = fileReadersResolver.Get(settings.InputPath).ReadWords(settings.InputPath);
             var convertedWords = wordsConverter.Convert(content);
             var filteredWords = filterApplyer.Apply(convertedWords);
             var freqDict = frequencyAnalyzer.GetWordsFrequency(filteredWords);
