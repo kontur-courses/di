@@ -4,6 +4,7 @@ using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.Preprocessors
 {
+    [State(State.Active)]
     public abstract class PreprocessorFilter : IPreprocessor
     {
         public IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags)

@@ -2,6 +2,7 @@
 
 namespace TagsCloudContainer.Preprocessors
 {
+    [State(State.Inactive)]
     public class CustomTagsFilter : PreprocessorFilter
     {
         public delegate bool RelevantTag(SimpleTag tag);
