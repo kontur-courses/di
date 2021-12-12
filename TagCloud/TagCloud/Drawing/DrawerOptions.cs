@@ -20,7 +20,7 @@ namespace TagCloud.Drawing
         [Option('b', "backgroud", Required = false, HelpText = "Set background color of cloud")]
         public Color BackgroundColor
         {
-            get => _backgroundColor.Name != "0" ? _backgroundColor : _defaultBackgroundColor; 
+            get => _backgroundColor.IsEmpty ? _defaultBackgroundColor : _backgroundColor; 
             set => _backgroundColor = value; 
         }
 
@@ -34,6 +34,6 @@ namespace TagCloud.Drawing
         public Size Size { get; set; }
         
         [Option("format", Required = false, HelpText = "Set format of result picture")]
-        public ImageFormat Format { get; set; }
+        public ImageFormat Format { get; set; } = ImageFormat.Png;
     }
 }

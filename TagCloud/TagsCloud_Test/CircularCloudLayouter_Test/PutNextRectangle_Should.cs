@@ -166,10 +166,10 @@ namespace TagsCloudVisualization_Test
         }
 
         private CircularCloudLayouter GetLayouter(Point? center) =>
-            new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty, new CoordinatesConverter()));
+            new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
 
         private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes) =>
-            GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty, new CoordinatesConverter()));
+            GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty));
 
         private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes, ICurve curve)
         {

@@ -19,11 +19,12 @@ namespace TagCloud_ConsoleUI
             
             while (!args.Contains("exit"))
             {
-                Parser.Default.ParseArguments<DrawerOptions, TextProcessingOptions>(args)
+                Parser.Default.ParseArguments<DrawerOptions, TextProcessingOptions, ClearOptions>(args)
                     .MapResult(
                         (DrawerOptions opts) => tagCloud.DrawTagClouds(opts),
                         (TextProcessingOptions opts) => tagCloud.ProcessText(opts),
-                        _ => 1);
+                        (ClearOptions opts) => tagCloud.ClearProcessedTexts(),
+                        errors => 1);
                 args = Console.ReadLine().Split();
             }
         }

@@ -29,15 +29,15 @@ namespace TagCloud.TextProcessing
                 writer.Write(_textReader.ReadFile(filePath));
                 using (var process = ConfigureProcess(TempWritePath))
                 {
-                    process.Start();
-                    process.WaitForExit();
+                    process.Start();                    
+                    process.WaitForExit();  
                 }
 
                 var myStemResults = ParseMyStemResult();
                 File.Delete(TempPath);
 
                 yield return myStemResults
-                    .Where(r => !options.ExcludePartOfSpeech.Contains(r.Pos)
+                    .Where(r => !options.ExcludePartOfSpeech.Contains(r.PartOfSpeech)
                                 || options.IncludeWords.Contains(r.Lemma))
                     .Select(r => r.Lemma)
                     .Where(w => !options.ExcludeWords.Contains(w))
@@ -48,12 +48,12 @@ namespace TagCloud.TextProcessing
             }
         }
 
-        private static IEnumerable<MyStemResult> ParseMyStemResult()
+        private static IEnumerable<MyStemResult?> ParseMyStemResult()
         {
             return File.ReadAllText(TempPath)
                 .Split("\n", StringSplitOptions.RemoveEmptyEntries)
                 .Select(JsonConvert.DeserializeObject<MyStemResult>)
-                .Where(r => r.analysis.Count > 0);
+                .Where(r => r?.analysis.Count > 0);
         }
 
         private static Process ConfigureProcess(string filepath)

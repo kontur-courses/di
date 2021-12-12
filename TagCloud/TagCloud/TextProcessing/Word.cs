@@ -4,7 +4,7 @@ namespace TagCloud.TextProcessing
 {
     public class Word
     {
-        public Font Font { get; set; }
+        public Font Font { get; }
         public Rectangle Rectangle { get; set; }
         public readonly string Text;
 
@@ -12,11 +12,6 @@ namespace TagCloud.TextProcessing
         {
             Text = text;
             Font = font;
-        }
-        
-        public Word(string text, Font font, Rectangle rectangle) : this (text, font)
-        {
-            Rectangle = rectangle;
         }
 
         public Word WithFontSize(double fontSize) => new(Text, new Font(Font.FontFamily, (float)fontSize));

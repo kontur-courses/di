@@ -9,15 +9,16 @@ namespace TagCloud.Extensions
     {
         private static int _count;
 
-        public static void SaveDefault(this Bitmap bitmap, string? filename = null)
+        public static void SaveCurrentDirectory(this Bitmap bitmap, string? filename = null,
+            string? saveDirectory = null, ImageFormat? format = null)
         {
-            var currentDir = AppDomain.CurrentDomain.BaseDirectory;
-            var imagesDir = Directory.CreateDirectory(Path.Combine(currentDir, "images"));
-            var name = filename ?? $"tag_cloud_0{_count}";
-            var path = Path.Combine(imagesDir.FullName, name);
-
-            bitmap.Save($"{path}.png", ImageFormat.Png);
-            _count++;
+            var targetDirectory = saveDirectory ?? AppDomain.CurrentDomain.BaseDirectory;
+            var imagesDirectory = Directory.CreateDirectory(Path.Combine(targetDirectory, "images"));
+            var name = filename ?? $"tag_cloud_{_count++}";
+            var path = Path.Combine(imagesDirectory.FullName, name);
+            var extension = ImageFormat.Png.ToString().ToLower();
+            var imageFormat = format ?? ImageFormat.Png;
+            bitmap.Save($"{path}.{extension}", ImageFormat.Png);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using TagCloud.Drawing;
@@ -17,7 +16,6 @@ namespace TagCloud
         private readonly ITextProcessor _textProcessor;
         private readonly IWordLayouter _wordLayouter;
 
-
         public TagCloud(ITextProcessor textProcessor, IWordLayouter wordLayouter, IDrawer drawer,
             TextWriter statusWriter)
         {
@@ -30,9 +28,16 @@ namespace TagCloud
         public int ProcessText(ITextProcessingOptions options)
         {
             _statusWriter.WriteLine("Начинаю обработку текста");
-            _processedTexts = _textProcessor.GetWordsWithFrequency(options).ToList();
-            _statusWriter.WriteLine("Обработка завершена\n");
-            return 0;
+            try
+            {
+                _processedTexts = _textProcessor.GetWordsWithFrequency(options).ToList();
+                _statusWriter.WriteLine("Обработка завершена\n");
+                return 0;
+            }
+            catch(IOException e){
+                _statusWriter.WriteLine(e.Message);
+                return 1;
+            }
         }
 
         public int DrawTagClouds(IDrawerOptions options)
@@ -42,10 +47,18 @@ namespace TagCloud
                 _statusWriter.WriteLine("Раскладываю текст");
                 var layoutedWords = _wordLayouter.Layout(options, text);
                 _statusWriter.WriteLine("Рисую bitmap\n");
-                _drawer.Draw(options, layoutedWords).SaveDefault();
+                var bitmap = _drawer.Draw(options, layoutedWords);
+                _statusWriter.WriteLine("Сохраняю bitmap\n");
+                bitmap.SaveCurrentDirectory(format: options.Format);
             }
 
-            _statusWriter.WriteLine("Готово!\n");
+            _statusWriter.WriteLine($"Готово!\nФайлы здесь: {Directory.GetCurrentDirectory()}");
+            return 0;
+        }
+
+        public int ClearProcessedTexts()
+        {
+            _processedTexts.Clear();
             return 0;
         }
     }

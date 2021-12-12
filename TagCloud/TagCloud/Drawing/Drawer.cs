@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TagCloud.Extensions;
 using TagCloud.TextProcessing;
 
-[assembly: InternalsVisibleTo("TagsCloud_Test")]
 namespace TagCloud.Drawing
 {
     internal class Drawer : IDrawer

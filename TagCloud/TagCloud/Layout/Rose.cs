@@ -7,35 +7,18 @@ namespace TagCloud.Layout
 {
     internal class Rose : ICurve
     {
-        private readonly CoordinatesConverter _converter;
-        
-        /// <summary>
-        /// Смещение по X к заданному центру
-        /// </summary>
+
         private readonly int _offsetX;
-
-        /// <summary>
-        /// Смещение по Y к заданному центру
-        /// </summary>
         private readonly int _offsetY;
-        
-        /// <summary>
-        /// Радиус витков
-        /// </summary>
         private double _radius = 1;
-
-        /// <summary>
-        /// Текущий угол в радианах
-        /// </summary>
         private double _phi;
         
-        public Rose(CoordinatesConverter converter) : this(Point.Empty, converter)
+        public Rose() : this(Point.Empty)
         {
         }
         
-        public Rose(Point center, CoordinatesConverter converter)
+        public Rose(Point center)
         {
-            _converter = converter;
             _offsetX = center.X;
             _offsetY = center.Y;
         }
@@ -45,7 +28,7 @@ namespace TagCloud.Layout
             while (true)
             {
                 var rho = _radius * Math.Sin(15 * _phi);
-                var cartesian = _converter.ToCartesian(rho, _phi);
+                var cartesian = CoordinatesConverter.ToCartesian(rho, _phi);
                 var point = new Point(cartesian.X + _offsetX, cartesian.Y + _offsetY);
 
                 _phi += deltaAngle;

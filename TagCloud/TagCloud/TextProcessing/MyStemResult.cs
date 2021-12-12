@@ -15,7 +15,7 @@ namespace TagCloud.TextProcessing
             .ToDictionary(p => p.Key, p => p.First().Value);
 
         public string Lemma => Analisys["lex"];
-        public PartOfSpeech Pos => (PartOfSpeech) Enum.Parse(typeof(PartOfSpeech), GetPosTag());
+        public PartOfSpeech PartOfSpeech => (PartOfSpeech) Enum.Parse(typeof(PartOfSpeech), GetPosTag());
 
         private string GetPosTag()
         {

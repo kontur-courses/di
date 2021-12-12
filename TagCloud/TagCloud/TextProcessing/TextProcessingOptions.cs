@@ -32,7 +32,7 @@ namespace TagCloud.TextProcessing
         [Option('e',"exclude", Required = false, HelpText = "Set words to exclude", Separator = ':')]
         public IEnumerable<string> ExcludeWords
         {
-            get  => _excludeWords.Count != 0 ? _excludeWords : DefaultExcludeWords; 
+            get  => _excludeWords.Any() ? _excludeWords : DefaultExcludeWords; 
             set => _excludeWords = value.ToHashSet();
         }
 
