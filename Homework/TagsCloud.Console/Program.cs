@@ -1,11 +1,15 @@
 ﻿using System.Drawing;
+using System.Reflection;
 using Autofac;
 using DeepMorphy;
+using TagsCloudContainer;
 using TagsCloudContainer.BitmapSaver;
 using TagsCloudContainer.FileReader;
 using TagsCloudContainer.Layouter;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
+using TagsCloudContainer.Visualizer.ColorGenerators;
+using TagsCloudContainer.Visualizer.VisualizerSettings;
 using TagsCloudContainer.WordsConverters;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsFrequencyAnalyzers;
@@ -18,47 +22,25 @@ namespace TagsCloud.Console
         {
             var appSettings = AppSettings.Parse(args);
             var tagCloudSettings = TagCloudSettings.Parse(args);
-            using var container = Configure(appSettings);
+            using var container = Configure(appSettings, tagCloudSettings);
             container.Resolve<IConsoleUI>()
                 .Run(appSettings, tagCloudSettings);
         }
 
-        internal static IContainer Configure(IAppSettings settings)
+        internal static IContainer Configure(IAppSettings settings, ITagCloudSettings tagCloudSettings)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<BitmapSaver>().As<IBitmapSaver>();
-            builder.RegisterType<TxtFileReader>().As<IFileReader>();
-            builder.RegisterType<WordsFrequencyAnalyzer>().As<IWordsFrequencyAnalyzer>();
-            builder.RegisterInstance(new LengthFilter(settings.MinWordLength)).As<IWordsFilter>();
-            builder.RegisterInstance(new SpeechPartsFilter(settings.SelectedSpeechParts.ToArray())).As<IWordsFilter>();
-            builder.RegisterInstance(new MorphAnalyzer()).AsSelf().SingleInstance();
-            builder.RegisterType<RussianWordsConverter>().As<IWordsConverter>();
-            builder.RegisterType<SpiralPointsProvider>().As<IPointsProvider>();
-            builder.RegisterType<PointsProvidersResolver>().As<IPointsProvidersResolver>();
-            builder.Register(c => RegisterCloudLayouter(c, settings)).As<ICloudLayouter>();
-            builder.RegisterType<RandomColorGenerator>().As<IColorGenerator>();
-            builder.Register(_ => new Point(settings.ImageWidth / 2, settings.ImageHeight / 2)).As<Point>();
-            builder.RegisterType<ColorGeneratorsResolver>().As<IColorGeneratorsResolver>();
-            builder.Register(c => RegisterVisualizerSettings(c, settings)).As<IVisualizerSettings>();
-            builder.RegisterType<Visualizer>().As<IVisualizer>();
-            builder.RegisterType<FileReadersResolver>().As<IFileReadersResolver>();
-            builder.RegisterType<FilterApplyer>().As<IFilterApplyer>().SingleInstance();
-            builder.RegisterType<ConsoleUI>().As<IConsoleUI>();
+            var assembly = Assembly.GetAssembly(typeof(TagCloud));
+            builder.RegisterInstance(settings).As<IAppSettings>().SingleInstance();
+            builder.RegisterInstance(tagCloudSettings).As<ITagCloudSettings>().SingleInstance();
+            builder.RegisterAssemblyTypes(assembly!).AsImplementedInterfaces().SingleInstance();
+            builder.Register(c => new VisualizerSettingsFactory(c.Resolve<IColorGeneratorsResolver>()).Create(tagCloudSettings))
+                .As<IVisualizerSettings>()
+                .SingleInstance();
+            builder.Register(c => new SpiralPointsProviderFactory().Create(tagCloudSettings)).As<IPointsProvider>();
+            builder.RegisterType<ConsoleUI>().AsImplementedInterfaces();
+            builder.RegisterInstance(new MorphAnalyzer()).SingleInstance();
             return builder.Build();
-        }
-
-        private static VisualizerSettings RegisterVisualizerSettings(IComponentContext context, IAppSettings settings)
-        {
-            return new VisualizerSettings(
-                context.Resolve<IColorGeneratorsResolver>().Get(settings.ColoringAlgorythm),
-                Color.FromName(settings.BackgroundColor),
-                new Font(new FontFamily(settings.FontName), settings.FontSize),
-                new Size(settings.ImageWidth, settings.ImageHeight));
-        }
-
-        private static CloudLayouter RegisterCloudLayouter(IComponentContext context, IAppSettings settings)
-        {
-            return new CloudLayouter(context.Resolve<IPointsProvidersResolver>().Get(settings.LayoutAlgorythm));
         }
     }
 }

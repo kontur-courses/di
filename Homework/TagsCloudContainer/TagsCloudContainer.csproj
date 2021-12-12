@@ -19,6 +19,7 @@
         <Compile Remove="TagCloudCreator.cs" />
         <Compile Remove="WordsFilter\FilterType.cs" />
         <Compile Remove="FileReader\TextFileFormat.cs" />
+        <Compile Remove="Visualizer\VisualizerSettings\IVisualizerSettingsFactory.cs" />
     </ItemGroup>
 
     <ItemGroup>

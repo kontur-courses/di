@@ -8,12 +8,17 @@ namespace TagsCloudContainer.WordsFilter
     public class LengthFilter : IWordsFilter
     {
         private readonly int minLength;
+        
+        // public LengthFilter(int minLength)
+        // {
+        //     if (minLength < 0)
+        //         throw new ArgumentException($"{nameof(minLength)} cannot be negative");
+        //     this.minLength = minLength;
+        // }
 
-        public LengthFilter(int minLength)
+        public LengthFilter(ITagCloudSettings settings)
         {
-            if (minLength < 0)
-                throw new ArgumentException($"{nameof(minLength)} cannot be negative");
-            this.minLength = minLength;
+            minLength = settings.MinWordLength;
         }
 
         public ICollection<WordInfo> Filter(ICollection<WordInfo> words)

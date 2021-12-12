@@ -8,9 +8,14 @@ namespace TagsCloudContainer.WordsFilter
     {
         private readonly SpeechPart[] selectedSpeechParts;
 
-        public SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
+        // public SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
+        // {
+        //     this.selectedSpeechParts = selectedSpeechParts;
+        // }
+
+        public SpeechPartsFilter(ITagCloudSettings settings)
         {
-            this.selectedSpeechParts = selectedSpeechParts;
+            selectedSpeechParts = settings.SelectedSpeechParts.ToArray();
         }
 
         public ICollection<WordInfo> Filter(ICollection<WordInfo> words)
