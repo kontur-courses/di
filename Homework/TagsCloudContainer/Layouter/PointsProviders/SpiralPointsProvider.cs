@@ -12,7 +12,12 @@ namespace TagsCloudContainer.Layouter.PointsProviders
         private double currentAngle;
         private Point? lastPoint;
 
-        public SpiralPointsProvider(Point center)
+        public SpiralPointsProvider(ITagCloudSettings settings)
+        {
+            center = new Point(settings.ImageWidth / 2, settings.ImageHeight / 2);
+        }
+        
+        internal SpiralPointsProvider(Point center)
         {
             this.center = center;
         }
