@@ -16,8 +16,7 @@ namespace TagsCloudContainer
         {
             foreach (var word in words)
             {
-                if (filters.Select(filter => filter.Allows(word))
-                    .All(result => result))
+                if (filters.All(filter => filter.Allows(word)))
                     yield return word;
             }
         }

@@ -59,7 +59,7 @@ public class TagCloudPainter
             var label = new Label { AutoSize = true };
             label.Font = new Font(settings.Font.FontFamily, fontSize, settings.Font.Style);
             label.Text = tag.Text;
-            var size = label.GetPreferredSize(new Size(1000, 1000));
+            var size = label.GetPreferredSize(settings.ImageSize);
             var rectangle = layouter.PutNextRectangle(size);
             yield return new CloudTag(tag, label, rectangle);
         }

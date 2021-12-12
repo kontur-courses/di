@@ -20,9 +20,9 @@ namespace TagsCloudContainer.Infrastructure
             container.Register<TagCloudPainter>();
             container.RegisterInstance(SettingsProvider.GetSettings());
             container.RegisterInstance(CloudSettingsProvider.GetSettings());
-            container.Register<IUIAction, ImageSettingsAction>("A");
-            container.Register<IUIAction, CloudSettingsAction>("B");
-            container.Register<IUIAction, GenerateImageAction>("C");
+            container.Register<IUIAction, ImageSettingsAction>("1");
+            container.Register<IUIAction, CloudSettingsAction>("2");
+            container.Register<IUIAction, GenerateImageAction>("3");
             container.Register<IUI, ConsoleUI>();
             return container;
         }
