@@ -11,14 +11,17 @@ namespace TagsCloudContainer.Common
     {
         public static void RegisterPreprocessors(ContainerBuilder builder)
         {
-            var preprocessors = AppDomain.CurrentDomain.GetAssemblies()
+            var preprocessors = GetActivePreprocessors();
+            builder.RegisterTypes(preprocessors).As<IPreprocessor>();
+            builder.RegisterType<TagsPreprocessor>().AsSelf();
+        }
+
+        public static Type[] GetActivePreprocessors() 
+            => AppDomain.CurrentDomain.GetAssemblies()
                 .First(a => a.FullName.Contains("TagsCloudContainer"))
                 .GetTypes()
                 .Where(TypeIsActivePreprocessor)
                 .ToArray();
-            builder.RegisterTypes(preprocessors).As<IPreprocessor>();
-            builder.RegisterType<TagsPreprocessor>().AsSelf();
-        }
 
         private static bool TypeIsActivePreprocessor(Type type)
         {

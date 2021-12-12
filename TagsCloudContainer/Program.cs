@@ -1,28 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using Autofac;
 using TagsCloudContainer.Common;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Layouters;
 using TagsCloudContainer.Painting;
 using TagsCloudContainer.Preprocessors;
-using TagsCloudVisualization;
+using TagsCloudContainer.UI;
+using TagsCloudContainer.UI.Menu;
 using TagsCloudVisualization.Interfaces;
-using TagsCloudVisualization.Visualizators;
 
 namespace TagsCloudContainer
 {
     internal class Program
     {
-        private const string textFilename = "..\\..\\..\\Tags\\startTags.txt";
-        private const string imageFilename = "..\\..\\..\\images\\image1.jpg";
-
         private static void Main(string[] args)
         {
-            var container = RegisterDependencies();
-            ResolveContainer(container);
+            var builder = new ContainerBuilder();
+            var preContainer = RegisterDependensiesInPreContainer(builder).Build();
+            new Registrator(builder).RegisterDependencies();
+            SetUpUi(preContainer);
         }
 
-        private static void ResolveContainer(IContainer container)
+        internal static void ResolveContainer(IContainer container)
         {
             var minHeight = 12;
             var maxScale = 10;
@@ -34,9 +37,9 @@ namespace TagsCloudContainer
                 var layouter = scope.Resolve<TagLayouter>();
                 var painter = scope.Resolve<TagPainter>();
                 var visualizator = scope.Resolve<IVisualizator<ITag>>();
-                var settings = scope.Resolve<IVisualizatorSettings>();
+                var settings = ResolveSettings(scope);
 
-                var text = reader.Read(textFilename);
+                var text = reader.Read(AppSettings.TextFilename);
                 var tags = parser.Parse(text);
                 tags = preprocessor.Process(tags);
                 var cloud = layouter.PlaceTagsInCloud(tags, minHeight, maxScale);
@@ -45,58 +48,64 @@ namespace TagsCloudContainer
             }
         }
 
-        private static IContainer RegisterDependencies()
+        private static IVisualizatorSettings ResolveSettings(ILifetimeScope scope)
         {
-            var builder = new ContainerBuilder();
-            RegisterLibraryDependencies(builder);
-            RegisterProjectDependencies(builder);
-            PreprocessorsRegistrator.RegisterPreprocessors(builder);
-            return builder.Build();
+            var settingParams = GetVisualizatorSettingsParams()
+                .ToContainerParameters();
+            return scope.Resolve<IVisualizatorSettings>(settingParams);
         }
 
-        private static void RegisterLibraryDependencies(ContainerBuilder builder)
+        private static Dictionary<string, object> GetVisualizatorSettingsParams()
         {
-            builder.RegisterType<Cloud>()
-                .As<ICloud<ITag>>()
-                .WithParameter("center", new PointF());
-
-            builder.RegisterType<Spiral>()
-                .As<ISpiral>()
-                .WithParameter("center", new PointF());
-
-            builder.RegisterType<Tag>()
-                .As<ITag>();
-
-            builder.RegisterType<Tag>();
-
-            builder.RegisterType<CircularCloudLayouter>()
-                .As<ICloudLayouter>();
-
-            builder.RegisterType<TagsVisualizator>()
-                .As<IVisualizator<ITag>>();
-
-            builder.RegisterType<TagsVisualizatorSettings>()
-                .As<IVisualizatorSettings>()
-                .WithParameter("filename", imageFilename);
+            var dict = new Dictionary<string, object>();
+            dict["filename"] = AppSettings.ImageFilename;
+            if(AppSettings.ImageSize != new Size())
+                dict["bitmapSize"] = AppSettings.ImageSize;
+            if (AppSettings.BackgroundColor != new Color())
+                dict["backgroundColor"] = AppSettings.BackgroundColor;
+            if (AppSettings.FontFamily != null)
+                dict["family"] = AppSettings.FontFamily;
+            if (AppSettings.MinMargin != 0)
+                dict["minMargin"] = AppSettings.MinMargin;
+            if (AppSettings.FillTags)
+                dict["fillTags"] = AppSettings.FillTags;
+            return dict;
         }
 
-        private static void RegisterProjectDependencies(ContainerBuilder builder)
+        private static ContainerBuilder RegisterDependensiesInPreContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<FileBlobStorage>()
-                .As<IBlobStorage>();
+            var preBuilder = new ContainerBuilder();
+            preBuilder.RegisterInstance(Console.Out).As<TextWriter>();
+            preBuilder.RegisterInstance(Console.In).As<TextReader>();
+            preBuilder.RegisterInstance(builder).As<ContainerBuilder>();
+            RegisterActions(preBuilder);
+            return preBuilder;
+        }
 
-            builder.RegisterType<Serializer>()
-                .As<ISerializer>();
+        private static void SetUpUi(IContainer preContainer)
+        {
+            using (var scope = preContainer.BeginLifetimeScope())
+            {
+                var menu = scope.Resolve<MenuCreator>().Menu;
+                var writer = scope.Resolve<TextWriter>();
+                var reader = scope.Resolve<TextReader>();
+                while (true)
+                {
+                    menu.ChooseCategory(reader, writer);
+                }
+            }
+        }
 
-            builder.RegisterType<TagCircularLayouter>()
-                .As<TagLayouter>();
-
-            builder.RegisterType<PalettesMaker>()
-                .As<IPalettesMaker>();
-
-            builder.RegisterType<TagReader>().AsSelf();
-            builder.RegisterType<TagPainter>().AsSelf();
-            builder.RegisterType<WordsCountParser>().AsSelf();
+        private static void RegisterActions(ContainerBuilder builder)
+        {
+            var action = typeof(IUiAction);
+            var actions = AppDomain.CurrentDomain.GetAssemblies()
+                .First(a => a.FullName.Contains("TagsCloudContainer"))
+                .GetTypes()
+                .Where(t => action.IsAssignableFrom(t))
+                .ToArray();
+            builder.RegisterTypes(actions).AsImplementedInterfaces();
+            builder.RegisterType<MenuCreator>().AsSelf();
         }
     }
 }
