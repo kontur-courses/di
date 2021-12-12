@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudApp.Settings
+namespace TagsCloudContainer.Settings
 {
     public static class Validate
     {

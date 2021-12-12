@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudApp.Settings;
+using TagsCloudContainer.Settings;
 
 namespace TagsCloud.Tests
 {

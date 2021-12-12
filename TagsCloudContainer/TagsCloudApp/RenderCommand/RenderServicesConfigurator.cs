@@ -17,11 +17,11 @@ namespace TagsCloudApp.RenderCommand
 {
     public class RenderServicesConfigurator
     {
-        private readonly RenderOptions renderOptions;
+        private readonly RenderArgs renderArgs;
 
-        public RenderServicesConfigurator(RenderOptions renderOptions)
+        public RenderServicesConfigurator(RenderArgs renderArgs)
         {
-            this.renderOptions = renderOptions;
+            this.renderArgs = renderArgs;
         }
 
         public IServiceCollection ConfigureServices()
@@ -38,13 +38,17 @@ namespace TagsCloudApp.RenderCommand
                 .AddSingleton<IMathFunction, LinearFunction>()
                 .AddSingleton<IMathFunction, LnFunction>()
                 .AddSingleton<ISaveSettings, SaveSettings>()
+                .AddSingleton<IRenderSettingsConverter, RenderSettingsConverter>()
+                .AddSingleton(p => p.GetRequiredService<IRenderSettingsConverter>().GetSettings())
                 .AddSingleton<IFontFamilySettings, FontFamilySettings>()
                 .AddSingleton<IRenderingSettings, RenderingSettings>()
                 .AddSingleton<IFontSizeSettings, FontSizeSettings>()
                 .AddSingleton<ISpeechPartFilterSettings, SpeechPartFilterSettings>()
                 .AddSingleton<IDefaultColorSettings, DefaultColorSettings>()
                 .AddSingleton<ISpeechPartColorMapSettings, SpeechPartColorMapSettings>()
-                .AddSingleton<ITagsCloudLayouterSettings, TagsCloudLayouterSettings>()
+                .AddSingleton(
+                    s => s.GetRequiredService<IServiceResolver<TagsCloudLayouterType, ITagsCloudLayouter>>()
+                        .GetService(TagsCloudLayouterType.FontBased))
                 .AddSingleton<IKeyValueParser, KeyValueParser>()
                 .AddSingleton<IWordsParser, WordsParser>()
                 .AddSingleton<IArgbColorParser, ArgbColorParser>()
@@ -63,7 +67,7 @@ namespace TagsCloudApp.RenderCommand
                 .AddSingleton<ITagsCloudRenderer, TagsCloudRenderer>()
                 .AddSingleton<Random>()
                 .AddSingleton<ITagsCloudDirector, TagsCloudDirector>()
-                .AddSingleton<IRenderOptions>(_ => renderOptions);
+                .AddSingleton<IRenderArgs>(_ => renderArgs);
         }
     }
 }

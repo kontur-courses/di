@@ -1,9 +1,6 @@
 ﻿using System.Drawing;
-using TagsCloudApp.Parsers;
-using TagsCloudApp.RenderCommand;
-using TagsCloudContainer.Settings;
 
-namespace TagsCloudApp.Settings
+namespace TagsCloudContainer.Settings
 {
     public class RenderingSettings : IRenderingSettings
     {
@@ -11,12 +8,11 @@ namespace TagsCloudApp.Settings
         public float Scale { get; }
         public Brush Background { get; }
 
-        public RenderingSettings(IRenderOptions renderOptions, IArgbColorParser colorParser)
+        public RenderingSettings(IRenderSettings settings)
         {
-            DesiredImageSize = ValidateSize(renderOptions.ImageSize);
-            Scale = Validate.Positive("Image scale", renderOptions.ImageScale);
-            var color = colorParser.Parse(renderOptions.BackgroundColor);
-            Background = new SolidBrush(color);
+            DesiredImageSize = ValidateSize(settings.ImageSize);
+            Scale = Validate.Positive("Image scale", settings.ImageScale);
+            Background = new SolidBrush(settings.BackgroundColor);
         }
 
         private static Size? ValidateSize(Size? size)

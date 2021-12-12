@@ -9,24 +9,24 @@ namespace TagsCloudApp.WordsLoading
     {
         private readonly IWordsParser wordParser;
         private readonly IFileTextLoaderResolver loaderResolver;
-        private readonly IRenderOptions renderOptions;
+        private readonly IRenderArgs renderArgs;
         private readonly IEnumParser enumParser;
 
         public FileWordsProvider(
             IWordsParser wordParser,
             IFileTextLoaderResolver loaderResolver,
-            IRenderOptions renderOptions,
+            IRenderArgs renderArgs,
             IEnumParser enumParser)
         {
             this.wordParser = wordParser;
             this.loaderResolver = loaderResolver;
-            this.renderOptions = renderOptions;
+            this.renderArgs = renderArgs;
             this.enumParser = enumParser;
         }
 
         public IEnumerable<string> GetWords()
         {
-            var filename = renderOptions.InputPath;
+            var filename = renderArgs.InputPath;
             var fileType = GetFileType(filename);
             var fileTextLoader = loaderResolver.GetFileTextLoader(fileType);
             var text = fileTextLoader.LoadText(filename);

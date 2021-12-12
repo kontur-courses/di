@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudContainer.Settings;
+using TagsCloudApp.Settings;
 
 namespace TagsCloudApp
 {

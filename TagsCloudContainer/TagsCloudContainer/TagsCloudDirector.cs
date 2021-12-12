@@ -12,25 +12,25 @@ namespace TagsCloudContainer
     {
         private readonly IEnumerable<IWordsPreprocessor> preprocessors;
         private readonly IWordColorMapperSettings colorMapperSettings;
-        private readonly ITagsCloudLayouterSettings tagsCloudLayouterSettings;
+        private readonly ITagsCloudLayouter tagsCloudLayouter;
         private readonly ITagsCloudRenderer renderer;
 
         public TagsCloudDirector(
             IEnumerable<IWordsPreprocessor> preprocessors,
             IWordColorMapperSettings colorMapperSettings,
-            ITagsCloudLayouterSettings tagsCloudLayouterSettings,
-            ITagsCloudRenderer renderer)
+            ITagsCloudRenderer renderer,
+            ITagsCloudLayouter tagsCloudLayouter)
         {
             this.preprocessors = preprocessors;
             this.colorMapperSettings = colorMapperSettings;
-            this.tagsCloudLayouterSettings = tagsCloudLayouterSettings;
             this.renderer = renderer;
+            this.tagsCloudLayouter = tagsCloudLayouter;
         }
 
         public Bitmap RenderWords(IEnumerable<string> words)
         {
             var preprocessedWords = PreprocessWords(words);
-            var layout = tagsCloudLayouterSettings.TagsCloudLayouter.GetCloudLayout(preprocessedWords);
+            var layout = tagsCloudLayouter.GetCloudLayout(preprocessedWords);
             var colorMap = colorMapperSettings.ColorMapper.GetColorMap(layout);
             var wordsStyles = GetWordsStyles(layout, colorMap).ToList();
             var bitmap = renderer.GetBitmap(wordsStyles, layout.ImageSize);

@@ -5,7 +5,7 @@ using CommandLine;
 namespace TagsCloudApp.RenderCommand
 {
     [Verb("render")]
-    public class RenderOptions : IRenderOptions
+    public class RenderArgs : IRenderArgs
     {
         [Option('i', "input", Default = "input.txt")]
         public string InputPath { get; set; }

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudApp.RenderCommand
 {
-    public interface IRenderOptions
+    public interface IRenderArgs
     {
         string InputPath { get; }
         string OutputPath { get; }

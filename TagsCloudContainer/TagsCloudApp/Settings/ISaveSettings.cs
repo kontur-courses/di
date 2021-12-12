@@ -1,6 +1,6 @@
 ﻿using System.Drawing.Imaging;
 
-namespace TagsCloudContainer.Settings
+namespace TagsCloudApp.Settings
 {
     public interface ISaveSettings
     {

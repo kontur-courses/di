@@ -9,7 +9,7 @@ namespace TagsCloudApp
     {
         public static void Main(string[] args)
         {
-            var options = Parser.Default.ParseArguments<RenderOptions>(args).Value;
+            var options = Parser.Default.ParseArguments<RenderArgs>(args).Value;
             if (options == null)
                 return;
 
