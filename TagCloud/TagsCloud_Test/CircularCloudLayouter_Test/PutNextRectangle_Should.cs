@@ -1,23 +1,21 @@
-using NUnit.Framework;
-using FluentAssertions;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using FluentAssertions;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud.Drawing;
 using TagCloud.Layout;
 using TagCloud.TextProcessing;
-using TagCloud.Utils;
-
 
 namespace TagsCloudVisualization_Test
 {
     public class PutNextRectangleShould
     {
-        private CircularCloudLayouter _layout;
-        private int _count = 0;
+        private int _count;
         private IDrawerOptions _drawerOptions;
+        private CircularCloudLayouter _layout;
         private ITextProcessingOptions _textProcessingOptions;
 
         [OneTimeSetUp]
@@ -26,7 +24,7 @@ namespace TagsCloudVisualization_Test
             _drawerOptions = new DrawerOptions();
             _textProcessingOptions = new TextProcessingOptions();
         }
-        
+
         [SetUp]
         public void Setup()
         {
@@ -39,7 +37,7 @@ namespace TagsCloudVisualization_Test
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed || _layout == null) return;
             var context = TestContext.CurrentContext;
             _layout = null;
-            Console.WriteLine($"{ context.Test.Name} {context.Result.Outcome.Status}");
+            Console.WriteLine($"{context.Test.Name} {context.Result.Outcome.Status}");
         }
 
         [TestCase(0, 0)]
@@ -89,7 +87,8 @@ namespace TagsCloudVisualization_Test
         {
             var center = new Point(x, y);
             var rectSize = new Size(50, 20);
-            GetLayouter(center).PutNextRectangle(rectSize).IntersectsWith(new Rectangle(center, Size.Empty)).Should().BeTrue();
+            GetLayouter(center).PutNextRectangle(rectSize).IntersectsWith(new Rectangle(center, Size.Empty)).Should()
+                .BeTrue();
         }
 
         [Test]
@@ -115,14 +114,17 @@ namespace TagsCloudVisualization_Test
             TestHelper.CheckIntersects(layouter.Rectangles.ToList()).Should().BeEmpty();
         }
 
-        [Test, Repeat(10), Timeout(20_000)]
+        [Test]
+        [Repeat(10)]
+        [Timeout(20_000)]
         public void Put1000Rectangles_TakesLess2SecondsAverage()
         {
             var rectSizes = TestHelper.GenerateSizes(1000);
             GetLayouter(null, rectSizes);
         }
 
-        [Test, Timeout(2_000)]
+        [Test]
+        [Timeout(2_000)]
         public void Put1000Rectangles_TakesLess2Seconds()
         {
             var rectSizes = TestHelper.GenerateSizes(1000);
@@ -138,12 +140,13 @@ namespace TagsCloudVisualization_Test
             var targetFactor = 0.70;
             var testAmount = 10;
             double sumFactor = 0;
-            for (int i = 0; i < testAmount; i++)
+            for (var i = 0; i < testAmount; i++)
             {
                 var rectSizes = TestHelper.GenerateSizes(amount);
                 var layouter = GetLayouter(null, rectSizes);
                 sumFactor += TestHelper.GetDensityFactor(layouter.Rectangles.ToList(), layouter.Center);
             }
+
             var actualFactor = Math.Round(sumFactor / testAmount, 2);
             actualFactor.Should().BeGreaterThan(targetFactor);
         }
@@ -154,22 +157,27 @@ namespace TagsCloudVisualization_Test
             var targetFactor = 0.75;
             var testAmount = 10;
             double sumFactor = 0;
-            for (int i = 0; i < testAmount; i++)
+            for (var i = 0; i < testAmount; i++)
             {
                 var rectSizes = TestHelper.GenerateSizes_WithOneVeryBig(100);
 
                 var layouter = GetLayouter(null, rectSizes);
                 sumFactor += TestHelper.GetDensityFactor(layouter.Rectangles.ToList(), layouter.Center);
             }
+
             var actualFactor = Math.Round(sumFactor / testAmount, 2);
             actualFactor.Should().BeGreaterThan(targetFactor);
         }
 
-        private CircularCloudLayouter GetLayouter(Point? center) =>
-            new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
+        private CircularCloudLayouter GetLayouter(Point? center)
+        {
+            return new(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
+        }
 
-        private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes) =>
-            GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty));
+        private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes)
+        {
+            return GetLayouter(center ?? Point.Empty, rectSizes, new ArchimedeanSpiral(center ?? Point.Empty));
+        }
 
         private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes, ICurve curve)
         {

@@ -6,8 +6,8 @@ namespace TagCloud.TextProcessing
 {
     internal class MyStemResult
     {
-        public  List<Dictionary<string, string>> analysis { get; set; }
-        public  string text { get; set; }
+        public List<Dictionary<string, string>> analysis { get; set; }
+        public string text { get; set; }
 
         public Dictionary<string, string> Analisys => analysis
             .SelectMany(d => d.Select(pair => pair))

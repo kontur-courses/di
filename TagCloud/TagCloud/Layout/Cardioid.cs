@@ -9,13 +9,13 @@ namespace TagCloud.Layout
     {
         private readonly int _offsetX;
         private readonly int _offsetY;
-        private double _radius = 1;
         private double _phi;
-        
+        private double _radius = 1;
+
         public Cardioid() : this(Point.Empty)
         {
         }
-        
+
         public Cardioid(Point center)
         {
             _offsetX = center.X;

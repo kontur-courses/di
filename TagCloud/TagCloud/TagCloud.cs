@@ -11,10 +11,10 @@ namespace TagCloud
     public class TagCloud
     {
         private readonly IDrawer _drawer;
-        private List<Dictionary<string, int>> _processedTexts = new();
         private readonly TextWriter _statusWriter;
         private readonly ITextProcessor _textProcessor;
         private readonly IWordLayouter _wordLayouter;
+        private List<Dictionary<string, int>> _processedTexts = new();
 
         public TagCloud(ITextProcessor textProcessor, IWordLayouter wordLayouter, IDrawer drawer,
             TextWriter statusWriter)
@@ -34,7 +34,8 @@ namespace TagCloud
                 _statusWriter.WriteLine("Обработка завершена\n");
                 return this;
             }
-            catch(IOException e){
+            catch (IOException e)
+            {
                 _statusWriter.WriteLine(e.Message);
                 return this;
             }
@@ -47,6 +48,7 @@ namespace TagCloud
                 _statusWriter.WriteLine("Сначала нужно подготовить данные. Сейчас список обработанных текстов пуст.");
                 return this;
             }
+
             foreach (var text in _processedTexts)
             {
                 _statusWriter.WriteLine("Раскладываю текст");
@@ -56,6 +58,7 @@ namespace TagCloud
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
                 bitmap.SaveCurrentDirectory(format: options.Format);
             }
+
             _statusWriter.WriteLine($"Готово!\nФайлы здесь: {Directory.GetCurrentDirectory()}");
             return this;
         }

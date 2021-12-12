@@ -1,10 +1,8 @@
-﻿using NUnit.Framework;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using NUnit.Framework;
 using TagCloud.Layout;
-using TagCloud.Utils;
-
 
 namespace TagsCloudVisualization_Test
 {

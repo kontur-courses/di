@@ -7,16 +7,15 @@ namespace TagCloud.Layout
 {
     internal class Rose : ICurve
     {
-
         private readonly int _offsetX;
         private readonly int _offsetY;
-        private double _radius = 1;
         private double _phi;
-        
+        private double _radius = 1;
+
         public Rose() : this(Point.Empty)
         {
         }
-        
+
         public Rose(Point center)
         {
             _offsetX = center.X;

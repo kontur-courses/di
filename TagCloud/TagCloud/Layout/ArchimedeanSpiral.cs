@@ -5,18 +5,17 @@ using TagCloud.Utils;
 
 namespace TagCloud.Layout
 {
-
     internal class ArchimedeanSpiral : ICurve
     {
         private readonly int _offsetX;
         private readonly int _offsetY;
         private readonly double _radius = 1;
-        private double _phi = 0;
-        
+        private double _phi;
+
         public ArchimedeanSpiral() : this(Point.Empty)
         {
         }
-        
+
         public ArchimedeanSpiral(Point center)
         {
             _offsetX = center.X;

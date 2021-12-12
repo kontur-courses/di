@@ -10,17 +10,17 @@ namespace TagCloud.TextProcessing
 {
     internal class TextProcessor : ITextProcessor
     {
-        private readonly IFileReader _textReader;
         private const string UtilFileName = "mystem.exe";
         private const string TempWritePath = @"c:\temp\input.txt";
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
+        private readonly IFileReader _textReader;
 
         public TextProcessor(IFileReader textReader)
         {
             _textReader = textReader;
         }
-        
+
         public IEnumerable<Dictionary<string, int>> GetWordsWithFrequency(ITextProcessingOptions options)
         {
             foreach (var filePath in options.FilesToProcess)
@@ -29,8 +29,8 @@ namespace TagCloud.TextProcessing
                 writer.Write(_textReader.ReadFile(filePath));
                 using (var process = ConfigureProcess(TempWritePath))
                 {
-                    process.Start();                    
-                    process.WaitForExit();  
+                    process.Start();
+                    process.WaitForExit();
                 }
 
                 var myStemResults = ParseMyStemResult();
@@ -62,7 +62,7 @@ namespace TagCloud.TextProcessing
             process.StartInfo.FileName = UtilFileName;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.Arguments = $"{Arguments} {filepath} {TempPath}";
-            
+
             return process;
         }
     }

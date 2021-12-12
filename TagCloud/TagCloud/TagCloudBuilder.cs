@@ -10,7 +10,7 @@ namespace TagCloud
     {
         private static IContainer? _container;
         private static ContainerBuilder? _builder;
-        
+
         public TagCloudBuilder GetDefault()
         {
             _builder = new ContainerBuilder();

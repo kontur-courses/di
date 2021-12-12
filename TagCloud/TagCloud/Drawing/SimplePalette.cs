@@ -7,7 +7,7 @@ namespace TagCloud.Drawing
     internal class SimplePalette : IPalette
     {
         private List<Color>? _colors;
-        
+
         public Color GetNextColor()
         {
             var rnd = new Random();

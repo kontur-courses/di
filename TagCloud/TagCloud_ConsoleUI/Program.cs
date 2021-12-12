@@ -16,7 +16,7 @@ namespace TagCloud_ConsoleUI
                 .GetDefault()
                 .WithStatusWriter<ConsoleStatusWriter>()
                 .Build();
-            
+
             while (!args.Contains("exit"))
             {
                 Parser.Default.ParseArguments<DrawerOptions, TextProcessingOptions, ClearOptions>(args)

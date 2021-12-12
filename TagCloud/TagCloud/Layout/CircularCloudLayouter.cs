@@ -6,16 +6,16 @@ using System.Runtime.CompilerServices;
 using TagCloud.Extensions;
 
 [assembly: InternalsVisibleTo("TagsCloud_Test")]
+
 namespace TagCloud.Layout
 {
     internal class CircularCloudLayouter : ICloudLayouter
     {
-        public readonly Point Center;
         private readonly ICurve _curve;
         private readonly List<Rectangle> _rectangles = new();
-        public List<Rectangle> Rectangles => _rectangles.ToList();
+        public readonly Point Center;
 
-        public CircularCloudLayouter(ICurve curve) :this(Point.Empty, curve)
+        public CircularCloudLayouter(ICurve curve) : this(Point.Empty, curve)
         {
         }
 
@@ -25,11 +25,13 @@ namespace TagCloud.Layout
             _curve = curve;
         }
 
+        public List<Rectangle> Rectangles => _rectangles.ToList();
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
-                throw new ArgumentException($"Ширина и высота прямоугольника должны быть положительными числами: " +
-                    $"{rectangleSize.Width} x {rectangleSize.Height}");
+                throw new ArgumentException("Ширина и высота прямоугольника должны быть положительными числами: " +
+                                            $"{rectangleSize.Width} x {rectangleSize.Height}");
 
             var rectangle = _rectangles.Any()
                 ? GetNextRectangleWithLocation(rectangleSize)
@@ -47,6 +49,7 @@ namespace TagCloud.Layout
                 pointEnumerator.MoveNext();
                 dryRect.Location = pointEnumerator.Current;
             }
+
             return dryRect;
         }
     }

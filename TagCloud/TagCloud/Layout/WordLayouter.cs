@@ -10,6 +10,7 @@ namespace TagCloud.Layout
     internal class WordLayouter : IWordLayouter
     {
         private readonly ICloudLayouter _layouter;
+
         private readonly Func<int, float, double> _scale = (freq, fontSize) =>
             (Math.Pow(freq - 1, 0.65) + 1) * fontSize;
 
@@ -23,14 +24,14 @@ namespace TagCloud.Layout
             using var g = Graphics.FromImage(new Bitmap(1, 1));
             var listWords = new List<Word>();
             var minFontSize = double.MaxValue;
-            
+
             foreach (var (word, frequency) in wordsWithFrequency)
             {
                 var fontSize = _scale(frequency, options.BaseFontSize);
                 minFontSize = Math.Min(minFontSize, fontSize);
-                listWords.Add(new Word(word, new Font(options.FontFamily, (float)fontSize)));
+                listWords.Add(new Word(word, new Font(options.FontFamily, (float) fontSize)));
             }
-            
+
             listWords = NormalizeFontSize(minFontSize, listWords);
             foreach (var word in listWords)
             {

@@ -8,7 +8,7 @@ namespace TagCloud.Extensions
     internal static class RectangleExtensions
     {
         /// <summary>
-        /// Находит расстояние от точки внутри прямоугольника до каждой его стороны
+        ///     Находит расстояние от точки внутри прямоугольника до каждой его стороны
         /// </summary>
         /// <param name="rect">Прямоугольник</param>
         /// <param name="point">Точка внутри прямоугольника</param>
@@ -20,14 +20,14 @@ namespace TagCloud.Extensions
             var right = rect.Right - point.X;
             var bottom = rect.Bottom - point.Y;
 
-            var distances = new List<int> { left, top, right, bottom };
+            var distances = new List<int> {left, top, right, bottom};
             if (distances.Any(d => d < 0))
                 throw new ArgumentException("Точка расположена вне прямоугольника");
             return distances;
         }
 
         /// <summary>
-        /// Возвращает новый прямоугольник полученный путем пересечения двух прямоугольников
+        ///     Возвращает новый прямоугольник полученный путем пересечения двух прямоугольников
         /// </summary>
         /// <exception cref="ArgumentException">Если прямоугольники не пересекаются</exception>
         public static Rectangle GetIntersection(this Rectangle first, Rectangle second)
@@ -39,7 +39,7 @@ namespace TagCloud.Extensions
         }
 
         /// <summary>
-        /// Находит пересечение двух прямоугольников, если они пересекаются
+        ///     Находит пересечение двух прямоугольников, если они пересекаются
         /// </summary>
         /// <param name="intersection">Новый прямоугольник полученный путем пересечения двух прямоугольников</param>
         /// <returns>true, если прямоугольники пересекаются, в противном случае — false.</returns>
@@ -50,6 +50,7 @@ namespace TagCloud.Extensions
                 intersection = Rectangle.Empty;
                 return false;
             }
+
             first.Intersect(second);
             intersection = first;
             return true;

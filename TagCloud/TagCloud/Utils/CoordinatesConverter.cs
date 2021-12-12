@@ -7,7 +7,7 @@ namespace TagCloud.Utils
     {
         public static Point ToCartesian(double rho, double phi)
         {
-            return new Point((int)Math.Round((rho * Math.Cos(phi))), (int)Math.Round(rho * Math.Sin(phi)));
+            return new Point((int) Math.Round(rho * Math.Cos(phi)), (int) Math.Round(rho * Math.Sin(phi)));
         }
 
         public static (double rho, double phi) ToPolar(Point point)
