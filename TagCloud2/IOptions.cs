@@ -19,5 +19,15 @@ namespace TagCloud2
         string FontName { get; set; }
 
         int FontSize { get; set; }
+
+        int X { get; set; }
+
+        int Y { get; set; }
+
+        double LinearSpeed { get; set; }
+
+        double AngleSpeed { get; set; }
+
+        string ExcludePath { get; set; }
     }
 }

@@ -38,14 +38,14 @@ namespace TagCloud2
             );
             kernel.Bind<Core>().ToSelf();
             kernel.Bind<ICloudLayouter>().To<CircularCloudLayouter>();
-            var Spiral = new ArchimedeanSpiral(new Point(500, 500));
+            var Spiral = new ArchimedeanSpiral(new Point(options.X/2, options.Y/2), options.AngleSpeed, options.LinearSpeed);
             kernel.Bind<ISpiral>().ToConstant(Spiral);
             kernel.Unbind<IFileReader>();
             kernel.Unbind<IImageFormatter>();
             GeneratorHelper.dictionary[options.Format].Invoke();
             GeneratorHelper.dictionary[options.OutputFormat].Invoke();
             var core2 = kernel.Get<Core>();
-            core2.Run(options.Path, options.FontName, options.OutputName, options.FontSize);
+            core2.Run(options);
         }
     }
 }

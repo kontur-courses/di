@@ -9,10 +9,10 @@ namespace TagCloud2.Image
 {
     public class ColoredCloudToBitmap : IColoredCloudToImageConverter
     {
-        public System.Drawing.Image GetImage(IColoredCloud cloud)
+        public System.Drawing.Image GetImage(IColoredCloud cloud, int xSize, int ySize)
         {
             var words = cloud.GetColoredWords();
-            var bitmap = new Bitmap(1000, 1000);
+            var bitmap = new Bitmap(xSize, ySize);
             var g = Graphics.FromImage(bitmap);
             foreach (var r in words)
             {

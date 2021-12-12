@@ -28,6 +28,29 @@ namespace ConsoleRunner
         [Option("fontsize", Required = false, HelpText = "Font size")]
         public int FontSize { get; set; }
         private int fontSize = 12;
+
+        [Option("xsize", Required = false, HelpText = "image X size")]
+        public int X { get; set; }
+        private int x = 1000;
+
+        [Option("ysize", Required = false, HelpText = "image Y size")]
+        public int Y { get; set; }
+        private int y = 1000;
+
+        [Option("anglespeed", Required = false, HelpText = "Angle speed of spiral. USE ONLY IF UNDERSTAND")]
+        public double AngleSpeed { get; set; }
+        private double angleSpeed = 0.108;
+
+        [Option("linearspeed", Required = false, HelpText = "Linear speed of spiral. USE ONLY IF UNDERSTAND")]
+        public double LinearSpeed { get; set; }
+        private double linearSpeed = 0.108;
+
+        [Option("boringwordspath", Required = false, HelpText = "path to file with words to exclude")]
+        public string ExcludePath { get; set; }
+
+        [Option("boringmode", Required = false, HelpText = "enables words excluding mode")]
+        public bool IsBoringMode { get; set; } 
+
         public void MakeNullsDefault()
         {
             Format = Format ?? format;
@@ -35,6 +58,10 @@ namespace ConsoleRunner
             OutputName = OutputName ?? outputName;
             FontName = FontName ?? fontName;
             if (FontSize == 0) FontSize = fontSize;
+            if (Y == 0) Y = y;
+            if (X == 0) X = x;
+            if (LinearSpeed == 0) LinearSpeed = linearSpeed;
+            if (AngleSpeed == 0) AngleSpeed = angleSpeed;
         }
     }
     class Program

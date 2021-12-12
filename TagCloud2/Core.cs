@@ -23,11 +23,11 @@ namespace TagCloud2
         private IFileGenerator fileGenerator;
         private IImageFormatter formatter;
 
-        public void Run(string fileName, string fontName, string outputName, int fontSize)
+        public void Run(IOptions options)
         {
-            var fontF = new FontFamily(fontName);
-            var font = new Font(fontF, fontSize);
-            var input = reader.ReadFile(fileName);
+            var fontF = new FontFamily(options.FontName);
+            var font = new Font(fontF, options.FontSize);
+            var input = reader.ReadFile(options.Path);
             var lines = wordReader.GetWords(input);
             var words = lines
                 .Select(x => preprocessor.PreprocessString(x))
@@ -41,8 +41,8 @@ namespace TagCloud2
             }
 
             var colored = coloredCloud.GetFromCloudLayouter(words, layouter, coloringAlgorithm);
-            var image = converterToImage.GetImage(colored);
-            fileGenerator.GenerateFile(outputName, formatter, image);
+            var image = converterToImage.GetImage(colored, options.X, options.Y);
+            fileGenerator.GenerateFile(options.OutputName, formatter, image);
         }
 
         public Core(IFileReader reader, IWordReader wordReader, IStringPreprocessor preprocessor, IStringToSizeConverter sizeConverter,
