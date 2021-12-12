@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using TagsCloudContainer;
 using TagsCloudContainer.BitmapSaver;
 using TagsCloudContainer.FileReader;
 using TagsCloudContainer.Visualizer;
@@ -10,36 +11,22 @@ namespace TagsCloud.Console
 {
     public class ConsoleUI : IConsoleUI
     {
+        private ITagCloud tagCloud;
         private readonly IFileReadersResolver fileReadersResolver;
-        private readonly IFilterApplyer filterApplyer;
-        private readonly IWordsFrequencyAnalyzer frequencyAnalyzer;
         private readonly IBitmapSaver saver;
-        private readonly IVisualizer visualizer;
-        private readonly IWordsConverter wordsConverter;
 
-        public ConsoleUI(IFileReadersResolver fileReadersResolver,
-            IWordsConverter wordsConverter,
-            IFilterApplyer filterApplyer,
-            IWordsFrequencyAnalyzer frequencyAnalyzer,
-            IVisualizer visualizer,
-            IBitmapSaver saver)
+        public ConsoleUI(IFileReadersResolver fileReadersResolver, IBitmapSaver saver, ITagCloud tagCloud)
         {
             this.fileReadersResolver = fileReadersResolver;
-            this.wordsConverter = wordsConverter;
-            this.filterApplyer = filterApplyer;
-            this.frequencyAnalyzer = frequencyAnalyzer;
-            this.visualizer = visualizer;
             this.saver = saver;
+            this.tagCloud = tagCloud;
         }
 
-        public void Run(IAppSettings settings)
+        public void Run(IAppSettings appSettings, ITagCloudSettings tagCloudSettings)
         {
-            var content = fileReadersResolver.Get(settings.InputPath).ReadWords(settings.InputPath);
-            var convertedWords = wordsConverter.Convert(content);
-            var filteredWords = filterApplyer.Apply(convertedWords);
-            var freqDict = frequencyAnalyzer.GetWordsFrequency(filteredWords);
-            using var visualization = visualizer.Visualize(freqDict);
-            saver.Save(visualization, settings.OutputPath);
+            var content = fileReadersResolver.Get(appSettings.InputPath).ReadWords(appSettings.InputPath);
+            using var visualization = tagCloud.LayDown(content, tagCloudSettings);
+            saver.Save(visualization, appSettings.OutputPath);
         }
     }
 }

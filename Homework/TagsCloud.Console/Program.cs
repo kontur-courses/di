@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Linq;
 using Autofac;
 using DeepMorphy;
 using TagsCloudContainer.BitmapSaver;
@@ -18,9 +17,10 @@ namespace TagsCloud.Console
         public static void Main(string[] args)
         {
             var appSettings = AppSettings.Parse(args);
+            var tagCloudSettings = TagCloudSettings.Parse(args);
             using var container = Configure(appSettings);
             container.Resolve<IConsoleUI>()
-                .Run(appSettings);
+                .Run(appSettings, tagCloudSettings);
         }
 
         internal static IContainer Configure(IAppSettings settings)
