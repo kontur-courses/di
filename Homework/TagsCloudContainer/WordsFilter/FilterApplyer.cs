@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagsCloudContainer.WordsConverters;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer.WordsFilter
 {

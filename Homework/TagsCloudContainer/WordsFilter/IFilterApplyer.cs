@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TagsCloudContainer.WordsConverters;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer.WordsFilter
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using TagsCloudContainer.WordsConverters;
+using TagsCloudContainer.WordsPreparator;
 
 [assembly:InternalsVisibleTo("TagsCloudContainer_Tests")]
 

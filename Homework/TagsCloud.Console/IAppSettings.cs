@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
-using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloud.Console
 {

@@ -5,7 +5,7 @@ using TagsCloudContainer;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.Visualizer.ColorGenerators;
-using TagsCloudContainer.WordsConverters;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloud.Console
 {

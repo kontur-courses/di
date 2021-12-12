@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainer.Visualizer;
-using TagsCloudContainer.WordsConverters;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsFrequencyAnalyzers;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer
 {
@@ -12,13 +12,13 @@ namespace TagsCloudContainer
         private readonly IFilterApplyer filterApplyer;
         private readonly IWordsFrequencyAnalyzer frequencyAnalyzer;
         private readonly IVisualizer visualizer;
-        private readonly IWordsConverter wordsConverter;
+        private readonly IWordsPreparator wordsConverter;
 
 
         public TagCloud(IFilterApplyer filterApplyer,
             IWordsFrequencyAnalyzer frequencyAnalyzer,
             IVisualizer visualizer,
-            IWordsConverter wordsConverter)
+            IWordsPreparator wordsConverter)
         {
             this.filterApplyer = filterApplyer;
             this.frequencyAnalyzer = frequencyAnalyzer;
@@ -28,8 +28,8 @@ namespace TagsCloudContainer
 
         public Bitmap LayDown(IEnumerable<string> words, ITagCloudSettings settings)
         {
-            var convertedWords = wordsConverter.Convert(words);
-            var filteredWords = filterApplyer.Apply(convertedWords);
+            var preparedWords = wordsConverter.Prepare(words);
+            var filteredWords = filterApplyer.Apply(preparedWords);
             var freqDict = frequencyAnalyzer.GetWordsFrequency(filteredWords);
             return visualizer.Visualize(freqDict);
         }

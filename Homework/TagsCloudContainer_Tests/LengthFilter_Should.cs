@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.WordsConverters;
 using TagsCloudContainer.WordsFilter;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer_Tests
 {

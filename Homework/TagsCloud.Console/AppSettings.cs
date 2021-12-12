@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CommandLine;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
-using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloud.Console
 {

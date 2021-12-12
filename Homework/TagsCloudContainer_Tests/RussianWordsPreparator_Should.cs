@@ -2,14 +2,14 @@
 using DeepMorphy;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.WordsConverters;
+using TagsCloudContainer.WordsPreparator;
 
 namespace TagsCloudContainer_Tests
 {
     [TestFixture]
-    public class RussianWordsConverter_Should
+    public class RussianWordsPreparator_Should
     {
-        private readonly RussianWordsConverter sut = new(new MorphAnalyzer());
+        private readonly RussianWordsPreparator sut = new(new MorphAnalyzer());
 
         [Test]
         public void Trim()
@@ -57,20 +57,20 @@ namespace TagsCloudContainer_Tests
         public SpeechPart IdentifySpeechParts(string word)
         {
             var input = new[] {word};
-            return sut.Convert(input).First().SpeechPart;
+            return sut.Prepare(input).First().SpeechPart;
         }
 
         [Test]
         public void ParseLines_WhenSeveralWords()
         {
             var input = new[] {"он один"};
-            var result = sut.Convert(input);
+            var result = sut.Prepare(input);
             result.Should().HaveCount(2);
         }
 
         private void AssertLemma(string[] input, string[] expected)
         {
-            sut.Convert(input)
+            sut.Prepare(input)
                 .Select(wi => wi.Lemma)
                 .Should().BeEquivalentTo(expected);
         }

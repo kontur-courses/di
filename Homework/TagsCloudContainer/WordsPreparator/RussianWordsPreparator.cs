@@ -3,9 +3,9 @@ using System.Linq;
 using DeepMorphy;
 using DeepMorphy.Model;
 
-namespace TagsCloudContainer.WordsConverters
+namespace TagsCloudContainer.WordsPreparator
 {
-    public record RussianWordsConverter : IWordsConverter
+    public record RussianWordsPreparator : IWordsPreparator
     {
         private const string SpeechPartKey = "чр";
 
@@ -25,12 +25,12 @@ namespace TagsCloudContainer.WordsConverters
         private readonly MorphAnalyzer analyzer;
 
 
-        public RussianWordsConverter(MorphAnalyzer analyzer)
+        public RussianWordsPreparator(MorphAnalyzer analyzer)
         {
             this.analyzer = analyzer;
         }
 
-        public ICollection<WordInfo> Convert(IEnumerable<string> words)
+        public ICollection<WordInfo> Prepare(IEnumerable<string> words)
         {
             var preparedWords = words
                 .Select(ToLowerAndTrim)

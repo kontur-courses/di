@@ -3,7 +3,6 @@ using TagsCloudContainer;
 using TagsCloudContainer.BitmapSaver;
 using TagsCloudContainer.FileReader;
 using TagsCloudContainer.Visualizer;
-using TagsCloudContainer.WordsConverters;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsFrequencyAnalyzers;
 
