@@ -4,7 +4,7 @@ using CommandLine;
 
 namespace TagCloud.TextProcessing
 {
-    [Verb("process", HelpText = "Обработать текст по заданному пути")]
+    [Verb("process", HelpText = "Обработать текст из файла по заданному пути")]
     public class TextProcessingOptions : ITextProcessingOptions
     {
         private static HashSet<string> DefaultExcludeWords => new() {"быть", "сказать", "мочь"};

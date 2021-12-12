@@ -25,41 +25,45 @@ namespace TagCloud
             _statusWriter = statusWriter;
         }
 
-        public int ProcessText(ITextProcessingOptions options)
+        public TagCloud ProcessText(ITextProcessingOptions options)
         {
             _statusWriter.WriteLine("Начинаю обработку текста");
             try
             {
                 _processedTexts = _textProcessor.GetWordsWithFrequency(options).ToList();
                 _statusWriter.WriteLine("Обработка завершена\n");
-                return 0;
+                return this;
             }
             catch(IOException e){
                 _statusWriter.WriteLine(e.Message);
-                return 1;
+                return this;
             }
         }
 
-        public int DrawTagClouds(IDrawerOptions options)
+        public TagCloud DrawTagClouds(IDrawerOptions options)
         {
+            if (!_processedTexts.Any())
+            {
+                _statusWriter.WriteLine("Сначала нужно подготовить данные. Сейчас список обработанных текстов пуст.");
+                return this;
+            }
             foreach (var text in _processedTexts)
             {
                 _statusWriter.WriteLine("Раскладываю текст");
                 var layoutedWords = _wordLayouter.Layout(options, text);
-                _statusWriter.WriteLine("Рисую bitmap\n");
+                _statusWriter.WriteLine("Рисую bitmap");
                 var bitmap = _drawer.Draw(options, layoutedWords);
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
                 bitmap.SaveCurrentDirectory(format: options.Format);
             }
-
             _statusWriter.WriteLine($"Готово!\nФайлы здесь: {Directory.GetCurrentDirectory()}");
-            return 0;
+            return this;
         }
 
-        public int ClearProcessedTexts()
+        public TagCloud ClearProcessedTexts()
         {
             _processedTexts.Clear();
-            return 0;
+            return this;
         }
     }
 }

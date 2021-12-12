@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.Layout
 {
-    public interface ICurve
+    internal interface ICurve
     {
         /// <summary>
         /// Выдает дискретные точки на кривой от последнего взятого значения до бесконечности!

@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace TagCloud.Drawing
 {
-    public class SimplePalette : IPalette
+    internal class SimplePalette : IPalette
     {
         private List<Color>? _colors;
         

@@ -24,11 +24,11 @@ namespace TagCloud.Drawing
             var bitmapSize = GetCanvasSize(rectangles, center);
             var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
-            
+
             using var g = Graphics.FromImage(bitmap);
             using var backgroundBrush = new SolidBrush(options.BackgroundColor);
             g.FillRectangle(backgroundBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);
-            
+
             var offsetPoint = new Point(bitmapCenter.X - center.X, bitmapCenter.Y - center.Y);
             foreach (var word in words)
             {
@@ -51,7 +51,7 @@ namespace TagCloud.Drawing
             var horizontalIncrement = Math.Abs(distances[0] - distances[2]);
             var verticalIncrement = Math.Abs(distances[1] - distances[3]);
             union.Inflate(horizontalIncrement, verticalIncrement);
-            return new Size((int)(union.Width * 1.1), (int)(union.Height * 1.1));
+            return new Size((int) (union.Width * 1.1), (int) (union.Height * 1.1));
         }
     }
 }

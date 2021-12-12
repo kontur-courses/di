@@ -7,7 +7,7 @@ using TagCloud.TextProcessing;
 
 namespace TagCloud_ConsoleUI
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -24,7 +24,7 @@ namespace TagCloud_ConsoleUI
                         (DrawerOptions opts) => tagCloud.DrawTagClouds(opts),
                         (TextProcessingOptions opts) => tagCloud.ProcessText(opts),
                         (ClearOptions opts) => tagCloud.ClearProcessedTexts(),
-                        errors => 1);
+                        errors => null);
                 args = Console.ReadLine().Split();
             }
         }
