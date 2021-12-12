@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TagsCloudContainer.WordsPreparator;
-
-[assembly: InternalsVisibleTo("TagsCloudContainer_Tests")]
 
 namespace TagsCloudContainer.WordsFilter
 {

@@ -16,7 +16,7 @@ namespace TagsCloudContainer.Layouter.PointsProviders
         {
             center = new Point(settings.ImageWidth / 2, settings.ImageHeight / 2);
         }
-        
+
         internal SpiralPointsProvider(Point center)
         {
             this.center = center;

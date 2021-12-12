@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Autofac;
 using DeepMorphy;
-using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer.VisualizerSettings;
 using Module = Autofac.Module;
 
