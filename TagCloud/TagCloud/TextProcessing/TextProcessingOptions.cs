@@ -4,7 +4,7 @@ using CommandLine;
 
 namespace TagCloud.TextProcessing
 {
-    [Verb("process", HelpText = "Process text from path")]
+    [Verb("process", HelpText = "Обработать текст по заданному пути")]
     public class TextProcessingOptions : ITextProcessingOptions
     {
         private static HashSet<string> DefaultExcludeWords => new() {"быть", "сказать", "мочь"};
@@ -23,23 +23,23 @@ namespace TagCloud.TextProcessing
         private HashSet<PartOfSpeech> _excludePartOfSpeech;
 
 
-        [Option('p',"path", Required = true, HelpText = "Set file paths")]
+        [Option('p',"path", Required = true, HelpText = "Задать путь к файлу")]
         public IEnumerable<string> FilesToProcess { get; set; }
         
-        [Option('i', "include", Required = false, HelpText = "Set include words", Separator = ':')]
+        [Option('i', "include", Required = false, HelpText = "Задать список слов обязательных к влючению (при наличии в исходном тексте)", Separator = ':')]
         public IEnumerable<string> IncludeWords { get; set; }
         
-        [Option('e',"exclude", Required = false, HelpText = "Set words to exclude", Separator = ':')]
+        [Option('e',"exclude", Required = false, HelpText = "Задать список слов для исключения из облака", Separator = ':')]
         public IEnumerable<string> ExcludeWords
         {
             get  => _excludeWords.Any() ? _excludeWords : DefaultExcludeWords; 
             set => _excludeWords = value.ToHashSet();
         }
 
-        [Option('a',"amount", Required = false, HelpText = "Set words amount in tag cloud", Default = 1000)]
+        [Option('a',"amount", Required = false, HelpText = "Установить количество слов в итоговом облаке тэгов (при наличии такого количества в исходном тексте)", Default = 1000)]
         public int Amount { get; set; }
         
-        [Option('s',"exclude-pos", Required = false, HelpText = "Part of speech to exclude", Separator = ':')]
+        [Option('s',"exclude-pos", Required = false, HelpText = "Задать список частей речи для исключения из облака", Separator = ':')]
         public IEnumerable<PartOfSpeech> ExcludePartOfSpeech
         {
             get => _excludePartOfSpeech.Count != 0 ? _excludePartOfSpeech : DefaultExcludePartOfSpeech;
