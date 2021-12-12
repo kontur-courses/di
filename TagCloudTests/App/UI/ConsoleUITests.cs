@@ -50,11 +50,6 @@ internal class ConsoleUITests
         {
             return new FakeReader();
         }
-
-        public IFileReader Create(IInputPathProvider inputPathProvider)
-        {
-            return Create(inputPathProvider.InputPath);
-        }
     }
 
     private class FakeReader : IFileReader

@@ -12,7 +12,7 @@ using TagCloud.Infrastructure.Weigher;
 
 namespace TagCloud;
 
-internal static class Startup
+internal static class Configurator
 {
     public static ContainerBuilder ConfigureConsoleClient(this ContainerBuilder builder, IAppSettings appSettings)
     {
