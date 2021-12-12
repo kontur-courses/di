@@ -1,0 +1,30 @@
+<Project>
+    <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props" />
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <LangVersion>8</LangVersion>
+        <OutputType>Library</OutputType>
+        <RootNamespace>TagsCloudVisualization.Tests</RootNamespace>
+    </PropertyGroup>
+
+    <Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets" />
+    <PropertyGroup>
+        <PostBuildEvent>
+            xcopy "$(SolutionDir)TagsCloudVisualization\Resources" "$(TargetDir)" /D /S /I /Y
+            xcopy "$(ProjectDir)Resources" "$(TargetDir)TestData" /D /S /I /Y
+        </PostBuildEvent>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="FakeItEasy" Version="7.2.0" />
+        <PackageReference Include="FluentAssertions" Version="6.2.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="NUnit" Version="3.13.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
+    </ItemGroup>
+</Project>
