@@ -12,7 +12,7 @@ namespace TagCloud2.Image
     {
         public ImageCodecInfo GetCodec()
         {
-            return GetEncoderInfo("image/jpeg");
+            return ImageFormatterHelper.GetEncoderInfo("image/jpeg");
         }
 
         public EncoderParameters GetParameters()
@@ -22,19 +22,6 @@ namespace TagCloud2.Image
             var myEncoderParameter = new EncoderParameter(myEncoder, 100L);
             myEncoderParameters.Param[0] = myEncoderParameter;
             return myEncoderParameters;
-        }
-
-        private static ImageCodecInfo GetEncoderInfo(String mimeType)
-        {
-            int j;
-            ImageCodecInfo[] encoders;
-            encoders = ImageCodecInfo.GetImageEncoders();
-            for (j = 0; j < encoders.Length; ++j)
-            {
-                if (encoders[j].MimeType == mimeType)
-                    return encoders[j];
-            }
-            return null;
         }
     }
 }

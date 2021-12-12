@@ -23,8 +23,10 @@ namespace TagCloud2
         private IFileGenerator fileGenerator;
         private IImageFormatter formatter;
 
-        public void Run(string fileName, Font font, string outputName)
+        public void Run(string fileName, string fontName, string outputName, int fontSize)
         {
+            var fontF = new FontFamily(fontName);
+            var font = new Font(fontF, fontSize);
             var input = reader.ReadFile(fileName);
             var lines = wordReader.GetWords(input);
             var words = lines
