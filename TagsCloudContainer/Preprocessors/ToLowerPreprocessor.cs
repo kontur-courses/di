@@ -7,9 +7,7 @@ namespace TagsCloudContainer.Preprocessors
     public class ToLowerPreprocessor : IPreprocessor
     {
         public IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags)
-        {
-            return tags.Select(Normalize);
-        }
+            => tags.Select(Normalize);
 
         private SimpleTag Normalize(SimpleTag tag)
         {
