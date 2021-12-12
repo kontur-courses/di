@@ -2,9 +2,16 @@
 
 namespace TagsCloudContainer.Layouter.PointsProviders
 {
-    public class SpiralPointsProviderFactory : IFactory<SpiralPointsProvider>
+    public class SpiralPointsProviderFactory : IFactory<IPointsProvider>
     {
-        public SpiralPointsProvider Create(ITagCloudSettings settings)
+        private readonly ITagCloudSettings settings;
+
+        public SpiralPointsProviderFactory(ITagCloudSettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public IPointsProvider Create()
         {
             var center = new Point(settings.ImageWidth / 2, settings.ImageHeight / 2);
             return new SpiralPointsProvider(center);

@@ -2,6 +2,6 @@
 {
     public interface IFactory<T>
     {
-        public T Create(ITagCloudSettings settings);
+        public T Create();
     }
 }

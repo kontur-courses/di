@@ -34,10 +34,10 @@ namespace TagsCloud.Console
             builder.RegisterInstance(settings).As<IAppSettings>().SingleInstance();
             builder.RegisterInstance(tagCloudSettings).As<ITagCloudSettings>().SingleInstance();
             builder.RegisterAssemblyTypes(assembly!).AsImplementedInterfaces().SingleInstance();
-            builder.Register(c => new VisualizerSettingsFactory(c.Resolve<IColorGeneratorsResolver>()).Create(tagCloudSettings))
+            builder.Register(c => c.Resolve<IFactory<IVisualizerSettings>>().Create())
                 .As<IVisualizerSettings>()
                 .SingleInstance();
-            builder.Register(c => new SpiralPointsProviderFactory().Create(tagCloudSettings)).As<IPointsProvider>();
+            builder.Register(c => c.Resolve<IFactory<IPointsProvider>>().Create()).As<IPointsProvider>();
             builder.RegisterType<ConsoleUI>().AsImplementedInterfaces();
             builder.RegisterInstance(new MorphAnalyzer()).SingleInstance();
             return builder.Build();

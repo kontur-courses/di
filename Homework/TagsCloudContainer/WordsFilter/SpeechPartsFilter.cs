@@ -8,10 +8,10 @@ namespace TagsCloudContainer.WordsFilter
     {
         private readonly SpeechPart[] selectedSpeechParts;
 
-        // public SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
-        // {
-        //     this.selectedSpeechParts = selectedSpeechParts;
-        // }
+        internal SpeechPartsFilter(params SpeechPart[] selectedSpeechParts)
+        {
+            this.selectedSpeechParts = selectedSpeechParts;
+        }
 
         public SpeechPartsFilter(ITagCloudSettings settings)
         {
