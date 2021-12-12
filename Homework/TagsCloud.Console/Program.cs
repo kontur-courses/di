@@ -1,17 +1,5 @@
-﻿using System.Drawing;
-using System.Reflection;
-using Autofac;
-using DeepMorphy;
+﻿using Autofac;
 using TagsCloudContainer;
-using TagsCloudContainer.BitmapSaver;
-using TagsCloudContainer.FileReader;
-using TagsCloudContainer.Layouter;
-using TagsCloudContainer.Layouter.PointsProviders;
-using TagsCloudContainer.Visualizer;
-using TagsCloudContainer.Visualizer.ColorGenerators;
-using TagsCloudContainer.Visualizer.VisualizerSettings;
-using TagsCloudContainer.WordsFilter;
-using TagsCloudContainer.WordsFrequencyAnalyzers;
 
 namespace TagsCloud.Console
 {

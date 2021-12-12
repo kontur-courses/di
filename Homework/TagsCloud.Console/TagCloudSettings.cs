@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CommandLine;
 using TagsCloudContainer;
 using TagsCloudContainer.Layouter.PointsProviders;
-using TagsCloudContainer.Visualizer;
 using TagsCloudContainer.Visualizer.ColorGenerators;
 using TagsCloudContainer.WordsPreparator;
 

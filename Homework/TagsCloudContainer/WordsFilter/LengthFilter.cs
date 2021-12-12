@@ -4,14 +4,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using TagsCloudContainer.WordsPreparator;
 
-[assembly:InternalsVisibleTo("TagsCloudContainer_Tests")]
+[assembly: InternalsVisibleTo("TagsCloudContainer_Tests")]
 
 namespace TagsCloudContainer.WordsFilter
 {
     public class LengthFilter : IWordsFilter
     {
         private readonly int minLength;
-        
+
         internal LengthFilter(int minLength)
         {
             if (minLength < 0)

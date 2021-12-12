@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CommandLine;
-using TagsCloudContainer.Layouter.PointsProviders;
-using TagsCloudContainer.Visualizer;
+﻿using CommandLine;
 
 namespace TagsCloud.Console
 {
@@ -13,7 +9,7 @@ namespace TagsCloud.Console
 
         [Option('o', "outputPath", Default = "examples/output.png", HelpText = "Directory path for tag cloud")]
         public string OutputPath { get; set; } = null!;
-        
+
 
         public static IAppSettings Parse(string[] args)
         {

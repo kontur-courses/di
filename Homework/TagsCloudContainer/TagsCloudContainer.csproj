@@ -7,38 +7,38 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Class1.cs" />
-        <Compile Remove="TextReader\Parsers\**" />
-        <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs" />
-        <Compile Remove="Visualizer\DefaultVisualizerSettings.cs" />
-        <Compile Remove="FileReader\Parsers\**" />
-        <Compile Remove="Visualizer\IWordAppearanceSettings.cs" />
-        <Compile Remove="WordsFilter\ToLowerFilter.cs" />
-        <Compile Remove="WordsFilter\WordsFilter.cs" />
-        <Compile Remove="ITagCloudCreator.cs" />
-        <Compile Remove="TagCloudCreator.cs" />
-        <Compile Remove="WordsFilter\FilterType.cs" />
-        <Compile Remove="FileReader\TextFileFormat.cs" />
-        <Compile Remove="Visualizer\VisualizerSettings\IVisualizerSettingsFactory.cs" />
-        <Compile Remove="FileReader\IFileReadersResolver.cs" />
-        <Compile Remove="Layouter\PointsProviders\IPointsProvidersResolver.cs" />
-        <Compile Remove="Visualizer\ColorGenerators\IColorGeneratorsResolver.cs" />
+        <Compile Remove="Class1.cs"/>
+        <Compile Remove="TextReader\Parsers\**"/>
+        <Compile Remove="WordsFrequencyAnalyzers\DefaultVisualizerSettings.cs"/>
+        <Compile Remove="Visualizer\DefaultVisualizerSettings.cs"/>
+        <Compile Remove="FileReader\Parsers\**"/>
+        <Compile Remove="Visualizer\IWordAppearanceSettings.cs"/>
+        <Compile Remove="WordsFilter\ToLowerFilter.cs"/>
+        <Compile Remove="WordsFilter\WordsFilter.cs"/>
+        <Compile Remove="ITagCloudCreator.cs"/>
+        <Compile Remove="TagCloudCreator.cs"/>
+        <Compile Remove="WordsFilter\FilterType.cs"/>
+        <Compile Remove="FileReader\TextFileFormat.cs"/>
+        <Compile Remove="Visualizer\VisualizerSettings\IVisualizerSettingsFactory.cs"/>
+        <Compile Remove="FileReader\IFileReadersResolver.cs"/>
+        <Compile Remove="Layouter\PointsProviders\IPointsProvidersResolver.cs"/>
+        <Compile Remove="Visualizer\ColorGenerators\IColorGeneratorsResolver.cs"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0" />
-        <PackageReference Include="DeepMorphy" Version="2.0.3" />
-        <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+        <PackageReference Include="Autofac" Version="6.3.0"/>
+        <PackageReference Include="DeepMorphy" Version="2.0.3"/>
+        <PackageReference Include="System.Drawing.Common" Version="6.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="TextReader\Parsers\**" />
-        <EmbeddedResource Remove="FileReader\Parsers\**" />
+        <EmbeddedResource Remove="TextReader\Parsers\**"/>
+        <EmbeddedResource Remove="FileReader\Parsers\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="TextReader\Parsers\**" />
-        <None Remove="FileReader\Parsers\**" />
+        <None Remove="TextReader\Parsers\**"/>
+        <None Remove="FileReader\Parsers\**"/>
     </ItemGroup>
 
 </Project>

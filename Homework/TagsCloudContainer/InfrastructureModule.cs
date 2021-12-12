@@ -2,7 +2,6 @@
 using Autofac;
 using DeepMorphy;
 using TagsCloudContainer.Layouter.PointsProviders;
-using TagsCloudContainer.Visualizer.ColorGenerators;
 using TagsCloudContainer.Visualizer.VisualizerSettings;
 using Module = Autofac.Module;
 

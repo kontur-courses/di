@@ -6,7 +6,7 @@ namespace TagsCloud.Console
     public class ArgumentsParser
     {
         public static T Parse<T>(string[] args)
-        where T: new()
+            where T : new()
         {
             using var parser = new Parser(config =>
             {

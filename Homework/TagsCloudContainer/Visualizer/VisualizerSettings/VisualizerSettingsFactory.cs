@@ -5,15 +5,15 @@ namespace TagsCloudContainer.Visualizer.VisualizerSettings
 {
     public class VisualizerSettingsFactory : IFactory<IVisualizerSettings>
     {
-        private ITagCloudSettings settings;
-        private readonly IResolver<PalleteType,IColorGenerator> resolver;
+        private readonly IResolver<PalleteType, IColorGenerator> resolver;
+        private readonly ITagCloudSettings settings;
 
         public VisualizerSettingsFactory(IResolver<PalleteType, IColorGenerator> resolver, ITagCloudSettings settings)
         {
             this.resolver = resolver;
             this.settings = settings;
         }
-        
+
         public IVisualizerSettings Create()
         {
             var colorAlgorithm = resolver.Get(settings.ColoringAlgorythm);

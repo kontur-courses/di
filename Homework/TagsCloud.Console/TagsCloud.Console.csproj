@@ -8,27 +8,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj" />
+        <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0" />
-        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+        <PackageReference Include="Autofac" Version="6.3.0"/>
+        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="output\**" />
-        <Compile Remove="examples\**" />
+        <Compile Remove="output\**"/>
+        <Compile Remove="examples\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="output\**" />
-        <EmbeddedResource Remove="examples\**" />
+        <EmbeddedResource Remove="output\**"/>
+        <EmbeddedResource Remove="examples\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="output\**" />
-        <None Remove="examples\**" />
+        <None Remove="output\**"/>
+        <None Remove="examples\**"/>
     </ItemGroup>
 
 </Project>

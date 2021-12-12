@@ -4,6 +4,6 @@ namespace TagsCloud.Console
 {
     public interface IConsoleUI
     {
-        public void Run(IAppSettings appSettings,ITagCloudSettings tagCloudsettings);
+        public void Run(IAppSettings appSettings, ITagCloudSettings tagCloudsettings);
     }
 }
