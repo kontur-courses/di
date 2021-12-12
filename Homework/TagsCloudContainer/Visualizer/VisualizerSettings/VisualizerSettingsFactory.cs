@@ -6,9 +6,9 @@ namespace TagsCloudContainer.Visualizer.VisualizerSettings
     public class VisualizerSettingsFactory : IFactory<IVisualizerSettings>
     {
         private ITagCloudSettings settings;
-        private readonly IColorGeneratorsResolver resolver;
+        private readonly IResolver<PalleteType,IColorGenerator> resolver;
 
-        public VisualizerSettingsFactory(IColorGeneratorsResolver resolver, ITagCloudSettings settings)
+        public VisualizerSettingsFactory(IResolver<PalleteType, IColorGenerator> resolver, ITagCloudSettings settings)
         {
             this.resolver = resolver;
             this.settings = settings;

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.Visualizer.ColorGenerators
 {
-    public class ColorGeneratorsResolver : IColorGeneratorsResolver
+    public class ColorGeneratorsResolver : IResolver<PalleteType, IColorGenerator>
     {
         private readonly Dictionary<PalleteType, IColorGenerator> resolver;
 

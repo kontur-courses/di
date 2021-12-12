@@ -20,6 +20,9 @@
         <Compile Remove="WordsFilter\FilterType.cs" />
         <Compile Remove="FileReader\TextFileFormat.cs" />
         <Compile Remove="Visualizer\VisualizerSettings\IVisualizerSettingsFactory.cs" />
+        <Compile Remove="FileReader\IFileReadersResolver.cs" />
+        <Compile Remove="Layouter\PointsProviders\IPointsProvidersResolver.cs" />
+        <Compile Remove="Visualizer\ColorGenerators\IColorGeneratorsResolver.cs" />
     </ItemGroup>
 
     <ItemGroup>

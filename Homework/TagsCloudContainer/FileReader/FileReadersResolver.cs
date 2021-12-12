@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.FileReader
 {
-    public class FileReadersResolver : IFileReadersResolver
+    public class FileReadersResolver : IResolver<string, IFileReader>
     {
         private readonly Dictionary<string, IFileReader> fileReadersResolver;
 

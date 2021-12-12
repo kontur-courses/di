@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.Layouter.PointsProviders
 {
-    public class PointsProvidersResolver : IPointsProvidersResolver
+    public class PointsProvidersResolver : IResolver<LayoutAlrogorithm, IPointsProvider>
     {
         private readonly Dictionary<LayoutAlrogorithm, IPointsProvider> resolver;
 
