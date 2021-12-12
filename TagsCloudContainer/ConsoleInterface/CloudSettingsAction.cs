@@ -43,7 +43,8 @@ namespace TagsCloudContainer
             Console.WriteLine("1 - Primary");
             Console.WriteLine("2 - Frequency");
             Console.WriteLine("3 - Gradient");
-            Console.WriteLine("4 - Back");
+            Console.WriteLine("4 - Random");
+            Console.WriteLine("5 - Back");
             var answer = Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine();
@@ -58,6 +59,9 @@ namespace TagsCloudContainer
                     break;
                 case '3':
                     cloudSettings.Painter = new GradientTagPainter(settings);
+                    break;
+                case '4':
+                    cloudSettings.Painter = new RandomTagPainter();
                     break;
                 default:
                     return;
