@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using Autofac;
-using TagsCloudVisualization.Interfaces;
-using TagsCloudVisualization.Visualizators;
 
 namespace TagsCloudContainer.UI
 {
