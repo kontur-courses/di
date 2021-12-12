@@ -34,40 +34,57 @@ namespace GuiClient
             var outputResultSettings = new OutputResultSettings();
             var paletteSettings = new PaletteSettings();
 
-            return new ServiceCollection()
-                .AddSingleton(imageSettings)
-                .AddSingleton<IImageSizeSettingsHolder>(imageSettings)
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection
                 .AddSingleton(fontSettings)
-                .AddSingleton<IFontSettingsHolder>(fontSettings)
-                .AddSingleton(inputFileSettings)
-                .AddSingleton<IInputFileSettingsHolder>(inputFileSettings)
-                .AddSingleton(outputResultSettings)
-                .AddSingleton<IOutputResultSettingsHolder>(outputResultSettings)
+                .AddSingleton(imageSettings)
                 .AddSingleton(paletteSettings)
+                .AddSingleton(inputFileSettings)
+                .AddSingleton(outputResultSettings);
+
+            serviceCollection
+                .AddSingleton<IFontSettingsHolder>(fontSettings)
+                .AddSingleton<IImageSizeSettingsHolder>(imageSettings)
                 .AddSingleton<IPaletteSettingsHolder>(paletteSettings)
+                .AddSingleton<IInputFileSettingsHolder>(inputFileSettings)
+                .AddSingleton<IOutputResultSettingsHolder>(outputResultSettings);
+
+            serviceCollection
                 .AddSingleton<ITagger, Tagger>()
-                .AddSingleton<IReaderFactory, ReaderFactory>()
-                .AddSingleton<ILineWriter, LineWriter>()
-                .AddSingleton<IPreprocessor, ToLowerCasePreprocessor>()
-                .AddSingleton<IPreprocessor, ToInitFormPreprocessor>()
                 .AddSingleton<IFilter, WordsLengthFilter>()
-                .AddSingleton<IFrequencyAnalyzer, WordsFrequencyAnalyzer>()
-                .AddSingleton<ICloudGenerator, CloudGenerator>()
+                .AddSingleton<IPreprocessor, ToInitFormPreprocessor>()
+                .AddSingleton<IPreprocessor, ToLowerCasePreprocessor>()
+                .AddSingleton<IFrequencyAnalyzer, WordsFrequencyAnalyzer>();
+
+            serviceCollection
+                .AddSingleton<IUiAction, OpenFileAction>()
+                .AddSingleton<IUiAction, SaveImageAction>()
+                .AddSingleton<IUiAction, RedrawImageAction>()
+                .AddSingleton<IUiAction, FontSettingsAction>()
+                .AddSingleton<IUiAction, ImageSettingsAction>()
+                .AddSingleton<IUiAction, PaletteSettingsAction>();
+
+            serviceCollection
                 .AddSingleton<IDrawer, Drawer>()
-                .AddSingleton<ILayouterFactory, LayouterFactory>()
                 .AddSingleton<IVisualizer, Visualizer>()
-                .AddSingleton(provider => new Lazy<MainForm>(() => provider.GetRequiredService<MainForm>()))
+                .AddSingleton<ICloudGenerator, CloudGenerator>()
+                .AddSingleton<ILayouterFactory, LayouterFactory>();
+
+            serviceCollection
+                .AddSingleton<ILineWriter, LineWriter>()
+                .AddSingleton<IReaderFactory, ReaderFactory>();
+
+            serviceCollection
                 .AddSingleton<PictureBoxImageHolder, PictureBoxImageHolder>()
                 .AddSingleton<IImageHolder>(x => x.GetRequiredService<PictureBoxImageHolder>())
-                .AddSingleton(provider => new Lazy<IImageHolder>(() => provider.GetRequiredService<IImageHolder>()))
-                .AddSingleton<IUiAction, ImageSettingsAction>()
-                .AddSingleton<IUiAction, PaletteSettingsAction>()
-                .AddSingleton<IUiAction, FontSettingsAction>()
-                .AddSingleton<IUiAction, SaveImageAction>()
-                .AddSingleton<IUiAction, OpenFileAction>()
-                .AddSingleton<IUiAction, RedrawImageAction>()
-                .AddSingleton<MainForm, MainForm>()
-                .BuildServiceProvider();
+                .AddSingleton(provider => new Lazy<IImageHolder>(() => provider.GetRequiredService<IImageHolder>()));
+
+            serviceCollection
+                .AddSingleton(provider => new Lazy<MainForm>(() => provider.GetRequiredService<MainForm>()))
+                .AddSingleton<MainForm, MainForm>();
+
+            return serviceCollection.BuildServiceProvider();
         }
     }
 }
