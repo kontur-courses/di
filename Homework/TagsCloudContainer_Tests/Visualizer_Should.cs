@@ -6,6 +6,8 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.Layouter;
 using TagsCloudContainer.Visualizer;
+using TagsCloudContainer.Visualizer.ColorGenerators;
+using TagsCloudContainer.Visualizer.VisualizerSettings;
 
 namespace TagsCloudContainer_Tests
 {

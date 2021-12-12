@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudContainer.Visualizer
+namespace TagsCloudContainer.Visualizer.ColorGenerators
 {
     [Flags]
     public enum PalleteType

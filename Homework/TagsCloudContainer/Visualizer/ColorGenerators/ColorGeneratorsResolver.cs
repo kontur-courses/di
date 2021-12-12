@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudContainer.Visualizer
+namespace TagsCloudContainer.Visualizer.ColorGenerators
 {
     public class ColorGeneratorsResolver : IColorGeneratorsResolver
     {

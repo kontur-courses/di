@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudContainer.Layouter;
+using TagsCloudContainer.Visualizer.ColorGenerators;
+using TagsCloudContainer.Visualizer.VisualizerSettings;
 
 namespace TagsCloudContainer.Visualizer
 {

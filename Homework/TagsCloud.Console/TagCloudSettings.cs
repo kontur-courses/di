@@ -4,6 +4,7 @@ using CommandLine;
 using TagsCloudContainer;
 using TagsCloudContainer.Layouter.PointsProviders;
 using TagsCloudContainer.Visualizer;
+using TagsCloudContainer.Visualizer.ColorGenerators;
 using TagsCloudContainer.WordsConverters;
 
 namespace TagsCloud.Console

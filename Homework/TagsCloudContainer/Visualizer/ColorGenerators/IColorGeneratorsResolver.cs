@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Visualizer
+﻿namespace TagsCloudContainer.Visualizer.ColorGenerators
 {
     public interface IColorGeneratorsResolver
     {
