@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using Autofac;
 using TagsCloudContainer.Common;
 using TagsCloudContainer.Layouters;
@@ -97,6 +98,5 @@ namespace TagsCloudContainer
             builder.RegisterType<TagPainter>().AsSelf();
             builder.RegisterType<WordsCountParser>().AsSelf();
         }
-        
     }
 }
