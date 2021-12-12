@@ -7,7 +7,7 @@ using TagCloud.TextProcessing;
 
 namespace TagCloud.Layout
 {
-    internal class WordLayouter
+    internal class WordLayouter : IWordLayouter
     {
         private readonly ICloudLayouter _layouter;
         private readonly Func<int, float, double> _scale = (freq, fontSize) =>

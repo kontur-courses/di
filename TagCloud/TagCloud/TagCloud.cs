@@ -1,39 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using Autofac;
 using TagCloud.Drawing;
 using TagCloud.Extensions;
 using TagCloud.Layout;
 using TagCloud.TextProcessing;
-using TagCloud.Utils;
 
 namespace TagCloud
 {
     public class TagCloud
     {
-        private readonly IContainer _container;
+        private readonly IDrawer _drawer;
         private List<Dictionary<string, int>> _processedTexts = new();
-        private List<Bitmap> _tagClouds;
+        private readonly TextWriter _statusWriter;
+        private readonly ITextProcessor _textProcessor;
+        private readonly IWordLayouter _wordLayouter;
 
-        public TagCloud()
+
+        public TagCloud(ITextProcessor textProcessor, IWordLayouter wordLayouter, IDrawer drawer,
+            TextWriter statusWriter)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            builder.RegisterType<Drawer>().As<IDrawer>();
-            builder.RegisterType<ArchimedeanSpiral>().As<ICurve>();
-            builder.RegisterType<TextProcessor>().AsSelf();
-            builder.RegisterType<WordLayouter>().AsSelf();
-            builder.RegisterType<CoordinatesConverter>().AsSelf();
-            _container = builder.Build();
+            _textProcessor = textProcessor;
+            _wordLayouter = wordLayouter;
+            _drawer = drawer;
+            _statusWriter = statusWriter;
         }
 
         public int ProcessText(ITextProcessingOptions options)
         {
-            Console.WriteLine("Начинаю обработку текста");
-            _processedTexts = _container.Resolve<TextProcessor>().GetInterestingWords(options).ToList();
-            Console.WriteLine("Обработка завершена\n");
+            _statusWriter.WriteLine("Начинаю обработку текста");
+            _processedTexts = _textProcessor.GetWordsWithFrequency(options).ToList();
+            _statusWriter.WriteLine("Обработка завершена\n");
             return 0;
         }
 
@@ -41,12 +39,13 @@ namespace TagCloud
         {
             foreach (var text in _processedTexts)
             {
-                Console.WriteLine("Раскладываю текст");
-                var layoutedWords = _container.Resolve<WordLayouter>().Layout(options, text);
-                Console.WriteLine("Рисую bitmap\n");
-                _container.Resolve<IDrawer>().Draw(options, layoutedWords).SaveDefault();
+                _statusWriter.WriteLine("Раскладываю текст");
+                var layoutedWords = _wordLayouter.Layout(options, text);
+                _statusWriter.WriteLine("Рисую bitmap\n");
+                _drawer.Draw(options, layoutedWords).SaveDefault();
             }
-            Console.WriteLine("Готово!\n");
+
+            _statusWriter.WriteLine("Готово!\n");
             return 0;
         }
     }

@@ -4,7 +4,7 @@ using TagCloud.TextProcessing;
 
 namespace TagCloud.Drawing
 {
-    internal interface IDrawer
+    public interface IDrawer
     {
         Bitmap Draw(IDrawerOptions options, List<Word> words);
     }

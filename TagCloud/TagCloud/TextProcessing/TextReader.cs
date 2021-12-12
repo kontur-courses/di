@@ -2,13 +2,18 @@
 
 namespace TagCloud.TextProcessing
 {
-    public class TextReader
+    public interface ITextReader
     {
-        public string Read(string path)
+        string ReadFile(string path);
+    }
+
+    public class TextReader : ITextReader
+    {
+        public string ReadFile(string path)
         {
             using var reader = new StreamReader(path);
             var text = reader.ReadToEnd();
-
+            
             return text;
         }
     }

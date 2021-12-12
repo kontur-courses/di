@@ -2,7 +2,7 @@
 
 namespace TagCloud.TextProcessing
 {
-    internal class Word
+    public class Word
     {
         public Font Font { get; set; }
         public Rectangle Rectangle { get; set; }

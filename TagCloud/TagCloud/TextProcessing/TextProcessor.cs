@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 
 namespace TagCloud.TextProcessing
 {
-    internal class TextProcessor
+    internal class TextProcessor : ITextProcessor
     {
         private const string UtilFileName = "mystem.exe";
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
 
-        public IEnumerable<Dictionary<string, int>> GetInterestingWords(ITextProcessingOptions options)
+        public IEnumerable<Dictionary<string, int>> GetWordsWithFrequency(ITextProcessingOptions options)
         {
             foreach (var filePath in options.FilesToProcess)
             {
