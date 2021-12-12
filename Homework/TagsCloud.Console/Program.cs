@@ -30,16 +30,10 @@ namespace TagsCloud.Console
         internal static IContainer Configure(IAppSettings settings, ITagCloudSettings tagCloudSettings)
         {
             var builder = new ContainerBuilder();
-            var assembly = Assembly.GetAssembly(typeof(TagCloud));
             builder.RegisterInstance(settings).As<IAppSettings>().SingleInstance();
             builder.RegisterInstance(tagCloudSettings).As<ITagCloudSettings>().SingleInstance();
-            builder.RegisterAssemblyTypes(assembly!).AsImplementedInterfaces().SingleInstance();
-            builder.Register(c => c.Resolve<IFactory<IVisualizerSettings>>().Create())
-                .As<IVisualizerSettings>()
-                .SingleInstance();
-            builder.Register(c => c.Resolve<IFactory<IPointsProvider>>().Create()).As<IPointsProvider>();
             builder.RegisterType<ConsoleUI>().AsImplementedInterfaces();
-            builder.RegisterInstance(new MorphAnalyzer()).SingleInstance();
+            builder.RegisterModule<InfrastructureModule>();
             return builder.Build();
         }
     }
