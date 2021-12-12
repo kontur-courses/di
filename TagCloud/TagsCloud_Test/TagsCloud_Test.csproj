@@ -12,6 +12,8 @@
     <OutputType>Library</OutputType>
 
     <StartupObject />
+
+    <RootNamespace>TagsCloudVisualization_Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

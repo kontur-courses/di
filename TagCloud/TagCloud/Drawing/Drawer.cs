@@ -6,33 +6,40 @@ using System.Runtime.CompilerServices;
 using TagCloud.Extensions;
 using TagCloud.TextProcessing;
 
-[assembly: InternalsVisibleTo("TagsCloudVisualization_Test")]
+[assembly: InternalsVisibleTo("TagsCloud_Test")]
 namespace TagCloud.Drawing
 {
     internal class Drawer : IDrawer
     {
+        private readonly IPalette _palette;
+
+        public Drawer(IPalette palette)
+        {
+            _palette = palette;
+        }
+
         public Bitmap Draw(IDrawerOptions options, List<Word> words)
         {
-            var colors = options.WordColors.ToList();
             var center = options.Center;
-            using var backgroundBrush = new SolidBrush(options.BackgroundColor);
 
             var rectangles = words.Select(w => w.Rectangle).ToList();
             var bitmapSize = GetCanvasSize(rectangles, center);
             var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
-
-            var rnd = new Random(Seed: 100);
+            
             using var g = Graphics.FromImage(bitmap);
+            using var backgroundBrush = new SolidBrush(options.BackgroundColor);
             g.FillRectangle(backgroundBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);
+            
+            var offsetPoint = new Point(bitmapCenter.X - center.X, bitmapCenter.Y - center.Y);
             foreach (var word in words)
             {
                 var rect = word.Rectangle;
-                var color = colors == null || colors.Count == 0
-                    ? Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256))
-                    : colors[rnd.Next(colors.Count)];
-                var brush = new SolidBrush(Color.FromArgb(255, color));
-                rect.Offset(new Point(bitmapCenter.X - center.X, bitmapCenter.Y - center.Y));
+                var color = _palette
+                    .WithColors(options.WordColors.ToList())
+                    .GetNextColor();
+                using var brush = new SolidBrush(color);
+                rect.Offset(offsetPoint);
                 g.DrawString(word.Text, word.Font, brush, rect.Location);
             }
 

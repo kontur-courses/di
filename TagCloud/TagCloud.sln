@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud_ConsoleUI", "TagCloud_ConsoleUI\TagCloud_ConsoleUI.csproj", "{C443E003-4E2E-4EEF-AF85-0C44B70840E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization_Test", "TagsCloudVisualization_Test\TagsCloudVisualization_Test.csproj", "{6CDAA6ED-473D-4D03-8577-7D6913CA9D7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud_Test", "TagsCloud_Test\TagsCloud_Test.csproj", "{6CDAA6ED-473D-4D03-8577-7D6913CA9D7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{DDFBD608-C337-4B24-927E-9439F1A55DEF}"
 EndProject

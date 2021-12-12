@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using TagCloud.Extensions;
 
-[assembly: InternalsVisibleTo("TagsCloudVisualization_Test")]
+[assembly: InternalsVisibleTo("TagsCloud_Test")]
 namespace TagCloud.Layout
 {
     internal class CircularCloudLayouter : ICloudLayouter

@@ -21,6 +21,7 @@ namespace TagCloud
             _builder.RegisterType<TextProcessor>().As<ITextProcessor>();
             _builder.RegisterType<WordLayouter>().As<IWordLayouter>();
             _builder.RegisterType<TxtFileReader>().As<IFileReader>();
+            _builder.RegisterType<SimplePalette>().As<IPalette>();
             _builder.RegisterType<CoordinatesConverter>().AsSelf();
             _builder.RegisterType<TagCloud>().AsSelf();
 

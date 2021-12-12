@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("TagsCloudVisualization_Test")]
+[assembly: InternalsVisibleTo("TagsCloud_Test")]
 namespace TagCloud.Layout
 {
     internal interface ICloudLayouter
