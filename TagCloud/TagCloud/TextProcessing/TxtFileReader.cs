@@ -2,12 +2,7 @@
 
 namespace TagCloud.TextProcessing
 {
-    public interface ITextReader
-    {
-        string ReadFile(string path);
-    }
-
-    public class TextReader : ITextReader
+    public class TxtFileReader : IFileReader
     {
         public string ReadFile(string path)
         {
@@ -17,5 +12,4 @@ namespace TagCloud.TextProcessing
             return text;
         }
     }
-    
 }
