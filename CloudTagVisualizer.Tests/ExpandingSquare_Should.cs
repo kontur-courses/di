@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using CloudTagContainer;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
+using Visualization;
 
-namespace CloudTagContainerTests
+namespace CloudTagVisualizer.Tests
 {
     [TestFixture]
     public class ExpandingSquare_Should

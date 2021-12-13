@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace CUI
+namespace CloudTagVisualizer.ConsoleInterface
 {
     public class Options
     {
@@ -9,20 +9,25 @@ namespace CUI
 
         [Option('p', "pathToSaveImage", Required = true, HelpText = "Set path where image will be saved")]
         public string PathToSaveImage { get; set; }
-        
-        [Option('b', "backgroundColor", Group  = "white black red blue chocolate",
+
+        [Option('b',
+            "backgroundColor",
+            Group = "white black red blue chocolate",
             Required = false,
             Default = "chocolate",
             HelpText = "Set background color")]
         public string BackGroundColorName { get; set; }
-        
-        [Option('c', "textColor", Group  = "white black red blue chocolate",
+
+        [Option('c',
+            "textColor",
+            Group = "white black red blue chocolate",
             Required = false,
             Default = "blue",
             HelpText = "Set color for text")]
         public string TextColorName { get; set; }
-        
-        [Option('m', "minimumWordLength",
+
+        [Option('m',
+            "minimumWordLength",
             Required = false,
             Default = 1,
             HelpText = "Set minimal length of words")]

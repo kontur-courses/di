@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using CloudTagContainer;
 using FluentAssertions;
 using NUnit.Framework;
+using Visualization;
 
-namespace CloudTagContainerTests
+namespace CloudTagVisualizer.Tests
 {
     [TestFixture]
     public class CountingWordSizer_Should

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 
-namespace CloudTagContainer.ImageSavers
+namespace Visualization.ImageSavers
 {
     public interface IImageSaver
     {

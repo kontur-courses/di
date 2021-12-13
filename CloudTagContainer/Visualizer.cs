@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-//https://github.com/MateoMiller/di/blob/master/HomeExercise.md
-namespace CloudTagContainer
+namespace Visualization
 {
     public class Visualizer
     {

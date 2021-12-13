@@ -1,9 +1,9 @@
-﻿using CloudTagContainer;
-using CloudTagContainer.ImageSavers;
+﻿using Visualization;
+using Visualization.ImageSavers;
 
-namespace CUI
+namespace CloudTagVisualizer.ConsoleInterface
 {
-    public class ConsoleInterface
+    public class TextVisualizerProcessor
     {
         private readonly Visualizer visualizer;
         private readonly IImageSaver imageSaver;
@@ -11,9 +11,9 @@ namespace CUI
         private readonly IWordsReader wordsReader;
         private readonly IWordsPreprocessor preprocessor;
 
-        public ConsoleInterface(
-            Visualizer visualizer, 
-            IImageSaver imageSaver, 
+        public TextVisualizerProcessor(
+            Visualizer visualizer,
+            IImageSaver imageSaver,
             IFileStreamFactory fileStreamFactory,
             IWordsReader wordsReader,
             IWordsPreprocessor preprocessor)
@@ -24,15 +24,15 @@ namespace CUI
             this.wordsReader = wordsReader;
             this.preprocessor = preprocessor;
         }
-        
+
         public void Run(Options options)
         {
             var inStream = fileStreamFactory.OpenOnReading(options.InputTextPath);
             var words = wordsReader.Read(inStream);
             var preprocessesWords = preprocessor.Preprocess(words);
-            
+
             var image = visualizer.Visualize(preprocessesWords);
-            
+
             var oStream = fileStreamFactory.OpenOnWriting(options.PathToSaveImage);
             imageSaver.Save(image, oStream);
         }

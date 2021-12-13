@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class CircularCloudLayouter : ILayouter
     {
         public Point Center { get; set; }
-        
+
         private List<Rectangle> puttedRectangles = new();
         private readonly ISpiral spiral;
         private IEnumerator<Point> spiralEnumerator;
@@ -21,7 +21,7 @@ namespace CloudTagContainer
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             spiralEnumerator ??= spiral.GetEnumerator(Center).GetEnumerator();
-            
+
             while (spiralEnumerator.MoveNext())
             {
                 var potentialCenter = spiralEnumerator.Current;

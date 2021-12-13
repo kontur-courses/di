@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class WordsReader : IWordsReader
     {

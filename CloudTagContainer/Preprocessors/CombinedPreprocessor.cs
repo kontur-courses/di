@@ -1,4 +1,4 @@
-﻿namespace CloudTagContainer
+﻿namespace Visualization
 {
     public class CombinedPreprocessor : IWordsPreprocessor
     {

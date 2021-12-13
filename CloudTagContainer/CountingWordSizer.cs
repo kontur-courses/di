@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class CountingWordSizer : IWordSizer
     {
@@ -26,8 +26,7 @@ namespace CloudTagContainer
         }
 
         private Size CalculateSize(int repeatedCount, float fontSize, string word)
-            => new Size(
-                (int) (repeatedCount * word.Length * fontSize),
+            => new((int) (repeatedCount * word.Length * fontSize),
                 (int) (repeatedCount * fontSize)
             );
     }

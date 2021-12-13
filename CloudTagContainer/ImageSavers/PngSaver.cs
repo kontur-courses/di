@@ -2,13 +2,13 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace CloudTagContainer.ImageSavers
+namespace Visualization.ImageSavers
 {
-    public class PngSaver: IImageSaver
+    public class PngSaver : IImageSaver
     {
         public void Save(Bitmap image, Stream outputStream)
         {
             image.Save(outputStream, ImageFormat.Png);
-;        }
+        }
     }
 }

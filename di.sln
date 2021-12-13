@@ -4,9 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudTagContainer", "CloudTagContainer\CloudTagContainer.csproj", "{49B7565D-D804-4315-8E2D-4674CCD029F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudTagContainerTests", "CloudTagContainerTests\CloudTagContainerTests.csproj", "{0D3BBA14-43E7-48B4-9431-66BB43814645}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudTagVisualizer.Tests", "CloudTagVisualizer.Tests\CloudTagVisualizer.Tests.csproj", "{0D3BBA14-43E7-48B4-9431-66BB43814645}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CUI", "CUI\CUI.csproj", "{E60390A3-85D1-4118-82AA-507D1366C9BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CloudTagsVisualizer", "CloudTagsVisualizer", "{ABEBFB31-C404-4978-8918-1C74F60843DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,10 @@ Global
 		{E60390A3-85D1-4118-82AA-507D1366C9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E60390A3-85D1-4118-82AA-507D1366C9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E60390A3-85D1-4118-82AA-507D1366C9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{49B7565D-D804-4315-8E2D-4674CCD029F0} = {ABEBFB31-C404-4978-8918-1C74F60843DC}
+		{0D3BBA14-43E7-48B4-9431-66BB43814645} = {ABEBFB31-C404-4978-8918-1C74F60843DC}
+		{E60390A3-85D1-4118-82AA-507D1366C9BD} = {ABEBFB31-C404-4978-8918-1C74F60843DC}
 	EndGlobalSection
 EndGlobal

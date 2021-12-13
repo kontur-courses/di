@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class FileStreamFactory : IFileStreamFactory
     {

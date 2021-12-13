@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class VisualizerSettings
     {

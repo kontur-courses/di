@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public interface IWordSizer
     {

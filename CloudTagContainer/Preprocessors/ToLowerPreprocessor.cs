@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class ToLowerPreprocessor : IWordsPreprocessor
     {

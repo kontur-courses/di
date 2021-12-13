@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public class RemovingBoringWordsPreprocessor : IWordsPreprocessor
     {

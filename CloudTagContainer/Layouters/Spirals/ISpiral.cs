@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace CloudTagContainer
+namespace Visualization
 {
     public interface ISpiral
     {
