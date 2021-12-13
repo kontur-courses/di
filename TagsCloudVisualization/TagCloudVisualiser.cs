@@ -28,8 +28,8 @@ namespace TagsCloudVisualization
             {
                 //graphics.FillRectangle(Brushes.Red, tag.Location);
                 //graphics.DrawRectangle(new Pen(Color.Blue, 5 / scale), tag.Location);
-                var tagImage = RenderTag(tag, scale);
-                graphics.DrawImage(tagImage.textImage, tag.Location, tagImage.frame, GraphicsUnit.Pixel);
+                var (textImage, frame) = RenderTag(tag, scale);
+                graphics.DrawImage(textImage, tag.Location, frame, GraphicsUnit.Pixel);
             }
             graphics.Dispose();
             return image;
