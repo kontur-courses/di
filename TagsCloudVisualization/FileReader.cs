@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace TagsCloudVisualization
@@ -7,9 +8,9 @@ namespace TagsCloudVisualization
     {
         private readonly IFileReader[] fileReaders;
 
-        public FileReader(IFileReader[] fileReaders)
+        public FileReader(IEnumerable<IFileReader> fileReaders)
         {
-            this.fileReaders = fileReaders;
+            this.fileReaders = fileReaders.ToArray();
         }
 
         public bool CanReadFile(FileInfo file)

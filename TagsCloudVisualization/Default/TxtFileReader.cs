@@ -10,7 +10,7 @@ namespace TagsCloudVisualization.Default
             if (!file.Exists)
                 return false;
             var extension = Path.GetExtension(file.Name);
-            return extension == "txt";
+            return extension == ".txt";
 
         }
 
