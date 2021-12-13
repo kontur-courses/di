@@ -78,5 +78,49 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
             inputRectangleWithWord.RectangleElement = centeringRectangleElement;
             return inputRectangleWithWord;
         }
+
+        public Dictionary<string, RectangleWithWord> FormElements(Size elementSize, List<Word> startElements)
+        {
+            var dictWithFormedWords = new Dictionary<string, RectangleWithWord>();
+
+            foreach (var word in startElements)
+            {
+                var element = CreateNewRectangleWithWord(elementSize, word);
+                var rectangleSize = element.RectangleElement.Size;
+
+                if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
+                    throw new ArgumentException("Width and height can't be zero");
+
+                if (dictWithFormedWords.ContainsKey(word.WordText))
+                {
+                    dictWithFormedWords[word.WordText].WordElement.CntOfWords++;
+                }
+                else
+                {
+                    dictWithFormedWords[word.WordText] = element;
+                }
+            }
+            Console.WriteLine(dictWithFormedWords.Count);
+            return dictWithFormedWords;
+        }
+
+        public List<RectangleWithWord> PositionElements(List<RectangleWithWord> sizedElements)
+        {
+            var positionedElements = new List<RectangleWithWord>();
+            foreach (var element in sizedElements)
+            {
+                var elementSize = element.RectangleElement.Size;
+                var word = element.WordElement;
+                var nextRectangle = CreateNewRectangleWithWord(elementSize, word);
+
+                while (positionedElements.Any(rectangle =>
+                    rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
+                {
+                    nextRectangle = CreateNewRectangleWithWord(nextRectangle.RectangleElement.Size, word);
+                }
+                positionedElements.Add(nextRectangle);
+            }
+            return positionedElements;
+        }
     }
 }

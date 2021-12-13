@@ -56,13 +56,10 @@ namespace TagsCloudVisualizationDI.Settings
 
         public ISaver Saver => new DefaultSaver(SavePath, Format);
 
-        public Func<List<RectangleWithWord>, string, IVisualization> Visualizator
+
+        public IVisualization Visualizator
         {
-            get
-            {
-                return (elementsForVisualization, imageSavePath)
-                    => new DefaultVisualization(elementsForVisualization, Brush, TextFont, ImageSize);
-            }
+            get => new DefaultVisualization(Brush, TextFont, ImageSize, 25);
         }
 
         public INormalizer Normalization => new DefaultNormalizer();

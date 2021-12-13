@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -26,7 +25,6 @@ namespace TagsCloudVisualizationDI
             var analyzer = settings.Analyzer;
             var normalizer = settings.Normalization;
             var filler = settings.Filler;
-            var pictureSavePath = settings.SavePath;
             var elementSize = settings.ElementSize;
             var saver = settings.Saver;
 
@@ -37,11 +35,22 @@ namespace TagsCloudVisualizationDI
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
 
-            filler.FillInElements(elementSize, normalyzedWords);
 
-            var elementsForVisualisation = filler.GetElementsList();
-            using var drawer = visualization.Invoke(elementsForVisualisation, pictureSavePath);
-            drawer.DrawAndSaveImage(saver.GetSavePath(), settings.Format);
+
+
+
+            //filler.FillInElements(elementSize, normalyzedWords);
+
+            var formedElements = filler.FormElements(elementSize, normalyzedWords);
+            var sizedElements = visualization.FindSizeForElements(formedElements);
+            var sortedElements = sizedElements.
+                OrderByDescending(el => el.WordElement.CntOfWords).ToList();
+            var positionedElements = filler.PositionElements(sortedElements);
+
+
+            //var elementsForVisualisation = filler.GetElementsList();
+            
+            visualization.DrawAndSaveImage(positionedElements, saver.GetSavePath(), settings.Format);
         }
 
         private static IEnumerable<Word> NormalyzeWords(IEnumerable<Word> analyzedWords, INormalizer normalizer)

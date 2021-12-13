@@ -1,30 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+
 
 namespace TagsCloudVisualizationDI.TextAnalization.Visualization
 {
     public class DefaultVisualization : IVisualization
     {
-        private List<RectangleWithWord> Elementslist { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
         private Size ImageSize { get; }
 
-        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, 
-            SolidBrush brush, Font font, Size imageSize)
+        private int SizeMultiplier { get; }
+
+        public DefaultVisualization(SolidBrush brush, Font font, Size imageSize, int sizeMultiplier)
         {
-            Elementslist = rectangleWithWordsList;
             ColorBrush = brush;
             TextFont = font;
             ImageSize = imageSize;
+            SizeMultiplier = sizeMultiplier;
         }
 
-        public void DrawAndSaveImage(string savePath, ImageFormat format)
+        public void DrawAndSaveImage(List<RectangleWithWord> elements,string savePath, ImageFormat format)
         {
             using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
-            var drawImage = DrawRectangles(image);
+            var drawImage = DrawRectangles(image, elements);
             try
             {
                 drawImage.Save(savePath, format);
@@ -36,14 +38,16 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
         }
 
 
-        private Bitmap DrawRectangles(Bitmap image)
+        private Bitmap DrawRectangles(Bitmap image, List<RectangleWithWord> elementList)
         {
             using var graphics = Graphics.FromImage(image);
-            foreach (var element in Elementslist)
+            foreach (var element in elementList)
             {
-                var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
+                var fontSize = SizeMultiplier * element.WordElement.CntOfWords;
                 var font = new Font("Times", fontSize);
-                graphics.DrawRectangle(new Pen(Brushes.Black), element.RectangleElement);
+
+                graphics.DrawRectangle(new Pen(Color.Black), element.RectangleElement);
+
                 graphics.DrawString(element.WordElement.WordText, font, ColorBrush,
                     element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
             }
@@ -55,6 +59,31 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
         {
             ColorBrush.Dispose();
             TextFont.Dispose();
+        }
+
+        public List<RectangleWithWord> FindSizeForElements(Dictionary<string, RectangleWithWord> formedElements)
+        {
+            var result = new List<RectangleWithWord>();
+
+            foreach (var element in formedElements.Values)
+            {
+                using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
+                using var graphics = Graphics.FromImage(image);
+
+                
+
+
+                var fontSize = element.WordElement.CntOfWords*SizeMultiplier;
+                var font = new Font("Times", fontSize);
+
+                var newSize = graphics.MeasureString(element.WordElement.WordText, font);
+                var sizedElement = new RectangleWithWord(new Rectangle
+                        (element.RectangleElement.Location, newSize.ToSize()),
+                    element.WordElement);
+                result.Add(sizedElement);
+            }
+
+            return result;
         }
     }
 }

@@ -21,18 +21,18 @@ namespace TagsCloudVisualizationDITests
         {
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\image";
             var saver = new DefaultSaver(savePath, ImageFormat.Png);
-            var visualization = new DefaultVisualization(new List<RectangleWithWord>(),
-                new SolidBrush(Color.AliceBlue), new Font("times", 15), new Size(10, 10));
-            Action act = () => visualization.DrawAndSaveImage(saver.GetSavePath(), ImageFormat.Png);
+            var visualization = new DefaultVisualization(new SolidBrush(Color.AliceBlue), new Font("times", 15),
+                new Size(10, 10), 10);
+            Action act = () => visualization.DrawAndSaveImage(new List<RectangleWithWord>(),saver.GetSavePath(), ImageFormat.Png);
             act.Should().NotThrow();
         }
 
         [Test]
         public void ShouldThrowWneInvalidPath()
         {
-            var visualization = new DefaultVisualization(new List<RectangleWithWord>(),
-                new SolidBrush(Color.AliceBlue), new Font("times", 15), new Size(10,10));
-            Action act = () => visualization.DrawAndSaveImage("", ImageFormat.Png);
+            var visualization = new DefaultVisualization(new SolidBrush(Color.AliceBlue), new Font("times", 15), 
+                new Size(10,10), 10);
+            Action act = () => visualization.DrawAndSaveImage(new List<RectangleWithWord>(),"", ImageFormat.Png);
             act.Should().Throw<FileNotFoundException>();
         }
 
@@ -41,9 +41,10 @@ namespace TagsCloudVisualizationDITests
         {
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\image";
             var saver = new DefaultSaver(savePath, ImageFormat.Png);
-            var visualization = new DefaultVisualization(new List<RectangleWithWord>(),
-                new SolidBrush(Color.AliceBlue), new Font("times", 15), new Size(10, 10));
-            visualization.DrawAndSaveImage(saver.GetSavePath(), ImageFormat.Png);
+            var visualization = 
+                new DefaultVisualization(new SolidBrush(Color.AliceBlue), new Font("times", 15), 
+                    new Size(10, 10), 10);
+            visualization.DrawAndSaveImage(new List<RectangleWithWord>(),saver.GetSavePath(), ImageFormat.Png);
             File.Exists(saver.GetSavePath()).Should().BeTrue();
         }
     }
