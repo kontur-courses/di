@@ -27,16 +27,18 @@ namespace TagsCloudVisualizationDI.Settings
 
         public SolidBrush Brush => new SolidBrush(Color.Black);
 
-        private ImageFormat SetFormat(ImageFormat format)
-        {
-            return (format == null) ? DefaultFormat : format;
-        }
+        
+
 
         private List<string> SetExcludedWords(List<string> excludedWords)
         {
             return (excludedWords == null) ? DefaultExcludedWords : excludedWords;
         }
 
+        private ImageFormat SetFormat(ImageFormat format)
+        {
+            return (format == null) ? DefaultFormat : format;
+        }
 
         private ImageFormat DefaultFormat
         {

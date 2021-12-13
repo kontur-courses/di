@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace TagsCloudVisualizationDI.TextAnalization.Visualization
 {
@@ -9,26 +11,23 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
         private List<RectangleWithWord> Elementslist { get; }
         private Brush ColorBrush { get; }
         private Font TextFont { get; }
-
-        private ImageFormat Format { get; }
-
-        private string SavePath { get; }
         private Size ImageSize { get; }
 
+        //private ImageFormat Format { get; }
+        //private string SavePath { get; }
 
-        
-        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, string savePath, 
-            SolidBrush brush, Font font, ImageFormat imageFormat, Size imageSize)
+        public DefaultVisualization(List<RectangleWithWord> rectangleWithWordsList, 
+            SolidBrush brush, Font font, Size imageSize)
         {
             Elementslist = rectangleWithWordsList;
             ColorBrush = brush;
             TextFont = font;
-            Format = imageFormat;
-            SavePath = savePath + '.'+ imageFormat;
             ImageSize = imageSize;
+            //Format = imageFormat;
+            //SavePath = savePath + '.' + imageFormat;
         }
-        
 
+        /*
         public void DrawAndSaveImage()
         {
             using (var image = new Bitmap(ImageSize.Width, ImageSize.Height))
@@ -37,38 +36,31 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
                 drawImage.Save(SavePath, Format);
             }
         }
+        */
+
+        public void DrawAndSaveImage(string savePath, ImageFormat format)
+        {
+            using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
+            var drawImage = DrawRectangles(image);
+            if (!(File.Exists(savePath)))
+                throw new FileNotFoundException($"файл по указанному пути: {savePath}  не найден");
+            drawImage.Save(savePath, format);
+        }
+
 
         private Bitmap DrawRectangles(Bitmap image)
         {
-            using (var graphics = Graphics.FromImage(image))
+            using var graphics = Graphics.FromImage(image);
+            foreach (var element in Elementslist)
             {
-                foreach (var element in Elementslist)
-                {
-                    var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
-                    var font = new Font("Times", fontSize);
-
-                    graphics.DrawString(element.WordElement.WordText, font, ColorBrush, 
-                        element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
-                }
-
-                return image;
-            }
-        }
-
-        public Size GetStringSize(RectangleWithWord word)
-        {
-            var image = new Bitmap(ImageSize.Width, ImageSize.Height);
-            using (var graphics = Graphics.FromImage(image))
-            {
-                var fontSize = TextFont.Size + 3 * word.WordElement.CntOfWords;
+                var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
                 var font = new Font("Times", fontSize);
 
-                var stringSize = graphics.MeasureString(word.WordElement.WordText, font);
-
-                var rectSize = new Size((int)stringSize.Width, (int)stringSize.Height);
-
-                return rectSize;
+                graphics.DrawString(element.WordElement.WordText, font, ColorBrush,
+                    element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
             }
+
+            return image;
         }
 
         public void Dispose()

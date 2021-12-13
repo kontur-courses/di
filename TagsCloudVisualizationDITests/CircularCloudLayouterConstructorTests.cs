@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualizationDI.Layouter.Filler;
@@ -13,7 +14,7 @@ namespace TagsCloudVisualizationTests
         public void CloudLayouterConstructorShouldWorkCorrectly() 
         {
             var center = new Point(2500, 2500); 
-            Action creating = () => new CircularCloudLayouterForRectanglesWithText(center, );
+            Action creating = () => new CircularCloudLayouterForRectanglesWithText(center);
             creating.Should().NotThrow();
         }
 
@@ -24,7 +25,7 @@ namespace TagsCloudVisualizationTests
         public void ShouldNotThrowExceptionWithAnySize(int width, int height)
         {
             var layouterCenter = new Point(width, height);
-            Action creating = () => new CircularCloudLayouterForRectanglesWithText(layouterCenter, );
+            Action creating = () => new CircularCloudLayouterForRectanglesWithText(layouterCenter);
             creating.Should().NotThrow();
         }
     }

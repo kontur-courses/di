@@ -1,10 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RectangularExtensions.cs" />
+    <Compile Remove="TestsCircularCloudLayouterShouldCorrectPutNext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TextFile1.txt" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.2.0" />
@@ -15,6 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TagsCloudVisualizationDI\TagsCloudVisualizationDI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="RectangularExtensions.cs" />
+    <Resource Include="TestsCircularCloudLayouterShouldCorrectPutNext.cs" />
+    <Resource Include="TextFile1.txt" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using TagsCloudVisualizationDI.Settings;
@@ -19,6 +20,9 @@ namespace TagsCloudVisualizationDI
             var buildContainer = containerBuilder.Build();
 
             var settings = buildContainer.Resolve<ISettingsConfiguration>();
+
+
+
             var visualization = settings.Visualizator;
             var reader = settings.FileReader;
             var analyzer = settings.Analyzer;
@@ -26,26 +30,32 @@ namespace TagsCloudVisualizationDI
             var filler = settings.Filler;
             var pictureSavePath = settings.SavePath;
             var elementSize = settings.ElementSize;
+            var saver = settings.Saver;
 
-            reader.InvokeProcess();
 
-            var wordsFromFile = reader.ReadText(reader.SaveAnalizationPath, reader.ReadingEncoding);
+            analyzer.InvokeMystemAnalization();
+
+            Console.WriteLine(reader.ReadingTextPath);
+
+            var wordsFromFile = reader.ReadText(reader.ReadingTextPath, reader.ReadingEncoding);
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
 
             filler.FillInElements(elementSize, normalyzedWords);
 
             var elementsForVisualisation = filler.GetElementsList();
-            using (var drawer = visualization.Invoke(elementsForVisualisation, pictureSavePath))
-            {
-                drawer.DrawAndSaveImage();
-            }
+            using var drawer = visualization.Invoke(elementsForVisualisation, pictureSavePath);
+            //drawer.DrawAndSaveImage();
+            drawer.DrawAndSaveImage(saver.GetSavePath(), settings.Format);
         }
 
-        private static IEnumerable<Word> NormalyzeWords(IEnumerable<Word> analyzedWords, IWordNormalizer normalizer)
+        private static IEnumerable<Word> NormalyzeWords(IEnumerable<Word> analyzedWords, INormalizer normalizer)
         {
             foreach (var word in analyzedWords)
-                yield return normalizer.NormalizeWord(word);
+            {
+                word.WordText = normalizer.Normalize(word.WordText);
+                yield return word;
+            }
         }
 
         private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, 
@@ -57,46 +67,5 @@ namespace TagsCloudVisualizationDI
                 .WithParameter("format", imageFormat)
                 .WithParameter("excludedWords", excludedWordsList);
         }
-
-
-        private static void InitializeRegistration(ContainerBuilder builder, Func<List<RectangleWithWord>, string, IVisualization> visualization)
-        {
-            /*
-            RegistrationOfTextFileReader(builder);
-            RegistrationOfTextAnalyzer(builder);
-            RegistrationOfNormalizer(builder);
-            RegistrationOfFiller(builder, visualization);
-            */
-        }
-        
-
-
-        /*
-        private static void RegistrationOfFiller(ContainerBuilder buildContainer, Func<List<RectangleWithWord>, string, IVisualization> visualization)
-        {
-
-            buildContainer.RegisterType<CircularCloudLayouterForRectanglesWithText>().As<IContentFiller>()
-                .WithParameter("center", new Point(2500, 2500))
-                .WithParameter("visualization", visualization);
-        }
-        */
-
-        /*
-        private static void RegistrationOfNormalizer(ContainerBuilder buildContainer)
-        {
-            buildContainer.RegisterType<WordNormalizerOrigin>().As<IWordNormalizer>();
-        }
-
-        private static void RegistrationOfTextAnalyzer(ContainerBuilder buildContainer)
-        {
-            buildContainer.RegisterType<DefaultAnalyzer>().As<IAnalyzer>()
-                .WithParameter("speechParts",
-                    Enum.GetValues(typeof(PartsOfSpeech.SpeechPart)).Cast<PartsOfSpeech.SpeechPart>());
-        }
-
-        private static void RegistrationOfTextFileReader(ContainerBuilder buildContainer)
-        {
-            buildContainer.RegisterType<DefaultTextFileReader>().As<ITextFileReader>();
-        }*/
     }
 }

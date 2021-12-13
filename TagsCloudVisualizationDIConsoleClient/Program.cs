@@ -17,10 +17,14 @@ namespace TagsCloudVisualizationDIConsoleClient
             }
 
             if (args.Length <2 || args.Length > 4)
-                throw new ArgumentException("Incorrect Number Of Arguments");
+                throw new ArgumentException("Incorrect Number Of MystemArgs");
 
             var pathToFile = args.ElementAtOrDefault(0);
             var pathToSave = args.ElementAtOrDefault(1);
+
+            Console.WriteLine(pathToFile);
+            Console.WriteLine(pathToSave);
+
             var safeDirectory = pathToSave.Remove(pathToSave.LastIndexOf('\\'));
             CheckArguments(pathToFile, safeDirectory);
             var imageFormat = ImageFormat.Png;
@@ -35,11 +39,12 @@ namespace TagsCloudVisualizationDIConsoleClient
 
         private static List<string> MakeExcluedeWordList(string excludedWordsDocumentPath)
         {
+            if (excludedWordsDocumentPath == null)
+                return null;
+
             if (!File.Exists(excludedWordsDocumentPath))
                 throw new Exception($"Giving path to file: {excludedWordsDocumentPath} is not valid, NOTSYSTEM");
 
-            if (excludedWordsDocumentPath == null)
-                return null;
             // в файле слова по одному в строке
             return File.ReadLines(excludedWordsDocumentPath).Select(w => w.ToLower()).ToList();
         }

@@ -6,24 +6,23 @@ namespace TagsCloudVisualizationDI.FileReader
 {
     public class DefaultTextFileReader : ITextFileReader
     {
-        public DefaultTextFileReader(string filePath, string saveAnalizationPath, string mystemPath, string arguments, Encoding enconding)
+        public DefaultTextFileReader(string readingTextPath, Encoding enconding)
         {
-            FilePath = filePath;
-            SaveAnalizationPath = saveAnalizationPath;
-            MystemPath = mystemPath;
-            Arguments = arguments;
+            //FilePath = filePath;
+            ReadingTextPath = readingTextPath;
+            //MystemPath = mystemPath;
+            //MystemArgs = arguments;
             ReadingEncoding = enconding;
         }
 
 
-        public string FilePath { get; }
+        //public string FilePath { get; }
 
 
-        public string SaveAnalizationPath { get; }
-        public string MystemPath { get; }
-        public string Arguments { get; }
+        public string ReadingTextPath { get; }
+        //public string MystemPath { get; }
+        //public string MystemArgs { get; }
         public Encoding ReadingEncoding { get; }
-
 
 
         public string[] ReadText(string path, Encoding encoding)
@@ -33,7 +32,7 @@ namespace TagsCloudVisualizationDI.FileReader
                 return File.ReadAllLines(path, encoding);
             }
             
-            throw new Exception($"Giving path {path} is not valid");
+            throw new FileNotFoundException($"Giving path {path} is not valid");
         }
     }
 }

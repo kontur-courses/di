@@ -8,13 +8,25 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
     {
         private readonly HashSet<PartsOfSpeech.SpeechPart> _excludedSpeechParts;
         private readonly IEnumerable<string> _excludedWords;
+        public string FilePath { get; }
 
 
-        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts, IEnumerable<string> excludedWords)
+        public string SaveAnalizationPath { get; }
+        public string MystemPath { get; }
+        public string MystemArgs { get; }
+
+
+        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts, IEnumerable<string> excludedWords, 
+            string filePath, string saveAnalizationPath, string mystemPath, string arguments)
         {
             _excludedSpeechParts = excludedSpeechParts.ToHashSet();
             _excludedWords = excludedWords;
+            FilePath = filePath;
+            SaveAnalizationPath = saveAnalizationPath;
+            MystemPath = mystemPath;
+            MystemArgs = arguments;
         }
+
 
         private bool CheckWord(string inputWord, out string wordContent, out PartsOfSpeech.SpeechPart enumElementOfCurrentType)
         {

@@ -1,16 +1,11 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualizationDI;
-using TagsCloudVisualizationDI.Layouter;
-using TagsCloudVisualizationDI;
 using TagsCloudVisualizationDI.TextAnalization.Visualization;
-using TagsCloudVisualizationDI.Layouter.Filler;
 
 
 namespace TagsCloudVisualizationTests
@@ -21,6 +16,7 @@ namespace TagsCloudVisualizationTests
     {
         private List<RectangleWithWord> _rectanglesWithNamesList = new List<RectangleWithWord>(); 
         
+        /*
         [TearDown]
         public void VisualizeError()
         {
@@ -39,7 +35,7 @@ namespace TagsCloudVisualizationTests
             }
             _rectanglesWithNamesList = new List<RectangleWithWord>();
         }
-
+        */
 
         /*
         [TestCase(0, 1)]
