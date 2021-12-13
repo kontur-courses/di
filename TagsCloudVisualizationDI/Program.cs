@@ -31,7 +31,7 @@ namespace TagsCloudVisualizationDI
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
 
-            var formedElements = filler.FormElements(elementSize, normalyzedWords);
+            var formedElements = filler.FormStatisticElements(elementSize, normalyzedWords);
             var sizedElements = visualization.FindSizeForElements(formedElements);
             var sortedElements = sizedElements.
                 OrderByDescending(el => el.WordElement.CntOfWords).ToList();

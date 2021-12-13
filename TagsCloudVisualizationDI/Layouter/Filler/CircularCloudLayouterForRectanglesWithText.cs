@@ -27,17 +27,13 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
             return new RectangleWithWord(rectangle, inputWord);
         }
 
-        public Dictionary<string, RectangleWithWord> FormElements(Size elementSize, List<Word> startElements)
+        public Dictionary<string, RectangleWithWord> FormStatisticElements(Size elementSize, List<Word> startElements)
         {
             var dictWithFormedWords = new Dictionary<string, RectangleWithWord>();
 
             foreach (var word in startElements)
             {
                 var element = CreateNewRectangleWithWord(elementSize, word);
-                var rectangleSize = element.RectangleElement.Size;
-
-                if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
-                    throw new ArgumentException("Width and height can't be zero");
 
                 if (dictWithFormedWords.ContainsKey(word.WordText))
                     dictWithFormedWords[word.WordText].WordElement.CntOfWords++;
