@@ -2,6 +2,7 @@
 using Visualization;
 using FluentAssertions;
 using NUnit.Framework;
+using Visualization.Preprocessors;
 
 namespace CloudTagContainerTests.PreprocessorsTests
 {

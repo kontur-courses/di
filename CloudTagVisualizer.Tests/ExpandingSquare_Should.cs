@@ -6,6 +6,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
 using Visualization;
+using Visualization.Layouters.Spirals;
 
 namespace CloudTagVisualizer.Tests
 {
@@ -17,7 +18,7 @@ namespace CloudTagVisualizer.Tests
         public void ReturnCenterPointOnFirstIteration_When(int x, int y)
         {
             var center = new Point(x, y);
-            var square = new ExpandingSquare();
+            var square = new ExpandingSquareSpiral();
 
             var firstReturnerPoint = square.GetEnumerator(center).First();
 
@@ -28,7 +29,7 @@ namespace CloudTagVisualizer.Tests
         public void ReturnPointsInTopRightBottomLeftOrder()
         {
             var center = new Point(5, 6);
-            var square = new ExpandingSquare();
+            var square = new ExpandingSquareSpiral();
             var expectedPoints = new List<Point>
             {
                 center,
@@ -56,10 +57,10 @@ namespace CloudTagVisualizer.Tests
         public void NotAffectOnOtherIntegerSquare()
         {
             var firstSquareCenter = new Point(10, 20);
-            var firstSquare = new ExpandingSquare();
+            var firstSquare = new ExpandingSquareSpiral();
 
             var secondSquareCenter = new Point(-10, -20);
-            var secondSquare = new ExpandingSquare();
+            var secondSquare = new ExpandingSquareSpiral();
 
             var takenPointsCount = 20;
 
@@ -78,7 +79,7 @@ namespace CloudTagVisualizer.Tests
         public void ReturnValuesWithIncreasingChebyshevDistance()
         {
             var center = new Point(5, 6);
-            var square = new ExpandingSquare();
+            var square = new ExpandingSquareSpiral();
 
             var pointsCount = 500;
             var enumerator = square.GetEnumerator(center);
@@ -93,16 +94,16 @@ namespace CloudTagVisualizer.Tests
         public void ReturnPointsWithGoodTimePerformance()
         {
             var center = new Point(10, 20);
-            var square = new ExpandingSquare();
+            var square = new ExpandingSquareSpiral();
             var takenPointsCount = 10000;
 
-            var difficultListToCreate = square
+            square
                 .GetEnumerator(center)
                 .Take(takenPointsCount)
                 .ToList();
         }
 
-        private void DistanceShouldExpire(IEnumerable<Point> points, Point startPoint)
+        private static void DistanceShouldExpire(IEnumerable<Point> points, Point startPoint)
         {
             var maxDistance = 0;
             foreach (var point in points)

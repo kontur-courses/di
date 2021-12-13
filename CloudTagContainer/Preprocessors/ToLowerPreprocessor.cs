@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Visualization
+namespace Visualization.Preprocessors
 {
     public class ToLowerPreprocessor : IWordsPreprocessor
     {

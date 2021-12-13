@@ -1,4 +1,4 @@
-﻿namespace Visualization
+﻿namespace Visualization.Preprocessors
 {
     public class CombinedPreprocessor : IWordsPreprocessor
     {

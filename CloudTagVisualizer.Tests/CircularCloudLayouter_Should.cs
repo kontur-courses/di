@@ -5,6 +5,8 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using Visualization;
+using Visualization.Layouters;
+using Visualization.Layouters.Spirals;
 
 namespace CloudTagVisualizer.Tests
 {
@@ -18,7 +20,7 @@ namespace CloudTagVisualizer.Tests
             var center = new Point(x, y);
             var size = new Size(500, 300);
             var expectedRectangle = new Rectangle(center - size / 2, size);
-            var layouter = new CircularCloudLayouter(new ExpandingSquare())
+            var layouter = new CircularCloudLayouter(new ExpandingSquareSpiral())
             {
                 Center = center
             };
@@ -32,7 +34,7 @@ namespace CloudTagVisualizer.Tests
         public void ReturnRectanglesAroundCenter_WhenSquaresWithSameSizeGiven()
         {
             var center = new Point(5, 6);
-            var layouter = new CircularCloudLayouter(new ExpandingSquare())
+            var layouter = new CircularCloudLayouter(new ExpandingSquareSpiral())
             {
                 Center = center
             };
@@ -43,15 +45,15 @@ namespace CloudTagVisualizer.Tests
             var verticalOffset = new Size(0, size.Height);
             var expected = new List<Rectangle>()
             {
-                new Rectangle(startPoint, size),
-                new Rectangle(startPoint - verticalOffset - horizontalOffset, size),
-                new Rectangle(startPoint - verticalOffset, size),
-                new Rectangle(startPoint - verticalOffset + horizontalOffset, size),
-                new Rectangle(startPoint + horizontalOffset, size),
-                new Rectangle(startPoint + horizontalOffset + verticalOffset, size),
-                new Rectangle(startPoint + verticalOffset, size),
-                new Rectangle(startPoint + verticalOffset - horizontalOffset, size),
-                new Rectangle(startPoint - horizontalOffset, size),
+                new(startPoint, size),
+                new(startPoint - verticalOffset - horizontalOffset, size),
+                new(startPoint - verticalOffset, size),
+                new(startPoint - verticalOffset + horizontalOffset, size),
+                new(startPoint + horizontalOffset, size),
+                new(startPoint + horizontalOffset + verticalOffset, size),
+                new(startPoint + verticalOffset, size),
+                new(startPoint + verticalOffset - horizontalOffset, size),
+                new(startPoint - horizontalOffset, size),
             };
 
             var actual = Enumerable
@@ -66,7 +68,7 @@ namespace CloudTagVisualizer.Tests
         [Test]
         public void ReturnNotIntersectedRectangles()
         {
-            var rectanglesCount = 50;
+            const int rectanglesCount = 50;
             var center = new Point(100, 200);
             var sizes = new Size[rectanglesCount];
             var random = new Random(12345);
@@ -75,7 +77,7 @@ namespace CloudTagVisualizer.Tests
                 sizes[i] = new Size(random.Next(1, 100), random.Next(1, 100));
             }
 
-            var layouter = new CircularCloudLayouter(new ExpandingSquare())
+            var layouter = new CircularCloudLayouter(new ExpandingSquareSpiral())
             {
                 Center = center
             };
@@ -97,17 +99,17 @@ namespace CloudTagVisualizer.Tests
             var center = new Point(100, 200);
             var sizes = new Size[]
             {
-                new Size(100, 100),
-                new Size(50, 100),
-                new Size(100, 50),
-                new Size(100, 200),
-                new Size(200, 100),
-                new Size(150, 150),
-                new Size(300, 300),
-                new Size(400, 400)
+                new(100, 100),
+                new(50, 100),
+                new(100, 50),
+                new(100, 200),
+                new(200, 100),
+                new(150, 150),
+                new(300, 300),
+                new(400, 400)
             };
 
-            var layouter = new CircularCloudLayouter(new ExpandingSquare())
+            var layouter = new CircularCloudLayouter(new ExpandingSquareSpiral())
             {
                 Center = center
             };

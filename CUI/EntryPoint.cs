@@ -4,6 +4,9 @@ using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Visualization;
 using Visualization.ImageSavers;
+using Visualization.Layouters;
+using Visualization.Layouters.Spirals;
+using Visualization.Preprocessors;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
@@ -58,7 +61,7 @@ namespace CloudTagVisualizer.ConsoleInterface
                         provider.GetService<RemovingBoringWordsPreprocessor>()
                     }));
             container.AddScoped<ILayouter, CircularCloudLayouter>();
-            container.AddScoped<ISpiral, ExpandingSquare>();
+            container.AddScoped<ISpiral, ExpandingSquareSpiral>();
             container.AddScoped<IWordSizer, CountingWordSizer>();
             container.AddScoped<IWordsParser, WordsParser>();
             container.AddScoped<IFileReader, FileReader>();

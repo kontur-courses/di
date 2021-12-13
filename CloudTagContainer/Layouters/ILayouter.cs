@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace Visualization
+namespace Visualization.Layouters
 {
     public interface ILayouter
     {

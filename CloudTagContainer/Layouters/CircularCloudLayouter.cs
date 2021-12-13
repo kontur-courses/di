@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Visualization.Layouters.Spirals;
 
-namespace Visualization
+namespace Visualization.Layouters
 {
     public class CircularCloudLayouter : ILayouter
     {

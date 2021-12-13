@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Visualization
+namespace Visualization.Layouters.Spirals
 {
-    public class ExpandingSquare : ISpiral
+    public class ExpandingSquareSpiral : ISpiral
     {
         public IEnumerable<Point> GetEnumerator(Point center)
         {

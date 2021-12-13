@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Visualization
+namespace Visualization.Preprocessors
 {
     public class RemovingBoringWordsPreprocessor : IWordsPreprocessor
     {

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Visualization
+﻿namespace Visualization
 {
     public interface IWordsParser
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Visualization
+namespace Visualization.Layouters.Spirals
 {
     public interface ISpiral
     {
