@@ -42,10 +42,10 @@ namespace CloudTagVisualizer.Tests
 
             var expected = new List<SizedWord>()
             {
-                new("a", new Size(1 * fontSize, fontSize)),
-                new("ab", new Size(2 * fontSize, fontSize)),
-                new("abc", new Size(3 * fontSize, fontSize)),
-                new("abcdef", new Size(6 * fontSize, fontSize))
+                new("a", 1f /4f * fontSize),
+                new("ab", 1f /4f * fontSize),
+                new("abc", 1f /4f * fontSize),
+                new("abcdef", 1f /4f * fontSize)
             };
 
             var result = sizer.Convert(words, fontSize);
@@ -63,9 +63,9 @@ namespace CloudTagVisualizer.Tests
 
             var expected = new List<SizedWord>()
             {
-                new("a", new Size(3 * fontSize, 3 * fontSize)),
-                new("abc", new Size(3 * 2 * fontSize, 2 * fontSize)),
-                new("abcdef", new Size(6 * fontSize, fontSize))
+                new("a", 3f / 6f * fontSize ),
+                new("abc", 2f / 6f * fontSize),
+                new("abcdef", 1f / 6f * fontSize)
             };
 
             var result = sizer.Convert(words, fontSize);

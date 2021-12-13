@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Visualization.Layouters;
 
@@ -33,7 +34,8 @@ namespace Visualization
             var imageSize = settings.ImageSize;
             using var bmp = new Bitmap(imageSize.Width, imageSize.Height);
             using var g = Graphics.FromImage(bmp);
-            g.FillRectangle(new SolidBrush(settings.BackgroundColor), new Rectangle(Point.Empty, settings.ImageSize));
+            g.FillRectangle(new SolidBrush(settings.BackgroundColor),
+                new Rectangle(Point.Empty, settings.ImageSize));
             foreach (var word in words)
             {
                 DrawWord(word, g);
@@ -46,7 +48,17 @@ namespace Visualization
         {
             var position = layouter.PutNextRectangle(word.WordSize);
             var brush = new SolidBrush(settings.TextColor);
-            g.DrawString(word.Word, settings.TextFont, brush, position);
+            var newFont = new Font(settings.TextFont.FontFamily, word.FontSize, settings.TextFont.Style);
+            var rnd = new Random();
+            var rndColor = Color.FromArgb(
+                rnd.Next(100, 255),
+                rnd.Next(100, 255),
+                rnd.Next(100, 255));
+            g.DrawRectangle(new Pen(rndColor), position);
+            g.DrawString(word.Word,
+                newFont,
+                brush,
+                position);
         }
     }
 }

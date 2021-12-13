@@ -5,12 +5,22 @@ namespace Visualization
     public class SizedWord
     {
         public string Word { get; }
-        public Size WordSize { get; }
+        public Size WordSize => CalculateSize();
+        public float FontSize { get; }
+        
+        private const float HeightCoefficient = 1.6f;
 
-        public SizedWord(string word, Size size)
+        public SizedWord(string word, float fontSize)
         {
-            this.Word = word;
-            this.WordSize = size;
+            Word = word;
+            FontSize = fontSize;
+        }
+
+        private Size CalculateSize()
+        {
+            var height = HeightCoefficient * FontSize;
+            var width = FontSize * Word.Length;
+            return new Size((int) width, (int) height);
         }
     }
 }

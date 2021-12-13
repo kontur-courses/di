@@ -4,6 +4,6 @@ namespace Visualization
 {
     public interface IWordSizer
     {
-        public List<SizedWord> Convert(string[] words, float fontSize);
+        public List<SizedWord> Convert(string[] words, float maxFontSize);
     }
 }

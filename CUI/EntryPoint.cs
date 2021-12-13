@@ -25,7 +25,7 @@ namespace CloudTagVisualizer.ConsoleInterface
 
             var visualizerSettings = new VisualizerSettings(
                 new Size(1920, 1080),
-                new Font("Arial", 24, FontStyle.Bold),
+                new Font("Arial", 1000, FontStyle.Bold),
                 Color.FromName(options.TextColorName),
                 Color.FromName(options.BackGroundColorName)
             );
