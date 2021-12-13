@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using TagsCloudContainer.Common;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
@@ -24,7 +24,6 @@ namespace TagsCloudContainer.UI
         public void Perform()
         {
             writer.WriteLine("Enter Preprocessor name");
-            var preprocessor = typeof(IPreprocessor);
             while (true)
             {
                 var processorName = reader.ReadLine();
@@ -32,12 +31,12 @@ namespace TagsCloudContainer.UI
                 var userPreprocessor = AppDomain.CurrentDomain.GetAssemblies()
                     .First(a => a.FullName.Contains("TagsCloudContainer"))
                     .GetTypes()
-                    .Where(t => preprocessor.IsAssignableFrom(t))
+                    .Where(t => t.IsInstanceOf<IPreprocessor>())
                     .FirstOrDefault(t => t.Name == processorName);
 
                 if (userPreprocessor != null)
                 {
-                    ChangeState(userPreprocessor.GetCustomAttribute<StateAttribute>());
+                    ChangeState(userPreprocessor);
                     return;
                 }
                 writer.WriteLine("Preprocessor with that name not found, " +
@@ -45,10 +44,13 @@ namespace TagsCloudContainer.UI
             }
         }
 
-        private void ChangeState(StateAttribute state)
+        private void ChangeState(Type preprocessorType)
         {
-            state.State = state.State == State.Active ? 
+            var prop = preprocessorType.GetProperty(nameof(State));
+            var state = (State)prop.GetValue(null);
+            state = state == State.Active ? 
                 State.Inactive : State.Active;
+            prop.SetValue(null, state);
         }
     }
 }

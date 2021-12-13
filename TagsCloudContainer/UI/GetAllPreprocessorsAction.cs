@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using TagsCloudContainer.Common;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
@@ -21,16 +21,16 @@ namespace TagsCloudContainer.UI
 
         public void Perform()
         {
-            var preprocessor = typeof(IPreprocessor);
             var preprocessors = AppDomain.CurrentDomain.GetAssemblies()
                 .First(a => a.FullName.Contains("TagsCloudContainer"))
                 .GetTypes()
-                .Where(t => preprocessor.IsAssignableFrom(t))
+                .Where(t => t.IsInstanceOf<IPreprocessor>())
                 .ToArray();
             foreach (var p in preprocessors)
             {
-                var status = p.GetCustomAttribute<StateAttribute>();
-                writer.WriteLine($@"{p.Name} is {status.State}");
+                var prop = p.GetProperty(nameof(State));
+                var status = (State) prop.GetValue(null);
+                writer.WriteLine($@"{p.Name} is {status}");
             }
         }
     }

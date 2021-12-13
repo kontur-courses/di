@@ -3,9 +3,9 @@ using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.Preprocessors
 {
-    [State(State.Active)]
     public interface IPreprocessor
     {
+        public static State State { get; set; } = State.Active;
         IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags);
     }
 }

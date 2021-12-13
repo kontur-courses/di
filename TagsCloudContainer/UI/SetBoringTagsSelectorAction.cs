@@ -2,7 +2,6 @@
 using System.IO;
 using Autofac;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
-using TagsCloudContainer.Common;
 using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
@@ -32,7 +31,7 @@ namespace TagsCloudContainer.UI
             {
                 try
                 {
-                    var t = CSharpScript.EvaluateAsync<Func<SimpleTag, bool>>(selector);
+                    var t = CSharpScript.EvaluateAsync<CustomTagsFilter.RelevantTag>(selector);
                     t.Wait();
                     builder.RegisterInstance(t.Result)
                         .As<CustomTagsFilter.RelevantTag>();

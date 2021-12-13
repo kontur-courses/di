@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.Preprocessors
@@ -10,7 +11,12 @@ namespace TagsCloudContainer.Preprocessors
 
         public TagsPreprocessor(IPreprocessor[] preprocessors)
         {
-            this.preprocessors = preprocessors;
+            this.preprocessors = (from preprocessor in preprocessors
+                    let prop = preprocessor.GetType()
+                        .GetProperty(nameof(State))
+                    where (State) prop.GetValue(null) == State.Active
+                    select preprocessor)
+                .ToArray();
         }
 
         public List<SimpleTag> Process(IEnumerable<SimpleTag> tags) 

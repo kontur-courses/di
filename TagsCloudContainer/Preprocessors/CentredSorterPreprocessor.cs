@@ -4,9 +4,10 @@ using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.Preprocessors
 {
-    [State(State.Inactive)]
-    public class InvertedSorterPreprocessor : IPreprocessor
+    public class CentredSorterPreprocessor : IPreprocessor
     {
+        public static State State { get; set; } = State.Inactive;
+
         public IEnumerable<SimpleTag> Process(IEnumerable<SimpleTag> tags)
             => tags.OrderByDescending(t => t.Count)
                 .ThenByDescending(t => t.Word.Length);

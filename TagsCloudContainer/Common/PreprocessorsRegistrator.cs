@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.Common
@@ -13,20 +15,23 @@ namespace TagsCloudContainer.Common
             var preprocessors = GetActivePreprocessors();
             builder.RegisterTypes(preprocessors).As<IPreprocessor>();
             builder.RegisterType<TagsPreprocessor>().AsSelf();
+            DefaultInactivePreprocessorsRegistrator(builder);
         }
 
         public static Type[] GetActivePreprocessors() 
             => AppDomain.CurrentDomain.GetAssemblies()
                 .First(a => a.FullName.Contains("TagsCloudContainer"))
                 .GetTypes()
-                .Where(TypeIsActivePreprocessor)
+                .Where(t => t.IsInstanceOf<IPreprocessor>())
                 .ToArray();
 
-        private static bool TypeIsActivePreprocessor(Type type)
+        private static void DefaultInactivePreprocessorsRegistrator(ContainerBuilder builder)
         {
-            var preprocessor = typeof(IPreprocessor);
-            return preprocessor.IsAssignableFrom(type) &&
-                   type.GetCustomAttribute<StateAttribute>().State == State.Active;
+            var hashSet = new HashSet<string>();
+            CustomTagsFilter.RelevantTag selector = t => true;
+            builder.RegisterInstance(hashSet).AsSelf();
+            builder.RegisterInstance(selector)
+                .As<CustomTagsFilter.RelevantTag>();
         }
     }
 }

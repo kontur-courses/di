@@ -2,9 +2,9 @@
 
 namespace TagsCloudContainer.Preprocessors
 {
-    [State(State.Active)]
     public class ShortTagsFilter : PreprocessorFilter
     {
+        public static State State { get; set; } = State.Active;
         protected override bool IsRelevantTag(SimpleTag tag)
             => tag.Word.Length > 2;
     }
