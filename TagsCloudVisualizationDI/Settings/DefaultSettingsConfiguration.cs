@@ -4,10 +4,10 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudVisualizationDI.Settings
 {
-    public class DeffaultSettingsConfiguration : ISettingsConfiguration
+    public class DefaultSettingsConfiguration : ISettingsConfiguration
     {
         
-        public DeffaultSettingsConfiguration(string pathToFile, string pathToSave, ImageFormat format, List<string> excludedWords)
+        public DefaultSettingsConfiguration(string pathToFile, string pathToSave, ImageFormat format, List<string> excludedWords)
         {
             SavePath = pathToSave;
             FilePath = pathToFile;
@@ -27,23 +27,18 @@ namespace TagsCloudVisualizationDI.Settings
 
         public SolidBrush Brush => new SolidBrush(Color.Black);
 
-        
-
 
         private List<string> SetExcludedWords(List<string> excludedWords)
         {
-            return (excludedWords == null) ? DefaultExcludedWords : excludedWords;
+            return excludedWords ?? DefaultExcludedWords;
         }
 
         private ImageFormat SetFormat(ImageFormat format)
         {
-            return (format == null) ? DefaultFormat : format;
+            return format ?? DefaultFormat;
         }
 
-        private ImageFormat DefaultFormat
-        {
-            get => ImageFormat.Png;
-        }
+        private ImageFormat DefaultFormat => ImageFormat.Png;
 
         private List<string> DefaultExcludedWords
         {

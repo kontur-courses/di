@@ -17,9 +17,6 @@ namespace TagsCloudVisualizationDI
             var buildContainer = containerBuilder.Build();
 
             var settings = buildContainer.Resolve<ISettingsConfiguration>();
-
-
-
             var visualization = settings.Visualizator;
             var reader = settings.FileReader;
             var analyzer = settings.Analyzer;
@@ -28,28 +25,16 @@ namespace TagsCloudVisualizationDI
             var elementSize = settings.ElementSize;
             var saver = settings.Saver;
 
-
             analyzer.InvokeMystemAnalization();
-            
-            var wordsFromFile = reader.ReadText(reader.PreAnalyzedTextPath, reader.ReadingEncoding);
+            var wordsFromFile = reader.ReadText();
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
-
-
-
-
-
-            //filler.FillInElements(elementSize, normalyzedWords);
-
             var formedElements = filler.FormElements(elementSize, normalyzedWords);
             var sizedElements = visualization.FindSizeForElements(formedElements);
             var sortedElements = sizedElements.
                 OrderByDescending(el => el.WordElement.CntOfWords).ToList();
-            var positionedElements = filler.PositionElements(sortedElements);
+            var positionedElements = filler.MakePositionElements(sortedElements);
 
-
-            //var elementsForVisualisation = filler.GetElementsList();
-            
             visualization.DrawAndSaveImage(positionedElements, saver.GetSavePath(), settings.Format);
         }
 
@@ -65,7 +50,7 @@ namespace TagsCloudVisualizationDI
         private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, 
             string pathToSave, ImageFormat imageFormat, List<string> excludedWordsList)
         {
-            buildContainer.RegisterType<DeffaultSettingsConfiguration>().As<ISettingsConfiguration>()
+            buildContainer.RegisterType<DefaultSettingsConfiguration>().As<ISettingsConfiguration>()
                 .WithParameter("pathToFile", pathToFile)
                 .WithParameter("pathToSave", pathToSave)
                 .WithParameter("format", imageFormat)

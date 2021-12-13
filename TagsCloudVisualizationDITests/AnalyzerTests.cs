@@ -17,7 +17,7 @@ namespace TagsCloudVisualizationDITests
         [Test]
         public void ShouldNotThrowWhenPathsAreValid()
         {
-            var settings = new DeffaultSettingsConfiguration(string.Empty, string.Empty, ImageFormat.Png, null);
+            var settings = new DefaultSettingsConfiguration(string.Empty, string.Empty, ImageFormat.Png, null);
             var analyzer = ((ISettingsConfiguration)settings).Analyzer;
             Action invoking = () => analyzer.InvokeMystemAnalization();
             invoking.Should().NotThrow();
@@ -30,11 +30,11 @@ namespace TagsCloudVisualizationDITests
             var path = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\ex2.TXT";
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\result.TXT";
 
-            var settings = (ISettingsConfiguration)new DeffaultSettingsConfiguration(path, savePath, ImageFormat.Png, null);
+            var settings = (ISettingsConfiguration)new DefaultSettingsConfiguration(path, savePath, ImageFormat.Png, null);
             var analyzer = settings.Analyzer;
             var reader = settings.FileReader;
             analyzer.InvokeMystemAnalization();
-            var words = reader.ReadText(reader.PreAnalyzedTextPath, Encoding.UTF8);
+            var words = reader.ReadText();
             var result = analyzer.GetAnalyzedWords(words).ToList();
             var expectedResult = new List<Word>
             {

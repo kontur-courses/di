@@ -7,6 +7,6 @@ namespace TagsCloudVisualizationDI.FileReader
         public string PreAnalyzedTextPath { get;}
 
         public Encoding ReadingEncoding { get; }
-        string[] ReadText(string path, Encoding encoding);
+        string[] ReadText();
     }
 }

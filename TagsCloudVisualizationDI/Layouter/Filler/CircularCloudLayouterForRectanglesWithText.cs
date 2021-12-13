@@ -11,46 +11,12 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
 
         private Spiral LayouterSpiral { get; }
 
-        private Dictionary<string, RectangleWithWord> ElementsDict { get;}
-
-
 
         public CircularCloudLayouterForRectanglesWithText(Point center)
         {
             Center = center;
             LayouterSpiral = new Spiral();
-            ElementsDict = new Dictionary<string, RectangleWithWord>();
         }
-
-        
-        private void PutNextElement(RectangleWithWord rectangleWithWord)
-        {
-            var rectangleSize = rectangleWithWord.RectangleElement.Size;
-            var word = rectangleWithWord.WordElement;
-
-            if (rectangleSize.Width == 0 || rectangleSize.Height == 0)
-                throw new ArgumentException("Width and height can't be zero");
-
-            if (ElementsDict.ContainsKey(word.WordText))
-            {
-                ElementsDict[word.WordText].WordElement.CntOfWords++;
-                return;
-            }
-
-            var nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
-
-            while (ElementsDict.Values.Any(rectangle =>
-                rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
-                nextRectangle = CreateNewRectangleWithWord(rectangleSize, word);
-            if(nextRectangle.RectangleElement.Location != Center)
-                nextRectangle = CenterElement(nextRectangle);
-
-            ElementsDict.Add(word.WordText, nextRectangle);
-
-
-        }
-
-        public List<RectangleWithWord> GetElementsList() => ElementsDict.Values.ToList();
 
         private RectangleWithWord CreateNewRectangleWithWord(Size rectangleSize, Word inputWord)
         {
@@ -59,24 +25,6 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
             var rectangleY = rectangleCenterLocation.Y - Math.Abs(rectangleSize.Height / 2);
             var rectangle = new Rectangle(rectangleX, rectangleY, Math.Abs(rectangleSize.Width), Math.Abs(rectangleSize.Height));
             return new RectangleWithWord(rectangle, inputWord);
-        }
-
-        
-
-        public void FillInElements(Size elementSize, List<Word> wordList)
-        {
-            foreach (var word in wordList)
-            {
-                var element = CreateNewRectangleWithWord(elementSize, word);
-                PutNextElement(element);
-            }
-        }
-
-        private RectangleWithWord CenterElement(RectangleWithWord inputRectangleWithWord)
-        {
-            var centeringRectangleElement = ElementCentering.Centering(inputRectangleWithWord.RectangleElement, Center, ElementsDict);
-            inputRectangleWithWord.RectangleElement = centeringRectangleElement;
-            return inputRectangleWithWord;
         }
 
         public Dictionary<string, RectangleWithWord> FormElements(Size elementSize, List<Word> startElements)
@@ -92,19 +40,14 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
                     throw new ArgumentException("Width and height can't be zero");
 
                 if (dictWithFormedWords.ContainsKey(word.WordText))
-                {
                     dictWithFormedWords[word.WordText].WordElement.CntOfWords++;
-                }
                 else
-                {
                     dictWithFormedWords[word.WordText] = element;
-                }
             }
-            Console.WriteLine(dictWithFormedWords.Count);
             return dictWithFormedWords;
         }
 
-        public List<RectangleWithWord> PositionElements(List<RectangleWithWord> sizedElements)
+        public List<RectangleWithWord> MakePositionElements(List<RectangleWithWord> sizedElements)
         {
             var positionedElements = new List<RectangleWithWord>();
             foreach (var element in sizedElements)
@@ -113,11 +56,12 @@ namespace TagsCloudVisualizationDI.Layouter.Filler
                 var word = element.WordElement;
                 var nextRectangle = CreateNewRectangleWithWord(elementSize, word);
 
-                while (positionedElements.Any(rectangle =>
-                    rectangle.RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
+                while (positionedElements.Any(rectangle => rectangle
+                    .RectangleElement.IntersectsWith(nextRectangle.RectangleElement)))
                 {
                     nextRectangle = CreateNewRectangleWithWord(nextRectangle.RectangleElement.Size, word);
                 }
+
                 positionedElements.Add(nextRectangle);
             }
             return positionedElements;

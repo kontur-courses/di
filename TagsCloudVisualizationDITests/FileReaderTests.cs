@@ -22,7 +22,7 @@ namespace TagsCloudVisualizationDITests
             var path = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\ex1.TXT";
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\result.TXT";
             var fileReader = new DefaultTextFileReader(savePath, Encoding.UTF8);
-            Action read = () => fileReader.ReadText(path, Encoding.UTF8);
+            Action read = () => fileReader.ReadText();
             read.Should().NotThrow();
         }
 
@@ -32,7 +32,7 @@ namespace TagsCloudVisualizationDITests
             var path = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "abraccadabras";
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\result.TXT";
             var fileReader = new DefaultTextFileReader(savePath, Encoding.UTF8);
-            Action read = () => fileReader.ReadText(path, Encoding.UTF8);
+            Action read = () => fileReader.ReadText();
             read.Should().Throw<FileNotFoundException>();
         }
 
@@ -42,7 +42,7 @@ namespace TagsCloudVisualizationDITests
             var path = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\ex1.TXT";
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\result.TXT";
             var fileReader = new DefaultTextFileReader(savePath, Encoding.UTF8);
-            var lines =  fileReader.ReadText(path, Encoding.UTF8);
+            var lines =  fileReader.ReadText();
             lines.Length.Should().Be(8);
         }
     }

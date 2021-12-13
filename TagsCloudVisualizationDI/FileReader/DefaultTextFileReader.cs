@@ -5,10 +5,10 @@ namespace TagsCloudVisualizationDI.FileReader
 {
     public class DefaultTextFileReader : ITextFileReader
     {
-        public DefaultTextFileReader(string readingTextPath, Encoding enconding)
+        public DefaultTextFileReader(string readingTextPath, Encoding encoding)
         {
             PreAnalyzedTextPath = readingTextPath;
-            ReadingEncoding = enconding;
+            ReadingEncoding = encoding;
         }
 
 
@@ -16,14 +16,14 @@ namespace TagsCloudVisualizationDI.FileReader
         public Encoding ReadingEncoding { get; }
 
 
-        public string[] ReadText(string path, Encoding encoding)
+        public string[] ReadText()
         {
-            if (File.Exists(path))
+            if (File.Exists(PreAnalyzedTextPath))
             { 
-                return File.ReadAllLines(path, encoding);
+                return File.ReadAllLines(PreAnalyzedTextPath, ReadingEncoding);
             }
             
-            throw new FileNotFoundException($"Giving path {path} is not valid");
+            throw new FileNotFoundException($"Giving path {PreAnalyzedTextPath} is not valid");
         }
     }
 }

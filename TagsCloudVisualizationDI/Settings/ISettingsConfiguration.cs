@@ -46,7 +46,8 @@ namespace TagsCloudVisualizationDI.Settings
         public Encoding TextEncoding => Encoding.UTF8;
         
 
-        public ITextFileReader FileReader => new DefaultTextFileReader(SaveAnalizationPath, TextEncoding);
+        public ITextFileReader FileReader => 
+            new DefaultTextFileReader(SaveAnalizationPath, TextEncoding);
 
         public SolidBrush Brush => new SolidBrush(Color.White);
 
