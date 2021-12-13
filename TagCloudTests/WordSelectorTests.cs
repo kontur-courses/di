@@ -4,6 +4,7 @@ using TagsCloudVisualization.Default;
 
 namespace TagCloudTests
 {
+    [TestFixture]
     public class WordSelectorTests
     {
         private WordSelector selector;

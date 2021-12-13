@@ -8,23 +8,19 @@ namespace TagsCloudVisualization
 {
     public class TagCloudMaker
     {
-        private readonly TokenGenerator tokenGenerator;
         private readonly ICloudMaker cloudMaker; 
         private readonly ITokenColorChooser tokenColorChooser;
         private readonly Graphics graphics = Graphics.FromImage(new Bitmap(1,1));
 
-        public TagCloudMaker(ICloudMaker cloudMaker, ITokenColorChooser tokenColorChooser, 
-            TokenGenerator tokenGenerator)
+        public TagCloudMaker(ICloudMaker cloudMaker, ITokenColorChooser tokenColorChooser)
         {
-            this.tokenGenerator = tokenGenerator;
             this.cloudMaker = cloudMaker;
             this.tokenColorChooser = tokenColorChooser;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
         }
 
-        public Tag[] CreateTagCloud(string text, Font font, int tagCount)
+        public Tag[] CreateTagCloud(Token[] tokens, Font font)
         {
-            var tokens = tokenGenerator.GetTokens(text, tagCount);
             var tags = new List<Tag>();
             foreach (var token in tokens)
             {
