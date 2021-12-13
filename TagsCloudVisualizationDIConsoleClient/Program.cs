@@ -32,13 +32,13 @@ namespace TagsCloudVisualizationDIConsoleClient
 
 
             var excludedWordsDocument = args.ElementAtOrDefault(2);
-            List<string> excludedWordList = MakeExcluedeWordList(excludedWordsDocument);
+            List<string> excludedWordList = MakeExcludeWordList(excludedWordsDocument);
 
             TagsCloudVisualizationDI.Program.Main(pathToFile, pathToSave, imageFormat, excludedWordList);
         }
 
 
-        private static List<string> MakeExcluedeWordList(string excludedWordsDocumentPath)
+        private static List<string> MakeExcludeWordList(string excludedWordsDocumentPath)
         {
             if (excludedWordsDocumentPath == null)
                 return null;
@@ -46,7 +46,6 @@ namespace TagsCloudVisualizationDIConsoleClient
             if (!File.Exists(excludedWordsDocumentPath))
                 throw new Exception($"Giving path to file: {excludedWordsDocumentPath} is not valid, NOTSYSTEM");
 
-            // в файле слова по одному в строке
             return File.ReadLines(excludedWordsDocumentPath).Select(w => w.ToLower()).ToList();
         }
 

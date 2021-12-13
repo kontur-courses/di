@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualizationDI.Layouter.Filler;

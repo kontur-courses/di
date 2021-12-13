@@ -17,25 +17,17 @@ namespace TagsCloudVisualizationDI.Settings
     public interface ISettingsConfiguration
     {
         public Size ElementSize => new Size(100, 100);
-
         public Point LayouterCenter => new Point(2500, 2500);
-
-
-
         public string MystemPath => Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\mystem.exe";
         public string SaveAnalizationPath => Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\result.TXT";
 
 
 
         public string SavePath
-        {
-            get;
-        }
+        { get; }
 
         public string FilePath
-        {
-            get;
-        }
+        { get; }
         public List<string> ExcludedWords => new List<string>();
         public ImageFormat Format => ImageFormat.Png;
 

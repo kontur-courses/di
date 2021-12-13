@@ -26,9 +26,11 @@ namespace TagsCloudVisualizationDI
             var saver = settings.Saver;
 
             analyzer.InvokeMystemAnalization();
+
             var wordsFromFile = reader.ReadText();
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
+
             var formedElements = filler.FormElements(elementSize, normalyzedWords);
             var sizedElements = visualization.FindSizeForElements(formedElements);
             var sortedElements = sizedElements.

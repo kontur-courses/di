@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualizationDI;
 using TagsCloudVisualizationDI.Saving;
-using TagsCloudVisualizationDI.Settings;
 using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
 namespace TagsCloudVisualizationDITests

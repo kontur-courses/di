@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualizationDI.Saving;

@@ -9,8 +9,6 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
         private readonly HashSet<PartsOfSpeech.SpeechPart> _excludedSpeechParts;
         private readonly IEnumerable<string> _excludedWords;
         public string FilePath { get; }
-
-
         public string SaveAnalizationPath { get; }
         public string MystemPath { get; }
         public string MystemArgs { get; }

@@ -14,7 +14,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
 
         private int SizeMultiplier { get; }
 
-        public DefaultVisualization(System.Drawing.Brush brush, Font font, Size imageSize, int sizeMultiplier)
+        public DefaultVisualization(Brush brush, Font font, Size imageSize, int sizeMultiplier)
         {
             ColorBrush = brush;
             TextFont = font;

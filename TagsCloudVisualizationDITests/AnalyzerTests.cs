@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualizationDI;

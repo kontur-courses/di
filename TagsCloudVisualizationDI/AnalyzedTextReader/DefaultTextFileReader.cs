@@ -5,9 +5,9 @@ namespace TagsCloudVisualizationDI.FileReader
 {
     public class DefaultTextFileReader : ITextFileReader
     {
-        public DefaultTextFileReader(string readingTextPath, Encoding encoding)
+        public DefaultTextFileReader(string preAnalyzedTextPath, Encoding encoding)
         {
-            PreAnalyzedTextPath = readingTextPath;
+            PreAnalyzedTextPath = preAnalyzedTextPath;
             ReadingEncoding = encoding;
         }
 
