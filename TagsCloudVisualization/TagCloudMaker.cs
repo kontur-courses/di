@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
@@ -22,27 +23,26 @@ namespace TagsCloudVisualization
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
         }
 
-        public Tag[] CreateTagCloud(string text, Font font)
+        public Tag[] CreateTagCloud(string text, Font font, int tagCount)
         {
             var tokens = tokenGenerator.GetTokens(text);
             var tags = new List<Tag>();
-            foreach (var token in tokens)
+            foreach (var token in tokens.Take(tagCount))
             {
-                var (size, curFont) = GetSize(token, font);
+                var size = GetSize(token, font);
                 var rect = cloudMaker.PutRectangle(size);
                 var color = tokenColorChooser.GetTokenColor(token);
-                tags.Add(new Tag(token.Value, curFont, color, rect));
+                tags.Add(new Tag(token.Value, font, color, rect));
             }
             return tags.ToArray(); 
         }
 
-        private (Size, Font) GetSize(Token token, Font font)
+        private Size GetSize(Token token, Font font)
         {
-            var scale = (float)Math.Sqrt(token.Weight);
-            var curFont = new Font(font.FontFamily, font.Size * scale, font.Style);
-            var fontSize = graphics.MeasureString(token.Value, curFont, PointF.Empty, StringFormat.GenericTypographic);
-            return (new Size((int)Math.Ceiling(fontSize.Width ),
-                (int)Math.Round(fontSize.Height)), curFont); 
+            var fontSize = graphics.MeasureString(token.Value, font);
+            var scale = Math.Sqrt(token.Weight);
+            return (new Size((int)Math.Ceiling(fontSize.Width * scale),
+                (int)Math.Ceiling(fontSize.Height * scale))); 
         }
     }
 }

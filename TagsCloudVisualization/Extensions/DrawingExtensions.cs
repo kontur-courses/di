@@ -18,7 +18,7 @@ namespace TagsCloudVisualization.Extensions
 
         public static float DistanceTo(this PointF point, PointF other)
         {
-            return (float)Math.Sqrt(point.X * other.X + point.Y * other.Y);
+            return (float)Math.Sqrt((point.X - other.X) * (point.X - other.X) + (point.Y - other.Y) * (point.Y - other.Y));
         }
 
         public static void DrawRectangle(this Graphics graphics, Pen pen, RectangleF rectangle)
