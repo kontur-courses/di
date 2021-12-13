@@ -26,7 +26,7 @@ namespace TagsCloudContainer
             this.wordsConverter = wordsConverter;
         }
 
-        public Bitmap LayDown(IEnumerable<string> words, ITagCloudSettings settings)
+        public Bitmap LayDown(IEnumerable<string> words)
         {
             var preparedWords = wordsConverter.Prepare(words);
             var filteredWords = filterApplyer.Apply(preparedWords);

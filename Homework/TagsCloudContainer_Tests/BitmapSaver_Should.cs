@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer.BitmapSaver;
@@ -50,16 +49,6 @@ namespace TagsCloudContainer_Tests
             testingBmp.Dispose();
             Action act = () => sut.Save(testingBmp, "test.png");
             act.Should().Throw<Exception>().WithMessage("Не удалось сохранить файл");
-        }
-
-        private bool IsFileExisting(string fullPath)
-        {
-            var file = Directory
-                .GetFiles(fullPath)
-                .SingleOrDefault(f => f == Path.GetFileName(fullPath));
-            if (file == null) return false;
-            File.Delete(file);
-            return true;
         }
     }
 }

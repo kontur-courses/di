@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    
+
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -24,6 +24,7 @@
         <Compile Remove="Layouter\PointsProviders\IPointsProvidersResolver.cs" />
         <Compile Remove="Visualizer\ColorGenerators\IColorGeneratorsResolver.cs" />
         <Compile Remove="Layouter\PointsProviders\SpiralPointsProviderFactory.cs" />
+        <Compile Remove="Properties\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -35,11 +36,13 @@
     <ItemGroup>
         <EmbeddedResource Remove="TextReader\Parsers\**" />
         <EmbeddedResource Remove="FileReader\Parsers\**" />
+        <EmbeddedResource Remove="Properties\**" />
     </ItemGroup>
 
     <ItemGroup>
         <None Remove="TextReader\Parsers\**" />
         <None Remove="FileReader\Parsers\**" />
+        <None Remove="Properties\**" />
     </ItemGroup>
 
 </Project>

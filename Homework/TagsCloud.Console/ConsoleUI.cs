@@ -20,7 +20,7 @@ namespace TagsCloud.Console
         public void Run(IAppSettings appSettings, ITagCloudSettings tagCloudSettings)
         {
             var content = fileReadersResolver.Get(appSettings.InputPath).ReadWords(appSettings.InputPath);
-            using var visualization = tagCloud.LayDown(content, tagCloudSettings);
+            using var visualization = tagCloud.LayDown(content);
             saver.Save(visualization, appSettings.OutputPath);
         }
     }

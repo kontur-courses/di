@@ -11,9 +11,9 @@ namespace TagsCloudContainer
         protected override void Load(ContainerBuilder builder)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            builder.RegisterAssemblyTypes(assembly!).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().SingleInstance();
             builder.Register(c => c.Resolve<IFactory<IVisualizerSettings>>().Create())
-                .As<IVisualizerSettings>()
+                .AsImplementedInterfaces()
                 .SingleInstance();
             builder.RegisterInstance(new MorphAnalyzer()).SingleInstance();
         }

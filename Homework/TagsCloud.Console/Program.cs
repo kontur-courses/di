@@ -17,8 +17,8 @@ namespace TagsCloud.Console
         internal static IContainer Configure(IAppSettings settings, ITagCloudSettings tagCloudSettings)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(settings).As<IAppSettings>().SingleInstance();
-            builder.RegisterInstance(tagCloudSettings).As<ITagCloudSettings>().SingleInstance();
+            builder.RegisterInstance(settings).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterInstance(tagCloudSettings).AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ConsoleUI>().AsImplementedInterfaces();
             builder.RegisterModule<InfrastructureModule>();
             return builder.Build();

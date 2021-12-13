@@ -9,7 +9,7 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class TxtFileReader_Should
     {
-        private const string testFilePath = @"..\..\..\TestFiles\testWords.txt";
+        private const string TestFilePath = @"..\..\..\TestFiles\testWords.txt";
 
         private readonly string[] expectedOutput =
         {
@@ -29,7 +29,7 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void ReadFile_WhenExists()
         {
-            var result = sut.ReadWords(testFilePath);
+            var result = sut.ReadWords(TestFilePath);
             result.Should().BeEquivalentTo(expectedOutput);
         }
 

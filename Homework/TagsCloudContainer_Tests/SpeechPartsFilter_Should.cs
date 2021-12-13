@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using System;
+using FakeItEasy;
+using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsPreparator;
 
@@ -16,12 +19,15 @@ namespace TagsCloudContainer_Tests
             new("ой", SpeechPart.Unknown)
         };
 
+        private readonly ITagCloudSettings settings = A.Fake<ITagCloudSettings>();
+
         private SpeechPartsFilter sut;
 
         [Test]
         public void ReturnSpecifiedSpeechPart()
         {
-            sut = new SpeechPartsFilter(SpeechPart.Noun);
+            A.CallTo(() => settings.SelectedSpeechParts).Returns(new[] {SpeechPart.Noun});
+            sut = new SpeechPartsFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .OnlyContain(x => x.SpeechPart == SpeechPart.Noun);
@@ -30,7 +36,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void ReturnSpecifiedSpeechParts()
         {
-            sut = new SpeechPartsFilter(SpeechPart.Noun, SpeechPart.Adjective);
+            A.CallTo(() => settings.SelectedSpeechParts).Returns(new[] {SpeechPart.Noun, SpeechPart.Adjective});
+            sut = new SpeechPartsFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .OnlyContain(w => w.SpeechPart == SpeechPart.Noun || w.SpeechPart == SpeechPart.Adjective);
@@ -39,7 +46,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void ExcludeNothing_WhenEmptyFilter()
         {
-            sut = new SpeechPartsFilter();
+            A.CallTo(() => settings.SelectedSpeechParts).Returns(Array.Empty<SpeechPart>());
+            sut = new SpeechPartsFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .BeEquivalentTo(testingInput);

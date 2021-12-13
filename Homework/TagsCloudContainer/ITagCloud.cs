@@ -5,6 +5,6 @@ namespace TagsCloudContainer
 {
     public interface ITagCloud
     {
-        public Bitmap LayDown(IEnumerable<string> words, ITagCloudSettings settings);
+        public Bitmap LayDown(IEnumerable<string> words);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer;
 using TagsCloudContainer.WordsFilter;
 using TagsCloudContainer.WordsPreparator;
 
@@ -17,12 +19,15 @@ namespace TagsCloudContainer_Tests
             new("ой", SpeechPart.Unknown)
         };
 
+        private readonly ITagCloudSettings settings = A.Fake<ITagCloudSettings>();
+
         private LengthFilter sut;
 
         [Test]
         public void ExcludeWords_WhenLengthSpecified()
         {
-            sut = new LengthFilter(3);
+            A.CallTo(() => settings.MinWordLength).Returns(3);
+            sut = new LengthFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .NotContain(w => w.Lemma.Length < 3);
@@ -31,7 +36,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void NotExcludeWords_WhenZeroArgument()
         {
-            sut = new LengthFilter(0);
+            A.CallTo(() => settings.MinWordLength).Returns(0);
+            sut = new LengthFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .BeEquivalentTo(testingInput);
@@ -40,7 +46,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void ExcludeAllWords_WhenHighLengthRequired()
         {
-            sut = new LengthFilter(int.MaxValue);
+            A.CallTo(() => settings.MinWordLength).Returns(int.MaxValue);
+            sut = new LengthFilter(settings);
             sut.Filter(testingInput)
                 .Should()
                 .BeEmpty();
@@ -49,7 +56,8 @@ namespace TagsCloudContainer_Tests
         [Test]
         public void Throw_WhenNegativeArgument()
         {
-            Assert.Throws<ArgumentException>(() => sut = new LengthFilter(-1));
+            A.CallTo(() => settings.MinWordLength).Returns(-1);
+            Assert.Throws<ArgumentException>(() => sut = new LengthFilter(settings));
         }
     }
 }

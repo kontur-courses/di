@@ -9,15 +9,11 @@ namespace TagsCloudContainer.WordsFilter
     {
         private readonly int minLength;
 
-        internal LengthFilter(int minLength)
-        {
-            if (minLength < 0)
-                throw new ArgumentException($"{nameof(minLength)} cannot be negative");
-            this.minLength = minLength;
-        }
 
         public LengthFilter(ITagCloudSettings settings)
         {
+            if (settings.MinWordLength < 0)
+                throw new ArgumentException($"Setting {nameof(settings.MinWordLength)} can't be negative");
             minLength = settings.MinWordLength;
         }
 

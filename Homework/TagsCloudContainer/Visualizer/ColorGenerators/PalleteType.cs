@@ -6,6 +6,6 @@ namespace TagsCloudContainer.Visualizer.ColorGenerators
     public enum PalleteType
     {
         Random = 0x0,
-        Black = 0x1,
+        Black = 0x1
     }
 }
