@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface ICloudMaker
     {
-        RectangleF PutRectangle(Size rectangleSize);
+        RectangleF PutRectangle(SizeF rectangleSize);
     }
 }

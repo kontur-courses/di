@@ -28,19 +28,19 @@ namespace TagsCloudVisualization
             {
                 //graphics.FillRectangle(Brushes.Red, tag.Location);
                 //graphics.DrawRectangle(new Pen(Color.Blue, 5 / scale), tag.Location);
-                var tagImage = RenderTag(tag);
+                var tagImage = RenderTag(tag, scale);
                 graphics.DrawImage(tagImage.textImage, tag.Location, tagImage.frame, GraphicsUnit.Pixel);
             }
             graphics.Dispose();
             return image;
         }
 
-        private (Image textImage, RectangleF frame) RenderTag(Tag tag)
+        private (Image textImage, RectangleF frame) RenderTag(Tag tag, float renderScale)
         {
-            var scale = 10;
-            var image = new Bitmap((int)(tag.Location.Width * scale), (int)(tag.Location.Height * scale));
+            var scale = 10 * renderScale * Math.Min(tag.Location.Width, tag.Location.Height) / Math.Min(tag.ValueSize.Width, (tag.ValueSize.Height));
+            var image = new Bitmap((int)(tag.ValueSize.Width * scale), (int)(tag.ValueSize.Height * scale ));
             var g = Graphics.FromImage(image);
-            g.ScaleTransform(scale, scale);
+            g.ScaleTransform(scale,scale);
             var sf = new StringFormat(){Alignment = StringAlignment.Near, Trimming = StringTrimming.None};
             g.DrawString(tag.Value, tag.Font,  new SolidBrush(tag.Color), 0, 0, sf);
             g.Dispose();

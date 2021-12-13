@@ -26,19 +26,19 @@ namespace TagsCloudVisualization
             this.distanceFunction = distanceFunction;
         }
 
-        public RectangleF PutRectangle(Size rectangleSize)
+        public RectangleF PutRectangle(SizeF rectangleSize)
         {
             return rectangles.Count == 0 ? PutFirstRectangle(rectangleSize) : PutNextRectangle(rectangleSize);
         }
 
-        private RectangleF PutFirstRectangle(Size rectangleSize)
+        private RectangleF PutFirstRectangle(SizeF rectangleSize)
         {
             var firstRectangle = CreateRectangle(Center, rectangleSize);
             AddRectanglePointsToPlacementLocations(firstRectangle, Center);
             return firstRectangle;
         }
 
-        private RectangleF PutNextRectangle(Size rectangleSize)
+        private RectangleF PutNextRectangle(SizeF rectangleSize)
         {
             var (rectangle, placementLocation) = placementLocations
                 .Select(p => (rectangleCenter: GetRectangleCenter(p, rectangleSize), placementLocation: p))
@@ -65,7 +65,7 @@ namespace TagsCloudVisualization
             }
         }
 
-        private PointF GetRectangleCenter(PointF placement, Size rectangleSize)
+        private PointF GetRectangleCenter(PointF placement, SizeF rectangleSize)
         {
             var offsetX = 0f;
             var offsetY = 0f;
@@ -90,7 +90,7 @@ namespace TagsCloudVisualization
             return false;
         }
 
-        private static RectangleF CreateRectangle(PointF center, Size size)
+        private static RectangleF CreateRectangle(PointF center, SizeF size)
         {
             return new RectangleF(center.X - size.Width / 2.0f, center.Y - size.Height / 2.0f, size.Width, size.Height);
         }

@@ -29,19 +29,19 @@ namespace TagsCloudVisualization
             foreach (var token in tokens)
             {
                 var size = GetSize(token, font);
-                var rect = cloudMaker.PutRectangle(size);
+                var rect = cloudMaker.PutRectangle(size.tagSize);
                 var color = tokenColorChooser.GetTokenColor(token);
-                tags.Add(new Tag(token.Value, font, color, rect));
+                tags.Add(new Tag(token.Value, font, color, rect, size.FontSize));
             }
             return tags.ToArray(); 
         }
 
-        private Size GetSize(Token token, Font font)
+        private (SizeF tagSize, SizeF FontSize) GetSize(Token token, Font font)
         {
             var fontSize = graphics.MeasureString(token.Value, font);
-            var scale = Math.Sqrt(token.Weight);
-            return (new Size((int)Math.Ceiling(fontSize.Width * scale),
-                (int)Math.Ceiling(fontSize.Height * scale))); 
+            var scale = (float)Math.Sqrt(token.Weight / (fontSize.Height * fontSize.Width));
+            return (new SizeF(fontSize.Width * scale,
+                fontSize.Height * scale), fontSize); 
         }
     }
 }
