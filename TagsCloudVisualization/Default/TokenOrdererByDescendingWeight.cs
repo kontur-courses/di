@@ -5,7 +5,7 @@ namespace TagsCloudVisualization.Default
 {
     public class TokenOrdererByDescendingWeight : ITokenOrderer
     {
-        public IEnumerable<Token> OrderTokens(Token[] tokens)
+        public IEnumerable<Token> OrderTokens(IEnumerable<Token> tokens)
         {
             return tokens.OrderByDescending(t => t.Weight);
         }

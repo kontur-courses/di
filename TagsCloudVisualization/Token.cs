@@ -3,7 +3,7 @@
     public class Token
     {
         public readonly string Value;
-        public double Weight;
+        public readonly double Weight;
 
         public Token(string value, double weight)
         {

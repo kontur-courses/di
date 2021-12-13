@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface ITokenWeigher
     {
-        Token[] Evaluate(string[] words);
+        Token[] Evaluate(IEnumerable<string> words);
     }
 }

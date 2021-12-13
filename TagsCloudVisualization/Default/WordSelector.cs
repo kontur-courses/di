@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TagsCloudVisualization.Default
 {
@@ -11,7 +10,8 @@ namespace TagsCloudVisualization.Default
         {
             stopWords = new HashSet<string>()
             {
-                "the", "be", "to", "of", "and", "a", "an", "in", "that", "for", "on", "as", "at", "by", "or", "and"
+                "the", "be", "to", "of", "and", "a", "an", "in",
+                "that", "for", "on", "as", "at", "by", "or", "and", "is", "are"
             };
         }
 
@@ -20,9 +20,8 @@ namespace TagsCloudVisualization.Default
             this.stopWords = new HashSet<string>(stopWords);
         }
         
-        public string[] GetWords(string text)
+        public IEnumerable<string> GetWords(string text)
         {
-            var allWords = new List<string>();
             var currentStart = 0;
             for (var i = 0; i < text.Length; i++)
             {
@@ -31,7 +30,7 @@ namespace TagsCloudVisualization.Default
                 {
                     var word = text.Substring(currentStart, i - currentStart).ToLower();
                     if (!stopWords.Contains(word))
-                        allWords.Add(word);
+                        yield return word;
                 } 
                 currentStart = i + 1;
             }
@@ -39,9 +38,8 @@ namespace TagsCloudVisualization.Default
             {
                 var word = text.Substring(currentStart).ToLower();
                 if (!stopWords.Contains(word))
-                    allWords.Add(word);
-            } 
-            return allWords.ToArray();
+                    yield return word;
+            }
         }
     }
 }

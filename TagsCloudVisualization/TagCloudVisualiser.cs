@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Extensions;
@@ -10,16 +9,16 @@ namespace TagsCloudVisualization
     {
         public Image Render(Tag[] tags, Size resolution)
         {
-            var allPoints = tags.SelectMany(t => t.Location.GetPoints()).ToArray();
+            var points = tags.SelectMany(t => t.Location.GetPoints()).ToArray();
             var center = PointF.Empty;
-            foreach (var point in allPoints)
+            foreach (var point in points)
             {
                 center.X += point.X;
                 center.X += point.Y;
             }
-            center.X /= allPoints.Length;
-            center.Y /= allPoints.Length;
-            var radius = allPoints.Max(p => p.DistanceTo(center));
+            center.X /= points.Length;
+            center.Y /= points.Length;
+            var radius = points.Max(p => p.DistanceTo(center));
             var scale = Math.Min(resolution.Width, resolution.Height) / (radius * 2);
             var image = new Bitmap(resolution.Width, resolution.Height);
             var graphics = Graphics.FromImage(image);
@@ -53,10 +52,10 @@ namespace TagsCloudVisualization
             {
                 if (image.GetPixel(i, j) != transparent)
                 {
-                    start.X = Math.Min(start.X, (int)(i ));
-                    start.Y = Math.Min(start.Y, (int)(j ));
-                    end.X = Math.Max(end.X, (int)(i ));
-                    end.Y = Math.Max(end.Y, (int)(j ));
+                    start.X = Math.Min(start.X, i);
+                    start.Y = Math.Min(start.Y, j);
+                    end.X = Math.Max(end.X, i);
+                    end.Y = Math.Max(end.Y, j);
                 }
             }
             var size = new Size(end.X - start.X, end.Y - start.Y);

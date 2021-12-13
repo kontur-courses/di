@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
@@ -22,9 +23,11 @@ namespace TagsCloudVisualization
            Size resolution, string resultPath, ImageFormat format)
         {
             if (!fileReader.CanReadFile(source))
-                throw new ArgumentException("Unknown source file format");
+                throw new ArgumentException("Unknown source file format.");
             var text = fileReader.ReadFile(source);
-            var tags = tagCloudMaker.CreateTagCloud(text, font, maxTegCount);
+            var tags = tagCloudMaker.CreateTagCloud(text, font, maxTegCount).ToArray();
+            if (tags.Length == 0)
+                throw new ArgumentException("Zero tags found.");
             var image = tagCloudVisualiser.Render(tags, resolution);
             image.Save(resultPath, format);
         }

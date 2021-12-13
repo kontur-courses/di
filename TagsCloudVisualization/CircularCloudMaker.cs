@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualization
 {
@@ -12,13 +13,17 @@ namespace TagsCloudVisualization
         public readonly PointF Center;
         private readonly List<RectangleF> rectangles = new List<RectangleF>();
         private readonly HashSet<PointF> placementLocations = new HashSet<PointF>();
+        private readonly Func<PointF, PointF, double> distanceFunction;
 
         public IReadOnlyList<RectangleF> Rectangles => rectangles;
         public double Radius => placementLocations.Max(p => GetDistanceBetween(p, Center));
+        
+        public CircularCloudMaker(Point center) : this(center, Distance) {}
 
-        public CircularCloudMaker(Point center)
+        public CircularCloudMaker(Point center, Func<PointF, PointF, double> distanceFunction)
         {
             Center = center;
+            this.distanceFunction = distanceFunction;
         }
 
         public RectangleF PutRectangle(Size rectangleSize)
@@ -90,9 +95,9 @@ namespace TagsCloudVisualization
             return new RectangleF(center.X - size.Width / 2.0f, center.Y - size.Height / 2.0f, size.Width, size.Height);
         }
         
-        private static double GetDistanceBetween(PointF point, PointF other)
+        private  double GetDistanceBetween(PointF point, PointF other)
         {
-            return Math.Sqrt((point.X - other.X)*(point.X - other.X) + (point.Y - other.Y) * (point.Y - other.Y));
+            return distanceFunction(point, other);
         }
         
         private static List<PointF> GetPoints(RectangleF rectangle)
@@ -104,6 +109,16 @@ namespace TagsCloudVisualization
                 new PointF(rectangle.Right, rectangle.Bottom),
                 new PointF(rectangle.Left, rectangle.Bottom)
             };
+        }
+
+        public static double ManhattanDistance(PointF point, PointF other)
+        {
+            return Math.Abs(point.X - other.X) + Math.Abs(point.Y - other.Y);
+        }
+        
+        public static double Distance(PointF point, PointF other)
+        {
+            return point.DistanceTo(other);
         }
     }
 }

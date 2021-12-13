@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TagsCloudVisualization.Default
 {
     public class WordCounter : ITokenWeigher
     {
-        public Token[] Evaluate(string[] words)
+        public Token[] Evaluate(IEnumerable<string> words)
         {
             var wordsCount = new Dictionary<string, int>();
             foreach (var word in words)

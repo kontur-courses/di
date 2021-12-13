@@ -1,7 +1,9 @@
-﻿namespace TagsCloudVisualization
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization
 {
     public interface IWordSelector
     {
-        string[] GetWords(string text);
+        IEnumerable<string> GetWords(string text);
     }
 }

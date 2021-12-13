@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Design;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Threading;
 using Autofac;
 using TagsCloudVisualization.Default;
 
@@ -32,7 +30,7 @@ namespace TagsCloudVisualization
             var font = new Font("Comic Sans MS", 9);
             var resolution = new Size(1280, 720);
             tagCloud.CreateTagCloudFromFile(file, font, 100, resolution, "testimage.png", ImageFormat.Png);
-            Process.Start(new ProcessStartInfo(Directory.GetCurrentDirectory() + "\\testimage.png") 
+            Process.Start(new ProcessStartInfo("testimage.png")
             { UseShellExecute = true });
         }
         
