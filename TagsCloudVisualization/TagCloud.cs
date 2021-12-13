@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -20,6 +21,8 @@ namespace TagsCloudVisualization
         public void CreateTagCloudFromFile(FileInfo source, Font font, int maxTegCount,
            Size resolution, string resultPath, ImageFormat format)
         {
+            if (!fileReader.CanReadFile(source))
+                throw new ArgumentException("Unknown source file format");
             var text = fileReader.ReadFile(source);
             var tags = tagCloudMaker.CreateTagCloud(text, font, maxTegCount);
             var image = tagCloudVisualiser.Render(tags, resolution);
