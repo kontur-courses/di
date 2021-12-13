@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudContainer.PaintConfigs
 {
     public interface IPaintConfig
     {
-        List<Brush> WordsColors { get;}
+        Brush Color { get;}
         string FontName { get; }
         int FontSize { get; }
         Size ImageSize { get; }
-
-        Brush GetRandomBrush();
     }
 }

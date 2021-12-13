@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Autofac;
-using TagsCloudContainer.PaintConfigs;
-using TagsCloudContainer.TextParsers;
-using TagsCloudVisualization;
+﻿using Autofac;
+using TagsCloudContainer.ContainerConfigurers;
+using TagsCloudContainer.Clients;
 
 namespace TagsCloudContainer
 {
@@ -11,8 +8,9 @@ namespace TagsCloudContainer
     {
         static void Main(string[] args)
         {
-            var builder = GetContainerBuilder(args);
-            var container = builder.Build();
+            var builder = new ContainerBuilder();
+            var ac = new AutofacConfigurer(args, builder);
+            var container = ac.GetContainer();
             DrawTagCloud(container);
         }
 
@@ -20,37 +18,9 @@ namespace TagsCloudContainer
         {
             using (var scope = container.BeginLifetimeScope())
             {
-                var cloudLayouter = scope.Resolve<ICloudLayouter>();
-                var paintConfig = scope.Resolve<IPaintConfig>();
-                var textParser = scope.Resolve<ITextParser>();
-                var painter = new CloudPainter(cloudLayouter, paintConfig, textParser);
-                var pathToSaving = "../../TagCloud.png";
-                painter.Draw(pathToSaving);
+                var painter = scope.Resolve<CloudPainter>();
+                painter.Draw(scope.Resolve<UserConfig>().OutputFile);
             }
-        }
-
-        public static ContainerBuilder GetContainerBuilder(string[] args)
-        {
-            var builder = new ContainerBuilder();
-            var center = new Point(1000, 1000);
-            var boringWords = new HashSet<string>();
-            var path = @"D:\di\Homework\TagsCloudContainer\words.txt";
-            var imageSize = new Size(2000, 2000);
-            var colors = new List<Brush>()
-            {
-                Brushes.DeepSkyBlue,
-                Brushes.BlueViolet,
-                Brushes.LightSkyBlue
-            };
-            var fontName = "Arial";
-            var fontSize = 20;
-
-            builder.Register(pc => new PaintCofig(colors, fontName, fontSize, imageSize))
-                .As<IPaintConfig>();
-            builder.Register(cl => new CircularCloudLayouter(center)).As<ICloudLayouter>();
-            builder.Register(tp => new TextParser(path, boringWords)).As<ITextParser>();
-
-            return builder;
         }
     }
 }
