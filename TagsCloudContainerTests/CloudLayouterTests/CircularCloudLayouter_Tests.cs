@@ -84,10 +84,10 @@ namespace TagsCloudContainerTests.CloudLayouterTests
 
             var top = rectangles.Max(rect => rect.Y);
             var right = rectangles.Max(rect => rect.X + rect.Width);
-            var bottom = Math.Abs(rectangles.Min(rect => rect.Y - rect.Height));
-            var left = Math.Abs(rectangles.Min(rect => rect.X));
+            var bottom = rectangles.Min(rect => rect.Y - rect.Height);
+            var left = rectangles.Min(rect => rect.X);
 
-            var radius = Math.Max(Math.Max(top, bottom), Math.Max(left, right));
+            var radius = Math.Max(Math.Max(top, Math.Abs(bottom)), Math.Max(Math.Abs(left), right));
 
             foreach (var rectangle in rectangles)
             {
