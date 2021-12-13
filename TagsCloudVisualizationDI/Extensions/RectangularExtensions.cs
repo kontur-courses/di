@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace TagsCloudVisualizationDI.Extensions
 {
-    public static class RectangularExtensions
+    internal static class RectangularExtensions
     {
-        internal static IEnumerable<Point> GetRectangleNodes(this Rectangle rectangle)
+        public static IEnumerable<Point> GetRectangleNodes(this Rectangle rectangle)
         {
             yield return new Point(rectangle.X, rectangle.Y);
             yield return new Point(rectangle.X + rectangle.Width, rectangle.Y);
