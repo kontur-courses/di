@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
-using TagsCloudVisualization;
+
 
 namespace TagsCloudContainer
 {
@@ -42,7 +43,7 @@ namespace TagsCloudContainer
             var rectSize = graphics.MeasureString(word, drawFont);
             var enclosingRectangle = cloudLayouter.PutNextRectangle(
                 new Size((int) rectSize.Width + wordsBorder, (int) rectSize.Height + wordsBorder));
-            graphics.DrawString(word, drawFont, config.GetRandomBrush(), enclosingRectangle);
+            graphics.DrawString(word, drawFont, config.Color, enclosingRectangle);
         }
 
         private int ScaleFontSize(int fontSize, int wordQuantity)
