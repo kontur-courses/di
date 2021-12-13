@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudContainer.UI.Menu
 {
-    public class Category
+    public class ConsoleCategory : ICategory
     {
         private readonly Dictionary<int, MenuItem> items;
         private TextReader reader;
@@ -12,13 +12,17 @@ namespace TagsCloudContainer.UI.Menu
         public MenuItem[] Items => items.Values.ToArray();
         public string Name { get; }
 
-        public Category(Dictionary<int, MenuItem> items, string name)
+        public ConsoleCategory(Dictionary<int, MenuItem> items,
+            string name, 
+            TextReader reader, TextWriter writer)
         {
+            this.reader = reader;
+            this.writer = writer;
             this.items = items;
             Name = name;
         }
 
-        public void GetMenuItems()
+        private void GetMenuItems()
         {
             writer.WriteLine($"To choose Menu action write position key, for example '1'");
             writer.WriteLine($"To return to main menu write 'Q'");
@@ -28,10 +32,8 @@ namespace TagsCloudContainer.UI.Menu
             }
         }
 
-        public void ChooseMenuItem(TextReader reader, TextWriter writer)
+        public void ChooseMenuItem()
         {
-            this.reader = reader;
-            this.writer = writer;
             GetMenuItems();
             while (true)
             {

@@ -25,7 +25,7 @@ namespace TagsCloudContainer
             SetUpUi(preContainer);
         }
 
-        internal static void ResolveContainer(IContainer container)
+        internal static void Visualize(IContainer container)
         {
             var minHeight = 12;
             var maxScale = 10;
@@ -86,12 +86,10 @@ namespace TagsCloudContainer
         {
             using (var scope = preContainer.BeginLifetimeScope())
             {
-                var menu = scope.Resolve<MenuCreator>().Menu;
-                var writer = scope.Resolve<TextWriter>();
-                var reader = scope.Resolve<TextReader>();
+                var menu = scope.Resolve<IMenuCreator>().Menu;
                 while (true)
                 {
-                    menu.ChooseCategory(reader, writer);
+                    menu.ChooseCategory();
                 }
             }
         }
@@ -105,7 +103,7 @@ namespace TagsCloudContainer
                 .Where(t => action.IsAssignableFrom(t))
                 .ToArray();
             builder.RegisterTypes(actions).AsImplementedInterfaces();
-            builder.RegisterType<MenuCreator>().AsSelf();
+            builder.RegisterType<ConsoleMenuCreator>().As<IMenuCreator>();
         }
     }
 }

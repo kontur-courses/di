@@ -5,20 +5,22 @@ using System.Linq;
 
 namespace TagsCloudContainer.UI.Menu
 {
-    public class MainMenu
+    public class ConsoleMainMenu : IMainMenu
     {
-        private readonly Dictionary<int, Category> categories;
-        public Category[] Categories => categories.Values.ToArray();
+        private readonly Dictionary<int, ConsoleCategory> categories;
+        public ConsoleCategory[] Categories => categories.Values.ToArray();
 
         private TextReader reader;
         private TextWriter writer;
 
-        public MainMenu(Dictionary<int, Category> categories)
+        public ConsoleMainMenu(Dictionary<int, ConsoleCategory> categories, TextReader reader, TextWriter writer)
         {
+            this.reader = reader;
+            this.writer = writer;
             this.categories = categories;
         }
 
-        public void GetCategories()
+        private void GetCategories()
         {
             writer.WriteLine($"To choose category write position key, for example '1'");
             writer.WriteLine($"To exit write 'Q'");
@@ -28,24 +30,22 @@ namespace TagsCloudContainer.UI.Menu
             }
         }
 
-        public void ChooseCategory(TextReader reader, TextWriter writer)
+        public void ChooseCategory()
         {
-            this.reader = reader;
-            this.writer = writer;
             GetCategories();
             while (true)
             {
                 var keyStr = reader.ReadLine();
                 if (keyStr == "Q")
                     Environment.Exit(0);
-                if(int.TryParse(keyStr, out var key))
+                if (int.TryParse(keyStr, out var key))
                     if (categories.ContainsKey(key))
                     {
-                        categories[key].ChooseMenuItem(reader, writer);
+                        categories[key].ChooseMenuItem();
                         GetCategories();
                     }
                     else
-                        writer.WriteLine("No Category with that key");
+                        writer.WriteLine("No ConsoleCategory with that key");
                 else
                     writer.WriteLine("Key should be int!");
             }

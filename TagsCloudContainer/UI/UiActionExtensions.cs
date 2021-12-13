@@ -1,22 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using TagsCloudContainer.UI.Menu;
 
 namespace TagsCloudContainer.UI
 {
     public static class UiActionExtensions
     {
-        public static MainMenu GetMenu(this IUiAction[] actions)
+        public static ConsoleMainMenu GetConsoleMenu
+            (this IUiAction[] actions, TextReader reader, TextWriter writer)
         {
-            var categories = GetCategories(actions);
-            var menuCategories = new Dictionary<int, Category>();
+            var categories = GetCategories(actions, reader, writer);
+            var menuCategories = new Dictionary<int, ConsoleCategory>();
             for (var i = 0; i < categories.Length; i++) 
                 menuCategories[i + 1] = categories[i];
-            return new MainMenu(menuCategories);
+            return new ConsoleMainMenu(menuCategories, reader, writer);
         }
 
-        private static Category[] GetCategories(IUiAction[] actions)
+        private static ConsoleCategory[] GetCategories
+            (IUiAction[] actions, TextReader reader, TextWriter writer)
         {
-            var result = new List<Category>();
+            var result = new List<ConsoleCategory>();
             var categories = new Dictionary<string, List<MenuItem>>();
             
             foreach (var uiAction in actions)
@@ -34,7 +37,7 @@ namespace TagsCloudContainer.UI
                 var itmes = categories[name];
                 for (var i = 0; i < itmes.Count; i++) 
                     categoryItems[i + 1] = itmes[i];
-                result.Add(new Category(categoryItems, name));
+                result.Add(new ConsoleCategory(categoryItems, name, reader, writer));
             }
 
             return result.ToArray();
