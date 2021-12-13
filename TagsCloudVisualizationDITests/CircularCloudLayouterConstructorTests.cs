@@ -1,18 +1,18 @@
-﻿using System;
-using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Drawing;
 using TagsCloudVisualizationDI.Layouter.Filler;
 
 namespace TagsCloudVisualizationTests
 {
-    [TestFixture] 
+    [TestFixture]
     public class CircularCloudLayouterConstructorTests
     {
-        [Test] 
-        public void CloudLayouterConstructorShouldWorkCorrectly() 
+        [Test]
+        public void CloudLayouterConstructorShouldWorkCorrectly()
         {
-            var center = new Point(2500, 2500); 
+            var center = new Point(2500, 2500);
             Action creating = () => new CircularCloudLayouterForRectanglesWithText(center);
             creating.Should().NotThrow();
         }

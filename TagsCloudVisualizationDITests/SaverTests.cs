@@ -1,7 +1,7 @@
-﻿using System;
-using System.Drawing.Imaging;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Drawing.Imaging;
 using TagsCloudVisualizationDI.Saving;
 
 namespace TagsCloudVisualizationDITests

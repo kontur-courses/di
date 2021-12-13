@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FluentAssertions;
-using NUnit.Framework;
 using TagsCloudVisualizationDI;
 using TagsCloudVisualizationDI.Layouter.Filler;
 

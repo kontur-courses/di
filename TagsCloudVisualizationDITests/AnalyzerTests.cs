@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using FluentAssertions;
-using NUnit.Framework;
 using TagsCloudVisualizationDI;
 using TagsCloudVisualizationDI.Settings;
 

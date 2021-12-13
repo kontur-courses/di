@@ -1,11 +1,10 @@
-﻿using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
-using FluentAssertions;
-using NUnit.Framework;
 using TagsCloudVisualizationDI;
-using TagsCloudVisualizationDI.FileReader;
-using TagsCloudVisualizationDI.TextAnalization.Analyzer;
+using TagsCloudVisualizationDI.AnalyzedTextReader;
 
 namespace TagsCloudVisualizationDITests
 {
@@ -35,7 +34,7 @@ namespace TagsCloudVisualizationDITests
         {
             var savePath = Path.GetDirectoryName(typeof(Program).Assembly.Location) + "\\ex1.TXT";
             var fileReader = new DefaultTextFileReader(savePath, Encoding.UTF8);
-            var lines =  fileReader.ReadText();
+            var lines = fileReader.ReadText();
             lines.Length.Should().Be(8);
         }
     }

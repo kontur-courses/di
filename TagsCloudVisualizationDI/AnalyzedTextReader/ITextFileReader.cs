@@ -1,10 +1,10 @@
 ﻿using System.Text;
 
-namespace TagsCloudVisualizationDI.FileReader
+namespace TagsCloudVisualizationDI.AnalyzedTextReader
 {
     public interface ITextFileReader
     {
-        public string PreAnalyzedTextPath { get;}
+        public string PreAnalyzedTextPath { get; }
 
         public Encoding ReadingEncoding { get; }
         string[] ReadText();

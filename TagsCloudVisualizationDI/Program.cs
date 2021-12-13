@@ -49,7 +49,7 @@ namespace TagsCloudVisualizationDI
             }
         }
 
-        private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile, 
+        private static void RegistrationOfSettings(ContainerBuilder buildContainer, string pathToFile,
             string pathToSave, ImageFormat imageFormat, List<string> excludedWordsList)
         {
             buildContainer.RegisterType<DefaultSettingsConfiguration>().As<ISettingsConfiguration>()

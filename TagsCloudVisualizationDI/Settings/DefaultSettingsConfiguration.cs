@@ -6,7 +6,7 @@ namespace TagsCloudVisualizationDI.Settings
 {
     public class DefaultSettingsConfiguration : ISettingsConfiguration
     {
-        
+
         public DefaultSettingsConfiguration(string pathToFile, string pathToSave, ImageFormat format, List<string> excludedWords)
         {
             SavePath = pathToSave;
@@ -15,7 +15,7 @@ namespace TagsCloudVisualizationDI.Settings
 
             Format = SetFormat(format);
             ExcludedWords = SetExcludedWords(excludedWords);
-        } 
+        }
 
         public string SavePath { get; }
         public string FilePath { get; }
@@ -42,7 +42,7 @@ namespace TagsCloudVisualizationDI.Settings
 
         private List<string> DefaultExcludedWords
         {
-            get => new List<string> {"к", "с", "он", "она", "в", "как", "что", "это", "то", "этот"};
+            get => new List<string> { "к", "с", "он", "она", "в", "как", "что", "это", "то", "этот" };
         }
     }
 }

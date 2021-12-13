@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
-using TagsCloudVisualizationDI.FileReader;
+using TagsCloudVisualizationDI.AnalyzedTextReader;
 using TagsCloudVisualizationDI.Layouter.Filler;
 using TagsCloudVisualizationDI.Saving;
 using TagsCloudVisualizationDI.TextAnalization;
@@ -36,9 +35,9 @@ namespace TagsCloudVisualizationDI.Settings
         public string Args => "-lndw -ig";
 
         public Encoding TextEncoding => Encoding.UTF8;
-        
 
-        public ITextFileReader FileReader => 
+
+        public ITextFileReader FileReader =>
             new DefaultTextFileReader(SaveAnalizationPath, TextEncoding);
 
         public SolidBrush Brush => new SolidBrush(Color.White);
@@ -58,7 +57,7 @@ namespace TagsCloudVisualizationDI.Settings
         public INormalizer Normalization => new DefaultNormalizer();
 
         public PartsOfSpeech.SpeechPart[] ExcludedParts
-        { 
+        {
             get => new[]
             {
                 PartsOfSpeech.SpeechPart.CONJ, PartsOfSpeech.SpeechPart.INTJ,

@@ -6,10 +6,10 @@ namespace TagsCloudVisualizationDI.Layouter
     public class Spiral
     {
         private double CurrentAngle { get; set; }
-        private double AngleStep { get;}
+        private double AngleStep { get; }
 
 
-        public Spiral(double angleStep = Math.PI/360)
+        public Spiral(double angleStep = Math.PI / 360)
         {
             CurrentAngle = 0;
             AngleStep = angleStep;

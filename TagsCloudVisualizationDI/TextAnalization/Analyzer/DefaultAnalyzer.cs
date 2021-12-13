@@ -14,7 +14,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
         public string MystemArgs { get; }
 
 
-        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts, IEnumerable<string> excludedWords, 
+        public DefaultAnalyzer(IEnumerable<PartsOfSpeech.SpeechPart> excludedSpeechParts, IEnumerable<string> excludedWords,
             string filePath, string saveAnalizationPath, string mystemPath, string arguments)
         {
             _excludedSpeechParts = excludedSpeechParts.ToHashSet();
@@ -28,7 +28,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Analyzer
 
         private bool CheckWord(string inputWord, out string wordContent, out PartsOfSpeech.SpeechPart enumElementOfCurrentType)
         {
-            var wordAndPart = inputWord.Split(new []{' ', ',', '='}, 3, StringSplitOptions.RemoveEmptyEntries);
+            var wordAndPart = inputWord.Split(new[] { ' ', ',', '=' }, 3, StringSplitOptions.RemoveEmptyEntries);
             if (wordAndPart.Length < 2)
             {
                 wordContent = default;

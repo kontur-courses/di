@@ -22,7 +22,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
             SizeMultiplier = sizeMultiplier;
         }
 
-        public void DrawAndSaveImage(List<RectangleWithWord> elements,string savePath, ImageFormat format)
+        public void DrawAndSaveImage(List<RectangleWithWord> elements, string savePath, ImageFormat format)
         {
             using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
             var drawImage = DrawRectangles(image, elements);
@@ -68,7 +68,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
                 using var graphics = Graphics.FromImage(image);
 
 
-                var fontSize = element.WordElement.CntOfWords*SizeMultiplier;
+                var fontSize = element.WordElement.CntOfWords * SizeMultiplier;
                 var font = new Font("Times", fontSize);
 
 

@@ -16,27 +16,45 @@ namespace TagsCloudVisualizationDIConsoleClient
                 return;
             }
 
-            if (args.Length <2 || args.Length > 4)
+            if (args.Length < 2 || args.Length > 4)
                 throw new ArgumentException("Incorrect Number Of MystemArgs");
 
             var pathToFile = args.ElementAtOrDefault(0);
             var pathToSave = args.ElementAtOrDefault(1);
 
             var lastIndexOfSlashes = pathToSave.LastIndexOf('\\');
+            var lastDotIndex = pathToSave.LastIndexOf('.');
             var safeDirectory = pathToSave.Remove(lastIndexOfSlashes);
             CheckArguments(pathToFile, safeDirectory);
-            var imageFormat = ImageFormat.Png;
-            
-        
 
+            var possibleFormat =
+                pathToSave.Substring(lastDotIndex);
+
+            var pathWithoutFormat = pathToSave.Substring(0, lastDotIndex);
+
+            var imageFormat = CheckPossibleFormat(possibleFormat);
 
 
             var excludedWordsDocument = args.ElementAtOrDefault(2);
-            List<string> excludedWordList = MakeExcludeWordList(excludedWordsDocument);
+            var excludedWordList = MakeExcludeWordList(excludedWordsDocument);
 
-            TagsCloudVisualizationDI.Program.Main(pathToFile, pathToSave, imageFormat, excludedWordList);
+            TagsCloudVisualizationDI.Program.Main(pathToFile, pathWithoutFormat, imageFormat, excludedWordList);
         }
 
+        private static ImageFormat CheckPossibleFormat(string possibleFormat)
+        {
+            return (possibleFormat.ToLower()) switch
+            {
+                ".png" => ImageFormat.Png,
+                ".jpeg" => ImageFormat.Jpeg,
+                ".jpg" => ImageFormat.Jpeg,
+                ".bmp" => ImageFormat.Bmp,
+                ".tiff" => ImageFormat.Tiff,
+                ".ico" => ImageFormat.Icon,
+                ".gif" => ImageFormat.Gif,
+                _ => ImageFormat.Png,
+            };
+        }
 
         private static List<string> MakeExcludeWordList(string excludedWordsDocumentPath)
         {
