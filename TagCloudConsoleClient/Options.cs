@@ -28,5 +28,8 @@ namespace TagCloudConsoleClient
         
         [Option('o', "open", HelpText = "Opens result at the end.")]
         public bool OpenResult { get; set; }
+        
+        [Option('s', "shape", HelpText = "OrderOfTags: N(NonOrderer), S(Sorted) or M(Mixed)")]
+        public string Order { get; set; }
     }
 }

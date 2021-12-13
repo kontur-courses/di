@@ -14,7 +14,7 @@ namespace TagsCloudVisualization
             var builder = new ContainerBuilder();
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<RandomTagColor>().As<ITokenColorChooser>();
-            builder.RegisterType<TokenOrdererByDescendingWeight>().As<ITokenOrderer>();
+            builder.RegisterType<TokenSortedOrder>().As<ITokenOrderer>();
             builder.RegisterType<WordCounter>().As<ITokenWeigher>();
             builder.RegisterType<WordSelector>().UsingConstructor().As<IWordSelector>();
             builder.RegisterInstance(new CircularCloudMaker(Point.Empty)).As<ICloudMaker>();

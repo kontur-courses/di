@@ -15,9 +15,9 @@ namespace TagsCloudVisualization
             this.tokenOrderer = tokenOrderer;
         }
 
-        public IEnumerable<Token> GetTokens(string text)
+        public IEnumerable<Token> GetTokens(string text, int maxCount)
         {
-            return tokenOrderer.OrderTokens(tokenWeigher.Evaluate(wordSelector.GetWords(text)));
+            return tokenOrderer.OrderTokens(tokenWeigher.Evaluate(wordSelector.GetWords(text), maxCount));
         }
     }
 }

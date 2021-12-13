@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using Autofac;
 using CommandLine;
 using TagsCloudVisualization;
@@ -12,6 +14,12 @@ namespace TagCloudConsoleClient
 {
     public class Program
     {
+        private static readonly Dictionary<string, ITokenOrderer> Orders = new Dictionary<string, ITokenOrderer>()
+        {
+            ["N"] = new TokenNonOrderer(),
+            ["S"] = new TokenSortedOrder(),
+            ["M"] = new TokenShuffler()
+        };
         public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(Start);
@@ -38,7 +46,7 @@ namespace TagCloudConsoleClient
                 SourceNotExist(); 
                 return;
             }
-            var tagCloud = ConfigureTagCloud(options.Manhattan);
+            var tagCloud = ConfigureTagCloud(options.Manhattan, options.Order);
             var resolution = new Size(options.Width, options.Height);
             try
             {
@@ -77,17 +85,20 @@ namespace TagCloudConsoleClient
             return (ImageFormat)prop?.GetValue(new object());
         }
 
-        private static TagCloud ConfigureTagCloud(bool manhattan)
+        private static TagCloud ConfigureTagCloud(bool manhattan, string order)
         {
             Func<PointF, PointF, double> metric;
             if (manhattan)
                 metric = CircularCloudMaker.ManhattanDistance;
             else
                 metric = CircularCloudMaker.Distance;
+            var orderer = Orders["N"];
+            if (order != null && Orders.ContainsKey(order))
+                orderer = Orders[order];
             var builder = new ContainerBuilder();
             builder.RegisterType<TxtFileReader>().As<IFileReader>();
             builder.RegisterType<RandomTagColor>().As<ITokenColorChooser>();
-            builder.RegisterType<TokenOrdererByDescendingWeight>().As<ITokenOrderer>();
+            builder.RegisterInstance(orderer).As<ITokenOrderer>();
             builder.RegisterType<WordCounter>().As<ITokenWeigher>();
             builder.RegisterType<WordSelector>().UsingConstructor().As<IWordSelector>();
             builder.RegisterInstance(new CircularCloudMaker(Point.Empty, metric)).As<ICloudMaker>();
@@ -100,5 +111,6 @@ namespace TagCloudConsoleClient
             using var scope = container.BeginLifetimeScope();
             return scope.Resolve<TagCloud>();
         }
+        
     }
 }

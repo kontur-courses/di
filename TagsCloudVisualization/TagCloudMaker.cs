@@ -24,9 +24,9 @@ namespace TagsCloudVisualization
 
         public Tag[] CreateTagCloud(string text, Font font, int tagCount)
         {
-            var tokens = tokenGenerator.GetTokens(text);
+            var tokens = tokenGenerator.GetTokens(text, tagCount);
             var tags = new List<Tag>();
-            foreach (var token in tokens.Take(tagCount))
+            foreach (var token in tokens)
             {
                 var size = GetSize(token, font);
                 var rect = cloudMaker.PutRectangle(size);

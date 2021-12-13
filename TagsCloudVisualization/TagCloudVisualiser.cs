@@ -29,13 +29,13 @@ namespace TagsCloudVisualization
                 //graphics.FillRectangle(Brushes.Red, tag.Location);
                 //graphics.DrawRectangle(new Pen(Color.Blue, 5 / scale), tag.Location);
                 var tagImage = RenderTag(tag);
-                graphics.DrawImage(tagImage, tag.Location);
+                graphics.DrawImage(tagImage.textImage, tag.Location, tagImage.frame, GraphicsUnit.Pixel);
             }
             graphics.Dispose();
             return image;
         }
 
-        private Image RenderTag(Tag tag)
+        private (Image textImage, RectangleF frame) RenderTag(Tag tag)
         {
             var scale = 10;
             var image = new Bitmap((int)(tag.Location.Width * scale), (int)(tag.Location.Height * scale));
@@ -59,12 +59,7 @@ namespace TagsCloudVisualization
                 }
             }
             var size = new Size(end.X - start.X, end.Y - start.Y);
-            var newImage = new Bitmap(size.Width, size.Height);
-            g = Graphics.FromImage(newImage);
-            g.DrawImage(image, new Rectangle(Point.Empty, newImage.Size),
-                new Rectangle(start, size), GraphicsUnit.Pixel);
-            g.Dispose();
-            return newImage;
+            return (image, new RectangleF(start, size));
         }
     }
 }

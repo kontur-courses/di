@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace TagsCloudVisualization.Default
 {
-    public class TokenOrdererByDescendingWeight : ITokenOrderer
+    public class TokenSortedOrder : ITokenOrderer
     {
         public IEnumerable<Token> OrderTokens(IEnumerable<Token> tokens)
         {
-            return tokens.OrderByDescending(t => t.Weight);
+            return tokens.OrderByDescending(t => t.Weight).ThenByDescending(t => t.Value.Length);
         }
     }
 }
