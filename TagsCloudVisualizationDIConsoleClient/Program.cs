@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace TagsCloudVisualizationDIConsoleClient
             var pathToFile = args.ElementAtOrDefault(0);
             var pathToSave = args.ElementAtOrDefault(1);
 
-            var safeDirectory = pathToSave.Remove(pathToSave.LastIndexOf('\\'));
+            var lastIndexOfSlashes = pathToSave.LastIndexOf('\\');
+            var safeDirectory = pathToSave.Remove(lastIndexOfSlashes);
             CheckArguments(pathToFile, safeDirectory);
             var imageFormat = ImageFormat.Png;
+            
+        
+
 
 
             var excludedWordsDocument = args.ElementAtOrDefault(2);
