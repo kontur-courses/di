@@ -7,19 +7,18 @@ using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
 {
-    public class GetAllPreprocessorsAction : IUiAction
+    public class GetAllPreprocessorsAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        public string Category => "Preprocessors";
-        public string Name => "GetAllPreprocessors";
-        public string Description { get; }
+        public override string Category => "Preprocessors";
+        public override string Name => "GetAllPreprocessors";
+        public override string Description { get; }
 
-        public GetAllPreprocessorsAction(TextWriter writer)
+        public GetAllPreprocessorsAction(TextReader reader, TextWriter writer)
+            : base(reader, writer)
         {
-            this.writer = writer;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             var preprocessors = AppDomain.CurrentDomain.GetAssemblies()
                 .First(a => a.FullName.Contains("TagsCloudContainer"))

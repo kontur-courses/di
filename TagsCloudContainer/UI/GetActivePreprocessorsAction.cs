@@ -3,19 +3,18 @@ using TagsCloudContainer.Common;
 
 namespace TagsCloudContainer.UI
 {
-    public class GetActivePreprocessorsAction : IUiAction
+    public class GetActivePreprocessorsAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        public string Category => "Preprocessors";
-        public string Name => "GetActivePreprocessors";
-        public string Description { get; }
+        public override string Category => "Preprocessors";
+        public override string Name => "GetActivePreprocessors";
+        public override string Description { get; }
 
-        public GetActivePreprocessorsAction(TextWriter writer)
+        public GetActivePreprocessorsAction(TextReader reader, TextWriter writer)
+            : base(reader, writer)
         {
-            this.writer = writer;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             var preprocessors = PreprocessorsRegistrator.GetActivePreprocessors();
             foreach (var preprocessor in preprocessors) 

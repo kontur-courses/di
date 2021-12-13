@@ -4,23 +4,19 @@ using Autofac;
 
 namespace TagsCloudContainer.UI
 {
-    public class VisualizeAction : IUiAction
+    public class VisualizeAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        private readonly TextReader reader;
-        private readonly ContainerBuilder builder;
-        public string Category => "Visualization";
-        public string Name => "Visualize";
-        public string Description { get; }
+        public override string Category => "Visualization";
+        public override string Name => "Visualize";
+        public override string Description { get; }
 
-        public VisualizeAction(TextWriter writer, TextReader reader, ContainerBuilder builder)
+        public VisualizeAction
+            (TextReader reader, TextWriter writer, ContainerBuilder builder)
+            :base(reader, writer, builder)
         {
-            this.writer = writer;
-            this.reader = reader;
-            this.builder = builder;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             writer.WriteLine("Visualize with current settings, yes or no? 'y', 'n'");
             while (true)

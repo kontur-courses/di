@@ -6,23 +6,18 @@ using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
 {
-    public class SetBoringTagsSelectorAction : IUiAction
+    public class SetBoringTagsSelectorAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        private readonly TextReader reader;
-        private readonly ContainerBuilder builder;
-        public string Category => "Preprocessors";
-        public string Name => "SetBoringTagsSelector";
-        public string Description { get; }
+        public override string Category => "Preprocessors";
+        public override string Name => "SetBoringTagsSelector";
+        public override string Description { get; }
 
         public SetBoringTagsSelectorAction(TextWriter writer, TextReader reader, ContainerBuilder builder)
+            : base(reader, writer, builder)
         {
-            this.writer = writer;
-            this.reader = reader;
-            this.builder = builder;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             writer.WriteLine("Enter selector to choose all 'good' tags");
             writer.WriteLine("Don`t forget to activate CustomTagsFilter!");

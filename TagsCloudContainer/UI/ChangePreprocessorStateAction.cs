@@ -2,36 +2,28 @@
 using System.IO;
 using System.Linq;
 using TagsCloudContainer.Common;
-using TagsCloudContainer.Extensions;
-using TagsCloudContainer.Preprocessors;
 
 namespace TagsCloudContainer.UI
 {
-    public class ChangePreprocessorStateAction : IUiAction
+    public class ChangePreprocessorStateAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        private readonly TextReader reader;
-        public string Category => "Preprocessors";
-        public string Name => "ChangePreprocessorState";
-        public string Description { get; }
+        public override string Category => "Preprocessors";
+        public override string Name => "ChangePreprocessorState";
+        public override string Description { get; }
 
-        public ChangePreprocessorStateAction(TextWriter writer, TextReader reader)
+        public ChangePreprocessorStateAction(TextReader reader, TextWriter writer)
+            : base(reader, writer)
         {
-            this.writer = writer;
-            this.reader = reader;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             writer.WriteLine("Enter Preprocessor name");
             while (true)
             {
                 var processorName = reader.ReadLine();
-
-                var userPreprocessor = AppDomain.CurrentDomain.GetAssemblies()
-                    .First(a => a.FullName.Contains("TagsCloudContainer"))
-                    .GetTypes()
-                    .Where(t => t.IsInstanceOf<IPreprocessor>())
+               
+                var userPreprocessor = PreprocessorsRegistrator.GetActivePreprocessors()
                     .FirstOrDefault(t => t.Name == processorName);
 
                 if (userPreprocessor != null)

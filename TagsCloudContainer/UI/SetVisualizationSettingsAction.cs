@@ -4,22 +4,18 @@ using System.IO;
 
 namespace TagsCloudContainer.UI
 {
-    public class SetVisualizationSettingsAction : IUiAction
+    public class SetVisualizationSettingsAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        private readonly TextReader reader;
-        public string Category => "Visualization";
-        public string Name => "SetVisualizationSettings";
-        public string Description { get; }
+        public override string Category => "Visualization";
+        public override string Name => "SetVisualizationSettings";
+        public override string Description { get; }
 
         public SetVisualizationSettingsAction
-            (TextWriter writer, TextReader reader)
+            (TextReader reader, TextWriter writer) : base(reader, writer)
         {
-            this.writer = writer;
-            this.reader = reader;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             writer.WriteLine("Change visualizator settings");
             SetSize();

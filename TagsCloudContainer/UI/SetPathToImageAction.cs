@@ -3,21 +3,18 @@ using System.Text.RegularExpressions;
 
 namespace TagsCloudContainer.UI
 {
-    public class SetPathToImageAction : IUiAction
+    public class SetPathToImageAction : ConsoleUiAction
     {
-        private readonly TextWriter writer;
-        private readonly TextReader reader;
-        public string Category => "AppSettings";
-        public string Name => "SetPathToImage";
-        public string Description { get; }
+        public override string Category => "AppSettings";
+        public override string Name => "SetPathToImage";
+        public override string Description { get; }
 
-        public SetPathToImageAction(TextWriter writer, TextReader reader)
+        public SetPathToImageAction(TextReader reader, TextWriter writer)
+            :base(reader, writer)
         {
-            this.writer = writer;
-            this.reader = reader;
         }
 
-        public void Perform()
+        public override void Perform()
         {
             writer.WriteLine("Set Path To Image");
             while (true)
