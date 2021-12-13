@@ -45,8 +45,6 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
                 var fontSize = SizeMultiplier * element.WordElement.CntOfWords;
                 var font = new Font("Times", fontSize);
 
-                graphics.DrawRectangle(new Pen(Color.Black), element.RectangleElement);
-
                 graphics.DrawString(element.WordElement.WordText, font, ColorBrush,
                     element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
             }
@@ -69,11 +67,10 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
                 using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
                 using var graphics = Graphics.FromImage(image);
 
-                
-
 
                 var fontSize = element.WordElement.CntOfWords*SizeMultiplier;
                 var font = new Font("Times", fontSize);
+
 
                 var newSize = graphics.MeasureString(element.WordElement.WordText, font);
                 var sizedElement = new RectangleWithWord(new Rectangle
