@@ -60,7 +60,8 @@ namespace CloudTagVisualizer.ConsoleInterface
             container.AddScoped<ILayouter, CircularCloudLayouter>();
             container.AddScoped<ISpiral, ExpandingSquare>();
             container.AddScoped<IWordSizer, CountingWordSizer>();
-            container.AddScoped<IWordsReader, WordsReader>();
+            container.AddScoped<IWordsParser, WordsParser>();
+            container.AddScoped<IFileReader, FileReader>();
             container.AddScoped<IFileStreamFactory, FileStreamFactory>();
             container.AddScoped<Visualizer>();
             container.AddSingleton(settings);

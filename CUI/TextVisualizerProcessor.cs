@@ -8,27 +8,30 @@ namespace CloudTagVisualizer.ConsoleInterface
         private readonly Visualizer visualizer;
         private readonly IImageSaver imageSaver;
         private readonly IFileStreamFactory fileStreamFactory;
-        private readonly IWordsReader wordsReader;
+        private readonly IFileReader fileReader;
+        private readonly IWordsParser wordsParser;
         private readonly IWordsPreprocessor preprocessor;
-
         public TextVisualizerProcessor(
             Visualizer visualizer,
             IImageSaver imageSaver,
             IFileStreamFactory fileStreamFactory,
-            IWordsReader wordsReader,
-            IWordsPreprocessor preprocessor)
+            IWordsParser wordsParser,
+            IWordsPreprocessor preprocessor,
+            IFileReader fileReader)
         {
             this.visualizer = visualizer;
             this.imageSaver = imageSaver;
             this.fileStreamFactory = fileStreamFactory;
-            this.wordsReader = wordsReader;
+            this.wordsParser = wordsParser;
             this.preprocessor = preprocessor;
+            this.fileReader = fileReader;
         }
 
         public void Run(Options options)
         {
             var inStream = fileStreamFactory.OpenOnReading(options.InputTextPath);
-            var words = wordsReader.Read(inStream);
+            var content = fileReader.ReadToEnd(inStream);
+            var words = wordsParser.Read(content);
             var preprocessesWords = preprocessor.Preprocess(words);
 
             var image = visualizer.Visualize(preprocessesWords);
