@@ -30,6 +30,8 @@ namespace TagsCloudVisualization
             base.Load(builder);
             builder.RegisterInstance(generalSettings).As<GeneralSettings>();
             builder.RegisterType<TxtFileReader>().As<IWordsReader>();
+            builder.RegisterType<PdfFileReader>().As<IWordsReader>();
+            builder.RegisterType<DocFileReader>().As<IWordsReader>();
             
             builder.Register(ctx =>
             {
