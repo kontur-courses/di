@@ -25,11 +25,14 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
         {
             using var image = new Bitmap(ImageSize.Width, ImageSize.Height);
             var drawImage = DrawRectangles(image);
-            /*
-            if (!(File.Exists(savePath)))
-                throw new FileNotFoundException($"файл по указанному пути: {savePath}  не найден");
-            */
-            drawImage.Save(savePath, format);
+            try
+            {
+                drawImage.Save(savePath, format);
+            }
+            catch (System.Runtime.InteropServices.ExternalException)
+            {
+                throw new FileNotFoundException($"Invalid save path: {savePath}");
+            }
         }
 
 
@@ -40,7 +43,7 @@ namespace TagsCloudVisualizationDI.TextAnalization.Visualization
             {
                 var fontSize = TextFont.Size + 3 * element.WordElement.CntOfWords;
                 var font = new Font("Times", fontSize);
-
+                graphics.DrawRectangle(new Pen(Brushes.Black), element.RectangleElement);
                 graphics.DrawString(element.WordElement.WordText, font, ColorBrush,
                     element.RectangleElement.Location.X, element.RectangleElement.Location.Y);
             }
