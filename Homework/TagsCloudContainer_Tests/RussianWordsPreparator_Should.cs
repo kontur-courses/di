@@ -9,7 +9,7 @@ namespace TagsCloudContainer_Tests
     [TestFixture]
     public class RussianWordsPreparator_Should
     {
-        private readonly RussianWordsPreparator sut = new(new MorphAnalyzer());
+        private readonly RussianWordsPreparator sut = new(new MorphAnalyzer(withLemmatization:true));
 
         [Test]
         public void Trim()
@@ -66,6 +66,15 @@ namespace TagsCloudContainer_Tests
             var input = new[] {"он один"};
             var result = sut.Prepare(input);
             result.Should().HaveCount(2);
+        }
+
+        [TestCase("доски", ExpectedResult = "доска", TestName = "when noun has singular form")]
+        [TestCase("красивые", ExpectedResult = "красивый", TestName = "when adjective")]
+        [TestCase("трех", ExpectedResult = "три", TestName = "when num")]
+        public string ResultWordsInInitialForm(string input)
+        {
+            var result = sut.Prepare(new []{input});
+            return result.First().Lemma;
         }
 
         private void AssertLemma(string[] input, string[] expected)
