@@ -9,11 +9,11 @@ namespace TagsCloudContainer
 {
     public class WordCloudPainter : IWordCloudPainter
     {
-        private IWordCloudCreator cloudCreater;
+        private IWordCloudCreator cloudCreator;
 
-        public WordCloudPainter(IWordCloudCreator cloudCreater)
+        public WordCloudPainter(IWordCloudCreator cloudCreator)
         {
-            this.cloudCreater = cloudCreater;
+            this.cloudCreator = cloudCreator;
         }
 
         public Bitmap PaintWords(ImageSettings imageSettings)
@@ -23,7 +23,7 @@ namespace TagsCloudContainer
 
             var graphic = Graphics.FromImage(bitmap);
             graphic.Clear(imageSettings.BackgroundColor);
-            var words = cloudCreater.GetWordCloud(graphic, imageSettings);
+            var words = cloudCreator.GetWordCloud(graphic, imageSettings);
 
             foreach (var word in words)
             {

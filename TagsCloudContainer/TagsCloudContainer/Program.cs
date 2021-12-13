@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Features.ResolveAnything;
+using DeepMorphy;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,7 +22,7 @@ namespace TagsCloudContainer
             builder.RegisterInstance(new LineByLineWordReader()).As<IWordReader>();
 
             builder.Register(cont => boringWords.ToHashSet()).As<HashSet<string>>();
-            builder.RegisterType<WordProcessor>().As<IWordProcessor>();
+            builder.RegisterType<ProcessorNonBoringWordsToLower>().As<IWordProcessor>();
 
             builder.RegisterType<TextFileWordsContainer>()
                 .As<IWordsContainer>()
@@ -30,12 +31,12 @@ namespace TagsCloudContainer
             builder.Register(p => new Point()).As<Point>();
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
 
-            builder.RegisterType<WordCloudCreater>().As<IWordCloudCreator>();
+            builder.RegisterType<WordCloudCreator>().As<IWordCloudCreator>();
             builder.RegisterInstance(new ConsoleClient()).As<IClient>();
             builder.RegisterType<WordCloudPainter>().As<IWordCloudPainter>();
 
-            builder.Register(cont => new ImageSaver(@"../../../../")).AsSelf();
-            builder.RegisterType<WordCloudSaver>().AsSelf();
+            builder.Register(cont => new ImageSaver(@"../../../../")).As<IImageSaver>();
+            builder.RegisterType<WordCloudSaver>().As<IWordCloudSaver>();
 
             builder.RegisterType<ClientControl>().AsSelf();
 

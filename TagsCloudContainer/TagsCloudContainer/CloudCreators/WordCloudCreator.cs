@@ -8,12 +8,13 @@ using TagsCloudVisualization;
 
 namespace TagsCloudContainer
 {
-    public class WordCloudCreater : IWordCloudCreator
+    public class WordCloudCreator : IWordCloudCreator
     {
         private ICloudLayouter cloudLayouter;
         private IWordsContainer wordsContainer;
         private Random rnd;
-        public WordCloudCreater(ICloudLayouter cloudLayouter, IWordsContainer wordsContainer)
+
+        public WordCloudCreator(ICloudLayouter cloudLayouter, IWordsContainer wordsContainer)
         {
             this.cloudLayouter = cloudLayouter;
             this.wordsContainer = wordsContainer;
@@ -23,6 +24,9 @@ namespace TagsCloudContainer
         public IEnumerable<Word> GetWordCloud(Graphics graphic, ImageSettings imageSettings)
         {
             var words = wordsContainer.GetWords().OrderBy(word => rnd.Next());
+
+            if (!words.Any())
+                yield break;
 
             var imageCenterX = imageSettings.ImageSize.Width / 2;
             var imageCenterY = imageSettings.ImageSize.Height / 2;
@@ -42,6 +46,7 @@ namespace TagsCloudContainer
                 yield return new Word(rect, word.Key, font);
             }
             cloudLayouter.Rectangles.Clear();
+
         }
     }
 }

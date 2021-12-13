@@ -11,6 +11,7 @@ namespace TagsCloudContainer
     {
         private static HashSet<string> fontFamilies = FontFamily.Families
             .Select(font => font.Name).ToHashSet();
+
         public ConsoleClient()
         {
 

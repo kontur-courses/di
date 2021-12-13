@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    public class ClientControl
+    public class ClientControl : IClientControl
     {
         private IClient client;
-        private WordCloudSaver saver;
-        public ClientControl(IClient client, WordCloudSaver saver)
+        private IWordCloudSaver saver;
+
+        public ClientControl(IClient client, IWordCloudSaver saver)
         {
             this.client = client;
             this.saver = saver;
@@ -33,6 +34,5 @@ namespace TagsCloudContainer
         public string GetNameForImage() => client.GetNameForImage();
 
         public void ShowPathToImage(string path) => client.ShowPathToNewFile(path);
-
     }
 }

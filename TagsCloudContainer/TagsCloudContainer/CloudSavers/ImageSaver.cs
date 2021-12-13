@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    public class ImageSaver
+    public class ImageSaver : IImageSaver
     {
         private string pathToSaveDirectory;
-        string fileFormat;
-        public ImageSaver(string pathToSaveDirectory, string fileFormat="png")
+        private string fileFormat;
+        public ImageSaver(string pathToSaveDirectory, string fileFormat = "png")
         {
             this.pathToSaveDirectory = pathToSaveDirectory;
             this.fileFormat = fileFormat;

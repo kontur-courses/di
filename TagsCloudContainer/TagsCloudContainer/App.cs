@@ -8,9 +8,9 @@ namespace TagsCloudContainer
 {
     public class App
     {
-        private WordCloudSaver saver;
+        private IWordCloudSaver saver;
         private ClientControl clientControl;
-        public App(ClientControl clientControl, WordCloudSaver saver)
+        public App(ClientControl clientControl, IWordCloudSaver saver)
         {
             this.clientControl = clientControl;
             this.saver = saver;

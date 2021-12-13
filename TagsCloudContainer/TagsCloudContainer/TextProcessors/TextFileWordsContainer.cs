@@ -11,6 +11,7 @@ namespace TagsCloudContainer
         private IWordReader wordReader;
         private IWordProcessor wordProcessor;
         private string path;
+
         public TextFileWordsContainer(IWordReader wordReader, IWordProcessor wordProcessor, string path)
         {
             this.wordReader = wordReader;

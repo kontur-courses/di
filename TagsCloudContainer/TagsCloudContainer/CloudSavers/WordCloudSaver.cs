@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer
 {
-    public class WordCloudSaver 
+    public class WordCloudSaver : IWordCloudSaver
     {
         private IWordCloudPainter cloudPainter;
-        private ImageSaver saver;
+        private IImageSaver saver;
 
-        public WordCloudSaver(IWordCloudPainter wordCloudPainter, ImageSaver saver)
+        public WordCloudSaver(IWordCloudPainter wordCloudPainter, IImageSaver saver)
         {
             cloudPainter = wordCloudPainter;
             this.saver = saver;
