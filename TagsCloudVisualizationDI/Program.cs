@@ -1,12 +1,10 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using TagsCloudVisualizationDI.Settings;
 using TagsCloudVisualizationDI.TextAnalization.Normalizer;
-using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
 namespace TagsCloudVisualizationDI
 {
@@ -34,10 +32,8 @@ namespace TagsCloudVisualizationDI
 
 
             analyzer.InvokeMystemAnalization();
-
-            Console.WriteLine(reader.ReadingTextPath);
-
-            var wordsFromFile = reader.ReadText(reader.ReadingTextPath, reader.ReadingEncoding);
+            
+            var wordsFromFile = reader.ReadText(reader.PreAnalyzedTextPath, reader.ReadingEncoding);
             var analyzedWords = analyzer.GetAnalyzedWords(wordsFromFile).ToList();
             var normalyzedWords = NormalyzeWords(analyzedWords, normalizer).ToList();
 
@@ -45,7 +41,6 @@ namespace TagsCloudVisualizationDI
 
             var elementsForVisualisation = filler.GetElementsList();
             using var drawer = visualization.Invoke(elementsForVisualisation, pictureSavePath);
-            //drawer.DrawAndSaveImage();
             drawer.DrawAndSaveImage(saver.GetSavePath(), settings.Format);
         }
 

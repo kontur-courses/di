@@ -22,9 +22,6 @@ namespace TagsCloudVisualizationDIConsoleClient
             var pathToFile = args.ElementAtOrDefault(0);
             var pathToSave = args.ElementAtOrDefault(1);
 
-            Console.WriteLine(pathToFile);
-            Console.WriteLine(pathToSave);
-
             var safeDirectory = pathToSave.Remove(pathToSave.LastIndexOf('\\'));
             CheckArguments(pathToFile, safeDirectory);
             var imageFormat = ImageFormat.Png;

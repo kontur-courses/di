@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudVisualizationDI.Layouter
+namespace TagsCloudVisualizationDI.Extensions
 {
     public static class RectangularExtensions
     {

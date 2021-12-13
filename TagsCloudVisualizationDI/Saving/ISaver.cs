@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace TagsCloudVisualizationDI.Saving
+﻿namespace TagsCloudVisualizationDI.Saving
 {
     public interface ISaver
     {

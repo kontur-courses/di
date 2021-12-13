@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagsCloudVisualizationDI.TextAnalization.Visualization;
 
 namespace TagsCloudVisualizationDI.Layouter.Filler
 {

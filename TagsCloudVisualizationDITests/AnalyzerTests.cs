@@ -34,7 +34,7 @@ namespace TagsCloudVisualizationDITests
             var analyzer = settings.Analyzer;
             var reader = settings.FileReader;
             analyzer.InvokeMystemAnalization();
-            var words = reader.ReadText(reader.ReadingTextPath, Encoding.UTF8);
+            var words = reader.ReadText(reader.PreAnalyzedTextPath, Encoding.UTF8);
             var result = analyzer.GetAnalyzedWords(words).ToList();
             var expectedResult = new List<Word>
             {

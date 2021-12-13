@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace TagsCloudVisualizationDI.FileReader
@@ -8,20 +7,12 @@ namespace TagsCloudVisualizationDI.FileReader
     {
         public DefaultTextFileReader(string readingTextPath, Encoding enconding)
         {
-            //FilePath = filePath;
-            ReadingTextPath = readingTextPath;
-            //MystemPath = mystemPath;
-            //MystemArgs = arguments;
+            PreAnalyzedTextPath = readingTextPath;
             ReadingEncoding = enconding;
         }
 
 
-        //public string FilePath { get; }
-
-
-        public string ReadingTextPath { get; }
-        //public string MystemPath { get; }
-        //public string MystemArgs { get; }
+        public string PreAnalyzedTextPath { get; }
         public Encoding ReadingEncoding { get; }
 
 
