@@ -10,7 +10,7 @@ namespace TagCloud.Configurations
         public IColorGenerator ColorGenerator { get; set; } = new RandomColorGenerator();
         public FontFamily FontFamily { get; set; } = new("Arial");
         public Size ImageSize { get; set; }
-        public IPointGenerator PointGenerator { get; } = new Spiral(0.1f, 0.9, new(0, 0), new Cache());
+        public IPointGenerator PointGenerator { get; } = new Circle(0.1f, 0.9, new(0, 0), new Cache());
         public string WordsFilename { get; set; } 
         public string OutputFilename { get; set; }
 

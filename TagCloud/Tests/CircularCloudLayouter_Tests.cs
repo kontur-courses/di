@@ -27,7 +27,7 @@ namespace TagCloud.Tests
         [SetUp]
         public void SetUp()
         {
-            sut = new CloudLayouter.CloudLayouter(new Spiral(0.01f, 1, new PointF(), new Cache()));
+            sut = new CloudLayouter.CloudLayouter(new Circle(0.01f, 1, new PointF(), new Cache()));
         }
 
         [TearDown]
@@ -78,7 +78,7 @@ namespace TagCloud.Tests
             int width,
             int height)
         {
-            sut = new CloudLayouter.CloudLayouter(new Spiral(0.2f, 1, new Point(xCloudPosition, yCloudPosition), new Cache()));
+            sut = new CloudLayouter.CloudLayouter(new Circle(0.2f, 1, new Point(xCloudPosition, yCloudPosition), new Cache()));
 
             var tag = sut.PutNextRectangle(new Size(width, height));
 

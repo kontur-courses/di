@@ -14,7 +14,7 @@ namespace TagCloud.Tests
         public void GetCoordinates_FirstPointInCenter()
         {
             var center = new PointF(2, 6);
-            var spiral = new Spiral(0.2f, 0.5, center, new Cache());
+            var spiral = new Circle(0.2f, 0.5, center, new Cache());
             
             var firstPoint = spiral.GetPoints(new Size(1, 1)).First();
             
@@ -25,7 +25,7 @@ namespace TagCloud.Tests
         public void GetCoordinates_ReturnCoordinatesThatRadiusShouldIncrease()
         {
             var center = new PointF(9,2);
-            var spiral = new Spiral(0.2f, 0.5, center, new Cache());
+            var spiral = new Circle(0.2f, 0.5, center, new Cache());
             
             var points = spiral.GetPoints( new Size(5, 5)).Take(100).ToArray();
             

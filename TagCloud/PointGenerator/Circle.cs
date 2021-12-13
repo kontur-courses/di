@@ -1,16 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TagCloud.PointGenerator
 {
     public class Circle : IPointGenerator
     {
-        private static readonly Spiral Spiral = new Spiral(0.1f, 0.8, new(0, 0), new Cache());
-        public IEnumerable<PointF> GetPoints(SizeF size)
+        private float spiralPitch;
+        private readonly float anglePitch;
+        private readonly double pitchCoefficient;
+        public PointF Center { get; }
+        private readonly ICache cache;
+
+        public Circle(float anglePitch, double densityCoefficient, PointF center, ICache cache)
         {
-            return Spiral.GetPoints(size);
+            this.anglePitch = anglePitch;
+            Center = center;
+            this.cache = cache;
+            pitchCoefficient = 20 * densityCoefficient * densityCoefficient;
         }
 
-        public PointF Center { get; } = Spiral.Center;
+        public IEnumerable<PointF> GetPoints(SizeF size)
+        {
+            spiralPitch = (float)(Math.Min(size.Height, size.Width) / pitchCoefficient);
+            foreach (var polar in ArchimedeanSpiral.GetArchimedeanSpiral(cache.SafeGetParameter(size),
+                anglePitch, spiralPitch))
+            {
+                cache.UpdateParameter(size, polar.Angle);
+                var cartesianPoint = polar.ToCartesian();
+                yield return new PointF(cartesianPoint.X + Center.X, cartesianPoint.Y + Center.Y);
+            }
+        }
     }
 }
