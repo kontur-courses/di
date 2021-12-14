@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Autofac;
 using TagCloud.Apps;
@@ -26,7 +27,10 @@ namespace TagCloud
 
         public static void Main(string[] args)
         {
-            var configuration = new CommandLineConfigurationProvider(args).GetConfiguration();
+            
+                var configuration = new CommandLineConfigurationProvider(args).GetConfiguration();
+            
+
             if (configuration == null)
                 return;
             CompositionRootInitialize(configuration);

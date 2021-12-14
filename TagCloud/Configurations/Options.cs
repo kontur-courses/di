@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Autofac.Features.GeneratedFactories;
 using CommandLine;
 
 namespace TagCloud.Configurations
@@ -25,5 +26,8 @@ namespace TagCloud.Configurations
 
         [Option('f', "font-family", Required = false, HelpText = "Words font-family")]
         public FontFamily FontFamily { get; set; }
+
+        [Option('g', "form of cloud (spiral, circle)", Required = false, HelpText = "You can configure form of cloud")]
+        public string CloudForm { get; set; }
     }
 }

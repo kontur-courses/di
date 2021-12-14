@@ -31,5 +31,10 @@ namespace TagCloud.PointGenerator
                 yield return new PointF(cartesianPoint.X + Center.X, cartesianPoint.Y + Center.Y);
             }
         }
+
+        public static Circle GetDefault()
+        {
+            return new Circle(0.1f, 0.9, new(0, 0), new Cache());
+        }
     }
 }

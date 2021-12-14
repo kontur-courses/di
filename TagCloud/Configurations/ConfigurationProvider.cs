@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using CommandLine;
+using TagCloud.PointGenerator;
 using TagCloud.Templates.Colors;
 
 namespace TagCloud.Configurations
@@ -29,6 +30,12 @@ namespace TagCloud.Configurations
                 return null;
             }
 
+            if (arguments == null)
+            {
+                Console.WriteLine("Invalid arguments");
+                return null;
+            }
+
             if (!File.Exists(arguments.Filename))
             {
                 Console.WriteLine($"File {arguments.Filename} does not exist!");
@@ -42,6 +49,13 @@ namespace TagCloud.Configurations
                 configuration.ColorGenerator = new OneColorGenerator(arguments.Color);
             if (arguments.FontFamily != null)
                 configuration.FontFamily = arguments.FontFamily;
+            if(arguments.CloudForm != null)
+                configuration.PointGenerator = arguments.CloudForm.ToLower() switch
+                {
+                    "spiral" => Spiral.GetDefaultSpiral(),
+                    "circle" => Circle.GetDefault(),
+                    _ => configuration.PointGenerator
+                };
             return configuration;
         }
     }
