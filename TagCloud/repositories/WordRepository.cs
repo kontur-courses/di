@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using TagCloud.configurations;
 using TagCloud.file_readers;
 
 namespace TagCloud.repositories
 {
     public class WordRepository : IRepository<string>
     {
-        private readonly List<string> words;
+        private readonly IEnumerable<string> words;
 
-        public WordRepository(IFileReader reader, IWordRepositoryConfiguration repositoryConfiguration)
+        public WordRepository(string filename, IFileReader reader)
         {
-            words = repositoryConfiguration.Filter(repositoryConfiguration.Handle(reader.GetWords())).ToList();
+            words = reader.GetWords(filename);
         }
 
         public IEnumerable<string> Get() => words;

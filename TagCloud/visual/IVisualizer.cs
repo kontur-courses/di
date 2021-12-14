@@ -5,6 +5,6 @@ namespace TagCloud.visual
 {
     public interface IVisualizer
     {
-        void FillImage(Image image, IImageConfiguration imageConfiguration);
+        Image GetImage(IImageConfiguration imageConfiguration);
     }
 }

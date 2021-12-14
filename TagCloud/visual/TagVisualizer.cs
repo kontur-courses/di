@@ -12,10 +12,11 @@ namespace TagCloud.visual
         {
             this.tagRepository = tagRepository;
         }
-        
-        public void FillImage(Image image, IImageConfiguration imageConfiguration)
+
+        public Image GetImage(IImageConfiguration imageConfiguration)
         {
-            using var graphics = Graphics.FromImage(image);
+            var bitmap = new Bitmap(imageConfiguration.GetWidth(), imageConfiguration.GetHeight());
+            var graphics = Graphics.FromImage(bitmap);
 
             var offset = new Point(imageConfiguration.GetWidth() / 2, imageConfiguration.GetHeight() / 2);
             graphics.Clear(imageConfiguration.GetBackgroundColor());
@@ -25,12 +26,14 @@ namespace TagCloud.visual
                 var layoutRectangle = tag.GetLayoutRectangle();
                 layoutRectangle.Offset(offset);
                 graphics.DrawString(
-                     tag.GetText(), 
-                     tag.GetFont(), 
-                     brush, 
-                     layoutRectangle
+                    tag.GetText(),
+                    tag.GetFont(),
+                    brush,
+                    layoutRectangle
                 );
             }
+
+            return bitmap;
         }
     }
 }

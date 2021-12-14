@@ -46,7 +46,7 @@ namespace TagCloud.layouter
             previousNode.Next = node;
             node.Next = currentNode;
         }
-        
+
         public IEnumerable<TValue> ToEnumerable()
         {
             var node = root;
@@ -56,7 +56,7 @@ namespace TagCloud.layouter
                 node = node.Next;
             }
         }
-        
+
         private bool IsNewValue(TValue value)
         {
             return !values.Contains(value);

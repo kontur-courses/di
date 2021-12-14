@@ -3,28 +3,18 @@ using TagCloud.configurations;
 
 namespace TagCloud.visual
 {
-    public class TagVisualizationSaver : ISaver
+    public class TagVisualizationSaver : ISaver<Image>
     {
-        private readonly IVisualizer visualizer;
         private readonly IImageSaveConfiguration saveConfiguration;
-        private readonly IImageConfiguration imageConfiguration;
 
-        public TagVisualizationSaver(
-            IVisualizer visualizer,
-            IImageSaveConfiguration saveConfiguration,
-            IImageConfiguration imageConfiguration
-        )
+        public TagVisualizationSaver(IImageSaveConfiguration saveConfiguration)
         {
-            this.visualizer = visualizer;
             this.saveConfiguration = saveConfiguration;
-            this.imageConfiguration = imageConfiguration;
         }
 
-        public void Save()
+        public void Save(Image image)
         {
-            using var bitmap = new Bitmap(imageConfiguration.GetWidth(), imageConfiguration.GetHeight());
-            visualizer.FillImage(bitmap, imageConfiguration);
-            bitmap.Save(saveConfiguration.GetFilename(), saveConfiguration.GetImageFormat());
+            image.Save(saveConfiguration.GetFilename(), saveConfiguration.GetImageFormat());
         }
     }
 }

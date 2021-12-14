@@ -10,20 +10,29 @@ namespace TagCloud.repositories
         private readonly List<Tag> tags;
 
         public TagRepository(
-            IRepository<string> wordRepository,
+            IRepository<string> repository,
+            IWordHelper helper,
             ITagRepositoryConfiguration configuration,
-            ICloudLayouter cloudLayouter
+            ICloudLayouter layouter
         )
         {
             tags = new List<Tag>();
-            foreach (var (word, freq) in wordRepository.CalculateWordStatistics())
+            foreach (var wordStatistic in helper.GetWordStatistics(ProcessWords(repository.Get(), helper)))
             {
-                var font = new Font(configuration.GetFamilyFont(), freq * configuration.GetSize());
-                var layoutRectangle = cloudLayouter.PutNextRectangle(new Size((int) font.Size * word.Length, font.Height));
-                tags.Add(new Tag(word, configuration.GetColor(), font, layoutRectangle));
+                var font = new Font(
+                    configuration.GetFamilyFont(),
+                    wordStatistic.Count * configuration.GetSize()
+                );
+                var layoutRectangle = layouter.PutNextRectangle(
+                    new Size((int)font.Size * wordStatistic.Word.Length, font.Height)
+                );
+                tags.Add(new Tag(wordStatistic.Word, configuration.GetColor(), font, layoutRectangle));
             }
         }
 
         public IEnumerable<Tag> Get() => tags;
+
+        private static IEnumerable<string> ProcessWords(IEnumerable<string> words, IWordHelper helper)
+            => helper.FilterWords(helper.ConvertWords(words));
     }
 }

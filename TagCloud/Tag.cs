@@ -23,7 +23,7 @@ namespace TagCloud
         public Color GetColor() => color;
 
         public Font GetFont() => font;
-        
+
         public RectangleF GetLayoutRectangle() => layoutRectangle;
     }
 }

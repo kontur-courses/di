@@ -1,7 +1,7 @@
 ﻿namespace TagCloud.visual
 {
-    public interface ISaver
+    public interface ISaver<in T>
     {
-        void Save();
+        void Save(T obj);
     }
 }

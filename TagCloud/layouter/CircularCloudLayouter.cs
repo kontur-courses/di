@@ -9,6 +9,7 @@ namespace TagCloud.layouter
         private readonly List<Rectangle> rectangles;
 
         private readonly SortedDistinctSingleLinkedList<Point> points;
+
         private readonly IEnumerable<Func<Point, Size, Point>> shifts = new List<Func<Point, Size, Point>>
         {
             (p, s) => p,
@@ -19,7 +20,7 @@ namespace TagCloud.layouter
 
         public CircularCloudLayouter()
         {
-            Point center = Point.Empty; //TODO
+            var center = Point.Empty;
             rectangles = new List<Rectangle>();
             points = new SortedDistinctSingleLinkedList<Point>(
                 (p1, p2) => center.DistanceTo(p1) < center.DistanceTo(p2)

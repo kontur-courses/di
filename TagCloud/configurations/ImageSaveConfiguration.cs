@@ -6,7 +6,7 @@ namespace TagCloud.configurations
     {
         private readonly string filename;
         private readonly ImageFormat format;
-        
+
         public ImageSaveConfiguration(string filename, ImageFormat format)
         {
             this.filename = filename;
