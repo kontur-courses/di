@@ -2,7 +2,7 @@
 
 namespace TagCloud.TextHandlers.Converters
 {
-    public interface IWordConverter
+    public interface IConvertersPool
     {
         IEnumerable<string> Convert(IEnumerable<string> words);
     }

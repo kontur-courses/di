@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.TextHandlers.Converters;
 
@@ -10,7 +11,7 @@ namespace TagCloud.Tests
         [Test]
         public void Convert_ShouldConvertWord()
         {
-            var sut = new WordConverter()
+            var sut = new ConvertersPool(Array.Empty<IConverter>())
                 .Using(s => s.ToLower())
                 .Using(s => s.Substring(1));
 

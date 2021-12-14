@@ -1,5 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Autofac;
+using NHunspell;
 using TagCloud.Apps;
 using TagCloud.CloudLayouter;
 using TagCloud.Configurations;
@@ -48,7 +51,10 @@ namespace TagCloud
             builder.RegisterType<WordsFromTextParser>().As<ITextParser>();
             builder.RegisterType<BoringWordsFilter>().As<IFilter>();
             builder.RegisterType<TextFilter>().As<ITextFilter>();
-            builder.Register(_ => new WordConverter().Using(s => s.ToLower())).As<IWordConverter>();
+            builder.RegisterType<ToLowerConverter>().As<IConverter>();
+            builder.RegisterType<Stemer>().As<IConverter>();
+            builder.RegisterType<TextFilter>().As<ITextFilter>();
+            builder.RegisterType<ConvertersPool>().As<IConvertersPool>();
             builder.RegisterType<FontSizeByCountCalculator>().AsSelf();
         }
 

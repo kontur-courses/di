@@ -8,10 +8,10 @@ namespace TagCloud.TextHandlers
     public class WordsReader : IReader
     {
         private readonly ITextParser parser;
-        private readonly IWordConverter converter;
+        private readonly IConvertersPool converter;
         private readonly ITextFilter filter;
 
-        public WordsReader(ITextParser parser, IWordConverter converter, ITextFilter filter)
+        public WordsReader(ITextParser parser, IConvertersPool converter, ITextFilter filter)
         {
             this.parser = parser;
             this.converter = converter;

@@ -4,16 +4,20 @@ using System.Linq;
 
 namespace TagCloud.TextHandlers.Converters
 {
-    public class WordConverter : IWordConverter
+    public class ConvertersPool : IConvertersPool
     {
         private readonly List<Func<string, string>> converters;
 
-        public WordConverter()
+        public ConvertersPool(IConverter[] converters)
         {
-            converters = new List<Func<string, string>>();
+            this.converters = new List<Func<string, string>>();
+            foreach (var converter in converters)
+            {
+                this.converters.Add(converter.Convert);
+            }
         }
 
-        public WordConverter Using(Func<string, string> converter)
+        public ConvertersPool Using(Func<string, string> converter)
         {
             converters.Add(converter);
             return this;
