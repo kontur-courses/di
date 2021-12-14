@@ -18,10 +18,10 @@ namespace CloudContainerTests
             ShouldThrowArgumentNullWithArgs(emptyArgs);
         }
 
-        private static void ShouldThrowArgumentNullWithArgs(string[] onlyInputFile)
+        private static void ShouldThrowArgumentNullWithArgs(string[] args)
         {
             FluentActions
-                .Invoking(() => new CommandLineClient(onlyInputFile))
+                .Invoking(() => new CommandLineClient(args))
                 .Should()
                 .Throw<ArgumentNullException>();
         }
