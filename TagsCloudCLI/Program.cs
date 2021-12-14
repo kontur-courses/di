@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using Autofac;
+using CloudImageSaver;
 using CommandLine;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudCLI
 { 
@@ -10,31 +13,28 @@ namespace TagsCloudCLI
     { 
         static void Main(string[] args)
         {
-            HandleErrors(() =>
+            try
             {
                 var result = Parser.Default.ParseArguments<Options>(args);
                 if (result.Errors.Any())
                     return;
                 var settings = new SettingProvider().GetSettings(result.Value);
-                var imageSaver = new ImageSaver(settings.Saver.Directory, settings.Saver.ImageName);
-                var builder = new ContainerBuilder();
-                builder.RegisterModule(new TagsCloudModule(settings));
-                var container = builder.Build();
-                var image = container.Resolve<Visualizer>().Visualize();
-                imageSaver.Save(image);
-            });
-        }
-
-        private static void HandleErrors(Action action)
-        {
-            try
-            {
-                action();
+                Run(settings);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        private static void Run(GeneralSettings settings)
+        {
+            var saver = new ImageSaver(settings.Saver.Directory, settings.Saver.ImageName);
+            var builder = new ContainerBuilder();
+            var container = builder.Build();
+            builder.RegisterModule(new TagsCloudModule(settings));
+            var image = container.Resolve<Visualizer>().Visualize();
+            saver.Save(image);
         }
     }
 }
