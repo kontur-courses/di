@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.Tests
     {
         private const string ImageFile = "TagsCloud";
 
-        private readonly TagsCloudDrawerModuleSettings _settings = new()
+        private readonly TagsCloudVisualisationSettings _settings = new()
         {
             WordsFile = Path.Combine(Directory.GetCurrentDirectory(), "Words.txt"),
             BoringWords = new[] { "a", "b", "c" }

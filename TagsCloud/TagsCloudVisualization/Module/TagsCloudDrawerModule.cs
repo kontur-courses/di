@@ -16,9 +16,9 @@ namespace TagsCloudVisualization.Module
 {
     public class TagsCloudDrawerModule : Autofac.Module
     {
-        private readonly TagsCloudDrawerModuleSettings _settings;
+        private readonly TagsCloudVisualisationSettings _settings;
 
-        public TagsCloudDrawerModule(TagsCloudDrawerModuleSettings settings)
+        public TagsCloudDrawerModule(TagsCloudVisualisationSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }

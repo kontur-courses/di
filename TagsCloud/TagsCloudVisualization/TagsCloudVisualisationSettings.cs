@@ -10,9 +10,9 @@ using TagsCloudVisualization.Drawable.Tags.Settings;
 using TagsCloudVisualization.Drawable.Tags.Settings.TagColorGenerator;
 using TagsCloudVisualization.WordsPreprocessor;
 
-namespace TagsCloudVisualization.Module
+namespace TagsCloudVisualization
 {
-    public class TagsCloudDrawerModuleSettings
+    public class TagsCloudVisualisationSettings
     {
         public string WordsFile { get; init; }
 

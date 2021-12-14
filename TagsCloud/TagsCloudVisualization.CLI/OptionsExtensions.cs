@@ -10,7 +10,6 @@ using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.CloudLayouter.VectorsGenerator;
 using TagsCloudVisualization.Drawable.Tags.Settings;
 using TagsCloudVisualization.Drawable.Tags.Settings.TagColorGenerator;
-using TagsCloudVisualization.Module;
 using TagsCloudVisualization.WordsPreprocessor;
 
 namespace TagsCloudVisualization.CLI
@@ -19,10 +18,10 @@ namespace TagsCloudVisualization.CLI
     {
         private static string DictionariesDirectory => Path.Combine(Directory.GetCurrentDirectory(), "Dictionaries");
 
-        internal static TagsCloudDrawerModuleSettings ToDrawerSettings(this Options options)
+        internal static TagsCloudVisualisationSettings ToDrawerSettings(this Options options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return new TagsCloudDrawerModuleSettings
+            return new TagsCloudVisualisationSettings
             {
                 WordsFile = options.WordsFile,
                 BoringWords = GetExcludedWordsFromFile(options.ExcludingWordsFile),

@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Module
     public static class TagsCloudDrawerModuleExtensions
     {
         public static ContainerBuilder RegisterTagsClouds(this ContainerBuilder builder,
-            TagsCloudDrawerModuleSettings settings)
+            TagsCloudVisualisationSettings settings)
         {
             builder.RegisterModule(new TagsCloudDrawerModule(settings));
             return builder;
