@@ -1,12 +1,15 @@
-﻿namespace TagsCloudVisualization.Settings
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace TagsCloudVisualization.Settings
 {
     public class WordsPreprocessorSettings
     {
         public string[] BoringWords { get; }
 
-        public WordsPreprocessorSettings(string[] boringWords)
+        public WordsPreprocessorSettings(IEnumerable<string> boringWords)
         {
-            BoringWords = boringWords;
+            BoringWords = boringWords.ToArray();
         }
     }
 }
