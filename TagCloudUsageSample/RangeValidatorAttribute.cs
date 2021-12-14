@@ -4,8 +4,8 @@ namespace TagCloudUsageSample
 {
     public class RangeValidatorAttribute : Attribute
     {
-        private readonly (IComparable Min, IComparable Max) range;
-        private readonly string parameterName;
+        protected readonly (IComparable Min, IComparable Max) range;
+        protected readonly string parameterName;
         
         public RangeValidatorAttribute(int min, int max, string parameterName)
         {
@@ -13,7 +13,7 @@ namespace TagCloudUsageSample
             this.parameterName = parameterName;
         }
 
-        public bool Validate(IComparable value, out string message)
+        public virtual bool Validate(IComparable value, out string message)
         {
             var result = Between(value, range);
             message = result ? $"" : $"{parameterName} should be grate then {range.Min} and less then {range.Max}";

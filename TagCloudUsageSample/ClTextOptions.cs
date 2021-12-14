@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using Autofac;
 using CommandLine;
 using TagsCloudVisualization;
-using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Parsers;
-using TagsCloudVisualization.Readers;
-using TagsCloudVisualization.WordProcessors;
 
 namespace TagCloudUsageSample
 {
     public class ClTextOptions : BaseOptions
     {
-        private static IContainer container;
-
         [FileValidatorAttribute("invalid file name")]
         [Option('t', "text", Required = true, HelpText = "Text file path")]
         public string TextFilePath { get; private set; }
         
         [PathValidatorAttribute("unknown directory")]
-        [Option('p', "path", Default = "..\\..\\", HelpText = "Set path to save tag clouds.")]
+        [Option('p', "path", Default = "ignore.txt", HelpText = "Set path to save tag clouds.")]
         public string SavePath{ get; private set; }
         
         [FileNameValidatorAttribute("invalid file name")]
@@ -59,33 +50,24 @@ namespace TagCloudUsageSample
         [Option('c', "color", Default = null, HelpText = "Set color of words.")]
         public string Color { get; set; }
         
+        [SizeValidator(1, 1, nameof(Size))]
+        [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
+        public string Size { get; set; }
+        
         public void CreateTags(out string firstFileName)
         {
-            container = Configurator.InjectWith(GetConfig());
             firstFileName = Path.Combine(SavePath, FileName) + "." + ImageFormat.Png.ToString().ToLower();
-            var painter = container.BeginLifetimeScope().Resolve<IPrinter<Text>>();
-            painter.GetBitmap(GetRectangles(), new Size(900, 900)).Save(firstFileName, ImageFormat.Png);
-        }
-
-        private IEnumerable<Text> GetRectangles()
-        {
-            using var scope = container.BeginLifetimeScope();
-            var layouter = scope.Resolve<ILayouter<Rectangle>>();
-            var statistic = scope.Resolve<IWordsStatistics>();
-            var format = TextFormat.GetFormatByExtension(Path.GetExtension(TextFilePath));
-            var reader = scope.Resolve<IEnumerable<IFileReader>>().FirstOrDefault(x => x.Format == format) ?? throw new ArgumentException("no proper reader exist");
-            var text = scope.Resolve<ITextProcessor>().ProcessWords(scope.Resolve<ITextParser>().ParseText(reader.ReadFile(TextFilePath!)));
-            statistic.AddWords(text);
-            foreach (var info in scope.Resolve<IWordStatisticsToSizeConverter>().Convert(statistic, WordCountToStatistic))
-                yield return new Text(info.Word, Font, layouter.PutNextRectangle(info.GetCollisionSize()));
+            Configurator.CreateTags(GetConfig()).Save(firstFileName, ImageFormat.Png);
         }
 
         private Config GetConfig()
         {
             var splittedColor = Color?.Split(' ').Select(int.Parse).ToList();
+            var size = Size.Split(' ').Select(int.Parse).ToList();
             
             return new Config
             {
+                Size = new Size(size[0], size[1]),
                 Color = Color is null ? null : System.Drawing.Color.FromArgb(splittedColor[0], splittedColor[1], splittedColor[2]),
                 WordCountToStatistic = WordCountToStatistic,
                 Density = Density,
