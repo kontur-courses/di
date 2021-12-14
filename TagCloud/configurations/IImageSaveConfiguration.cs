@@ -4,7 +4,7 @@ namespace TagCloud.configurations
 {
     public interface IImageSaveConfiguration
     {
-        string GetFilename();
+        string? GetFilename();
         ImageFormat GetImageFormat();
     }
 }

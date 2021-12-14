@@ -12,7 +12,7 @@ namespace TagCloudConsoleUI
 
         [Option('b', "background-color", Required = false, HelpText = "Set background color")]
         public Color BackgroundColor { get; set; } = Color.Black;
-        
+
         [Option('c', "color", Required = false, HelpText = "Set words color")]
         public Color WordColor { get; set; } = Color.Magenta;
 
@@ -20,12 +20,12 @@ namespace TagCloudConsoleUI
         public FontFamily FontFamily { get; set; } = FontFamily.GenericSansSerif;
 
         [Option("image-size", Required = false, HelpText = "Set result image size")]
-        public Size Size { get; set; } = new (1500, 1500);
+        public Size Size { get; set; } = new(1500, 1500);
 
         [Option("format", Required = false, HelpText = "Set result image format")]
         public ImageFormat Format { get; set; } = ImageFormat.Png;
-        
-        [Option('p', "path",Required = true, HelpText = "Set path to save image")]
-        public ImageFormat FilePath { get; set; }
+
+        [Option('p', "path", Required = true, HelpText = "Set path to save image")]
+        public string? FilePath { get; set; }
     }
 }

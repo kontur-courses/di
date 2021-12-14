@@ -7,7 +7,6 @@ namespace TagCloud.layouter
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<Rectangle> rectangles;
-
         private readonly SortedDistinctSingleLinkedList<Point> points;
 
         private readonly IEnumerable<Func<Point, Size, Point>> shifts = new List<Func<Point, Size, Point>>
