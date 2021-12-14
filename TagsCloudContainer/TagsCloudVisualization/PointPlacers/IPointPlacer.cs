@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.Layouters
+namespace TagsCloudVisualization.PointPlacers
 {
     public interface IPointPlacer
     {

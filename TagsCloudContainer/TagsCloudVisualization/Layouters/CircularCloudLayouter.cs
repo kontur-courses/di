@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagsCloudVisualization.Extensions;
+using TagsCloudVisualization.PointPlacers;
 
 namespace TagsCloudVisualization.Layouters
 {

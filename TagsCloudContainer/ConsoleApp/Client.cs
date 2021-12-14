@@ -9,6 +9,7 @@ using TagsCloudVisualization;
 using TagsCloudVisualization.Factories;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Parsers;
+using TagsCloudVisualization.PointPlacers;
 using TagsCloudVisualization.TextHandlers;
 using TagsCloudVisualization.TextPreparers;
 using TagsCloudVisualization.Visualization;
@@ -26,7 +27,9 @@ namespace ConsoleApp
         private Point center;
         private string wordsPath;
         private string imageName = "TagCloud";
+        private string savingPath = "";
         private ImageFormat imageFormat = ImageFormat.Png;
+        private int ignoringLength = 3;
 
         public void CreateCloud()
         {
@@ -41,21 +44,25 @@ namespace ConsoleApp
         {
             while (true)
             {
+                Console.Write("Input command name: ");
                 if (!TryReadConsoleInput(out var consoleInput))
                 {
                     Console.WriteLine("Wrong input");
                     continue;
                 }
+                
+                if (consoleInput is "finish" && TryFinish()) break;
 
                 if (consoleInput is "default")
                 {
                     SetParamsToDefault();
                     break;
                 }
-                
-                if (consoleInput is "finish" && TryFinish())
+
+                if (consoleInput is "help")
                 {
-                    break;
+                    Help();
+                    continue;
                 }
 
                 var result = consoleInput switch
@@ -68,17 +75,13 @@ namespace ConsoleApp
                     "image_name" => TryConfigureImageName(),
                     "image_format" => TryConfigureImageFormat(),
                     "words_path" => TryConfigureWordsPath(),
+                    "image_path" => TryConfigureImagePath(),
+                    "ignoring" => TryConfigureIgnoring(),
                     _ => false
                 };
 
-                if (result)
-                {
-                    Console.WriteLine(consoleInput + " was configured successfully");
-                }
-                else
-                {
-                    Console.WriteLine(consoleInput + " wasn't configured or incorrect command name");
-                }
+                Console.WriteLine(consoleInput + 
+                                  (result ? " was configured successfully" : " wasn't configured or incorrect command name"));
             }
             
             ConfigurePreparations();
@@ -95,7 +98,11 @@ namespace ConsoleApp
 
             var img = creator.CreateFromFile(wordsPath);
 
-            img.Save(imageName + "." + imageFormat.ToString().ToLower(), ImageFormat.Png);
+            var savingName = imageName + "." + imageFormat.ToString().ToLower();
+            
+            img.Save(savingName, ImageFormat.Png);
+            
+            Console.WriteLine($"Cloud visualization saved to {savingName}");
         }
 
         private IContainer RegisterDependencies()
@@ -119,6 +126,107 @@ namespace ConsoleApp
             containerBuilder.RegisterInstance(wordsFilters).As<IEnumerable<Func<string, bool>>>();
 
             return containerBuilder.Build();
+        }
+
+        private void Help()
+        {
+            Console.WriteLine("image_size - configurate image size. Input: two positive integers. Example: 800 600");
+            Console.WriteLine("bg_color - configurate background color. Input: color hex code. Example: #000000");
+            Console.WriteLine("words_color - configurate words color. Input: color hex code. Example: #FFFFFF");
+            Console.WriteLine("font_size - configurate font size. Input: one positive integer. Example: 5");
+            Console.WriteLine("center - configurate layout center. Input: two positive integers. Example: 400 300");
+            Console.WriteLine("image_name - configurate saved image name. Input: string. Example: TagCloud");
+            Console.WriteLine("image_format - configurate saved image format." +
+                              " Input: one string of png, jpg, jpeg, bmp, tiff, exif. Example: png");
+            Console.WriteLine("words_path - configurate path to file with words. Input: txt file path." +
+                              " Accepts relative to current .exe path and absolute paths. Example: C:\\words.txt");
+            Console.WriteLine("image_path - configurate path to file with words. Input: txt file path." +
+                              " Accepts relative to current .exe path and absolute paths. Example: C:\\Users\\Admin\\");
+            Console.WriteLine("finish - finishes configuration and saving image");
+            Console.WriteLine("default - turns every parameter, except words_path, to default: \n" +
+                              "image_size - 800 600\n" +
+                              "bg_color - white\n" +
+                              "words_color - black\n" +
+                              "font_size - 11\n" +
+                              "center - 400 300\n" +
+                              "image_name - TagsCloud");
+            Console.WriteLine("Creator is filtrating words with length less than 3, " +
+                              "if you want to change this option or add words to ingnore " +
+                              "type ignoring");
+        }
+        
+        private bool TryConfigureImagePath()
+        {
+            Console.Write("Input image saving path: ");
+
+            if (!TryReadConsoleInput(out var consoleInput))
+            {
+                return false;
+            }
+
+            if (!Directory.Exists(consoleInput))
+            {
+                Console.WriteLine("Invalid path");
+                return false;
+            }
+
+            savingPath = consoleInput;
+            return true;
+        }
+
+        private bool TryConfigureIgnoring()
+        {
+            Console.WriteLine("Type what to configure:\n" +
+                              "1 - add words to ignore.\n" +
+                              "2 - ingoring length.");
+            
+            if (!TryReadConsoleInput(out var consoleInput))
+            {
+                return false;
+            }
+
+            return consoleInput switch
+            {
+                "1" => TryConfigureWordsToIgnore(),
+                "2" => TryConfigureIgnoringLength(),
+                _ => false
+            };
+        }
+
+        private bool TryConfigureWordsToIgnore()
+        {
+            Console.Write("Write words to ignore separated by space: ");
+
+            if (!TryReadConsoleInput(out var consoleInput))
+            {
+                return false;
+            }
+
+            var words = consoleInput.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            
+            wordsFilters.Add(s => words.Contains(s));
+            
+            return true;
+        }
+
+        private bool TryConfigureIgnoringLength()
+        {
+            Console.Write("Write length less than which words will be ignored: ");
+
+            if (!TryReadConsoleInput(out var consoleInput))
+            {
+                return false;
+            }
+
+            if (!int.TryParse(consoleInput, out var num))
+            {
+                Console.WriteLine("Length should be integer");
+                return false;
+            }
+
+            ignoringLength = num;
+            
+            return true;
         }
 
         private bool TryConfigureWordsPath()
@@ -154,6 +262,7 @@ namespace ConsoleApp
         private bool TryConfigureImageFormat()
         {
             Console.Write("Input image format: ");
+            
             if (!TryReadConsoleInput(out var consoleInput))
             {
                 return false;
@@ -270,7 +379,7 @@ namespace ConsoleApp
 
         private void ConfigureFilters()
         {
-            wordsFilters.Add(s => s.Length < 3);    
+            wordsFilters.Add(s => s.Length < ignoringLength);    
         }
 
         private bool TryConfigureCenter()
@@ -306,6 +415,7 @@ namespace ConsoleApp
             colorizer = _ => Color.Black;
             wordsPreparers = new List<Func<string, string>>();
             wordsFilters = new List<Func<string, bool>>();
+            savingPath = "";
         }
 
         private bool TryFinish()

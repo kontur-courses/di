@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization.Layouters
+namespace TagsCloudVisualization.PointPlacers
 {
     public class Spiral : IPointPlacer
     {

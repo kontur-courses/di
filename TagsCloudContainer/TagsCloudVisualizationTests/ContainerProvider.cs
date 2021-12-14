@@ -6,6 +6,7 @@ using TagsCloudVisualization;
 using TagsCloudVisualization.Factories;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Parsers;
+using TagsCloudVisualization.PointPlacers;
 using TagsCloudVisualization.TextHandlers;
 using TagsCloudVisualization.TextPreparers;
 using TagsCloudVisualization.Visualization;
