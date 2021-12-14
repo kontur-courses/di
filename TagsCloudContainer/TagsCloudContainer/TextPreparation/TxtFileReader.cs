@@ -15,24 +15,13 @@ namespace TagsCloudContainer.TextPreparation
             }
 
             using var reader = new StreamReader(filePath);
-            var result = new List<string>();
-            while (!reader.EndOfStream)
+            var lines = reader.ReadToEnd().Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+            if (lines.Any(line => (line).Contains(' ')))
             {
-                var line = reader.ReadLine();
-                if ((line ?? string.Empty).Contains(' '))
-                {
-                    throw new ArgumentException("Each line must contain only one word");
-                }
-
-                if (line is "")
-                {
-                    continue;
-                }
-
-                result.Add(line);
+                throw new ArgumentException("Each line must contain only one word");
             }
 
-            return result;
+            return lines.Where(line => !string.IsNullOrEmpty(line)).ToList();
         }
     }
 }

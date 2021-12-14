@@ -12,11 +12,14 @@ namespace TagsCloudContainer
             Size minTagSize, Size maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient,
             float minFontSize, FontFamily fontFamily, Brush textBrush)
         {
-            if (words == null || tagsColors == null || maxTagSize.Height < minTagSize.Height ||
-                maxTagSize.Width < minTagSize.Width || layouter == null || minFontSize <= 0 || fontFamily == null ||
-                textBrush == null)
+            if (words == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Words can't be null");
+            }
+
+            if (tagsColors == null)
+            {
+                throw new ArgumentException("Tags colors can't be null");
             }
 
             GenerateRectangles(words, minTagSize, maxTagSize, layouter, reductionCoefficient);
@@ -28,9 +31,19 @@ namespace TagsCloudContainer
         private static void GenerateRectangles(List<string> words, Size minSize, Size maxSize,
             CircularCloudLayouter layouter, double reductionCoefficient)
         {
+            if (maxSize.Height < minSize.Height || maxSize.Width < minSize.Width)
+            {
+                throw new ArgumentException("Min tag size must be less or equal than max tag size");
+            }
+
             if (reductionCoefficient <= 0 || reductionCoefficient >= 1)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Reduction coefficient must be between 0 and 1");
+            }
+
+            if (layouter == null)
+            {
+                throw new ArgumentException("Layouter can't be null");
             }
 
             var currentSize = maxSize;
@@ -47,6 +60,21 @@ namespace TagsCloudContainer
         private static void AddWordsToImage(Bitmap bitmap, List<Rectangle> rectangles, List<string> words,
             float minFontSize, FontFamily fontFamily, Brush textBrush)
         {
+            if (minFontSize <= 0)
+            {
+                throw new ArgumentException("Font size can't be zero or negative");
+            }
+
+            if (fontFamily == null)
+            {
+                throw new ArgumentException("Font family can't be null");
+            }
+
+            if (textBrush == null)
+            {
+                throw new ArgumentException("Brush can't be null");
+            }
+
             var graphics = Graphics.FromImage(bitmap);
             for (var i = 0; i < words.Count && i < rectangles.Count; i++)
             {
@@ -60,7 +88,7 @@ namespace TagsCloudContainer
             var size = TextRenderer.MeasureText(word, new Font(FontFamily.GenericSansSerif, minFontSize));
             if (size.Width > rectangle.Width || size.Height > rectangle.Height)
             {
-                throw new ArgumentException("word is too long for tag cloud");
+                throw new ArgumentException("Word is too long for tag cloud");
             }
 
             var currentFontSize = minFontSize;

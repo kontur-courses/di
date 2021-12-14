@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -10,9 +11,27 @@ namespace TagsCloudContainer
 {
     public static class ConsoleApplication
     {
-        private static int id = 1;
+        private const int Id = 1;
 
         public static void Run()
+        {
+            var container = BuildContainer();
+            while (true)
+            {
+                using var scope = container.BeginLifetimeScope();
+                var fileName = Id + ".png";
+                var parametersToVisualize = GetParametersToVisualize(scope);
+                Visualizer.GetCloudVisualization(parametersToVisualize.wordsToVisualize, parametersToVisualize.colors,
+                        parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
+                        parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
+                        parametersToVisualize.reductionCoefficient, parametersToVisualize.minFontSize,
+                        parametersToVisualize.fontFamily, parametersToVisualize.brush)
+                    .Save("../../Samples/" + fileName, ImageFormat.Png);
+                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName);
+            }
+        }
+
+        private static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(new TxtFileReader()).As<IFileReader>();
@@ -36,57 +55,80 @@ namespace TagsCloudContainer
             builder.Register(_ => FontFamily.GenericSansSerif).Named<FontFamily>("fontFamily");
             builder.Register(_ => Brushes.Azure).Named<Brush>("textBrush");
             builder.Register(_ => "Result saved to Samples/").Named<string>("finalMessage");
-            var container = builder.Build();
-            while (true)
+            return builder.Build();
+        }
+
+        private static (List<string> wordsToVisualize, List<Color> colors, Color backgroundColor, Size minTagSize, Size
+            maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient, float minFontSize, FontFamily
+            fontFamily, Brush brush) GetParametersToVisualize(ILifetimeScope scope)
+        {
+            var path = AskUserForPath(scope);
+            var wordsToVisualize = scope.Resolve<IWordsHelper>()
+                .GetAllWordsToVisualize(scope.Resolve<IFileReader>().GetAllWords(path));
+            var colors = AskUserForTagColors(scope);
+            var backgroundColor = AskUserForBackgroundColor(scope);
+            var minTagSize = scope.ResolveNamed<Size>("minTagSize");
+            var maxTagSize = scope.ResolveNamed<Size>("maxTagSize");
+            var center = AskUserForCenterOfImage(scope);
+            var pointsGenerator = AskUserForUsingDefaultGenerator(scope)
+                ? AskUserForCustomPointsGenerator(scope, center)
+                : new SpiralPointsGenerator(center);
+            var reductionCoefficient = scope.ResolveNamed<double>("reductionCoefficient");
+            var minFontSize = scope.ResolveNamed<float>("minFontSize");
+            var fontFamily = scope.ResolveNamed<FontFamily>("fontFamily");
+            var brush = scope.ResolveNamed<Brush>("textBrush");
+            return (wordsToVisualize, colors, backgroundColor, minTagSize, maxTagSize,
+                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brush);
+        }
+
+        private static string AskUserForPath(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("inputFileMessage"));
+            return Console.ReadLine();
+        }
+
+        private static List<Color> AskUserForTagColors(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("tagColorsMessage"));
+            return Console.ReadLine()?.Split(' ').Select(Color.FromName).ToList();
+        }
+
+        private static Color AskUserForBackgroundColor(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("backgroundColorMessage"));
+            return Color.FromName(Console.ReadLine() ?? string.Empty);
+        }
+
+        private static Point AskUserForCenterOfImage(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("coordinatesMessage"));
+            var coordinates = Console.ReadLine()?.Split(' ').Select(int.Parse).ToList();
+            if (coordinates == null || coordinates.Count() != 2)
             {
-                using var scope = container.BeginLifetimeScope();
-                Console.WriteLine(scope.ResolveNamed<string>("inputFileMessage"));
-                var path = Console.ReadLine();
-                var wordsToVisualize = scope.Resolve<IWordsHelper>()
-                    .GetAllWordsToVisualize(scope.Resolve<IFileReader>().GetAllWords(path));
-                Console.WriteLine(scope.ResolveNamed<string>("tagColorsMessage"));
-                var colors = Console.ReadLine()?.Split(' ').Select(Color.FromName).ToList();
-                Console.WriteLine(scope.ResolveNamed<string>("backgroundColorMessage"));
-                var backgroundColor = Color.FromName(Console.ReadLine() ?? string.Empty);
-                var minTagSize = scope.ResolveNamed<Size>("minTagSize");
-                var maxTagSize = scope.ResolveNamed<Size>("maxTagSize");
-                Console.WriteLine("Print coordinates of center of your image separated by whitespace");
-                var coordinates = Console.ReadLine()?.Split(' ').Select(int.Parse).ToList();
-                if (coordinates == null || coordinates.Count() != 2)
-                {
-                    throw new ArgumentException();
-                }
-
-                var center = new Point(coordinates[0], coordinates[1]);
-                Console.WriteLine(scope.ResolveNamed<string>("useDefaultGeneratorMessage"));
-                var pointsGenerator = new SpiralPointsGenerator(center);
-                var answer = Console.ReadLine();
-                var positiveResult = scope.ResolveNamed<string>("positiveAnswer");
-                if (answer == null || !answer.Equals(positiveResult))
-                {
-                    Console.WriteLine(scope.ResolveNamed<string>("radiusMessage"));
-                    var startRadius = double.Parse(Console.ReadLine() ?? string.Empty);
-                    Console.WriteLine(scope.ResolveNamed<string>("angleMessage"));
-                    var startAngle = double.Parse(Console.ReadLine() ?? string.Empty);
-                    Console.WriteLine(scope.ResolveNamed<string>("angleDeltaMessage"));
-                    var angleDelta = double.Parse(Console.ReadLine() ?? string.Empty);
-                    Console.WriteLine(scope.ResolveNamed<string>("radiusDeltaMessage"));
-                    var radiusDelta = double.Parse(Console.ReadLine() ?? string.Empty);
-                    pointsGenerator =
-                        new SpiralPointsGenerator(center, startRadius, startAngle, angleDelta, radiusDelta);
-                }
-
-                var reductionCoefficient = scope.ResolveNamed<double>("reductionCoefficient");
-                var minFontSize = scope.ResolveNamed<float>("minFontSize");
-                var fontFamily = scope.ResolveNamed<FontFamily>("fontFamily");
-                var brush = scope.ResolveNamed<Brush>("textBrush");
-                var fileName = id + ".png";
-                Visualizer.GetCloudVisualization(wordsToVisualize, colors, backgroundColor, minTagSize, maxTagSize,
-                        new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily,
-                        brush)
-                    .Save("../../Samples/" + fileName, ImageFormat.Png);
-                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName);
+                throw new ArgumentException();
             }
+
+            return new Point(coordinates[0], coordinates[1]);
+        }
+
+        private static bool AskUserForUsingDefaultGenerator(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("useDefaultGeneratorMessage"));
+            var answer = Console.ReadLine();
+            return answer != null && !answer.Equals(scope.ResolveNamed<string>("positiveAnswer"));
+        }
+
+        private static SpiralPointsGenerator AskUserForCustomPointsGenerator(ILifetimeScope scope, Point center)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("radiusMessage"));
+            var startRadius = double.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine(scope.ResolveNamed<string>("angleMessage"));
+            var startAngle = double.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine(scope.ResolveNamed<string>("angleDeltaMessage"));
+            var angleDelta = double.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine(scope.ResolveNamed<string>("radiusDeltaMessage"));
+            var radiusDelta = double.Parse(Console.ReadLine() ?? string.Empty);
+            return new SpiralPointsGenerator(center, startRadius, startAngle, angleDelta, radiusDelta);
         }
     }
 }

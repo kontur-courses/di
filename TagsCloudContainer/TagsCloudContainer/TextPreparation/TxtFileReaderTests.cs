@@ -7,20 +7,20 @@ namespace TagsCloudContainer.TextPreparation
 {
     public class TxtFileReaderTests
     {
-        private TxtFileReader reader;
+        private TxtFileReader sut;
         private string fileName;
 
         [SetUp]
         public void InitVariables()
         {
-            reader = new TxtFileReader();
+            sut = new TxtFileReader();
             fileName = "a.txt";
         }
 
         [Test]
         public void GetAllWords_Throws_WhenFileNameIsNull()
         {
-            Action act = () => reader.GetAllWords(null);
+            Action act = () => sut.GetAllWords(null);
 
             act.Should().Throw<ArgumentException>();
         }
@@ -29,7 +29,7 @@ namespace TagsCloudContainer.TextPreparation
         public void GetAllWords_Throws_WhenFileContainsManyWordsInOneLine()
         {
             System.IO.File.WriteAllText(fileName, "a b c");
-            Action act = () => reader.GetAllWords(fileName);
+            Action act = () => sut.GetAllWords(fileName);
 
             act.Should().Throw<ArgumentException>().WithMessage("Each line must contain only one word");
             System.IO.File.Delete(fileName);
@@ -40,15 +40,15 @@ namespace TagsCloudContainer.TextPreparation
         {
             System.IO.File.WriteAllText(fileName, "");
 
-            reader.GetAllWords(fileName).Should().BeEmpty();
+            sut.GetAllWords(fileName).Should().BeEmpty();
         }
 
         [Test]
         public void GetAllWords_ReturnsEmptyList_WhenAllLinesAreEmpty()
         {
-            System.IO.File.WriteAllText(fileName, "\n\n\n");
+            System.IO.File.WriteAllText(fileName, Environment.NewLine + Environment.NewLine + Environment.NewLine);
 
-            reader.GetAllWords(fileName).Should().BeEmpty();
+            sut.GetAllWords(fileName).Should().BeEmpty();
         }
 
         [Test]
@@ -56,9 +56,9 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"a", "b", "c"};
 
-            System.IO.File.WriteAllText(fileName, "a\nb\nc\n");
+            System.IO.File.WriteAllText(fileName, "a" + Environment.NewLine + "b" + Environment.NewLine + "c");
 
-            reader.GetAllWords(fileName).Should().BeEquivalentTo(expectedResult);
+            sut.GetAllWords(fileName).Should().BeEquivalentTo(expectedResult);
         }
     }
 }

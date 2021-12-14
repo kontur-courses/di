@@ -125,7 +125,55 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 5,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>().WithMessage("word is too long for tag cloud");
+            act.Should().Throw<ArgumentException>().WithMessage("Word is too long for tag cloud");
+        }
+        
+        [Test]
+        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsZero()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(
+                new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0, 5,
+                FontFamily.GenericSansSerif, Brushes.Aqua);
+
+            act.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsLessThanZero()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(
+                new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), -1, 5,
+                FontFamily.GenericSansSerif, Brushes.Aqua);
+
+            act.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsOne()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(
+                new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 1, 5,
+                FontFamily.GenericSansSerif, Brushes.Aqua);
+
+            act.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsGreaterThanOne()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(
+                new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 2, 5,
+                FontFamily.GenericSansSerif, Brushes.Aqua);
+
+            act.Should().Throw<ArgumentException>();
         }
     }
 }

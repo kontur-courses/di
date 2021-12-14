@@ -26,4 +26,4 @@ namespace TagsCloudContainer.TextPreparation
             return words.Distinct().OrderByDescending(word => words.Count(w => w.Equals(word))).ToList();
         }
     }
-}  
+}

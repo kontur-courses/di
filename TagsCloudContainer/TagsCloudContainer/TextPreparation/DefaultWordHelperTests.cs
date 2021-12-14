@@ -7,18 +7,18 @@ namespace TagsCloudContainer.TextPreparation
 {
     public class DefaultWordHelperTests
     {
-        private DefaultWordHelper helper;
+        private DefaultWordHelper sut;
 
         [SetUp]
         public void InitWordHelper()
         {
-            helper = new DefaultWordHelper();
+            sut = new DefaultWordHelper();
         }
 
         [Test]
         public void GetAllWordsToVisualize_Throws_WhenWordsIsNull()
         {
-            Action act = () => helper.GetAllWordsToVisualize(null);
+            Action act = () => sut.GetAllWordsToVisualize(null);
 
             act.Should().Throw<ArgumentException>();
         }
@@ -26,7 +26,7 @@ namespace TagsCloudContainer.TextPreparation
         [Test]
         public void GetAllWordsToVisualize_RemovesAllShortWords()
         {
-            helper.GetAllWordsToVisualize(new List<string>() {"a", "bb", "ccc"}).Should().BeEmpty();
+            sut.GetAllWordsToVisualize(new List<string>() {"a", "bb", "ccc"}).Should().BeEmpty();
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"aaaa", "bbbb"};
 
-            helper.GetAllWordsToVisualize(new List<string>() {"AAAA", "bBBb"}).Should().BeEquivalentTo(expectedResult);
+            sut.GetAllWordsToVisualize(new List<string>() {"AAAA", "bBBb"}).Should().BeEquivalentTo(expectedResult);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"aaaa"};
 
-            helper.GetAllWordsToVisualize(new List<string>() {"aaaa", "aaaa"}).Should().BeEquivalentTo(expectedResult);
+            sut.GetAllWordsToVisualize(new List<string>() {"aaaa", "aaaa"}).Should().BeEquivalentTo(expectedResult);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"aaaa"};
 
-            helper.GetAllWordsToVisualize(new List<string>() {"aaaa", "aAaa"}).Should().BeEquivalentTo(expectedResult);
+            sut.GetAllWordsToVisualize(new List<string>() {"aaaa", "aAaa"}).Should().BeEquivalentTo(expectedResult);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"aaaa", "bbbb", "cccc"};
 
-            helper.GetAllWordsToVisualize(new List<string>()
+            sut.GetAllWordsToVisualize(new List<string>()
                 {
                     "aaaa",
                     "aaaa",
@@ -76,7 +76,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             var expectedResult = new List<string>() {"aaaa", "bbbb"};
 
-            helper.GetAllWordsToVisualize(new List<string>() {"aaaa", "bbbb", "aaaa", "bbbb"})
+            sut.GetAllWordsToVisualize(new List<string>() {"aaaa", "bbbb", "aaaa", "bbbb"})
                 .Should()
                 .BeEquivalentTo(expectedResult);
         }
