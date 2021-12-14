@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Linq;
 using Autofac;
 using TagsCloudContainer.TagsCloudVisualization;
@@ -21,15 +19,14 @@ namespace TagsCloudContainer
                 var rnd = new Random();
                 var parametersToVisualize = GetParametersToVisualize(scope);
                 var bitmap = Visualizer.GetCloudVisualization(parametersToVisualize.wordsToVisualize,
-                    parametersToVisualize.colors,
-                    parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
-                    parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
+                    parametersToVisualize.colors, parametersToVisualize.backgroundColor,
+                    parametersToVisualize.minTagSize, parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
                     parametersToVisualize.reductionCoefficient, parametersToVisualize.minFontSize,
                     parametersToVisualize.fontFamily, parametersToVisualize.brushes);
                 var fileName = rnd.Next().ToString();
                 FileSaver.Save(bitmap, fileName, "../../Samples/", parametersToVisualize.format);
-                
-                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName + "." + parametersToVisualize.format);
+                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName + "." +
+                                  parametersToVisualize.format);
             }
         }
 
@@ -56,7 +53,6 @@ namespace TagsCloudContainer
             builder.Register(_ => 0.8).Named<double>("reductionCoefficient");
             builder.Register(_ => 5f).Named<float>("minFontSize");
             builder.Register(_ => FontFamily.GenericSansSerif).Named<FontFamily>("fontFamily");
-            builder.Register(_ => Brushes.Azure).Named<Brush>("textBrush");
             builder.Register(_ => "Print text colors separated by whitespace").Named<string>("brushesMessage");
             builder.Register(_ => "Print format to save").Named<string>("formatMessage");
             builder.Register(_ => "Result saved to Samples/").Named<string>("finalMessage");
@@ -72,6 +68,7 @@ namespace TagsCloudContainer
                 .GetAllWordsToVisualize(GetFileReaderByFilePath(scope, path).GetAllWords(path));
             var colors = AskUserForTagColors(scope);
             var backgroundColor = AskUserForBackgroundColor(scope);
+            var brushes = AskUserForBrushColors(scope);
             var minTagSize = scope.ResolveNamed<Size>("minTagSize");
             var maxTagSize = scope.ResolveNamed<Size>("maxTagSize");
             var center = AskUserForCenterOfImage(scope);
@@ -82,9 +79,9 @@ namespace TagsCloudContainer
             var minFontSize = scope.ResolveNamed<float>("minFontSize");
             var fontFamily = scope.ResolveNamed<FontFamily>("fontFamily");
             var format = AskUserForSavingFormat(scope);
-            var brushes = AskUserForBrushColors(scope);
             return (wordsToVisualize, colors, backgroundColor, minTagSize, maxTagSize,
-                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brushes, format);
+                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brushes,
+                format);
         }
 
         private static string AskUserForPath(ILifetimeScope scope)
@@ -104,13 +101,17 @@ namespace TagsCloudContainer
             Console.WriteLine(scope.ResolveNamed<string>("backgroundColorMessage"));
             return Color.FromName(Console.ReadLine() ?? string.Empty);
         }
-        
+
         private static List<Brush> AskUserForBrushColors(ILifetimeScope scope)
         {
             Console.WriteLine(scope.ResolveNamed<string>("brushesMessage"));
-            return Console.ReadLine()?.Split(' ').Select(Color.FromName).ToList().Select(color => (Brush)new SolidBrush(color)).ToList();
+            return Console.ReadLine()
+                ?.Split(' ')
+                .Select(Color.FromName)
+                .ToList()
+                .Select(color => (Brush) new SolidBrush(color))
+                .ToList();
         }
-
 
         private static Point AskUserForCenterOfImage(ILifetimeScope scope)
         {
@@ -130,7 +131,7 @@ namespace TagsCloudContainer
             var answer = Console.ReadLine();
             return answer != null && !answer.Equals(scope.ResolveNamed<string>("positiveAnswer"));
         }
-        
+
         private static string AskUserForSavingFormat(ILifetimeScope scope)
         {
             Console.WriteLine(scope.ResolveNamed<string>("formatMessage"));
@@ -161,9 +162,10 @@ namespace TagsCloudContainer
             {
                 return scope.ResolveNamed<TxtFileReader>("txtReader");
             }
-            else if (path.Length >= 4 && path.Substring(path.Length - 4).Equals("docx"))
+
+            if (path.Length >= 4 && path.Substring(path.Length - 4).Equals("docx"))
             {
-                return scope.ResolveNamed<DocFileReader>("docReader");    
+                return scope.ResolveNamed<DocFileReader>("docReader");
             }
 
             throw new ArgumentException("Invalid file extension");

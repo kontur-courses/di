@@ -12,7 +12,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             Action act = () => new TxtFileReader(new WordsReader()).GetAllWords(null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Path can't be null");
         }
 
         [Test]

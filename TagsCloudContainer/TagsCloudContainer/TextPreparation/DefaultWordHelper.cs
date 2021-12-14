@@ -10,7 +10,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             if (words == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Words can't be null");
             }
 
             return SortWordsByPopularity(RemoveAllBoringWords(words.Select(word => word.ToLower()).ToList()));

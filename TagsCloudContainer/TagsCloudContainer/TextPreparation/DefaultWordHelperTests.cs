@@ -20,7 +20,7 @@ namespace TagsCloudContainer.TextPreparation
         {
             Action act = () => sut.GetAllWordsToVisualize(null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Words can't be null");
         }
 
         [Test]

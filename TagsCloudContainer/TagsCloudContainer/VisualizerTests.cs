@@ -17,17 +17,17 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Words can't be null");
         }
 
         [Test]
-        public void GetCloudVisualization_Throws_WhenTagsColorsIsNull()
+        public void GetCloudVisualization_Throws_WhenTagsColorsAreNull()
         {
             Action act = () => Visualizer.GetCloudVisualization(new List<string>(), null, Color.Aqua, new Size(50, 50),
                 new Size(100, 50), new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Tags colors can't be null");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Min tag size must be less or equal than max tag size");
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Min tag size must be less or equal than max tag size");
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace TagsCloudContainer
                 Color.Aqua, new Size(50, 50), new Size(100, 100), null, 0.8, 1, FontFamily.GenericSansSerif,
                 Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Layouter can't be null");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Reduction coefficient must be between 0 and 1");
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 1, 1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Reduction coefficient must be between 0 and 1");
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace TagsCloudContainer
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.5, -1,
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Font size can't be zero or negative");
         }
 
         [Test]
@@ -102,7 +102,18 @@ namespace TagsCloudContainer
                 Color.Aqua, new Size(50, 50), new Size(100, 100),
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.5, 1, null, Brushes.Aqua);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Font family can't be null");
+        }
+
+        [Test]
+        public void GetCloudVisualization_Throws_WhenBrushesAreNull()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.5, 1,
+                FontFamily.GenericSansSerif, null as List<Brush>);
+            
+            act.Should().Throw<ArgumentException>().WithMessage("Brushes can't be null");
         }
 
         [Test]
@@ -110,9 +121,21 @@ namespace TagsCloudContainer
         {
             Action act = () => Visualizer.GetCloudVisualization(new List<string>(), new List<Color>() {Color.Aqua},
                 Color.Aqua, new Size(50, 50), new Size(100, 100),
-                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.5, 1,
-                FontFamily.GenericSansSerif, null as List<Brush>);
-            act.Should().Throw<ArgumentException>();
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 5,
+                FontFamily.GenericSansSerif, null as Brush);
+
+            act.Should().Throw<ArgumentException>().WithMessage("Brush can't be null");
+        }
+
+        [Test]
+        public void GetCloudVisualization_Throws_WhenOneOfBrushesIsNull()
+        {
+            Action act = () => Visualizer.GetCloudVisualization(new List<string>(), new List<Color>() {Color.Aqua},
+                Color.Aqua, new Size(50, 50), new Size(100, 100),
+                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.8, 5,
+                FontFamily.GenericSansSerif, new List<Brush>() {null});
+
+            act.Should().Throw<ArgumentException>().WithMessage("Brush can't be null");
         }
 
         [Test]
@@ -125,54 +148,6 @@ namespace TagsCloudContainer
                 FontFamily.GenericSansSerif, Brushes.Aqua);
 
             act.Should().Throw<ArgumentException>().WithMessage("Word is too long for tag cloud");
-        }
-        
-        [Test]
-        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsZero()
-        {
-            Action act = () => Visualizer.GetCloudVisualization(
-                new List<string>(), new List<Color>() {Color.Aqua},
-                Color.Aqua, new Size(50, 50), new Size(100, 100),
-                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0, 5,
-                FontFamily.GenericSansSerif, Brushes.Aqua);
-
-            act.Should().Throw<ArgumentException>();
-        }
-        
-        [Test]
-        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsLessThanZero()
-        {
-            Action act = () => Visualizer.GetCloudVisualization(
-                new List<string>(), new List<Color>() {Color.Aqua},
-                Color.Aqua, new Size(50, 50), new Size(100, 100),
-                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), -1, 5,
-                FontFamily.GenericSansSerif, Brushes.Aqua);
-
-            act.Should().Throw<ArgumentException>();
-        }
-        
-        [Test]
-        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsOne()
-        {
-            Action act = () => Visualizer.GetCloudVisualization(
-                new List<string>(), new List<Color>() {Color.Aqua},
-                Color.Aqua, new Size(50, 50), new Size(100, 100),
-                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 1, 5,
-                FontFamily.GenericSansSerif, Brushes.Aqua);
-
-            act.Should().Throw<ArgumentException>();
-        }
-        
-        [Test]
-        public void GetCloudVisualization_Throws_WhenReductionCoefficientIsGreaterThanOne()
-        {
-            Action act = () => Visualizer.GetCloudVisualization(
-                new List<string>(), new List<Color>() {Color.Aqua},
-                Color.Aqua, new Size(50, 50), new Size(100, 100),
-                new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 2, 5,
-                FontFamily.GenericSansSerif, Brushes.Aqua);
-
-            act.Should().Throw<ArgumentException>();
         }
     }
 }
