@@ -18,15 +18,17 @@ namespace TagsCloudContainer
             while (true)
             {
                 var rnd = new Random();
-                var fileName = rnd.Next() + ".png";
                 var parametersToVisualize = GetParametersToVisualize(scope);
-                Visualizer.GetCloudVisualization(parametersToVisualize.wordsToVisualize, parametersToVisualize.colors,
-                        parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
-                        parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
-                        parametersToVisualize.reductionCoefficient, parametersToVisualize.minFontSize,
-                        parametersToVisualize.fontFamily, parametersToVisualize.brush)
-                    .Save("../../Samples/" + fileName, ImageFormat.Png);
-                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName);
+                var bitmap = Visualizer.GetCloudVisualization(parametersToVisualize.wordsToVisualize,
+                    parametersToVisualize.colors,
+                    parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
+                    parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
+                    parametersToVisualize.reductionCoefficient, parametersToVisualize.minFontSize,
+                    parametersToVisualize.fontFamily, parametersToVisualize.brush);
+                var fileName = rnd.Next().ToString();
+                FileSaver.Save(bitmap, fileName, "../../Samples/", parametersToVisualize.format);
+                
+                Console.WriteLine(scope.ResolveNamed<string>("finalMessage") + fileName + "." + parametersToVisualize.format);
             }
         }
 
@@ -54,13 +56,14 @@ namespace TagsCloudContainer
             builder.Register(_ => 5f).Named<float>("minFontSize");
             builder.Register(_ => FontFamily.GenericSansSerif).Named<FontFamily>("fontFamily");
             builder.Register(_ => Brushes.Azure).Named<Brush>("textBrush");
+            builder.Register(_ => "Print format to save").Named<string>("formatMessage");
             builder.Register(_ => "Result saved to Samples/").Named<string>("finalMessage");
             return builder.Build();
         }
 
         private static (List<string> wordsToVisualize, List<Color> colors, Color backgroundColor, Size minTagSize, Size
             maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient, float minFontSize, FontFamily
-            fontFamily, Brush brush) GetParametersToVisualize(ILifetimeScope scope)
+            fontFamily, Brush brush, string format) GetParametersToVisualize(ILifetimeScope scope)
         {
             var path = AskUserForPath(scope);
             var wordsToVisualize = scope.Resolve<IWordsHelper>()
@@ -77,8 +80,9 @@ namespace TagsCloudContainer
             var minFontSize = scope.ResolveNamed<float>("minFontSize");
             var fontFamily = scope.ResolveNamed<FontFamily>("fontFamily");
             var brush = scope.ResolveNamed<Brush>("textBrush");
+            var format = AskUserForSavingFormat(scope);
             return (wordsToVisualize, colors, backgroundColor, minTagSize, maxTagSize,
-                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brush);
+                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brush, format);
         }
 
         private static string AskUserForPath(ILifetimeScope scope)
@@ -116,6 +120,12 @@ namespace TagsCloudContainer
             Console.WriteLine(scope.ResolveNamed<string>("useDefaultGeneratorMessage"));
             var answer = Console.ReadLine();
             return answer != null && !answer.Equals(scope.ResolveNamed<string>("positiveAnswer"));
+        }
+        
+        private static string AskUserForSavingFormat(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("formatMessage"));
+            return Console.ReadLine();
         }
 
         private static SpiralPointsGenerator AskUserForCustomPointsGenerator(ILifetimeScope scope, Point center)
