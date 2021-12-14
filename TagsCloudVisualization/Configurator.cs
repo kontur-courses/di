@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Features.AttributeFilters;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Parsers;
+using TagsCloudVisualization.Printing;
 using TagsCloudVisualization.Readers;
 using TagsCloudVisualization.WordProcessors;
 using TagsCloudVisualization.WordValidators;
@@ -14,36 +15,6 @@ using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization
 {
-    public enum TagCloudResultActions
-    {
-        Open,
-        Save,
-        SaveAndOpen,
-    }
-
-    public enum SourceTextInterpretationMode
-    {
-        LiteraryText,
-        OneWordPerLine,
-    }
-    
-    public struct Config
-    {
-        public int WordCountToStatistic { get; set; }
-        public Point Center { get; set; }
-        public double Density { get; set; }
-        public byte MinWordToStatisticLength { get; set; }
-        public float MaximumWordFontSize { get; set; }
-        
-        public string TextFilePath { get; set; }
-        public string? CustomIgnoreFilePath { get; set; }
-        public string DefaultIgnoreFilePath { get; set; }
-        
-        public TagCloudResultActions TagCloudResultActions { get; set; }
-        public SourceTextInterpretationMode  SourceTextInterpretationMode { get; set; }
-    }
-    
-
     public static class Configurator
     {
         private static void InjectParsers(ContainerBuilder builder, Config config)
@@ -93,7 +64,13 @@ namespace TagsCloudVisualization
             InjectValidators(builder, config);
             
             builder.RegisterType<WordsStatistics>().As<IWordsStatistics>();
-            builder.Register(_ => new DefaultWordStatisticsToSizeConverter(config.MaximumWordFontSize)).As<IWordStatisticsToSizeConverter>();
+            builder.Register(_ => new DefaultWordStatisticsToSizeConverter(80)).As<IWordStatisticsToSizeConverter>();
+
+            if (config.Color is null) builder.RegisterType<RandomColorScheme>().As<IColorScheme>();
+            else builder.Register(_ => new SingleColorScheme(config.Color.Value)).As<IColorScheme>();
+            
+            builder.RegisterType<TextPrinter>().As<IPrinter<Text>>();
+            builder.RegisterType<RectanglesReCalculator>().As<IRectanglesReCalculator>();
 
             return builder.Build();
         }

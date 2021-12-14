@@ -17,7 +17,7 @@ namespace TagCloudUsageSample
     public class ClTextOptions : BaseOptions
     {
         private static IContainer container;
-        
+
         [FileValidatorAttribute("invalid file name")]
         [Option('t', "text", Required = true, HelpText = "Text file path")]
         public string TextFilePath { get; private set; }
@@ -47,24 +47,27 @@ namespace TagCloudUsageSample
         [RangeValidatorAttribute(1, 50, nameof(MinWordLengthToStatistic))]
         [Option('m', "wordLength", Default = 3, HelpText = "Set min word length to statistic")]
         public int MinWordLengthToStatistic { get; private set; }
-        
-        [RangeValidatorAttribute(25, 400, nameof(MaximumWordFontSize))]
-        [Option('f', "font", Default = 60, HelpText = "Set font size for most common word.")]
-        public int MaximumWordFontSize{ get; private set; }
-        
+
+        [Option('f', "font", Default = "Arial", Required = false, HelpText = "Set font for words.")]
+        public string Font { get; private set; }
+
         [RangeValidatorAttribute(-1, 50, nameof(WordCountToStatistic))]
         [Option('w', "wordCount", Default = -1, HelpText = "Set number of word to statistic.")]
         public int WordCountToStatistic { get; private set; }
+        
+        [ColorValidator("incorrect color")]
+        [Option('c', "color", Default = null, HelpText = "Set color of words.")]
+        public string Color { get; set; }
         
         public void CreateTags(out string firstFileName)
         {
             container = Configurator.InjectWith(GetConfig());
             firstFileName = Path.Combine(SavePath, FileName) + "." + ImageFormat.Png.ToString().ToLower();
-            Console.WriteLine(firstFileName);
-            Painter.GetBitmapWithText(GetRectangles()).Save(firstFileName, ImageFormat.Png);
+            var painter = container.BeginLifetimeScope().Resolve<IPrinter<Text>>();
+            painter.GetBitmap(GetRectangles(), new Size(900, 900)).Save(firstFileName, ImageFormat.Png);
         }
 
-        private IEnumerable<(string, float, Rectangle)> GetRectangles()
+        private IEnumerable<Text> GetRectangles()
         {
             using var scope = container.BeginLifetimeScope();
             var layouter = scope.Resolve<ILayouter<Rectangle>>();
@@ -74,17 +77,20 @@ namespace TagCloudUsageSample
             var text = scope.Resolve<ITextProcessor>().ProcessWords(scope.Resolve<ITextParser>().ParseText(reader.ReadFile(TextFilePath!)));
             statistic.AddWords(text);
             foreach (var info in scope.Resolve<IWordStatisticsToSizeConverter>().Convert(statistic, WordCountToStatistic))
-                yield return (info.Word, info.FontSize, layouter.PutNextRectangle(info.GetCollisionSize()));
+                yield return new Text(info.Word, Font, layouter.PutNextRectangle(info.GetCollisionSize()));
         }
 
-        public Config GetConfig()
+        private Config GetConfig()
         {
+            var splittedColor = Color?.Split(' ').Select(int.Parse).ToList();
+            
             return new Config
             {
+                Color = Color is null ? null : System.Drawing.Color.FromArgb(splittedColor[0], splittedColor[1], splittedColor[2]),
                 WordCountToStatistic = WordCountToStatistic,
                 Density = Density,
                 MinWordToStatisticLength = (byte)MinWordLengthToStatistic,
-                MaximumWordFontSize = MaximumWordFontSize,
+                Font = Font,
                 TextFilePath = TextFilePath,
                 CustomIgnoreFilePath = IgnoreWordsFileName,
                 TagCloudResultActions = Open ? TagCloudResultActions.SaveAndOpen : TagCloudResultActions.Save,

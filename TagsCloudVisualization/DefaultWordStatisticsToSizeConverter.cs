@@ -20,7 +20,7 @@ namespace TagsCloudVisualization
             var maxTagWeight = (double)words.First().Count;
             var minTagWeight = (double)words.Last().Count;
 
-            foreach (var (word, count) in words.Take(topWordCount < 0 ? words.Count() : topWordCount))
+            foreach (var (word, count) in words.Take(topWordCount < 0 ? words.Count : topWordCount))
             {
                 var fontSize = count <= minTagWeight
                     ? 1f

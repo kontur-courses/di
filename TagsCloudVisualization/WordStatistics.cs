@@ -32,17 +32,14 @@ namespace TagsCloudVisualization
 
         public virtual IEnumerable<WordCount> GetStatistics(int topWordCount = -1)
         {
-            if (topWordCount < 0)
-                return statistics
-                    .Select(WordCount.Create)
-                    .OrderByDescending(wordCount => wordCount.Count)
-                    .ThenBy(wordCount => wordCount.Word);
-            
-            return statistics
+            var orderedStatistic = statistics
                 .Select(WordCount.Create)
                 .OrderByDescending(wordCount => wordCount.Count)
-                .ThenBy(wordCount => wordCount.Word)
-                .Take(topWordCount);
+                .ThenBy(wordCount => wordCount.Word);
+            
+            return topWordCount < 0 
+                ? orderedStatistic 
+                : orderedStatistic.Take(topWordCount);
         }
     }
 }

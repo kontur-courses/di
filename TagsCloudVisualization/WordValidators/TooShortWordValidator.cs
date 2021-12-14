@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualization.WordValidators
+﻿using System;
+
+namespace TagsCloudVisualization.WordValidators
 {
     public class TooShortWordValidator : IWordValidator
     {

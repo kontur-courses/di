@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Printing;
 
 namespace TagsCloudVisualizationTest
 {
@@ -17,8 +18,8 @@ namespace TagsCloudVisualizationTest
             
             try
             {
-                Painter
-                    .GetBitmapWithRectangles(rectangles)  // Throw ArgumentException while creating too big bmp.
+                new RectanglePrinter()
+                    .GetBitmap(rectangles)  // Throw ArgumentException while creating too big bmp.
                     .Save(SavePath, ImageFormat.Jpeg);
             }
             catch (ArgumentException _)
