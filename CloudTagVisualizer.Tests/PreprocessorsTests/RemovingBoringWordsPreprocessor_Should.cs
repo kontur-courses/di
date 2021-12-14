@@ -13,7 +13,7 @@ namespace CloudTagContainerTests.PreprocessorsTests
         [TestCase(-1, TestName = "When min word length is negative")]
         public void Throw_When(int minWordLength)
         {
-            Action action = () => new RemovingBoringWordsPreprocessor(minWordLength);
+            Action action = () => new RemovingBoringWordsPreprocessor(null);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -24,7 +24,7 @@ namespace CloudTagContainerTests.PreprocessorsTests
         [TestCase(1, new[] {"abc", "def", "qwe"}, TestName = "When multiplied word with allowed length given")]
         public void ReturnSameArray_When(int minWordLength, string[] input)
         {
-            var preprocessor = new RemovingBoringWordsPreprocessor(minWordLength);
+            var preprocessor = new RemovingBoringWordsPreprocessor(null);
             var result = preprocessor.Preprocess(input);
 
             result.Should().BeEquivalentTo(input);
@@ -40,7 +40,7 @@ namespace CloudTagContainerTests.PreprocessorsTests
             TestName = "When some values does not match allowed length")]
         public void ReturnTrimmedArray_When(int minWordLength, string[] input, string[] expected)
         {
-            var preprocessor = new RemovingBoringWordsPreprocessor(minWordLength);
+            var preprocessor = new RemovingBoringWordsPreprocessor(null);
 
             var result = preprocessor.Preprocess(input);
 

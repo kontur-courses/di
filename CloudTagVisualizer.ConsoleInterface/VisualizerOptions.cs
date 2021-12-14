@@ -2,7 +2,7 @@
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
-    public class Options
+    public class VisualizerOptions
     {
         [Option('t', "textToVisualize", Required = true, HelpText = "Set path to input txt file")]
         public string InputTextPath { get; set; }
@@ -26,11 +26,18 @@ namespace CloudTagVisualizer.ConsoleInterface
             HelpText = "Set color for text")]
         public string TextColorName { get; set; }
 
-        [Option('m',
-            "minimumWordLength",
+        [Option('w',
+            "width",
             Required = false,
-            Default = 1,
-            HelpText = "Set minimal length of words")]
-        public int MinimalWordLength { get; set; }
+            Default = 1920,
+            HelpText = "Set image width")]
+        public int ImageWidth { get; set; }
+        
+        [Option('h',
+            "height",
+            Required = false,
+            Default = 1080,
+            HelpText = "Set image height")]
+        public int ImageHeight { get; set; }
     }
 }

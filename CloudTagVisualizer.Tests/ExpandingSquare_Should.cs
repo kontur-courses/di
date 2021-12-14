@@ -5,7 +5,6 @@ using System.Linq;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
-using Visualization;
 using Visualization.Layouters.Spirals;
 
 namespace CloudTagVisualizer.Tests

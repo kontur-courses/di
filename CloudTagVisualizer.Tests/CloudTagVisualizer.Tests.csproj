@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CloudTagContainer\CloudTagContainer.csproj" />
+      <ProjectReference Include="..\CloudTagVisualizer.Visualization\CloudTagVisualizer.Visualization.csproj" />
     </ItemGroup>
 
 </Project>

@@ -29,16 +29,16 @@ namespace CloudTagVisualizer.ConsoleInterface
             this.fileReader = fileReader;
         }
 
-        public void Run(Options options)
+        public void Run(VisualizerOptions visualizerOptions)
         {
-            var inStream = fileStreamFactory.OpenOnReading(options.InputTextPath);
+            var inStream = fileStreamFactory.OpenOnReading(visualizerOptions.InputTextPath);
             var content = fileReader.ReadToEnd(inStream);
             var words = wordsParser.Read(content);
             var preprocessesWords = preprocessor.Preprocess(words);
 
             var image = visualizer.Visualize(preprocessesWords);
 
-            var oStream = fileStreamFactory.OpenOnWriting(options.PathToSaveImage);
+            var oStream = fileStreamFactory.OpenOnWriting(visualizerOptions.PathToSaveImage);
             imageSaver.Save(image, oStream);
         }
     }

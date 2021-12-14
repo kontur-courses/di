@@ -41,11 +41,11 @@ namespace CloudTagVisualizer.ConsoleInterface
             Console.Write("HELLO");
         }
 
-        private static Options GetOptions(string[] args)
+        private static VisualizerOptions GetOptions(string[] args)
         {
             return Parser
                 .Default
-                .ParseArguments<Options>(args)
+                .ParseArguments<VisualizerOptions>(args)
                 .Value;
         }
     }

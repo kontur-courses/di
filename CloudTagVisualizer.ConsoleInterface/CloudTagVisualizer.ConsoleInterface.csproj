@@ -14,15 +14,9 @@
       <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\CloudTagContainer\CloudTagContainer.csproj" />
-    </ItemGroup>
 
     <ItemGroup>
       <None Update="Russian.dic">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="input.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Russian.aff">
@@ -31,6 +25,14 @@
       <None Update="input.doc">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Samples\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\CloudTagVisualizer.Visualization\CloudTagVisualizer.Visualization.csproj" />
     </ItemGroup>
 
 </Project>
