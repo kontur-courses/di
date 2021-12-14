@@ -111,8 +111,7 @@ namespace TagsCloudContainer
             Action act = () => Visualizer.GetCloudVisualization(new List<string>(), new List<Color>() {Color.Aqua},
                 Color.Aqua, new Size(50, 50), new Size(100, 100),
                 new CircularCloudLayouter(new SpiralPointsGenerator(new Point(500, 500))), 0.5, 1,
-                FontFamily.GenericSansSerif, null);
-
+                FontFamily.GenericSansSerif, null as List<Brush>);
             act.Should().Throw<ArgumentException>();
         }
 

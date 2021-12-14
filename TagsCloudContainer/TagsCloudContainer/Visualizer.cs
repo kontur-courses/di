@@ -12,6 +12,15 @@ namespace TagsCloudContainer
             Size minTagSize, Size maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient,
             float minFontSize, FontFamily fontFamily, Brush textBrush)
         {
+            return GetCloudVisualization(words, tagsColors, backgroundColor,
+                minTagSize, maxTagSize, layouter, reductionCoefficient,
+                minFontSize, fontFamily, new List<Brush>() {textBrush});
+        }
+        
+        public static Bitmap GetCloudVisualization(List<string> words, List<Color> tagsColors, Color backgroundColor,
+            Size minTagSize, Size maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient,
+            float minFontSize, FontFamily fontFamily, List<Brush> brushes)
+        {
             if (words == null)
             {
                 throw new ArgumentException("Words can't be null");
@@ -24,7 +33,7 @@ namespace TagsCloudContainer
 
             GenerateRectangles(words, minTagSize, maxTagSize, layouter, reductionCoefficient);
             var bitmapWithRectangles = CloudVisualizer.Draw(layouter, tagsColors, backgroundColor);
-            AddWordsToImage(bitmapWithRectangles, layouter.Rectangles, words, minFontSize, fontFamily, textBrush);
+            AddWordsToImage(bitmapWithRectangles, layouter.Rectangles, words, minFontSize, fontFamily, brushes);
             return bitmapWithRectangles;
         }
 
@@ -58,7 +67,7 @@ namespace TagsCloudContainer
         }
 
         private static void AddWordsToImage(Bitmap bitmap, List<Rectangle> rectangles, List<string> words,
-            float minFontSize, FontFamily fontFamily, Brush textBrush)
+            float minFontSize, FontFamily fontFamily, List<Brush> brushes)
         {
             if (minFontSize <= 0)
             {
@@ -70,16 +79,19 @@ namespace TagsCloudContainer
                 throw new ArgumentException("Font family can't be null");
             }
 
-            if (textBrush == null)
+            if (brushes == null)
             {
                 throw new ArgumentException("Brush can't be null");
             }
 
+            var rnd = new Random();
             var graphics = Graphics.FromImage(bitmap);
             for (var i = 0; i < words.Count && i < rectangles.Count; i++)
             {
+                var brushIndex = brushes.Count == Math.Min(words.Count, rectangles.Count)
+                    ? i : rnd.Next(0, brushes.Count);
                 var fontSize = GetFontSize(rectangles[i], words[i], minFontSize);
-                graphics.DrawString(words[i], new Font(fontFamily, fontSize), textBrush, rectangles[i]);
+                graphics.DrawString(words[i], new Font(fontFamily, fontSize), brushes[brushIndex], rectangles[i]);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using Autofac;
@@ -24,7 +25,7 @@ namespace TagsCloudContainer
                     parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
                     parametersToVisualize.maxTagSize, parametersToVisualize.layouter,
                     parametersToVisualize.reductionCoefficient, parametersToVisualize.minFontSize,
-                    parametersToVisualize.fontFamily, parametersToVisualize.brush);
+                    parametersToVisualize.fontFamily, parametersToVisualize.brushes);
                 var fileName = rnd.Next().ToString();
                 FileSaver.Save(bitmap, fileName, "../../Samples/", parametersToVisualize.format);
                 
@@ -56,6 +57,7 @@ namespace TagsCloudContainer
             builder.Register(_ => 5f).Named<float>("minFontSize");
             builder.Register(_ => FontFamily.GenericSansSerif).Named<FontFamily>("fontFamily");
             builder.Register(_ => Brushes.Azure).Named<Brush>("textBrush");
+            builder.Register(_ => "Print text colors separated by whitespace").Named<string>("brushesMessage");
             builder.Register(_ => "Print format to save").Named<string>("formatMessage");
             builder.Register(_ => "Result saved to Samples/").Named<string>("finalMessage");
             return builder.Build();
@@ -63,7 +65,7 @@ namespace TagsCloudContainer
 
         private static (List<string> wordsToVisualize, List<Color> colors, Color backgroundColor, Size minTagSize, Size
             maxTagSize, CircularCloudLayouter layouter, double reductionCoefficient, float minFontSize, FontFamily
-            fontFamily, Brush brush, string format) GetParametersToVisualize(ILifetimeScope scope)
+            fontFamily, List<Brush> brushes, string format) GetParametersToVisualize(ILifetimeScope scope)
         {
             var path = AskUserForPath(scope);
             var wordsToVisualize = scope.Resolve<IWordsHelper>()
@@ -79,10 +81,10 @@ namespace TagsCloudContainer
             var reductionCoefficient = scope.ResolveNamed<double>("reductionCoefficient");
             var minFontSize = scope.ResolveNamed<float>("minFontSize");
             var fontFamily = scope.ResolveNamed<FontFamily>("fontFamily");
-            var brush = scope.ResolveNamed<Brush>("textBrush");
             var format = AskUserForSavingFormat(scope);
+            var brushes = AskUserForBrushColors(scope);
             return (wordsToVisualize, colors, backgroundColor, minTagSize, maxTagSize,
-                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brush, format);
+                new CircularCloudLayouter(pointsGenerator), reductionCoefficient, minFontSize, fontFamily, brushes, format);
         }
 
         private static string AskUserForPath(ILifetimeScope scope)
@@ -102,6 +104,13 @@ namespace TagsCloudContainer
             Console.WriteLine(scope.ResolveNamed<string>("backgroundColorMessage"));
             return Color.FromName(Console.ReadLine() ?? string.Empty);
         }
+        
+        private static List<Brush> AskUserForBrushColors(ILifetimeScope scope)
+        {
+            Console.WriteLine(scope.ResolveNamed<string>("brushesMessage"));
+            return Console.ReadLine()?.Split(' ').Select(Color.FromName).ToList().Select(color => (Brush)new SolidBrush(color)).ToList();
+        }
+
 
         private static Point AskUserForCenterOfImage(ILifetimeScope scope)
         {
