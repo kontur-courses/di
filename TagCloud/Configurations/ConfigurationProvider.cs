@@ -42,9 +42,11 @@ namespace TagCloud.Configurations
                 return null;
             }
 
-            var configuration = new Configuration(arguments.Filename, arguments.Output);
-            configuration.ImageSize = new Size(arguments.Width, arguments.Height);
-            configuration.BackgroundColor = arguments.BackgroundColor;
+            var configuration = new Configuration(arguments.Filename, arguments.Output)
+            {
+                ImageSize = new Size(arguments.Width, arguments.Height),
+                BackgroundColor = arguments.BackgroundColor
+            };
             if (arguments.Color != Color.Empty)
                 configuration.ColorGenerator = new OneColorGenerator(arguments.Color);
             if (arguments.FontFamily != null)

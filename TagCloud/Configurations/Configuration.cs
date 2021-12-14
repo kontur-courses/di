@@ -6,17 +6,15 @@ namespace TagCloud.Configurations
 {
     public class Configuration
     {
-        public Color BackgroundColor { get; set; } = Color.Aqua;
+        public Color BackgroundColor { get; set; }
         public IColorGenerator ColorGenerator { get; set; } = new RandomColorGenerator();
         public FontFamily FontFamily { get; set; } = new("Arial");
+        public static float MaxFontSize => 70;
+        public static float MinFontSize => 20;
         public Size ImageSize { get; set; }
-
         public IPointGenerator PointGenerator { get; set; }
-        /*= new Circle(0.1f, 0.9, new(0, 0), new Cache());*/
-            = new Spiral(2.5f, 25f, new Cache()); 
-
-        public string WordsFilename { get; set; }
-        public string OutputFilename { get; set; }
+        public string WordsFilename { get; }
+        public string OutputFilename { get; }
 
         public Configuration(Color backgroundColor, IColorGenerator colorGenerator, Size imageSize,
             IPointGenerator pointGenerator, string wordsFilename, string outputFilename, FontFamily fontFamily)

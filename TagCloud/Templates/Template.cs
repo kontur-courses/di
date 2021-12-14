@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.TextHandlers;
 
 namespace TagCloud.Templates
 {
@@ -10,11 +9,6 @@ namespace TagCloud.Templates
         private readonly List<WordParameter> words = new();
         public Size Size { get; set; }
         public Color BackgroundColor { get; set; }
-
-        public bool IsEmpty()
-        {
-            return words.Count == 0;
-        }
 
         public PointF Center { get; set; }
 

@@ -6,8 +6,7 @@ namespace TagCloud.Templates
     {
         public RectangleF WordRectangleF { get; set; }
         public string Word { get; }
-        public Color Color { get; } 
-        public PointF Location => WordRectangleF.Location;
+        public Color Color { get; }
         public Font Font { get; }
 
         public WordParameter(string word, Font font, Color color)

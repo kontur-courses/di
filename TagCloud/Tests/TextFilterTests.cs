@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using TagCloud.TextHandlers;
 using TagCloud.TextHandlers.Filters;
 
 namespace TagCloud.Tests

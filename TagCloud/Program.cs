@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using Autofac;
 using TagCloud.Apps;
 using TagCloud.CloudLayouter;
@@ -16,20 +14,14 @@ using IContainer = Autofac.IContainer;
 
 namespace TagCloud
 {
-    public class Program
+    public static class Program
     {
         private static IContainer container;
-        private const float SpiralAnglePitch = 0.1f;
-        private const double DensityCoefficient = 0.8;
-        private static PointF center = new(0, 0);
-        private static float minFontSize = 20;
-        private static float maxFontSize = 70;
 
         public static void Main(string[] args)
         {
-            
-                var configuration = new CommandLineConfigurationProvider(args).GetConfiguration();
-            
+            var configuration = new CommandLineConfigurationProvider(args).GetConfiguration();
+
 
             if (configuration == null)
                 return;
@@ -64,7 +56,7 @@ namespace TagCloud
         {
             builder.Register(_ => configuration.FontFamily).As<FontFamily>();
             builder.RegisterType<Template>().As<ITemplate>();
-            builder.Register((c, p) =>
+            builder.Register((c, _) =>
                     new TemplateCreator(configuration.FontFamily, configuration.BackgroundColor,
                         configuration.ImageSize,
                         c.Resolve<IFontSizeCalculator>(), c.Resolve<IColorGenerator>(), c.Resolve<ICloudLayouter>()))
@@ -72,7 +64,8 @@ namespace TagCloud
             builder.RegisterType<WordParameter>().AsSelf();
             builder.Register(_ => configuration.ColorGenerator).As<IColorGenerator>();
             builder.Register(_
-                => new FontSizeByCountCalculator(minFontSize, maxFontSize)).As<IFontSizeCalculator>();
+                    => new FontSizeByCountCalculator(Configuration.MinFontSize, Configuration.MaxFontSize))
+                .As<IFontSizeCalculator>();
         }
 
         private static void RegisterCloudLayouter(ContainerBuilder builder, Configuration configuration)

@@ -8,7 +8,6 @@ namespace TagCloud.Templates
         void Add(WordParameter wordParameter);
         IEnumerable<WordParameter> GetWordParameters();
         Size Size { get; set; }
-        bool IsEmpty();
         PointF Center { get; set; }
         Color BackgroundColor { get; set; }
     }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using CommandLine;
 using TagCloud.Configurations;
 using TagCloud.Templates;
 using TagCloud.TextHandlers;

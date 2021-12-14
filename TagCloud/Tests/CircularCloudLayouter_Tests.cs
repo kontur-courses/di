@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagCloud.PointGenerator;
 
 namespace TagCloud.Tests
@@ -28,17 +27,6 @@ namespace TagCloud.Tests
         public void SetUp()
         {
             sut = new CloudLayouter.CloudLayouter(new Circle(0.01f, 1, new PointF(), new Cache()));
-        }
-
-        [TearDown]
-        public void CreateBitmapImageOnFail()
-        {
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
-            var visualizer = new Visualizer();
-            var fileToSave = FailedTestsData + "/" + TestContext.CurrentContext.Test.FullName + ".png";
-           // visualizer.DrawRectangles(fileToSave); //todo ...
-            var path = Path.GetFullPath(fileToSave);
-            Console.WriteLine($"Tag cloud visualization saved to file {path}");
         }
 
         [TestCase(0, 1, TestName = "Width is zero")]
@@ -78,7 +66,8 @@ namespace TagCloud.Tests
             int width,
             int height)
         {
-            sut = new CloudLayouter.CloudLayouter(new Circle(0.2f, 1, new Point(xCloudPosition, yCloudPosition), new Cache()));
+            sut = new CloudLayouter.CloudLayouter(new Circle(0.2f, 1, new Point(xCloudPosition, yCloudPosition),
+                new Cache()));
 
             var tag = sut.PutNextRectangle(new Size(width, height));
 

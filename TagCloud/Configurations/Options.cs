@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using Autofac.Features.GeneratedFactories;
 using CommandLine;
 
 namespace TagCloud.Configurations
@@ -9,10 +8,10 @@ namespace TagCloud.Configurations
         [Option('i', "input", Required = true, HelpText = "File with words to draw")]
         public string Filename { get; set; }
 
-        [Option('w', "width", Default = 1280, Required = false, HelpText = "Image width")]
+        [Option('w', "width", Default = 1920, Required = false, HelpText = "Image width")]
         public int Width { get; set; }
 
-        [Option('h', "height", Default = 720, Required = false, HelpText = "Image height")]
+        [Option('h', "height", Default = 1080, Required = false, HelpText = "Image height")]
         public int Height { get; set; }
 
         [Option('o', "output", Required = true, HelpText = "Output image")]

@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ExamplesIMG" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="TextHandlers\Converters\PunctuationMarksRemover.cs" />
     </ItemGroup>
 

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.PointGenerator
 {
-    public struct PolarCoordinates
+    public readonly struct PolarCoordinates
     {
         public float R { get; }
 

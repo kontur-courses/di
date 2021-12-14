@@ -5,7 +5,7 @@ namespace TagCloud.Templates.Colors
 {
     public class RandomColorGenerator : IColorGenerator
     {
-        private static Random random = new Random();
+        private static Random random = new();
         public Color GetColor(string word)
         {
             var r = random.Next(255);
