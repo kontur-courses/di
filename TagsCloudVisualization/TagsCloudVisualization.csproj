@@ -170,6 +170,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ignore.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Russian.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using Autofac;
@@ -87,6 +88,26 @@ namespace TagsCloudVisualization
             builder.RegisterType<DocxReader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<TxtReader>().As<IFileReader>().SingleInstance();
             builder.RegisterType<MyPdfReader>().As<IFileReader>().SingleInstance();
+        }
+        
+        public static Bitmap CreateTags(Config config)
+        {
+            var container = InjectWith(config);
+            var painter = container.BeginLifetimeScope().Resolve<IPrinter<Text>>();
+            return painter.GetBitmap(GetRectangles(container, config), config.Size);
+        }
+        
+        private static IEnumerable<Text> GetRectangles(ILifetimeScope container, Config config)
+        {
+            using var scope = container.BeginLifetimeScope();
+            var layouter = scope.Resolve<ILayouter<Rectangle>>();
+            var statistic = scope.Resolve<IWordsStatistics>();
+            var format = TextFormat.GetFormatByExtension(Path.GetExtension(config.TextFilePath));
+            var reader = scope.Resolve<IEnumerable<IFileReader>>().FirstOrDefault(x => x.Format == format) ?? throw new ArgumentException("no proper reader exist");
+            var text = scope.Resolve<ITextProcessor>().ProcessWords(scope.Resolve<ITextParser>().ParseText(reader.ReadFile(config.TextFilePath!)));
+            statistic.AddWords(text);
+            foreach (var info in scope.Resolve<IWordStatisticsToSizeConverter>().Convert(statistic, config.WordCountToStatistic))
+                yield return new Text(info.Word, config.Font, layouter.PutNextRectangle(info.GetCollisionSize()));
         }
     }
 }
