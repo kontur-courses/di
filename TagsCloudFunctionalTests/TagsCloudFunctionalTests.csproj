@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="FluentAssertions" Version="6.2.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="NUnit" Version="3.13.1" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+        <ContentWithTargetPath Include="TestData\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+        </ContentWithTargetPath>
+        <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CloudImageSaver\CloudImageSaver.csproj" />
+      <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
+    </ItemGroup>
+
+</Project>

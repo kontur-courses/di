@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace TagsCloudCLI
+namespace CloudImageSaver
 {
     public class ImageSaver
     {
@@ -17,10 +17,10 @@ namespace TagsCloudCLI
             if (!Directory.Exists(directory))
                 throw new ArgumentException($"No such directory {directory}");
             this.imageName = imageName;
-            format = DefineFormat();
+            format = DefineFormat(imageName);
         }
 
-        private ImageFormat DefineFormat()
+        private static ImageFormat DefineFormat(string imageName)
         {
             var extension = Path.GetExtension(imageName);
             return extension switch
@@ -34,8 +34,7 @@ namespace TagsCloudCLI
 
         public void Save(Image image)
         {
-            var pathToDirectory = Path.Combine(Directory.GetCurrentDirectory(), directory);
-            var path = Path.Combine(pathToDirectory, imageName);
+            var path = Path.Combine(directory, imageName);
             image.Save(path, format);
         }
     }
