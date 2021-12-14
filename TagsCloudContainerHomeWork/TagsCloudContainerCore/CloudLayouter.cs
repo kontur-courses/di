@@ -1,61 +1,55 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using TagsCloudContainerCore.InterfacesCore;
-using TagsCloudVisualization;
 
-namespace TagsCloudContainerCore
+namespace TagsCloudContainerCore;
+
+public class CloudLayouter
 {
-    public class CloudLayouter : ICloudLayouter
+    public readonly int BackgroundColorHex;
+
+    private readonly IStatisticMaker statisticMaker;
+    private readonly ILayouter cloudLayouter;
+    private readonly ITagMaker tagMaker;
+
+    private readonly string fontName;
+    private readonly int fontColorHex;
+    private readonly float maxFontSize;
+    private readonly Size imageSize;
+
+
+    public CloudLayouter(
+        IStatisticMaker statisticMaker,
+        ILayouter cloudLayouter,
+        ITagMaker tagMaker,
+        Size imageSize,
+        string fontName,
+        float maxFontSize,
+        int fontColorHex,
+        int backgroundColorHex)
     {
-        private readonly IStatisticMaker statisticMaker;
-        private readonly CircularCloudLayouter cloudLayouter;
+        BackgroundColorHex = backgroundColorHex;
+        this.statisticMaker = statisticMaker;
+        this.tagMaker = tagMaker;
+        this.imageSize = imageSize;
+        this.fontColorHex = fontColorHex;
+        this.fontName = fontName;
+        this.cloudLayouter = cloudLayouter;
+        this.maxFontSize = maxFontSize;
+    }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private string fontName;
-
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private float maxFontSize;
-        private readonly Graphics graphics;
-
-        public void AddTags(IEnumerable<string> tags)
+    public IEnumerable<TagToRender> GetTagsToRender(IEnumerable<string> tags)
+    {
+        statisticMaker.AddTags(tags);
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        foreach (var tag in statisticMaker.CountedTags)
         {
-            foreach (var tag in tags)
-            {
-                statisticMaker.AddTag(tag);
-            }
-        }
+            var fontSize = tagMaker.GetFontSize(tag, statisticMaker, maxFontSize);
+            var size = tagMaker.GetTagSize(tag.Key, fontName, fontSize, imageSize);
+            var location = cloudLayouter.PutNextRectangle(size).Location;
+            var tagToRender = new TagToRender(location, tag.Key, fontColorHex, fontSize, fontName);
 
-        private float GetFontSizeForTag(KeyValuePair<string, int> tag)
-            => maxFontSize * (tag.Value - statisticMaker.GetMaxTag().Value) /
-               (statisticMaker.GetMaxTag().Value - statisticMaker.GetMinTag().Value);
-
-        public IEnumerator<TagToRender> GetWordsToRender()
-        {
-            // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var tag in statisticMaker.CountedTags)
-            {
-                var fontSize = GetFontSizeForTag(tag);
-                var font = new Font(fontName, fontSize);
-                var tagToRender = new TagToRender(tag.Key, graphics, font);
-                var location = cloudLayouter.PutNextRectangle(tagToRender.TagSize).Location;
-                tagToRender.Location = location;
-                
-                yield return tagToRender;
-            }
-        }
-
-        public CloudLayouter(
-            IStatisticMaker statisticMaker,
-            CircularCloudLayouter cloudLayouter,
-            string fontName,
-            Graphics graphics,
-            float maxFontSize)
-        {
-            this.graphics = graphics;
-            this.cloudLayouter = cloudLayouter;
-            this.fontName = fontName;
-            this.maxFontSize = maxFontSize;
-            this.statisticMaker = statisticMaker;
+            yield return tagToRender;
         }
     }
 }

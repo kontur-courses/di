@@ -4,19 +4,23 @@ namespace TagsCloudContainerCore
 {
     public class TagToRender
     {
-        private Graphics graphics;
-        public readonly string Tag;
-        public Point Location { get;  set; }
+        public  string Value { get; }
 
-        public Size TagSize => graphics.MeasureString(Tag, Font).ToSize();
+        public int ColorHex { get; }
 
-        public TagToRender(string tag, Graphics graphics, Font font)
+        public Point Location { get; }
+
+        public float FontSize { get; }
+        
+        public string FontName { get; }
+
+        public TagToRender(Point location, string value, int colorHex, float fontSize, string fontName)
         {
-            Tag = tag;
-            this.graphics = graphics;
+            Location = location;
+            Value = value;
+            ColorHex = colorHex;
+            FontSize = fontSize;
+            FontName = fontName;
         }
-
-
-        public Font Font { get; set; }
     }
 }

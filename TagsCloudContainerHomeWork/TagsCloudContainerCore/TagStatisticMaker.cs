@@ -13,8 +13,7 @@ namespace TagsCloudContainerCore
 
         private bool isChangeTags;
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private Func<string, bool> tagFilter;
+        private readonly Func<string, bool> tagFilter;
 
         public TagStatisticMaker(Func<string, bool> tagFilter = null)
         {
@@ -48,9 +47,17 @@ namespace TagsCloudContainerCore
             return orderedPairs[0];
         }
 
-
-        public void AddTag(string tag)
+        public void AddTags(IEnumerable<string> tags)
         {
+            foreach (var tag in tags)
+            {
+                AddTag(tag);
+            }
+        }
+
+        private void AddTag(string tag)
+        {
+            tag = tag.ToLowerInvariant();
             if (!tagFilter(tag))
             {
                 return;
