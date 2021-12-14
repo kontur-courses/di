@@ -4,9 +4,9 @@ using iTextSharp.text.pdf.parser;
 
 namespace TagsCloudVisualization.WordsProvider.FileReader
 {
-    public class PdfFileReader : IWordsReader
+    internal class PdfFileReader : IWordsReader
     {
-        public bool IsSupportedFileExtension(string extension) => extension == "pdf";
+        public bool IsSupportedFileExtension(string extension) => extension == ".pdf";
 
         public string GetFileContent(string path)
         {

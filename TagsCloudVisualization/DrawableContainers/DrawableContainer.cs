@@ -5,7 +5,7 @@ using TagsCloudVisualization.Drawable;
 
 namespace TagsCloudVisualization.DrawableContainers
 {
-    public class DrawableContainer : IDrawableContainer
+    internal class DrawableContainer : IDrawableContainer
     {
         private readonly List<IDrawable> drawables = new();
         private int left = int.MaxValue;
@@ -22,7 +22,7 @@ namespace TagsCloudVisualization.DrawableContainers
             drawables.Add(tag);
         }
 
-        public IEnumerable<IDrawable> GetDrawables() => drawables;
+        public IEnumerable<IDrawable> GetItems() => drawables;
 
         public Size GetMinCanvasSize() => new (right - left, bottom - top);
     }

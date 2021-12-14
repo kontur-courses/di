@@ -7,7 +7,7 @@ using TagsCloudVisualization.WordsProvider.FileReader;
 
 namespace TagsCloudVisualization.WordsProvider
 {
-    public class FileReadService : IFileReadService
+    internal class FileReadService : IFileReadService
     {
         private const string WordsSplitPattern = @"\W+";
         private readonly Regex wordsSplit = new Regex(WordsSplitPattern);

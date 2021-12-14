@@ -6,7 +6,7 @@ namespace TagsCloudVisualization.DrawableContainers
 {
     public interface IDrawableContainer
     {
-        IEnumerable<IDrawable> GetDrawables();
+        IEnumerable<IDrawable> GetItems();
         Size GetMinCanvasSize();
     }
 }

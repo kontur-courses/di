@@ -5,7 +5,7 @@ using TagsCloudVisualization.Drawable;
 
 namespace TagsCloudVisualization.Extensions
 {
-    public static class DrawableExtensions
+    internal static class DrawableExtensions
     {
         public static Size GetMinCanvasSize(this IEnumerable<IDrawable> rectangles)
         {

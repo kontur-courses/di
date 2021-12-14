@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization.SizeService
 {
-    public class TagSizeService : ITagSizeService
+    internal class TagSizeService : ITagSizeService
     {
         public Size GetSize(Tag tag, Font font)
         {

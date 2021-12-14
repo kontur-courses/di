@@ -2,9 +2,9 @@
 
 namespace TagsCloudVisualization.WordsProvider.FileReader
 {
-    public class DocFileReader : IWordsReader
+    internal class DocFileReader : IWordsReader
     {
-        public bool IsSupportedFileExtension(string extension) => extension is "doc" or "docx";
+        public bool IsSupportedFileExtension(string extension) => extension is ".doc" or ".docx";
 
         public string GetFileContent(string path)
         {

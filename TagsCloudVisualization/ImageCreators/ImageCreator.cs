@@ -3,7 +3,7 @@ using TagsCloudVisualization.DrawableContainers;
 
 namespace TagsCloudVisualization.ImageCreators
 {
-    public class ImageCreator : IImageCreator
+    internal class ImageCreator : IImageCreator
     {
         public Image Draw(IDrawableContainer drawableContainer)
         {
@@ -13,7 +13,7 @@ namespace TagsCloudVisualization.ImageCreators
 
             graphics.TranslateTransform(bitmap.Width / 2f, bitmap.Height / 2f);
 
-            foreach (var drawableTag in drawableContainer.GetDrawables())
+            foreach (var drawableTag in drawableContainer.GetItems())
                 drawableTag.Draw(graphics);
 
             return bitmap;

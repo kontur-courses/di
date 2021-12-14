@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.WordsProvider.FileReader
 {
-    public class TxtFileReader : IWordsReader
+    internal class TxtFileReader : IWordsReader
     {
         public bool IsSupportedFileExtension(string extension) => extension == ".txt";
 

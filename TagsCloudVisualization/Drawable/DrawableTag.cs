@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Drawable
 {
-    public class DrawableTag : IDrawable
+    internal class DrawableTag : IDrawable
     {
         private readonly Color color;
         private readonly Font font;

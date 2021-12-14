@@ -9,7 +9,7 @@ using TagsCloudVisualization.SizeService;
 
 namespace TagsCloudVisualization.DrawableContainers.Builders
 {
-    public class DrawableContainerBuilder : IDrawableContainerBuilder
+    internal class DrawableContainerBuilder : IDrawableContainerBuilder
     {
         private readonly ITagFontService fontService;
         private readonly ITagColorService colorService;

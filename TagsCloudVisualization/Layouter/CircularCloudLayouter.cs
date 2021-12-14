@@ -6,7 +6,7 @@ using TagsCloudVisualization.PointGenerators;
 
 namespace TagsCloudVisualization.Layouter
 {
-    public class CircularCloudLayouter : ILayouter
+    internal class CircularCloudLayouter : ILayouter
     {
         private readonly IPointGenerator generator;
         private readonly List<Rectangle> rectangles;

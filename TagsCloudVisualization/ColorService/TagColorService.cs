@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.ColorService
 {
-    public class TagColorService : ITagColorService
+    internal class TagColorService : ITagColorService
     {
         private readonly Color color;
 

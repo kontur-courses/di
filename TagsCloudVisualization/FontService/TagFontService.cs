@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.FontService
 {
-    public class TagFontService : ITagFontService
+    internal class TagFontService : ITagFontService
     {
         private readonly string fontFamilyName;
         private readonly int maxFontSize;
