@@ -26,7 +26,7 @@ namespace TagCloud.Layout
                 var wordSize = g.MeasureString(word.Text, word.Font).ToSize();
                 word.Rectangle = _layouter.PutNextRectangle(wordSize);
             }
-
+            _layouter.Reset();
             return words;
         }
 

@@ -9,5 +9,7 @@ namespace TagCloud.Layout
         ///     Выдает дискретные точки на кривой от последнего взятого значения до бесконечности!
         /// </summary>
         IEnumerable<Point> GetDiscretePoints(double deltaAngle = 0.01);
+
+        void Reset();
     }
 }

@@ -36,5 +36,11 @@ namespace TagCloud.Layout
                 yield return point;
             }
         }
+
+        public void Reset()
+        {
+            _radius = 1;
+            _phi = 0;
+        }
     }
 }

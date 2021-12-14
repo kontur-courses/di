@@ -36,7 +36,13 @@ namespace TagCloud.Layout
             _rectangles.Add(rectangle);
             return rectangle;
         }
-
+        
+        public void Reset()
+        {
+            _rectangles.Clear();
+            _curve.Reset();
+        }
+        
         private Rectangle GetNextRectangleWithLocation(Size rectSize)
         {
             var dryRect = new Rectangle(Point.Empty, rectSize);

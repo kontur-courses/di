@@ -8,5 +8,6 @@ namespace TagCloud.Layout
     internal interface ICloudLayouter
     {
         Rectangle PutNextRectangle(Size rectangleSize);
+        void Reset();
     }
 }
