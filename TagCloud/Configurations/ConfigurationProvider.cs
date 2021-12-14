@@ -51,12 +51,12 @@ namespace TagCloud.Configurations
                 configuration.ColorGenerator = new OneColorGenerator(arguments.Color);
             if (arguments.FontFamily != null)
                 configuration.FontFamily = arguments.FontFamily;
-            if(arguments.CloudForm != null)
+            if (arguments.CloudForm != null)
                 configuration.PointGenerator = arguments.CloudForm.ToLower() switch
                 {
                     "spiral" => Spiral.GetDefaultSpiral(),
                     "circle" => Circle.GetDefault(),
-                    _ => configuration.PointGenerator
+                    _ => Circle.GetDefault()
                 };
             return configuration;
         }

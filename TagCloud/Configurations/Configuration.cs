@@ -12,7 +12,7 @@ namespace TagCloud.Configurations
         public static float MaxFontSize => 70;
         public static float MinFontSize => 20;
         public Size ImageSize { get; set; }
-        public IPointGenerator PointGenerator { get; set; }
+        public IPointGenerator PointGenerator { get; set; } = Circle.GetDefault();
         public string WordsFilename { get; }
         public string OutputFilename { get; }
 
