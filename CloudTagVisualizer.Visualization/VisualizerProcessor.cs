@@ -37,7 +37,7 @@ namespace Visualization
         {
             using var inStream = fileStreamFactory.OpenOnReading(pathToRead);
             var content = fileReader.ReadToEnd(inStream);
-            var words = wordsParser.Read(content);
+            var words = wordsParser.Parse(content);
             var preprocessesWords = preprocessor.Preprocess(words);
 
             VisualizedImage = visualizer.Visualize(preprocessesWords);

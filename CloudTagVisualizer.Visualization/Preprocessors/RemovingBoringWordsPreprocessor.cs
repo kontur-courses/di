@@ -10,7 +10,7 @@ namespace Visualization.Preprocessors
 
         public RemovingBoringWordsPreprocessor(IHunspeller hunspeller)
         {
-            this.hunspeller = hunspeller;
+            this.hunspeller = hunspeller ?? throw new ArgumentNullException(nameof(hunspeller));
         }
 
         public string[] Preprocess(string[] rawWords)

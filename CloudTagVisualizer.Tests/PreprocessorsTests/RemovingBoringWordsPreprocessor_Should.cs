@@ -1,50 +1,66 @@
 ﻿using System;
-using Visualization;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using Visualization.Preprocessors;
 
-namespace CloudTagContainerTests.PreprocessorsTests
+namespace CloudTagVisualizer.Tests.PreprocessorsTests
 {
     [TestFixture]
     public class RemovingBoringWordsPreprocessor_Should
     {
-        [TestCase(0, TestName = "When min word length is zero")]
-        [TestCase(-1, TestName = "When min word length is negative")]
-        public void Throw_When(int minWordLength)
+        private IHunspeller hunspeller;
+
+        [SetUp]
+        public void OnSetUp()
+        {
+            hunspeller = A.Fake<IHunspeller>();
+        }
+        
+        [Test]
+        public void Throw_WhenNullHunspellerGiven()
         {
             Action action = () => new RemovingBoringWordsPreprocessor(null);
 
             action.Should().Throw<ArgumentException>();
         }
 
-        [TestCase(1, new string[0], TestName = "When empty array given")]
-        [TestCase(1, new[] {"abc"}, TestName = "When one word with allowed length given")]
-        [TestCase(3, new[] {"aaa", "bbb", "ccc"}, TestName = "When all values has minimal allowed length")]
-        [TestCase(1, new[] {"abc", "def", "qwe"}, TestName = "When multiplied word with allowed length given")]
-        public void ReturnSameArray_When(int minWordLength, string[] input)
+        
+        [TestCaseSource(typeof(RemovingBoringWordsTestCases), nameof(RemovingBoringWordsTestCases.SameValueCases))]
+        public void ReturnSameArray_WhenHunspellerAlwaysReturnTrue(string[] words)
         {
-            var preprocessor = new RemovingBoringWordsPreprocessor(null);
-            var result = preprocessor.Preprocess(input);
+            var preprocessor = new RemovingBoringWordsPreprocessor(hunspeller);
+            A.CallTo(() => hunspeller.Check(null))
+                .WithAnyArguments()
+                .Returns(true);
+            
+            var result = preprocessor.Preprocess(words);
 
-            result.Should().BeEquivalentTo(input);
+            result.Should().BeEquivalentTo(words);
         }
 
-        [TestCase(3,
-            new[] {"a", "ab"},
-            new string[0],
-            TestName = "When all values does not match allowed length")]
-        [TestCase(3,
-            new[] {"a", "abcdef", "ab"},
-            new[] {"abcdef"},
-            TestName = "When some values does not match allowed length")]
-        public void ReturnTrimmedArray_When(int minWordLength, string[] input, string[] expected)
+        [Test]
+        public void NotReturnExactWord_WhenHunspellerCheckReturnedFalse()
         {
-            var preprocessor = new RemovingBoringWordsPreprocessor(null);
+            var preprocessor = new RemovingBoringWordsPreprocessor(hunspeller);
+            var words = new[] {"abc", "def", "qwe"};
+            var expected = new[] {words[0], words[2]};
+            A.CallTo(() => hunspeller.Check(words[0])).Returns(true);
+            A.CallTo(() => hunspeller.Check(words[1])).Returns(false);
+            A.CallTo(() => hunspeller.Check(words[2])).Returns(true);
 
-            var result = preprocessor.Preprocess(input);
+            var result = preprocessor.Preprocess(words);
 
             result.Should().BeEquivalentTo(expected);
         }
+    }
+    
+    internal class RemovingBoringWordsTestCases
+    {
+        public static object[] SameValueCases =
+        {
+            new object[] {Array.Empty<string>()},
+            new object[] {new[] {"abc", "def", "qwe"}}
+        };
     }
 }

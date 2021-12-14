@@ -46,19 +46,12 @@ namespace Visualization
 
         private void DrawWord(SizedWord word, Graphics g)
         {
-            var position = layouter.PutNextRectangle(word.WordSize);
-            var brush = new SolidBrush(settings.TextColor);
-            var newFont = new Font(settings.TextFont.FontFamily, word.FontSize, settings.TextFont.Style);
-            var rnd = new Random();
-            var rndColor = Color.FromArgb(
-                rnd.Next(100, 255),
-                rnd.Next(100, 255),
-                rnd.Next(100, 255));
-            g.DrawRectangle(new Pen(rndColor), position);
-            g.DrawString(word.Word,
-                newFont,
-                brush,
-                position);
+            var location = layouter.PutNextRectangle(word.WordSize);
+            var textBrush = new SolidBrush(settings.TextColor);
+            var strokePen = new Pen(settings.StrokeColor);
+            var fontWithChangedSize = new Font(settings.TextFont.FontFamily, word.FontSize, settings.TextFont.Style);
+            g.DrawRectangle(strokePen, location);
+            g.DrawString(word.Word, fontWithChangedSize, textBrush, location);
         }
     }
 }

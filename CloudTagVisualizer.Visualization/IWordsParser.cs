@@ -2,6 +2,6 @@
 {
     public interface IWordsParser
     {
-        public string[] Read(string fullString);
+        public string[] Parse(string fullString);
     }
 }

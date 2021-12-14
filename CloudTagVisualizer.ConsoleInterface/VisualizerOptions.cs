@@ -20,13 +20,13 @@ namespace CloudTagVisualizer.ConsoleInterface
         [Option("imageFormat", Default = "png", HelpText = "Set format for image saving")]
         public string ImageFormat { get; set; }
 
-        [Option("backgroundColor", Default = "FFFFFF", HelpText = "Set background color")]
+        [Option("backgroundColor", Default = "2F2F2F", HelpText = "Set background color")]
         public string BackgroundColorArgb { get; set; }
 
-        [Option("textColor", Default = "FFFF00", HelpText = "Set text color")]
+        [Option("textColor", Default = "D2F898", HelpText = "Set text color")]
         public string TextColorArgb { get; set; }
 
-        [Option("strokeColor", Default = "FF00FF", HelpText = "Set text stroke color")]
+        [Option("strokeColor", Default = "0000FF", HelpText = "Set text stroke color")]
         public string StrokeColorArgb { get; set; }
 
         [Option("width", Default = 1920, HelpText = "Set image width")]
@@ -41,7 +41,6 @@ namespace CloudTagVisualizer.ConsoleInterface
         
         [Option("fontSize", Default = 240)]
         public int FontSize { get; set; }
-        
 
         public Font Font => new(FontName, FontSize);
         public Size ImageSize => new(ImageWidth, ImageHeight);
@@ -53,7 +52,7 @@ namespace CloudTagVisualizer.ConsoleInterface
         {
             get
             {
-                Enum.TryParse(ImageFormat, out SavingFormat res);
+                Enum.TryParse(ImageFormat, true, out SavingFormat res);
                 return res;
             }
         }
@@ -62,15 +61,17 @@ namespace CloudTagVisualizer.ConsoleInterface
         {
             get
             {
-                Enum.TryParse(InputTextFormat, out InputFileFormat res);
+                Enum.TryParse(InputTextFormat, true, out InputFileFormat res);
                 return res;
             }
         }
         
         private static Color ColorFromHex(string hexed)
         {
-            var integer = Convert.ToInt32(hexed, 16);
-            return Color.FromArgb(integer);
+            var red = Convert.ToInt32(hexed[0..2], 16);
+            var green = Convert.ToInt32(hexed[2..4], 16);
+            var blue = Convert.ToInt32(hexed[4..6], 16);
+            return Color.FromArgb(red, green, blue);
         }
     }
 }

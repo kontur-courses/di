@@ -5,7 +5,7 @@ using Visualization.Preprocessors;
 
 namespace Visualization.VisualizerProcessorFactory
 {
-    public class VisualizerFactory
+    public class ProcessorFactory
     {
         public static VisualizerProcessor CreateInstance(VisualizerFactorySettings factorySettings)
         {
@@ -28,7 +28,7 @@ namespace Visualization.VisualizerProcessorFactory
             container.AddScoped<Visualizer>();
             container.AddScoped<VisualizerProcessor>();
             container.AddScoped<IFileStreamFactory, FileStreamFactory>();
-            container.AddScoped<IWordsParser, WordsParser>();
+            container.AddScoped<IWordsParser, RussianWordsParser>();
             container.AddScoped<ToLowerPreprocessor>();
             container.AddScoped<IHunspeller, NHunspeller>();
             container.AddScoped<RemovingBoringWordsPreprocessor>();

@@ -16,41 +16,27 @@ namespace CloudTagVisualizer.ConsoleInterface
 {
     public class EntryPoint
     {
-        private static readonly bool IsDebug = true;
-
         public static void Main(string[] args)
         {
-            if (IsDebug)
-                args = new[]
-                {
-                    "show-demo"
-                };
-
-            var isCorrectArguments = ParseOptions(args);
-            
-            if (!isCorrectArguments)
-                Environment.Exit(1);
+            ParseDefaultOptions(args);
         }
 
-        private static bool ParseOptions(string[] args)
+        private static void ParseDefaultOptions(string[] args)
         {
-            var result = Parser
+            Parser
                 .Default
                 .ParseArguments<VisualizerOptions, ShowDemoOptions>(args)
                 .WithParsed<VisualizerOptions>(VisualizeOnce)
                 .WithParsed<ShowDemoOptions>(ShowDemo);
-            return !result.Errors.Any();
         }
         
-        private static bool ParseDemoOptions(string[] args)
+        private static void ParseDemoOptions(string[] args)
         {
-            var result = Parser
+            Parser
                 .Default
                 .ParseArguments<VisualizerOptions, ExitOptions>(args)
                 .WithParsed<VisualizerOptions>(VisualizeOnce)
-                .WithParsed<ExitOptions>(Exit);
-            
-            return result.Errors.Any(x => x is not HelpRequestedError);
+                .WithParsed<ExitOptions>(ExitDemo);
         }
 
         private static void VisualizeOnce(VisualizerOptions options)
@@ -66,26 +52,27 @@ namespace CloudTagVisualizer.ConsoleInterface
                 InputFileFormat = options.InputFileFormat
             };
 
-            var visualizerProcessor = VisualizerFactory.CreateInstance(factorySettings);
+            var visualizerProcessor = ProcessorFactory.CreateInstance(factorySettings);
             visualizerProcessor.Visualize(options.PathToFileWithWords);
             visualizerProcessor.Save(options.PathToSaveImage);
         }
 
         private static void ShowDemo(ShowDemoOptions options)
         {
-            var isSuccess = true;
-            while (isSuccess)
+            Console.WriteLine("--help to see commands");
+            while (true)
             {
                 var args = Console
                     .ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                
-                isSuccess = ParseDemoOptions(args);
+
+                ParseDemoOptions(args);
             }
         }
 
-        private static void Exit(ExitOptions options)
+        private static void ExitDemo(ExitOptions options)
         {
+            Console.WriteLine("Exiting demo");
             Environment.Exit(0);
         }
     }

@@ -1,17 +1,16 @@
 ﻿using System;
-using Visualization;
 using FluentAssertions;
 using NUnit.Framework;
 using Visualization.Preprocessors;
 
-namespace CloudTagContainerTests.PreprocessorsTests
+namespace CloudTagVisualizer.Tests.PreprocessorsTests
 {
     [TestFixture]
     public class ToLowerPreprocessor_Should
     {
         private readonly ToLowerPreprocessor preprocessor = new();
 
-        [TestCaseSource(typeof(TestCases), nameof(TestCases.SameValueCases))]
+        [TestCaseSource(typeof(ToLowerPreprocessorTestCases), nameof(ToLowerPreprocessorTestCases.SameValueCases))]
         public void ShouldReturnSameArray_When(string[] input)
         {
             var result = preprocessor.Preprocess(input);
@@ -19,7 +18,6 @@ namespace CloudTagContainerTests.PreprocessorsTests
             result.Should().BeEquivalentTo(input);
         }
 
-        [TestCase(new[] {"A"}, new[] {"a"}, TestName = "When one word given")]
         [TestCase(new[] {"aBCDe"}, new[] {"abcde"}, TestName = "When not the whole word was is upper case")]
         [TestCase(new[] {"abc", "aBc", "ABC"},
             new[] {"abc", "abc", "abc"},
@@ -32,12 +30,11 @@ namespace CloudTagContainerTests.PreprocessorsTests
         }
     }
 
-    internal class TestCases
+    internal class ToLowerPreprocessorTestCases
     {
         public static object[] SameValueCases =
         {
             new object[] {Array.Empty<string>()},
-            new object[] {new[] {"abc"}},
             new object[] {new[] {"abc", "def", "qwe"}},
             new object[] {new[] {"123", "456", "789"}}
         };
