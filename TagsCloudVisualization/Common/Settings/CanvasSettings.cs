@@ -9,6 +9,13 @@ namespace TagsCloudVisualization.Common.Settings
         public int Height { get; set; }
         public Color BackgroundColor { get; set; }
 
+        public CanvasSettings(int width, int height, Color backgroundColor)
+        {
+            Width = width;
+            Height = height;
+            BackgroundColor = backgroundColor;
+        }
+
         public CanvasSettings(CommandLineOptions options)
         {
             Width = options.Width;

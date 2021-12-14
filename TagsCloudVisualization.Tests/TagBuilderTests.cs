@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudVisualization.Common.Settings;
 using TagsCloudVisualization.Common.Tags;
+using TagsCloudVisualization.Common.TextAnalyzers;
 
 namespace TagsCloudVisualization.Tests
 {
@@ -10,43 +13,52 @@ namespace TagsCloudVisualization.Tests
     public class TagBuilderTests
     {
         private TagBuilder tagBuilder;
+        private TagStyleSettings tagStyleSettings;
+        private List<WordStatistic> wordStatistics;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            tagBuilder = new TagBuilder();
+            tagStyleSettings = new TagStyleSettings(
+                new[] {Color.Red, Color.Green, Color.Blue},
+                new[] {"Arial", "Cambria", "Comic Sans MS"}, 
+                25,
+                10);
+            
+            tagBuilder = new TagBuilder(tagStyleSettings);
+            
+            wordStatistics = new List<WordStatistic>
+            {
+                new WordStatistic("Сталин", 1),
+                new WordStatistic("Черчилль", 2),
+                new WordStatistic("Рузвельт", 3),
+                new WordStatistic("Гитлер", 4)
+            };
         }
-
-        [TestCase("облако", 1, 1)]
-        [TestCase("Ленин", 3, 1)]
-        [TestCase("nag1bat0r", 1, 10)]
-        [DefaultFloatingPointTolerance(0.0001)]
-        public void GetTags_ShouldCorrectCountTagWeight_ForSingleWord(string input, int inputCount, int numOfLines)
+        
+        [Test]
+        public void GetTags_ShouldReturnAllTags()
         {
-            var fakeWordStatistic = new Dictionary<string, int> {{input, inputCount}};
+            var actualTags = tagBuilder.GetTags(wordStatistics).ToList();
 
-            // var actual = tagBuilder.GetTags(string.Empty).ToList();
-            //
-            // actual.Should().ContainSingle(tag => tag.Weight == 1);
+            actualTags.Count().Should().Be(wordStatistics.Count());
         }
 
         [Test]
-        [DefaultFloatingPointTolerance(0.0001)]
-        public void GetTags_ShouldCorrectCountTagWeight_ForMultipleWords()
+        public void GetTags_ShouldCorrectlyStyleTags()
         {
-            const int numOfLines = 10;
-            var fakeWordStatistic = new Dictionary<string, int>
-            {
-                {"облако", 1},
-                {"Ленин", 3},
-                {"nag1bat0r", 1}
-            };
+            var actualTags = tagBuilder.GetTags(wordStatistics).ToList();
+            var expectedColors = tagStyleSettings.ForegroundColors.Count();
+            var expectedFontFamilies = tagStyleSettings.FontFamilies.Count();
+            var expectedFontSizes = wordStatistics.Select(stat => stat.Count).Distinct().Count();
 
-            // var actual = tagBuilder.GetTags(string.Empty).ToList();
-            //
-            // actual.Should().Contain(tag => tag.Text == "облако" && tag.Weight == (float) 1 / 5);
-            // actual.Should().Contain(tag => tag.Text == "Ленин" && tag.Weight == (float) 3 / 5);
-            // actual.Should().Contain(tag => tag.Text == "nag1bat0r" && tag.Weight == (float) 1 / 5);
+            var actualColors = actualTags.Select(tag => tag.Style.ForegroundColor).Distinct().Count();
+            var actualFontFamilies = actualTags.Select(tag => tag.Style.Font.FontFamily).Distinct().Count();
+            var actualFontSizes = actualTags.Select(tag => tag.Style.Font.Size).Distinct().Count();
+            
+            actualColors.Should().Be(expectedColors);
+            actualFontFamilies.Should().Be(expectedFontFamilies);
+            actualFontSizes.Should().Be(expectedFontSizes);
         }
     }
 }

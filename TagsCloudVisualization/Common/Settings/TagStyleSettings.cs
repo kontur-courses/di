@@ -11,6 +11,14 @@ namespace TagsCloudVisualization.Common.Settings
         public float Size { get; set; }
         public float SizeScatter { get; set; }
 
+        public TagStyleSettings(Color[] foregroundColors, string[] fontFamilies, float size, float sizeScatter)
+        {
+            ForegroundColors = foregroundColors;
+            FontFamilies = fontFamilies;
+            Size = size;
+            SizeScatter = sizeScatter;
+        }
+
         public TagStyleSettings(CommandLineOptions options)
         {
             ForegroundColors = options.ForegroundColors

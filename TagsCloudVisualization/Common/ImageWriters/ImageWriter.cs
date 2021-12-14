@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -44,7 +45,7 @@ namespace TagsCloudVisualization.Common.ImageWriters
                     return ImageFormat.Wmf;
 
                 default:
-                    return ImageFormat.Bmp;
+                    throw new ArgumentException("Передан неизвестный формат сохраняемого изображения.");
             }
         }
     }
