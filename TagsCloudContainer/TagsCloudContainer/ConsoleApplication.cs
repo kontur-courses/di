@@ -11,15 +11,14 @@ namespace TagsCloudContainer
 {
     public static class ConsoleApplication
     {
-        private const int Id = 1;
-
         public static void Run()
         {
             var container = BuildContainer();
+            using var scope = container.BeginLifetimeScope();
             while (true)
             {
-                using var scope = container.BeginLifetimeScope();
-                var fileName = Id + ".png";
+                var rnd = new Random();
+                var fileName = rnd.Next() + ".png";
                 var parametersToVisualize = GetParametersToVisualize(scope);
                 Visualizer.GetCloudVisualization(parametersToVisualize.wordsToVisualize, parametersToVisualize.colors,
                         parametersToVisualize.backgroundColor, parametersToVisualize.minTagSize,
@@ -34,7 +33,8 @@ namespace TagsCloudContainer
         private static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(new TxtFileReader()).As<IFileReader>();
+            builder.Register(_ => new TxtFileReader(new WordsReader())).Named<TxtFileReader>("txtReader");
+            builder.Register(_ => new DocFileReader(new WordsReader())).Named<DocFileReader>("docReader");
             builder.RegisterInstance(new DefaultWordHelper()).As<IWordsHelper>();
             builder.Register(_ => "Print path to file with words").Named<string>("inputFileMessage");
             builder.Register(_ => "Print colors of tags separated by whitespace").Named<string>("tagColorsMessage");
@@ -64,7 +64,7 @@ namespace TagsCloudContainer
         {
             var path = AskUserForPath(scope);
             var wordsToVisualize = scope.Resolve<IWordsHelper>()
-                .GetAllWordsToVisualize(scope.Resolve<IFileReader>().GetAllWords(path));
+                .GetAllWordsToVisualize(GetFileReaderByFilePath(scope, path).GetAllWords(path));
             var colors = AskUserForTagColors(scope);
             var backgroundColor = AskUserForBackgroundColor(scope);
             var minTagSize = scope.ResolveNamed<Size>("minTagSize");
@@ -129,6 +129,25 @@ namespace TagsCloudContainer
             Console.WriteLine(scope.ResolveNamed<string>("radiusDeltaMessage"));
             var radiusDelta = double.Parse(Console.ReadLine() ?? string.Empty);
             return new SpiralPointsGenerator(center, startRadius, startAngle, angleDelta, radiusDelta);
+        }
+
+        private static IFileReader GetFileReaderByFilePath(ILifetimeScope scope, string path)
+        {
+            if (path is not {Length: >= 3})
+            {
+                throw new ArgumentException("File path is Invalid");
+            }
+
+            if (path.Substring(path.Length - 3).Equals("txt"))
+            {
+                return scope.ResolveNamed<TxtFileReader>("txtReader");
+            }
+            else if (path.Length >= 4 && path.Substring(path.Length - 4).Equals("docx"))
+            {
+                return scope.ResolveNamed<DocFileReader>("docReader");    
+            }
+
+            throw new ArgumentException("Invalid file extension");
         }
     }
 }

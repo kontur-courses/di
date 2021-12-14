@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace TagsCloudContainer.TextPreparation
 {
-    public class TxtFileReaderTests
+    public class DocFileReaderTests
     {
         [Test]
         public void GetAllWords_Throws_WhenPathIsNull()
         {
-            Action act = () => new TxtFileReader(new WordsReader()).GetAllWords(null);
+            Action act = () => new DocFileReader(new WordsReader()).GetAllWords(null);
 
             act.Should().Throw<ArgumentException>();
         }
@@ -21,9 +21,17 @@ namespace TagsCloudContainer.TextPreparation
             var fake = A.Fake<IWordsReader>();
             A.CallTo(() => fake.ReadAllWords(null)).WithAnyArguments().Returns(null);
 
-            new TxtFileReader(fake).GetAllWords("../../input.txt");
+            new DocFileReader(fake).GetAllWords("../../input.docx");
 
             A.CallTo(() => fake.ReadAllWords(null)).WithAnyArguments().MustHaveHappened(1, Times.Exactly);
+        }
+
+        [Test]
+        public void GetAllWords_Throws_WhenCantReadFile()
+        {
+            Action act = () => new DocFileReader(new WordsReader()).GetAllWords("../../input.txt");
+
+            act.Should().Throw<Exception>();
         }
     }
 }

@@ -38,6 +38,18 @@
           <HintPath>..\packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+          <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="DocumentFormat.OpenXml, Version=2.14.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17">
+          <HintPath>..\packages\DocumentFormat.OpenXml.2.14.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="FakeItEasy, Version=7.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
+          <HintPath>..\packages\FakeItEasy.7.2.0\lib\net45\FakeItEasy.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="FluentAssertions, Version=6.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
           <HintPath>..\packages\FluentAssertions.6.2.0\lib\net47\FluentAssertions.dll</HintPath>
           <Private>True</Private>
@@ -84,6 +96,7 @@
         <Reference Include="System.Windows.Forms" />
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
+        <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ConsoleApplication.cs" />
@@ -98,10 +111,15 @@
         <Compile Include="TagsCloudVisualization\SpiralPointsGeneratorTests.cs" />
         <Compile Include="TextPreparation\DefaultWordHelper.cs" />
         <Compile Include="TextPreparation\DefaultWordHelperTests.cs" />
+        <Compile Include="TextPreparation\DocFileReader.cs" />
+        <Compile Include="TextPreparation\DocFileReaderTests.cs" />
         <Compile Include="TextPreparation\IFileReader.cs" />
         <Compile Include="TextPreparation\IWordsHelper.cs" />
+        <Compile Include="TextPreparation\IWordsReader.cs" />
         <Compile Include="TextPreparation\TxtFileReader.cs" />
         <Compile Include="TextPreparation\TxtFileReaderTests.cs" />
+        <Compile Include="TextPreparation\WordsReaderTests.cs" />
+        <Compile Include="TextPreparation\WordsReader.cs" />
         <Compile Include="Visualizer.cs" />
         <Compile Include="VisualizerTests.cs" />
     </ItemGroup>
