@@ -28,6 +28,9 @@
       <None Update="Russian.aff">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="input.doc">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

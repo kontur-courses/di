@@ -8,13 +8,15 @@ namespace Visualization
         public Font TextFont { get; set; }
         public Color TextColor { get; set; }
         public Color BackgroundColor { get; set; }
+        public Color StrokeColor { get; set; }
 
-        public VisualizerSettings(Size imageSize, Font textFont, Color textColor, Color backgroundColor)
+        public VisualizerSettings(Size imageSize, Font textFont, Color textColor, Color backgroundColor, Color strokeColor)
         {
-            this.ImageSize = imageSize;
-            this.TextFont = textFont;
-            this.TextColor = textColor;
-            this.BackgroundColor = backgroundColor;
+            ImageSize = imageSize;
+            TextFont = textFont;
+            TextColor = textColor;
+            BackgroundColor = backgroundColor;
+            StrokeColor = strokeColor;
         }
     }
 }

@@ -5,7 +5,7 @@ using Spire.Doc.Documents;
 
 namespace Visualization.Readers
 {
-    public class DocsFileReader: IFileReader
+    public class DocFileReader: IFileReader
     {
         public string ReadToEnd(Stream inputSteam)
         {

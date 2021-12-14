@@ -8,6 +8,7 @@ using Visualization.Layouters;
 using Visualization.Layouters.Spirals;
 using Visualization.Preprocessors;
 using Visualization.Readers;
+using Visualization.VisualizerProcessorFactory;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
@@ -24,17 +25,19 @@ namespace CloudTagVisualizer.ConsoleInterface
             if (options == null)
                 Environment.Exit(1);
 
-            var visualizerSettings = new VisualizerSettings(
-                new Size(1920, 1080),
-                new Font("Arial", 200, FontStyle.Bold),
-                Color.FromName(options.TextColorName),
-                Color.FromName(options.BackGroundColorName)
-            );
-
-            var container = ConfigureContainer(visualizerSettings, options);
-
-            var cui = container.BuildServiceProvider().GetService<TextVisualizerProcessor>();
-            cui.Run(options);
+            var settings = new VisualizerFactorySettings();
+            settings.BackgroundColor = Color.Chocolate;
+            settings.StrokeColor = Color.Blue;
+            settings.TextColor = Color.Blue;
+            settings.ImageSize = new Size(1920, 1080);
+            settings.TextFont = new Font("Arial", 240);
+            settings.SavingFormat = SavingFormat.Bmp;
+            settings.InputFileFormat = InputFileFormat.Doc;
+            var processor = VisualizerFactory.CreateInstance(settings);
+            
+            processor.Visualize("input.doc");
+            processor.Save("result.bmp");
+            
             Console.Write("HELLO");
         }
 
@@ -44,33 +47,6 @@ namespace CloudTagVisualizer.ConsoleInterface
                 .Default
                 .ParseArguments<Options>(args)
                 .Value;
-        }
-
-        private static ServiceCollection ConfigureContainer(VisualizerSettings settings, Options options)
-        {
-            var container = new ServiceCollection();
-            container.AddScoped<IImageSaver, PngSaver>();
-            container.AddScoped<TextVisualizerProcessor>();
-            container.AddScoped<ToLowerPreprocessor>();
-            container.AddScoped<IHunspeller, NHunspeller>();
-            container.AddScoped<RemovingBoringWordsPreprocessor>();
-            container.AddScoped<IWordsPreprocessor, CombinedPreprocessor>(
-                provider => new CombinedPreprocessor(
-                    new IWordsPreprocessor[]
-                    {
-                        provider.GetService<ToLowerPreprocessor>(),
-                        provider.GetService<RemovingBoringWordsPreprocessor>()
-                    }));
-            container.AddScoped<ILayouter, CircularCloudLayouter>();
-            container.AddScoped<ISpiral, ExpandingSquareSpiral>();
-            container.AddScoped<IWordSizer, CountingWordSizer>();
-            container.AddScoped<IWordsParser, WordsParser>();
-            container.AddScoped<IFileReader, TxtFileReader>();
-            container.AddScoped<IFileStreamFactory, FileStreamFactory>();
-            container.AddScoped<Visualizer>();
-            container.AddSingleton(settings);
-
-            return container;
         }
     }
 }
