@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
+using iTextSharp.text;
 using NUnit.Framework;
+using TagsCloudVisualization;
 using TagsCloudVisualization.WordsToTagTransformers;
 
 namespace TagsCloudVisualizationTests.WordsToTagTransformersTest
@@ -22,13 +25,8 @@ namespace TagsCloudVisualizationTests.WordsToTagTransformersTest
             var transformer = new WordsToTagTransformer();
             var tags = transformer.Transform(words).ToList();
 
-            tags.Should().HaveCount(3);
-            tags
-                .Select(x => x.Count)
-                .Should()
-                .BeInAscendingOrder()
-                .And
-                .OnlyHaveUniqueItems();
+            var expected = new List<Tag> { new(3, "three"), new(2, "two"), new(1, "one") };
+            tags.Should().BeEquivalentTo(expected);
         }
     }
 }
