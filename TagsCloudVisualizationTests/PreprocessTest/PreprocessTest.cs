@@ -5,7 +5,7 @@ using TagsCloudVisualization.WordsPreprocessors.Filters;
 using TagsCloudVisualization.WordsPreprocessors.Preparers;
 
 
-namespace TagsCloudVisualizationTests.Preprocess
+namespace TagsCloudVisualizationTests.PreprocessTest
 {
     public class PreprocessTest
     {
@@ -18,7 +18,10 @@ namespace TagsCloudVisualizationTests.Preprocess
 
             var processed = preprocessor.Preprocess(words);
 
-            processed.Should().ContainInOrder("text", "text2");
+            processed
+                .Should()
+                .BeEquivalentTo(new[] { "text", "text2" }, options => 
+                    options.WithStrictOrdering());
         }
     }
 }

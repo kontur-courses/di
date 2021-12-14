@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using TagsCloudVisualization.WordsPreprocessors.Preparers;
 
-namespace TagsCloudVisualizationTests.Preprocess
+namespace TagsCloudVisualizationTests.PreprocessTest
 {
     public class PrepareTest
     {
@@ -14,7 +14,10 @@ namespace TagsCloudVisualizationTests.Preprocess
 
             var processed = preparer.Prepare(words);
 
-            processed.Should().ContainInOrder("text", "a", "b", "text2");
+            processed
+                .Should()
+                .BeEquivalentTo(new[] { "text", "a", "b", "text2" }, options => 
+                    options.WithStrictOrdering());
         }
     }
 }
