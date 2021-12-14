@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using TagsCloudVisualization.Settings;
 
 
@@ -23,7 +24,12 @@ namespace TagsCloudCLI
         }
         
         
-        private static IEnumerable<string> GetBoringWordsFromFile(string filename) =>
-            !File.Exists(filename) ? Array.Empty<string>() : File.ReadLines(filename);
+        private static IEnumerable<string> GetBoringWordsFromFile(string filename)
+        {
+            if (!File.Exists(filename))
+                throw new ArgumentException($"No such file {filename}");
+            var words = File.ReadLines(filename);
+            return words.Select(word => word.ToLowerInvariant());
+        }
     }
 }
