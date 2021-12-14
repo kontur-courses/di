@@ -5,7 +5,9 @@ namespace TagCloud.Drawing
 {
     public interface IPalette
     {
+        Color BackgroundColor { get; }
         Color GetNextColor();
-        IPalette WithColors(List<Color> colors);
+        IPalette WithWordColors(List<Color> colors);
+        IPalette WithBackGroundColor(Color color);
     }
 }

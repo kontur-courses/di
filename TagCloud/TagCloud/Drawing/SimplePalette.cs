@@ -7,6 +7,7 @@ namespace TagCloud.Drawing
     internal class SimplePalette : IPalette
     {
         private List<Color>? _colors;
+        public Color BackgroundColor { get; private set; }
 
         public Color GetNextColor()
         {
@@ -16,9 +17,15 @@ namespace TagCloud.Drawing
                 : _colors[rnd.Next(_colors.Count)];
         }
 
-        public IPalette WithColors(List<Color> colors)
+        public IPalette WithWordColors(List<Color> colors)
         {
             _colors = colors;
+            return this;
+        }
+
+        public IPalette WithBackGroundColor(Color color)
+        {
+            BackgroundColor = color;
             return this;
         }
     }

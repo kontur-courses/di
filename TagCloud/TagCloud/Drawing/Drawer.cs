@@ -18,33 +18,34 @@ namespace TagCloud.Drawing
 
         public Bitmap Draw(IDrawerOptions options, List<Word> words)
         {
-            var center = options.Center;
-
-            var rectangles = words.Select(w => w.Rectangle).ToList();
-            var bitmapSize = GetCanvasSize(rectangles, center);
-            var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height);
-            var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
+            var bitmap = GetClearBitmap(options, words.Select(w => w.Rectangle));
 
             using var g = Graphics.FromImage(bitmap);
-            using var backgroundBrush = new SolidBrush(options.BackgroundColor);
-            g.FillRectangle(backgroundBrush, 0, 0, bitmapSize.Width, bitmapSize.Height);
+            _palette
+                .WithWordColors(options.WordColors.ToList())
+                .WithBackGroundColor(options.BackgroundColor);
+            using var backgroundBrush = new SolidBrush(_palette.BackgroundColor);
+            g.FillRectangle(backgroundBrush, 0, 0, bitmap.Width, bitmap.Height);
 
-            var offsetPoint = new Point(bitmapCenter.X - center.X, bitmapCenter.Y - center.Y);
+            var bitmapCenter = new Point(bitmap.Width / 2, bitmap.Height / 2);
+            var offsetPoint = new Point(bitmapCenter.X - options.Center.X, bitmapCenter.Y - options.Center.Y);
             foreach (var word in words)
             {
-                var rect = word.Rectangle;
-                var color = _palette
-                    .WithColors(options.WordColors.ToList())
-                    .GetNextColor();
-                using var brush = new SolidBrush(color);
-                rect.Offset(offsetPoint);
-                g.DrawString(word.Text, word.Font, brush, rect.Location);
+                var rectangle = word.Rectangle;
+                using var brush = new SolidBrush(_palette.GetNextColor());
+                rectangle.Offset(offsetPoint);
+                g.DrawString(word.Text, word.Font, brush, rectangle.Location);
             }
-
             return bitmap;
         }
 
-        private Size GetCanvasSize(List<Rectangle> rectangles, Point center)
+        private static Bitmap GetClearBitmap(IDrawerOptions options, IEnumerable<Rectangle> rectangles)
+        {
+            var bitmapSize = GetCanvasSize(rectangles, options.Center);
+            return new Bitmap(bitmapSize.Width, bitmapSize.Height);
+        }
+
+        private static Size GetCanvasSize(IEnumerable<Rectangle> rectangles, Point center)
         {
             var union = rectangles.First().UnionRange(rectangles);
             var distances = union.GetDistancesToInnerPoint(center);

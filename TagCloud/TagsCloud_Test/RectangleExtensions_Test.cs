@@ -36,26 +36,5 @@ namespace TagsCloudVisualization_Test
             var point = new Point(50, 50);
             rectangle.GetDistancesToInnerPoint(point).All(d => d >= 0).Should().BeTrue();
         }
-
-        [Test]
-        public void GetIntersection_ShouldReturnIntersection_WhenHasIntersection()
-        {
-            var first = new Rectangle(Point.Empty, new Size(100, 100));
-            var second = new Rectangle(new Point(50, 50), new Size(100, 100));
-            var expected = new Rectangle(new Point(50, 50), new Size(50, 50));
-
-            if (first.TryGetIntersection(second, out var intersection))
-                intersection.Should().Be(expected);
-        }
-
-        [Test]
-        public void GetIntersection_ShouldThrow_WhenHasNotIntersection()
-        {
-            var first = new Rectangle(Point.Empty, new Size(100, 100));
-            var second = new Rectangle(new Point(101, 101), new Size(100, 100));
-
-            Action aciton = () => first.GetIntersection(second);
-            aciton.Should().Throw<ArgumentException>();
-        }
     }
 }

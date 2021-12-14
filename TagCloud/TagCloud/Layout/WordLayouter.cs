@@ -11,9 +11,6 @@ namespace TagCloud.Layout
     {
         private readonly ICloudLayouter _layouter;
 
-        private readonly Func<int, float, double> _scale = (freq, fontSize) =>
-            (Math.Pow(freq - 1, 0.65) + 1) * fontSize;
-
         public WordLayouter(ICloudLayouter layouter)
         {
             _layouter = layouter;
@@ -21,32 +18,37 @@ namespace TagCloud.Layout
 
         public List<Word> Layout(IDrawerOptions options, Dictionary<string, int> wordsWithFrequency)
         {
+            var words = GetWordsWithScaledFontSize(wordsWithFrequency, options.BaseFontSize, options.FontFamily);
+            
             using var g = Graphics.FromImage(new Bitmap(1, 1));
-            var listWords = new List<Word>();
-            var minFontSize = double.MaxValue;
-
-            foreach (var (word, frequency) in wordsWithFrequency)
-            {
-                var fontSize = _scale(frequency, options.BaseFontSize);
-                minFontSize = Math.Min(minFontSize, fontSize);
-                listWords.Add(new Word(word, new Font(options.FontFamily, (float) fontSize)));
-            }
-
-            listWords = NormalizeFontSize(minFontSize, listWords);
-            foreach (var word in listWords)
+            foreach (var word in words)
             {
                 var wordSize = g.MeasureString(word.Text, word.Font).ToSize();
                 word.Rectangle = _layouter.PutNextRectangle(wordSize);
             }
 
-            return listWords;
+            return words;
         }
 
-        private List<Word> NormalizeFontSize(double minSize, List<Word> words)
+        private static List<Word> GetWordsWithScaledFontSize(Dictionary<string, int> wordsWithFrequency, float baseFontSize,
+            FontFamily fontFamily)
         {
-            return words
-                .Select(w => w.WithFontSize(w.Font.Size / minSize * 14))
-                .ToList();
+            var listWords = new List<Word>();
+            var minFontSize = double.PositiveInfinity;
+
+            foreach (var (word, frequency) in wordsWithFrequency)
+            {
+                var fontSize = Scale(frequency, baseFontSize);
+                minFontSize = Math.Min(minFontSize, fontSize);
+                listWords.Add(new Word(word, new Font(fontFamily, fontSize)));
+            }
+
+            return NormalizeFontSize(minFontSize, listWords).ToList();
+
+            float Scale(int freq, float fontSize) => (float) (Math.Pow(freq - 1, 0.65) + 1) * fontSize;
+
+            IEnumerable<Word> NormalizeFontSize(double minSize, IEnumerable<Word> words) 
+                => words.Select(w => w.WithFontSize(w.Font.Size / minSize * 14));
         }
     }
 }

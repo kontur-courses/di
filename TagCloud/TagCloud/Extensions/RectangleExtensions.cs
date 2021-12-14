@@ -10,8 +10,6 @@ namespace TagCloud.Extensions
         /// <summary>
         ///     Находит расстояние от точки внутри прямоугольника до каждой его стороны
         /// </summary>
-        /// <param name="rect">Прямоугольник</param>
-        /// <param name="point">Точка внутри прямоугольника</param>
         /// <returns>Возвращает расстояния в порядке left, top, right, bottom (все расстояния положительные)</returns>
         public static List<int> GetDistancesToInnerPoint(this Rectangle rect, Point point)
         {
@@ -24,36 +22,6 @@ namespace TagCloud.Extensions
             if (distances.Any(d => d < 0))
                 throw new ArgumentException("Точка расположена вне прямоугольника");
             return distances;
-        }
-
-        /// <summary>
-        ///     Возвращает новый прямоугольник полученный путем пересечения двух прямоугольников
-        /// </summary>
-        /// <exception cref="ArgumentException">Если прямоугольники не пересекаются</exception>
-        public static Rectangle GetIntersection(this Rectangle first, Rectangle second)
-        {
-            if (!first.IntersectsWith(second))
-                throw new ArgumentException("Прямоугольники не имеют пересечения");
-            first.Intersect(second);
-            return first;
-        }
-
-        /// <summary>
-        ///     Находит пересечение двух прямоугольников, если они пересекаются
-        /// </summary>
-        /// <param name="intersection">Новый прямоугольник полученный путем пересечения двух прямоугольников</param>
-        /// <returns>true, если прямоугольники пересекаются, в противном случае — false.</returns>
-        public static bool TryGetIntersection(this Rectangle first, Rectangle second, out Rectangle? intersection)
-        {
-            if (!first.IntersectsWith(second))
-            {
-                intersection = Rectangle.Empty;
-                return false;
-            }
-
-            first.Intersect(second);
-            intersection = first;
-            return true;
         }
 
         public static Rectangle UnionRange(this Rectangle rectangle, IEnumerable<Rectangle> others)

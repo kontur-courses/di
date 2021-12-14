@@ -37,23 +37,15 @@ namespace TagsCloudVisualization_Test
             return squareSum / sphereSquare;
         }
 
-        public static List<Rectangle> CheckIntersects(List<Rectangle> rectangles)
+        public static IEnumerable<Rectangle> CheckIntersects(List<Rectangle> rectangles)
         {
             return rectangles
                 .SelectMany(rect => rectangles
                     .Where(other => other != rect)
                     .Where(rect.IntersectsWith)
-                    .Select(other => rect.GetIntersection(other)))
+                    .Select(other => Rectangle.Intersect(rect, other)))
                 .Distinct()
                 .ToList();
-        }
-
-        public static Rectangle UnionAll(List<Rectangle> rectangles)
-        {
-            var union = rectangles.First();
-            foreach (var r in rectangles)
-                union = Rectangle.Union(union, r);
-            return union;
         }
 
         public static List<Size> GenerateSizes_WithOneVeryBig(int tagsCount)

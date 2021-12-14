@@ -13,7 +13,7 @@ namespace TagCloud
         private readonly IDrawer _drawer;
         private readonly TextWriter _statusWriter;
         private readonly ITextProcessor _textProcessor;
-        private readonly IWordLayouter _wordLayouter;
+        public IWordLayouter _wordLayouter { get; set; }
         private List<Dictionary<string, int>> _processedTexts = new();
 
         public TagCloud(ITextProcessor textProcessor, IWordLayouter wordLayouter, IDrawer drawer,
