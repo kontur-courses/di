@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Linq;
+using WeCantSpell.Hunspell;
 
 namespace Visualization.Preprocessors
 {
     public class RemovingBoringWordsPreprocessor : IWordsPreprocessor
     {
-        private readonly int minWordLength;
+        private readonly IHunspeller hunspeller;
 
-        public RemovingBoringWordsPreprocessor(int minWordLength)
+        public RemovingBoringWordsPreprocessor(IHunspeller hunspeller)
         {
-            if (minWordLength <= 0)
-                throw new ArgumentException("Must be positive", nameof(minWordLength));
-            this.minWordLength = minWordLength;
+            this.hunspeller = hunspeller;
         }
 
         public string[] Preprocess(string[] rawWords)
         {
             return rawWords
-                .Where(word => !IsBoring(word))
+                .Where(word => hunspeller.Check(word))
                 .ToArray();
-        }
-
-        private bool IsBoring(string word)
-        {
-            return word.Length < minWordLength;
         }
     }
 }

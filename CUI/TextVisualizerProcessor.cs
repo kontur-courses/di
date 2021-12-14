@@ -1,6 +1,7 @@
 ﻿using Visualization;
 using Visualization.ImageSavers;
 using Visualization.Preprocessors;
+using Visualization.Readers;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {

@@ -18,4 +18,16 @@
       <ProjectReference Include="..\CloudTagContainer\CloudTagContainer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Russian.dic">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Russian.aff">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

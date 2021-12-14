@@ -7,6 +7,7 @@ using Visualization.ImageSavers;
 using Visualization.Layouters;
 using Visualization.Layouters.Spirals;
 using Visualization.Preprocessors;
+using Visualization.Readers;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
@@ -25,7 +26,7 @@ namespace CloudTagVisualizer.ConsoleInterface
 
             var visualizerSettings = new VisualizerSettings(
                 new Size(1920, 1080),
-                new Font("Arial", 1000, FontStyle.Bold),
+                new Font("Arial", 200, FontStyle.Bold),
                 Color.FromName(options.TextColorName),
                 Color.FromName(options.BackGroundColorName)
             );
@@ -51,8 +52,8 @@ namespace CloudTagVisualizer.ConsoleInterface
             container.AddScoped<IImageSaver, PngSaver>();
             container.AddScoped<TextVisualizerProcessor>();
             container.AddScoped<ToLowerPreprocessor>();
-            container.AddScoped(_ => new RemovingBoringWordsPreprocessor(
-                options.MinimalWordLength));
+            container.AddScoped<IHunspeller, NHunspeller>();
+            container.AddScoped<RemovingBoringWordsPreprocessor>();
             container.AddScoped<IWordsPreprocessor, CombinedPreprocessor>(
                 provider => new CombinedPreprocessor(
                     new IWordsPreprocessor[]
@@ -64,7 +65,7 @@ namespace CloudTagVisualizer.ConsoleInterface
             container.AddScoped<ISpiral, ExpandingSquareSpiral>();
             container.AddScoped<IWordSizer, CountingWordSizer>();
             container.AddScoped<IWordsParser, WordsParser>();
-            container.AddScoped<IFileReader, FileReader>();
+            container.AddScoped<IFileReader, TxtFileReader>();
             container.AddScoped<IFileStreamFactory, FileStreamFactory>();
             container.AddScoped<Visualizer>();
             container.AddSingleton(settings);
