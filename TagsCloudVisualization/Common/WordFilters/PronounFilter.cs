@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudVisualization.Common.WordFilters
 {
@@ -27,7 +28,12 @@ namespace TagsCloudVisualization.Common.WordFilters
             "то", "нибудь", "либо"
         };
 
-        public bool IsValid(string word)
+        public IEnumerable<string> Filter(IEnumerable<string> words)
+        {
+            return words.Where(IsToFilter);
+        }
+
+        private bool IsToFilter(string word)
         {
             if (pronouns.Contains(word))
                 return false;

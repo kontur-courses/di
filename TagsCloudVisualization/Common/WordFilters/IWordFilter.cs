@@ -1,7 +1,9 @@
-﻿namespace TagsCloudVisualization.Common.WordFilters
+﻿using System.Collections.Generic;
+
+namespace TagsCloudVisualization.Common.WordFilters
 {
     public interface IWordFilter
     {
-        public bool IsValid(string word);
+        public IEnumerable<string> Filter(IEnumerable<string> words);
     }
 }

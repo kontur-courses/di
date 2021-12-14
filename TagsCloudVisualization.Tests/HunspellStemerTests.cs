@@ -19,22 +19,24 @@ namespace TagsCloudVisualization.Tests
             stemer = new HunspellStemer(hunspell);
         }
         
-        [TestCase("облако", "облако", TestName = "InputEqualStem")]
-        [TestCase("облаком", "облако", TestName = "StemCheck")]
-        [TestCase("облака", "облако", TestName = "InputIsPlural")]
-        [TestCase("облаками", "облако", TestName = "PluralStemCheck")]
+        [TestCase("облако", "облако", TestName = "Input equal stem")]
+        [TestCase("облаком", "облако", TestName = "Stem check")]
+        [TestCase("облака", "облако", TestName = "Input is plural")]
+        [TestCase("облаками", "облако", TestName = "Plural stem check")]
         public void TryGetStem_ShouldStemWords(string input, string expected)
         {
             var result = stemer.TryGetStem(input, out var actual);
+            
             actual.Should().Be(expected);
             result.Should().BeTrue();
         }
         
-        [TestCase("Ленин", TestName = "RussianProperName")]
-        [TestCase("nag1bat0r", TestName = "SteamNickname")]
+        [TestCase("Ленин", TestName = "Russian proper name")]
+        [TestCase("nag1bat0r", TestName = "Non-vocabulary word")]
         public void TryGetStem_ShouldReturnFalse_WhenStemFailed(string input)
         {
             var result = stemer.TryGetStem(input, out var actual);
+            
             result.Should().BeFalse();
         }
     }

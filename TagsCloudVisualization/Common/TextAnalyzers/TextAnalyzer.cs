@@ -8,24 +8,23 @@ namespace TagsCloudVisualization.Common.TextAnalyzers
     public class TextAnalyzer : ITextAnalyzer
     {
         private readonly IStemer stemer;
-        private readonly IWordFilter[] wordFilters;
+        private readonly IWordFilter wordFilter;
 
-        public TextAnalyzer(IStemer stemer = null, IWordFilter[] wordFilters = null)
+        public TextAnalyzer(IStemer stemer = null, IWordFilter wordFilter = null)
         {
             this.stemer = stemer;
-            this.wordFilters = wordFilters ?? new IWordFilter[0];
+            this.wordFilter = wordFilter;
         }
 
-        public Dictionary<string, int> GetWordStatistics(string text)
+        public List<WordStatistic> GetWordStatistics(string text)
         {
             return GetWordStatistics(ParseWords(text));
         }
 
-        public Dictionary<string, int> GetWordStatistics(IEnumerable<string> words)
+        public List<WordStatistic> GetWordStatistics(IEnumerable<string> words)
         {
             var statistic = new Dictionary<string, int>();
-            foreach (var word in words.Select(GetStem)
-                .Where(word => wordFilters.All(filter => filter.IsValid(word))))
+            foreach (var word in Filter(words.Select(GetStem)))
             {
                 if (!statistic.ContainsKey(word))
                     statistic[word] = 1;
@@ -33,7 +32,7 @@ namespace TagsCloudVisualization.Common.TextAnalyzers
                     statistic[word]++;
             }
 
-            return statistic;
+            return statistic.Select(stat => new WordStatistic(stat.Key, stat.Value)).ToList();
         }
 
         private static IEnumerable<string> ParseWords(string text)
@@ -55,6 +54,11 @@ namespace TagsCloudVisualization.Common.TextAnalyzers
                 return stem;
 
             return word;
+        }
+
+        private IEnumerable<string> Filter(IEnumerable<string> words)
+        {
+            return wordFilter != null ? wordFilter.Filter(words) : words;
         }
     }
 }

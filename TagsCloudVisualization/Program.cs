@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Autofac;
 using CommandLine;
-using TagsCloudVisualization.Common.TagCloudPainters;
-using TagsCloudVisualization.Common.Tags;
+using TagsCloudVisualization.Commands;
+using TagsCloudVisualization.Processors;
 
 namespace TagsCloudVisualization
 {
@@ -11,29 +10,19 @@ namespace TagsCloudVisualization
     {
         public static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<CommandLineOptions>(args)
-                .WithParsed(RunOptions)
-                .WithNotParsed(HandleParseError);
-        }
-        
-        private static void RunOptions(CommandLineOptions opts)
-        {
-            var container = ContainerConfig.ConfigureContainer(opts);
-            
-            var tagBuilder = container.Resolve<ITagBuilder>();
-            var tags = tagBuilder.GetTags(opts.InputFile);
-
-            var styledTagBuilder = container.Resolve<IStyledTagBuilder>();
-            var styledTags = styledTagBuilder.GetStyledTags(tags);
-
-            var painter = container.Resolve<ITagCloudPainter>();
-            painter.Paint(styledTags, opts.OutputFile);
+            Parser.Default.ParseArguments<CommandLineOptions, CreateCloudCommand, ShowDemoCommand>(args)
+                .MapResult(
+                    (CreateCloudCommand options) => CreateCloudProcessor.Run(options),
+                    (ShowDemoCommand options) => ShowDemoProcessor.Run(options),
+                    HandleParseError);
         }
 
-        private static void HandleParseError(IEnumerable<Error> errors)
+        private static int HandleParseError(IEnumerable<Error> errors)
         {
             foreach (var error in errors)
                 Console.WriteLine(error.ToString());
+
+            return 1;
         }
     }
 }

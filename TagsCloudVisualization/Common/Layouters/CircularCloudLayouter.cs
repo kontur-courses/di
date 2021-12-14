@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using MoreLinq.Extensions;
 using TagsCloudVisualization.Common.Settings;
 using TagsCloudVisualization.Extensions;
 
@@ -9,7 +10,6 @@ namespace TagsCloudVisualization.Common.Layouters
 {
     public class CircularCloudLayouter : ILayouter
     {
-        private readonly ICanvasSettings settings;
         private readonly List<Rectangle> rects;
 
         public Point LayoutCenter { get; }
@@ -18,7 +18,6 @@ namespace TagsCloudVisualization.Common.Layouters
 
         public CircularCloudLayouter(ICanvasSettings settings)
         {
-            this.settings = settings;
             rects = new List<Rectangle>();
             LayoutCenter = new Point(settings.Width / 2, settings.Height / 2);
         }
@@ -30,7 +29,7 @@ namespace TagsCloudVisualization.Common.Layouters
 
             var newRect = rects.Any()
                 ? rects.SelectMany(rect => GetPossibleRectangles(rect, rectangleSize))
-                    .MinBy(possibleRect => possibleRect.Distance).Rect
+                    .MinBy(possibleRect => possibleRect.Distance).First().Rect
                 : new Rectangle(
                     new Point(LayoutCenter.X - rectangleSize.Width / 2, LayoutCenter.Y - rectangleSize.Height / 2),
                     rectangleSize);

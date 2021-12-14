@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using FluentAssertions;
 using NHunspell;
 using NUnit.Framework;
@@ -22,33 +23,34 @@ namespace TagsCloudVisualization.Tests
         {
             textAnalyzer = ConfigureContainer().Resolve<ITextAnalyzer>();
         }
-        
+
         [TestCase("облако облака облаком облаках облаке", "облако", 5,
-            TestName = "StemCheck")]
+            TestName = "Stem check")]
         [TestCase("облако облака\r\nоблаком\tоблаках облаке", "облако", 5,
-            TestName = "IgnoreSeparators")]
+            TestName = "Ignore separators between words")]
         [TestCase("облако, облака. \"облаком\" - облаках! облаке;", "облако", 5,
-            TestName = "IgnorePunctuationChars")]
+            TestName = "Ignore punctuation chars between words")]
         [TestCase("Облако оБлакА облакоМ облаКах ОБЛАКЕ", "облако", 5,
-            TestName = "IgnoreCase")]
+            TestName = "Ignore case")]
         [TestCase("Облако в облаке на облаке за облаком об облаке", "облако", 5,
-            TestName = "IgnorePrepositions - CustomFilterCheck")]
+            TestName = "Ignore prepositions - Custom filter check")]
         [TestCase("Я Облако Ваше какое-то облако любое облако каким-нибудь облаком неким облаком", "облако", 5,
-            TestName = "IgnorePronouns - StaticFilterCheck")]
+            TestName = "Ignore pronouns - Static filter check")]
         [TestCase("nag1bat0r nag1bat0r nag1bat0r nag1bat0r nag1bat0r", "nag1bat0r", 5,
-            TestName = "PassWords_WhenStemFailed")]
+            TestName = "Pass words when stem failed")]
         [TestCase("n.a,g:1{b)a!t?0'r", "n.a,g:1{b)a!t?0'r", 1,
-            TestName = "PassPunctuationChars_WhenInWord")]
+            TestName = "Pass punctuation chars in word")]
         public void GetWordStatistics_ShouldWorksCorrectly(string text, string expectedStem, int stemCount)
         {
-            var stat = textAnalyzer.GetWordStatistics(text);
-            stat.Should().OnlyContain(pair => pair.Key == expectedStem && pair.Value == stemCount);
+            var wordStatistics = textAnalyzer.GetWordStatistics(text);
+
+            wordStatistics.Should().OnlyContain(stat => stat.Text == expectedStem && stat.Count == stemCount);
         }
 
         private static IContainer ConfigureContainer()
         {
             var builder = new ContainerBuilder();
-            
+
             builder.RegisterType<TextFileReader>().As<IFileReader>();
             builder.RegisterInstance(new Hunspell(DictRuAff, DictRuDic)).SingleInstance();
             builder.RegisterType<HunspellStemer>().As<IStemer>();
@@ -56,7 +58,15 @@ namespace TagsCloudVisualization.Tests
             builder.RegisterType<CustomFilter>()
                 .As<IWordFilter>()
                 .OnActivated(service => service.Instance.Load(DictExcludeWords));
-            builder.RegisterType<TextAnalyzer>().As<ITextAnalyzer>();
+            builder.RegisterType<ComposeFilter>()
+                .WithParameter(new ResolvedParameter(
+                    (pi, ctx) => pi.ParameterType == typeof(IWordFilter[]),
+                    (pi, ctx) => ctx.Resolve<IWordFilter[]>()));
+            builder.RegisterType<TextAnalyzer>()
+                .As<ITextAnalyzer>()
+                .WithParameter(new ResolvedParameter(
+                    (pi, ctx) => pi.ParameterType == typeof(IWordFilter),
+                    (pi, ctx) => ctx.Resolve<ComposeFilter>()));
 
             return builder.Build();
         }

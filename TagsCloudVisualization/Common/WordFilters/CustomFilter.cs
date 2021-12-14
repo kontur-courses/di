@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TagsCloudVisualization.Common.FileReaders;
 
 namespace TagsCloudVisualization.Common.WordFilters
@@ -24,9 +25,9 @@ namespace TagsCloudVisualization.Common.WordFilters
             }
         }
 
-        public bool IsValid(string word)
+        public IEnumerable<string> Filter(IEnumerable<string> words)
         {
-            return !excludeWords.Contains(word);
+            return words.Where(word => !excludeWords.Contains(word));
         }
     }
 }

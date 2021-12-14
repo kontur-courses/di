@@ -1,39 +1,46 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using TagsCloudVisualization.Common.FileReaders;
+using TagsCloudVisualization.Common.Settings;
 using TagsCloudVisualization.Common.TextAnalyzers;
 
 namespace TagsCloudVisualization.Common.Tags
 {
     public class TagBuilder : ITagBuilder
     {
-        private readonly IFileReader fileReader;
-        private readonly ITextAnalyzer textAnalyzer;
+        private readonly ITagStyleSettings tagStyleSettings;
+        private int colorIndex;
+        private int fontIndex;
 
-        public TagBuilder(IFileReader fileReader, ITextAnalyzer textAnalyzer)
+        public TagBuilder(ITagStyleSettings tagStyleSettings = null)
         {
-            this.fileReader = fileReader;
-            this.textAnalyzer = textAnalyzer;
+            this.tagStyleSettings = tagStyleSettings;
+            colorIndex = -1;
+            fontIndex = -1;
         }
 
-        public IEnumerable<Tag> GetTags(string path)
+        public IEnumerable<Tag> GetTags(IList<WordStatistic> wordStatistics)
         {
-            var allStatistic = fileReader.ReadLines(path)
-                .Select(line => textAnalyzer.GetWordStatistics(line))
-                .Aggregate(MergeStatistics);
-
-            var wordsCount = allStatistic.Values.Sum();
-            foreach (var statistic in allStatistic)
-                yield return new Tag(statistic.Key, (float) statistic.Value / wordsCount);
+            return wordStatistics.Select(wordStatistic => new Tag(wordStatistic.Text,
+                GetNewTagStyle((float) wordStatistic.Count / wordStatistics.Sum(stat => stat.Count))));
         }
 
-        private static Dictionary<string, int> MergeStatistics(Dictionary<string, int> statistic1,
-            Dictionary<string, int> statistic2)
+        private TagStyle GetNewTagStyle(float weight)
         {
-            return statistic1.Concat(statistic2)
-                .GroupBy(x => x.Key)
-                .ToDictionary(x => x.Key,
-                    x => x.Sum(y => y.Value));
+            return tagStyleSettings == null ? new TagStyle() : new TagStyle(GetTagColor(), GetTagFont(weight));
+        }
+
+        private Color GetTagColor()
+        {
+            colorIndex = (colorIndex + 1) % tagStyleSettings.ForegroundColors.Length;
+            return tagStyleSettings.ForegroundColors[colorIndex];
+        }
+
+        private Font GetTagFont(float weight)
+        {
+            fontIndex = (fontIndex + 1) % tagStyleSettings.FontFamilies.Length;
+            return new Font(tagStyleSettings.FontFamilies[fontIndex],
+                tagStyleSettings.Size - tagStyleSettings.SizeScatter + tagStyleSettings.SizeScatter * 2 * weight * 10);
         }
     }
 }

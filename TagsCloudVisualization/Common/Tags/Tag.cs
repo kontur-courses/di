@@ -3,12 +3,13 @@
     public class Tag
     {
         public string Text { get; }
-        public float Weight { get; }
+        
+        public TagStyle Style { get; }
 
-        public Tag(string text, float weight)
+        public Tag(string text, TagStyle style)
         {
             Text = text;
-            Weight = weight;
+            Style = style;
         }
     }
 }
