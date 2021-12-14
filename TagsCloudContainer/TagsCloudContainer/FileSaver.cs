@@ -7,7 +7,7 @@ namespace TagsCloudContainer
 {
     public static class FileSaver
     {
-        private static readonly Dictionary<string, ImageFormat> Formats = new Dictionary<string, ImageFormat>()
+        private static readonly Dictionary<string, ImageFormat> Formats = new()
         {
             {"jpg", ImageFormat.Jpeg}, {"bmp", ImageFormat.Bmp}, {"png", ImageFormat.Png}
         };
