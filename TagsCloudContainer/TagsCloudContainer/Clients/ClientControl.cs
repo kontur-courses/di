@@ -8,19 +8,13 @@ namespace TagsCloudContainer
 {
     public class ClientControl : IClientControl
     {
-        private IClient client;
-        private IWordCloudSaver saver;
+        private readonly IClient client;
+        private readonly IWordCloudSaver saver;
 
         public ClientControl(IClient client, IWordCloudSaver saver)
         {
             this.client = client;
             this.saver = saver;
-        }
-
-        public void Start()
-        {
-            var path = saver.SaveCloud(GetNameForImage(), GetImageSettings());
-            client.ShowPathToNewFile(path);
         }
 
         internal bool IsFinish()

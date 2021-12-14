@@ -17,15 +17,14 @@ namespace TagsCloudContainer
             this.saver = saver;
         }
 
-        public void Start()
+        public void Start(string pathToSaveDir, ImageFormats format)
         {
-            
             while (flag)
             {
-                flag = clientControl.IsFinish();
+                flag = !clientControl.IsFinish();
                 var imageName = clientControl.GetNameForImage();
                 var customSettings = clientControl.GetImageSettings();
-                var pathToImage = saver.SaveCloud(imageName, customSettings);
+                var pathToImage = saver.SaveCloud(pathToSaveDir, imageName, customSettings, format);
                 clientControl.ShowPathToImage(pathToImage);
             }
         }

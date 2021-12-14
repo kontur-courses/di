@@ -9,11 +9,6 @@ namespace TagsCloudContainer
 {
     public class LineByLineWordReader : IWordReader
     {
-        public LineByLineWordReader()
-        {
-
-        }
-
         public IEnumerable<string> Read(string pathToFile)
         {
             var streamReader = new StreamReader(pathToFile);

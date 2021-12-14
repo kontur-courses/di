@@ -8,43 +8,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer;
+using System.IO;
 
 namespace TagsCloudContainerTest
 {
     public class WordCloudSaverTest
     {
         private IWordCloudPainter cloudPainter;
-        private IImageSaver saver;
         private ImageSettings fakeSettings;
 
         [SetUp]
         public void InitializeService()
         {
             cloudPainter = A.Fake<IWordCloudPainter>();
-            saver = A.Fake<IImageSaver>();
             fakeSettings = new ImageSettings(new Size(),FontFamily.GenericSansSerif,Color.Black, Color.White);
         }
 
         [Test]
         public void CheckCallsPaintWords()
         {
-            var cloudSaver = new WordCloudSaver(cloudPainter, saver);
+            A.CallTo(() => cloudPainter.PaintWords(fakeSettings)).WithAnyArguments().Returns(new Bitmap(1, 1));
+            var cloudSaver = new WordCloudSaver(cloudPainter);
 
-            cloudSaver.SaveCloud("", fakeSettings);
+            cloudSaver.SaveCloud("", "", fakeSettings, ImageFormats.png);
 
             A.CallTo(() => cloudPainter.PaintWords(fakeSettings)).MustHaveHappenedOnceExactly();
         }
 
         [Test]
-        public void CheckCallsSave()
+        public void CheckSavingImage()
         {
-            var image = new Bitmap(1, 1);
-            A.CallTo(() => cloudPainter.PaintWords(fakeSettings)).WithAnyArguments().Returns(image);
-            var cloudSaver = new WordCloudSaver(cloudPainter, saver);
+            var dirPath = @"..\..\..\Files";
+            var imageName = "test";
+            A.CallTo(() => cloudPainter.PaintWords(fakeSettings)).WithAnyArguments().Returns(new Bitmap(1, 1));
+            var cloudSaver = new WordCloudSaver(cloudPainter);
 
-            cloudSaver.SaveCloud("", fakeSettings);
+            cloudSaver.SaveCloud(dirPath, imageName, fakeSettings, ImageFormats.png);
 
-            A.CallTo(() => saver.Save(image, "")).MustHaveHappenedOnceExactly();
+            File.Exists($"{dirPath}\\{imageName}.png").Should().BeTrue();
         }
     }
 }
