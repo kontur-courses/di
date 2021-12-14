@@ -1,43 +1,76 @@
-﻿using CommandLine;
+﻿using System;
+using System.Drawing;
+using CommandLine;
+using Visualization.VisualizerProcessorFactory;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
+    [Verb("visualize")]
     public class VisualizerOptions
     {
-        [Option('t', "textToVisualize", Required = true, HelpText = "Set path to input txt file")]
-        public string InputTextPath { get; set; }
+        [Option("textToVisualize", Required = true, HelpText = "Set path to input txt file")]
+        public string PathToFileWithWords { get; set; }
+        
+        [Option("textFormat", Default = "txt", HelpText = "Set format for input file")]
+        public string InputTextFormat { get; set; }
 
-        [Option('p', "pathToSaveImage", Required = true, HelpText = "Set path where image will be saved")]
+        [Option("pathToSaveImage", Required = true, HelpText = "Set path where image will be saved")]
         public string PathToSaveImage { get; set; }
+        
+        [Option("imageFormat", Default = "png", HelpText = "Set format for image saving")]
+        public string ImageFormat { get; set; }
 
-        [Option('b',
-            "backgroundColor",
-            Group = "white black red blue chocolate",
-            Required = false,
-            Default = "chocolate",
-            HelpText = "Set background color")]
-        public string BackGroundColorName { get; set; }
+        [Option("backgroundColor", Default = "FFFFFF", HelpText = "Set background color")]
+        public string BackgroundColorArgb { get; set; }
 
-        [Option('c',
-            "textColor",
-            Group = "white black red blue chocolate",
-            Required = false,
-            Default = "blue",
-            HelpText = "Set color for text")]
-        public string TextColorName { get; set; }
+        [Option("textColor", Default = "FFFF00", HelpText = "Set text color")]
+        public string TextColorArgb { get; set; }
 
-        [Option('w',
-            "width",
-            Required = false,
-            Default = 1920,
-            HelpText = "Set image width")]
+        [Option("strokeColor", Default = "FF00FF", HelpText = "Set text stroke color")]
+        public string StrokeColorArgb { get; set; }
+
+        [Option("width", Default = 1920, HelpText = "Set image width")]
+
         public int ImageWidth { get; set; }
         
-        [Option('h',
-            "height",
-            Required = false,
-            Default = 1080,
-            HelpText = "Set image height")]
+        [Option("height", Default = 1080, HelpText = "Set image height")]
         public int ImageHeight { get; set; }
+        
+        [Option("font", Default = "Arial")]
+        public string FontName { get; set; }
+        
+        [Option("fontSize", Default = 240)]
+        public int FontSize { get; set; }
+        
+
+        public Font Font => new(FontName, FontSize);
+        public Size ImageSize => new(ImageWidth, ImageHeight);
+        public Color BackgroundColor => ColorFromHex(BackgroundColorArgb);
+        public Color TextColor => ColorFromHex(TextColorArgb);
+        public Color StrokeColor => ColorFromHex(StrokeColorArgb);
+
+        public SavingFormat SavingFormat
+        {
+            get
+            {
+                Enum.TryParse(ImageFormat, out SavingFormat res);
+                return res;
+            }
+        }
+        
+        public InputFileFormat InputFileFormat
+        {
+            get
+            {
+                Enum.TryParse(InputTextFormat, out InputFileFormat res);
+                return res;
+            }
+        }
+        
+        private static Color ColorFromHex(string hexed)
+        {
+            var integer = Convert.ToInt32(hexed, 16);
+            return Color.FromArgb(integer);
+        }
     }
 }

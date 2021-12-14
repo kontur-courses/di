@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Visualization;
@@ -19,34 +21,72 @@ namespace CloudTagVisualizer.ConsoleInterface
         public static void Main(string[] args)
         {
             if (IsDebug)
-                args = new[] {"-t", "input.txt", "-p", "result.png"};
+                args = new[]
+                {
+                    "show-demo"
+                };
 
-            var options = GetOptions(args);
-            if (options == null)
+            var isCorrectArguments = ParseOptions(args);
+            
+            if (!isCorrectArguments)
                 Environment.Exit(1);
-
-            var settings = new VisualizerFactorySettings();
-            settings.BackgroundColor = Color.Chocolate;
-            settings.StrokeColor = Color.Blue;
-            settings.TextColor = Color.Blue;
-            settings.ImageSize = new Size(1920, 1080);
-            settings.TextFont = new Font("Arial", 240);
-            settings.SavingFormat = SavingFormat.Bmp;
-            settings.InputFileFormat = InputFileFormat.Doc;
-            var processor = VisualizerFactory.CreateInstance(settings);
-            
-            processor.Visualize("input.doc");
-            processor.Save("result.bmp");
-            
-            Console.Write("HELLO");
         }
 
-        private static VisualizerOptions GetOptions(string[] args)
+        private static bool ParseOptions(string[] args)
         {
-            return Parser
+            var result = Parser
                 .Default
-                .ParseArguments<VisualizerOptions>(args)
-                .Value;
+                .ParseArguments<VisualizerOptions, ShowDemoOptions>(args)
+                .WithParsed<VisualizerOptions>(VisualizeOnce)
+                .WithParsed<ShowDemoOptions>(ShowDemo);
+            return !result.Errors.Any();
+        }
+        
+        private static bool ParseDemoOptions(string[] args)
+        {
+            var result = Parser
+                .Default
+                .ParseArguments<VisualizerOptions, ExitOptions>(args)
+                .WithParsed<VisualizerOptions>(VisualizeOnce)
+                .WithParsed<ExitOptions>(Exit);
+            
+            return result.Errors.Any(x => x is not HelpRequestedError);
+        }
+
+        private static void VisualizeOnce(VisualizerOptions options)
+        {
+            var factorySettings = new VisualizerFactorySettings
+            {
+                BackgroundColor = options.BackgroundColor,
+                StrokeColor = options.StrokeColor,
+                TextColor = options.TextColor,
+                ImageSize = options.ImageSize,
+                TextFont = options.Font,
+                SavingFormat = options.SavingFormat,
+                InputFileFormat = options.InputFileFormat
+            };
+
+            var visualizerProcessor = VisualizerFactory.CreateInstance(factorySettings);
+            visualizerProcessor.Visualize(options.PathToFileWithWords);
+            visualizerProcessor.Save(options.PathToSaveImage);
+        }
+
+        private static void ShowDemo(ShowDemoOptions options)
+        {
+            var isSuccess = true;
+            while (isSuccess)
+            {
+                var args = Console
+                    .ReadLine()
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                
+                isSuccess = ParseDemoOptions(args);
+            }
+        }
+
+        private static void Exit(ExitOptions options)
+        {
+            Environment.Exit(0);
         }
     }
 }

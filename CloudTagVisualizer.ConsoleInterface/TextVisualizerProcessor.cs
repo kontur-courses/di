@@ -31,7 +31,7 @@ namespace CloudTagVisualizer.ConsoleInterface
 
         public void Run(VisualizerOptions visualizerOptions)
         {
-            var inStream = fileStreamFactory.OpenOnReading(visualizerOptions.InputTextPath);
+            var inStream = fileStreamFactory.OpenOnReading(visualizerOptions.PathToFileWithWords);
             var content = fileReader.ReadToEnd(inStream);
             var words = wordsParser.Read(content);
             var preprocessesWords = preprocessor.Preprocess(words);
