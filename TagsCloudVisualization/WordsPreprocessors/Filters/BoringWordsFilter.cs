@@ -7,7 +7,12 @@ namespace TagsCloudVisualization.WordsPreprocessors.Filters
     {
         private readonly HashSet<string> boringWords;
 
-        public BoringWordsFilter(IEnumerable<string> boringWords) => this.boringWords = boringWords.ToHashSet();
+        public BoringWordsFilter(IEnumerable<string> boringWords)
+        {
+            this.boringWords = boringWords
+                .Select(word => word.ToLowerInvariant())
+                .ToHashSet();
+        }
 
         public IEnumerable<string> Filter(IEnumerable<string> words) =>
             words.Where(word => !string.IsNullOrWhiteSpace(word) && !IsBoring(word));

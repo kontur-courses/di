@@ -10,7 +10,7 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudFunctionalTests
 {
-    public class TagsCloudTest
+    public class FunctionalTest
     {
         [TestCase("txt", TestName = "txt")]
         [TestCase("docx", TestName = "doc")]

@@ -21,16 +21,16 @@ namespace TagsCloudVisualizationTests.PreprocessTest
         }
         
         [Test]
-        public void Filter_ShouldntFilterOtherCaseBoringWords()
+        public void Filter_ShouldFilterOtherCaseBoringWords()
         {
             var words = new[] { "text", "a", "b", "text2" };
-            var filter =  new BoringWordsFilter(new[] { "A", "b" });
+            var filter =  new BoringWordsFilter(new[] { "A", "B" });
 
             var processed = filter.Filter(words);
 
             processed
                 .Should()
-                .BeEquivalentTo(new[] { "text", "a", "text2" }, options => 
+                .BeEquivalentTo(new[] { "text", "text2" }, options => 
                     options.WithStrictOrdering());
         }
     }

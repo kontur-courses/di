@@ -29,7 +29,7 @@ namespace TagsCloudCLI
             if (!File.Exists(filename))
                 throw new ArgumentException($"No such file {filename}");
             var words = File.ReadLines(filename);
-            return words.Select(word => word.ToLowerInvariant());
+            return words;
         }
     }
 }
