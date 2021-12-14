@@ -19,13 +19,15 @@ namespace TagsCloudContainer.Clients
             var ret = new UserConfig();
             var result = Parser.Default.ParseArguments<Options>(args);
             result.WithParsed(options =>
-                {
-                    ret = new UserConfig(options);
-                }).WithNotParsed(errs =>
-                {
-                    Console.WriteLine("Failed with errors:\n{0}",
-                        string.Join("\n", errs));
-                });
+            {
+                if (options.Input == null || options.Output == null)
+                    throw new ArgumentNullException();
+                ret = new UserConfig(options);
+            }).WithNotParsed(errs =>
+            {
+                Console.WriteLine("Failed with errors:\n{0}",
+                    string.Join("\n", errs));
+            });
 
             return ret;
         }
