@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using Autofac;
 using FluentAssertions;
@@ -9,7 +8,6 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Extensions;
 using TagsCloudVisualization.Layouters;
-using TagsCloudVisualization.Visualization;
 
 namespace TagsCloudVisualizationTests
 {

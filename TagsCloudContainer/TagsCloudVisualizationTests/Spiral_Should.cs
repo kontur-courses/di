@@ -2,7 +2,6 @@
 using System.Drawing;
 using NUnit.Framework;
 using FluentAssertions;
-using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.PointPlacers;
 
 namespace TagsCloudVisualizationTests

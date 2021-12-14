@@ -23,10 +23,11 @@ namespace TagsCloudVisualization.Visualization.Configurator
         public IEnumerable<IVisualizingToken> Configure(IEnumerable<string> visualizingValues)
         {
             var frequencyDict = GetFrequencyDict(visualizingValues);
+            var fontCoefficient = fontSize / 10 * 2;
             
             return frequencyDict.Keys.Select(
                     value => tokenFactory.NewToken(value,
-                        new Font(FontFamily.GenericSansSerif, fontSize + 2 * (frequencyDict[value] - 1)),
+                        new Font(FontFamily.GenericSansSerif, fontSize + fontCoefficient * (frequencyDict[value] - 1)),
                         colorizer(value)))
                 .ToArray();
         }

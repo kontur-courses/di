@@ -99,8 +99,10 @@ namespace ConsoleApp
             var img = creator.CreateFromFile(wordsPath);
 
             var savingName = imageName + "." + imageFormat.ToString().ToLower();
+
+            savingPath += savingPath[^1] == '\\' ? "" : "\\";
             
-            img.Save(savingName, ImageFormat.Png);
+            img.Save(savingPath + savingName, ImageFormat.Png);
             
             Console.WriteLine($"Cloud visualization saved to {savingName}");
         }
