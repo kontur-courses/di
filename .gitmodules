@@ -1,0 +1,3 @@
+[submodule "TagsCloudContainer/tdd"]
+	path = TagsCloudContainer/tdd
+	url = https://github.com/KirillKalutsky/tdd.git

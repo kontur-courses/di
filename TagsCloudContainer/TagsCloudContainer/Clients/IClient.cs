@@ -15,5 +15,6 @@ namespace TagsCloudContainer
         Size GetImageSize();
         void ShowPathToNewFile(string path);
         string GetNameForImage();
+        bool IsFinish();
     }
 }

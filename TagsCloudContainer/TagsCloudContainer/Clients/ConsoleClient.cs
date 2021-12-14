@@ -82,5 +82,16 @@ namespace TagsCloudContainer
             Console.WriteLine("Придумайте название для изображения");
             return Console.ReadLine();
         }
+
+        public bool IsFinish()
+        {
+            if (Console.KeyAvailable)
+            {
+                var cl = Console.ReadKey(true);
+
+                return !(cl.Modifiers.HasFlag(ConsoleModifiers.Control) && cl.Key.ToString() == "c");
+            }
+            return true;
+        }
     }
 }

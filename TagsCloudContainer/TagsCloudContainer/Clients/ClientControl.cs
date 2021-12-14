@@ -23,6 +23,11 @@ namespace TagsCloudContainer
             client.ShowPathToNewFile(path);
         }
 
+        internal bool IsFinish()
+        {
+            return client.IsFinish();
+        }
+
         public ImageSettings GetImageSettings() => new ImageSettings
             (
                 client.GetImageSize(),

@@ -10,6 +10,7 @@ namespace TagsCloudContainer
     {
         private IWordCloudSaver saver;
         private ClientControl clientControl;
+        private bool flag = true;
         public App(ClientControl clientControl, IWordCloudSaver saver)
         {
             this.clientControl = clientControl;
@@ -18,8 +19,10 @@ namespace TagsCloudContainer
 
         public void Start()
         {
-            while (true)
+            
+            while (flag)
             {
+                flag = clientControl.IsFinish();
                 var imageName = clientControl.GetNameForImage();
                 var customSettings = clientControl.GetImageSettings();
                 var pathToImage = saver.SaveCloud(imageName, customSettings);
