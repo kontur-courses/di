@@ -31,8 +31,8 @@ namespace TagsCloudCLI
         {
             var saver = new ImageSaver(settings.Saver.Directory, settings.Saver.ImageName);
             var builder = new ContainerBuilder();
-            var container = builder.Build();
             builder.RegisterModule(new TagsCloudModule(settings));
+            var container = builder.Build();
             var image = container.Resolve<Visualizer>().Visualize();
             saver.Save(image);
         }
