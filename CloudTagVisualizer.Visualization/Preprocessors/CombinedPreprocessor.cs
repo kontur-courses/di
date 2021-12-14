@@ -1,8 +1,10 @@
-﻿namespace Visualization.Preprocessors
+﻿using System.Linq;
+
+namespace Visualization.Preprocessors
 {
     public class CombinedPreprocessor : IWordsPreprocessor
     {
-        private IWordsPreprocessor[] childPreprocessors;
+        private readonly IWordsPreprocessor[] childPreprocessors;
 
         public CombinedPreprocessor(IWordsPreprocessor[] childPreprocessors)
         {
@@ -11,13 +13,9 @@
 
         public string[] Preprocess(string[] rawWords)
         {
-            var result = rawWords;
-            foreach (var preprocessor in childPreprocessors)
-            {
-                result = preprocessor.Preprocess(result);
-            }
 
-            return result;
+            return childPreprocessors
+                .Aggregate(rawWords, (current, preprocessor) => preprocessor.Preprocess(current));
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Visualization
         public Size WordSize => CalculateSize();
         public float FontSize { get; }
         
-        private const float HeightFontCoefficient = 2.0f;
-        private const float WidthFontCoefficient = 2.0f;
+        private const float HeightSizeCoefficient = 2.0f;
+        private const float WidthSizeCoefficient = 2.0f;
 
         public SizedWord(string word, float fontSize)
         {
@@ -19,8 +19,8 @@ namespace Visualization
 
         private Size CalculateSize()
         {
-            var height = HeightFontCoefficient * FontSize;
-            var width = WidthFontCoefficient * FontSize * Word.Length;
+            var height = HeightSizeCoefficient * FontSize;
+            var width = WidthSizeCoefficient * FontSize * Word.Length;
             return new Size((int) width, (int) height);
         }
     }

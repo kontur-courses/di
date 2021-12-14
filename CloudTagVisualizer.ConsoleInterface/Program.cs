@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using CommandLine;
-using Microsoft.Extensions.DependencyInjection;
-using Visualization;
-using Visualization.ImageSavers;
-using Visualization.Layouters;
-using Visualization.Layouters.Spirals;
-using Visualization.Preprocessors;
-using Visualization.Readers;
 using Visualization.VisualizerProcessorFactory;
 
 namespace CloudTagVisualizer.ConsoleInterface
 {
-    public class EntryPoint
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -63,7 +53,7 @@ namespace CloudTagVisualizer.ConsoleInterface
             while (true)
             {
                 var args = Console
-                    .ReadLine()
+                    .ReadLine()?
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
                 ParseDemoOptions(args);

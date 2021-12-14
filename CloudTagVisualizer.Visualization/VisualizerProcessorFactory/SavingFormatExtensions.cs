@@ -10,7 +10,7 @@ namespace Visualization.VisualizerProcessorFactory
             {
                 SavingFormat.Png => new PngSaver(),
                 SavingFormat.Jpeg => new JpegSaver(),
-                SavingFormat.Bmp => new JpegSaver(),
+                SavingFormat.Bmp => new BmpSaver(),
                 _ => throw new InvalidOperationException($"Can not find image saver for {format}")
             };
     }

@@ -1,7 +1,6 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
-using Visualization;
 using Visualization.Preprocessors;
 
 namespace CloudTagVisualizer.Tests.PreprocessorsTests

@@ -4,11 +4,13 @@ namespace Visualization.Preprocessors
 {
     public class NHunspeller: IHunspeller
     {
-        private WordList wordList;
+        private readonly WordList wordList;
         
-        public NHunspeller()
+        public NHunspeller(IHunspellerFilesProvider filesProvider)
         {
-            wordList = WordList.CreateFromFiles("Russian.dic", "Russian.aff");
+            wordList = WordList.CreateFromFiles(
+                filesProvider.GetDicFile(),
+                filesProvider.GetAffFile());
         }
         
         public bool Check(string word)

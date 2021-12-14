@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Visualization;
 using Visualization.Layouters;
 using Visualization.Layouters.Spirals;
 
@@ -84,9 +83,9 @@ namespace CloudTagVisualizer.Tests
 
             var rectangles = sizes.Select(size => layouter.PutNextRectangle(size)).ToArray();
 
-            for (int i = 0; i < rectanglesCount; i++)
+            for (var i = 0; i < rectanglesCount; i++)
             {
-                for (int j = i + 1; j < rectanglesCount; j++)
+                for (var j = i + 1; j < rectanglesCount; j++)
                 {
                     rectangles[i].IntersectsWith(rectangles[j]).Should().BeFalse();
                 }
