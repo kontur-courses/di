@@ -7,7 +7,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CloudImageSaver\CloudImageSaver.csproj" />
-        <ProjectReference Include="..\TagsCloudImageSaver\TagsCloudImageSaver.csproj" />
         <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj" />
     </ItemGroup>
     <ItemGroup>
