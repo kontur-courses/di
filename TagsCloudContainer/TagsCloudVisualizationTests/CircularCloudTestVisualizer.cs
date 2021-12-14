@@ -4,19 +4,20 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace TagsCloudVisualization.Visualization
+namespace TagsCloudVisualizationTests
 {
     // Этот класс был временным для задачи TagCloud 
-    // Удаление уже в процессе :)
+    // По итогу написал нормальный визуализатор для самой задачи, а этот решил оставить только для тестов
+    // Так как он позволяет просто визуализировать именно прямоугольники
     #pragma warning disable CA1416
-    public class CircularCloudVisualizer
+    public class CircularCloudTestVisualizer
     {
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
         private readonly string path;
         private readonly Pen pen;
 
-        public CircularCloudVisualizer(
+        public CircularCloudTestVisualizer(
             int imageWidth,
             int imageHeight,
             Color penColor,
@@ -30,7 +31,7 @@ namespace TagsCloudVisualization.Visualization
             pen = new Pen(penColor);
         }
 
-        public void PutRectangle(RectangleF rectangle)
+        private void PutRectangle(RectangleF rectangle)
         {
             graphics.DrawRectangles(pen, new[] {rectangle});
         }
@@ -40,28 +41,6 @@ namespace TagsCloudVisualization.Visualization
             foreach (var rectangle in rectangles)
             {
                 PutRectangle(rectangle);
-            }
-        }
-
-        public void PutWordInRectangle(string word, RectangleF rectangle)
-        {
-            var wordSize = (int) rectangle.Height / word.Length;
-            graphics.DrawString(word, new Font(FontFamily.GenericSansSerif, wordSize), pen.Brush, rectangle);
-        }
-
-        public void PutWordsInRectangles(IEnumerable<string> words, IEnumerable<RectangleF> rectangles)
-        {
-            var wordsArray = words as string[] ?? words.ToArray();
-            var rectanglesArray = rectangles as RectangleF[] ?? rectangles.ToArray();
-            
-            if (wordsArray.Length != rectanglesArray.Length)
-            {
-                throw new ArgumentException("Texts and Rectangles counts should be the same");
-            }
-
-            foreach (var tuple in wordsArray.Zip(rectanglesArray))
-            {
-                PutWordInRectangle(tuple.First, tuple.Second);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -16,24 +17,30 @@ namespace TagsCloudVisualizationTests
     public class CircularCloudLayouterShould
     {
         private const float Epsilon = 1e-5f;
-        private CircularCloudLayouter layouter;
-        private CircularCloudVisualizer visualizer;
         private readonly Point center = new (300, 400);
         private const int RectanglesCount = 100;
         private const int CloudsCount = 100;
+        private ContainerProvider provider;
+        private ILayouter layouter;
+
+        [OneTimeSetUp]
+        public void SetUpOnce()
+        {
+            provider = new ContainerProvider();
+            provider.RegisterDependencies();
+        }
 
         [SetUp]
         public void SetUp()
         {
-            var pointPlacer = new Spiral(center);
-            layouter = new CircularCloudLayouter(pointPlacer);
-            visualizer = new CircularCloudVisualizer(800, 600, Color.Black,
-                Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
+            layouter = provider.Container.Resolve<ILayouter>();
         }
 
         [TearDown]
         public void TearDown()
         {
+            var visualizer = new CircularCloudTestVisualizer(800, 600, Color.Black);
+            
             if (TestContext.CurrentContext.Result.Outcome.Status is TestStatus.Failed or TestStatus.Inconclusive)
             {
                 visualizer.PutRectangles(layouter.PlacedRectangles);
@@ -107,8 +114,6 @@ namespace TagsCloudVisualizationTests
 
         private double GetCloudDensity(IEnumerable<SizeF> rectanglesSizes)
         {
-            layouter = new CircularCloudLayouter(new Spiral(center));
-            
             var rectanglesArea = 0.0f;
 
             var lastRectangle = new RectangleF();
