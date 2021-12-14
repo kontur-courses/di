@@ -53,7 +53,7 @@ namespace ConsoleApp
                     break;
                 }
                 
-                if (consoleInput is "exit" && TryFinish())
+                if (consoleInput is "finish" && TryFinish())
                 {
                     break;
                 }
@@ -129,7 +129,7 @@ namespace ConsoleApp
                 return false;
             }
 
-            if (!Directory.Exists(consoleInput))
+            if (!File.Exists(consoleInput))
             {
                 Console.WriteLine("Invalid path");
                 return false;
@@ -310,7 +310,13 @@ namespace ConsoleApp
 
         private bool TryFinish()
         {
-            return wordsPath is not null;
+            if (wordsPath is null)
+            {
+                Console.WriteLine("You need to configure words_path to finish");
+                return false;
+            }
+
+            return true;
         }
 
         private static bool TryReadConsoleInput(out string consoleInput)
