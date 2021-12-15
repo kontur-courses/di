@@ -5,6 +5,6 @@ namespace TagsCloudContainer.TextParsers
     public interface IExcludingWords
     {
         HashSet<string> GetWords();
-        void ExcludeWord(string word);
+        void AddWord(string word);
     }
 }

@@ -18,17 +18,23 @@ namespace TagsCloudContainer.ContainerConfigurers
 
         public IContainer GetContainer()
         {
-            builder.RegisterInstance(new CommandLineClient(args)).As<IClient>();
-            builder.Register(c => c.Resolve<IClient>().UserConfig).As<UserConfig>();
+            builder.RegisterInstance(new CommandLineClient(args))
+                .As<IClient>();
+            builder.Register(c => c.Resolve<IClient>().UserConfig)
+                .As<UserConfig>();
             builder.Register(c => new PaintConfig(
                 c.Resolve<UserConfig>().TagsColor,
                 c.Resolve<UserConfig>().TagsFontName,
                 c.Resolve<UserConfig>().TagsFontSize,
-                c.Resolve<UserConfig>().ImageSize)).As<IPaintConfig>().SingleInstance();
+                c.Resolve<UserConfig>().ImageSize))
+                .As<IPaintConfig>().SingleInstance();
             builder.Register(c => new CircularCloudLayouter(
-                    c.Resolve<UserConfig>().ImageCenter)).As<ICloudLayouter>().SingleInstance();
-            builder.Register(c => new TextParser(c.Resolve<UserConfig>().InputFile,
-                new BoringWords())).As<ITextParser>().SingleInstance();
+                    c.Resolve<UserConfig>().ImageCenter))
+                .As<ICloudLayouter>().SingleInstance();
+            builder.Register(c => new TextParser(
+                c.Resolve<UserConfig>().InputFile,
+                c.Resolve<UserConfig>().ExcludedWords))
+                .As<ITextParser>().SingleInstance();
             builder.RegisterType<CloudPainter>().AsSelf().SingleInstance();
 
             return builder.Build();

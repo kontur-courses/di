@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using System.Collections.Generic;
+using CommandLine;
 
 namespace TagsCloudContainer.Clients
 {
@@ -28,5 +29,8 @@ namespace TagsCloudContainer.Clients
 
         [Option('c', "color", Default = "DeepSkyBlue", HelpText = "tag's color")]
         public string Color { get; set; }
+
+        [Option('e', "exclude", Default = "")]
+        public IEnumerable<string> ExcludedWords { get; set; }
     }
 }

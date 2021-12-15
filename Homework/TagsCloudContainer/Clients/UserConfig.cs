@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using TagsCloudContainer.TextParsers;
 
 namespace TagsCloudContainer.Clients
 {
@@ -13,8 +16,12 @@ namespace TagsCloudContainer.Clients
         public string TagsFontName { get; private set; }
         public int TagsFontSize { get; private set; }
         public Brush TagsColor { get; private set; }
+        public BoringWords ExcludedWords { get; private set; }
 
-        public UserConfig() { }
+        public UserConfig()
+        {
+            ExcludedWords = new BoringWords();
+        }
 
         public void GetConfig(Options options)
         {
@@ -24,8 +31,15 @@ namespace TagsCloudContainer.Clients
             ImageCenter = new Point(ImageSize.Width / 2, ImageSize.Height / 2);
             TagsFontName = options.FontName;
             TagsFontSize = options.FontSize;
+            GetExcludedWords(options.ExcludedWords);
             TryGetTagsColor(options);
             ThrowIfAnyArgIsIncorrect();
+        }
+
+        private void GetExcludedWords(IEnumerable<string> words)
+        {
+            foreach (var word in words)
+                ExcludedWords.ExcludeWord(word);
         }
 
         private void TryGetTagsColor(Options options)
