@@ -23,7 +23,6 @@ namespace TagCloud.TextProcessing
             PartOfSpeech.SPRO
         };
 
-
         [Option('p', "path", Required = true, HelpText = "Задать путь к файлу")]
         public IEnumerable<string> FilesToProcess { get; set; }
 
@@ -40,8 +39,7 @@ namespace TagCloud.TextProcessing
         }
 
         [Option('a', "amount", Required = false,
-            HelpText =
-                "Установить количество слов в итоговом облаке тэгов (при наличии такого количества в исходном тексте)",
+            HelpText = "Установить количество слов в итоговом облаке тэгов (при наличии такого количества в исходном тексте)",
             Default = 1000)]
         public int Amount { get; set; }
 

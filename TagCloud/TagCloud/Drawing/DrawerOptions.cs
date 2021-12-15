@@ -38,7 +38,7 @@ namespace TagCloud.Drawing
         
         public ImageFormat? Format => GetImageFormat(ImageExtension);
 
-        [Option('a', "format", Required = false, HelpText = "Задать формат результирующего изображения")]
+        [Option("format", Required = false, HelpText = "Задать формат результирующего изображения")]
         public ImageExtension ImageExtension { get; set; } = ImageExtension.Png;
 
         private static ImageFormat? GetImageFormat(ImageExtension extension)  
