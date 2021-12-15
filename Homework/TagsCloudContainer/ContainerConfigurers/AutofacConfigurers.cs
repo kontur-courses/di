@@ -54,6 +54,7 @@ namespace TagsCloudContainer.ContainerConfigurers
         {
             builder.Register(c => new PaintConfig(
                     c.Resolve<UserConfig>().TagsColors,
+                    c.Resolve<UserConfig>().ImageFormat,
                     c.Resolve<UserConfig>().TagsFontName,
                     c.Resolve<UserConfig>().TagsFontSize,
                     c.Resolve<UserConfig>().ImageSize))

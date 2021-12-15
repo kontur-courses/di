@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
@@ -17,6 +18,8 @@ namespace TagsCloudContainer.Clients
         public int TagsFontSize { get; private set; }
         public ITextFormatReader FormatReader { get; private set; }
         public IColorScheme TagsColors { get; private set; }
+        public ImageFormat ImageFormat { get; private set; }
+
         public BoringWords ExcludedWords { get; private set; }
 
         public UserConfig()
@@ -32,10 +35,23 @@ namespace TagsCloudContainer.Clients
             ImageCenter = new Point(ImageSize.Width / 2, ImageSize.Height / 2);
             TagsFontName = options.FontName;
             TagsFontSize = options.FontSize;
+            ImageFormat = GetImageFormat(options.OutputFileFormat);
             FormatReader = GetTextFormatReader(options.InputFileFormat);
-            GetExcludedWords(options.ExcludedWords);
+            AddExcludedWords(options.ExcludedWords);
             TagsColors = TryGetTagsColors(options);
             ThrowIfAnyArgIsIncorrect();
+        }
+
+        private ImageFormat GetImageFormat(string formatName)
+        {
+            formatName = formatName.ToLower();
+            switch (formatName)
+            {
+                case "png": return ImageFormat.Png;
+                case "bmp": return ImageFormat.Bmp;
+                case "jpeg": return ImageFormat.Jpeg;
+                default: throw new ArgumentException("Uknown output image format!");
+            }
         }
 
         private ITextFormatReader GetTextFormatReader(string formatName)
@@ -45,7 +61,7 @@ namespace TagsCloudContainer.Clients
             return new TxtReader();
         }
 
-        private void GetExcludedWords(IEnumerable<string> words)
+        private void AddExcludedWords(IEnumerable<string> words)
         {
             foreach (var word in words)
                 ExcludedWords.AddWord(word.ToLower());

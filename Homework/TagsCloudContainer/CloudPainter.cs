@@ -32,7 +32,8 @@ namespace TagsCloudContainer
             graphics.Clear(Color.DimGray);
             foreach (var wordCount in parser.GetWordsCounts())
                 DrawWord(wordCount, graphics);
-            image.Save(pathToSaving, ImageFormat.Png);
+            var savingName = pathToSaving + "." + config.ImageFormat.ToString();
+            image.Save(savingName, config.ImageFormat);
         }
 
         private void DrawWord(KeyValuePair<string, int> wordCount, Graphics graphics)

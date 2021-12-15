@@ -8,7 +8,7 @@ namespace TagsCloudContainer.Clients
         [Value(0, HelpText = "path to input file")]
         public string Input { get; set; }
 
-        [Option('o', "output", Default = "tagcloud.png", HelpText = "path to output file")]
+        [Option('o', "output", Default = "tagcloud", HelpText = "path to output file")]
         public string Output { get; set; }
 
 
@@ -30,8 +30,11 @@ namespace TagsCloudContainer.Clients
             "tag's color scheme (0 - Black and White, 1 - Camouflage, 2 - Cyberpunk")]
         public int Color { get; set; }
 
-        [Option('f', "fileformat", Default = "txt", HelpText = "input file format")]
+        [Option('f', "inputformat", Default = "txt", HelpText = "input file format")]
         public string InputFileFormat { get; set; }
+
+        [Option('i', "outputformat", Default = "png", HelpText = "output file format")]
+        public string OutputFileFormat { get; set; }
 
         [Option('e', "exclude", Default = new[] {""})]
         public IEnumerable<string> ExcludedWords { get; set; }
