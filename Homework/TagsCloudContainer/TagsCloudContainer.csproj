@@ -86,12 +86,14 @@
     <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
     <Compile Include="TextParsers\BoringWords.cs" />
     <Compile Include="TextParsers\IExcludingWords.cs" />
+    <Compile Include="TextParsers\ITextFormatReader.cs" />
     <Compile Include="TextParsers\ITextParser.cs" />
     <Compile Include="PaintConfigs\PaintConfig.cs" />
     <Compile Include="PaintConfigs\IPaintConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextParsers\TextParser.cs" />
+    <Compile Include="TextParsers\TxtReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

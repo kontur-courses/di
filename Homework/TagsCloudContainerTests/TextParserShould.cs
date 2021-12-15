@@ -19,7 +19,7 @@ namespace CloudContainerTests
         {
             string incorrectPath = "words";
             Action wordsGetterCreationWithIncorrectPath =
-                () => new TextParser(incorrectPath, boringWords);
+                () => new TextParser(incorrectPath, boringWords, new TxtReader());
 
             wordsGetterCreationWithIncorrectPath.Should().Throw<FileNotFoundException>();
         }
@@ -28,7 +28,7 @@ namespace CloudContainerTests
         public void Throw_ArgumentNullException_WhenPathIsNull()
         {
             Action wordsGetterCreationWithIncorrectPath =
-                () => new TextParser(null, boringWords);
+                () => new TextParser(null, boringWords, new TxtReader());
 
             wordsGetterCreationWithIncorrectPath.Should().Throw<ArgumentNullException>();
         }
@@ -46,7 +46,7 @@ namespace CloudContainerTests
                 sw.WriteLine("words");
             }
 
-            var wordsGetter = new TextParser(path, boringWords);
+            var wordsGetter = new TextParser(path, boringWords, new TxtReader());
             var distinctWordsCount = wordsGetter.GetDistinctWordsAmount();
 
             distinctWordsCount.Should().Be(wordsCount);

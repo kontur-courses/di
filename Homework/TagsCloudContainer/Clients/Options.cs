@@ -26,11 +26,13 @@ namespace TagsCloudContainer.Clients
         [Option('s', "fontSize", Default = 20, HelpText = "tags fontSize")]
         public int FontSize { get; set; }
 
-
         [Option('c', "color", Default = "DeepSkyBlue", HelpText = "tag's color")]
         public string Color { get; set; }
 
-        [Option('e', "exclude", Default = new[] {"C#"})]
+        [Option('f', "fileformat", Default = "txt", HelpText = "input file format")]
+        public string InputFileFormat { get; set; }
+
+        [Option('e', "exclude", Default = new[] {""})]
         public IEnumerable<string> ExcludedWords { get; set; }
     }
 }

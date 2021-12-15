@@ -38,7 +38,8 @@ namespace TagsCloudContainer.ContainerConfigurers
         {
             builder.Register(c => new TextParser(
                     c.Resolve<UserConfig>().InputFile,
-                    c.Resolve<UserConfig>().ExcludedWords))
+                    c.Resolve<UserConfig>().ExcludedWords,
+                    c.Resolve<UserConfig>().FormatReader))
                 .As<ITextParser>().SingleInstance();
         }
 

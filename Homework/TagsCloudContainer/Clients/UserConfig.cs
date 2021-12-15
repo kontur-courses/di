@@ -14,6 +14,7 @@ namespace TagsCloudContainer.Clients
         public Point ImageCenter { get; private set; }
         public string TagsFontName { get; private set; }
         public int TagsFontSize { get; private set; }
+        public ITextFormatReader FormatReader { get; private set; }
         public Brush TagsColor { get; private set; }
         public BoringWords ExcludedWords { get; private set; }
 
@@ -30,9 +31,17 @@ namespace TagsCloudContainer.Clients
             ImageCenter = new Point(ImageSize.Width / 2, ImageSize.Height / 2);
             TagsFontName = options.FontName;
             TagsFontSize = options.FontSize;
+            FormatReader = GetTextFormatReader(options.InputFileFormat);
             GetExcludedWords(options.ExcludedWords);
             TryGetTagsColor(options);
             ThrowIfAnyArgIsIncorrect();
+        }
+
+        private ITextFormatReader GetTextFormatReader(string formatName)
+        {
+            if (formatName.ToLower() != "txt")
+                throw new ArgumentException("Unknown input file format!");
+            return new TxtReader();
         }
 
         private void GetExcludedWords(IEnumerable<string> words)
