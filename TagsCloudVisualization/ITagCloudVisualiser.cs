@@ -4,6 +4,6 @@ namespace TagsCloudVisualization
 {
     public interface ITagCloudVisualiser
     {
-        Image Render(Tag[] tags, Size resolution);
+        Image Render(Tag[] tags, Size resolution, Color background);
     }
 }

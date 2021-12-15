@@ -13,14 +13,14 @@ namespace TagsCloudVisualization
         public readonly PointF Center;
         private readonly List<RectangleF> rectangles = new List<RectangleF>();
         private readonly HashSet<PointF> placementLocations = new HashSet<PointF>();
-        private readonly Func<PointF, PointF, double> distanceFunction;
+        private readonly Func<PointF, PointF, float> distanceFunction;
 
         public IReadOnlyList<RectangleF> Rectangles => rectangles;
         public double Radius => placementLocations.Max(p => GetDistanceBetween(p, Center));
         
         public CircularCloudMaker(Point center) : this(center, Distance) {}
 
-        public CircularCloudMaker(Point center, Func<PointF, PointF, double> distanceFunction)
+        public CircularCloudMaker(Point center, Func<PointF, PointF, float> distanceFunction)
         {
             Center = center;
             this.distanceFunction = distanceFunction;
@@ -111,12 +111,12 @@ namespace TagsCloudVisualization
             };
         }
 
-        public static double ManhattanDistance(PointF point, PointF other)
+        public static float ManhattanDistance(PointF point, PointF other)
         {
             return Math.Abs(point.X - other.X) + Math.Abs(point.Y - other.Y);
         }
         
-        public static double Distance(PointF point, PointF other)
+        public static float Distance(PointF point, PointF other)
         {
             return point.DistanceTo(other);
         }

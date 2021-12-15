@@ -10,25 +10,38 @@ namespace TagsCloudVisualization.Default
             "that", "for", "on", "as", "at", "by", "or", "and", "is", "are"
         };
 
+        private static readonly HashSet<char> InsideWordSymbols = new HashSet<char>()
+        {
+            '.', '_', '-', '\''
+        };
+
         public IEnumerable<string> GetWords(string text)
         {
             var currentStart = 0;
             for (var i = 0; i < text.Length; i++)
             {
-                if (text[i] == '.' || text[i] == '_' || char.IsLetterOrDigit(text[i])) continue;
+                if (InsideWordSymbols.Contains(text[i]) || char.IsLetterOrDigit(text[i])) continue;
                 if (currentStart != i)
                 {
-                    var word = text.Substring(currentStart, i - currentStart).ToLower();
-                    if (!StopWords.Contains(word))
+                    var word = TryGetWord(text, currentStart, i - 1);
+                    if (word != null)
                         yield return word;
                 } 
                 currentStart = i + 1;
             }
-
             if (currentStart == text.Length) yield break;
-            var lastWord = text.Substring(currentStart).ToLower();
-            if (!StopWords.Contains(lastWord))
+            var lastWord = TryGetWord(text, currentStart, text.Length - 1);
+            if (lastWord != null)
                 yield return lastWord;
+        }
+
+        private static string TryGetWord(string text, int start, int end)
+        {
+            while (end > 0 && InsideWordSymbols.Contains(text[end]))
+                end--;
+            if (end - start + 1 <= 0) return null;
+            var word = text.Substring(start, end - start + 1).ToLower();
+            return !StopWords.Contains(word) ? word : null;
         }
     }
 }

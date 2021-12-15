@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using TagsCloudVisualization.Extensions;
 
@@ -7,7 +9,7 @@ namespace TagsCloudVisualization
 {
     public class TagCloudVisualiser : ITagCloudVisualiser
     {
-        public Image Render(Tag[] tags, Size resolution)
+        public Image Render(Tag[] tags, Size resolution, Color background)
         {
             var points = tags.SelectMany(t => t.Location.GetPoints()).ToArray();
             var center = new PointF(points.Average(p => p.X), points.Average(p => p.Y));
@@ -15,6 +17,7 @@ namespace TagsCloudVisualization
             var scale = Math.Min(resolution.Width, resolution.Height) / (radius * 2);
             var image = new Bitmap(resolution.Width, resolution.Height);
             using var graphics = Graphics.FromImage(image);
+            graphics.FillRectangle(new SolidBrush(background), new Rectangle(Point.Empty, resolution));
             graphics.ScaleTransform(scale, scale);
             graphics.TranslateTransform( resolution.Width  / scale / 2, resolution.Height / scale / 2 );
             foreach (var tag in tags)
