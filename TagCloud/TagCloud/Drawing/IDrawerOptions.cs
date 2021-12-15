@@ -13,5 +13,7 @@ namespace TagCloud.Drawing
         float BaseFontSize { get; }
         Size Size { get; }
         ImageFormat? Format { get; }
+        string Path { get; }
+        string FileName { get; }
     }
 }

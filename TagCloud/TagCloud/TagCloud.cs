@@ -57,10 +57,10 @@ namespace TagCloud
                 _statusWriter.WriteLine("Рисую bitmap");
                 var bitmap = _drawer.Draw(options, layoutedWords);
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
-                bitmap.SaveCurrentDirectory(format: options.Format);
+                bitmap.Save(options.FileName, options.Path, options.Format);
             }
 
-            _statusWriter.WriteLine($"Готово!\nФайлы здесь: {Directory.GetCurrentDirectory()}");
+            _statusWriter.WriteLine($"Готово!\nФайлы здесь: {options.Path}");
             return this;
         }
 

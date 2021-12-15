@@ -16,6 +16,12 @@ namespace TagCloud.Drawing
         [Option("format", Required = false, HelpText = "Задать формат результирующего изображения")]
         public ImageExtension ImageExtension { get; set; } = ImageExtension.Png;
 
+        [Option('p', "path", Required = false, HelpText = "Задать директорию для сохранения изображений")]
+        public string Path { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
+
+        [Option('n', "file-name", Required = false, HelpText = "Задать имя для сохраняемых изображений")]
+        public string FileName { get; set; }
+
         [Option("center", Required = false, HelpText = "Задать центр облака")]
         public Point Center { get; set; }
 
@@ -40,6 +46,7 @@ namespace TagCloud.Drawing
         public Size Size { get; set; }
 
         public ImageFormat? Format => GetImageFormat(ImageExtension);
+
 
         private static ImageFormat? GetImageFormat(ImageExtension extension)
         {

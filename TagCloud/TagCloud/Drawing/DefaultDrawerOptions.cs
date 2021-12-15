@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -13,5 +14,7 @@ namespace TagCloud.Drawing
         public float BaseFontSize => 20;
         public Size Size { get; }
         public ImageFormat? Format => ImageFormat.Png;
+        public string Path { get; } = AppDomain.CurrentDomain.BaseDirectory;
+        public string FileName { get; }
     }
 }
