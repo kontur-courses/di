@@ -14,11 +14,11 @@ namespace TagCloud.TextProcessing
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
 
-        public IEnumerable<MyStemResult?> GetMyStemResultData(string filePath)
+        public static IEnumerable<MyStemResult?> GetMyStemResultData(string filePath)
         {
             RunMyStem(filePath);
             var myStemResults = ParseMyStemResult();
-            
+            File.Delete(TempPath);
             return myStemResults;
         }
 
@@ -50,8 +50,9 @@ namespace TagCloud.TextProcessing
         {
             return File.ReadAllText(TempPath)
                 .Split("\n", StringSplitOptions.RemoveEmptyEntries)
-                .Select(JsonConvert.DeserializeObject<MyStemResult>)
-                .Where(r => r?.analysis.Count > 0);
+                .Select(JsonConvert.DeserializeObject<MyStemResultDto>)
+                .Select(MyStemResult.FromDto)
+                .Where(r => r.Analysis.Count > 0);
         }
 
         private static Process ConfigureProcess(string filepath)

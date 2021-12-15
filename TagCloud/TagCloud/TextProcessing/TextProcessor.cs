@@ -5,20 +5,18 @@ namespace TagCloud.TextProcessing
 {
     internal class TextProcessor : ITextProcessor
     {
-        private readonly MyStemManager _myStemManager;
         private readonly IFileProvider _textProvider;
 
-        public TextProcessor(IFileProvider textProvider, MyStemManager myStemManager)
+        public TextProcessor(IFileProvider textProvider)
         {
             _textProvider = textProvider;
-            _myStemManager = myStemManager;
         }
 
         public IEnumerable<Dictionary<string, int>> GetWordsWithFrequency(ITextProcessingOptions options)
         {
             return options.FilesToProcess
-                .Select(filePath => _myStemManager.GetMyStemResultData(_textProvider.GetTxtFilePath(filePath))).Select(
-                    myStemResults => myStemResults
+                .Select(filePath => MyStemManager.GetMyStemResultData(_textProvider.GetTxtFilePath(filePath)))
+                .Select(myStemResults => myStemResults
                         .Where(r => !options.ExcludePartOfSpeech.Contains(r.PartOfSpeech)
                                     || options.IncludeWords.Contains(r.Lemma))
                         .Select(r => r.Lemma)
