@@ -29,7 +29,7 @@ namespace TagsCloudContainer
             var imageSize = config.ImageSize;
             var image = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(image);
-            graphics.Clear(Color.Gray);
+            graphics.Clear(Color.DimGray);
             foreach (var wordCount in parser.GetWordsCounts())
                 DrawWord(wordCount, graphics);
             image.Save(pathToSaving, ImageFormat.Png);

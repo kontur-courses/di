@@ -85,6 +85,7 @@
     <Compile Include="CloudPainter.cs" />
     <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
     <Compile Include="PaintConfigs\BlackWhiteScheme.cs" />
+    <Compile Include="PaintConfigs\CyberpunkScheme.cs" />
     <Compile Include="PaintConfigs\IColorScheme.cs" />
     <Compile Include="PaintConfigs\CamouflageScheme.cs" />
     <Compile Include="TextParsers\BoringWords.cs" />

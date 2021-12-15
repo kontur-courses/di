@@ -57,6 +57,7 @@ namespace TagsCloudContainer.Clients
             {
                 case 0: return new BlackWhiteScheme();
                 case 1: return new CamouflageScheme();
+                case 2: return new CyberpunkScheme();
                 default: throw new ArgumentException("Unknow color scheme number!");
             }
         }
