@@ -36,6 +36,7 @@ namespace TagCloud.Drawing
                 rectangle.Offset(offsetPoint);
                 g.DrawString(word.Text, word.Font, brush, rectangle.Location);
             }
+
             return bitmap;
         }
 

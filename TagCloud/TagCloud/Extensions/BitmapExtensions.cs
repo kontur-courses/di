@@ -16,10 +16,10 @@ namespace TagCloud.Extensions
             var imagesDirectory = Directory.CreateDirectory(Path.Combine(targetDirectory, "images"));
             var name = filename ?? $"tag_cloud_{_count++}";
             var path = Path.Combine(imagesDirectory.FullName, name);
-            
+
             var imageFormat = format ?? ImageFormat.Png;
             var extension = imageFormat.ToString().ToLower();
-            
+
             bitmap.Save($"{path}.{extension}", imageFormat);
         }
     }

@@ -153,7 +153,7 @@ namespace TagsCloud_Test
 
         private CircularCloudLayouter GetLayouter(Point? center)
         {
-            return new(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
+            return new CircularCloudLayouter(center ?? Point.Empty, new ArchimedeanSpiral(center ?? Point.Empty));
         }
 
         private CircularCloudLayouter GetLayouter(Point? center, List<Size> rectSizes)

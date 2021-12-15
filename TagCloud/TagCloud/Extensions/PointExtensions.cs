@@ -11,7 +11,7 @@ namespace TagCloud.Extensions
         /// <param name="rectSize">Размер прямоугольника</param>
         public static Point GetRectangleLocationByCenter(this Point center, Size rectSize)
         {
-            return new(center.X - rectSize.Width / 2, center.Y - rectSize.Height / 2);
+            return new Point(center.X - rectSize.Width / 2, center.Y - rectSize.Height / 2);
         }
     }
 }

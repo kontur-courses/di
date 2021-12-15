@@ -17,7 +17,7 @@ namespace TagCloud.TextProcessing
 
         public Word WithFontSize(double fontSize)
         {
-            return new(Text, new Font(Font.FontFamily, (float) fontSize));
+            return new Word(Text, new Font(Font.FontFamily, (float) fontSize));
         }
     }
 }

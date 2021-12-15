@@ -19,18 +19,20 @@ namespace TagCloud.Layout
         public List<Word> Layout(IDrawerOptions options, Dictionary<string, int> wordsWithFrequency)
         {
             var words = GetWordsWithScaledFontSize(wordsWithFrequency, options.BaseFontSize, options.FontFamily);
-            
+
             using var g = Graphics.FromImage(new Bitmap(1, 1));
             foreach (var word in words)
             {
                 var wordSize = g.MeasureString(word.Text, word.Font).ToSize();
                 word.Rectangle = _layouter.PutNextRectangle(wordSize);
             }
+
             _layouter.Reset();
             return words;
         }
 
-        private static List<Word> GetWordsWithScaledFontSize(Dictionary<string, int> wordsWithFrequency, float baseFontSize,
+        private static List<Word> GetWordsWithScaledFontSize(Dictionary<string, int> wordsWithFrequency,
+            float baseFontSize,
             FontFamily fontFamily)
         {
             var listWords = new List<Word>();
@@ -45,10 +47,15 @@ namespace TagCloud.Layout
 
             return NormalizeFontSize(minFontSize, listWords).ToList();
 
-            float Scale(int freq, float fontSize) => (float) (Math.Pow(freq - 1, 0.65) + 1) * fontSize;
+            float Scale(int freq, float fontSize)
+            {
+                return (float) (Math.Pow(freq - 1, 0.65) + 1) * fontSize;
+            }
 
-            IEnumerable<Word> NormalizeFontSize(double minSize, IEnumerable<Word> words) 
-                => words.Select(w => w.WithFontSize(w.Font.Size / minSize * 14));
+            IEnumerable<Word> NormalizeFontSize(double minSize, IEnumerable<Word> words)
+            {
+                return words.Select(w => w.WithFontSize(w.Font.Size / minSize * 14));
+            }
         }
     }
 }

@@ -17,14 +17,14 @@ namespace TagCloud.TextProcessing
             return options.FilesToProcess
                 .Select(filePath => MyStemManager.GetMyStemResultData(_textProvider.GetTxtFilePath(filePath)))
                 .Select(myStemResults => myStemResults
-                        .Where(r => !options.ExcludePartOfSpeech.Contains(r.PartOfSpeech)
-                                    || options.IncludeWords.Contains(r.Lemma))
-                        .Select(r => r.Lemma)
-                        .Where(w => !options.ExcludeWords.Contains(w))
-                        .GroupBy(s => s)
-                        .OrderByDescending(g => g.Count())
-                        .Take(options.Amount)
-                        .ToDictionary(g => g.Key, g => g.Count()));
+                    .Where(r => !options.ExcludePartOfSpeech.Contains(r.PartOfSpeech)
+                                || options.IncludeWords.Contains(r.Lemma))
+                    .Select(r => r.Lemma)
+                    .Where(w => !options.ExcludeWords.Contains(w))
+                    .GroupBy(s => s)
+                    .OrderByDescending(g => g.Count())
+                    .Take(options.Amount)
+                    .ToDictionary(g => g.Key, g => g.Count()));
         }
     }
 }

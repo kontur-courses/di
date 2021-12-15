@@ -6,11 +6,6 @@ namespace TagCloud.TextProcessing
 {
     internal class MyStemResult
     {
-        public static MyStemResult FromDto(MyStemResultDto? dto)
-        {
-            return new MyStemResult(dto?.Analysis, dto?.Text);
-        }
-
         private readonly List<Dictionary<string, string>> _analysis;
         private readonly string _text;
 
@@ -27,6 +22,11 @@ namespace TagCloud.TextProcessing
 
         public string Lemma => Analysis["lex"];
         public PartOfSpeech PartOfSpeech => (PartOfSpeech) Enum.Parse(typeof(PartOfSpeech), GetPosTag());
+
+        public static MyStemResult FromDto(MyStemResultDto? dto)
+        {
+            return new MyStemResult(dto?.Analysis, dto?.Text);
+        }
 
         private string GetPosTag()
         {

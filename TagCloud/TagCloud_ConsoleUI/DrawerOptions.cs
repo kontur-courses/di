@@ -13,6 +13,9 @@ namespace TagCloud.Drawing
         private readonly Color _defaultBackgroundColor = Color.White;
         private Color _backgroundColor;
 
+        [Option("format", Required = false, HelpText = "Задать формат результирующего изображения")]
+        public ImageExtension ImageExtension { get; set; } = ImageExtension.Png;
+
         [Option("center", Required = false, HelpText = "Задать центр облака")]
         public Point Center { get; set; }
 
@@ -35,20 +38,17 @@ namespace TagCloud.Drawing
 
         [Option("picture-size", Required = false, HelpText = "Задать размер итогового изображения")]
         public Size Size { get; set; }
-        
+
         public ImageFormat? Format => GetImageFormat(ImageExtension);
 
-        [Option("format", Required = false, HelpText = "Задать формат результирующего изображения")]
-        public ImageExtension ImageExtension { get; set; } = ImageExtension.Png;
-
-        private static ImageFormat? GetImageFormat(ImageExtension extension)  
+        private static ImageFormat? GetImageFormat(ImageExtension extension)
         {
             var propertyInfo = typeof(ImageFormat)
                 .GetProperties()
                 .FirstOrDefault(p => p.Name
                     .Equals(extension.ToString(), StringComparison.InvariantCultureIgnoreCase));
-            
+
             return propertyInfo?.GetValue(propertyInfo) as ImageFormat;
-        }  
+        }
     }
 }

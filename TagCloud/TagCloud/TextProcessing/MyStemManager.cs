@@ -45,7 +45,7 @@ namespace TagCloud.TextProcessing
                     "Проверьте исходный текст на соответствие кодировке UTF-8.\n" +
                     $"Вывод MyStem: {myStemErrorOut}");
         }
-        
+
         private static IEnumerable<MyStemResult?> ParseMyStemResult()
         {
             return File.ReadAllText(TempPath)
@@ -65,6 +65,5 @@ namespace TagCloud.TextProcessing
             process.StartInfo.Arguments = $"{Arguments} {filepath} {TempPath}";
             return process;
         }
-
     }
 }

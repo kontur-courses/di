@@ -7,8 +7,7 @@ namespace TagCloud.TextProcessing
     {
         [JsonProperty(PropertyName = "analysis")]
         public List<Dictionary<string, string>> Analysis { get; set; }
-        
-        [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+
+        [JsonProperty(PropertyName = "text")] public string Text { get; set; }
     }
 }
