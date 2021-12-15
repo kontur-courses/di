@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using TagCloud.Drawing;
@@ -34,9 +36,9 @@ namespace TagCloud
                 _statusWriter.WriteLine("Обработка завершена\n");
                 return this;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
-                _statusWriter.WriteLine(e.Message);
+                _statusWriter.WriteLine($"Произошла ошибка:\n{e.Message}");
                 return this;
             }
         }

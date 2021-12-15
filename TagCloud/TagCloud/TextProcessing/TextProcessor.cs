@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -27,9 +28,22 @@ namespace TagCloud.TextProcessing
                 using (var process = ConfigureProcess(_textProvider.GetTxtFilePath(filePath)))
                 {
                     process.ErrorDataReceived += (s, e) => myStemErrorOut += e.Data;
-                    process.Start();
+                    try
+                    {
+                        process.Start();
+                    }
+                    catch (Exception e)
+                    {
+                        throw new ApplicationException("MyStem не запустился" +
+                                                       " проверьте наличие утилиты в корневом каталоге программы", e);
+                    }
                     process.BeginErrorReadLine();
                     process.WaitForExit();
+                    if (!string.IsNullOrEmpty(myStemErrorOut))
+                        throw new WarningException(
+                            "MyStem отработал с ошибками, обработка текста прервана.\n" +
+                            "Проверьте исходный текст на соответствие кодировке UTF-8.\n" +
+                            $"Вывод MyStem: {myStemErrorOut}");
                 }
 
                 var myStemResults = ParseMyStemResult();
