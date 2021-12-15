@@ -13,7 +13,7 @@ namespace TagCloud
         private readonly IDrawer _drawer;
         private readonly TextWriter _statusWriter;
         private readonly ITextProcessor _textProcessor;
-        public IWordLayouter _wordLayouter { get; set; }
+        private readonly IWordLayouter _wordLayouter;
         private List<Dictionary<string, int>> _processedTexts = new();
 
         public TagCloud(ITextProcessor textProcessor, IWordLayouter wordLayouter, IDrawer drawer,
@@ -66,6 +66,7 @@ namespace TagCloud
         public TagCloud ClearProcessedTexts()
         {
             _processedTexts.Clear();
+            _statusWriter.WriteLine("Список обработанных текстов очищен");
             return this;
         }
     }

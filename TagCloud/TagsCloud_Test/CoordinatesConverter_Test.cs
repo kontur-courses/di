@@ -4,7 +4,7 @@ using FluentAssertions.Execution;
 using NUnit.Framework;
 using TagCloud.Utils;
 
-namespace TagsCloudVisualization_Test
+namespace TagsCloud_Test
 {
     public class CoordinatesConverterTest
     {

@@ -5,31 +5,13 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagCloud.Drawing;
 using TagCloud.Layout;
-using TagCloud.TextProcessing;
 
-namespace TagsCloudVisualization_Test
+namespace TagsCloud_Test
 {
     public class PutNextRectangleShould
     {
-        private int _count;
-        private IDrawerOptions _drawerOptions;
         private CircularCloudLayouter _layout;
-        private ITextProcessingOptions _textProcessingOptions;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            _drawerOptions = new DrawerOptions();
-            _textProcessingOptions = new TextProcessingOptions();
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            _count++;
-        }
 
         [TearDown]
         public void TearDown()

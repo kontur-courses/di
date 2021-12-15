@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
 
-namespace TagsCloudVisualization_Test
+namespace TagsCloud_Test
 {
     public static class TestHelper
     {

@@ -6,7 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Extensions;
 
-namespace TagsCloudVisualization_Test
+namespace TagsCloud_Test
 {
     public class RectangleExtensionsTest
     {
