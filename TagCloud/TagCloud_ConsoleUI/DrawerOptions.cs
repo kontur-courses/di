@@ -4,8 +4,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using CommandLine;
+using TagCloud;
+using TagCloud.Drawing;
 
-namespace TagCloud.Drawing
+namespace TagCloud_ConsoleUI
 {
     [Verb("draw", HelpText = "Построить облако тэгов по обработанному тексту")]
     public class DrawerOptions : IDrawerOptions

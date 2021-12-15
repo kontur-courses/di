@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommandLine;
+using TagCloud.TextProcessing;
 
-namespace TagCloud.TextProcessing
+namespace TagCloud_ConsoleUI
 {
     [Verb("process", HelpText = "Обработать текст из файла по заданному пути")]
     public class TextProcessingOptions : ITextProcessingOptions

@@ -3,8 +3,6 @@ using System.Linq;
 using CommandLine;
 using CommandLine.Text;
 using TagCloud;
-using TagCloud.Drawing;
-using TagCloud.TextProcessing;
 
 namespace TagCloud_ConsoleUI
 {
