@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using System.Collections.Generic;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
@@ -29,7 +28,7 @@ namespace TagsCloudContainer.ContainerConfigurers
             builder.Register(c => new CircularCloudLayouter(
                     c.Resolve<UserConfig>().ImageCenter)).As<ICloudLayouter>().SingleInstance();
             builder.Register(c => new TextParser(c.Resolve<UserConfig>().InputFile,
-                new HashSet<string>())).As<ITextParser>().SingleInstance();
+                new BoringWords())).As<ITextParser>().SingleInstance();
             builder.RegisterType<CloudPainter>().AsSelf().SingleInstance();
 
             return builder.Build();

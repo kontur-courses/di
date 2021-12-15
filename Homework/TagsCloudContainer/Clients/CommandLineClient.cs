@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CommandLine;
 
 namespace TagsCloudContainer.Clients
@@ -16,20 +17,13 @@ namespace TagsCloudContainer.Clients
 
         private UserConfig GetUserConfig()
         {
-            var ret = new UserConfig();
+            var userConfig = new UserConfig();
             var result = Parser.Default.ParseArguments<Options>(args);
-            result.WithParsed(options =>
-            {
-                if (options.Input == null || options.Output == null)
-                    throw new ArgumentNullException();
-                ret = new UserConfig(options);
-            }).WithNotParsed(errs =>
-            {
-                Console.WriteLine("Failed with errors:\n{0}",
-                    string.Join("\n", errs));
-            });
+            result.WithParsed(options => userConfig = new UserConfig(options))
+                .WithNotParsed(errs => throw new Exception(
+                    $"Failed with errors:\n{string.Join("\n", errs)}"));
 
-            return ret;
+            return userConfig;
         }
     }
 }

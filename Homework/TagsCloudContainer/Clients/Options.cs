@@ -7,7 +7,7 @@ namespace TagsCloudContainer.Clients
         [Value(0, HelpText = "path to input file")]
         public string Input { get; set; }
 
-        [Value(1, HelpText = "path to result destination directory")]
+        [Option('o', "output", Default = "tagcloud.png", HelpText = "path to output file")]
         public string Output { get; set; }
 
 
