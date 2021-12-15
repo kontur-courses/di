@@ -5,10 +5,10 @@ namespace TagsCloudVisualization.Default
 {
     public class RandomTagColor : ITokenColorChooser
     {
+        private Random random = new Random();
         public Color GetTokenColor(Token token)
         {
-            var randomGen = new Random(token.Value.GetHashCode());
-            return Color.FromArgb(randomGen.Next(0,200), randomGen.Next(0,200), randomGen.Next(0,200));
+            return Color.FromArgb(random.Next(0,200), random.Next(0,200), random.Next(0,200));
         }
     }
 }

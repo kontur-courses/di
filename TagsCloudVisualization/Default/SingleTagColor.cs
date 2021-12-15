@@ -2,11 +2,11 @@
 
 namespace TagsCloudVisualization.Default
 {
-    public class TagSingleColor : ITokenColorChooser
+    public class SingleTagColor : ITokenColorChooser
     {
-        private Color color;
+        private readonly Color color;
 
-        public TagSingleColor(Color color)
+        public SingleTagColor(Color color)
         {
             this.color = color;
         }

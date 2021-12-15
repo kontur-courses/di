@@ -22,13 +22,13 @@ namespace TagsCloudVisualization
             this.tokenGenerator = tokenGenerator;
         }
 
-        public void CreateTagCloudFromFile(FileInfo source, Font font, int maxTegCount,
+        public void CreateTagCloudFromFile(FileInfo source, Font font, int maxTagCount,
            Size resolution, string resultPath, ImageFormat format)
         {
             if (!fileReader.CanReadFile(source))
                 throw new ArgumentException("Unknown source file format.");
             var text = fileReader.ReadFile(source);
-            var tokens = tokenGenerator.GetTokens(text, maxTegCount).ToArray();
+            var tokens = tokenGenerator.GetTokens(text, maxTagCount).ToArray();
             var tags = tagCloudMaker.CreateTagCloud(tokens, font);
             if (tags.Length == 0)
                 throw new ArgumentException("Zero tags found.");
