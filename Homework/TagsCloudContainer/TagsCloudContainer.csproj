@@ -36,6 +36,9 @@
     <Reference Include="Autofac, Version=6.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="CommandLine, Version=2.8.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>packages\CommandLineParser.2.8.0\lib\net461\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -69,9 +72,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\CommandLineClient.cs" />
+    <Compile Include="Clients\UserConfig.cs" />
+    <Compile Include="Clients\IClient.cs" />
+    <Compile Include="Clients\Options.cs" />
+    <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
+    <Compile Include="CloudLayouters\ICloudLayouter.cs" />
+    <Compile Include="CloudLayouters\PointExtensions.cs" />
     <Compile Include="CloudPainter.cs" />
+    <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
     <Compile Include="TextParsers\ITextParser.cs" />
-    <Compile Include="PaintConfigs\PaintCofig.cs" />
+    <Compile Include="PaintConfigs\PaintConfig.cs" />
     <Compile Include="PaintConfigs\IPaintConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,13 +93,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
-      <Project>{28e27620-7c89-4aff-8113-c16f6347a71b}</Project>
-      <Name>TagsCloudVisualization</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="words.txt" />
+    <Content Include="Resources\TagCloud.png" />
+    <Content Include="Resources\words.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
