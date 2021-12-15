@@ -30,7 +30,7 @@ namespace TagsCloudContainer.Clients
         [Option('c', "color", Default = "DeepSkyBlue", HelpText = "tag's color")]
         public string Color { get; set; }
 
-        [Option('e', "exclude", Default = "")]
+        [Option('e', "exclude", Default = new[] {"C#"})]
         public IEnumerable<string> ExcludedWords { get; set; }
     }
 }

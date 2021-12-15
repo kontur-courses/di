@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using TagsCloudContainer.TextParsers;
 
 namespace TagsCloudContainer.Clients
@@ -39,7 +38,7 @@ namespace TagsCloudContainer.Clients
         private void GetExcludedWords(IEnumerable<string> words)
         {
             foreach (var word in words)
-                ExcludedWords.AddWord(word);
+                ExcludedWords.AddWord(word.ToLower());
         }
 
         private void TryGetTagsColor(Options options)

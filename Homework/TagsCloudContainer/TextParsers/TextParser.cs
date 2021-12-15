@@ -37,6 +37,7 @@ namespace TagsCloudContainer.TextParsers
                 while ((line = sr.ReadLine()) != null)
                 {
                     line = line.ToLower();
+                    line = line.TrimEnd('\n');
                     if (excludedWords.Contains(line)) continue;
                     if (!words.TryGetValue(line,  out _))
                         words.Add(line, 0);

@@ -23,7 +23,8 @@ namespace CloudContainerTests
         {
             var onlyNecessaryArgs = new string[] { "input", "output" };
             var defaultOptions = GetDefaultOptions(onlyNecessaryArgs);
-            var expectedUserConfig = new UserConfig(defaultOptions);
+            var expectedUserConfig = new UserConfig();
+            expectedUserConfig.GetConfig(defaultOptions);
 
             var client = new CommandLineClient(onlyNecessaryArgs);
 
@@ -43,7 +44,8 @@ namespace CloudContainerTests
             parsedArgs.FontName = args[7];
             parsedArgs.FontSize = int.Parse(args[9]);
             parsedArgs.Color = args[11];
-            var expectedUserConfig = new UserConfig(parsedArgs);
+            var expectedUserConfig = new UserConfig();
+            expectedUserConfig.GetConfig(parsedArgs);
 
             var client = new CommandLineClient(args);
 
