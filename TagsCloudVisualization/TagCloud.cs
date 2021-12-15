@@ -32,7 +32,7 @@ namespace TagsCloudVisualization
             var tokens = tokenGenerator.GetTokens(text, maxTagCount).ToArray();
             var tags = tagCloudMaker.CreateTagCloud(tokens, font);
             if (tags.Length == 0)
-                throw new ArgumentException("Zero tags found.");
+                throw new ArgumentException("Zero tags found");
             if (resolution.Height < 1 || resolution.Width < 1)
                 throw new ArgumentException("Resolution must be positive");
             var image = tagCloudVisualiser.Render(tags, resolution, background);

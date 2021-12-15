@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.Default;
@@ -26,26 +27,42 @@ namespace TagCloudTests
         public void Selector_WordsShould_BeLowercase()
         {
             var text = "HeLLo wOrld";
-            var words = selector.GetWords(text);
             var expected = new[] { "hello", "world" };
+            var words = selector.GetWords(text);
             words.Should().BeEquivalentTo(expected);
         }
 
-        [Test]
-        public void Selector_UnderLineAndDot_NotSeparated()
+        [TestCase("qwerty")]
+        [TestCase("123")]
+        [TestCase("a12")]
+        [TestCase("a1a")]
+        [TestCase("-5")]
+        [TestCase(".net")]
+        [TestCase("e-maxx.ru")]
+        [TestCase("12_13_14")]
+        [TestCase("don't")]
+        public void Selector_Should_NotSeparate(string text)
         {
-            var text = "hel_lo wor.ld";
             var words = selector.GetWords(text);
-            var expected = new[] { "hel_lo", "wor.ld"};
-            words.Should().BeEquivalentTo(expected);
+            words.Should().HaveCount(1).And.Contain(text);
+        }
+
+        [TestCase("abc!123", new[]{"abc", "123"})]
+        [TestCase("abc abc", new []{"abc", "abc"})]
+        [TestCase("abc:123", new []{"abc", "123"})]
+        [TestCase("abc.", new []{"abc"})]
+        public void Selector_Should_Separate(string text, string[] expectedWords)
+        {
+            var words = selector.GetWords(text);
+            words.Should().BeEquivalentTo(expectedWords);
         }
 
         [Test]
-        public void Selector_NotDigitsOrLetter_Separates()
+        public void Selector_Ignore_EndDot()
         {
-            var text = "0!1?2:3;4'5";
+            var text = "abc. . .net5.0 something.";
+            var expected = new[] { "abc",".net5.0","something"};
             var words = selector.GetWords(text);
-            var expected = new[] { "0","1","2","3","4","5"};
             words.Should().BeEquivalentTo(expected);
         }
     }
