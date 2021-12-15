@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace TagCloud.TextProcessing
@@ -11,25 +10,25 @@ namespace TagCloud.TextProcessing
     internal class TextProcessor : ITextProcessor
     {
         private const string UtilFileName = "mystem.exe";
-        private const string TempWritePath = @"c:\temp\input.txt";
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
-        private readonly IFileReader _textReader;
+        private readonly IFileProvider _textProvider;
 
-        public TextProcessor(IFileReader textReader)
+        public TextProcessor(IFileProvider textProvider)
         {
-            _textReader = textReader;
+            _textProvider = textProvider;
         }
 
         public IEnumerable<Dictionary<string, int>> GetWordsWithFrequency(ITextProcessingOptions options)
         {
             foreach (var filePath in options.FilesToProcess)
             {
-                using var writer = new StreamWriter(TempWritePath, false, Encoding.UTF8);
-                writer.Write(_textReader.ReadFile(filePath));
-                using (var process = ConfigureProcess(TempWritePath))
+                var myStemErrorOut = string.Empty;
+                using (var process = ConfigureProcess(_textProvider.GetTxtFilePath(filePath)))
                 {
+                    process.ErrorDataReceived += (s, e) => myStemErrorOut += e.Data;
                     process.Start();
+                    process.BeginErrorReadLine();
                     process.WaitForExit();
                 }
 
@@ -61,8 +60,9 @@ namespace TagCloud.TextProcessing
             var process = new Process();
             process.StartInfo.FileName = UtilFileName;
             process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.Arguments = $"{Arguments} {filepath} {TempPath}";
-
             return process;
         }
     }
