@@ -8,7 +8,7 @@ namespace TagCloud.Extensions
     {
         private static int _count;
 
-        public static void Save(this Bitmap bitmap, string? filename = null,
+        public static void SaveWithPostfix(this Bitmap bitmap, string? filename = null,
             string? targetDirectory = null, ImageFormat? format = null)
         {
             var imagesDirectory = Directory.CreateDirectory(Path.Combine(targetDirectory, "images"));
