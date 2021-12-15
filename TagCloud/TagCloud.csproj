@@ -11,13 +11,23 @@
       <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
       <PackageReference Include="DeepMorphy" Version="2.0.3" />
       <PackageReference Include="FluentAssertions" Version="6.2.0" />
-      <PackageReference Include="NHunspell" Version="1.2.5554.16953" />
+      <PackageReference Include="NHunspell.Patched" Version="1.2.5554" />
       <PackageReference Include="NUnit" Version="3.13.2" />
-      <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="ru_RU.aff">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="ru_RU.dic">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="TextHandlers\Converters\PunctuationMarksRemover.cs" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="TextHandlers\Converters\PunctuationMarksRemover.cs" />
+      <Folder Include="bin\Debug\net48" />
     </ItemGroup>
 
 </Project>
