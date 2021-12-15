@@ -12,13 +12,7 @@ namespace CloudContainerTests
     [TestFixture]
     public class TextParserShould
     {
-        private HashSet<string> boringWords;
-
-        [SetUp]
-        public void CreateEmptyBoringWords()
-        {
-            boringWords = new HashSet<string>();
-        }
+        private IExcludingWords boringWords = new BoringWords();
 
         [Test]
         public void Throw_FileNotFoundException_WhenPathIsIncorrect()

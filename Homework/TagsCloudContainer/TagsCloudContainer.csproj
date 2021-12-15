@@ -70,6 +70,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeCantSpell.Hunspell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WeCantSpell.Hunspell.3.0.1\lib\net45\WeCantSpell.Hunspell.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\CommandLineClient.cs" />
@@ -81,6 +84,8 @@
     <Compile Include="CloudLayouters\PointExtensions.cs" />
     <Compile Include="CloudPainter.cs" />
     <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
+    <Compile Include="TextParsers\BoringWords.cs" />
+    <Compile Include="TextParsers\IExcludingWords.cs" />
     <Compile Include="TextParsers\ITextParser.cs" />
     <Compile Include="PaintConfigs\PaintConfig.cs" />
     <Compile Include="PaintConfigs\IPaintConfig.cs" />

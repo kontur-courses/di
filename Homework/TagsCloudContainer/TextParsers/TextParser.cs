@@ -7,14 +7,14 @@ namespace TagsCloudContainer.TextParsers
     public class TextParser : ITextParser
     {
         private readonly string path;
-        private readonly HashSet<string> boringWords;
+        private readonly HashSet<string> excludedWords;
         private readonly Dictionary<string, int> wordsCount;
         private int totalWords;
 
-        public TextParser(string path, IEnumerable<string> boringWords)
+        public TextParser(string path, IExcludingWords excludingWords)
         {
             this.path = path;
-            this.boringWords = boringWords.ToHashSet();
+            this.excludedWords = excludingWords.GetWords();
             this.totalWords = 0;
             wordsCount = GetWordsFromFile(path);
         }
@@ -37,7 +37,7 @@ namespace TagsCloudContainer.TextParsers
                 while ((line = sr.ReadLine()) != null)
                 {
                     line = line.ToLower();
-                    if (boringWords.Contains(line)) continue;
+                    if (excludedWords.Contains(line)) continue;
                     if (!words.TryGetValue(line,  out _))
                         words.Add(line, 0);
                     words[line]++;
