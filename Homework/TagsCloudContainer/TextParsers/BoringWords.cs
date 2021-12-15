@@ -34,7 +34,7 @@ namespace TagsCloudContainer.TextParsers
             };
         }
 
-        public void ExcludeWord(string word)
+        public void AddWord(string word)
             => Words.Add(word);
 
         public HashSet<string> GetWords()

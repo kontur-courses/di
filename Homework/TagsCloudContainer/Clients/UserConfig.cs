@@ -39,7 +39,7 @@ namespace TagsCloudContainer.Clients
         private void GetExcludedWords(IEnumerable<string> words)
         {
             foreach (var word in words)
-                ExcludedWords.ExcludeWord(word);
+                ExcludedWords.AddWord(word);
         }
 
         private void TryGetTagsColor(Options options)
