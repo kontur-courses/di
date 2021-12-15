@@ -6,17 +6,17 @@ namespace TagsCloudContainer.Clients
 {
     public class UserConfig
     {
-        public string InputFile { get; }
-        public string OutputFile { get; }
-        public Size ImageSize { get; }
-        public Point ImageCenter { get; }
-        public string TagsFontName { get; }
-        public int TagsFontSize { get; }
-        public Brush TagsColor { get; }
+        public string InputFile { get; private set; }
+        public string OutputFile { get; private set; }
+        public Size ImageSize { get; private set; }
+        public Point ImageCenter { get; private set; }
+        public string TagsFontName { get; private set; }
+        public int TagsFontSize { get; private set; }
+        public Brush TagsColor { get; private set; }
 
         public UserConfig() { }
 
-        public UserConfig(Options options)
+        public void GetConfig(Options options)
         {
             InputFile = options.Input;
             OutputFile = options.Output;
@@ -24,7 +24,12 @@ namespace TagsCloudContainer.Clients
             ImageCenter = new Point(ImageSize.Width / 2, ImageSize.Height / 2);
             TagsFontName = options.FontName;
             TagsFontSize = options.FontSize;
+            TryGetTagsColor(options);
             ThrowIfAnyArgIsIncorrect();
+        }
+
+        private void TryGetTagsColor(Options options)
+        {
             try
             {
                 TagsColor = (Brush) typeof(Brushes).GetProperty(options.Color).GetValue(null, null);

@@ -19,7 +19,7 @@ namespace TagsCloudContainer.Clients
         {
             var userConfig = new UserConfig();
             var result = Parser.Default.ParseArguments<Options>(args);
-            result.WithParsed(options => userConfig = new UserConfig(options))
+            result.WithParsed(options => userConfig.GetConfig(options))
                 .WithNotParsed(errs => throw new Exception(
                     $"Failed with errors:\n{string.Join("\n", errs)}"));
 
