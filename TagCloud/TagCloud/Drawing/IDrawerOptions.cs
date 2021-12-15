@@ -12,6 +12,6 @@ namespace TagCloud.Drawing
         FontFamily FontFamily { get; }
         float BaseFontSize { get; }
         Size Size { get; }
-        ImageFormat Format { get; }
+        ImageFormat? Format { get; }
     }
 }

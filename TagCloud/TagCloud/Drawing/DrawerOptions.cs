@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using CommandLine;
 
 namespace TagCloud.Drawing
@@ -33,8 +35,20 @@ namespace TagCloud.Drawing
 
         [Option("picture-size", Required = false, HelpText = "Задать размер итогового изображения")]
         public Size Size { get; set; }
+        
+        public ImageFormat? Format => GetImageFormat(ImageExtension);
 
-        [Option("format", Required = false, HelpText = "Задать формат результирующего изображения")]
-        public ImageFormat Format { get; set; } = ImageFormat.Png;
+        [Option('a', "format", Required = false, HelpText = "Задать формат результирующего изображения")]
+        public ImageExtension ImageExtension { get; set; } = ImageExtension.Png;
+
+        private static ImageFormat? GetImageFormat(ImageExtension extension)  
+        {
+            var propertyInfo = typeof(ImageFormat)
+                .GetProperties()
+                .FirstOrDefault(p => p.Name
+                    .Equals(extension.ToString(), StringComparison.InvariantCultureIgnoreCase));
+            
+            return propertyInfo?.GetValue(propertyInfo) as ImageFormat;
+        }  
     }
 }
