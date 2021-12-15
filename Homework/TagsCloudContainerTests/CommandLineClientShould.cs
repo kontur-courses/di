@@ -35,7 +35,7 @@ namespace CloudContainerTests
         public void ParseArgumentsCorrectly()
         {
             var args = new string[] { "input", "output", "-w", 
-                "2000", "-h", "1500", "-n", "TimesNewRoman", "-s", "50", "-c", "Blue"};
+                "2000", "-h", "1500", "-n", "TimesNewRoman", "-s", "50", "-c", "0"};
             var parsedArgs = new Options();
             parsedArgs.Input = args[0];
             parsedArgs.Output = args[1];
@@ -43,7 +43,7 @@ namespace CloudContainerTests
             parsedArgs.Height = int.Parse(args[5]);
             parsedArgs.FontName = args[7];
             parsedArgs.FontSize = int.Parse(args[9]);
-            parsedArgs.Color = args[11];
+            parsedArgs.Color = int.Parse(args[11]);
             var expectedUserConfig = new UserConfig();
             expectedUserConfig.GetConfig(parsedArgs);
 
@@ -61,7 +61,7 @@ namespace CloudContainerTests
             defaultOptions.Width = 1000;
             defaultOptions.FontName = "Arial";
             defaultOptions.FontSize = 20;
-            defaultOptions.Color = "DeepSkyBlue";
+            defaultOptions.Color = 0;
             return defaultOptions;
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
 
 namespace TagsCloudContainer.Clients
@@ -15,7 +16,7 @@ namespace TagsCloudContainer.Clients
         public string TagsFontName { get; private set; }
         public int TagsFontSize { get; private set; }
         public ITextFormatReader FormatReader { get; private set; }
-        public Brush TagsColor { get; private set; }
+        public IColorScheme TagsColors { get; private set; }
         public BoringWords ExcludedWords { get; private set; }
 
         public UserConfig()
@@ -33,7 +34,7 @@ namespace TagsCloudContainer.Clients
             TagsFontSize = options.FontSize;
             FormatReader = GetTextFormatReader(options.InputFileFormat);
             GetExcludedWords(options.ExcludedWords);
-            TryGetTagsColor(options);
+            TagsColors = TryGetTagsColors(options);
             ThrowIfAnyArgIsIncorrect();
         }
 
@@ -50,15 +51,13 @@ namespace TagsCloudContainer.Clients
                 ExcludedWords.AddWord(word.ToLower());
         }
 
-        private void TryGetTagsColor(Options options)
+        private IColorScheme TryGetTagsColors(Options options)
         {
-            try
+            switch (options.Color)
             {
-                TagsColor = (Brush) typeof(Brushes).GetProperty(options.Color).GetValue(null, null);
-            }
-            catch (NullReferenceException)
-            {
-                throw new NullReferenceException($"There is no such color \"{options.Color}\"");
+                case 0: return new BlackWhiteScheme();
+                case 1: return new CamouflageScheme();
+                default: throw new ArgumentException("Unknow color scheme number!");
             }
         }
 

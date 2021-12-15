@@ -84,6 +84,9 @@
     <Compile Include="CloudLayouters\PointExtensions.cs" />
     <Compile Include="CloudPainter.cs" />
     <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
+    <Compile Include="PaintConfigs\BlackWhiteScheme.cs" />
+    <Compile Include="PaintConfigs\IColorScheme.cs" />
+    <Compile Include="PaintConfigs\CamouflageScheme.cs" />
     <Compile Include="TextParsers\BoringWords.cs" />
     <Compile Include="TextParsers\IExcludingWords.cs" />
     <Compile Include="TextParsers\ITextFormatReader.cs" />

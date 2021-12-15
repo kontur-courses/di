@@ -26,8 +26,9 @@ namespace TagsCloudContainer.Clients
         [Option('s', "fontSize", Default = 20, HelpText = "tags fontSize")]
         public int FontSize { get; set; }
 
-        [Option('c', "color", Default = "DeepSkyBlue", HelpText = "tag's color")]
-        public string Color { get; set; }
+        [Option('c', "color", Default = 0, HelpText = 
+            "tag's color scheme (0 - Black and White, 1 - Camouflage")]
+        public int Color { get; set; }
 
         [Option('f', "fileformat", Default = "txt", HelpText = "input file format")]
         public string InputFileFormat { get; set; }

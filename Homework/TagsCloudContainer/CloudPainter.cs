@@ -29,7 +29,7 @@ namespace TagsCloudContainer
             var imageSize = config.ImageSize;
             var image = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(image);
-            graphics.Clear(Color.Black);
+            graphics.Clear(Color.Gray);
             foreach (var wordCount in parser.GetWordsCounts())
                 DrawWord(wordCount, graphics);
             image.Save(pathToSaving, ImageFormat.Png);
@@ -43,7 +43,7 @@ namespace TagsCloudContainer
             var rectSize = graphics.MeasureString(word, drawFont);
             var enclosingRectangle = cloudLayouter.PutNextRectangle(
                 new Size((int) rectSize.Width + wordsBorder, (int) rectSize.Height + wordsBorder));
-            graphics.DrawString(word, drawFont, config.Color, enclosingRectangle);
+            graphics.DrawString(word, drawFont, config.Color.GetNextColor(), enclosingRectangle);
         }
 
         private int ScaleFontSize(int fontSize, int wordQuantity)
