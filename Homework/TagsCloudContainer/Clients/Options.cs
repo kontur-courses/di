@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommandLine;
+using TagsCloudContainer.CloudLayouters;
 
 namespace TagsCloudContainer.Clients
 {
@@ -35,6 +36,9 @@ namespace TagsCloudContainer.Clients
 
         [Option('i', "outputformat", Default = "png", HelpText = "output file format")]
         public string OutputFileFormat { get; set; }
+
+        [Option('r', "spiral", Default = "log", HelpText = "tag cloud spiral form (log or sqr)")]
+        public string Spiral { get; set; }
 
         [Option('e', "exclude", Default = new[] {""})]
         public IEnumerable<string> ExcludedWords { get; set; }

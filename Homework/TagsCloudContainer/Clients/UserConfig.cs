@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
 
@@ -18,6 +19,7 @@ namespace TagsCloudContainer.Clients
         public int TagsFontSize { get; private set; }
         public ITextFormatReader FormatReader { get; private set; }
         public IColorScheme TagsColors { get; private set; }
+        public ISpiral Spiral { get; private set; }
         public ImageFormat ImageFormat { get; private set; }
 
         public BoringWords ExcludedWords { get; private set; }
@@ -40,6 +42,18 @@ namespace TagsCloudContainer.Clients
             AddExcludedWords(options.ExcludedWords);
             TagsColors = TryGetTagsColors(options);
             ThrowIfAnyArgIsIncorrect();
+            Spiral = GetSpiral(options.Spiral);
+        }
+
+        private ISpiral GetSpiral(string spiralName)
+        {
+            spiralName = spiralName.ToLower();
+            switch (spiralName)
+            {
+                case "log": return new LogarithmSpiral(ImageCenter);
+                case "sqr": return new SquareSpiral(ImageCenter);
+                default: throw new ArgumentException("Unknown spiral kind!");
+            }
         }
 
         private ImageFormat GetImageFormat(string formatName)

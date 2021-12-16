@@ -46,7 +46,8 @@ namespace TagsCloudContainer.ContainerConfigurers
         private void RegisterCloudLayouter()
         {
             builder.Register(c => new CircularCloudLayouter(
-                    c.Resolve<UserConfig>().ImageCenter))
+                    c.Resolve<UserConfig>().ImageCenter,
+                    c.Resolve<UserConfig>().Spiral))
                 .As<ICloudLayouter>().SingleInstance();
         }
 

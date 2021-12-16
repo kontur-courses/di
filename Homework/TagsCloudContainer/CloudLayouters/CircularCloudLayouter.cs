@@ -8,11 +8,11 @@ namespace TagsCloudContainer.CloudLayouters
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly List<Rectangle> _rectangles;
-        public IReadOnlyCollection<Rectangle> Rectangles
-            => _rectangles;
         private readonly Point _cloudCenter;
-        public Point CloudCenter
-            => new Point(_cloudCenter.X, _cloudCenter.Y);
+        public IReadOnlyCollection<Rectangle> Rectangles => _rectangles;
+        public Point CloudCenter => new Point(_cloudCenter.X, _cloudCenter.Y);
+        public double EnclosingRadius => _enclosingCircleRadius;
+
         private const double CurveStartingRadius = 0;
         private const double MinimumCurveAngleStep = 0.2;
         private const double CurveAngleStepSlowDown = 0.002;
@@ -20,14 +20,14 @@ namespace TagsCloudContainer.CloudLayouters
         private double _curveAngleStep = Math.PI / 10;
         private double _currentCurveAngle;
         private double _enclosingCircleRadius;
-        public double EnclosingRadius
-            => _enclosingCircleRadius;
+        private ISpiral spiral;
 
-        public CircularCloudLayouter(Point center)
+        public CircularCloudLayouter(Point center, ISpiral spiral)
         {
             _rectangles = new List<Rectangle>();
             _cloudCenter = center;
             _enclosingCircleRadius = 0;
+            this.spiral = spiral;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -60,11 +60,13 @@ namespace TagsCloudContainer.CloudLayouters
 
         private Point GetNextRectCenter(Size rectSize)
         {
-            var nextRectCenter = GetNextCurvePoint();
+            //var nextRectCenter = GetNextCurvePoint();
+            var nextRectCenter = spiral.GetNextCurvePoint();
             var nextRect = GetRectangleByCenter(nextRectCenter, rectSize);
             while (DoesRectIntersectAnyOther(nextRect))
             {
-                nextRectCenter = GetNextCurvePoint();
+                //nextRectCenter = GetNextCurvePoint();
+                nextRectCenter = spiral.GetNextCurvePoint();
                 nextRect = GetRectangleByCenter(nextRectCenter, rectSize);
             }
 

@@ -29,10 +29,10 @@ namespace TagsCloudContainer
             var imageSize = config.ImageSize;
             var image = new Bitmap(imageSize.Width, imageSize.Height);
             var graphics = Graphics.FromImage(image);
-            graphics.Clear(Color.DimGray);
+            graphics.Clear(Color.DarkKhaki);
             foreach (var wordCount in parser.GetWordsCounts())
                 DrawWord(wordCount, graphics);
-            var savingName = pathToSaving + "." + config.ImageFormat.ToString();
+            var savingName = pathToSaving + "." + config.ImageFormat;
             image.Save(savingName, config.ImageFormat);
         }
 
