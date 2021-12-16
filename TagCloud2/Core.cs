@@ -37,7 +37,7 @@ namespace TagCloud2
             var rectangles = words.Select(x => sizeConverter.Convert(x.GetWord(), x.GetFont())).ToArray();
             foreach (var size in rectangles)
             {
-                var currentRectangle = layouter.PutNewRectangle(size);
+                layouter.PutNewRectangle(size);
             }
 
             var colored = coloredCloud.GetFromCloudLayouter(words, layouter, coloringAlgorithm);

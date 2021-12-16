@@ -8,6 +8,8 @@ using TagCloud2.TextGeometry;
 using TagCloudVisualisation;
 using Ninject.Extensions.Conventions;
 using System.Collections.Generic;
+using Autofac;
+
 
 namespace TagCloud2
 {
@@ -15,13 +17,13 @@ namespace TagCloud2
     {
         public static Dictionary<string, Action> dictionary;
         
-        public static void Initialize(StandardKernel kernel)
+        public static void Initialize(ContainerBuilder builder)
         {
             dictionary = new();
-            dictionary.Add("txt", () => kernel.Bind<IFileReader>().To<TxtFileReader>());
-            dictionary.Add("docx", () => kernel.Bind<IFileReader>().To<DocxFileReader>());
-            dictionary.Add("png", () => kernel.Bind<IImageFormatter>().To<PngImageFormatter>());
-            dictionary.Add("jpeg", () => kernel.Bind<IImageFormatter>().To<JpegImageFormatter>());
+            dictionary.Add("txt", () => builder.RegisterType<TxtFileReader>().As<IFileReader>());
+            dictionary.Add("docx", () => builder.RegisterType<DocxFileReader>().As<IFileReader>());
+            dictionary.Add("png", () => builder.RegisterType<PngImageFormatter>().As<IImageFormatter>());
+            dictionary.Add("jpeg", () => builder.RegisterType<JpegImageFormatter>().As<IImageFormatter>());
         }
     }
 
@@ -29,22 +31,24 @@ namespace TagCloud2
     {
         public void Generate(IOptions options)
         {
-            var kernel = new StandardKernel();
-            GeneratorHelper.Initialize(kernel);
-            kernel.Bind(x => x
-            .FromThisAssembly()
-            .SelectAllClasses()
-            .BindAllInterfaces()
-            );
-            kernel.Bind<Core>().ToSelf();
-            kernel.Bind<ICloudLayouter>().To<CircularCloudLayouter>();
+            var builder = new ContainerBuilder();
+            GeneratorHelper.Initialize(builder);
+            builder.RegisterType<Core>().AsSelf();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             var Spiral = new ArchimedeanSpiral(new Point(options.X/2, options.Y/2), options.AngleSpeed, options.LinearSpeed);
-            kernel.Bind<ISpiral>().ToConstant(Spiral);
-            kernel.Unbind<IFileReader>();
-            kernel.Unbind<IImageFormatter>();
+            builder.RegisterInstance(Spiral).As<ISpiral>();
             GeneratorHelper.dictionary[options.Format].Invoke();
             GeneratorHelper.dictionary[options.OutputFormat].Invoke();
-            var core2 = kernel.Get<Core>();
+            builder.RegisterType<LinesWordReader>().As<IWordReader>();
+            builder.RegisterType<StringPreprocessor>().As<IStringPreprocessor>();
+            builder.RegisterType<StringToRectangleConverter>().As<IStringToSizeConverter>();
+            builder.RegisterType<ColoredCloud>().As<IColoredCloud>();
+            builder.RegisterType<RandomColoringAlgorithm>().As<IColoringAlgorithm>();
+            builder.RegisterType<FileGenerator>().As<IFileGenerator>();
+            builder.RegisterType<ColoredCloudToBitmap>().As<IColoredCloudToImageConverter>();
+            builder.RegisterType<SillyWordsRemover>().As<ISillyWordRemover>();
+            builder.RegisterType<ShortWordsSelector>().As<ISillyWordSelector>();
+            var core2 = builder.Build().Resolve<Core>();
             core2.Run(options);
         }
     }
