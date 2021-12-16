@@ -7,7 +7,7 @@ using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
 
-namespace TagsCloudContainer.Clients
+namespace TagsCloudContainer.Client
 {
     public class UserConfig
     {

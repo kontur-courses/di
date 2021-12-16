@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommandLine;
-using TagsCloudContainer.CloudLayouters;
 
-namespace TagsCloudContainer.Clients
+namespace TagsCloudContainer.Client
 {
     public class Options
     {
@@ -24,7 +23,7 @@ namespace TagsCloudContainer.Clients
         [Option('s', "fontSize", Default = 20, HelpText = "tags fontSize")]
         public int FontSize { get; set; }
 
-        [Option('c', "color", Default = 0, HelpText = 
+        [Option('c', "color", Default = 0, HelpText =
             "tag's color scheme (0 - Black and White, 1 - Camouflage, 2 - Cyberpunk")]
         public int Color { get; set; }
 
@@ -34,11 +33,11 @@ namespace TagsCloudContainer.Clients
         [Option('i', "outputformat", Default = "png", HelpText = "output file format")]
         public string OutputFileFormat { get; set; }
 
-        [Option('r', "spiral", Default = "log", HelpText = 
+        [Option('r', "spiral", Default = "log", HelpText =
             "tag cloud spiral form (log for logarithm, sqr for square and rnd for random)")]
         public string Spiral { get; set; }
 
-        [Option('e', "exclude", Default = new[] {""})]
+        [Option('e', "exclude", Default = new[] { "" })]
         public IEnumerable<string> ExcludedWords { get; set; }
     }
 }

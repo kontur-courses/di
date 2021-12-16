@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer.csproj", "{FC9C20D9-301D-49EA-AFC4-D2C4924B5091}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{FC9C20D9-301D-49EA-AFC4-D2C4924B5091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "..\TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{59D69F21-E125-4C18-B0F8-B060A0173D48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{59D69F21-E125-4C18-B0F8-B060A0173D48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{59D69F21-E125-4C18-B0F8-B060A0173D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59D69F21-E125-4C18-B0F8-B060A0173D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59D69F21-E125-4C18-B0F8-B060A0173D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

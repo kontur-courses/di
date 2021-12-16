@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using TagsCloudContainer.Clients;
+using TagsCloudContainer.Client;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;
@@ -8,17 +8,14 @@ namespace TagsCloudContainer.ContainerConfigurers
 {
     public class AutofacConfigurer
     {
-        private string[] args;
-        private ContainerBuilder builder;
-        public AutofacConfigurer(string[] args, ContainerBuilder builder)
+        private readonly ContainerBuilder builder;
+        public AutofacConfigurer(ContainerBuilder builder)
         {
-            this.args = args;
             this.builder = builder;
         }
 
         public IContainer GetContainer()
         {
-            RegisterClient();
             RegisterUserConfig();
             RegisterPaintConfig();
             RegisterCloudLayouter();
@@ -65,12 +62,6 @@ namespace TagsCloudContainer.ContainerConfigurers
         {
             builder.Register(c => c.Resolve<IClient>().UserConfig)
                 .As<UserConfig>();
-        }
-
-        private void RegisterClient()
-        {
-            builder.RegisterInstance(new CommandLineClient(args))
-                .As<IClient>();
         }
     }
 }

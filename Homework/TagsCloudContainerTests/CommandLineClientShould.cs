@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.Clients;
+using TagsCloudContainer.Client;
 
 namespace CloudContainerTests
 {

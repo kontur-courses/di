@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer.Clients
+﻿namespace TagsCloudContainer.Client
 {
     public interface IClient
     {

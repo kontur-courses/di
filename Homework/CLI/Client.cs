@@ -1,14 +1,15 @@
 ﻿using System;
+using TagsCloudContainer.Client;
 using CommandLine;
 
-namespace TagsCloudContainer.Clients
+namespace CLI
 {
-    public class CommandLineClient : IClient
+    public class Client : IClient
     {
-        private string[] args;
+        private readonly string[] args;
         public UserConfig UserConfig { get; }
 
-        public CommandLineClient(string[] args)
+        public Client(string[] args)
         {
             this.args = args;
             UserConfig = GetUserConfig();
