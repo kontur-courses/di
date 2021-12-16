@@ -11,6 +11,19 @@ namespace TagsCloudVisualizationTest
     public class SaveBitmapWhenFailure : Attribute
     {
         public string SavePath { get; private set; }
+        private readonly RectanglePrinter rectanglePrinter;
+        private readonly IColorScheme colorScheme;
+
+        public SaveBitmapWhenFailure() : this(new RectanglePrinter(new RectanglesReCalculator()), new RandomColorScheme())
+        {
+            
+        }
+
+        public SaveBitmapWhenFailure(RectanglePrinter rectanglePrinter, IColorScheme colorScheme)
+        {
+            this.rectanglePrinter = rectanglePrinter;
+            this.colorScheme = colorScheme;
+        }
         
         public bool TrySave(IEnumerable<Rectangle> rectangles, string methodName)
         {
@@ -18,8 +31,8 @@ namespace TagsCloudVisualizationTest
             
             try
             {
-                new RectanglePrinter()
-                    .GetBitmap(rectangles)  // Throw ArgumentException while creating too big bmp.
+                rectanglePrinter
+                    .GetBitmap(colorScheme, rectangles)  // Throw ArgumentException while creating too big bmp.
                     .Save(SavePath, ImageFormat.Jpeg);
             }
             catch (ArgumentException _)

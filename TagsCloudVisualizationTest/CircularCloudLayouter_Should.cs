@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
+using Autofac;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.Layouters;
+using TagsCloudVisualization.Printing;
+using TagsCloudVisualization.Statistics;
+using TagsCloudVisualization.WordProcessors;
 using TagsCloudVisualizationTest.Builders;
 using static FluentAssertions.FluentActions;
 
@@ -16,7 +21,18 @@ namespace TagsCloudVisualizationTest
     [TestFixture]
     public class CircularCloudLayouter_Should
     {
-        private readonly ThreadLocal<List<Rectangle>> rectangles = new ThreadLocal<List<Rectangle>>(() => new List<Rectangle>());
+        private readonly ThreadLocal<List<Rectangle>> rectangles = new(() => new List<Rectangle>());
+        private IContainer container;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<RandomColorScheme>().AsImplementedInterfaces();
+            builder.RegisterType<RectanglePrinter>().AsImplementedInterfaces();
+            builder.RegisterType<RectanglesReCalculator>().AsImplementedInterfaces();
+            container = builder.Build();
+        }
 
         [TearDown]
         public void TearDown()
