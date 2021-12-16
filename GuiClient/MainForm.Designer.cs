@@ -167,8 +167,25 @@ namespace DesktopClient
                 changed = true; Invalidate(); 
             };
             
+            setTextButton = new Button
+            {
+                Location = new Point(720, 300),
+                Size = new Size(150, 50),
+                Text = "Change Text"
+            };
+            setTextButton.Click += (_, _) =>
+            {
+                var openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "(txt)|*txt";
+                if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+                textFilePath = openFileDialog.FileName;
+                changed = true; Invalidate(); 
+            };
+            
             
             Controls.Add(setIgnoreFileButton);
+            Controls.Add(setTextButton);
             Controls.Add(fontButton);
             Controls.Add(colorButton);
             Controls.Add(cloudBox);

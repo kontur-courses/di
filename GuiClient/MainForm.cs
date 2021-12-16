@@ -9,6 +9,7 @@ namespace DesktopClient
     {
         private PictureBox cloudBox;
         private Button setIgnoreFileButton;
+        private Button setTextButton;
         private Button fontButton;
         private Button colorButton;
         private NumericUpDown wordCountToStatistic;
