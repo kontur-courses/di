@@ -52,6 +52,7 @@ namespace TagsCloudContainer.Clients
             {
                 case "log": return new LogarithmSpiral(ImageCenter);
                 case "sqr": return new SquareSpiral(ImageCenter);
+                case "rnd": return new RandomSpiral(ImageCenter);
                 default: throw new ArgumentException("Unknown spiral kind!");
             }
         }

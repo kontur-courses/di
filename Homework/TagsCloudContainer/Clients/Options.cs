@@ -37,7 +37,8 @@ namespace TagsCloudContainer.Clients
         [Option('i', "outputformat", Default = "png", HelpText = "output file format")]
         public string OutputFileFormat { get; set; }
 
-        [Option('r', "spiral", Default = "log", HelpText = "tag cloud spiral form (log or sqr)")]
+        [Option('r', "spiral", Default = "log", HelpText = 
+            "tag cloud spiral form (log for logarithm, sqr for square and rnd for random)")]
         public string Spiral { get; set; }
 
         [Option('e', "exclude", Default = new[] {""})]

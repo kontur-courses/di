@@ -84,6 +84,8 @@
     <Compile Include="CloudLayouters\ISpiral.cs" />
     <Compile Include="CloudLayouters\PointExtensions.cs" />
     <Compile Include="CloudLayouters\LogarithmSpiral.cs" />
+    <Compile Include="CloudLayouters\Quarter.cs" />
+    <Compile Include="CloudLayouters\RandomSpiral.cs" />
     <Compile Include="CloudLayouters\SquareSpiral.cs" />
     <Compile Include="CloudPainter.cs" />
     <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
