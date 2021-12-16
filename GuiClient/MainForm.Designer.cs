@@ -1,5 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using Autofac;
+using TagsCloudVisualization.Readers;
 
 namespace DesktopClient
 {
@@ -130,7 +134,8 @@ namespace DesktopClient
             setIgnoreFileButton.Click += (_, _) =>
             {
                 var openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "(txt)|*txt";
+                // openFileDialog.Filter = "Text Files(*.txt)|*.txt";
+                openFileDialog.Filter = string.Join("|", tagCloud.Container.Resolve<IEnumerable<IFileReader>>().Select(x => x.Format.Filter));
                 if (openFileDialog.ShowDialog() == DialogResult.Cancel)
                     return;
                 ignoreWordsFileName = openFileDialog.FileName;
@@ -176,7 +181,8 @@ namespace DesktopClient
             setTextButton.Click += (_, _) =>
             {
                 var openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "(txt)|*txt";
+                // openFileDialog.Filter = "(txt)|*txt";
+                openFileDialog.Filter = string.Join("|", tagCloud.Container.Resolve<IEnumerable<IFileReader>>().Select(x => x.Format.Filter));
                 if (openFileDialog.ShowDialog() == DialogResult.Cancel)
                     return;
                 textFilePath = openFileDialog.FileName;

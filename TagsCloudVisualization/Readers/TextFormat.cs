@@ -14,6 +14,8 @@ namespace TagsCloudVisualization.Readers
 
         private readonly string value;
 
+        public string Filter => $"({value.Substring(1)})|*{value.Substring(1)}";
+
         private TextFormat(string format)
         {
             value = format;
