@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationShould.cs" />
-    <Compile Include="CommandLineClientShould.cs" />
+    <Compile Include="CLIShould.cs" />
     <Compile Include="TextParserShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CLI\CLI.csproj">
+      <Project>{eae5def8-1a00-4f1b-b047-66e94f4d7b68}</Project>
+      <Name>CLI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
       <Project>{fc9c20d9-301d-49ea-afc4-d2c4924b5091}</Project>
       <Name>TagsCloudContainer</Name>

@@ -34,7 +34,7 @@ namespace CloudContainerTests
         }
 
         [Test]
-        public void ShowDistinctWordsCountRight()
+        public void Show_Distinct_Words_Count_Right()
         {
             var path = "words.txt";
             var wordsCount = 3;
