@@ -100,7 +100,7 @@ namespace ConsoleApp
 
             var savingName = imageName + "." + imageFormat.ToString().ToLower();
 
-            savingPath += savingPath[^1] == '\\' ? "" : "\\";
+            savingPath += savingPath.Length > 0 && savingPath[^1] == '\\' ? "" : "\\";
             
             img.Save(savingPath + savingName, ImageFormat.Png);
             

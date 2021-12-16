@@ -13,7 +13,7 @@ namespace TagsCloudVisualizationTests
 {
     [TestFixture]
     [Ignore("Visual test")]
-    public class TagCloudCreator_Should
+    public class TagsCloudVisualization_Should
     {
         private ContainerProvider provider;
 
