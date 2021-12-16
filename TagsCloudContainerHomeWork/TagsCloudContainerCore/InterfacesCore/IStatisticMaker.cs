@@ -4,8 +4,8 @@ namespace TagsCloudContainerCore.InterfacesCore;
 
 public interface IStatisticMaker
 {
-    void AddTags(IEnumerable<string> tags);
-    public KeyValuePair<string, int> GetMinTag();
-    public KeyValuePair<string, int> GetMaxTag();
+    void AddTagValues(IEnumerable<string> tags);
+    public KeyValuePair<string, int> GetMostFrequentTag();
+    public KeyValuePair<string, int> GetLeastFrequentTag();
     IEnumerable<KeyValuePair<string, int>> CountedTags { get; }
 }

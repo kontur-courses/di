@@ -14,6 +14,7 @@ public static class XmlSettingsHelper
         var settings = new LayoutSettings
         {
             PathToExcludedWords = null,
+            // ReSharper disable once StringLiteralTypo
             BackgroundColor = "FFFFFF",
             FontName = "Arial",
             FontColor = "000000",

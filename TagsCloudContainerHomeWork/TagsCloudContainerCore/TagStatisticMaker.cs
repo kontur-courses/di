@@ -23,7 +23,7 @@ public class TagStatisticMaker : IStatisticMaker
 
     public IEnumerable<KeyValuePair<string, int>> CountedTags => tagsWithCount;
 
-    public KeyValuePair<string, int> GetMaxTag()
+    public KeyValuePair<string, int> GetLeastFrequentTag()
     {
         // ReSharper disable once InvertIf
         if (isChangeTags)
@@ -35,7 +35,7 @@ public class TagStatisticMaker : IStatisticMaker
         return orderedPairs[^1];
     }
 
-    public KeyValuePair<string, int> GetMinTag()
+    public KeyValuePair<string, int> GetMostFrequentTag()
     {
         // ReSharper disable once InvertIf
         if (isChangeTags)
@@ -47,7 +47,7 @@ public class TagStatisticMaker : IStatisticMaker
         return orderedPairs[0];
     }
 
-    public void AddTags(IEnumerable<string> tags)
+    public void AddTagValues(IEnumerable<string> tags)
     {
         foreach (var tag in tags)
         {

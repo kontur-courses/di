@@ -11,7 +11,7 @@ using TagsCloudContainerCore.InterfacesCore;
 namespace TagsCloudContainerCore.Helpers;
 
 // ReSharper disable once InconsistentNaming
-public static class DIContainersHelper
+public static class DICloudLayouterContainerFactory
 {
     public static IContainer GetContainer(LayoutSettings settings)
     {
@@ -20,16 +20,20 @@ public static class DIContainersHelper
             step: settings.Step,
             minAngle: MathF.PI / 180 * settings.MinAngle);
 
-        Func<string,bool> wordFilter = s => !ExcludeWordFileHelper.IsExclude(s);
+        var backgroundColor = int.Parse("FF" + settings.BackgroundColor, NumberStyles.HexNumber);
 
         // ReSharper disable once ConvertToLocalFunction
+        Func<string, bool> wordFilter = s => !ExcludeWordFileHelper.IsExclude(s);
+
         var builder = new ContainerBuilder();
+
+        builder.RegisterType<WinPainter>().As<IPainter>()
+            .WithParameter(new NamedParameter("backgroundColorHex", backgroundColor));
 
         builder.RegisterType<TagStatisticMaker>()
             .As<IStatisticMaker>()
             .WithParameter("tagFilter", wordFilter);
 
-        builder.RegisterType<WinTagMaker>().As<ITagMaker>();
 
         builder.RegisterType<CircularCloudLayouter>().As<ILayouter>()
             .WithParameters(new List<Parameter>
@@ -37,19 +41,10 @@ public static class DIContainersHelper
                 new PositionalParameter(0, Point.Empty),
                 new PositionalParameter(1, circularParameters)
             });
+        
+        builder.RegisterType<WinTagMaker>().As<ITagMaker<LayoutSettings>>();
 
-        var fontColor = int.Parse("FF" + settings.FontColor, NumberStyles.HexNumber);
-        var backGroundColor = int.Parse("FF" + settings.BackgroundColor, NumberStyles.HexNumber);
-        builder.RegisterType<CloudLayouter>().WithParameters(new List<Parameter>(
-            new List<Parameter>
-            {
-                new NamedParameter("fontName", settings.FontName),
-                new NamedParameter("maxFontSize", settings.MaxFontSize),
-                new NamedParameter("fontColorHex", fontColor),
-                new NamedParameter("backgroundColorHex", backGroundColor),
-                new NamedParameter("imageSize", settings.PictureSize)
-            }
-        ));
+        builder.RegisterType<TagCloudMaker>().As<ITagCloudMaker<LayoutSettings>>();
 
         return builder.Build();
     }

@@ -6,13 +6,14 @@ using System.Text.RegularExpressions;
 using Autofac;
 using CommandDotNet;
 using TagsCloudContainerCore.Helpers;
+using TagsCloudContainerCore.InterfacesCore;
 
 namespace TagsCloudContainerCore.Console;
 
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once ClassNeverInstantiated.Global
 [SuppressMessage("Interoperability", "CA1416", MessageId = "Проверка совместимости платформы")]
-public class ConsoleUI
+public class WinConsoleUI
 {
     public static void Main(string[] args)
     {
@@ -22,7 +23,7 @@ public class ConsoleUI
         }
 
 
-        new AppRunner<ConsoleUI>().Run(args);
+        new AppRunner<WinConsoleUI>().Run(args);
     }
 
     [Command("font",
@@ -57,7 +58,7 @@ public class ConsoleUI
             if (!colorRegex.IsMatch(color))
             {
                 throw new ArgumentException("Вы ввели не правильную кодировку цвета.\n" +
-                                            " Используйте прдеставление HEX, например \"FF01AB\"");
+                                            " Используйте представление HEX, например \"FF01AB\"");
             }
 
             settings.FontColor = color.ToUpperInvariant();
@@ -89,7 +90,7 @@ public class ConsoleUI
     }
 
 
-    [Command("reset", Description = "Cбрасывает все настройки до начальных")]
+    [Command("reset", Description = "Сбрасывает все настройки до начальных")]
     public void ResetSettings()
     {
         XmlSettingsHelper.CreateSettingsFile();
@@ -136,6 +137,7 @@ public class ConsoleUI
         PrintSettings();
     }
 
+    // ReSharper disable once StringLiteralTypo
     [Command("picsize", Description = "Устанавливает размер выходного изображения")]
     public void SetPictureSize(
         [Named("width")] int width,
@@ -167,7 +169,7 @@ public class ConsoleUI
         if (!colorRegex.IsMatch(color))
         {
             throw new ArgumentException("Вы ввели не правильную кодировку цвета.\n" +
-                                        " Используйте прдеставление HEX, например \"FF01AB\"");
+                                        " Используйте преставление HEX, например \"FF01AB\"");
         }
 
         var settings = XmlSettingsHelper.GetLayoutSettings();
@@ -176,7 +178,7 @@ public class ConsoleUI
         System.Console.WriteLine($"Установлен цвет фона: \"{color}\"\n");
     }
 
-    [Command("exclude", Description = "Добавляем файл с исключенными словами. " +
+    [Command("exclude", Description = "Добавляем файл с исключёнными словами. " +
                                       "Файл должен содержать слова записанные через пробел")]
     public void ExcludeWordsFromFile(
         [Positional(Description = "Путь до файла")]
@@ -189,27 +191,37 @@ public class ConsoleUI
 
         var settings = XmlSettingsHelper.GetLayoutSettings();
         settings.PathToExcludedWords = path;
-        
+
         XmlSettingsHelper.CreateSettingsFile(settings);
         PrintSettings();
     }
 
-    [DefaultCommand]
+    [Command("print",
+        Description = "Печатаем облако тегов по тексту из in в файл out,\n" +
+                      "если в out указать только директорию, то именем будет текущие дата и время, формат файла png.\n"+
+                      "Что-бы сохранить картинку в нужном расширении в out нужно указать путь на файл с соответствующим расширением")]
     // ReSharper disable once MemberCanBePrivate.Global
     public void DrawCloud(
         [Named("in", Description = "Путь к файлу со списком тегов")]
         string pathIn,
-        [Named("out", Description = "Путь к дериктории, куда сохранить изображение")]
+        [Named("out", Description = "Путь к файлу, куда сохранить изображение")]
         string pathOut)
     {
         var settings = XmlSettingsHelper.GetLayoutSettings();
 
-        var container = DIContainersHelper.GetContainer(settings);
-        var layouter = container.Resolve<CloudLayouter>();
+        var container = DICloudLayouterContainerFactory.GetContainer(settings);
+
+        var layouter = container.Resolve<ITagCloudMaker<LayoutSettings>>();
+        var painter = container.Resolve<IPainter>();
 
         var rawTags = FileRiderHelper.GetTags(pathIn);
-        var tagsToRender = layouter.GetTagsToRender(rawTags);
+        var tagsToRender = layouter.GetTagsToRender(rawTags, settings);
 
-        DrawHelper.Paint(pathOut, tagsToRender, settings.PictureSize, layouter.BackgroundColorHex);
+        using var picture = painter.Paint(tagsToRender, settings.PictureSize);
+        WinSaver.Save(picture, pathOut);
+
+        System.Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("\n[ГОТОВО]\n");
+        System.Console.ResetColor();
     }
 }

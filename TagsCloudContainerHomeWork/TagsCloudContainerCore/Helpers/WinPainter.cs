@@ -2,19 +2,25 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
+using TagsCloudContainerCore.InterfacesCore;
 
 namespace TagsCloudContainerCore.Helpers;
 
 [SuppressMessage("Interoperability", "CA1416", MessageId = "Проверка совместимости платформы")]
-public static class DrawHelper
+public class WinPainter : IPainter
 {
-    public static void Paint(
-        string outPath,
-        IEnumerable<TagToRender> tags,
-        Size imageSize,
-        int backgroundColorHex)
+    private readonly int backgroundColorHex;
+
+    public WinPainter(int backgroundColorHex)
     {
-        using var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
+        this.backgroundColorHex = backgroundColorHex;
+    }
+
+    public Bitmap Paint(
+        IEnumerable<TagToRender> tags,
+        Size imageSize)
+    {
+         var bitmap = new Bitmap(imageSize.Width, imageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);
         var bitmapCenter = new Point(imageSize.Width / 2, imageSize.Height / 2);
 
@@ -34,6 +40,6 @@ public static class DrawHelper
             graphics.DrawString(tag.Value, font, fontBrush, tag.Location);
         }
 
-        bitmap.Save(outPath, ImageFormat.Png);
+        return bitmap;
     }
 }

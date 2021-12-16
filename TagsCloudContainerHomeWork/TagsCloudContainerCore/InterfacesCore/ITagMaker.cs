@@ -3,8 +3,8 @@ using System.Drawing;
 
 namespace TagsCloudContainerCore.InterfacesCore;
 
-public interface ITagMaker
+public interface ITagMaker<in TSettings>
+
 {
-    public float GetFontSize(KeyValuePair<string, int> tag, IStatisticMaker maker, float maxFontSize);
-    public Size GetTagSize(string tag, string fontName, float fontSize, Size imageSize);
+    public TagToRender MakeTag(KeyValuePair<string, int> raw, TSettings settings, IStatisticMaker statisticMaker);
 }
