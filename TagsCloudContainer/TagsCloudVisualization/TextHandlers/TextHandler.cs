@@ -18,9 +18,8 @@ namespace TagsCloudVisualization.TextHandlers
         public IEnumerable<string> Handle(string filePath)
         {
             var words = parser.ParseWords(filePath);
-            words = preparer.PrepareText(words);
 
-            return words;
+            return preparer.PrepareText(words);
         }
     }
 }

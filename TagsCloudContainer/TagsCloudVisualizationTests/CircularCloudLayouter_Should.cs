@@ -15,7 +15,7 @@ namespace TagsCloudVisualizationTests
     public class CircularCloudLayouterShould
     {
         private const float Epsilon = 1e-5f;
-        private readonly Point center = new (300, 400);
+        private readonly Point center = new (400, 300);
         private const int RectanglesCount = 100;
         private const int CloudsCount = 100;
         private ContainerProvider provider;
@@ -82,7 +82,7 @@ namespace TagsCloudVisualizationTests
 
         [Test]
         [Repeat(100)]
-        public void PutNextRectangle_AverageRandomSizeRectanglesCloudDensity_GreaterThan60Percents()
+        public void PutNextRectangle_AverageRandomSizeRectanglesCloudDensity_GreaterThan55Percents()
         {
             var avgDensity = 0.0;
 
@@ -93,12 +93,12 @@ namespace TagsCloudVisualizationTests
 
             avgDensity /= CloudsCount;
 
-            avgDensity.Should().BeGreaterThan(0.6);
+            avgDensity.Should().BeGreaterThan(0.55);
         }
 
         [Test]
         [Repeat(100)]
-        public void PutNextRectangle_AverageSameSizeRectanglesCloudDensity_GreaterThan70Percents()
+        public void PutNextRectangle_AverageSameSizeRectanglesCloudDensity_GreaterThan65Percents()
         {
             var avgDensity = Generators.
                 RectanglesRandomSizeGenerator(CloudsCount)
@@ -106,12 +106,14 @@ namespace TagsCloudVisualizationTests
 
             avgDensity /= CloudsCount;
 
-            avgDensity.Should().BeGreaterThan(0.7);
+            avgDensity.Should().BeGreaterThan(0.65);
         }
 
 
         private double GetCloudDensity(IEnumerable<SizeF> rectanglesSizes)
         {
+            layouter = provider.Container.Resolve<ILayouter>();
+            
             var rectanglesArea = 0.0f;
 
             var lastRectangle = new RectangleF();

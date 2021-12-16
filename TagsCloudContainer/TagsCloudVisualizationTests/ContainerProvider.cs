@@ -19,6 +19,11 @@ namespace TagsCloudVisualizationTests
         public IContainer Container { get; private set; }
         private ContainerBuilder builder;
 
+        public ContainerProvider()
+        {
+            builder = new ContainerBuilder();
+        }
+
         public void RegisterDependencies()
         {
             builder.RegisterType<Spiral>().As<IPointPlacer>();

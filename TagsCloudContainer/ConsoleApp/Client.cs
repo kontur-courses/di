@@ -53,7 +53,7 @@ namespace ConsoleApp
                 
                 if (consoleInput is "finish" && TryFinish()) break;
 
-                if (consoleInput is "default")
+                if (consoleInput is "default" && TryFinish())
                 {
                     SetParamsToDefault();
                     break;
