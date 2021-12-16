@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
 using TagsCloudContainer.Clients;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;

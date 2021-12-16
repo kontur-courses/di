@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using System.Xml;
-
 namespace TagsCloudContainer.CloudLayouters
 {
     public class SquareSpiral : ISpiral
@@ -15,7 +13,6 @@ namespace TagsCloudContainer.CloudLayouters
         private const int delta = 10;
         private int needToGo;
         private int currentDistance;
-        private int stepCounter;
 
         public SquareSpiral(Point spiralCenter)
         {

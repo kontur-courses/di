@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace TagsCloudContainer.TextParsers
 {
@@ -34,20 +32,6 @@ namespace TagsCloudContainer.TextParsers
         private Dictionary<string, int> GetWordsFromFile(string path)
         {
             var words = new Dictionary<string, int>();
-            //using (StreamReader sr = new StreamReader(path, Encoding.Default))
-            //{
-            //    string line;
-            //    while ((line = sr.ReadLine()) != null)
-            //    {
-            //        line = line.ToLower();
-            //        line = line.TrimEnd('\n');
-            //        if (excludedWords.Contains(line)) continue;
-            //        if (!words.TryGetValue(line,  out _))
-            //            words.Add(line, 0);
-            //        words[line]++;
-            //        totalWords++;
-            //    }
-            //}
             var lines = textReader.GetLines(path);
             foreach (var line in lines)
                 ProcessLine(line, words);

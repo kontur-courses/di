@@ -12,13 +12,6 @@ namespace TagsCloudContainer.CloudLayouters
         public IReadOnlyCollection<Rectangle> Rectangles => _rectangles;
         public Point CloudCenter => new Point(_cloudCenter.X, _cloudCenter.Y);
         public double EnclosingRadius => _enclosingCircleRadius;
-
-        private const double CurveStartingRadius = 0;
-        private const double MinimumCurveAngleStep = 0.2;
-        private const double CurveAngleStepSlowDown = 0.002;
-        private const double DirectionBetweenRoundsCoeff = 1 / (2 * Math.PI);
-        private double _curveAngleStep = Math.PI / 10;
-        private double _currentCurveAngle;
         private double _enclosingCircleRadius;
         private ISpiral spiral;
 
@@ -60,29 +53,15 @@ namespace TagsCloudContainer.CloudLayouters
 
         private Point GetNextRectCenter(Size rectSize)
         {
-            //var nextRectCenter = GetNextCurvePoint();
             var nextRectCenter = spiral.GetNextCurvePoint();
             var nextRect = GetRectangleByCenter(nextRectCenter, rectSize);
             while (DoesRectIntersectAnyOther(nextRect))
             {
-                //nextRectCenter = GetNextCurvePoint();
                 nextRectCenter = spiral.GetNextCurvePoint();
                 nextRect = GetRectangleByCenter(nextRectCenter, rectSize);
             }
 
             return nextRectCenter;
-        }
-
-        private Point GetNextCurvePoint()
-        {
-            _currentCurveAngle += _curveAngleStep;
-            if (_curveAngleStep > MinimumCurveAngleStep)
-                _curveAngleStep -= CurveAngleStepSlowDown;
-            return new Point(
-                Convert.ToInt32((CurveStartingRadius + DirectionBetweenRoundsCoeff * _currentCurveAngle)
-                                * Math.Cos(_currentCurveAngle)) + CloudCenter.X,
-                Convert.ToInt32((CurveStartingRadius + DirectionBetweenRoundsCoeff * _currentCurveAngle)
-                                * Math.Sin(_currentCurveAngle)) + CloudCenter.Y);
         }
 
         private static Rectangle GetRectangleByCenter(Point centerCoords, Size rectangleSize)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using TagsCloudContainer.CloudLayouters;
 using TagsCloudContainer.PaintConfigs;
 using TagsCloudContainer.TextParsers;

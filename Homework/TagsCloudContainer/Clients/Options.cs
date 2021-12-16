@@ -12,14 +12,11 @@ namespace TagsCloudContainer.Clients
         [Option('o', "output", Default = "tagcloud", HelpText = "path to output file")]
         public string Output { get; set; }
 
-
         [Option('w', "width", Default = 1000, HelpText = "tag cloud image width")]
         public int Width { get; set; }
 
-
         [Option('h', "height", Default = 1000, HelpText = "tag cloud image height")]
         public int Height { get; set; }
-
 
         [Option('n', "fontName", Default = "Arial", HelpText = "tags fontName")]
         public string FontName { get; set; }
