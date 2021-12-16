@@ -8,9 +8,13 @@ namespace TagCloud2
 {
     public class LinesWordReader : IWordReader
     {
-        public string[] GetWords(string input)
+        public string[] GetUniqueLowercaseWords(string input)
         {
-            return input.Split('\r');
+            return input
+                .ToLower()
+                .Split('\r')
+                .Distinct()
+                .ToArray();
         }
     }
 }

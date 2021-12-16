@@ -14,6 +14,7 @@ namespace TagCloud2.Image
             var words = cloud.GetColoredWords();
             var bitmap = new Bitmap(xSize, ySize);
             var g = Graphics.FromImage(bitmap);
+            g.Clear(Color.Black);
             foreach (var r in words)
             {
                 var word = r.GetWord();

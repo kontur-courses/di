@@ -12,7 +12,7 @@ namespace TagCloud2
         ISillyWordSelector sillySelector;
         public string PreprocessString(string input)
         {
-            return sillyRemover.RemoveSillyWords(input, sillySelector).ToLower();
+            return sillyRemover.RemoveSillyWords(input, sillySelector);
         }
 
         public StringPreprocessor(ISillyWordRemover remover, ISillyWordSelector selector)

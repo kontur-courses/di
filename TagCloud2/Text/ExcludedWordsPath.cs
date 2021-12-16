@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TagCloud2
+namespace TagCloud2.Text
 {
-    public interface IWordReader
+    public class ExcludedWordsPath
     {
-        string[] GetUniqueLowercaseWords(string input);
+        public string Path { get; set; }
     }
 }

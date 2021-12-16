@@ -9,60 +9,42 @@ namespace ConsoleRunner
         [Option('p', "path", Required = true, HelpText = "Path to input file with text")]
         public string Path { get; set; }
 
-        [Option('f', "format", Required = false, HelpText = "Format of input file")]
-        public string Format { get; set; }
-        private string format = "txt";
+        [Option('f', "inputformat", Required = false, HelpText = "Format of input file", Default = "txt")]
+        public string InputFormat { get; set; }
 
-        [Option('i', "imageFormat", Required = false, HelpText = "Output format")]
+        [Option('i', "imageFormat", Required = false, HelpText = "Output format", Default = "png")]
         public string OutputFormat { get; set; }
-        private string outputFormat = "png";
 
-        [Option('n', "outputName", Required = false, HelpText = "Output name")]
+        [Option('n', "outputName", Required = false, HelpText = "Output name", Default = "output.png")]
         public string OutputName { get; set; }
-        private string outputName = "output.png";
 
-        [Option("font", Required = false, HelpText = "Font name")]
+        [Option("font", Required = false, HelpText = "Font name", Default = "Arial")]
         public string FontName { get; set; }
-        private string fontName = "Arial";
 
-        [Option("fontsize", Required = false, HelpText = "Font size")]
+        [Option("fontsize", Required = false, HelpText = "Font size", Default = 12)]
         public int FontSize { get; set; }
-        private int fontSize = 12;
 
-        [Option("xsize", Required = false, HelpText = "image X size")]
+        [Option("xsize", Required = false, HelpText = "image X size", Default = 1000)]
         public int X { get; set; }
-        private int x = 1000;
 
-        [Option("ysize", Required = false, HelpText = "image Y size")]
+        [Option("ysize", Required = false, HelpText = "image Y size", Default = 1000)]
         public int Y { get; set; }
-        private int y = 1000;
 
-        [Option("anglespeed", Required = false, HelpText = "Angle speed of spiral. USE ONLY IF UNDERSTAND")]
+        [Option("anglespeed", Required = false, HelpText = "Angle speed of spiral. USE ONLY IF UNDERSTAND", Default = 0.108)]
         public double AngleSpeed { get; set; }
-        private double angleSpeed = 0.108;
 
-        [Option("linearspeed", Required = false, HelpText = "Linear speed of spiral. USE ONLY IF UNDERSTAND")]
+        [Option("linearspeed", Required = false, HelpText = "Linear speed of spiral. USE ONLY IF UNDERSTAND", Default = 0.032)]
         public double LinearSpeed { get; set; }
-        private double linearSpeed = 0.108;
 
-        [Option("boringwordspath", Required = false, HelpText = "path to file with words to exclude")]
+        [Option("excludewordspath", Required = false, HelpText = "path to file with words to exclude")]
         public string ExcludePath { get; set; }
 
-        [Option("boringmode", Required = false, HelpText = "enables words excluding mode")]
-        public bool IsBoringMode { get; set; } 
+        [Option("cm", Required = false, HelpText = "specify coloring mode (random/bw)", Default = "random")]
+        public string ColoringMode { get; set; }
 
-        public void MakeNullsDefault()
-        {
-            Format = Format ?? format;
-            OutputFormat = OutputFormat ?? outputFormat;
-            OutputName = OutputName ?? outputName;
-            FontName = FontName ?? fontName;
-            if (FontSize == 0) FontSize = fontSize;
-            if (Y == 0) Y = y;
-            if (X == 0) X = x;
-            if (LinearSpeed == 0) LinearSpeed = linearSpeed;
-            if (AngleSpeed == 0) AngleSpeed = angleSpeed;
-        }
+        [Option("bm", Required = false, HelpText = "choose mode of boring words picking (short/exclude)\n" +
+            "if using exclude, specify exclude path.", Default = "short")]
+        public string BoringMode { get; set; }
     }
     class Program
     {
@@ -70,7 +52,6 @@ namespace ConsoleRunner
         {
             var options = new Options();
             Parser.Default.ParseArguments<Options>(args).WithParsed(o => options = o);
-            options.MakeNullsDefault();
             var g = new Generator();
             g.Generate(options);
         }

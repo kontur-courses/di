@@ -28,12 +28,13 @@ namespace TagCloud2
             var fontF = new FontFamily(options.FontName);
             var font = new Font(fontF, options.FontSize);
             var input = reader.ReadFile(options.Path);
-            var lines = wordReader.GetWords(input);
+            var lines = wordReader.GetUniqueLowercaseWords(input);
             var words = lines
                 .Select(x => preprocessor.PreprocessString(x))
                 .Where(x => x != "")
                 .Select(x => new ColoredSizedWord(x, font))
                 .ToArray();
+
             var rectangles = words.Select(x => sizeConverter.Convert(x.GetWord(), x.GetFont())).ToArray();
             foreach (var size in rectangles)
             {

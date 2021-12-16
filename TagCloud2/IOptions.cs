@@ -10,7 +10,7 @@ namespace TagCloud2
     {
         string Path { get; set; }
 
-        string Format { get; set; }
+        string InputFormat { get; set; }
 
         string OutputFormat { get; set; }
 
@@ -29,5 +29,9 @@ namespace TagCloud2
         double AngleSpeed { get; set; }
 
         string ExcludePath { get; set; }
+
+        string ColoringMode { get; set; }
+
+        string BoringMode { get; set; }
     }
 }

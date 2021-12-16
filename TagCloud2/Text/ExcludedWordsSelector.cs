@@ -8,15 +8,15 @@ namespace TagCloud2.Text
 {
     public class ExcludedWordsSelector : ISillyWordSelector
     {
-        private HashSet<string> sillyWords;
+        private HashSet<string> excluded;
         public bool IsWordSilly(string word)
         {
-            return sillyWords.Contains(word);
+            return excluded.Contains(word);
         }
 
-        public ExcludedWordsSelector(HashSet<string> sillyWords)
+        public ExcludedWordsSelector(IFileReader fileReader, IWordReader wordReader, ExcludedWordsPath path)
         {
-            this.sillyWords = sillyWords;
+            excluded = wordReader.GetUniqueLowercaseWords(fileReader.ReadFile(path.Path)).ToHashSet();
         }
     }
 }
