@@ -14,7 +14,6 @@ namespace TagsCloudVisualization
         
         public string TextFilePath { get; set; }
         public string? CustomIgnoreFilePath { get; set; }
-        public string DefaultIgnoreFilePath => "ignore.txt";
         
         public TagCloudResultActions TagCloudResultActions { get; set; }
         public SourceTextInterpretationMode  SourceTextInterpretationMode { get; set; }

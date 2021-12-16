@@ -5,6 +5,6 @@ namespace TagsCloudVisualization
 {
     public interface IPrinter<in TPrintedObject>
     {
-        Bitmap GetBitmap(IEnumerable<TPrintedObject> objects, Size? bitmapSize = null);
+        Bitmap GetBitmap(IColorScheme colorScheme, IEnumerable<TPrintedObject> objects, Size? bitmapSize = null);
     }
 }

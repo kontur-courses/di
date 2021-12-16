@@ -5,9 +5,14 @@ namespace TagsCloudVisualization.WordValidators
 {
     public class IgnoredWordsValidator : IWordValidator
     {
-        private readonly HashSet<string> boringWords;
+        private HashSet<string> boringWords;
         
-        public IgnoredWordsValidator([KeyFilter("IgnoreWords")] IEnumerable<string> invalidWords)
+        public IgnoredWordsValidator()
+        {
+            boringWords = new HashSet<string> {"в", "на", "что", "ты", "я", "вы", "он", "на", "из", "от", "за", "для"};
+        }
+
+        public void SetIgnoreWords(IEnumerable<string> invalidWords)
         {
             boringWords = new HashSet<string>(invalidWords);
         }

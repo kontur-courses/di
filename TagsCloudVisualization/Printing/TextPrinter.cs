@@ -9,15 +9,13 @@ namespace TagsCloudVisualization
     {
         private const int Margin = 50;
         private readonly IRectanglesReCalculator reCalculator;
-        private readonly IColorScheme colorScheme;
 
-        public TextPrinter(IRectanglesReCalculator reCalculator, IColorScheme colorScheme)
+        public TextPrinter(IRectanglesReCalculator reCalculator)
         {
             this.reCalculator = reCalculator;
-            this.colorScheme = colorScheme;
         }
         
-        public Bitmap GetBitmap(IEnumerable<Text> texts, Size? bitmapSize = null)
+        public Bitmap GetBitmap(IColorScheme colorScheme, IEnumerable<Text> texts, Size? bitmapSize = null)
         {
             var fixedTexts = texts.ToList();
             if (!fixedTexts.Any()) throw new ArgumentException($"text list is empty");
@@ -33,12 +31,12 @@ namespace TagsCloudVisualization
                 fixedTexts.Select((x, i) => new Text(
                     x.Word, 
                     x.Font, 
-                    recalculated[i])));
+                    recalculated[i])), colorScheme);
 
             return bmp;
         }
         
-        private void DrawText(Graphics graphics, IEnumerable<Text> texts)
+        private void DrawText(Graphics graphics, IEnumerable<Text> texts, IColorScheme colorScheme)
         {
             foreach (var (word, font, rectangle) in texts)
             {

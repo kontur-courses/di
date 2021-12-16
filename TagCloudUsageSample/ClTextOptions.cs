@@ -53,11 +53,14 @@ namespace TagCloudUsageSample
         [SizeValidator(1, 1, nameof(Size))]
         [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
         public string Size { get; set; }
+
+
+        private readonly TagCloud tagCloud = new();
         
         public void CreateTags(out string firstFileName)
         {
             firstFileName = Path.Combine(SavePath, FileName) + "." + ImageFormat.Png.ToString().ToLower();
-            Configurator.CreateTags(GetConfig()).Save(firstFileName, ImageFormat.Png);
+            tagCloud.GetBitmap(GetConfig()).Save(firstFileName, ImageFormat.Png);
         }
 
         private Config GetConfig()

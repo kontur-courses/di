@@ -8,7 +8,7 @@ namespace TagsCloudVisualization
     {
         private readonly float maxFontSize;
 
-        public DefaultWordStatisticsToSizeConverter(float maxFontSize)
+        public DefaultWordStatisticsToSizeConverter(float maxFontSize = 1000)
         {
             this.maxFontSize = maxFontSize;
         }

@@ -9,9 +9,9 @@ namespace TagsCloudVisualization
     {
         private const int Margin = 100;
         
-        public Bitmap GetBitmap(IEnumerable<Rectangle> texts)
+        public Bitmap GetBitmap(IColorScheme colorScheme, IEnumerable<Rectangle> objects, Size? bitmapSize = null)
         {
-            var rects = texts.ToList();
+            var rects = objects.ToList();
             if (!rects.Any())
                 throw new ArgumentException($"rectangle list is empty");
 
@@ -27,26 +27,19 @@ namespace TagsCloudVisualization
             var centersDelta = new Size(actualCenter.X - bmp.Width / 2, actualCenter.Y - bmp.Height / 2);
 
             using var graphics = Graphics.FromImage(bmp);
-            DrawRectangles(graphics, rects.Select(rect => rect.Move(-centersDelta.Width, -centersDelta.Height)));
+            DrawRectangles(colorScheme, graphics, rects.Select(rect => rect.Move(-centersDelta.Width, -centersDelta.Height)));
 
             return bmp;
         }
         
-        private void DrawRectangles(Graphics graphics, IEnumerable<Rectangle> rectangles)
+        private void DrawRectangles(IColorScheme colorScheme, Graphics graphics, IEnumerable<Rectangle> rectangles)
         {
-            var rnd = new Random();
-
             foreach (var rectangle in rectangles)
             {
                 using var pen = new Pen(Brushes.Black, 1);
-                pen.Color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+                pen.Color = colorScheme.GetColorBy(rectangle.Size);
                 graphics.DrawRectangle(pen, rectangle);
             }
-        }
-
-        public Bitmap GetBitmap(IEnumerable<Rectangle> objects, Size? bitmapSize = null)
-        {
-            throw new NotImplementedException();
         }
     }
 }

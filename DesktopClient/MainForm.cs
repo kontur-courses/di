@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Autofac;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Layouters;
 
 namespace DesktopClient
 {
@@ -24,6 +26,9 @@ namespace DesktopClient
         private string ignoreWordsFileName;
 
         private bool changed;
+        
+        private readonly TagCloud tagCloud = new();
+        
 
         public MainForm()
         {
@@ -45,7 +50,7 @@ namespace DesktopClient
         protected override void OnPaint(PaintEventArgs e)
         {
             if (textFilePath is null || !changed) return;
-            cloudBox.Image = CreateTags();
+            cloudBox.Image = tagCloud.GetBitmap(GetConfig());
             changed = false;
         }
 
@@ -66,12 +71,6 @@ namespace DesktopClient
             };
 
             return config;
-        }
-        
-        private Bitmap CreateTags()
-        {
-            var bmp = Configurator.CreateTags(GetConfig());
-            return bmp;
         }
     }
 }

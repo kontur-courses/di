@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace TagsCloudVisualization.WordValidators
+﻿namespace TagsCloudVisualization.WordValidators
 {
     public class TooShortWordValidator : IWordValidator
     {
-        private readonly int minWordLength;
+        private int minWordLength;
 
-        public TooShortWordValidator(int minWordLength)
+        public void SetLimit(int minWordLength)
         {
             this.minWordLength = minWordLength;
         }

@@ -4,11 +4,11 @@ namespace TagsCloudVisualization
 {
     public class SingleColorScheme : IColorScheme
     {
-        private readonly Color color;
+        private Color color;
 
-        public SingleColorScheme(Color color)
+        public void SetColor(Color colour)
         {
-            this.color = color;
+            color = colour;
         }
         
         public Color GetColorBy(Size size)

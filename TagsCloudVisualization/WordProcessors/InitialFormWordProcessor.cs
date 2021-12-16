@@ -3,7 +3,7 @@ using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization.WordProcessors
 {
-    public class InitialFormWordProcessor : IWordProcessor
+    public class InitialFormWordProcessor : ILiteraryWordProcessor
     {
         private readonly WordList wordList;
         

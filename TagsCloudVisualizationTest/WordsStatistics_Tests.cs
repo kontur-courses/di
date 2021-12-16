@@ -20,7 +20,7 @@ namespace TagsCloudVisualizationTest
         public void OneTimeSetUp()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<WordsStatistics>().As<IWordsStatistics>();
+            builder.RegisterType<BaseWordsStatistics>().As<IWordsStatistics>();
             builder.Register(_ =>
             {
                 var processor = A.Fake<ITextProcessor>();
