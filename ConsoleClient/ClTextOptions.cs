@@ -54,6 +54,23 @@ namespace TagCloudUsageSample
         [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
         public string Size { get; set; }
 
+        public static ClTextOptions GetDefaultOption()
+        {
+            return new ClTextOptions
+            {
+                TextFilePath = @"C:\Users\dns\Desktop\test.txt",
+                Font = "Arial",
+                FileName = "TEST",
+                Open = true,
+                SavePath = @"C:\Users\dns\Desktop",
+                MinWordLengthToStatistic = 3,
+                WordCountToStatistic = 50,
+                IsLiteraryText = true,
+                Density = 5,
+                Size = "900 900"
+            };
+        }
+
 
         private readonly TagCloud tagCloud = new();
         

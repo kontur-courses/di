@@ -17,18 +17,38 @@ namespace TagsCloudVisualization.Printing
             return new Rectangle(source.X + xDelta, source.Y + yDelta, source.Width, source.Height);
         }
 
+        private static Rectangle Resize(this Rectangle source, SizeF delta)
+        {
+            return new Rectangle(
+                (int)(source.X / delta.Width),
+                (int)(source.Y / delta.Height),
+                (int)(source.Width / delta.Width),
+                (int)(source.Height / delta.Height)
+            );
+        }
+
         public static Rectangle Translate(this Rectangle source, Size currentSize, Size newSize)
         {
+            // return source;
             var sizeDelta = new SizeF(
-                ((float) currentSize.Width / newSize.Width),
-                ((float) currentSize.Height / newSize.Height));
+                (float) currentSize.Width / newSize.Width,
+                (float) currentSize.Height / newSize.Height);
 
-            return new Rectangle(
+            var resized = source.Resize(new SizeF(Math.Max(sizeDelta.Height, sizeDelta.Width), Math.Max(sizeDelta.Height, sizeDelta.Width)));
+            // if (lengthCoefficient != -1 && resized.Height * lengthCoefficient > resized.Width)
+            // {
+            //     sizeDelta = new SizeF(
+            //         (float)resized.Height * lengthCoefficient / resized.Width,
+            //         (float)resized.Height * lengthCoefficient / resized.Width);
+            //     resized = source.Resize(sizeDelta);
+            // }
+            resized = new Rectangle(
                 (int)(source.X / sizeDelta.Width),
                 (int)(source.Y / sizeDelta.Height),
-                (int)(source.Width / sizeDelta.Width),
-                (int)(source.Height / sizeDelta.Height)
+                (int)(source.Width / Math.Max(sizeDelta.Height, sizeDelta.Width)),
+                (int)(source.Height / Math.Max(sizeDelta.Height, sizeDelta.Width))
             );
+            return resized;
         }
         
         internal static Size GetCircumscribedSize(this IList<Rectangle> rectangles)

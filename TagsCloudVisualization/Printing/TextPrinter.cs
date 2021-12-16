@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Printing
 {
     public class TextPrinter : IPrinter<Text>
     {
-        private const int Margin = 50;
+        private const int Margin = 0;
         private readonly IRectanglesReCalculator reCalculator;
 
         public TextPrinter(IRectanglesReCalculator reCalculator)
@@ -23,7 +23,10 @@ namespace TagsCloudVisualization.Printing
                 ? reCalculator.MoveToCenter(fixedTexts.Select(x => x.Rectangle).ToList())
                 : reCalculator.RecalculateRectangles(fixedTexts.Select(x => x.Rectangle).ToList(), bitmapSize.Value);
 
-            var bmp = new Bitmap(recalculated.GetCircumscribedSize().Width + Margin / 2, recalculated.GetCircumscribedSize().Height + Margin);
+            bitmapSize ??= new Size(recalculated.GetCircumscribedSize().Width + Margin / 2,
+                recalculated.GetCircumscribedSize().Height + Margin);
+            // var bmp = new Bitmap(bitmapSize.Value.Width, bitmapSize.Value.Height);
+            var bmp = new Bitmap(recalculated.GetCircumscribedSize().Width, recalculated.GetCircumscribedSize().Height);
 
             using var graphics = Graphics.FromImage(bmp);
             DrawText(
@@ -33,6 +36,8 @@ namespace TagsCloudVisualization.Printing
                     x.Font, 
                     recalculated[i])), colorScheme);
 
+            var b = new RectanglePrinter(reCalculator).GetBitmap(colorScheme, recalculated);
+            graphics.DrawImage(b, Point.Empty);
             return bmp;
         }
         
