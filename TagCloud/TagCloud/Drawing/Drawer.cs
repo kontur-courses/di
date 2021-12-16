@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
-using TagCloud.TextProcessing;
+using TagCloud.PreLayout;
 
 namespace TagCloud.Drawing
 {

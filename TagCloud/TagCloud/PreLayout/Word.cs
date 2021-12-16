@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.TextProcessing
+namespace TagCloud.PreLayout
 {
     public class Word
     {

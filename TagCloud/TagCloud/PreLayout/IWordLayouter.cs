@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using TagCloud.Drawing;
-using TagCloud.TextProcessing;
 
-namespace TagCloud.Layout
+namespace TagCloud.PreLayout
 {
     public interface IWordLayouter
     {

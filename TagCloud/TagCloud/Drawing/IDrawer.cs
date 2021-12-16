@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using TagCloud.TextProcessing;
+using TagCloud.PreLayout;
 
 namespace TagCloud.Drawing
 {

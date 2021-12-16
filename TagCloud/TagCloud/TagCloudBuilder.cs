@@ -2,6 +2,7 @@
 using Autofac;
 using TagCloud.Drawing;
 using TagCloud.Layout;
+using TagCloud.PreLayout;
 using TagCloud.TextProcessing;
 
 namespace TagCloud

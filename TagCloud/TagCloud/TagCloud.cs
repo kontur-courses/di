@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using TagCloud.Drawing;
 using TagCloud.Extensions;
-using TagCloud.Layout;
+using TagCloud.PreLayout;
 using TagCloud.TextProcessing;
 
 namespace TagCloud
