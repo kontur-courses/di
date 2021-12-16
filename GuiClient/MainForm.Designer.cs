@@ -43,7 +43,8 @@ namespace DesktopClient
             {
                 Width = 720,
                 Height = 720,
-                BackColor = Color.Bisque
+                BackColor = Color.Bisque,
+                SizeMode = PictureBoxSizeMode.Zoom,
             };
 
             wordCountToStatistic = new NumericUpDown

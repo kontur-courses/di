@@ -1,9 +1,7 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Autofac;
 using TagsCloudVisualization;
-using TagsCloudVisualization.Layouters;
 
 namespace DesktopClient
 {
@@ -21,7 +19,7 @@ namespace DesktopClient
         private CheckBox randomColor;
         private Color? color;
         
-        private string font = "Arials";
+        private string font = "Arial";
         private string? textFilePath;
         private string ignoreWordsFileName;
 
@@ -58,7 +56,7 @@ namespace DesktopClient
         {
             var config = new Config
             {
-                Size = new Size(700, 700),
+                Size = new Size(720, 720),
                 Color = randomColor.Checked ? null : color,
                 WordCountToStatistic = wordCountToStatistic.Value > 0 ? (int)wordCountToStatistic.Value : -1,
                 Density = density.Value > 0 ? (double)density.Value : 1d,

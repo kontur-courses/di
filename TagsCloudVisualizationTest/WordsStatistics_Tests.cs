@@ -6,6 +6,7 @@ using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordProcessors;
 
 namespace TagsCloudVisualizationTest

@@ -8,7 +8,7 @@
 // using TagsCloudVisualization;
 // using TagsCloudVisualization.Layouters;
 //
-// namespace TagCloudUsageSample
+// namespace ConsoleClient
 // {
 //     public class CommandLineCloudOptions : BaseOptions
 //     {

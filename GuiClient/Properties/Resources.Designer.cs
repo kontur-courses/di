@@ -41,7 +41,7 @@ namespace DesktopClient.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DesktopClient.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GuiClient.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Statistics
 {
     public class DefaultWordStatisticsToSizeConverter : IWordStatisticsToSizeConverter
     {

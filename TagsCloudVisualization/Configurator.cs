@@ -2,6 +2,7 @@
 using TagsCloudVisualization.Parsers;
 using TagsCloudVisualization.Printing;
 using TagsCloudVisualization.Readers;
+using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordProcessors;
 using TagsCloudVisualization.WordValidators;
 using WeCantSpell.Hunspell;

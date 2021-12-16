@@ -6,8 +6,9 @@ using System.Linq;
 using Autofac;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Parsers;
+using TagsCloudVisualization.Printing;
 using TagsCloudVisualization.Readers;
-using TagsCloudVisualization.WordProcessors;
+using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordValidators;
 
 namespace TagsCloudVisualization
@@ -55,19 +56,15 @@ namespace TagsCloudVisualization
             IWordsStatistics statistic = config.SourceTextInterpretationMode == SourceTextInterpretationMode.LiteraryText
                 ? Container.Resolve<LiteraryWordsStatistics>()
                 : Container.Resolve<OneWordByLineStatistics>();
-            
             if (config.CustomIgnoreFilePath is not null) 
                 Container.Resolve<IgnoredWordsValidator>().SetIgnoreWords(Container.Resolve<LinesParser>().ParseText(LoadFile(config.CustomIgnoreFilePath)));
-            ITextProcessor processor = config.SourceTextInterpretationMode == SourceTextInterpretationMode.LiteraryText 
-                ? Container.Resolve<LiteraryTextProcessor>() 
-                : Container.Resolve<OneWordByLineProcessor>();
             statistic.AddWords(parsedText!);
             tagWordInfo = Container.Resolve<IWordStatisticsToSizeConverter>().Convert(statistic, config.WordCountToStatistic);
         }
 
         private void LoadLayouter(Config config)
         {
-            layouter = new CircularCloudLayouter(new PointSpiral(config.Center, config.Density, (int) config.Density));
+            layouter = new CircularCloudLayouter(new PointSpiral(Point.Empty, config.Density, (int) config.Density));
         }
 
         private void LoadTextToPrint(Config config)

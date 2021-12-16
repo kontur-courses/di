@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudUsageSample", "TagCloudUsageSample\TagCloudUsageSample.csproj", "{4E1F1A33-6F8F-4EE0-B8E1-56EB6DF7E183}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{4E1F1A33-6F8F-4EE0-B8E1-56EB6DF7E183}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{CEDD37A7-3BF8-43EE-A309-84B468252A15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualizationTest", "TagsCloudVisualizationTest\TagsCloudVisualizationTest.csproj", "{F0DE46CA-AB75-400F-8EFF-42E157B3C762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopClient", "DesktopClient\DesktopClient.csproj", "{AF87C9D3-28D3-4141-A921-F0CFC0302D37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiClient", "GuiClient\GuiClient.csproj", "{AF87C9D3-28D3-4141-A921-F0CFC0302D37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

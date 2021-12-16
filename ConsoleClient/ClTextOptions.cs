@@ -14,7 +14,7 @@ namespace TagCloudUsageSample
         public string TextFilePath { get; private set; }
         
         [PathValidatorAttribute("unknown directory")]
-        [Option('p', "path", Default = "ignore.txt", HelpText = "Set path to save tag clouds.")]
+        [Option('p', "path", Required = false, HelpText = "Set path to save tag clouds.")]
         public string SavePath{ get; private set; }
         
         [FileNameValidatorAttribute("invalid file name")]
@@ -50,7 +50,7 @@ namespace TagCloudUsageSample
         [Option('c', "color", Default = null, HelpText = "Set color of words.")]
         public string Color { get; set; }
         
-        [SizeValidator(1, 1, nameof(Size))]
+        [SizeValidator(1, 10000, nameof(Size))]
         [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
         public string Size { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Statistics
 {
     public record WordCount
     {

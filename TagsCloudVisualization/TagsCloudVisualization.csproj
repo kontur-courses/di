@@ -63,14 +63,6 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <Private>True</Private>
@@ -125,9 +117,6 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Configurator.cs" />
-    <Compile Include="DefaultWordStatisticsToSizeConverter.cs" />
-    <Compile Include="IWordsStatistics.cs" />
-    <Compile Include="IWordStatisticsToSizeConverter.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Layouters\IInfinityPointsEnumirable.cs" />
     <Compile Include="Layouters\ILayouter.cs" />
@@ -152,10 +141,16 @@
     <Compile Include="Readers\TextFormat.cs" />
     <Compile Include="Readers\TxtReader.cs" />
     <Compile Include="SourceTextInterpretationMode.cs" />
+    <Compile Include="Statistics\DefaultWordStatisticsToSizeConverter.cs" />
+    <Compile Include="Statistics\IWordsStatistics.cs" />
+    <Compile Include="Statistics\IWordStatisticsToSizeConverter.cs" />
+    <Compile Include="Statistics\LiteraryWordsStatistics.cs" />
+    <Compile Include="Statistics\OneWordByLineStatistics.cs" />
+    <Compile Include="Statistics\WordCount.cs" />
+    <Compile Include="Statistics\WordStatistics.cs" />
     <Compile Include="TagCloud.cs" />
     <Compile Include="TagCloudResultActions.cs" />
     <Compile Include="TagWordInfo.cs" />
-    <Compile Include="WordCount.cs" />
     <Compile Include="WordProcessors\InitialFormWordProcessor.cs" />
     <Compile Include="WordProcessors\ITextProcessor.cs" />
     <Compile Include="WordProcessors\IWordProcessor.cs" />
@@ -163,7 +158,6 @@
     <Compile Include="WordProcessors\LowerCaseWordProcessor.cs" />
     <Compile Include="WordProcessors\BaseWordsProcessor.cs" />
     <Compile Include="WordProcessors\OneWordByLineProcessor.cs" />
-    <Compile Include="WordStatistics.cs" />
     <Compile Include="WordValidators\IgnoredWordsValidator.cs" />
     <Compile Include="WordValidators\IWordValidator.cs" />
     <Compile Include="WordValidators\TooShortWordValidator.cs" />
@@ -173,9 +167,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ignore.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Russian.aff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

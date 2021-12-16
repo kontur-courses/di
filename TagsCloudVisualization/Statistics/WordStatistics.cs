@@ -3,28 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using TagsCloudVisualization.WordProcessors;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Statistics
 {
-    public class LiteraryWordsStatistics : BaseWordsStatistics
-    {
-        public LiteraryWordsStatistics(LiteraryTextProcessor textProcessor) : base(textProcessor)
-        {
-        }
-    }
-    
-    public class OneWordByLineStatistics : BaseWordsStatistics
-    {
-        public OneWordByLineStatistics(OneWordByLineProcessor textProcessor) : base(textProcessor)
-        {
-        }
-    }
-
     public abstract class BaseWordsStatistics : IWordsStatistics
     {
         private readonly IDictionary<string, int> statistics = new Dictionary<string, int>();
         private readonly ITextProcessor textProcessor;
 
-        public BaseWordsStatistics(ITextProcessor textProcessor)
+        protected BaseWordsStatistics(ITextProcessor textProcessor)
         {
             this.textProcessor = textProcessor;
         }

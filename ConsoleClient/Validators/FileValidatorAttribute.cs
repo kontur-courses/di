@@ -5,7 +5,7 @@ namespace TagCloudUsageSample
     public class FileValidatorAttribute : StringValidatorAttribute
     {
         public FileValidatorAttribute(string message) 
-            : base(File.Exists, message)
+            : base(s => s is null || File.Exists(s), message)
         {
         }
     }

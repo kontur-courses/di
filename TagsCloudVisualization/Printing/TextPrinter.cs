@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Printing
 {
     public class TextPrinter : IPrinter<Text>
     {
@@ -40,7 +40,11 @@ namespace TagsCloudVisualization
         {
             foreach (var (word, font, rectangle) in texts)
             {
-                var rf = new RectangleF(rectangle.X + Margin / 2, rectangle.Y - rectangle.Height / 2 + Margin / 2, rectangle.Width * 1.3f, rectangle.Height == 0 ? 1 : rectangle.Height * 2);
+                var rf = new RectangleF(
+                    rectangle.X + Margin / 2, 
+                    rectangle.Y - rectangle.Height / 2 + Margin / 2, 
+                    rectangle.Width * 1.3f, 
+                    rectangle.Height == 0 ? 1 : rectangle.Height * 2);
                 graphics.DrawString(word, 
                     new Font(font, rectangle.Height == 0 ? 1 : rectangle.Height, FontStyle.Regular), 
                     new SolidBrush(colorScheme.GetColorBy(rectangle.Size)), rf);

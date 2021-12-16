@@ -6,7 +6,6 @@ namespace TagsCloudVisualization
     {
         public Size Size { get; set; }
         public int WordCountToStatistic { get; set; }
-        public Point Center { get; set; }
         public double Density { get; set; }
         public byte MinWordToStatisticLength { get; set; }
         public string Font { get; set; }
