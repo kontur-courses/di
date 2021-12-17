@@ -31,4 +31,4 @@
 
 # Tag cloud sample:
 
-![TagCloud](CloudSamples\sample.jpg)
+![TagCloud](CloudSamples\sample.png)
