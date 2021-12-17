@@ -41,8 +41,8 @@ namespace TagCloud_ConsoleUI
         public FontFamily FontFamily { get; set; } = FontFamily.GenericSansSerif;
 
         [Option('s', "font-size", Required = false,
-            HelpText = "Задать базовый размер шрифта (итоговый зависит от частоты встречаемости слова)", Default = 20)]
-        public float BaseFontSize { get; set; } = 20;
+            HelpText = "Задать базовый размер шрифта (итоговый зависит от частоты встречаемости слова)", Default = 14)]
+        public float BaseFontSize { get; set; } = 14;
 
         [Option("picture-size", Required = false, HelpText = "Задать размер итогового изображения")]
         public Size Size { get; set; }
