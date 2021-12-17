@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using System;
+using System.Diagnostics;
 using TagCloud2;
 
 namespace ConsoleRunner
@@ -54,6 +55,9 @@ namespace ConsoleRunner
             Parser.Default.ParseArguments<Options>(args).WithParsed(o => options = o);
             var g = new Generator();
             g.Generate(options);
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(options.OutputName) { UseShellExecute = true };
+            p.Start();
         }
     }
 }
