@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace TagCloud.TextProcessing
 {
-    internal class MyStemResult
+    internal class MyStemResult : ILexeme
     {
         private readonly List<Dictionary<string, string>> _analysis;
-        private readonly string _text;
+        public string Text { get; }
 
         private MyStemResult(List<Dictionary<string, string>> analysis, string text)
         {
-            _text = text;
+            Text = text;
             _analysis = analysis;
         }
 
@@ -30,9 +30,9 @@ namespace TagCloud.TextProcessing
 
         private string GetPosTag()
         {
-            var gramms = Analysis["gr"];
+            var grammemes = Analysis["gr"];
             var splitters = new[] {',', '='};
-            return gramms.Split(splitters)[0];
+            return grammemes.Split(splitters)[0];
         }
     }
 }

@@ -22,6 +22,7 @@ namespace TagCloud
             _builder.RegisterType<WordLayouter>().As<IWordLayouter>();
             _builder.RegisterType<TxtFileProvider>().As<IFileProvider>();
             _builder.RegisterType<SimplePalette>().As<IPalette>();
+            _builder.RegisterType<MyStemManager>().As<IMorphologyAnalyzer>();
             _builder.RegisterType<TagCloud>().AsSelf();
 
             return this;

@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace TagCloud.TextProcessing
 {
-    internal class MyStemManager
+    internal class MyStemManager : IMorphologyAnalyzer
     {
         private const string UtilFileName = "mystem.exe";
         private const string TempPath = @"c:\temp\output.txt";
         private const string Arguments = "-nl -ig -d --format json";
 
-        public static IEnumerable<MyStemResult?> GetMyStemResultData(string filePath)
+        public IEnumerable<ILexeme?> GetLexemesFrom(string filePath)
         {
             RunMyStem(filePath);
             var myStemResults = ParseMyStemResult();
