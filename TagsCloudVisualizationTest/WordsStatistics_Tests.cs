@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualization;
 using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordProcessors;
 

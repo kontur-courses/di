@@ -5,12 +5,12 @@ using TagsCloudVisualization.WordProcessors;
 
 namespace TagsCloudVisualization.Statistics
 {
-    public abstract class BaseWordsStatistics : IWordsStatistics
+    public class BaseWordsStatistics : IWordsStatistics
     {
         private readonly IDictionary<string, int> statistics = new Dictionary<string, int>();
         private readonly ITextProcessor textProcessor;
 
-        protected BaseWordsStatistics(ITextProcessor textProcessor)
+        public BaseWordsStatistics(ITextProcessor textProcessor)
         {
             this.textProcessor = textProcessor;
         }

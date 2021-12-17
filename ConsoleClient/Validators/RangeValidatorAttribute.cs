@@ -1,22 +1,22 @@
 ﻿using System;
 
-namespace TagCloudUsageSample
+namespace TagCloudUsageSample.Validators
 {
     public class RangeValidatorAttribute : Attribute
     {
-        protected readonly (IComparable Min, IComparable Max) range;
-        protected readonly string parameterName;
+        private readonly (IComparable Min, IComparable Max) range;
+        protected readonly string ParameterName;
         
         public RangeValidatorAttribute(int min, int max, string parameterName)
         {
             range = (min, max);
-            this.parameterName = parameterName;
+            ParameterName = parameterName;
         }
 
         public virtual bool Validate(IComparable value, out string message)
         {
             var result = Between(value, range);
-            message = result ? $"" : $"{parameterName} should be grate then {range.Min} and less then {range.Max}";
+            message = result ? $"" : $"{ParameterName} should be grate then {range.Min} and less then {range.Max}";
             return result;
         }
         

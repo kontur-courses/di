@@ -17,20 +17,9 @@ namespace TagsCloudVisualization.WordProcessors
         
         public IEnumerable<string> ProcessWords(IEnumerable<string> text)
         {
-            var validated = text.Where(x => wordValidators.All(v => v.Validate(x))).ToList();
-            foreach (var word in validated)
-            {
-                var processedWord = word;
-                foreach (var wordProcessor in wordProcessors)
-                {
-                    processedWord = wordProcessor.ProcessWord(processedWord);
-                }
-
-                yield return processedWord;
-            }
-            // return text
-            //     .Where(x => wordValidators.All(v => v.Validate(x)))
-            //     .Select(word => wordProcessors.Aggregate(word, (current, wordProcessor) => wordProcessor.ProcessWord(current)));
+            return text
+                .Where(x => wordValidators.All(v => v.Validate(x)))
+                .Select(word => wordProcessors.Aggregate(word, (current, wordProcessor) => wordProcessor.ProcessWord(current)));
         }
     }
 }

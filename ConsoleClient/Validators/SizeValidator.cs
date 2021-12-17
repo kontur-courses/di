@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TagCloudUsageSample
+namespace TagCloudUsageSample.Validators
 {
     public class SizeValidator : RangeValidatorAttribute
     {
@@ -16,7 +16,7 @@ namespace TagCloudUsageSample
             var splited = size.Split(' ').ToList();
             if (splited.Count != 2 || !int.TryParse(splited[0], out var w) || !int.TryParse(splited[1], out var h))
             {
-                message = $"{parameterName} is not size";
+                message = $"{ParameterName} is not size";
                 return false;
             }
 

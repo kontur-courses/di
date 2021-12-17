@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace TagsCloudVisualization.Statistics
         public IEnumerable<TagWordInfo> Convert(IWordsStatistics statistics, int topWordCount)
         {
             var words = statistics.GetStatistics().ToList();
+            if (!words.Any()) yield break;
 
             var maxTagWeight = (double)words.First().Count;
             var minTagWeight = (double)words.Last().Count;

@@ -3,46 +3,47 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using CommandLine;
+using TagCloudUsageSample.Validators;
 using TagsCloudVisualization;
 
 namespace TagCloudUsageSample
 {
     public class ClTextOptions : BaseOptions
     {
-        [FileValidatorAttribute("invalid file name")]
-        [Option('t', "text", Required = true, HelpText = "Text file path")]
+        [FileValidator("invalid file name")]
+        [Option('t', "text", Default = @"sample.txt", HelpText = "Text file path")]
         public string TextFilePath { get; private set; }
         
-        [PathValidatorAttribute("unknown directory")]
-        [Option('p', "path", Required = false, HelpText = "Set path to save tag clouds.")]
+        [PathValidator("unknown directory")]
+        [Option('p', "path", Default = @"..\..\", HelpText = "Set path to save tag clouds.")]
         public string SavePath{ get; private set; }
         
-        [FileNameValidatorAttribute("invalid file name")]
+        [FileNameValidator("invalid file name")]
         [Option('n', "name", Default = "TagCloud", HelpText = "Set name to save tag clouds.")]
         public string FileName { get; private set; }
         
-        [FileValidatorAttribute("invalid file name")]
+        [FileValidator("invalid file name")]
         [Option('i', "ignore", HelpText = "Ignore words file path")]
         public string IgnoreWordsFileName { get; private set; }
         
-        [Option('o', "open", Default = false, HelpText = "Open created file")]
+        [Option('o', "open", Default = true, HelpText = "Open created file")]
         public bool Open { get; set; }
         
-        [Option('l', "isLiteraryText", Default = false, HelpText = "Is text literary")]
+        [Option('l', "isLiteraryText", Default = true, HelpText = "Is text literary")]
         public bool IsLiteraryText { get; set; }
         
-        [RangeValidatorAttribute(1, 50, nameof(Density))]
+        [RangeValidator(1, 50, nameof(Density))]
         [Option('d', "density", Default = 5, HelpText = "Set density")]
         public int Density { get; private set; }
         
-        [RangeValidatorAttribute(1, 50, nameof(MinWordLengthToStatistic))]
+        [RangeValidator(1, 50, nameof(MinWordLengthToStatistic))]
         [Option('m', "wordLength", Default = 3, HelpText = "Set min word length to statistic")]
         public int MinWordLengthToStatistic { get; private set; }
 
         [Option('f', "font", Default = "Arial", Required = false, HelpText = "Set font for words.")]
         public string Font { get; private set; }
 
-        [RangeValidatorAttribute(-1, 50, nameof(WordCountToStatistic))]
+        [RangeValidator(-1, 500, nameof(WordCountToStatistic))]
         [Option('w', "wordCount", Default = -1, HelpText = "Set number of word to statistic.")]
         public int WordCountToStatistic { get; private set; }
         
@@ -53,25 +54,7 @@ namespace TagCloudUsageSample
         [SizeValidator(1, 10000, nameof(Size))]
         [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
         public string Size { get; set; }
-
-        public static ClTextOptions GetDefaultOption()
-        {
-            return new ClTextOptions
-            {
-                TextFilePath = @"C:\Users\dns\Desktop\test.txt",
-                Font = "Arial",
-                FileName = "TEST",
-                Open = true,
-                SavePath = @"C:\Users\dns\Desktop",
-                MinWordLengthToStatistic = 3,
-                WordCountToStatistic = 50,
-                IsLiteraryText = true,
-                Density = 5,
-                Size = "900 900"
-            };
-        }
-
-
+        
         private readonly TagCloud tagCloud = new();
         
         public void CreateTags(out string firstFileName)

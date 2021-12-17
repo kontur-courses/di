@@ -115,6 +115,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharExt.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
@@ -151,8 +152,10 @@
     <Compile Include="TagCloud.cs" />
     <Compile Include="TagCloudResultActions.cs" />
     <Compile Include="TagWordInfo.cs" />
+    <Compile Include="WordProcessors\ILiteraryWordProcessor.cs" />
     <Compile Include="WordProcessors\InitialFormWordProcessor.cs" />
     <Compile Include="WordProcessors\ITextProcessor.cs" />
+    <Compile Include="WordProcessors\IWordByLineProcessor.cs" />
     <Compile Include="WordProcessors\IWordProcessor.cs" />
     <Compile Include="WordProcessors\LiteraryTextProcessor.cs" />
     <Compile Include="WordProcessors\LowerCaseWordProcessor.cs" />

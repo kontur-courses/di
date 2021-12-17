@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagCloudUsageSample
+namespace TagCloudUsageSample.Validators
 {
     public class StringValidatorAttribute : Attribute
     {

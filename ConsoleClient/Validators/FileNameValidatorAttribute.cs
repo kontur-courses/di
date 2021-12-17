@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace TagCloudUsageSample
+namespace TagCloudUsageSample.Validators
 {
     public class FileNameValidatorAttribute : StringValidatorAttribute
     {

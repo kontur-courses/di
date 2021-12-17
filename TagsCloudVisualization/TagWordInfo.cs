@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 
 namespace TagsCloudVisualization
 {
@@ -16,8 +17,9 @@ namespace TagsCloudVisualization
 
         public Size GetCollisionSize()
         {
+            var len = Word.Select(x => x.GetSize() * FontSize).Sum();
             return new Size(
-                (int) Math.Round(FontSize * Word.Length), 
+                (int) Math.Round(len), 
                 (int) Math.Round(FontSize));
         }
     }

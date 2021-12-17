@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace TagCloudUsageSample
+namespace TagCloudUsageSample.Validators
 {
     public class ColorValidator : StringValidatorAttribute
     {
