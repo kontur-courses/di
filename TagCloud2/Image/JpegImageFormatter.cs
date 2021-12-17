@@ -10,12 +10,11 @@ namespace TagCloud2.Image
 {
     public class JpegImageFormatter : IImageFormatter
     {
-        public ImageCodecInfo GetCodec()
-        {
-            return ImageFormatterHelper.GetEncoderInfo("image/jpeg");
-        }
+        public ImageCodecInfo Codec => ImageFormatterHelper.GetEncoderInfo("image/jpeg");
 
-        public EncoderParameters GetParameters()
+        public EncoderParameters Parameters => GetParameters();
+
+        private EncoderParameters GetParameters()
         {
             var myEncoder = System.Drawing.Imaging.Encoder.Quality;
             var myEncoderParameters = new EncoderParameters(1);

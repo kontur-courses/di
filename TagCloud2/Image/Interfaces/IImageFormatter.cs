@@ -9,7 +9,7 @@ namespace TagCloud2
 {
     public interface IImageFormatter
     {
-        ImageCodecInfo GetCodec();
-        EncoderParameters GetParameters();
+        ImageCodecInfo Codec { get; }
+        EncoderParameters Parameters { get; }
     }
 }

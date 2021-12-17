@@ -12,7 +12,7 @@ namespace TagCloud2
         {
             return input
                 .ToLower()
-                .Split('\r')
+                .Split(Environment.NewLine)
                 .Distinct()
                 .ToArray();
         }

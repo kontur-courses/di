@@ -35,13 +35,14 @@ namespace TagCloud2
                 .Select(x => new ColoredSizedWord(x, font))
                 .ToArray();
 
-            var rectangles = words.Select(x => sizeConverter.Convert(x.GetWord(), x.GetFont())).ToArray();
+            var rectangles = words.Select(x => sizeConverter.Convert(x.Word, x.Font)).ToArray();
             foreach (var size in rectangles)
             {
                 layouter.PutNewRectangle(size);
             }
 
-            var colored = coloredCloud.GetFromCloudLayouter(words, layouter, coloringAlgorithm);
+            var colored = new ColoredCloud();
+            colored.AddColoredWordsFromCloudLayouter(words, layouter, coloringAlgorithm);
             var image = converterToImage.GetImage(colored, options.X, options.Y);
             fileGenerator.GenerateFile(options.OutputName, formatter, image);
         }

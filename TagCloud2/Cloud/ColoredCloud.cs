@@ -11,23 +11,21 @@ namespace TagCloud2
 {
     public class ColoredCloud : IColoredCloud
     {
-        List<IColoredSizedWord> coloredSizedWords = new();
+        public List<IColoredSizedWord> ColoredWords { get; }
 
-        public List<IColoredSizedWord> GetColoredWords()
+        public ColoredCloud()
         {
-            return coloredSizedWords;
+            ColoredWords = new();
         }
 
-        public IColoredCloud GetFromCloudLayouter(IColoredSizedWord[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm)
+        public void AddColoredWordsFromCloudLayouter(IColoredSizedWord[] words, ICloudLayouter cloud, IColoringAlgorithm coloringAlgorithm)
         {
             var rectangles = cloud.GetRectangles().ToList();
             for (int i = 0; i < words.Length; i++)
             {
                 var color = coloringAlgorithm.GetColor(rectangles[i]);
-                coloredSizedWords.Add(new ColoredSizedWord(color, rectangles[i], words[i].GetWord(), words[i].GetFont()));
+                ColoredWords.Add(new ColoredSizedWord(color, rectangles[i], words[i].Word, words[i].Font));
             }
-            
-            return this;
         }
     }
 }

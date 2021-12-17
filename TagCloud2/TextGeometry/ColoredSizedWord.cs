@@ -9,56 +9,26 @@ namespace TagCloud2.TextGeometry
 {
     public class ColoredSizedWord : IColoredSizedWord
     {
-        private Color color;
+        public Color Color { get; }
 
-        private Rectangle size;
+        public Rectangle Size { get; }
 
-        private string word;
+        public string Word { get; }
 
-        private Font font;
-
-        public void SetSize(Rectangle rect)
-        {
-            size = rect;
-        } 
-
-        public void SetColor(Color c)
-        {
-            color = c;
-        }
+        public Font Font { get; }
 
         public ColoredSizedWord(Color color, Rectangle size, string word, Font font)
         {
-            this.color = color;
-            this.size = size;
-            this.word = word;
-            this.font = font;
+            this.Color = color;
+            this.Size = size;
+            this.Word = word;
+            this.Font = font;
         }
 
         public ColoredSizedWord(string word, Font font)
         {
-            this.word = word;
-            this.font = font;
-        }
-
-        public Color GetColor()
-        {
-            return color;
-        }
-
-        public Font GetFont()
-        {
-            return font;
-        }
-
-        public Rectangle GetSize()
-        {
-            return size;
-        }
-
-        public string GetWord()
-        {
-            return word;
+            this.Word = word;
+            this.Font = font;
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Reflection;
-using Ninject;
 using TagCloud2.Image;
 using TagCloud2.Text;
 using TagCloud2.TextGeometry;
 using TagCloudVisualisation;
-using Ninject.Extensions.Conventions;
 using System.Collections.Generic;
 using Autofac;
 using TagCloud2.Cloud;
@@ -29,6 +27,7 @@ namespace TagCloud2
             var outputDict = new Dictionary<object, Action>();
             outputDict.Add("png", () => builder.RegisterType<PngImageFormatter>().As<IImageFormatter>());
             outputDict.Add("jpeg", () => builder.RegisterType<JpegImageFormatter>().As<IImageFormatter>());
+            outputDict.Add("bitmap", () => builder.RegisterType<BitmapImageFormatter>().As<IImageFormatter>());
             dictionary.Add("OutputFormat", outputDict);
 
             var colorDict = new Dictionary<object, Action>();

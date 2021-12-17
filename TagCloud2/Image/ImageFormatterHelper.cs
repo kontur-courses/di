@@ -19,7 +19,8 @@ namespace TagCloud2.Image
                 if (encoders[j].MimeType == mimeType)
                     return encoders[j];
             }
-            return null;
+
+            throw new ArgumentException("no such codec");
         }
     }
 }

@@ -11,15 +11,15 @@ namespace TagCloud2.Image
     {
         public System.Drawing.Image GetImage(IColoredCloud cloud, int xSize, int ySize)
         {
-            var words = cloud.GetColoredWords();
+            var words = cloud.ColoredWords;
             var bitmap = new Bitmap(xSize, ySize);
             var g = Graphics.FromImage(bitmap);
             g.Clear(Color.Black);
             foreach (var r in words)
             {
-                var word = r.GetWord();
-                var brush = new SolidBrush(r.GetColor());
-                g.DrawString(word, r.GetFont(), brush, r.GetSize());
+                var word = r.Word;
+                var brush = new SolidBrush(r.Color);
+                g.DrawString(word, r.Font, brush, r.Size);
             }
             return bitmap;
         }

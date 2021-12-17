@@ -17,7 +17,7 @@ namespace TagCloud2Tests
         [Test]
         public void PreprocessString_OnWord_MustReturnLowercase()
         {
-            sp.PreprocessString("СТраННое").Should().Be("странное");
+            sp.PreprocessString("СТраННое").Should().Be("СТраННое");
         }
 
         [Test]

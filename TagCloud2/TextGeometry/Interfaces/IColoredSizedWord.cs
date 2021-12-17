@@ -9,12 +9,12 @@ namespace TagCloud2.TextGeometry
 {
     public interface IColoredSizedWord
     {
-        public Rectangle GetSize();
+        Rectangle Size { get; }
 
-        public Color GetColor();
+        Color Color { get; }
 
-        public string GetWord();
+        string Word { get; }
 
-        public Font GetFont();
+        Font Font { get; }
     }
 }

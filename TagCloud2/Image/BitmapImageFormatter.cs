@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TagCloud2.Image
 {
-    public class PngImageFormatter : IImageFormatter
+    public class BitmapImageFormatter : IImageFormatter
     {
-        public ImageCodecInfo Codec => ImageFormatterHelper.GetEncoderInfo("image/png");
+        public ImageCodecInfo Codec => ImageFormatterHelper.GetEncoderInfo("image/bmp");
 
         public EncoderParameters Parameters => null;
     }
