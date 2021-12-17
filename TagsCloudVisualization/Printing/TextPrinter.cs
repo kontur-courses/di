@@ -41,6 +41,7 @@ namespace TagsCloudVisualization.Printing
                     x.Font, 
                     recalculated[i])), colorScheme);
 
+            // for debug
             // var b = new RectanglePrinter(reCalculator).GetBitmap(colorScheme, recalculated, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin));
             // graphics.DrawImage(b, Point.Empty);
             return bmp;
