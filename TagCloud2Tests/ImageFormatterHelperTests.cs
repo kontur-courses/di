@@ -27,6 +27,7 @@ namespace TagCloud2Tests
         public void GetEncoderInfo_OnIncorrectCodec_ShouldThrow()
         {
             Action t = () => ImageFormatterHelper.GetEncoderInfo("abobus");
+
             t.Should().Throw<ArgumentException>();
         }
     }

@@ -15,6 +15,7 @@ namespace TagCloud2Tests
         {
             var input = "Слово";
             var expected = new string[] { "слово" };
+
             wr.GetUniqueLowercaseWords(input).Should().BeEquivalentTo(expected);
         }
 
@@ -23,6 +24,7 @@ namespace TagCloud2Tests
         {
             var input = "Слово"+ Environment.NewLine + "Дело";
             var expected = new string[] { "слово", "дело" };
+
             wr.GetUniqueLowercaseWords(input).Should().BeEquivalentTo(expected);
         }
 
@@ -31,6 +33,7 @@ namespace TagCloud2Tests
         {
             var input = string.Format("собака{0}Собака{0}СОБАКА", Environment.NewLine);
             var expected = new string[] { "собака" };
+
             wr.GetUniqueLowercaseWords(input).Should().BeEquivalentTo(expected);
         }
     }
