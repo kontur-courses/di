@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CommandLine;
+﻿using CommandLine;
+using System.Collections.Generic;
 
 namespace TagsCloudContainer.Client
 {

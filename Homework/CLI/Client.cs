@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CommandLine;
+using System;
 using TagsCloudContainer.Client;
-using CommandLine;
 
 namespace CLI
 {

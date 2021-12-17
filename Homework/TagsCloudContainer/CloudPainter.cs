@@ -13,7 +13,7 @@ namespace TagsCloudContainer
         private readonly ICloudLayouter cloudLayouter;
         private readonly IPaintConfig config;
         private readonly ITextParser parser;
-        private const int wordsBorder = 2;
+        private const int WordsBorder = 2;
 
         public CloudPainter(ICloudLayouter cloudLayouter, IPaintConfig config,
             ITextParser parser)
@@ -42,14 +42,14 @@ namespace TagsCloudContainer
             var drawFont = new Font(config.FontName, scaledFontSize);
             var rectSize = graphics.MeasureString(word, drawFont);
             var enclosingRectangle = cloudLayouter.PutNextRectangle(
-                new Size((int) rectSize.Width + wordsBorder, (int) rectSize.Height + wordsBorder));
+                new Size((int)rectSize.Width + WordsBorder, (int)rectSize.Height + WordsBorder));
             graphics.DrawString(word, drawFont, config.Color.GetNextColor(), enclosingRectangle);
         }
 
         private int ScaleFontSize(int fontSize, int wordQuantity)
         {
-            var magicLogarithmBase = 1.05;
-            return (int)Math.Ceiling((fontSize + Math.Log(wordQuantity, magicLogarithmBase)));
+            const double magicLogarithmBase = 1.05;
+            return (int)Math.Ceiling(fontSize + Math.Log(wordQuantity, magicLogarithmBase));
         }
     }
 }

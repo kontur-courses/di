@@ -10,7 +10,7 @@ namespace TagsCloudContainer.PaintConfigs
 
         public CamouflageScheme()
         {
-            colors = new List<Brush>()
+            colors = new List<Brush>
             {
                 Brushes.DarkOliveGreen,
                 Brushes.DarkGreen,

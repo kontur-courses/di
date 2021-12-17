@@ -22,7 +22,7 @@ namespace TagsCloudContainer.Client
         public ISpiral Spiral { get; private set; }
         public ImageFormat ImageFormat { get; private set; }
 
-        public BoringWords ExcludedWords { get; private set; }
+        public BoringWords ExcludedWords { get; }
 
         public UserConfig()
         {
@@ -38,7 +38,7 @@ namespace TagsCloudContainer.Client
             TagsFontName = options.FontName;
             TagsFontSize = options.FontSize;
             ImageFormat = GetImageFormat(options.OutputFileFormat);
-            FormatReader = GetTextFormatReader(options.InputFileFormat);
+            FormatReader = GetTextFormatReader(options.InputFileFormat.ToLower());
             AddExcludedWords(options.ExcludedWords);
             TagsColors = TryGetTagsColors(options);
             ThrowIfAnyArgIsIncorrect();
@@ -71,7 +71,7 @@ namespace TagsCloudContainer.Client
 
         private ITextFormatReader GetTextFormatReader(string formatName)
         {
-            if (formatName.ToLower() != "txt")
+            if (formatName != "txt")
                 throw new ArgumentException("Unknown input file format!");
             return new TxtReader();
         }

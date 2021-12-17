@@ -6,31 +6,29 @@ namespace TagsCloudContainer.CloudLayouters
 {
     public class RandomSpiral : ISpiral
     {
-        private Point cloudCenter;
         private Quarter previuosQuarter;
         private Point currentPoint;
-        private Dictionary<Quarter, Func<Point, bool>> quarterCheckers;
-        private int tempMin = -10000; 
-        private int tempMax = 10000;
+        private readonly Dictionary<Quarter, Func<Point, bool>> quarterCheckers;
+        private const int TempMin = -10000; 
+        private const int TempMax = 10000;
 
         public RandomSpiral(Point cloudCenter)
         {
-            this.cloudCenter = cloudCenter;
-            this.previuosQuarter = Quarter.Forth;
-            this.currentPoint = cloudCenter;
-            quarterCheckers = new Dictionary<Quarter, Func<Point, bool>>()
+            previuosQuarter = Quarter.Forth;
+            currentPoint = cloudCenter;
+            quarterCheckers = new Dictionary<Quarter, Func<Point, bool>>
             {
                 {Quarter.Forth, p => p.X > cloudCenter.X && p.Y < cloudCenter.Y},
                 {Quarter.First, p => p.X < cloudCenter.X && p.Y < cloudCenter.Y},
                 {Quarter.Second, p => p.X < cloudCenter.X && p.Y > cloudCenter.Y},
-                {Quarter.Third, p => p.X > cloudCenter.X && p.Y > cloudCenter.Y},
+                {Quarter.Third, p => p.X > cloudCenter.X && p.Y > cloudCenter.Y}
             };
         }
         public Point GetNextCurvePoint()
         {
             var rnd = new Random(Guid.NewGuid().GetHashCode());
             while (IsntPointAtNextQuarter())
-                currentPoint = new Point(rnd.Next(tempMin, tempMax), rnd.Next(tempMin, tempMax));
+                currentPoint = new Point(rnd.Next(TempMin, TempMax), rnd.Next(TempMin, TempMax));
             previuosQuarter = GetNextQuarter();
             return currentPoint;
         }
@@ -42,10 +40,13 @@ namespace TagsCloudContainer.CloudLayouters
 
         private Quarter GetNextQuarter()
         {
-            if (previuosQuarter == Quarter.Forth) return Quarter.First;
-            if (previuosQuarter == Quarter.First) return Quarter.Second;
-            if (previuosQuarter == Quarter.Second) return Quarter.Third;
-            return Quarter.Forth;
+            switch (previuosQuarter)
+            {
+                case Quarter.Forth: return Quarter.First;
+                case Quarter.First: return Quarter.Second;
+                case Quarter.Second: return Quarter.Third;
+                default: return Quarter.Forth;
+            }
         }
     }
 }

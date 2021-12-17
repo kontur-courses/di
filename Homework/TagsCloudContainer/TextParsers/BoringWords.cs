@@ -8,7 +8,7 @@ namespace TagsCloudContainer.TextParsers
 
         public BoringWords()
         {
-            Words = new HashSet<string>()
+            Words = new HashSet<string>
             {
                 //modal verbs
                 "can", "can't", "could", "couldn't", "may", "might", "must", "need",
@@ -30,7 +30,7 @@ namespace TagsCloudContainer.TextParsers
                 "of", "in", "to", "for", "with", "on", "at", "from", "by",
                 "about", "as", "into", "like", "through", "after", "over",
                 "between", "out", "against", "during", "withot", "before",
-                "under", "around", "among",
+                "under", "around", "among"
             };
         }
 

@@ -4,7 +4,6 @@ namespace TagsCloudContainer.TextParsers
 {
     public class TextParser : ITextParser
     {
-        private readonly string path;
         private readonly HashSet<string> excludedWords;
         private readonly Dictionary<string, int> wordsCount;
         private readonly ITextFormatReader textReader;
@@ -13,9 +12,8 @@ namespace TagsCloudContainer.TextParsers
         public TextParser(string path, IExcludingWords excludingWords,
             ITextFormatReader textReader)
         {
-            this.path = path;
-            this.excludedWords = excludingWords.GetWords();
-            this.totalWords = 0;
+            excludedWords = excludingWords.GetWords();
+            totalWords = 0;
             this.textReader = textReader;
             wordsCount = GetWordsFromFile(path);
         }
@@ -26,20 +24,17 @@ namespace TagsCloudContainer.TextParsers
         public int GetDistinctWordsAmount()
             => wordsCount.Count;
 
-        public int GetTotalWordsCount()
-            => totalWords;
-
-        private Dictionary<string, int> GetWordsFromFile(string path)
+        private Dictionary<string, int> GetWordsFromFile(string pathToText)
         {
             var words = new Dictionary<string, int>();
-            var lines = textReader.GetLines(path);
+            var lines = textReader.GetLines(pathToText);
             foreach (var line in lines)
                 ProcessLine(line, words);
 
             return words;
         }
 
-        private void ProcessLine(string line, Dictionary<string, int> words)
+        private void ProcessLine(string line, IDictionary<string, int> words)
         {
             var word = line.ToLower();
             word = word.TrimEnd('\n');

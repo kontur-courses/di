@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Text;
-using NUnit.Framework;
-using Autofac;
+﻿using Autofac;
 using CLI;
 using FluentAssertions;
+using NUnit.Framework;
+using System.IO;
+using System.Text;
 using TagsCloudContainer;
 using TagsCloudContainer.Client;
 using TagsCloudContainer.ContainerConfigurers;
@@ -13,22 +13,22 @@ namespace CloudContainerTests
     [TestFixture]
     public class ApplicationShould
     {
-        private string inputFilePath = "words.txt";
-        private string outputFilePath = "tagcloud.png";
+        private const string InputFilePath = "words.txt";
+        private const string OutputFilePath = "tagcloud.png";
 
         [SetUp]
         public void CreateInputFile()
         {
             var word = "C#";
-            using (var fs = File.Create(inputFilePath)) { }
-            using (StreamWriter sw = new StreamWriter(inputFilePath, false, Encoding.Default))
+            using (File.Create(InputFilePath)) { }
+            using (var sw = new StreamWriter(InputFilePath, false, Encoding.Default))
                 sw.WriteLine(word);
         }
 
         [TearDown]
         public void DeleteInputFile()
         {
-            DeleteFileIfExists(inputFilePath);
+            DeleteFileIfExists(InputFilePath);
         }
 
         private void DeleteFileIfExists(string path)
@@ -40,18 +40,18 @@ namespace CloudContainerTests
         [Test]
         public void Create_Output_File_When_Path_Is_Given()
         {
-            var args = new[] { inputFilePath, outputFilePath};
-            CheckIfOutptFileExists(outputFilePath, args);
+            var args = new[] { InputFilePath, OutputFilePath };
+            CheckIfOutptFileExists(OutputFilePath, args);
         }
 
         [Test]
         public void Create_Output_File_When_Path_Is_Not_Given()
         {
-            var args = new[] { inputFilePath};
-            CheckIfOutptFileExists(outputFilePath, args);
+            var args = new[] { InputFilePath };
+            CheckIfOutptFileExists(OutputFilePath, args);
         }
 
-        private void CheckIfOutptFileExists(string outputFilePath, string[] args)
+        private void CheckIfOutptFileExists(string output, string[] args)
         {
             var container = GetContainerFromArgs(args);
 
@@ -61,8 +61,8 @@ namespace CloudContainerTests
                 painter.Draw(scope.Resolve<UserConfig>().OutputFile);
             }
 
-            File.Exists(outputFilePath).Should().BeTrue();
-            DeleteFileIfExists(outputFilePath);
+            File.Exists(output).Should().BeTrue();
+            DeleteFileIfExists(output);
         }
 
         private IContainer GetContainerFromArgs(string[] args)

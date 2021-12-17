@@ -3,11 +3,10 @@ namespace TagsCloudContainer.CloudLayouters
 {
     public class SquareSpiral : ISpiral
     {
-        private Point RightShift; 
-        private Point LeftShift; 
-        private Point DownShift; 
-        private Point UpShift;
-        private Point spiralCenter;
+        private readonly Point RightShift; 
+        private readonly Point LeftShift; 
+        private readonly Point DownShift; 
+        private readonly Point UpShift;
         private Point currentShift;
         private Point CurrentLocation;
         private const int delta = 10;
@@ -16,7 +15,6 @@ namespace TagsCloudContainer.CloudLayouters
 
         public SquareSpiral(Point spiralCenter)
         {
-            this.spiralCenter = spiralCenter;
             RightShift = new Point(1, 0);
             LeftShift = new Point(-1, 0);
             DownShift = new Point(0, 1);
@@ -49,8 +47,7 @@ namespace TagsCloudContainer.CloudLayouters
         {
             if (currentShift == RightShift) return UpShift;
             if (currentShift == UpShift) return LeftShift;
-            if (currentShift == LeftShift) return DownShift;
-            return RightShift;
+            return currentShift == LeftShift ? DownShift : RightShift;
         }
     }
 }

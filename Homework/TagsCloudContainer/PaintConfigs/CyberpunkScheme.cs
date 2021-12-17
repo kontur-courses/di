@@ -6,18 +6,18 @@ namespace TagsCloudContainer.PaintConfigs
 {
     public class CyberpunkScheme : IColorScheme
     {
-        private List<Brush> colors;
+        private readonly List<Brush> colors;
 
         public CyberpunkScheme()
         {
-            colors = new List<Brush>()
+            colors = new List<Brush>
             {
                 Brushes.Yellow,
                 Brushes.Purple,
                 Brushes.Blue,
                 Brushes.Purple,
                 Brushes.DeepSkyBlue,
-                Brushes.DeepPink,
+                Brushes.DeepPink
             };
         }
         public Brush GetNextColor()

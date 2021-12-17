@@ -10,19 +10,12 @@ namespace TagsCloudContainer.CloudLayouters
         private const double CurveAngleStepSlowDown = 0.002;
         private const double DirectionBetweenRoundsCoeff = 1 / (2 * Math.PI);
         private double curveAngleStep = Math.PI / 10;
-        private double currentCurveAngle = 0;
+        private double currentCurveAngle;
         private Point spiralCenter;
-
-        public LogarithmSpiral() {}
 
         public LogarithmSpiral(Point spiralCenter)
         {
             this.spiralCenter = spiralCenter;
-        }
-
-        public void SetSpiralCenter(Point center)
-        {
-            spiralCenter = center;
         }
 
         public Point GetNextCurvePoint()

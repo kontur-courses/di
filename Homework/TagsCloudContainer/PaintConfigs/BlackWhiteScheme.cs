@@ -10,7 +10,7 @@ namespace TagsCloudContainer.PaintConfigs
 
         public BlackWhiteScheme()
         {
-            colors = new List<Brush>()
+            colors = new List<Brush>
             {
                 Brushes.White,
                 Brushes.Black

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
-using NUnit;
-using FluentAssertions;
-using NUnit.Framework;
 using TagsCloudContainer.TextParsers;
 
 namespace CloudContainerTests
@@ -15,7 +13,7 @@ namespace CloudContainerTests
         private IExcludingWords boringWords = new BoringWords();
 
         [Test]
-        public void Throw_FileNotFoundException_WhenPathIsIncorrect()
+        public void Throw_FileNotFoundException_When_Path_Is_Incorrect()
         {
             string incorrectPath = "words";
             Action wordsGetterCreationWithIncorrectPath =
@@ -25,7 +23,7 @@ namespace CloudContainerTests
         }
 
         [Test]
-        public void Throw_ArgumentNullException_WhenPathIsNull()
+        public void Throw_ArgumentNullException_When_Path_Is_Null()
         {
             Action wordsGetterCreationWithIncorrectPath =
                 () => new TextParser(null, boringWords, new TxtReader());
