@@ -12,7 +12,7 @@ namespace TagCloud
         private static IContainer? _container;
         private static ContainerBuilder? _builder;
 
-        public TagCloudBuilder GetDefault()
+        public TagCloudBuilder CreateDefault()
         {
             _builder = new ContainerBuilder();
             _builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
@@ -31,7 +31,7 @@ namespace TagCloud
         public TagCloud Build()
         {
             if (_builder == null)
-                GetDefault();
+                CreateDefault();
             _container = _builder.Build();
             return _container.Resolve<TagCloud>();
         }
@@ -39,7 +39,7 @@ namespace TagCloud
         public TagCloudBuilder WithStatusWriter<T>() where T : TextWriter
         {
             if (_builder == null)
-                GetDefault();
+                CreateDefault();
             var type = typeof(T);
             _builder.RegisterType<T>().As<TextWriter>();
             return this;

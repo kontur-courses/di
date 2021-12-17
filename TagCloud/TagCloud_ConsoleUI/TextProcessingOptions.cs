@@ -49,7 +49,7 @@ namespace TagCloud_ConsoleUI
             Separator = ':')]
         public IEnumerable<PartOfSpeech> ExcludePartOfSpeech
         {
-            get => _excludePartOfSpeech.Count != 0 ? _excludePartOfSpeech : DefaultExcludePartOfSpeech;
+            get => _excludePartOfSpeech.Any() ? _excludePartOfSpeech : DefaultExcludePartOfSpeech;
             set => _excludePartOfSpeech = value.ToHashSet();
         }
     }

@@ -12,7 +12,7 @@ namespace TagCloud_ConsoleUI
         {
             var builder = new TagCloudBuilder();
             var tagCloud = builder
-                .GetDefault()
+                .CreateDefault()
                 .WithStatusWriter<ConsoleStatusWriter>()
                 .Build();
 

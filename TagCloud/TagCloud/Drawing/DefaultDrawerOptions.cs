@@ -14,7 +14,7 @@ namespace TagCloud.Drawing
         public float BaseFontSize => 14;
         public Size Size { get; }
         public ImageFormat? Format => ImageFormat.Png;
-        public string Path { get; } = AppDomain.CurrentDomain.BaseDirectory;
+        public string Path => AppDomain.CurrentDomain.BaseDirectory;
         public string FileName { get; }
     }
 }
