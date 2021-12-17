@@ -11,16 +11,16 @@ namespace TagCloud.Extensions
         public static void SaveWithPostfix(this Bitmap bitmap, string? filename = null,
             string? targetDirectory = null, ImageFormat? format = null)
         {
+            targetDirectory ??= Directory.GetCurrentDirectory();
             var imagesDirectory = Directory.CreateDirectory(Path.Combine(targetDirectory, "images"));
             var name = filename != null
                 ? $"{filename}_{_count++}"
                 : $"tagCloud_{_count++}";
             var path = Path.Combine(imagesDirectory.FullName, name);
 
-            var imageFormat = format ?? ImageFormat.Png;
-            var extension = imageFormat.ToString().ToLower();
-
-            bitmap.Save($"{path}.{extension}", imageFormat);
+            format ??= ImageFormat.Png;
+            var extension = format.ToString().ToLower();
+            bitmap.Save($"{path}.{extension}", format);
         }
     }
 }
