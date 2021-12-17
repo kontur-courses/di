@@ -14,9 +14,9 @@ namespace TagsCloudVisualization.Processors
     {
         private static readonly string[] TestFiles =
         {
-            @"TestData\txt\Test_Облако.txt",
-            @"TestData\txt\Test_Литературный_текст.txt",
-            @"TestData\txt\Text_Большой_текст.txt"
+            @"\demo\Test_Облако.txt",
+            @"\demo\Test_Литературный_текст.txt",
+            @"\demo\Text_Большой_текст.txt"
         };
 
         public static int Run(ShowDemoCommand options)
@@ -24,18 +24,20 @@ namespace TagsCloudVisualization.Processors
             try
             {
                 var container = ContainerConfig.ConfigureContainer(new CommandLineOptions());
-                var workDir = AppDomain.CurrentDomain.BaseDirectory;
+                var executingPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 foreach (var testFile in TestFiles)
                 {
-                    var text = container.Resolve<IFileReader>().ReadFile(workDir + testFile);
+                    var text = container.Resolve<IFileReader>().ReadFile(executingPath + testFile);
                     var stat = container.Resolve<ITextAnalyzer>().GetWordStatistics(text);
                     var tags = container.Resolve<ITagBuilder>().GetTags(stat);
                     var bitmap = container.Resolve<ITagCloudPainter>().Paint(tags);
+
+                    var saveFilePath = options.OutputPath + Path.GetFileNameWithoutExtension(testFile) + ".png";
                     container.Resolve<IImageWriter>()
-                        .Save(bitmap, options.OutputPath + Path.GetFileName(testFile) + ".png");
+                        .Save(bitmap, saveFilePath);
 
                     Console.WriteLine(
-                        $"Облако тегов сгенерировано и сохранено '{workDir + Path.GetFileName(testFile) + ".png"}'.");
+                        $"Облако тегов сгенерировано и сохранено '{saveFilePath}'.");
                 }
 
                 return 0;
