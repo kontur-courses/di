@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualizationTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiClient", "GuiClient\GuiClient.csproj", "{AF87C9D3-28D3-4141-A921-F0CFC0302D37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Result", "Result\Result.csproj", "{E36071B5-2502-4AC9-94A9-D8E3C066DBB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{AF87C9D3-28D3-4141-A921-F0CFC0302D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF87C9D3-28D3-4141-A921-F0CFC0302D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF87C9D3-28D3-4141-A921-F0CFC0302D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E36071B5-2502-4AC9-94A9-D8E3C066DBB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E36071B5-2502-4AC9-94A9-D8E3C066DBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E36071B5-2502-4AC9-94A9-D8E3C066DBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E36071B5-2502-4AC9-94A9-D8E3C066DBB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
