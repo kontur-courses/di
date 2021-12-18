@@ -7,13 +7,14 @@ namespace TagCloud.TextProcessing
     internal class MyStemResult : ILexeme
     {
         private readonly List<Dictionary<string, string>> _analysis;
-        public string Text { get; }
 
         private MyStemResult(List<Dictionary<string, string>> analysis, string text)
         {
             Text = text;
             _analysis = analysis;
         }
+
+        public string Text { get; }
 
         public Dictionary<string, string> Analysis => _analysis
             .SelectMany(d => d.Select(pair => pair))

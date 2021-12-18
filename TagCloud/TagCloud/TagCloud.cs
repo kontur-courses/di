@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using TagCloud.BitmapSaving;
 using TagCloud.Drawing;
 using TagCloud.Extensions;
 using TagCloud.PreLayout;
@@ -63,7 +64,7 @@ namespace TagCloud
                     bitmap = bitmap.ScaledResize(options.Size, options.BackgroundColor);
                 }
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
-                bitmap.SaveWithPostfix(options.FileName, options.Path, options.Format);
+                TagCloudImageSaver.Save(bitmap, options.FileName, options.Path, options.Format);
             }
 
             _statusWriter.WriteLine($"Готово!\nФайлы здесь: {options.Path}");
