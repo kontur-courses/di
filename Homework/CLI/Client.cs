@@ -60,7 +60,7 @@ namespace CLI
             var sourceReader = TryGetSourceReader(options);
             var wordHandlers = GetWordHandlers(options);
             var wordGroper = GetWordGrouper();
-            return new TextParser2(sourceReader, wordHandlers, wordGroper);
+            return new TextParser(sourceReader, wordHandlers, wordGroper);
         }
 
         private ISourceReader TryGetSourceReader(Options options)
@@ -69,7 +69,7 @@ namespace CLI
             if (options.Input != null)
             {
                 if (options.InputFileFormat != "txt")
-                    throw new FormatException("Can't read file format!");
+                    throw new ArgumentException("Unknown text format is given!");
                 sourceReader = new TxtFileReader(options.Input);
             }
             else if (options.Tags != null)
@@ -82,6 +82,7 @@ namespace CLI
         {
             return (word, dict) =>
             {
+                if (word == "") return;
                 if (!dict.TryGetValue(word, out _))
                     dict.Add(word, 0);
                 dict[word]++;

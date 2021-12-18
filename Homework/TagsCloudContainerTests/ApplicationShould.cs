@@ -1,77 +1,32 @@
-﻿using Autofac;
+﻿using System.IO;
+using Autofac;
 using CLI;
+using ContainerConfigurers;
 using FluentAssertions;
 using NUnit.Framework;
-using System.IO;
-using System.Text;
 using TagsCloudContainer;
 using TagsCloudContainer.Client;
-using TagsCloudContainer.ContainerConfigurers;
 
 namespace CloudContainerTests
 {
     [TestFixture]
     public class ApplicationShould
     {
-        private const string InputFilePath = "words.txt";
-        private const string OutputFilePath = "tagcloud.png";
-
-        [SetUp]
-        public void CreateInputFile()
-        {
-            var word = "C#";
-            using (File.Create(InputFilePath)) { }
-            using (var sw = new StreamWriter(InputFilePath, false, Encoding.Default))
-                sw.WriteLine(word);
-        }
-
-        [TearDown]
-        public void DeleteInputFile()
-        {
-            DeleteFileIfExists(InputFilePath);
-        }
-
-        private void DeleteFileIfExists(string path)
-        {
-            if (File.Exists(path))
-                File.Delete(path);
-        }
-
         [Test]
-        public void Create_Output_File_When_Path_Is_Given()
+        public void Create_Output_File()
         {
-            var args = new[] { InputFilePath, OutputFilePath };
-            CheckIfOutptFileExists(OutputFilePath, args);
-        }
-
-        [Test]
-        public void Create_Output_File_When_Path_Is_Not_Given()
-        {
-            var args = new[] { InputFilePath };
-            CheckIfOutptFileExists(OutputFilePath, args);
-        }
-
-        private void CheckIfOutptFileExists(string output, string[] args)
-        {
-            var container = GetContainerFromArgs(args);
+            var input = "input";
+            var config = new Client(new string[] {input}).UserConfig;
+            var container = new AutofacConfigurer(config).GetContainer();
 
             using (var scope = container.BeginLifetimeScope())
             {
                 var painter = scope.Resolve<CloudPainter>();
-                painter.Draw(scope.Resolve<UserConfig>().OutputFile);
+                painter.Draw(scope.Resolve<IUserConfig>().OutputFile);
             }
 
-            File.Exists(output).Should().BeTrue();
-            DeleteFileIfExists(output);
-        }
-
-        private IContainer GetContainerFromArgs(string[] args)
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(new Client(args)).As<IClient>();
-            var ac = new AutofacConfigurer(builder);
-            var container = ac.GetContainer();
-            return container;
+            File.Exists("tagcloud" + ".Png").Should().BeTrue();
+            File.Delete("tagcloud" + ".Png");
         }
     }
 }

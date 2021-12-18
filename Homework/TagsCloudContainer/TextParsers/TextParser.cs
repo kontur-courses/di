@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace TagsCloudContainer.TextParsers
 {
-    public class TextParser2 : ITextParser
+    public class TextParser : ITextParser
     {
         private readonly ISourceReader sourceReader;
         private readonly Dictionary<string, int> wordsCounts;
         private readonly List<Func<string, string>> handlers;
         private readonly Action<string, Dictionary<string, int>> grouper;
 
-        public TextParser2(ISourceReader sourceReader, 
+        public TextParser(ISourceReader sourceReader, 
             List<Func<string, string>> handlers,
             Action<string, Dictionary<string, int>> grouper)
         {

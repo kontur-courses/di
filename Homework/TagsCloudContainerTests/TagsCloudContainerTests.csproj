@@ -56,6 +56,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\TagsCloudContainer\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\TagsCloudContainer\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -81,10 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationShould.cs" />
-    <Compile Include="CLIShould.cs" />
-    <Compile Include="TextParserShould.cs" />
+    <Compile Include="CommandLineClientShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserConfigShould.cs" />
+    <Compile Include="TextParserShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -94,6 +94,10 @@
     <ProjectReference Include="..\CLI\CLI.csproj">
       <Project>{eae5def8-1a00-4f1b-b047-66e94f4d7b68}</Project>
       <Name>CLI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ContainerConfigurers\ContainerConfigurers.csproj">
+      <Project>{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}</Project>
+      <Name>ContainerConfigurers</Name>
     </ProjectReference>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
       <Project>{fc9c20d9-301d-49ea-afc4-d2c4924b5091}</Project>
