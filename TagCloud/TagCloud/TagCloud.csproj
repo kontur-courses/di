@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+        <PackageReference Include="Autofac" Version="6.3.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="System.Drawing.Common" Version="6.0.0"/>
     </ItemGroup>
 
     <ItemGroup>

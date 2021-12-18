@@ -63,6 +63,7 @@ namespace TagCloud
                     _statusWriter.WriteLine("Масштабирую к заданному размеру. (Возможно ухудшение качества)");
                     bitmap = bitmap.ScaledResize(options.Size, options.BackgroundColor);
                 }
+
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
                 TagCloudImageSaver.Save(bitmap, options.FileName, options.Path, options.Format);
             }

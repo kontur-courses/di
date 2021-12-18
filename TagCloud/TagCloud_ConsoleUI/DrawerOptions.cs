@@ -45,7 +45,7 @@ namespace TagCloud_ConsoleUI
         public float BaseFontSize { get; set; } = 14;
 
         [Option("image-size", Required = false, HelpText = "Задать размер итогового изображения\n" +
-                                                             "(пример: draw --image-size 1920,1080)")]
+                                                           "(пример: draw --image-size 1920,1080)")]
         public Size Size { get; set; }
 
         public ImageFormat? Format => GetImageFormat(ImageExtension);

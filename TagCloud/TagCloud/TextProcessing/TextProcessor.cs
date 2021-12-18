@@ -5,8 +5,8 @@ namespace TagCloud.TextProcessing
 {
     internal class TextProcessor : ITextProcessor
     {
-        private readonly IFileProvider _textProvider;
         private readonly IMorphologyAnalyzer _morphologyAnalyzer;
+        private readonly IFileProvider _textProvider;
 
         public TextProcessor(IFileProvider textProvider, IMorphologyAnalyzer morphologyAnalyzer)
         {
