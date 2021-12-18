@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace TagsCloudContainer.PaintConfigs
 {
-    public interface IColorScheme
+    public interface IColorScheme : IDisposable
     {
         Brush GetNextColor();
     }

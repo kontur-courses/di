@@ -30,14 +30,15 @@ namespace TagsCloudContainer.TextParsers
                 "of", "in", "to", "for", "with", "on", "at", "from", "by",
                 "about", "as", "into", "like", "through", "after", "over",
                 "between", "out", "against", "during", "withot", "before",
-                "under", "around", "among"
+                "under", "around", "among",
+                //other
+                "there", "that", "this", "those", "these", "which", "where",
+                "some", "had", "why", "but", "and", "most", "when", "been",
+                "all", "such", "since", "yes", "no", "or", "too", "many"
             };
         }
 
-        public void AddWord(string word)
-            => Words.Add(word);
-
         public HashSet<string> GetWords()
-            => Words;
+            => new HashSet<string>(Words);
     }
 }

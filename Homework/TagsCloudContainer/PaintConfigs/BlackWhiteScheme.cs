@@ -24,5 +24,11 @@ namespace TagsCloudContainer.PaintConfigs
             colorNumber %= colors.Count;
             return colors[colorNumber];
         }
+
+        public void Dispose()
+        {
+            foreach (var color in colors)
+                color.Dispose();
+        }
     }
 }

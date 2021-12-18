@@ -1,12 +1,15 @@
 ﻿using CommandLine;
 using System.Collections.Generic;
 
-namespace TagsCloudContainer.Client
+namespace CLI
 {
     public class Options
     {
-        [Value(0, HelpText = "path to input file")]
+        [Option("input", Default = null, HelpText = "path to input file")]
         public string Input { get; set; }
+
+        [Option("words", Default = null, HelpText = "tags set")]
+        public IEnumerable<string> Tags { get; set; }
 
         [Option('o', "output", Default = "tagcloud", HelpText = "path to output file")]
         public string Output { get; set; }
@@ -37,7 +40,13 @@ namespace TagsCloudContainer.Client
             "tag cloud spiral form (log for logarithm, sqr for square and rnd for random)")]
         public string Spiral { get; set; }
 
-        [Option('e', "exclude", Default = new[] { "" })]
+        [Option('m', "mod", Default = new[] { "lower", "trim" },
+            HelpText = "Enumerates string functions which will be apply to all tags\n" +
+                       "lower - ToLower(), trim - Trim()")]
+        public IEnumerable<string> Modifications { get; set; }
+
+        [Option('e', "exclude", Default = null,
+            HelpText = "tags that will be excluded from parsing result")]
         public IEnumerable<string> ExcludedWords { get; set; }
     }
 }

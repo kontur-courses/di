@@ -78,8 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\Options.cs" />
-    <Compile Include="Client\UserConfig.cs" />
+    <Compile Include="Client\IUserConfig.cs" />
     <Compile Include="Client\IClient.cs" />
     <Compile Include="CloudLayouters\CircularCloudLayouter.cs" />
     <Compile Include="CloudLayouters\ICloudLayouter.cs" />
@@ -90,27 +89,28 @@
     <Compile Include="CloudLayouters\RandomSpiral.cs" />
     <Compile Include="CloudLayouters\SquareSpiral.cs" />
     <Compile Include="CloudPainter.cs" />
-    <Compile Include="ContainerConfigurers\AutofacConfigurers.cs" />
     <Compile Include="PaintConfigs\BlackWhiteScheme.cs" />
     <Compile Include="PaintConfigs\CyberpunkScheme.cs" />
     <Compile Include="PaintConfigs\IColorScheme.cs" />
     <Compile Include="PaintConfigs\CamouflageScheme.cs" />
-    <Compile Include="PainterResolver.cs" />
     <Compile Include="TextParsers\BoringWords.cs" />
     <Compile Include="TextParsers\IExcludingWords.cs" />
-    <Compile Include="TextParsers\ITextFormatReader.cs" />
+    <Compile Include="TextParsers\ISourceReader.cs" />
     <Compile Include="TextParsers\ITextParser.cs" />
     <Compile Include="PaintConfigs\PaintConfig.cs" />
     <Compile Include="PaintConfigs\IPaintConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextParsers\TextParser.cs" />
-    <Compile Include="TextParsers\TxtReader.cs" />
+    <Compile Include="TextParsers\TagsReader.cs" />
+    <Compile Include="TextParsers\TextParser2.cs" />
+    <Compile Include="TextParsers\TxtFileReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\MountainsOfMadness.txt" />
+    <Content Include="Resources\mountainsOfMadnessTags.Jpeg" />
     <Content Include="Resources\TagCloud.png" />
     <Content Include="Resources\words.txt" />
   </ItemGroup>

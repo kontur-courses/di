@@ -25,5 +25,11 @@ namespace TagsCloudContainer.PaintConfigs
             var rnd = new Random(Guid.NewGuid().GetHashCode());
             return colors[rnd.Next(0, colors.Count)];
         }
+
+        public void Dispose()
+        {
+            foreach (var color in colors)
+                color.Dispose();
+        }
     }
 }

@@ -2,8 +2,9 @@
 
 namespace TagsCloudContainer.TextParsers
 {
-    public interface ITextFormatReader
+    public interface ISourceReader
     {
-        IEnumerable<string> GetLines(string path);
+        IEnumerable<string> GetNextWord();
+
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IClient
     {
-        UserConfig UserConfig { get; }
+        IUserConfig UserConfig { get; }
     }
 }

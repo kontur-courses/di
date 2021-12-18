@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerConfigurers", "ContainerConfigurers\ContainerConfigurers.csproj", "{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

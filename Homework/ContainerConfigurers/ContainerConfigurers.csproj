@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EAE5DEF8-1A00-4F1B-B047-66E94F4D7B68}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>CLI</RootNamespace>
-    <AssemblyName>CLI</AssemblyName>
+    <ProjectGuid>{5EBDB868-176B-433E-8BA6-FDBFC18A2C3F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ContainerConfigurers</RootNamespace>
+    <AssemblyName>ContainerConfigurers</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,12 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=6.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="CommandLine, Version=2.8.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommandLineParser.2.8.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -72,10 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
-    <Compile Include="CommandLineConfig.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="AutofacConfigurer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,10 +80,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContainerConfigurers\ContainerConfigurers.csproj">
-      <Project>{5ebdb868-176b-433e-8ba6-fdbfc18a2c3f}</Project>
-      <Name>ContainerConfigurers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj">
       <Project>{fc9c20d9-301d-49ea-afc4-d2c4924b5091}</Project>
       <Name>TagsCloudContainer</Name>

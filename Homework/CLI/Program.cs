@@ -1,7 +1,7 @@
 ﻿using Autofac;
+using ContainerConfigurers;
 using TagsCloudContainer;
 using TagsCloudContainer.Client;
-using TagsCloudContainer.ContainerConfigurers;
 
 namespace CLI
 {
@@ -9,11 +9,13 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(new Client(args)).As<IClient>();
-            var configurer = new AutofacConfigurer(builder);
-            var container = configurer.GetContainer();
-            PainterResolver.DrawTagCloud(container);
+            var config = new Client(args).UserConfig;
+            var container = new AutofacConfigurer(config).GetContainer();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var painter = scope.Resolve<CloudPainter>();
+                painter.Draw(scope.Resolve<IUserConfig>().OutputFile);
+            }
         }
     }
 }

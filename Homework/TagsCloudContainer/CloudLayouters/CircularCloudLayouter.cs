@@ -9,11 +9,11 @@ namespace TagsCloudContainer.CloudLayouters
     {
         private readonly List<Rectangle> _rectangles;
         private readonly Point _cloudCenter;
+        private readonly ISpiral spiral;
         public IReadOnlyCollection<Rectangle> Rectangles => _rectangles;
         public Point CloudCenter => new Point(_cloudCenter.X, _cloudCenter.Y);
         public double EnclosingRadius => _enclosingCircleRadius;
         private double _enclosingCircleRadius;
-        private ISpiral spiral;
 
         public CircularCloudLayouter(Point center, ISpiral spiral)
         {
