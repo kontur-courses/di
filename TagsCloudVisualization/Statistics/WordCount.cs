@@ -10,8 +10,8 @@ namespace TagsCloudVisualization.Statistics
             Count = count;
         }
 
-        public string Word { get; set; }
-        public int Count { get; set; }
+        public string Word { get; }
+        public int Count { get; }
 
         public static WordCount Create(KeyValuePair<string, int> pair)
         {

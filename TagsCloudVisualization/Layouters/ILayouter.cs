@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
+using ResultProject;
 
 namespace TagsCloudVisualization.Layouters
 {
-    public interface ILayouter<out TFigure>
+    public interface ILayouter<TFigure>
     {
-        TFigure PutNextRectangle(Size rectangleSize);
+        Result<TFigure> PutNextRectangle(Size rectangleSize);
     }
 }

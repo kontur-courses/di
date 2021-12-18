@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
@@ -8,18 +9,21 @@ namespace TagsCloudVisualization.Readers
     {
         public TextFormat Format => TextFormat.Pdf;
 
-        public string ReadFile(string filePath)
+        public Result<string> ReadFile(string filePath)
         {
-            StringBuilder text = new();  
-            using (var reader = new PdfReader(filePath))  
-            {  
-                for (var i = 1; i <= reader.NumberOfPages; i++)  
+            return Result.Of(() =>
+            {
+                var text = new StringBuilder();  
+                using (var reader = new PdfReader(filePath))  
                 {  
-                    text.Append(PdfTextExtractor.GetTextFromPage(reader, i));  
+                    for (var i = 1; i <= reader.NumberOfPages; i++)  
+                    {  
+                        text.Append(PdfTextExtractor.GetTextFromPage(reader, i));  
+                    }  
                 }  
-            }  
    
-            return text.ToString();  
+                return text.ToString();  
+            }, $"Can't read {filePath} for some reason");
         }
     }
 }

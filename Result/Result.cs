@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Result
+namespace ResultProject
 {
     public readonly struct Result<T>
     {
@@ -34,7 +37,7 @@ namespace Result
 
         public static Result<None> Ok() => Ok<None>(null);
 
-        private static Result<T> Fail<T>(string? e) => new(e);
+        public static Result<T> Fail<T>(string e) => new(e);
 
         public static Result<T> Of<T>(Func<T> f, string? error = default)
         {
@@ -60,23 +63,38 @@ namespace Result
                 return Fail<None>(error ?? e.Message);
             }
         }
+        
+        public static Result<TInput> ThenAction<TInput>(this Result<TInput> input, Action<TInput> continuation)
+        {
+            continuation(input.Value);
+            return input;
+        }
 
-        public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput?, TOutput> continuation) 
+        public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput, TOutput> continuation) 
             => input.Then(inp => Of(() => continuation(inp)));
 
-        public static Result<None> Then<TInput>(this Result<TInput> input, Action<TInput?> continuation) 
+        public static Result<None> Then<TInput>(this Result<TInput> input, Action<TInput> continuation) 
             => input.Then(inp => OfAction(() => continuation(inp)));
 
-        public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput?, Result<TOutput>> continuation) 
+        public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput, Result<TOutput>> continuation) 
             => input.IsSuccess ? continuation(input.Value) : Fail<TOutput>(input.Error);
+        
+        public static Result<T> ValidateNull<T>(this Result<T> input, string message) 
+            => input.Value ??  Fail<T>(message);
+        
+        public static Result<IEnumerable<TOutput>> ThenForEach<TInput, TOutput>(this Result<IEnumerable<TInput>> input, Func<TInput, TOutput> continuation)
+        {
+            if (!input.IsSuccess) return Fail<IEnumerable<TOutput>>(input.Error);
+            return input.Value.Select(value => continuation(value)).ToList();
+        }
 
-        public static Result<TInput> OnFail<TInput>(this Result<TInput> input, Action<string?> handleError)
+        public static Result<TInput> OnFail<TInput>(this Result<TInput> input, Action<string> handleError)
         {
             if (!input.IsSuccess) handleError(input.Error);
             return input;
         }
 
-        public static Result<TInput> ReplaceError<TInput>(this Result<TInput> input, Func<string?, string> replaceError) 
+        public static Result<TInput> ReplaceError<TInput>(this Result<TInput> input, Func<string, string> replaceError) 
             => input.IsSuccess ? input : Fail<TInput>(replaceError(input.Error));
 
         public static Result<TInput> RefineError<TInput>(this Result<TInput> input, string errorMessage) 

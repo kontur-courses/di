@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ResultProject;
 using TagsCloudVisualization.WordProcessors;
 
 namespace TagsCloudVisualization.Statistics
@@ -17,7 +17,6 @@ namespace TagsCloudVisualization.Statistics
 
         private void AddProcessedWord(string word)
         {
-            if (word == null) throw new ArgumentNullException(nameof(word));
             if (string.IsNullOrWhiteSpace(word)) return;
             statistics[word.ToLower()] = 1 + (statistics.TryGetValue(word.ToLower(), out var count) ? count : 0);
         }
@@ -29,17 +28,20 @@ namespace TagsCloudVisualization.Statistics
                 AddProcessedWord(processWord);
             }
         }
-
-        public virtual IEnumerable<WordCount> GetStatistics(int topWordCount = -1)
+        
+        public virtual Result<IEnumerable<WordCount>> GetStatistics()
         {
-            var orderedStatistic = statistics
+            if (!statistics.Any()) return Result.Fail<IEnumerable<WordCount>>("No words in statistic");
+            
+            return Result.Ok(statistics
                 .Select(WordCount.Create)
                 .OrderByDescending(wordCount => wordCount.Count)
-                .ThenBy(wordCount => wordCount.Word);
-            
-            return topWordCount < 0 
-                ? orderedStatistic 
-                : orderedStatistic.Take(topWordCount);
+                .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
+        }
+
+        public virtual Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount)
+        {
+            return GetStatistics().Then(x => x.Take((int)topWordCount));
         }
     }
 }

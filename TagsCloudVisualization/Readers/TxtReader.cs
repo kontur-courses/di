@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
@@ -6,9 +7,9 @@ namespace TagsCloudVisualization.Readers
     {
         public TextFormat Format => TextFormat.Txt;
 
-        public string ReadFile(string filePath)
+        public Result<string> ReadFile(string filePath)
         {
-            return File.ReadAllText(filePath);
+            return Result.Of(() => File.ReadAllText(filePath), $"Can't read {filePath} for some reason");
         }
     }
 }

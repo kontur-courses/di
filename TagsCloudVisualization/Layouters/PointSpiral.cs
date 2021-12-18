@@ -11,13 +11,8 @@ namespace TagsCloudVisualization
         private readonly double dtheta;
         private readonly double densityParameter;
 
-        public PointSpiral(Point center, double densityParameter = 1, int degreesDelta = 1)
+        public PointSpiral(Point center, uint densityParameter = 1, uint degreesDelta = 1)
         {
-            if (densityParameter <= 0f)
-                throw new ArgumentException("densityParameter should be positive");
-            if (degreesDelta <= 0)
-                throw new ArgumentException("degreesDelta should be positive");
-            
             this.center = center;
             this.densityParameter = densityParameter;
             

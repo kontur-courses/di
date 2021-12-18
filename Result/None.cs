@@ -1,4 +1,4 @@
-namespace Result
+namespace ResultProject
 {
     public abstract class None { }
 }

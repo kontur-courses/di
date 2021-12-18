@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using ResultProject;
 
 namespace TagsCloudVisualization.Statistics
 {
     public interface IWordStatisticsToSizeConverter
     {
-        public IEnumerable<TagWordInfo> Convert(IWordsStatistics statistics, int topWordCount);
+        public Result<IEnumerable<TagWordInfo>> Convert(IWordsStatistics statistics, uint topWordCount);
     }
 }

@@ -29,25 +29,21 @@ namespace TagsCloudVisualization.Printing
 
         public static Rectangle Translate(this Rectangle source, Size currentSize, Size newSize)
         {
-            // return source;
             var sizeDelta = new SizeF(
                 (float) currentSize.Width / newSize.Width,
                 (float) currentSize.Height / newSize.Height);
 
-            var resized = source.Resize(new SizeF(Math.Max(sizeDelta.Height, sizeDelta.Width), Math.Max(sizeDelta.Height, sizeDelta.Width)));
-            // if (lengthCoefficient != -1 && resized.Height * lengthCoefficient > resized.Width)
-            // {
-            //     sizeDelta = new SizeF(
-            //         (float)resized.Height * lengthCoefficient / resized.Width,
-            //         (float)resized.Height * lengthCoefficient / resized.Width);
-            //     resized = source.Resize(sizeDelta);
-            // }
+            var resized = source.Resize(
+                new SizeF(Math.Max(sizeDelta.Height, sizeDelta.Width), 
+                Math.Max(sizeDelta.Height, sizeDelta.Width)));
+            
             resized = new Rectangle(
                 (int)(source.X / sizeDelta.Width),
                 (int)(source.Y / sizeDelta.Height),
                 (int)(source.Width / Math.Max(sizeDelta.Height, sizeDelta.Width)),
                 (int)(source.Height / Math.Max(sizeDelta.Height, sizeDelta.Width))
             );
+            
             return resized;
         }
         

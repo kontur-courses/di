@@ -2,6 +2,7 @@
 using System.Text;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
+using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
@@ -9,15 +10,18 @@ namespace TagsCloudVisualization.Readers
     {
         public TextFormat Format => TextFormat.Docx;
 
-        public string ReadFile(string filePath)
+        public Result<string> ReadFile(string filePath)
         {
-            using var wordDocument = WordprocessingDocument.Open(filePath, false);
-            return GetPlainText(wordDocument.MainDocumentPart?.Document.Body ?? throw new FormatException(filePath));
+            return Result.Of(() =>
+            {
+                using var wordDocument = WordprocessingDocument.Open(filePath, false);
+                return GetPlainText(wordDocument.MainDocumentPart?.Document.Body ?? throw new FormatException(filePath));
+            }, $"Can't read {filePath} for some reason");
         }
         
         private static string GetPlainText(OpenXmlElement element) 
         {
-            StringBuilder text = new(); 
+            var text = new StringBuilder(); 
             foreach (OpenXmlElement section in element.Elements()) 
             {              
                 switch (section.LocalName) 

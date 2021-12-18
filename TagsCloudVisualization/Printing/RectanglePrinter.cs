@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using ResultProject;
 
 namespace TagsCloudVisualization.Printing
 {
@@ -15,32 +16,34 @@ namespace TagsCloudVisualization.Printing
             this.reCalculator = reCalculator;
         }
         
-        public Bitmap GetBitmap(IColorScheme colorScheme, IEnumerable<Rectangle> objects, Size? bitmapSize = null)
+        public Result<Bitmap> GetBitmap(IColorScheme colorScheme, IEnumerable<Rectangle> objects, Size? bitmapSize = null)
         {
             var rects = objects.ToList();
-            if (!rects.Any()) throw new ArgumentException($"rectangle list is empty");
-            var recalculated = bitmapSize is null
+            if (!rects.Any()) return Result.Fail<Bitmap>($"rectangle list is empty");
+            return (bitmapSize is null
                 ? reCalculator.MoveToCenter(rects)
-                : reCalculator.RecalculateRectangles(rects, bitmapSize.Value);
-            // var firstRectangle = rects.First();
-            // var actualCenter = new Point(firstRectangle.X + firstRectangle.Width / 2, 
-            //     firstRectangle.Y + firstRectangle.Height / 2);
-            //
-            // var bmp = new Bitmap(
-            //     Math.Abs(rects.Max(x => x.Right) - rects.Min(x => x.Left)) + Margin,
-            //     Math.Abs(rects.Max(x => x.Bottom) - rects.Min(x => x.Top)) + Margin
-            // );
-            //
-            // var centersDelta = new Size(actualCenter.X - bmp.Width / 2, actualCenter.Y - bmp.Height / 2);
+                : reCalculator.RecalculateRectangles(rects, bitmapSize.Value))
+                .Then(x => (x, new Bitmap(x.GetCircumscribedSize().Width + Margin / 2, x.GetCircumscribedSize().Height + Margin)))
+                .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
+                .Then(x =>
+                {
+                    var (rectangles, bitmap, graphics) = x;
+                    DrawRectangles(colorScheme, graphics, rectangles);
+                    return bitmap;
+                });
 
-            var bmp = new Bitmap(recalculated.GetCircumscribedSize().Width + Margin / 2, recalculated.GetCircumscribedSize().Height + Margin);
-            using var graphics = Graphics.FromImage(bmp);
-            DrawRectangles(colorScheme, graphics, recalculated);
-            // DrawRectangles(colorScheme, graphics, rects.Select(rect => rect.Move(-centersDelta.Width, -centersDelta.Height)));
+            // var bmp = new Bitmap(recalculated.GetCircumscribedSize().Width + Margin / 2, recalculated.GetCircumscribedSize().Height + Margin);
+            // using var graphics = Graphics.FromImage(bmp);
+            // DrawRectangles(colorScheme, graphics, recalculated);
 
-            return bmp;
+            // return bmp;
         }
-        
+
+        public Result<Bitmap> GetBitmap(IColorScheme colorScheme, Result<IEnumerable<Rectangle>> objects, Size? bitmapSize = null)
+        {
+            return GetBitmap(colorScheme, objects.GetValueOrThrow()!, bitmapSize);
+        }
+
         private void DrawRectangles(IColorScheme colorScheme, Graphics graphics, IEnumerable<Rectangle> rectangles)
         {
             foreach (var rectangle in rectangles)

@@ -1,5 +1,4 @@
-﻿using System;
-using WeCantSpell.Hunspell;
+﻿using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization.WordProcessors
 {
@@ -7,9 +6,9 @@ namespace TagsCloudVisualization.WordProcessors
     {
         private readonly WordList wordList;
         
-        public InitialFormWordProcessor(WordList? wordList)
+        public InitialFormWordProcessor(WordList wordList)
         {
-            this.wordList = wordList ?? throw new ArgumentNullException(nameof(wordList));
+            this.wordList = wordList;
         }
         
         public string ProcessWord(string word)

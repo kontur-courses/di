@@ -2,9 +2,9 @@
 {
     public class TooShortWordValidator : IWordValidator
     {
-        private int minWordLength;
+        private byte minWordLength;
 
-        public void SetLimit(int minWordLength)
+        public void SetLimit(byte minWordLength)
         {
             this.minWordLength = minWordLength;
         }

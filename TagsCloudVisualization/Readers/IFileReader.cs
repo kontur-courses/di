@@ -1,9 +1,11 @@
-﻿namespace TagsCloudVisualization.Readers
+﻿using ResultProject;
+
+namespace TagsCloudVisualization.Readers
 {
     public interface IFileReader
     {
         TextFormat Format { get; }
 
-        string ReadFile(string filePath);
+        Result<string> ReadFile(string filePath);
     }
 }
