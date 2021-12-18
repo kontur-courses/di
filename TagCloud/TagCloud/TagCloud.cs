@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using TagCloud.Drawing;
@@ -56,6 +57,11 @@ namespace TagCloud
                 var layoutedWords = _wordLayouter.Layout(options, text);
                 _statusWriter.WriteLine("Рисую bitmap");
                 var bitmap = _drawer.Draw(options, layoutedWords);
+                if (options.Size != Size.Empty)
+                {
+                    _statusWriter.WriteLine("Масштабирую к заданному размеру. (Возможно ухудшение качества)");
+                    bitmap = bitmap.ScaledResize(options.Size, options.BackgroundColor);
+                }
                 _statusWriter.WriteLine("Сохраняю bitmap\n");
                 bitmap.SaveWithPostfix(options.FileName, options.Path, options.Format);
             }
