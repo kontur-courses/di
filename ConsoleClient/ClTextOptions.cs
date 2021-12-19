@@ -73,7 +73,7 @@ namespace TagCloudUsageSample
                 Size = new Size(size[0], size[1]),
                 Color = Color is null ? null : System.Drawing.Color.FromArgb(splittedColor[0], splittedColor[1], splittedColor[2]),
                 WordCountToStatistic = WordCountToStatistic,
-                Density = Density,
+                Density = (uint)Density,
                 MinWordToStatisticLength = (byte)MinWordLengthToStatistic,
                 Font = Font,
                 TextFilePath = TextFilePath,

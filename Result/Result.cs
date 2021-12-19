@@ -72,9 +72,18 @@ namespace ResultProject
 
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput, TOutput> continuation) 
             => input.Then(inp => Of(() => continuation(inp)));
+        
+        public static Result<bool> ThenCombine(this Result<bool> input, params Func<bool, Result<bool>>[] continuations)
+        {
+            return continuations.Aggregate(input, (current, continuation) => current.Then<bool, Result<Result<bool>>>(inp => Of(() => continuation(inp))).Value.Value);
+            // return input.Then(inp => Of(() => continuation(inp)));
+        }
 
         public static Result<None> Then<TInput>(this Result<TInput> input, Action<TInput> continuation) 
             => input.Then(inp => OfAction(() => continuation(inp)));
+        
+        public static Result<TCast> ThenCast<TInput, TCast>(this Result<TInput> input)
+            => new(input.Error, (TCast)Convert.ChangeType(input.Value, typeof(TCast)));
 
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input, Func<TInput, Result<TOutput>> continuation) 
             => input.IsSuccess ? continuation(input.Value) : Fail<TOutput>(input.Error);
@@ -92,6 +101,16 @@ namespace ResultProject
         {
             if (!input.IsSuccess) handleError(input.Error);
             return input;
+        }
+        
+        // public static Result<TInput> FailIf<TInput>(this Result<TInput> input, Func<TInput, bool> determinant, string message)
+        // {
+        //     return !determinant(input.Value) ? Fail<TInput>(message) : Ok(input.Value);
+        // }
+
+        public static Result<TInput> ThenFailIf<TInput>(this Result<TInput> input, Func<TInput, bool> continuation, string message)
+        {
+            return !continuation(input.Value) ? Fail<TInput>(message) : input;
         }
 
         public static Result<TInput> ReplaceError<TInput>(this Result<TInput> input, Func<string, string> replaceError) 

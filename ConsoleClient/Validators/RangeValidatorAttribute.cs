@@ -1,4 +1,5 @@
 ﻿using System;
+using ResultProject;
 
 namespace TagCloudUsageSample.Validators
 {
@@ -13,11 +14,13 @@ namespace TagCloudUsageSample.Validators
             ParameterName = parameterName;
         }
 
-        public virtual bool Validate(IComparable value, out string message)
+        public virtual Result<bool> Validate(IComparable value)
         {
-            var result = Between(value, range);
-            message = result ? $"" : $"{ParameterName} should be grate then {range.Min} and less then {range.Max}";
-            return result;
+            return Between(value, range)
+                .ThenFailIf(x => !x, $"{ParameterName} should be grate then {range.Min} and less then {range.Max}");
+            // var result = Between(value, range);
+            // message = result ? $"" : $"{ParameterName} should be grate then {range.Min} and less then {range.Max}";
+            // return result;
         }
         
         private static bool Between(IComparable source, IComparable left, IComparable right)
@@ -28,13 +31,16 @@ namespace TagCloudUsageSample.Validators
             return source.CompareTo(min) >= 0 && source.CompareTo(max) <= 0;
         }
         
-        private static bool Between(IComparable source, (IComparable Min, IComparable Max) range)
+        private static Result<bool> Between(IComparable source, (IComparable Min, IComparable Max) range)
         {
-            var (min, max) = range;
-            if (min.CompareTo(max) > 0)
-                throw new ArgumentException("first value should be less or equal then second");
-
-            return Between(source, min, max);
+            return Result.Ok(range)
+                .ThenFailIf(x => x.Min.CompareTo(x.Max) > 0, "first value should be less or equal then second")
+                .Then(x => Between(source, x.Min, x.Max));
+            // var (min, max) = range;
+            // if (min.CompareTo(max) > 0)
+            //     throw new ArgumentException("first value should be less or equal then second");
+            //
+            // return Between(source, min, max);
         }
     }
 }
