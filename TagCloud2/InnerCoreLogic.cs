@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagCloud2.Image;
 using TagCloud2.TextGeometry;
 using TagCloudVisualisation;
 
 namespace TagCloud2
 {
-    public class Core
+    public class InnerCoreLogic
     {
-        private IFileReader reader;
-        private IWordReader wordReader;
-        private IStringPreprocessor preprocessor;
-        private IStringToSizeConverter sizeConverter;
-        private ICloudLayouter layouter;
-        private IColoredCloud coloredCloud;
-        private IColoringAlgorithm coloringAlgorithm;
-        private IColoredCloudToImageConverter converterToImage;
-        private IFileGenerator fileGenerator;
-        private IImageFormatter formatter;
+        private readonly IFileReader reader;
+        private readonly IWordReader wordReader;
+        private readonly IStringPreprocessor preprocessor;
+        private readonly IStringToSizeConverter sizeConverter;
+        private readonly ICloudLayouter layouter;
+        private readonly IColoredCloud coloredCloud;
+        private readonly IColoringAlgorithm coloringAlgorithm;
+        private readonly IColoredCloudToImageConverter converterToImage;
+        private readonly IFileGenerator fileGenerator;
+        private readonly IImageFormatter formatter;
 
         public void Run(IOptions options)
         {
@@ -47,7 +43,7 @@ namespace TagCloud2
             fileGenerator.GenerateFile(options.OutputName, formatter, image);
         }
 
-        public Core(IFileReader reader, IWordReader wordReader, IStringPreprocessor preprocessor, IStringToSizeConverter sizeConverter,
+        public InnerCoreLogic(IFileReader reader, IWordReader wordReader, IStringPreprocessor preprocessor, IStringToSizeConverter sizeConverter,
             ICloudLayouter layouter, IColoredCloud coloredCloud, IColoringAlgorithm coloringAlgorithm, 
             IColoredCloudToImageConverter converterToImage, IFileGenerator fileGenerator, IImageFormatter formatter)
         {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace TagCloud2.Text
@@ -19,8 +17,8 @@ namespace TagCloud2.Text
             {
                 using var zip = new ZipArchive(file, ZipArchiveMode.Read);
                 var entry = zip.Entries.Where(x => x.Name == "document.xml").First();
-                NameTable nt = new NameTable();
-                XmlNamespaceManager nsManager = new XmlNamespaceManager(nt);
+                NameTable nt = new();
+                XmlNamespaceManager nsManager = new(nt);
                 nsManager.AddNamespace("w", wordmlNamespace);
                 var SB = new StringBuilder();
                 var xml = new XmlDocument(nt);

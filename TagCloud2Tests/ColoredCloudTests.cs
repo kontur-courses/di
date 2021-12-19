@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagCloud2;
 using FakeItEasy;
 using TagCloudVisualisation;
@@ -16,15 +12,15 @@ namespace TagCloud2Tests
 {
     public class ColoredCloudTests
     {
-        private ICloudLayouter cloud = A.Fake<ICloudLayouter>();
+        private readonly ICloudLayouter cloud = A.Fake<ICloudLayouter>();
 
         private IColoredCloud coloredCloud = new ColoredCloud();
 
-        private IColoringAlgorithm whiteAlgo = new WhiteColoringAlgorithm();
+        private readonly IColoringAlgorithm whiteAlgo = new WhiteColoringAlgorithm();
 
-        private Color white = Color.FromArgb(255, 255, 255);
+        private readonly Color white = Color.FromArgb(255, 255, 255);
 
-        private Font font = SystemFonts.DefaultFont;
+        private readonly Font font = SystemFonts.DefaultFont;
 
         [SetUp]
         public void SetUp()
@@ -35,8 +31,8 @@ namespace TagCloud2Tests
         [Test]
         public void GetFromCloudLayouter_OnEmpty_ShouldWorkCorrect()
         {
-            A.CallTo(() => cloud.GetRectangles()).Returns(new Rectangle[0]);
-            coloredCloud.AddColoredWordsFromCloudLayouter(new IColoredSizedWord[0], cloud, whiteAlgo);
+            A.CallTo(() => cloud.GetRectangles()).Returns(System.Array.Empty<Rectangle>());
+            coloredCloud.AddColoredWordsFromCloudLayouter(System.Array.Empty<IColoredSizedWord>(), cloud, whiteAlgo);
             coloredCloud.ColoredWords.Should().BeEmpty();
         }
 
@@ -68,10 +64,11 @@ namespace TagCloud2Tests
                 coloredSizedWord2
             }, cloud, whiteAlgo);
 
-            var expList = new List<ColoredSizedWord>();
-
-            expList.Add(new ColoredSizedWord(white, rect1, "aboba1", font));
-            expList.Add(new ColoredSizedWord(white, rect2, "aboba2", font));
+            var expList = new List<ColoredSizedWord>
+            {
+                new ColoredSizedWord(white, rect1, "aboba1", font),
+                new ColoredSizedWord(white, rect2, "aboba2", font)
+            };
 
             coloredCloud.ColoredWords.Should().BeEquivalentTo(expList);
         }

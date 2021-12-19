@@ -6,7 +6,7 @@ namespace TagCloudVisualisation
 { 
     public class Program
     {
-        private static Random random = new Random();
+        private static readonly Random random = new();
         public static void Main()
         {
             var folder = "RenderedPictures";

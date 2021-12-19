@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace TagCloud2.Image
 {
@@ -13,13 +8,13 @@ namespace TagCloud2.Image
         {
             var words = cloud.ColoredWords;
             var bitmap = new Bitmap(xSize, ySize);
-            var g = Graphics.FromImage(bitmap);
-            g.Clear(Color.Black);
-            foreach (var r in words)
+            var graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(Color.Black);
+            foreach (var coloredSizedWord in words)
             {
-                var word = r.Word;
-                var brush = new SolidBrush(r.Color);
-                g.DrawString(word, r.Font, brush, r.Size);
+                var word = coloredSizedWord.Word;
+                var brush = new SolidBrush(coloredSizedWord.Color);
+                graphics.DrawString(word, coloredSizedWord.Font, brush, coloredSizedWord.Size);
             }
             return bitmap;
         }

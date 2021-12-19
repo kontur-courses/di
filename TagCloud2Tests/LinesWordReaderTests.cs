@@ -1,5 +1,4 @@
 ﻿using System;
-using NUnit;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud2;
@@ -8,7 +7,7 @@ namespace TagCloud2Tests
 {
     public class LinesWordReader_Should
     {
-        private LinesWordReader wr = new();
+        private readonly LinesWordReader wr = new();
 
         [Test]
         public void GetWords_OnOneWord_ShouldReturnThisWordInArray()

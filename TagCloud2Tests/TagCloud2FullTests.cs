@@ -4,23 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TagCloud2;
-using TagCloud2.Image;
 
 namespace TagCloud2Tests
 {
     public class TagCloud2FullTests
     {
-        private Generator generator = new();
+        private readonly Generator generator = new();
 
-        private List<string> wordList = new();
+        private readonly List<string> wordList = new();
 
-        private List<Rectangle> rectangleList = new();
+        private readonly List<Rectangle> rectangleList = new();
 
-        private TestOptions options = new();
+        private readonly TestOptions options = new();
 
         [SetUp]
         public void SetUp()
@@ -75,9 +72,9 @@ namespace TagCloud2Tests
 
         private bool BitmapsRChannelsAreEqual(Bitmap expected, Bitmap result)
         {
-            for (int x = 0; x < options.X; x = x + 2)
+            for (int x = 0; x < options.X; x += 2)
             {
-                for (int y = 0; y < options.Y; y = y + 2)
+                for (int y = 0; y < options.Y; y += 2)
                 {
                     var expectedPixel = expected.GetPixel(x, y).R;
                     var actualPixel = result.GetPixel(x, y).R;
