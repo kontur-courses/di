@@ -1,14 +1,17 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using CommandLine;
+using ResultProject;
 using TagCloudUsageSample.Validators;
 using TagsCloudVisualization;
 
 namespace TagCloudUsageSample
 {
-    public class ClTextOptions : BaseOptions
+    public class ClTextOptions
     {
         [FileValidator("invalid file name")]
         [Option('t', "text", Default = @"sample.txt", HelpText = "Text file path")]
@@ -20,7 +23,7 @@ namespace TagCloudUsageSample
         
         [FileNameValidator("invalid file name")]
         [Option('n', "name", Default = "TagCloud", HelpText = "Set name to save tag clouds.")]
-        public string FileName { get; private set; }
+        public string SaveFileName { get; private set; }
         
         [FileValidator("invalid file name")]
         [Option('i', "ignore", HelpText = "Ignore words file path")]
@@ -43,8 +46,8 @@ namespace TagCloudUsageSample
         [Option('f', "font", Default = "Arial", Required = false, HelpText = "Set font for words.")]
         public string Font { get; private set; }
 
-        [RangeValidator(-1, 500, nameof(WordCountToStatistic))]
-        [Option('w', "wordCount", Default = -1, HelpText = "Set number of word to statistic.")]
+        [RangeValidator(0, 500, nameof(WordCountToStatistic))]
+        [Option('w', "wordCount", Default = 50, HelpText = "Set number of word to statistic.")]
         public int WordCountToStatistic { get; private set; }
         
         [ColorValidator("incorrect color")]
@@ -54,33 +57,64 @@ namespace TagCloudUsageSample
         [SizeValidator(1, 10000, nameof(Size))]
         [Option('s', "size", Default = "900 900", HelpText = "Set size of image.")]
         public string Size { get; set; }
-        
-        private readonly TagCloud tagCloud = new();
-        
-        public void CreateTags(out string firstFileName)
+
+        private Result<bool> ValidateRanges()
         {
-            firstFileName = Path.Combine(SavePath, FileName) + "." + ImageFormat.Png.ToString().ToLower();
-            tagCloud.GetBitmap(GetConfig()).Save(firstFileName, ImageFormat.Png);
+            return Result.Ok(GetType())
+                .Then(x => x.GetProperties())
+                .Then(x => x.Where(y => y.GetCustomAttributes(true).OfType<RangeValidatorAttribute>().Any()))
+                .ThenForEach(x => x.GetCustomAttributes(true).AsResult()
+                    .Then(y => y.OfType<RangeValidatorAttribute>())
+                    .Then(y => y.First())
+                    .Then(y => y.Validate((IComparable) x.GetValue(this))))
+                .ThenCheckAllForFail(x => x);
+        }
+        
+        private Result<bool> ValidateStrings()
+        {
+            return GetType().AsResult()
+                .Then(x => x.GetProperties())
+                .Then(x => x.Where(y => y.GetCustomAttributes(true).OfType<StringValidatorAttribute>().Any()))
+                .ThenForEach(x => x.GetCustomAttributes(true).AsResult()
+                    .Then(y => y.OfType<StringValidatorAttribute>())
+                    .Then(y => y.First())
+                    .Then(y => y.Validate((string) x.GetValue(this))))
+                .ThenCheckAllForFail(x => x);
         }
 
-        private Config GetConfig()
+        private Result<bool> Validate()
+        {
+            return new Result<bool>().ThenCombineAndCheckAllForFail(_ => ValidateRanges(), _ => ValidateStrings());
+        }
+
+        private Color? GetColor()
         {
             var splittedColor = Color?.Split(' ').Select(int.Parse).ToList();
+            return Color is null ? null : System.Drawing.Color.FromArgb(splittedColor[0], splittedColor[1], splittedColor[2]);
+        }
+
+        private Size GetSize()
+        {
             var size = Size.Split(' ').Select(int.Parse).ToList();
-            
-            return new Config
-            {
-                Size = new Size(size[0], size[1]),
-                Color = Color is null ? null : System.Drawing.Color.FromArgb(splittedColor[0], splittedColor[1], splittedColor[2]),
-                WordCountToStatistic = WordCountToStatistic,
-                Density = (uint)Density,
-                MinWordToStatisticLength = (byte)MinWordLengthToStatistic,
-                Font = Font,
-                TextFilePath = TextFilePath,
-                CustomIgnoreFilePath = IgnoreWordsFileName,
-                TagCloudResultActions = Open ? TagCloudResultActions.SaveAndOpen : TagCloudResultActions.Save,
-                SourceTextInterpretationMode = IsLiteraryText ? SourceTextInterpretationMode.LiteraryText : SourceTextInterpretationMode.OneWordPerLine
-            };
+            return new Size(size[0], size[1]);
+        }
+
+        public Result<Config> GetConfig()
+        {
+            return Validate().AsResult()
+                .Then(_ => new Config())
+                .ThenAction(x => x.SourceTextInterpretationMode = IsLiteraryText ? SourceTextInterpretationMode.LiteraryText : SourceTextInterpretationMode.OneWordPerLine)
+                .ThenAction(x => x.TagCloudResultActions = Open ? TagCloudResultActions.SaveAndOpen : TagCloudResultActions.Save)
+                .ThenAction(x => x.CustomIgnoreFilePath = IgnoreWordsFileName)
+                .ThenAction(x => x.TextFilePath = TextFilePath)
+                .ThenAction(x => x.Font = Font)
+                .ThenAction(x => x.MinWordToStatisticLength = (byte)MinWordLengthToStatistic)
+                .ThenAction(x => x.Density = (uint)Density)
+                .ThenAction(x => x.WordCountToStatistic = (uint)WordCountToStatistic)
+                .ThenAction(x => x.Color = GetColor())
+                .ThenAction(x => x.SavePath = SavePath)
+                .ThenAction(x => x.SaveFileName = SaveFileName)
+                .ThenAction(x => x.Size = GetSize());
         }
     }
 }

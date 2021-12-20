@@ -32,7 +32,7 @@ namespace TagsCloudVisualizationTest
             try
             {
                 rectanglePrinter
-                    .GetBitmap(colorScheme, rectangles)  // Throw ArgumentException while creating too big bmp.
+                    .GetBitmap(colorScheme, rectangles).GetValueOrThrow()  // Throw ArgumentException while creating too big bmp.
                     .Save(SavePath, ImageFormat.Jpeg);
             }
             catch (ArgumentException _)

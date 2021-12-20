@@ -24,9 +24,12 @@ namespace TagsCloudVisualization.Printing
             return (bitmapSize is null
                     ? reCalculator.MoveToCenter(fixedTexts.Select(x => x.Rectangle).ToList())
                     : reCalculator.RecalculateRectangles(fixedTexts.Select(x => x.Rectangle).ToList(), new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
-                .Then(x => bitmapSize is null
-                    ? reCalculator.MoveToCenter(x)
-                    : reCalculator.RecalculateRectangles(x, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
+                // .Then(x => bitmapSize is null
+                //     ? reCalculator.MoveToCenter(x)
+                //     : reCalculator.RecalculateRectangles(x, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
+                // .Then(x => bitmapSize is null
+                //     ? reCalculator.MoveToCenter(x)
+                //     : reCalculator.RecalculateRectangles(x, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
                 .Then(x => (x, bitmapSize ?? new Size(x.GetCircumscribedSize().Width, x.GetCircumscribedSize().Height)))
                 .Then(x => (x.x, new Bitmap(x.Item2.Width, x.Item2.Height)))
                 .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
@@ -35,23 +38,9 @@ namespace TagsCloudVisualization.Printing
                 {
                     var (rects, bmp, graphics) = x;
                     DrawText(graphics, fixedTexts.Select((y, i) => new Text(y.Word, y.Font, rects[i])), colorScheme);
+                    // new RectanglePrinter(new RectanglesReCalculator()).DrawRectangles(colorScheme, graphics, rects);
                     return bmp;
                 });
-            
-            // recalculated = bitmapSize is null
-            //     ? reCalculator.MoveToCenter(recalculated)
-            //     : reCalculator.RecalculateRectangles(recalculated, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin));
-
-            // var nBitmapSize = bitmapSize ?? new Size(recalculated.GetCircumscribedSize().Width, recalculated.GetCircumscribedSize().Height);
-            
-            // var bmp = new Bitmap(nBitmapSize.Width, nBitmapSize.Height);
-            // using var graphics = Graphics.FromImage(bmp);
-            // DrawText(graphics, fixedTexts.Select((x, i) => new Text(x.Word, x.Font, recalculated[i])), colorScheme);
-
-            // for debug
-            // var b = new RectanglePrinter(reCalculator).GetBitmap(colorScheme, recalculated, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin));
-            // graphics.DrawImage(b, Point.Empty);
-            // return bmp;
         }
         
         public Result<Bitmap> GetBitmap(IColorScheme colorScheme, Result<IEnumerable<Text>> objects, Size? bitmapSize = null)

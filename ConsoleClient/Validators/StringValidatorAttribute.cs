@@ -16,10 +16,8 @@ namespace TagCloudUsageSample.Validators
 
         public Result<bool> Validate(string value)
         {
-            return validationFunc(value).ThenFailIf(x => !x, $"{outMessage}: {value}");
-            // var result = validationFunc(value);
-            // message = result ? "" : $"{outMessage}: {value}";
-            // return result;
+            return validationFunc(value)
+                .ThenFailIf(x => !x, $"{outMessage}: {value}");
         }
     }
 }

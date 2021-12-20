@@ -111,6 +111,10 @@
         <Compile Include="WordsStatistics_Tests.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Result\Result.csproj">
+        <Project>{e36071b5-2502-4ac9-94a9-d8e3c066dbb3}</Project>
+        <Name>Result</Name>
+      </ProjectReference>
       <ProjectReference Include="..\TagsCloudVisualization\TagsCloudVisualization.csproj">
         <Project>{cedd37a7-3bf8-43ee-a309-84b468252a15}</Project>
         <Name>TagsCloudVisualization</Name>

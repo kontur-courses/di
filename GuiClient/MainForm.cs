@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ResultProject;
 using TagsCloudVisualization;
 
 namespace DesktopClient
@@ -49,7 +52,12 @@ namespace DesktopClient
         protected override void OnPaint(PaintEventArgs e)
         {
             if (textFilePath is null || !changed) return;
-            cloudBox.Image = tagCloud.GetBitmap(GetConfig());
+
+            (GetConfig(), new TagCloud()).AsResult()
+                .Then(x => x.Item2.GetBitmap(x.Item1))
+                .ThenAction(x => cloudBox.Image = x)
+                .OnFail();
+            
             changed = false;
         }
 

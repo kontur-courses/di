@@ -23,13 +23,13 @@ namespace TagsCloudVisualizationTest.Builders
             return this;
         }
         
-        public CircularCloudLayouterBuilder WithDensityParameter(double density)
+        public CircularCloudLayouterBuilder WithDensityParameter(uint density)
         {
             pointSpiralBuilder.WithDensityParameter(density);
             return this;
         }
         
-        public CircularCloudLayouterBuilder WithDegreesDelta(int degreesDeltaParameter)
+        public CircularCloudLayouterBuilder WithDegreesDelta(uint degreesDeltaParameter)
         {
             pointSpiralBuilder.WithDegreesDelta(degreesDeltaParameter);
             return this;

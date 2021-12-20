@@ -38,28 +38,28 @@ namespace TagsCloudVisualizationTest
         [Test]
         public void GetStatistics_IsEmpty_AfterCreation()
         {
-            wordsStatistics.GetStatistics().Should().BeEmpty();
+            wordsStatistics.GetStatistics().IsSuccess.Should().BeFalse();
         }
 
         [Test]
         public void GetStatistics_ContainsItem_AfterAddition()
         {
             wordsStatistics.AddWords(new[] { "abc" });
-            wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().Equal(new WordCount("abc", 1));
         }
 
         [Test]
         public void GetStatistics_ContainsManyItems_AfterAdditionOfDifferentWords()
         {
             wordsStatistics.AddWords(new[] { "abc", "def" });
-            wordsStatistics.GetStatistics().Should().HaveCount(2);
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().HaveCount(2);
         }
 
         [Test]
         public void GetStatistics_SortsWordsByFrequency()
         {
             wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "bbbbbbbbbb", "bbbbbbbbbb" });
-            wordsStatistics.GetStatistics().Select(t => t.Word)
+            wordsStatistics.GetStatistics().GetValueOrThrow().Select(t => t.Word)
                 .Should().BeEquivalentTo(new[] {"bbbbbbbbbb", "aaaaaaaaaa"},
                     options => options.WithStrictOrdering());
         }
@@ -68,7 +68,7 @@ namespace TagsCloudVisualizationTest
         public void GetStatistics_SortsWordsByAbc_WhenFrequenciesAreSame()
         {
             wordsStatistics.AddWords(new[] { "cccccccccc", "aaaaaaaaaa", "bbbbbbbbbb" });
-            wordsStatistics.GetStatistics().Select(t => t.Word)
+            wordsStatistics.GetStatistics().GetValueOrThrow().Select(t => t.Word)
                 .Should().ContainInOrder("aaaaaaaaaa", "bbbbbbbbbb", "cccccccccc");
         }
 
@@ -76,8 +76,8 @@ namespace TagsCloudVisualizationTest
         public void GetStatistics_ReturnsSameResult_OnSecondCall()
         {
             wordsStatistics.AddWords(new[] { "abc" });
-            wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
-            wordsStatistics.GetStatistics().Should().Equal(new WordCount("abc", 1));
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().Equal(new WordCount("abc", 1));
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().Equal(new WordCount("abc", 1));
         }
 
         [Test]
@@ -90,28 +90,28 @@ namespace TagsCloudVisualizationTest
         public void AddWord_CountsOnce_WhenSameWord()
         {
             wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "aaaaaaaaaa" });
-            wordsStatistics.GetStatistics().Should().HaveCount(1);
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().HaveCount(1);
         }
 
         [Test]
         public void AddWord_IncrementsCounter_WhenSameWord()
         {
             wordsStatistics.AddWords(new[] { "aaaaaaaaaa", "aaaaaaaaaa" });
-            wordsStatistics.GetStatistics().Select(t => t.Count).First().Should().Be(2);
+            wordsStatistics.GetStatistics().GetValueOrThrow().Select(t => t.Count).First().Should().Be(2);
         }
 
         [Test]
         public void AddWord_Ignores_EmptyWord()
         {
             wordsStatistics.AddWords(new[] { "" });
-            wordsStatistics.GetStatistics().Should().BeEmpty();
+            wordsStatistics.GetStatistics().IsSuccess.Should().BeFalse();
         }
 
         [Test]
         public void AddWord_Ignores_WhitespaceWord()
         {
             wordsStatistics.AddWords(new[] { " " });
-            wordsStatistics.GetStatistics().Should().BeEmpty();
+            wordsStatistics.GetStatistics().IsSuccess.Should().BeFalse();
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace TagsCloudVisualizationTest
             }
 
             wordsStatistics.AddWords(words);
-            wordsStatistics.GetStatistics().Should().HaveCount(counter);
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().HaveCount(counter);
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace TagsCloudVisualizationTest
             }
             
             wordsStatistics.AddWords(words);
-            wordsStatistics.GetStatistics().Should().HaveCount(wordCount);
+            wordsStatistics.GetStatistics().GetValueOrThrow().Should().HaveCount(wordCount);
         }
 
         [Test, Timeout(1500)]

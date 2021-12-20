@@ -11,29 +11,20 @@ namespace TagsCloudVisualization.Printing
         public Result<IList<Rectangle>> RecalculateRectangles(IList<Rectangle> rectangles, Size defaultMaxSize)
         {
             return MoveToCenter(rectangles)
-                .Then(y => y.Select(x => x.Translate(y.GetCircumscribedSize(), defaultMaxSize)).ToList() as IList<Rectangle>);
-            
-            
-            // var centeredRects = MoveToCenter(rectangles);
-            // var oldSize = centeredRects.GetCircumscribedSize();
-            // return centeredRects.Select(x => x.Translate(oldSize, defaultMaxSize)).ToList();
+                .Then(rects => rects.Select(rect => rect.Translate(rects.GetCircumscribedSize(), defaultMaxSize)))
+                .Then(rects => rects.ToList() as IList<Rectangle>);
         }
 
         public Result<IList<Rectangle>> MoveToCenter(IList<Rectangle> rectangles)
         {
-            if (!rectangles.Any()) return Result.Fail<IList<Rectangle>>($"rectangles list is empty");
-            
-            return Result.Ok((rectangles, rectangles.First()))
-                .Then(x => (x.rectangles, x.Item2, new Point(x.Item2.X + x.Item2.Width / 2, x.Item2.Y + x.Item2.Height / 2)))
-                .Then(x => (x.rectangles, x.Item2, x.Item3, x.rectangles.GetCircumscribedSize()))
-                .Then(x => new Size(x.Item3.X - x.Item4.Width / 2, x.Item3.Y - x.Item4.Height / 2))
-                .Then(y => rectangles.Select(x => x.Move(-x.Width, -x.Height)))
-                .Then(x => x.ToList() as IList<Rectangle>);
-            // var center = new Point(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
-            // var initialSize = rectangles.GetCircumscribedSize();
-            // var centersDelta = new Size(center.X - initialSize.Width / 2, center.Y - initialSize.Height / 2);
-
-            // return rectangles.Select(x => x.Move(-centersDelta.Width, -centersDelta.Height)).ToList();
+            return rectangles.AsResult()
+                .ThenFailIf(x => !x.Any(), "rectangles list is empty")
+                .Then(rects => rects.ToList())
+                .Then(rects => (rects, center: new Point(rects.First().X + rects.First().Width / 2, rects.First().Y + rects.First().Height / 2)))
+                .Then(x => (x.rects, x.center, initialSize: x.rects.GetCircumscribedSize()))
+                .Then(x => (x.rects, centersDelta: new Size(x.center.X - x.initialSize.Width / 2, x.center.Y - x.initialSize.Height / 2)))
+                .Then(x => x.rects.Select(rect => rect.Move(-x.centersDelta.Width, -x.centersDelta.Height)))
+                .Then(rects => rects.ToList() as IList<Rectangle>);
         }
     }
 }

@@ -27,16 +27,11 @@ namespace TagsCloudVisualization.Printing
                 .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
                 .Then(x =>
                 {
+                    
                     var (rectangles, bitmap, graphics) = x;
                     DrawRectangles(colorScheme, graphics, rectangles);
                     return bitmap;
                 });
-
-            // var bmp = new Bitmap(recalculated.GetCircumscribedSize().Width + Margin / 2, recalculated.GetCircumscribedSize().Height + Margin);
-            // using var graphics = Graphics.FromImage(bmp);
-            // DrawRectangles(colorScheme, graphics, recalculated);
-
-            // return bmp;
         }
 
         public Result<Bitmap> GetBitmap(IColorScheme colorScheme, Result<IEnumerable<Rectangle>> objects, Size? bitmapSize = null)
@@ -44,7 +39,7 @@ namespace TagsCloudVisualization.Printing
             return GetBitmap(colorScheme, objects.GetValueOrThrow()!, bitmapSize);
         }
 
-        private void DrawRectangles(IColorScheme colorScheme, Graphics graphics, IEnumerable<Rectangle> rectangles)
+        public void DrawRectangles(IColorScheme colorScheme, Graphics graphics, IEnumerable<Rectangle> rectangles)
         {
             foreach (var rectangle in rectangles)
             {

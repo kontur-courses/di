@@ -9,7 +9,7 @@ using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization
 {
-    public static class Configurator
+    public static class AutofacConfigurator
     {
         private static void InjectParsers(ContainerBuilder builder)
         {

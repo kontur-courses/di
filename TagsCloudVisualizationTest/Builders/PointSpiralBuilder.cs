@@ -6,8 +6,8 @@ namespace TagsCloudVisualizationTest.Builders
     public class PointSpiralBuilder
     {
         private Point center;
-        private double densityParameter = 1;
-        private int degreesDeltaParameter = 1;
+        private uint densityParameter = 1;
+        private uint degreesDeltaParameter = 1;
 
         private PointSpiralBuilder()
         {
@@ -24,13 +24,13 @@ namespace TagsCloudVisualizationTest.Builders
             return this;
         }
         
-        public PointSpiralBuilder WithDensityParameter(double density)
+        public PointSpiralBuilder WithDensityParameter(uint density)
         {
             densityParameter = density;
             return this;
         }
         
-        public PointSpiralBuilder WithDegreesDelta(int degreesDelta)
+        public PointSpiralBuilder WithDegreesDelta(uint degreesDelta)
         {
             degreesDeltaParameter = degreesDelta;
             return this;

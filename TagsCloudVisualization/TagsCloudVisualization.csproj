@@ -117,7 +117,7 @@
   <ItemGroup>
     <Compile Include="CharExt.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Configurator.cs" />
+    <Compile Include="AutofacConfigurator.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Layouters\IInfinityPointsEnumirable.cs" />
     <Compile Include="Layouters\ILayouter.cs" />

@@ -17,7 +17,7 @@ namespace TagsCloudVisualization.Statistics
 
         private void AddProcessedWord(string word)
         {
-            if (string.IsNullOrWhiteSpace(word)) return;
+            if (string.IsNullOrWhiteSpace(word) || string.IsNullOrEmpty(word)) return;
             statistics[word.ToLower()] = 1 + (statistics.TryGetValue(word.ToLower(), out var count) ? count : 0);
         }
 
@@ -31,12 +31,18 @@ namespace TagsCloudVisualization.Statistics
         
         public virtual Result<IEnumerable<WordCount>> GetStatistics()
         {
-            if (!statistics.Any()) return Result.Fail<IEnumerable<WordCount>>("No words in statistic");
-            
-            return Result.Ok(statistics
-                .Select(WordCount.Create)
-                .OrderByDescending(wordCount => wordCount.Count)
-                .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
+            return statistics.AsResult()
+                .ThenFailIf(x => !x.Any(), "No words in statistic")
+                .ThenForEach(WordCount.Create)
+                .Then(x => x.OrderByDescending(wordCount => wordCount.Count)
+                            .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
+
+            // if (!statistics.Any()) return Result.Fail<IEnumerable<WordCount>>("No words in statistic");
+            //
+            // return Result.Ok(statistics
+            //     .Select(WordCount.Create)
+            //     .OrderByDescending(wordCount => wordCount.Count)
+            //     .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
         }
 
         public virtual Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount)
