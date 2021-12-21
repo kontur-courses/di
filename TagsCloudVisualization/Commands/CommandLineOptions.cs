@@ -41,16 +41,5 @@ namespace TagsCloudVisualization.Commands
         [Option("scatter", Default = 10,
             HelpText = "Используемый разброс в размере шрифтов тегов.")]
         public float TagSizeScatter { get; set; }
-        
-        public CommandLineOptions()
-        {
-            Width = 1920;
-            Height = 1080;
-            BackgroundColor = "DimGray";
-            ForegroundColors = new[] {"Chocolate"};
-            Fonts = new[] {"Arial"};
-            TagSize = 25;
-            TagSizeScatter = 10;
-        }
     }
 }

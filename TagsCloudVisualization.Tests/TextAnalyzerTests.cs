@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using Autofac.Core;
 using FluentAssertions;
 using NHunspell;
@@ -51,13 +52,15 @@ namespace TagsCloudVisualization.Tests
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<TextFileReader>().As<IFileReader>();
+            builder.RegisterType<TextFileReader>().As<IFileReader>().AsSelf();
             builder.RegisterInstance(new Hunspell(DictRuAff, DictRuDic)).SingleInstance();
             builder.RegisterType<HunspellStemer>().As<IStemer>();
             builder.RegisterType<PronounFilter>().As<IWordFilter>();
             builder.RegisterType<CustomFilter>()
-                .As<IWordFilter>()
-                .OnActivated(service => service.Instance.Load(DictExcludeWords));
+                .WithParameter(new ResolvedParameter(
+                    (pi, ctx) => pi.ParameterType == typeof(IEnumerable<string>),
+                    (pi, ctx) => ctx.Resolve<TextFileReader>().ReadLines(DictExcludeWords)))
+                .As<IWordFilter>();
             builder.RegisterType<ComposeFilter>()
                 .WithParameter(new ResolvedParameter(
                     (pi, ctx) => pi.ParameterType == typeof(IWordFilter[]),

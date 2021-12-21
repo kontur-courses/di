@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.Commands;
 
 namespace TagsCloudVisualization.Common.Settings
 {
@@ -9,18 +8,18 @@ namespace TagsCloudVisualization.Common.Settings
         public int Height { get; set; }
         public Color BackgroundColor { get; set; }
 
+        public CanvasSettings()
+        {
+            Width = 1920;
+            Height = 1080;
+            BackgroundColor = Color.DimGray;
+        }
+
         public CanvasSettings(int width, int height, Color backgroundColor)
         {
             Width = width;
             Height = height;
             BackgroundColor = backgroundColor;
-        }
-
-        public CanvasSettings(CommandLineOptions options)
-        {
-            Width = options.Width;
-            Height = options.Height;
-            BackgroundColor = ColorTranslator.FromHtml(options.BackgroundColor.Trim());
         }
     }
 }

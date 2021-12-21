@@ -21,8 +21,9 @@ namespace TagsCloudVisualization.Common.Tags
 
         public IEnumerable<Tag> GetTags(IList<WordStatistic> wordStatistics)
         {
+            var allWordsCount = wordStatistics.Sum(stat => stat.Count);
             return wordStatistics.Select(wordStatistic => new Tag(wordStatistic.Text,
-                GetNewTagStyle((float) wordStatistic.Count / wordStatistics.Sum(stat => stat.Count))));
+                GetNewTagStyle((float) wordStatistic.Count / allWordsCount)));
         }
 
         private TagStyle GetNewTagStyle(float weight)
