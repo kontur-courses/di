@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Autofac;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Readers;
 
 namespace DesktopClient
 {
@@ -17,7 +19,7 @@ namespace DesktopClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(AutofacConfigurator.InjectWith<MainForm>());
         }
     }
 }

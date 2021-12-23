@@ -1,8 +1,10 @@
-﻿namespace TagsCloudVisualization.WordProcessors
+﻿using ResultProject;
+
+namespace TagsCloudVisualization.WordProcessors
 {
     public class LowerCaseWordProcessor : IWordProcessor
     {
-        public string ProcessWord(string word)
+        public Result<string> ProcessWord(string word)
         {
             return word.ToLower();
         }

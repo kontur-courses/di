@@ -18,9 +18,7 @@ namespace TagsCloudVisualization
         public Size GetCollisionSize()
         {
             var len = Word.Select(x => x.GetSize() * FontSize).Sum();
-            return new Size(
-                (int) Math.Round(len), 
-                (int) Math.Round(FontSize));
+            return new Size((int) Math.Round(len), (int) Math.Round(FontSize));
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using CommandLine;
 using ResultProject;
@@ -67,7 +64,7 @@ namespace TagCloudUsageSample
                     .Then(y => y.OfType<RangeValidatorAttribute>())
                     .Then(y => y.First())
                     .Then(y => y.Validate((IComparable) x.GetValue(this))))
-                .ThenCheckAllForFail(x => x);
+                .ValidateForFail();
         }
         
         private Result<bool> ValidateStrings()
@@ -79,7 +76,7 @@ namespace TagCloudUsageSample
                     .Then(y => y.OfType<StringValidatorAttribute>())
                     .Then(y => y.First())
                     .Then(y => y.Validate((string) x.GetValue(this))))
-                .ThenCheckAllForFail(x => x);
+                .ValidateForFail();
         }
 
         private Result<bool> Validate()

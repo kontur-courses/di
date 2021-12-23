@@ -7,5 +7,10 @@ namespace TagsCloudVisualization.Statistics
         public LiteraryWordsStatistics(LiteraryTextProcessor textProcessor) : base(textProcessor)
         {
         }
+
+        public override IWordsStatistics CreateStatistics()
+        {
+            return new LiteraryWordsStatistics((LiteraryTextProcessor)textProcessor);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ResultProject;
 using TagsCloudVisualization.WordProcessors;
@@ -8,7 +9,8 @@ namespace TagsCloudVisualization.Statistics
     public class BaseWordsStatistics : IWordsStatistics
     {
         private readonly IDictionary<string, int> statistics = new Dictionary<string, int>();
-        private readonly ITextProcessor textProcessor;
+        protected readonly ITextProcessor textProcessor;
+        private string? error;
 
         public BaseWordsStatistics(ITextProcessor textProcessor)
         {
@@ -23,27 +25,27 @@ namespace TagsCloudVisualization.Statistics
 
         public void AddWords(IEnumerable<string> word)
         {
-            foreach (var processWord in textProcessor.ProcessWords(word))
-            {
-                AddProcessedWord(processWord);
-            }
+            textProcessor.AsResult()
+                .Then(x => x.ProcessWords(word))
+                .ThenForEach(x =>
+                {
+                    AddProcessedWord(x);
+                    return new Result<None>();
+                })
+                .ThrowOnFail();
         }
         
         public virtual Result<IEnumerable<WordCount>> GetStatistics()
         {
             return statistics.AsResult()
                 .ThenFailIf(x => !x.Any(), "No words in statistic")
-                .ThenForEach(WordCount.Create)
+                .ThenForEach<string, int, WordCount>(x => WordCount.Create(x))
                 .Then(x => x.OrderByDescending(wordCount => wordCount.Count)
                             .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
-
-            // if (!statistics.Any()) return Result.Fail<IEnumerable<WordCount>>("No words in statistic");
-            //
-            // return Result.Ok(statistics
-            //     .Select(WordCount.Create)
-            //     .OrderByDescending(wordCount => wordCount.Count)
-            //     .ThenBy(wordCount => wordCount.Word) as IEnumerable<WordCount>);
         }
+
+        public virtual IWordsStatistics CreateStatistics() 
+            => new BaseWordsStatistics(textProcessor);
 
         public virtual Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount)
         {

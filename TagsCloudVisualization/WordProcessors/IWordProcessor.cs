@@ -1,7 +1,9 @@
-﻿namespace TagsCloudVisualization.WordProcessors
+﻿using ResultProject;
+
+namespace TagsCloudVisualization.WordProcessors
 {
     public interface IWordProcessor
     {
-        string ProcessWord(string word);
+        Result<string> ProcessWord(string word);
     }
 }

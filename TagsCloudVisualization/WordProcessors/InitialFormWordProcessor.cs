@@ -1,19 +1,33 @@
-﻿using WeCantSpell.Hunspell;
+﻿using System;
+using ResultProject;
+using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization.WordProcessors
 {
     public class InitialFormWordProcessor : ILiteraryWordProcessor
     {
-        private readonly WordList wordList;
+        private readonly WordList? wordList;
+        private readonly string? ErrorMessage;
         
-        public InitialFormWordProcessor(WordList wordList)
+        public InitialFormWordProcessor(string dictName)
         {
-            this.wordList = wordList;
+            try
+            {
+                wordList = WordList.CreateFromFiles(dictName);
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = e.Message;
+            }
         }
         
-        public string ProcessWord(string word)
+        public Result<string> ProcessWord(string word)
         {
-            return wordList.CheckDetails(word).Root ?? word;
+           return  wordList.AsResult()
+                .ValidateNull(ErrorMessage!)
+                .Then(x => x?.CheckDetails(word).Root ?? word)
+                .RefineError("Can't find dictionary for initial word forms");
+            // return wordList.CheckDetails(word).Root ?? word;
         }
     }
 }

@@ -135,7 +135,7 @@ namespace DesktopClient
             {
                 var openFileDialog = new OpenFileDialog();
                 // openFileDialog.Filter = "Text Files(*.txt)|*.txt";
-                openFileDialog.Filter = string.Join("|", tagCloud.Container.Resolve<IEnumerable<IFileReader>>().Select(x => x.Format.Filter));
+                openFileDialog.Filter = string.Join("|", readers.Select(x => x.Format.Filter));
                 if (openFileDialog.ShowDialog() == DialogResult.Cancel)
                     return;
                 ignoreWordsFileName = openFileDialog.FileName;
@@ -181,8 +181,7 @@ namespace DesktopClient
             setTextButton.Click += (_, _) =>
             {
                 var openFileDialog = new OpenFileDialog();
-                // openFileDialog.Filter = "(txt)|*txt";
-                openFileDialog.Filter = string.Join("|", tagCloud.Container.Resolve<IEnumerable<IFileReader>>().Select(x => x.Format.Filter));
+                openFileDialog.Filter = string.Join("|", readers.Select(x => x.Format.Filter));
                 if (openFileDialog.ShowDialog() == DialogResult.Cancel)
                     return;
                 textFilePath = openFileDialog.FileName;

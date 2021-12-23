@@ -10,7 +10,6 @@ namespace TagCloudUsageSample.Validators
         {
         }
 
-        
         private static Result<bool> ValidateColor(string color)
         {
             if (color is null) return true.AsResult();

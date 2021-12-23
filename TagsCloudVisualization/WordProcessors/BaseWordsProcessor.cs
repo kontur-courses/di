@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ResultProject;
 using TagsCloudVisualization.WordValidators;
 
 namespace TagsCloudVisualization.WordProcessors
@@ -15,18 +16,31 @@ namespace TagsCloudVisualization.WordProcessors
             this.wordValidators = wordValidators;
         }
         
-        public IEnumerable<string> ProcessWords(IEnumerable<string> text)
+        public Result<IEnumerable<string>> ProcessWords(IEnumerable<string> text)
         {
             var fixedText = text.ToList();
-            if (!fixedText.Any()) return Enumerable.Empty<string>();
+            if (!fixedText.Any()) return Enumerable.Empty<string>().AsResult();
             
             var validatedWords = wordValidators.Any() 
                 ? fixedText.Where(x => wordValidators.All(v => v.Validate(x)))
                 : fixedText;
-            
-            return wordProcessors.Any() 
-                ? validatedWords.Select(word => wordProcessors.Aggregate(word, (current, wordProcessor) => wordProcessor.ProcessWord(current)))
-                : validatedWords;
+
+            if (!wordProcessors.Any()) return validatedWords.AsResult();
+
+
+            return validatedWords.AsResult()
+                .ThenForEach(x =>
+                {
+                    var processedWord = x.AsResult();
+
+                    foreach (var wordProcessor in wordProcessors)
+                    {
+                        if (!processedWord.IsSuccess) return processedWord;
+                        processedWord = wordProcessor.ProcessWord(processedWord.GetValueOrThrow()!);
+                    }
+
+                    return processedWord;
+                });
         }
     }
 }

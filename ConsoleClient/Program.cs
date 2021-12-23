@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using Autofac;
 using CommandLine;
 using ResultProject;
 using TagsCloudVisualization;
@@ -17,18 +19,25 @@ namespace TagCloudUsageSample
                 { 
                     options.AsResult()
                         .Then(x => x.GetConfig())
-                        .Then(config => (config, Path.Combine(config.SavePath, config.SaveFileName) + "." + ImageFormat.Png.ToString().ToLower()))
-                        .Then(x => (x.config, x.Item2, new TagCloud()))
-                        .Then(x => (x.Item2, x.Item3.GetBitmap(x.config), x.config.TagCloudResultActions))
-                        .Then(x => (x.Item1, x.Item2.GetValueOrThrow(), x.TagCloudResultActions))
-                        .ThenAction(x =>
-                        {
-                            if (x.TagCloudResultActions is TagCloudResultActions.Save or TagCloudResultActions.SaveAndOpen)
-                                x.Item2.Save(x.Item1, ImageFormat.Png);
-                        })
-                        .ThenAction(x => TryOpen(x.Item1, x.TagCloudResultActions))
+                        .Then(HandleConfig)
                         .OnFail(Console.WriteLine);
                 });
+        }
+
+        private static Result<Bitmap> HandleConfig(Config config)
+        {
+           return AutofacConfigurator.InjectWith<TagCloud>().GetBitmap(config)
+                .ThenAction(bmp =>
+                {
+                    if (config.TagCloudResultActions is TagCloudResultActions.Save or TagCloudResultActions.SaveAndOpen)
+                        bmp.Save(GetPath(config), ImageFormat.Png);
+                })
+                .ThenAction(_ => TryOpen(GetPath(config), config.TagCloudResultActions));
+        }
+
+        private static string GetPath(Config config)
+        {
+            return Path.Combine(config.SavePath, config.SaveFileName) + "." + ImageFormat.Png.ToString().ToLower();
         }
         
         private static void TryOpen(string firstFileName, TagCloudResultActions tagCloudResultActions)

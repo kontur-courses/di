@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ResultProject;
 using TagsCloudVisualization;
+using TagsCloudVisualization.Readers;
 
 namespace DesktopClient
 {
@@ -28,12 +28,15 @@ namespace DesktopClient
         private string ignoreWordsFileName;
 
         private bool changed;
-        
-        private readonly TagCloud tagCloud = new();
+
+        private readonly IEnumerable<IFileReader> readers;
+        private readonly TagCloud tagCloud;
         
 
-        public MainForm()
+        public MainForm(IEnumerable<IFileReader> readers, TagCloud tagCloud)
         {
+            this.readers = readers;
+            this.tagCloud = tagCloud;
             InitializeComponent();
         }
 
@@ -49,15 +52,17 @@ namespace DesktopClient
             Invalidate();
         }
 
+        private void DrawBitmap(Config config)
+        {
+            tagCloud.GetBitmap(config)
+                .ThenAction(x => cloudBox.Image = x)
+                .OnFail(x => MessageBox.Show(x, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error));
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (textFilePath is null || !changed) return;
-
-            (GetConfig(), new TagCloud()).AsResult()
-                .Then(x => x.Item2.GetBitmap(x.Item1))
-                .ThenAction(x => cloudBox.Image = x)
-                .OnFail();
-            
+            DrawBitmap(GetConfig());
             changed = false;
         }
 
@@ -67,8 +72,8 @@ namespace DesktopClient
             {
                 Size = new Size(720, 720),
                 Color = randomColor.Checked ? null : color,
-                WordCountToStatistic = wordCountToStatistic.Value > 0 ? (int)wordCountToStatistic.Value : -1,
-                Density = density.Value > 0 ? (double)density.Value : 1d,
+                WordCountToStatistic = wordCountToStatistic.Value > 0 ? (uint)wordCountToStatistic.Value : 0,
+                Density = density.Value > 0 ? (uint)density.Value : 1,
                 MinWordToStatisticLength = (byte)minWordLengthToStatistic.Value,
                 Font = font,
                 TextFilePath = textFilePath!,

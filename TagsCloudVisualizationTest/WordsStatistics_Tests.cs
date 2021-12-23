@@ -4,6 +4,7 @@ using Autofac;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
+using ResultProject;
 using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordProcessors;
 
@@ -23,7 +24,7 @@ namespace TagsCloudVisualizationTest
             builder.Register(_ =>
             {
                 var processor = A.Fake<ITextProcessor>();
-                A.CallTo(() => processor.ProcessWords(A<IEnumerable<string>>.Ignored)).ReturnsLazily((IEnumerable<string> text) => text);
+                A.CallTo(() => processor.ProcessWords(A<IEnumerable<string>>.Ignored)).ReturnsLazily((IEnumerable<string> text) => text.AsResult());
                 return processor;
             }).As<ITextProcessor>();
             container = builder.Build();

@@ -8,5 +8,6 @@ namespace TagsCloudVisualization.Statistics
         public void AddWords(IEnumerable<string> word);
         Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount);
         Result<IEnumerable<WordCount>> GetStatistics();
+        IWordsStatistics CreateStatistics();
     }
 }

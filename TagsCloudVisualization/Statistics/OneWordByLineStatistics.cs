@@ -7,5 +7,10 @@ namespace TagsCloudVisualization.Statistics
         public OneWordByLineStatistics(OneWordByLineProcessor textProcessor) : base(textProcessor)
         {
         }
+        
+        public override IWordsStatistics CreateStatistics()
+        {
+            return new OneWordByLineStatistics((OneWordByLineProcessor)textProcessor);
+        }
     }
 }

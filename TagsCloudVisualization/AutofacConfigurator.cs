@@ -5,7 +5,6 @@ using TagsCloudVisualization.Readers;
 using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordProcessors;
 using TagsCloudVisualization.WordValidators;
-using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization
 {
@@ -15,8 +14,7 @@ namespace TagsCloudVisualization
         {
             builder.RegisterType<LinesParser>().SingleInstance().AsSelf();
             builder.RegisterType<LiteraryTextParser>().SingleInstance().AsSelf();
-            builder.RegisterType<InitialFormWordProcessor>().As<ILiteraryWordProcessor>().SingleInstance();
-            builder.Register(_ => WordList.CreateFromFiles(@"Russian.dic")).SingleInstance().AsSelf();;
+            builder.Register(_ => new InitialFormWordProcessor("Russian.dic")).As<ILiteraryWordProcessor>().SingleInstance();
         }
         
         private static void InjectValidators(ContainerBuilder builder)
@@ -25,7 +23,7 @@ namespace TagsCloudVisualization
             builder.RegisterType<TooShortWordValidator>().As<IWordValidator>().AsSelf().SingleInstance();
         }
         
-        public static IContainer InjectWith()
+        public static T InjectWith<T>()
         {
             var builder = new ContainerBuilder();
 
@@ -44,7 +42,10 @@ namespace TagsCloudVisualization
             builder.RegisterType<TextPrinter>().As<IPrinter<Text>>().SingleInstance();
             builder.RegisterType<RectanglesReCalculator>().As<IRectanglesReCalculator>().SingleInstance();
 
-            return builder.Build();
+            builder.RegisterType<TagCloud>().AsSelf().SingleInstance();
+            builder.RegisterType<T>().AsSelf().SingleInstance();
+            
+            return builder.Build().Resolve<T>();
         }
 
         private static void InjectProcessors(ContainerBuilder builder)
