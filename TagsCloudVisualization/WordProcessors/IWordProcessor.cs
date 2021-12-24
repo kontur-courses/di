@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.WordProcessors
 {
-    public interface IWordProcessor
+    internal interface IWordProcessor
     {
         Result<string> ProcessWord(string word);
     }

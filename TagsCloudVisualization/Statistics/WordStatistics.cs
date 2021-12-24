@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ResultProject;
 using TagsCloudVisualization.WordProcessors;
 
+[assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
+[assembly: InternalsVisibleTo("FakeItEasy")]
 namespace TagsCloudVisualization.Statistics
 {
-    public class BaseWordsStatistics : IWordsStatistics
+    internal class BaseWordsStatistics : IWordsStatistics
     {
         private readonly IDictionary<string, int> statistics = new Dictionary<string, int>();
-        protected readonly ITextProcessor textProcessor;
+        protected readonly ITextProcessor TextProcessor;
         private string? error;
 
         public BaseWordsStatistics(ITextProcessor textProcessor)
         {
-            this.textProcessor = textProcessor;
+            TextProcessor = textProcessor;
         }
 
         private void AddProcessedWord(string word)
@@ -25,7 +27,7 @@ namespace TagsCloudVisualization.Statistics
 
         public void AddWords(IEnumerable<string> word)
         {
-            textProcessor.AsResult()
+            TextProcessor.AsResult()
                 .Then(x => x.ProcessWords(word))
                 .ThenForEach(x =>
                 {
@@ -45,7 +47,7 @@ namespace TagsCloudVisualization.Statistics
         }
 
         public virtual IWordsStatistics CreateStatistics() 
-            => new BaseWordsStatistics(textProcessor);
+            => new BaseWordsStatistics(TextProcessor);
 
         public virtual Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount)
         {

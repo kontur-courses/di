@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    public static class CharExt
+    internal static class CharExt
     {
         private const double DefaultSize = 22d / 30;
 

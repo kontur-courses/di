@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ResultProject;
 
+[assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
 namespace TagsCloudVisualization.Printing
 {
-    public class RectanglePrinter : IPrinter<Rectangle>
+    internal class RectanglePrinter : IPrinter<Rectangle>
     {
         private const int Margin = 100;
         private readonly IRectanglesReCalculator reCalculator;

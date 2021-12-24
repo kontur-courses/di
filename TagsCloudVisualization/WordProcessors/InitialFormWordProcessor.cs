@@ -4,7 +4,7 @@ using WeCantSpell.Hunspell;
 
 namespace TagsCloudVisualization.WordProcessors
 {
-    public class InitialFormWordProcessor : ILiteraryWordProcessor
+    internal class InitialFormWordProcessor : ILiteraryWordProcessor
     {
         private readonly WordList? wordList;
         private readonly string? ErrorMessage;
@@ -27,7 +27,6 @@ namespace TagsCloudVisualization.WordProcessors
                 .ValidateNull(ErrorMessage!)
                 .Then(x => x?.CheckDetails(word).Root ?? word)
                 .RefineError("Can't find dictionary for initial word forms");
-            // return wordList.CheckDetails(word).Root ?? word;
         }
     }
 }

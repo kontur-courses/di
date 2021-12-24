@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    public interface IInfinityPointsEnumerable
+    internal interface IInfinityPointsEnumerable
     {
         IEnumerable<Point> GetPoints();
     }

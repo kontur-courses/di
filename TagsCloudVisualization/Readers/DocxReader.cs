@@ -6,7 +6,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
-    public class DocxReader : IFileReader
+    internal class DocxReader : IFileReader
     {
         public TextFormat Format => TextFormat.Docx;
 

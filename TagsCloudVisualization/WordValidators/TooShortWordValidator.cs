@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization.WordValidators
 {
-    public class TooShortWordValidator : IWordValidator
+    internal class TooShortWordValidator : IWordValidator
     {
         private byte minWordLength;
 

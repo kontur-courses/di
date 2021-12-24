@@ -31,8 +31,10 @@ namespace TagsCloudVisualization
         private readonly SingleColorScheme singleColorScheme;
         
         private readonly IPrinter<Text> printer;
+        
+        public InfoTagsCloud Info { get; }
 
-        public TagCloud(
+        internal TagCloud(
             IEnumerable<IFileReader> fileReaders, 
             LiteraryTextParser literaryTextParser, 
             LinesParser linesParser, 
@@ -43,7 +45,7 @@ namespace TagsCloudVisualization
             IWordStatisticsToSizeConverter wordStatisticsToSizeConverter, 
             RandomColorScheme randomColorScheme, 
             SingleColorScheme singleColorScheme, 
-            IPrinter<Text> printer)
+            IPrinter<Text> printer, InfoTagsCloud info)
         {
             this.fileReaders = fileReaders;
             this.literaryTextParser = literaryTextParser;
@@ -56,6 +58,7 @@ namespace TagsCloudVisualization
             this.randomColorScheme = randomColorScheme;
             this.singleColorScheme = singleColorScheme;
             this.printer = printer;
+            Info = info;
         }
         
         private Result<string> ReadFile(string filePath)
@@ -96,12 +99,12 @@ namespace TagsCloudVisualization
                 .Then(x => wordStatisticsToSizeConverter.Convert(x, config.WordCountToStatistic));
         }
 
-        private ILayouter<Rectangle> GetLayouter(Config config)
+        private static ILayouter<Rectangle> GetLayouter(Config config)
         {
             return new CircularCloudLayouter(new PointSpiral(Point.Empty, config.Density, config.Density));
         }
 
-        private Result<IEnumerable<Text>> GetTextToPrint(ILayouter<Rectangle> layouter, IEnumerable<TagWordInfo> words, string font)
+        private static Result<IEnumerable<Text>> GetTextToPrint(ILayouter<Rectangle> layouter, IEnumerable<TagWordInfo> words, string font)
         {
             return words.AsResult()
                 .ThenForEach(x => new Text(x.Word, font, layouter.PutNextRectangle(x.GetCollisionSize()).GetValueOrThrow()).AsResult());

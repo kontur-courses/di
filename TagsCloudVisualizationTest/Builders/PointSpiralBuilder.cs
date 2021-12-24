@@ -3,7 +3,7 @@ using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTest.Builders
 {
-    public class PointSpiralBuilder
+    internal class PointSpiralBuilder
     {
         private Point center;
         private uint densityParameter = 1;

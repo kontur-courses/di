@@ -3,7 +3,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.WordProcessors
 {
-    public interface ITextProcessor
+    internal interface ITextProcessor
     {
         Result<IEnumerable<string>> ProcessWords(IEnumerable<string> text);
     }

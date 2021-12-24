@@ -5,7 +5,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
-    public class MyPdfReader : IFileReader
+    internal class MyPdfReader : IFileReader
     {
         public TextFormat Format => TextFormat.Pdf;
 

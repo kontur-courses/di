@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using ResultProject;
 
 namespace TagsCloudVisualization.Printing
 {
-    public class TextPrinter : IPrinter<Text>
+    internal class TextPrinter : IPrinter<Text>
     {
         private const int Margin = 50;
         private readonly IRectanglesReCalculator reCalculator;
@@ -24,12 +23,6 @@ namespace TagsCloudVisualization.Printing
             return (bitmapSize is null
                     ? reCalculator.MoveToCenter(fixedTexts.Select(x => x.Rectangle).ToList())
                     : reCalculator.RecalculateRectangles(fixedTexts.Select(x => x.Rectangle).ToList(), new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
-                // .Then(x => bitmapSize is null
-                //     ? reCalculator.MoveToCenter(x)
-                //     : reCalculator.RecalculateRectangles(x, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
-                // .Then(x => bitmapSize is null
-                //     ? reCalculator.MoveToCenter(x)
-                //     : reCalculator.RecalculateRectangles(x, new Size(bitmapSize.Value.Width - Margin, bitmapSize.Value.Height - Margin)))
                 .Then(x => (x, bitmapSize ?? new Size(x.GetCircumscribedSize().Width, x.GetCircumscribedSize().Height)))
                 .Then(x => (x.x, new Bitmap(x.Item2.Width, x.Item2.Height)))
                 .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
@@ -38,7 +31,6 @@ namespace TagsCloudVisualization.Printing
                 {
                     var (rects, bmp, graphics) = x;
                     DrawText(graphics, fixedTexts.Select((y, i) => new Text(y.Word, y.Font, rects[i])), colorScheme);
-                    // new RectanglePrinter(new RectanglesReCalculator()).DrawRectangles(colorScheme, graphics, rects);
                     return bmp;
                 });
         }

@@ -8,7 +8,7 @@ using TagsCloudVisualization.Printing;
 
 namespace TagsCloudVisualizationTest
 {
-    public class SaveBitmapWhenFailure : Attribute
+    internal class SaveBitmapWhenFailure : Attribute
     {
         public string SavePath { get; private set; }
         private readonly RectanglePrinter rectanglePrinter;

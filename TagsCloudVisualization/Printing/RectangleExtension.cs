@@ -5,12 +5,8 @@ using System.Linq;
 
 namespace TagsCloudVisualization.Printing
 {
-    public static class RectangleExtension
+    internal static class RectangleExtension
     {
-        public static Rectangle Move(this Rectangle source, Point delta)
-        {
-            return Move(source, delta.X, delta.Y);
-        }
         
         public static Rectangle Move(this Rectangle source, int xDelta, int yDelta)
         {

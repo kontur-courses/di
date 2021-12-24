@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using ResultProject;
 
 namespace TagsCloudVisualization.Printing
 {
-    public class RectanglesReCalculator : IRectanglesReCalculator
+    internal class RectanglesReCalculator : IRectanglesReCalculator
     {
         public Result<IList<Rectangle>> RecalculateRectangles(IList<Rectangle> rectangles, Size defaultMaxSize)
         {

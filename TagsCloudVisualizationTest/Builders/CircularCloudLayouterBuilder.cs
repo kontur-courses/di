@@ -3,7 +3,7 @@ using TagsCloudVisualization.Layouters;
 
 namespace TagsCloudVisualizationTest.Builders
 {
-    public class CircularCloudLayouterBuilder
+    internal class CircularCloudLayouterBuilder
     {
         private readonly PointSpiralBuilder pointSpiralBuilder;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TagsCloudVisualization.Parsers
 {
-    public class LinesParser : ITextParser
+    internal class LinesParser : ITextParser
     {
         public IEnumerable<string> ParseText(string text)
         {

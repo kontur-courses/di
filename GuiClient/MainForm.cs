@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ResultProject;
 using TagsCloudVisualization;
-using TagsCloudVisualization.Readers;
 
 namespace DesktopClient
 {
@@ -29,13 +27,13 @@ namespace DesktopClient
 
         private bool changed;
 
-        private readonly IEnumerable<IFileReader> readers;
+        private readonly InfoTagsCloud info;
         private readonly TagCloud tagCloud;
         
 
-        public MainForm(IEnumerable<IFileReader> readers, TagCloud tagCloud)
+        public MainForm(TagCloud tagCloud)
         {
-            this.readers = readers;
+            info = tagCloud.Info;
             this.tagCloud = tagCloud;
             InitializeComponent();
         }

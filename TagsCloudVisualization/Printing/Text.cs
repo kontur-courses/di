@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Printing
 {
-    public record Text
+    internal record Text
     {
         public string Word { get; }
         public string Font { get; }

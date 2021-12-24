@@ -3,7 +3,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Statistics
 {
-    public interface IWordStatisticsToSizeConverter
+    internal interface IWordStatisticsToSizeConverter
     {
         public Result<IEnumerable<TagWordInfo>> Convert(IWordsStatistics statistics, uint topWordCount);
     }

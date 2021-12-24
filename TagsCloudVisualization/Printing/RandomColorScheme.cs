@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagsCloudVisualization.Printing
 {
-    public class RandomColorScheme : IColorScheme
+    internal class RandomColorScheme : IColorScheme
     {
         public Color GetColorBy(Size size)
         {

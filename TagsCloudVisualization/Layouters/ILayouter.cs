@@ -3,7 +3,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Layouters
 {
-    public interface ILayouter<TFigure>
+    internal interface ILayouter<TFigure>
     {
         Result<TFigure> PutNextRectangle(Size rectangleSize);
     }

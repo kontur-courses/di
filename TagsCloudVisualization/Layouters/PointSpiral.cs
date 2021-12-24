@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
 namespace TagsCloudVisualization
 {
-    public class PointSpiral : IInfinityPointsEnumerable
+    internal class PointSpiral : IInfinityPointsEnumerable
     {
         private readonly Point center;
         private readonly double dtheta;

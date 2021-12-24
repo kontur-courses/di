@@ -3,7 +3,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Readers
 {
-    public class TxtReader : IFileReader
+    internal class TxtReader : IFileReader
     {
         public TextFormat Format => TextFormat.Txt;
 

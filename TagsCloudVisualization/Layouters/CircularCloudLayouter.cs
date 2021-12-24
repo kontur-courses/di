@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using ResultProject;
 
 namespace TagsCloudVisualization.Layouters
 {
-    public class CircularCloudLayouter : ILayouter<Rectangle>
+    internal class CircularCloudLayouter : ILayouter<Rectangle>
     {
         private readonly IEnumerator<Point> pointSpiral;
         private readonly HashSet<Rectangle> issuedRectangles;

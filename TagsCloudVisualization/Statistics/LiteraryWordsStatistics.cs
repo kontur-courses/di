@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Statistics
 {
-    public class LiteraryWordsStatistics : BaseWordsStatistics
+    internal class LiteraryWordsStatistics : BaseWordsStatistics
     {
         public LiteraryWordsStatistics(LiteraryTextProcessor textProcessor) : base(textProcessor)
         {
@@ -10,7 +10,7 @@ namespace TagsCloudVisualization.Statistics
 
         public override IWordsStatistics CreateStatistics()
         {
-            return new LiteraryWordsStatistics((LiteraryTextProcessor)textProcessor);
+            return new LiteraryWordsStatistics((LiteraryTextProcessor)TextProcessor);
         }
     }
 }

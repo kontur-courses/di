@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Parsers
 {
-    public interface ITextParser
+    internal interface ITextParser
     {
         IEnumerable<string> ParseText(string text);
     }

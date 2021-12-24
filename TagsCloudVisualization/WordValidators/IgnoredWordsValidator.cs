@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Autofac.Features.AttributeFilters;
 
 namespace TagsCloudVisualization.WordValidators
 {
-    public class IgnoredWordsValidator : IWordValidator
+    internal class IgnoredWordsValidator : IWordValidator
     {
         private HashSet<string> boringWords;
         

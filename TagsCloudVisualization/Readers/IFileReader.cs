@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Readers
 {
-    public interface IFileReader
+    internal interface IFileReader
     {
         TextFormat Format { get; }
 

@@ -6,7 +6,7 @@ using ResultProject;
 
 namespace TagsCloudVisualization.Statistics
 {
-    public class DefaultWordStatisticsToSizeConverter : IWordStatisticsToSizeConverter
+    internal class DefaultWordStatisticsToSizeConverter : IWordStatisticsToSizeConverter
     {
         private readonly float maxFontSize;
 

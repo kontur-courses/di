@@ -1,23 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TagsCloudVisualization
 {
-    // public struct UintWithMinusOne
-    // {
-    //     private int value;
-    //     
-    //     public static implicit operator UintWithMinusOne(int x)
-    //     {
-    //         if (x < -1) throw new InvalidCastException($"UintWithMinusOne can not be less than -1, but was {x}");
-    //         return new UintWithMinusOne {value = x};
-    //     }
-    //     public static explicit operator int(UintWithMinusOne counter)
-    //     {
-    //         return counter.value;
-    //     }
-    // }
-    
     public class Config
     {
         public Size Size { get; set; }

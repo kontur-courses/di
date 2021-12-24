@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Printing
 {
-    public class SingleColorScheme : IColorScheme
+    internal class SingleColorScheme : IColorScheme
     {
         private Color color;
 

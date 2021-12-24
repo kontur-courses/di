@@ -5,7 +5,7 @@ using TagsCloudVisualization.WordValidators;
 
 namespace TagsCloudVisualization.WordProcessors
 {
-    public abstract class BaseWordsProcessor : ITextProcessor
+    internal abstract class BaseWordsProcessor : ITextProcessor
     {
         private readonly IEnumerable<IWordProcessor> wordProcessors;
         private readonly IEnumerable<IWordValidator> wordValidators;
