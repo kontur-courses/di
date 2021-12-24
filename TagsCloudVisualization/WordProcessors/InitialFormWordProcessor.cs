@@ -20,10 +20,10 @@ namespace TagsCloudVisualization.WordProcessors
             {
                 errorMessage = "Can't find dictionary for initial word forms";
             }
-            // catch (Exception e)
-            // {
-            //     errorMessage = e.Message;
-            // }
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+            }
         }
         
         public Result<string> ProcessWord(string word)
