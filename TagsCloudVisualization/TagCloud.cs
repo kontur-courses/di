@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ResultProject;
 using TagsCloudVisualization.Layouters;
 using TagsCloudVisualization.Parsers;
@@ -10,6 +11,7 @@ using TagsCloudVisualization.Readers;
 using TagsCloudVisualization.Statistics;
 using TagsCloudVisualization.WordValidators;
 
+[assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
 namespace TagsCloudVisualization
 {
     public class TagCloud
@@ -34,7 +36,8 @@ namespace TagsCloudVisualization
         
         public InfoTagsCloud Info { get; }
 
-        internal TagCloud(
+        
+        public TagCloud(
             IEnumerable<IFileReader> fileReaders, 
             LiteraryTextParser literaryTextParser, 
             LinesParser linesParser, 
@@ -45,7 +48,8 @@ namespace TagsCloudVisualization
             IWordStatisticsToSizeConverter wordStatisticsToSizeConverter, 
             RandomColorScheme randomColorScheme, 
             SingleColorScheme singleColorScheme, 
-            IPrinter<Text> printer, InfoTagsCloud info)
+            IPrinter<Text> printer, 
+            InfoTagsCloud info)
         {
             this.fileReaders = fileReaders;
             this.literaryTextParser = literaryTextParser;
@@ -125,7 +129,7 @@ namespace TagsCloudVisualization
         {
             return ReadFile(config.TextFilePath)
                 .ThenAction(_ => tooShortWordValidator.SetLimit(config.MinWordToStatisticLength))
-                .ThenAction(_ => SetIgnoreWords(config.CustomIgnoreFilePath))
+                .ThenAction(_ => SetIgnoreWords(config.IgnoreFilePath))
                 .Then(text => ParseText(config.SourceTextInterpretationMode, text))
                 .Then(parsedText => CalculateStatistic(config, parsedText))
                 .Then(calculatedWords => (calculatedWords, layouter: GetLayouter(config)))

@@ -5,10 +5,9 @@ using ResultProject;
 using TagsCloudVisualization.WordProcessors;
 
 [assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
-[assembly: InternalsVisibleTo("FakeItEasy")]
 namespace TagsCloudVisualization.Statistics
 {
-    internal class BaseWordsStatistics : IWordsStatistics
+    public class BaseWordsStatistics : IWordsStatistics
     {
         private readonly IDictionary<string, int> statistics = new Dictionary<string, int>();
         protected readonly ITextProcessor TextProcessor;

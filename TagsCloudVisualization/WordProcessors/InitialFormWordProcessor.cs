@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ResultProject;
 using WeCantSpell.Hunspell;
 
@@ -7,7 +8,7 @@ namespace TagsCloudVisualization.WordProcessors
     internal class InitialFormWordProcessor : ILiteraryWordProcessor
     {
         private readonly WordList? wordList;
-        private readonly string? ErrorMessage;
+        private readonly string? errorMessage;
         
         public InitialFormWordProcessor(string dictName)
         {
@@ -15,18 +16,21 @@ namespace TagsCloudVisualization.WordProcessors
             {
                 wordList = WordList.CreateFromFiles(dictName);
             }
-            catch (Exception e)
+            catch (FileNotFoundException e)
             {
-                ErrorMessage = e.Message;
+                errorMessage = "Can't find dictionary for initial word forms";
             }
+            // catch (Exception e)
+            // {
+            //     errorMessage = e.Message;
+            // }
         }
         
         public Result<string> ProcessWord(string word)
         {
            return  wordList.AsResult()
-                .ValidateNull(ErrorMessage!)
-                .Then(x => x?.CheckDetails(word).Root ?? word)
-                .RefineError("Can't find dictionary for initial word forms");
+                .ValidateNull(errorMessage!)
+                .Then(x => x?.CheckDetails(word).Root ?? word);
         }
     }
 }

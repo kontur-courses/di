@@ -13,6 +13,7 @@
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,8 +70,8 @@
         </Reference>
         <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+        </Reference>                                                                            
+        <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
           <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
           <Private>True</Private>
         </Reference>
@@ -92,12 +93,10 @@
             <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
         </Reference>
         <Reference Include="System.Xml.Linq" />
-        <Reference Include="WeCantSpell.Hunspell, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\WeCantSpell.Hunspell.3.0.1\lib\net45\WeCantSpell.Hunspell.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AutofacConfiguratorForTests.cs" />
+        <Compile Include="BitmapExtension.cs" />
         <Compile Include="Builders\CircularCloudLayouterBuilder.cs" />
         <Compile Include="Builders\PointSpiralBuilder.cs" />
         <Compile Include="CircularCloudLayouter_Should.cs" />
@@ -105,6 +104,7 @@
         <Compile Include="PointExtension_Should.cs" />
         <Compile Include="PointSpiral_Should.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="ResultRailwayTests.sc.cs" />
         <Compile Include="SaveBitmapWhenFailure.cs" />
         <Compile Include="WordsStatistics_Tests.cs" />
     </ItemGroup>
@@ -120,6 +120,18 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="Russian.aff">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Russian.dic">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="sample.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="aprovel bmp.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

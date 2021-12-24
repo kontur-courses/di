@@ -102,7 +102,7 @@ namespace TagCloudUsageSample
                 .Then(_ => new Config())
                 .ThenAction(x => x.SourceTextInterpretationMode = IsLiteraryText ? SourceTextInterpretationMode.LiteraryText : SourceTextInterpretationMode.OneWordPerLine)
                 .ThenAction(x => x.TagCloudResultActions = Open ? TagCloudResultActions.SaveAndOpen : TagCloudResultActions.Save)
-                .ThenAction(x => x.CustomIgnoreFilePath = IgnoreWordsFileName)
+                .ThenAction(x => x.IgnoreFilePath = IgnoreWordsFileName)
                 .ThenAction(x => x.TextFilePath = TextFilePath)
                 .ThenAction(x => x.Font = Font)
                 .ThenAction(x => x.MinWordToStatisticLength = (byte)MinWordLengthToStatistic)

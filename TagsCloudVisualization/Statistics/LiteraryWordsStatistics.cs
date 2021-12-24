@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Statistics
 {
-    internal class LiteraryWordsStatistics : BaseWordsStatistics
+    public class LiteraryWordsStatistics : BaseWordsStatistics
     {
         public LiteraryWordsStatistics(LiteraryTextProcessor textProcessor) : base(textProcessor)
         {

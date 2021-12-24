@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    internal record TagWordInfo
+    public record TagWordInfo
     {
         public string Word { get; }
         private float FontSize { get; }

@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization.WordProcessors
 {
-    internal interface IWordByLineProcessor : IWordProcessor
+    public interface IWordByLineProcessor : IWordProcessor
     {
     }
 }

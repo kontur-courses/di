@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.WordValidators
 {
-    internal class IgnoredWordsValidator : IWordValidator
+    public class IgnoredWordsValidator : IWordValidator
     {
         private HashSet<string> boringWords;
         

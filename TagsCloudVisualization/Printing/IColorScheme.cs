@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("TagsCloudVisualizationTest")]
 namespace TagsCloudVisualization.Printing
 {
-    internal interface IColorScheme
+    public interface IColorScheme
     {
         Color GetColorBy(Size size);
     }

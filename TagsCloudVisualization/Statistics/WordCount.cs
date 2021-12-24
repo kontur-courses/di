@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Statistics
 {
-    internal record WordCount
+    public record WordCount
     {
         public WordCount(string word, int count)
         {

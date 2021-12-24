@@ -5,7 +5,7 @@ using ResultProject;
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace TagsCloudVisualization.Statistics
 {
-    internal interface IWordsStatistics
+    public interface IWordsStatistics
     {
         public void AddWords(IEnumerable<string> word);
         Result<IEnumerable<WordCount>> GetStatistics(uint topWordCount);

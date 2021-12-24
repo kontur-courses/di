@@ -75,7 +75,7 @@ namespace DesktopClient
                 MinWordToStatisticLength = (byte)minWordLengthToStatistic.Value,
                 Font = font,
                 TextFilePath = textFilePath!,
-                CustomIgnoreFilePath = ignoreWordsFileName,
+                IgnoreFilePath = ignoreWordsFileName,
                 TagCloudResultActions = TagCloudResultActions.None,
                 SourceTextInterpretationMode = isLiteraryText.Checked ? SourceTextInterpretationMode.LiteraryText : SourceTextInterpretationMode.OneWordPerLine
             };

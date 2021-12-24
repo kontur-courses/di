@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using ResultProject;
 
@@ -27,6 +28,7 @@ namespace TagsCloudVisualization.Printing
                 .Then(x => (x.x, new Bitmap(x.Item2.Width, x.Item2.Height)))
                 .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
                 .Then(x => (x.x, x.Item2, Graphics.FromImage(x.Item2)))
+                .ThenFailIf(_ => new InstalledFontCollection().Families.Count(x => x.Name == fixedTexts.First().Font) == 0, $"Can't find font {fixedTexts.First().Font}")
                 .Then(x =>
                 {
                     var (rects, bmp, graphics) = x;

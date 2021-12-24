@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization.WordValidators
 {
-    internal interface IWordValidator
+    public interface IWordValidator
     {
         bool Validate(string word);
     }

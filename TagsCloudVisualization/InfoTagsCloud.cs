@@ -6,7 +6,7 @@ namespace TagsCloudVisualization
 {
     public class InfoTagsCloud
     {
-        internal InfoTagsCloud(IEnumerable<IFileReader> readers)
+        public InfoTagsCloud(IEnumerable<IFileReader> readers)
         {
             this.readers = readers;
         }

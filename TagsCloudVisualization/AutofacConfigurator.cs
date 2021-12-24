@@ -44,6 +44,7 @@ namespace TagsCloudVisualization
 
             builder.RegisterType<TagCloud>().AsSelf().SingleInstance();
             builder.RegisterType<T>().AsSelf().SingleInstance();
+            builder.RegisterType<InfoTagsCloud>().AsSelf().SingleInstance();
             
             return builder.Build().Resolve<T>();
         }

@@ -15,7 +15,7 @@ namespace TagsCloudVisualization
         public Color? Color { get; set; }
         
         public string TextFilePath { get; set; }
-        public string? CustomIgnoreFilePath { get; set; }
+        public string? IgnoreFilePath { get; set; }
         
         public TagCloudResultActions TagCloudResultActions { get; set; }
         public SourceTextInterpretationMode  SourceTextInterpretationMode { get; set; }
