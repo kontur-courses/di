@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TagsCloudContainer", "TagsCloudContainer", "{29686B62-B546-413B-AD9A-3ADC9CD0B23B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer\TagsCloudContainer.csproj", "{8701D1CB-FD73-4D16-BDAC-297A8C36662D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Clients.Console", "TagsCloudContainer\TagsCloudContainer.Clients.Console\TagsCloudContainer.Clients.Console.csproj", "{23D774F6-7631-451C-8DCC-12BCEF3B0D53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer\TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{A5026F37-5D05-4C70-91B6-A166F905661C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,22 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8701D1CB-FD73-4D16-BDAC-297A8C36662D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8701D1CB-FD73-4D16-BDAC-297A8C36662D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8701D1CB-FD73-4D16-BDAC-297A8C36662D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8701D1CB-FD73-4D16-BDAC-297A8C36662D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D774F6-7631-451C-8DCC-12BCEF3B0D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D774F6-7631-451C-8DCC-12BCEF3B0D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D774F6-7631-451C-8DCC-12BCEF3B0D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D774F6-7631-451C-8DCC-12BCEF3B0D53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5026F37-5D05-4C70-91B6-A166F905661C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5026F37-5D05-4C70-91B6-A166F905661C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5026F37-5D05-4C70-91B6-A166F905661C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5026F37-5D05-4C70-91B6-A166F905661C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8701D1CB-FD73-4D16-BDAC-297A8C36662D} = {29686B62-B546-413B-AD9A-3ADC9CD0B23B}
+		{23D774F6-7631-451C-8DCC-12BCEF3B0D53} = {29686B62-B546-413B-AD9A-3ADC9CD0B23B}
+		{A5026F37-5D05-4C70-91B6-A166F905661C} = {29686B62-B546-413B-AD9A-3ADC9CD0B23B}
 	EndGlobalSection
 EndGlobal
