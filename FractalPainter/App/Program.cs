@@ -5,6 +5,7 @@ using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
+using Ninject.Extensions.Factory;
 
 namespace FractalPainting.App
 {
@@ -36,6 +37,8 @@ namespace FractalPainting.App
                 container.Bind<Palette>().ToSelf().InSingletonScope();
                 container.Bind<KochPainter>().ToSelf();
 
+                container.Bind<IDragonPainterFactory>().ToFactory();
+                
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(container.Get<MainForm>());
