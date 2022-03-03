@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using FractalPainting.App.Actions;
+using FractalPainting.App.Fractals;
 using FractalPainting.Infrastructure.Common;
 using FractalPainting.Infrastructure.UiActions;
 using Ninject;
@@ -33,6 +34,7 @@ namespace FractalPainting.App
                     context.Kernel.Get<PictureBoxImageHolder>()
                 );
                 container.Bind<Palette>().ToSelf().InSingletonScope();
+                container.Bind<KochPainter>().ToSelf();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
