@@ -1,20 +1,17 @@
-﻿using FractalPainting.App.Fractals;
+﻿
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
-using Ninject;
+using System;
 
 namespace FractalPainting.App.Actions
 {
     public class KochFractalAction : IUiAction
     {
-        private IImageHolder imageHolder;
-        private Palette palette;
+        private readonly Lazy<IPainter> kochPainter;
 
-        public KochFractalAction([Named("single")] IImageHolder imageHolder, Palette palette)
+        public KochFractalAction(Lazy<IPainter> kochPainter)
         {
-            this.palette = palette;
-            this.imageHolder = imageHolder;
+            this.kochPainter = kochPainter;
         }
 
 
@@ -24,11 +21,7 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            var container = new StandardKernel();
-            container.Bind<IImageHolder>().ToConstant(imageHolder);
-            container.Bind<Palette>().ToConstant(palette);
-
-            container.Get<KochPainter>().Paint();
+            kochPainter.Value.Paint();
         }
     }
 }

@@ -4,7 +4,7 @@ using FractalPainting.Infrastructure.Common;
 
 namespace FractalPainting.App.Fractals
 {
-    public class KochPainter
+    public class KochPainter : IPainter
     {
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
