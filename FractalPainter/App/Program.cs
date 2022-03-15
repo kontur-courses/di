@@ -23,24 +23,19 @@ namespace FractalPainting.App
                 var container = new StandardKernel();
 
                 // start here
-                //container.Bind(c => c.FromThisAssembly().SelectAllClasses().BindAllInterfaces());
-                //container.Bind(c => c.FromThisAssembly().SelectAllClasses().BindAllBaseClasses());
+                container.Bind(x => x.FromThisAssembly().SelectAllClasses().InheritedFrom<IUiAction>().BindAllInterfaces().Configure(b => b.InSingletonScope()));
+
                 container.Bind<IImageHolder>().To<PictureBoxImageHolder>().InSingletonScope();               
-                container.Bind<IUiAction>().To<DragonFractalAction>().InSingletonScope();
-                container.Bind<IUiAction>().To<PaletteSettingsAction>().InSingletonScope();
                 container.Bind<Palette>().ToSelf();
                 container.Bind<IPainter>().To<KochPainter>();
                 
-                container.Bind<IUiAction>().To<KochFractalAction>().InSingletonScope();
                 container.Bind<MainForm>().ToSelf().InSingletonScope();
                 container.Bind<IDragonPainterFactory>().ToFactory();
 
-                container.Bind<IUiAction>().To<ImageSettingsAction>().InSingletonScope();
                 container.Bind<IObjectSerializer>().To<XmlObjectSerializer>().WhenInjectedInto<SettingsManager>();
                 container.Bind<IBlobStorage>().To<FileBlobStorage>().WhenInjectedInto<SettingsManager>();
                 container.Bind<AppSettings>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load()).InSingletonScope();
                 container.Bind<ImageSettings>().ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings).InSingletonScope();
-                container.Bind<IUiAction>().To<SaveImageAction>().InSingletonScope();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);             
