@@ -11,6 +11,7 @@ namespace FractalPainting.Infrastructure.UiActions
             var items = actions.GroupBy(a => a.Category)
                 .Select(g => CreateTopLevelMenuItem(g.Key, g.ToList()))
                 .Cast<ToolStripItem>()
+                .OrderBy(a => a.Text.Length)
                 .ToArray();
             return items;
         }
