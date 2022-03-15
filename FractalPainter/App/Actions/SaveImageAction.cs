@@ -1,24 +1,18 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 using FractalPainting.Infrastructure.Common;
-using FractalPainting.Infrastructure.Injection;
 using FractalPainting.Infrastructure.UiActions;
 
 namespace FractalPainting.App.Actions
 {
-    public class SaveImageAction : IUiAction, INeed<IImageDirectoryProvider>, INeed<IImageHolder>
+    public class SaveImageAction : IUiAction
     {
-        private IImageDirectoryProvider imageDirectoryProvider;
-        private IImageHolder imageHolder;
-
-        public void SetDependency(IImageDirectoryProvider dependency)
+        private readonly AppSettings appSettings;
+        private readonly IImageHolder imageHolder;
+        public SaveImageAction(AppSettings appSettings, IImageHolder imageHolder)
         {
-            imageDirectoryProvider = dependency;
-        }
-
-        public void SetDependency(IImageHolder dependency)
-        {
-            imageHolder = dependency;
+            this.appSettings = appSettings;
+            this.imageHolder = imageHolder;
         }
 
         public string Category => "Файл";
@@ -30,7 +24,7 @@ namespace FractalPainting.App.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
+                InitialDirectory = Path.GetFullPath(appSettings.ImagesDirectory),
                 DefaultExt = "bmp",
                 FileName = "image.bmp",
                 Filter = "Изображения (*.bmp)|*.bmp" 

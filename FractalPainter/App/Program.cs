@@ -31,7 +31,6 @@ namespace FractalPainting.App
                 container.Bind<Palette>().ToSelf();
                 container.Bind<IPainter>().To<KochPainter>();
                 
-                container.Bind<IUiAction>().To<SaveImageAction>().InSingletonScope();
                 container.Bind<IUiAction>().To<KochFractalAction>().InSingletonScope();
                 container.Bind<MainForm>().ToSelf().InSingletonScope();
                 container.Bind<IDragonPainterFactory>().ToFactory();
@@ -41,6 +40,7 @@ namespace FractalPainting.App
                 container.Bind<IBlobStorage>().To<FileBlobStorage>().WhenInjectedInto<SettingsManager>();
                 container.Bind<AppSettings>().ToMethod(context => context.Kernel.Get<SettingsManager>().Load()).InSingletonScope();
                 container.Bind<ImageSettings>().ToMethod(context => context.Kernel.Get<AppSettings>().ImageSettings).InSingletonScope();
+                container.Bind<IUiAction>().To<SaveImageAction>().InSingletonScope();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);             
