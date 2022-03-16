@@ -8,7 +8,7 @@ using Ninject.Extensions.Factory;
 
 namespace FractalPainting.App
 {
-    internal static class Program
+    internal static partial class Program
     {
         /// <summary>
         ///     The main entry point for the application.
@@ -29,28 +29,6 @@ namespace FractalPainting.App
             {
                 MessageBox.Show(e.Message);
             }
-        }
-
-        private static void ConfigureContainer(IKernel container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container can't by null");
-            }
-            container.Bind<IUiAction>().To<SaveImageAction>();
-            container.Bind<IUiAction>().To<DragonFractalAction>();
-            container.Bind<IUiAction>().To<KochFractalAction>();
-            container.Bind<IUiAction>().To<ImageSettingsAction>();
-            container.Bind<IUiAction>().To<PaletteSettingsAction>();
-
-            container.Bind<Palette>().ToSelf()
-                .InSingletonScope();
-            container.Bind<IImageHolder, PictureBoxImageHolder>()
-                .To<PictureBoxImageHolder>()
-                .InSingletonScope();
-
-            // container.Bind<IDragonPainterFactory>().ToFactory();//TODO:5.1
-
         }
     }
 }
