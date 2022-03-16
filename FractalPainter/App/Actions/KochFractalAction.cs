@@ -9,15 +9,11 @@ namespace FractalPainting.App.Actions
 {
     public class KochFractalAction : IUiAction
     {
-        private Lazy<KochPainter> kochPainter;
-        private readonly IImageHolder imageHolder;
-        private readonly Palette palette;
+        private readonly KochPainter kochPainter;
 
-        public KochFractalAction(IImageHolder imageHolder, Palette palette)
+        public KochFractalAction(KochPainter kochPainter)
         {
-            this.palette = palette;
-            this.imageHolder = imageHolder;
-            kochPainter = new Lazy<KochPainter>(() => new KochPainter(this.imageHolder, this.palette));
+            this.kochPainter = kochPainter;
         }
 
         public string Category => "Фракталы";
@@ -26,7 +22,7 @@ namespace FractalPainting.App.Actions
 
         public void Perform()
         {
-            kochPainter.Value.Paint();
+            kochPainter.Paint();
         }
     }
 }
