@@ -20,7 +20,6 @@ namespace FractalPainting.App
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-
                 var container = new StandardKernel();
                 ConfigureContainer(container);
                 var mainForm = container.Get<MainForm>();
