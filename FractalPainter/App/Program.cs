@@ -32,7 +32,7 @@ namespace FractalPainting.App
             }
         }
 
-        private static void ConfigureContainer(KernelBase container)
+        private static void ConfigureContainer(IKernel container)
         {
             if (container == null)
             {
@@ -42,8 +42,11 @@ namespace FractalPainting.App
             container.Bind<IUiAction>().To<DragonFractalAction>();
             container.Bind<IUiAction>().To<KochFractalAction>();
             container.Bind<IUiAction>().To<PaletteSettingsAction>();
-            container.Bind<IImageHolder>().To<PictureBoxImageHolder>();
-            container.Bind<Palette>().ToConstant(new Palette());
+            container.Bind<Palette>().ToSelf().InSingletonScope();
+            container.Bind<DragonSettings>().ToConstant(new DragonSettingsGenerator(new Random()).Generate());
+            container.Bind<IImageHolder, PictureBoxImageHolder>()
+                .To<PictureBoxImageHolder>()
+                .InSingletonScope();
         }
     }
 }

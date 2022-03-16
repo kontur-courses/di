@@ -10,10 +10,14 @@ namespace FractalPainting.App.Actions
     public class KochFractalAction : IUiAction
     {
         private Lazy<KochPainter> kochPainter;
+        private readonly IImageHolder imageHolder;
+        private readonly Palette palette;
 
         public KochFractalAction(IImageHolder imageHolder, Palette palette)
         {
-            kochPainter=new Lazy<KochPainter>(()=>new KochPainter(imageHolder,palette));
+            this.palette = palette;
+            this.imageHolder = imageHolder;
+            kochPainter = new Lazy<KochPainter>(() => new KochPainter(this.imageHolder, this.palette));
         }
 
         public string Category => "Фракталы";
