@@ -22,7 +22,7 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
     private Size CalculateSizeForWord(string word, int frequency)
     {
         var size = word.MeasureString(settings.Font);
-        var ratio = 100 * MathF.Pow(settings.FrequencyRatio, frequency);
+        var ratio = MathF.Pow(settings.FrequencyRatio, frequency);
         return new Size((int) (size.Width * ratio), (int) (size.Height * ratio));
     }
 }
