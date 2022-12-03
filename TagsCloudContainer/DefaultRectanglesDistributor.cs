@@ -11,13 +11,12 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
         ISettingsProvider settingsProvider)
     {
         settings = settingsProvider.Settings;
+        DistributedRectangles = new Dictionary<string, Rectangle>();
         foreach (var dist in wordsHandler.WordDistribution)
-            layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value));
-
-        DistributedRectangles = new List<Rectangle>(layouter.PlacedRectangles);
+            DistributedRectangles.Add(dist.Key, layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
     }
 
-    public List<Rectangle> DistributedRectangles { get; }
+    public Dictionary<string,Rectangle> DistributedRectangles { get; }
 
     private Size CalculateSizeForWord(string word, int frequency)
     {
