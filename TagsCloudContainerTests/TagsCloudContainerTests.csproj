@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ApprovalTests" Version="5.7.3" />
+        <PackageReference Include="Autofac" Version="6.5.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TagsCloudContainer\TagsCloudContainer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="WordSequenceProcessingTests.WordDistribution_Should_Be_Correct.approved.txt">
+        <ParentExtension>.cs</ParentExtension>
+        <ParentFile>WordSequenceProcessingTests</ParentFile>
+        <DependentUpon>WordSequenceProcessingTests.cs</DependentUpon>
+      </None>
+      <None Update="WordSequenceProcessingTests.WordDistribution_Should_Be_Correct_WhenEmptyString.approved.txt">
+        <ParentExtension>.cs</ParentExtension>
+        <ParentFile>WordSequenceProcessingTests</ParentFile>
+        <DependentUpon>WordSequenceProcessingTests.cs</DependentUpon>
+      </None>
+      <None Update="WordsFromFileReaderTests.WordsFromFileReader_ShouldWorkCorrectly.approved.txt">
+        <DependentUpon>WordsFromFileReaderTests.cs</DependentUpon>
+      </None>
+    </ItemGroup>
+
+</Project>
