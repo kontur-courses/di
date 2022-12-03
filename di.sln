@@ -1,6 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TagsCloudContainer", "TagsCloudContainer", "{8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer\TagsCloudContainer.csproj", "{996FC1BD-4767-4CA4-8D64-FB58D72B7527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.UnitTests", "TagsCloudContainer\TagsCloudContainer.UnitTests\TagsCloudContainer.UnitTests.csproj", "{FCC81DC9-95AB-4313-9189-4662BFA670E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Interfaces", "TagsCloudContainer\TagsCloudContainer.Interfaces\TagsCloudContainer.Interfaces.csproj", "{65515299-DAD7-45EC-BC06-6EC0610A6F33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Cli", "TagsCloudContainer\TagsCloudContainer.Cli\TagsCloudContainer.Cli.csproj", "{7892B21E-D0AB-4869-BD09-69C152BC0FBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +23,27 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{996FC1BD-4767-4CA4-8D64-FB58D72B7527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{996FC1BD-4767-4CA4-8D64-FB58D72B7527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{996FC1BD-4767-4CA4-8D64-FB58D72B7527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{996FC1BD-4767-4CA4-8D64-FB58D72B7527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC81DC9-95AB-4313-9189-4662BFA670E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC81DC9-95AB-4313-9189-4662BFA670E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC81DC9-95AB-4313-9189-4662BFA670E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC81DC9-95AB-4313-9189-4662BFA670E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65515299-DAD7-45EC-BC06-6EC0610A6F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65515299-DAD7-45EC-BC06-6EC0610A6F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65515299-DAD7-45EC-BC06-6EC0610A6F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65515299-DAD7-45EC-BC06-6EC0610A6F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7892B21E-D0AB-4869-BD09-69C152BC0FBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7892B21E-D0AB-4869-BD09-69C152BC0FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7892B21E-D0AB-4869-BD09-69C152BC0FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7892B21E-D0AB-4869-BD09-69C152BC0FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{996FC1BD-4767-4CA4-8D64-FB58D72B7527} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
+		{FCC81DC9-95AB-4313-9189-4662BFA670E7} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
+		{65515299-DAD7-45EC-BC06-6EC0610A6F33} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
+		{7892B21E-D0AB-4869-BD09-69C152BC0FBA} = {8C250F09-A55B-4F2F-A5F6-FE5C86424D9B}
 	EndGlobalSection
 EndGlobal

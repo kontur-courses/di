@@ -1,0 +1,63 @@
+{
+  "DrawerSettings": [
+    {
+      "Type": "ClassicDrawerSettings",
+      "ImageRectangle": {
+        "Location": {
+          "X": 0,
+          "Y": 0
+        },
+        "Size": {
+          "Width": 10000,
+          "Height": 10000
+        },
+        "X": 0,
+        "Y": 0
+      },
+      "NumbersSize": 8,
+      "NumbersFamily": "Times New Roman",
+      "NumbersBrush": {
+        "Type": "SolidBrush",
+        "Color": "Blue"
+      },
+      "TextBrush": {
+        "Type": "SolidBrush",
+        "Color": "Black"
+      },
+      "TextFontFamily": "Comic Sans MS",
+      "TextFontStyle": 6,
+      "MinimumTextFontSize": 100,
+      "MaximumTextFontSize": 500,
+      "WriteNumbers": true,
+      "RectangleBorderBrush": {
+        "Type": "SolidBrush",
+        "Color": "Red"
+      },
+      "RectangleBorderSize": 2,
+      "RectangleFillBrush": {
+        "Type": "SolidBrush",
+        "Color": "Pink"
+      },
+      "FillRectangles": true,
+      "BackgroundBrush": {
+        "Type": "SolidBrush",
+        "Color": "LightGoldenrodYellow"
+      }
+    }
+  ],
+  "LayouterAlgorithmSettings": [
+    {
+      "Type": "CircularLayouterAlgorithmSettings",
+      "Center": {
+        "X": 5000,
+        "Y": 5000
+      }
+    }
+  ],
+  "GraphicsProviderSettings": {
+    "Type": "CliGraphicsProviderSettings",
+    "Width": 10000,
+    "Height": 10000,
+    "BasePath": "C:\\Users\\Admin\\repositories\\alex2021cyberhuman\\di\\TagsCloudContainer\\TagsCloudContainer.Cli\\bin\\Debug\\net7.0-windows\\images"
+  }
+}
