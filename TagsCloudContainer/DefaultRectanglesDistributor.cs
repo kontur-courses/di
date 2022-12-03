@@ -5,20 +5,24 @@ namespace TagsCloudContainer;
 
 public class DefaultRectanglesDistributor : IRectanglesDistributor
 {
-    public List<Rectangle> DistributedRectangles { get; }
+    private readonly Settings settings;
 
-    public DefaultRectanglesDistributor(ICloudLayouter layouter, IWordsHandler wordsHandler)
+    public DefaultRectanglesDistributor(ICloudLayouter layouter, IWordsHandler wordsHandler,
+        ISettingsProvider settingsProvider)
     {
+        settings = settingsProvider.Settings;
         foreach (var dist in wordsHandler.WordDistribution)
             layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value));
 
         DistributedRectangles = new List<Rectangle>(layouter.PlacedRectangles);
     }
 
+    public List<Rectangle> DistributedRectangles { get; }
+
     private Size CalculateSizeForWord(string word, int frequency)
     {
-        var font = new Font("Courier New", 10.0F);
-        var size = word.MeasureString(font);
-        return new Size((int) size.Width * 100, (int) size.Height * 100);
+        var size = word.MeasureString(settings.Font);
+        var ratio = 100 * MathF.Pow(settings.FrequencyRatio, frequency);
+        return new Size((int) (size.Width * ratio), (int) (size.Height * ratio));
     }
 }
