@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using ApprovalTests;
-using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
 using Autofac;
 using NUnit.Framework;
@@ -12,8 +11,6 @@ namespace TagsCloudContainerTests;
 [UseReporter(typeof(DiffReporter))]
 public class WordSequenceProcessingTests
 {
-    private ContainerBuilder builder;
-
     [SetUp]
     public void Setup()
     {
@@ -21,6 +18,8 @@ public class WordSequenceProcessingTests
         builder.RegisterType<StringSpaceSplitter>().As<IEnumerable<string>>();
         builder.RegisterType<DefaultWordsHandler>().As<IWordsHandler>();
     }
+
+    private ContainerBuilder builder;
 
     [Test]
     public void WordDistribution_Should_Be_Correct()
@@ -31,10 +30,8 @@ public class WordSequenceProcessingTests
             var wordsHadler = scope.Resolve<IWordsHandler>();
             Approvals.VerifyAll(wordsHadler.WordDistribution);
         }
-        
-
     }
-    
+
     [Test]
     public void WordDistribution_Should_Be_Correct_WhenEmptyString()
     {
@@ -45,6 +42,5 @@ public class WordSequenceProcessingTests
             var wordsHadler = scope.Resolve<IWordsHandler>();
             Approvals.VerifyAll(wordsHadler.WordDistribution);
         }
-
     }
 }

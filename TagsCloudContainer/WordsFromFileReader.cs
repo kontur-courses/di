@@ -10,7 +10,14 @@ public class WordsFromFileReader : IEnumerable<string>
     {
         Words = new List<string>(File.ReadAllLines(path));
     }
-    public IEnumerator<string> GetEnumerator() => Words.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public IEnumerator<string> GetEnumerator()
+    {
+        return Words.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
