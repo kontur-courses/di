@@ -14,8 +14,9 @@ public class DefaultWordsHandler : IWordsHandler
     {
         foreach (var word in WordSequence)
         {
-            if (WordDistribution.ContainsKey(word)) WordDistribution[word] += 1;
-            else WordDistribution.Add(word, 1);
+            string w = word.ToLower();
+            if (WordDistribution.ContainsKey(w)) WordDistribution[w] += 1;
+            else WordDistribution.Add(w, 1);
         }
     }
 }

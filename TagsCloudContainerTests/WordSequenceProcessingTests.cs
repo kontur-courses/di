@@ -25,7 +25,7 @@ public class WordSequenceProcessingTests
     [Test]
     public void WordDistribution_Should_Be_Correct()
     {
-        builder.RegisterInstance("A B D A A B A").As<string>();
+        builder.RegisterInstance("A B D a a b A").As<string>();
         using (var scope = builder.Build().BeginLifetimeScope())
         {
             var wordsHadler = scope.Resolve<IWordsHandler>();
