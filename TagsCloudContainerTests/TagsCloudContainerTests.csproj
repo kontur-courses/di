@@ -46,7 +46,7 @@
 
     <ItemGroup>
       <Reference Include="TagsCloudVisualization">
-        <HintPath>..\libs\TagsCloudVisualization.dll</HintPath>
+        <HintPath>..\TagsCloudContainer\libs\TagsCloudVisualization.dll</HintPath>
       </Reference>
     </ItemGroup>
 
