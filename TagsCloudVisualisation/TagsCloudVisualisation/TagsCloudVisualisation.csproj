@@ -13,6 +13,8 @@
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,10 +95,17 @@
         <Compile Include="GetParamsForm.Designer.cs">
           <DependentUpon>GetParamsForm.cs</DependentUpon>
         </Compile>
+        <Compile Include="InputStream\FileInputStream\FromFileInputWordsStream.cs" />
+        <Compile Include="InputStream\FileInputStream\IFileEncoder.cs" />
+        <Compile Include="InputStream\FileInputStream\TxtEncoder.cs" />
+        <Compile Include="InputStream\IInputWordsStream.cs" />
         <Compile Include="Program.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RandomRectanglesCreator.cs" />
         <Compile Include="TagCloudDrawer.cs" />
+        <Compile Include="Word.cs" />
+        <Compile Include="WordsPreprocessor\DefaultWordsPreprocessor.cs" />
+        <Compile Include="WordsPreprocessor\IBoringWords.cs" />
+        <Compile Include="WordsPreprocessor\IWordsPreprocessor.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
