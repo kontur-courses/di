@@ -4,5 +4,5 @@ namespace TagsCloudContainer;
 
 public interface IRectanglesDistributor
 {
-    public Dictionary<string,Rectangle> DistributedRectangles { get; }
+    public Dictionary<string, Rectangle> DistributedRectangles { get; }
 }
