@@ -4,10 +4,11 @@ namespace TagsCloudContainer;
 
 public class Settings
 {
+    public Color BackgroundColor;
+    public Brush Brush;
     public Font Font;
     public float FrequencyRatio;
     public Size ImageSize;
-    public Brush Brush;
-    public string SavePath;
     public string InputPath;
+    public string SavePath;
 }
