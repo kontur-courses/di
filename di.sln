@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{1CC0FDB2-5B5A-4754-B727-A888C24C0A52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudUnitTests", "TagCloudUnitTests\TagCloudUnitTests.csproj", "{0F462316-99A0-4DA5-A522-0810A490FFE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +19,19 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC0FDB2-5B5A-4754-B727-A888C24C0A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC0FDB2-5B5A-4754-B727-A888C24C0A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC0FDB2-5B5A-4754-B727-A888C24C0A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC0FDB2-5B5A-4754-B727-A888C24C0A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F462316-99A0-4DA5-A522-0810A490FFE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F462316-99A0-4DA5-A522-0810A490FFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F462316-99A0-4DA5-A522-0810A490FFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F462316-99A0-4DA5-A522-0810A490FFE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {467E252F-58A7-45F1-A14A-26648C688314}
 	EndGlobalSection
 EndGlobal
