@@ -1,6 +1,6 @@
 namespace TagsCloudContainer;
 
-public class ISettingsProvider
+public interface ISettingsProvider
 {
     public Settings Settings { get; }
 }
