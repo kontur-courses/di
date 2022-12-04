@@ -14,6 +14,8 @@ public class ImageSaver
     }
     public void Save(Bitmap bitmap)
     {
-        bitmap.Save(settings.SavePath);
+        if (!Directory.Exists(Path.GetDirectoryName(settings.SavePath)))
+            Directory.CreateDirectory(Path.GetDirectoryName(settings.SavePath));
+        bitmap.Save(settings.SavePath, ImageFormat.Jpeg);
     }
 }
