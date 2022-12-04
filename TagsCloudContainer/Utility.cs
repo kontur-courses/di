@@ -8,6 +8,6 @@ public static class Utility
     {
         var fakeImage = new Bitmap(1, 1);
         var graphics = Graphics.FromImage(fakeImage);
-        return graphics.MeasureString("Hello", font);
+        return graphics.MeasureString(s, font);
     }
 }

@@ -16,12 +16,14 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
             DistributedRectangles.Add(dist.Key, layouter.PutNextRectangle(CalculateSizeForWord(dist.Key, dist.Value)));
     }
 
-    public Dictionary<string,Rectangle> DistributedRectangles { get; }
+    public Dictionary<string, Rectangle> DistributedRectangles { get; }
 
     private Size CalculateSizeForWord(string word, int frequency)
     {
         var size = word.MeasureString(settings.Font);
-        var ratio = MathF.Pow(settings.FrequencyRatio, frequency);
-        return new Size((int) (size.Width * ratio), (int) (size.Height * ratio));
+        var ratio = MathF.Pow(settings.FrequencyRatio, frequency - 1);
+        size.Height *= ratio;
+        size.Width *= ratio;
+        return Size.Ceiling(size);
     }
 }
