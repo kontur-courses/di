@@ -38,16 +38,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="TagsCloudVisualization">
-        <HintPath>bin\Debug\TagsCloudVisualization.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="default.txt" />
       <EmbeddedResource Include="default.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="TagsCloudVisualization">
+        <HintPath>..\libs\TagsCloudVisualization.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
