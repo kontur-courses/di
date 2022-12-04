@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="ApprovalTests" Version="5.7.3" />
         <PackageReference Include="Autofac" Version="6.5.0" />
+        <PackageReference Include="Autofac.Extras.Moq" Version="6.1.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="NUnit" Version="3.13.2" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
@@ -34,6 +35,19 @@
       <None Update="WordsFromFileReaderTests.WordsFromFileReader_ShouldWorkCorrectly.approved.txt">
         <DependentUpon>WordsFromFileReaderTests.cs</DependentUpon>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="TagsCloudVisualization">
+        <HintPath>bin\Debug\TagsCloudVisualization.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="default.txt" />
+      <EmbeddedResource Include="default.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

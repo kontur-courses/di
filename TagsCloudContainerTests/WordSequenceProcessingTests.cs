@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using ApprovalTests;
 using ApprovalTests.Reporters;
-using Autofac;
 using NUnit.Framework;
 using TagsCloudContainer;
 
@@ -14,33 +13,26 @@ public class WordSequenceProcessingTests
     [SetUp]
     public void Setup()
     {
-        builder = new ContainerBuilder();
-        builder.RegisterType<StringSpaceSplitter>().As<IEnumerable<string>>();
-        builder.RegisterType<DefaultWordsHandler>().As<IWordsHandler>();
     }
-
-    private ContainerBuilder builder;
 
     [Test]
     public void WordDistribution_Should_Be_Correct()
     {
-        builder.RegisterInstance("A B D a a b A").As<string>();
-        using (var scope = builder.Build().BeginLifetimeScope())
-        {
-            var wordsHadler = scope.Resolve<IWordsHandler>();
-            Approvals.VerifyAll(wordsHadler.WordDistribution);
-        }
+        var sequence = new List<string>(
+            "AAa aAa B b AA a B b D"
+                .Split());
+
+        var wordsHandler = new DefaultWordsHandler(sequence);
+        Approvals.VerifyAll(wordsHandler.WordDistribution);
     }
+
 
     [Test]
     public void WordDistribution_Should_Be_Correct_WhenEmptyString()
     {
-        builder.RegisterInstance("").As<string>();
+        var sequence = new List<string>();
 
-        using (var scope = builder.Build().BeginLifetimeScope())
-        {
-            var wordsHadler = scope.Resolve<IWordsHandler>();
-            Approvals.VerifyAll(wordsHadler.WordDistribution);
-        }
+        var wordsHandler = new DefaultWordsHandler(sequence);
+        Approvals.VerifyAll(wordsHandler.WordDistribution);
     }
 }
