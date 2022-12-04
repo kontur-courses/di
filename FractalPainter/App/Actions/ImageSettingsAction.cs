@@ -9,6 +9,11 @@ namespace FractalPainting.App.Actions
         private IImageHolder imageHolder;
         private IImageSettingsProvider imageSettingsProvider;
 
+        //public ImageSettingsAction(IImageHolder imageHolder, IImageSettingsProvider imageSettingsProvider)
+        //{
+        //    this.imageHolder = imageHolder;
+        //    this.imageSettingsProvider = imageSettingsProvider;
+        //}
         public void SetDependency(IImageHolder dependency)
         {
             imageHolder = dependency;
