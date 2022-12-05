@@ -11,4 +11,5 @@ public class Settings
     public Size ImageSize;
     public string InputPath;
     public string SavePath;
+    public string FilterPath;
 }

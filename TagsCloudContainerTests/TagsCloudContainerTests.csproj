@@ -22,24 +22,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="WordSequenceProcessingTests.WordDistribution_Should_Be_Correct.approved.txt">
-        <ParentExtension>.cs</ParentExtension>
-        <ParentFile>WordSequenceProcessingTests</ParentFile>
-        <DependentUpon>WordSequenceProcessingTests.cs</DependentUpon>
-      </None>
-      <None Update="WordSequenceProcessingTests.WordDistribution_Should_Be_Correct_WhenEmptyString.approved.txt">
-        <ParentExtension>.cs</ParentExtension>
-        <ParentFile>WordSequenceProcessingTests</ParentFile>
-        <DependentUpon>WordSequenceProcessingTests.cs</DependentUpon>
-      </None>
-      <None Update="WordsFromFileReaderTests.WordsFromFileReader_ShouldWorkCorrectly.approved.txt">
-        <DependentUpon>WordsFromFileReaderTests.cs</DependentUpon>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="default.txt" />
       <EmbeddedResource Include="default.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="filter.txt" />
+      <EmbeddedResource Include="filter.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>

@@ -18,8 +18,6 @@ public class ImageDrawerTests
     {
         builder = new ContainerBuilder();
         builder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>();
-        builder.RegisterType<TestFileReader>().As<IEnumerable<string>>();
-        builder.RegisterType<DefaultWordsHandler>().As<IWordsHandler>();
         builder.RegisterInstance(new SpiralCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
         builder.RegisterType<DefaultRectanglesDistributor>().As<IRectanglesDistributor>();
         builder.RegisterType<ImageSaver>().AsSelf();
@@ -33,7 +31,7 @@ public class ImageDrawerTests
     public void Default()
     {
         var savePath = Path.Combine(saveDir, "default.jpg");
-        
+
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
@@ -46,7 +44,11 @@ public class ImageDrawerTests
                 SavePath = savePath,
                 BackgroundColor = Color.Black
             });
-            builder.RegisterInstance(mock.Create<ISettingsProvider>()).As<ISettingsProvider>();
+            var settings = mock.Create<ISettingsProvider>();
+            var testFileReader = new TestFileReader(settings);
+            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
+
         }
 
         var container = builder.Build();
@@ -69,7 +71,10 @@ public class ImageDrawerTests
                 SavePath = savePath,
                 BackgroundColor = Color.Aquamarine
             });
-            builder.RegisterInstance(mock.Create<ISettingsProvider>()).As<ISettingsProvider>();
+            var settings = mock.Create<ISettingsProvider>();
+            var testFileReader = new TestFileReader(settings);
+            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
 
         var container = builder.Build();
@@ -92,7 +97,10 @@ public class ImageDrawerTests
                 SavePath = savePath,
                 BackgroundColor = Color.Black
             });
-            builder.RegisterInstance(mock.Create<ISettingsProvider>()).As<ISettingsProvider>();
+            var settings = mock.Create<ISettingsProvider>();
+            var testFileReader = new TestFileReader(settings);
+            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
 
         var container = builder.Build();
@@ -115,11 +123,43 @@ public class ImageDrawerTests
                 SavePath = savePath,
                 BackgroundColor = Color.Black
             });
-            builder.RegisterInstance(mock.Create<ISettingsProvider>()).As<ISettingsProvider>();
+            var settings = mock.Create<ISettingsProvider>();
+            var testFileReader = new TestFileReader(settings);
+            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
 
         builder.RegisterInstance(new BlockCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
 
+        var container = builder.Build();
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+    }
+
+    [Test]
+    public void FilterTest()
+    {
+        var savePath = Path.Combine(saveDir, "filter.jpg");
+
+        using (var mock = AutoMock.GetLoose())
+        {
+            mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
+            {
+                Brush = new SolidBrush(Color.Aqua),
+                Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
+                FrequencyRatio = 1.6f,
+                ImageSize = new Size(5000, 5000),
+                InputPath = inputPath,
+                SavePath = savePath,
+                BackgroundColor = Color.Black,
+                FilterPath = @"filter.txt"
+            });
+            var settings = mock.Create<ISettingsProvider>();
+            var testFileReader = new TestFileReader(settings);
+            builder.RegisterInstance(new WordsHandlerWithFilter(testFileReader.Words, testFileReader.ExcludedWords))
+                .As<IWordsHandler>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
+        }
+        
         var container = builder.Build();
         container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
     }
