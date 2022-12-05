@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TagsCloudVisualisation.WordsPreprocessor.BoringWords;
 
 namespace TagsCloudVisualisation.WordsPreprocessor
 {
@@ -13,6 +14,6 @@ namespace TagsCloudVisualisation.WordsPreprocessor
         /// <param name="words">Список всех слов</param>
         /// <param name="boringWords">Сущность, которая позволит определять, скучное ли слово</param>
         /// <returns>Обработанные неповторяющиеся слова</returns>
-        ISet<Word> GetProcessedWords(List<string> words, IBoringWords boringWords);
+        ISet<Word> GetProcessedWords(List<string> words, params IBoringWords[] boringWords);
     }
 }

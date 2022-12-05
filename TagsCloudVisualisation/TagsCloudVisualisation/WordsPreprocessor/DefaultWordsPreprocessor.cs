@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using TagsCloudVisualisation.WordsPreprocessor.BoringWords;
 
 namespace TagsCloudVisualisation.WordsPreprocessor
 {
@@ -26,13 +27,15 @@ namespace TagsCloudVisualisation.WordsPreprocessor
         /// </summary>
         /// <param name="words">Список всех слов</param>
         /// <param name="boringWords">Сущность, которая позволит определять, скучное ли слово</param>
-        /// <returns>Обработанные неповторяющиеся слова</returns>
-        public ISet<Word> GetProcessedWords(List<string> words, IBoringWords boringWords)
+        /// <returns>Обработанные неповторяющиеся слова без скучных слов</returns>
+        public ISet<Word> GetProcessedWords(List<string> words, params IBoringWords[] boringWords)
         {
             wordsSet = CreateWordsSet(words, word => word.ToLower(cultureInfo));
             CalculateTfIndexes(wordsSet, words.Count);
             return wordsSet
-                .Where(word => !boringWords.IsBoring(word)).ToHashSet();
+                .Where(word => 
+                    boringWords.All(checker => !checker.IsBoring(word)))
+                .ToHashSet();
         }
 
         /// <summary>

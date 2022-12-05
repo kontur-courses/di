@@ -95,6 +95,8 @@
         <Compile Include="GetParamsForm.Designer.cs">
           <DependentUpon>GetParamsForm.cs</DependentUpon>
         </Compile>
+        <Compile Include="InputStream\FileInputStream\Exceptions\IncorrectCallException.cs" />
+        <Compile Include="InputStream\FileInputStream\Exceptions\IncorrectFileTypeException.cs" />
         <Compile Include="InputStream\FileInputStream\FromFileInputWordsStream.cs" />
         <Compile Include="InputStream\FileInputStream\IFileEncoder.cs" />
         <Compile Include="InputStream\FileInputStream\TxtEncoder.cs" />
@@ -102,9 +104,17 @@
         <Compile Include="Program.cs" />
         <Compile Include="RandomRectanglesCreator.cs" />
         <Compile Include="TagCloudDrawer.cs" />
+        <Compile Include="Tests\FileInputStream\FromFileInputWordsStreamTest.cs" />
+        <Compile Include="Tests\FileInputStream\TxtEncoderTest.cs" />
+        <Compile Include="Tests\Infrastructure\FileEncoderСheater.cs" />
+        <Compile Include="Tests\Infrastructure\NoBoringWords.cs" />
+        <Compile Include="Tests\Infrastructure\SimpleBoringWordsIdentifier.cs" />
+        <Compile Include="Tests\Infrastructure\SimpleVeryBoringWordsIdentifier.cs" />
+        <Compile Include="Tests\WordPreprocessor\DefaultWordsPreprocessorTest.cs" />
         <Compile Include="Word.cs" />
+        <Compile Include="WordsPreprocessor\BoringWords\BoringUnionsAndAppealsRU.cs" />
+        <Compile Include="WordsPreprocessor\BoringWords\IBoringWords.cs" />
         <Compile Include="WordsPreprocessor\DefaultWordsPreprocessor.cs" />
-        <Compile Include="WordsPreprocessor\IBoringWords.cs" />
         <Compile Include="WordsPreprocessor\IWordsPreprocessor.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
