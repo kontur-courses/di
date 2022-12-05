@@ -19,12 +19,19 @@ namespace TagCloudShould
         [TearDown]
         public void PrintPathAndSaveIfTestIsDown()
         {
+
+            var testName = TestContext.CurrentContext.Test.Name ;
+
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
+            {
+                tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
                 return;
-            var testName = TestContext.CurrentContext.Test.Name + TestContext.CurrentContext.Result.FailCount;
-            tagCloud.Save(testName);
-            Console.WriteLine("Tag cloud visualization saved to file: " + Environment.CurrentDirectory + "\\" +
-                              testName + ".png");
+            }
+
+            var pathDebug = Environment.CurrentDirectory + 
+                            "\\..\\..\\..\\saved_images\\debugImages\\" + testName + TestContext.CurrentContext.Result.FailCount + ".png";
+            tagCloud.Save(pathDebug);
+            Console.WriteLine("Tag cloud visualization saved to file: " + pathDebug);
         }
 
         [Test]
@@ -70,18 +77,10 @@ namespace TagCloudShould
         }
 
         [Test, Timeout(5000)]
-        public void NoVisualization_Timeout()
-        {
-            tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouter,
-                new ArithmeticSpiral(Point.Empty));
-        }
-
-        [Test, Timeout(5000)]
         public void Visualization_Timeout()
         {
             tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouter,
                 new ArithmeticSpiral(Point.Empty));
-            tagCloud.Save(TestContext.CurrentContext.Test.Name);
         }
 
         [Test]
@@ -96,19 +95,18 @@ namespace TagCloudShould
             var circularLayouterCloud = new CircularCloudLayouter(divideTags);
             tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouterCloud,
                 new ArithmeticSpiral(Point.Empty));
-            tagCloud.Save(TestContext.CurrentContext.Test.Name);
         }
     }
     [TestFixture]
     public class Should
     {
-        private static string rootDirectory = Environment.CurrentDirectory + "\\..\\..\\..\\word_data\\";
+        private static string rootDirectory = Environment.CurrentDirectory + "\\..\\..\\..\\";
         [Test]
         public void check_simple()
         {
             var file = "data.txt";
-            var cloud = CreateTagCloud(new ArithmeticSpiral(new Point(0, 0)), rootDirectory + file);
-            cloud.Save("fe");
+            var cloud = CreateTagCloud(new ArithmeticSpiral(new Point(0, 0)), rootDirectory+ "word_data\\" + file);
+            cloud.Save(rootDirectory+ "saved_images\\"+TestContext.CurrentContext.Test.Name+".png");
         }
 
         public static TagCloud CreateTagCloud(ArithmeticSpiral spiral, string path)

@@ -6,7 +6,7 @@ namespace TagsCloudVisualization
 {
     public static class Visualizator
     {
-        public static void Save(this TagCloud tagCloud, string fileName)
+        public static void Save(this TagCloud tagCloud, string path)
         {
             var srcSize = tagCloud.GetScreenSize();
 
@@ -22,7 +22,7 @@ namespace TagsCloudVisualization
                 g.DrawString(textRectangle.text, textRectangle.font, new SolidBrush(color),
                     textRectangle.rectangle.Location + new Size(srcSize.Width / 2, srcSize.Height / 2));
             }
-            graphics.Save(fileName + ".png", ImageFormat.Png);
+            graphics.Save(path);
 
         }
 
