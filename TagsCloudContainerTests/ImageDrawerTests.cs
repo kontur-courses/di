@@ -30,7 +30,7 @@ public class ImageDrawerTests
     [Test]
     public void Default()
     {
-        var savePath = Path.Combine(saveDir, "default.jpg");
+        var savePath = Path.Combine(saveDir, "default.png");
 
         using (var mock = AutoMock.GetLoose())
         {
@@ -58,7 +58,7 @@ public class ImageDrawerTests
     [Test]
     public void ColorsTest()
     {
-        var savePath = Path.Combine(saveDir, "colors.jpg");
+        var savePath = Path.Combine(saveDir, "colors.png");
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
@@ -84,7 +84,7 @@ public class ImageDrawerTests
     [Test]
     public void FontTest()
     {
-        var savePath = Path.Combine(saveDir, "font.jpg");
+        var savePath = Path.Combine(saveDir, "font.png");
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
@@ -110,7 +110,7 @@ public class ImageDrawerTests
     [Test]
     public void DifferentLayoutTest()
     {
-        var savePath = Path.Combine(saveDir, "layout.jpg");
+        var savePath = Path.Combine(saveDir, "layout.png");
         using (var mock = AutoMock.GetLoose())
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
@@ -138,7 +138,7 @@ public class ImageDrawerTests
     [Test]
     public void FilterTest()
     {
-        var savePath = Path.Combine(saveDir, "filter.jpg");
+        var savePath = Path.Combine(saveDir, "filter.png");
 
         using (var mock = AutoMock.GetLoose())
         {

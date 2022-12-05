@@ -16,6 +16,6 @@ public class ImageSaver
     {
         if (!Directory.Exists(Path.GetDirectoryName(settings.SavePath)))
             Directory.CreateDirectory(Path.GetDirectoryName(settings.SavePath));
-        bitmap.Save(settings.SavePath, ImageFormat.Jpeg);
+        bitmap.Save(settings.SavePath, ImageFormat.Png);
     }
 }
