@@ -1,13 +1,13 @@
 ﻿namespace TagsCloudVisualization
 {
-    internal class FrequencyTags
+    public class FrequencyTags
     {
         private IDictionary<string, int> repeatDictionary = new Dictionary<string, int>();
         public IDictionary<string, int> GetDictionaryWithTags(IEnumerable<string> splitStrings)
         {
             if (splitStrings == null)
                 throw new ArgumentNullException();
-            foreach (var splitString in splitStrings)
+            foreach (var splitString in splitStrings.Select(x=>x.ToLower()))
             {
                 if (!repeatDictionary.ContainsKey(splitString))
                     repeatDictionary[splitString] = 0;

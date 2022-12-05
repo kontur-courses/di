@@ -13,13 +13,12 @@ namespace TagsCloudVisualization
     public class CircularCloudLayouter
     {
         public IDictionary<string, int> sizeDictionary;
-
-        private readonly Graphics g;
-
-        public CircularCloudLayouter(IDictionary<string, int> sizeDictionary, Graphics g)
+         
+        Graphics graphics;
+        public CircularCloudLayouter(IDictionary<string, int> sizeDictionary)
         {
             this.sizeDictionary = sizeDictionary;
-            this.g = g;
+            graphics= Graphics.FromImage(new Bitmap(1,1));
         }
 
         public IEnumerable<Tuple<string, Size, Font>> GetNextRectangleOptions()
@@ -27,7 +26,7 @@ namespace TagsCloudVisualization
             foreach (var pair in sizeDictionary)
             {
                 var font = new Font("Times", pair.Value);
-                var size = g.MeasureString(pair.Key, font).ToSize();
+                var size = graphics.MeasureString(pair.Key, font).ToSize();
                 yield return Tuple.Create(pair.Key, size, font);
             }
         }

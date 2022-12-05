@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace TagsCloudVisualization
 {
-    static class DividerTags
+    public static class DividerTags
     {
         public static IDictionary<string, int> DivideTags(this IDictionary<string, int> tags, int fontMax = 150, int fontMin = 50)
         {
@@ -22,6 +23,12 @@ namespace TagsCloudVisualization
             }
 
             return tagsDictionary;
+        }
+
+        public static CircularCloudLayouter GetCircularCloudLayouter(string path)
+        {
+            return new CircularCloudLayouter(new FrequencyTags()
+                .GetDictionaryWithTags(new FileParserForLines(path).GetWords()).DivideTags());
         }
     }
 }

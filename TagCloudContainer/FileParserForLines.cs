@@ -11,7 +11,7 @@
 
         public IEnumerable<string> GetWords()
         {
-            return File.ReadAllLines(Environment.CurrentDirectory + "\\..\\..\\..\\" + path);
+            return File.ReadAllLines(/*Environment.CurrentDirectory + "\\..\\..\\..\\" +*/ path);
         }
     }
 }

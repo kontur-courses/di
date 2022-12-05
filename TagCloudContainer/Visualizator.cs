@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TagsCloudVisualization
 {
-    internal static class Visualizator
+    public static class Visualizator
     {
         public static void Save(this TagCloud tagCloud, string fileName)
         {
