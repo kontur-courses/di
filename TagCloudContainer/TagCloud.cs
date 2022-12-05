@@ -11,13 +11,12 @@ namespace TagsCloudVisualization
         private readonly List<Point> emptyPoints;
         private Size srcSize;
 
-        public TagCloud(List<Point> emptyPoints, List<TextRectangle> rectangles
-            , CircularCloudLayouter circularCloudLayouter, ArithmeticSpiral arithmeticSpiral)
+        public TagCloud()
         {
-            this.emptyPoints = emptyPoints;
-            this.rectangles = rectangles;
-            CreateTagCloud(circularCloudLayouter,arithmeticSpiral);
+            rectangles = new List<TextRectangle>();
+            emptyPoints = new List<Point>();
         }
+   
 
         public List<TextRectangle> GetRectangles() => rectangles;
         public Size GetScreenSize() => srcSize;

@@ -2,8 +2,8 @@
 {
     public class FrequencyTags
     {
-        private IDictionary<string, int> repeatDictionary = new Dictionary<string, int>();
-        public IDictionary<string, int> GetDictionaryWithTags(IEnumerable<string> splitStrings)
+        private Dictionary<string, int> repeatDictionary = new Dictionary<string, int>();
+        public Dictionary<string, int> GetDictionaryWithTags(IEnumerable<string> splitStrings)
         {
             if (splitStrings == null)
                 throw new ArgumentNullException();

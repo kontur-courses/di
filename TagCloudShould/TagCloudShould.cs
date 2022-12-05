@@ -24,25 +24,24 @@ namespace TagCloudShould
 
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
             {
-                tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
+                //tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
                 return;
             }
 
             var pathDebug = Environment.CurrentDirectory + 
                             "\\..\\..\\..\\saved_images\\debugImages\\" + testName + TestContext.CurrentContext.Result.FailCount + ".png";
-            tagCloud.Save(pathDebug);
+           // tagCloud.Save(pathDebug);
             Console.WriteLine("Tag cloud visualization saved to file: " + pathDebug);
         }
 
         [Test]
         public void NoVisualization_NoIntersections()
         {
-            var tagCloud = new TagCloud
-                (new List<Point>(), new List<TextRectangle>(), circularLayouter, new ArithmeticSpiral(Point.Empty));
+            var tagCloud = new TagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var rectangles = tagCloud.GetRectangles();
             foreach (var rectangle in rectangles)
-                foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
-                    thisRectangle.rectangle.IntersectsWith(rectangle.rectangle).Should().BeFalse();
+            foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
+                thisRectangle.rectangle.IntersectsWith(rectangle.rectangle).Should().BeFalse();
         }
 
         [Test]
@@ -54,8 +53,8 @@ namespace TagCloudShould
 
         public void ArgumentException_WhenHaveEmptySpaceSmall()
         {
-            tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouter,
-                new ArithmeticSpiral(Point.Empty));
+            tagCloud = new TagCloud();
+            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var arithmeticSpiral = new ArithmeticSpiral(new Point(0, 0));
             var point = arithmeticSpiral.GetPoint();
             var rectangles = tagCloud.GetRectangles();
@@ -79,8 +78,8 @@ namespace TagCloudShould
         [Test, Timeout(5000)]
         public void Visualization_Timeout()
         {
-            tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouter,
-                new ArithmeticSpiral(Point.Empty));
+            tagCloud = new TagCloud();
+            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
         }
 
         [Test]
@@ -93,8 +92,8 @@ namespace TagCloudShould
             var divideTags = new FrequencyTags()
                 .GetDictionaryWithTags(string.Join(", ", strsplt).Split(", ")).DivideTags();
             var circularLayouterCloud = new CircularCloudLayouter(divideTags);
-            tagCloud = new TagCloud(new List<Point>(), new List<TextRectangle>(), circularLayouterCloud,
-                new ArithmeticSpiral(Point.Empty));
+            tagCloud = new TagCloud();
+            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
         }
     }
     [TestFixture]

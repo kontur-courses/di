@@ -12,10 +12,10 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter
     {
-        public IDictionary<string, int> sizeDictionary;
+        public Dictionary<string, int> sizeDictionary;
          
         Graphics graphics;
-        public CircularCloudLayouter(IDictionary<string, int> sizeDictionary)
+        public CircularCloudLayouter(Dictionary<string, int> sizeDictionary)
         {
             this.sizeDictionary = sizeDictionary;
             graphics= Graphics.FromImage(new Bitmap(1,1));

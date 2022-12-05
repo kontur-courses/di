@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudVisualization
 {
-    internal class FileParserForLines
+    public class FileParserForLines
     {
         private readonly string path;
 

@@ -7,7 +7,7 @@ namespace TagsCloudVisualization
 {
     public static class DividerTags
     {
-        public static IDictionary<string, int> DivideTags(this IDictionary<string, int> tags, int fontMax = 150, int fontMin = 50)
+        public static Dictionary<string, int> DivideTags(this Dictionary<string, int> tags, int fontMax = 150, int fontMin = 50)
         {
             if (fontMax <= 0 || fontMin <= 0)
                 throw new ArgumentNullException("sizeAvgTagSize must be > 0");

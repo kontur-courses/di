@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudContainer", "TagCloudContainer.csproj", "{A138D828-DDDB-4AC3-964A-943AE90E5678}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudShould", "..\TagCloudShould\TagCloudShould.csproj", "{47FCBD39-B9EE-4893-946E-E16665C7E14C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudShould", "..\TagCloudShould\TagCloudShould.csproj", "{47FCBD39-B9EE-4893-946E-E16665C7E14C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudGraphicalUserInterface", "..\TagCloudGUI\TagCloudGraphicalUserInterface.csproj", "{ECF15FBA-5B1D-4D7D-A551-792D9E102336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{47FCBD39-B9EE-4893-946E-E16665C7E14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47FCBD39-B9EE-4893-946E-E16665C7E14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47FCBD39-B9EE-4893-946E-E16665C7E14C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECF15FBA-5B1D-4D7D-A551-792D9E102336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECF15FBA-5B1D-4D7D-A551-792D9E102336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECF15FBA-5B1D-4D7D-A551-792D9E102336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECF15FBA-5B1D-4D7D-A551-792D9E102336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
