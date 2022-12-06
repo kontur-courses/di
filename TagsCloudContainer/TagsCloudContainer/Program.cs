@@ -1,17 +1,24 @@
+using Autofac;
+using TagsCloudContainer.Actions;
+
 namespace TagsCloudContainer
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<MainForm>().As<Form>();
+            builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();
+            builder.RegisterType<SaveImageAction>().As<IUiAction>();
+            builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
+            builder.RegisterType<DrawImageAction>().As<IUiAction>();
+
+            var container = builder.Build();
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(container.Resolve<Form>());
         }
     }
 }
