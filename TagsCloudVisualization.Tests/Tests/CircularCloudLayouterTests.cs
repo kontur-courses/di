@@ -54,7 +54,7 @@ namespace TagsCloudVisualization.Tests.Tests
         public void GenerateCloud_SuccessPath_ShouldReturnAmountRectangles()
         {
             var amount = 100;
-            var listSize = TagCloudHelper.GenerateRandomListSize(amount);
+            var listSize = TagCloudHelper.GenerateRectangleSizesRandom(amount);
             
             rectangles = cloudLayouter.GenerateCloud(center, listSize);
             
@@ -66,7 +66,7 @@ namespace TagsCloudVisualization.Tests.Tests
         public void IsRectanglesIntersect_AllRectanglesNotIntersect_ShouldReturnTrue()
         {
             rectangles = cloudLayouter
-                .GenerateCloud(center, TagCloudHelper.GenerateRandomListSize(50));
+                .GenerateCloud(center, TagCloudHelper.GenerateRectangleSizesRandom(50));
 
             for (var i = 1; i < rectangles.Count; i++)
                 for (var j = 0; j < i; j++)
@@ -78,7 +78,7 @@ namespace TagsCloudVisualization.Tests.Tests
         public void CloseLocationRectangles_AllRectangleShiftToCenter_ShouldReturnTrue()
         {
             rectangles = cloudLayouter
-                .GenerateCloud(center, TagCloudHelper.GenerateRandomListSize(150));
+                .GenerateCloud(center, TagCloudHelper.GenerateRectangleSizesRandom(150));
 
             var radius = Math.Max(rectangles.Sum(x => x.Width), rectangles.Sum(x => x.Height)) / 2;
 
@@ -95,7 +95,7 @@ namespace TagsCloudVisualization.Tests.Tests
             if (TestContext.CurrentContext.Result.Outcome == ResultState.Failure)
             {
                 var path = string.Concat(projectDirectory, $"\\FailureImages\\{TestContext.CurrentContext.Test.Name}.png");
-                var bitmap = TagCloudHelper.DrawTagCloud(rectangles, 1000, 1000);
+                var bitmap = TagCloudHelper.DrawOnlyRectangles(rectangles, CloudConfiguration.Default);
                 
                 bitmap.Save(path);
                 
