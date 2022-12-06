@@ -14,9 +14,9 @@ namespace TagsCloudContainer
         public void CreateNewImageTagsLayouter(bool input)
         {
             var cloudLayouter = new CircularCloudLayouter(new Point(400, 250),input);
-            var tags = TagsLayouterHelper.ReadTagsFromFile("test.txt");
-            var font = new System.Drawing.Font("Arial", 20, FontStyle.Bold);
-            var tagsLayouter = new TagsLayouter(cloudLayouter, tags, font);
+            var tags = new ReadTagsFromTxt().ReadTagsFromFile("test.txt");
+            var tagsLayouter = new TagsLayouter(cloudLayouter, tags, new FontFamily("Arial"), 60.0f
+                , new SolidBrush(Color.Black), new Bitmap(800, 500));
             tagsLayouter.PutAllTags();
             tagsLayouter.SaveBitmapWithText(TestContext.CurrentContext.Test.Name);
         }

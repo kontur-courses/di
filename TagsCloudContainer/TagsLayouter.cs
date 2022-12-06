@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 
 namespace TagsCloudContainer
@@ -8,49 +9,61 @@ namespace TagsCloudContainer
     public class TagsLayouter
     {
         private CircularCloudLayouter cloudLayouter;
-        private readonly string[] tags;
-        private readonly Font font;
-        public Dictionary<string, Rectangle> Tags { get; set; }
+        private readonly Dictionary<string, int> tags;
+        private readonly FontFamily fontFamily;
+        private readonly SolidBrush brush;
+        private readonly Bitmap bitmap;
+        private readonly float maxFontSize;
+        public List<TagInfo> Tags;
 
-        public TagsLayouter(CircularCloudLayouter cloudLayouter, string[] tags, Font font)
+
+        public TagsLayouter(CircularCloudLayouter cloudLayouter, Dictionary<string, int> tags, FontFamily fontFamily
+            , float maxFontSize, SolidBrush brush, Bitmap bitmap)
         {
             this.cloudLayouter = cloudLayouter;
             this.tags = tags;
-            this.font = font;
-            Tags = new Dictionary<string, Rectangle>();
+            this.fontFamily = fontFamily;
+            this.maxFontSize = maxFontSize;
+            this.brush = brush;
+            this.bitmap = bitmap;
         }
 
         public void PutAllTags()
         {
-            foreach (var tag in tags)
-                PutNextTags(tag);
+            var minT = tags.Values.Min();
+            var maxT = tags.Values.Max();
+            Tags = tags
+                .Select(t => new TagInfo(t.Key, new Font(fontFamily, CalculateSizeFont(t.Value, minT, maxT, maxFontSize))))
+                .ToList();
+
+            foreach (var tag in Tags)
+            {
+                var sizeF = CalculateSizeWord(tag.TagText,tag.TagFont);
+                var size = new Size((int)Math.Ceiling(sizeF.Width), (int)Math.Ceiling(sizeF.Height));
+                var rect = cloudLayouter.PutNextRectangle(size);
+                tag.TagRect = rect;
+            }
         }
 
-        private void PutNextTags(string tag)
+        private float CalculateSizeFont(int T,int minT, int maxT, float f)
         {
-            var sizeF = CalculateSizeWord(tag);
-            var size = new Size((int)Math.Ceiling(sizeF.Width), (int)Math.Ceiling(sizeF.Height));
-            var rect = cloudLayouter.PutNextRectangle(size);
-            Tags[tag] = rect;
+            return Math.Max(f * (T - minT) / (maxT - minT) , 1);
         }
 
-        private SizeF CalculateSizeWord(string word)
+        private SizeF CalculateSizeWord(string word, Font font)
         {
-            var bmp = new Bitmap(100, 100);
-            using Graphics gph = Graphics.FromImage(bmp);
+            using Graphics gph = Graphics.FromImage(bitmap);
             return gph.MeasureString(word, font);
         }
 
         public void SaveBitmapWithText(string btmName)
         {
-            var bmp = new Bitmap(800, 500);
-            using Graphics gph = Graphics.FromImage(bmp);
-            var brush = new SolidBrush(Color.Black);
+            using Graphics gph = Graphics.FromImage(bitmap);
             foreach (var tag in Tags)
             {
-                gph.DrawString(tag.Key, font, brush, tag.Value);
+                gph.DrawString(tag.TagText, tag.TagFont, brush, tag.TagRect);
             }
-            bmp.Save(btmName + ".bmp");
+            bitmap.Save(btmName + ".png");
         }
     }
 }
