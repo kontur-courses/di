@@ -1,0 +1,43 @@
+﻿<Window x:Class="TagsCloud.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TagsCloudVisualization.WPF"
+        mc:Ignorable="d"
+        Name="MyWindow"
+        Title="TagsCloud" Height="450" Width="800" ResizeMode="NoResize">
+        <Grid>
+                <Canvas x:Name="MyCanvas" Background="Black" Focusable="True">
+                </Canvas>               
+                <Menu VerticalAlignment="Top">
+                        <MenuItem Width="40" Header="File" FontSize="12">
+                                <MenuItem Header="Start" Name="StartButton" Click="Start"></MenuItem>
+                                <MenuItem Header="Clear" Click="Clear"></MenuItem>
+                                <MenuItem Header="Save Picture" Click="SavePicture"></MenuItem>
+                        </MenuItem>
+                        <MenuItem Width="40" Header="Edit" FontSize="12">
+                                <StackPanel Width="100">
+                                        <Label Content="Step"/>
+                                        <Slider x:Name="StepSlider" Minimum="1" Maximum="20" 
+                                                TickPlacement = "BottomRight" ValueChanged="StepSliderChanged"/>
+                                        <TextBox x:Name="TbSteps" Text="1" TextChanged="Clear"/>
+                                </StackPanel>
+                                <StackPanel Width="100">
+                                        <Label Content="Time delay"/>
+                                        <Slider x:Name="SpeedSlider" Minimum="0.1" Maximum="10" TickFrequency = "2" 
+                                                TickPlacement = "BottomRight"/>
+                                        <TextBox x:Name="TbSpeed" Text="{Binding ElementName=SpeedSlider, Path=Value,
+                                         UpdateSourceTrigger=PropertyChanged}" TextChanged="UpdateInterval"/>
+                                </StackPanel>
+                                <StackPanel>
+                                        <Label Content="Rectangles Count"></Label>
+                                        <TextBox x:Name="RectanglesCountTb" TextChanged="UpdateRectanglesCount"></TextBox>
+                                </StackPanel>
+                                <CheckBox Name="PrintRectangles" Content="Draw Rectangles?"
+                                          IsChecked="False" Click="Clear">
+                                </CheckBox>
+                        </MenuItem>
+                </Menu>
+        </Grid>
+</Window>
