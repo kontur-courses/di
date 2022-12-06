@@ -1,18 +1,16 @@
 ﻿using System.Drawing;
 using TagsCloudVisualization;
+using Autofac;
+using TagsCloudVisualization.CloudDrawer;
 
-const int
-    BITMAP_WIDTH = 300,
-    BITMAP_HEIGHT = 300,
-    CENTER_X = 150,
-    CENTER_Y = 150;
+var text = "test test";
 
-var layouter = new CircularCloudLayouterSpiral(new Point(CENTER_X, CENTER_Y));
-var drawer = new TagCloudDrawer(
-    BITMAP_WIDTH, BITMAP_HEIGHT,
-    1, Color.Black,
-    layouter);
-drawer.DrawRandomRectangles(200,
-    new Size(1, 1),
-    new Size(10, 10));
-drawer.SaveImage();
+AppContainer.Configure();
+
+using (var scope = AppContainer.GetScope())
+{
+    var generator = scope.Resolve<ICloudGenerator>();
+    var cloud = generator.GenerateCloud(text);
+    var drawer = scope.Resolve<ICloudDrawer>();
+    drawer.Draw(cloud);
+}
