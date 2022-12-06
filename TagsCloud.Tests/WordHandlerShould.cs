@@ -43,4 +43,32 @@ public class WordHandlerShould
         var handler = new BoringRusWordsHandler();
         string.Join(" ", handler.ProcessWords(wordsArray)).Should().Be(result);
     }
+
+    [TestCase("гулял гулял снова пришел", 3)]
+    [TestCase("гулял гулял гулял", 1)]
+    public void RecurringWordsHandler_SeveralRecurringWords_Count(string words, int result)
+    {
+        var wordsArray = words.Split(" ");
+        var handler = new RecurringWordsHandler();
+        handler.ProcessWords(wordsArray);
+        handler.WordCount.Count.Should().Be(result);
+    }
+
+    [TestCase("гулял гулял гулял", "гулял")]
+    [TestCase("гулял гулял снова пришел", "гулял снова пришел")]
+    public void RecurringWordsHandler_SeveralRecurringWords_WordsWithoutRecurring(string words, string result)
+    {
+        var wordsArray = words.Split(" ");
+        var handler = new RecurringWordsHandler();
+        string.Join(" ", handler.ProcessWords(wordsArray)).Should().Be(result);
+    }
+
+    [Test]
+    public void RecurringWordsHandler_SeveralRecurringWords_CurrentWordCount()
+    {
+        var wordsArray = "гулял гулял гулял пришел".Split(" ");
+        var handler = new RecurringWordsHandler();
+        handler.ProcessWords(wordsArray);
+        handler.WordCount["гулял"].Should().Be(3);
+    }
 }
