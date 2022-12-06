@@ -10,10 +10,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using TagsCloud.CloudLayouter;
 using TagsCloud.CloudLayouter.Implementation;
-using TagsCloudVisualization.WPF;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using FontFamily = System.Windows.Media.FontFamily;
 using Point = System.Drawing.Point;
 
 namespace TagsCloud.WPF
@@ -67,9 +67,9 @@ namespace TagsCloud.WPF
             }
             else
             {
-                figure = CreateTextBox(currentWord);
+                figure = CreateLabel(currentWord);
                 rectangleFromCloud =
-                    circularCloud.PutNextRectangle(SizeCreator.GetRectangleSize((TextBox) figure));
+                    circularCloud.PutNextRectangle(SizeCreator.GetLabelSize((Label) figure));
             }
             
             Canvas.SetLeft(figure, rectangleFromCloud.X);
@@ -79,14 +79,15 @@ namespace TagsCloud.WPF
             MyCanvas.Children.Add(figure);
         }
 
-        private TextBox CreateTextBox(string text)
+        private Label CreateLabel(string text)
         {
-            return new TextBox
+            return new Label
             {
                 Foreground = customColor,
                 Background = Brushes.Black,
                 FontSize = random.Next(10, 15),
-                Text = text
+                Content = text,
+                FontFamily = new FontFamily("Verdana")
             };
         }
 

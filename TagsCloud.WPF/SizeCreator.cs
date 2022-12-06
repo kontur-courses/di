@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Size = System.Drawing.Size;
 
-namespace TagsCloudVisualization.WPF;
+namespace TagsCloud.WPF;
 
 internal static class SizeCreator
 {
@@ -15,18 +15,18 @@ internal static class SizeCreator
     public static Size GetRandomRectangleSize(int randomFrom, int randomTo) =>
         new(Random.Next(randomFrom, randomTo), Random.Next(randomFrom, randomTo));
 
-    public static Size GetRectangleSize(TextBox tb)
+    public static Size GetLabelSize(Label label)
     {
 #pragma warning disable CS0618
-        var formattedText = new FormattedText(tb.Text, CultureInfo.CurrentUICulture,
+        var formattedText = new FormattedText((string) label.Content, CultureInfo.CurrentUICulture,
 #pragma warning restore CS0618
             FlowDirection.LeftToRight,
-            new Typeface(tb.FontFamily, 
-                tb.FontStyle, 
-                tb.FontWeight, 
-                tb.FontStretch),
-            tb.FontSize,
-            Brushes.Black, 
+            new Typeface(label.FontFamily,
+                label.FontStyle,
+                label.FontWeight,
+                label.FontStretch),
+            label.FontSize,
+            Brushes.Black,
             new NumberSubstitution());
 
         return new Size((int) formattedText.Width + BorderLength, (int) formattedText.Height + BorderLength);
