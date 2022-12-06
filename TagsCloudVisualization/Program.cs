@@ -18,6 +18,8 @@ namespace TagsCloudVisualization
             var bitmap = TagCloudHelper.DrawTagCloud(rectangles, 1500, 1500);
             
             bitmap.Save(string.Concat(ProjectDirectory, @"\Images\cloud.png"));
+            
+            new FileGenerator().Generate(string.Concat(ProjectDirectory, @"\words.txt"), 100);
         }
     }
 }
