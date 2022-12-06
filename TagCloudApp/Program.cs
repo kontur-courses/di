@@ -75,7 +75,8 @@ internal static class Program
         builder.RegisterType<WordsInfosProvider>()
             .As<IWordsInfosProvider>()
             .SingleInstance();
-
+        builder.RegisterType<WordsPaintDataProvider>()
+            .As<IWordsPaintDataProvider>();
 
         builder.RegisterType<TagCloudPainter>()
             .SingleInstance();
