@@ -1,7 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
+using TagCloudContainer.Filters;
+using TagCloudContainer.Formatters;
+using TagCloudContainer.FrequencyWords;
+using TagCloudContainer.Parsers;
+using TagCloudContainer.PointAlgorithm;
+using TagCloudContainer.Readers;
+using TagCloudContainer.Rectangles;
+using TagCloudContainer.TagsWithFont;
 
 namespace TagsCloudVisualization
 {
@@ -9,21 +14,23 @@ namespace TagsCloudVisualization
     {
         private readonly List<TextRectangle> rectangles;
         private readonly List<Point> emptyPoints;
+        private readonly IEnumerable<FontTag> tags;
         private Size srcSize;
 
-        public TagCloud()
+        public TagCloud(IEnumerable<FontTag> tags)
         {
+            this.tags = tags;
             rectangles = new List<TextRectangle>();
             emptyPoints = new List<Point>();
         }
-   
 
         public List<TextRectangle> GetRectangles() => rectangles;
         public Size GetScreenSize() => srcSize;
 
-        public void CreateTagCloud(CircularCloudLayouter circularCloudLayouter, ArithmeticSpiral arithmeticSpiral)
+        public void CreateTagCloud(IRectangleBuilder circularCloudLayouter, IPointer arithmeticSpiral)
         {
-            var nextSizeRectangle = circularCloudLayouter.GetNextRectangleOptions().GetEnumerator();
+
+            var nextSizeRectangle = circularCloudLayouter.GetNextRectangle(tags).GetEnumerator();
             nextSizeRectangle.MoveNext();
             bool? filledEmptySpaces = false;
             while (true)
@@ -33,8 +40,8 @@ namespace TagsCloudVisualization
                 (int)(emptyPoints.Max(x => x.Y) * 2.5));
         }
 
-        private bool TryFillRectangle(ArithmeticSpiral arithmeticSpiral,
-            IEnumerator<Tuple<string, Size, Font>> nextSizeRectangle, ref bool? nextIteration)
+        private bool TryFillRectangle(IPointer arithmeticSpiral,
+            IEnumerator<SizeTextRectangle> nextSizeRectangle, ref bool? nextIteration)
         {
             var point = arithmeticSpiral.GetPoint();
             if (nextIteration == null)
@@ -42,17 +49,17 @@ namespace TagsCloudVisualization
             nextIteration = FillEmptySpaces(nextIteration, nextSizeRectangle);
             if (!rectangles.Select(x => x.rectangle.Contains(point)).Contains(true))
                 emptyPoints.Add(point);
-            if (!Contains(rectangles, point, nextSizeRectangle.Current.Item2))
+            if (!Contains(rectangles, point, nextSizeRectangle.Current.rectangle))
                 nextIteration = AddRectangle(point, nextSizeRectangle);
             return false;
         }
 
-        private bool? FillEmptySpaces(bool? filledEmptySpaced, IEnumerator<Tuple<string, Size, Font>> nextSizeRectangle)
+        private bool? FillEmptySpaces(bool? filledEmptySpaced, IEnumerator<SizeTextRectangle> nextSizeRectangle)
         {
             if (filledEmptySpaced.Value && emptyPoints.Any())
             {
                 for (var i = 0; i < emptyPoints.Count; i++)
-                    if (!Contains(rectangles, emptyPoints[i], nextSizeRectangle.Current.Item2))
+                    if (!Contains(rectangles, emptyPoints[i], nextSizeRectangle.Current.rectangle))
                         AddRectangle(emptyPoints[i], nextSizeRectangle);
                 filledEmptySpaced = false;
             }
@@ -60,11 +67,14 @@ namespace TagsCloudVisualization
             return filledEmptySpaced;
         }
 
-        private bool? AddRectangle(Point point, IEnumerator<Tuple<string, Size, Font>> nextSizeRectangle)
+        private bool? AddRectangle(Point point, IEnumerator<SizeTextRectangle> nextSizeRectangle)
         {
-            var rectangle = new Rectangle(point - new Size(nextSizeRectangle.Current.Item2.Width / 2, nextSizeRectangle.Current.Item2.Height / 2), nextSizeRectangle.Current.Item2);
-            var textRectangle = new TextRectangle(rectangle, nextSizeRectangle.Current.Item1,
-                nextSizeRectangle.Current.Item3);
+            var rectangle =
+                new Rectangle(
+                    point - new Size(nextSizeRectangle.Current.rectangle.Width / 2,
+                        nextSizeRectangle.Current.rectangle.Height / 2), nextSizeRectangle.Current.rectangle);
+            var textRectangle = new TextRectangle(rectangle, nextSizeRectangle.Current.text,
+                nextSizeRectangle.Current.font);
             if (!nextSizeRectangle.MoveNext())
                 return null;
             rectangles.Add(textRectangle);
@@ -81,6 +91,21 @@ namespace TagsCloudVisualization
                 .Select(x =>
                     x.rectangle.IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
                 .Contains(true);
+        }
+        public static TagCloud InitialCloud(string pathTxtFile,FontFamily font,int maxFont,int minFont)
+        {
+            var fileReader= new TxtReader().Read(pathTxtFile);
+            var parser = new FileLinesParser();
+            var parsedText= parser.Parse(fileReader);
+            var filterWords = new FilterWords();
+            var filtredTags = filterWords.Filter(parsedText);
+            var formatter = new WordFormatter();
+            var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
+            var freqtag = new FrequencyTags();
+            var freqTags = freqtag.GetWordsFrequency(formattedTags);
+            var fontSizer = new FontSizer();
+            var fontTags = fontSizer.GetTagsWithSize(freqTags, font, maxFont, minFont);
+            return new TagCloud(fontTags);
         }
     }
 }

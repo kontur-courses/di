@@ -1,13 +1,13 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagCloudContainer.Rectangles
 {
-    public class TextRectangle
+    public class SizeTextRectangle
     {
-        public readonly Rectangle rectangle;
+        public readonly Size rectangle;
         public readonly string text;
         public readonly Font font;
-        public TextRectangle(Rectangle rectangle, string text, Font font)
+        public SizeTextRectangle(Size rectangle, string text, Font font)
         {
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentNullException(nameof(text));

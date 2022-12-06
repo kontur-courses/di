@@ -1,4 +1,4 @@
-﻿namespace TagCloudShould.Infrastructure
+﻿namespace TagCloudShould
 {
     [TestFixture]
     public class TextRectangleShould
@@ -7,7 +7,6 @@
         [TestCase(null, TestName = "TextRectangle text is null")]
         public void ThrowException_WhenNullTextRectangleFieldText(string text)
         {
-
             Action action = () => new TextRectangle(new Rectangle(10, 10, 10, 10), text, new Font("Times", 10));
             action.Should().Throw<ArgumentNullException>();
         }

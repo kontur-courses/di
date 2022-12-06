@@ -1,4 +1,12 @@
 ﻿using Autofac;
+using TagCloudContainer.Filters;
+using TagCloudContainer.Formatters;
+using TagCloudContainer.FrequencyWords;
+using TagCloudContainer.Parsers;
+using TagCloudContainer.PointAlgorithm;
+using TagCloudContainer.Readers;
+using TagCloudContainer.Rectangles;
+using TagCloudContainer.TagsWithFont;
 
 namespace TagCloudShould
 {
@@ -11,9 +19,12 @@ namespace TagCloudShould
         [SetUp]
         public void SetUp()
         {
-            circularLayouter =
-                DividerTags.GetCircularCloudLayouter(Environment.CurrentDirectory +
-                                                     "\\..\\..\\..\\word_data\\data.txt");
+            circularLayouter = new CircularCloudLayouter();
+            var reader = new TxtReader();
+            var text=reader.Read((Environment.CurrentDirectory +
+                                   "\\..\\..\\..\\word_data\\data.txt"));
+            var words = new FileLinesParser().Parse(text);
+            tagCloud = InitializeCloud(words);
         }
 
         [TearDown]
@@ -24,7 +35,7 @@ namespace TagCloudShould
 
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
             {
-                //tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
+                tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
                 return;
             }
 
@@ -34,10 +45,26 @@ namespace TagCloudShould
             Console.WriteLine("Tag cloud visualization saved to file: " + pathDebug);
         }
 
+
+        private TagCloud InitializeCloud(IEnumerable<string> rowWords)
+        {
+            var filterWords = new FilterWords();
+            var filtredTags = filterWords.Filter(rowWords);
+            var formatter = new WordFormatter();
+            var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
+            var freqtag = new FrequencyTags();
+            var freqTags = freqtag.GetWordsFrequency(formattedTags);
+            var fontSizer = new FontSizer();
+            var fontTags = fontSizer.GetTagsWithSize(freqTags, new FontFamily("Times"), 150, 50);
+            return new TagCloud(fontTags);
+        }
+
+
+
         [Test]
         public void NoVisualization_NoIntersections()
         {
-            var tagCloud = new TagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
+            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var rectangles = tagCloud.GetRectangles();
             foreach (var rectangle in rectangles)
             foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
@@ -53,7 +80,6 @@ namespace TagCloudShould
 
         public void ArgumentException_WhenHaveEmptySpaceSmall()
         {
-            tagCloud = new TagCloud();
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var arithmeticSpiral = new ArithmeticSpiral(new Point(0, 0));
             var point = arithmeticSpiral.GetPoint();
@@ -78,7 +104,7 @@ namespace TagCloudShould
         [Test, Timeout(5000)]
         public void Visualization_Timeout()
         {
-            tagCloud = new TagCloud();
+        
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
         }
 
@@ -89,34 +115,8 @@ namespace TagCloudShould
             var strsplt = new string[400];
             for (var i = 0; i < 400; i++)
                 strsplt[i] = random.Next(1, 100).ToString();
-            var divideTags = new FrequencyTags()
-                .GetDictionaryWithTags(string.Join(", ", strsplt).Split(", ")).DivideTags();
-            var circularLayouterCloud = new CircularCloudLayouter(divideTags);
-            tagCloud = new TagCloud();
+            tagCloud=InitializeCloud(strsplt);
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
-        }
-    }
-    [TestFixture]
-    public class Should
-    {
-        private static string rootDirectory = Environment.CurrentDirectory + "\\..\\..\\..\\";
-        [Test]
-        public void check_simple()
-        {
-            var file = "data.txt";
-            var cloud = CreateTagCloud(new ArithmeticSpiral(new Point(0, 0)), rootDirectory+ "word_data\\" + file);
-            cloud.Save(rootDirectory+ "saved_images\\"+TestContext.CurrentContext.Test.Name+".png");
-        }
-
-        public static TagCloud CreateTagCloud(ArithmeticSpiral spiral, string path)
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterTypes(typeof(List<Point>), typeof(List<TextRectangle>), typeof(TagCloud)).AsSelf();
-            builder.RegisterType<CircularCloudLayouter>().AsSelf();
-            builder.RegisterInstance(DividerTags.GetCircularCloudLayouter(path)).As<CircularCloudLayouter>();
-            builder.RegisterInstance(spiral).As<ArithmeticSpiral>();
-            var container = builder.Build();
-            return container.Resolve<TagCloud>();
         }
     }
 }
