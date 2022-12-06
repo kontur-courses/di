@@ -1,8 +1,15 @@
+using System.Reflection;
 using Autofac;
-using TagCloudApp.Abstractions;
 using TagCloudApp.Domain;
-using TagCloudApp.Implementations;
-using TagCloudApp.Infrastructure;
+using TagCloudCreator.Domain;
+using TagCloudCreator.Domain.Providers;
+using TagCloudCreator.Domain.Settings;
+using TagCloudCreator.Infrastructure.Settings;
+using TagCloudCreator.Interfaces;
+using TagCloudCreator.Interfaces.Providers;
+using TagCloudCreatorExtensions;
+using TagCloudCreatorExtensions.ImageSavers;
+using TagCloudCreatorExtensions.WordsFileReaders;
 
 namespace TagCloudApp;
 
@@ -49,39 +56,39 @@ internal static class Program
         builder.RegisterType<WordsFileReaderProvider>()
             .As<IWordsFileReaderProvider>()
             .SingleInstance();
-        builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtWordsFileReader))!)
             .AssignableTo<IWordsFileReader>()
             .As<IWordsFileReader>()
             .SingleInstance();
-        
+
         builder.RegisterType<ImageSaverProvider>()
             .As<IImageSaverProvider>()
             .SingleInstance();
-        builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(PngImageSaver))!)
             .AssignableTo<IImageSaver>()
             .As<IImageSaver>()
             .SingleInstance();
-        
-        builder.RegisterType<WordsSelector>()
-            .As<IWordsSelector>()
+
+        builder.RegisterType<WordsInfoParser>()
+            .As<IWordsInfoParser>()
             .SingleInstance();
-        builder.RegisterType<WordsInfoProvider>()
-            .As<IWordsInfoProvider>()
+        builder.RegisterType<WordsInfosProvider>()
+            .As<IWordsInfosProvider>()
             .SingleInstance();
 
 
         builder.RegisterType<TagCloudPainter>()
             .SingleInstance();
-        builder.RegisterType<WeightedTagCloudLayouterCreator>()
-            .As<ITagCloudLayouterCreator>()
+        builder.RegisterType<WeightedTagCloudLayouterProvider>()
+            .As<ITagCloudLayouterProvider>()
+            .SingleInstance();
+        builder.RegisterType<WeightedTagCloudLayouterSettings>()
             .SingleInstance();
 
-        builder.RegisterType<TagCloudLayouterSettings>()
-            .SingleInstance();
         builder.RegisterType<TagCloudPaintSettings>()
             .SingleInstance();
 
-       
+
         var container = builder.Build();
         return container;
     }

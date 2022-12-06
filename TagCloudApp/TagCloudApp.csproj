@@ -14,6 +14,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TagCloudLayouter\TagCloudLayouter.csproj" />
+      <ProjectReference Include="..\TagCloudCreatorExtensions\TagCloudCreatorExtensions.csproj" />
+      <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Drawing.Common">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.11\System.Drawing.Common.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

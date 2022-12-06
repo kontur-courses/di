@@ -1,13 +1,14 @@
-﻿using TagCloudApp.Abstractions;
-using TagCloudApp.Domain;
+﻿using TagCloudApp.Domain;
+using TagCloudApp.Infrastructure;
+using TagCloudCreator.Domain.Settings;
 
 namespace TagCloudApp.Actions;
 
 public class TagCloudLayouterSettingsAction : IUiAction
 {
-    private readonly TagCloudLayouterSettings _layouterSettings;
+    private readonly WeightedTagCloudLayouterSettings _layouterSettings;
 
-    public TagCloudLayouterSettingsAction(TagCloudLayouterSettings layouterSettings)
+    public TagCloudLayouterSettingsAction(WeightedTagCloudLayouterSettings layouterSettings)
     {
         _layouterSettings = layouterSettings;
     }

@@ -1,7 +1,7 @@
-﻿using TagCloudApp.Abstractions;
-using TagCloudApp.Domain;
-using TagCloudApp.Implementations;
+﻿using TagCloudApp.Domain;
 using TagCloudApp.Infrastructure;
+using TagCloudCreator.Domain.Settings;
+using TagCloudCreator.Infrastructure.Settings;
 
 namespace TagCloudApp.Actions;
 
