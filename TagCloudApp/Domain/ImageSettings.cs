@@ -2,8 +2,8 @@ namespace TagCloudApp.Domain;
 
 public class ImageSettings
 {
-    private int _width = 800;
-    private int _height = 600;
+    private int _width;
+    private int _height;
 
     public int Width
     {

@@ -1,6 +1,6 @@
 using TagCloudApp.Domain;
 
-namespace TagCloudApp;
+namespace TagCloudApp.Abstractions;
 
 public interface IImageSettingsProvider
 {

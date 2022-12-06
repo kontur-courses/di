@@ -1,6 +1,6 @@
 using TagCloudApp.Domain;
 
-namespace TagCloudApp;
+namespace TagCloudApp.Abstractions;
 
 public interface IImageHolder
 {
@@ -8,5 +8,5 @@ public interface IImageHolder
     Graphics StartDrawing();
     void UpdateUi();
     void RecreateImage(ImageSettings settings);
-    void SaveImage(string fileName);
+    void SaveImage();
 }

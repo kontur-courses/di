@@ -1,10 +1,18 @@
 using System.Drawing.Imaging;
+using TagCloudApp.Abstractions;
 using TagCloudApp.Domain;
 
-namespace TagCloudApp;
+namespace TagCloudApp.Implementations;
 
 public class PictureBoxImageHolder : PictureBox, IImageHolder
 {
+    private readonly IImageSaverProvider _imageSaverProvider;
+
+    public PictureBoxImageHolder(IImageSaverProvider imageSaverProvider)
+    {
+        _imageSaverProvider = imageSaverProvider;
+    }
+
     public Size GetImageSize()
     {
         FailIfNotInitialized();
@@ -34,9 +42,9 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
         Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
     }
 
-    public void SaveImage(string fileName)
+    public void SaveImage()
     {
         FailIfNotInitialized();
-        Image.Save(fileName, ImageFormat.Bmp);
+        _imageSaverProvider.GetSaver().SaveImage(Image);
     }
 }

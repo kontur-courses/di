@@ -1,34 +1,49 @@
 ﻿using TagCloudApp.Abstractions;
+using TagCloudApp.Domain;
 
 namespace TagCloudApp.Actions;
 
 public class SaveImageAction : IUiAction
 {
-    private readonly IImageDirectoryProvider _imageDirectoryProvider;
     private readonly IImageHolder _imageHolder;
+    private readonly IImagePathProvider _imagePathProvider;
+    private readonly IImageSaverProvider _imageSaverProvider;
 
-    public SaveImageAction(IImageDirectoryProvider imageDirectoryProvider, IImageHolder imageHolder)
+    public SaveImageAction(
+        IImageHolder imageHolder,
+        IImagePathProvider imagePathProvider,
+        IImageSaverProvider imageSaverProvider
+    )
     {
-        _imageDirectoryProvider = imageDirectoryProvider;
         _imageHolder = imageHolder;
+        _imagePathProvider = imagePathProvider;
+        _imageSaverProvider = imageSaverProvider;
     }
 
     public MenuCategory Category => MenuCategory.File;
-    public string Name => "Сохранить...";
-    public string Description => "Сохранить изображение в файл";
+    public string Name => "Save image...";
+    public string Description => "Save image to file";
+
+    private string? _filter;
 
     public void Perform()
     {
+        _filter ??= string.Join("|", _imageSaverProvider.SupportedExtensions
+            .Select(extension => $"{extension}|*{extension}")
+        );
         var dialog = new SaveFileDialog
         {
             CheckFileExists = false,
-            InitialDirectory = Path.GetFullPath(_imageDirectoryProvider.ImagesDirectory),
-            DefaultExt = "bmp",
-            FileName = "image.bmp",
-            Filter = "Изображения (*.bmp)|*.bmp"
+            InitialDirectory = Path.GetFullPath(_imagePathProvider.ImagePath),
+            FileName = "image",
+            AddExtension = true,
+            Filter = _filter
         };
         var res = dialog.ShowDialog();
-        if (res == DialogResult.OK)
-            _imageHolder.SaveImage(dialog.FileName);
+        if (res is not DialogResult.OK)
+            return;
+
+        _imagePathProvider.ImagePath = dialog.FileName;
+        _imageHolder.SaveImage();
     }
 }

@@ -4,5 +4,5 @@ namespace TagCloudApp.Abstractions;
 
 public interface IWordsSelector
 {
-    IEnumerable<WordInfo> GetWords();
+    IEnumerable<WordInfo> GetWordsInfos();
 }

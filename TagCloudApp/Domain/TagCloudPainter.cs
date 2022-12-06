@@ -1,31 +1,31 @@
-﻿using CircularCloudLayouter;
-using TagCloudApp.Abstractions;
-using TagCloudApp.Domain;
+﻿using TagCloudApp.Abstractions;
 
-namespace TagCloudApp;
+namespace TagCloudApp.Domain;
 
 public class TagCloudPainter
 {
     private readonly IImageHolder _imageHolder;
-    private readonly ITagCloudLayouter _layouter;
-    private readonly TagCloudDrawSettings _drawSettings;
+    private readonly ITagCloudLayouterCreator _layouterCreator;
+    private readonly TagCloudPaintSettings _paintSettings;
     private readonly IWordsInfoProvider _wordsInfoProvider;
 
     public TagCloudPainter(
         IImageHolder imageHolder,
-        ITagCloudLayouter layouter,
-        TagCloudDrawSettings drawSettings,
+        ITagCloudLayouterCreator layouterCreator,
+        TagCloudPaintSettings paintSettings,
         IWordsInfoProvider wordsInfoProvider
     )
     {
         _imageHolder = imageHolder;
-        _layouter = layouter;
-        _drawSettings = drawSettings;
+        _layouterCreator = layouterCreator;
+        _paintSettings = paintSettings;
         _wordsInfoProvider = wordsInfoProvider;
     }
 
     public void Paint()
     {
+        var layouter = _layouterCreator.CreateLayouter();
+        var basicFont = _paintSettings.BasicFont;
         var imageSize = _imageHolder.GetImageSize();
 
         var countSortedWords = _wordsInfoProvider.WordInfos
@@ -36,25 +36,24 @@ public class TagCloudPainter
 
         using (var graphics = _imageHolder.StartDrawing())
         {
-            using (var backgroundBrush = new SolidBrush(_drawSettings.BackgroundColor))
+            using (var backgroundBrush = new SolidBrush(_paintSettings.BackgroundColor))
             {
                 graphics.FillRectangle(backgroundBrush, 0, 0, imageSize.Width, imageSize.Height);
             }
 
-            using (var wordsBrush = new SolidBrush(_drawSettings.WordsColor))
+            using (var wordsBrush = new SolidBrush(_paintSettings.WordsColor))
             {
                 for (var i = 0; i < countSortedWords.Length; i++)
                 {
                     var (word, count) = countSortedWords[i];
-                    var fontSize = maxCount == minCount
-                        ? _drawSettings.MinFontSize + (_drawSettings.MaxFontSize - _drawSettings.MinFontSize) / 2d
-                        : _drawSettings.MinFontSize +
-                          (double) (count - minCount) / (maxCount - minCount) *
-                          (_drawSettings.MaxFontSize - _drawSettings.MinFontSize);
-                    using (var font = new Font(_drawSettings.FontFamily, (int) fontSize))
+                    using (var font = new Font(
+                               basicFont.FontFamily,
+                               CalculateFontSize(count, minCount, maxCount),
+                               basicFont.Style)
+                          )
                     {
                         var rectSize = Size.Ceiling(graphics.MeasureString(word, font));
-                        var rect = _layouter.PutNextRectangle(rectSize);
+                        var rect = layouter.PutNextRectangle(rectSize);
                         graphics.DrawString(word, font, wordsBrush, rect);
                     }
 
@@ -65,5 +64,14 @@ public class TagCloudPainter
         }
 
         _imageHolder.UpdateUi();
+    }
+
+    private int CalculateFontSize(int count, int minCount, int maxCount)
+    {
+        var sizeDelta = minCount == maxCount
+            ? (_paintSettings.MaxFontSize - _paintSettings.MinFontSize) / 2d
+            : (double) (count - minCount) / (maxCount - minCount) *
+              (_paintSettings.MaxFontSize - _paintSettings.MinFontSize);
+        return _paintSettings.MinFontSize + (int) sizeDelta;
     }
 }

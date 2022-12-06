@@ -1,4 +1,5 @@
-﻿using TagCloudApp.Domain;
+﻿using TagCloudApp.Abstractions;
+using TagCloudApp.Domain;
 
 namespace TagCloudApp.Actions
 {
@@ -15,8 +16,8 @@ namespace TagCloudApp.Actions
         }
 
         public MenuCategory Category => MenuCategory.Settings;
-        public string Name => "Изображение...";
-        public string Description => "Размеры изображения";
+        public string Name => "Image...";
+        public string Description => "Image size";
 
         public void Perform()
         {

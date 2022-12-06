@@ -1,4 +1,4 @@
-﻿namespace TagCloudApp;
+namespace TagCloudApp;
 
 partial class MainForm
 {

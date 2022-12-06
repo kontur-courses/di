@@ -1,4 +1,5 @@
-﻿using TagCloudApp.Domain;
+﻿using TagCloudApp.Abstractions;
+using TagCloudApp.Domain;
 
 namespace TagCloudApp.Actions;
 
@@ -12,8 +13,8 @@ public class TagCloudLayouterSettingsAction : IUiAction
     }
 
     public MenuCategory Category => MenuCategory.Settings;
-    public string Name => "Алгоритм...";
-    public string Description => "Форм фактор облака, соотношение сторон";
+    public string Name => "Layouter...";
+    public string Description => "Cloud form factor and aspect ratio";
 
     public void Perform()
     {

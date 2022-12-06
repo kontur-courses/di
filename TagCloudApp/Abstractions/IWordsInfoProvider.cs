@@ -4,5 +4,5 @@ namespace TagCloudApp.Abstractions;
 
 public interface IWordsInfoProvider
 {
-    IReadOnlyCollection<WordInfo> WordInfos { get; }
+    IEnumerable<WordInfo> WordInfos { get; }
 }

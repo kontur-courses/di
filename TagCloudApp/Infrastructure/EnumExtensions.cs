@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TagCloudApp;
+namespace TagCloudApp.Infrastructure;
 
 public static class EnumExtensions
 {

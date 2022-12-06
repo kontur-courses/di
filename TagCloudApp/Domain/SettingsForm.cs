@@ -1,4 +1,4 @@
-﻿namespace TagCloudApp;
+﻿namespace TagCloudApp.Domain;
 
 public static class SettingsForm
 {

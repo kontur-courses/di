@@ -1,4 +1,6 @@
-﻿namespace TagCloudApp;
+﻿using TagCloudApp.Domain;
+
+namespace TagCloudApp.Abstractions;
 
 public interface IUiAction
 {

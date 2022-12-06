@@ -5,15 +5,15 @@ namespace TagCloudApp.Implementations;
 
 public class WordsSelector : IWordsSelector
 {
-    private readonly IWordsLoader _wordsLoader;
+    private readonly IWordsFileReaderProvider _wordsFileReaderProvider;
 
-    public WordsSelector(IWordsLoader wordsLoader)
+    public WordsSelector(IWordsFileReaderProvider wordsFileReaderProvider)
     {
-        _wordsLoader = wordsLoader;
+        _wordsFileReaderProvider = wordsFileReaderProvider;
     }
 
-    public IEnumerable<WordInfo> GetWords() =>
-        _wordsLoader.LoadWords()
+    public IEnumerable<WordInfo> GetWordsInfos() =>
+        _wordsFileReaderProvider.GetReader().GetWords()
             .Select(w => w.ToLower())
             .GroupBy(w => w)
             .Select(group => new WordInfo(group.Key, group.Count()));

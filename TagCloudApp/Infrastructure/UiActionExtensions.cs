@@ -1,4 +1,7 @@
-﻿namespace TagCloudApp;
+﻿using TagCloudApp.Abstractions;
+using TagCloudApp.Domain;
+
+namespace TagCloudApp.Infrastructure;
 
 public static class UiActionExtensions
 {

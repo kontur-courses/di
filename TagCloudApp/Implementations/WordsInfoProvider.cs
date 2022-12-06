@@ -5,10 +5,11 @@ namespace TagCloudApp.Implementations;
 
 public class WordsInfoProvider : IWordsInfoProvider
 {
-    public IReadOnlyCollection<WordInfo> WordInfos { get; }
+    public IEnumerable<WordInfo> WordInfos => _wordsSelector.GetWordsInfos().ToList();
+    private readonly IWordsSelector _wordsSelector;
 
     public WordsInfoProvider(IWordsSelector wordsSelector)
     {
-        WordInfos = wordsSelector.GetWords().ToList();
+        _wordsSelector = wordsSelector;
     }
 }
