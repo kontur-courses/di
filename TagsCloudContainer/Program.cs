@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading;
 
 namespace TagsCloudContainer
 {
@@ -9,13 +10,22 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var center = new Point(0, 0);
-            var layouter = new CircularCloudLayouter(center);
-            var rectangles = GenerateRectangles(50, layouter);
-
-            RectangleVisualisator visualisator = new RectangleVisualisator(rectangles);
-            visualisator.Paint();
-            visualisator.Save("Rectangles", ImageFormat.Png);
+            var text = TextReader.GetTextFromFile("D:\\Documents\\Kontur\\di\\TagsCloudContainer\\Example.txt");
+            var handler = new WordHandler();
+            var words = handler.ProcessWords(text);
+            
+            foreach (var word in words)
+            {
+                Console.WriteLine(word);
+            }
+            
+            // var center = new Point(0, 0);
+            // var layouter = new CircularCloudLayouter(center);
+            // var rectangles = GenerateRectangles(50, layouter);
+            //
+            // RectangleVisualisator visualisator = new RectangleVisualisator(rectangles);
+            // visualisator.Paint();
+            // visualisator.Save("Rectangles", ImageFormat.Png);
         }
 
         public static List<Rectangle> GenerateRectangles(int amount, CircularCloudLayouter layouter)
