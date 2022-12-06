@@ -11,10 +11,10 @@ namespace TagsCloudContainer.Infrastructure
     {
         [DisplayName("Ширина")]
         [Category("1. Размеры")]
-        public int Width { get; set; } = 100;
+        public int Width { get; set; } = 500;
         [DisplayName("Высота")]
         [Category("1. Размеры")]
-        public int Height { get; set; } = 100;
+        public int Height { get; set; } = 500;
 
 
         [DisplayName("Цвет текста внутри прямоугольников")]

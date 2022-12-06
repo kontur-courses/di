@@ -13,6 +13,7 @@ namespace TagsCloudContainer
 
             builder.RegisterType<MainForm>().As<Form>();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<ImageHolder>().AsSelf().SingleInstance();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
