@@ -9,13 +9,20 @@ namespace TagsCloudContainer.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
-        public string Category => "Файл";
-        public string Name => "Источник данных...";
-        public string Description => "Выбрать источник данных для алгоритма";
+        private ImageSettings settings;
+
+        public ImageSettingsAction(ImageSettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public string Category => "Изображение";
+        public string Name => "Настройки...";
+        public string Description => "Изменить параметры изоюражения";
 
         public void Perform()
         {
-            throw new NotImplementedException();
+            SettingsForm.For(settings).ShowDialog();
         }
     }
 }
