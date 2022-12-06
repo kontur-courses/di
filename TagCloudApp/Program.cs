@@ -53,14 +53,6 @@ internal static class Program
             .As<IUiAction>()
             .SingleInstance();
 
-        builder.RegisterType<WordsFileReaderProvider>()
-            .As<IWordsFileReaderProvider>()
-            .SingleInstance();
-        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtWordsFileReader))!)
-            .AssignableTo<IWordsFileReader>()
-            .As<IWordsFileReader>()
-            .SingleInstance();
-
         builder.RegisterType<ImageSaverProvider>()
             .As<IImageSaverProvider>()
             .SingleInstance();
@@ -69,11 +61,16 @@ internal static class Program
             .As<IImageSaver>()
             .SingleInstance();
 
+        builder.RegisterType<WordsFileReaderProvider>()
+            .As<IWordsFileReaderProvider>()
+            .SingleInstance();
+        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtWordsFileReader))!)
+            .AssignableTo<IWordsFileReader>()
+            .As<IWordsFileReader>()
+            .SingleInstance();
+
         builder.RegisterType<WordsInfoParser>()
             .As<IWordsInfoParser>()
-            .SingleInstance();
-        builder.RegisterType<WordsInfosProvider>()
-            .As<IWordsInfosProvider>()
             .SingleInstance();
         builder.RegisterType<WordsPaintDataProvider>()
             .As<IWordsPaintDataProvider>();

@@ -13,7 +13,7 @@ public class WordsInfoParser : IWordsInfoParser
         _wordsFileReaderProvider = wordsFileReaderProvider;
     }
 
-    public IEnumerable<WordInfo> GetWordsInfos() =>
+    public IEnumerable<WordInfo> GetWordsInfo() =>
         _wordsFileReaderProvider.GetReader().GetWords()
             .Select(w => w.ToLower())
             .GroupBy(w => w)

@@ -1,34 +1,35 @@
 ﻿using System.Drawing;
 using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Infrastructure;
+using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 
-namespace TagCloudCreator.Domain;
+namespace TagCloudCreator.Domain.Providers;
 
 public class WordsPaintDataProvider : IWordsPaintDataProvider
 {
     private readonly Graphics _graphics;
     private readonly ITagCloudLayouterProvider _layouterProvider;
-    private readonly IWordsInfosProvider _wordsInfosProvider;
+    private readonly IWordsInfoParser _wordsInfoParser;
     private readonly TagCloudPaintSettings _paintSettings;
 
     public WordsPaintDataProvider(
         Graphics graphics,
         ITagCloudLayouterProvider layouterProvider,
-        IWordsInfosProvider wordsInfosProvider,
+        IWordsInfoParser wordsInfoParser,
         TagCloudPaintSettings paintSettings
     )
     {
         _graphics = graphics;
         _layouterProvider = layouterProvider;
-        _wordsInfosProvider = wordsInfosProvider;
+        _wordsInfoParser = wordsInfoParser;
         _paintSettings = paintSettings;
     }
 
     public IEnumerable<WordPaintData> GetWordsPaintData()
     {
         var layouter = _layouterProvider.CreateLayouter();
-        var countSortedWordsInfos = _wordsInfosProvider.WordsInfos
+        var countSortedWordsInfos = _wordsInfoParser.GetWordsInfo()
             .OrderByDescending(word => word.Count)
             .ToArray();
         var minCount = countSortedWordsInfos[^1].Count;

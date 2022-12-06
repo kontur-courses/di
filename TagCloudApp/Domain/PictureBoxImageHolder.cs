@@ -23,6 +23,7 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
     public Graphics StartDrawing()
     {
         FailIfNotInitialized();
+        ResetImage();
         return Graphics.FromImage(Image);
     }
 
@@ -47,5 +48,10 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
         FailIfNotInitialized();
         _imageSaverProvider.GetSaver().SaveImage(Image);
+    }
+
+    private void ResetImage()
+    {
+        Image = new Bitmap(Image.Width, Image.Height, Image.PixelFormat);
     }
 }
