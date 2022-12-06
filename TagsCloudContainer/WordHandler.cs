@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TagsCloudContainer
 {
@@ -16,12 +15,21 @@ namespace TagsCloudContainer
                 _borringWords.Add(word.ToLower());
         }
         
-        public List<string> ProcessWords(string text)
+        public Dictionary<string, int> ProcessWords(string text)
         {
-            return text.Split(Environment.NewLine)
-                .Select(word => word.ToLower())
-                .Where(word => word.Length > 3 && !_borringWords.Contains(word))
-                .ToList();
+            var words = new Dictionary<string, int>();
+            String[] separators = {Environment.NewLine, ", ", ". "};
+            foreach (var word in text.Split(separators, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var wordToDictionary = word.ToLower();
+                if(word.Length <= 3 || _borringWords.Contains(wordToDictionary))
+                    continue;
+                if(!words.ContainsKey(wordToDictionary))
+                    words.Add(wordToDictionary, 0);
+                words[wordToDictionary]++;
+            }
+
+            return words;
         }
     }
 }
