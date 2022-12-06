@@ -2,12 +2,12 @@
 
 public class BoringRusWordsHandler : IWordHandler
 {
-    private string[] prepositions = {
+    private readonly string[] prepositions = {
         "в", "без", "до", "для", "за", "через", "над", "по", "из", "у", "около", "под", "о", "про", "на", "к", "перед",
         "при", "с", "между"
     };
 
-    private string[] pronouns =
+    private readonly string[] pronouns =
     {
         "я", "он", "ты", "кто-то",
         "что-то", "что-либо", "кое-что",
