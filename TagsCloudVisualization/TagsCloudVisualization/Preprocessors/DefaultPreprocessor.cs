@@ -14,7 +14,7 @@ public class DefaultPreprocessor : IPreprocessor
             if (result.ContainsKey(word))
                 result[word]++;
             else
-                result.Add(word, 0);
+                result.Add(word, 1);
         }
 
         return result;

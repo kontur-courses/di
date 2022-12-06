@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TagsCloudVisualization.CloudDrawer;
 
 public class DefaultCloudDrawer : ICloudDrawer
 {
-    private const string DefaultPath = "..\\..\\..\\..\\..\\..\\Results";
+    private const string DefaultPath = "..\\..\\..\\Result.png";
 
     private Bitmap bitmap;
     private Graphics graphics;
@@ -24,6 +25,8 @@ public class DefaultCloudDrawer : ICloudDrawer
         SaveImage();
     }
 
-    public void SaveImage() =>
-        bitmap.Save($"{DefaultPath}\\{DateTime.Now}.bmp");
+    public void SaveImage()
+    {
+        bitmap.Save(DefaultPath, ImageFormat.Png);
+    }
 }
