@@ -26,9 +26,9 @@ namespace TagsCloudVisualization
         public List<Rectangle> GenerateCloud(Point center, List<Size> rectangleSizes)
         {
             var rectangles = new List<Rectangle>();
-            
-            foreach (var rectangleSize in rectangleSizes)
-                rectangles.Add(GetNextRectangle(center, rectangles, rectangleSize));
+
+            foreach (var size in rectangleSizes)
+                rectangles.Add(GetNextRectangle(center, rectangles, size));
 
             return rectangles;
         }
