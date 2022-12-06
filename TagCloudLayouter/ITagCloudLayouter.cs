@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace CircularCloudLayouter;
 
-public interface ICircularCloudLayouter
+public interface ITagCloudLayouter
 {
     Rectangle PutNextRectangle(Size rectSize);
 }

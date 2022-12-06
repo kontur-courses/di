@@ -2,7 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularCloudLayouter", "CircularCloudLayouter\CircularCloudLayouter.csproj", "{D1403341-B428-4A12-89C2-43B09F0E7B8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudLayouter", "TagCloudLayouter\TagCloudLayouter.csproj", "{D1403341-B428-4A12-89C2-43B09F0E7B8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudApp", "TagCloudApp\TagCloudApp.csproj", "{1ED3C19A-92AE-4D52-994C-4CFA07A054ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,9 @@ Global
 		{D1403341-B428-4A12-89C2-43B09F0E7B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1403341-B428-4A12-89C2-43B09F0E7B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1403341-B428-4A12-89C2-43B09F0E7B8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED3C19A-92AE-4D52-994C-4CFA07A054ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED3C19A-92AE-4D52-994C-4CFA07A054ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED3C19A-92AE-4D52-994C-4CFA07A054ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED3C19A-92AE-4D52-994C-4CFA07A054ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

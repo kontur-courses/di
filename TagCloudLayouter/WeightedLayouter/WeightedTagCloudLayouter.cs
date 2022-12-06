@@ -1,22 +1,17 @@
 using System.Drawing;
 using CircularCloudLayouter.WeightedLayouter.Forming;
-using CircularCloudLayouter.WeightedLayouter.Forming.Standard;
 using CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
 namespace CircularCloudLayouter.WeightedLayouter;
 
-public class WeightedCircularCloudLayouter : ICircularCloudLayouter
+public class WeightedTagCloudLayouter : ITagCloudLayouter
 {
     private readonly Point _center;
     private readonly WeightedSideLayouter[] _sideLayouters;
 
     public int RectanglesPlaced { get; private set; }
 
-    public WeightedCircularCloudLayouter(Point center) : this(center, StandardFormFactors.Rectangle)
-    {
-    }
-
-    public WeightedCircularCloudLayouter(Point center, FormFactor formFactor)
+    public WeightedTagCloudLayouter(Point center, FormFactor formFactor)
     {
         _center = center;
         _sideLayouters = new WeightedSideLayouter[]

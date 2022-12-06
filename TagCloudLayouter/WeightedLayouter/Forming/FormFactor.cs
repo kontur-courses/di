@@ -4,6 +4,8 @@ public abstract class FormFactor
 {
     protected FormFactor(double widthToHeightRatio)
     {
+        if (widthToHeightRatio <= 0)
+            throw new ArgumentException($"{nameof(widthToHeightRatio)} should be positive!");
         WidthToHeightRatio = widthToHeightRatio;
     }
 
@@ -13,12 +15,12 @@ public abstract class FormFactor
     {
         if (max - min < sideLength)
             throw new ArgumentException("Not enough space to place side!");
-        return CalculatePreferredStart(min, max, sideLength, middle);
+        return InternalCalculatePreferredStart(min, max, sideLength, middle);
     }
 
     public abstract double GetSegmentScore(int weight, double distToCenter);
 
     public abstract FormFactor WithRatio(double widthToHeightRatio);
 
-    protected abstract int CalculatePreferredStart(int min, int max, int sideLength, int middle);
+    protected abstract int InternalCalculatePreferredStart(int min, int max, int sideLength, int middle);
 }

@@ -12,6 +12,6 @@ public class XFormFactor : FormFactor
     public override double GetSegmentScore(int weight, double distToCenter) =>
         distToCenter / (weight * weight + distToCenter * distToCenter);
 
-    protected override int CalculatePreferredStart(int min, int max, int sideLength, int middle) =>
+    protected override int InternalCalculatePreferredStart(int min, int max, int sideLength, int middle) =>
         PreferredStartCalculators.CloserToEdges(min, max, sideLength, middle);
 }

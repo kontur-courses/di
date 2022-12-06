@@ -12,6 +12,6 @@ public class RectangleFormFactor : FormFactor
     public override double GetSegmentScore(int weight, double distToCenter) =>
         1d / weight;
 
-    protected override int CalculatePreferredStart(int min, int max, int sideLength, int middle) =>
+    protected override int InternalCalculatePreferredStart(int min, int max, int sideLength, int middle) =>
         PreferredStartCalculators.CloserToMiddle(min, max, sideLength, middle);
 }

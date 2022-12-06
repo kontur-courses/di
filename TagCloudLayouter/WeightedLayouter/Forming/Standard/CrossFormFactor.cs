@@ -12,6 +12,6 @@ public class CrossFormFactor : FormFactor
     public override double GetSegmentScore(int weight, double distToCenter) =>
         weight / (weight * weight + 1.4 * distToCenter * distToCenter);
 
-    protected override int CalculatePreferredStart(int min, int max, int sideLength, int middle) =>
+    protected override int InternalCalculatePreferredStart(int min, int max, int sideLength, int middle) =>
         PreferredStartCalculators.CloserToMiddle(min, max, sideLength, middle);
 }
