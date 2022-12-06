@@ -10,6 +10,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using TagsCloud.CloudLayouter;
 using TagsCloud.CloudLayouter.Implementation;
+using TagsCloud.FontFinder;
+using TagsCloud.FontFinder.Implementation;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -33,11 +35,14 @@ namespace TagsCloud.WPF
 
         private ICloudLayouter<Rectangle>? circularCloud;
         private List<UIElement> uiElements = new();
+
+        private IFontFinder fontFinder;
         
         public MainWindow()
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
+            fontFinder = new WindowsFontFinder();
             words = GetWordsFromTxt(PathToWords);
             MyCanvas.Focus();
             timer.Interval = TimeSpan.FromSeconds(0);
@@ -126,6 +131,8 @@ namespace TagsCloud.WPF
             UpdateCircularCloudFromTextBox();
             uiElements = new List<UIElement>();
             MyCanvas.Children.Clear();
+            // if (RectanglesCountTb is not null)
+            //     RectanglesCountTb.Text = string.Join(" ", new WindowsFontFinder().GetAllFonts()!);
 
             if (ColorPicker?.SelectedColor is not null)
                 customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
@@ -174,12 +181,6 @@ namespace TagsCloud.WPF
                 return;
             var filename = dlg.FileName;
             SaveCanvasToFile(this, MyCanvas, DefaultDpi, filename);
-        }
-        
-        private void ColorPickChanged(object sender, RoutedPropertyChangedEventArgs<Color?> routedPropertyChangedEventArgs)
-        {
-            if (ColorPicker.SelectedColor is not null)
-                customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
         }
 
         private static void SaveCanvasToFile(FrameworkElement window, UIElement canvas, double dpi, string filename)
