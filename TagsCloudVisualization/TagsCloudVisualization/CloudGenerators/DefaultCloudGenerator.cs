@@ -19,7 +19,7 @@ public class DefaultCloudGenerator : ICloudGenerator
         var wordFreq = Preprocessor.Preprocessing(text);
         foreach (var (word, freq) in wordFreq)
         {
-            //rects.Add(word, new Rectangle(0,0,));
+            //TODO: реализовать
         }
 
         return rects;
