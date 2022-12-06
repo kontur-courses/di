@@ -52,8 +52,10 @@ namespace TagsCloud.WPF
         {
             if (circularCloud is null || uiElements.Count >= rectanglesCount)
                 return;
-            
-            customColor = GetRandomColor();
+
+            customColor = IsRandomColors.IsChecked is not null && (bool) IsRandomColors.IsChecked
+                ? GetRandomColor()
+                : customColor;
             var currentWord = words[random.Next(words.Length)];
 
             Rectangle rectangleFromCloud;
@@ -123,6 +125,9 @@ namespace TagsCloud.WPF
             UpdateCircularCloudFromTextBox();
             uiElements = new List<UIElement>();
             MyCanvas.Children.Clear();
+
+            if (ColorPicker?.SelectedColor is not null)
+                customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
         }
 
         private void UpdateCircularCloudFromTextBox()
@@ -168,6 +173,12 @@ namespace TagsCloud.WPF
                 return;
             var filename = dlg.FileName;
             SaveCanvasToFile(this, MyCanvas, DefaultDpi, filename);
+        }
+        
+        private void ColorPickChanged(object sender, RoutedPropertyChangedEventArgs<Color?> routedPropertyChangedEventArgs)
+        {
+            if (ColorPicker.SelectedColor is not null)
+                customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
         }
 
         private static void SaveCanvasToFile(FrameworkElement window, UIElement canvas, double dpi, string filename)

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TagsCloudVisualization.WPF"
         mc:Ignorable="d"
         Name="MyWindow"
@@ -33,6 +34,12 @@
                                 <StackPanel>
                                         <Label Content="Rectangles Count"></Label>
                                         <TextBox x:Name="RectanglesCountTb" TextChanged="UpdateRectanglesCount"></TextBox>
+                                </StackPanel>
+                                <StackPanel>
+                                        <Label Content="Color"></Label>
+                                        <xctk:ColorPicker Name="ColorPicker" SelectedColorChanged="ColorPickChanged"></xctk:ColorPicker>
+                                        <CheckBox Name="IsRandomColors" Content="Set Random Color" IsChecked="False" 
+                                                  Click="Clear"></CheckBox>
                                 </StackPanel>
                                 <CheckBox Name="PrintRectangles" Content="Draw Rectangles?"
                                           IsChecked="False" Click="Clear">
