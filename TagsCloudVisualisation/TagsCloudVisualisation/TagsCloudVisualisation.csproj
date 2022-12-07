@@ -36,30 +36,49 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
+        </Reference>
         <Reference Include="FluentAssertions, Version=6.8.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
           <HintPath>..\..\packages\FluentAssertions.6.8.0\lib\net47\FluentAssertions.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib" />
         <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
           <HintPath>..\..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+        </Reference>
         <Reference Include="System.ComponentModel.Composition" />
         <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+        </Reference>
         <Reference Include="System.Drawing" />
         <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>..\..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
         </Reference>
+        <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+        </Reference>
         <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>..\..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
         </Reference>
         <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>..\..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
         </Reference>
-        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
         </Reference>
         <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>..\..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
@@ -74,48 +93,65 @@
           <HintPath>..\..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
         </Reference>
         <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+          <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
         </Reference>
         <Reference Include="System.Windows.Forms" />
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CircularCloudLayouter.cs" />
-        <Compile Include="CircularCloudLayouterTest.cs" />
-        <Compile Include="CloudDrawer.cs">
-          <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="CloudDrawer.Designer.cs">
-          <DependentUpon>CloudDrawer.cs</DependentUpon>
-        </Compile>
-        <Compile Include="GetParamsForm.cs">
-          <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="GetParamsForm.Designer.cs">
-          <DependentUpon>GetParamsForm.cs</DependentUpon>
-        </Compile>
-        <Compile Include="InputStream\FileInputStream\Exceptions\IncorrectCallException.cs" />
-        <Compile Include="InputStream\FileInputStream\Exceptions\IncorrectFileTypeException.cs" />
-        <Compile Include="InputStream\FileInputStream\FromFileInputWordsStream.cs" />
-        <Compile Include="InputStream\FileInputStream\IFileEncoder.cs" />
-        <Compile Include="InputStream\FileInputStream\TxtEncoder.cs" />
-        <Compile Include="InputStream\IInputWordsStream.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudCreator\CloudCreator.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudCreator\ICloudCreator.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudDrawers\CloudDrawer.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudDrawers\Exceptions\DrawingException.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudDrawers\ICloudDrawer.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudDrawers\WordToDraw\DrawingWord.cs" />
+        <Compile Include="App\CloudCreatorDriver\CloudDrawers\WordToDraw\IDrawingWord.cs" />
+        <Compile Include="App\CloudCreatorDriver\DrawingSettings\DrawingSettings.cs" />
+        <Compile Include="App\CloudCreatorDriver\DrawingSettings\IDrawingSettings.cs" />
+        <Compile Include="App\CloudCreatorDriver\DrawingSettings\IWordVisualisation.cs" />
+        <Compile Include="App\CloudCreatorDriver\DrawingSettings\WordVisualisation.cs" />
+        <Compile Include="App\CloudCreatorDriver\ImageSaver\FileTypes\FileType.cs" />
+        <Compile Include="App\CloudCreatorDriver\ImageSaver\FileTypes\IFileType.cs" />
+        <Compile Include="App\CloudCreatorDriver\ImageSaver\IImageSaver.cs" />
+        <Compile Include="App\CloudCreatorDriver\ImageSaver\PngImageSaver.cs" />
+        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\Exceptions\CloudSettingsException.cs" />
+        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\ICloudLayouter.cs" />
+        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\ICloudLayouterSettings.cs" />
+        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\SpiralCloudLayouters\SpiralCloudLayouter.cs" />
+        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\SpiralCloudLayouters\SpiralCloudLayouterSettings.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\Exceptions\IncorrectCallException.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\Exceptions\IncorrectFileTypeException.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\FromFileInputWordsStream.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\IFileEncoder.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\TxtEncoder.cs" />
+        <Compile Include="App\WordPreprocessorDriver\InputStream\IInputWordsStream.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\BoringWords\BoringUnionsAndAppealsRU.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\BoringWords\IBoringWords.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\DefaultWordsPreprocessor.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\IWordsPreprocessor.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\Word\IWord.cs" />
+        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\Word\Word.cs" />
+        <Compile Include="Clients\ConsoleClient\ConsoleClient.cs" />
+        <Compile Include="Clients\IClient.cs" />
         <Compile Include="Program.cs" />
-        <Compile Include="RandomRectanglesCreator.cs" />
-        <Compile Include="TagCloudDrawer.cs" />
+        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\CircularCloudLayouterTest.cs" />
+        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\Infrastructure\RandomRectanglesCreator.cs" />
+        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\Infrastructure\TagCloudDrawer.cs" />
         <Compile Include="Tests\FileInputStream\FromFileInputWordsStreamTest.cs" />
+        <Compile Include="Tests\FileInputStream\Infrastructure\FileEncoderСheater.cs" />
         <Compile Include="Tests\FileInputStream\TxtEncoderTest.cs" />
-        <Compile Include="Tests\Infrastructure\FileEncoderСheater.cs" />
-        <Compile Include="Tests\Infrastructure\NoBoringWords.cs" />
-        <Compile Include="Tests\Infrastructure\SimpleBoringWordsIdentifier.cs" />
-        <Compile Include="Tests\Infrastructure\SimpleVeryBoringWordsIdentifier.cs" />
         <Compile Include="Tests\WordPreprocessor\DefaultWordsPreprocessorTest.cs" />
-        <Compile Include="Word.cs" />
-        <Compile Include="WordsPreprocessor\BoringWords\BoringUnionsAndAppealsRU.cs" />
-        <Compile Include="WordsPreprocessor\BoringWords\IBoringWords.cs" />
-        <Compile Include="WordsPreprocessor\DefaultWordsPreprocessor.cs" />
-        <Compile Include="WordsPreprocessor\IWordsPreprocessor.cs" />
+        <Compile Include="Tests\WordPreprocessor\Infrastructure\NoBoringWords.cs" />
+        <Compile Include="Tests\WordPreprocessor\Infrastructure\SimpleBoringWordsIdentifier.cs" />
+        <Compile Include="Tests\WordPreprocessor\Infrastructure\SimpleVeryBoringWordsIdentifier.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="App\CloudCreatorDriver" />
+      <Folder Include="App\WordPreprocessorDriver" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="App.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

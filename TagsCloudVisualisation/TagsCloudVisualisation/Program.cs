@@ -1,19 +1,29 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Autofac;
+using TagsCloudVisualisation.App.CloudCreator;
+using TagsCloudVisualisation.App.CloudDrawers;
+using TagsCloudVisualisation.Clients;
+using TagsCloudVisualisation.Clients.ConsoleClient;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualisation
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GetParamsForm());
+            var container = GetContainer();
+            using var scope = container.BeginLifetimeScope();
+            var client = scope.Resolve<IClient>();
+            client.Run();
+        }
+
+        private static IContainer GetContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<ConsoleClient>().As<IClient>();
+            builder.RegisterType<CloudCreator>().As<ICloudCreator>();
+            builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
+            // TODO Переделать зависимости и правильно собрать контейнер
+            return builder.Build();
         }
     }
 }

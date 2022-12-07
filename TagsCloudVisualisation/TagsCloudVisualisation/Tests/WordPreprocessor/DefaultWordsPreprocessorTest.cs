@@ -3,8 +3,9 @@ using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualisation.Tests.Infrastructure;
-using TagsCloudVisualisation.WordsPreprocessor;
+using TagsCloudVisualisation.App.WordsPreprocessor;
+using TagsCloudVisualisation.App.WordsPreprocessor.BoringWords;
+using TagsCloudVisualisation.Tests.WordPreprocessor.Infrastructure;
 
 namespace TagsCloudVisualisation.Tests.WordPreprocessor
 {
@@ -23,7 +24,7 @@ namespace TagsCloudVisualisation.Tests.WordPreprocessor
         public void GetProcessedWords_ShouldReturnOnlyUniqueWordsWithCount()
         {
             var words = new List<string> { "word", "word", "word", "word2" };
-            var processedWords = sut!.GetProcessedWords(words, new NoBoringWords());
+            var processedWords = sut!.GetProcessedWords(words, new []{ new NoBoringWords()});
             processedWords.Count.Should().Be(2);
             processedWords.Any(word => word.Value == "word" && word.Count == 3).Should().BeTrue();
         }
@@ -32,7 +33,7 @@ namespace TagsCloudVisualisation.Tests.WordPreprocessor
         public void GetProcessedWords_ShouldRemoveBoringWords_ByIBoringWords()
         {
             var words = new List<string> { "boring", "boring", "word", "word-2", "boring" };
-            var processedWords = sut!.GetProcessedWords(words, new SimpleBoringWordsIdentifier());
+            var processedWords = sut!.GetProcessedWords(words, new []{new SimpleBoringWordsIdentifier()});
             processedWords.Count.Should().Be(2);
             processedWords.All(word => word.Value != "boring").Should().BeTrue();
         }
@@ -42,7 +43,7 @@ namespace TagsCloudVisualisation.Tests.WordPreprocessor
         {
             var words = new List<string> { "very-boring", "boring", "word", "word-2", "boring", "very-boring" };
             var processedWords = sut!.GetProcessedWords(words,
-                new SimpleBoringWordsIdentifier(), new SimpleVeryBoringWordsIdentifier());
+                new IBoringWords[]{ new SimpleBoringWordsIdentifier(), new SimpleVeryBoringWordsIdentifier() });
             processedWords.Count.Should().Be(2);
             processedWords.All(word => !word.Value.Contains("boring")).Should().BeTrue();
         }

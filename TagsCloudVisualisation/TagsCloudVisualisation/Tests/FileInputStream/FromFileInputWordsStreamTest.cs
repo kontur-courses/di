@@ -3,10 +3,10 @@ using System.IO;
 using System.Reflection;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualisation.InputStream;
-using TagsCloudVisualisation.InputStream.FileInputStream;
-using TagsCloudVisualisation.InputStream.FileInputStream.Exceptions;
-using TagsCloudVisualisation.Tests.Infrastructure;
+using TagsCloudVisualisation.App.InputStream;
+using TagsCloudVisualisation.App.InputStream.FileInputStream;
+using TagsCloudVisualisation.App.InputStream.FileInputStream.Exceptions;
+using TagsCloudVisualisation.Tests.FileInputStream.Infrastructure;
 
 namespace TagsCloudVisualisation.Tests.FileInputStream
 {

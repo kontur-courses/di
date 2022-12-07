@@ -1,0 +1,33 @@
+﻿using System;
+
+namespace TagsCloudVisualisation.App.WordsPreprocessor.Word
+{
+    /// <summary>
+    /// Класс слова, который хранит информацию о слове, его количестве встреч в слове и индексе tf
+    /// </summary>
+    public class Word : IWord
+    {
+        public string Value { get; }
+        public int Count { get; set; }
+        public double Tf { get; set; }
+        
+        public Word(string value, int count = 1, double tf = 1)
+        {
+            Value = value;
+            Count = count;
+            Tf = tf;
+        }
+
+        public bool Equals(IWord other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Value == other.Value;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+    }
+}

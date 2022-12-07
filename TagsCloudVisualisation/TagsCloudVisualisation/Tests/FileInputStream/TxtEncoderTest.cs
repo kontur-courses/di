@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudVisualisation.InputStream.FileInputStream;
+using TagsCloudVisualisation.App.InputStream.FileInputStream;
 
 namespace TagsCloudVisualisation.Tests.FileInputStream
 {
