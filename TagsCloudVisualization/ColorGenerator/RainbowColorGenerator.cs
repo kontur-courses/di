@@ -1,0 +1,29 @@
+﻿using System.Drawing;
+
+namespace TagsCloudVisualization.ColorGenerator;
+
+public class RainbowColorGenerator : IColorGenerator
+{
+    private readonly Random random;
+
+    private static readonly Color[] Colors =
+    {
+        Color.Red,
+        Color.Orange,
+        Color.Yellow,
+        Color.Green,
+        Color.LightBlue,
+        Color.Blue,
+        Color.Purple
+    };
+
+    public RainbowColorGenerator(Random random)
+    {
+        this.random = random;
+    }
+    
+    public Color Generate(string tag)
+    {
+        return Colors[random.Next(Colors.Length)];
+    }
+}
