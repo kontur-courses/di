@@ -40,7 +40,7 @@ public class DrawingCloudCreator : ICloudCreator
     {
         var maxSize = drawer.MaxFontSize;
         var minSize = drawer.MinFontSize;
-        return (int)((double)(minSize * maxCount - minSize * count + maxSize * count - maxSize * minCount) /
+        return - (int)((double)(minSize * maxCount - minSize * count + maxSize * count - maxSize * minCount) /
                      (minCount - maxCount));
     }
 }
