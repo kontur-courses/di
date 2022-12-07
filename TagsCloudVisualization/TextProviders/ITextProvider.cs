@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.Abstractions;
+﻿namespace TagsCloudVisualization.TextProviders;
 
 public interface ITextProvider
 {

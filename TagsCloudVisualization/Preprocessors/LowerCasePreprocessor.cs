@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.Abstractions;
+﻿namespace TagsCloudVisualization.Preprocessors;
 
 public class LowerCasePreprocessor : IPreprocessor
 {
