@@ -37,6 +37,7 @@ namespace TagsCloudContainer.Infrastructure
         {
             base.OnLoad(e);
             Text = "Настройки";
+            Size = new Size(500, 500);
         }
     }
 }
