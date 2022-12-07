@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
+using TagCloud.PointGenerators;
 
 namespace TagCloud
 {
@@ -9,17 +10,12 @@ namespace TagCloud
     {
         private readonly TagCloud tagCloud;
 
-        private readonly SpiralPointGenerator spiralGenerator;
+        private readonly IPointGenerator pointGenerator;
 
-
-        public CircularCloudLayouter() : this(new Point())
+        public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-        }
-
-        public CircularCloudLayouter(Point center)
-        {
-            tagCloud = new TagCloud(center);
-            spiralGenerator = new SpiralPointGenerator(center);
+            tagCloud = new TagCloud(pointGenerator.GetCenterPoint());
+            this.pointGenerator = pointGenerator;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -44,7 +40,7 @@ namespace TagCloud
         private Point GetNextRectanglePoint(Size rectangleSize)
         {
             var rectangleCenter = GetCenterFor(rectangleSize);
-            var nextPoint = spiralGenerator.GetNextPoint().ShiftTo(rectangleCenter);
+            var nextPoint = pointGenerator.GetNextPoint().ShiftTo(rectangleCenter);
             return nextPoint;
         }
 

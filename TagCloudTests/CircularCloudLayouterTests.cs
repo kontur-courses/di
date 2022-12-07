@@ -5,6 +5,8 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagCloud.PointGenerators;
+using TagCloud.TagCloudVisualizations;
 
 namespace TagCloud
 {
@@ -16,7 +18,8 @@ namespace TagCloud
         [SetUp]
         public void PrepareCircularCloudLayouter()
         {
-            cloudLayouter = new CircularCloudLayouter();
+            var center = new Point();
+            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
         }
 
         [TearDown]
@@ -32,7 +35,8 @@ namespace TagCloud
 
             File.WriteAllText(filePath + ".txt", $"The test {context.Test.FullName} failed with an error: {context.Result.Message}" + 
                                                  Environment.NewLine + "StackTrace:" + context.Result.StackTrace);
-            TagCloudVisualization.SaveAsBitmap(cloudLayouter.GetTagCloud(), filePath + ".bmp");
+            var visualization = new TagCloudBitmapVisualization(cloudLayouter.GetTagCloud());
+            visualization.Save(filePath + ".bmp");
 
             TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
         }
@@ -45,7 +49,7 @@ namespace TagCloud
         {
             var planningCenter = new Point(x, y);
 
-            var tagCloud = new CircularCloudLayouter(planningCenter).GetTagCloud();
+            var tagCloud = new CircularCloudLayouter(new SpiralPointGenerator(planningCenter)).GetTagCloud();
 
             tagCloud.GetWidth().Should().Be(0);
             tagCloud.GetHeight().Should().Be(0);
@@ -65,7 +69,8 @@ namespace TagCloud
         [TestCase(3, 3, 500, 500)]
         public void PutNextRectangle_ReturnedNotIntersectedRectangle(int centerX, int centerY, int firstRectWidth, int firstRectHeight)
         {
-            cloudLayouter = new CircularCloudLayouter(new Point(centerX, centerY));
+            var center = new Point(centerX, centerY);
+            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
 
             do
             {

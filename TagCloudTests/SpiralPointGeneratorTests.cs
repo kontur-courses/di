@@ -2,6 +2,7 @@
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.PointGenerators;
 
 namespace TagCloud
 {

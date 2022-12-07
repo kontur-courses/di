@@ -2,9 +2,9 @@
 using System.Drawing;
 using TagCloud.Extensions;
 
-namespace TagCloud
+namespace TagCloud.PointGenerators
 {
-    public class SpiralPointGenerator
+    public class SpiralPointGenerator : IPointGenerator
     {
         private double theta = 0;
         private double radius = 0;
@@ -29,6 +29,9 @@ namespace TagCloud
 
             return point;
         }
+
+        public Point GetCenterPoint() =>
+            new Point(center);
 
         private void DoStep()
         {

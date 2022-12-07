@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.PointGenerators;
 
 namespace TagCloud
 {
@@ -15,7 +16,7 @@ namespace TagCloud
             var rectangleSizes = Enumerable.Range(2, 40).
                 Select(width => new Size(width, width / 2)).Reverse();
 
-            var circularCloudLayouter = new CircularCloudLayouter(center);
+            var circularCloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
             foreach (var rectangleSize in rectangleSizes)
                 circularCloudLayouter.PutNextRectangle(rectangleSize);
 

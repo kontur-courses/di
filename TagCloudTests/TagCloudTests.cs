@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.PointGenerators;
 
 namespace TagCloud
 {
@@ -14,8 +15,9 @@ namespace TagCloud
         [SetUp]
         public void PrepareCircularCloudLayouter()
         {
-            cloudLayouter = new CircularCloudLayouter();
-            tagCloud = new TagCloud(new Point());
+            var center = new Point();
+            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            tagCloud = new TagCloud(center);
 
             var rectangle = new Rectangle(0, 0, 5, 5);
             tagCloud.Rectangles.Add(rectangle);
@@ -28,7 +30,8 @@ namespace TagCloud
         [TestCase(-300, -300, 5, 5, TestName = "center in XY negative point")]
         public void PutNextRectangle_FirstRectangleMustBeInCenterOfCloud_When(int centerX, int centerY, int reactWidth, int reactHeight)
         {
-            cloudLayouter = new CircularCloudLayouter(new Point(centerX, centerY));
+            var center = new Point(centerX, centerY);
+            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
 
             var rectangle = cloudLayouter.PutNextRectangle(new Size(reactWidth, reactHeight));
             var planningReactLocation = new Point(centerX - reactWidth / 2, centerY - reactHeight / 2);

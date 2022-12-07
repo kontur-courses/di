@@ -2,13 +2,24 @@
 using System.Drawing;
 using TagCloud.Extensions;
 
-namespace TagCloud
+namespace TagCloud.TagCloudVisualizations
 {
-    public class TagCloudVisualization
+    public class TagCloudBitmapVisualization : ITagCloudVisualization
     {
-        private static readonly Random random = new Random();
+        private readonly Random random = new Random();
+        private readonly TagCloud tagCloud;
 
-        public static void SaveAsBitmap(TagCloud tagCloud, string file)
+        public TagCloudBitmapVisualization(TagCloud tagCloud)
+        {
+            this.tagCloud = tagCloud;
+        }
+
+        public void Visualize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save(string file)
         {
             var rectangleOutline = 1;
 
@@ -16,7 +27,7 @@ namespace TagCloud
                 tagCloud.GetWidth() + rectangleOutline, 
                 tagCloud.GetHeight() + rectangleOutline);
 
-            Size frameShift = new Size(-tagCloud.GetLeftBound(), -tagCloud.GetTopBound());
+            var frameShift = new Size(-tagCloud.GetLeftBound(), -tagCloud.GetTopBound());
 
             using (var graphics = Graphics.FromImage(bitmap))
             {
@@ -29,15 +40,15 @@ namespace TagCloud
             bitmap.Save(file);
         }
 
-        private static Rectangle MoveRectangleToImageFrame(Rectangle rectangle, Size imageCenter) =>
+        private Rectangle MoveRectangleToImageFrame(Rectangle rectangle, Size imageCenter) =>
             new Rectangle(rectangle.Location.ShiftTo(imageCenter), rectangle.Size);
         
 
-        private static Brush GetRandomBrush() =>
+        private Brush GetRandomBrush() =>
             new SolidBrush(GetRandomColor());
         
 
-        private static Color GetRandomColor()
+        private Color GetRandomColor()
         {
             var knownColors = (KnownColor[])Enum.GetValues(typeof(KnownColor));
             var randomColorName = knownColors[random.Next(knownColors.Length)];

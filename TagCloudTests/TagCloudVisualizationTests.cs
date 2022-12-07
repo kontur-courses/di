@@ -2,6 +2,8 @@
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud.PointGenerators;
+using TagCloud.TagCloudVisualizations;
 
 namespace TagCloud
 {
@@ -10,7 +12,8 @@ namespace TagCloud
         [Test]
         public void SaveAsBitmap_TagCloudInFile_Success()
         {
-            var cloudLayouter = new CircularCloudLayouter(new Point(50, -50));
+            var center = new Point(50, -50);
+            var cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
             var tempBmpFile = "temp.bmp";
 
             File.Delete(tempBmpFile);
@@ -19,7 +22,8 @@ namespace TagCloud
 
             for (int i = 400; i > 1; i -= 2)
                 cloudLayouter.PutNextRectangle(new Size(i, i / 2));
-            TagCloudVisualization.SaveAsBitmap(cloudLayouter.GetTagCloud(), tempBmpFile);
+            var visualization = new TagCloudBitmapVisualization(cloudLayouter.GetTagCloud());
+            visualization.Save(tempBmpFile);
 
             File.Exists(tempBmpFile).Should().BeTrue($"file {tempBmpFile} must be generated");
         }
