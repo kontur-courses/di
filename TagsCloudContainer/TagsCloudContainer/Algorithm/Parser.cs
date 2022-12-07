@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagsCloudContainer.Infrastructure;
+﻿using TagsCloudContainer.Infrastructure;
 
-namespace TagsCloudContainer.Parser
+namespace TagsCloudContainer.Algorithm
 {
     public class Parser
     {
@@ -36,11 +30,9 @@ namespace TagsCloudContainer.Parser
         public Dictionary<string, int> RemoveBoringWords(Dictionary<string, int> source)
         {
             var boringWords = GetBoringWords();
-            var result = new Dictionary<string, int>();
-            foreach (var pair in source)
-                if (!boringWords.Contains(pair.Key))
-                    result.Add(pair.Key, pair.Value);
-            return result;
+            return source
+                .Where(pair => !boringWords.Contains(pair.Key))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public HashSet<string> GetBoringWords()
