@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Drawing.Imaging;
 
 namespace TagCloudGraphicalUserInterface
 {
-    public class PictureBoxTags : PictureBox, IImage
+    public class PictureBoxTags : PictureBox, IImageSettingsProvider
     {
         public Size GetImageSize()
         {
-            FailIfNotInitialized();
-            return Image.Size;
+            return Image == null
+                ? throw new InvalidOperationException(
+                    "Call PictureBoxImageHolder.RecreateImage before other method call!")
+                : Image.Size;
+
         }
 
         public Graphics StartDrawing()
         {
-            FailIfNotInitialized();
-            return Graphics.FromImage(Image);
+            return Image == null
+                ? throw new InvalidOperationException(
+                    "Call PictureBoxImageHolder.RecreateImage before other method call!")
+                : Graphics.FromImage(Image);
         }
 
-        private void FailIfNotInitialized()
-        {
-            if (Image == null)
-                throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
-        }
 
         public void UpdateUi()
         {
@@ -42,7 +35,9 @@ namespace TagCloudGraphicalUserInterface
 
         public void SaveImage(string fileName)
         {
-            FailIfNotInitialized();
+            if (Image == null)
+                throw new InvalidOperationException(
+                    "Call PictureBoxImageHolder.RecreateImage before other method call!");
             Image.Save(fileName);
         }
     }

@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
- 
-
-namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface
 {
     public class CloudForm:Form
     {
-        public CloudForm(IActionForm[] actionForms, PictureBoxTags pictureBox, AppSettings settings, ImageSettings imageSettings, Palette palette)
+        public CloudForm(IActionForm[] actionForms, PictureBoxTags pictureBox, ImageSettings imageSettings)
         {
           
             ClientSize = new Size(imageSettings.Width, imageSettings.Height);
@@ -23,9 +13,6 @@ namespace TagCloudGraphicalUserInterface
             pictureBox.Dock = DockStyle.Fill;
             pictureBox.SizeMode=PictureBoxSizeMode.Zoom;
             Controls.Add(pictureBox);
-            DependencyInjector.Inject<IImage>(actionForms, pictureBox);
-            DependencyInjector.Inject(actionForms, settings);
-            DependencyInjector.Inject(actionForms, palette);
         }
 
     }

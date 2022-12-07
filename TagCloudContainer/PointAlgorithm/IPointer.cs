@@ -4,6 +4,6 @@ namespace TagCloudContainer.PointAlgorithm
 {
     public interface IPointer
     {
-        Point GetPoint();
+        Point GetNextPoint();
     }
 }

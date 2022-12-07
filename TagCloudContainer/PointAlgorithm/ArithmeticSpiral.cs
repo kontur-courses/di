@@ -4,22 +4,21 @@ namespace TagCloudContainer.PointAlgorithm
 {
     public class ArithmeticSpiral: IPointer
     {
-        private int x, y;
+        private readonly Point currentPoint;
         private double angle;
-        private int constantEllipsoid, density;
+        private readonly double ellipsoidMultiplier, multiplier;
 
-        public ArithmeticSpiral(Point start, int constantEllipsoid = 1, int density = 1)
+        public ArithmeticSpiral(Point startPoint, int ellipsoidMultiplier = 1, int densityMultiplier = 1)
         {
-            x = start.X;
-            y = start.Y;
-            this.constantEllipsoid = constantEllipsoid;
-            this.density = density;
+            currentPoint = startPoint;
+            multiplier =densityMultiplier;
+            this.ellipsoidMultiplier = ellipsoidMultiplier;
         }
-        public Point GetPoint()
+        public Point GetNextPoint()
         {
-            var nextPoint = new Point((int)(x + Math.Cos(angle) * angle * constantEllipsoid),
-                (int)(y + Math.Sin(angle) * angle));
-            angle += Math.PI / (360 * density);
+            var nextPoint = new Point((int)(currentPoint.X + Math.Cos(angle) * angle * ellipsoidMultiplier),
+                (int)(currentPoint.Y + Math.Sin(angle) * angle));
+            angle += Math.PI / (360 * multiplier);
             return nextPoint;
         }
     }

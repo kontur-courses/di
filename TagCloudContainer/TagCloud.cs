@@ -43,7 +43,7 @@ namespace TagsCloudVisualization
         private bool TryFillRectangle(IPointer arithmeticSpiral,
             IEnumerator<SizeTextRectangle> nextSizeRectangle, ref bool? nextIteration)
         {
-            var point = arithmeticSpiral.GetPoint();
+            var point = arithmeticSpiral.GetNextPoint();
             if (nextIteration == null)
                 return true;
             nextIteration = FillEmptySpaces(nextIteration, nextSizeRectangle);

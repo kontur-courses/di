@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface
 {
-    public interface IImage
+    internal interface IImage
     {
-        Size GetImageSize();
-        Graphics StartDrawing();
-        void UpdateUi();
-        void RecreateImage(ImageSettings settings);
-        void SaveImage(string fileName);
+        public int Width { get; set; }  
+        public int Height { get; set; }  
     }
 }

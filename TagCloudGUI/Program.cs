@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Autofac;
+﻿using Autofac;
 using TagCloudContainer.PointAlgorithm;
 using TagCloudContainer.Rectangles;
 using TagsCloudVisualization;
@@ -26,8 +20,8 @@ namespace TagCloudGraphicalUserInterface
             builder.RegisterType<TagAction>().As<IActionForm>();
             builder.RegisterType<PaletteAction>().As<IActionForm>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
-            builder.RegisterType<PictureBoxTags>().As<IImage, PictureBoxTags>().SingleInstance();
-            builder.RegisterTypes(typeof(Dictionary<string, int>), typeof(CircularCloudLayouter), typeof(ArithmeticSpiral), typeof(TagCloud), typeof(List<TextRectangle>), typeof(List<Point>),
+            builder.RegisterType<PictureBoxTags>().As<IImageSettingsProvider, PictureBoxTags>().SingleInstance();
+            builder.RegisterTypes(typeof(CircularCloudLayouter), typeof(ArithmeticSpiral), typeof(TagCloud), typeof(List<TextRectangle>),
                 typeof(AppSettings), typeof(CloudForm), typeof(ImageSettings)).AsSelf();
             var container = builder.Build();
             Application.Run(container.Resolve<CloudForm>());

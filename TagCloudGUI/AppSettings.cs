@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface
 {
-    public class AppSettings : IDirectoryProvider
+    public class AppSettings : IProviderSettings
     {
-        public string ImagesDirectory { get; set; }
-        public ImageSettings ImageSettings { get; set; }
+        public string ImagesDirectory { get; }
     }
 }

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface
 {
-    public class TagCloudSettings : IDirectoryProvider
+    public class TagCloudSettings : IProviderSettings
     {
         public Point StartPoint { get; set; } = new Point(0, 0);
         public int ellipsoide { get; set; } =1;
