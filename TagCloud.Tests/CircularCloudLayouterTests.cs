@@ -1,6 +1,6 @@
 using System.Drawing;
 using NUnit.Framework;
-using TagCloud.CloudLayouter.CircularCloudLayouter;
+using TagCloud.LayoutAlgorithm.CircularLayoutAlgorithm;
 
 namespace TagCloud.Tests;
 
