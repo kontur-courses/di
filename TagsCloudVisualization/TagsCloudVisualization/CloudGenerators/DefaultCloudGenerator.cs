@@ -13,13 +13,13 @@ public class DefaultCloudGenerator : ICloudGenerator
         Preprocessor = preprocessor;
     }
 
-    public Dictionary<string, Rectangle> GenerateCloud(string text)
+    public Dictionary<string, Point> GenerateCloud(string text)
     {
-        var rects = new Dictionary<string, Rectangle>();
+        var rects = new Dictionary<string, Point>();
         var wordFreq = Preprocessor.Preprocessing(text);
         foreach (var (word, freq) in wordFreq)
         {
-            //TODO: реализовать
+            //TODO: реализовать генерацию облака с помощью Layouter
         }
 
         return rects;

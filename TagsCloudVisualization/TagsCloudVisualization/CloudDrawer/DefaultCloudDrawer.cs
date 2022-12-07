@@ -18,10 +18,13 @@ public class DefaultCloudDrawer : ICloudDrawer
         pen = new Pen(borderColor, borderWidth);
     }
 
-    public void Draw(Dictionary<string, Rectangle> wordsInRect)
+    public void Draw(Dictionary<string, Point> wordsInPoint)
     {
-        foreach (var (word, rect) in wordsInRect)
-            graphics.DrawRectangle(pen, rect);
+        foreach (var (word, rect) in wordsInPoint)
+        {
+            //TODO: реализовать метод отрисовки слов
+        }
+
         SaveImage();
     }
 
