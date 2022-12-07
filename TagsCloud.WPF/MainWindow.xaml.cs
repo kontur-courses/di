@@ -33,6 +33,7 @@ namespace TagsCloud.WPF
         private const double DefaultDpi = 96.0;
 
         private readonly string[] words;
+        private int wordPointer;
         private const string PathToWords = "../../../Words.txt";
 
         private ICloudLayouter<Rectangle>? circularCloud;
@@ -54,19 +55,17 @@ namespace TagsCloud.WPF
             words = ProcessWords(GetWordsFromTxt(PathToWords));
             rectanglesCount = words.Length;
             MyCanvas.Focus();
-            // timer.Interval = TimeSpan.FromSeconds(0);
-            // timer.Start();
+            timer.Interval = TimeSpan.FromSeconds(0);
+            timer.Start();
 
             RectanglesCountTb.Text = rectanglesCount.ToString();
         }
 
-        private static RecurringWordsHandler? GetRecurringWordsHandler(IWordHandler[] wordHandlers)
+        private static RecurringWordsHandler? GetRecurringWordsHandler(IEnumerable<IWordHandler> wordHandlers)
         {
             foreach (var handler in wordHandlers)
-            {
                 if (handler is RecurringWordsHandler recurringWordsHandler)
                     return recurringWordsHandler;
-            }
 
             return null;
         }
@@ -78,31 +77,26 @@ namespace TagsCloud.WPF
 
         private void DrawRectangle(object? sender, EventArgs e)
         {
-            if (circularCloud is null || uiElements.Count >= rectanglesCount)
+            if (circularCloud is null || ((bool) PrintRectangles.IsChecked! && uiElements.Count >= rectanglesCount) ||
+                ((bool) !PrintRectangles.IsChecked! && uiElements.Count >= words.Length)) 
                 return;
 
-            foreach (var item in (bool) PrintRectangles.IsChecked!
-                         ? (IEnumerable) Enumerable.Range(0, rectanglesCount)
-                         : words) 
+            customColor = (bool) IsRandomColors.IsChecked! ? GetRandomColor() : customColor;
+            Rectangle rectangleFromCloud;
+            UIElement figure;
+            if (PrintRectangles.IsChecked is not null && (bool) PrintRectangles.IsChecked)
             {
-                customColor = (bool) IsRandomColors.IsChecked! ? GetRandomColor() : customColor;
-
-                Rectangle rectangleFromCloud;
-                UIElement figure;
-                if (PrintRectangles.IsChecked is not null && (bool) PrintRectangles.IsChecked)
-                {
-                    rectangleFromCloud = circularCloud.PutNextRectangle(SizeCreator.GetRandomRectangleSize(25, 50));
-                    figure = CreateRectangle(rectangleFromCloud);
-                }
-                else
-                {
-                    figure = CreateLabel((item as string)!);
-                    rectangleFromCloud =
-                        circularCloud.PutNextRectangle(SizeCreator.GetLabelSize((Label) figure));
-                }
-
-                AddFigure(figure, rectangleFromCloud);
+                rectangleFromCloud = circularCloud.PutNextRectangle(SizeCreator.GetRandomRectangleSize(25, 50));
+                figure = CreateRectangle(rectangleFromCloud);
             }
+            else
+            {
+                figure = CreateLabel(words[wordPointer++]);
+                rectangleFromCloud =
+                    circularCloud.PutNextRectangle(SizeCreator.GetLabelSize((Label) figure));
+            }
+
+            AddFigure(figure, rectangleFromCloud);
         }
 
         private void AddFigure(UIElement figure, Rectangle rectangleFromCloud)
@@ -162,6 +156,7 @@ namespace TagsCloud.WPF
             UpdateCircularCloudFromTextBox();
             uiElements = new List<UIElement>();
             MyCanvas.Children.Clear();
+            wordPointer = 0;
 
             if (ColorPicker?.SelectedColor is not null)
                 customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
@@ -205,9 +200,9 @@ namespace TagsCloud.WPF
             };
 
             var result = dlg.ShowDialog();
-
             if (result != true)
                 return;
+            
             var filename = dlg.FileName;
             SaveCanvasToFile(this, MyCanvas, DefaultDpi, filename);
         }
@@ -241,8 +236,11 @@ namespace TagsCloud.WPF
         private void UpdateRectanglesCount(object sender, TextChangedEventArgs e)
         {
             var tryParse = int.TryParse(RectanglesCountTb.Text, out var count);
-            if (tryParse)
-                rectanglesCount = (bool) PrintRectangles.IsChecked! ? count : words.Length;
+            if (!tryParse) 
+                return;
+            
+            rectanglesCount = (bool) PrintRectangles.IsChecked! ? count : words.Length;
+            RectanglesCountTb.Text = (bool) PrintRectangles.IsChecked! ? count.ToString() : words.Length.ToString();
         }
     }
 }
