@@ -6,6 +6,6 @@ namespace TagCloud.IReaders
 {
     public interface IReader
     {
-        public string Read();
+        public IEnumerable<string> ReadWords();
     }
 }

@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.PointGenerators;
 
-namespace TagCloud
+namespace TagCloudTests
 {
     class SpiralPointGeneratorTests
     {

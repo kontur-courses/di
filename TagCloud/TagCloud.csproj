@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="WordPreprocessors\BoringWordsDictionary.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="BoringWordsRepositories\BoringWordsDictionary.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 

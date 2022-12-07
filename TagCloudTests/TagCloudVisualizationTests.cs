@@ -2,10 +2,11 @@
 using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud;
 using TagCloud.PointGenerators;
 using TagCloud.TagCloudVisualizations;
 
-namespace TagCloud
+namespace TagCloudTests
 {
     public class TagCloudVisualizationTests
     {

@@ -2,9 +2,10 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud;
 using TagCloud.PointGenerators;
 
-namespace TagCloud
+namespace TagCloudTests
 {
     public class TagCloudCreatorTests
     {

@@ -5,10 +5,11 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using TagCloud;
 using TagCloud.PointGenerators;
 using TagCloud.TagCloudVisualizations;
 
-namespace TagCloud
+namespace TagCloudTests
 {
     public class CircularCloudLayouterTests
     {

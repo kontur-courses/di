@@ -9,10 +9,44 @@ using TagCloud.IReaders;
 
 namespace TagCloudTests
 {
-    public class TextFileReaderTests
+    public class SingleWordInRowTextFileReaderTests
     {
         private readonly Random random = new Random();
-        private string data;
+        private string[] data;
+
+        [SetUp]
+        public void PrepareRandomString()
+        {
+            data = Enumerable.Range(20,40).Select(RandomString).ToArray();
+        }
+
+        [Test]
+        public void SingleWordInRowTextFileReader_Read_Data()
+        {
+            var path = "TextFileData.txt";
+            CreateTextFileWithData(path);
+
+            var fileReader = new SingleWordInRowTextFileReader(path);
+
+            CheckThatDataIsReadBy(fileReader);
+            DeleteFile(path);
+        }
+
+        [TestCase("TextFileData.csv", TestName = "File extension not supported")]
+        public void SingleWordInRowTextFileReader_Ctor_ThrowFileLoadExceptionWhen(string path)
+        {
+            Action act = () => new SingleWordInRowTextFileReader(path);
+
+            act.Should().Throw<FileLoadException>();
+        }
+
+        [TestCase("notExistingFile.txt", TestName = "file extension not exist")]
+        public void SingleWordInRowTextFileReader_Ctor_ThrowFileNotFoundExceptionWhen(string path)
+        {
+            Action act = () => new SingleWordInRowTextFileReader(path);
+
+            act.Should().Throw<FileNotFoundException>();
+        }
 
         private string RandomString(int length)
         {
@@ -21,37 +55,20 @@ namespace TagCloudTests
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        [SetUp]
-        public void PrepareRandomString()
-        {
-            data = RandomString(random.Next(100, 1000));
-        }
-
-        [Test]
-        public void TextFileReader_Read_Data()
-        {
-            var path = "TextFileData.txt";
-            CreateTextFileWithData(path);
-
-            var fileReader = new TextFileReader(path);
-
-            CheckThatDataIsReadBy(fileReader);
-            DeleteFile(path);
-        }
-
         private void CreateTextFileWithData(string path)
         {
-            File.Exists(path).Should().BeFalse();
             using (var file = new StreamWriter(path))
             {
-                file.Write(data);
+                foreach (var line in data)
+                    file.WriteLine(line);
             }
             File.Exists(path).Should().BeTrue();
         }
 
         private void CheckThatDataIsReadBy(IReader reader)
         {
-            reader.Read().Should().BeEquivalentTo(data);
+            var words = reader.ReadWords(); 
+            words.Should().BeEquivalentTo(data);
         }
 
         private void DeleteFile(string path)

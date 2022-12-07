@@ -3,21 +3,22 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using TagCloud;
 using TagCloud.PointGenerators;
 
-namespace TagCloud
+namespace TagCloudTests
 {
     public class TagCloudTests
     {
         private CircularCloudLayouter cloudLayouter;
-        private TagCloud tagCloud;
+        private TagCloud.TagCloud tagCloud;
 
         [SetUp]
         public void PrepareCircularCloudLayouter()
         {
             var center = new Point();
             cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
-            tagCloud = new TagCloud(center);
+            tagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = new Rectangle(0, 0, 5, 5);
             tagCloud.Rectangles.Add(rectangle);
@@ -57,7 +58,7 @@ namespace TagCloud
         [Test]
         public void Equals_ReturnedTrue_ForEqualObjects()
         {
-            var otherTagCloud = new TagCloud(tagCloud.Center);
+            var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
 
             otherTagCloud.Rectangles.AddRange(tagCloud.Rectangles);
 
@@ -67,7 +68,7 @@ namespace TagCloud
         [Test]
         public void Equals_ReturnedFalse_WhenCenterNotEquals()
         {
-            var otherTagCloud = new TagCloud(new Point(tagCloud.Center.X -5, tagCloud.Center.Y - 7));
+            var otherTagCloud = new TagCloud.TagCloud(new Point(tagCloud.Center.X -5, tagCloud.Center.Y - 7));
 
             tagCloud.Equals(otherTagCloud).Should().BeFalse();
         }
@@ -75,7 +76,7 @@ namespace TagCloud
         [Test]
         public void Equals_ReturnedFalse_WhenRectanglesNotEquals()
         {
-            var otherTagCloud = new TagCloud(tagCloud.Center);
+            var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
 
             otherTagCloud.Rectangles.AddRange(
                 tagCloud.Rectangles.Select(rectangle=>
@@ -91,7 +92,7 @@ namespace TagCloud
         [Test]
         public void Equals_ReturnedFalse_WhenRectanglesCountNotEquals()
         {
-            var otherTagCloud = new TagCloud(tagCloud.Center);
+            var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
             
             otherTagCloud.Rectangles.AddRange(tagCloud.Rectangles);
 
