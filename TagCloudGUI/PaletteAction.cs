@@ -4,6 +4,7 @@
     public class PaletteAction : IActionForm
     {
         private Palette palette;
+
         public PaletteAction(Palette palette)
         {
             this.palette = palette;

@@ -21,7 +21,8 @@ namespace TagCloudGraphicalUserInterface
             builder.RegisterType<PaletteAction>().As<IActionForm>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxTags>().As<IImageSettingsProvider, PictureBoxTags>().SingleInstance();
-            builder.RegisterTypes(typeof(CircularCloudLayouter), typeof(ArithmeticSpiral), typeof(TagCloud), typeof(List<TextRectangle>),
+            builder.RegisterTypes(typeof(CircularCloudLayouter), typeof(ArithmeticSpiral), typeof(TagCloud),
+                typeof(TextRectangle),
                 typeof(AppSettings), typeof(CloudForm), typeof(ImageSettings)).AsSelf();
             var container = builder.Build();
             Application.Run(container.Resolve<CloudForm>());
