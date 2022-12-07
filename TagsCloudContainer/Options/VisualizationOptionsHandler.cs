@@ -56,7 +56,7 @@ public static class VisualizationOptionsHandler
         Console.WriteLine("Введите минимальную длину слова(можно пропустить):");
         var input = Console.ReadLine();
         return string.IsNullOrEmpty(input)
-            ? int.MaxValue
+            ? int.MinValue
             : int.Parse(input);
     }
 }

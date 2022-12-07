@@ -21,7 +21,7 @@ public class TagCloudCreator
         var words = File.ReadAllLines(visualizationOptions.PathToTextFile).Select(word => word.ToLower())
             .Where(line => line.Length > visualizationOptions.BoringWordsThreshold)
             .ToList();
-        var tags = converter.ConvertToTags(words, visualizationOptions.MinFontSize);
+        var tags = converter.ConvertToTags(words, visualizationOptions);
         drawer.DrawCloud(tags, visualizationOptions);
     }
 }

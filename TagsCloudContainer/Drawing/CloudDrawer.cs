@@ -20,8 +20,7 @@ public class CloudDrawer : ICloudDrawer
             {
                 var pen = new Pen(Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)));
                 graphics.DrawRectangle(pen, tag.Bounds);
-                graphics.DrawString(tag.Word, new Font("Arial", tag.FontSize, FontStyle.Regular, GraphicsUnit.Pixel),
-                    new SolidBrush(pen.Color), tag.Bounds);
+                graphics.DrawString(tag.Word, tag.Font, new SolidBrush(pen.Color), tag.Bounds);
             }
         }
 

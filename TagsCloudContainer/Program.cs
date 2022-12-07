@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,9 +20,11 @@ namespace TagsCloudContainer
             {
                 while (true)
                 {
-                    var options = VisualizationOptionsHandler.RequestVisualizationOptions();
+                    // var options = VisualizationOptionsHandler.RequestVisualizationOptions();
+                    var options = new VisualizationOptions("D:/test.txt", ImageFormat.Bmp, new Size(1000, 1000), 2, 15);
                     var cloudCreator = container.Resolve<TagCloudCreator>();
                     cloudCreator.CreateCloud(options);
+                    Console.ReadKey();
                 }
             }
             catch (Exception e)

@@ -6,6 +6,8 @@ public class SimpleWeightCounter : IWeightCounter
     {
         return lines
             .GroupBy(x => x)
-            .ToDictionary(x => x.Key, x => x.Count());
+            .ToDictionary(x => x.Key, x => x.Count())
+            .OrderByDescending(x => x.Value)
+            .ToDictionary(x => x.Key, x => x.Value);
     }
 }

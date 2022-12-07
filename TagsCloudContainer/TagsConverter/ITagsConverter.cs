@@ -1,6 +1,8 @@
-﻿namespace TagsCloudContainer.TagsConverter;
+﻿using TagsCloudContainer.Options;
+
+namespace TagsCloudContainer.TagsConverter;
 
 public interface ITagsConverter
 {
-    IEnumerable<Tag> ConvertToTags(IEnumerable<string> words, int minFontSize);
+    IEnumerable<Tag> ConvertToTags(IEnumerable<string> words, VisualizationOptions visualizationOptions);
 }
