@@ -27,6 +27,7 @@ namespace TagsCloudContainer.Visualisator
             var rectangles = cloudLayouter.FindRectanglesPositions();
             using (var g = imageHolder.StartDrawing())
             {
+                g.Clear(imageSettings.BackgroundColor);
                 using var tBrush = new SolidBrush(imageSettings.TextColor);
                 using var font = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Point);
                 using var rBrush = new SolidBrush(imageSettings.RectangleBackgroundColor);
@@ -38,6 +39,7 @@ namespace TagsCloudContainer.Visualisator
                     g.DrawRectangle(rBorderPen, pair.rectangle);
                 }
             }
+            imageHolder.UpdateUi();
         }
     }
 }

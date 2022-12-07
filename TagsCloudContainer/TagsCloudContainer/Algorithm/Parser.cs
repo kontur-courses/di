@@ -25,7 +25,7 @@ namespace TagsCloudContainer.Algorithm
             var wordsCount = new Dictionary<string, int>();
             using var reader = new StreamReader(fileSettings.SourceFilePath);
             while (reader.ReadLine() is {} line)
-                wordsCount[line] = wordsCount.ContainsKey(line) ? 1 : wordsCount[line] + 1;
+                wordsCount[line] = wordsCount.ContainsKey(line) ? wordsCount[line] + 1 : 1;
             return wordsCount;
         }
 
@@ -40,7 +40,7 @@ namespace TagsCloudContainer.Algorithm
         private HashSet<string> GetBoringWords()
         {
             var boringWords = new HashSet<string>();
-            using var reader = new StreamReader(fileSettings.SourceFilePath);
+            using var reader = new StreamReader(fileSettings.BoringWordsFilePath);
             while (reader.ReadLine() is {} line)
                 boringWords.Add(line);
             return boringWords;

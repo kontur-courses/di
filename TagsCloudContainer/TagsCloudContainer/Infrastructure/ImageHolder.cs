@@ -19,6 +19,12 @@ namespace TagsCloudContainer.Infrastructure
             return Graphics.FromImage(Image);
         }
 
+        public void UpdateUi()
+        {
+            Refresh();
+            Application.DoEvents();
+        }
+
         public void RecreateImage(ImageSettings imageSettings)
         {
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);

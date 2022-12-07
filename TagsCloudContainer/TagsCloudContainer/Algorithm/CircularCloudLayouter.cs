@@ -14,23 +14,26 @@ namespace TagsCloudContainer.Algorithm
 {
     public class CircularCloudLayouter
     {
-        public readonly Point Center;
+        public Point Center => new Point(imageHolder.GetImageSize().Width / 2, imageHolder.Height / 2);
 
+        private readonly ImageHolder imageHolder;
         private readonly List<(Rectangle rectangle, string text)> rectangles;
-        private readonly Func<int, Point> pointFinderFunc;
+        private readonly AlgorithmSettings algoSettings;
         private readonly Parser parser;
+        private Func<int, Point> pointFinderFunc;
 
         public CircularCloudLayouter(ImageHolder imageHolder, AlgorithmSettings algoSettings, Parser parser)
         {
-            var imgSize = imageHolder.Size;
-            Center = new Point(imgSize.Width/2, imgSize.Height/2);
+            this.imageHolder = imageHolder;
             rectangles = new List<(Rectangle rectangle, string text)>();
-            this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
+            this.algoSettings = algoSettings;
             this.parser = parser;
         }
 
         public List<(Rectangle rectangle, string text)> FindRectanglesPositions()
         {
+            rectangles.Clear();
+            this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
             var wordsCount = parser.GetWordsCountWithoutBoring();
             var sumWords = wordsCount.Sum(e => e.Value);
             foreach (var pair in wordsCount)
@@ -44,8 +47,9 @@ namespace TagsCloudContainer.Algorithm
 
         private Size CalculateRectangleSize(int wordCount, int totalWordsCount)
         {
-            var length = (int)Math.Sqrt(wordCount / totalWordsCount);
-            return new Size(length, length);
+            var proc = (double)wordCount / (double)totalWordsCount;
+            return new Size((int)(imageHolder.GetImageSize().Width * 0.7 * proc),
+                (int)(imageHolder.GetImageSize().Height * 0.7 * proc));
         }
 
         private Rectangle GetNextRectangle(Size rectangleSize)
