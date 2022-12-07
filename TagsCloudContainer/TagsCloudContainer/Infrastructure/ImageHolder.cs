@@ -9,6 +9,11 @@ namespace TagsCloudContainer.Infrastructure
 {
     public class ImageHolder : PictureBox
     {
+        public Size GetImageSize()
+        {
+            return Image.Size;
+        }
+
         public void RecreateImage(ImageSettings imageSettings)
         {
             Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);

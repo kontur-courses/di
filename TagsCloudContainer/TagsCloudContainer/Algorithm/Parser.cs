@@ -14,7 +14,9 @@ namespace TagsCloudContainer.Algorithm
         public Dictionary<string, int> CountWordsWithoutBoring()
         {
             var words = CountWordsInSourceFile();
-            words = RemoveBoringWords(words);
+            words = RemoveBoringWords(words)
+                .OrderByDescending(e => e.Value)
+                .ToDictionary(e => e.Key, e => e.Value);
             return words;
         }
 
@@ -27,7 +29,7 @@ namespace TagsCloudContainer.Algorithm
             return wordsCount;
         }
 
-        public Dictionary<string, int> RemoveBoringWords(Dictionary<string, int> source)
+        private Dictionary<string, int> RemoveBoringWords(Dictionary<string, int> source)
         {
             var boringWords = GetBoringWords();
             return source
@@ -35,7 +37,7 @@ namespace TagsCloudContainer.Algorithm
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        public HashSet<string> GetBoringWords()
+        private HashSet<string> GetBoringWords()
         {
             var boringWords = new HashSet<string>();
             using var reader = new StreamReader(fileSettings.SourceFilePath);
