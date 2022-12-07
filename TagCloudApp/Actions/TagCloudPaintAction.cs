@@ -2,23 +2,24 @@
 using TagCloudApp.Infrastructure;
 using TagCloudCreator.Domain;
 using TagCloudCreator.Interfaces.Providers;
+using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudApp.Actions;
 
 public class TagCloudPaintAction : IUiAction
 {
     private readonly TagCloudPainter _painter;
-    private readonly IWordsPathProvider _wordsPathProvider;
+    private readonly IWordsPathSettings _wordsPathSettings;
     private readonly IWordsFileReaderProvider _readersProvider;
 
     public TagCloudPaintAction(
         TagCloudPainter painter,
-        IWordsPathProvider wordsPathProvider,
+        IWordsPathSettings wordsPathSettings,
         IWordsFileReaderProvider readersProvider
     )
     {
         _painter = painter;
-        _wordsPathProvider = wordsPathProvider;
+        _wordsPathSettings = wordsPathSettings;
         _readersProvider = readersProvider;
     }
 
@@ -39,12 +40,12 @@ public class TagCloudPaintAction : IUiAction
         {
             CheckFileExists = true,
             Filter = _filter,
-            InitialDirectory = Path.GetFullPath(_wordsPathProvider.WordsPath)
+            InitialDirectory = Path.GetFullPath(_wordsPathSettings.WordsPath)
         };
         var res = dialog.ShowDialog();
         if (res != DialogResult.OK)
             return;
-        _wordsPathProvider.WordsPath = dialog.FileName;
+        _wordsPathSettings.WordsPath = dialog.FileName;
         _painter.Paint();
     }
 }

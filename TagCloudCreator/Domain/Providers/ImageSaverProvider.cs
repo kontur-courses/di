@@ -1,27 +1,28 @@
 ﻿using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
+using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudCreator.Domain.Providers;
 
 public class ImageSaverProvider : IImageSaverProvider
 {
     private readonly Dictionary<string, IImageSaver> _wordsFileReaders;
-    private readonly IImagePathProvider _wordsPathProvider;
+    private readonly IImagePathSettings _wordsPathSettings;
 
     public ImageSaverProvider(
         IEnumerable<IImageSaver> wordsFileReaders,
-        IImagePathProvider wordsPathProvider
+        IImagePathSettings wordsPathSettings
     )
     {
         _wordsFileReaders = wordsFileReaders.ToDictionary(saver => saver.SupportedExtension);
-        _wordsPathProvider = wordsPathProvider;
+        _wordsPathSettings = wordsPathSettings;
     }
 
     public IReadOnlyCollection<string> SupportedExtensions => _wordsFileReaders.Keys;
 
     public IImageSaver GetSaver()
     {
-        var imageExtension = Path.GetExtension(_wordsPathProvider.ImagePath);
+        var imageExtension = Path.GetExtension(_wordsPathSettings.ImagePath);
         if (_wordsFileReaders.TryGetValue(imageExtension, out var result))
             return result;
         throw new ArgumentException($"No saver for extension: {imageExtension}");

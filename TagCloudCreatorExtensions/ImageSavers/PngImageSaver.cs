@@ -2,22 +2,23 @@
 using System.Drawing.Imaging;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
+using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudCreatorExtensions.ImageSavers;
 
 public class PngImageSaver : IImageSaver
 {
-    private readonly IImagePathProvider _imagePathProvider;
+    private readonly IImagePathSettings _imagePathSettings;
 
-    public PngImageSaver(IImagePathProvider imagePathProvider)
+    public PngImageSaver(IImagePathSettings imagePathSettings)
     {
-        _imagePathProvider = imagePathProvider;
+        _imagePathSettings = imagePathSettings;
     }
 
     public string SupportedExtension => ".png";
 
     public void SaveImage(Image image)
     {
-        image.Save(_imagePathProvider.ImagePath, ImageFormat.Png);
+        image.Save(_imagePathSettings.ImagePath, ImageFormat.Png);
     }
 }

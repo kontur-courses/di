@@ -1,8 +1,8 @@
-﻿using TagCloudCreator.Interfaces.Providers;
+﻿using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudCreator.Domain.Settings;
 
-public class AppSettings : IImagePathProvider, IWordsPathProvider, IImageSettingsProvider
+public class AppSettings : IImagePathSettings, IWordsPathSettings
 {
     public string ImagePath { get; set; } = null!;
     public string WordsPath { get; set; } = null!;
