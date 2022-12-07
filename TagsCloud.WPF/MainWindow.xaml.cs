@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,7 +13,8 @@ using System.Windows.Threading;
 using TagsCloud.CloudLayouter;
 using TagsCloud.CloudLayouter.Implementation;
 using TagsCloud.FontFinder;
-using TagsCloud.FontFinder.Implementation;
+using TagsCloud.WordHandler;
+using TagsCloud.WordHandler.Implementation;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -24,11 +27,10 @@ namespace TagsCloud.WPF
     {
         private readonly Random random = new();
         private Brush customColor = Brushes.Beige;
-        private int rectanglesCount = DefaultRectanglesCount;
+        private int rectanglesCount;
         private readonly DispatcherTimer timer = new();
-        
+
         private const double DefaultDpi = 96.0;
-        private const int DefaultRectanglesCount = 100;
 
         private readonly string[] words;
         private const string PathToWords = "../../../Words.txt";
@@ -37,19 +39,40 @@ namespace TagsCloud.WPF
         private List<UIElement> uiElements = new();
 
         private IFontFinder fontFinder;
+        private readonly IWordHandler[] wordHandlers;
+        private readonly RecurringWordsHandler? recurringWordsHandler;
 
-        public MainWindow()
+        private const int DefaultFontSize = 10;
+
+        public MainWindow(IFontFinder fontFinder, IWordHandler[] wordHandlers)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
-            fontFinder = new WindowsFontFinder();
-            words = GetWordsFromTxt(PathToWords);
+            this.fontFinder = fontFinder;
+            this.wordHandlers = wordHandlers;
+            recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
+            words = ProcessWords(GetWordsFromTxt(PathToWords));
+            rectanglesCount = words.Length;
             MyCanvas.Focus();
-            timer.Interval = TimeSpan.FromSeconds(0);
-            timer.Start();
+            // timer.Interval = TimeSpan.FromSeconds(0);
+            // timer.Start();
 
             RectanglesCountTb.Text = rectanglesCount.ToString();
         }
+
+        private static RecurringWordsHandler? GetRecurringWordsHandler(IWordHandler[] wordHandlers)
+        {
+            foreach (var handler in wordHandlers)
+            {
+                if (handler is RecurringWordsHandler recurringWordsHandler)
+                    return recurringWordsHandler;
+            }
+
+            return null;
+        }
+
+        private string[] ProcessWords(string[] getWordsFromTxt) => 
+            wordHandlers.Aggregate(getWordsFromTxt, (current, handler) => handler.ProcessWords(current));
 
         private static string[] GetWordsFromTxt(string path) => File.ReadAllLines(path);
 
@@ -58,29 +81,36 @@ namespace TagsCloud.WPF
             if (circularCloud is null || uiElements.Count >= rectanglesCount)
                 return;
 
-            customColor = IsRandomColors.IsChecked is not null && (bool) IsRandomColors.IsChecked
-                ? GetRandomColor()
-                : customColor;
-            var currentWord = words[random.Next(words.Length)];
+            foreach (var item in (bool) PrintRectangles.IsChecked!
+                         ? (IEnumerable) Enumerable.Range(0, rectanglesCount)
+                         : words) 
+            {
+                customColor = (bool) IsRandomColors.IsChecked! ? GetRandomColor() : customColor;
 
-            Rectangle rectangleFromCloud;
-            UIElement figure;
-            if (PrintRectangles.IsChecked is not null && (bool) PrintRectangles.IsChecked)
-            {
-                rectangleFromCloud = circularCloud.PutNextRectangle(SizeCreator.GetRandomRectangleSize(25, 50));
-                figure = CreateRectangle(rectangleFromCloud);
+                Rectangle rectangleFromCloud;
+                UIElement figure;
+                if (PrintRectangles.IsChecked is not null && (bool) PrintRectangles.IsChecked)
+                {
+                    rectangleFromCloud = circularCloud.PutNextRectangle(SizeCreator.GetRandomRectangleSize(25, 50));
+                    figure = CreateRectangle(rectangleFromCloud);
+                }
+                else
+                {
+                    figure = CreateLabel((item as string)!);
+                    rectangleFromCloud =
+                        circularCloud.PutNextRectangle(SizeCreator.GetLabelSize((Label) figure));
+                }
+
+                AddFigure(figure, rectangleFromCloud);
             }
-            else
-            {
-                figure = CreateLabel(currentWord);
-                rectangleFromCloud =
-                    circularCloud.PutNextRectangle(SizeCreator.GetLabelSize((Label) figure));
-            }
-            
+        }
+
+        private void AddFigure(UIElement figure, Rectangle rectangleFromCloud)
+        {
             Canvas.SetLeft(figure, rectangleFromCloud.X);
             Canvas.SetTop(figure, rectangleFromCloud.Y);
             uiElements.Add(figure);
-            
+
             MyCanvas.Children.Add(figure);
         }
 
@@ -90,7 +120,8 @@ namespace TagsCloud.WPF
             {
                 Foreground = customColor,
                 Background = Brushes.Black,
-                FontSize = random.Next(10, 15),
+                FontSize = DefaultFontSize 
+                           + (recurringWordsHandler is not null ? recurringWordsHandler.WordCount[text] : 0),
                 Content = text,
                 FontFamily = new FontFamily("Verdana")
             };
@@ -121,8 +152,8 @@ namespace TagsCloud.WPF
             }
             else
             {
-                 StartButton.Header = "Start";
-                 timer.Tick -= DrawRectangle;
+                StartButton.Header = "Start";
+                timer.Tick -= DrawRectangle;
             }
         }
 
@@ -141,7 +172,7 @@ namespace TagsCloud.WPF
             var isNumber = int.TryParse(TbSteps.Text, out var steps);
             if (!isNumber)
                 steps = 1;
-            
+
             circularCloud =
                 new CircularCloudLayouter(new Point((int) (MyWindow.Width / 2),
                     (int) (MyWindow.Height / 2)), steps);
@@ -152,7 +183,7 @@ namespace TagsCloud.WPF
             var isNumber = double.TryParse(TbSpeed.Text, out var speed);
             if (!isNumber)
                 speed = 0.1;
-            
+
             timer.Interval = TimeSpan.FromSeconds(speed);
             uiElements = new List<UIElement>();
             MyCanvas.Children.Clear();
@@ -168,14 +199,14 @@ namespace TagsCloud.WPF
         {
             var dlg = new Microsoft.Win32.SaveFileDialog
             {
-                FileName = "Image", 
+                FileName = "Image",
                 DefaultExt = ".png",
                 Filter = "PNG File (.png)|*.png"
             };
 
             var result = dlg.ShowDialog();
 
-            if (result != true) 
+            if (result != true)
                 return;
             var filename = dlg.FileName;
             SaveCanvasToFile(this, MyCanvas, DefaultDpi, filename);
@@ -185,19 +216,19 @@ namespace TagsCloud.WPF
         {
             var size = new System.Windows.Size(window.Width, window.Height);
             canvas.Measure(size);
- 
+
             var rtb = new RenderTargetBitmap(
-                (int)window.Width,
-                (int)window.Height,
+                (int) window.Width,
+                (int) window.Height,
                 dpi,
                 dpi,
                 PixelFormats.Pbgra32
             );
             rtb.Render(canvas);
- 
+
             SaveRtbAsPngbmp(rtb, filename);
         }
- 
+
         private static void SaveRtbAsPngbmp(BitmapSource bmp, string filename)
         {
             var enc = new PngBitmapEncoder();
@@ -211,7 +242,7 @@ namespace TagsCloud.WPF
         {
             var tryParse = int.TryParse(RectanglesCountTb.Text, out var count);
             if (tryParse)
-                rectanglesCount = count;
+                rectanglesCount = (bool) PrintRectangles.IsChecked! ? count : words.Length;
         }
     }
 }

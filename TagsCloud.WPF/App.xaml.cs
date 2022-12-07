@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using Ninject;
+using TagsCloud.FontFinder;
+using TagsCloud.FontFinder.Implementation;
+using TagsCloud.WordHandler;
+using TagsCloud.WordHandler.Implementation;
 
 namespace TagsCloud.WPF
 {
@@ -19,11 +19,23 @@ namespace TagsCloud.WPF
         }
  
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             var app = new App();
-            var window = new MainWindow();
+            var container = GetBuilder();
+            var window = container.Get<MainWindow>();
             app.Run(window);
-        } 
+        }
+
+        private static IKernel GetBuilder()
+        {
+            var container = new StandardKernel();
+            container.Bind<IFontFinder>().To<WindowsFontFinder>();
+            container.Bind<IWordHandler>().To<LowerCaseHandler>();
+            container.Bind<IWordHandler>().To<BoringRusWordsHandler>();
+            container.Bind<IWordHandler>().To<RecurringWordsHandler>().InSingletonScope();
+            
+            return container;
+        }
     }
 }
