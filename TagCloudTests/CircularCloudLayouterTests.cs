@@ -13,8 +13,6 @@ namespace TagCloudTests;
 [Parallelizable(ParallelScope.All)]
 public class CircularCloudLayouterTests
 {
-    private readonly ConcurrentDictionary<string, CircularCloudLayouter> layouterByTestId = new();
-
     [SetUp]
     public void SetUp()
     {
@@ -40,6 +38,8 @@ public class CircularCloudLayouterTests
 
         Console.WriteLine($"Tag cloud visualization saved to file {directory.FullName}\\{filename}");
     }
+
+    private readonly ConcurrentDictionary<string, CircularCloudLayouter> layouterByTestId = new();
 
     [TestCase(0, 0)]
     [TestCase(10, 10)]

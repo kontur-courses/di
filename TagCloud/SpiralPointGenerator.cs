@@ -3,17 +3,17 @@ using TagCloud.Abstractions;
 
 namespace TagCloud;
 
-public class SpiralPointGenerator: IPointGenerator
+public class SpiralPointGenerator : IPointGenerator
 {
     private readonly double spiralExpansionStep;
     private readonly double spiralTwistStep;
-    
+
     public SpiralPointGenerator(double spiralExpansionStep, double spiralTwistStep)
     {
         this.spiralExpansionStep = spiralExpansionStep;
         this.spiralTwistStep = spiralTwistStep;
     }
-    
+
     public IEnumerable<Point> Generate(Point center)
     {
         double r = 0;

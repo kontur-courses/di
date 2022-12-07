@@ -50,7 +50,7 @@ public class TagCloudDrawerTests
 
         AllPixels(bitmap).Should().Contain(penColor);
     }
-    
+
     [Test]
     public void DrawTagCloud_DifferentCloudsBitmaps_AreDifferent()
     {
