@@ -1,6 +1,7 @@
 using Autofac;
 using TagsCloudContainer.Actions;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Parser;
 
 namespace TagsCloudContainer
 {
@@ -13,7 +14,9 @@ namespace TagsCloudContainer
 
             builder.RegisterType<MainForm>().As<Form>();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
+            builder.RegisterType<FileSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ImageHolder>().AsSelf().SingleInstance();
+            builder.RegisterType<Parser.Parser>().AsSelf();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
