@@ -13,5 +13,17 @@ namespace TagsCloud.WPF
     /// </summary>
     public partial class App : Application
     {
+        private App()
+        {
+            InitializeComponent();
+        }
+ 
+        [STAThread]
+        static void Main()
+        {
+            var app = new App();
+            var window = new MainWindow();
+            app.Run(window);
+        } 
     }
 }

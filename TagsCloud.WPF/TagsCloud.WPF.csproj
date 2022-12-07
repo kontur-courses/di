@@ -15,4 +15,9 @@
       <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ApplicationDefinition Remove="App.xaml" />
+      <Page Include="App.xaml" />
+    </ItemGroup>
+
 </Project>
