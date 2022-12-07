@@ -11,7 +11,7 @@ namespace TagsCloudContainer.Algorithm
             this.fileSettings = fileSettings;
         }
 
-        public Dictionary<string, int> CountWordsWithoutBoring()
+        public Dictionary<string, int> GetWordsCountWithoutBoring()
         {
             var words = CountWordsInSourceFile();
             words = RemoveBoringWords(words)

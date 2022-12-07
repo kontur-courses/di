@@ -31,7 +31,6 @@ namespace TagsCloudContainer.Algorithm
 
         public List<(Rectangle rectangle, string text)> FindRectanglesPositions()
         {
-            //rectangles = new List<(Rectangle rectangle, string text)>();
             var wordsCount = parser.GetWordsCountWithoutBoring();
             var sumWords = wordsCount.Sum(e => e.Value);
             foreach (var pair in wordsCount)
