@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TagCloud.BoringWordsStorage;
-using TagCloud.IReaders;
+using TagCloud.Readers;
 
 namespace TagCloud.BoringWordsRepositories
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Tag;
 
 namespace TagCloud
 {
@@ -9,13 +10,13 @@ namespace TagCloud
     {
         public Point Center { get; private set; }
 
-        public List<Rectangle> Rectangles { get; private set; }
+        public List<ITag> Rectangles { get; private set; }
 
         public TagCloud(Point center)
         {
             Center = center;
 
-            Rectangles = new List<Rectangle>();
+            Rectangles = new List<ITag>();
         }
 
         public int GetWidth()
@@ -23,8 +24,8 @@ namespace TagCloud
             if (Rectangles.Count == 0)
                 return 0;
 
-            return Rectangles.Max(r => r.Right) - 
-                Rectangles.Min(r => r.Left);
+            return Rectangles.Max(r => r.Frame.Right) - 
+                Rectangles.Min(r => r.Frame.Left);
         }
 
         public int GetHeight()
@@ -32,13 +33,13 @@ namespace TagCloud
             if (Rectangles.Count == 0)
                 return 0;
 
-            return Rectangles.Max(r => r.Bottom) - 
-                Rectangles.Min(r => r.Top);
+            return Rectangles.Max(r => r.Frame.Bottom) - 
+                Rectangles.Min(r => r.Frame.Top);
         }
 
-        public int GetLeftBound() => Rectangles.Min(r => r.Left);
+        public int GetLeftBound() => Rectangles.Min(r => r.Frame.Left);
 
-        public int GetTopBound() => Rectangles.Min(r => r.Top);
+        public int GetTopBound() => Rectangles.Min(r => r.Frame.Top);
 
         public override int GetHashCode()
         {

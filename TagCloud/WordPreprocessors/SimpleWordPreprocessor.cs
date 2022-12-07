@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TagCloud.BoringWordsStorage;
-using TagCloud.IReaders;
+using TagCloud.Readers;
 
 namespace TagCloud.WordPreprocessors
 {
@@ -18,7 +18,7 @@ namespace TagCloud.WordPreprocessors
             boringWords = boringWordsStorage.GetBoringWords();
         }
 
-        public IEnumerable<string> Preprocessing()
+        public IEnumerable<string> GetPreprocessedWords()
         {
             var lowerCaseWords = СonvertToLowerCase(words);
             var preprocessedWords = RemoveBoringWordsFrom(lowerCaseWords);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using TagCloud.Extensions;
 
 namespace TagCloud.TagCloudVisualizations
@@ -33,7 +34,7 @@ namespace TagCloud.TagCloudVisualizations
             {
                 foreach (var rectangle in tagCloud.Rectangles)
                 {
-                    var rectangleInFrame = MoveRectangleToImageFrame(rectangle, frameShift);
+                    var rectangleInFrame = MoveRectangleToImageFrame(rectangle.Frame, frameShift);
                     graphics.DrawRectangle(new Pen(GetRandomBrush()), rectangleInFrame);
                 }
             }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TagCloud.IReaders
+namespace TagCloud.Readers
 {
     public class SingleWordInRowTextFileReader : IReader
     {

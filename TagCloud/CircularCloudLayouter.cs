@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.PointGenerators;
+using TagCloud.Tag;
+using TagCloud.WordPreprocessors;
 
 namespace TagCloud
 {
     public class CircularCloudLayouter
     {
-        private readonly TagCloud tagCloud;
-
         private readonly IPointGenerator pointGenerator;
+        private readonly IEnumerable<Rectangle> rectangles;
 
         public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
-            tagCloud = new TagCloud(pointGenerator.GetCenterPoint());
             this.pointGenerator = pointGenerator;
+            this.rectangles = new List<Rectangle>();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -28,8 +30,7 @@ namespace TagCloud
             {
                 rectangle = GetNextRectangle(rectangleSize);
             }
-            while (tagCloud.Rectangles.Any(r => r.IntersectsWith(rectangle)));
-            tagCloud.Rectangles.Add(rectangle);
+            while (rectangles.Any(r => r.IntersectsWith(rectangle)));
 
             return rectangle;
         }
@@ -47,6 +48,11 @@ namespace TagCloud
         private Size GetCenterFor(Size rectangleSize) =>
             new Size(-rectangleSize.Width / 2, -rectangleSize.Height / 2);
 
-        public TagCloud GetTagCloud() => tagCloud;
+        public TagCloud GetTagCloudOfLayout()
+        {
+            var tagCloud = new TagCloud(pointGenerator.GetCenterPoint());
+            tagCloud.Rectangles.AddRange(rectangles.Select(rectangle => new Layout(rectangle)));
+            return tagCloud;
+        }
     }
 }

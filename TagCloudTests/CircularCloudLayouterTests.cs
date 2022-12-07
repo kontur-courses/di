@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud;
 using TagCloud.PointGenerators;
+using TagCloud.Tag;
 using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests
@@ -36,7 +37,7 @@ namespace TagCloudTests
 
             File.WriteAllText(filePath + ".txt", $"The test {context.Test.FullName} failed with an error: {context.Result.Message}" + 
                                                  Environment.NewLine + "StackTrace:" + context.Result.StackTrace);
-            var visualization = new TagCloudBitmapVisualization(cloudLayouter.GetTagCloud());
+            var visualization = new TagCloudBitmapVisualization(cloudLayouter.GetTagCloudOfLayout());
             visualization.Save(filePath + ".bmp");
 
             TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
@@ -50,7 +51,7 @@ namespace TagCloudTests
         {
             var planningCenter = new Point(x, y);
 
-            var tagCloud = new CircularCloudLayouter(new SpiralPointGenerator(planningCenter)).GetTagCloud();
+            var tagCloud = new CircularCloudLayouter(new SpiralPointGenerator(planningCenter)).GetTagCloudOfLayout();
 
             tagCloud.GetWidth().Should().Be(0);
             tagCloud.GetHeight().Should().Be(0);
@@ -77,8 +78,8 @@ namespace TagCloudTests
             {
                 var rectSize = new Size(firstRectWidth, firstRectHeight);
                 var newRect = cloudLayouter.PutNextRectangle(rectSize);
-                cloudLayouter.GetTagCloud().Rectangles.Where(rect => rect != newRect).
-                    All(rect => !rect.IntersectsWith(newRect)).Should().BeTrue();
+                cloudLayouter.GetTagCloudOfLayout().Rectangles.Where(rect => rect.Frame != newRect).
+                    All(rect => rect?.Frame.IntersectsWith(newRect) == false).Should().BeTrue();
 
                 firstRectHeight /= 2;
                 firstRectWidth /= 2;

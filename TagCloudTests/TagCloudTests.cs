@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud;
 using TagCloud.PointGenerators;
+using TagCloud.Tag;
 
 namespace TagCloudTests
 {
@@ -21,7 +22,7 @@ namespace TagCloudTests
             tagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = new Rectangle(0, 0, 5, 5);
-            tagCloud.Rectangles.Add(rectangle);
+            tagCloud.Rectangles.Add(new Layout(rectangle));
         }
 
         [TestCase(0, 0, 35, 75, TestName = "center in zero point")]
@@ -33,13 +34,13 @@ namespace TagCloudTests
         {
             var center = new Point(centerX, centerY);
             cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            var tagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = cloudLayouter.PutNextRectangle(new Size(reactWidth, reactHeight));
+            tagCloud.Rectangles.Add(new Layout(rectangle));
             var planningReactLocation = new Point(centerX - reactWidth / 2, centerY - reactHeight / 2);
 
             rectangle.Location.Should().BeEquivalentTo(planningReactLocation);
-
-            tagCloud = cloudLayouter.GetTagCloud();
 
             tagCloud.GetHeight().Should().Be(reactHeight);
             tagCloud.GetWidth().Should().Be(reactWidth);
@@ -81,8 +82,9 @@ namespace TagCloudTests
             otherTagCloud.Rectangles.AddRange(
                 tagCloud.Rectangles.Select(rectangle=>
                 {
-                    rectangle.Width += 5;
-                    return rectangle;
+                    var newRectangle = new Rectangle(rectangle.Frame.Location, rectangle.Frame.Size);
+                    newRectangle.Width += 5;
+                    return new Layout(newRectangle);
                 }));
 
             tagCloud.Equals(otherTagCloud).Should().BeFalse();

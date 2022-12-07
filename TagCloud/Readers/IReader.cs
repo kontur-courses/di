@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TagCloud.IReaders
+namespace TagCloud.Readers
 {
     public interface IReader
     {

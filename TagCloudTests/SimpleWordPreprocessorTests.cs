@@ -5,7 +5,7 @@ using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.BoringWordsRepositories;
-using TagCloud.IReaders;
+using TagCloud.Readers;
 using TagCloud.WordPreprocessors;
 
 namespace TagCloudTests
@@ -22,7 +22,7 @@ namespace TagCloudTests
         }
 
         [Test]
-        public void SimpleWordPreprocessor_Preprocessing_ShouldСonvertWordsToLowerCase()
+        public void SimpleWordPreprocessor_GetPreprocessedWords_ShouldReturnСonvertWordsToLowerCase()
         {
             var words = wordsReader.ReadWords();
             var preprocessedWords = GetPreprocessedWords();
@@ -33,7 +33,7 @@ namespace TagCloudTests
 
 
         [Test]
-        public void SimpleWordPreprocessor_Preprocessing_ShouldRemoveBoringWordsFromWords()
+        public void SimpleWordPreprocessor_GetPreprocessedWords_ShouldReturnRemoveBoringWordsFromWords()
         {
             var words = wordsReader.ReadWords();
             var boringWords = new TextFileBoringWordsStorage().GetBoringWords();
@@ -46,7 +46,7 @@ namespace TagCloudTests
         private IEnumerable<string> GetPreprocessedWords()
         {
             wordPreprocessor = new SimpleWordPreprocessor(wordsReader, new TextFileBoringWordsStorage());
-            var preprocessedWords = wordPreprocessor.Preprocessing();
+            var preprocessedWords = wordPreprocessor.GetPreprocessedWords();
             return preprocessedWords;
         }
     }
