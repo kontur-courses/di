@@ -1,10 +1,9 @@
-using System.Drawing;
-using CircularCloudLayouter.Segments;
+﻿using CircularCloudLayouter.Segments;
 using CircularCloudLayouter.WeightedLayouter.Forming;
 
 namespace CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
-public abstract class WeightedSideLayouter
+public class WeightedSideHelper
 {
     private const int NeighboursSpace = 2;
 
@@ -13,34 +12,25 @@ public abstract class WeightedSideLayouter
 
     private readonly WeightedCollection _sideWeights = new(Optimizer);
 
-    protected readonly Point Center;
-    protected readonly FormFactor FormFactor;
+    public FormFactor FormFactor { get; }
 
-    protected WeightedSideLayouter(Point center, FormFactor formFactor)
+    public WeightedSideHelper(FormFactor formFactor)
     {
-        Center = center;
         FormFactor = formFactor;
     }
 
-    public double CalculateCoefficient() =>
-        _sideWeights.MaxWeight * RatioCoefficient;
+    public double CalculateCoefficient(double ratioCoefficient) =>
+        _sideWeights.MaxWeight * ratioCoefficient;
 
-    protected abstract double RatioCoefficient { get; }
-
-    public abstract Rectangle GetNextRectangle(Size rectSize);
-
-    public void UpdateWeights(Rectangle rect)
+    public void UpdateWeights(WeightedSegment newWeights)
     {
-        var newWeights = ParseWeights(rect);
         if (newWeights.Weight < 0)
             return;
         _sideWeights.UpdateGreaterWeights(newWeights);
         _sideWeights.OptimizeWeights();
     }
 
-    protected abstract WeightedSegment ParseWeights(Rectangle rectangle);
-
-    protected (int Absolute, int Relative) FindNextRectPos(int sideLength, int middle)
+    public (int Absolute, int Relative) FindNextRectPos(int sideLength, int middle)
     {
         sideLength += 2 * NeighboursSpace;
 

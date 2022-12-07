@@ -1,27 +1,34 @@
 using System.Drawing;
 using CircularCloudLayouter.Segments;
-using CircularCloudLayouter.WeightedLayouter.Forming;
 
 namespace CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
-public class LeftSideLayouter : WeightedSideLayouter
+public class LeftSideLayouter : ISideLayouter
 {
-    public LeftSideLayouter(Point center, FormFactor formFactor) : base(center, formFactor)
+    private readonly WeightedSideHelper _weightedSideHelper;
+    private readonly Point _center;
+
+    public LeftSideLayouter(Point center, WeightedSideHelper weightedSideHelper)
     {
+        _center = center;
+        _weightedSideHelper = weightedSideHelper;
     }
 
-    protected override double RatioCoefficient => 1;
+    public double CalculateCoefficient() => 
+        _weightedSideHelper.CalculateCoefficient(1);
 
-    public override Rectangle GetNextRectangle(Size rectSize)
+    public Rectangle GetNextRectangle(Size rectSize)
     {
-        var resPos = FindNextRectPos(rectSize.Height, Center.Y);
+        var resPos = _weightedSideHelper.FindNextRectPos(rectSize.Height, _center.Y);
         return new Rectangle(
-            Center.X - rectSize.Width - resPos.Relative,
+            _center.X - rectSize.Width - resPos.Relative,
             resPos.Absolute,
             rectSize.Width, rectSize.Height
         );
     }
 
-    protected override WeightedSegment ParseWeights(Rectangle rect) =>
-        new(rect.Top, rect.Bottom, Center.X - rect.Left);
+    public void UpdateWeights(Rectangle rect)
+    {
+        _weightedSideHelper.UpdateWeights(new WeightedSegment(rect.Top, rect.Bottom, _center.X - rect.Left));
+    }
 }

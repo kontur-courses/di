@@ -7,19 +7,19 @@ namespace CircularCloudLayouter.WeightedLayouter;
 public class WeightedTagCloudLayouter : ITagCloudLayouter
 {
     private readonly Point _center;
-    private readonly WeightedSideLayouter[] _sideLayouters;
+    private readonly ISideLayouter[] _sideLayouters;
 
     public int RectanglesPlaced { get; private set; }
 
     public WeightedTagCloudLayouter(Point center, FormFactor formFactor)
     {
         _center = center;
-        _sideLayouters = new WeightedSideLayouter[]
+        _sideLayouters = new ISideLayouter[]
         {
-            new RightSideLayouter(_center, formFactor),
-            new LeftSideLayouter(_center, formFactor),
-            new TopSideLayouter(_center, formFactor),
-            new BottomSideLayouter(_center, formFactor)
+            new RightSideLayouter(_center, new WeightedSideHelper(formFactor)),
+            new LeftSideLayouter(_center, new WeightedSideHelper(formFactor)),
+            new TopSideLayouter(_center, new WeightedSideHelper(formFactor)),
+            new BottomSideLayouter(_center, new WeightedSideHelper(formFactor))
         };
     }
 
