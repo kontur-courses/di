@@ -2,6 +2,6 @@
 
 public interface IImageSaverProvider
 {
-    IReadOnlyCollection<string> SupportedExtensions { get; }
+    IEnumerable<string> SupportedExtensions { get; }
     IImageSaver GetSaver();
 }

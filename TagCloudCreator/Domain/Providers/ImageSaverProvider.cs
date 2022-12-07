@@ -18,7 +18,7 @@ public class ImageSaverProvider : IImageSaverProvider
         _wordsPathSettings = wordsPathSettings;
     }
 
-    public IReadOnlyCollection<string> SupportedExtensions => _wordsFileReaders.Keys;
+    public IEnumerable<string> SupportedExtensions => _wordsFileReaders.Keys;
 
     public IImageSaver GetSaver()
     {

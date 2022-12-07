@@ -2,6 +2,6 @@
 
 public interface IWordsFileReaderProvider
 {
-    IReadOnlyCollection<string> SupportedExtensions { get; }
+    IEnumerable<string> SupportedExtensions { get; }
     IWordsFileReader GetReader();
 }

@@ -17,7 +17,7 @@ public class WordsFileReaderProvider : IWordsFileReaderProvider
         _wordsPathSettings = wordsPathSettings;
     }
 
-    public IReadOnlyCollection<string> SupportedExtensions => _wordsFileReaders.Keys;
+    public IEnumerable<string> SupportedExtensions => _wordsFileReaders.Keys;
 
     public IWordsFileReader GetReader()
     {
