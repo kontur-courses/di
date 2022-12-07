@@ -36,7 +36,7 @@ namespace TagCloud
 
             var bitmap = imageGenerator.GenerateBitmap(frequencies);
 
-            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, "TagCloudImages", "WordCloud.png");
+            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, "TagCloudImages", "GradientWordCloud.png");
         }
 
         private static void CreateTestText()
