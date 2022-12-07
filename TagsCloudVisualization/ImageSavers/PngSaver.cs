@@ -1,10 +1,9 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 
-namespace TagsCloudVisualization.Abstractions;
+namespace TagsCloudVisualization.ImageSavers;
 
-public class PngSaver : IImageSaver
+public class PngSaver : AbstractImageSaver
 {
-    public override string Extension { get; } = "png";
-    public override ImageFormat Format { get; } = ImageFormat.Png;
+    protected override string Extension { get; } = "png";
+    protected override ImageFormat Format { get; } = ImageFormat.Png;
 }
