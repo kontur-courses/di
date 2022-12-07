@@ -19,7 +19,7 @@ public class DrawingCloudCreator : ICloudCreator
         var wordsToCount = words
             .GroupBy(w => w)
             .Select(g => (word: g.Key, count: g.Count()))
-            .OrderBy(t => t.count)
+            .OrderByDescending(t => t.count)
             .ToList();
         var maxCount = wordsToCount.First().count;
         var minCount = wordsToCount.Last().count;

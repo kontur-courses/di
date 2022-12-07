@@ -27,7 +27,7 @@ public class BaseCloudDrawer: ICloudDrawer
         foreach (var tuple in words)
         {
             using var font = new Font(FontFamily, tuple.Item2);
-            Graphics.DrawString(tuple.Item1, font, brush, tuple.Item3);
+            Graphics.DrawString(tuple.Item1, font, brush, tuple.Item3.Location);
         }
         return bitmap;
     }
