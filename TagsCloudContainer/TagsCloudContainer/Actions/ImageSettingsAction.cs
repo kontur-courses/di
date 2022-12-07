@@ -9,11 +9,13 @@ namespace TagsCloudContainer.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
-        private ImageSettings settings;
+        private ImageHolder imageHolder;
+        private ImageSettings imageSettings;
 
-        public ImageSettingsAction(ImageSettings settings)
+        public ImageSettingsAction(ImageHolder imageHolder, ImageSettings imageSettings)
         {
-            this.settings = settings;
+            this.imageHolder = imageHolder;
+            this.imageSettings = imageSettings;
         }
 
         public string Category => "Изображение";
@@ -22,7 +24,8 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            SettingsForm.For(settings).ShowDialog();
+            SettingsForm.For(imageSettings).ShowDialog();
+            imageHolder.RecreateImage(imageSettings);
         }
     }
 }
