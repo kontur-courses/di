@@ -15,13 +15,14 @@ public class DefaultImageDrawer : IImageDrawer
         settings = settingProvider.Settings;
         this.rectanglesDistributor = rectanglesDistributor;
         this.wordsHandler = wordsHandler;
-        DrawImage();
     }
 
     public Bitmap DrawnBitmap { get; private set; }
 
-    private void DrawImage()
+    public Bitmap DrawImage()
     {
+        if (DrawnBitmap != null) return DrawnBitmap;
+
         DrawnBitmap = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
         var offset = new Point(settings.ImageSize.Width / 2, settings.ImageSize.Height / 2);
         var graphics = Graphics.FromImage(DrawnBitmap);
@@ -36,5 +37,7 @@ public class DefaultImageDrawer : IImageDrawer
             font = new Font(font.FontFamily, font.Size * ratio, font.Style);
             graphics.DrawString(pair.Key, font, settings.Brush, rect);
         }
+
+        return DrawnBitmap;
     }
 }

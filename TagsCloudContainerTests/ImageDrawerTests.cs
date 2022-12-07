@@ -52,7 +52,7 @@ public class ImageDrawerTests
         }
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
     }
 
     [Test]
@@ -78,7 +78,7 @@ public class ImageDrawerTests
         }
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
     }
 
     [Test]
@@ -104,7 +104,7 @@ public class ImageDrawerTests
         }
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
     }
 
     [Test]
@@ -132,7 +132,7 @@ public class ImageDrawerTests
         builder.RegisterInstance(new BlockCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
     }
 
     [Test]
@@ -161,6 +161,6 @@ public class ImageDrawerTests
         }
         
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawnBitmap);
+        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
     }
 }
