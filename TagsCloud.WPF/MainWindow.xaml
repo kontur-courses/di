@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Name="MyWindow"
-        Title="TagsCloud" Height="450" Width="800" ResizeMode="NoResize">
+        Title="TagsCloud" Width="700" Height="500" SizeChanged="Clear">
         <Grid>
                 <Canvas x:Name="MyCanvas" Background="Black" Focusable="True">
                 </Canvas>               

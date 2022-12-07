@@ -37,7 +37,7 @@ namespace TagsCloud.WPF
         private List<UIElement> uiElements = new();
 
         private IFontFinder fontFinder;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -131,8 +131,6 @@ namespace TagsCloud.WPF
             UpdateCircularCloudFromTextBox();
             uiElements = new List<UIElement>();
             MyCanvas.Children.Clear();
-            // if (RectanglesCountTb is not null)
-            //     RectanglesCountTb.Text = string.Join(" ", new WindowsFontFinder().GetAllFonts()!);
 
             if (ColorPicker?.SelectedColor is not null)
                 customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
