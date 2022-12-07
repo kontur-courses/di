@@ -19,6 +19,11 @@ namespace TagsCloudContainer.Infrastructure
             return Graphics.FromImage(Image);
         }
 
+        public void SaveImage(string fileName)
+        {
+            Image.Save(fileName);
+        }
+
         public void UpdateUi()
         {
             Refresh();
