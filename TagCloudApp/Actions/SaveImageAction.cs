@@ -2,24 +2,23 @@
 using TagCloudApp.Infrastructure;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
-using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudApp.Actions;
 
 public class SaveImageAction : IUiAction
 {
     private readonly IImageHolder _imageHolder;
-    private readonly IImagePathSettings _imagePathSettings;
+    private readonly IImagePathSettingsProvider _imagePathSettingsProvider;
     private readonly IImageSaverProvider _imageSaverProvider;
 
     public SaveImageAction(
         IImageHolder imageHolder,
-        IImagePathSettings imagePathSettings,
+        IImagePathSettingsProvider imagePathSettingsProvider,
         IImageSaverProvider imageSaverProvider
     )
     {
         _imageHolder = imageHolder;
-        _imagePathSettings = imagePathSettings;
+        _imagePathSettingsProvider = imagePathSettingsProvider;
         _imageSaverProvider = imageSaverProvider;
     }
 
@@ -31,13 +30,14 @@ public class SaveImageAction : IUiAction
 
     public void Perform()
     {
+        var imagePathSettings = _imagePathSettingsProvider.GetImagePathSettings();
         _filter ??= string.Join("|", _imageSaverProvider.SupportedExtensions
             .Select(extension => $"{extension}|*{extension}")
         );
         var dialog = new SaveFileDialog
         {
             CheckFileExists = false,
-            InitialDirectory = Path.GetFullPath(_imagePathSettings.ImagePath),
+            InitialDirectory = Path.GetFullPath(imagePathSettings.ImagePath),
             FileName = "image",
             AddExtension = true,
             Filter = _filter
@@ -46,7 +46,7 @@ public class SaveImageAction : IUiAction
         if (res is not DialogResult.OK)
             return;
 
-        _imagePathSettings.ImagePath = dialog.FileName;
+        imagePathSettings.ImagePath = dialog.FileName;
         _imageHolder.SaveImage();
     }
 }

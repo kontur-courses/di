@@ -12,9 +12,12 @@ public class SettingsManager
     {
         _serializer = serializer;
         _storage = storage;
+        AppSettings = new Lazy<AppSettings>(LoadFromFile);
     }
 
-    public AppSettings Load()
+    public Lazy<AppSettings> AppSettings { get; }
+
+    public AppSettings LoadFromFile()
     {
         try
         {
@@ -23,7 +26,7 @@ public class SettingsManager
                 return _serializer.Deserialize<AppSettings>(data)!;
 
             var defaultSettings = CreateDefaultSettings();
-            Save(defaultSettings);
+            Save();
             return defaultSettings;
         }
         catch (Exception)
@@ -44,8 +47,8 @@ public class SettingsManager
             }
         };
 
-    public void Save(AppSettings settings)
+    public void Save()
     {
-        _storage.Set(SettingsFilename, _serializer.Serialize(settings));
+        _storage.Set(SettingsFilename, _serializer.Serialize(AppSettings.Value));
     }
 }

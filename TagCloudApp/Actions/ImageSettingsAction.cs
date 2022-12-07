@@ -1,20 +1,22 @@
 ﻿using TagCloudApp.Domain;
 using TagCloudApp.Infrastructure;
-using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Interfaces;
+using TagCloudCreator.Interfaces.Providers;
 
 namespace TagCloudApp.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
         private readonly IImageHolder _imageHolder;
-        private readonly ImageSettings _imageSettings;
+        private readonly IImageSettingsProvider _imageSettingsProvider;
 
-        public ImageSettingsAction(IImageHolder imageHolder,
-            ImageSettings imageSettings)
+        public ImageSettingsAction(
+            IImageHolder imageHolder,
+            IImageSettingsProvider imageSettingsProvider
+        )
         {
             _imageHolder = imageHolder;
-            _imageSettings = imageSettings;
+            _imageSettingsProvider = imageSettingsProvider;
         }
 
         public MenuCategory Category => MenuCategory.Settings;
@@ -23,8 +25,8 @@ namespace TagCloudApp.Actions
 
         public void Perform()
         {
-            SettingsForm.For(_imageSettings).ShowDialog();
-            _imageHolder.RecreateImage(_imageSettings);
+            SettingsForm.For(_imageSettingsProvider.GetImageSettings()).ShowDialog();
+            _imageHolder.RecreateImage();
         }
     }
 }

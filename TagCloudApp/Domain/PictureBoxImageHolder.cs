@@ -1,5 +1,4 @@
 using System.Drawing.Imaging;
-using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 
@@ -8,10 +7,12 @@ namespace TagCloudApp.Domain;
 public class PictureBoxImageHolder : PictureBox, IImageHolder
 {
     private readonly IImageSaverProvider _imageSaverProvider;
+    private readonly IImageSettingsProvider _imageSettingsProvider;
 
-    public PictureBoxImageHolder(IImageSaverProvider imageSaverProvider)
+    public PictureBoxImageHolder(IImageSaverProvider imageSaverProvider, IImageSettingsProvider imageSettingsProvider)
     {
         _imageSaverProvider = imageSaverProvider;
+        _imageSettingsProvider = imageSettingsProvider;
     }
 
     public Size GetImageSize()
@@ -23,7 +24,7 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
     public Graphics StartDrawing()
     {
         FailIfNotInitialized();
-        ResetImage();
+        RecreateImage();
         return Graphics.FromImage(Image);
     }
 
@@ -39,8 +40,9 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
         Application.DoEvents();
     }
 
-    public void RecreateImage(ImageSettings imageSettings)
+    public void RecreateImage()
     {
+        var imageSettings = _imageSettingsProvider.GetImageSettings();
         Image = new Bitmap(imageSettings.Width, imageSettings.Height, PixelFormat.Format24bppRgb);
     }
 
@@ -48,10 +50,5 @@ public class PictureBoxImageHolder : PictureBox, IImageHolder
     {
         FailIfNotInitialized();
         _imageSaverProvider.GetSaver().SaveImage(Image);
-    }
-
-    private void ResetImage()
-    {
-        Image = new Bitmap(Image.Width, Image.Height, Image.PixelFormat);
     }
 }

@@ -1,23 +1,22 @@
 ﻿using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
-using TagCloudCreator.Interfaces.Settings;
 
 namespace TagCloudCreatorExtensions.WordsFileReaders;
 
 public class TxtWordsFileReader : IWordsFileReader
 {
-    private readonly IWordsPathSettings _pathSettings;
+    private readonly IWordsPathSettingsProvider _pathSettingsProvider;
 
-    public TxtWordsFileReader(IWordsPathSettings pathSettings)
+    public TxtWordsFileReader(IWordsPathSettingsProvider pathSettingsProvider)
     {
-        _pathSettings = pathSettings;
+        _pathSettingsProvider = pathSettingsProvider;
     }
 
     public string SupportedExtension => ".txt";
 
     public IEnumerable<string> GetWords()
     {
-        var dir = _pathSettings.WordsPath;
+        var dir = _pathSettingsProvider.GetWordsPathSettings().WordsPath;
         return File.ReadLines(dir);
     }
 }

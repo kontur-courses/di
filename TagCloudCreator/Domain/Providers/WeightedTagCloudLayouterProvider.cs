@@ -8,19 +8,24 @@ namespace TagCloudCreator.Domain.Providers;
 
 public class WeightedTagCloudLayouterProvider : ITagCloudLayouterProvider
 {
-    private readonly ImageSettings _imageSettings;
+    private readonly IImageSettingsProvider _imageSettingsProvider;
     private readonly WeightedTagCloudLayouterSettings _layouterSettings;
 
-    public WeightedTagCloudLayouterProvider(ImageSettings imageSettings, WeightedTagCloudLayouterSettings layouterSettings)
+    public WeightedTagCloudLayouterProvider(
+        IImageSettingsProvider imageSettingsProvider,
+        WeightedTagCloudLayouterSettings layouterSettings
+    )
     {
-        _imageSettings = imageSettings;
+        _imageSettingsProvider = imageSettingsProvider;
         _layouterSettings = layouterSettings;
     }
 
     public ITagCloudLayouter CreateLayouter()
     {
+        var imageSettings = _imageSettingsProvider.GetImageSettings();
+
         var formFactor = _layouterSettings.FormFactor.WithRatio(_layouterSettings.WidthToHeightRatio);
-        var center = new Point(_imageSettings.Width / 2, _imageSettings.Height / 2);
+        var center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
         return new WeightedTagCloudLayouter(center, formFactor);
     }
 }

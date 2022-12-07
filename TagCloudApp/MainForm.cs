@@ -1,6 +1,6 @@
 using TagCloudApp.Domain;
 using TagCloudApp.Infrastructure;
-using TagCloudCreator.Domain.Settings;
+using TagCloudCreator.Interfaces.Providers;
 
 namespace TagCloudApp;
 
@@ -9,9 +9,10 @@ public partial class MainForm : Form
     public MainForm(
         IEnumerable<IUiAction> actions,
         PictureBoxImageHolder pictureBox,
-        ImageSettings imageSettings
+        IImageSettingsProvider imageSettingsProvider
     )
     {
+        var imageSettings = imageSettingsProvider.GetImageSettings();
         ClientSize = new Size(imageSettings.Width, imageSettings.Height);
         imageSettings.OnChange += size => ClientSize = size;
         FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -21,7 +22,7 @@ public partial class MainForm : Form
         mainMenu.Items.AddRange(actions.ToMenuItems());
         Controls.Add(mainMenu);
 
-        pictureBox.RecreateImage(imageSettings);
+        pictureBox.RecreateImage();
         pictureBox.Dock = DockStyle.Fill;
         Controls.Add(pictureBox);
     }

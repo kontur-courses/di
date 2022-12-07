@@ -7,7 +7,6 @@ using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Infrastructure.Settings;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
-using TagCloudCreator.Interfaces.Settings;
 using TagCloudCreatorExtensions;
 using TagCloudCreatorExtensions.ImageSavers;
 using TagCloudCreatorExtensions.WordsFileReaders;
@@ -36,16 +35,16 @@ internal static class Program
             .As<IBlobStorage>();
         builder.RegisterType<XmlObjectSerializer>()
             .As<IObjectSerializer>();
-        builder.Register(c => c.Resolve<SettingsManager>().Load())
-            .As<AppSettings>()
-            .As<IImagePathSettings>()
-            .As<IWordsPathSettings>()
-            .SingleInstance();
-        builder.Register(c => c.Resolve<AppSettings>().ImageSettings)
+
+        builder.RegisterType<AppSettingsProvider>()
+            .AsSelf()
+            .As<IImageSettingsProvider>()
+            .As<IWordsPathSettingsProvider>()
+            .As<IImagePathSettingsProvider>()
             .SingleInstance();
 
         builder.RegisterType<PictureBoxImageHolder>()
-            .As<PictureBoxImageHolder>()
+            .AsSelf()
             .As<IImageHolder>()
             .SingleInstance();
 

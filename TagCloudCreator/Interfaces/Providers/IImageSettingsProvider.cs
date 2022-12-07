@@ -4,5 +4,5 @@ namespace TagCloudCreator.Interfaces.Providers;
 
 public interface IImageSettingsProvider
 {
-    ImageSettings ImageSettings { get; }
+    ImageSettings GetImageSettings();
 }
