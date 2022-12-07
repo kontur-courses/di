@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Drawing;
 
-namespace TagCloud;
+namespace TagCloud.Abstractions;
 
 public interface ICloudLayouter
 {

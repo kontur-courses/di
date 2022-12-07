@@ -2,6 +2,7 @@
 using System.Drawing;
 using QuadTrees;
 using QuadTrees.Wrappers;
+using TagCloud.Abstractions;
 
 namespace TagCloud;
 

@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud;
+using TagCloud.Abstractions;
 
 namespace TagCloudTests;
 
