@@ -21,6 +21,7 @@ namespace TagsCloudContainer
             builder.RegisterType<Algorithm.CircularCloudLayouter>().AsSelf();
             builder.RegisterType<TagCloudPainter>().AsSelf();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();
+            builder.RegisterType<ChoseBoringWordsSourceFileAction>().As<IUiAction>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
