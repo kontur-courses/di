@@ -16,6 +16,31 @@ namespace TagsCloudContainer
             _spiral = new Spiral(center, 2);
             _rectangles = new List<Rectangle>();
         }
+        
+        public List<Rectangle> GenerateRectanglesByWords(Dictionary<string, int> words)
+        {
+            List<Rectangle> rectangles = new List<Rectangle>();
+            using var settingFont = new Font("Arial", 16);
+            foreach (var word in words)
+            {
+                using var font = new Font(settingFont.FontFamily, word.Value / (float)words.Count * 100 * settingFont.Size);
+                var size = MeasureWord(word.Key, font);
+                rectangles.Add(PutNextRectangle(size));
+            }
+            
+            return rectangles;
+        }
+
+        private static Size MeasureWord(string word, Font font)
+        {
+            using var bitmap = new Bitmap(1, 1);
+            using var graphics = Graphics.FromImage(bitmap);
+            var result = graphics.MeasureString(word, font);
+            result = result.ToSize();
+            if (result.Width == 0) result.Width = 1;
+            if (result.Height == 0) result.Height = 1;
+            return result.ToSize();
+        }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
@@ -29,51 +54,33 @@ namespace TagsCloudContainer
             } while (rectangle.IsIntersects(_rectangles));
             
             if(_rectangles.Count != 0)
-                rectangle = MoveRectangleToCenter(rectangle);
+                rectangle = ShiftRectangleToCenter(rectangle);
             
             _rectangles.Add(rectangle);
             return rectangle;
         }
-        
-        private Rectangle MoveRectangleToCenter(Rectangle newRectangle)
+
+        private Rectangle ShiftRectangleToCenter(Rectangle rectangle)
         {
-            var shiftX = newRectangle.GetCenter().X < _center.X ? 1 : -1;
-            var shiftY = newRectangle.GetCenter().Y < _center.Y ? 1 : -1;
-            var isIntersectsByX = false;
-            var isIntersectsByY = false;
-            while (!isIntersectsByX && !isIntersectsByY)
-            {
-                shiftX = newRectangle.GetCenter().X < _center.X ? 1 : -1;
-                newRectangle = TryMoveRectangleX(newRectangle, shiftX, ref isIntersectsByX);
-                shiftY = newRectangle.GetCenter().Y < _center.Y ? 1 : -1;
-                newRectangle = TryMoveRectangleY(newRectangle, shiftY, ref isIntersectsByY);
-            };
-            
-            return newRectangle;
+            var dx = rectangle.GetCenter().X < _center.X ? 1 : -1;
+            rectangle = ShiftRectangle(rectangle, dx, 0);
+            var dy = rectangle.GetCenter().Y < _center.Y ? 1 : -1;
+            rectangle = ShiftRectangle(rectangle, 0, dy);
+            return rectangle;
         }
 
-        private Rectangle TryMoveRectangleX(Rectangle newRectangle, int x, ref bool isIntersectsByX)
+        private Rectangle ShiftRectangle(Rectangle rectangle, int dx, int dy)
         {
-            var shift = new Size(x, 0);
-            newRectangle.Location += shift;
-            if (newRectangle.IsIntersects(_rectangles))
-            {
-                isIntersectsByX = true;
-                newRectangle.Location -= shift;
-            }
-            return newRectangle;
-        }
-        
-        private Rectangle TryMoveRectangleY(Rectangle newRectangle, int y, ref bool isIntersectsByY)
-        {
-            var shift = new Size(0, y);
-            newRectangle.Location += shift;
-            if (newRectangle.IsIntersects(_rectangles))
-            {
-                isIntersectsByY = true;
-                newRectangle.Location -= shift;
-            }
-            return newRectangle;
+            var offset = new Size(dx, dy);
+            while (rectangle.IsIntersects(_rectangles) == false &&
+                   rectangle.GetCenter().X != _center.X &&
+                   rectangle.GetCenter().Y != _center.Y)
+                rectangle.Location += offset;
+
+            if (rectangle.IsIntersects(_rectangles))
+                rectangle.Location -= offset;
+
+            return rectangle;
         }
     }
 }

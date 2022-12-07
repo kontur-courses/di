@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudContainer
 {
@@ -18,7 +19,7 @@ namespace TagsCloudContainer
         public Dictionary<string, int> ProcessWords(string text)
         {
             var words = new Dictionary<string, int>();
-            String[] separators = {Environment.NewLine, ", ", ". "};
+            String[] separators = {Environment.NewLine, ", ", ". ", " "};
             foreach (var word in text.Split(separators, StringSplitOptions.RemoveEmptyEntries))
             {
                 var wordToDictionary = word.ToLower();
@@ -29,7 +30,9 @@ namespace TagsCloudContainer
                 words[wordToDictionary]++;
             }
 
-            return words;
+            return words
+                .OrderByDescending(x => x.Value)
+                .ToDictionary(x => x.Key, x => x.Value);;
         }
     }
 }
