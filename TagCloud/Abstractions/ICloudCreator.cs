@@ -4,5 +4,5 @@ namespace TagCloud.Abstractions;
 
 public interface ICloudCreator
 {
-    Bitmap CreateTagCloud(IEnumerable<string> words, ICloudDrawer drawer);
+    Bitmap CreateTagCloud(IEnumerable<string> words);
 }

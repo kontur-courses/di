@@ -4,5 +4,9 @@ namespace TagCloud.Abstractions;
 
 public interface ICloudDrawer
 {
-    Bitmap DrawTagCloud(IEnumerable<(string, int, Rectangle)> words);
+    Graphics Graphics { get; }
+    FontFamily FontFamily { get; }
+    int MaxFontSize { get; }
+    int MinFontSize { get; }
+    Bitmap Draw(IEnumerable<(string, int, Rectangle)> words);
 }
