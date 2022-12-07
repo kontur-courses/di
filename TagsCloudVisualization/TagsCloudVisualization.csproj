@@ -12,8 +12,4 @@
         <PackageReference Include="WeCantSpell.Hunspell" Version="4.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ImageSettings" />
-    </ItemGroup>
-
 </Project>
