@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
+using Autofac;
 using ConsoleClient;
-using Ninject;
 using TagCloud;
 using TagCloud.Abstractions;
 
@@ -13,16 +13,17 @@ if (!File.Exists(filename))
     return;
 }
 
-ConfigureContainer().Get<Client>().Execute();
+ConfigureContainer().Resolve<Client>().Execute();
 
-StandardKernel ConfigureContainer()
+IContainer ConfigureContainer()
 {
-    var container = new StandardKernel();
-    container.Bind<IWordsLoader>().ToConstant(new FileWordsLoader(filename));
-    container.Bind<IWordsProcessor>().To<FakeWordsProcessor>();
-    container.Bind<ICloudDrawer>().ToConstant(new BaseCloudDrawer(new FontFamily("Arial"), 50, 10,
-        new Size(800, 600), Color.Black)).InSingletonScope();
-    container.Bind<ICloudLayouter>().ToConstant(new CircularCloudLayouter(new Point(400, 300))).InSingletonScope();
-    container.Bind<ICloudCreator>().To<DrawingCloudCreator>();
-    return container;
+    var builder = new ContainerBuilder();
+    builder.RegisterInstance(new FileWordsLoader(filename)).As<IWordsLoader>();
+    builder.RegisterType<FakeWordsProcessor>().As<IWordsProcessor>();
+    builder.RegisterInstance(new BaseCloudDrawer(new FontFamily("Arial"), 50, 10,
+        new Size(800, 600), Color.Black)).As<ICloudDrawer>();
+    builder.RegisterInstance(new CircularCloudLayouter(new Point(400, 300))).As<ICloudLayouter>();
+    builder.RegisterType<DrawingCloudCreator>().As<ICloudCreator>();
+    builder.RegisterType<Client>();
+    return builder.Build();
 }
