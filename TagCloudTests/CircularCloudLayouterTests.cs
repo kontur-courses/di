@@ -34,7 +34,7 @@ public class CircularCloudLayouterTests
         if (!directory.Exists) directory.Create();
 
         var layouter = layouterByTestId[testId];
-        new TagCloudDrawer().DrawTagCloud(layouter).Save(Path.Join(directory.FullName, filename));
+        new TagCloudDrawer().Draw(layouter).Save(Path.Join(directory.FullName, filename));
 
         Console.WriteLine($"Tag cloud visualization saved to file {directory.FullName}\\{filename}");
     }

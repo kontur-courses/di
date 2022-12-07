@@ -21,7 +21,7 @@ public class TagCloudDrawer
     public Color BackgroundColor { get; set; } = Color.White;
     public Pen RectanglesPen { get; set; } = new(Color.Black, 1);
 
-    public Bitmap DrawTagCloud(ICloudLayouter layouter)
+    public Bitmap Draw(ICloudLayouter layouter)
     {
         var bitmap = new Bitmap(ImageSize.Width, ImageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);

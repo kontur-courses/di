@@ -7,7 +7,7 @@ namespace TagCloudTests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
-public class TagCloudDrawerTests
+public class LayouterDrawerTests
 {
     [Test]
     public void ImageSize_ThrowArgumentException_OnNegativeSize()
@@ -22,19 +22,19 @@ public class TagCloudDrawerTests
     }
 
     [Test]
-    public void DrawTagCloud_Bitmap_FilledWithBackgroundColor()
+    public void Draw_Bitmap_FilledWithBackgroundColor()
     {
         var layouter = new CircularCloudLayouter(new Point(0, 0));
         var backgroundColor = Color.FromArgb(255, 255, 255);
         var drawer = new TagCloudDrawer { BackgroundColor = backgroundColor };
 
-        var bitmap = drawer.DrawTagCloud(layouter);
+        var bitmap = drawer.Draw(layouter);
 
         AllPixels(bitmap).Should().OnlyContain(c => c == backgroundColor);
     }
 
     [Test]
-    public void DrawTagCloud_DrawSomeRectangles()
+    public void Draw_DrawSomeRectangles()
     {
         var layouter = new CircularCloudLayouter(new Point(0, 0));
         layouter.PutNextRectangle(new Size(10, 10));
@@ -46,21 +46,21 @@ public class TagCloudDrawerTests
             RectanglesPen = new Pen(penColor, 1)
         };
 
-        var bitmap = drawer.DrawTagCloud(layouter);
+        var bitmap = drawer.Draw(layouter);
 
         AllPixels(bitmap).Should().Contain(penColor);
     }
 
     [Test]
-    public void DrawTagCloud_DifferentCloudsBitmaps_AreDifferent()
+    public void Draw_DifferentCloudsBitmaps_AreDifferent()
     {
         var layouter = new CircularCloudLayouter(new Point(0, 0));
         layouter.PutNextRectangle(new Size(10, 10));
         var drawer = new TagCloudDrawer();
 
-        var bitmap1 = drawer.DrawTagCloud(layouter);
+        var bitmap1 = drawer.Draw(layouter);
         layouter.PutNextRectangle(new Size(10, 10));
-        var bitmap2 = drawer.DrawTagCloud(layouter);
+        var bitmap2 = drawer.Draw(layouter);
 
         AllPixels(bitmap1).Should().NotEqual(AllPixels(bitmap2));
     }
