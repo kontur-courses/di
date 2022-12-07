@@ -20,11 +20,9 @@ namespace TagsCloudContainer
             {
                 while (true)
                 {
-                    // var options = VisualizationOptionsHandler.RequestVisualizationOptions();
-                    var options = new VisualizationOptions("D:/test.txt", ImageFormat.Bmp, new Size(1000, 1000), 2, 15);
+                    var options = VisualizationOptionsHandler.RequestVisualizationOptions();
                     var cloudCreator = container.Resolve<TagCloudCreator>();
                     cloudCreator.CreateCloud(options);
-                    Console.ReadKey();
                 }
             }
             catch (Exception e)
