@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using TagCloud.Extensions;
 
 namespace TagCloud.Tags
@@ -9,6 +7,7 @@ namespace TagCloud.Tags
     public class Layout : ITag
     {
         protected Rectangle frame;
+
         public Rectangle Frame => frame;
 
         public Size Size { get; }
@@ -28,11 +27,17 @@ namespace TagCloud.Tags
             frame = new Rectangle(Frame.Location.ShiftTo(shift), Frame.Size);
         }
 
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void DrawIn(Graphics graphics, Brush byBrush) => 
             graphics.DrawRectangle(new Pen(byBrush), Frame);
 
-        public override bool Equals(object obj) =>
-            obj != null && Frame == (obj as Layout).Frame;
-        
+        public override bool Equals(object obj) => Equals(obj as Layout);
+
+        public bool Equals(Layout layout) =>
+            layout != null && Frame == layout.Frame;
     }
 }

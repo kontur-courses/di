@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TagCloud.TagCloudVisualizations
+﻿namespace TagCloud.TagCloudVisualizations
 {
     public interface ITagCloudVisualization
     {
-        public void Visualize();
-        public void Save(string file);
+        public void Visualize(ITagCloudVisualizationSettings settings);
+        public void Save(string file, ITagCloudVisualizationSettings settings);
     }
 }

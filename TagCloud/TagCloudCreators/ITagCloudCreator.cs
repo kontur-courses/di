@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TagCloud.TagCloudVisualizations;
 
 namespace TagCloud.TagCloudCreators
 {
     public interface ITagCloudCreator
     {
-        TagCloud GenerateTagCloud();
+        TagCloud GenerateTagCloud(ITagCloudVisualizationSettings settings);
     }
 }

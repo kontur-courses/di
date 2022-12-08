@@ -5,9 +5,9 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagCloud;
+using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
-using TagCloud.Tags;
+using TagCloud.TagCloudCreators;
 using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests
@@ -16,12 +16,14 @@ namespace TagCloudTests
     {
         private readonly string failedTestsPictureFolder = "FailedTestsPicture";
         private CircularCloudLayouter cloudLayouter;
+        private LayoutTagCloudCreator layoutTagCloudCreator;
 
         [SetUp]
         public void PrepareCircularCloudLayouter()
         {
             var center = new Point();
             cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            layoutTagCloudCreator = null;
         }
 
         [TearDown]
@@ -37,10 +39,14 @@ namespace TagCloudTests
 
             File.WriteAllText(filePath + ".txt", $"The test {context.Test.FullName} failed with an error: {context.Result.Message}" + 
                                                  Environment.NewLine + "StackTrace:" + context.Result.StackTrace);
-            var visualization = new TagCloudBitmapVisualization(cloudLayouter.GetTagCloudOfLayout());
-            visualization.Save(filePath + ".bmp");
-
-            TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
+            
+            if (layoutTagCloudCreator != null)
+            {
+                var visualization = new TagCloudBitmapVisualization(layoutTagCloudCreator);
+                var settings = TagCloudVisualizationSettings.Default();
+                visualization.Save(filePath, settings);
+                TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
+            }
         }
 
 
@@ -78,8 +84,8 @@ namespace TagCloudTests
             {
                 var rectSize = new Size(firstRectWidth, firstRectHeight);
                 var newRect = cloudLayouter.PutNextRectangle(rectSize);
-                cloudLayouter.GetTagCloudOfLayout().Rectangles.Where(rect => rect.Frame != newRect).
-                    All(rect => rect?.Frame.IntersectsWith(newRect) == false).Should().BeTrue();
+                cloudLayouter.GetTagCloudOfLayout().Layouts.Where(rect => rect.Frame != newRect).
+                    All(rect => rect.Frame.IntersectsWith(newRect) == false).Should().BeTrue();
 
                 firstRectHeight /= 2;
                 firstRectWidth /= 2;

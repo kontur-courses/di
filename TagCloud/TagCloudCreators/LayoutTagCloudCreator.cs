@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using TagCloud.CloudLayouters;
+using TagCloud.TagCloudVisualizations;
 using TagCloud.Tags;
 
 namespace TagCloud.TagCloudCreators
@@ -13,15 +13,24 @@ namespace TagCloud.TagCloudCreators
         private readonly IEnumerable<Size> sizes;
         public LayoutTagCloudCreator(ICloudLayouter cloudLayouter, IEnumerable<Size> sizes)
         {
+            if (sizes == null || cloudLayouter == null)
+            {
+                throw new ArgumentNullException(
+                    "ICloudLayouter and IEnumerable<Size> are required for this method");
+            }
             this.cloudLayouter = cloudLayouter;
             this.sizes = sizes;
         }
 
-        public TagCloud GenerateTagCloud()
+        public TagCloud GenerateTagCloud(ITagCloudVisualizationSettings settings)
         {
+            if (settings == null)
+                throw new ArgumentNullException(
+                    "ITagCloudVisualizationSettings is required for this method");
+
             var tagCloud = new TagCloud(cloudLayouter.Center);
             foreach (var layoutSize in sizes)
-                tagCloud.Rectangles.Add(new Layout(
+                tagCloud.Layouts.Add(new Layout(
                     cloudLayouter.PutNextRectangle(layoutSize)));
 
             return tagCloud;

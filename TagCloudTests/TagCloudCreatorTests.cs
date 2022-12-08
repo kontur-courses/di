@@ -2,11 +2,11 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
 using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
 using TagCloud.Tags;
 using TagCloud.TagCloudCreators;
+using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests
 {
@@ -23,13 +23,14 @@ namespace TagCloudTests
             var tagCloud = new TagCloud.TagCloud(center);
             var circularCloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
             foreach (var rectangleSize in rectangleSizes)
-                tagCloud.Rectangles.Add(new Layout(circularCloudLayouter.PutNextRectangle(rectangleSize)));
+                tagCloud.Layouts.Add(new Layout(circularCloudLayouter.PutNextRectangle(rectangleSize)));
 
             var spiralPointGenerator = new SpiralPointGenerator(center);
             var cloudLayouter = new CircularCloudLayouter(spiralPointGenerator);
             var layoutTagCloudCreator = new LayoutTagCloudCreator(cloudLayouter, rectangleSizes);
-
-            tagCloud.Should().Be(layoutTagCloudCreator.GenerateTagCloud());
+            var settings = TagCloudVisualizationSettings.Default();
+            
+            tagCloud.Should().Be(layoutTagCloudCreator.GenerateTagCloud(settings));
         }
     }
 }

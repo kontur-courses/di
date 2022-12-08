@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
 using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
 using TagCloud.Tags;
@@ -12,7 +11,7 @@ namespace TagCloudTests
 {
     public class TagCloudTests
     {
-        private CircularCloudLayouter cloudLayouter;
+        private ICloudLayouter cloudLayouter;
         private TagCloud.TagCloud tagCloud;
 
         [SetUp]
@@ -23,7 +22,7 @@ namespace TagCloudTests
             tagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = new Rectangle(0, 0, 5, 5);
-            tagCloud.Rectangles.Add(new Layout(rectangle));
+            tagCloud.Layouts.Add(new Layout(rectangle));
         }
 
         [TestCase(0, 0, 35, 75, TestName = "center in zero point")]
@@ -35,23 +34,24 @@ namespace TagCloudTests
         {
             var center = new Point(centerX, centerY);
             cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
-            var tagCloud = new TagCloud.TagCloud(center);
+            var localTagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = cloudLayouter.PutNextRectangle(new Size(reactWidth, reactHeight));
-            tagCloud.Rectangles.Add(new Layout(rectangle));
+            localTagCloud.Layouts.Add(new Layout(rectangle));
             var planningReactLocation = new Point(centerX - reactWidth / 2, centerY - reactHeight / 2);
 
             rectangle.Location.Should().BeEquivalentTo(planningReactLocation);
 
-            tagCloud.GetHeight().Should().Be(reactHeight);
-            tagCloud.GetWidth().Should().Be(reactWidth);
-            tagCloud.GetLeftBound().Should().Be(planningReactLocation.X);
-            tagCloud.GetTopBound().Should().Be(planningReactLocation.Y);
+            localTagCloud.GetHeight().Should().Be(reactHeight);
+            localTagCloud.GetWidth().Should().Be(reactWidth);
+            localTagCloud.GetLeftBound().Should().Be(planningReactLocation.X);
+            localTagCloud.GetTopBound().Should().Be(planningReactLocation.Y);
         }
 
         [Test]
         public void GetHashCode_Throw_NotImplementedException()
         {
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Action getHashCode = () => tagCloud.GetHashCode();
 
             getHashCode.Should().Throw<NotImplementedException>();
@@ -62,7 +62,7 @@ namespace TagCloudTests
         {
             var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
 
-            otherTagCloud.Rectangles.AddRange(tagCloud.Rectangles);
+            otherTagCloud.Layouts.AddRange(tagCloud.Layouts);
 
             tagCloud.Equals(otherTagCloud).Should().BeTrue();
         }
@@ -80,8 +80,8 @@ namespace TagCloudTests
         {
             var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
 
-            otherTagCloud.Rectangles.AddRange(
-                tagCloud.Rectangles.Select(rectangle=>
+            otherTagCloud.Layouts.AddRange(
+                tagCloud.Layouts.Select(rectangle=>
                 {
                     var newRectangle = new Rectangle(rectangle.Frame.Location, rectangle.Frame.Size);
                     newRectangle.Width += 5;
@@ -97,15 +97,15 @@ namespace TagCloudTests
         {
             var otherTagCloud = new TagCloud.TagCloud(tagCloud.Center);
             
-            otherTagCloud.Rectangles.AddRange(tagCloud.Rectangles);
+            otherTagCloud.Layouts.AddRange(tagCloud.Layouts);
 
-            otherTagCloud.Rectangles.Add(tagCloud.Rectangles.Last());
+            otherTagCloud.Layouts.Add(tagCloud.Layouts.Last());
             tagCloud.Equals(otherTagCloud).Should().BeFalse();
 
-            otherTagCloud.Rectangles.Remove(otherTagCloud.Rectangles.Last());
+            otherTagCloud.Layouts.Remove(otherTagCloud.Layouts.Last());
             tagCloud.Equals(otherTagCloud).Should().BeTrue();
 
-            tagCloud.Rectangles.Add(otherTagCloud.Rectangles.Last());
+            tagCloud.Layouts.Add(otherTagCloud.Layouts.Last());
             tagCloud.Equals(otherTagCloud).Should().BeFalse();
         }
     }

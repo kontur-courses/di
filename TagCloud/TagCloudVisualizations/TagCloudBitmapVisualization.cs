@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using TagCloud.Extensions;
+using System.Drawing.Drawing2D;
+using TagCloud.TagCloudCreators;
 
 namespace TagCloud.TagCloudVisualizations
 {
     public class TagCloudBitmapVisualization : ITagCloudVisualization
     {
         private readonly Random random = new Random();
-        private readonly TagCloud tagCloud;
+        private readonly ITagCloudCreator tagCloudCreator;
 
-        public TagCloudBitmapVisualization(TagCloud tagCloud)
+        public TagCloudBitmapVisualization(ITagCloudCreator tagCloudCreator)
         {
-            this.tagCloud = tagCloud;
+            this.tagCloudCreator = tagCloudCreator;
         }
 
-        public void Visualize()
+        public void Visualize(ITagCloudVisualizationSettings settings)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(string file)
+        public void Save(string file, ITagCloudVisualizationSettings settings)
         {
             var rectangleOutline = 1;
+
+            var tagCloud = tagCloudCreator.GenerateTagCloud(settings);
 
             var bitmap = new Bitmap(
                 tagCloud.GetWidth() + rectangleOutline, 
@@ -32,16 +34,19 @@ namespace TagCloud.TagCloudVisualizations
 
             using (var graphics = Graphics.FromImage(bitmap))
             {
-                foreach (var tag in tagCloud.Rectangles)
+                foreach (var tag in tagCloud.Layouts)
                 {
                     tag.ShiftTo(frameShift);
                     var byBrush = GetRandomBrush();
                     tag.DrawIn(graphics, byBrush);
                 }
             }
-            bitmap.Save(file);
-        }
 
+            if (settings.PictureSize != null)
+                bitmap = new Bitmap(bitmap, settings.PictureSize.Value);
+            bitmap.Save(file, settings.PictureFormat);
+        }
+        
         private Brush GetRandomBrush() =>
             new SolidBrush(GetRandomColor());
         

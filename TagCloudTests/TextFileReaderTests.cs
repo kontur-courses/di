@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.Readers;
@@ -35,6 +33,7 @@ namespace TagCloudTests
         [TestCase("TextFileData.csv", TestName = "File extension not supported")]
         public void SingleWordInRowTextFileReader_Ctor_ThrowFileLoadExceptionWhen(string path)
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new SingleWordInRowTextFileReader(path);
 
             act.Should().Throw<FileLoadException>();
@@ -43,6 +42,7 @@ namespace TagCloudTests
         [TestCase("notExistingFile.txt", TestName = "file extension not exist")]
         public void SingleWordInRowTextFileReader_Ctor_ThrowFileNotFoundExceptionWhen(string path)
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new SingleWordInRowTextFileReader(path);
 
             act.Should().Throw<FileNotFoundException>();

@@ -1,11 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text;
-using TagCloud;
 using TagCloud.BoringWordsRepositories;
 using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
@@ -27,9 +23,10 @@ namespace TagCloudTests
             var wordsReader = new SingleWordInRowTextFileReader(wordDictionaryPath);
             var boringWordsStorage = new TextFileBoringWordsStorage();
             var wordPreprocessor = new SimpleWordPreprocessor(wordsReader, boringWordsStorage);
-            var tagCloud = new WordTagCloudCreator(cloudLayouter, wordPreprocessor).GenerateTagCloud();
-            var visualization = new TagCloudBitmapVisualization(tagCloud);
-            visualization.Save(picturePath);
+            var tagCloudCreator = new WordTagCloudCreator(cloudLayouter, wordPreprocessor);
+            var settings = TagCloudVisualizationSettings.Default();
+            var visualization = new TagCloudBitmapVisualization(tagCloudCreator);
+            visualization.Save(picturePath, settings);
 
             File.Exists(picturePath).Should().BeTrue($"file {picturePath} must be generated");
         }
