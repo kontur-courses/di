@@ -4,15 +4,17 @@ using System.Drawing;
 using System.Linq;
 using TagCloud.Extensions;
 using TagCloud.PointGenerators;
-using TagCloud.Tag;
+using TagCloud.Tags;
 using TagCloud.WordPreprocessors;
 
-namespace TagCloud
+namespace TagCloud.CloudLayouters
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
+        public Point Center => pointGenerator.GetCenterPoint();
+
         private readonly IPointGenerator pointGenerator;
-        private readonly IEnumerable<Rectangle> rectangles;
+        private readonly List<Rectangle> rectangles;
 
         public CircularCloudLayouter(IPointGenerator pointGenerator)
         {
@@ -31,7 +33,7 @@ namespace TagCloud
                 rectangle = GetNextRectangle(rectangleSize);
             }
             while (rectangles.Any(r => r.IntersectsWith(rectangle)));
-
+            rectangles.Add(rectangle);
             return rectangle;
         }
 

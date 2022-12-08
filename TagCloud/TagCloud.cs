@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.Tag;
+using TagCloud.Tags;
 
 namespace TagCloud
 {
     public class TagCloud
     {
         public Point Center { get; private set; }
-
+        //TODO: rename
         public List<ITag> Rectangles { get; private set; }
 
         public TagCloud(Point center)

@@ -4,7 +4,9 @@ using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud;
+using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
+using TagCloud.TagCloudCreators;
 using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests
@@ -24,7 +26,10 @@ namespace TagCloudTests
             var layoutSizes = new List<Size>();
             for (int i = 400; i > 1; i -= 2)
                 layoutSizes.Add(new Size(i, i / 2));
-            var visualization = new TagCloudBitmapVisualization(TagCloudCreator.Create(layoutSizes, center));
+            var spiralPointGenerator = new SpiralPointGenerator(center);
+            var circularCloudLayouter = new CircularCloudLayouter(spiralPointGenerator);
+            var tagCloud = new LayoutTagCloudCreator(circularCloudLayouter, layoutSizes).GenerateTagCloud();
+            var visualization = new TagCloudBitmapVisualization(tagCloud);
             visualization.Save(tempBmpFile);
 
             File.Exists(tempBmpFile).Should().BeTrue($"file {tempBmpFile} must be generated");

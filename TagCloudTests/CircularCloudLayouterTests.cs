@@ -7,7 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud;
 using TagCloud.PointGenerators;
-using TagCloud.Tag;
+using TagCloud.Tags;
 using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests

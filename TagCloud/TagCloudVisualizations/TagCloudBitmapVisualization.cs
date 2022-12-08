@@ -32,23 +32,19 @@ namespace TagCloud.TagCloudVisualizations
 
             using (var graphics = Graphics.FromImage(bitmap))
             {
-                foreach (var rectangle in tagCloud.Rectangles)
+                foreach (var tag in tagCloud.Rectangles)
                 {
-                    var rectangleInFrame = MoveRectangleToImageFrame(rectangle.Frame, frameShift);
-                    graphics.DrawRectangle(new Pen(GetRandomBrush()), rectangleInFrame);
+                    tag.ShiftTo(frameShift);
+                    var byBrush = GetRandomBrush();
+                    tag.DrawIn(graphics, byBrush);
                 }
             }
             bitmap.Save(file);
         }
 
-        private Rectangle MoveRectangleToImageFrame(Rectangle rectangle, Size imageCenter) =>
-            new Rectangle(rectangle.Location.ShiftTo(imageCenter), rectangle.Size);
-        
-
         private Brush GetRandomBrush() =>
             new SolidBrush(GetRandomColor());
         
-
         private Color GetRandomColor()
         {
             var knownColors = (KnownColor[])Enum.GetValues(typeof(KnownColor));

@@ -4,8 +4,9 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TagCloud;
+using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
-using TagCloud.Tag;
+using TagCloud.Tags;
 
 namespace TagCloudTests
 {
