@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer.Tests", "TagsCloudContainer.Tests\TagsCloudContainer.Tests.csproj", "{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +19,19 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36CB9580-E1A1-457A-9C10-ECAC4F1A7817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1B57D9-D9F4-4EB8-8C03-F59944DF4F08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1474272-1144-4181-862F-DB9B41704B63}
 	EndGlobalSection
 EndGlobal
