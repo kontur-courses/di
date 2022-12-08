@@ -33,7 +33,7 @@ public class CircularCloudLayouterTests
         var testName = TestContext.CurrentContext.Test.Name;
         var debugPath = TestContext.CurrentContext.TestDirectory;
 
-        var path = Path.Combine(debugPath, testName) + @"_Failed.jpg";
+        var path = $"{Path.Combine(debugPath, testName)}_Failed.jpg";
         bitmap.Save(path);
 
         TestContext.Error.WriteLine($"Tag cloud visualization saved to file {path}");
@@ -71,17 +71,11 @@ public class CircularCloudLayouterTests
     }
 
     [Test]
-    public void PutNextRectangle_AddOne()
-    {
-        layouter.PutNextRectangle(new Size(40, 60));
-        layouter.Rectangles.Count.Should().Be(1);
-    }
-
-    [Test]
     public void PutNextRectangle_FirstInCenter()
     {
         var size = new Size(43, 45);
         layouter.PutNextRectangle(size);
+        layouter.Rectangles.Count.Should().Be(1);
         layouter.Rectangles[0].Location
             .Should()
             .Be(new Point(center.X - size.Width / 2, center.Y - size.Height / 2));
@@ -93,7 +87,7 @@ public class CircularCloudLayouterTests
     {
         var size = new Size(width, height);
         layouter.PutNextRectangle(size);
-        layouter.Rectangles[0].Size.Should().Be(size);
+        layouter.Rectangles[^1].Size.Should().Be(size);
     }
 
     [TestCase(-8, -8, 6, 6, ExpectedResult = true, TestName = "Left Top overlap")]
@@ -114,9 +108,12 @@ public class CircularCloudLayouterTests
     public bool HasOverlapWith_CorrectAnswer_OnOverlap(int xOffset, int yOffset, int width, int height)
     {
         var staticSize = new Size(12, 12);
+        
         layouter.PutNextRectangle(staticSize);
         var rectangle = new Rectangle(new Point(center.X + xOffset, center.Y + yOffset), new Size(width, height));
-        return layouter.HasOverlapWith(rectangle);
+        var hasOverlap = layouter.HasOverlapWith(rectangle);
+        
+        return hasOverlap;
     }
 
     [Test]
@@ -124,7 +121,6 @@ public class CircularCloudLayouterTests
     {
         const double accuracy = 0.2;
 
-        // The more rectangles, the more accurately repeats the shape of a circle
         for (var i = 0; i < 200; i++)
             layouter.PutNextRectangle(new Size(50, 20));
 
@@ -133,7 +129,7 @@ public class CircularCloudLayouterTests
         var horizontalRadius = Math.Abs(rects.Max(x => x.Right) - rects.Min(x => x.Left)) / 2;
         var verticalRadius = Math.Abs(rects.Max(x => x.Bottom) - rects.Min(x => x.Top)) / 2;
         var boundingElipseArea = Math.PI * horizontalRadius * verticalRadius;
-        (Math.Abs(rectangleArea / boundingElipseArea - 1)).Should().BeLessThan(accuracy);
+        Math.Abs(rectangleArea / boundingElipseArea - 1).Should().BeLessThan(accuracy);
     }
 
 
@@ -160,6 +156,6 @@ public class CircularCloudLayouterTests
             layouter.PutNextRectangle(new Size(50, 50));
 
         layouter.Clear();
-        layouter.Rectangles.Count.Should().Be(0);
+        layouter.Rectangles.Should().BeEmpty();
     }
 }
