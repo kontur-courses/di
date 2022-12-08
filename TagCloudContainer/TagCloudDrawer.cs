@@ -6,9 +6,9 @@ namespace TagsCloudVisualization
     {
         public static void DrawWithSave(List<TextRectangle> rectangles, string path)
         {
-            var maxLocationX = GetMaxPointLocation(rectangles, x=>x.rectangle.X);
+            var maxLocationX = GetMaxPointLocation(rectangles, x => x.rectangle.X);
             var maxLocationY = GetMaxPointLocation(rectangles, y => y.rectangle.Y);
-            var srcSize= new Size(Math.Abs(maxLocationX.rectangle.Location.X*3), Math.Abs(maxLocationY.rectangle.Location.Y * 3));
+            var srcSize = new Size(Math.Abs(maxLocationX.rectangle.Location.X * 3), Math.Abs(maxLocationY.rectangle.Location.Y * 3));
             var bitmap = new Bitmap(srcSize.Width, srcSize.Height);
             var g = Graphics.FromImage(bitmap);
             foreach (var textRectangle in rectangles)
@@ -21,7 +21,7 @@ namespace TagsCloudVisualization
             bitmap.Save(path);
         }
 
-        private static TextRectangle GetMaxPointLocation(IEnumerable<TextRectangle> rectangles,Func<TextRectangle,int> func)
+        private static TextRectangle GetMaxPointLocation(IEnumerable<TextRectangle> rectangles, Func<TextRectangle, int> func)
         {
             return rectangles.MaxBy(func);
         }

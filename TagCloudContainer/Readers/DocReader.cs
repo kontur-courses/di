@@ -12,8 +12,8 @@ namespace TagCloudContainer.Readers
             var stringBuilder = new StringBuilder();
             var document = new Document(path);
             foreach (Section section in document.Sections)
-            foreach (Paragraph paragraph in section.Paragraphs)
-                stringBuilder.AppendLine(paragraph.Text);
+                foreach (Paragraph paragraph in section.Paragraphs)
+                    stringBuilder.AppendLine(paragraph.Text);
             return stringBuilder.ToString();
         }
     }

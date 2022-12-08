@@ -11,10 +11,10 @@ namespace TagCloudContainer.Rectangles
             foreach (var tag in fontTags)
             {
                 var font = new Font(tag.Font, tag.SizeFont);
-                var rectangle = g.MeasureString(tag.Word,font).ToSize();
+                var rectangle = g.MeasureString(tag.Word, font).ToSize();
                 yield return new SizeTextRectangle(rectangle, tag.Word, font);
             }
         }
- 
+
     }
 }

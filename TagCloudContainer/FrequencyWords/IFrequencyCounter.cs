@@ -5,4 +5,3 @@
         IEnumerable<WordFrequency> GetWordsFrequency(IEnumerable<string> words);
     }
 }
-    

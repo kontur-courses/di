@@ -8,7 +8,7 @@
 //        {
 //            var spiral = new ArithmeticSpiral(new Point(0, 0));
 //            for (var i = 0; i < 10000000; i++)
-//                spiral.GetPoint();
+//                spiral.GetNextPoint();
 //        }
 
 //        [Test]
@@ -17,7 +17,7 @@
 //            var spiral = new ArithmeticSpiral(new Point(0, 0));
 //            var pointList = new List<Point>();
 //            for (var i = 0; i < 100000; i++)
-//                pointList.Add(spiral.GetPoint());
+//                pointList.Add(spiral.GetNextPoint());
 //            var yPoints = pointList.OrderBy(p => p.Y);
 //            var xPoints = pointList.OrderBy(p => p.X);
 //            Math.Abs(yPoints.First().Y).Should()

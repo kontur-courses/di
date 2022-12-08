@@ -92,11 +92,11 @@ namespace TagsCloudVisualization
                     x.rectangle.IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
                 .Contains(true);
         }
-        public static TagCloud InitialCloud(string pathTxtFile,FontFamily font,int maxFont,int minFont)
+        public static TagCloud InitialCloud(string pathTxtFile, FontFamily font, int maxFont, int minFont)
         {
-            var fileReader= new TxtReader().Read(pathTxtFile);
+            var fileReader = new TxtReader().Read(pathTxtFile);
             var parser = new FileLinesParser();
-            var parsedText= parser.Parse(fileReader);
+            var parsedText = parser.Parse(fileReader);
             var filterWords = new FilterWords();
             var filtredTags = filterWords.Filter(parsedText);
             var formatter = new WordFormatter();

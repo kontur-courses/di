@@ -22,10 +22,10 @@
             return
                 new ToolStripMenuItem
                     (action.Name, null, (sender, args) => action.Perform())
-                    {
-                        ToolTipText = action.Description,
-                        Tag = action
-                    };
+                {
+                    ToolTipText = action.Description,
+                    Tag = action
+                };
         }
     }
 }

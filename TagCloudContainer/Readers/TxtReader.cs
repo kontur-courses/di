@@ -1,6 +1,6 @@
 ﻿namespace TagCloudContainer.Readers
 {
-    public class TxtReader:IFileReader
+    public class TxtReader : IFileReader
     {
         public string Read(string path)
         {

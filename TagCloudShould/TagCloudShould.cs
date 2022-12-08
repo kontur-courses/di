@@ -21,7 +21,7 @@ namespace TagCloudShould
         {
             circularLayouter = new CircularCloudLayouter();
             var reader = new TxtReader();
-            var text=reader.Read((Environment.CurrentDirectory +
+            var text = reader.Read((Environment.CurrentDirectory +
                                    "\\..\\..\\..\\word_data\\data.txt"));
             var words = new FileLinesParser().Parse(text);
             tagCloud = InitializeCloud(words);
@@ -31,17 +31,17 @@ namespace TagCloudShould
         public void PrintPathAndSaveIfTestIsDown()
         {
 
-            var testName = TestContext.CurrentContext.Test.Name ;
+            var testName = TestContext.CurrentContext.Test.Name;
 
             if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
             {
-                tagCloud.Save(Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
+                TagCloudDrawer.DrawWithSave(tagCloud.GetRectangles(), Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
                 return;
             }
 
-            var pathDebug = Environment.CurrentDirectory + 
+            var pathDebug = Environment.CurrentDirectory +
                             "\\..\\..\\..\\saved_images\\debugImages\\" + testName + TestContext.CurrentContext.Result.FailCount + ".png";
-           // tagCloud.Save(pathDebug);
+            TagCloudDrawer.DrawWithSave(tagCloud.GetRectangles(), pathDebug);
             Console.WriteLine("Tag cloud visualization saved to file: " + pathDebug);
         }
 
@@ -67,8 +67,8 @@ namespace TagCloudShould
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var rectangles = tagCloud.GetRectangles();
             foreach (var rectangle in rectangles)
-            foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
-                thisRectangle.rectangle.IntersectsWith(rectangle.rectangle).Should().BeFalse();
+                foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
+                    thisRectangle.rectangle.IntersectsWith(rectangle.rectangle).Should().BeFalse();
         }
 
         [Test]
@@ -82,13 +82,13 @@ namespace TagCloudShould
         {
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
             var arithmeticSpiral = new ArithmeticSpiral(new Point(0, 0));
-            var point = arithmeticSpiral.GetPoint();
+            var point = arithmeticSpiral.GetNextPoint();
             var rectangles = tagCloud.GetRectangles();
             var smallRectangle = rectangles.Last().rectangle;
             var smallOptions = new Tuple<string, Size, Font>("small", smallRectangle.Size, new Font("Times", 5));
             while (!new Rectangle(point - smallOptions.Item2 / 2, smallOptions.Item2).IntersectsWith(smallRectangle))
             {
-                point = arithmeticSpiral.GetPoint();
+                point = arithmeticSpiral.GetNextPoint();
                 if (!rectangles
                         .Select(x =>
                             x.rectangle.IntersectsWith(new Rectangle(point - smallOptions.Item2 / 2,
@@ -104,7 +104,7 @@ namespace TagCloudShould
         [Test, Timeout(5000)]
         public void Visualization_Timeout()
         {
-        
+
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
         }
 
@@ -115,7 +115,7 @@ namespace TagCloudShould
             var strsplt = new string[400];
             for (var i = 0; i < 400; i++)
                 strsplt[i] = random.Next(1, 100).ToString();
-            tagCloud=InitializeCloud(strsplt);
+            tagCloud = InitializeCloud(strsplt);
             tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
         }
     }

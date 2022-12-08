@@ -36,7 +36,7 @@ namespace TagCloudGraphicalUserInterface
                 new ArithmeticSpiral(settings.StartPoint, settings.ellipsoidMultiplier, settings.densityMultiplier));
             var sizeCloud = cloud.GetScreenSize();
             imageSettingsProvider.RecreateImage(new ImageSettings()
-                { Height = sizeCloud.Height, Width = sizeCloud.Width });
+            { Height = sizeCloud.Height, Width = sizeCloud.Width });
             DrawCloud(cloud, imageSettingsProvider, palette);
         }
 

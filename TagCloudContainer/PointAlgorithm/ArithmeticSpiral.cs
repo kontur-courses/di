@@ -2,7 +2,7 @@
 
 namespace TagCloudContainer.PointAlgorithm
 {
-    public class ArithmeticSpiral: IPointer
+    public class ArithmeticSpiral : IPointer
     {
         private readonly Point currentPoint;
         private double angle;
@@ -11,7 +11,7 @@ namespace TagCloudContainer.PointAlgorithm
         public ArithmeticSpiral(Point startPoint, int ellipsoidMultiplier = 1, int densityMultiplier = 1)
         {
             currentPoint = startPoint;
-            multiplier =densityMultiplier;
+            multiplier = densityMultiplier;
             this.ellipsoidMultiplier = ellipsoidMultiplier;
         }
         public Point GetNextPoint()

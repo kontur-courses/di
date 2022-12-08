@@ -8,7 +8,7 @@ namespace TagCloudContainer.TagsWithFont
         public int SizeFont;
         public FontFamily Font;
 
-        public FontTag(string word,int sizeFont, FontFamily font)
+        public FontTag(string word, int sizeFont, FontFamily font)
         {
             Word = word;
             SizeFont = sizeFont;
