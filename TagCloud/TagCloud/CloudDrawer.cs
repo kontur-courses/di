@@ -6,15 +6,18 @@ namespace TagCloud;
 
 public class CloudDrawer : ICloudDrawer
 {
-    public Palette Palette { get; set; }
-    public ICloudLayouter Layouter { get; set; }
-    public SizeProperties Size { get; set; }
-    public ITextToTagsConverter TextToTagsConverter { get; set; }
-    public FontProperties FontProperties { get; set; }
-
-
-    public CloudDrawer(ITextToTagsConverter textToTagsConverter, SizeProperties size, ICloudLayouter layouter,
-        Palette palette, FontProperties fontProperties)
+    private Palette Palette { get; set; }
+    private ICloudLayouter Layouter { get; set; }
+    private SizeProperties Size { get; set; }
+    private ITextToTagsConverter TextToTagsConverter { get; set; }
+    private FontProperties FontProperties { get; set; }
+    
+    public CloudDrawer(
+        ITextToTagsConverter textToTagsConverter, 
+        SizeProperties size, 
+        ICloudLayouter layouter,
+        Palette palette, 
+        FontProperties fontProperties)
     {
         Layouter = layouter;
         Palette = palette;
@@ -43,6 +46,7 @@ public class CloudDrawer : ICloudDrawer
     private IEnumerable<TextBox> ComputeTags(Dictionary<string, int> tags)
     {
         var maxCount = tags.Values.Max();
+        var words = new List<TextBox>();
         foreach (var tag in tags)
         {
             var text = new TextBox();
@@ -52,10 +56,10 @@ public class CloudDrawer : ICloudDrawer
             var size = ComputeFontSize(tag.Value, maxCount, FontProperties.MinSize, FontProperties.MaxSize);
             text.Font = new Font(FontProperties.Family, size, FontProperties.Style);
             text.Location = Layouter.PutNextRectangle(text.PreferredSize).Location;
-            yield return text;
+            words.Add(text);
         }
-
         Layouter.Clear();
+        return words;
     }
 
     private static float ComputeFontSize(float count, float maxCount, float minSize, float maxSize) =>
