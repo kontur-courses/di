@@ -11,7 +11,7 @@ namespace TagsCloudContainer
         private readonly Size shiftToBitmapCenter;
         private readonly List<Rectangle> _rectangles;
         private readonly Dictionary<string, int> _words;
-        
+
         public RectangleVisualisator(Dictionary<string, int> words, CircularCloudLayouter layouter)
         {
             _words = words;
@@ -22,12 +22,12 @@ namespace TagsCloudContainer
 
         private Bitmap GenerateBitmap()
         {
-            var width = _rectangles.Max(rectangle => rectangle.Right) - 
+            var width = _rectangles.Max(rectangle => rectangle.Right) -
                         _rectangles.Min(rectangle => rectangle.Left);
-            
-            var height = _rectangles.Max(rectangle => rectangle.Bottom) - 
+
+            var height = _rectangles.Max(rectangle => rectangle.Bottom) -
                          _rectangles.Min(rectangle => rectangle.Top);
-        
+
             return new Bitmap(width * 2, height * 2);
         }
 
@@ -41,7 +41,8 @@ namespace TagsCloudContainer
             foreach (var word in _words)
             {
                 var rectangleOnMap = CreateRectangleOnMap(_rectangles[count]);
-                using var font = new Font(settingFont.FontFamily, word.Value / (float)_words.Count * 100 * settingFont.Size);
+                using var font = new Font(settingFont.FontFamily,
+                    word.Value / (float) _words.Count * 100 * settingFont.Size);
                 graphics.DrawString(word.Key, font, pen.Brush, rectangleOnMap.Location);
                 count++;
             }
@@ -51,10 +52,10 @@ namespace TagsCloudContainer
         {
             return new Rectangle(rectangle.Location + shiftToBitmapCenter, rectangle.Size);
         }
-        
-        public void Save(string filename, ImageFormat format)
+
+        public void Save(string path, string filename, ImageFormat format)
         {
-            _bitmap.Save($"{filename}.{format}", format);
+            _bitmap.Save($"{path}\\{filename}.{format}", format);
         }
     }
 }
