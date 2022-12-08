@@ -100,58 +100,10 @@
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="App\CloudCreatorDriver\CloudCreator\CloudCreator.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudCreator\ICloudCreator.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudDrawers\CloudDrawer.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudDrawers\Exceptions\DrawingException.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudDrawers\ICloudDrawer.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudDrawers\WordToDraw\DrawingWord.cs" />
-        <Compile Include="App\CloudCreatorDriver\CloudDrawers\WordToDraw\IDrawingWord.cs" />
-        <Compile Include="App\CloudCreatorDriver\DrawingSettings\DrawingSettings.cs" />
-        <Compile Include="App\CloudCreatorDriver\DrawingSettings\IDrawingSettings.cs" />
-        <Compile Include="App\CloudCreatorDriver\DrawingSettings\IWordVisualisation.cs" />
-        <Compile Include="App\CloudCreatorDriver\DrawingSettings\WordVisualisation.cs" />
-        <Compile Include="App\CloudCreatorDriver\ImageSaver\FileTypes\FileType.cs" />
-        <Compile Include="App\CloudCreatorDriver\ImageSaver\FileTypes\IFileType.cs" />
-        <Compile Include="App\CloudCreatorDriver\ImageSaver\IImageSaver.cs" />
-        <Compile Include="App\CloudCreatorDriver\ImageSaver\PngImageSaver.cs" />
-        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\Exceptions\CloudSettingsException.cs" />
-        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\ICloudLayouter.cs" />
-        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\ICloudLayouterSettings.cs" />
-        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\SpiralCloudLayouters\SpiralCloudLayouter.cs" />
-        <Compile Include="App\CloudCreatorDriver\RectanglesLayouters\SpiralCloudLayouters\SpiralCloudLayouterSettings.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\Exceptions\IncorrectCallException.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\Exceptions\IncorrectFileTypeException.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\FromFileInputWordsStream.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\IFileEncoder.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\FileInputStream\TxtEncoder.cs" />
-        <Compile Include="App\WordPreprocessorDriver\InputStream\IInputWordsStream.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\BoringWords\BoringUnionsAndAppealsRU.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\BoringWords\IBoringWords.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\DefaultWordsPreprocessor.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\IWordsPreprocessor.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\Word\IWord.cs" />
-        <Compile Include="App\WordPreprocessorDriver\WordsPreprocessor\Word\Word.cs" />
-        <Compile Include="Clients\ConsoleClient\ConsoleClient.cs" />
-        <Compile Include="Clients\IClient.cs" />
-        <Compile Include="Program.cs" />
-        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\CircularCloudLayouterTest.cs" />
-        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\Infrastructure\RandomRectanglesCreator.cs" />
-        <Compile Include="Tests\CloudLayouter\SpiralCloudLayouter\Infrastructure\TagCloudDrawer.cs" />
-        <Compile Include="Tests\FileInputStream\FromFileInputWordsStreamTest.cs" />
-        <Compile Include="Tests\FileInputStream\Infrastructure\FileEncoderСheater.cs" />
-        <Compile Include="Tests\FileInputStream\TxtEncoderTest.cs" />
-        <Compile Include="Tests\WordPreprocessor\DefaultWordsPreprocessorTest.cs" />
-        <Compile Include="Tests\WordPreprocessor\Infrastructure\NoBoringWords.cs" />
-        <Compile Include="Tests\WordPreprocessor\Infrastructure\SimpleBoringWordsIdentifier.cs" />
-        <Compile Include="Tests\WordPreprocessor\Infrastructure\SimpleVeryBoringWordsIdentifier.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="App\CloudCreatorDriver" />
-      <Folder Include="App\WordPreprocessorDriver" />
-    </ItemGroup>
-    <ItemGroup>
       <None Include="App.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Tests" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

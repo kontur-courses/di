@@ -2,7 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualisation", "TagsCloudVisualisation\TagsCloudVisualisation\TagsCloudVisualisation.csproj", "{FB2E16EE-57A4-4EA7-9C30-5EF6528D8FF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloud", "TagCloud\TagCloud.csproj", "{13DEDF80-C56E-4031-9415-DA60A8A70085}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudTest", "TagCloudTest\TagCloudTest.csproj", "{53ABDA6A-60B3-474D-A9A0-8877B48D30C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +16,13 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB2E16EE-57A4-4EA7-9C30-5EF6528D8FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB2E16EE-57A4-4EA7-9C30-5EF6528D8FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB2E16EE-57A4-4EA7-9C30-5EF6528D8FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB2E16EE-57A4-4EA7-9C30-5EF6528D8FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13DEDF80-C56E-4031-9415-DA60A8A70085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13DEDF80-C56E-4031-9415-DA60A8A70085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13DEDF80-C56E-4031-9415-DA60A8A70085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13DEDF80-C56E-4031-9415-DA60A8A70085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53ABDA6A-60B3-474D-A9A0-8877B48D30C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53ABDA6A-60B3-474D-A9A0-8877B48D30C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53ABDA6A-60B3-474D-A9A0-8877B48D30C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53ABDA6A-60B3-474D-A9A0-8877B48D30C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
