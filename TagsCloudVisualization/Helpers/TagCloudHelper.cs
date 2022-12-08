@@ -13,7 +13,7 @@ namespace TagsCloudVisualization
             var imageHeight = cloudConfiguration.ImageSize.Height;
 
             var bitmap = new Bitmap(imageWidth, imageHeight);
-            var gp = Graphics.FromImage(bitmap);
+            using var gp = Graphics.FromImage(bitmap);
             
             gp.FillRectangle(new SolidBrush(cloudConfiguration.BackgroundColor), new Rectangle(0,0, imageWidth, imageHeight));
 
@@ -29,7 +29,7 @@ namespace TagsCloudVisualization
             var imageHeight = cloudConfiguration.ImageSize.Height;
             
             var bitmap = new Bitmap(imageWidth, imageHeight);
-            var gp = Graphics.FromImage(bitmap);
+            using var gp = Graphics.FromImage(bitmap);
             
             gp.FillRectangle(new SolidBrush(cloudConfiguration.BackgroundColor), new Rectangle(0,0, imageWidth, imageHeight));
             gp.DrawRectangles(new Pen(cloudConfiguration.PrimaryColor), rects.ToArray());
@@ -67,7 +67,7 @@ namespace TagsCloudVisualization
 
         public static List<Size> GenerateRectangleSizes(List<Tag> tags)
         {
-            var gp = Graphics.FromImage(new Bitmap(1, 1));
+            using var gp = Graphics.FromImage(new Bitmap(1, 1));
 
             return tags.Select(tag => gp.MeasureString(tag.Text, new Font("Arial", tag.FontSize)).ToSize()).ToList();
         }
