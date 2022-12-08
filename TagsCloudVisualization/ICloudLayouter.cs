@@ -5,7 +5,7 @@ namespace TagsCloudVisualization
 {
     public interface ICloudLayouter
     {
-        Rectangle GetNextRectangle(Point center, List<Rectangle> rectangles, Size nextRectangleSize);
-        List<Rectangle> GenerateCloud(Point center, List<Size> rectangleSizes);
+        Rectangle GetNextRectangle(List<Rectangle> rectangles, Size nextRectangleSize);
+        List<Rectangle> GenerateCloud(List<Size> rectangleSizes);
     }
 }

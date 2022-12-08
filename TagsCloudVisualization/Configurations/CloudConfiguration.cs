@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Configurations
 {
     public class CloudConfiguration : IDisposable
     {
