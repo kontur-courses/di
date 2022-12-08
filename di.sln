@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{D3DFA2C0-9A73-49EF-BDD0-FB2A297A66AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{0EC7F1A7-A28C-4646-B3CA-0B316D08116D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D3DFA2C0-9A73-49EF-BDD0-FB2A297A66AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3DFA2C0-9A73-49EF-BDD0-FB2A297A66AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3DFA2C0-9A73-49EF-BDD0-FB2A297A66AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EC7F1A7-A28C-4646-B3CA-0B316D08116D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC7F1A7-A28C-4646-B3CA-0B316D08116D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC7F1A7-A28C-4646-B3CA-0B316D08116D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC7F1A7-A28C-4646-B3CA-0B316D08116D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

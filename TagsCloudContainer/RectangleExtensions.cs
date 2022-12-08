@@ -21,5 +21,10 @@ namespace TagsCloudContainer
 
             return false;
         }
+        
+        public static int GetArea(this Rectangle rectangle)
+        {
+            return rectangle.Width * rectangle.Height;
+        }
     }
 }
