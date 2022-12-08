@@ -8,14 +8,13 @@ using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Visualisator
 {
-    public class TagCloudPainter
+    public class TagCloudPainter : IPainter
     {
-        private CircularCloudLayouter cloudLayouter;
+        private ICloudLayouter cloudLayouter;
         ImageHolder imageHolder;
         ImageSettings imageSettings;
 
-
-        public TagCloudPainter(CircularCloudLayouter cloudLayouter, ImageHolder imageHolder, ImageSettings imageSettings)
+        public TagCloudPainter(ICloudLayouter cloudLayouter, ImageHolder imageHolder, ImageSettings imageSettings)
         {
             this.cloudLayouter = cloudLayouter;
             this.imageHolder = imageHolder;

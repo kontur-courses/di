@@ -12,23 +12,21 @@ using TagsCloudVisualization;
 
 namespace TagsCloudContainer.Algorithm
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
-        public Point Center;
+        public readonly Point Center;
         
         private readonly ImageSettings imageSettings;
         private readonly List<(Rectangle rectangle, string text)> rectangles;
-        private readonly AlgorithmSettings algoSettings;
-        private readonly Parser parser;
+        private readonly IParser parser;
         private Func<int, Point> pointFinderFunc;
 
-        public CircularCloudLayouter(ImageSettings imageSettings, AlgorithmSettings algoSettings, Parser parser)
+        public CircularCloudLayouter(ImageSettings imageSettings, AlgorithmSettings algoSettings, IParser parser)
         {
             this.imageSettings = imageSettings;
             Center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
             this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
             rectangles = new List<(Rectangle rectangle, string text)>();
-            this.algoSettings = algoSettings;
             this.parser = parser;
         }
 

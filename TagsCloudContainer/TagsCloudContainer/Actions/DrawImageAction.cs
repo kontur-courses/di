@@ -9,9 +9,9 @@ namespace TagsCloudContainer.Actions
 {
     public class DrawImageAction : IUiAction
     {
-        private TagCloudPainter painter;
+        private IPainter painter;
 
-        public DrawImageAction(TagCloudPainter painter)
+        public DrawImageAction(IPainter painter)
         {
             this.painter = painter;
         }

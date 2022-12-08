@@ -2,7 +2,7 @@
 
 namespace TagsCloudContainer.Algorithm
 {
-    public class Parser
+    public class Parser : IParser
     {
         private FileSettings fileSettings;
 

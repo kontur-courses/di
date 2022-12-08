@@ -1,5 +1,6 @@
 using Autofac;
 using TagsCloudContainer.Actions;
+using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.Visualisator;
 
@@ -17,9 +18,9 @@ namespace TagsCloudContainer
             builder.RegisterType<FileSettings>().AsSelf().SingleInstance();
             builder.RegisterType<AlgorithmSettings>().AsSelf().SingleInstance();
             builder.RegisterType<ImageHolder>().AsSelf().SingleInstance();
-            builder.RegisterType<Algorithm.Parser>().AsSelf();
-            builder.RegisterType<Algorithm.CircularCloudLayouter>().AsSelf();
-            builder.RegisterType<TagCloudPainter>().AsSelf();
+            builder.RegisterType<Algorithm.Parser>().As<IParser>();
+            builder.RegisterType<Algorithm.CircularCloudLayouter>().As<ICloudLayouter>();
+            builder.RegisterType<TagCloudPainter>().As<IPainter>();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();
             builder.RegisterType<ChoseBoringWordsSourceFileAction>().As<IUiAction>();
             builder.RegisterType<SaveImageAction>().As<IUiAction>();
