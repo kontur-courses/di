@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{AE337334-387D-4D9F-B732-621527D7891C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE337334-387D-4D9F-B732-621527D7891C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE337334-387D-4D9F-B732-621527D7891C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE337334-387D-4D9F-B732-621527D7891C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE337334-387D-4D9F-B732-621527D7891C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
