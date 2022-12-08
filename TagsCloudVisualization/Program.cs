@@ -1,0 +1,30 @@
+﻿using System.Drawing;
+using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
+using TagsCloudVisualization.Curves;
+using TagsCloudVisualization.FileReaders;
+using TagsCloudVisualization.TextFormatters;
+
+namespace TagsCloudVisualization
+{
+    internal class Program
+    {
+        private static void Main(string[] args)
+        {
+            var parsedArgs = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
+            IServiceCollection services = new ServiceCollection();
+            services.AddSingleton<IFileReader>(new TxtFileReader(parsedArgs.InputFile));
+            services.AddSingleton(new Spiral(new Point(parsedArgs.X, parsedArgs.Y)));
+            services.AddSingleton(new Painter(new Size(parsedArgs.Width, parsedArgs.Height)));
+            services.AddSingleton(new CircularCloudLayouter(new Point(parsedArgs.X, parsedArgs.Y)));
+            services.AddSingleton<IWordFilter>(new SmallWordFilter());
+            services.AddSingleton<TextFormatter>();
+            services.AddSingleton<Client>();
+            var container = services.BuildServiceProvider();
+
+            var font = new FontFamily(parsedArgs.FontName);
+            var client = container.GetRequiredService<Client>();
+            client.Draw(parsedArgs.OutputFile, font);
+        }
+    }
+}
