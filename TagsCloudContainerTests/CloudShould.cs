@@ -1,10 +1,15 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudVisualization.Infrastructure.Algorithm;
+using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 
-
-namespace TagsCloudTests
+namespace TagsCloudContainerTests
 {
     public class CloudShould
     {
@@ -23,9 +28,9 @@ namespace TagsCloudTests
         public static bool AreThereAnyIntersections(Rectangle[] rectangles)
         {
             for (var i = 0; i < rectangles.Length; i++)
-            for (var j = i + 1; j < rectangles.Length; j++)
-                if (rectangles[i].AreIntersected(rectangles[j]))
-                    return true;
+                for (var j = i + 1; j < rectangles.Length; j++)
+                    if (rectangles[i].AreIntersected(rectangles[j]))
+                        return true;
 
             return false;
         }

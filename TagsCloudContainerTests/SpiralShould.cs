@@ -6,10 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using TagsCloudContainer.Algorithm.Curves;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 
-namespace TagsCloudTests
+namespace TagsCloudContainerTests
 {
     public class SpiralShould
     {
@@ -18,7 +17,8 @@ namespace TagsCloudTests
         {
             Action action = () => new Spiral(0, Point.Empty);
             action.Should().Throw<ArgumentException>();
-        } [Test]
+        }
+        [Test]
         public void ThrowException_IncorrectIncrement()
         {
             Action action = () => new Spiral(1, Point.Empty, 0);

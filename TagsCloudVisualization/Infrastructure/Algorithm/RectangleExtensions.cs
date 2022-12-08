@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudVisualization.Infrastructure.Algorithm
 {
     public static class RectangleExtensions
     {

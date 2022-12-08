@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using TagsCloudContainer.Algorithm.Curves;
+using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 
-namespace TagsCloudContainer.Algorithm
+namespace TagsCloudVisualization.Infrastructure.Algorithm
 {
     public class Cloud
     {

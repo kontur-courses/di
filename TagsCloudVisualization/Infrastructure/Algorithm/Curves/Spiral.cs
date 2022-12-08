@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer.Algorithm.Curves
+namespace TagsCloudVisualization.Infrastructure.Algorithm.Curves
 {
     public class Spiral : ICurve
     {
