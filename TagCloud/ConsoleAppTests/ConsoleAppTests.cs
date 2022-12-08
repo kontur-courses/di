@@ -6,7 +6,7 @@ namespace ConsoleAppTests;
 
 public class ConsoleAppTests
 {
-    private ArgsParser parser = new ArgsParser();
+    private ArgumentsParser parser = new();
 
     [TestCase("Help -h --help", TestName = "Help contains information about itself")]
     [TestCase("Image width -W --width", TestName = "Help contains information about width option")]
