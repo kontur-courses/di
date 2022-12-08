@@ -1,6 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudLayout", "CloudLayout\CloudLayout.csproj", "{195D4FC8-5265-4EE0-BC95-5BE8714B4BE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{79FBD490-E4EC-4A17-AB68-D91EFD962329}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{F8E9B290-6EA4-47C6-A206-C10EDC7A24E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +21,23 @@ Global
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D70883B-6F8B-4166-802F-8EDC9BE93199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195D4FC8-5265-4EE0-BC95-5BE8714B4BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195D4FC8-5265-4EE0-BC95-5BE8714B4BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195D4FC8-5265-4EE0-BC95-5BE8714B4BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195D4FC8-5265-4EE0-BC95-5BE8714B4BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79FBD490-E4EC-4A17-AB68-D91EFD962329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79FBD490-E4EC-4A17-AB68-D91EFD962329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79FBD490-E4EC-4A17-AB68-D91EFD962329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79FBD490-E4EC-4A17-AB68-D91EFD962329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E9B290-6EA4-47C6-A206-C10EDC7A24E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E9B290-6EA4-47C6-A206-C10EDC7A24E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E9B290-6EA4-47C6-A206-C10EDC7A24E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E9B290-6EA4-47C6-A206-C10EDC7A24E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49BF5C44-42A8-49E2-80B1-9FAF4065CD8D}
 	EndGlobalSection
 EndGlobal
