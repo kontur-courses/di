@@ -1,15 +1,19 @@
 using System.Reflection;
 using Autofac;
+using MyStemWrapper;
 using TagCloudApp.Domain;
 using TagCloudCreator.Domain;
 using TagCloudCreator.Domain.Providers;
 using TagCloudCreator.Domain.Settings;
+using TagCloudCreator.Infrastructure;
 using TagCloudCreator.Infrastructure.Settings;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 using TagCloudCreatorExtensions;
 using TagCloudCreatorExtensions.ImageSavers;
 using TagCloudCreatorExtensions.WordsFileReaders;
+using TagCloudCreatorExtensions.WordsFilters;
+using TagCloudCreatorExtensions.WordsFilters.Settings;
 
 namespace TagCloudApp;
 
@@ -38,9 +42,7 @@ internal static class Program
 
         builder.RegisterType<AppSettingsProvider>()
             .AsSelf()
-            .As<IImageSettingsProvider>()
-            .As<IWordsPathSettingsProvider>()
-            .As<IImagePathSettingsProvider>()
+            .AsImplementedInterfaces()
             .SingleInstance();
 
         builder.RegisterType<PictureBoxImageHolder>()
@@ -64,14 +66,29 @@ internal static class Program
         builder.RegisterType<WordsFileReaderProvider>()
             .As<IWordsFileReaderProvider>()
             .SingleInstance();
-        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtWordsFileReader))!)
-            .AssignableTo<IWordsFileReader>()
-            .As<IWordsFileReader>()
+        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtFileReader))!)
+            .AssignableTo<IFileReader>()
+            .As<IFileReader>()
             .SingleInstance();
 
+        builder.Register(_ => new MyStemWordsGrammarInfoParser(@"../../../../MyStemBin/mystem.exe"))
+            .AsSelf()
+            .SingleInstance();
+        builder.RegisterType<MyStemWordsNormalizer>()
+            .As<IWordsNormalizer>()
+            .SingleInstance();
+        builder.RegisterType<FiltersSettings>()
+            .AsSelf()
+            .AsImplementedInterfaces()
+            .SingleInstance();
+        builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(WordsLengthFilter))!)
+            .AssignableTo<IWordsFilter>()
+            .As<IWordsFilter>()
+            .SingleInstance();
         builder.RegisterType<WordsInfoParser>()
             .As<IWordsInfoParser>()
             .SingleInstance();
+
         builder.RegisterType<WordsPaintDataProvider>()
             .As<IWordsPaintDataProvider>();
 

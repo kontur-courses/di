@@ -3,5 +3,5 @@
 public interface IWordsFileReaderProvider
 {
     IEnumerable<string> SupportedExtensions { get; }
-    IWordsFileReader GetReader();
+    IFileReader GetReader();
 }

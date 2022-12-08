@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MyStemWrapper\MyStemWrapper.csproj" />
       <ProjectReference Include="..\TagCloudCreator\TagCloudCreator.csproj" />
     </ItemGroup>
 

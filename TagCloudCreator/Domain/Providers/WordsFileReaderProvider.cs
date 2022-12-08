@@ -5,11 +5,11 @@ namespace TagCloudCreator.Domain.Providers;
 
 public class WordsFileReaderProvider : IWordsFileReaderProvider
 {
-    private readonly Dictionary<string, IWordsFileReader> _wordsFileReaders;
+    private readonly Dictionary<string, IFileReader> _wordsFileReaders;
     private readonly IWordsPathSettingsProvider _pathSettingsProvider;
 
     public WordsFileReaderProvider(
-        IEnumerable<IWordsFileReader> wordsFileReaders,
+        IEnumerable<IFileReader> wordsFileReaders,
         IWordsPathSettingsProvider pathSettingsProvider)
     {
         _wordsFileReaders = wordsFileReaders.ToDictionary(reader => reader.SupportedExtension);
@@ -18,7 +18,7 @@ public class WordsFileReaderProvider : IWordsFileReaderProvider
 
     public IEnumerable<string> SupportedExtensions => _wordsFileReaders.Keys;
 
-    public IWordsFileReader GetReader()
+    public IFileReader GetReader()
     {
         var wordsFileExtension = Path.GetExtension(_pathSettingsProvider.GetWordsPathSettings().WordsPath);
         if (_wordsFileReaders.TryGetValue(wordsFileExtension, out var result))
