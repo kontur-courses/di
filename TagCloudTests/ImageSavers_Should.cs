@@ -43,10 +43,18 @@ public class ImageSavers_Should
 
     private static TestCaseData[] ImagesFormatsTestCaseData =
     {
-        new TestCaseData
-        (
+        new TestCaseData(
             new Func<IImagePathSettingsProvider, IImageSaver>(provider => new PngImageSaver(provider))
-        ).SetName("Png")
+        ).SetName("Png"),
+        new TestCaseData(
+            new Func<IImagePathSettingsProvider, IImageSaver>(provider => new JpegImageSaver(provider))
+        ).SetName("Jpeg"),
+        new TestCaseData(
+            new Func<IImagePathSettingsProvider, IImageSaver>(provider => new GifImageSaver(provider))
+        ).SetName("Gif"),
+        new TestCaseData(
+            new Func<IImagePathSettingsProvider, IImageSaver>(provider => new EmfImageSaver(provider))
+        ).SetName("Emf")
     };
 
     private static void RemoveIfExists(string file)

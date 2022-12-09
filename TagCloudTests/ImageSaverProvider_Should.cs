@@ -1,10 +1,10 @@
 using TagCloudCreator.Domain.Providers;
+using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 using TagCloudCreator.Interfaces.Settings;
 using TagCloudCreatorExtensions.ImageSavers;
 
 namespace TagCloudTests;
-
 
 [TestFixture]
 public class ImageSaverProvider_Should
@@ -21,19 +21,25 @@ public class ImageSaverProvider_Should
             .Returns(_pathSettings);
 
         _imageSaverProvider = new ImageSaverProvider(
-            new[]
+            new IImageSaver[]
             {
-                new PngImageSaver(pathSettingsProvider)
+                new PngImageSaver(pathSettingsProvider),
+                new JpegImageSaver(pathSettingsProvider),
+                new GifImageSaver(pathSettingsProvider),
+                new EmfImageSaver(pathSettingsProvider)
             },
             pathSettingsProvider
         );
     }
 
-    [TestCase("png", typeof(PngImageSaver), TestName = "Png")]
+    [TestCase(".png", typeof(PngImageSaver), TestName = "Png")]
+    [TestCase(".jpeg", typeof(JpegImageSaver), TestName = "Jpeg")]
+    [TestCase(".gif", typeof(GifImageSaver), TestName = "Gif")]
+    [TestCase(".emf", typeof(EmfImageSaver), TestName = "Emf")]
     public void ReturnCorrectSaver_ForCorrectExtension(string extension,
         Type expectedSaverType)
     {
-        _pathSettings.ImagePath = $"image.{extension}";
+        _pathSettings.ImagePath = $"image{extension}";
         _imageSaverProvider.GetSaver().GetType().Should().Be(expectedSaverType);
     }
 
