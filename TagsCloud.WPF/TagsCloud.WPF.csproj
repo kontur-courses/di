@@ -12,10 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.5.0" />
       <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-      <PackageReference Include="Ninject" Version="3.3.6" />
     </ItemGroup>
 
     <ItemGroup>

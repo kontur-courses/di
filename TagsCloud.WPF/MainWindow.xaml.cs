@@ -43,7 +43,7 @@ namespace TagsCloud.WPF
         private const int DefaultFontSize = 10;
         private FontStyle fontStyle;
 
-        public MainWindow(IWordHandler[] wordHandlers, IFileReader reader, string path)
+        public MainWindow(IWordHandler[] wordHandlers, IFileReader reader , string path)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();

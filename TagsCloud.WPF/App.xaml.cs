@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using Ninject;
+using Autofac;
 using TagsCloud.FileConverter;
 using TagsCloud.FileConverter.Implementation;
 using TagsCloud.FileReader;
@@ -24,22 +24,23 @@ namespace TagsCloud.WPF
         private static void Main()
         {
             var app = new App();
-            var container = GetBuilder();
-            var window = container.Get<MainWindow>();
+            var container = GetContainer();
+            var window = container.Resolve<MainWindow>();
             app.Run(window);
         }
 
-        private static IKernel GetBuilder()
+        private static IContainer GetContainer()
         {
-            var container = new StandardKernel();
-            container.Bind<IWordHandler>().To<LowerCaseHandler>();
-            container.Bind<IWordHandler>().To<BoringRusWordsHandler>();
-            container.Bind<IWordHandler>().To<RecurringWordsHandler>().InSingletonScope();
-            container.Bind<string>().ToConstant("../../../Words.doc");
-            container.Bind<IFileReader>().To<DocxReader>();
-            container.Bind<IFileConverter>().To<ConvertToTxt>();
-            
-            return container;
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MainWindow>().SingleInstance();
+            builder.Register(_ => new string("../../../Words.docx")).As<string>();
+            builder.RegisterType<LowerCaseHandler>().As<IWordHandler>();
+            builder.RegisterType<BoringRusWordsHandler>().As<IWordHandler>();
+            builder.RegisterType<RecurringWordsHandler>().As<IWordHandler>();
+            builder.RegisterType<DocxReader>().As<IFileReader>();
+            builder.RegisterType<ConvertToTxt>().As<IFileConverter>();
+
+            return builder.Build();
         }
     }
 }
