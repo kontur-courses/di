@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreator", "TagCloud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudCreatorExtensions", "TagCloudCreatorExtensions\TagCloudCreatorExtensions.csproj", "{BFAA3182-5B87-4243-AE3A-6B2A669D0A1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStemWrapper", "MyStemWrapper\MyStemWrapper.csproj", "{5BE6377E-42DB-45E3-8963-AD5D25A8132A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{BFAA3182-5B87-4243-AE3A-6B2A669D0A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAA3182-5B87-4243-AE3A-6B2A669D0A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAA3182-5B87-4243-AE3A-6B2A669D0A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE6377E-42DB-45E3-8963-AD5D25A8132A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE6377E-42DB-45E3-8963-AD5D25A8132A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE6377E-42DB-45E3-8963-AD5D25A8132A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE6377E-42DB-45E3-8963-AD5D25A8132A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
