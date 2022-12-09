@@ -4,5 +4,5 @@ namespace TagCloud.ImageGenerator;
 
 public interface IImageGenerator
 {
-    public Image GenerateImage(Rectangle[] rectangles);
+    public Image GenerateImage(Tag[] tags);
 }
