@@ -1,6 +1,5 @@
-﻿using TagsCloud.Core.Interfaces;
+﻿namespace TagsCloud.Core.WordFilters;
 
-namespace TagsCloud.Core;
 public class TempFilter : IWordFilter
 {
 	public IEnumerable<string> Filter(IEnumerable<string> words)
