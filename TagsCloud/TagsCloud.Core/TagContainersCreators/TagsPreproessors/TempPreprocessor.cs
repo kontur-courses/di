@@ -1,4 +1,5 @@
-﻿using TagsCloud.Core.Interfaces;
+﻿using TagsCloud.Core.WordFilters;
+using TagsCloud.Core.WordReaders;
 
 namespace TagsCloud.Core.TagContainersCreators.TagsPreproessors;
 

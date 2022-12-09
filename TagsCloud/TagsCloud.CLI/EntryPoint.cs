@@ -3,10 +3,11 @@ using System.Drawing.Imaging;
 using SimpleInjector;
 using TagsCloud.Core;
 using TagsCloud.Core.BitmapPainters;
-using TagsCloud.Core.Interfaces;
 using TagsCloud.Core.Layouters;
 using TagsCloud.Core.TagContainersCreators;
 using TagsCloud.Core.TagContainersCreators.TagsPreproessors;
+using TagsCloud.Core.WordFilters;
+using TagsCloud.Core.WordReaders;
 
 namespace TagsCloud.CLI;
 
