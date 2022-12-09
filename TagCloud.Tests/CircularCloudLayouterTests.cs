@@ -16,7 +16,7 @@ public class CircularCloudLayouterTests
     [TestCase(-1, -1, Description = "Negative coordinates")]
     public void Constructor_ShouldAcceptAnyPoint(int x, int y)
     {
-        Assert.DoesNotThrow(() => new CircularCloudLayouter(new Point(x, y)));
+        Assert.DoesNotThrow(() => new CircularLayoutAlgorithm(new Point(x, y)));
     }
 
     [TestCase(-1, 0)]
@@ -24,7 +24,7 @@ public class CircularCloudLayouterTests
     [TestCase(-1, -1)]
     public void PutNextRectangle_ShouldThrowArgumentException_OnNegativeSize(int width, int height)
     {
-        var layouter = new CircularCloudLayouter(Center);
+        var layouter = new CircularLayoutAlgorithm(Center);
         var size = new Size(-1, -1);
         Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(size));
     }
@@ -32,7 +32,7 @@ public class CircularCloudLayouterTests
     [Test]
     public void PutNextRectangle_ShouldPlaceFirstRectangleInCenter()
     {
-        var layouter = new CircularCloudLayouter(Center);
+        var layouter = new CircularLayoutAlgorithm(Center);
         var expectedSize = new Size(10, 10);
         var expectedLocation = new Point(Center.X - expectedSize.Width / 2, Center.Y - expectedSize.Height / 2);
         var expectedRectangle = new Rectangle(expectedLocation, expectedSize);
@@ -75,7 +75,7 @@ public class CircularCloudLayouterTests
 
     private void AssertRectanglesDontIntersect(int count, Func<Size> rectangleSizeSelector)
     {
-        var layouter = new CircularCloudLayouter(Center);
+        var layouter = new CircularLayoutAlgorithm(Center);
 
         var checkedRectangles = new List<Rectangle>();
         for (var i = 0; i < count; i++)
@@ -89,7 +89,7 @@ public class CircularCloudLayouterTests
     
     private void AssertShapeIsATightCircleAroundCenter(int count, Func<Size> rectangleSizeSelector)
     { 
-        var layouter = new CircularCloudLayouter(Center);
+        var layouter = new CircularLayoutAlgorithm(Center);
         
         var layout = new List<Rectangle>();
         for (var i = 0; i < count; i++)

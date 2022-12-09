@@ -2,13 +2,13 @@
 
 namespace TagCloud.LayoutAlgorithm.CircularLayoutAlgorithm;
 
-public class CircularCloudLayouter : ICloudLayouter
+public class CircularLayoutAlgorithm : ILayoutAlgorithm
 {
     private readonly Point center;
     private readonly FermatSpiral fermatSpiral;
     private readonly List<Rectangle> rectangles = new();  
 
-    public CircularCloudLayouter(Point center)
+    public CircularLayoutAlgorithm(Point center)
     {
         this.center = center;
         fermatSpiral = new FermatSpiral(center);

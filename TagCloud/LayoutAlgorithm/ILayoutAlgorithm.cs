@@ -2,7 +2,7 @@
 
 namespace TagCloud.LayoutAlgorithm;
 
-public interface ICloudLayouter
+public interface ILayoutAlgorithm
 {
     Rectangle PutNextRectangle(Size rectangleSize);
 }
