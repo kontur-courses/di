@@ -1,7 +1,8 @@
 ﻿using Autofac;
+using TagCloud;
 using TagsCloudLayouter;
 
-namespace TagCloud;
+namespace App;
 
 internal static class Program
 {
@@ -9,8 +10,11 @@ internal static class Program
     private static void Main(string[] args)
     {
         var container = DiContainerBuilder.Build();
+        var app = new ConsoleApplication.ConsoleApplication();
+        app.Run(container, args);
+
         var drawer = container.Resolve<ICloudDrawer>();
-        var text = container.Resolve<IFileLoader>().Load(@"Words.txt").ToLower();
+        var text = container.Resolve<IFileLoader>().Load(container.Resolve<ApplicationProperties>().Path).ToLower();
         var words = container.Resolve<IWordsParser>().Parse(text);
         var wordsFrequency = FrequencyDictionary.GetWordsFrequency(words);
         var textBoxes = container.Resolve<TextWrapper>().Wrap(wordsFrequency);
@@ -23,7 +27,7 @@ internal static class Program
         });
         layouter.Clear();
         
-        const string path = @"Cloud.jpg";
+        const string path = @"Cloud.png";
         drawer.Draw(textBoxes).Save(path);
 
         Console.WriteLine($"Tag cloud visualization saved to file {path}");

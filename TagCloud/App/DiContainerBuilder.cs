@@ -1,7 +1,8 @@
 ﻿using Autofac;
+using TagCloud;
 using TagsCloudLayouter;
 
-namespace TagCloud;
+namespace App;
 
 public static class DiContainerBuilder
 {
@@ -9,7 +10,7 @@ public static class DiContainerBuilder
     {
         var builder = new ContainerBuilder();
         RegisterProperties(builder);
-        
+        builder.RegisterType<TxtFileLoader>().As<IFileLoader>().SingleInstance();
         builder.RegisterType<WordsParser>().As<IWordsParser>();
         builder.RegisterType<FrequencyDictionary>().AsSelf();
         builder.Register(context => new CircularCloudLayouter(
@@ -25,17 +26,10 @@ public static class DiContainerBuilder
 
     private static void RegisterProperties(ContainerBuilder builder)
     {
-        builder.RegisterType<TxtFileLoader>().As<IFileLoader>().SingleInstance();
-        builder.RegisterInstance(new Palette(Color.Tan, Color.Teal)).AsSelf().SingleInstance();
-        builder.RegisterInstance(new SizeProperties()).AsSelf().SingleInstance();
-        builder.RegisterType<FontProperties>().AsSelf().SingleInstance();
-        builder.Register(context => new CloudProperties
-            {
-                Center = context.Resolve<SizeProperties>().ImageCenter, 
-                Density = 0.1, 
-                AngleStep = 0.1
-            })
-            .As<CloudProperties>()
-            .SingleInstance();
+        builder.RegisterType<ApplicationProperties>().AsSelf().SingleInstance();
+        builder.Register(context => context.Resolve<ApplicationProperties>().Palette).AsSelf().SingleInstance();
+        builder.Register(context => context.Resolve<ApplicationProperties>().SizeProperties).AsSelf().SingleInstance();
+        builder.Register(context => context.Resolve<ApplicationProperties>().FontProperties).AsSelf().SingleInstance();
+        builder.Register(context => context.Resolve<ApplicationProperties>().CloudProperties).AsSelf().SingleInstance();
     }
 }
