@@ -16,4 +16,17 @@ public class RelativeWordSizingAlgorithm : IWordSizingAlgorithm
     {
         return (int)Math.Round(tagMap[word] / (double)tagMap.TotalWordCount * baseWordSize);
     }
+
+    public Tag[] GetTagSizes(TagMap tagMap)
+    {
+        var result = new Tag[tagMap.UniqueWordCount];
+        var i = 0;
+        foreach (var word in tagMap.FrequencyMap.Keys)
+        {
+            var size = GetWordSize(word, tagMap);
+            result[i++] = new Tag(word, size);
+        }
+
+        return result;
+    }
 }
