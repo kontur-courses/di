@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.Core.Interfaces;
+﻿namespace TagsCloud.Core.WordReaders;
 
 public interface IWordReader
 {
