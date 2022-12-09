@@ -34,10 +34,14 @@ public class SaveImageAction : IUiAction
         _filter ??= string.Join("|", _imageSaverProvider.SupportedExtensions
             .Select(extension => $"{extension}|*{extension}")
         );
+
+        var initialDirectory = Path.GetFullPath(imagePathSettings.ImagePath);
+        if (File.Exists(initialDirectory))
+            initialDirectory = new FileInfo(initialDirectory).Directory!.FullName;
         var dialog = new SaveFileDialog
         {
             CheckFileExists = false,
-            InitialDirectory = Path.GetFullPath(imagePathSettings.ImagePath),
+            InitialDirectory = initialDirectory,
             FileName = "image",
             AddExtension = true,
             Filter = _filter

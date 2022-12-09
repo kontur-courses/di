@@ -35,11 +35,14 @@ public class TagCloudPaintAction : IUiAction
         _filter ??= string.Join("|", _readersProvider.SupportedExtensions
             .Select(extension => $"{extension}|*{extension}")
         );
+        var initialDirectory = Path.GetFullPath(pathSettings.WordsPath);
+        if (File.Exists(initialDirectory))
+            initialDirectory = new FileInfo(initialDirectory).Directory!.FullName;
         var dialog = new OpenFileDialog
         {
             CheckFileExists = true,
             Filter = _filter,
-            InitialDirectory = Path.GetFullPath(pathSettings.WordsPath)
+            InitialDirectory = initialDirectory
         };
         var res = dialog.ShowDialog();
         if (res != DialogResult.OK)
