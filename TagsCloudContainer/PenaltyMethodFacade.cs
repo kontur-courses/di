@@ -12,7 +12,7 @@ namespace TagsCloudVisualization
 {
     internal static class PenaltyMethodFacade
     {
-        public static Point Calculate(Func function, Point start, List<Func> equations)
+        public static Point Calculate(Func function, PointF start, List<Func> equations)
         {
             PenaltyMethods.Epsilon = 1E-2;
             OneDimensionalSearches.Epsilon = 1E-2;
