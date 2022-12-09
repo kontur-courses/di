@@ -1,4 +1,5 @@
 using TagCloudCreator.Domain.Providers;
+using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 using TagCloudCreator.Interfaces.Settings;
 using TagCloudCreatorExtensions.ImageSavers;
@@ -21,19 +22,20 @@ public class WordsFileReaderProvider_Should
             .Returns(_pathSettings);
 
         _readerProvider = new FileReaderProvider(
-            new[]
+            new IFileReader[]
             {
-                new TxtFileReader(pathSettingsProvider)
+                new TxtFileReader(pathSettingsProvider),
+                new DocxFileReader(pathSettingsProvider)
             },
             pathSettingsProvider
         );
     }
 
-    [TestCase("txt", typeof(TxtFileReader), TestName = "Txt")]
-    public void ReturnCorrectReader_ForCorrectExtension(string extension,
-        Type expectedReaderType)
+    [TestCase(".txt", typeof(TxtFileReader), TestName = "Txt")]
+    [TestCase(".docx", typeof(DocxFileReader), TestName = "Docx")]
+    public void ReturnCorrectReader_ForCorrectExtension(string extension, Type expectedReaderType)
     {
-        _pathSettings.WordsPath = $"text.{extension}";
+        _pathSettings.WordsPath = $"text{extension}";
         _readerProvider.GetReader().GetType().Should().Be(expectedReaderType);
     }
 

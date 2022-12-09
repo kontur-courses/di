@@ -1,6 +1,11 @@
-﻿using TagCloudCreator.Interfaces.Providers;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using TagCloudCreator.Interfaces;
+using TagCloudCreator.Interfaces.Providers;
 using TagCloudCreator.Interfaces.Settings;
 using TagCloudCreatorExtensions.WordsFileReaders;
+using Text = DocumentFormat.OpenXml.Drawing.Text;
 
 namespace TagCloudTests;
 
@@ -9,6 +14,7 @@ public class WordsReaders_Should
 {
     private const string TestText = "a bc\r\nde f";
     private IWordsPathSettingsProvider _pathSettingsProvider = null!;
+    private string? _filePathToRemove;
 
     [SetUp]
     public void Setup()
@@ -19,25 +25,47 @@ public class WordsReaders_Should
             .Returns(pathSettings);
     }
 
+    [TearDown]
+    public void TearDown()
+    {
+        if (_filePathToRemove is not null && File.Exists(_filePathToRemove))
+            File.Delete(_filePathToRemove);
+    }
+
     [Test]
     public void ReadTxtFile_Successfully()
     {
-        const string filePath = "text.txt";
-        var reader = new TxtFileReader(_pathSettingsProvider);
-        _pathSettingsProvider.GetWordsPathSettings().WordsPath = filePath;
-
-        using (var writer = new StreamWriter(File.Create(filePath)))
+        _filePathToRemove = "text.txt";
+        using (var writer = new StreamWriter(File.Create(_filePathToRemove)))
         {
             writer.Write(TestText);
         }
 
-        reader.ReadFile().Should().Be(TestText);
-        RemoveIfExists(filePath);
+        Check(new TxtFileReader(_pathSettingsProvider));
     }
 
-    private static void RemoveIfExists(string file)
+    [Test]
+    public void ReadDocxFile_Successfully()
     {
-        if (File.Exists(file))
-            File.Delete(file);
+        _filePathToRemove = "text.docx";
+        using var wordDoc = WordprocessingDocument.Create(_filePathToRemove, WordprocessingDocumentType.Document);
+        {
+            var mainPart = wordDoc.AddMainDocumentPart();
+            mainPart.Document = new Document(new Body());
+            var body = mainPart.Document.Body!;
+            foreach (var line in TestText.Split("\r\n"))
+                body.AppendChild(new Text(line));
+
+            wordDoc.Close();
+        }
+
+        Check(new DocxFileReader(_pathSettingsProvider));
+    }
+
+    private void Check(IFileReader reader)
+    {
+        _pathSettingsProvider.GetWordsPathSettings().WordsPath = _filePathToRemove!;
+
+        reader.ReadFile().Should().Be(TestText);
     }
 }
