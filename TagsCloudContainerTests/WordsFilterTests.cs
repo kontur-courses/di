@@ -9,13 +9,13 @@ namespace TagsCloudContainerTests
     {
         private List<string> boringWords = new();
         private WordsFilter sut;
-        private MyConfiguration configuration;
+        private CustomOptions options;
 
         [SetUp]
         public void Setup()
         {
             sut = new WordsFilter();
-            configuration = new MyConfiguration
+            options = new CustomOptions
             {
                 ExcludedParticals = "SPRO, PR, PART, CONJ"
             };
@@ -33,7 +33,7 @@ namespace TagsCloudContainerTests
             var taggedWords = new List<string> { "печь{печь=S,жен,неод=(вин,ед|им,ед)|печь=V,несов,пе=инф}" };
             var expectedResult = new List<string> { "печь" };
 
-            var result = sut.FilterWords(taggedWords, boringWords, configuration);
+            var result = sut.FilterWords(taggedWords, boringWords, options);
 
             result.Should().BeEquivalentTo(expectedResult);
         }
@@ -44,7 +44,7 @@ namespace TagsCloudContainerTests
             var taggedWords = new List<string> { "Печь{печь=S,жен,неод=(вин,ед|им,ед)|печь=V,несов,пе=инф}" };
             var expectedResult = new List<string> { "печь" };
 
-            var result = sut.FilterWords(taggedWords, boringWords, configuration);
+            var result = sut.FilterWords(taggedWords, boringWords, options);
 
             result.Should().BeEquivalentTo(expectedResult);
         }
@@ -55,7 +55,7 @@ namespace TagsCloudContainerTests
             var taggedWords = new List<string> { "около{около=PR=|около=ADV=}" };
             var expectedResult = new List<string>();
 
-            var result = sut.FilterWords(taggedWords, boringWords, configuration);
+            var result = sut.FilterWords(taggedWords, boringWords, options);
 
             result.Should().BeEquivalentTo(expectedResult);
         }
@@ -66,7 +66,7 @@ namespace TagsCloudContainerTests
             var taggedWords = new List<string> { "около{около=ADV=|около=PR=}" };
             var expectedResult = new List<string>();
 
-            var result = sut.FilterWords(taggedWords, boringWords, configuration);
+            var result = sut.FilterWords(taggedWords, boringWords, options);
 
             result.Should().BeEquivalentTo(expectedResult);
         }
@@ -85,7 +85,7 @@ namespace TagsCloudContainerTests
                 "печь"
             };
 
-            var result = sut.FilterWords(taggedWords, boringWords, new MyConfiguration());
+            var result = sut.FilterWords(taggedWords, boringWords, new CustomOptions());
 
             result.Should().BeEquivalentTo(expectedResult);
         }
@@ -97,7 +97,7 @@ namespace TagsCloudContainerTests
             boringWords.Add("печь");
             var expectedResult = new List<string>();
 
-            var result = sut.FilterWords(taggedWords, boringWords, configuration);
+            var result = sut.FilterWords(taggedWords, boringWords, options);
 
             result.Should().BeEquivalentTo(expectedResult);
         }

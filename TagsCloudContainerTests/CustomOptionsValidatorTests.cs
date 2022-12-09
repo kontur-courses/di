@@ -4,14 +4,14 @@ using TagsCloudContainer;
 
 namespace TagsCloudContainerTests
 {
-    internal class MyConigValidatorTests
+    internal class CustomOptionsValidatorTests
     {
-        private MyConfiguration config;
+        private CustomOptions options;
 
         [SetUp]
         public void Setup()
         {
-            config = new MyConfiguration
+            options = new CustomOptions
             {
                 TextsPath = "c:\\Windows\\System32",
                 WordsFileName = "cmd.exe",
@@ -27,7 +27,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddPreSetConfig_ShouldNotThrowAnyExceptions()
         {
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().NotThrow();
         }
@@ -35,9 +35,9 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddPreSetConfigWithLowerCaseColor_ShouldNotThrowAnyExceptions()
         {
-            config.FontColor = "white";
+            options.FontColor = "white";
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().NotThrow();
         }
@@ -45,9 +45,9 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddConfigWithEmptyTextsPath_ShouldThrowArgumentException()
         {
-            config.TextsPath = "";
+            options.TextsPath = "";
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Texts directory does not exist");
         }
@@ -55,9 +55,9 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddConfigWithEmptyWordsFileName_ShouldThrowArgumentException()
         {
-            config.WordsFileName = "";
+            options.WordsFileName = "";
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Tag file does not exist");
         }
@@ -65,9 +65,9 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddConfigWithEmptyBoringWordsFileName_ShouldThrowArgumentException()
         {
-            config.BoringWordsName = "";
+            options.BoringWordsName = "";
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Exclude words file does not exist");
         }
@@ -76,9 +76,9 @@ namespace TagsCloudContainerTests
         [TestCase("NonExistingFont")]
         public void ValidateConfig_AddConfigWithIncorectFontName_ShouldThrowArgumentException(string font)
         {
-            config.Font = font;
+            options.Font = font;
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage($"Font \"{font}\" can't be found");
         }
@@ -87,9 +87,9 @@ namespace TagsCloudContainerTests
         [TestCase(-1)]
         public void ValidateConfig_AddConfigWithPictureSizeLessThanOne_ShouldThrowArgumentException(int size)
         {
-            config.PictureSize = size;
+            options.PictureSize = size;
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Picture size should be above 0");
         }
@@ -98,9 +98,9 @@ namespace TagsCloudContainerTests
         [TestCase(-1)]
         public void ValidateConfig_AddConfigWithFontSizeLessThanOne_ShouldThrowArgumentException(int size)
         {
-            config.FontSize = size;
+            options.FontSize = size;
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Font size should be above 0");
         }
@@ -109,9 +109,9 @@ namespace TagsCloudContainerTests
         [TestCase("NonExistingColor")]
         public void ValidateConfig_AddConfigWithIncorrectFontColorName_ShouldThrowArgumentException(string font)
         {
-            config.FontColor = font;
+            options.FontColor = font;
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Invalid font color");
         }
@@ -120,9 +120,9 @@ namespace TagsCloudContainerTests
         [TestCase("NonExistingColor")]
         public void ValidateConfig_AddConfigWithIncorrectBackgroundColorName_ShouldThrowArgumentException(string font)
         {
-            config.BackgroundColor = font;
+            options.BackgroundColor = font;
 
-            var act = () => MyConfigValidator.ValidateConfig(config);
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Invalid backgroud color");
         }

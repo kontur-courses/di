@@ -5,10 +5,10 @@ namespace TagsCloudContainer
     public class WordsFilter : IWordsFilter
     {
         public List<string> FilterWords(List<string> taggedWords, List<string> boringWords,
-            IMyConfiguration configuration)
+            ICustomOptions options)
         {
             var excludedParticalsArr =
-                configuration.ExcludedParticals.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+                options.ExcludedParticals.Split(", ", StringSplitOptions.RemoveEmptyEntries);
 
             var excludedParts = string.Join('|', excludedParticalsArr
                 .Select(x => "=(,|=)"
@@ -35,6 +35,6 @@ namespace TagsCloudContainer
     public interface IWordsFilter
     {
         public List<string> FilterWords(List<string> taggedWords, List<string> boringWords,
-            IMyConfiguration configuration);
+            ICustomOptions options);
     }
 }

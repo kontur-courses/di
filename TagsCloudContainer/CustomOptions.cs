@@ -1,6 +1,6 @@
 ﻿namespace TagsCloudContainer
 {
-    public class MyConfiguration : IMyConfiguration
+    public class CustomOptions : ICustomOptions
     {
         public int PictureSize { get; set; }
         public int FontSize { get; set; }
@@ -13,7 +13,7 @@
         public string ExcludedParticals { get; set; } = string.Empty;
     }
 
-    public interface IMyConfiguration
+    public interface ICustomOptions
     {
         int PictureSize { get; set; }
         int FontSize { get; set; }

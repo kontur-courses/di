@@ -14,8 +14,8 @@ namespace TagsCloudContainer
                 .AddCommandLine(args)
                 .Build();
 
-            var myConfig = configuration.Get<MyConfiguration>();
-            MyConfigValidator.ValidateConfig(myConfig);
+            var options = configuration.Get<CustomOptions>();
+            CustomOptionsValidator.ValidateOptions(options);
 
             var container = new ServiceCollection()
                 .AddSingleton<IConverter, FileToDictionaryConverter>()
@@ -28,7 +28,7 @@ namespace TagsCloudContainer
 
             var drawer = ActivatorUtilities.CreateInstance<CloudDrawer>(container);
 
-            drawer.DrawCloud(myConfig);
+            drawer.DrawCloud(options);
         }
     }
 }

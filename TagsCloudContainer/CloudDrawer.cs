@@ -18,17 +18,17 @@ namespace TagsCloudContainer
             this.calculator = calculator;
         }
 
-        public void DrawCloud(string path, IMyConfiguration configuration)
+        public void DrawCloud(string path, ICustomOptions options)
         {
-            var layout = new CircularCloudLayout(spiralDrawer, new InputOptions(configuration.PictureSize));
-            var size = configuration.PictureSize;
+            var layout = new CircularCloudLayout(spiralDrawer, new InputOptions(options.PictureSize));
+            var size = options.PictureSize;
             var picture = new Bitmap(size, size);
             var g = Graphics.FromImage(picture);
-            var backColor = Color.FromName(configuration.BackgroundColor);
-            var fontColor = new SolidBrush(Color.FromName(configuration.FontColor));
+            var backColor = Color.FromName(options.BackgroundColor);
+            var fontColor = new SolidBrush(Color.FromName(options.FontColor));
             g.Clear(backColor);
-            var wordsFromFile = converter.GetWordsInFile(configuration);
-            var wordsToDraw = calculator.CalculateSize(wordsFromFile, configuration);
+            var wordsFromFile = converter.GetWordsInFile(options);
+            var wordsToDraw = calculator.CalculateSize(wordsFromFile, options);
 
             foreach (var pair in wordsToDraw)
             {
@@ -40,7 +40,7 @@ namespace TagsCloudContainer
             picture.Save(path, ImageFormat.Png);
         }
 
-        public void DrawCloud(IMyConfiguration configuration)
+        public void DrawCloud(ICustomOptions configuration)
         {
             DrawCloud(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud.png"), configuration);
         }

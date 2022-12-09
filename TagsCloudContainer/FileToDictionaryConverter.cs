@@ -11,14 +11,14 @@ namespace TagsCloudContainer
             this.filter = filter;
         }
 
-        public Dictionary<string, int> GetWordsInFile(IMyConfiguration configuration)
+        public Dictionary<string, int> GetWordsInFile(ICustomOptions options)
         {
-            var cmd = $"mystem.exe {Path.Combine(configuration.TextsPath, configuration.WordsFileName)} out.txt -nig";
+            var cmd = $"mystem.exe {Path.Combine(options.TextsPath, options.WordsFileName)} out.txt -nig";
 
             var proc = new ProcessStartInfo
             {
                 UseShellExecute = true,
-                WorkingDirectory = Path.Combine(configuration.TextsPath),
+                WorkingDirectory = Path.Combine(options.TextsPath),
                 FileName = @"C:\Windows\System32\cmd.exe",
                 Arguments = "/C" + cmd,
                 WindowStyle = ProcessWindowStyle.Hidden
@@ -26,11 +26,11 @@ namespace TagsCloudContainer
 
             Process.Start(proc);
 
-            var boringWords = File.ReadAllLines(Path.Combine(configuration.TextsPath, configuration.BoringWordsName))
+            var boringWords = File.ReadAllLines(Path.Combine(options.TextsPath, options.BoringWordsName))
                 .Select(x => x.ToLower())
                 .ToList();
 
-            var taggedWordFilePath = Path.Combine(configuration.TextsPath, "out.txt");
+            var taggedWordFilePath = Path.Combine(options.TextsPath, "out.txt");
 
             while (IsFileLocked(new FileInfo(taggedWordFilePath)))
                 Task.Delay(5);
@@ -40,7 +40,7 @@ namespace TagsCloudContainer
 
             File.Delete(taggedWordFilePath);
 
-            var filteredWords = filter.FilterWords(taggedWords, boringWords, configuration);
+            var filteredWords = filter.FilterWords(taggedWords, boringWords, options);
 
             var result = new Dictionary<string, int>();
             filteredWords.ForEach(x =>
@@ -75,6 +75,6 @@ namespace TagsCloudContainer
 
     public interface IConverter
     {
-        Dictionary<string, int> GetWordsInFile(IMyConfiguration configuration);
+        Dictionary<string, int> GetWordsInFile(ICustomOptions options);
     }
 }
