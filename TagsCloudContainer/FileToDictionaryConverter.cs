@@ -4,23 +4,21 @@ namespace TagsCloudContainer
 {
     public class FileToDictionaryConverter : IConverter
     {
-        private readonly IMyConfiguration configs;
         private readonly IWordsFilter filter;
 
-        public FileToDictionaryConverter(IMyConfiguration configs, IWordsFilter filter)
+        public FileToDictionaryConverter(IWordsFilter filter)
         {
-            this.configs = configs;
             this.filter = filter;
         }
 
-        public Dictionary<string, int> GetWordsInFile()
+        public Dictionary<string, int> GetWordsInFile(IMyConfiguration configuration)
         {
-            var cmd = $"mystem.exe {Path.Combine(configs.TextsPath, configs.WordsFileName)} out.txt -nig";
+            var cmd = $"mystem.exe {Path.Combine(configuration.TextsPath, configuration.WordsFileName)} out.txt -nig";
 
             var proc = new ProcessStartInfo
             {
                 UseShellExecute = true,
-                WorkingDirectory = Path.Combine(configs.TextsPath),
+                WorkingDirectory = Path.Combine(configuration.TextsPath),
                 FileName = @"C:\Windows\System32\cmd.exe",
                 Arguments = "/C" + cmd,
                 WindowStyle = ProcessWindowStyle.Hidden
@@ -28,11 +26,11 @@ namespace TagsCloudContainer
 
             Process.Start(proc);
 
-            var boringWords = File.ReadAllLines(Path.Combine(configs.TextsPath, configs.BoringWordsName))
+            var boringWords = File.ReadAllLines(Path.Combine(configuration.TextsPath, configuration.BoringWordsName))
                 .Select(x => x.ToLower())
                 .ToList();
 
-            var taggedWordFilePath = Path.Combine(configs.TextsPath, "out.txt");
+            var taggedWordFilePath = Path.Combine(configuration.TextsPath, "out.txt");
 
             while (IsFileLocked(new FileInfo(taggedWordFilePath)))
                 Task.Delay(5);
@@ -42,7 +40,7 @@ namespace TagsCloudContainer
 
             File.Delete(taggedWordFilePath);
 
-            var filteredWords = filter.FilterWords(taggedWords, boringWords);
+            var filteredWords = filter.FilterWords(taggedWords, boringWords, configuration);
 
             var result = new Dictionary<string, int>();
             filteredWords.ForEach(x =>
@@ -77,6 +75,6 @@ namespace TagsCloudContainer
 
     public interface IConverter
     {
-        Dictionary<string, int> GetWordsInFile();
+        Dictionary<string, int> GetWordsInFile(IMyConfiguration configuration);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CloudLayout;
-using System.Reflection;
 
 namespace TagsCloudContainer
 {
@@ -19,8 +18,6 @@ namespace TagsCloudContainer
             MyConfigValidator.ValidateConfig(myConfig);
 
             var container = new ServiceCollection()
-                .AddSingleton<IInputOptions>(new InputOptions(myConfig.PictureSize))
-                .AddSingleton<IMyConfiguration>(myConfig)
                 .AddSingleton<IConverter, FileToDictionaryConverter>()
                 .AddSingleton<IWordsFilter, WordsFilter>()
                 .AddSingleton<ISpiralDrawer, SpiralDrawer>()
@@ -31,7 +28,7 @@ namespace TagsCloudContainer
 
             var drawer = ActivatorUtilities.CreateInstance<CloudDrawer>(container);
 
-            drawer.DrawCloud();
+            drawer.DrawCloud(myConfig);
         }
     }
 }

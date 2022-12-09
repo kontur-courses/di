@@ -4,11 +4,7 @@ namespace TagsCloudContainer
 {
     public class WordSizeCalculator : IWordSizeCalculator
     {
-        private readonly IMyConfiguration configuration;
-
-        public WordSizeCalculator(IMyConfiguration configuration) => this.configuration = configuration;
-
-        public Dictionary<string, Font> CalculateSize(Dictionary<string, int> input)
+        public Dictionary<string, Font> CalculateSize(Dictionary<string, int> input, IMyConfiguration configuration)
         {
             var result = new Dictionary<string, Font>(input.Count);
             foreach (var pair in input)
@@ -20,6 +16,6 @@ namespace TagsCloudContainer
 
     public interface IWordSizeCalculator
     {
-        public Dictionary<string, Font> CalculateSize(Dictionary<string, int> input);
+        public Dictionary<string, Font> CalculateSize(Dictionary<string, int> input, IMyConfiguration configuration);
     }
 }

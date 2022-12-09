@@ -6,31 +6,29 @@ namespace TagsCloudContainer
 {
     public class CloudDrawer
     {
-        private readonly int size;
-        private readonly ILayout layout;
+        private readonly ISpiralDrawer spiralDrawer;
         private readonly IConverter converter;
         private readonly IWordSizeCalculator calculator;
-        private readonly IMyConfiguration configuration;
 
-        public CloudDrawer(IMyConfiguration configuration, ILayout layout, IConverter converter,
+        public CloudDrawer(ISpiralDrawer spiralDrawer, IConverter converter,
             IWordSizeCalculator calculator)
         {
-            size = configuration.PictureSize;
-            this.layout = layout;
+            this.spiralDrawer = spiralDrawer;
             this.converter = converter;
             this.calculator = calculator;
-            this.configuration = configuration;
         }
 
-        public void DrawCloud(string path)
+        public void DrawCloud(string path, IMyConfiguration configuration)
         {
+            var layout = new CircularCloudLayout(spiralDrawer, new InputOptions(configuration.PictureSize));
+            var size = configuration.PictureSize;
             var picture = new Bitmap(size, size);
             var g = Graphics.FromImage(picture);
             var backColor = Color.FromName(configuration.BackgroundColor);
             var fontColor = new SolidBrush(Color.FromName(configuration.FontColor));
             g.Clear(backColor);
-            var wordsFromFile = converter.GetWordsInFile();
-            var wordsToDraw = calculator.CalculateSize(wordsFromFile);
+            var wordsFromFile = converter.GetWordsInFile(configuration);
+            var wordsToDraw = calculator.CalculateSize(wordsFromFile, configuration);
 
             foreach (var pair in wordsToDraw)
             {
@@ -42,9 +40,9 @@ namespace TagsCloudContainer
             picture.Save(path, ImageFormat.Png);
         }
 
-        public void DrawCloud()
+        public void DrawCloud(IMyConfiguration configuration)
         {
-            DrawCloud(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud.png"));
+            DrawCloud(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud.png"), configuration);
         }
     }
 }
