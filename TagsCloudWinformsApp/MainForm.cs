@@ -8,7 +8,7 @@ public partial class MainForm : Form
 {
     private SettingsHandler settingsHandler = new();
     private InputFilesReader inputFilesReader = new();
-    private string TextFilesFilter = "text files|*.doc;*.docx;*.txt";
+    private string TextFilesFilter = "text files|*.txt";
     private string ImageFilesFilter = "png (*.png)|*.png|jpeg (*.jpeg)|*.jpeg|jpg (*.jpg)|*.jpg";
 
     public MainForm()
