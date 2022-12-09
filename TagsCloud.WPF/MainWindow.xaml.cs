@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -17,6 +16,7 @@ using TagsCloud.WordHandler.Implementation;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using FontStyle = System.Windows.FontStyle;
 using Point = System.Drawing.Point;
 
 namespace TagsCloud.WPF
@@ -41,12 +41,14 @@ namespace TagsCloud.WPF
         private readonly RecurringWordsHandler? recurringWordsHandler;
 
         private const int DefaultFontSize = 10;
+        private FontStyle fontStyle;
 
         public MainWindow(IWordHandler[] wordHandlers)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
             this.wordHandlers = wordHandlers;
+            fontStyle = FontStyles.Normal;
             recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
             words = ProcessWords(GetWordsFromTxt(PathToWords));
             rectanglesCount = words.Length;
@@ -113,7 +115,7 @@ namespace TagsCloud.WPF
                 FontSize = DefaultFontSize 
                            + (recurringWordsHandler is not null ? recurringWordsHandler.WordCount[text] : 0),
                 Content = text,
-                FontStyle = FontStyles.Italic,
+                FontStyle = fontStyle,
             };
         }
 
@@ -237,6 +239,21 @@ namespace TagsCloud.WPF
             
             rectanglesCount = (bool) PrintRectangles.IsChecked! ? count : words.Length;
             RectanglesCountTb.Text = (bool) PrintRectangles.IsChecked! ? count.ToString() : words.Length.ToString();
+        }
+
+        private void ChangeFontStyle(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var header = menuItem!.Name;
+
+            fontStyle = header switch
+            {
+                "Italic" => FontStyles.Italic,
+                "Oblique" => FontStyles.Oblique,
+                _ => FontStyles.Normal
+            };
+            
+            Clear(sender, e);
         }
     }
 }

@@ -17,6 +17,11 @@
                                 <MenuItem Header="Save Picture" Click="SavePicture"></MenuItem>
                         </MenuItem>
                         <MenuItem Width="40" Header="Edit" FontSize="12">
+                                <MenuItem Header="Font Style">
+                                        <MenuItem Header="Italic" Name="Italic" Click="ChangeFontStyle"></MenuItem>
+                                        <MenuItem Header="Oblique" Name="Oblique" Click="ChangeFontStyle"></MenuItem>
+                                        <MenuItem Header="Normal" Name="Normal" Click="ChangeFontStyle"></MenuItem>
+                                </MenuItem>
                                 <StackPanel Width="100">
                                         <Label Content="Step"/>
                                         <Slider x:Name="StepSlider" Minimum="1" Maximum="20" 
