@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using Ninject;
-using TagsCloud.FontFinder;
-using TagsCloud.FontFinder.Implementation;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
 
@@ -30,7 +28,6 @@ namespace TagsCloud.WPF
         private static IKernel GetBuilder()
         {
             var container = new StandardKernel();
-            container.Bind<IFontFinder>().To<WindowsFontFinder>();
             container.Bind<IWordHandler>().To<LowerCaseHandler>();
             container.Bind<IWordHandler>().To<BoringRusWordsHandler>();
             container.Bind<IWordHandler>().To<RecurringWordsHandler>().InSingletonScope();

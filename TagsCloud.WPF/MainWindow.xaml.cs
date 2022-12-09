@@ -12,13 +12,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using TagsCloud.CloudLayouter;
 using TagsCloud.CloudLayouter.Implementation;
-using TagsCloud.FontFinder;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
-using FontFamily = System.Windows.Media.FontFamily;
 using Point = System.Drawing.Point;
 
 namespace TagsCloud.WPF
@@ -39,17 +37,15 @@ namespace TagsCloud.WPF
         private ICloudLayouter<Rectangle>? circularCloud;
         private List<UIElement> uiElements = new();
 
-        private IFontFinder fontFinder;
         private readonly IWordHandler[] wordHandlers;
         private readonly RecurringWordsHandler? recurringWordsHandler;
 
         private const int DefaultFontSize = 10;
 
-        public MainWindow(IFontFinder fontFinder, IWordHandler[] wordHandlers)
+        public MainWindow(IWordHandler[] wordHandlers)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
-            this.fontFinder = fontFinder;
             this.wordHandlers = wordHandlers;
             recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
             words = ProcessWords(GetWordsFromTxt(PathToWords));
@@ -117,7 +113,7 @@ namespace TagsCloud.WPF
                 FontSize = DefaultFontSize 
                            + (recurringWordsHandler is not null ? recurringWordsHandler.WordCount[text] : 0),
                 Content = text,
-                FontFamily = new FontFamily("Verdana")
+                FontStyle = FontStyles.Italic,
             };
         }
 
