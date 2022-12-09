@@ -13,5 +13,7 @@ namespace TagsCloudContainer.Infrastructure
         {
             return new WordColorProvider();
         }
+
+        public static IWordColorProvider CreateDefault() => new WordColorProvider();
     }
 }

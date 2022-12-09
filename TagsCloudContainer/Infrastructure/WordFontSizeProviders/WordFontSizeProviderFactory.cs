@@ -12,5 +12,7 @@ namespace TagsCloudContainer.Infrastructure
         {
             return new WordFontSizeProvider();
         }
+
+        public static IWordFontSizeProvider CreateDefault() => new WordFontSizeProvider();
     }
 }
