@@ -3,7 +3,7 @@
 public class FontProperties
 {
     public FontProperties(float minSize = 10f,
-        float maxSize = 128f,
+        float maxSize = 96f,
         FontStyle style = FontStyle.Regular,
         HorizontalAlignment textAlign = HorizontalAlignment.Center)
     {

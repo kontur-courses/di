@@ -1,6 +1,4 @@
-﻿using TagsCloudLayouter;
-
-namespace TagCloud;
+﻿namespace TagCloud;
 
 public class CloudDrawer : ICloudDrawer
 {

@@ -8,7 +8,7 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        var container = new DiContainerBuilder().Build();
+        var container = DiContainerBuilder.Build();
         var drawer = container.Resolve<ICloudDrawer>();
         var text = container.Resolve<IFileLoader>().Load(@"Words.txt").ToLower();
         var words = container.Resolve<IWordsParser>().Parse(text);

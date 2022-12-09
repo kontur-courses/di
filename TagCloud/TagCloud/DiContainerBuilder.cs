@@ -3,23 +3,39 @@ using TagsCloudLayouter;
 
 namespace TagCloud;
 
-public class DiContainerBuilder
+public static class DiContainerBuilder
 {
-    public IContainer Build()
+    public static IContainer Build()
     {
         var builder = new ContainerBuilder();
-
-        builder.RegisterInstance(new TxtFileLoader()).As<IFileLoader>();
-        
-        builder.RegisterInstance(new Palette(Color.Tan, Color.Teal)).AsSelf();
-        builder.RegisterInstance(new SizeProperties(new Size(1024, 1024))).AsSelf();
-        builder.RegisterInstance(new FontProperties()).AsSelf();
+        RegisterProperties(builder);
         
         builder.RegisterType<WordsParser>().As<IWordsParser>();
         builder.RegisterType<FrequencyDictionary>().AsSelf();
-        builder.RegisterInstance(new CircularCloudLayouter(new Point(512, 512), 0.1, 0.1)).As<ICloudLayouter>();
+        builder.Register(context => new CircularCloudLayouter(
+            context.Resolve<SizeProperties>().ImageCenter, 
+            context.Resolve<CloudProperties>().Density, 
+            context.Resolve<CloudProperties>().AngleStep))
+            .As<ICloudLayouter>()
+            .InstancePerDependency();
         builder.RegisterType<TextWrapper>().AsSelf();
         builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
         return builder.Build();
+    }
+
+    private static void RegisterProperties(ContainerBuilder builder)
+    {
+        builder.RegisterType<TxtFileLoader>().As<IFileLoader>().SingleInstance();
+        builder.RegisterInstance(new Palette(Color.Tan, Color.Teal)).AsSelf().SingleInstance();
+        builder.RegisterInstance(new SizeProperties()).AsSelf().SingleInstance();
+        builder.RegisterType<FontProperties>().AsSelf().SingleInstance();
+        builder.Register(context => new CloudProperties
+            {
+                Center = context.Resolve<SizeProperties>().ImageCenter, 
+                Density = 0.1, 
+                AngleStep = 0.1
+            })
+            .As<CloudProperties>()
+            .SingleInstance();
     }
 }

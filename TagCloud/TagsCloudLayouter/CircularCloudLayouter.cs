@@ -4,14 +4,14 @@ namespace TagsCloudLayouter;
 
 public class CircularCloudLayouter : ICloudLayouter
 {
-    public readonly Point Center;
-    public double Density { get; }
-    public double AngleStep { get; }
+    public Point Center { get; }
     public IReadOnlyList<Rectangle> Rectangles => rectangles;
 
+    private double Density { get; }
+    private double AngleStep { get; }
     private readonly List<Rectangle> rectangles = new();
     private PolarPoint CurrentPosition { get; set; }
-    private List<(PolarPoint, PolarPoint)> unusedRanges = new();
+    private List<(PolarPoint Start, PolarPoint End)> unusedRanges = new();
 
     public CircularCloudLayouter(Point center, double density = 0.01, double angleStep = 0.01)
     {
@@ -20,14 +20,10 @@ public class CircularCloudLayouter : ICloudLayouter
         AngleStep = angleStep;
     }
 
-    public CircularCloudLayouter(SizeProperties sizeProperties) : this(sizeProperties.ImageCenter)
-    {
-    }
-
     public Rectangle PutNextRectangle(Size rectangleSize)
     {
         if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
-            throw new ArgumentException("Size can't be negative");
+            throw new ArgumentException("Size can't be negative or zero");
         foreach (var polarPoint in GetAllFreeRanges())
         {
             if (TryAddRectangle(polarPoint, rectangleSize, out var rectangle))
@@ -37,12 +33,9 @@ public class CircularCloudLayouter : ICloudLayouter
         throw new Exception("There is no place for the rectangle");
     }
 
-    public IEnumerable<Rectangle> PutRectangles(IEnumerable<Size> rectangleSizes) =>
-        rectangleSizes.Select(PutNextRectangle);
-
     private bool TryAddRectangle(PolarPoint pointInPolar, Size rectangleSize, out Rectangle outRectangle)
     {
-        var rectangleCenter = (Point)pointInPolar;
+        var rectangleCenter = PolarPoint.ToCartesian(pointInPolar);
         var position = new Point(Center.X + rectangleCenter.X - rectangleSize.Width / 2,
             Center.Y + rectangleCenter.Y - rectangleSize.Height / 2);
 
@@ -65,27 +58,27 @@ public class CircularCloudLayouter : ICloudLayouter
         return new List<IEnumerable<PolarPoint>>
         {
             unusedRanges.SelectMany(range =>
-                GenerateArchimedeanSpiralRadius(range.Item1, range.Item2, 0, Density, AngleStep)),
+                GenerateArchimedeanSpiralRadius(range.Start, range.End, 0, Density, AngleStep)),
             GenerateArchimedeanSpiralRadius(CurrentPosition, null, 0, Density, AngleStep)
         }.SelectMany(x => x);
     }
 
     private void RemoveOverlappedFromUnused()
     {
-        var newRanges = new List<ValueTuple<PolarPoint, PolarPoint>>();
+        var newRanges = new List<(PolarPoint Start, PolarPoint End)>();
         foreach (var range in unusedRanges)
             RemoveOverlappedForRange(range, newRanges);
         unusedRanges = newRanges;
     }
 
-    private void RemoveOverlappedForRange(ValueTuple<PolarPoint, PolarPoint> range,
-        ICollection<ValueTuple<PolarPoint, PolarPoint>> ranges)
+    private void RemoveOverlappedForRange((PolarPoint Start, PolarPoint End) range,
+        ICollection<(PolarPoint Start, PolarPoint End)> ranges)
     {
         var isLastOverlapped = true;
         PolarPoint start = default, end = default;
-        foreach (var polarPoint in GenerateArchimedeanSpiralRadius(range.Item1, range.Item2, 0, Density, AngleStep))
+        foreach (var polarPoint in GenerateArchimedeanSpiralRadius(range.Start, range.End, 0, Density, AngleStep))
         {
-            var point = (Point)polarPoint;
+            var point = PolarPoint.ToCartesian(polarPoint);
             var isOverlapped = HasOverlapWith(new Rectangle(point.X - 1, point.Y - 1, 3, 3));
             if (isOverlapped)
             {
@@ -115,8 +108,12 @@ public class CircularCloudLayouter : ICloudLayouter
         return false;
     }
 
-    private static IEnumerable<PolarPoint> GenerateArchimedeanSpiralRadius(PolarPoint start, PolarPoint? end,
-        double offset, double density, double angleStep)
+    private static IEnumerable<PolarPoint> GenerateArchimedeanSpiralRadius(
+        PolarPoint start, 
+        PolarPoint? end,
+        double offset, 
+        double density, 
+        double angleStep)
     {
         /** Archimedean Spiral  
          * Formula: r = a + b * θ,
