@@ -11,7 +11,7 @@ public abstract class MyStemParsingConfig : IParsingConfig
     
     private const string MyStemUrl = "http://download.cdn.yandex.net/mystem/mystem-3.1-win-64bit.zip";
     private static readonly string WorkingDirectory = Environment.CurrentDirectory;
-    private readonly Regex wordTypeRegex = new Regex("=([a-zA-Z]{1,6})[=,]");
+    private readonly Regex wordTypeRegex = new("=([a-zA-Z]{1,6})[=,]");
     private readonly Process myStem;
     
     protected MyStemParsingConfig()
@@ -70,33 +70,22 @@ public abstract class MyStemParsingConfig : IParsingConfig
 
     private static string Extract(string archivePath)
     {
-        Console.WriteLine("Extracting Mystem...");
         var destination = Path.Combine(WorkingDirectory, "mystem");
         ZipFile.ExtractToDirectory(archivePath, destination);
 
         File.Delete(archivePath);
-        Console.Clear();
         return Path.Combine(destination, "mystem.exe");
     }
 
     private async Task<string> DownloadMyStem()
     {
-        Console.Write("Downloading Mystem");
         var myStemPath = Path.Combine(WorkingDirectory, "mystem.zip");
         using var client = new HttpClient();
         var response = client.GetAsync(MyStemUrl);
 
-        while (!response.IsCompleted)
-        {
-            Console.Write(".");
-            Thread.Sleep(750);
-        }   
-        
         await using var fs = new FileStream(myStemPath, FileMode.CreateNew);
         await response.Result.Content.CopyToAsync(fs);
 
-
-        Console.Clear();
         return myStemPath;
     }
 
