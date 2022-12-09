@@ -35,7 +35,7 @@ public class DefaultImageDrawer : IImageDrawer
             var ratio = MathF.Pow(settings.FrequencyRatio, wordsHandler.WordDistribution[pair.Key] - 1);
             rect.Offset(offset);
             font = new Font(font.FontFamily, font.Size * ratio, font.Style);
-            graphics.DrawString(pair.Key, font, settings.Brush, rect);
+            graphics.DrawString(pair.Key, font, new SolidBrush(settings.FontColor), rect);
         }
 
         return DrawnBitmap;

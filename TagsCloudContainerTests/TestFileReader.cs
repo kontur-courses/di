@@ -5,18 +5,20 @@ using TagsCloudContainer;
 
 namespace TagsCloudContainerTests;
 
-public class TestFileReader
+public class TestFileReader : IWordSequenceProvider, IWordFilterProvider
 {
-    public List<string> Words;
-    public List<string> ExcludedWords;
+    public IEnumerable<string> WordSequence => wordSeq;
+    private List<string> wordSeq;
+    public IEnumerable<string> WordFilter => wordFilt;
+    private List<string> wordFilt;
 
-    public TestFileReader(ISettingsProvider settingsProvider)
+    public TestFileReader(string wordsSeqPath, string wordsFiltPath)
     {
-        Words = new List<string>();
-        foreach (var line in File.ReadAllLines(settingsProvider.Settings.InputPath)) Words.AddRange(line.Split());
+        wordSeq = new List<string>();
+        foreach (var line in File.ReadAllLines(wordsSeqPath)) wordSeq.AddRange(line.Split());
         
-        ExcludedWords = new List<string>();
-        if(settingsProvider.Settings.FilterPath!=null)
-            foreach (var line in File.ReadAllLines(settingsProvider.Settings.FilterPath)) ExcludedWords.AddRange(line.Split());
+        wordFilt = new List<string>();
+        if(wordsFiltPath!=null)
+            foreach (var line in File.ReadAllLines(wordsFiltPath)) wordFilt.AddRange(line.Split());
     }
 }

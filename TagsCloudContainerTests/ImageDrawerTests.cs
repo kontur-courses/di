@@ -18,9 +18,8 @@ public class ImageDrawerTests
     {
         builder = new ContainerBuilder();
         builder.RegisterType<DefaultImageDrawer>().As<IImageDrawer>();
-        builder.RegisterInstance(new SpiralCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
         builder.RegisterType<DefaultRectanglesDistributor>().As<IRectanglesDistributor>();
-        builder.RegisterType<ImageSaver>().AsSelf();
+        builder.RegisterType<DefaultWordsHandler>().As<IWordsHandler>();
     }
 
     private ContainerBuilder builder;
@@ -36,23 +35,22 @@ public class ImageDrawerTests
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
             {
-                Brush = new SolidBrush(Color.Aqua),
+                FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                InputPath = inputPath,
-                SavePath = savePath,
-                BackgroundColor = Color.Black
+                BackgroundColor = Color.Black,
+                Layouter = LayouterType.Spiral
             });
             var settings = mock.Create<ISettingsProvider>();
-            var testFileReader = new TestFileReader(settings);
-            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
             builder.RegisterInstance(settings).As<ISettingsProvider>();
 
         }
 
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
 
     [Test]
@@ -63,22 +61,21 @@ public class ImageDrawerTests
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
             {
-                Brush = new SolidBrush(Color.Red),
+                FontColor = Color.Red,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                InputPath = inputPath,
-                SavePath = savePath,
-                BackgroundColor = Color.Aquamarine
+                BackgroundColor = Color.Aquamarine,
+                Layouter = LayouterType.Spiral
             });
             var settings = mock.Create<ISettingsProvider>();
-            var testFileReader = new TestFileReader(settings);
-            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            
             builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
-
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
 
     [Test]
@@ -89,22 +86,22 @@ public class ImageDrawerTests
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
             {
-                Brush = new SolidBrush(Color.Aqua),
+                FontColor = Color.Aqua,
                 Font = new Font("Arial", 24, FontStyle.Italic),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(5000, 5000),
-                InputPath = inputPath,
-                SavePath = savePath,
-                BackgroundColor = Color.Black
+                BackgroundColor = Color.Black,
+                Layouter = LayouterType.Spiral
             });
             var settings = mock.Create<ISettingsProvider>();
-            var testFileReader = new TestFileReader(settings);
-            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            
             builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
 
     [Test]
@@ -115,24 +112,22 @@ public class ImageDrawerTests
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
             {
-                Brush = new SolidBrush(Color.Aqua),
+                FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.3f,
                 ImageSize = new Size(6000, 6000),
-                InputPath = inputPath,
-                SavePath = savePath,
-                BackgroundColor = Color.Black
+                BackgroundColor = Color.Black,
+                Layouter = LayouterType.Block
             });
             var settings = mock.Create<ISettingsProvider>();
-            var testFileReader = new TestFileReader(settings);
-            builder.RegisterInstance(new DefaultWordsHandler(testFileReader.Words)).As<IWordsHandler>();
+            
             builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
-
-        builder.RegisterInstance(new BlockCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
 
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
 
     [Test]
@@ -144,23 +139,22 @@ public class ImageDrawerTests
         {
             mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
             {
-                Brush = new SolidBrush(Color.Aqua),
+                FontColor = Color.Aqua,
                 Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
                 FrequencyRatio = 1.6f,
                 ImageSize = new Size(5000, 5000),
-                InputPath = inputPath,
-                SavePath = savePath,
                 BackgroundColor = Color.Black,
-                FilterPath = @"filter.txt"
+                Layouter = LayouterType.Spiral
             });
             var settings = mock.Create<ISettingsProvider>();
-            var testFileReader = new TestFileReader(settings);
-            builder.RegisterInstance(new WordsHandlerWithFilter(testFileReader.Words, testFileReader.ExcludedWords))
-                .As<IWordsHandler>();
             builder.RegisterInstance(settings).As<ISettingsProvider>();
         }
+        var testFileReader = new TestFileReader(inputPath, @"filter.txt");
+        builder.RegisterInstance(testFileReader).As<IWordFilterProvider>();
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
+        builder.RegisterType<WordsHandlerWithFilter>().As<IWordsHandler>();
         
         var container = builder.Build();
-        container.Resolve<ImageSaver>().Save(container.Resolve<IImageDrawer>().DrawImage());
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
 }

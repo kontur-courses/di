@@ -2,22 +2,26 @@ namespace TagsCloudContainer;
 
 public class WordsHandlerWithFilter : DefaultWordsHandler, IWordsHandler
 {
+    private readonly IEnumerable<string> wordsToExclude;
+
+    private Dictionary<string, int> wordDistribution;
+
+    public WordsHandlerWithFilter(IWordSequenceProvider wordSequenceProvider, IWordFilterProvider wordsFilterProvider)
+        : base(wordSequenceProvider)
+    {
+        wordsToExclude =
+            from word in wordsFilterProvider.WordFilter
+            select word.ToLower();
+    }
+
     public Dictionary<string, int> WordDistribution
     {
         get
         {
-            if(wordDistribution==null)ProcessSequence();
+            if (wordDistribution == null) ProcessSequence();
             return wordDistribution;
         }
         private set => wordDistribution = value;
-    }
-    private Dictionary<string, int> wordDistribution;
-    private readonly IEnumerable<string> wordsToExclude;
-
-    public WordsHandlerWithFilter(IEnumerable<string> wordSequence, IEnumerable<string> wordsToExclude)
-        : base(wordSequence)
-    {
-        this.wordsToExclude = wordsToExclude;
     }
 
     protected override void ProcessSequence()

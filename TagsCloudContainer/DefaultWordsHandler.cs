@@ -6,9 +6,9 @@ public class DefaultWordsHandler : IWordsHandler
 
     private Dictionary<string, int> wordDistribution;
 
-    public DefaultWordsHandler(IEnumerable<string> WordSequence)
+    public DefaultWordsHandler(IWordSequenceProvider wordSequenceProvider)
     {
-        this.WordSequence = WordSequence;
+        WordSequence = wordSequenceProvider.WordSequence;
     }
 
     public Dictionary<string, int> WordDistribution
