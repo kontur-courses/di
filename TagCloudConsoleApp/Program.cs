@@ -83,9 +83,18 @@ public static class Program
         var colorNames = options.ColorNames.ToList();
         var colors = colorNames.Select(Color.FromName).ToArray();
         if (colors.Length > 0)
-            registrationBuilder   
+            registrationBuilder
                 .WithParameter(new TypedParameter(typeof(Color), colors[0]))
                 .WithParameter(new TypedParameter(typeof(Color[]), colors));
+        else
+            registrationBuilder
+                .WithParameter(new TypedParameter(typeof(Color), Color.Red))
+                .WithParameter(new TypedParameter(typeof(Color[]), new[]
+                {
+                    Color.Red, Color.Orange, Color.Yellow, Color.Green,
+                    Color.LightBlue, Color.Blue, Color.Purple
+                }));
+
     }
 
     private static int HandleErrors(IEnumerable<Error> errors)

@@ -6,11 +6,6 @@ public class WhiteGradientColoringAlgorithm : IColoringAlgorithm
 {
     private readonly Color color;
 
-    public WhiteGradientColoringAlgorithm()
-    {
-        this.color = Color.Red;
-    }
-    
     public WhiteGradientColoringAlgorithm(Color color)
     {
         this.color = color;

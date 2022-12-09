@@ -12,14 +12,6 @@ public class RandomColoringAlgorithm : IColoringAlgorithm
         this.colors = colors;
     }
 
-    public RandomColoringAlgorithm()
-    {
-        colors = new[]
-        {
-            Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.LightBlue, Color.Blue, Color.Purple
-        };
-    }
-
     public Color[] GetColors(int count)
     {
         var result = new Color[count];
