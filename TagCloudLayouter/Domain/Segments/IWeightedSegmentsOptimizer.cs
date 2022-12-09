@@ -1,4 +1,4 @@
-namespace CircularCloudLayouter.Segments;
+namespace CircularCloudLayouter.Domain.Segments;
 
 public interface IWeightedSegmentsOptimizer
 {

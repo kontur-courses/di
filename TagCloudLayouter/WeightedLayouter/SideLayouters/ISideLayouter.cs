@@ -1,10 +1,11 @@
-using System.Drawing;
+
+using CircularCloudLayouter.Domain;
 
 namespace CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
 public interface ISideLayouter
 {
     double CalculateCoefficient();
-    Rectangle GetNextRectangle(Size rectSize);
-    public void UpdateWeights(Rectangle rect);
+    ImmutableRectangle GetNextRectangle(ImmutableSize rectSize);
+    public void UpdateWeights(ImmutableRectangle rect);
 }

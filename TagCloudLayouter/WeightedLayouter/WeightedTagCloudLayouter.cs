@@ -1,4 +1,4 @@
-using System.Drawing;
+using CircularCloudLayouter.Domain;
 using CircularCloudLayouter.WeightedLayouter.Forming;
 using CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
@@ -6,12 +6,12 @@ namespace CircularCloudLayouter.WeightedLayouter;
 
 public class WeightedTagCloudLayouter : ITagCloudLayouter
 {
-    private readonly Point _center;
+    private readonly ImmutablePoint _center;
     private readonly ISideLayouter[] _sideLayouters;
 
     public int RectanglesPlaced { get; private set; }
 
-    public WeightedTagCloudLayouter(Point center, FormFactor formFactor)
+    public WeightedTagCloudLayouter(ImmutablePoint center, FormFactor formFactor)
     {
         _center = center;
         _sideLayouters = new ISideLayouter[]
@@ -23,13 +23,13 @@ public class WeightedTagCloudLayouter : ITagCloudLayouter
         };
     }
 
-    public Rectangle PutNextRectangle(Size rectSize)
+    public ImmutableRectangle PutNextRectangle(ImmutableSize rectSize)
     {
         if (rectSize.Height <= 0 || rectSize.Width <= 0)
             throw new ArgumentException($"{nameof(rectSize.Width)} and {nameof(rectSize.Height)} cannot be zero!");
 
         var rect = RectanglesPlaced == 0
-            ? new Rectangle(_center - rectSize / 2, rectSize)
+            ? new ImmutableRectangle(_center - rectSize / 2, rectSize)
             : _sideLayouters
                 .MinBy(layouter => layouter.CalculateCoefficient())!
                 .GetNextRectangle(rectSize);

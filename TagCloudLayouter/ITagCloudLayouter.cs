@@ -1,8 +1,8 @@
-using System.Drawing;
+using CircularCloudLayouter.Domain;
 
 namespace CircularCloudLayouter;
 
 public interface ITagCloudLayouter
 {
-    Rectangle PutNextRectangle(Size rectSize);
+    ImmutableRectangle PutNextRectangle(ImmutableSize rectSize);
 }

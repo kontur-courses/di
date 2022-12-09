@@ -1,14 +1,14 @@
-using System.Drawing;
-using CircularCloudLayouter.Segments;
+using CircularCloudLayouter.Domain;
+using CircularCloudLayouter.Domain.Segments;
 
 namespace CircularCloudLayouter.WeightedLayouter.SideLayouters;
 
 public class RightSideLayouter : ISideLayouter
 {
     private readonly WeightedSideHelper _weightedSideHelper;
-    private readonly Point _center;
+    private readonly ImmutablePoint _center;
 
-    public RightSideLayouter(Point center, WeightedSideHelper weightedSideHelper)
+    public RightSideLayouter(ImmutablePoint center, WeightedSideHelper weightedSideHelper)
     {
         _center = center;
         _weightedSideHelper = weightedSideHelper;
@@ -17,17 +17,17 @@ public class RightSideLayouter : ISideLayouter
     public double CalculateCoefficient() =>
         _weightedSideHelper.CalculateCoefficient(1);
 
-    public Rectangle GetNextRectangle(Size rectSize)
+    public ImmutableRectangle GetNextRectangle(ImmutableSize rectSize)
     {
         var resPos = _weightedSideHelper.FindNextRectPos(rectSize.Height, _center.Y);
-        return new Rectangle(
+        return new ImmutableRectangle(
             _center.X + resPos.Relative,
             resPos.Absolute,
             rectSize.Width, rectSize.Height
         );
     }
 
-    public void UpdateWeights(Rectangle rect)
+    public void UpdateWeights(ImmutableRectangle rect)
     {
         _weightedSideHelper.UpdateWeights(new WeightedSegment(rect.Top, rect.Bottom, rect.Right - _center.X));
     }

@@ -91,6 +91,8 @@ internal static class Program
             .As<IWordsInfoParser>()
             .SingleInstance();
 
+        builder.RegisterType<WordSizeCalculator>()
+            .As<IWordSizeCalculator>();
         builder.RegisterType<WordsPaintDataProvider>()
             .As<IWordsPaintDataProvider>();
 

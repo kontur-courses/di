@@ -1,4 +1,4 @@
-﻿using CircularCloudLayouter.Segments;
+﻿using CircularCloudLayouter.Domain.Segments;
 using CircularCloudLayouter.WeightedLayouter.Forming;
 
 namespace CircularCloudLayouter.WeightedLayouter.SideLayouters;

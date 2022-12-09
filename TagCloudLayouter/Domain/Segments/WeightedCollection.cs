@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace CircularCloudLayouter.Segments;
+namespace CircularCloudLayouter.Domain.Segments;
 
 public class WeightedCollection :
     ICollection<WeightedSegment>,

@@ -1,14 +1,14 @@
-﻿using System.Drawing;
+﻿using CircularCloudLayouter.Domain;
 
 namespace TagCloudCreator.Infrastructure;
 
-public readonly record struct WordPaintData(string Word, Font Font, Rectangle Rect)
+public readonly record struct WordPaintData(string Word, int FontSize, ImmutableRectangle Rect)
 {
     public bool Equals(WordPaintData other) =>
         Word == other.Word &&
-        Font.Equals(other.Font) &&
+        FontSize.Equals(other.FontSize) &&
         Rect.Equals(other.Rect);
 
     public override int GetHashCode() =>
-        HashCode.Combine(Word, Font, Rect);
+        HashCode.Combine(Word, FontSize, Rect);
 }

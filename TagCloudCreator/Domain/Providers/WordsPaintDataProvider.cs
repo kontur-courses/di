@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TagCloudCreator.Domain.Settings;
+﻿using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Infrastructure;
 using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
@@ -8,19 +7,19 @@ namespace TagCloudCreator.Domain.Providers;
 
 public class WordsPaintDataProvider : IWordsPaintDataProvider
 {
-    private readonly Graphics _graphics;
+    private readonly IWordSizeCalculator _wordSizeCalculator;
     private readonly ITagCloudLayouterProvider _layouterProvider;
     private readonly IWordsInfoParser _wordsInfoParser;
     private readonly TagCloudPaintSettings _paintSettings;
 
     public WordsPaintDataProvider(
-        Graphics graphics,
+        IWordSizeCalculator wordSizeCalculator,
         ITagCloudLayouterProvider layouterProvider,
         IWordsInfoParser wordsInfoParser,
         TagCloudPaintSettings paintSettings
     )
     {
-        _graphics = graphics;
+        _wordSizeCalculator = wordSizeCalculator;
         _layouterProvider = layouterProvider;
         _wordsInfoParser = wordsInfoParser;
         _paintSettings = paintSettings;
@@ -39,20 +38,13 @@ public class WordsPaintDataProvider : IWordsPaintDataProvider
 
         foreach (var (word, count) in countSortedWordsInfos)
         {
-            using var font = CreateFont(count, minCount, maxCount);
-            var rectSize = Size.Ceiling(_graphics.MeasureString(word, font));
+            var fontSize = CalculateFontSize(count, minCount, maxCount);
+            var rectSize = _wordSizeCalculator.GetSizeFor(word, fontSize);
             var rect = layouter.PutNextRectangle(rectSize);
 
-            yield return new WordPaintData(word, font, rect);
+            yield return new WordPaintData(word, fontSize, rect);
         }
     }
-
-    private Font CreateFont(int currentCount, int minCount, int maxCount) =>
-        new(
-            _paintSettings.BasicFont.FontFamily,
-            CalculateFontSize(currentCount, minCount, maxCount),
-            _paintSettings.BasicFont.Style
-        );
 
     private int CalculateFontSize(int count, int minCount, int maxCount)
     {

@@ -1,7 +1,8 @@
-﻿using TagCloudCreator.Interfaces;
+﻿using TagCloudCreator.Infrastructure;
+using TagCloudCreator.Interfaces;
 using TagCloudCreator.Interfaces.Providers;
 
-namespace TagCloudCreator.Infrastructure;
+namespace TagCloudCreator.Domain;
 
 public class WordsInfoParser : IWordsInfoParser
 {

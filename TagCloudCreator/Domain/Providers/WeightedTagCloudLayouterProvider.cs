@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using CircularCloudLayouter;
+﻿using CircularCloudLayouter;
+using CircularCloudLayouter.Domain;
 using CircularCloudLayouter.WeightedLayouter;
 using TagCloudCreator.Domain.Settings;
 using TagCloudCreator.Interfaces.Providers;
@@ -25,7 +25,7 @@ public class WeightedTagCloudLayouterProvider : ITagCloudLayouterProvider
         var imageSettings = _imageSettingsProvider.GetImageSettings();
 
         var formFactor = _layouterSettings.FormFactor.WithRatio(_layouterSettings.WidthToHeightRatio);
-        var center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+        var center = new ImmutablePoint(imageSettings.Width / 2, imageSettings.Height / 2);
         return new WeightedTagCloudLayouter(center, formFactor);
     }
 }
