@@ -1,6 +1,6 @@
 ﻿namespace TagCloudCreator.Interfaces.Providers;
 
-public interface IWordsFileReaderProvider
+public interface IFileReaderProvider
 {
     IEnumerable<string> SupportedExtensions { get; }
     IFileReader GetReader();

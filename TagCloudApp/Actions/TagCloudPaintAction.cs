@@ -9,12 +9,12 @@ public class TagCloudPaintAction : IUiAction
 {
     private readonly TagCloudPainter _painter;
     private readonly IWordsPathSettingsProvider _pathSettingsProvider;
-    private readonly IWordsFileReaderProvider _readersProvider;
+    private readonly IFileReaderProvider _readersProvider;
 
     public TagCloudPaintAction(
         TagCloudPainter painter,
         IWordsPathSettingsProvider pathSettingsProvider,
-        IWordsFileReaderProvider readersProvider
+        IFileReaderProvider readersProvider
     )
     {
         _painter = painter;

@@ -3,12 +3,12 @@ using TagCloudCreator.Interfaces.Providers;
 
 namespace TagCloudCreator.Domain.Providers;
 
-public class WordsFileReaderProvider : IWordsFileReaderProvider
+public class FileReaderProvider : IFileReaderProvider
 {
     private readonly Dictionary<string, IFileReader> _wordsFileReaders;
     private readonly IWordsPathSettingsProvider _pathSettingsProvider;
 
-    public WordsFileReaderProvider(
+    public FileReaderProvider(
         IEnumerable<IFileReader> wordsFileReaders,
         IWordsPathSettingsProvider pathSettingsProvider)
     {
@@ -23,6 +23,6 @@ public class WordsFileReaderProvider : IWordsFileReaderProvider
         var wordsFileExtension = Path.GetExtension(_pathSettingsProvider.GetWordsPathSettings().WordsPath);
         if (_wordsFileReaders.TryGetValue(wordsFileExtension, out var result))
             return result;
-        throw new ArgumentException($"No reader for extension: {wordsFileExtension}");
+        throw new InvalidOperationException($"No reader for extension: {wordsFileExtension}");
     }
 }

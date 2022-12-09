@@ -24,6 +24,6 @@ public class ImageSaverProvider : IImageSaverProvider
         var imageExtension = Path.GetExtension(_pathSettingsProvider.GetImagePathSettings().ImagePath);
         if (_wordsFileReaders.TryGetValue(imageExtension, out var result))
             return result;
-        throw new ArgumentException($"No saver for extension: {imageExtension}");
+        throw new InvalidOperationException($"No saver for extension: {imageExtension}");
     }
 }

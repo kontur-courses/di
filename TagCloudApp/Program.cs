@@ -65,8 +65,8 @@ internal static class Program
             .As<IImageSaver>()
             .SingleInstance();
 
-        builder.RegisterType<WordsFileReaderProvider>()
-            .As<IWordsFileReaderProvider>()
+        builder.RegisterType<FileReaderProvider>()
+            .As<IFileReaderProvider>()
             .SingleInstance();
         builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(TxtFileReader))!)
             .AssignableTo<IFileReader>()

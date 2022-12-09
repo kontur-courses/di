@@ -5,24 +5,24 @@ namespace TagCloudCreator.Infrastructure;
 
 public class WordsInfoParser : IWordsInfoParser
 {
-    private readonly IWordsFileReaderProvider _wordsFileReaderProvider;
+    private readonly IFileReaderProvider _fileReaderProvider;
     private readonly IWordsNormalizer _wordsNormalizer;
     private readonly ICollection<IWordsFilter> _wordsFilters;
 
     public WordsInfoParser(
-        IWordsFileReaderProvider wordsFileReaderProvider,
+        IFileReaderProvider fileReaderProvider,
         IWordsNormalizer wordsNormalizer,
         ICollection<IWordsFilter> wordsFilters
     )
     {
-        _wordsFileReaderProvider = wordsFileReaderProvider;
+        _fileReaderProvider = fileReaderProvider;
         _wordsNormalizer = wordsNormalizer;
         _wordsFilters = wordsFilters;
     }
 
     public IEnumerable<WordInfo> GetWordsInfo()
     {
-        var text = _wordsFileReaderProvider.GetReader().ReadFile().ToLower();
+        var text = _fileReaderProvider.GetReader().ReadFile().ToLower();
         var originalFormWords = _wordsNormalizer.GetWordsOriginalForm(text);
         var filtered = _wordsFilters.Aggregate(
             originalFormWords,
