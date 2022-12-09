@@ -32,13 +32,15 @@ public class BitmapImageGenerator : IImageGenerator
         using var backgroundBrush = new SolidBrush(Color.White);
         
         graphics.FillRectangle(backgroundBrush,0, 0, image.Width, image.Height);
+        var colors = coloringAlgorithm.GetColors(tags.Length);
+        var i = 0;
         foreach (var tag in tags)
         {
             var tagFont = new Font(font.FontFamily, tag.Size);
             var measuredTag = graphics.MeasureString(tag.Word, tagFont);
             var tagSize = new Size((int)Math.Ceiling(measuredTag.Width), (int)Math.Ceiling(measuredTag.Height));
             var position = layoutAlgorithm.PutNextRectangle(tagSize).Location;
-            using var tagBrush = new SolidBrush(coloringAlgorithm.GetNextColor());
+            using var tagBrush = new SolidBrush(colors[i++]);
             graphics.DrawString(tag.Word, tagFont, tagBrush, position);
         }
 

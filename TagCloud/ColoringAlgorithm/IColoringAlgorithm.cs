@@ -4,5 +4,5 @@ namespace TagCloud.ColoringAlgorithm;
 
 public interface IColoringAlgorithm
 {
-    public Color GetNextColor();
+    public Color[] GetColors(int count);
 }

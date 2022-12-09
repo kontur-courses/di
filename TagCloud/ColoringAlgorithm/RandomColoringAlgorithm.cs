@@ -20,8 +20,14 @@ public class RandomColoringAlgorithm : IColoringAlgorithm
         };
     }
 
-    public Color GetNextColor()
+    public Color[] GetColors(int count)
     {
-        return colors[rng.Next(colors.Length)];
+        var result = new Color[count];
+        
+        for (var i = 0; i < count; i++)
+        {
+            result[i] = colors[rng.Next(colors.Length)];
+        }
+        return result;
     }
 }

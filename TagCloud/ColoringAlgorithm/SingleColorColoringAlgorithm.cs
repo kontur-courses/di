@@ -11,8 +11,10 @@ public class SingleColorColoringAlgorithm : IColoringAlgorithm
         this.color = color;
     }
     
-    public Color GetNextColor()
+    public Color[] GetColors(int count)
     {
-        return color;
+        var result = new Color[count];
+        Array.Fill(result, color, 0, count);
+        return result;
     }
 }

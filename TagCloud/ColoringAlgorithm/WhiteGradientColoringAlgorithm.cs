@@ -5,22 +5,25 @@ namespace TagCloud.ColoringAlgorithm;
 public class WhiteGradientColoringAlgorithm : IColoringAlgorithm
 {
     private readonly Color color;
-    private readonly int stepCount;
-    private int currentStep;
 
-    public WhiteGradientColoringAlgorithm(Color color, int stepCount)
+    public WhiteGradientColoringAlgorithm(Color color)
     {
         this.color = color;
-        this.stepCount = stepCount;
     }
     
-    public Color GetNextColor()
+    public Color[] GetColors(int count)
     {
-        var redCurrent = color.R + (Color.White.R - color.R) * currentStep / stepCount;
-        var greenCurrent = color.G + (Color.White.G - color.G) * currentStep / stepCount;
-        var blueCurrent = color.B + (Color.White.B - color.B) * currentStep / stepCount;
+        var result = new Color[count];
 
-        currentStep++;
-        return Color.FromArgb(redCurrent, greenCurrent, blueCurrent);
+        for (var i = 0; i < count; i++)
+        {
+            var redCurrent = color.R + (Color.White.R - color.R) * i / (2 * count);
+            var greenCurrent = color.G + (Color.White.G - color.G) * i / (2 * count);
+            var blueCurrent = color.B + (Color.White.B - color.B) * i / (2 * count);
+            
+            result[i] = Color.FromArgb(redCurrent, greenCurrent, blueCurrent);
+        }
+
+        return result;
     }
 }
