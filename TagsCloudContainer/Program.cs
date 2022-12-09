@@ -18,12 +18,11 @@ namespace TagsCloudContainer
             CustomOptionsValidator.ValidateOptions(options);
 
             var container = new ServiceCollection()
-                .AddSingleton<IConverter, FileToDictionaryConverter>()
-                .AddSingleton<IWordsFilter, WordsFilter>()
+                .AddTransient<IConverter, FileToDictionaryConverter>()
+                .AddTransient<IWordsFilter, WordsFilter>()
                 .AddSingleton<ISpiralDrawer, SpiralDrawer>()
-                .AddSingleton<ILayout, CircularCloudLayout>()
                 .AddSingleton<IWordSizeCalculator, WordSizeCalculator>()
-                .AddSingleton<CloudDrawer>()
+                .AddTransient<CloudDrawer>()
                 .BuildServiceProvider();
 
             var drawer = ActivatorUtilities.CreateInstance<CloudDrawer>(container);
