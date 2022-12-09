@@ -1,28 +1,29 @@
 ﻿using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using TagCloud.Parser;
 using TagCloud.Parser.ParsingConfig;
 
-namespace TagCloud.Tests;
+namespace TagCloud.Tests.TagParser;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Children)]
 public class PlainTextParserTests
 {
-    [Test]
-    public static void Should_Parse_UniqueWords()
+    [TearDown]
+    public static void TearDown()
     {
-        var data = new[]
-        {
-            "каждый",
-            "охотник",
-            "желает",
-            "знать",
-            "где",
-            "сидит",
-            "фазан"
-        };
+        var workDir = TestContext.CurrentContext.WorkDirectory;
+        var testName = TestContext.CurrentContext.WorkerId;
+        var path = Path.Combine(workDir, testName);
+        File.Delete(path);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetUniqueLowercaseWords))]
+    public static void Should_Parse_UniqueWords(string[] data)
+    {
         var filename = WriteData(data);
         var expected = GetExpected(data);
 
@@ -33,18 +34,9 @@ public class PlainTextParserTests
     }
 
     [Test]
-    public static void Should_ParseAsLowercase_UniqueWords()
+    [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetUniqueMixedCaseWords))]
+    public static void Should_ParseAsLowercase_UniqueWords(string[] data)
     {
-        var data = new[]
-        {
-            "кАжДый",
-            "охоТник",
-            "ЖЕЛАЕТ",
-            "ЗНаТЬ",
-            "Где",
-            "СИДИт",
-            "фазан"
-        };
         var filename = WriteData(data);
         var expected = GetExpected(data);
 
@@ -55,24 +47,9 @@ public class PlainTextParserTests
     }
     
     [Test]
-    public static void Should_Parse_WithRepeats()
+    [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetRepeatingLowercaseWords))]
+    public static void Should_Parse_WithRepeats(string[] data)
     {
-        var data = new[]
-        {
-            "каждый",
-            "каждый",
-            "каждый",
-            "охотник",
-            "желает",
-            "желает",
-            "где",
-            "где",
-            "знать",
-            "фазан",
-            "фазан",
-            "сидит",
-            "каждый"
-        };
         var filename = WriteData(data);
         var expected = GetExpected(data);
 
@@ -83,24 +60,9 @@ public class PlainTextParserTests
     }
     
     [Test]
-    public static void Should_ParseAsLowercase_WithRepeats()
+    [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetRepeatingMixedCaseWords))]
+    public static void Should_ParseAsLowercase_WithRepeats(string[] data)
     {
-        var data = new[]
-        {
-            "кАЖДЫй",
-            "каЖдЫй",
-            "Каждый",
-            "охОтник",
-            "желАЕт",
-            "жЕЛает",
-            "ГДЕ",
-            "где",
-            "знатЬ",
-            "фазАН",
-            "фаЗан",
-            "сидит",
-            "каЖдый"
-        };
         var filename = WriteData(data);
         var expected = GetExpected(data);
 
@@ -121,7 +83,7 @@ public class PlainTextParserTests
     private static string WriteData(string[] data)
     {
         var workDir = TestContext.CurrentContext.WorkDirectory;
-        var testName = TestContext.CurrentContext.Test.Name;
+        var testName = TestContext.CurrentContext.WorkerId;
         var path = Path.Combine(workDir, testName);
 
         File.WriteAllLines(path, data);
