@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagCloud;
+﻿namespace TagCloud;
 
 public class Palette
 {

@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-
-namespace TagCloud;
+﻿namespace TagCloud;
 
 public interface ICloudDrawer
 {
-    public Bitmap Draw();
+    public Bitmap Draw(IEnumerable<TextBox> texts);
 }
