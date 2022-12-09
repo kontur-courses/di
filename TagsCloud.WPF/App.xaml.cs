@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows;
 using Ninject;
+using TagsCloud.FileConverter;
+using TagsCloud.FileConverter.Implementation;
+using TagsCloud.FileReader;
+using TagsCloud.FileReader.Implementation;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
 
@@ -31,6 +35,9 @@ namespace TagsCloud.WPF
             container.Bind<IWordHandler>().To<LowerCaseHandler>();
             container.Bind<IWordHandler>().To<BoringRusWordsHandler>();
             container.Bind<IWordHandler>().To<RecurringWordsHandler>().InSingletonScope();
+            container.Bind<string>().ToConstant("../../../Words.doc");
+            container.Bind<IFileReader>().To<DocxReader>();
+            container.Bind<IFileConverter>().To<ConvertToTxt>();
             
             return container;
         }

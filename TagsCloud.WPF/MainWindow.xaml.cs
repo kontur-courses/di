@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using TagsCloud.CloudLayouter;
 using TagsCloud.CloudLayouter.Implementation;
+using TagsCloud.FileReader;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
 using Brush = System.Windows.Media.Brush;
@@ -21,7 +22,7 @@ using Point = System.Drawing.Point;
 
 namespace TagsCloud.WPF
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly Random random = new();
         private Brush customColor = Brushes.Beige;
@@ -32,7 +33,6 @@ namespace TagsCloud.WPF
 
         private readonly string[] words;
         private int wordPointer;
-        private const string PathToWords = "../../../Words.txt";
 
         private ICloudLayouter<Rectangle>? circularCloud;
         private List<UIElement> uiElements = new();
@@ -43,14 +43,14 @@ namespace TagsCloud.WPF
         private const int DefaultFontSize = 10;
         private FontStyle fontStyle;
 
-        public MainWindow(IWordHandler[] wordHandlers)
+        public MainWindow(IWordHandler[] wordHandlers, IFileReader reader, string path)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
             this.wordHandlers = wordHandlers;
             fontStyle = FontStyles.Normal;
             recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
-            words = ProcessWords(GetWordsFromTxt(PathToWords));
+            words = ProcessWords(reader.Read(path));
             rectanglesCount = words.Length;
             MyCanvas.Focus();
             timer.Interval = TimeSpan.FromSeconds(0);
@@ -70,8 +70,6 @@ namespace TagsCloud.WPF
 
         private string[] ProcessWords(string[] getWordsFromTxt) => 
             wordHandlers.Aggregate(getWordsFromTxt, (current, handler) => handler.ProcessWords(current));
-
-        private static string[] GetWordsFromTxt(string path) => File.ReadAllLines(path);
 
         private void DrawRectangle(object? sender, EventArgs e)
         {
