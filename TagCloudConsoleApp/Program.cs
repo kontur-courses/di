@@ -1,1 +1,98 @@
-﻿return ;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using Autofac;
+using CommandLine;
+using TagCloud;
+using TagCloud.ColoringAlgorithm;
+using TagCloud.ColoringAlgorithm.Provider;
+using TagCloud.ImageGenerator;
+using TagCloud.LayoutAlgorithm;
+using TagCloud.LayoutAlgorithm.CircularLayoutAlgorithm;
+using TagCloud.Parser;
+using TagCloud.Parser.ParsingConfig;
+using TagCloud.Parser.ParsingConfig.MyStemParsingConfig;
+using TagCloud.WordSizingAlgorithm;
+
+namespace TagCloudConsoleApp;
+
+public static class Program
+{
+    public static int Main(string[] args)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Console.WriteLine("App only supports OS Windows.");
+            return -1;
+        }
+
+        var exitCode = Parser.Default.ParseArguments<Options>(args).MapResult(Run, HandleErrors);
+        return exitCode;
+    }
+    
+    private static int Run(Options options)
+    {
+        var containerBuilder = new ContainerBuilder();
+
+        containerBuilder.RegisterType<CircularLayoutAlgorithm>().As<ILayoutAlgorithm>()
+            .WithParameter(new TypedParameter(typeof(Point),
+                new Point(options.Width / 2, options.Height != null ? options.Height.Value / 2 : options.Width / 2)));
+        containerBuilder.RegisterType<BoringWordsMyStemParsingConfig>().As<IParsingConfig>();
+        
+        var sizingBuilder = containerBuilder.RegisterType<RelativeWordSizingAlgorithm>().As<IWordSizingAlgorithm>();
+        if (options.FontSize != null)
+            sizingBuilder.WithParameter(new TypedParameter(typeof(int), options.FontSize));
+
+        var imageGeneratorBuilder = containerBuilder.RegisterType<BitmapImageGenerator>().As<IImageGenerator>()
+            .WithParameter(new TypedParameter(typeof(Size), new Size(options.Width, options.Height ?? options.Width)));
+        imageGeneratorBuilder.WithParameter(options.FontName != null
+            ? new TypedParameter(typeof(Font), new Font(options.FontName, 1))
+            : new TypedParameter(typeof(Font), new Font("Arial", 1)));
+
+        if (options.InputFile.EndsWith(".docx"))
+            containerBuilder.RegisterType<WordDocumentParser>().As<ITagParser>();
+        else
+            containerBuilder.RegisterType<PlainTextParser>().As<ITagParser>();
+
+        RegisterColoringAlgorithms(containerBuilder, options);
+
+        containerBuilder.RegisterType<TagCloudGenerator>();
+        var container = containerBuilder.Build();
+        var generator = container.Resolve<TagCloudGenerator>();
+        var image = generator.GenerateCloud(options.InputFile);
+        image.Save(options.OutputFile, ImageFormat.Png);
+        Console.WriteLine($"Image saved as {options.OutputFile}");
+        return 0;
+    }
+
+    private static void RegisterColoringAlgorithms(ContainerBuilder containerBuilder, Options options)
+    {
+        var expectedAlgorithm = options.ColoringAlgorithm;
+        var algorithms = ColoringAlgorithmProvider.Algorithms
+            .Where(t => t.Name.StartsWith(expectedAlgorithm))
+            .ToArray();
+
+        if (algorithms.Length != 1)
+            throw new ArgumentException($"Bad argument given to parameter \"Coloring algorithm\": {expectedAlgorithm}");
+        
+        var registrationBuilder = containerBuilder.RegisterType(algorithms[0]).As<IColoringAlgorithm>();
+
+        if (options.ColorNames == null)
+            return;
+        
+        var colorNames = options.ColorNames.ToList();
+        var colors = colorNames.Select(Color.FromName).ToArray();
+        if (colors.Length > 0)
+            registrationBuilder   
+                .WithParameter(new TypedParameter(typeof(Color), colors[0]))
+                .WithParameter(new TypedParameter(typeof(Color[]), colors));
+    }
+
+    private static int HandleErrors(IEnumerable<Error> errors)
+    {
+        var result = -1;
+        if (errors.Any(x => x is HelpRequestedError or VersionRequestedError))
+            result = 0;
+        return result;
+    }
+}

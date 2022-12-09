@@ -9,7 +9,7 @@ public static class ColoringAlgorithmProvider
         var type = typeof(IColoringAlgorithm);
         Algorithms = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
-            .Where(t => t.IsAssignableFrom(type) && t.IsClass)
+            .Where(t => t.GetInterfaces().Contains(type) && t.IsClass)
             .ToArray();
     }
 }

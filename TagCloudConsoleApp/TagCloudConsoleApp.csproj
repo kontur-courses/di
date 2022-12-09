@@ -11,4 +11,9 @@
       <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.5.0" />
+      <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    </ItemGroup>
+
 </Project>
