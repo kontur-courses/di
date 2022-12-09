@@ -20,7 +20,7 @@ public class MyStemSpeechPartWordsFilter : IWordsFilter
     }
 
     public IEnumerable<string> FilterWords(IEnumerable<string> sourceWords) =>
-        _grammarInfoParser.Parse(string.Join(" ", sourceWords))
+        _grammarInfoParser.Parse(sourceWords)
             .Where(info => !_settings.ExcludedSpeechParts.Contains(info.SpeechPart))
             .Where(info => !_settings.ExcludeUndefined || info.SpeechPart is not SpeechPart.Undefined)
             .Select(word => word.OriginalForm);

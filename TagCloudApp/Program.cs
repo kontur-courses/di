@@ -19,6 +19,8 @@ namespace TagCloudApp;
 
 internal static class Program
 {
+    private const string MyStemExecutablePath = "../../../../MyStemBin/mystem.exe";
+
     [STAThread]
     private static void Main()
     {
@@ -71,7 +73,7 @@ internal static class Program
             .As<IFileReader>()
             .SingleInstance();
 
-        builder.Register(_ => new MyStemWordsGrammarInfoParser(@"../../../../MyStemBin/mystem.exe"))
+        builder.Register(_ => new MyStemWordsGrammarInfoParser(MyStemExecutablePath))
             .AsSelf()
             .SingleInstance();
         builder.RegisterType<MyStemWordsNormalizer>()

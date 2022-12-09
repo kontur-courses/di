@@ -16,17 +16,22 @@ public class MyStemWordsGrammarInfoParser
             new MyStemSettings
             {
                 MyStemAppPath = myStemExecutablePath,
-                LaunchOptions = new[] {MyStemLaunchOption.MissOriginalForm, MyStemLaunchOption.AddGrammarInfo},
+                LaunchOptions = new[]
+                {
+                    MyStemLaunchOption.LinearMode,
+                    MyStemLaunchOption.MissOriginalForm,
+                    MyStemLaunchOption.AddGrammarInfo
+                },
                 OutputFormat = MyStemOutputFormat.Json,
                 Encoding = MyStemEncoding.Utf8
             }
         );
     }
 
-    public IEnumerable<WordGrammarInfo> Parse(string sourceText)
+    public IEnumerable<WordGrammarInfo> Parse(IEnumerable<string> words)
     {
-        var analysisJsonRaw = _myStem.Analyze(sourceText);
-        return JsonSerializer.Deserialize<RawWordAnalysisResult[]>(analysisJsonRaw)!
+        return _myStem.Analyze(words)
+            .Select(jsonRaw => JsonSerializer.Deserialize<RawWordAnalysisResult>(jsonRaw)!)
             .Select(ParseGrammarInfo);
     }
 

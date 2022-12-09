@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Text;
 using MyStemWrapper.Domain.Settings;
 using MyStemWrapper.Infrastructure;
@@ -14,18 +15,26 @@ public class MyStem
         _myStemSettings = myStemSettings;
     }
 
-    public string Analyze(string source)
+    public IEnumerable<string> Analyze(IEnumerable<string> sourceWords)
     {
         using var myStem = StartProcess();
+        var results = new ConcurrentQueue<string>();
+        using var task = RunOutputReaderTask(myStem, results);
 
-        myStem.StandardInput.Write(source);
-        myStem.StandardInput.Flush();
+        foreach (var sourceWord in sourceWords)
+        {
+            myStem.StandardInput.WriteLine(sourceWord);
+            myStem.StandardInput.Flush();
+            while (results.TryDequeue(out var result))
+                yield return result;
+        }
+
         myStem.StandardInput.Close();
+        task.GetAwaiter().GetResult();
+        myStem.Kill();
 
-        var result = myStem.StandardOutput.ReadToEnd();
-        myStem.WaitForExit();
-
-        return result;
+        while (results.TryDequeue(out var result))
+            yield return result;
     }
 
     private Process StartProcess()
@@ -48,4 +57,17 @@ public class MyStem
             }
         )!;
     }
+
+    private static Task RunOutputReaderTask(Process process, ConcurrentQueue<string> outResults) =>
+        Task.Run(
+            async () =>
+            {
+                while (!process.StandardOutput.EndOfStream)
+                {
+                    var line = await process.StandardOutput.ReadLineAsync().ConfigureAwait(false);
+                    if (line is not null)
+                        outResults.Enqueue(line);
+                }
+            }
+        );
 }

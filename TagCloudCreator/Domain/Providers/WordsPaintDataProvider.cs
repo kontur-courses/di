@@ -32,6 +32,8 @@ public class WordsPaintDataProvider : IWordsPaintDataProvider
         var countSortedWordsInfos = _wordsInfoParser.GetWordsInfo()
             .OrderByDescending(word => word.Count)
             .ToArray();
+        if (countSortedWordsInfos.Length == 0)
+            yield break;
         var minCount = countSortedWordsInfos[^1].Count;
         var maxCount = countSortedWordsInfos[0].Count;
 
