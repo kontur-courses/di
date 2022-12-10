@@ -7,15 +7,6 @@ namespace TagsCloudVisualization;
 
 public static class AppContainer
 {
-    private const int
-        WINDOW_WIDTH = 600,
-        WINDOW_HEIGHT = 400,
-        CENTER_X = 300,
-        CENTER_Y = 200;
-
-    private const string
-        DEFAULT_PATH = "..\\..\\..\\input.txt";
-
     private static IContainer container;
 
     public static void Configure()
@@ -25,13 +16,13 @@ public static class AppContainer
         builder.RegisterType<DefaultCloudGenerator>().As<ICloudGenerator>();
 
         builder
-            .RegisterInstance(new DefaultTextInput(DEFAULT_PATH))
+            .RegisterInstance(new DefaultTextInput(Config.DefaultPath))
             .As<ITextInput>();
         builder
-            .RegisterInstance(new CircularCloudLayouterSpiral(new Point(CENTER_X, CENTER_Y)))
+            .RegisterInstance(new CircularCloudLayouterSpiral(new Point(Config.CenterX, Config.CenterY)))
             .As<CircularCloudLayouter>();
         builder
-            .RegisterInstance(new DefaultCloudDrawer(WINDOW_WIDTH, WINDOW_HEIGHT, 1, Color.Black))
+            .RegisterInstance(new DefaultCloudDrawer(Config.WindowWidth, Config.WindowHeight, Config.TextBrush))
             .As<ICloudDrawer>();
 
         container = builder.Build();
