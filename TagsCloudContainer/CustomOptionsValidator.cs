@@ -20,8 +20,10 @@ namespace TagsCloudContainer
             color = Color.FromName(options.FontColor);
             if (!color.IsKnownColor)
                 throw new ArgumentException("Invalid font color");
-            if (options.FontSize < 1)
+            if (options.MinTagSize < 1)
                 throw new ArgumentException("Font size should be above 0");
+            if (options.MaxTagSize > options.PictureSize)
+                throw new ArgumentException("Font size should be less than picture size");
             if (options.PictureSize < 1)
                 throw new ArgumentException("Picture size should be above 0");
             var font = new Font(options.Font, 1);

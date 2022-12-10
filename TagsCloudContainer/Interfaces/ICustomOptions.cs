@@ -3,7 +3,8 @@
     public interface ICustomOptions
     {
         int PictureSize { get; set; }
-        int FontSize { get; set; }
+        int MinTagSize { get; set; }
+        int MaxTagSize { get; set; }
         string TextsPath { get; set; }
         string WordsFileName { get; set; }
         string BoringWordsName { get; set; }

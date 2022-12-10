@@ -18,7 +18,7 @@ namespace TagsCloudContainerTests
                 BoringWordsName = "cmd.exe",
                 Font = "Arial",
                 PictureSize = 600,
-                FontSize = 15,
+                MinTagSize = 15,
                 BackgroundColor = "White",
                 FontColor = "Blue"
             };
@@ -98,7 +98,7 @@ namespace TagsCloudContainerTests
         [TestCase(-1)]
         public void ValidateConfig_AddConfigWithFontSizeLessThanOne_ShouldThrowArgumentException(int size)
         {
-            options.FontSize = size;
+            options.MinTagSize = size;
 
             var act = () => CustomOptionsValidator.ValidateOptions(options);
 
