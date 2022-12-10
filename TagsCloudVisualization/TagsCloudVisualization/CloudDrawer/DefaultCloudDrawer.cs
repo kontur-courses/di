@@ -9,20 +9,20 @@ public class DefaultCloudDrawer : ICloudDrawer
 
     private Bitmap bitmap;
     private Graphics graphics;
-    private Pen pen;
+    private Brush brush;
 
-    public DefaultCloudDrawer(int windowWidth, int windowHeight, int borderWidth, Color borderColor)
+    public DefaultCloudDrawer(int windowWidth, int windowHeight, Brush brush)
     {
         bitmap = new Bitmap(windowWidth, windowHeight);
         graphics = Graphics.FromImage(bitmap);
-        pen = new Pen(borderColor, borderWidth);
+        this.brush = brush;
     }
 
-    public void Draw(Dictionary<string, Point> wordsInPoint)
+    public void Draw(List<TextLabel> wordsInPoint)
     {
-        foreach (var (word, rect) in wordsInPoint)
+        foreach (var textLabel in wordsInPoint)
         {
-            //TODO: реализовать метод отрисовки слов
+            graphics.DrawString(textLabel.Content, textLabel.Font, brush, textLabel.Position);
         }
 
         SaveImage();

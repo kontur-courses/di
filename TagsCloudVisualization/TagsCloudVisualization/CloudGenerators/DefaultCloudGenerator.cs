@@ -13,13 +13,26 @@ public class DefaultCloudGenerator : ICloudGenerator
         Preprocessor = preprocessor;
     }
 
-    public Dictionary<string, Point> GenerateCloud(string text)
+    public List<TextLabel> GenerateCloud(string text)
     {
-        var rects = new Dictionary<string, Point>();
+        var rects = new List<TextLabel>();
         var wordFreq = Preprocessor.Preprocessing(text);
-        foreach (var (word, freq) in wordFreq)
+        var g = Graphics.FromImage(new Bitmap(1, 1));
+        var generalCount = wordFreq.Values.Sum();
+        foreach (var (word, freq) in wordFreq.OrderByDescending(pair => pair.Value))
         {
-            //TODO: реализовать генерацию облака с помощью Layouter
+            Font font = new Font("Arial", (int)(16f * (1 + freq * 1f / generalCount)));
+            SizeF sz = g.MeasureString(word, font);
+            Rectangle rc = new Rectangle(0, 0, (int)sz.Width, (int)sz.Height);
+
+            rc = Layouter.PutNextRectangle(rc.Size);
+
+            rects.Add(new TextLabel()
+            {
+                Position = new Point(rc.X, rc.Y),
+                Content = word,
+                Font = font
+            });
         }
 
         return rects;
