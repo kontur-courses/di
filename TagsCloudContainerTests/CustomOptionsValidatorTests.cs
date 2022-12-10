@@ -4,7 +4,7 @@ using TagsCloudContainer;
 
 namespace TagsCloudContainerTests
 {
-    internal class CustomOptionsValidatorTests
+    public class CustomOptionsValidatorTests
     {
         private CustomOptions options;
 
