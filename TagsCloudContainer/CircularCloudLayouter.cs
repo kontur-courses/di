@@ -9,25 +9,26 @@ namespace TagsCloudContainer
         private Spiral _spiral;
         private List<Rectangle> _rectangles;
         private Point _center;
-        
+
         public CircularCloudLayouter(Point center)
         {
             _center = center;
             _spiral = new Spiral(center, 2);
             _rectangles = new List<Rectangle>();
         }
-        
+
         public List<Rectangle> GenerateRectanglesByWords(Dictionary<string, int> words)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
             using var settingFont = new Font("Arial", 16);
             foreach (var word in words)
             {
-                using var font = new Font(settingFont.FontFamily, word.Value / (float)words.Count * 100 * settingFont.Size);
+                using var font = new Font(settingFont.FontFamily,
+                    word.Value / (float) words.Count * 100 * settingFont.Size);
                 var size = MeasureWord(word.Key, font);
                 rectangles.Add(PutNextRectangle(size));
             }
-            
+
             return rectangles;
         }
 
@@ -44,18 +45,18 @@ namespace TagsCloudContainer
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
-            if (rectangleSize == Size.Empty || rectangleSize.Height < 0 || rectangleSize.Width < 0)
+            if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
                 throw new ArgumentException("The size must not be equal to or less than 0");
-            
+
             Rectangle rectangle;
             do
             {
                 rectangle = new Rectangle(_spiral.NextPoint(), rectangleSize);
             } while (rectangle.IsIntersects(_rectangles));
-            
-            if(_rectangles.Count != 0)
+
+            if (_rectangles.Count != 0)
                 rectangle = ShiftRectangleToCenter(rectangle);
-            
+
             _rectangles.Add(rectangle);
             return rectangle;
         }
