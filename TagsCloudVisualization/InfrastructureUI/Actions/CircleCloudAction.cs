@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
 using TagsCloudVisualization.InfrastructureUI.Painters;
 using TagsCloudVisualization.Settings;
@@ -24,13 +23,14 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
         public string Category => "Виды облаков";
         public string Name => "Окружность";
         public string Description => "";
+
         public void Perform()
         {
             var size = imageHolder.GetImageSize();
 
             var definerSize = new DefinerSize(settings);
             factory(definerSize,
-                new Spiral(1,new Point(size.Width/ 2, size.Height /2)))
+                    new Spiral(1, new Point(size.Width / 2, size.Height / 2)))
                 .Paint();
         }
     }

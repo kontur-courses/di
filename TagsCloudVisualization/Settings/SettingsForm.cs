@@ -11,7 +11,7 @@ namespace TagsCloudVisualization.Settings
             {
                 Text = "OK",
                 DialogResult = DialogResult.OK,
-                Dock = DockStyle.Bottom,
+                Dock = DockStyle.Bottom
             };
             Controls.Add(okButton);
             Controls.Add(new PropertyGrid
@@ -28,6 +28,7 @@ namespace TagsCloudVisualization.Settings
             Text = "Настройки";
         }
     }
+
     public static class SettingsForm
     {
         public static SettingsForm<TSettings> For<TSettings>(TSettings settings)

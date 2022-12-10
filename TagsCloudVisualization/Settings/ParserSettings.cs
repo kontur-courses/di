@@ -1,5 +1,4 @@
-﻿using System.Text;
-using TagsCloudVisualization.Infrastructure.Parsers;
+﻿using TagsCloudVisualization.Infrastructure.Parsers;
 
 namespace TagsCloudVisualization.Settings
 {

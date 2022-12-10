@@ -4,6 +4,6 @@
     {
         Utf8,
         Utf32,
-        Unicode,
+        Unicode
     }
 }

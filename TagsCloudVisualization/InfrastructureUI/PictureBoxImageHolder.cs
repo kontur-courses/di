@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Analyzer;
 using TagsCloudVisualization.Infrastructure.Parsers;
 using TagsCloudVisualization.Settings;
@@ -32,12 +31,6 @@ namespace TagsCloudVisualization.InfrastructureUI
             return Graphics.FromImage(Image);
         }
 
-        private void FailIfNotInitialized()
-        {
-            if (Image == null)
-                throw new InvalidOperationException("Call PictureBoxImageHolder.RecreateImage before other method call!");
-        }
-
         public void UpdateUi()
         {
             Refresh();
@@ -64,6 +57,13 @@ namespace TagsCloudVisualization.InfrastructureUI
         public void SetParser(IParser parser)
         {
             analyzer.SetParser(parser);
+        }
+
+        private void FailIfNotInitialized()
+        {
+            if (Image == null)
+                throw new InvalidOperationException(
+                    "Call PictureBoxImageHolder.RecreateImage before other method call!");
         }
     }
 }

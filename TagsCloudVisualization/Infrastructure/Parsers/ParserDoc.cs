@@ -6,8 +6,8 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public class ParserDoc : IParser
     {
-        private readonly ParserSettings settings;
         private readonly ICurrentTextFileProvider fileProvider;
+        private readonly ParserSettings settings;
 
         public ParserDoc(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {

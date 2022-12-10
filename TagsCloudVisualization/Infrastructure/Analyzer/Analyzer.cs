@@ -36,39 +36,43 @@ namespace TagsCloudVisualization.Infrastructure.Analyzer
 
         public Dictionary<string, int> CreateFrequencyDictionary()
         {
-                var result = new Dictionary<string, int>();
+            var result = new Dictionary<string, int>();
 
-                var remainingWords = Analyze(parser.WordParse());
+            var remainingWords = Analyze(parser.WordParse());
 
-                foreach (var word in remainingWords)
-                {
-                    if (!result.ContainsKey(word))
-                        result[word] = 0;
-                    result[word]++;
-                }
-                return result;
-        }
+            foreach (var word in remainingWords)
+            {
+                if (!result.ContainsKey(word))
+                    result[word] = 0;
+                result[word]++;
+            }
 
-        private IEnumerable<string> Analyze(IEnumerable<string> words)
-        {
-            var analyzer = new MorphAnalyzer(withLemmatization: settings.Lemmatization, withTrimAndLower:true);
-            var excludedTags = settings.ExcludedParts.Select(p => converter[p]).ToHashSet();
-            var selectedTags = settings.SelectedParts.Select(p => converter[p]).ToHashSet();
-
-            var result =  analyzer
-                .Parse(words)
-                .Where(m => m.Tags.All(t => !excludedTags.Contains(t["чр"]))
-                            && selectedTags.Contains(m.BestTag["чр"]))
-                .Where(m => !settings.Lemmatization || m.BestTag.HasLemma)
-                .Select(m => settings.Lemmatization ? m.BestTag.Lemma : m.Text);
-
-            foreach (var word in result)
-                yield return word;
+            return result;
         }
 
         public void SetParser(IParser parser)
         {
             this.parser = parser;
+        }
+
+        private IEnumerable<string> Analyze(IEnumerable<string> words)
+        {
+            var analyzer = new MorphAnalyzer(settings.Lemmatization, withTrimAndLower: true);
+            var excludedTags = settings.ExcludedParts.Select(p => converter[p]).ToHashSet();
+            var selectedTags = settings.SelectedParts.Select(p => converter[p]).ToHashSet();
+
+            var wordsParse = analyzer
+                .Parse(words).ToArray();
+
+            var excludeWords = wordsParse.Where(m => m.Tags.All(t => !excludedTags.Contains(t["чр"]))
+                                                     && (selectedTags.Count == 0 ||
+                                                         selectedTags.Contains(m.BestTag["чр"]))).ToArray();
+
+            var lem = excludeWords.Where(m => !settings.Lemmatization || m.BestTag.HasLemma).ToArray();
+
+
+            foreach (var word in lem.Select(m => settings.Lemmatization ? m.BestTag.Lemma : m.Text))
+                yield return word;
         }
     }
 }

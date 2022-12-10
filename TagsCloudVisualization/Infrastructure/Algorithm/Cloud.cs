@@ -7,11 +7,9 @@ namespace TagsCloudVisualization.Infrastructure.Algorithm
 {
     public class Cloud
     {
-        private readonly List<Rectangle> rectangles;
-        private readonly IEnumerator<Point> pointEnumerator;
         private readonly Point center;
-
-        public Rectangle[] Rectangles => rectangles.ToArray();
+        private readonly IEnumerator<Point> pointEnumerator;
+        private readonly List<Rectangle> rectangles;
 
         public Cloud(ICurve curve)
         {
@@ -20,12 +18,12 @@ namespace TagsCloudVisualization.Infrastructure.Algorithm
             center = curve.Center;
         }
 
+        public Rectangle[] Rectangles => rectangles.ToArray();
+
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
-            {
                 throw new ArgumentException("size cannot be less than or equal to zero");
-            }
 
             var nextRectangle = new Rectangle(GetCenterPointRectangle(center, rectangleSize),
                 rectangleSize);

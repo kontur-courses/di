@@ -9,8 +9,8 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
 {
     public class SetTextAction : IUiAction
     {
-        private readonly string filter;
         private readonly Dictionary<string, IParser> dictionaryParsers;
+        private readonly string filter;
         private readonly IImageHolder imageHolder;
 
         public SetTextAction(IImageHolder imageHolder, IEnumerable<IParser> parsers)

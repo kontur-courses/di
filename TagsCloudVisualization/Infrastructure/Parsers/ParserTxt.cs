@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public class ParserTxt : IParser
     {
-        private readonly ParserSettings settings;
         private readonly ICurrentTextFileProvider fileProvider;
+        private readonly ParserSettings settings;
 
         public ParserTxt(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using Spire.Doc;
@@ -10,9 +9,9 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public static class ParserHelper
     {
-        public static Regex AllWordRegex => new(@"([\w]+-[\w]+)|([\w]+)");
+        public static Regex AllWordRegex => new(@"([\w]+)");
 
-        public static Dictionary<EncodingEnum, Encoding> Encodings = new()
+        public static Dictionary<EncodingEnum, Encoding> Encodings { get; } = new()
         {
             [EncodingEnum.Unicode] = Encoding.Unicode,
             [EncodingEnum.Utf32] = Encoding.UTF32,

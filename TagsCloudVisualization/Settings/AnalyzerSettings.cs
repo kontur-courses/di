@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TagsCloudVisualization.Infrastructure;
+﻿using System.Collections.Generic;
 using TagsCloudVisualization.Infrastructure.Analyzer;
 
 namespace TagsCloudVisualization.Settings

@@ -10,7 +10,6 @@ using TagsCloudVisualization.InfrastructureUI.Actions;
 using TagsCloudVisualization.InfrastructureUI.Painters;
 using TagsCloudVisualization.Settings;
 
-
 namespace TagsCloudVisualization
 {
     public static class Program
@@ -52,17 +51,16 @@ namespace TagsCloudVisualization
             {
                 var holder = c.Resolve<IImageHolder>();
                 var analyzer = c.Resolve<IAnalyzer>();
-                return (size, curve) => new CloudPainter(holder, analyzer, size, curve);
+                var palette = c.Resolve<PaletteSettings>();
+                return (size, curve) => new CloudPainter(holder, analyzer, size, curve, palette);
             }).SingleInstance();
 
 
             containerBuilder.RegisterType<Analyzer>().As<IAnalyzer>().SingleInstance();
 
 
-
             return containerBuilder.Build();
         }
-
 
         [STAThread]
         public static void Main()
@@ -75,5 +73,4 @@ namespace TagsCloudVisualization
             Application.Run(container.Resolve<CloudForm>());
         }
     }
-
 }

@@ -1,16 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
     public class DefinerSize
     {
-
         private readonly FontSettings fontSettings;
 
         public DefinerSize(FontSettings fontSettings)
@@ -27,9 +23,10 @@ namespace TagsCloudVisualization
             foreach (var word in d.Keys)
             {
                 var percent = d[word] / (float)countWord;
-                var emSize =  fontSettings.MinEmSize +  difference * percent;
+                var emSize = fontSettings.MinEmSize + difference * percent;
                 result[word] = new Font(fontSettings.FontFamily, emSize, fontSettings.Style);
             }
+
             return result;
         }
     }

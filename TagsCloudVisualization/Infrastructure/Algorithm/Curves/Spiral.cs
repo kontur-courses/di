@@ -7,36 +7,29 @@ namespace TagsCloudVisualization.Infrastructure.Algorithm.Curves
 {
     public class Spiral : ICurve
     {
-        private readonly float distanceBetweenLoops;
         private readonly float angleIncrement;
-
-        public Point Center { get; }
+        private readonly float distanceBetweenLoops;
 
         public Spiral(float distanceBetweenLoops, Point center, float angleIncrement = 0.02f)
         {
             if (distanceBetweenLoops == 0)
-            {
                 throw new ArgumentException(
-                    $"distanceBetweenLoops cannot be zero");
-            }
+                    "distanceBetweenLoops cannot be zero");
 
             if (angleIncrement == 0)
-            {
                 throw new ArgumentException(
-                    $"angleIncrement cannot be zero");
-            }
+                    "angleIncrement cannot be zero");
 
             this.angleIncrement = angleIncrement;
             this.distanceBetweenLoops = distanceBetweenLoops / (float)(2 * Math.PI);
-            this.Center = center;
+            Center = center;
         }
+
+        public Point Center { get; }
 
         public IEnumerator<Point> GetEnumerator()
         {
-            for (var angle = 0f; ; angle += angleIncrement)
-            {
-                yield return GetArchimedeanSpiralPoint(angle);
-            }
+            for (var angle = 0f;; angle += angleIncrement) yield return GetArchimedeanSpiralPoint(angle);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
