@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer.Infrastructure
 {
-    internal class WordPreparer : IWordPreparer
+    public class WordPreparer : IWordPreparer
     {
         public string[] Prepare(IEnumerable<string> words)
         {
