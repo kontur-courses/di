@@ -8,9 +8,9 @@ namespace TagCloud.Tests;
 [Parallelizable(ParallelScope.Children)]
 public class RelativeWordSizingAlgorithmTests
 {
-    [TestCase(12, TestName = "{m}: baseSize=12")]
-    [TestCase(18, TestName = "{m}: baseSize=18")]
-    [TestCase(120, TestName = "{m}: baseSize=120")]
+    [TestCase(12, TestName = "{m}_With_BaseSize_12")]
+    [TestCase(18, TestName = "{m}_With_BaseSize_18")]
+    [TestCase(120, TestName = "{m}_With_BaseSize_120")]
     public void Should_ReturnBaseSize_OnSingleWord(int baseSize)
     {
         var algorithm = new RelativeWordSizingAlgorithm(baseSize);
@@ -20,9 +20,9 @@ public class RelativeWordSizingAlgorithmTests
         algorithm.GetWordSize("word", tagMap).Should().Be(baseSize);
     }
     
-    [TestCase(12, TestName = "{m}: baseSize=12")]
-    [TestCase(18, TestName = "{m}: baseSize=18")]
-    [TestCase(120, TestName = "{m}: baseSize=120")]
+    [TestCase(12, TestName = "{m}_With_BaseSize_12")]
+    [TestCase(18, TestName = "{m}_With_BaseSize_18")]
+    [TestCase(120, TestName = "{m}_With_BaseSize_120")]
     public void Should_ReturnBaseSize_OnOneUniqueWord(int baseSize)
     {
         var algorithm = new RelativeWordSizingAlgorithm(baseSize);
@@ -35,9 +35,9 @@ public class RelativeWordSizingAlgorithmTests
         algorithm.GetWordSize("word", tagMap).Should().Be(baseSize);
     }
     
-    [TestCase(12, TestName = "{m}: baseSize=12")]
-    [TestCase(18, TestName = "{m}: baseSize=18")]
-    [TestCase(120, TestName = "{m}: baseSize=120")]
+    [TestCase(12, TestName = "{m}_With_BaseSize_12")]
+    [TestCase(18, TestName = "{m}_With_BaseSize_18")]
+    [TestCase(120, TestName = "{m}_With_BaseSize_120")]
     public void Should_ReturnHalfBaseSize_OnTwoUniqueWordsWithEqualAmount(int baseSize)
     {
         var algorithm = new RelativeWordSizingAlgorithm(baseSize);
@@ -48,10 +48,10 @@ public class RelativeWordSizingAlgorithmTests
         algorithm.GetWordSize("word1", tagMap).Should().Be(baseSize / 2);
     }
     
-    [TestCase(3, TestName = "{m}: 1/3")]
-    [TestCase(4, TestName = "{m}: 1/4")]
-    [TestCase(6, TestName = "{m}: 1/6")]
-    [TestCase(12, TestName = "{m}: 1/12")]
+    [TestCase(3, TestName = "{m}_For_1_Word_OutOf_3")]
+    [TestCase(4, TestName = "{m}_For_1_Word_OutOf_4")]
+    [TestCase(6, TestName = "{m}_For_1_Word_OutOf_6")]
+    [TestCase(12, TestName = "{m}_For_1_Word_OutOf_12")]
     public void Should_ReturnRelativeSize(int totalWordCount)
     {
         const int baseSize = 12;
