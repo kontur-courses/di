@@ -17,6 +17,8 @@ namespace TagsCloudContainer.Algorithm
 
         public Dictionary<string, int> GetWordsCountWithoutBoring()
         {
+            fileSettings.ThrowExcIfFileNotFound();
+
             var words = CountWordsInSourceFile();
             words = RemoveBoringWords(words)
                 .OrderByDescending(e => e.Value)
@@ -54,7 +56,7 @@ namespace TagsCloudContainer.Algorithm
         private HashSet<string> GetCustomBoringWords()
         {
             var boringWords = new HashSet<string>();
-            using var reader = new StreamReader(fileSettings.BoringWordsFilePath);
+            using var reader = new StreamReader(fileSettings.CustomBoringWordsFilePath);
             while (reader.ReadLine()?.Trim().ToLower() is {} line)
                 boringWords.Add(line);
             return boringWords;

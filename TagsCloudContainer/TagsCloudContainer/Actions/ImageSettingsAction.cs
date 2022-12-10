@@ -26,7 +26,14 @@ namespace TagsCloudContainer.Actions
         public void Perform()
         {
             SettingsForm.For(imageSettings).ShowDialog();
-            pictureBox.RecreateImage(imageSettings);
+            if (imageSettings.Width > 0 && imageSettings.Height > 0)
+            {
+                pictureBox.RecreateImage(imageSettings);
+                return;
+            }
+
+            MessageBox.Show("Только положительные значения!");
+            Perform();
         }
     }
 }

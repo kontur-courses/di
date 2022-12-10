@@ -26,8 +26,10 @@ namespace TagsCloudContainer.Algorithm
 
         public CircularCloudLayouter(ImageSettings imageSettings, AlgorithmSettings algoSettings, IParser parser)
         {
+            algoSettings.ThrowExcIfNonPositiveArgs();
+            imageSettings.ThrowExcIfNonPositiveArgs();
+
             this.imageSettings = imageSettings;
-            //Center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
             this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
             rectangles = new List<(Rectangle rectangle, string text)>();
             this.parser = parser;

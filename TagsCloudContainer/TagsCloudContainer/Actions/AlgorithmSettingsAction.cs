@@ -23,6 +23,12 @@ namespace TagsCloudContainer.Actions
         public void Perform()
         {
             SettingsForm.For(algoSettings).ShowDialog();
+
+            if (algoSettings.Fi <= 0 || algoSettings.Dr <= 0)
+            {
+                MessageBox.Show("Только положительные значения!");
+                Perform();
+            }
         }
     }
 }

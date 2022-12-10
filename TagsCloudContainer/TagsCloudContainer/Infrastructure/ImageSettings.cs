@@ -29,5 +29,13 @@ namespace TagsCloudContainer.Infrastructure
         [DisplayName("Задний фон картинки")]
         [Category("2. Цвета")]
         public Color BackgroundColor { get; set; } = Color.DarkBlue;
+
+        public void ThrowExcIfNonPositiveArgs()
+        {
+            if (Width <= 0)
+                throw new ArgumentException($"Параметры только положительны! Width={Width}");
+            if (Height <= 0)
+                throw new ArgumentException($"Параметры только положительны! Height={Height}");
+        }
     }
 }

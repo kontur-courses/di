@@ -13,5 +13,13 @@ namespace TagsCloudContainer.Infrastructure
         public double Dr { get; set; } = 0.01;
         [DisplayName("Скорость изменения угла")]
         public double Fi { get; set; } = 0.0368;
+
+        public void ThrowExcIfNonPositiveArgs()
+        {
+            if (Dr <= 0)
+                throw new ArgumentException($"Параметры только положительны! Dr={Dr}");
+            if (Fi <= 0)
+                throw new ArgumentException($"Параметры только положительны! Fi={Fi}");
+        }
     }
 }

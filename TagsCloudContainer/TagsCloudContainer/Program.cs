@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using Autofac;
 using DeepMorphy;
 using TagsCloudContainer.Actions;
@@ -30,9 +31,16 @@ namespace TagsCloudContainer
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<DrawImageAction>().As<IUiAction>();
 
-            var container = builder.Build();
-            ApplicationConfiguration.Initialize();
-            Application.Run(container.Resolve<Form>());
+            try
+            {
+                var container = builder.Build();
+                ApplicationConfiguration.Initialize();
+                Application.Run(container.Resolve<Form>());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }
