@@ -98,14 +98,10 @@ public static class Program
     private static void RegisterColoringAlgorithms(ContainerBuilder containerBuilder, Options options)
     {
         var expectedAlgorithm = options.ColoringAlgorithm;
-        var algorithms = ColoringAlgorithmProvider.Algorithms
-            .Where(t => t.Name.StartsWith(expectedAlgorithm))
-            .ToArray();
+        var algorithm = ColoringAlgorithmProvider.Algorithms
+            .Single(t => t.Name.StartsWith(expectedAlgorithm));
 
-        if (algorithms.Length != 1)
-            throw new ArgumentException($"Bad argument given to parameter \"Coloring algorithm\": {expectedAlgorithm}");
-        
-        var registrationBuilder = containerBuilder.RegisterType(algorithms[0]).As<IColoringAlgorithm>();
+        var registrationBuilder = containerBuilder.RegisterType(algorithm).As<IColoringAlgorithm>();
 
         if (options.ColorNames == null)
             return;
