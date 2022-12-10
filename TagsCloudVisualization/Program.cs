@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using TagsCloudVisualization.Configurations;
+using TagsCloudVisualization.Enums;
 
 namespace TagsCloudVisualization
 {
@@ -10,9 +10,10 @@ namespace TagsCloudVisualization
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(Options.RunOptions);
             
-            var words = Preprocessor.Process(Options.WordsFilePath);
-            
-            TagCloudCreator.Create(words);
+            var words = Preprocessor.Process(Options.WordsFilePath, 
+                PartSpeech.Noun | PartSpeech.Adjective);
+
+            TagCloudCreator.Create(words, 100);
         }
     }
 }

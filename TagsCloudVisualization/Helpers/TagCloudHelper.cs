@@ -7,7 +7,7 @@ namespace TagsCloudVisualization.Helpers
 {
     public class TagCloudHelper
     {
-        public static List<Tag> CreateTagsFromWords(IEnumerable<string> words, int minFontSize = 10, int maxFontSize = 50)
+        public static List<Tag> CreateTagsFromWords(IEnumerable<string> words, int minFontSize = 10, int maxFontSize = 50, int amount = -1)
         {
             var tags = new List<Tag>();
             var dict = new Dictionary<string, int>();
@@ -22,12 +22,18 @@ namespace TagsCloudVisualization.Helpers
             if (dict.Count == 0)
                 return tags;
 
-            var minFrequency = dict.Min(x => x.Value);
-            var maxFrequency = dict.Max(x => x.Value);
+            var orderedDict = dict.OrderByDescending(x => x.Value)
+                .Take(amount == -1 ? dict.Count : amount);
 
-            foreach (var (text, frequency) in dict)
+            var minFrequency = orderedDict.Min(x => x.Value);
+            var maxFrequency = orderedDict.Max(x => x.Value);
+
+            foreach (var (text, frequency) in orderedDict)
             {
-                var fontSize = maxFontSize * (frequency - minFrequency) / (maxFrequency - minFrequency);
+                var fontSize = 0;
+                
+                if (maxFrequency - minFrequency != 0) 
+                    fontSize = maxFontSize * (frequency - minFrequency) / (maxFrequency - minFrequency);
 
                 if (fontSize < minFontSize)
                     fontSize = minFontSize;
