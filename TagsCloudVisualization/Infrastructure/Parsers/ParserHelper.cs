@@ -9,7 +9,7 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public static class ParserHelper
     {
-        public static Regex AllWordRegex => new(@"([\w]+)");
+        public static Regex AllWordRegex => new(@"([\w]+)", RegexOptions.Compiled);
 
         public static Dictionary<EncodingEnum, Encoding> Encodings { get; } = new()
         {
