@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TagsCloudContainer.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "-f 123.txt -o 123.png"
+    }
+  }
+}
