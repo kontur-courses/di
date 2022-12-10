@@ -5,6 +5,7 @@ namespace TagsCloudContainer
 {
     public class Spiral
     {
+        private const double AngleStep = Math.PI / 10;
         private double _angle;
         private Point _prevPoint;
         private double _step;
@@ -19,7 +20,7 @@ namespace TagsCloudContainer
 
         public Point NextPoint()
         {
-            _angle += Math.PI / 10;
+            _angle += AngleStep;
             var rho = _angle * _step / (2 * Math.PI);
             var x = rho * Math.Cos(_angle) + _prevPoint.X;
             var y = rho * Math.Sin(_angle) + _prevPoint.Y;
