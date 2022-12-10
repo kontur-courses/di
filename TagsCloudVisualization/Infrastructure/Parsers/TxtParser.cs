@@ -4,12 +4,12 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Parsers
 {
-    public class ParserTxt : IParser
+    public class TxtParser : IParser
     {
         private readonly ICurrentTextFileProvider fileProvider;
         private readonly ParserSettings settings;
 
-        public ParserTxt(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public TxtParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
             this.fileProvider = fileProvider;
             this.settings = settings;
@@ -24,9 +24,12 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
             if (settings.TextType == TextType.OneWordOneLine)
                 foreach (var line in File.ReadAllLines(path, encoding))
                     yield return line;
+            else
+            {
+                foreach (var word in ParserHelper.AllWordRegex.Matches(File.ReadAllText(path, encoding)))
+                    yield return word.ToString();
+            }
 
-            foreach (var word in ParserHelper.AllWordRegex.Matches(File.ReadAllText(path, encoding)))
-                yield return word.ToString();
         }
     }
 }

@@ -17,9 +17,9 @@ namespace TagsCloudContainerTests
     {
         private  Analyzer analyzer;
         private  AnalyzerSettings settings;
-        private string[] boring = new[] { "а", "перед", "что", "и", "я", "он", "ты", "они" };
-        private string[] verbs = new[] { "удаляет", "смотрит", "наблюдает" };
-        private string[] nouns = new[] { "СОЛОМА, МУДРОСТЬ" };
+        private readonly string[] boring = { "а", "перед", "что", "и", "я", "он", "ты", "они" };
+        private readonly string[] verbs = { "удаляет", "смотрит", "наблюдает" };
+        private readonly string[] nouns = { "СОЛОМА, МУДРОСТЬ" };
 
 
         [SetUp]
@@ -111,7 +111,5 @@ namespace TagsCloudContainerTests
 
             result.Keys.Should().BeEquivalentTo("удалять", "смотреть", "наблюдать");
         }
-
-
     }
 }

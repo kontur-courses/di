@@ -30,9 +30,9 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterType<AnalyzerSettingsAction>().As<IUiAction>().SingleInstance();
             containerBuilder.RegisterType<FontSettingsAction>().As<IUiAction>().SingleInstance();
 
-            containerBuilder.RegisterType<ParserDocx>().As<IParser>().SingleInstance();
-            containerBuilder.RegisterType<ParserTxt>().As<IParser>().SingleInstance();
-            containerBuilder.RegisterType<ParserDoc>().As<IParser>().SingleInstance();
+            containerBuilder.RegisterType<DocxParser>().As<IParser>().SingleInstance();
+            containerBuilder.RegisterType<TxtParser>().As<IParser>().SingleInstance();
+            containerBuilder.RegisterType<DocParser>().As<IParser>().SingleInstance();
 
             containerBuilder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<PaletteSettings>().AsSelf().SingleInstance();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TagsCloudVisualization.Settings
+namespace TagsCloudVisualization.InfrastructureUI
 {
     public class SettingsForm<TSettings> : Form
     {

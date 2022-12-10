@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using Spire.Doc;
+using Spire.Doc.Interface;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Parsers
 {
-    public class ParserDoc : IParser
+    public class DocParser : IParser
     {
         private readonly ICurrentTextFileProvider fileProvider;
         private readonly ParserSettings settings;
 
-        public ParserDoc(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public DocParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
             this.fileProvider = fileProvider;
             this.settings = settings;

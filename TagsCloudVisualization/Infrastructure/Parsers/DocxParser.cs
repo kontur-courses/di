@@ -4,12 +4,12 @@ using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure.Parsers
 {
-    public class ParserDocx : IParser
+    public class DocxParser : IParser
     {
         private readonly ICurrentTextFileProvider fileProvider;
         private readonly ParserSettings settings;
 
-        public ParserDocx(ParserSettings settings, ICurrentTextFileProvider fileProvider)
+        public DocxParser(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
             this.fileProvider = fileProvider;
             this.settings = settings;
