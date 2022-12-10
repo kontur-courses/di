@@ -29,9 +29,9 @@ namespace TagsCloudContainer.Actions
             {
                 CheckFileExists = false,
                 InitialDirectory = Path.GetFullPath(fileSettings.ResultImagePath),
-                DefaultExt = "bmp",
-                FileName = "image.bmp",
-                Filter = "Изображения (*.bmp)|*.bmp"
+                DefaultExt = "png",
+                FileName = "image.png",
+                Filter = "Изображения (*.png)|*.png|Изображения (*.jpg)|*.jpg|Изображения (*.bmp)|*.bmp"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)

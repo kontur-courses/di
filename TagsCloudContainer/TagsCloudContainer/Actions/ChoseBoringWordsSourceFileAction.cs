@@ -25,14 +25,14 @@ namespace TagsCloudContainer.Actions
             var dialog = new OpenFileDialog()
             {
                 CheckFileExists = true,
-                InitialDirectory = Path.GetFullPath(fileSettings.BoringWordsFilePath),
+                InitialDirectory = Path.GetFullPath(fileSettings.CustomBoringWordsFilePath),
                 DefaultExt = "txt",
                 FileName = "boring.txt",
                 Filter = "Текстовые файлы (*.txt)|*.txt"
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                fileSettings.BoringWordsFilePath = dialog.FileName;
+                fileSettings.CustomBoringWordsFilePath = dialog.FileName;
         }
     }
 }
