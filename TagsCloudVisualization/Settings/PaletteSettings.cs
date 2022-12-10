@@ -23,7 +23,7 @@ namespace TagsCloudVisualization.Settings
                 G: PrimaryColor.G - SecondaryColor.G,
                 B: PrimaryColor.B - SecondaryColor.B);
             var length = Math.Sqrt(Math.Pow(vector.R, 2) + Math.Pow(vector.G, 2) + Math.Pow(vector.B, 2));
-            if (length == 0) return Color.White;
+            if (length == 0) return SecondaryColor;
 
             var r = vector.R;
             var g = vector.G;

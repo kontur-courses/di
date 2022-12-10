@@ -36,7 +36,7 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
             var dialog = new OpenFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(Environment.CurrentDirectory),
+                InitialDirectory = Path.GetFullPath("..//..//..//texts"),
                 Filter = filter
             };
             var res = dialog.ShowDialog();

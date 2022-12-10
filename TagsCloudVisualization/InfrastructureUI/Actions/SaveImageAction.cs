@@ -22,7 +22,7 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
             var dialog = new SaveFileDialog
             {
                 CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(Environment.CurrentDirectory),
+                InitialDirectory = Path.GetFullPath("..//..//..//images"),
                 DefaultExt = "png",
                 FileName = "image.png",
                 Filter = "Изображения (*.png)|*.png"
