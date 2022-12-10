@@ -14,7 +14,7 @@ namespace TagsCloudContainerTests
     public class RectangleVisualisatorTest
     {
         private CircularCloudLayouter _layouter;
-        private Dictionary<string, int> _words;
+        private List<Word> _words;
         private string _projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
 
         [SetUp]
@@ -25,7 +25,7 @@ namespace TagsCloudContainerTests
         }
 
 
-        private Dictionary<string, int> GetWords()
+        private List<Word> GetWords()
         {
             var text = TextReader.GetTextFromFile($"{_projectDirectory}\\Example.txt");
             var handler = new WordHandler("BoringWords.txt");

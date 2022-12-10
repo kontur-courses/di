@@ -17,15 +17,15 @@ namespace TagsCloudContainer
             _rectangles = new List<Rectangle>();
         }
 
-        public List<Rectangle> GenerateRectanglesByWords(Dictionary<string, int> words)
+        public List<Rectangle> GenerateRectanglesByWords(List<Word> words)
         {
             List<Rectangle> rectangles = new List<Rectangle>();
             using var settingFont = new Font("Arial", 16);
             foreach (var word in words)
             {
                 using var font = new Font(settingFont.FontFamily,
-                    word.Value / (float) words.Count * 100 * settingFont.Size);
-                var size = MeasureWord(word.Key, font);
+                    word.Count / (float) words.Count * 100 * settingFont.Size);
+                var size = MeasureWord(word.Value, font);
                 rectangles.Add(PutNextRectangle(size));
             }
 

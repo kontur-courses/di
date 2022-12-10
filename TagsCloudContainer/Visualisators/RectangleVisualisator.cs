@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class RectangleVisualisator
+    public class RectangleVisualisator : IVisualisator
     {
         private Bitmap _bitmap;
         private readonly Size shiftToBitmapCenter;
         private readonly List<Rectangle> _rectangles;
-        private readonly Dictionary<string, int> _words;
+        private readonly List<Word> _words;
 
-        public RectangleVisualisator(Dictionary<string, int> words, CircularCloudLayouter layouter)
+        public RectangleVisualisator(List<Word> words, CircularCloudLayouter layouter)
         {
             _words = words;
             _rectangles = layouter.GenerateRectanglesByWords(_words);
@@ -42,8 +42,8 @@ namespace TagsCloudContainer
             {
                 var rectangleOnMap = CreateRectangleOnMap(_rectangles[count]);
                 using var font = new Font(settingFont.FontFamily,
-                    word.Value / (float) _words.Count * 100 * settingFont.Size);
-                graphics.DrawString(word.Key, font, pen.Brush, rectangleOnMap.Location);
+                    word.Count / (float) _words.Count * 100 * settingFont.Size);
+                graphics.DrawString(word.Value, font, pen.Brush, rectangleOnMap.Location);
                 count++;
             }
         }
