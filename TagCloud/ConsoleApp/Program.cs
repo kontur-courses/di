@@ -2,7 +2,7 @@
 using TagCloud;
 using TagsCloudLayouter;
 
-namespace App;
+namespace ConsoleApp;
 
 internal static class Program
 {
@@ -10,8 +10,12 @@ internal static class Program
     private static void Main(string[] args)
     {
         var container = DiContainerBuilder.Build();
-        var app = new ConsoleApplication.ConsoleApplication();
-        app.Run(container, args);
+        
+        var argsParser = new ArgumentsParser();
+        argsParser.ParseArgs(args);
+        argsParser.Options?.Apply(container);
+        if (argsParser.Options is null)
+            return;
 
         var drawer = container.Resolve<ICloudDrawer>();
         var text = container.Resolve<IFileLoader>().Load(container.Resolve<ApplicationProperties>().Path).ToLower();

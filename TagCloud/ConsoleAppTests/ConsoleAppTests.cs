@@ -1,8 +1,8 @@
-using App.ConsoleApplication;
+using ConsoleApp;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AppTests;
+namespace ConsoleAppTests;
 
 public class ConsoleAppTests
 {

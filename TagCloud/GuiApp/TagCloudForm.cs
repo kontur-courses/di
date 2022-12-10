@@ -1,9 +1,11 @@
-namespace App.GuiApplication;
+using TagCloud;
+
+namespace GuiApp;
 
 public class TagCloudForm : Form
 {
     private readonly System.ComponentModel.IContainer? components = null;
-    
+    private ApplicationProperties ApplicationProperties { get; }
     protected override void Dispose(bool disposing)
     {
         if (disposing && components != null)
@@ -14,9 +16,10 @@ public class TagCloudForm : Form
         base.Dispose(disposing);
     }
     
-    public TagCloudForm()
+    public TagCloudForm(ApplicationProperties appProperties)
     {
         Size = new Size(1280, 720);
+        ApplicationProperties = appProperties;
         InitializeComponent();
     }
 

@@ -2,7 +2,7 @@
 using TagCloud;
 using TagsCloudLayouter;
 
-namespace App;
+namespace GuiApp;
 
 public static class DiContainerBuilder
 {
@@ -21,6 +21,7 @@ public static class DiContainerBuilder
             .InstancePerDependency();
         builder.RegisterType<TextWrapper>().AsSelf();
         builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
+        builder.Register(context => new TagCloudForm(context.Resolve<ApplicationProperties>())).As<Form>().SingleInstance();
         return builder.Build();
     }
 

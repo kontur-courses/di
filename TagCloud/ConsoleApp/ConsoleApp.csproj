@@ -4,13 +4,16 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <TargetFramework>net6.0-windows</TargetFramework>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.5.0" />
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GuiApp\GuiApp.csproj" />
       <ProjectReference Include="..\GuiApp\GuiApp.csproj" />
       <ProjectReference Include="..\TagCloud\TagCloud.csproj" />
     </ItemGroup>

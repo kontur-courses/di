@@ -1,6 +1,4 @@
-﻿using TagCloud;
-
-namespace App;
+﻿namespace TagCloud;
 
 public class ApplicationProperties
 {
@@ -10,7 +8,7 @@ public class ApplicationProperties
     }
 
     public string Path { get; set; } = "";
-    public Palette Palette { get; set; } = new Palette(Color.Tan, Color.Teal);
+    public Palette Palette { get; set; } = new(Color.Tan, Color.Teal);
     public FontProperties FontProperties { get; set; } = new();
     public SizeProperties SizeProperties { get; set; } = new();
     public CloudProperties CloudProperties { get; set; } = new()

@@ -1,15 +1,16 @@
-﻿using Autofac;
+﻿using System.Drawing;
+using Autofac;
 using CommandLine;
 using TagCloud;
 
-namespace App.ConsoleApplication;
+namespace ConsoleApp;
 
 public class ConsoleOptions
 {
     [Option('f', "file", Required = true, HelpText = "Image file to read words")]
     public string File { get; set; }
-    
-    [Option('F', "font", Required = false, HelpText = "Font name")]
+
+    [Option('F', "font", Required = false, HelpText = "Font name", Default = "Arial")]
     public string FontName { get; set; }
         
     [Option('W', "width", Required = true, HelpText = "Image width")]
