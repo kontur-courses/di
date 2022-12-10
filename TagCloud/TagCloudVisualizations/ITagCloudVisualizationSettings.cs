@@ -8,6 +8,7 @@ namespace TagCloud.TagCloudVisualizations
         public ImageFormat PictureFormat { get; set; }
         public Size? PictureSize { get; set; }
 
+        public Color BackgroundColor { get; set; }
         public Color? TextColor { get; set; }
         public string FontFamilyName { get; set; }
     }

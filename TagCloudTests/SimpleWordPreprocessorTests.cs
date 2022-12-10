@@ -16,7 +16,8 @@ namespace TagCloudTests
         [SetUp]
         public void CreateWords()
         {
-            wordsReader = new SingleWordInRowTextFileReader("aboutKonturWords.txt");
+            wordsReader = new SingleWordInRowTextFileReader();
+            wordsReader.Open("aboutKonturWords.txt");
         }
 
         [Test]
@@ -43,8 +44,8 @@ namespace TagCloudTests
 
         private IEnumerable<string> GetPreprocessedWords()
         {
-            wordPreprocessor = new SimpleWordPreprocessor(wordsReader, new TextFileBoringWordsStorage());
-            var preprocessedWords = wordPreprocessor.GetPreprocessedWords();
+            wordPreprocessor = new SimpleWordPreprocessor(new TextFileBoringWordsStorage());
+            var preprocessedWords = wordPreprocessor.GetPreprocessedWords(wordsReader);
             return preprocessedWords;
         }
     }

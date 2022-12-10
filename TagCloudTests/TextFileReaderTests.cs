@@ -24,26 +24,22 @@ namespace TagCloudTests
             var path = "TextFileData.txt";
             CreateTextFileWithData(path);
 
-            var fileReader = new SingleWordInRowTextFileReader(path);
+            var fileReader = new SingleWordInRowTextFileReader();
+            fileReader.Open(path);
 
             CheckThatDataIsReadBy(fileReader);
             DeleteFile(path);
-        }
-
-        [TestCase("TextFileData.csv", TestName = "File extension not supported")]
-        public void SingleWordInRowTextFileReader_Ctor_ThrowFileLoadExceptionWhen(string path)
-        {
-            // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new SingleWordInRowTextFileReader(path);
-
-            act.Should().Throw<FileLoadException>();
         }
 
         [TestCase("notExistingFile.txt", TestName = "file extension not exist")]
         public void SingleWordInRowTextFileReader_Ctor_ThrowFileNotFoundExceptionWhen(string path)
         {
             // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new SingleWordInRowTextFileReader(path);
+            Action act = () => 
+            {
+                var reader = new SingleWordInRowTextFileReader();
+                reader.Open(path);
+            };
 
             act.Should().Throw<FileNotFoundException>();
         }

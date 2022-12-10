@@ -13,6 +13,13 @@ namespace TagCloud.PointGenerators
 
         private readonly Size center;
 
+        public delegate IPointGenerator Factory();
+
+        public SpiralPointGenerator()
+        {
+            center = new Size();
+        }
+
         public SpiralPointGenerator(Point center)
         {
             this.center = new Size(center);

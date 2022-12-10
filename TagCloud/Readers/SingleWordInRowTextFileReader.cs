@@ -1,27 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace TagCloud.Readers
 {
     public class SingleWordInRowTextFileReader : IReader
     {
-        private readonly string path;
-        public SingleWordInRowTextFileReader(string path)
-        {
-            this.path = path;
-            CheckFile();
-        }
+        private string path;
 
-        public IEnumerable<string> ReadWords() =>
-            File.ReadAllLines(path);
+        public string FileExtFilter => "txt files (*.txt)|*.txt";
 
-        private void CheckFile()
+        public void Open(string path)
         {
-            if (Path.GetExtension(path)!.ToLower() != ".txt")
-                throw new FileLoadException("txt file only");
+            if (path == null) 
+                throw new ArgumentNullException(nameof(path));
 
             if (!File.Exists(path))
                 throw new FileNotFoundException($"file {path} not found");
+
+            this.path = path;
         }
+
+        public IEnumerable<string> ReadWords() =>
+            path == null 
+                ? "У меня нет слов".Split()
+                : File.ReadAllLines(path);
     }
 }

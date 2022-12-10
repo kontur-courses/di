@@ -25,10 +25,9 @@ namespace TagCloudTests
             var layoutSizes = new List<Size>();
             for (int i = 400; i > 1; i -= 2)
                 layoutSizes.Add(new Size(i, i / 2));
-            var spiralPointGenerator = new SpiralPointGenerator(center);
-            var circularCloudLayouter = new CircularCloudLayouter(spiralPointGenerator);
+            var circularCloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             var tagCloudCreator = new LayoutTagCloudCreator(circularCloudLayouter, layoutSizes);
-            var settings = TagCloudVisualizationSettings.Default();
+            var settings = new TagCloudVisualizationSettings();
             var visualization = new TagCloudBitmapVisualization(tagCloudCreator);
             visualization.Save(tempBmpFile, settings);
 

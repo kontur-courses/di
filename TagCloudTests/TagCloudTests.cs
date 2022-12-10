@@ -18,7 +18,7 @@ namespace TagCloudTests
         public void PrepareCircularCloudLayouter()
         {
             var center = new Point();
-            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             tagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = new Rectangle(0, 0, 5, 5);
@@ -33,7 +33,7 @@ namespace TagCloudTests
         public void PutNextRectangle_FirstRectangleMustBeInCenterOfCloud_When(int centerX, int centerY, int reactWidth, int reactHeight)
         {
             var center = new Point(centerX, centerY);
-            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             var localTagCloud = new TagCloud.TagCloud(center);
 
             var rectangle = cloudLayouter.PutNextRectangle(new Size(reactWidth, reactHeight));

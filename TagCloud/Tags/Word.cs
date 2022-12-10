@@ -4,7 +4,7 @@ using TagCloud.CloudLayouters;
 
 namespace TagCloud.Tags
 {
-    public class Word : Layout, ITag
+    public class Word : Layout
     {
         private static readonly Graphics Meter = Graphics.FromImage(new Bitmap(1,1)); 
         public string Text { get; }

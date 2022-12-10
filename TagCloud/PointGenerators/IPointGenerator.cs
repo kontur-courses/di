@@ -4,7 +4,8 @@ namespace TagCloud.PointGenerators
 {
     public interface IPointGenerator
     {
-        Point GetNextPoint();
-        Point GetCenterPoint();
+        public delegate IPointGenerator Factory();
+        public Point GetNextPoint();
+        public Point GetCenterPoint();
     }
 }

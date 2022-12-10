@@ -4,7 +4,8 @@ namespace TagCloud.CloudLayouters
 {
     public interface ICloudLayouter
     {
-        Point Center { get; }
-        Rectangle PutNextRectangle(Size rectangleSize);
+        public Point Center { get; }
+        public Rectangle PutNextRectangle(Size rectangleSize);
+        public void Reset();
     }
 }

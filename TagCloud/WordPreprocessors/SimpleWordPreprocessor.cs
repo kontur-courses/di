@@ -1,24 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TagCloud.BoringWordsStorage;
+using TagCloud.BoringWordsRepositories;
 using TagCloud.Readers;
 
 namespace TagCloud.WordPreprocessors
 {
     public class SimpleWordPreprocessor : IWordPreprocessor
     {
-        private readonly IEnumerable<string> words;
         private readonly HashSet<string> boringWords;
 
-        public SimpleWordPreprocessor(IReader wordsReader, IBoringWordsStorage boringWordsStorage)
+        public SimpleWordPreprocessor(IBoringWordsStorage boringWordsStorage)
         {
-            words = wordsReader.ReadWords();
             boringWords = boringWordsStorage.GetBoringWords();
         }
 
-        public IEnumerable<string> GetPreprocessedWords()
+        public IEnumerable<string> GetPreprocessedWords(IReader wordsReader)
         {
-            var lowerCaseWords = СonvertToLowerCase(words);
+            var lowerCaseWords = СonvertToLowerCase(wordsReader.ReadWords());
             var preprocessedWords = RemoveBoringWordsFrom(lowerCaseWords);
             return preprocessedWords;
         }

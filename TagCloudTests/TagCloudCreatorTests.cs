@@ -21,14 +21,13 @@ namespace TagCloudTests
                 Select(width => new Size(width, width / 2)).Reverse().ToArray();
 
             var tagCloud = new TagCloud.TagCloud(center);
-            var circularCloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            var circularCloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             foreach (var rectangleSize in rectangleSizes)
                 tagCloud.Layouts.Add(new Layout(circularCloudLayouter.PutNextRectangle(rectangleSize)));
 
-            var spiralPointGenerator = new SpiralPointGenerator(center);
-            var cloudLayouter = new CircularCloudLayouter(spiralPointGenerator);
+            var cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             var layoutTagCloudCreator = new LayoutTagCloudCreator(cloudLayouter, rectangleSizes);
-            var settings = TagCloudVisualizationSettings.Default();
+            var settings = new TagCloudVisualizationSettings();
             
             tagCloud.Should().Be(layoutTagCloudCreator.GenerateTagCloud(settings));
         }

@@ -22,7 +22,7 @@ namespace TagCloudTests
         public void PrepareCircularCloudLayouter()
         {
             var center = new Point();
-            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
             layoutTagCloudCreator = null;
         }
 
@@ -43,7 +43,7 @@ namespace TagCloudTests
             if (layoutTagCloudCreator != null)
             {
                 var visualization = new TagCloudBitmapVisualization(layoutTagCloudCreator);
-                var settings = TagCloudVisualizationSettings.Default();
+                var settings = new TagCloudVisualizationSettings();
                 visualization.Save(filePath, settings);
                 TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
             }
@@ -57,7 +57,7 @@ namespace TagCloudTests
         {
             var planningCenter = new Point(x, y);
 
-            var tagCloud = new CircularCloudLayouter(new SpiralPointGenerator(planningCenter)).GetTagCloudOfLayout();
+            var tagCloud = new CircularCloudLayouter(() => new SpiralPointGenerator(planningCenter)).GetTagCloudOfLayout();
 
             tagCloud.GetWidth().Should().Be(0);
             tagCloud.GetHeight().Should().Be(0);
@@ -78,7 +78,7 @@ namespace TagCloudTests
         public void PutNextRectangle_ReturnedNotIntersectedRectangle(int centerX, int centerY, int firstRectWidth, int firstRectHeight)
         {
             var center = new Point(centerX, centerY);
-            cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
+            cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
 
             do
             {

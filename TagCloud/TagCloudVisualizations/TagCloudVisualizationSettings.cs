@@ -5,22 +5,11 @@ namespace TagCloud.TagCloudVisualizations
 {
     public class TagCloudVisualizationSettings : ITagCloudVisualizationSettings
     {
-        public ImageFormat PictureFormat { get; set; }
-        public Size? PictureSize { get; set; }
+        public ImageFormat PictureFormat { get; set; } = ImageFormat.Png;
+        public Size? PictureSize { get; set; } = new Size(500, 500);
 
-        public Color? TextColor { get; set; }
-        public string FontFamilyName { get; set; }
-
-        public static TagCloudVisualizationSettings Default()
-        {
-            var settings = new TagCloudVisualizationSettings
-            {
-                PictureFormat = ImageFormat.Png,
-                PictureSize = new Size(1000, 1000),
-                TextColor = null,
-                FontFamilyName = "Arial"
-            };
-            return settings;
-        }
+        public Color BackgroundColor { get; set; } = Color.Black;
+        public Color? TextColor { get; set; } = null;
+        public string FontFamilyName { get; set; } = "Arial";
     }
 }

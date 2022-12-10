@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System.Drawing;
 using System.IO;
 using TagCloud.BoringWordsRepositories;
 using TagCloud.CloudLayouters;
@@ -14,17 +13,18 @@ namespace TagCloudTests
 {
     public class WordTagCloudCreatorTests
     {
-        [TestCase("aboutKonturWords.txt", "wordsCloud.png")]
+        [TestCase(null, "defaultWordsCloud.png", TestName = "with default words")]
+        [TestCase("aboutKonturWords.txt", "wordsCloud.png", TestName = "with words collection")]
         public void GenerateTagCloud(string wordDictionaryPath, string picturePath)
         {
-            var center = new Point();
-            var spiralPointGenerator = new SpiralPointGenerator(center);
-            var cloudLayouter = new CircularCloudLayouter(spiralPointGenerator);
-            var wordsReader = new SingleWordInRowTextFileReader(wordDictionaryPath);
+            var cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator());
+            var wordsReader = new SingleWordInRowTextFileReader();
+            if(wordDictionaryPath != null)
+                wordsReader.Open(wordDictionaryPath);
             var boringWordsStorage = new TextFileBoringWordsStorage();
-            var wordPreprocessor = new SimpleWordPreprocessor(wordsReader, boringWordsStorage);
-            var tagCloudCreator = new WordTagCloudCreator(cloudLayouter, wordPreprocessor);
-            var settings = TagCloudVisualizationSettings.Default();
+            var wordPreprocessor = new SimpleWordPreprocessor(boringWordsStorage);
+            var tagCloudCreator = new WordTagCloudCreator(wordsReader, cloudLayouter, wordPreprocessor);
+            var settings = new TagCloudVisualizationSettings();
             var visualization = new TagCloudBitmapVisualization(tagCloudCreator);
             visualization.Save(picturePath, settings);
 
