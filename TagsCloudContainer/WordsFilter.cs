@@ -8,7 +8,7 @@ namespace TagsCloudContainer
         public List<string> FilterWords(List<string> taggedWords, List<string> boringWords,
             ICustomOptions options)
         {
-            //PoS - Part of Speech; grammemes - grammatical number etc
+            //PoS - Part of Speech; grammemes - grammatical number etc, including PoS
             var excludedPoS =
                 options.ExcludedParticals.Split(", ", StringSplitOptions.RemoveEmptyEntries);
 
@@ -18,8 +18,8 @@ namespace TagsCloudContainer
                 .ToArray());
             jointPos = jointPos.Length == 0 ? "= (,|=)" : jointPos;
             var regexString =
-                "^(\\w+){((?!).)*$".Insert(11,
-                    jointPos); // something like that ^(\w+){((?!=SPRO(,|=)|=PR(,|=)|=PART(,|=)|=CONJ(,|=)).)*$
+                "^\\w+{(\\w+)((?!).)*$".Insert(14,
+                    jointPos); // something like that ^\w+{(\w+)((?!=SPRO(,|=)|=PR(,|=)|=PART(,|=)|=CONJ(,|=)).)*$
             var regex = new Regex(regexString);
 
             var inputWords = taggedWords
@@ -27,7 +27,7 @@ namespace TagsCloudContainer
                 .Select(x =>
                 {
                     var match = regex.Match(x);
-                    return match.Groups[1].Value.ToLower();
+                    return match.Groups[1].Value;
                 }).ToList();
 
             return inputWords.Where(x => !boringWords.Contains(x)).ToList();
