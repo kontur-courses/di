@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using CloudLayout.Interfaces;
 
 namespace CloudLayout
 {
@@ -11,12 +12,5 @@ namespace CloudLayout
             Size = size;
             CenterPoint = new Point(size / 2, size/ 2);
         }
-    }
-
-    public interface IInputOptions
-    {
-        Point CenterPoint { get; set; }
-
-        int Size { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -71,10 +72,5 @@ namespace TagsCloudContainer
 
             return false;
         }
-    }
-
-    public interface IConverter
-    {
-        Dictionary<string, int> GetWordsInFile(ICustomOptions options);
     }
 }

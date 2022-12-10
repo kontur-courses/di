@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
@@ -12,10 +13,5 @@ namespace TagsCloudContainer
 
             return result;
         }
-    }
-
-    public interface IWordSizeCalculator
-    {
-        public Dictionary<string, Font> CalculateSize(Dictionary<string, int> input, ICustomOptions options);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
+using CloudLayout.Interfaces;
 
 namespace CloudLayout
 {
     public class SpiralDrawer : ISpiralDrawer
     {
-
         public List<PointF> GetSpiralPoints(Point center)
         {
             var result = new List<PointF>();
@@ -23,10 +23,5 @@ namespace CloudLayout
 
             return result;
         }
-    }
-
-    public interface ISpiralDrawer
-    {
-        List<PointF> GetSpiralPoints(Point center);
     }
 }

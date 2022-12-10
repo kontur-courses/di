@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using CloudLayout.Interfaces;
 
 namespace CloudLayout
 {
-    public class CircularCloudLayout :ILayout
+    public class CircularCloudLayout : ILayout
     {
         public readonly int radius;
         private readonly List<PointF> spiralPoints;
@@ -12,9 +13,9 @@ namespace CloudLayout
         {
             var center = options.CenterPoint;
             if (center.X < 1)
-                throw new ArgumentException("X sould be positive number");
+                throw new ArgumentException("X should be positive number");
             if (center.Y < 1)
-                throw new ArgumentException("Y sould be positive number");
+                throw new ArgumentException("Y should be positive number");
             radius = center.X < center.Y ? center.X : center.Y;
             placedRectangles = new();
             spiralPoints = drawer.GetSpiralPoints(center);
@@ -99,7 +100,8 @@ namespace CloudLayout
 
         private bool PointLiesInRectangles(PointF p) => placedRectangles.Any(x => x.Contains(p));
 
-        private bool RectangleIntersects(RectangleF rectangle) => placedRectangles.Any(x => x.IntersectsWith(rectangle));
+        private bool RectangleIntersects(RectangleF rectangle) =>
+            placedRectangles.Any(x => x.IntersectsWith(rectangle));
 
         private bool RectangleOutOfCircleRange(RectangleF rectangle)
         {
@@ -114,10 +116,5 @@ namespace CloudLayout
         }
 
         private static bool ValidateSize(SizeF size) => size.Height > 0 && size.Width > 0;
-    }
-
-    public interface ILayout
-    {
-        bool PutNextRectangle(SizeF size, out RectangleF rectangle);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CloudLayout;
+using CloudLayout.Interfaces;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
