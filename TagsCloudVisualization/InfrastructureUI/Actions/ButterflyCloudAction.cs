@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
-using TagsCloudVisualization.Painters;
+using TagsCloudVisualization.InfrastructureUI.Painters;
 using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.InfrastructureUI.Actions

@@ -7,17 +7,19 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
     public class ParserDocx : IParser
     {
         private readonly ParserSettings settings;
+        private readonly ICurrentTextFileProvider fileProvider;
 
-        public ParserDocx(ParserSettings settings)
+        public ParserDocx(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
+            this.fileProvider = fileProvider;
             this.settings = settings;
         }
 
         public string FileType => "docx";
 
-        public IEnumerable<string> WordParse(string path)
+        public IEnumerable<string> WordParse()
         {
-            var document = new Document(path, FileFormat.Docx);
+            var document = new Document(fileProvider.Path, FileFormat.Docx);
 
             if (settings.TextType == TextType.OneWordOneLine)
                 return ParserHelper.GetTextParagraph(document);

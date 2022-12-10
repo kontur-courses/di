@@ -18,6 +18,9 @@ namespace TagsCloudVisualization.InfrastructureUI
         
         void SaveImage(string fileName);
 
-        void SetParser(IParser parser, string path);
+        void SetFile(string path);
+
+        void SetParser(IParser parser);
+
     }
 }

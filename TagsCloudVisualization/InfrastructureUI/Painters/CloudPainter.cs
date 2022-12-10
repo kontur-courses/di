@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TagsCloudVisualization.InfrastructureUI;
 using TagsCloudVisualization.Infrastructure.Algorithm;
-using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
+using TagsCloudVisualization.Infrastructure.Analyzer;
 
-namespace TagsCloudVisualization.Painters
+namespace TagsCloudVisualization.InfrastructureUI.Painters
 {
     public class CloudPainter
     {
@@ -39,7 +35,7 @@ namespace TagsCloudVisualization.Painters
                 Color.FromArgb(random.Next(1, 255), random.Next(1, 255), random.Next(1, 255)));
             using (var graphics = imageHolder.StartDrawing())
             {
-                graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, imageSize.Width, imageSize.Height);
+                graphics.FillRectangle(new SolidBrush(Color.Wheat), 0, 0, imageSize.Width, imageSize.Height);
                 var counter = 0;
                 foreach (var word in words.Keys.OrderBy(w => frequency[w]).Reverse())
                 {

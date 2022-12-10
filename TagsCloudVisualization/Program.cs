@@ -3,10 +3,11 @@ using System.Windows.Forms;
 using Autofac;
 using TagsCloudVisualization.Infrastructure;
 using TagsCloudVisualization.Infrastructure.Algorithm.Curves;
+using TagsCloudVisualization.Infrastructure.Analyzer;
 using TagsCloudVisualization.Infrastructure.Parsers;
 using TagsCloudVisualization.InfrastructureUI;
 using TagsCloudVisualization.InfrastructureUI.Actions;
-using TagsCloudVisualization.Painters;
+using TagsCloudVisualization.InfrastructureUI.Painters;
 using TagsCloudVisualization.Settings;
 
 
@@ -30,7 +31,6 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterType<AnalyzerSettingsAction>().As<IUiAction>().SingleInstance();
             containerBuilder.RegisterType<FontSettingsAction>().As<IUiAction>().SingleInstance();
 
-
             containerBuilder.RegisterType<ParserDocx>().As<IParser>().SingleInstance();
             containerBuilder.RegisterType<ParserTxt>().As<IParser>().SingleInstance();
             containerBuilder.RegisterType<ParserDoc>().As<IParser>().SingleInstance();
@@ -40,8 +40,10 @@ namespace TagsCloudVisualization
             containerBuilder.RegisterType<ParserSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<AnalyzerSettings>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<FontSettings>().AsSelf().SingleInstance();
-            
 
+            containerBuilder.RegisterType<TextFileProvider>()
+                .As<TextFileProvider, ICurrentTextFileProvider>()
+                .SingleInstance();
             containerBuilder.RegisterType<PictureBoxImageHolder>()
                 .As<PictureBoxImageHolder, IImageHolder>()
                 .SingleInstance();

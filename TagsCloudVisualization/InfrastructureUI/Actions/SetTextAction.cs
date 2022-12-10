@@ -44,7 +44,8 @@ namespace TagsCloudVisualization.InfrastructureUI.Actions
 
             var index = dialog.FileName.LastIndexOf('.') + 1;
             var fileType = dialog.FileName[index..];
-            imageHolder.SetParser(dictionaryParsers[fileType], dialog.FileName);
+            imageHolder.SetFile(dialog.FileName);
+            imageHolder.SetParser(dictionaryParsers[fileType]);
         }
     }
 }

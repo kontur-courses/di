@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TagsCloudVisualization.Infrastructure
 {
-    class Class1
+    public interface ICurrentTextFileProvider
     {
+        public string Path { get; }
     }
 }

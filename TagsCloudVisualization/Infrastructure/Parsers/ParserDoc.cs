@@ -7,21 +7,22 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
     public class ParserDoc : IParser
     {
         private readonly ParserSettings settings;
+        private readonly ICurrentTextFileProvider fileProvider;
 
-        public ParserDoc(ParserSettings settings)
+        public ParserDoc(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
+            this.fileProvider = fileProvider;
             this.settings = settings;
         }
 
         public string FileType => "doc";
 
-        public IEnumerable<string> WordParse(string path)
+        public IEnumerable<string> WordParse()
         {
-            var document = new Document(path, FileFormat.Doc);
-
-            if (settings.TextType == TextType.OneWordOneLine)
-                return ParserHelper.GetTextParagraph(document);
-            return ParserHelper.GetAllWordInDocument(document);
+            var document = new Document(fileProvider.Path, FileFormat.Doc);
+            return settings.TextType == TextType.OneWordOneLine
+                ? ParserHelper.GetTextParagraph(document)
+                : ParserHelper.GetAllWordInDocument(document);
         }
     }
 }

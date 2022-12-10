@@ -8,24 +8,26 @@ namespace TagsCloudVisualization.Infrastructure.Parsers
     public class ParserTxt : IParser
     {
         private readonly ParserSettings settings;
+        private readonly ICurrentTextFileProvider fileProvider;
 
-        public ParserTxt(ParserSettings settings)
+        public ParserTxt(ParserSettings settings, ICurrentTextFileProvider fileProvider)
         {
+            this.fileProvider = fileProvider;
             this.settings = settings;
         }
 
         public string FileType => "txt";
 
-        public IEnumerable<string> WordParse(string path)
+        public IEnumerable<string> WordParse()
         {
-            var encoding = Encoding.GetEncoding(settings.Encoding.ToString());
-
+            var encoding = ParserHelper.Encodings[settings.Encoding];
+            var path = fileProvider.Path;
             if (settings.TextType == TextType.OneWordOneLine)
                 foreach (var line in File.ReadAllLines(path, encoding))
                     yield return line;
 
-            foreach (string word in ParserHelper.AllWordRegex.Matches(File.ReadAllText(path, encoding)))
-                yield return word;
+            foreach (var word in ParserHelper.AllWordRegex.Matches(File.ReadAllText(path, encoding)))
+                yield return word.ToString();
         }
     }
 }
