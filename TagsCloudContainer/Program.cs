@@ -21,6 +21,7 @@ namespace TagsCloudContainer
 
             var container = new ServiceCollection()
                 .AddTransient<IConverter, FileToDictionaryConverter>()
+                .AddSingleton<IDocParser, BudgetDocParser>()
                 .AddTransient<IWordsFilter, WordsFilter>()
                 .AddSingleton<ISpiralDrawer, SpiralDrawer>()
                 .AddSingleton<IWordSizeCalculator, WordSizeCalculator>()

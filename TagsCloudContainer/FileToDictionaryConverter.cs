@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
@@ -6,40 +7,54 @@ namespace TagsCloudContainer
     public class FileToDictionaryConverter : IConverter
     {
         private readonly IWordsFilter filter;
+        private readonly IDocParser parser;
 
-        public FileToDictionaryConverter(IWordsFilter filter)
+        public FileToDictionaryConverter(IWordsFilter filter, IDocParser parser)
         {
             this.filter = filter;
+            this.parser = parser;
         }
 
         public Dictionary<string, int> GetWordsInFile(ICustomOptions options)
         {
-            var cmd = $"mystem.exe {Path.Combine(options.TextsPath, options.WordsFileName)} out.txt -nig";
+            var inputWordPath = Path.Combine(options.TextsPath, options.WordsFileName);
+            var bufferedWords = new List<string>();
+
+            if (options.WordsFileName[options.WordsFileName.LastIndexOf('.')..] != ".txt")
+                bufferedWords = parser.ParseDoc(inputWordPath);
+            else
+                bufferedWords = File.ReadAllLines(inputWordPath)
+                    .ToList();
+            bufferedWords = bufferedWords
+                .Select(x => x.ToLower())
+                .ToList();
+            var tmpFilePath = Path.Combine(options.TextsPath, "tmp.txt");
+            File.WriteAllLines(tmpFilePath, bufferedWords);
+
+            var cmd = $"mystem.exe -nig {tmpFilePath}";
 
             var proc = new ProcessStartInfo
             {
-                UseShellExecute = true,
+                UseShellExecute = false,
                 WorkingDirectory = Path.Combine(options.TextsPath),
                 FileName = @"C:\Windows\System32\cmd.exe",
                 Arguments = "/C" + cmd,
-                WindowStyle = ProcessWindowStyle.Hidden
+                RedirectStandardOutput = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                StandardOutputEncoding = Encoding.UTF8,
             };
+            var p = Process.Start(proc);
 
-            Process.Start(proc);
+            var taggedWords = p.StandardOutput
+                .ReadToEnd()
+                .Split("\r\n")
+                .ToList();
+
+            File.Delete(tmpFilePath);
 
             var boringWords = File.ReadAllLines(Path.Combine(options.TextsPath, options.BoringWordsName))
                 .Select(x => x.ToLower())
                 .ToList();
-
-            var taggedWordFilePath = Path.Combine(options.TextsPath, "out.txt");
-
-            while (IsFileLocked(new FileInfo(taggedWordFilePath)))
-                Task.Delay(5);
-
-            var taggedWords = File.ReadAllLines(taggedWordFilePath)
-                .ToList();
-
-            File.Delete(taggedWordFilePath);
 
             var filteredWords = filter.FilterWords(taggedWords, boringWords, options);
 

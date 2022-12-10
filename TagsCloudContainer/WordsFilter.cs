@@ -18,8 +18,8 @@ namespace TagsCloudContainer
                 .ToArray());
             jointPos = jointPos.Length == 0 ? "= (,|=)" : jointPos;
             var regexString =
-                "^\\w+{(\\w+)((?!).)*$".Insert(14,
-                    jointPos); // something like that ^\w+{(\w+)((?!=SPRO(,|=)|=PR(,|=)|=PART(,|=)|=CONJ(,|=)).)*$
+                "^(\\w+){((?!).)*$".Insert(11, jointPos);
+            // something like that ^(\w+){((?!=SPRO(,|=)|=PR(,|=)|=PART(,|=)|=CONJ(,|=)).)*$
             var regex = new Regex(regexString);
 
             var inputWords = taggedWords
