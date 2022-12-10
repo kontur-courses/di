@@ -21,7 +21,6 @@ public class WordDocumentParserTests
         File.Delete(path);
     }
     
-    [Test]
     [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetUniqueLowercaseWords))]
     public static void Should_Parse_UniqueWords(string[] data)
     {
@@ -34,7 +33,6 @@ public class WordDocumentParserTests
         actual.Should().BeEquivalentTo(expected);
     }
 
-    [Test]
     [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetUniqueMixedCaseWords))]
     public static void Should_ParseAsLowercase_UniqueWords(string[] data)
     {
@@ -47,7 +45,6 @@ public class WordDocumentParserTests
         actual.Should().BeEquivalentTo(expected);
     }
     
-    [Test]
     [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetRepeatingLowercaseWords))]
     public static void Should_Parse_WithRepeats(string[] data)
     {
@@ -60,7 +57,6 @@ public class WordDocumentParserTests
         actual.Should().BeEquivalentTo(expected);
     }
     
-    [Test]
     [TestCaseSource(typeof(TagParserDataProvider), nameof(TagParserDataProvider.GetRepeatingMixedCaseWords))]
     public static void Should_ParseAsLowercase_WithRepeats(string[] data)
     {
