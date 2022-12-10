@@ -15,7 +15,7 @@ public class Options
                                                                    + "Options:\n"
                                                                    + "Random: colors each word with a random color. Default color set is rainbow."
                                                                    + "SingleColor: colors every word with one color. Default is red."
-                                                                   + "WhiteGradient: colors every word with colors from gradient from starting color to white. Default starting color is red.")]
+                                                                   + "Gradient: colors every word with colors from gradient from starting color to ending color. Default is from red to orange.")]
     public string ColoringAlgorithm { get; set; } = null!;
     
     [Option('w', "width", Required = true, HelpText = "Width of output file.")]
