@@ -14,7 +14,6 @@ using TagsCloud.CloudLayouter.Implementation;
 using TagsCloud.FileReader;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
-using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using FontStyle = System.Windows.FontStyle;
@@ -25,7 +24,7 @@ namespace TagsCloud.WPF
     public partial class MainWindow
     {
         private readonly Random random = new();
-        private Brush customColor = Brushes.Beige;
+        private SolidColorBrush customColor;
         private int rectanglesCount;
         private readonly DispatcherTimer timer = new();
 
@@ -49,6 +48,7 @@ namespace TagsCloud.WPF
             UpdateCircularCloudFromTextBox();
             this.wordHandlers = wordHandlers;
             fontStyle = FontStyles.Normal;
+            customColor = new SolidColorBrush(Colors.Beige);
             recurringWordsHandler = GetRecurringWordsHandler(wordHandlers);
             words = ProcessWords(reader.Read(path));
             rectanglesCount = words.Length;
@@ -106,12 +106,16 @@ namespace TagsCloud.WPF
 
         private Label CreateLabel(string text)
         {
+            var color = new SolidColorBrush(customColor.Color);
+            var wordsCount = recurringWordsHandler is not null ? recurringWordsHandler.WordCount[text] : 0;
+            var mostFrequentWordCount =
+                recurringWordsHandler?.GetMostFrequentPair ?? 1;
+            color.Opacity = (bool) OftenWordBrighter.IsChecked! ? wordsCount / (double) mostFrequentWordCount : 1;
             return new Label
             {
-                Foreground = customColor,
+                Foreground = color,
                 Background = Brushes.Black,
-                FontSize = DefaultFontSize 
-                           + (recurringWordsHandler is not null ? recurringWordsHandler.WordCount[text] : 0),
+                FontSize = DefaultFontSize + wordsCount,
                 Content = text,
                 FontStyle = fontStyle,
             };
@@ -155,7 +159,7 @@ namespace TagsCloud.WPF
             wordPointer = 0;
 
             if (ColorPicker?.SelectedColor is not null)
-                customColor = new SolidColorBrush((Color) ColorPicker.SelectedColor);
+                customColor = new SolidColorBrush(ColorPicker.SelectedColor.Value);
         }
 
         private void UpdateCircularCloudFromTextBox()

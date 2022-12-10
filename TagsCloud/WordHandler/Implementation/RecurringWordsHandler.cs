@@ -18,4 +18,6 @@ public class RecurringWordsHandler : IWordHandler
         WordCount.Add(word, 1);
         return word;
     }
+
+    public int GetMostFrequentPair => WordCount.Max(item => item.Value);
 }

@@ -42,6 +42,8 @@
                                 <StackPanel>
                                         <Label Content="Color"></Label>
                                         <xctk:ColorPicker Name="ColorPicker" SelectedColorChanged="Clear"></xctk:ColorPicker>
+                                        <CheckBox Name="OftenWordBrighter" Content="Often Word Brighter" 
+                                                  IsChecked="False" Click="Clear"></CheckBox>
                                         <CheckBox Name="IsRandomColors" Content="Set Random Color" IsChecked="False" 
                                                   Click="Clear"></CheckBox>
                                 </StackPanel>
