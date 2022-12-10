@@ -4,22 +4,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.Infrastructure.Settings;
 
 namespace TagsCloudContainer.Infrastructure
 {
     public class WordPlateVisualizer
     {
-        private readonly IWordColorProvider colorProvider;
+        private readonly IWordColorProviderFactory colorProviderFactory;
 
-        public WordPlateVisualizer(IWordColorProvider colorProvider)
+        public WordPlateVisualizer(IWordColorProviderFactory colorProviderFactory)
         {
-            this.colorProvider = colorProvider;
+            this.colorProviderFactory = colorProviderFactory;
         }
 
-        public Bitmap DrawPlates(WordPlate[] plates, Size size)
+        public Bitmap DrawPlates(WordPlate[] plates, Size size, WordColorSettings settings)
         {
             if (size.IsEmpty)
                 throw new ArgumentException("Size can't be empty");
+
+            var colorProvider = colorProviderFactory.CreateDefault(settings);
 
             var bitmap = new Bitmap(size.Width, size.Height);
             using var graphics = Graphics.FromImage(bitmap);
@@ -31,9 +34,9 @@ namespace TagsCloudContainer.Infrastructure
             return bitmap;
         }
 
-        public void DrawPlatesAndSave(WordPlate[] plates, Size size, string filename)
+        public void DrawPlatesAndSave(WordPlate[] plates, Size size, string filename, WordColorSettings settings)
         {
-            using var bitmap = DrawPlates(plates, size);
+            using var bitmap = DrawPlates(plates, size, settings);
             bitmap.Save(filename);
         }
     }
