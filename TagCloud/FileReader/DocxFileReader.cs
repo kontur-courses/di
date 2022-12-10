@@ -1,11 +1,9 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
-namespace TagCloud
+namespace TagCloud.FileReader
 {
     public class DocxFileReader : IFileReader
     {

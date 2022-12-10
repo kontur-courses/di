@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.CloudLayouter;
 
-namespace TagCloud
+namespace TagCloud.ImageProcessing
 {
     public class CloudImageGenerator
     {

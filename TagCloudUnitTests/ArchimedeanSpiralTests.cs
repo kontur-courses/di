@@ -2,7 +2,7 @@
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
-using TagCloud;
+using TagCloud.CloudLayouter;
 
 namespace TagCloudUnitTests
 {

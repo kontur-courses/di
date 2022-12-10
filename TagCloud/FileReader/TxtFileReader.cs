@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System;
 
-namespace TagCloud
+namespace TagCloud.FileReader
 {
     public class TxtFileReader : IFileReader
     {

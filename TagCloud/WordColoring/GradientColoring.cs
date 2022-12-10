@@ -1,38 +1,30 @@
 ﻿using System;
 using System.Drawing;
 
-namespace TagCloud
+namespace TagCloud.WordColoring
 {
     public class GradientColoring : IWordColoring
     {
-        private readonly Color colorForMinValue;
+        public Color MinValueColor { get; set; } = Color.Blue;
 
-        private readonly Color colorForMaxValue;
+        public Color MaxValueColor { get; set; } = Color.DarkRed;
 
-        private readonly double minValue;
+        public double MinValue { get; set; } = 0.0;
 
-        private readonly double maxValue;
+        public double MaxValue { get; set; } = 0.0;
 
-        public GradientColoring(Color minValueColor, Color maxValueColor, double minValue, double maxValue)
+        public Color GetColor(double value = 0.0)
         {
-            this.colorForMinValue = minValueColor;
-            this.colorForMaxValue = maxValueColor;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-        }
+            var r = GetGradientColorComponent(MinValueColor.R, MaxValueColor.R, value);
+            var g = GetGradientColorComponent(MinValueColor.G, MaxValueColor.G, value);
+            var b = GetGradientColorComponent(MinValueColor.B, MaxValueColor.B, value);
 
-        public Color GetColor(double value = 0)
-        {
-            var r = GetGradientColorComponent(colorForMinValue.R, colorForMaxValue.R, value);
-            var g = GetGradientColorComponent(colorForMinValue.G, colorForMaxValue.G, value);
-            var b = GetGradientColorComponent(colorForMinValue.B, colorForMaxValue.B, value);
-
-            return Color.FromArgb( r, g, b);
+            return Color.FromArgb(r, g, b);
         }
 
         private byte GetGradientColorComponent(byte minValueColorComponent, byte maxValueColorComponent, double value)
         {
-            return (byte)(minValueColorComponent + (maxValueColorComponent - minValueColorComponent) * (value - minValue) / (maxValue - minValue));
+            return (byte)(minValueColorComponent + (maxValueColorComponent - minValueColorComponent) * (value - MinValue) / (MaxValue - MinValue));
         }
     }
 }

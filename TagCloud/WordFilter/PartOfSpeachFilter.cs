@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagCloud
+namespace TagCloud.WordFilter
 {
     public class PartOfSpeachFilter : IWordFilter
     {

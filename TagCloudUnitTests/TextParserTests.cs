@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using TagCloud;
+using TagCloud.TextParsing;
 
 namespace TagCloudUnitTests
 {

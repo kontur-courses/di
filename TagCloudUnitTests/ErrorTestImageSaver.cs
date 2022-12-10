@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
-using TagCloud;
+using TagCloud.ImageProcessing;
 
 namespace TagCloudUnitTests
 {

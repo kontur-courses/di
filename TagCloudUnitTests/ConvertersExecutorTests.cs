@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
-using TagCloud;
+using TagCloud.WordConverter;
 
 namespace TagCloudUnitTests
 {
@@ -16,7 +16,7 @@ namespace TagCloudUnitTests
         }
 
         [Test]
-        public void Conver_ReturnsLowerCaseWords_WhenToLowerConverterRegistred()
+        public void Convert_ReturnsLowerCaseWords_WhenToLowerConverterRegistred()
         {
             convertersExecutor.RegisterConverter(new ToLowerConverter());
 

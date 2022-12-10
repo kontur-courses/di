@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
-using TagCloud;
 using System.Linq;
+using TagCloud.FrequencyAnalyzer;
 
 namespace TagCloudUnitTests
 {

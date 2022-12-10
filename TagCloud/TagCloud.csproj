@@ -50,7 +50,9 @@
   <ItemGroup>
     <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="FileReader\DocxFileReader.cs" />
     <Compile Include="ImageProcessing\ImageSettings.cs" />
+    <Compile Include="CloudLayouter\Vector.cs" />
     <Compile Include="WordColoring\BlackColoring.cs" />
     <Compile Include="WordColoring\GradientColoring.cs" />
     <Compile Include="WordColoring\IWordColoring.cs" />
@@ -60,7 +62,6 @@
     <Compile Include="ImageProcessing\ImageSaver.cs" />
     <Compile Include="CloudLayouter\ICloudLayouter.cs" />
     <Compile Include="CloudLayouter\PointExtensions.cs" />
-    <Compile Include="FileReader\DocxFileReader.cs" />
     <Compile Include="FileReader\IFileReader.cs" />
     <Compile Include="FileReader\TxtFileReader.cs" />
     <Compile Include="FrequencyAnalyzer\IWordsFrequencyAnalyzer.cs" />
@@ -68,19 +69,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CloudLayouter\RectangleExtensions.cs" />
     <Compile Include="CloudLayouter\RectangleSizeGenerator.cs" />
-    <Compile Include="CloudLayouter\Vector.cs" />
     <Compile Include="WordColoring\RandomColoring.cs" />
     <Compile Include="WordConverter\ConvertersExecutor.cs" />
     <Compile Include="WordConverter\IConvertersExecutor.cs" />
     <Compile Include="WordFilter\BoringWordFilter.cs" />
-    <Compile Include="TextParser\ITextParser.cs" />
+    <Compile Include="TextParsing\ITextParser.cs" />
     <Compile Include="WordConverter\IWordConverter.cs" />
     <Compile Include="WordFilter\FiltersExecutor.cs" />
     <Compile Include="WordFilter\IFiltersExecutor.cs" />
     <Compile Include="WordFilter\IWordFilter.cs" />
     <Compile Include="WordFilter\NounFilter.cs" />
     <Compile Include="WordFilter\PartOfSpeachFilter.cs" />
-    <Compile Include="TextParser\TextParser.cs" />
+    <Compile Include="TextParsing\TextParser.cs" />
     <Compile Include="WordConverter\ToInitialFormConverter.cs" />
     <Compile Include="WordConverter\ToLowerConverter.cs" />
     <Compile Include="WordFilter\VerbFilter.cs" />

@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
-using System.Security.Principal;
 
-namespace TagCloud
+namespace TagCloud.CloudLayouter
 {
     public class Vector
     {

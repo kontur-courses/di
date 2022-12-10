@@ -1,4 +1,4 @@
-﻿namespace TagCloud
+﻿namespace TagCloud.WordFilter
 {
     public class VerbFilter : PartOfSpeachFilter
     {

@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagCloud.WordColoring;
 
-namespace TagCloud
+namespace TagCloud.ImageProcessing
 {
     public interface IImageSettings
     {

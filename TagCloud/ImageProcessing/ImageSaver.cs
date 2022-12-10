@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace TagCloud
+namespace TagCloud.ImageProcessing
 {
     public static class ImageSaver
     {

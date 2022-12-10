@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagCloud.TextAndWordProcessing
+namespace TagCloud.WordConverter
 {
     public class ToInitialFormConverter : IWordConverter
     {

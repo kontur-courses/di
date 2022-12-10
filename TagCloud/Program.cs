@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using TagCloud.FileReader;
+using TagCloud.WordConverter;
+using TagCloud.WordFilter;
+using TagCloud.FrequencyAnalyzer;
+using TagCloud.WordColoring;
+using TagCloud.ImageProcessing;
+using TagCloud.CloudLayouter;
+using TagCloud.TextParsing;
 
 namespace TagCloud
 {
@@ -27,8 +35,16 @@ namespace TagCloud
 
             var frequencies = new WordsFrequencyAnalyzer().GetFrequencies(filteredWords);
 
-            var gradientColoring = new GradientColoring(Color.Blue, Color.DarkRed, frequencies.Min(pair => pair.Value), frequencies.Max(pair => pair.Value));
-            var imageSettings = new ImageSettings(new Size(600,600), Color.White, new FontFamily("Times New Roman"), 12, 36, gradientColoring);
+            var gradientColoring = new GradientColoring()
+            {
+                MinValue = frequencies.Min(pair => pair.Value),
+                MaxValue = frequencies.Max(pair => pair.Value)
+            };
+
+            var imageSettings = new ImageSettings()
+            {
+                WordColoring = gradientColoring
+            };
 
             var layouter = new CircularCloudLayouter(new Point(0, 0));
 

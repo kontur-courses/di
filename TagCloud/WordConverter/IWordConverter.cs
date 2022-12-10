@@ -1,4 +1,4 @@
-﻿namespace TagCloud
+﻿namespace TagCloud.WordConverter
 {
     public interface IWordConverter
     {
