@@ -1,4 +1,5 @@
 using Autofac;
+using DeepMorphy;
 using TagsCloudContainer.Actions;
 using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Infrastructure;
@@ -19,6 +20,7 @@ namespace TagsCloudContainer
             builder.RegisterType<AlgorithmSettings>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBox>().AsSelf().SingleInstance();
             builder.RegisterType<Algorithm.Parser>().As<IParser>();
+            builder.RegisterType<MorphAnalyzer>().AsSelf().SingleInstance();
             builder.RegisterType<Algorithm.CircularCloudLayouter>().As<ICloudLayouter>();
             builder.RegisterType<TagCloudPainter>().As<IPainter>();
             builder.RegisterType<ChoseSourceFileAction>().As<IUiAction>();

@@ -1,14 +1,18 @@
-﻿using TagsCloudContainer.Infrastructure;
+﻿using DeepMorphy;
+using TagsCloudContainer.Extensions;
+using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Algorithm
 {
     public class Parser : IParser
     {
         private FileSettings fileSettings;
+        private MorphAnalyzer morph;
 
-        public Parser(FileSettings fileSettings)
+        public Parser(FileSettings fileSettings, MorphAnalyzer morph)
         {
             this.fileSettings = fileSettings;
+            this.morph = morph;
         }
 
         public Dictionary<string, int> GetWordsCountWithoutBoring()
@@ -31,13 +35,23 @@ namespace TagsCloudContainer.Algorithm
 
         private Dictionary<string, int> RemoveBoringWords(Dictionary<string, int> source)
         {
-            var boringWords = GetBoringWords();
+            source = RemoveCustomBoringWords(source);
+            var notBoringTypes = new[] { "сущ", "прил", "гл" };
+            return source
+                .Where(pair => notBoringTypes.Any(type =>
+                    morph.GetGrams(pair.Key)["чр"].Contains(type)))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        private Dictionary<string, int> RemoveCustomBoringWords(Dictionary<string, int> source)
+        {
+            var boringWords = GetCustomBoringWords();
             return source
                 .Where(pair => !boringWords.Contains(pair.Key))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        private HashSet<string> GetBoringWords()
+        private HashSet<string> GetCustomBoringWords()
         {
             var boringWords = new HashSet<string>();
             using var reader = new StreamReader(fileSettings.BoringWordsFilePath);
