@@ -20,9 +20,13 @@ namespace TagsCloudContainer.Algorithm
             fileSettings.ThrowExcIfFileNotFound();
 
             var words = CountWordsInSourceFile();
+            if (words.Keys.Any(s => s.Any(char.IsWhiteSpace)))
+                throw new ArgumentException("Файл-исходни некорректен. Слова содержат пробелы.");
+
             words = RemoveBoringWords(words)
                 .OrderByDescending(e => e.Value)
                 .ToDictionary(e => e.Key, e => e.Value);
+            
             return words;
         }
 
