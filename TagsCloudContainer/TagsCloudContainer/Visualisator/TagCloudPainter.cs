@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Algorithm;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Visualisator
@@ -11,19 +12,19 @@ namespace TagsCloudContainer.Visualisator
     public class TagCloudPainter : IPainter
     {
         private List<(Rectangle rectangle, string text)> rectangles;
-        ImageHolder imageHolder;
+        PictureBox pictureBox;
         ImageSettings imageSettings;
 
-        public TagCloudPainter(ICloudLayouter cloudLayouter, ImageHolder imageHolder, ImageSettings imageSettings)
+        public TagCloudPainter(ICloudLayouter cloudLayouter, PictureBox pictureBox, ImageSettings imageSettings)
         {
             this.rectangles = cloudLayouter.FindRectanglesPositions();
-            this.imageHolder = imageHolder;
+            this.pictureBox = pictureBox;
             this.imageSettings = imageSettings;
         }
 
         public void Paint()
         {
-            using (var g = imageHolder.StartDrawing())
+            using (var g = pictureBox.StartDrawing())
             {
                 g.Clear(imageSettings.BackgroundColor);
                 using var tBrush = new SolidBrush(imageSettings.TextColor);
@@ -37,7 +38,7 @@ namespace TagsCloudContainer.Visualisator
                     g.DrawRectangle(rBorderPen, pair.rectangle);
                 }
             }
-            imageHolder.UpdateUi();
+            pictureBox.UpdateUi();
         }
     }
 }

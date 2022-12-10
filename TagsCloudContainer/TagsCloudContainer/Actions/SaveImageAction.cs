@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private ImageHolder imageHolder;
+        private PictureBox pictureBox;
         private FileSettings fileSettings;
 
-        public SaveImageAction(ImageHolder imageHolder, FileSettings fileSettings)
+        public SaveImageAction(PictureBox pictureBox, FileSettings fileSettings)
         {
-            this.imageHolder = imageHolder;
+            this.pictureBox = pictureBox;
             this.fileSettings = fileSettings;
         }
 
@@ -34,7 +35,7 @@ namespace TagsCloudContainer.Actions
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                imageHolder.SaveImage(dialog.FileName);
+                pictureBox.SaveImage(dialog.FileName);
         }
     }
 }

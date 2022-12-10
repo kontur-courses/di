@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
-        private ImageHolder imageHolder;
+        private PictureBox pictureBox;
         private ImageSettings imageSettings;
 
-        public ImageSettingsAction(ImageHolder imageHolder, ImageSettings imageSettings)
+        public ImageSettingsAction(PictureBox pictureBox, ImageSettings imageSettings)
         {
-            this.imageHolder = imageHolder;
+            this.pictureBox = pictureBox;
             this.imageSettings = imageSettings;
         }
 
@@ -25,7 +26,7 @@ namespace TagsCloudContainer.Actions
         public void Perform()
         {
             SettingsForm.For(imageSettings).ShowDialog();
-            imageHolder.RecreateImage(imageSettings);
+            pictureBox.RecreateImage(imageSettings);
         }
     }
 }

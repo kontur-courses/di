@@ -8,7 +8,7 @@ namespace TagsCloudContainer
 {
     public partial class MainForm : Form
     {
-        public MainForm(IUiAction[] actions, ImageHolder holder, ImageSettings imageSettings)
+        public MainForm(IUiAction[] actions, PictureBox pictureBox, ImageSettings imageSettings)
         {
             Size = new Size(imageSettings.Width, imageSettings.Height);
 
@@ -16,9 +16,9 @@ namespace TagsCloudContainer
             menu.Items.AddRange(actions.ToMenuItems());
             Controls.Add(menu);
             
-            holder.RecreateImage(imageSettings);
-            holder.Dock = DockStyle.Fill;
-            Controls.Add(holder);
+            pictureBox.RecreateImage(imageSettings);
+            pictureBox.Dock = DockStyle.Fill;
+            Controls.Add(pictureBox);
 
             InitializeComponent();
         }

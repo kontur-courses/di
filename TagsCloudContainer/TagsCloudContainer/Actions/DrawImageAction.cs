@@ -15,6 +15,7 @@ namespace TagsCloudContainer.Actions
         {
             this.painter = painter;
         }
+
         public string Category => "Изображение";
         public string Name => "Получить картинку";
         public string Description => "Отрисовывает Облако тегов";
