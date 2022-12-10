@@ -9,7 +9,7 @@ AppContainer.Configure();
 using (var scope = AppContainer.GetScope())
 {
     var textInput = scope.Resolve<ITextInput>();
-    var text = textInput.GetString();
+    var text = textInput.GetInputString();
 
     var generator = scope.Resolve<ICloudGenerator>();
     var cloud = generator.GenerateCloud(text);

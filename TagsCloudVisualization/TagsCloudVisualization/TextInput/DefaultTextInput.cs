@@ -9,7 +9,7 @@ public class DefaultTextInput : ITextInput
         this.path = path;
     }
 
-    public string GetString()
+    public string GetInputString()
     {
         if (!File.Exists(path))
             throw new Exception("File doesn't exist");

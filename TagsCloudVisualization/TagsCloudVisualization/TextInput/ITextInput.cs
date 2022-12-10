@@ -2,5 +2,5 @@
 
 public interface ITextInput
 {
-    string GetString();
+    string GetInputString();
 }
