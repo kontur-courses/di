@@ -10,20 +10,19 @@ namespace TagsCloudContainer.Visualisator
 {
     public class TagCloudPainter : IPainter
     {
-        private ICloudLayouter cloudLayouter;
+        private List<(Rectangle rectangle, string text)> rectangles;
         ImageHolder imageHolder;
         ImageSettings imageSettings;
 
         public TagCloudPainter(ICloudLayouter cloudLayouter, ImageHolder imageHolder, ImageSettings imageSettings)
         {
-            this.cloudLayouter = cloudLayouter;
+            this.rectangles = cloudLayouter.FindRectanglesPositions();
             this.imageHolder = imageHolder;
             this.imageSettings = imageSettings;
         }
 
         public void Paint()
         {
-            var rectangles = cloudLayouter.FindRectanglesPositions();
             using (var g = imageHolder.StartDrawing())
             {
                 g.Clear(imageSettings.BackgroundColor);
