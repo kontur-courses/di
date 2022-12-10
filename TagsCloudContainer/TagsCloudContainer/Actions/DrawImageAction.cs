@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer.Actions
@@ -10,9 +11,11 @@ namespace TagsCloudContainer.Actions
     public class DrawImageAction : IUiAction
     {
         private IPainter painter;
+        private ICloudLayouter cloudLayouter;
 
-        public DrawImageAction(IPainter painter)
+        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter)
         {
+            this.cloudLayouter = cloudLayouter;
             this.painter = painter;
         }
 
@@ -22,7 +25,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            painter.Paint();
+            painter.Paint(cloudLayouter.FindRectanglesPositions());
         }
     }
 }

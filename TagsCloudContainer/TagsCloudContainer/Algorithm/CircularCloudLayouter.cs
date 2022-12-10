@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,17 +15,19 @@ namespace TagsCloudContainer.Algorithm
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public readonly Point Center;
         
+
         private readonly ImageSettings imageSettings;
         private readonly List<(Rectangle rectangle, string text)> rectangles;
         private readonly IParser parser;
         private Func<int, Point> pointFinderFunc;
 
+        public Point Center => new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+
         public CircularCloudLayouter(ImageSettings imageSettings, AlgorithmSettings algoSettings, IParser parser)
         {
             this.imageSettings = imageSettings;
-            Center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
+            //Center = new Point(imageSettings.Width / 2, imageSettings.Height / 2);
             this.pointFinderFunc = algoSettings.GetPointFinderFunction(Center);
             rectangles = new List<(Rectangle rectangle, string text)>();
             this.parser = parser;

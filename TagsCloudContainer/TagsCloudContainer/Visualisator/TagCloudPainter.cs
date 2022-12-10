@@ -11,18 +11,16 @@ namespace TagsCloudContainer.Visualisator
 {
     public class TagCloudPainter : IPainter
     {
-        private List<(Rectangle rectangle, string text)> rectangles;
         PictureBox pictureBox;
         ImageSettings imageSettings;
 
-        public TagCloudPainter(ICloudLayouter cloudLayouter, PictureBox pictureBox, ImageSettings imageSettings)
+        public TagCloudPainter(PictureBox pictureBox, ImageSettings imageSettings)
         {
-            this.rectangles = cloudLayouter.FindRectanglesPositions();
             this.pictureBox = pictureBox;
             this.imageSettings = imageSettings;
         }
 
-        public void Paint()
+        public void Paint(List<(Rectangle rectangle, string text)> rectangles)
         {
             using (var g = pictureBox.StartDrawing())
             {
