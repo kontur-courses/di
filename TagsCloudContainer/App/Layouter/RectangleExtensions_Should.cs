@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.App.Layouter
 {
     [TestFixture]
     public class RectangleExtensions_Should

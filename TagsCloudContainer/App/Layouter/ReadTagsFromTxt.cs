@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using TagsCloudContainer.App.Layouter;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.App.Layouter
 {
-    public class ReadTagsFromTxt: IReadTags
+    public class TagsReaderFromTxt : ITagsReader
     {
-        public Dictionary<string, int> ReadTagsFromFile(string path)
+        public Dictionary<string, int> Text { get; set; }
+
+        public void ReadTagsFromFile(string path)
         {
             var text = File.ReadAllText(path);
-            return text
+            Text = text
                 .ToLower()
                 .Split("\r\n", StringSplitOptions.RemoveEmptyEntries)
                 //научиться убирать скучные слова

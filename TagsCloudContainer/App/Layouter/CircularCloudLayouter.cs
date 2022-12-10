@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.App.Layouter
 {
-    public class CircularCloudLayouter 
+    public class CircularCloudLayouter : ICircularCloudLayouter
     {
         public List<Rectangle> Rectangles { get; set; }
-        public readonly Point Center;
-        private readonly double offsetPoint;
-        private readonly double spiralStep;
         private int lastNumberPoint;
-        public bool IsOffsetToCenter { get; set; }
+        private readonly CloudLayouterSettings settings;
 
-        public CircularCloudLayouter(Point center, bool isOffsetToCenter, double offsetPoint, double spiralStep)
+        public CircularCloudLayouter(CloudLayouterSettings cloudLayouterSettings)
         {
-            if (center.X < 0 || center.Y < 0) throw new ArgumentException();
-            this.spiralStep = spiralStep;
-            this.offsetPoint = offsetPoint;
-            Center = center;
-            IsOffsetToCenter = isOffsetToCenter;
+            if (cloudLayouterSettings.Center.X < 0 || cloudLayouterSettings.Center.Y < 0) 
+                throw new ArgumentException();
+            this.settings = cloudLayouterSettings;
             Rectangles = new List<Rectangle>();
             lastNumberPoint = 0;
-        }
-
-        public CircularCloudLayouter(Point center) : this(center, false, 0.01, -0.3)
-        {
-        }
-
-        public CircularCloudLayouter(Point center, bool isOffsetToCenter) : this(center, isOffsetToCenter, 0.01, -0.3)
-        {
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -38,15 +24,15 @@ namespace TagsCloudContainer
             Rectangle rect;
             for (; ; lastNumberPoint++)
             {
-                var phi = lastNumberPoint * spiralStep;
-                var r = offsetPoint * lastNumberPoint;
-                var x = (int)(r * Math.Cos(phi)) + Center.X;
-                var y = (int)(r * Math.Sin(phi)) + Center.Y;
+                var phi = lastNumberPoint * settings.SpiralStep;
+                var r = settings.OffsetPoint * lastNumberPoint;
+                var x = (int)(r * Math.Cos(phi)) + settings.Center.X;
+                var y = (int)(r * Math.Sin(phi)) + settings.Center.Y;
                 var point = new Point(x - rectangleSize.Width / 2, y - rectangleSize.Height / 2);
                 rect = new Rectangle(point, rectangleSize);
                 if (!rect.AreIntersected(Rectangles))
                 {
-                    if (IsOffsetToCenter) rect = OffsetToCenter(rect);
+                    if (settings.IsOffsetToCenter) rect = OffsetToCenter(rect);
                     break;
                 }
             }
@@ -54,21 +40,27 @@ namespace TagsCloudContainer
             return rect;
         }
 
+        public void Clear()
+        {
+            Rectangles = new List<Rectangle>();
+            lastNumberPoint = 0;
+        }
+
         private Rectangle OffsetToCenter(Rectangle rect)
         {
             var point = rect.Location;
-            while (rect.CanBeShiftedToPointX(Center))
+            while (rect.CanBeShiftedToPointX(settings.Center))
             {
-                var newX = ((rect.Center().X < Center.X) ? 1 : -1) + point.X;
+                var newX = ((rect.Center().X < settings.Center.X) ? 1 : -1) + point.X;
                 var pointNew = new Point(newX, point.Y);
                 var rectNew = new Rectangle(pointNew, rect.Size);
                 if (rectNew.AreIntersected(Rectangles)) break;
                 point = pointNew;
                 rect = rectNew;
             }
-            while (rect.CanBeShiftedToPointY(Center))
+            while (rect.CanBeShiftedToPointY(settings.Center))
             {
-                var newY = ((rect.Center().Y < Center.Y) ? 1 : -1) + point.Y;
+                var newY = ((rect.Center().Y < settings.Center.Y) ? 1 : -1) + point.Y;
                 var pointNew = new Point(point.X, newY);
                 var rectNew = new Rectangle(pointNew, rect.Size);
                 if (rectNew.AreIntersected(Rectangles)) break;
