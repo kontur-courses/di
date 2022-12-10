@@ -8,6 +8,6 @@ namespace TagsCloudContainer.Infrastructure
 {
     public interface IWordReader
     {
-        public bool TryReadWords(string filename, out string[] words);
+        public Result TryReadWords(string filename, out string[] words);
     }
 }
