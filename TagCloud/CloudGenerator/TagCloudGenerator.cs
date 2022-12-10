@@ -3,9 +3,9 @@ using TagCloud.ImageGenerator;
 using TagCloud.Parser;
 using TagCloud.WordSizingAlgorithm;
 
-namespace TagCloud;
+namespace TagCloud.CloudGenerator;
 
-public class TagCloudGenerator
+public class TagCloudGenerator : ICloudGenerator
 {
     private readonly ITagParser parser;
     private readonly IWordSizingAlgorithm wordSizingAlgorithm;
