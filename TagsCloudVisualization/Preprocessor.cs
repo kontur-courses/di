@@ -9,21 +9,18 @@ namespace TagsCloudVisualization
     {
         public IEnumerable<string> Process(string path)
         {
-            var lines = File.ReadAllLines(path);
-
             var words = new List<string>();
-            
+            var lines = File.ReadAllLines(path);
             var morph = new MorphAnalyzer(withLemmatization: true);
-
             var morhsInfo = morph.Parse(lines);
-
+            
             foreach (var morphInfo in morhsInfo)
             {
                 var bestTag = morphInfo.BestTag;
-
+            
                 if (IsContainsInvalidGrammems(bestTag.Grams))
                     continue;
-
+            
                 words.Add(bestTag.HasLemma ? bestTag.Lemma : morphInfo.Text);
             }
 

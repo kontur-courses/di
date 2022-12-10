@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
             var prepocessor = new Preprocessor();
             var words = prepocessor.Process(Options.WordsFilePath);
             
-            TagCloudCreator.Create(words, Options.SaveTagCloudImagePath, CloudConfiguration.Default, DistributionConfiguration.Default, Options.AmountImages);
+            TagCloudCreator.Create(words);
         }
     }
 }
