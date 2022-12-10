@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using Autofac;
 using CommandLine;
-using TagCloud;
+using TagCloud.CloudGenerator;
 using TagCloud.ColoringAlgorithm;
 using TagCloud.ColoringAlgorithm.Provider;
 using TagCloud.ImageGenerator;
@@ -32,37 +32,67 @@ public static class Program
     
     private static int Run(Options options)
     {
+        var container = ConfigureContainer(options);
+
+        var generator = container.Resolve<ICloudGenerator>();
+        var image = generator.GenerateCloud(options.InputFile);
+        image.Save(options.OutputFile, ImageFormat.Png);
+        Console.WriteLine($"Image saved as {options.OutputFile}");
+        return 0;
+    }
+
+    private static IContainer ConfigureContainer(Options options)
+    {
         var containerBuilder = new ContainerBuilder();
+        RegisterLayoutAlgorithm(options, containerBuilder);
+        RegisterWordSizingAlgorithm(options, containerBuilder);
+        RegisterParsingConfig(containerBuilder);
+        RegisterParser(options, containerBuilder);
+        RegisterColoringAlgorithms(containerBuilder, options);
+        RegisterImageGenerator(options, containerBuilder);
+        RegisterCloudGenerator(containerBuilder);
+        return containerBuilder.Build();
+    }
 
-        containerBuilder.RegisterType<CircularLayoutAlgorithm>().As<ILayoutAlgorithm>()
-            .WithParameter(new TypedParameter(typeof(Point),
-                new Point(options.Width / 2, options.Height != null ? options.Height.Value / 2 : options.Width / 2)));
-        containerBuilder.RegisterType<BoringWordsMyStemParsingConfig>().As<IParsingConfig>();
-        
-        var sizingBuilder = containerBuilder.RegisterType<RelativeWordSizingAlgorithm>().As<IWordSizingAlgorithm>();
-        if (options.FontSize != null)
-            sizingBuilder.WithParameter(new TypedParameter(typeof(int), options.FontSize));
+    private static void RegisterCloudGenerator(ContainerBuilder containerBuilder)
+    {
+        containerBuilder.RegisterType<TagCloudGenerator>().As<ICloudGenerator>();
+    }
 
+    private static void RegisterParser(Options options, ContainerBuilder containerBuilder)
+    {
+        if (options.InputFile.EndsWith(".docx"))
+            containerBuilder.RegisterType<WordDocumentParser>().As<ITagParser>();
+        else
+            containerBuilder.RegisterType<PlainTextParser>().As<ITagParser>();
+    }
+
+    private static void RegisterImageGenerator(Options options, ContainerBuilder containerBuilder)
+    {
         var imageGeneratorBuilder = containerBuilder.RegisterType<BitmapImageGenerator>().As<IImageGenerator>()
             .WithParameter(new TypedParameter(typeof(Size), new Size(options.Width, options.Height ?? options.Width)));
         imageGeneratorBuilder.WithParameter(options.FontName != null
             ? new TypedParameter(typeof(Font), new Font(options.FontName, 1))
             : new TypedParameter(typeof(Font), new Font("Arial", 1)));
+    }
 
-        if (options.InputFile.EndsWith(".docx"))
-            containerBuilder.RegisterType<WordDocumentParser>().As<ITagParser>();
-        else
-            containerBuilder.RegisterType<PlainTextParser>().As<ITagParser>();
+    private static void RegisterWordSizingAlgorithm(Options options, ContainerBuilder containerBuilder)
+    {
+        var sizingBuilder = containerBuilder.RegisterType<RelativeWordSizingAlgorithm>().As<IWordSizingAlgorithm>();
+        if (options.FontSize != null)
+            sizingBuilder.WithParameter(new TypedParameter(typeof(int), options.FontSize));
+    }
 
-        RegisterColoringAlgorithms(containerBuilder, options);
+    private static void RegisterParsingConfig(ContainerBuilder containerBuilder)
+    {
+        containerBuilder.RegisterType<BoringWordsMyStemParsingConfig>().As<IParsingConfig>();
+    }
 
-        containerBuilder.RegisterType<TagCloudGenerator>();
-        var container = containerBuilder.Build();
-        var generator = container.Resolve<TagCloudGenerator>();
-        var image = generator.GenerateCloud(options.InputFile);
-        image.Save(options.OutputFile, ImageFormat.Png);
-        Console.WriteLine($"Image saved as {options.OutputFile}");
-        return 0;
+    private static void RegisterLayoutAlgorithm(Options options, ContainerBuilder containerBuilder)
+    {
+        containerBuilder.RegisterType<CircularLayoutAlgorithm>().As<ILayoutAlgorithm>()
+            .WithParameter(new TypedParameter(typeof(Point),
+                new Point(options.Width / 2, options.Height != null ? options.Height.Value / 2 : options.Width / 2)));
     }
 
     private static void RegisterColoringAlgorithms(ContainerBuilder containerBuilder, Options options)
