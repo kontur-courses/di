@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     public class FileGenerator
     {
