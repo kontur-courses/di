@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloudVisualization.Infrastructure;
+using TagsCloudVisualization.Infrastructure.Parsers;
 
-namespace TagsCloudVisualization.InfrastructureUI
+namespace TagsCloudVisualization.InfrastructureUI.Actions
 {
     public class SetTextAction : IUiAction
     {
@@ -16,8 +16,14 @@ namespace TagsCloudVisualization.InfrastructureUI
         public SetTextAction(IImageHolder imageHolder, IEnumerable<IParser> parsers)
         {
             this.imageHolder = imageHolder;
-            dictionaryParsers = parsers.ToDictionary(p => p.FileType);
-            var types = parsers.Select(p => $"*.{p.FileType}");
+            var pars = parsers as IParser[] ?? parsers.ToArray();
+
+            if (pars.Length == 0)
+                throw new ArgumentException("Not found parser");
+
+            dictionaryParsers = pars.ToDictionary(p => p.FileType);
+
+            var types = pars.Select(p => $"*.{p.FileType}").ToArray();
             filter = @$"Текстовые файлы ({string.Join(" ", types)})|{string.Join(";", types)}";
         }
 
@@ -39,7 +45,6 @@ namespace TagsCloudVisualization.InfrastructureUI
             var index = dialog.FileName.LastIndexOf('.') + 1;
             var fileType = dialog.FileName[index..];
             imageHolder.SetParser(dictionaryParsers[fileType], dialog.FileName);
-
         }
     }
 }

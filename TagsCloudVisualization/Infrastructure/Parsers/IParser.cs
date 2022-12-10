@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagsCloudVisualization.Infrastructure
+namespace TagsCloudVisualization.Infrastructure.Parsers
 {
     public interface IParser
     {

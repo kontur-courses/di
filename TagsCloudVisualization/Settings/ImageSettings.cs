@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.InfrastructureUI
+﻿namespace TagsCloudVisualization.Settings
 {
     public class ImageSettings
     {

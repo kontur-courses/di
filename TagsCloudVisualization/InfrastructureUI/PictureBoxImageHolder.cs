@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using TagsCloudVisualization.Infrastructure;
+using TagsCloudVisualization.Infrastructure.Parsers;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.InfrastructureUI
 {

@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 
 using TagsCloudVisualization.Infrastructure;
+using TagsCloudVisualization.Infrastructure.Parsers;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.InfrastructureUI
 {

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DeepMorphy;
+using TagsCloudVisualization.Infrastructure.Parsers;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.Infrastructure
 {
     public class Analyzer : IAnalyzer
     {
         private readonly AnalyzerSettings settings;
-
         private IParser parser;
         private string filePath;
 

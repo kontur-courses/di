@@ -2,12 +2,11 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace TagsCloudVisualization.InfrastructureUI
+namespace TagsCloudVisualization.InfrastructureUI.Actions
 {
     public class SaveImageAction : IUiAction
     {
         private readonly IImageHolder imageHolder;
-
 
         public SaveImageAction(IImageHolder imageHolder)
         {

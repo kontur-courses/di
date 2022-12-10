@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization
 {
@@ -16,7 +17,6 @@ namespace TagsCloudVisualization
         {
             this.fontSettings = fontSettings;
         }
-
 
         public Dictionary<string, Font> DefineFontSize(IReadOnlyDictionary<string, int> d)
         {
