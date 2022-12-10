@@ -9,12 +9,8 @@ namespace TagsCloudVisualization
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(Options.RunOptions);
-
-            // var fileGenerator = new FileGenerator();
-            // fileGenerator.Generate(_wordsFilePath, 1000);
             
-            var prepocessor = new Preprocessor();
-            var words = prepocessor.Process(Options.WordsFilePath);
+            var words = Preprocessor.Process(Options.WordsFilePath);
             
             TagCloudCreator.Create(words);
         }

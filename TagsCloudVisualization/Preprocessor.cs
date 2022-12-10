@@ -5,9 +5,9 @@ using DeepMorphy;
 
 namespace TagsCloudVisualization
 {
-    public class Preprocessor
+    public static class Preprocessor
     {
-        public IEnumerable<string> Process(string path)
+        public static IEnumerable<string> Process(string path)
         {
             var words = new List<string>();
             var lines = File.ReadAllLines(path);
@@ -27,7 +27,7 @@ namespace TagsCloudVisualization
             return words;
         }
 
-        private bool IsContainsInvalidGrammems(IEnumerable<string> grams)
+        private static bool IsContainsInvalidGrammems(IEnumerable<string> grams)
         {
             return grams.Contains("мест") 
                    || grams.Contains("предл") 
