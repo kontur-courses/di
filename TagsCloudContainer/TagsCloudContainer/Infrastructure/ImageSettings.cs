@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,7 @@ namespace TagsCloudContainer.Infrastructure
         public int Height { get; set; } = 500;
 
 
-        [DisplayName("Цвет текста внутри прямоугольников")]
-        [Category("2. Цвета")]
-        public Color TextColor { get; set; } = Color.Black;
+        
         [DisplayName("Задний фон прямоугольников")]
         [Category("2. Цвета")]
         public Color RectangleBackgroundColor { get; set; } = Color.Red;
@@ -29,6 +28,16 @@ namespace TagsCloudContainer.Infrastructure
         [DisplayName("Задний фон картинки")]
         [Category("2. Цвета")]
         public Color BackgroundColor { get; set; } = Color.DarkBlue;
+
+        [DisplayName("Цвет шрифта")]
+        [Category("3. Шрифт")]
+        public Color TextColor { get; set; } = Color.Black;
+
+        [DisplayName("Шрифт")]
+        [Category("3. Шрифт")]
+        public Font Font { get; set; } = new Font("Arial", 20, FontStyle.Bold, GraphicsUnit.Point);
+
+
 
         public void ThrowExcIfNonPositiveArgs()
         {
