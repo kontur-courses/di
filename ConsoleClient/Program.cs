@@ -1,25 +1,34 @@
 ﻿using System.Drawing;
 using Autofac;
+using CommandLine;
 using ConsoleClient;
 using TagCloud;
 using TagCloud.Abstractions;
 
-Console.Write("Filename: ");
-var filename = Console.ReadLine();
-if (filename is null) throw new ArgumentException("Filename can't be null");
-if (!File.Exists(filename))
+
+Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
 {
-    Console.WriteLine("File don't exist");
-    return;
-}
+    if (o.Source is null)
+    {
+        Console.Write("Source filepath: ");
+        o.Source = Console.ReadLine();
+    }
 
-ConfigureContainer().Resolve<Client>().Execute();
+    if (o.Result is null)
+    {
+        Console.Write("Result filepath: ");
+        o.Result = Console.ReadLine();
+    }
+    
+    ConfigureContainer(o.Source).Resolve<Client>().Execute(o.Result);
+});
 
-IContainer ConfigureContainer()
+
+IContainer ConfigureContainer(string sourceFilepath)
 {
     var builder = new ContainerBuilder();
 
-    builder.RegisterInstance(new FileWordsLoader(filename))
+    builder.RegisterInstance(new FileWordsLoader(sourceFilepath))
         .As<IWordsLoader>().SingleInstance();
 
     var trimToLowerProcessor = new FuncWordsProcessor(words => words.Select(w => w.Trim().ToLower()));

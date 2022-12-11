@@ -8,6 +8,9 @@ public class FileWordsLoader : IWordsLoader
 
     public FileWordsLoader(string filename)
     {
+        if (!File.Exists(filename))
+            throw new ArgumentException($"File {filename} don't exists");
+        
         this.filename = filename;
     }
     

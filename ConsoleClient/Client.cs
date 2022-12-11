@@ -18,12 +18,12 @@ public class Client
         this.creator = creator;
     }
 
-    public void Execute()
+    public void Execute(string resultFilepath)
     {
         var words = wordsLoader.Load();
         foreach (var processor in wordsProcessors)
             words = processor.Process(words);
         var bitmap = creator.CreateTagCloud(words);
-        bitmap.Save("../../../result.png");
+        bitmap.Save(resultFilepath);
     }
 }
