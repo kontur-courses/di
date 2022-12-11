@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using Autofac;
 
 namespace TagsCloudContainer
 {
@@ -10,21 +11,22 @@ namespace TagsCloudContainer
         public static void Main(string[] args)
         {
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-            var text = TextReader.GetTextFromFile($"{projectDirectory}\\TextFiles\\Example.txt");
-            var handler = new WordHandler("BoringWords.txt");
-            var settings = new Settings()
-            {
-                WordColor = Color.Purple,
-                WordFontName = "Arial",
-                WordFontSize = 16
-            };
-            var words = handler.ProcessWords(text, settings);
-            var center = new Point(0, 0);
-            var layouter = new CircularCloudLayouter(center);
+            var builder = new ContainerBuilder();
+            builder.Register(x => new Settings()
+                {
+                    WordColor = Color.Purple,
+                    WordFontName = "Arial",
+                    WordFontSize = 16
+                })
+                .As<Settings>();
+            builder.Register(x =>
+                    new WordHandler($"{projectDirectory}\\TextFiles\\Example.txt"))
+                .As<WordHandler>();
+            builder.Register(x => new CircularCloudLayouter(new Point()))
+                .As<CircularCloudLayouter>();
+            builder.RegisterType<RectangleVisualisator>().AsSelf();
 
-            var visualisator = new RectangleVisualisator(words, layouter, settings);
-            visualisator.Paint();
-            visualisator.Save(projectDirectory + "\\Results", "Rectangles", ImageFormat.Png);
+            builder.Build();
         }
     }
 }

@@ -13,9 +13,9 @@ namespace TagsCloudContainer
         private readonly List<Word> _words;
         private readonly Settings _settings;
 
-        public RectangleVisualisator(List<Word> words, CircularCloudLayouter layouter, Settings settings)
+        public RectangleVisualisator(WordHandler handler, CircularCloudLayouter layouter, Settings settings)
         {
-            _words = words;
+            _words = handler.ProcessWords(settings);
             _settings = settings;
             _rectangles = WordGenerator.GenerateRectanglesByWords(_words, layouter, settings);
             _bitmap = GenerateBitmap();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace TagsCloudContainer
 {
@@ -9,20 +10,23 @@ namespace TagsCloudContainer
     {
         private readonly Dictionary<string, Word> _boringWords;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
-
-        public WordHandler(string boringWordsFileName = "")
+        private string _pathToFile;
+        private readonly string _projectDirectory;
+        public WordHandler(string pathToFile, string boringWordsFileName = "")
         {
-            var projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
+            _pathToFile = pathToFile;
+            _projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
                 .Parent.Parent.FullName;
             var text = TextReader.GetTextFromFile(String.IsNullOrEmpty(boringWordsFileName)
-                ? $"{projectDirectory}\\TextFiles\\BoringWords.txt"
-                : $"{projectDirectory}\\TextFiles\\{boringWordsFileName}");
+                ? $"{_projectDirectory}\\TextFiles\\BoringWords.txt"
+                : $"{_projectDirectory}\\TextFiles\\{boringWordsFileName}");
 
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
-        public List<Word> ProcessWords(string text, Settings settings)
+        public List<Word> ProcessWords(Settings settings)
         {
+            var text = TextReader.GetTextFromFile(_pathToFile);
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)
