@@ -42,7 +42,7 @@ namespace TagsCloudContainer
             var rectangles = new List<Rectangle>();
             var containers = new List<TextContainer>();
             var radiusPic = 0;
-            ccl.StepSize = GetStepSize();
+            ccl.StepSize = TryToParse(box_stepSize.Text);
             foreach (var key in parsedText.Keys)
             {
                 int count = parsedText[key];
@@ -59,21 +59,6 @@ namespace TagsCloudContainer
             pic_main.BackgroundImage = image;
         }
 
-        private int GetStepSize()
-        {
-            int stepSize = 0;
-            try
-            {
-                stepSize = int.Parse(box_stepSize.Text);
-            }
-            catch
-            {
-                stepSize = 0;
-            }
-
-            return stepSize <= 0 ? 0 : stepSize;
-        }
-
         private int GetMaxCoords(Rectangle rect)
         {
             int max = Math.Max(Math.Abs(rect.X), Math.Abs(rect.Y));
@@ -84,11 +69,17 @@ namespace TagsCloudContainer
 
         private void but_save_Click(object sender, EventArgs e)
         {
+            int heigth = TryToParse(box_heightPic.Text);
+            int width = TryToParse(box_widthPic.Text);
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG picture(*.png)|*.png|JPG picture(*.jpg)|*.jpg";
             if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
                 return;
             string filename = saveFileDialog.FileName;
+            if (heigth > 0 && width > 0)
+            {
+                image = new Bitmap(image, new Size(width, heigth));
+            }
             image.Save(filename);
         }
 
@@ -119,6 +110,21 @@ namespace TagsCloudContainer
                 return;
             Font font = fontDialog.Font;
             fontFamily = font.FontFamily;
+        }
+
+        private int TryToParse(string str)
+        {
+            int number;
+            try
+            {
+                number = int.Parse(str);
+            }
+            catch
+            {
+                number = 0;
+            }
+
+            return number;
         }
     }
 }

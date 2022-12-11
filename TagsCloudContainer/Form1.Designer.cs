@@ -40,11 +40,15 @@ namespace TagsCloudContainer
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.but_fontColor = new System.Windows.Forms.Button();
             this.but_backgroundColor = new System.Windows.Forms.Button();
             this.but_save = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.box_heightPic = new System.Windows.Forms.TextBox();
+            this.box_widthPic = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic_main)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -135,6 +139,25 @@ namespace TagsCloudContainer
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(457, 41);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(107, 22);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Выбрать";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(457, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Шрифт";
+            // 
             // but_fontColor
             // 
             this.but_fontColor.Location = new System.Drawing.Point(344, 41);
@@ -166,30 +189,49 @@ namespace TagsCloudContainer
             this.but_save.UseVisualStyleBackColor = true;
             this.but_save.Click += new System.EventHandler(this.but_save_Click);
             // 
-            // button1
+            // label5
             // 
-            this.button1.Location = new System.Drawing.Point(457, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 22);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Выбрать";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 412);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(119, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Высота изображения:";
             // 
-            // label4
+            // label6
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(457, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Шрифт";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(237, 412);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(120, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Ширина изображения:";
+            // 
+            // box_heightPic
+            // 
+            this.box_heightPic.Location = new System.Drawing.Point(131, 409);
+            this.box_heightPic.Name = "box_heightPic";
+            this.box_heightPic.Size = new System.Drawing.Size(100, 20);
+            this.box_heightPic.TabIndex = 13;
+            this.box_heightPic.Text = "1080";
+            // 
+            // box_widthPic
+            // 
+            this.box_widthPic.Location = new System.Drawing.Point(363, 409);
+            this.box_widthPic.Name = "box_widthPic";
+            this.box_widthPic.Size = new System.Drawing.Size(100, 20);
+            this.box_widthPic.TabIndex = 13;
+            this.box_widthPic.Text = "1920";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 434);
+            this.Controls.Add(this.box_widthPic);
+            this.Controls.Add(this.box_heightPic);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.but_save);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pic_main);
@@ -199,7 +241,13 @@ namespace TagsCloudContainer
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox box_heightPic;
+        private System.Windows.Forms.TextBox box_widthPic;
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
