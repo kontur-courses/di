@@ -14,11 +14,9 @@ public class SizeDefiner : ISizeDefiner
 
         if (withVerticalWords)
         {
-            DefineSizeOnlyHorizontal(stingAndFontSize, fontFamilyName, bitmap, stringSizeAndOrientation);
+            DefineSizeWithVertical(stingAndFontSize, fontFamilyName, bitmap, stringSizeAndOrientation);
         }
         else  DefineSizeOnlyHorizontal(stingAndFontSize, fontFamilyName, bitmap, stringSizeAndOrientation);
-       
-
 
         return stringSizeAndOrientation;
     }
@@ -42,7 +40,7 @@ public class SizeDefiner : ISizeDefiner
                 var newSize = new Size(size.Height, size.Width);
                 size = newSize;
             };
-            stringSizeAndOrientation.Add(item.Key, new TextOptions(size, Orientation.Horizontal, fontSize));
+            stringSizeAndOrientation.Add(item.Key, new TextOptions(size, orientation, fontSize));
         }
     }
 
@@ -51,7 +49,7 @@ public class SizeDefiner : ISizeDefiner
         var orientation = Orientation.Horizontal;
         var rndNumber = rnd.Next(1, 10);
         var isVertical = rndNumber > 6;
-        if (verticalCount <= 6 || !isVertical) return orientation;
+        if (verticalCount >= 10 || !isVertical) return orientation;
         orientation = Orientation.Vertical;
         verticalCount += 1;
         return orientation;
