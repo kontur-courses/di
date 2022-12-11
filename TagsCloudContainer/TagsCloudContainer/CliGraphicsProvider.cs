@@ -32,14 +32,19 @@ public class CliGraphicsProvider : IGraphicsProvider
     public void Commit()
     {
         graphics?.Dispose();
-        using var cache = new MemoryStream();
-        bitmapImage?.Save(cache, ImageFormat.Png);
-        bitmapImage?.Dispose();
-        var randomFileName = $"{Path.GetRandomFileName()}.png";
-        var fullPath = Path.Combine(cliGraphicsProviderSettings.BasePath, randomFileName);
-        if (!Directory.Exists(cliGraphicsProviderSettings.BasePath))
-            Directory.CreateDirectory(cliGraphicsProviderSettings.BasePath);
-        File.WriteAllBytes(fullPath, cache.ToArray());
+        if (bitmapImage is not null)
+        {
+            using var cache = new MemoryStream();
+            bitmapImage.Save(cache, ImageFormat.Png);
+            bitmapImage.Dispose();
+
+            var randomFileName = $"{Path.GetRandomFileName()}.png";
+            var fullPath = Path.Combine(cliGraphicsProviderSettings.BasePath, randomFileName);
+            if (!Directory.Exists(cliGraphicsProviderSettings.BasePath))
+                Directory.CreateDirectory(cliGraphicsProviderSettings.BasePath);
+            File.WriteAllBytes(fullPath, cache.ToArray());
+        }
+
         graphics = null;
         bitmapImage = null;
     }

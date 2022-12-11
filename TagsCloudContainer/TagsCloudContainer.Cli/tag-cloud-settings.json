@@ -10,38 +10,78 @@
         "Size": {
           "Width": 10000,
           "Height": 10000
-        },
-        "X": 0,
-        "Y": 0
+        }
       },
-      "NumbersSize": 8,
-      "NumbersFamily": "Times New Roman",
+      "NumbersSize": 20,
+      "NumbersFamily": "Segoe Print",
       "NumbersBrush": {
         "Type": "SolidBrush",
-        "Color": "Blue"
+        "Color": "Black"
       },
       "TextBrush": {
         "Type": "SolidBrush",
         "Color": "Black"
       },
-      "TextFontFamily": "Comic Sans MS",
-      "TextFontStyle": 6,
+      "TextFontFamily": "Times New Roman",
+      "TextFontStyle": 7,
       "MinimumTextFontSize": 100,
-      "MaximumTextFontSize": 500,
+      "MaximumTextFontSize": 300,
       "WriteNumbers": true,
       "RectangleBorderBrush": {
         "Type": "SolidBrush",
-        "Color": "Red"
+        "Color": "Blue"
       },
-      "RectangleBorderSize": 2,
+      "RectangleBorderSize": 10,
       "RectangleFillBrush": {
         "Type": "SolidBrush",
-        "Color": "Pink"
+        "Color": "White"
       },
       "FillRectangles": true,
       "BackgroundBrush": {
         "Type": "SolidBrush",
-        "Color": "LightGoldenrodYellow"
+        "Color": "Violet"
+      }
+    },
+    {
+      "Type": "ClassicDrawerSettings",
+      "ImageRectangle": {
+        "Location": {
+          "X": 0,
+          "Y": 0
+        },
+        "Size": {
+          "Width": 10000,
+          "Height": 10000
+        }
+      },
+      "NumbersSize": 25,
+      "NumbersFamily": "Segoe Print",
+      "NumbersBrush": {
+        "Type": "SolidBrush",
+        "Color": "White"
+      },
+      "TextBrush": {
+        "Type": "SolidBrush",
+        "Color": "White"
+      },
+      "TextFontFamily": "Segoe Print",
+      "TextFontStyle": 1,
+      "MinimumTextFontSize": 100,
+      "MaximumTextFontSize": 300,
+      "WriteNumbers": true,
+      "RectangleBorderBrush": {
+        "Type": "SolidBrush",
+        "Color": "Violet"
+      },
+      "RectangleBorderSize": 10,
+      "RectangleFillBrush": {
+        "Type": "SolidBrush",
+        "Color": "Violet"
+      },
+      "FillRectangles": true,
+      "BackgroundBrush": {
+        "Type": "SolidBrush",
+        "Color": "Violet"
       }
     }
   ],
