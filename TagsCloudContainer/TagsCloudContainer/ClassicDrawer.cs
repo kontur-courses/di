@@ -19,6 +19,58 @@ public class ClassicDrawer : IDrawer
 
     public void DrawCloud(IReadOnlyCollection<CloudWord> cloudWords)
     {
+        var tagPropertyItems = GetTagPropertyItems(cloudWords);
+
+        Draw(tagPropertyItems);
+    }
+
+    private void Draw(
+        IEnumerable<(string word, Font font, Rectangle rectangle)> tagPropertyItems)
+    {
+        var rectangleBorderPen = new Pen(classicDrawerSettings.RectangleBorderBrush,
+            classicDrawerSettings.RectangleBorderSize);
+        var numbersFont = new Font(new FontFamily(classicDrawerSettings.NumbersFamily),
+            classicDrawerSettings.NumbersSize);
+        var withoutBordersLocationAddition = new Size(classicDrawerSettings.RectangleBorderSize,
+            classicDrawerSettings.RectangleBorderSize);
+        
+        graphics.FillRectangle(classicDrawerSettings.BackgroundBrush, classicDrawerSettings.ImageRectangle);
+        tagPropertyItems.Foreach((item, index) => DrawTag(item.rectangle,
+            withoutBordersLocationAddition,
+            rectangleBorderPen,
+            index + 1,
+            numbersFont,
+            item.word,
+            item.font));
+    }
+
+    private void DrawTag(
+        Rectangle layoutRectangle,
+        Size withoutBordersLocationAddition,
+        Pen rectangleBorderPen,
+        int counter,
+        Font numbersFont,
+        string word,
+        Font textFont)
+    {
+        var textStartingPoint = layoutRectangle.Location + withoutBordersLocationAddition;
+
+        if (classicDrawerSettings.FillRectangles)
+            graphics.FillRectangle(classicDrawerSettings.RectangleFillBrush, layoutRectangle);
+
+        if (classicDrawerSettings.RectangleBorderSize != 0)
+            graphics.DrawRectangle(rectangleBorderPen, layoutRectangle);
+
+        if (classicDrawerSettings.WriteNumbers)
+            graphics.DrawString(counter.ToString(), numbersFont,
+                classicDrawerSettings.NumbersBrush, layoutRectangle);
+
+        graphics.DrawString(word, textFont, classicDrawerSettings.TextBrush, textStartingPoint);
+    }
+
+    private IEnumerable<(string word, Font font, Rectangle rectangle)> GetTagPropertyItems(
+        IEnumerable<CloudWord> cloudWords)
+    {
         var cloudWordAndFontSizeTuples = cloudWords
             .Select(x => (word: x.Text,
                 fontSize: Math.Clamp(classicDrawerSettings.MinimumTextFontSize + x.Occurrences * 3 - 3,
@@ -39,34 +91,21 @@ public class ClassicDrawer : IDrawer
 
         var wordsAndRectanglesTuples = cloudWordAndBlockSizeTuples
             .Select(x => (x.word, x.font, rectangle: algorithm.PutNextRectangle(x.size)))
-            .ToList();
+            .Where(x => classicDrawerSettings.ImageRectangle.Contains(x.rectangle));
 
+        return wordsAndRectanglesTuples;
+    }
+}
 
-        var counter = 1;
-        var rectangleBorderPen = new Pen(classicDrawerSettings.RectangleBorderBrush,
-            classicDrawerSettings.RectangleBorderSize);
-        var numbersFont = new Font(new FontFamily(classicDrawerSettings.NumbersFamily),
-            classicDrawerSettings.NumbersSize);
-        var withoutBordersLocationAddition = bordersSizeAddition / 2;
-        graphics.FillRectangle(classicDrawerSettings.BackgroundBrush, classicDrawerSettings.ImageRectangle);
-        foreach (var (word, font, layoutRectangle) in wordsAndRectanglesTuples)
+public static class EnumerableExtensions
+{
+    public static void Foreach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
+    {
+        var counter = 0;
+        foreach (var item in enumerable)
         {
-            if (!classicDrawerSettings.ImageRectangle.Contains(layoutRectangle))
-                return;
-
-            var textStartingPoint = layoutRectangle.Location + withoutBordersLocationAddition;
-
-            if (classicDrawerSettings.FillRectangles)
-                graphics.FillRectangle(classicDrawerSettings.RectangleFillBrush, layoutRectangle);
-
-            if (!bordersSizeAddition.IsEmpty)
-                graphics.DrawRectangle(rectangleBorderPen, layoutRectangle);
-
-            if (classicDrawerSettings.WriteNumbers)
-                graphics.DrawString((counter++).ToString(), numbersFont,
-                    classicDrawerSettings.NumbersBrush, layoutRectangle);
-
-            graphics.DrawString(word, font, classicDrawerSettings.TextBrush, textStartingPoint);
+            action(item, counter);
+            counter++;
         }
     }
 }
