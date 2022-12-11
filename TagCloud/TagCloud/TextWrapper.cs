@@ -1,17 +1,11 @@
-﻿using TagsCloudLayouter;
-
-namespace TagCloud;
+﻿namespace TagCloud;
 
 public class TextWrapper
 {
-    private ICloudLayouter Layouter { get; set; }
     private FontProperties FontProperties { get; set; }
     
-    public TextWrapper(
-        ICloudLayouter layouter, 
-        FontProperties fontProperties)
+    public TextWrapper(FontProperties fontProperties)
     {
-        Layouter = layouter;
         FontProperties = fontProperties;
     }
 
