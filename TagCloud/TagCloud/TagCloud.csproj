@@ -10,17 +10,10 @@
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
-        <PackageReference Include="WeCantSpell.Hunspell" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\TagsCloudLayouter\TagsCloudLayouter.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="Languages\**">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>
