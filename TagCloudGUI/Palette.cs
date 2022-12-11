@@ -1,9 +1,14 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿using System.ComponentModel;
+
+namespace TagCloudGraphicalUserInterface
 {
     public class Palette
     {
-        public Color PrimaryColor { get; set; } = Color.Yellow;
-        public Color SecondaryColor { get; set; } = Color.Red;
-        public Color BackgroundColor { get; set; } = Color.DarkBlue;
+        [DisplayName("Приоритетный цвет")]
+        public Color PrimaryColor { get; set; } = Color.Magenta;
+        [DisplayName("Второстепенный цвет")]
+        public Color SecondaryColor { get; set; } = Color.Yellow;
+        [DisplayName("Цвет фона")]
+        public Color BackgroundColor { get; set; } = Color.White;
     }
 }

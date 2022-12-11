@@ -3,9 +3,9 @@ using TagCloudContainer.TagsWithFont;
 
 namespace TagCloudContainer.Rectangles
 {
-    public class CircularCloudLayouter : IRectangleBuilder
+    public class RectangleBuilder : IRectangleBuilder
     {
-        public IEnumerable<SizeTextRectangle> GetNextRectangle(IEnumerable<FontTag> fontTags)
+        public IEnumerable<SizeTextRectangle> GetRectangles(IEnumerable<ITag> fontTags)
         {
             var g = Graphics.FromImage(new Bitmap(1, 1));
             foreach (var tag in fontTags)

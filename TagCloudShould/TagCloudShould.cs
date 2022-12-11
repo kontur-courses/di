@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿using TagCloudContainer;
 using TagCloudContainer.Filters;
 using TagCloudContainer.Formatters;
 using TagCloudContainer.FrequencyWords;
@@ -14,57 +14,43 @@ namespace TagCloudShould
     public class TagCloudShould
     {
         private TagCloud tagCloud;
-        private CircularCloudLayouter circularLayouter;
+        private ICloudCreateSettings settings;
+        private IEnumerable<ITag> defaultTags;
 
         [SetUp]
         public void SetUp()
         {
-            circularLayouter = new CircularCloudLayouter();
-            var reader = new TxtReader();
-            var text = reader.Read((Environment.CurrentDirectory +
-                                   "\\..\\..\\..\\word_data\\data.txt"));
+            tagCloud = new TagCloud();
+            settings = new CloudCreateSettings(new ArithmeticSpiral() { Config = new PointConfig(1, 1) },
+                new RectangleBuilder());
+            var reader = new Reader();
+            var text = reader.TxtRead((Environment.CurrentDirectory +
+                                       "\\..\\..\\..\\word_data\\data.txt"));
             var words = new FileLinesParser().Parse(text);
-            tagCloud = InitializeCloud(words);
-        }
-
-        [TearDown]
-        public void PrintPathAndSaveIfTestIsDown()
-        {
-
-            var testName = TestContext.CurrentContext.Test.Name;
-
-            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
-            {
-                TagCloudDrawer.DrawWithSave(tagCloud.GetRectangles(), Environment.CurrentDirectory + "\\..\\..\\..\\saved_images\\" + testName + ".png");
-                return;
-            }
-
-            var pathDebug = Environment.CurrentDirectory +
-                            "\\..\\..\\..\\saved_images\\debugImages\\" + testName + TestContext.CurrentContext.Result.FailCount + ".png";
-            TagCloudDrawer.DrawWithSave(tagCloud.GetRectangles(), pathDebug);
-            Console.WriteLine("Tag cloud visualization saved to file: " + pathDebug);
+            defaultTags = InitializeTags(words);
         }
 
 
-        private TagCloud InitializeCloud(IEnumerable<string> rowWords)
+        private IEnumerable<ITag> InitializeTags(IEnumerable<string> rowWords)
         {
             var filterWords = new FilterWords();
-            var filtredTags = filterWords.Filter(rowWords);
+            var filtredTags = filterWords.Filter(rowWords, x => x.Length > 0);
             var formatter = new WordFormatter();
             var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
             var freqtag = new FrequencyTags();
             var freqTags = freqtag.GetWordsFrequency(formattedTags);
             var fontSizer = new FontSizer();
-            var fontTags = fontSizer.GetTagsWithSize(freqTags, new FontFamily("Times"), 150, 50);
-            return new TagCloud(fontTags);
+            var fontTags = fontSizer.GetTagsWithSize(freqTags,
+                new FontSettings() { Font = new FontFamily("Times"), MaxFont = 150, MinFont = 50 });
+            return fontTags;
         }
 
 
 
         [Test]
-        public void NoVisualization_NoIntersections()
+        public void CreateCloudDefaultTags_NoIntersections()
         {
-            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
+            tagCloud.CreateTagCloud(settings, defaultTags);
             var rectangles = tagCloud.GetRectangles();
             foreach (var rectangle in rectangles)
                 foreach (var thisRectangle in rectangles.Where(rect => rect != rectangle))
@@ -72,7 +58,7 @@ namespace TagCloudShould
         }
 
         [Test]
-        public void NoVisualization_NoArgumentExceptionWhenNotSpaceForSmallestTag()
+        public void CreateCloudDefaultTags_NoArgumentExceptionWhenNotSpaceForSmallestTag()
         {
             Action runVisual = () => ArgumentException_WhenHaveEmptySpaceSmall();
             runVisual.Should().NotThrow<Exception>();
@@ -80,8 +66,8 @@ namespace TagCloudShould
 
         public void ArgumentException_WhenHaveEmptySpaceSmall()
         {
-            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
-            var arithmeticSpiral = new ArithmeticSpiral(new Point(0, 0));
+            tagCloud.CreateTagCloud(settings, defaultTags);
+            var arithmeticSpiral = new ArithmeticSpiral() { Config = new PointConfig(1, 1) };
             var point = arithmeticSpiral.GetNextPoint();
             var rectangles = tagCloud.GetRectangles();
             var smallRectangle = rectangles.Last().rectangle;
@@ -102,21 +88,21 @@ namespace TagCloudShould
         }
 
         [Test, Timeout(5000)]
-        public void Visualization_Timeout()
+        public void CreateCloudDefaultTags_Timeout()
         {
 
-            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
+            tagCloud.CreateTagCloud(settings, defaultTags);
         }
 
-        [Test]
-        public void Visualization_WithRandomSave()
+        [Test, Timeout(5000)]
+        public void CreateCloud_WithRandomNumbers()
         {
             var random = new Random(123);
             var strsplt = new string[400];
             for (var i = 0; i < 400; i++)
                 strsplt[i] = random.Next(1, 100).ToString();
-            tagCloud = InitializeCloud(strsplt);
-            tagCloud.CreateTagCloud(circularLayouter, new ArithmeticSpiral(Point.Empty));
+            var tags = InitializeTags(strsplt);
+            tagCloud.CreateTagCloud(settings, tags);
         }
     }
 }

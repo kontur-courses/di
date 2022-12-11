@@ -1,17 +1,19 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿using TagCloudGraphicalUserInterface.Interfaces;
+
+namespace TagCloudGraphicalUserInterface
 {
     public static class ActionExtensions
     {
         public static ToolStripItem[] ToMenuItems(this IActionForm[] actions)
         {
-            var items = actions.GroupBy(a => a.Category)
+            return actions
+                .GroupBy(a => a.Category)
                 .Select(g => CreateTopLevelMenuItem(g.Key, g.ToList()))
                 .Cast<ToolStripItem>()
                 .ToArray();
-            return items;
         }
 
-        private static ToolStripMenuItem CreateTopLevelMenuItem(string name, IList<IActionForm> items)
+        private static ToolStripMenuItem CreateTopLevelMenuItem(string name, IEnumerable<IActionForm> items)
         {
             var menuItems = items.Select(a => a.ToMenuItem()).ToArray();
             return new ToolStripMenuItem(name, null, menuItems);

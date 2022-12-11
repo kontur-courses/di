@@ -1,8 +1,10 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿using TagCloudGraphicalUserInterface.Interfaces;
+
+namespace TagCloudGraphicalUserInterface
 {
     public class ImageSettings : IImage
     {
-        public int Width { get; set; } = 100;
-        public int Height { get; set; } = 100;
+        public int Width { get; set; } = 500;
+        public int Height { get; set; } = 500;
     }
 }

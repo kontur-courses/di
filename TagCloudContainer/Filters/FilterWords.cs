@@ -3,11 +3,9 @@
 
     public class FilterWords : IFilter
     {
-        public IEnumerable<string> Filter(IEnumerable<string> textWords)
+        public IEnumerable<string> Filter(IEnumerable<string> textWords, Func<string, bool> filterFunc)
         {
-            //var list = WordList.CreateFromWords(textWords);
-            //return list.Suggest("").ToList();
-            return textWords;
+            return textWords.Select(x => x).Where(filterFunc);
         }
     }
 }

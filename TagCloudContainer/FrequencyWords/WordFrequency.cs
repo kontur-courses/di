@@ -2,15 +2,12 @@
 {
     public class WordFrequency
     {
-        public string Word;
-        public int Count;
-        public WordFrequency(string word)
+        public string Word { get; }
+        public int Count { get; }
+        public WordFrequency(string word, int count)
         {
-            this.Word = word;
-        }
-        public void CountPlus()
-        {
-            Count++;
+            Word = word;
+            Count = count;
         }
     }
 }

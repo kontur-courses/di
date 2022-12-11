@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Imaging;
+using TagCloudGraphicalUserInterface.Interfaces;
 
 namespace TagCloudGraphicalUserInterface
 {
@@ -20,7 +21,6 @@ namespace TagCloudGraphicalUserInterface
                     "Call PictureBoxImageHolder.RecreateImage before other method call!")
                 : Graphics.FromImage(Image);
         }
-
 
         public void UpdateUi()
         {

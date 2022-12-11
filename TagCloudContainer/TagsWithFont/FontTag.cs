@@ -2,11 +2,11 @@
 
 namespace TagCloudContainer.TagsWithFont
 {
-    public class FontTag
+    public class FontTag : ITag
     {
-        public string Word;
-        public int SizeFont;
-        public FontFamily Font;
+        public string Word { get; }
+        public int SizeFont { get; }
+        public FontFamily Font { get; }
 
         public FontTag(string word, int sizeFont, FontFamily font)
         {

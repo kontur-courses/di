@@ -1,4 +1,6 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿using TagCloudGraphicalUserInterface.Interfaces;
+
+namespace TagCloudGraphicalUserInterface.Actions
 {
 
     public class PaletteAction : IActionForm
@@ -12,7 +14,7 @@
 
         public string Category => "Настройки";
         public string Name => "Цвет вывода";
-        public string Description => "Цвета для рисования фракталов";
+        public string Description => "Цвета для рисования облака";
 
         public void Perform()
         {

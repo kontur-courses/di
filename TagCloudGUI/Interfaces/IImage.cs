@@ -1,4 +1,4 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface.Interfaces
 {
     internal interface IImage
     {

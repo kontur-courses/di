@@ -1,6 +1,6 @@
 ﻿namespace TagCloudContainer.Parsers
 {
-    internal interface IFileParser
+    public interface IFileParser
     {
         IEnumerable<string> Parse(string text);
     }

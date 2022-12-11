@@ -4,6 +4,6 @@ namespace TagCloudContainer.Rectangles
 {
     public interface IRectangleBuilder
     {
-        IEnumerable<SizeTextRectangle> GetNextRectangle(IEnumerable<FontTag> fontTags);
+        IEnumerable<SizeTextRectangle> GetRectangles(IEnumerable<ITag> tags);
     }
 }

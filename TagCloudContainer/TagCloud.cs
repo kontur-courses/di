@@ -1,10 +1,6 @@
 ﻿using System.Drawing;
-using TagCloudContainer.Filters;
-using TagCloudContainer.Formatters;
-using TagCloudContainer.FrequencyWords;
-using TagCloudContainer.Parsers;
+using TagCloudContainer;
 using TagCloudContainer.PointAlgorithm;
-using TagCloudContainer.Readers;
 using TagCloudContainer.Rectangles;
 using TagCloudContainer.TagsWithFont;
 
@@ -14,30 +10,23 @@ namespace TagsCloudVisualization
     {
         private readonly List<TextRectangle> rectangles;
         private readonly List<Point> emptyPoints;
-        private readonly IEnumerable<FontTag> tags;
-        private Size srcSize;
 
-        public TagCloud(IEnumerable<FontTag> tags)
+        public TagCloud()
         {
-            this.tags = tags;
             rectangles = new List<TextRectangle>();
             emptyPoints = new List<Point>();
         }
 
         public List<TextRectangle> GetRectangles() => rectangles;
-        public Size GetScreenSize() => srcSize;
 
-        public void CreateTagCloud(IRectangleBuilder circularCloudLayouter, IPointer arithmeticSpiral)
+        public void CreateTagCloud(ICloudCreateSettings cloudCreator, IEnumerable<ITag> tags)
         {
-
-            var nextSizeRectangle = circularCloudLayouter.GetNextRectangle(tags).GetEnumerator();
+            var nextSizeRectangle = cloudCreator.RectangleBuilder.GetRectangles(tags).GetEnumerator();
             nextSizeRectangle.MoveNext();
             bool? filledEmptySpaces = false;
             while (true)
-                if (TryFillRectangle(arithmeticSpiral, nextSizeRectangle, ref filledEmptySpaces))
+                if (TryFillRectangle(cloudCreator.PointFigure, nextSizeRectangle, ref filledEmptySpaces))
                     break;
-            srcSize = new Size((int)(emptyPoints.Max(x => x.X) * 2.5),
-                (int)(emptyPoints.Max(x => x.Y) * 2.5));
         }
 
         private bool TryFillRectangle(IPointer arithmeticSpiral,
@@ -84,7 +73,7 @@ namespace TagsCloudVisualization
             return true;
         }
 
-        private static bool Contains(List<TextRectangle> rectangles, Point point,
+        private static bool Contains(IEnumerable<TextRectangle> rectangles, Point point,
             Size size)
         {
             return rectangles
@@ -92,20 +81,20 @@ namespace TagsCloudVisualization
                     x.rectangle.IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
                 .Contains(true);
         }
-        public static TagCloud InitialCloud(string pathTxtFile, FontFamily font, int maxFont, int minFont)
-        {
-            var fileReader = new TxtReader().Read(pathTxtFile);
-            var parser = new FileLinesParser();
-            var parsedText = parser.Parse(fileReader);
-            var filterWords = new FilterWords();
-            var filtredTags = filterWords.Filter(parsedText);
-            var formatter = new WordFormatter();
-            var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
-            var freqtag = new FrequencyTags();
-            var freqTags = freqtag.GetWordsFrequency(formattedTags);
-            var fontSizer = new FontSizer();
-            var fontTags = fontSizer.GetTagsWithSize(freqTags, font, maxFont, minFont);
-            return new TagCloud(fontTags);
-        }
+        //public static TagCloud InitialCloud(string pathTxtFile, FontFamily font, int MaxFont, int MinFont)
+        //{
+        //    var fileReader = new Reader().Read(pathTxtFile);
+        //    var parser = new FileLinesParser();
+        //    var parsedText = parser.Parse(fileReader);
+        //    var filterWords = new FilterWords();
+        //    var filtredTags = filterWords.Filter(parsedText, s => s.Length>3);
+        //    var formatter = new WordFormatter();
+        //    var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
+        //    var freqtag = new FrequencyTags();
+        //    var freqTags = freqtag.GetWordsFrequency(formattedTags);
+        //    var fontSizer = new FontSizer();
+        //    var fontTags = fontSizer.GetTagsWithSize(freqTags, font, MaxFont, MinFont);
+        //    return new TagCloud(fontTags);
+        //}
     }
 }

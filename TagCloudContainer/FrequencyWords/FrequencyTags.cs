@@ -6,14 +6,11 @@
         {
             if (words == null)
                 throw new ArgumentNullException();
-            var wordFrequencies = new Dictionary<string, WordFrequency>();
-            foreach (var word in words)
-            {
-                if (!wordFrequencies.ContainsKey(word))
-                    wordFrequencies[word] = new WordFrequency(word);
-                wordFrequencies[word].CountPlus();
-            }
-            return wordFrequencies.Values.OrderByDescending(x => x.Count);
+            return words
+                .GroupBy(w => w)
+                .Select(word =>
+                    new WordFrequency(word.Key, word.Count()))
+                .OrderByDescending(x => x.Count);
         }
     }
 }

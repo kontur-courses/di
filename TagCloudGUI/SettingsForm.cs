@@ -7,14 +7,13 @@
             return new SettingsForm<TSettings>(settings);
         }
     }
-
     public class SettingsForm<TSettings> : Form
     {
         public SettingsForm(TSettings settings)
         {
             var acceptButton = new Button
             {
-                Text = "OK",
+                Text = "Select",
                 DialogResult = DialogResult.OK,
                 Dock = DockStyle.Bottom,
             };
@@ -22,10 +21,11 @@
             Controls.Add(new PropertyGrid
             {
                 SelectedObject = settings,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
             });
             AcceptButton = acceptButton;
         }
+
 
         protected override void OnLoad(EventArgs e)
         {

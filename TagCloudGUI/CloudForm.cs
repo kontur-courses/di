@@ -1,4 +1,6 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿using TagCloudGraphicalUserInterface.Interfaces;
+
+namespace TagCloudGraphicalUserInterface
 {
     public class CloudForm : Form
     {
@@ -14,6 +16,5 @@
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             Controls.Add(pictureBox);
         }
-
     }
 }
