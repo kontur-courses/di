@@ -16,7 +16,7 @@ public static class DiContainerBuilder
         builder.Register(context => new CircularCloudLayouter(
             context.Resolve<SizeProperties>().ImageCenter, 
             context.Resolve<CloudProperties>().Density, 
-            context.Resolve<CloudProperties>().AngleStep))
+            context.Resolve<CloudProperties>().Density))
             .As<ICloudLayouter>()
             .InstancePerDependency();
         builder.RegisterType<TextWrapper>().AsSelf();

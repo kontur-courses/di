@@ -11,12 +11,11 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
         var container = DiContainerBuilder.Build();
-        var constructor = container.Resolve<TagCloudConstructor>();
         var form = container.Resolve<Form>();
         RenderButton.RenderRequired += (_, _) =>
         {
             var oldImage = Viewport.Instance.Image;
-            Viewport.Instance.Image = constructor.Construct();
+            Viewport.Instance.Image = container.Resolve<TagCloudConstructor>().Construct();
             oldImage?.Dispose();
         };
         

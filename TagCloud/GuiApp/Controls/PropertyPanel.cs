@@ -31,6 +31,10 @@ public class PropertyPanel : TableLayoutPanel
         
         Controls.Add(backgroundColor);
         Controls.Add(foregroundColor);
+
+        density.Control.DecimalPlaces = 2;
+        density.Control.Increment = (decimal)0.01;
+        Controls.Add(density);
         
         openFileButton.Anchor = AnchorStyles.Right;
         Controls.Add(openFileButton);
@@ -50,6 +54,7 @@ public class PropertyPanel : TableLayoutPanel
         imageSizeProperties.Height = properties.SizeProperties.ImageSize.Height;
         backgroundColor.Color = properties.Palette.Background;
         foregroundColor.Color = properties.Palette.Foreground;
+        density.Control.Value = (decimal)properties.CloudProperties.Density;
     }
     
     private void BindPropertiesToAppProperties()
@@ -61,6 +66,7 @@ public class PropertyPanel : TableLayoutPanel
         backgroundColor.ColorChanged += OnBackgroundColorChanged;
         foregroundColor.ColorChanged += OnForegroundColorChanged;
         openFileButton.FileChanged += OnFileChanged;
+        density.Control.ValueChanged += OnDensityChanged;
     }
     
     protected override void Dispose(bool disposing)
@@ -72,6 +78,7 @@ public class PropertyPanel : TableLayoutPanel
         backgroundColor.ColorChanged -= OnBackgroundColorChanged;
         foregroundColor.ColorChanged -= OnForegroundColorChanged;
         openFileButton.FileChanged -= OnFileChanged;
+        density.Control.ValueChanged -= OnDensityChanged;
         base.Dispose(disposing);
     }
 
@@ -114,6 +121,12 @@ public class PropertyPanel : TableLayoutPanel
     {
         properties.Path = openFileButton.File;
         renderButton.IsRenderAvailable = true;
+    }
+
+    private ControlWithDescription<NumericUpDown> density = new (new NumericUpDown(), "Density");
+    private void OnDensityChanged(object? sender, EventArgs args)
+    {
+        properties.CloudProperties.Density = (double)density.Control.Value;
     }
     
     private RenderButton renderButton = new ();
