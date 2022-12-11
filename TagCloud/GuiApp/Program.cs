@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using GuiApp.Components;
+using TagCloud;
 
 namespace GuiApp;
 
@@ -7,8 +9,12 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        var container = DiContainerBuilder.Build();
         ApplicationConfiguration.Initialize();
-        Application.Run(container.Resolve<Form>());
+        var container = DiContainerBuilder.Build();
+        var constructor = container.Resolve<TagCloudConstructor>();
+        var form = container.Resolve<Form>();
+        RenderButton.RenderRequired += (_, _) => Viewport.Instance.Image = constructor.Construct();
+        
+        Application.Run(form);
     }
 }
