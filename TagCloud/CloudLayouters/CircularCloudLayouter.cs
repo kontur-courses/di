@@ -12,23 +12,18 @@ namespace TagCloud.CloudLayouters
     {
         public Point Center => pointGenerator.GetCenterPoint();
 
-        private IPointGenerator pointGenerator;
+        private readonly IPointGenerator pointGenerator;
         private readonly IPointGenerator.Factory pointGeneratorFactory;
         private readonly List<Rectangle> rectangles;
+
+        public delegate ICloudLayouter Factory(IPointGenerator.Factory pointGeneratorFactory);
 
         public CircularCloudLayouter(IPointGenerator.Factory pointGeneratorFactory)
         {
             this.pointGeneratorFactory = pointGeneratorFactory;
             this.rectangles = new List<Rectangle>();
-            Reset();
+            this.pointGenerator = this.pointGeneratorFactory.Invoke();
         }
-
-        public void Reset()
-        {
-            pointGenerator = pointGeneratorFactory.Invoke();
-            rectangles.Clear();
-        }
-
 
         public Rectangle PutNextRectangle(Size rectangleSize)
         {

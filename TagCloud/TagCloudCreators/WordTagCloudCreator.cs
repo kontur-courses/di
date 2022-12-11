@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.BoringWordsRepositories;
 using TagCloud.CloudLayouters;
 using TagCloud.Readers;
 using TagCloud.TagCloudVisualizations;
@@ -13,20 +14,23 @@ namespace TagCloud.TagCloudCreators
     public class WordTagCloudCreator : ITagCloudCreator
     {
         private readonly IReader wordReader;
-        private readonly ICloudLayouter cloudLayouter;
+        private readonly IBoringWordsStorage boringWordsStorage;
+        private readonly ICloudLayouter.Factory cloudLayouterFactory;
+        private ICloudLayouter cloudLayouter;
         private readonly IWordPreprocessor wordPreprocessor;
         private IOrderedEnumerable<KeyValuePair<string, int>> wordsWithRate;
         
-        public WordTagCloudCreator(IReader wordReader, ICloudLayouter cloudLayouter, IWordPreprocessor wordPreprocessor)
+        public WordTagCloudCreator(IReader wordReader, IBoringWordsStorage boringWordsStorage, ICloudLayouter.Factory cloudLayouterFactory, IWordPreprocessor wordPreprocessor)
         {
-            if (wordPreprocessor == null || cloudLayouter == null)
+            if (wordPreprocessor == null || cloudLayouterFactory == null)
             {
                 throw new ArgumentNullException(
-                    "ICloudLayouter and IWordPreprocessor are required for this method");
+                    $"{nameof(IReader)}, {nameof(ICloudLayouter.Factory)} and {nameof(IWordPreprocessor)} are required for this method");
             }
 
             this.wordReader = wordReader;
-            this.cloudLayouter = cloudLayouter;
+            this.boringWordsStorage = boringWordsStorage;
+            this.cloudLayouterFactory = cloudLayouterFactory;
             this.wordPreprocessor = wordPreprocessor;
         }
 
@@ -36,6 +40,7 @@ namespace TagCloud.TagCloudCreators
                 throw new ArgumentNullException(
                     "ITagCloudVisualizationSettings is required for this method");
 
+            cloudLayouter = cloudLayouterFactory.Invoke();
             PrepareWords(wordReader);
             var tagCloud = new TagCloud(cloudLayouter.Center);
             PrepareTagCloud(tagCloud, settings);
@@ -44,7 +49,7 @@ namespace TagCloud.TagCloudCreators
 
         private void PrepareWords(IReader wordReader)
         {
-            var words = wordPreprocessor.GetPreprocessedWords(wordReader);
+            var words = wordPreprocessor.GetPreprocessedWords(wordReader, boringWordsStorage);
             wordsWithRate = words.GroupBy(word => word).
                 Select(group => new KeyValuePair<string, int>(group.Key, group.Count())).
                 OrderByDescending(group => group.Value);
@@ -52,7 +57,6 @@ namespace TagCloud.TagCloudCreators
 
         private void PrepareTagCloud(TagCloud tagCloud, ITagCloudVisualizationSettings settings)
         {
-            cloudLayouter.Reset();
             foreach (var word in wordsWithRate)
             {
                 var font = new Font(settings.FontFamilyName, word.Value * 20);

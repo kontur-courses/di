@@ -20,9 +20,9 @@ namespace TagCloudGui.Actions
         {
             using FileDialog fd = new OpenFileDialog();
             fd.Filter = boringWordsStorage.FileExtFilter;
-            if (fd.ShowDialog() == DialogResult.Yes)
+            if (fd.ShowDialog() == DialogResult.OK)
             {
-                boringWordsStorage.GetBoringWords(fd.FileName);
+                boringWordsStorage.LoadBoringWords(fd.FileName);
             }
         }
     }

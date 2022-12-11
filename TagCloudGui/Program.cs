@@ -8,6 +8,7 @@ using TagCloud.Readers;
 using TagCloud.TagCloudCreators;
 using TagCloud.TagCloudVisualizations;
 using TagCloud.WordPreprocessors;
+using TagCloudGui.Actions;
 using TagCloudGui.Infrastructure;
 using TagCloudGui.Infrastructure.Common;
 
@@ -39,22 +40,35 @@ namespace TagCloudGui
         private static ContainerBuilder CreateContainers()
         {
             var containerBuilder = new ContainerBuilder();
+            RegisterTagCloudInterfacesIn(containerBuilder);
+            RegisterIUiActionsIn(containerBuilder);
+            containerBuilder.RegisterType<PictureBoxImageHolder>().As<IImageHolder>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<MainForm>();
+            return containerBuilder;
+        }
 
+
+        private static void RegisterTagCloudInterfacesIn(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<SingleWordInRowTextFileReader>().As<IReader>().
+                SingleInstance();
+            containerBuilder.RegisterType<TextFileBoringWordsStorage>().As<IBoringWordsStorage>().
+                SingleInstance();
             containerBuilder.RegisterType<SpiralPointGenerator>().As<IPointGenerator>();
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
-            containerBuilder.RegisterType<TextFileBoringWordsStorage>().As<IBoringWordsStorage>();
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
             containerBuilder.RegisterType<WordTagCloudCreator>().As<ITagCloudCreator>();
             containerBuilder.RegisterType<TagCloudBitmapVisualization>().As<ITagCloudVisualization>();
+            containerBuilder.RegisterType<TagCloudVisualizationSettings>().As<ITagCloudVisualizationSettings>().
+                SingleInstance();
+        }
 
-            containerBuilder.RegisterType<SingleWordInRowTextFileReader>().As<IReader>().SingleInstance();
-            containerBuilder.RegisterType<TagCloudVisualizationSettings>().As<ITagCloudVisualizationSettings>().SingleInstance();
-            containerBuilder.RegisterType<MainForm>().SingleInstance();
-            containerBuilder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).
-                AssignableTo<IUiAction>().As<IUiAction>().SingleInstance();
-            containerBuilder.RegisterType<PictureBoxImageHolder>().As<IImageHolder>().AsSelf().SingleInstance();
-
-            return containerBuilder;
+        private static void RegisterIUiActionsIn(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<BoringWordsReadAction>().As<IUiAction>();
+            containerBuilder.RegisterType<ImageSettingsAction>().As<IUiAction>();
+            containerBuilder.RegisterType<TextFileReadAction>().As<IUiAction>();
+            containerBuilder.RegisterType<WordTagCloudCreateAction>().As<IUiAction>();
         }
     }
 }

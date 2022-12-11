@@ -7,15 +7,11 @@ namespace TagCloud.WordPreprocessors
 {
     public class SimpleWordPreprocessor : IWordPreprocessor
     {
-        private readonly HashSet<string> boringWords;
+        private HashSet<string> boringWords;
 
-        public SimpleWordPreprocessor(IBoringWordsStorage boringWordsStorage)
+        public IEnumerable<string> GetPreprocessedWords(IReader wordsReader, IBoringWordsStorage boringWordsStorage)
         {
             boringWords = boringWordsStorage.GetBoringWords();
-        }
-
-        public IEnumerable<string> GetPreprocessedWords(IReader wordsReader)
-        {
             var lowerCaseWords = СonvertToLowerCase(wordsReader.ReadWords());
             var preprocessedWords = RemoveBoringWordsFrom(lowerCaseWords);
             return preprocessedWords;
@@ -25,7 +21,7 @@ namespace TagCloud.WordPreprocessors
             words.Select(word => word.ToLower());
 
         private IEnumerable<string> RemoveBoringWordsFrom(IEnumerable<string> words) =>
-            words.Where(w => !boringWords.Contains(w));
+            words.Where(word => !boringWords.Contains(word));
 
     }
 }

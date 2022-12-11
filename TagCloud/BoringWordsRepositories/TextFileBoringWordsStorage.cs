@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TagCloud.Readers;
 
@@ -6,15 +7,22 @@ namespace TagCloud.BoringWordsRepositories
 {
     public class TextFileBoringWordsStorage : SingleWordInRowTextFileReader, IBoringWordsStorage
     {
-        public HashSet<string> GetBoringWords() =>
-            GetBoringWords(@"BoringWordsRepositories\BoringWordsDictionary.txt");
+        private HashSet<string> boringWords;
 
-        public HashSet<string> GetBoringWords(string path)
+        public TextFileBoringWordsStorage()
         {
+            boringWords = new HashSet<string>();
+        }
+
+        public void LoadBoringWords(string path)
+        {
+            boringWords.Clear();
             Open(path);
-            return ReadWords()
-                .Select(word => word.ToLower())
+            boringWords = ReadWords().
+                Select(word => word.ToLower())
                 .ToHashSet();
         }
+
+        public HashSet<string> GetBoringWords() => boringWords;
     }
 }

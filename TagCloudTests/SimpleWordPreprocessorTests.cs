@@ -11,12 +11,15 @@ namespace TagCloudTests
     public class SimpleWordPreprocessorTests
     {
         private IReader wordsReader;
+        private IBoringWordsStorage boringWordsStorage;
         private IWordPreprocessor wordPreprocessor;
+        private readonly string boringWordsPath = @"BoringWordsRepositories\BoringWordsDictionary.txt";
 
         [SetUp]
         public void CreateWords()
         {
             wordsReader = new SingleWordInRowTextFileReader();
+            boringWordsStorage = new TextFileBoringWordsStorage();
             wordsReader.Open("aboutKonturWords.txt");
         }
 
@@ -30,12 +33,12 @@ namespace TagCloudTests
             preprocessedWords.Should().NotContain(word => word.Any(c => char.IsUpper(c)));
         }
 
-
         [Test]
         public void SimpleWordPreprocessor_GetPreprocessedWords_ShouldReturnRemoveBoringWordsFromWords()
         {
             var words = wordsReader.ReadWords();
-            var boringWords = new TextFileBoringWordsStorage().GetBoringWords();
+            boringWordsStorage.LoadBoringWords(boringWordsPath);
+            var boringWords = boringWordsStorage.GetBoringWords();
             var preprocessedWords = GetPreprocessedWords();
 
             words.Should().Contain(word => boringWords.Contains(word));
@@ -44,8 +47,9 @@ namespace TagCloudTests
 
         private IEnumerable<string> GetPreprocessedWords()
         {
-            wordPreprocessor = new SimpleWordPreprocessor(new TextFileBoringWordsStorage());
-            var preprocessedWords = wordPreprocessor.GetPreprocessedWords(wordsReader);
+            wordPreprocessor = new SimpleWordPreprocessor();
+            var preprocessedWords = wordPreprocessor.
+                GetPreprocessedWords(wordsReader, boringWordsStorage);
             return preprocessedWords;
         }
     }
