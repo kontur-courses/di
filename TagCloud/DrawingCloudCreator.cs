@@ -14,26 +14,23 @@ public class DrawingCloudCreator : ICloudCreator
         this.layouter = layouter;
     }
 
-    public Bitmap CreateTagCloud(IEnumerable<string> words)
+    public Bitmap CreateTagCloud(IEnumerable<ITag> tags)
     {
-        var wordsToCount = words
-            .GroupBy(w => w)
-            .Select(g => (word: g.Key, count: g.Count()))
-            .OrderByDescending(t => t.count)
-            .ToList();
-        var maxCount = wordsToCount.First().count;
-        var minCount = wordsToCount.Last().count;
-        var wordsToFontSize = wordsToCount
-            .Select(t => (t.word, fontsize: GetFontSize(t.count, minCount, maxCount)));
-        var wordsToFontsizeToRectangle = wordsToFontSize
-            .Select(t => (t.word, t.fontsize, GetRectangle(t.word, t.fontsize)));
-        return drawer.Draw(wordsToFontsizeToRectangle);
+        var tagsArray = tags.ToArray();
+        var maxCount = tagsArray.Max(t => t.Weight);
+        var minCount = tagsArray.Min(t => t.Weight);
+        var wordFontSizeAndLocation = tagsArray.Select(t =>
+        {
+            var fontsize = GetFontSize(t.Weight, minCount, maxCount);
+            return (t.Text, fontsize, GetPoint(t.Text, fontsize));
+        });
+        return drawer.Draw(wordFontSizeAndLocation);
     }
 
-    private Rectangle GetRectangle(string word, int fontsize)
+    private Point GetPoint(string word, int fontsize)
     {
         using var font = new Font(drawer.FontFamily, fontsize);
-        return layouter.PutNextRectangle(drawer.Graphics.MeasureString(word, font).ToSize());
+        return layouter.PutNextRectangle(drawer.Graphics.MeasureString(word, font).ToSize()).Location;
     }
 
     private int GetFontSize(int count, int minCount, int maxCount)

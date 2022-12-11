@@ -8,5 +8,5 @@ public interface ICloudDrawer
     FontFamily FontFamily { get; }
     int MaxFontSize { get; }
     int MinFontSize { get; }
-    Bitmap Draw(IEnumerable<(string, int, Rectangle)> words);
+    Bitmap Draw(IEnumerable<(string, int, Point)> words);
 }

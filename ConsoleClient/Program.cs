@@ -5,7 +5,6 @@ using ConsoleClient;
 using TagCloud;
 using TagCloud.Abstractions;
 
-
 Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
 {
     if (o.Source is null)
@@ -19,7 +18,7 @@ Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
         Console.Write("Result filepath: ");
         o.Result = Console.ReadLine();
     }
-    
+
     ConfigureContainer(o.Source).Resolve<Client>().Execute(o.Result);
 });
 
@@ -37,6 +36,8 @@ IContainer ConfigureContainer(string sourceFilepath)
     var bored = new[] { "мест", "предл", "союз", "част", "межд", "неизв" };
     builder.RegisterInstance(new MorphWordsProcessor(bored))
         .As<IWordsProcessor>().SingleInstance();
+
+    builder.RegisterType<CountWordsTagger>().As<IWordsTagger>();
 
     var drawer = new BaseCloudDrawer(new FontFamily("Arial"), 50, 10, new Size(800, 600), Color.Black);
     builder.RegisterInstance(drawer)

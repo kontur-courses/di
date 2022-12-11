@@ -5,25 +5,28 @@ namespace ConsoleClient;
 public class Client
 {
     private readonly ICloudCreator creator;
-    private readonly IWordsLoader wordsLoader;
-    private readonly IEnumerable<IWordsProcessor> wordsProcessors;
+    private readonly IWordsLoader loader;
+    private readonly IEnumerable<IWordsProcessor> processors;
+    private readonly IWordsTagger tagger;
 
     public Client(
-        IWordsLoader wordsLoader,
-        IEnumerable<IWordsProcessor> wordsProcessors,
+        IWordsLoader loader,
+        IEnumerable<IWordsProcessor> processors,
+        IWordsTagger tagger,
         ICloudCreator creator)
     {
-        this.wordsLoader = wordsLoader;
-        this.wordsProcessors = wordsProcessors;
+        this.loader = loader;
+        this.processors = processors;
+        this.tagger = tagger;
         this.creator = creator;
     }
 
     public void Execute(string resultFilepath)
     {
-        var words = wordsLoader.Load();
-        foreach (var processor in wordsProcessors)
-            words = processor.Process(words);
-        var bitmap = creator.CreateTagCloud(words);
+        var words = loader.Load();
+        words = processors.Aggregate(words, (current, processor) => processor.Process(current));
+        var tags = tagger.ToTags(words);
+        var bitmap = creator.CreateTagCloud(tags);
         bitmap.Save(resultFilepath);
     }
 }
