@@ -14,6 +14,7 @@ using TagsCloud.CloudLayouter.Implementation;
 using TagsCloud.FileReader;
 using TagsCloud.WordHandler;
 using TagsCloud.WordHandler.Implementation;
+using TagsCloud.WPF.PictureSaver;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using FontStyle = System.Windows.FontStyle;
@@ -28,7 +29,7 @@ namespace TagsCloud.WPF
         private int rectanglesCount;
         private readonly DispatcherTimer timer = new();
 
-        private const double DefaultDpi = 96.0;
+        private IPictureSaver pictureSaver;
 
         private readonly string[] words;
         private int wordPointer;
@@ -42,7 +43,7 @@ namespace TagsCloud.WPF
         private const int DefaultFontSize = 10;
         private FontStyle fontStyle;
 
-        public MainWindow(IWordHandler[] wordHandlers, IFileReader reader , string path)
+        public MainWindow(IWordHandler[] wordHandlers, IFileReader reader, IPictureSaver pictureSaver, string path)
         {
             InitializeComponent();
             UpdateCircularCloudFromTextBox();
@@ -190,48 +191,7 @@ namespace TagsCloud.WPF
                 TbSteps.Text = StepSlider.Value.ToString(CultureInfo.InvariantCulture).Split('.')[0];
         }
 
-        private void SavePicture(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog
-            {
-                FileName = "Image",
-                DefaultExt = ".png",
-                Filter = "PNG File (.png)|*.png"
-            };
-
-            var result = dlg.ShowDialog();
-            if (result != true)
-                return;
-            
-            var filename = dlg.FileName;
-            SaveCanvasToFile(this, MyCanvas, DefaultDpi, filename);
-        }
-
-        private static void SaveCanvasToFile(FrameworkElement window, UIElement canvas, double dpi, string filename)
-        {
-            var size = new System.Windows.Size(window.Width, window.Height);
-            canvas.Measure(size);
-
-            var rtb = new RenderTargetBitmap(
-                (int) window.Width,
-                (int) window.Height,
-                dpi,
-                dpi,
-                PixelFormats.Pbgra32
-            );
-            rtb.Render(canvas);
-
-            SaveRtbAsPngbmp(rtb, filename);
-        }
-
-        private static void SaveRtbAsPngbmp(BitmapSource bmp, string filename)
-        {
-            var enc = new PngBitmapEncoder();
-            enc.Frames.Add(BitmapFrame.Create(bmp));
-
-            using var stm = File.Create(filename);
-            enc.Save(stm);
-        }
+        private void SavePicture(object sender, RoutedEventArgs e) => pictureSaver.SavePicture(sender, e);
 
         private void UpdateRectanglesCount(object sender, TextChangedEventArgs e)
         {

@@ -8,7 +8,7 @@ using TagsCloud.WordHandler.Implementation;
 
 namespace TagsCloud.ContainerConfigurator.Implementation;
 
-public class WpfContainerDoc<T> : IContainerConfigurator
+public class WpfContainerDoc<T> : IContainerConfigurator where T : notnull
 {
     private const string Path = "../../../Words.docx";
 
