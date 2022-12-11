@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Autofac;
+using TagsCloudVisualization.Clients;
 using TagsCloudVisualization.CloudDrawer;
 using TagsCloudVisualization.TextInput;
 
@@ -9,20 +10,20 @@ public static class AppContainer
 {
     private static IContainer container;
 
-    public static void Configure()
+    public static void Configure(Options options)
     {
         var builder = new ContainerBuilder();
         builder.RegisterType<DefaultPreprocessor>().As<IPreprocessor>();
         builder.RegisterType<DefaultCloudGenerator>().As<ICloudGenerator>();
 
         builder
-            .RegisterType<DefaultTextInput>()
+            .RegisterInstance(new DefaultTextInput(options.Path))
             .As<ITextInput>();
         builder
             .RegisterInstance(new CircularCloudLayouterSpiral(new Point(Config.CenterX, Config.CenterY)))
             .As<CircularCloudLayouter>();
         builder
-            .RegisterInstance(new DefaultCloudDrawer(Config.WindowWidth, Config.WindowHeight, Config.TextBrush))
+            .RegisterInstance(new DefaultCloudDrawer(options.ImageWidth, options.ImageHeight, Config.TextBrush))
             .As<ICloudDrawer>();
 
         container = builder.Build();

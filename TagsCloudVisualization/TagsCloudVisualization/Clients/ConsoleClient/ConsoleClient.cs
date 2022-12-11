@@ -7,22 +7,21 @@ namespace TagsCloudVisualization.Clients;
 
 public class ConsoleClient
 {
-    private string inputPath;
+    private Options options;
 
     public ConsoleClient(params string[] args)
     {
-        var options = Parser.Default.ParseArguments<Options>(args);
-        inputPath = options.Value.Path;
+        options = Parser.Default.ParseArguments<Options>(args).Value;
     }
 
     public void Run()
     {
-        AppContainer.Configure();
+        AppContainer.Configure(options);
 
         using (var scope = AppContainer.GetScope())
         {
             var textInput = scope.Resolve<ITextInput>();
-            var text = textInput.GetInputString(inputPath);
+            var text = textInput.GetInputString();
 
             var generator = scope.Resolve<ICloudGenerator>();
             var cloud = generator.GenerateCloud(text);

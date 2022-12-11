@@ -2,7 +2,14 @@
 
 public class DefaultTextInput : ITextInput
 {
-    public string GetInputString(string path = Config.DefaultPath)
+    private string path;
+
+    public DefaultTextInput(string path)
+    {
+        this.path = path;
+    }
+
+    public string GetInputString()
     {
         if (!File.Exists(path))
             throw new Exception("File doesn't exist");
