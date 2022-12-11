@@ -9,16 +9,22 @@ namespace TagCloud.CloudLayouter
 
         public Point CentralPoint { get; }
 
+        private readonly double compressionRatio;
+
         private readonly double scaleFactor;
 
         private double angle = -DeltaAngle;
 
-        public ArchimedeanSpiral(Point centralPoint, double scaleFactor = 1)
+        public ArchimedeanSpiral(Point centralPoint, double compressionRatio = 1, double scaleFactor = 1)
         {
             if (scaleFactor <= 0)
                 throw new ArgumentException("scale factor must be more than zero");
 
+            if (compressionRatio <= 0)
+                throw new ArgumentException("compression ratio must be more than zero");
+
             CentralPoint = centralPoint;
+            this.compressionRatio = compressionRatio;
             this.scaleFactor = scaleFactor;
         }
 
@@ -28,7 +34,7 @@ namespace TagCloud.CloudLayouter
 
             var x = CentralPoint.X + (int)(scaleFactor * angle * Math.Cos(angle));
 
-            var y = CentralPoint.Y + (int)(scaleFactor * angle * Math.Sin(angle));
+            var y = CentralPoint.Y + (int)(compressionRatio * scaleFactor * angle * Math.Sin(angle));
 
             return new Point(x, y);
         }
