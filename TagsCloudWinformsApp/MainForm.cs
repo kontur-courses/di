@@ -46,6 +46,10 @@ public partial class MainForm : Form
 
         fontColor_button.Visible = wordColoring_comboBox.SelectedIndex != 1;
         fontColor_label.Visible = wordColoring_comboBox.SelectedIndex != 1;
+        
+        generate_button.Enabled = inputFilesReader.InputPath != null;
+        removeFilter_button.Enabled = inputFilesReader.FilterPath != null;
+        saveImage_button.Enabled = mainPictureBox.Image != null;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -105,7 +109,7 @@ public partial class MainForm : Form
             var imgDrawer = container.Resolve<IImageDrawer>();
             Bitmap bitmap = imgDrawer.DrawImage();
             mainPictureBox.Image = bitmap;
-            saveImage_button.Enabled = true;
+            UpdateSettingsView();
         }
         catch (Exception ex)
         {
@@ -121,7 +125,7 @@ public partial class MainForm : Form
         if (result == DialogResult.OK)
         {
             inputFilesReader.InputPath = openFileDialog1.FileName;
-            generate_button.Enabled = true;
+            UpdateSettingsView();
         }
     }
 
@@ -139,10 +143,24 @@ public partial class MainForm : Form
         if (result == DialogResult.OK)
         {
             inputFilesReader.FilterPath = openFileDialog1.FileName;
-            removeFilter_button.Enabled = true;
+            UpdateSettingsView();
         }
     }
 
+    private void saveImage_button_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Filter = ImageFilesFilter;
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+            mainPictureBox.Image.Save(dialog.FileName);
+        }
+    }
+
+    private void wordColoring_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateSettingsView();
+    }
     private IContainer BuildContainer()
     {
         var builder = new ContainerBuilder();
@@ -177,20 +195,5 @@ public partial class MainForm : Form
         }
 
         return builder.Build();
-    }
-
-    private void saveImage_button_Click(object sender, EventArgs e)
-    {
-        SaveFileDialog dialog = new SaveFileDialog();
-        dialog.Filter = ImageFilesFilter;
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-            mainPictureBox.Image.Save(dialog.FileName);
-        }
-    }
-
-    private void wordColoring_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        UpdateSettingsView();
     }
 }
