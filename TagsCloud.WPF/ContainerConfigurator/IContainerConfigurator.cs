@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace TagsCloud.ContainerConfigurator;
+namespace TagsCloud.WPF.ContainerConfigurator;
 
 public interface IContainerConfigurator
 {

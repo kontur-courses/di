@@ -8,16 +8,8 @@ namespace TagsCloud.WPF.PictureSaver.Implementation;
 public class PictureSaverCanvas : IPictureSaver
 {
     private const double DefaultDpi = 96d;
-    private readonly UIElement myCanvas;
-    private readonly FrameworkElement window;
 
-    public PictureSaverCanvas(FrameworkElement window, UIElement myCanvas)
-    {
-        this.myCanvas = myCanvas;
-        this.window = window;
-    }
-
-    public void SavePicture(object sender, RoutedEventArgs e)
+    public void SavePicture(object sender, RoutedEventArgs e, FrameworkElement window, UIElement myCanvas)
     {
         var dlg = new Microsoft.Win32.SaveFileDialog
         {

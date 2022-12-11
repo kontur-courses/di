@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Autofac;
-using TagsCloud.ContainerConfigurator;
-using TagsCloud.ContainerConfigurator.Implementation;
+using TagsCloud.WPF.ContainerConfigurator;
+using TagsCloud.WPF.ContainerConfigurator.Implementation;
 
 namespace TagsCloud.WPF
 {
@@ -20,7 +20,7 @@ namespace TagsCloud.WPF
         private static void Main()
         {
             var app = new App();
-            var container = GetContainer(new WpfContainerDocx<MainWindow>());
+            var container = GetContainer(new WpfContainerDocx());
             var window = container.Resolve<MainWindow>();
             app.Run(window);
         }
