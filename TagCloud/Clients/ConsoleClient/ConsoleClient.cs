@@ -3,7 +3,6 @@ using TagCloud.App.CloudCreatorDriver.CloudCreator;
 using TagCloud.App.CloudCreatorDriver.CloudDrawers;
 using TagCloud.App.CloudCreatorDriver.DrawingSettings;
 using TagCloud.App.CloudCreatorDriver.ImageSaver;
-using TagCloud.App.CloudCreatorDriver.ImageSaver.FileTypes;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
 using TagCloud.App.WordPreprocessorDriver.InputStream;
@@ -172,7 +171,7 @@ public class ConsoleClient : IClient
 
     private static bool TryGetFileEncoder(
         IEnumerable<IFileEncoder> fileEncoders,
-        IFullFileName fileName,
+        FullFileName fileName,
         out IFileEncoder? fileEncoder)
     {
         fileEncoder = fileEncoders.FirstOrDefault(encoder =>
