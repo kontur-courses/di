@@ -10,11 +10,11 @@ namespace TagsCloudContainer
     {
         private readonly Dictionary<string, Word> _boringWords;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
-        private string _pathToFile;
+        private string _fileName;
         private readonly string _projectDirectory;
-        public WordHandler(string pathToFile, string boringWordsFileName = "")
+        public WordHandler(string fileName, string boringWordsFileName = "")
         {
-            _pathToFile = pathToFile;
+            _fileName = fileName;
             _projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
                 .Parent.Parent.FullName;
             var text = TextReader.GetTextFromFile(String.IsNullOrEmpty(boringWordsFileName)
@@ -26,7 +26,7 @@ namespace TagsCloudContainer
 
         public List<Word> ProcessWords(Settings settings)
         {
-            var text = TextReader.GetTextFromFile(_pathToFile);
+            var text = TextReader.GetTextFromFile($"{_projectDirectory}\\TextFiles\\{_fileName}");
             var wordsDictionary = CreateDictionaryBasedOnText(text);
             var words = wordsDictionary
                 .Select(x => x.Value)

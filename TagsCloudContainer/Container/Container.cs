@@ -22,8 +22,7 @@ namespace TagsCloudContainer
                 .As<Settings>();
             builder.Register(x =>
                     new WordHandler(
-                        $"{projectDirectory}\\TextFiles\\{options.InputFile}",
-                        $"{options.BorringWordsFile}"))
+                        options.InputFile, options.BorringWordsFile))
                 .As<WordHandler>();
             builder.Register(x =>
                     new CircularCloudLayouter(new Point(options.CenterX, options.CenterY)))
