@@ -1,6 +1,4 @@
-﻿using System;
-using TagCloud.AppConfig;
-using TagCloud.CloudLayouter;
+﻿using TagCloud.AppConfig;
 using TagCloud.FileReader;
 using TagCloud.FrequencyAnalyzer;
 using TagCloud.ImageProcessing;
@@ -48,7 +46,7 @@ namespace TagCloud.App
 
             var bitmap = cloudImageGenerator.GenerateBitmap(frequencies);
 
-            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, appConfig.inputTextFilePath,appConfig.outputImageFilePath);
+            ImageSaver.SaveBitmap(bitmap, appConfig.outputImageFilePath);
         }
     }
 }

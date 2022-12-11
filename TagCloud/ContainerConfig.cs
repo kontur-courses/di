@@ -20,7 +20,16 @@ namespace TagCloud
             var builder = new ContainerBuilder();
 
             //получение текста и списка слов
-            builder.RegisterType<TxtFileReader>().As<IFileReader>();
+            builder.Register<IFileReader>(
+               (c, p) =>
+               {
+                   var filePath = appConfig.inputTextFilePath;
+
+                   if (filePath.Contains(".doc"))
+                       return new DocxFileReader();
+
+                   return new TxtFileReader();
+               });
 
             builder.RegisterType<TextParser>().As<ITextParser>();
 

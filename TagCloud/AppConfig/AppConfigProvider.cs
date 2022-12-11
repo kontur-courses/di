@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TagCloud.ImageProcessing;
 
 namespace TagCloud.AppConfig
@@ -15,9 +14,9 @@ namespace TagCloud.AppConfig
 
         public IAppConfig GetAppConfig()
         {
-            return new AppConfig("TestText.txt", 
-                                @"C:\VIKTOR\Kontur\8_Dependency_Injection\TagCloudImages\WordCloud.png", 
-                                new ImageSettings()); //предусмотреть передачу GradientColoring
+            return new AppConfig(@"C:\VIKTOR\Kontur\8_Dependency_Injection\TestText.txt", 
+                                 @"C:\VIKTOR\Kontur\8_Dependency_Injection\TagCloudImages\WordCloud.png", 
+                                 new ImageSettings()); //предусмотреть передачу GradientColoring
 
         }
     }
