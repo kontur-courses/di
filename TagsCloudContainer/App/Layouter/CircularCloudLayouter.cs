@@ -12,7 +12,7 @@ namespace TagsCloudContainer.App.Layouter
 
         public CircularCloudLayouter(CloudLayouterSettings cloudLayouterSettings)
         {
-            if (cloudLayouterSettings.Center.X < 0 || cloudLayouterSettings.Center.Y < 0) 
+            if (cloudLayouterSettings.Center.X < 0 || cloudLayouterSettings.Center.Y < 0)
                 throw new ArgumentException();
             this.settings = cloudLayouterSettings;
             Rectangles = new List<Rectangle>();
@@ -70,13 +70,13 @@ namespace TagsCloudContainer.App.Layouter
             return rect;
         }
 
-        public void SaveBitmap(string btmName)
-        {
-            var bmp = new Bitmap(800, 500);
-            using Graphics gph = Graphics.FromImage(bmp);
-            var blackPen = new Pen(Color.Black, 1);
-            gph.DrawRectangles(blackPen, Rectangles.ToArray());
-            bmp.Save(btmName + ".bmp");
-        }
+        //public void SaveBitmap(string bmpName)
+        //{
+        //    var bitmap = new Bitmap(800, 500);
+        //    using var graphics = Graphics.FromImage(bitmap);
+        //    var blackPen = new Pen(Color.Black, 1);
+        //    graphics.DrawRectangles(blackPen, Rectangles.ToArray());
+        //    bitmap.Save(btmName + ".bmp");
+        //}
     }
 }

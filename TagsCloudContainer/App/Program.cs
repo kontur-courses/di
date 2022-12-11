@@ -25,9 +25,10 @@ namespace TagsCloudContainer.App
             builder.RegisterType<OpenFileAction>().As<IUiAction>();
 
             builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>();
-            builder.RegisterType<TagsLayouter>().AsSelf(); 
+            builder.RegisterType<TagsLayouter>().AsSelf();
             builder.RegisterType<CloudLayouterSettings>().AsSelf().SingleInstance();
             builder.RegisterType<SimpleTagsExtractor>().As<ITagsExtractor>().SingleInstance();
+            builder.RegisterType<SimpleTagsPainter>().As<ITagsPainter>();
             builder.RegisterType<TextReaderFromTxt>().As<ITextReader>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<FontText>().AsSelf().SingleInstance();
@@ -37,7 +38,7 @@ namespace TagsCloudContainer.App
             builder.RegisterType<ImageDirectoryProvider>().As<IImageDirectoryProvider>();
 
             builder.RegisterType<MainForm>().AsSelf();
-            var container = builder.Build();  
+            var container = builder.Build();
             var mainForm = container.Resolve<MainForm>();
             Application.Run(mainForm);
         }

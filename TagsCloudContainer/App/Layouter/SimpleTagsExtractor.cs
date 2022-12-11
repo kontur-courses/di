@@ -23,7 +23,7 @@ namespace TagsCloudContainer.App.Layouter
 
         public string[] ChooseNotBoringWords(string[] text)
         {
-            var partsOfSpeech = new [] { "сущ", "прил", "кр_прил", "гл", "инф_гл", "прич", "кр_прич", "деепр", "нареч" };
+            var partsOfSpeech = new[] { "сущ", "прил", "кр_прил", "гл", "инф_гл", "прич", "кр_прич", "деепр", "нареч" };
             var morph = new MorphAnalyzer(withLemmatization: true);
             return morph.Parse(text)
                 .Where(tag => partsOfSpeech.Contains(tag.BestTag.Grams.FirstOrDefault()))

@@ -7,10 +7,12 @@ namespace TagsCloudContainer.App.Actions
     public class TagsLayouterAction : IUiAction
     {
         private TagsLayouter tagsLayouter;
+        private ITagsPainter tagsPainter;
 
-        public TagsLayouterAction(TagsLayouter tagsLayouter)
+        public TagsLayouterAction(TagsLayouter tagsLayouter, ITagsPainter tagsPainter)
         {
             this.tagsLayouter = tagsLayouter;
+            this.tagsPainter = tagsPainter;
         }
 
         public string Category => "Облако тегов";
@@ -19,8 +21,8 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            tagsLayouter.PutAllTags();
-            tagsLayouter.Paint();
+            var tags = tagsLayouter.PutAllTags();
+            tagsPainter.Paint(tags);
         }
     }
 }
