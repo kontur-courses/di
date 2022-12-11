@@ -6,7 +6,8 @@ public static class CircularHelper
 {
     public static IEnumerable<Point> EnumeratePointsInArchimedesSpiral(float polarStepK,
         float angleStep,
-        Point center, float startAngle = 0f)
+        Point center,
+        float startAngle = 0f)
     {
         var current = new PointF(center.X, center.Y);
         var centerX = (float)center.X;

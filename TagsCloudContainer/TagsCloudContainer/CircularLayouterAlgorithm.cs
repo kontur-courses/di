@@ -20,7 +20,12 @@ public class CircularLayouterAlgorithm : ILayouterAlgorithm
     public CircularLayouterAlgorithm(CircularLayouterAlgorithmSettings circularLayouterAlgorithmSettings)
     {
         center = circularLayouterAlgorithmSettings.Center;
-        spiralEnumerator = CircularHelper.EnumeratePointsInArchimedesSpiral(0.01f, 0.05f, center).GetEnumerator();
+        spiralEnumerator = CircularHelper
+            .EnumeratePointsInArchimedesSpiral(circularLayouterAlgorithmSettings.PolarStepK,
+                circularLayouterAlgorithmSettings.AngleStep,
+                center,
+                circularLayouterAlgorithmSettings.StartAngle)
+            .GetEnumerator();
     }
 
 

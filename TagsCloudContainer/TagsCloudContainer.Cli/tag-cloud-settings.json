@@ -92,6 +92,15 @@
         "X": 5000,
         "Y": 5000
       }
+    },
+    {
+      "Type": "CircularLayouterAlgorithmSettings",
+      "Center": {
+        "X": 5000,
+        "Y": 5000
+      },
+      "StartAngle": 3.14,
+      "AngleStep": 0.05
     }
   ],
   "GraphicsProviderSettings": {
