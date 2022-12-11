@@ -34,30 +34,12 @@ namespace TagsCloudContainer.Visualisator
                 {
                     g.FillRectangle(rBrush, pair.rectangle);
                     g.DrawRectangle(rBorderPen, pair.rectangle);
-                    using var font = GetAdjustedFont(g, pair.text, imageSettings.Font, 
-                        pair.rectangle.Width, 100, 1);
+                    using var font = imageSettings.Font.GetAdjustedFont(g, pair.text, pair.rectangle.Width,
+                        100, 1);
                     g.DrawString(pair.text, font, tBrush, pair.rectangle);
                 }
             }
             pictureBox.UpdateUi();
-        }
-
-        public Font GetAdjustedFont(Graphics g, string graphicString, Font originalFont, int containerWidth, int maxFontSize, int minFontSize)
-        {
-            Font testFont = null;     
-            for (int adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
-            {
-                testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style);
-                
-                SizeF adjustedSizeNew = g.MeasureString(graphicString, testFont);
-
-                if (containerWidth > Convert.ToInt32(adjustedSizeNew.Width))
-                {
-                    return testFont;
-                }
-            }
-
-            return originalFont;
         }
     }
 }
