@@ -13,7 +13,7 @@ namespace TagsCloudContainerTests
         {
             options = new CustomOptions
             {
-                TextsPath = "c:\\Windows\\System32",
+                WorkingDir = "c:\\Windows\\System32",
                 WordsFileName = "cmd.exe",
                 BoringWordsName = "cmd.exe",
                 Font = "Arial",
@@ -45,7 +45,7 @@ namespace TagsCloudContainerTests
         [Test]
         public void ValidateConfig_AddConfigWithEmptyTextsPath_ShouldThrowArgumentException()
         {
-            options.TextsPath = "";
+            options.WorkingDir = "";
 
             var act = () => CustomOptionsValidator.ValidateOptions(options);
 
@@ -125,6 +125,18 @@ namespace TagsCloudContainerTests
             var act = () => CustomOptionsValidator.ValidateOptions(options);
 
             act.Should().Throw<ArgumentException>().WithMessage("Invalid backgroud color");
+        }
+
+        [TestCase(600)]
+        [TestCase(601)]
+        public void ValidateConfig_AddConfigWithFontSizeMoreOrEqualThanPictureSize_ShouldThrowArgumentException(
+            int size)
+        {
+            options.MaxTagSize = size;
+
+            var act = () => CustomOptionsValidator.ValidateOptions(options);
+
+            act.Should().Throw<ArgumentException>().WithMessage("Font size should be less than picture size");
         }
     }
 }
