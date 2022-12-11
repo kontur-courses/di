@@ -8,6 +8,7 @@ public class TxtFile : IFile
     }
 
     public string Path { get; }
+    public const string Extension = ".txt";
 
     public string ReadAll()
     {
