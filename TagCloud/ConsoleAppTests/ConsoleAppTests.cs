@@ -11,7 +11,9 @@ public class ConsoleAppTests
     [TestCase("-H, --height", TestName = "Help contains information about height option")]
     [TestCase("-f, --file", TestName = "Help contains information about file option")]
     [TestCase("-F, --font", TestName = "Help contains information about font option")]
-    [TestCase("-d, --density ", TestName = "Help contains information about density option")]
+    [TestCase("-d, --density", TestName = "Help contains information about density option")]
+    [TestCase("--exclude", TestName = "Help contains information about exclusion option")]
+    [TestCase("-o", TestName = "Help contains information about output option")]
     public void Execute_Help_ContainsInformation(string info)
     {
         var args = new[] { "--help" };

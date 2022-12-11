@@ -37,6 +37,9 @@ public class ConsoleOptions
     [Option('o', "out", Required = false, Default = "Cloud.png", HelpText = "Output image path(including name). Supported formats: .jpg, .jpeg, .png")]
     public string OutputPath { get; set; }
     
+    [Option("exclude", Required = false, HelpText = "Words to exclude")]
+    public string ExcludedWords { get; set; }
+    
     public void Apply(IContainer container)
     {
         ApplySizeOption(container);
@@ -44,6 +47,7 @@ public class ConsoleOptions
         ApplyFileOption(container);
         var cloudProperties = container.Resolve<CloudProperties>();
         cloudProperties.Density = Density;
+        cloudProperties.ExcludedWords = ExcludedWords.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
         var palette = container.Resolve<Palette>();
         palette.Background = ColorTranslator.FromHtml(BackgroundColor);
         palette.Foreground = ColorTranslator.FromHtml(ForegroundColor);
