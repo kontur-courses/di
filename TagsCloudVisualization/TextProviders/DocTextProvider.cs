@@ -1,11 +1,16 @@
-﻿using TagsCloudVisualization.Abstractions;
-using Xceed.Words.NET;
+﻿using Xceed.Words.NET;
 
 namespace TagsCloudVisualization.TextProviders;
 
 public class DocTextProvider : ITextProvider
 {
-    public IEnumerable<string> GetText(string path)
+    private readonly string path;
+
+    public DocTextProvider(string path)
+    {
+        this.path = path;
+    }
+    public IEnumerable<string> GetText()
     {
         if (!File.Exists(path))
         {

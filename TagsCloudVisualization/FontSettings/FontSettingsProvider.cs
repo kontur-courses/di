@@ -2,7 +2,15 @@
 
 public class FontSettingsProvider : IFontSettingsProvider
 {
-    public FontSettings GetSettings(int size, string family)
+    private readonly int size;
+    private readonly string family;
+
+    public FontSettingsProvider(int size, string family)
+    {
+        this.size = size;
+        this.family = family;
+    }
+    public FontSettings GetSettings()
     {
         return new FontSettings(size, family);
     }
