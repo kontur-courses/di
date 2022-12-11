@@ -1,4 +1,4 @@
-using GuiApp.Components;
+using GuiApp.Controls;
 using TagCloud;
 
 namespace GuiApp;

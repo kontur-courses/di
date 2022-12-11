@@ -1,6 +1,4 @@
-﻿using GuiApp.Components;
-
-namespace GuiApp;
+﻿namespace GuiApp.Controls;
 
 public class SaveButton : Button
 {

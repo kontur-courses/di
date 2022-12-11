@@ -1,6 +1,6 @@
 ﻿using TagCloud;
 
-namespace GuiApp.Components;
+namespace GuiApp.Controls;
 
 public class PropertyPanel : TableLayoutPanel
 {
@@ -65,7 +65,6 @@ public class PropertyPanel : TableLayoutPanel
     
     protected override void Dispose(bool disposing)
     {
-        base.Dispose(disposing);
         font.Control.SelectedValueChanged -= OnFontChanged;
         minFontSize.Control.ValueChanged -= OnMinFontSizeChanged;
         maxFontSize.Control.ValueChanged -= OnMaxFontSizeChanged;
@@ -73,6 +72,7 @@ public class PropertyPanel : TableLayoutPanel
         backgroundColor.ColorChanged -= OnBackgroundColorChanged;
         foregroundColor.ColorChanged -= OnForegroundColorChanged;
         openFileButton.FileChanged -= OnFileChanged;
+        base.Dispose(disposing);
     }
 
     private ControlWithDescription<FontComboBox> font = new (new FontComboBox(), "Font");

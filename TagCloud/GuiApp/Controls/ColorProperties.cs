@@ -1,4 +1,4 @@
-﻿namespace GuiApp.Components;
+﻿namespace GuiApp.Controls;
 
 public class ColorProperties : ControlWithDescription<Button>
 {

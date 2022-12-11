@@ -1,6 +1,6 @@
 ﻿using TagCloud;
 
-namespace GuiApp.Components;
+namespace GuiApp.Controls;
 
 public class Ui : TableLayoutPanel
 {

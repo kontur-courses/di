@@ -1,4 +1,4 @@
-﻿namespace GuiApp.Components;
+﻿namespace GuiApp.Controls;
 
 public class ControlWithDescription<T> : TableLayoutPanel where T : Control
 {
