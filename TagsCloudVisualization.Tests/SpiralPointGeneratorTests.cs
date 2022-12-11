@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudVisualization.CloudLayouter.PointGenerator;
 
 namespace TagsCloudVisualization.Tests;
 

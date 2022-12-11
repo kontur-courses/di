@@ -7,7 +7,8 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using TagsCloudVisualization.Abstractions;
+using TagsCloudVisualization.CloudLayouter;
+using TagsCloudVisualization.CloudLayouter.PointGenerator;
 
 namespace TagsCloudVisualization.Tests;
 
@@ -23,7 +24,7 @@ public class CircularCloudLayouterTests
     public void Setup()
     {
         center = new Point(100, 100);
-        cloudLayouter = new CircularCloudLayouter(center);
+        cloudLayouter = new CircularCloudLayouter(new SpiralPointGenerator(center));
         rectangles = new List<Rectangle>();
     }
 

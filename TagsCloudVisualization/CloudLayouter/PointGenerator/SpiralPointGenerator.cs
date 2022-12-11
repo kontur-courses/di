@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization.Abstractions;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudVisualization.CloudLayouter.PointGenerator;
 
 public class SpiralPointGenerator : IPointGenerator
 {
