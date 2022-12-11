@@ -21,6 +21,7 @@ public static class DiContainerBuilder
             .InstancePerDependency();
         builder.RegisterType<TextWrapper>().AsSelf();
         builder.RegisterType<CloudDrawer>().As<ICloudDrawer>();
+        builder.RegisterType<TagCloudConstructor>().As<TagCloudConstructor>();
         return builder.Build();
     }
 
