@@ -11,11 +11,13 @@ namespace TagsCloudContainer
         private readonly Size shiftToBitmapCenter;
         private readonly List<Rectangle> _rectangles;
         private readonly List<Word> _words;
+        private readonly Settings _settings;
 
-        public RectangleVisualisator(List<Word> words, CircularCloudLayouter layouter)
+        public RectangleVisualisator(List<Word> words, CircularCloudLayouter layouter, Settings settings)
         {
             _words = words;
-            _rectangles = layouter.GenerateRectanglesByWords(_words);
+            _settings = settings;
+            _rectangles = WordGenerator.GenerateRectanglesByWords(_words, layouter, settings);
             _bitmap = GenerateBitmap();
             shiftToBitmapCenter = new Size(_bitmap.Width / 2, _bitmap.Height / 2);
         }
@@ -36,13 +38,11 @@ namespace TagsCloudContainer
             using var graphics = Graphics.FromImage(_bitmap);
             graphics.Clear(Color.Black);
             var count = 0;
-            using var pen = new Pen(Color.Purple);
-            using var settingFont = new Font("Arial", 16);
+            using var pen = new Pen(_settings.WordColor);
             foreach (var word in _words)
             {
                 var rectangleOnMap = CreateRectangleOnMap(_rectangles[count]);
-                using var font = new Font(settingFont.FontFamily,
-                    word.Count / (float) _words.Count * 100 * settingFont.Size);
+                using var font = new Font(_settings.WordFontName, word.Size);
                 graphics.DrawString(word.Value, font, pen.Brush, rectangleOnMap.Location);
                 count++;
             }

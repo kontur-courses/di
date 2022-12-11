@@ -9,7 +9,7 @@ namespace TagsCloudContainer
     {
         private readonly Dictionary<string, Word> _boringWords;
         private string[] _separators = {Environment.NewLine, ", ", ". ", " "};
-        
+
         public WordHandler(string boringWordsFileName = "")
         {
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory)
@@ -21,13 +21,18 @@ namespace TagsCloudContainer
             _boringWords = CreateDictionaryBasedOnText(text);
         }
 
-        public List<Word> ProcessWords(string text)
+        public List<Word> ProcessWords(string text, Settings settings)
         {
             var wordsDictionary = CreateDictionaryBasedOnText(text);
-            return wordsDictionary
+            var words = wordsDictionary
                 .Select(x => x.Value)
                 .Where(x => !_boringWords.ContainsKey(x.Value) && x.Value.Length >= 3)
                 .ToList();
+
+            foreach (var word in words)
+                word.GenerateSize(settings, words.Count);
+
+            return words;
         }
 
         private Dictionary<string, Word> CreateDictionaryBasedOnText(string text)

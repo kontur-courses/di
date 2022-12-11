@@ -17,32 +17,6 @@ namespace TagsCloudContainer
             _rectangles = new List<Rectangle>();
         }
 
-        public List<Rectangle> GenerateRectanglesByWords(List<Word> words)
-        {
-            List<Rectangle> rectangles = new List<Rectangle>();
-            using var settingFont = new Font("Arial", 16);
-            foreach (var word in words)
-            {
-                using var font = new Font(settingFont.FontFamily,
-                    word.Count / (float) words.Count * 100 * settingFont.Size);
-                var size = MeasureWord(word.Value, font);
-                rectangles.Add(PutNextRectangle(size));
-            }
-
-            return rectangles;
-        }
-
-        private static Size MeasureWord(string word, Font font)
-        {
-            using var bitmap = new Bitmap(1, 1);
-            using var graphics = Graphics.FromImage(bitmap);
-            var result = graphics.MeasureString(word, font);
-            result = result.ToSize();
-            if (result.Width == 0) result.Width = 1;
-            if (result.Height == 0) result.Height = 1;
-            return result.ToSize();
-        }
-
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Height <= 0 || rectangleSize.Width <= 0)
