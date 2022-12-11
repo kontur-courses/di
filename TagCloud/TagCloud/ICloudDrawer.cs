@@ -2,5 +2,5 @@
 
 public interface ICloudDrawer
 {
-    public Bitmap Draw(IEnumerable<TextBox> texts);
+    public Bitmap Draw(IEnumerable<Label> texts);
 }

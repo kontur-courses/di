@@ -11,7 +11,7 @@ public class CloudDrawer : ICloudDrawer
         Size = size;
     }
 
-    public Bitmap Draw(IEnumerable<TextBox> texts)
+    public Bitmap Draw(IEnumerable<Label> texts)
     {
         var bitmap = new Bitmap(Size.ImageSize.Width, Size.ImageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);

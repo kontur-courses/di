@@ -26,12 +26,12 @@ public class TagCloudConstructor
         var words = parser.Parse(text);
         words = new WordPreprocessor().Process(words);
         var wordsFrequency = FrequencyDictionary.GetWordsFrequency(words);
-        var textBoxes = wrapper.Wrap(wordsFrequency);
+        var texts = wrapper.Wrap(wordsFrequency);
         
-        layouter.PlaceTexts(textBoxes);
+        layouter.PlaceTexts(texts);
         layouter.Clear();
         
-        return drawer.Draw(textBoxes);
+        return drawer.Draw(texts);
     }
 
     private ICloudDrawer drawer;

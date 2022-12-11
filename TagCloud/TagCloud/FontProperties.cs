@@ -3,9 +3,9 @@
 public class FontProperties
 {
     public FontProperties(float minSize = 10f,
-        float maxSize = 96f,
+        float maxSize = 64f,
         FontStyle style = FontStyle.Regular,
-        HorizontalAlignment textAlign = HorizontalAlignment.Center)
+        ContentAlignment textAlign = ContentAlignment.MiddleCenter)
     {
         MinSize = minSize;
         MaxSize = maxSize;
@@ -17,5 +17,5 @@ public class FontProperties
     public float MinSize { get; set; }
     public float MaxSize { get; set; }
     public FontStyle Style { get; set; }
-    public HorizontalAlignment TextAlign { get; set; }
+    public ContentAlignment TextAlign { get; set; }
 }

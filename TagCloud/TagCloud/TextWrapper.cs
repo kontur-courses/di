@@ -9,20 +9,21 @@ public class TextWrapper
         FontProperties = fontProperties;
     }
 
-    public IEnumerable<TextBox> Wrap(Dictionary<string, int> wordsWithSize)
+    public IEnumerable<Label> Wrap(Dictionary<string, int> wordsWithSize)
     {
         var maxCount = wordsWithSize.Values.Max();
-        var textBoxes = new List<TextBox>();
+        var texts = new List<Label>();
         foreach (var word in wordsWithSize)
         {
-            var text = new TextBox();
+            var text = new Label();
             text.Text = word.Key;
             text.TextAlign = FontProperties.TextAlign;
             var size = ComputeFontSize(word.Value, maxCount, FontProperties.MinSize, FontProperties.MaxSize);
             text.Font = new Font(FontProperties.Family, size, FontProperties.Style);
-            textBoxes.Add(text);
+            text.AutoSize = true;
+            texts.Add(text);
         }
-        return textBoxes;
+        return texts;
     }
     
     private static float ComputeFontSize(float count, float maxCount, float minSize, float maxSize) =>
