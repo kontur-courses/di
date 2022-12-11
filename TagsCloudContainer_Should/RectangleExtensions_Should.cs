@@ -2,10 +2,10 @@
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer.App.Layouter;
 
-namespace TagsCloudContainer.App.Layouter
+namespace TagsCloudContainer_Should
 {
-    [TestFixture]
     public class RectangleExtensions_Should
     {
         [Test]

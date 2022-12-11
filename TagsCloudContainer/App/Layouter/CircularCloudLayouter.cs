@@ -69,14 +69,5 @@ namespace TagsCloudContainer.App.Layouter
             }
             return rect;
         }
-
-        //public void SaveBitmap(string bmpName)
-        //{
-        //    var bitmap = new Bitmap(800, 500);
-        //    using var graphics = Graphics.FromImage(bitmap);
-        //    var blackPen = new Pen(Color.Black, 1);
-        //    graphics.DrawRectangles(blackPen, Rectangles.ToArray());
-        //    bitmap.Save(btmName + ".bmp");
-        //}
     }
 }

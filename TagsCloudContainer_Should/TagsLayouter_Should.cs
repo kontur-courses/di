@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using NUnit.Framework;
-using DeepMorphy;
-using System.Text;
+﻿using NUnit.Framework;
+//using DeepMorphy;
 
-namespace TagsCloudContainer.App.Layouter
+namespace TagsCloudContainer_Should
 
 {
     [TestFixture]
