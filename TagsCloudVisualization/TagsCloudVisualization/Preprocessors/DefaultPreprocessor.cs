@@ -6,7 +6,7 @@ public class DefaultPreprocessor : IPreprocessor
     {
         Dictionary<string, int> result = new();
         text = text.ToLower();
-        var words = text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        var words = text.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var word in words)
         {
             if (result.ContainsKey(word))
