@@ -34,7 +34,7 @@ public static class OptionsExtensions
         {
             "rainbow" => new RainbowColorGenerator(new Random()),
             "random" => new RandomColorGenerator(new Random()),
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException("Such color generator not supported")
         };
     }
 
@@ -44,7 +44,7 @@ public static class OptionsExtensions
         {
             "jpeg" => new JpegImageSaver(),
             "png" => new PngImageSaver(),
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException("Such image saver not supported")
         };
     }
 
@@ -55,7 +55,7 @@ public static class OptionsExtensions
         {
             "circular" => new CircularCloudLayouter(new SpiralPointGenerator(point)),
             "random" => new CircularCloudLayouter(new RandomPointGenerator(new Random())),
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException("Such layouter algorithm not supported")
         };
         return algorithm;
     }

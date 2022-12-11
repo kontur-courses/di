@@ -9,6 +9,9 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CloudLayouter;
 using TagsCloudVisualization.CloudLayouter.PointGenerator;
+using TagsCloudVisualization.ColorGenerator;
+using TagsCloudVisualization.ImageSavers;
+using TagsCloudVisualization.ImageSettings;
 
 namespace TagsCloudVisualization.Tests;
 
@@ -42,8 +45,9 @@ public class CircularCloudLayouterTests
 
         var filename = $"{TestContext.CurrentContext.Test.Name}.png";
         var fullpath = Path.Combine(directoryPath, filename);
-        using var image = new ImageGenerator().Generate(rectangles);
-        image.Save(fullpath, ImageFormat.Png);
+        var generator = new Drawer.ImageDrawer(new PngImageSaver(), new ImageSettingsProvider(Color.White, 1600, 1600));
+        var colorGenerator = new RainbowColorGenerator(new Random());
+        generator.Draw(rectangles.Select(r => new RectangleImage(r, colorGenerator)).ToList(), fullpath);
         TestContext.Error.WriteLine($"Tag cloud visualization saved to file {fullpath}");
     }
 

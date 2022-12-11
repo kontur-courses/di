@@ -12,7 +12,7 @@ public class TxtTextProvider : ITextProvider
     {
         if (!File.Exists(path))
         {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException("Such txt file not found");
         }
 
         return File.ReadLines(path);

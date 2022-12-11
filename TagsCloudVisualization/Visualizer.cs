@@ -1,5 +1,5 @@
-﻿using TagsCloudVisualization.Preprocessors;
-using TagsCloudVisualization.TagDrawer;
+﻿using TagsCloudVisualization.Drawer;
+using TagsCloudVisualization.Preprocessors;
 using TagsCloudVisualization.TagFactory;
 using TagsCloudVisualization.TextProviders;
 using TagsCloudVisualization.ToTagConverter;
@@ -12,19 +12,19 @@ public class Visualizer
     private readonly IPreprocessor preprocessor;
     private readonly IToTagConverter tagConverter;
     private readonly ITagFactory tagFactory;
-    private readonly ITagsDrawer tagsDrawer;
+    private readonly IDrawer drawer;
 
     public Visualizer(ITextProvider textProvider,
         IPreprocessor preprocessor,
         IToTagConverter tagConverter,
         ITagFactory tagFactory,
-        ITagsDrawer tagsDrawer)
+        IDrawer drawer)
     {
         this.textProvider = textProvider;
         this.preprocessor = preprocessor;
         this.tagConverter = tagConverter;
         this.tagFactory = tagFactory;
-        this.tagsDrawer = tagsDrawer;
+        this.drawer = drawer;
     }
 
     public void Visualize(string path, int tagCount)
@@ -33,7 +33,7 @@ public class Visualizer
         var processedText = preprocessor.Process(text);
         var tags = tagConverter.Convert(processedText);
         var tagImages = tags.Select(x => tagFactory.Create(x)).Take(tagCount).ToList();
-        tagsDrawer.Draw(tagImages,path);
+        drawer.Draw(tagImages,path);
     }
     
 }

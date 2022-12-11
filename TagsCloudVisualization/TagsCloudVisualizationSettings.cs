@@ -22,8 +22,7 @@ public class TagsCloudVisualizationSettings
     public IColorGenerator ColorGenerator { get; set; }
 
     public AbstractImageSaver ImageSaver { get; set; }
-
-    public IReadOnlyCollection<IPreprocessor> Preprocessors { get; set; } = Array.Empty<IPreprocessor>();
+    
     public IReadOnlyCollection<string> BoringWords { get; set; } = Array.Empty<string>();
     
     public int TagCount { get; set; }

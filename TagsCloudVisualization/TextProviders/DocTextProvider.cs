@@ -14,7 +14,7 @@ public class DocTextProvider : ITextProvider
     {
         if (!File.Exists(path))
         {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException("Such Doc file not found");
         }
 
         yield return DocX.Load(path).Text;

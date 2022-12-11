@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TagsCloudVisualization.Drawer;
 using TagsCloudVisualization.Preprocessors;
-using TagsCloudVisualization.TagDrawer;
 using TagsCloudVisualization.TagFactory;
 using TagsCloudVisualization.TextProviders;
 using TagsCloudVisualization.ToTagConverter;
@@ -20,7 +20,7 @@ public static class Bootstrapper
         services.AddScoped(_ => settings.ColorGenerator);
         services.AddScoped(_ => settings.FontSettingsProvider);
         services.AddScoped(_ => GetTextProvider(settings.Filepath));
-        services.AddScoped<ITagsDrawer, TagDrawer.TagsDrawer>();
+        services.AddScoped<IDrawer, ImageDrawer>();
         services.AddScoped(_ => settings.ImageSaver);
         services.AddPreprocessors(settings);
         return services;
@@ -30,7 +30,7 @@ public static class Bootstrapper
     {
         if (string.IsNullOrWhiteSpace(path))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("File path not set");
         }
 
         var extension = Path.GetExtension(path).TrimStart('.');
@@ -44,12 +44,12 @@ public static class Bootstrapper
 
     private static void AddPreprocessors(this IServiceCollection services, TagsCloudVisualizationSettings settings)
     {
-        var list = new List<IPreprocessor>
+        var preprocessors = new List<IPreprocessor>
         {
             new LowerCasePreprocessor(),
             new BoringPreprocessor(settings.BoringWords.ToList())
         };
 
-        services.AddSingleton<IPreprocessor>(_ => new MultiPreprocessor(list));
+        services.AddSingleton<IPreprocessor>(_ => new MultiPreprocessor(preprocessors));
     }
 }

@@ -5,10 +5,6 @@ using TagsCloudVisualization.CLI;
 using TagsCloudVisualization.CLI.Extensions;
 
 var result = Parser.Default.ParseArguments<Options>(args);
-if (result.Errors.Any())
-{
-    throw new ArgumentException();
-}
 
 var settings = result.Value.GetVisualizationSettings();
 

@@ -2,20 +2,20 @@
 using TagsCloudVisualization.ImageSavers;
 using TagsCloudVisualization.ImageSettings;
 
-namespace TagsCloudVisualization.TagDrawer;
+namespace TagsCloudVisualization.Drawer;
 
-public class TagsDrawer : ITagsDrawer
+public class ImageDrawer : IDrawer
 {
     private readonly IImageSettingsProvider settingsProvider;
     private readonly AbstractImageSaver imageSaver;
 
-    public TagsDrawer(AbstractImageSaver imageSaver, IImageSettingsProvider settingsProvider)
+    public ImageDrawer(AbstractImageSaver imageSaver, IImageSettingsProvider settingsProvider)
     {
         this.settingsProvider = settingsProvider;
         this.imageSaver = imageSaver;
     }
 
-    public void Draw(IReadOnlyCollection<TagImage> tagImages, string filePath)
+    public void Draw(IReadOnlyCollection<IDrawImage> drawImages, string filePath)
     {
         var settings = settingsProvider.GetSettings();
         using var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
@@ -25,31 +25,28 @@ public class TagsDrawer : ITagsDrawer
         var bounds = new Rectangle(Point.Empty, settings.ImageSize);
         var offset = settings.ImageSize / 2;
 
-        foreach (var tag in tagImages)
-        {
-            tag.Bound.Offset(offset.Width, offset.Height);
-        }
+        var shifted = drawImages.Select(tag => tag.Offset(offset)).ToList();
 
-        Validate(tagImages, bounds);
+        Validate(shifted, bounds);
 
-        DrawTags(tagImages, graphics);
+        Draw(shifted, graphics);
 
         imageSaver.Save(filePath, image);
     }
 
-    private void DrawTags(IReadOnlyCollection<TagImage> tagImages, Graphics graphics)
+    private void Draw(IReadOnlyCollection<IDrawImage> drawImages, Graphics graphics)
     {
-        foreach (var drawable in tagImages)
+        foreach (var drawable in drawImages)
         {
             drawable.Draw(graphics);
         }
     }
 
-    private void Validate(IReadOnlyCollection<TagImage> tagImages, Rectangle bounds)
+    private void Validate(IReadOnlyCollection<IDrawImage> tagImages, Rectangle bounds)
     {
         foreach (var tag in tagImages)
         {
-            if (!bounds.Contains(tag.Bound))
+            if (!bounds.Contains(tag.Bounds))
                 throw new Exception("Rectangles don't fit");
         }
     }
