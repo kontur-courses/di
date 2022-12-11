@@ -15,11 +15,11 @@ public class PreprocessorsTest
     }
 
     [TestCase("a")]
-    [TestCase("a b c")]
+    [TestCase("a\nb\nc")]
     public void SeparatedBySpaceTest(string text)
     {
         var result = preprocessor.Preprocessing(text);
-        var exepectedResultKeys = text.Split(" ");
+        var exepectedResultKeys = text.Split("\n");
         var expectedResultValues = exepectedResultKeys.Select(key => text.SubstringCount(key));
         result.Keys
             .Should()
