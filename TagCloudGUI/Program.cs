@@ -43,7 +43,7 @@ namespace TagCloudGraphicalUserInterface
             builder.RegisterType<SourceTagsAction>().As<IActionForm>();
             builder.RegisterType<PaletteAction>().As<IActionForm>();
 
-            builder.RegisterType<ArithmeticSpiral>().As<IPointer>().InstancePerLifetimeScope();
+            builder.RegisterType<ArithmeticSpiral>().As<IPointer>();
             builder.RegisterType<FontSettings>().As<IFontSettings>();
             builder.RegisterType<RectangleBuilder>().As<IRectangleBuilder>();
             builder.RegisterType<CloudCreateSettings>().As<ICloudCreateSettings>();
