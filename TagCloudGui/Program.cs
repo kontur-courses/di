@@ -59,7 +59,7 @@ namespace TagCloudGui
             containerBuilder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
             containerBuilder.RegisterType<SimpleWordPreprocessor>().As<IWordPreprocessor>();
             containerBuilder.RegisterType<WordTagCloudCreator>().As<ITagCloudCreator>();
-            containerBuilder.RegisterType<TagCloudBitmapVisualization>().As<ITagCloudVisualization>();
+            containerBuilder.RegisterType<WordTagCloudBitmapVisualization>().As<ITagCloudVisualization>();
             containerBuilder.RegisterType<TagCloudVisualizationSettings>().As<ITagCloudVisualizationSettings>().
                 SingleInstance();
         }

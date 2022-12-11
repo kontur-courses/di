@@ -6,7 +6,6 @@ namespace TagCloud.Tags
     {
         public Rectangle Frame { get; }
         public Size Size { get; }
-        public void DrawIn(Graphics graphics, Brush byBrush);
         public void ShiftTo(Size shift);
     }
 }

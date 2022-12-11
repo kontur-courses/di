@@ -7,9 +7,16 @@ namespace TagCloud.WordPreprocessors
 {
     public class SimpleWordPreprocessor : IWordPreprocessor
     {
+        private readonly IReader wordsReader;
+        private readonly IBoringWordsStorage boringWordsStorage;
         private HashSet<string> boringWords;
 
-        public IEnumerable<string> GetPreprocessedWords(IReader wordsReader, IBoringWordsStorage boringWordsStorage)
+        public SimpleWordPreprocessor(IReader wordsReader, IBoringWordsStorage boringWordsStorage)
+        {
+            this.wordsReader = wordsReader;
+            this.boringWordsStorage = boringWordsStorage;
+        }
+        public IEnumerable<string> GetPreprocessedWords()
         {
             boringWords = boringWordsStorage.GetBoringWords();
             var lowerCaseWords = СonvertToLowerCase(wordsReader.ReadWords());

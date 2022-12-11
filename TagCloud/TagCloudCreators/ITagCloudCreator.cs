@@ -1,9 +1,16 @@
-﻿using TagCloud.TagCloudVisualizations;
+﻿using TagCloud.CloudLayouters;
+using TagCloud.TagCloudVisualizations;
+using TagCloud.WordPreprocessors;
 
 namespace TagCloud.TagCloudCreators
 {
     public interface ITagCloudCreator
     {
-        TagCloud GenerateTagCloud(ITagCloudVisualizationSettings settings);
+        public delegate ITagCloudCreator Factory(
+            ICloudLayouter.Factory cloudLayouterFactory,
+            IWordPreprocessor wordPreprocessor,
+            ITagCloudVisualizationSettings settings);
+
+        public TagCloud TagCloud { get; }
     }
 }

@@ -16,14 +16,12 @@ namespace TagCloudTests
     {
         private readonly string failedTestsPictureFolder = "FailedTestsPicture";
         private CircularCloudLayouter cloudLayouter;
-        private LayoutTagCloudCreator layoutTagCloudCreator;
 
         [SetUp]
         public void PrepareCircularCloudLayouter()
         {
             var center = new Point();
             cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
-            layoutTagCloudCreator = null;
         }
 
         [TearDown]
@@ -39,17 +37,7 @@ namespace TagCloudTests
 
             File.WriteAllText(filePath + ".txt", $"The test {context.Test.FullName} failed with an error: {context.Result.Message}" + 
                                                  Environment.NewLine + "StackTrace:" + context.Result.StackTrace);
-            
-            if (layoutTagCloudCreator != null)
-            {
-                var visualization = new TagCloudBitmapVisualization(layoutTagCloudCreator);
-                var settings = new TagCloudVisualizationSettings();
-                visualization.Save(filePath, settings);
-                TestContext.WriteLine($"Tag cloud visualization saved to file {filePath}");
-            }
         }
-
-
 
         [TestCase(0, 0, TestName = "in zero point")]
         [TestCase(5, 10, TestName = "in point(5, 10)")]

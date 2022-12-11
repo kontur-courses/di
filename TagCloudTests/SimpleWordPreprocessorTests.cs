@@ -47,9 +47,8 @@ namespace TagCloudTests
 
         private IEnumerable<string> GetPreprocessedWords()
         {
-            wordPreprocessor = new SimpleWordPreprocessor();
-            var preprocessedWords = wordPreprocessor.
-                GetPreprocessedWords(wordsReader, boringWordsStorage);
+            wordPreprocessor = new SimpleWordPreprocessor(wordsReader, boringWordsStorage);
+            var preprocessedWords = wordPreprocessor.GetPreprocessedWords();
             return preprocessedWords;
         }
     }

@@ -11,16 +11,11 @@ namespace TagCloud.Tags
 
         public Font Font { get; }
 
-        public Word(string word, Font font, ICloudLayouter circularCloudLayouter) :base(GetTextLayout(word, font))
+        public Word(string word, Font font, ICloudLayouter circularCloudLayouter) : base(GetTextLayout(word, font))
         {
             Text = word;
             Font = font;
             frame = circularCloudLayouter.PutNextRectangle(Size);
-        }
-
-        public override void DrawIn(Graphics graphics, Brush byBrush)
-        {
-            graphics.DrawString(Text, Font, byBrush, Frame.Location);
         }
 
         private static Size GetTextLayout(string word, Font font)

@@ -2,24 +2,33 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using TagCloud.CloudLayouters;
 using TagCloud.TagCloudCreators;
+using TagCloud.Tags;
+using TagCloud.WordPreprocessors;
 
 namespace TagCloud.TagCloudVisualizations
 {
-    public class TagCloudBitmapVisualization : ITagCloudVisualization
+    public abstract class TagCloudBitmapVisualization : ITagCloudVisualization
     {
         private readonly Random random = new Random();
-        private readonly ITagCloudCreator tagCloudCreator;
+        private readonly ICloudLayouter.Factory cloudLayouterFactory;
+        private readonly IWordPreprocessor wordPreprocessor;
+        private readonly ITagCloudCreator.Factory tagCloudCreatorFactory;
         private TagCloud tagCloud;
 
-        public TagCloudBitmapVisualization(ITagCloudCreator tagCloudCreator)
+        public TagCloudBitmapVisualization(ICloudLayouter.Factory cloudLayouterFactory,
+            IWordPreprocessor wordPreprocessor, ITagCloudCreator.Factory tagCloudCreatorFactory)
         {
-            this.tagCloudCreator = tagCloudCreator;
+            this.cloudLayouterFactory = cloudLayouterFactory;
+            this.wordPreprocessor = wordPreprocessor;
+            this.tagCloudCreatorFactory = tagCloudCreatorFactory;
         }
 
-        public void PrepareImage(Graphics inGraphics, ITagCloudVisualizationSettings settings)
+        public void PrepareImage(Graphics inGraphics,
+            ITagCloudVisualizationSettings settings)
         {
-            PrepareTagCloud(settings);
+            tagCloud = tagCloudCreatorFactory(cloudLayouterFactory, wordPreprocessor, settings).TagCloud;
 
             var bitmap = CreateTagCloudBitmap(settings);
             
@@ -33,9 +42,10 @@ namespace TagCloud.TagCloudVisualizations
             inGraphics.DrawImage(bitmap, rect);
         }
         
-        public void Save(string file, ITagCloudVisualizationSettings settings)
+        public void Save(string file,
+            ITagCloudVisualizationSettings settings)
         {
-            PrepareTagCloud(settings);
+            tagCloud = tagCloudCreatorFactory(cloudLayouterFactory, wordPreprocessor, settings).TagCloud;
 
             var bitmap = CreateTagCloudBitmap(settings);
 
@@ -43,11 +53,6 @@ namespace TagCloud.TagCloudVisualizations
                 bitmap = new Bitmap(bitmap, settings.PictureSize.Value);
 
             bitmap.Save(file, ImageFormat.Png);
-        }
-
-        private void PrepareTagCloud(ITagCloudVisualizationSettings settings)
-        {
-            tagCloud = tagCloudCreator.GenerateTagCloud(settings);
         }
 
         private Bitmap CreateTagCloudBitmap(ITagCloudVisualizationSettings settings)
@@ -64,12 +69,17 @@ namespace TagCloud.TagCloudVisualizations
             {
                 tag.ShiftTo(frameShift);
                 //TODO: переделать
-                tag.DrawIn(graphics, settings.TextColor == null
+                DrawIn(graphics, tag, settings.TextColor == null
                     ? GetRandomBrush(settings.BackgroundColor)
                     : new SolidBrush(settings.TextColor.Value));
             }
 
             return bitmap;
+        }
+
+        public virtual void DrawIn(Graphics graphics, ITag tag, Brush byBrush)
+        {
+            throw new NotImplementedException();
         }
 
         private Brush GetRandomBrush(Color? excludingColor) =>

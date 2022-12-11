@@ -32,9 +32,6 @@ namespace TagCloud.Tags
             throw new NotImplementedException();
         }
 
-        public virtual void DrawIn(Graphics graphics, Brush byBrush) => 
-            graphics.DrawRectangle(new Pen(byBrush), Frame);
-
         public override bool Equals(object obj) => Equals(obj as Layout);
 
         public bool Equals(Layout layout) =>

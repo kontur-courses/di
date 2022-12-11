@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloud.BoringWordsRepositories;
 using TagCloud.CloudLayouters;
-using TagCloud.Readers;
 using TagCloud.TagCloudVisualizations;
 using TagCloud.Tags;
 using TagCloud.WordPreprocessors;
@@ -13,60 +11,59 @@ namespace TagCloud.TagCloudCreators
 {
     public class WordTagCloudCreator : ITagCloudCreator
     {
-        private readonly IReader wordReader;
-        private readonly IBoringWordsStorage boringWordsStorage;
         private readonly ICloudLayouter.Factory cloudLayouterFactory;
         private ICloudLayouter cloudLayouter;
         private readonly IWordPreprocessor wordPreprocessor;
         private IOrderedEnumerable<KeyValuePair<string, int>> wordsWithRate;
-        
-        public WordTagCloudCreator(IReader wordReader, 
-            IBoringWordsStorage boringWordsStorage, 
+        private readonly ITagCloudVisualizationSettings settings;
+        public TagCloud TagCloud { get; private set; }
+
+        public delegate ITagCloudCreator Factory(
+            ICloudLayouter.Factory cloudLayouterFactory,
+            IWordPreprocessor wordPreprocessor,
+            ITagCloudVisualizationSettings settings);
+
+        public WordTagCloudCreator(
             ICloudLayouter.Factory cloudLayouterFactory, 
-            IWordPreprocessor wordPreprocessor)
+            IWordPreprocessor wordPreprocessor,
+            ITagCloudVisualizationSettings settings)
         {
-            if (wordReader == null 
-                || boringWordsStorage == null
-                || cloudLayouterFactory == null
-                || wordPreprocessor == null)
+            if (cloudLayouterFactory == null
+                || wordPreprocessor == null
+                || settings == null)
             {
                 throw new ArgumentNullException(
-                    $"{nameof(IReader)}, {nameof(IBoringWordsStorage)}, {nameof(ICloudLayouter.Factory)} and {nameof(IWordPreprocessor)} are required for this method");
+                    $"{nameof(ICloudLayouter.Factory)}, {nameof(ITagCloudVisualizationSettings)} and {nameof(IWordPreprocessor)} are required for this method");
             }
 
-            this.wordReader = wordReader;
-            this.boringWordsStorage = boringWordsStorage;
             this.cloudLayouterFactory = cloudLayouterFactory;
             this.wordPreprocessor = wordPreprocessor;
+            this.settings = settings;
+            GenerateTagCloud();
         }
 
-        public TagCloud GenerateTagCloud(ITagCloudVisualizationSettings settings)
+        private void GenerateTagCloud()
         {
-            if (settings == null)
-                throw new ArgumentNullException(
-                    $"{nameof(ITagCloudVisualizationSettings)} is required for this method");
-
             cloudLayouter = cloudLayouterFactory.Invoke();
-            PrepareWords(wordReader, settings);
-            var tagCloud = new TagCloud(cloudLayouter.Center);
-            PrepareTagCloud(tagCloud, settings);
-            return tagCloud;
+            PrepareWords();
+            TagCloud = new TagCloud(cloudLayouter.Center);
+            PrepareTagCloud();
         }
 
-        private void PrepareWords(IReader wordReader, ITagCloudVisualizationSettings settings)
+        private void PrepareWords()
         {
-            var words = wordPreprocessor.GetPreprocessedWords(wordReader, boringWordsStorage);
+            var words = wordPreprocessor.GetPreprocessedWords();
             wordsWithRate = words.GroupBy(word => word).
                 Select(group => new KeyValuePair<string, int>(group.Key, group.Count())).
                 OrderByDescending(group => group.Value);
         }
 
-        private void PrepareTagCloud(TagCloud tagCloud, ITagCloudVisualizationSettings settings)
+        private void PrepareTagCloud()
         {
             foreach (var word in wordsWithRate)
             {
                 var font = new Font(settings.FontFamilyName, GetFontSize(word.Value, settings.TextScale));
-                tagCloud.Layouts.Add(new Word(word.Key, font, cloudLayouter));
+                TagCloud.Layouts.Add(new Word(word.Key, font, cloudLayouter));
             }
         }
 
