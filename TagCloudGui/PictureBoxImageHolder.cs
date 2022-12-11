@@ -42,8 +42,6 @@ namespace TagCloudGui
 
         public void SaveImage(string fileName)
         {
-            //TODO: SaveImage
-            throw new NotImplementedException();
             FailIfNotInitialized();
             Image.Save(fileName);
         }

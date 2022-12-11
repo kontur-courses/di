@@ -69,6 +69,7 @@ namespace TagCloudGui
             containerBuilder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             containerBuilder.RegisterType<TextFileReadAction>().As<IUiAction>();
             containerBuilder.RegisterType<WordTagCloudCreateAction>().As<IUiAction>();
+            containerBuilder.RegisterType<ImageSaveAction>().As<IUiAction>();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using TagCloud.TagCloudCreators;
 
 namespace TagCloud.TagCloudVisualizations
@@ -63,21 +62,26 @@ namespace TagCloud.TagCloudVisualizations
             foreach (var tag in tagCloud.Layouts)
             {
                 tag.ShiftTo(frameShift);
-                var byBrush = GetRandomBrush();
-                tag.DrawIn(graphics, byBrush);
+                //TODO: переделать
+                tag.DrawIn(graphics, settings.TextColor == null
+                    ? GetRandomBrush(settings.BackgroundColor)
+                    : new SolidBrush(settings.TextColor.Value));
             }
 
             return bitmap;
         }
 
-        private Brush GetRandomBrush() =>
-            new SolidBrush(GetRandomColor());
+        private Brush GetRandomBrush(Color? excludingColor) =>
+            new SolidBrush(GetRandomColor(excludingColor));
         
-        private Color GetRandomColor()
+        private Color GetRandomColor(Color? excludingColor)
         {
             var knownColors = (KnownColor[])Enum.GetValues(typeof(KnownColor));
             var randomColorName = knownColors[random.Next(knownColors.Length)];
-            return Color.FromKnownColor(randomColorName);
+            var randomColor = Color.FromKnownColor(randomColorName);
+            return excludingColor == null || randomColor != excludingColor 
+                ? randomColor
+                : GetRandomColor(excludingColor);
         }
     }
 }
