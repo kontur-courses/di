@@ -27,6 +27,13 @@ public class ConsoleOptions
     
     [Option('d', "density", Required = false, Default = 0.1, HelpText = "Cloud density")]
     public double Density { get; set; }
+    
+    [Option("background", Required = false, Default = "#000000", HelpText = "Background color")]
+    public string BackgroundColor { get; set; }
+    
+    [Option("foreground", Required = false, Default = "#ffffff", HelpText = "Foreground color")]
+    public string ForegroundColor { get; set; }
+    
 
     public void Apply(IContainer container)
     {
@@ -35,6 +42,9 @@ public class ConsoleOptions
         ApplyFileOption(container);
         var cloudProperties = container.Resolve<CloudProperties>();
         cloudProperties.Density = Density;
+        var palette = container.Resolve<Palette>();
+        palette.Background = ColorTranslator.FromHtml(BackgroundColor);
+        palette.Foreground = ColorTranslator.FromHtml(ForegroundColor);
     }
     
     private void ApplySizeOption(IComponentContext container)
