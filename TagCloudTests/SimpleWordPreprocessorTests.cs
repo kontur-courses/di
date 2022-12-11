@@ -20,7 +20,7 @@ namespace TagCloudTests
         {
             wordsReader = new SingleWordInRowTextFileReader();
             boringWordsStorage = new TextFileBoringWordsStorage(new SingleWordInRowTextFileReader());
-            wordsReader.Open("aboutKonturWords.txt");
+            wordsReader.SetFile("aboutKonturWords.txt");
         }
 
         [Test]

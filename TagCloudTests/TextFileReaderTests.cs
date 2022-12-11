@@ -24,7 +24,7 @@ namespace TagCloudTests
             CreateTextFileWithData(path);
 
             var fileReader = new SingleWordInRowTextFileReader();
-            fileReader.Open(path);
+            fileReader.SetFile(path);
 
             CheckThatDataIsReadBy(fileReader);
             DeleteFile(path);
@@ -33,7 +33,7 @@ namespace TagCloudTests
         public void SingleWordInRowTextFileReader_Read_FileWithoutWords()
         {
             var fileReader = new SingleWordInRowTextFileReader();
-            fileReader.Open("empty.txt");
+            fileReader.SetFile("empty.txt");
 
             fileReader.ReadWords().Should().BeEmpty();
         }
@@ -45,7 +45,7 @@ namespace TagCloudTests
             Action act = () => 
             {
                 var reader = new SingleWordInRowTextFileReader();
-                reader.Open(path);
+                reader.SetFile(path);
             };
 
             act.Should().Throw<FileNotFoundException>();

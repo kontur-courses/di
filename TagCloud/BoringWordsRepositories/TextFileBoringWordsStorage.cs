@@ -20,7 +20,7 @@ namespace TagCloud.BoringWordsRepositories
         public void LoadBoringWords(string path)
         {
             boringWords.Clear();
-            reader.Open(path);
+            reader.SetFile(path);
             boringWords = reader.ReadWords().
                 Select(word => word.ToLower())
                 .ToHashSet();

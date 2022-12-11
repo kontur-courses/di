@@ -10,7 +10,7 @@ namespace TagCloud.Readers
 
         public string FileExtFilter => "txt files (*.txt)|*.txt";
 
-        public void Open(string path)
+        public void SetFile(string path)
         {
             if (path == null) 
                 throw new ArgumentNullException(nameof(path));

@@ -22,7 +22,7 @@ namespace TagCloudGui.Actions
             using FileDialog fd = new OpenFileDialog();
             fd.Filter = reader.FileExtFilter;
             if (fd.ShowDialog() == DialogResult.OK)
-                reader.Open(fd.FileName);
+                reader.SetFile(fd.FileName);
         }
     }
 }

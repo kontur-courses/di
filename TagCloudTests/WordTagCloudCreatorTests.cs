@@ -24,7 +24,7 @@ namespace TagCloudTests
 
             var wordsReader = new SingleWordInRowTextFileReader();
             if(wordDictionaryPath != null)
-                wordsReader.Open(wordDictionaryPath);
+                wordsReader.SetFile(wordDictionaryPath);
             var boringWordsStorage = new TextFileBoringWordsStorage(new SingleWordInRowTextFileReader());
             if(boringWordDictionaryPath != null)
                 boringWordsStorage.LoadBoringWords(boringWordDictionaryPath);

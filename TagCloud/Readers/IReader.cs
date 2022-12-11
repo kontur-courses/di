@@ -5,7 +5,7 @@ namespace TagCloud.Readers
     public interface IReader
     {
         public string FileExtFilter { get; }
-        public void Open(string path);
+        public void SetFile(string path);
         public IEnumerable<string> ReadWords();
     }
 }
