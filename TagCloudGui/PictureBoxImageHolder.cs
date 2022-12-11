@@ -40,10 +40,10 @@ namespace TagCloudGui
                     PixelFormat.Format24bppRgb);
         }
 
-        public void SaveImage(string fileName)
+        public void SaveImage(string fileName, ImageFormat format)
         {
             FailIfNotInitialized();
-            Image.Save(fileName);
+            Image.Save(fileName, format);
         }
     }
 }

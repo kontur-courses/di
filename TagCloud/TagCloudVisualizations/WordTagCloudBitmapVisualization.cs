@@ -1,24 +1,16 @@
-﻿using System.Drawing;
-using TagCloud.CloudLayouters;
-using TagCloud.TagCloudCreators;
+﻿using System;
+using System.Drawing;
 using TagCloud.Tags;
-using TagCloud.WordPreprocessors;
 
 namespace TagCloud.TagCloudVisualizations
 {
     public class WordTagCloudBitmapVisualization : TagCloudBitmapVisualization
     {
-        public WordTagCloudBitmapVisualization(
-            ICloudLayouter.Factory cloudLayouterFactory, 
-            IWordPreprocessor wordPreprocessor, 
-            ITagCloudCreator.Factory tagCloudCreatorFactory) : 
-            base(cloudLayouterFactory, wordPreprocessor, tagCloudCreatorFactory)
-        {
-        }
-
-        public override void DrawIn(Graphics graphics, ITag tag, Brush byBrush)
+        protected override void DrawIn(Graphics graphics, ITag tag, Brush byBrush)
         {
             var word = tag as Word;
+            if (word == null)
+                throw new NullReferenceException("wrong type of tag");
             graphics.DrawString(word.Text, word.Font, byBrush, word.Frame.Location);
         }
     }

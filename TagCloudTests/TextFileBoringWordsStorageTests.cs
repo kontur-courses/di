@@ -8,10 +8,12 @@ namespace TagCloudTests
     public class TextFileBoringWordsStorageTests
     {
         private IBoringWordsStorage boringWordsStorage;
+        private IBoringWordsReader wordReader;
         [SetUp]
         public void CreateTextFileBoringWordsStorageTests()
         {
-            boringWordsStorage = new TextFileBoringWordsStorage(new SingleWordInRowTextFileReader());
+            wordReader = new SingleWordInRowTextFileReader();
+            boringWordsStorage = new TextFileBoringWordsStorage(wordReader);
         }
 
         [Test]
@@ -32,6 +34,12 @@ namespace TagCloudTests
         {
             boringWordsStorage.LoadBoringWords(path);
             boringWordsStorage.GetBoringWords().Should().HaveCountGreaterThan(1);
+        }
+
+        [Test]
+        public void TextFileBoringWordsStorage_FileExtFilter_IsEqualToBaseIBoringWordsReader()
+        {
+            boringWordsStorage.FileExtFilter.Should().BeEquivalentTo(wordReader.FileExtFilter);
         }
     }
 }

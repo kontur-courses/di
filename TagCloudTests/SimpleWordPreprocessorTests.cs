@@ -38,6 +38,7 @@ namespace TagCloudTests
         {
             var words = wordsReader.ReadWords();
             boringWordsStorage.LoadBoringWords(boringWordsPath);
+
             var boringWords = boringWordsStorage.GetBoringWords();
             var preprocessedWords = GetPreprocessedWords();
 

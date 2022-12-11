@@ -10,7 +10,7 @@ namespace TagCloudTests
     {
         [TestCase(0,0, TestName = "center in zero")]
         [TestCase(3, 5, TestName = "non-zero center")]
-        public void GetNextPoint_FirstPointCreatedInCenter_When(int centerX, int centerY)
+        public void SpiralPointGenerator_GetNextPoint_FirstPointCreatedInCenter_When(int centerX, int centerY)
         {
             var center = new Point(centerX, centerY);
             var spiralPointGenerator = new SpiralPointGenerator(center);
@@ -22,7 +22,7 @@ namespace TagCloudTests
 
         [TestCase(0, 0, TestName = "center in zero")]
         [TestCase(3, 5, TestName = "non-zero center")]
-        public void GetNextPoint_NewPointsAreMovingAwayFromCenter_When(int centerX, int centerY)
+        public void SpiralPointGenerator_GetNextPoint_NewPointsAreMovingAwayFromCenter_When(int centerX, int centerY)
         {
             var center = new Point(centerX, centerY);
             var spiralPointGenerator = new SpiralPointGenerator(center);

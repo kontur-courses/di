@@ -18,6 +18,7 @@ namespace TagCloudTests
             data = Enumerable.Range(20,40).Select(RandomString).ToArray();
         }
 
+        [Test]
         public void SingleWordInRowTextFileReader_Read_Data()
         {
             var path = "TextFileData.txt";
@@ -30,6 +31,7 @@ namespace TagCloudTests
             DeleteFile(path);
         }
 
+        [Test]
         public void SingleWordInRowTextFileReader_Read_FileWithoutWords()
         {
             var fileReader = new SingleWordInRowTextFileReader();
@@ -49,6 +51,20 @@ namespace TagCloudTests
             };
 
             act.Should().Throw<FileNotFoundException>();
+        }
+
+        [TestCase(null, TestName = "is null")]
+        [TestCase("", TestName = "is whitespace")]
+        public void SingleWordInRowTextFileReader_Ctor_ThrowArgumentNullExceptionWhenPath(string path)
+        {
+            // ReSharper disable once ObjectCreationAsStatement
+            Action act = () =>
+            {
+                var reader = new SingleWordInRowTextFileReader();
+                reader.SetFile(path);
+            };
+
+            act.Should().Throw<ArgumentNullException>();
         }
 
         private string RandomString(int length)

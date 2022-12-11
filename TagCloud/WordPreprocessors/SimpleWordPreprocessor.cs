@@ -16,6 +16,7 @@ namespace TagCloud.WordPreprocessors
             this.wordsReader = wordsReader;
             this.boringWordsStorage = boringWordsStorage;
         }
+
         public IEnumerable<string> GetPreprocessedWords()
         {
             boringWords = boringWordsStorage.GetBoringWords();

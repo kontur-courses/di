@@ -6,7 +6,7 @@ using TagCloud.Tags;
 
 namespace TagCloud
 {
-    public class TagCloud
+    public class TagCloud : ITagCloud
     {
         public Point Center { get; }
 
@@ -36,9 +36,9 @@ namespace TagCloud
             throw new NotImplementedException();
         }
 
-        public override bool Equals(object obj) => Equals(obj as TagCloud);
+        public override bool Equals(object obj) => Equals(obj as ITagCloud);
 
-        public bool Equals(TagCloud other)
+        public bool Equals(ITagCloud other)
         {
             return other != null &&
                    other.Center == Center &&

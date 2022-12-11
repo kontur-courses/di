@@ -12,11 +12,12 @@ namespace TagCloud.TagCloudCreators
     public class WordTagCloudCreator : ITagCloudCreator
     {
         private readonly ICloudLayouter.Factory cloudLayouterFactory;
-        private ICloudLayouter cloudLayouter;
         private readonly IWordPreprocessor wordPreprocessor;
-        private IOrderedEnumerable<KeyValuePair<string, int>> wordsWithRate;
         private readonly ITagCloudVisualizationSettings settings;
-        public TagCloud TagCloud { get; private set; }
+
+        private ICloudLayouter cloudLayouter;
+        private IOrderedEnumerable<KeyValuePair<string, int>> wordsWithRate;
+        private ITagCloud tagCloud;
 
         public delegate ITagCloudCreator Factory(
             ICloudLayouter.Factory cloudLayouterFactory,
@@ -28,43 +29,35 @@ namespace TagCloud.TagCloudCreators
             IWordPreprocessor wordPreprocessor,
             ITagCloudVisualizationSettings settings)
         {
-            if (cloudLayouterFactory == null
-                || wordPreprocessor == null
-                || settings == null)
-            {
-                throw new ArgumentNullException(
-                    $"{nameof(ICloudLayouter.Factory)}, {nameof(ITagCloudVisualizationSettings)} and {nameof(IWordPreprocessor)} are required for this method");
-            }
-
             this.cloudLayouterFactory = cloudLayouterFactory;
             this.wordPreprocessor = wordPreprocessor;
             this.settings = settings;
-            GenerateTagCloud();
         }
 
-        private void GenerateTagCloud()
+        public ITagCloud GenerateTagCloud()
         {
-            cloudLayouter = cloudLayouterFactory.Invoke();
             PrepareWords();
-            TagCloud = new TagCloud(cloudLayouter.Center);
-            PrepareTagCloud();
+            return PrepareTagCloud();
         }
 
         private void PrepareWords()
         {
+            cloudLayouter = cloudLayouterFactory.Invoke();
             var words = wordPreprocessor.GetPreprocessedWords();
             wordsWithRate = words.GroupBy(word => word).
                 Select(group => new KeyValuePair<string, int>(group.Key, group.Count())).
                 OrderByDescending(group => group.Value);
         }
 
-        private void PrepareTagCloud()
+        private ITagCloud PrepareTagCloud()
         {
+            tagCloud = new TagCloud(cloudLayouter.Center);
             foreach (var word in wordsWithRate)
             {
                 var font = new Font(settings.FontFamilyName, GetFontSize(word.Value, settings.TextScale));
-                TagCloud.Layouts.Add(new Word(word.Key, font, cloudLayouter));
+                tagCloud.Layouts.Add(new Word(word.Key, font, cloudLayouter));
             }
+            return tagCloud;
         }
 
         private int GetFontSize(int wordRate, int scale) =>

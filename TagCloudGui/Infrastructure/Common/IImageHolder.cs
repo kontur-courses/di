@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudGui.Infrastructure.Common
@@ -9,6 +10,6 @@ namespace TagCloudGui.Infrastructure.Common
         Graphics StartDrawing();
         void UpdateUi();
         void RecreateImage(ITagCloudVisualizationSettings settings);
-        void SaveImage(string fileName);
+        void SaveImage(string fileName, ImageFormat format);
     }
 }

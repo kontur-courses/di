@@ -1,4 +1,5 @@
-﻿using TagCloud.TagCloudVisualizations;
+﻿using TagCloud.TagCloudCreators;
+using TagCloud.TagCloudVisualizations;
 using TagCloudGui.Infrastructure;
 using TagCloudGui.Infrastructure.Common;
 
@@ -8,15 +9,18 @@ namespace TagCloudGui.Actions
     {
         private readonly ITagCloudVisualizationSettings settings;
         private readonly ITagCloudVisualization visualization;
+        private readonly ITagCloudCreator tagCloudCreator;
         private readonly IImageHolder imageHolder;
 
         public WordTagCloudCreateAction(
             IImageHolder imageHolder,
             ITagCloudVisualization visualization, 
+            ITagCloudCreator tagCloudCreator,
             ITagCloudVisualizationSettings settings)
         {
             this.imageHolder = imageHolder;
             this.visualization = visualization;
+            this.tagCloudCreator = tagCloudCreator;
             this.settings = settings;
         }
 
@@ -29,7 +33,8 @@ namespace TagCloudGui.Actions
         {
             using (var graphics = imageHolder.StartDrawing())
             {
-                visualization.PrepareImage(graphics, settings);
+                var tagCloud = tagCloudCreator.GenerateTagCloud();
+                visualization.PrepareImage(graphics, tagCloud, settings);
             }
             imageHolder.UpdateUi();
         }

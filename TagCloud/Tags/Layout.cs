@@ -7,9 +7,7 @@ namespace TagCloud.Tags
     public class Layout : ITag
     {
         protected Rectangle frame;
-
         public Rectangle Frame => frame;
-
         public Size Size { get; }
 
         public Layout(Rectangle frame)
@@ -32,7 +30,8 @@ namespace TagCloud.Tags
             throw new NotImplementedException();
         }
 
-        public override bool Equals(object obj) => Equals(obj as Layout);
+        public override bool Equals(object obj) => 
+            Equals(obj as Layout);
 
         public bool Equals(Layout layout) =>
             layout != null && Frame == layout.Frame;

@@ -12,7 +12,7 @@ namespace TagCloud.Readers
 
         public void SetFile(string path)
         {
-            if (path == null) 
+            if (string.IsNullOrWhiteSpace(path)) 
                 throw new ArgumentNullException(nameof(path));
 
             if (!File.Exists(path))

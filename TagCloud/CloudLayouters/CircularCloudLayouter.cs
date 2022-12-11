@@ -10,19 +10,18 @@ namespace TagCloud.CloudLayouters
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        public Point Center => pointGenerator.GetCenterPoint();
+        public Point Center { get; }
 
         private readonly IPointGenerator pointGenerator;
-        private readonly IPointGenerator.Factory pointGeneratorFactory;
         private readonly List<Rectangle> rectangles;
 
         public delegate ICloudLayouter Factory(IPointGenerator.Factory pointGeneratorFactory);
 
         public CircularCloudLayouter(IPointGenerator.Factory pointGeneratorFactory)
         {
-            this.pointGeneratorFactory = pointGeneratorFactory;
-            this.rectangles = new List<Rectangle>();
-            this.pointGenerator = this.pointGeneratorFactory.Invoke();
+            rectangles = new List<Rectangle>();
+            pointGenerator = pointGeneratorFactory.Invoke();
+            Center = pointGenerator.GetCenterPoint();
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -53,7 +52,7 @@ namespace TagCloud.CloudLayouters
         private Size GetCenterFor(Size rectangleSize) =>
             new Size(-rectangleSize.Width / 2, -rectangleSize.Height / 2);
 
-        public TagCloud GetTagCloudOfLayout()
+        public ITagCloud GetTagCloudOfLayout()
         {
             var tagCloud = new TagCloud(pointGenerator.GetCenterPoint());
             tagCloud.Layouts.AddRange(rectangles.Select(rectangle => new Layout(rectangle)));

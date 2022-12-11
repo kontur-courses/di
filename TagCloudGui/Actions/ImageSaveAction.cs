@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TagCloudGui.Infrastructure;
@@ -26,8 +27,21 @@ namespace TagCloudGui.Actions
                 $"{GetFileNameFrom(codec)} file ({codec.FilenameExtension})|{codec.FilenameExtension}"));
             if (fd.ShowDialog() == DialogResult.OK)
             {
-                imageHolder.SaveImage(fd.FileName);
+                imageHolder.SaveImage(fd.FileName, GetImageFormatBy(Path.GetExtension(fd.FileName)));
             }
+        }
+
+        private ImageFormat GetImageFormatBy(string extenstion)
+        {
+            return extenstion.ToLower() switch
+            {
+                ".bmp" => ImageFormat.Bmp,
+                ".jpg" => ImageFormat.Jpeg,
+                ".tif" => ImageFormat.Tiff,
+                ".gif" => ImageFormat.Gif,
+                ".png" => ImageFormat.Png,
+                _ => throw new FormatException("Не удалось определить формат изображения")
+            };
         }
 
         private string GetFileNameFrom(ImageCodecInfo imageCodecInfo) =>

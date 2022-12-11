@@ -11,6 +11,6 @@ namespace TagCloud.TagCloudCreators
             IWordPreprocessor wordPreprocessor,
             ITagCloudVisualizationSettings settings);
 
-        public TagCloud TagCloud { get; }
+        public ITagCloud GenerateTagCloud();
     }
 }

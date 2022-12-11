@@ -7,8 +7,6 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud.CloudLayouters;
 using TagCloud.PointGenerators;
-using TagCloud.TagCloudCreators;
-using TagCloud.TagCloudVisualizations;
 
 namespace TagCloudTests
 {
@@ -25,7 +23,7 @@ namespace TagCloudTests
         }
 
         [TearDown]
-        public void SavePicture_WhenTestFailed()
+        public void SaveExceptionText_WhenTestFailed()
         {
             var context = TestContext.CurrentContext;
             if (context.Result.Outcome.Status != TestStatus.Failed)
@@ -41,20 +39,19 @@ namespace TagCloudTests
 
         [TestCase(0, 0, TestName = "in zero point")]
         [TestCase(5, 10, TestName = "in point(5, 10)")]
-        public void Ctor_SetCenterPoint(int x, int y)
+        public void CircularCloudLayouter_Ctor_SetCenterPoint(int x, int y)
         {
             var planningCenter = new Point(x, y);
 
-            var tagCloud = new CircularCloudLayouter(() => new SpiralPointGenerator(planningCenter)).GetTagCloudOfLayout();
+            cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(planningCenter));
 
-            tagCloud.GetWidth().Should().Be(0);
-            tagCloud.GetHeight().Should().Be(0);
+            cloudLayouter.Center.Should().BeEquivalentTo(planningCenter);
         }
 
         [TestCase(0, 0, TestName = "width and height are equal to zero")]
         [TestCase(0, 10, TestName = "width is zero")]
         [TestCase(10, 0, TestName = "height is zero")]
-        public void PutNextRectangle_ThrowArgumentException_When(int width, int height)
+        public void CircularCloudLayouter_PutNextRectangle_ThrowArgumentException_When(int width, int height)
         {
             Action act = () => cloudLayouter.PutNextRectangle(new Size(width, height));
 
@@ -63,7 +60,7 @@ namespace TagCloudTests
 
         [TestCase(0, 0, 350, 750)]
         [TestCase(3, 3, 500, 500)]
-        public void PutNextRectangle_ReturnedNotIntersectedRectangle(int centerX, int centerY, int firstRectWidth, int firstRectHeight)
+        public void CircularCloudLayouter_PutNextRectangle_ReturnedNotIntersectedRectangle(int centerX, int centerY, int firstRectWidth, int firstRectHeight)
         {
             var center = new Point(centerX, centerY);
             cloudLayouter = new CircularCloudLayouter(() => new SpiralPointGenerator(center));
