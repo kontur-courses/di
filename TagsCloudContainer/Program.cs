@@ -1,8 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using Autofac;
+﻿using Autofac;
+using TagsCloudContainer.Application;
 
 namespace TagsCloudContainer
 {
@@ -10,23 +7,9 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-            var builder = new ContainerBuilder();
-            builder.Register(x => new Settings()
-                {
-                    WordColor = Color.Purple,
-                    WordFontName = "Arial",
-                    WordFontSize = 16
-                })
-                .As<Settings>();
-            builder.Register(x =>
-                    new WordHandler($"{projectDirectory}\\TextFiles\\Example.txt"))
-                .As<WordHandler>();
-            builder.Register(x => new CircularCloudLayouter(new Point()))
-                .As<CircularCloudLayouter>();
-            builder.RegisterType<RectangleVisualisator>().AsSelf();
-
-            builder.Build();
+            var container = Container.SetDIBuilder();
+            var app = container.Resolve<IApp>();
+            app.Run();
         }
     }
 }
