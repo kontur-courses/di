@@ -39,6 +39,8 @@ public class PropertyPanel : TableLayoutPanel
         openFileButton.Anchor = AnchorStyles.Right;
         Controls.Add(openFileButton);
         
+        Controls.Add(excludedWords);
+        
         renderButton.Anchor = AnchorStyles.Bottom;
         renderButton.Dock = DockStyle.Bottom;
         Controls.Add(renderButton);
@@ -67,6 +69,7 @@ public class PropertyPanel : TableLayoutPanel
         foregroundColor.ColorChanged += OnForegroundColorChanged;
         openFileButton.FileChanged += OnFileChanged;
         density.Control.ValueChanged += OnDensityChanged;
+        excludedWords.ExcludedWordsChanged += OnExcludedExcludedWordsChanged;
     }
     
     protected override void Dispose(bool disposing)
@@ -79,6 +82,7 @@ public class PropertyPanel : TableLayoutPanel
         foregroundColor.ColorChanged -= OnForegroundColorChanged;
         openFileButton.FileChanged -= OnFileChanged;
         density.Control.ValueChanged -= OnDensityChanged;
+        excludedWords.ExcludedWordsChanged -= OnExcludedExcludedWordsChanged;
         base.Dispose(disposing);
     }
 
@@ -123,6 +127,12 @@ public class PropertyPanel : TableLayoutPanel
         renderButton.IsRenderAvailable = true;
     }
 
+    private ExcludedWords excludedWords = new ();
+    private void OnExcludedExcludedWordsChanged(object? sender, EventArgs args)
+    {
+        properties.CloudProperties.ExcludedWords = excludedWords.Text.Split(' ', '\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+    }
+    
     private ControlWithDescription<NumericUpDown> density = new (new NumericUpDown(), "Density");
     private void OnDensityChanged(object? sender, EventArgs args)
     {
