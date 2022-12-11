@@ -53,7 +53,7 @@ namespace TagsCloudContainer.Algorithm
         {
             var proc = (double)wordCount / (double)totalWordsCount;
             return new Size((int)(imageSettings.Width * 0.7 * proc),
-                (int)(imageSettings.Height * 0.7 * proc));
+                (int)(imageSettings.Width * 0.7 * proc * 0.5));
         }
 
         private Rectangle GetNextRectangle(Size rectangleSize)
