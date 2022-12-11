@@ -12,7 +12,7 @@ namespace TagCloudUnitTests
         [SetUp]
         public void Setup()
         {
-            convertersExecutor = new ConvertersExecutor();
+            convertersExecutor = new ConvertersExecutor( new IWordConverter[] { });
         }
 
         [Test]

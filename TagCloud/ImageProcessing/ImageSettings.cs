@@ -11,9 +11,9 @@ namespace TagCloud.ImageProcessing
 
         public FontFamily FontFamily { get; set; } = new FontFamily("Times New Roman");
 
-        public int MinFontSize { get; set; } = 36;
+        public int MinFontSize { get; set; } = 12;
 
-        public int MaxFontSize { get; set; } = 12;
+        public int MaxFontSize { get; set; } = 36;
 
         public IWordColoring WordColoring { get; set; } = new BlackColoring();
     }

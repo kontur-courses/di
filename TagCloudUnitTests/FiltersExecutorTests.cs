@@ -12,7 +12,7 @@ namespace TagCloudUnitTests
         [SetUp]
         public void Setup()
         {
-            filtersExecutor = new FiltersExecutor();
+            filtersExecutor = new FiltersExecutor(new IWordFilter[] { });
         }
 
         [Test]

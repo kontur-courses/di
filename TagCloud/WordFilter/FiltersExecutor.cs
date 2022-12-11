@@ -7,7 +7,7 @@ namespace TagCloud.WordFilter
     {
         private readonly List<IWordFilter> Filters = new List<IWordFilter>();
 
-        public FiltersExecutor(params IWordFilter[] filters)
+        public FiltersExecutor(IWordFilter[] filters)
         {
             foreach (var filter in filters)
                 RegisterFilter(filter);

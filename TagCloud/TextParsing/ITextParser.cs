@@ -2,7 +2,7 @@
 
 namespace TagCloud.TextParsing
 {
-    internal interface ITextParser
+    public interface ITextParser
     {
         IReadOnlyList<string> GetWords(string text);
     }

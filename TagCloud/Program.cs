@@ -12,49 +12,63 @@ using TagCloud.WordColoring;
 using TagCloud.ImageProcessing;
 using TagCloud.CloudLayouter;
 using TagCloud.TextParsing;
+using Autofac;
+using TagCloud.AppConfig;
+using TagCloud.App;
 
 namespace TagCloud
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static IContainer container;
+
+        static IContainer ConfigureContainer(IAppConfig appConfig)
         {
-            var text = new TxtFileReader().ReadAllText("TestText.txt");
+            var builder = new ContainerBuilder();
 
-            var words = new TextParser().GetWords(text);
+            //получение текста и списка слов
+            builder.RegisterType<TxtFileReader>().As<IFileReader>();
 
-            var converterExecutor = new ConvertersExecutor();
-            converterExecutor.RegisterConverter(new ToLowerConverter());
+            builder.RegisterType<TextParser>().As<ITextParser>();
 
-            var filtersExecutor = new FiltersExecutor();
-            filtersExecutor.RegisterFilter(new BoringWordFilter());
+            builder.RegisterType<ToInitialFormConverter>().As<IWordConverter>();
+            builder.RegisterType<ToLowerConverter>().As<IWordConverter>();
+            builder.RegisterType<ConvertersExecutor>().As<IConvertersExecutor>();
 
-            var convertedWords = converterExecutor.Convert(words);
+            builder.RegisterType<BoringWordFilter>().As<IWordFilter>();
+            builder.RegisterType<FiltersExecutor>().As<IFiltersExecutor>();
 
-            var filteredWords = filtersExecutor.Filter(convertedWords);
+            builder.RegisterType<WordsFrequencyAnalyzer>().As<IWordsFrequencyAnalyzer>();
 
-            var frequencies = new WordsFrequencyAnalyzer().GetFrequencies(filteredWords);
+            //получение раскладчика
+            builder.Register(c => new CircularCloudLayouter(new Point(0, 0))).As<ICloudLayouter>(); //переделать конструктор для доп получения IPointGenerator
+            // builder.RegisterType<ArchimedeanSpiral>.As<IPointGenerator>() 
+            // сделать наследование от IPointGenerator
 
-            var gradientColoring = new GradientColoring()
-            {
-                MinValue = frequencies.Min(pair => pair.Value),
-                MaxValue = frequencies.Max(pair => pair.Value)
-            };
+            //получение настроек изображения
+            builder.Register(с => appConfig.imageSettings).As<IImageSettings>(); 
+            builder.Register(с => appConfig.imageSettings.WordColoring).As<IWordColoring>();  // передать макс и мин значения в сдучае GradientColoring
+            builder.Register(с => appConfig.imageSettings.FontFamily).As<FontFamily>();
 
-            var imageSettings = new ImageSettings()
-            {
-                WordColoring = gradientColoring
-            };
+            //получение генератор изображения
+            builder.RegisterType<CloudImageGenerator>().AsSelf(); // сделать интерфейс ICloudImageGenerator // мб возьмёт не тот конструктор, указать нужный конструктоор
 
-            var layouter = new CircularCloudLayouter(new Point(0, 0));
+            //получение приложения
+            builder.RegisterType<ConsoleApp>().As<IApp>();
 
-            var imageGenerator = new CloudImageGenerator(layouter, imageSettings);
-
-            var bitmap = imageGenerator.GenerateBitmap(frequencies);
-
-            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, "TagCloudImages", "GradientWordCloud.png");
+            return builder.Build();
         }
 
+        static void Main(string[] args)
+        {
+            var appConfig = new AppConfigProvider(args).GetAppConfig();
+
+            container = ConfigureContainer(appConfig);
+
+            var app = container.Resolve<IApp>();
+
+            app.Run(appConfig);
+        }
         private static void CreateTestText()
         {
             var lines = File.ReadAllLines("TestWords.txt");

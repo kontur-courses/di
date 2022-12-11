@@ -7,7 +7,7 @@ namespace TagCloud.WordConverter
     {
         private readonly List<IWordConverter> Converters = new List<IWordConverter>();
 
-        public ConvertersExecutor(params IWordConverter[] converters)
+        public ConvertersExecutor(IWordConverter[] converters)
         {
             foreach (var converter in converters)
                 RegisterConverter(converter);
