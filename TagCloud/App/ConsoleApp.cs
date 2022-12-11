@@ -17,34 +17,28 @@ namespace TagCloud.App
         private readonly IConvertersExecutor convertersExecutor;
         private readonly IFiltersExecutor filtersExecutor;
         private readonly IWordsFrequencyAnalyzer wordsFrequencyAnalyzer;
-        private readonly ICloudLayouter cloudLayouter;
-        private readonly IImageSettings imageSettings;
-        private readonly CloudImageGenerator cloudImageGenerator; // переделать на интерфейс ICloudImageGenerator
+        private readonly ICloudImageGenerator cloudImageGenerator;
 
         public ConsoleApp(IFileReader fileReader, 
                           ITextParser textParser, 
                           IConvertersExecutor convertersExecutor, 
                           IFiltersExecutor filtersExecutor, 
                           IWordsFrequencyAnalyzer wordsFrequencyAnalyzer, 
-                          ICloudLayouter cloudLayouter, 
-                          IImageSettings imageSettings, 
-                          CloudImageGenerator cloudImageGenerator)
+                          ICloudImageGenerator cloudImageGenerator)
         {
             this.fileReader = fileReader;
             this.textParser = textParser;
             this.convertersExecutor = convertersExecutor;
             this.filtersExecutor = filtersExecutor;
             this.wordsFrequencyAnalyzer = wordsFrequencyAnalyzer;
-            this.cloudLayouter = cloudLayouter;
-            this.imageSettings = imageSettings;
             this.cloudImageGenerator = cloudImageGenerator;
         }
 
         public void Run(IAppConfig appConfig)
         {
-            var text = new TxtFileReader().ReadAllText(appConfig.inputTextFilePath);
+            var text = fileReader.ReadAllText(appConfig.inputTextFilePath);
 
-            var words = new TextParser().GetWords(text);
+            var words = textParser.GetWords(text);
 
             var convertedWords = convertersExecutor.Convert(words);
 
@@ -54,7 +48,7 @@ namespace TagCloud.App
 
             var bitmap = cloudImageGenerator.GenerateBitmap(frequencies);
 
-            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, "TagCloudImages", "GradientWordCloud.png");
+            ImageSaver.SaveBitmapInSolutionSubDirectory(bitmap, appConfig.inputTextFilePath,appConfig.outputImageFilePath);
         }
     }
 }

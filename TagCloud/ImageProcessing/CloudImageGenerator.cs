@@ -6,7 +6,7 @@ using TagCloud.CloudLayouter;
 
 namespace TagCloud.ImageProcessing
 {
-    public class CloudImageGenerator
+    public class CloudImageGenerator : ICloudImageGenerator
     {
         private readonly ICloudLayouter layouter;
 

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace TagCloud.CloudLayouter
 {
-    public class ArchimedeanSpiral
+    public class ArchimedeanSpiral : IPointGenerator
     {
         private const double DeltaAngle = 2 * Math.PI / 360;
 

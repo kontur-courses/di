@@ -81,9 +81,12 @@
     <Compile Include="App\IApp.cs" />
     <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="ContainerConfig.cs" />
     <Compile Include="FileReader\DocxFileReader.cs" />
+    <Compile Include="ImageProcessing\ICloudImageGenerator.cs" />
     <Compile Include="ImageProcessing\ImageSettings.cs" />
     <Compile Include="CloudLayouter\Vector.cs" />
+    <Compile Include="CloudLayouter\IPointGenerator.cs" />
     <Compile Include="WordColoring\BlackColoring.cs" />
     <Compile Include="WordColoring\GradientColoring.cs" />
     <Compile Include="WordColoring\IWordColoring.cs" />

@@ -10,13 +10,13 @@ namespace TagCloud.AppConfig
     internal class AppConfig : IAppConfig
     {
         public string inputTextFilePath { get; set; }
-        public string outputImageFileFullPath { get; set; }
+        public string outputImageFilePath { get; set; }
         public IImageSettings imageSettings { get; set; }
 
         public AppConfig(string inputTextFileFullPath, string outputImageFileFullPath, IImageSettings imageSettings)
         {
             this.inputTextFilePath = inputTextFileFullPath;
-            this.outputImageFileFullPath = outputImageFileFullPath;
+            this.outputImageFilePath = outputImageFileFullPath;
             this.imageSettings = imageSettings;
         }
     }

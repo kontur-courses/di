@@ -9,7 +9,7 @@ namespace TagCloud.CloudLayouter
     {
         public Point CloudCenter { get; }
 
-        private readonly ArchimedeanSpiral spiral;
+        private readonly IPointGenerator pointGenerator;
 
         private readonly List<Rectangle> rectangles = new List<Rectangle>();
 
@@ -17,7 +17,7 @@ namespace TagCloud.CloudLayouter
         {
             CloudCenter = cloudCenter;
 
-            spiral = new ArchimedeanSpiral(CloudCenter);
+            pointGenerator = new ArchimedeanSpiral(CloudCenter);
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)
@@ -29,7 +29,7 @@ namespace TagCloud.CloudLayouter
 
             do
             {
-                var pointToPutRectangle = spiral.GetNextPoint();
+                var pointToPutRectangle = pointGenerator.GetNextPoint();
 
                 rectangle = new Rectangle(pointToPutRectangle, rectangleSize);
 
