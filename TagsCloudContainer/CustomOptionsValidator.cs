@@ -8,11 +8,11 @@ namespace TagsCloudContainer
         {
             if (options is null)
                 throw new ArgumentNullException(nameof(options));
-            if (!Directory.Exists(options.TextsPath))
+            if (!Directory.Exists(options.WorkingDir))
                 throw new ArgumentException("Texts directory does not exist");
-            if (!File.Exists(Path.Combine(options.TextsPath, options.WordsFileName)))
+            if (!File.Exists(Path.Combine(options.WorkingDir, options.WordsFileName)))
                 throw new ArgumentException("Tag file does not exist");
-            if (!File.Exists(Path.Combine(options.TextsPath, options.BoringWordsName)))
+            if (!File.Exists(Path.Combine(options.WorkingDir, options.BoringWordsName)))
                 throw new ArgumentException("Exclude words file does not exist");
             var color = Color.FromName(options.BackgroundColor);
             if (!color.IsKnownColor)
@@ -24,7 +24,7 @@ namespace TagsCloudContainer
                 throw new ArgumentException("Font size should be above 0");
             if (options.PictureSize < 1)
                 throw new ArgumentException("Picture size should be above 0");
-            if (options.MaxTagSize > options.PictureSize)
+            if (options.MaxTagSize >= options.PictureSize)
                 throw new ArgumentException("Font size should be less than picture size");
             var font = new Font(options.Font, 1);
             if (font.Name != options.Font)

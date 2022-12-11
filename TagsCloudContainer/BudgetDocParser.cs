@@ -4,7 +4,7 @@ using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer
 {
-    internal class BudgetDocParser : IDocParser
+    public class BudgetDocParser : IDocParser
     {
         public List<string> ParseDoc(string filePath)
         {

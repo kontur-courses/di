@@ -17,7 +17,7 @@ namespace TagsCloudContainer
 
         public Dictionary<string, int> GetWordsInFile(ICustomOptions options)
         {
-            var inputWordPath = Path.Combine(options.TextsPath, options.WordsFileName);
+            var inputWordPath = Path.Combine(options.WorkingDir, options.WordsFileName);
             var bufferedWords = new List<string>();
 
             if (options.WordsFileName[options.WordsFileName.LastIndexOf('.')..] != ".txt")
@@ -30,7 +30,7 @@ namespace TagsCloudContainer
             bufferedWords = bufferedWords
                 .Select(x => x.ToLower())
                 .ToList();
-            var tmpFilePath = Path.Combine(options.TextsPath, "tmp.txt");
+            var tmpFilePath = Path.Combine(options.WorkingDir, "tmp.txt");
             File.WriteAllLines(tmpFilePath, bufferedWords);
 
             var cmd = $"mystem.exe -nig {tmpFilePath}";
@@ -38,7 +38,7 @@ namespace TagsCloudContainer
             var proc = new ProcessStartInfo
             {
                 UseShellExecute = false,
-                WorkingDirectory = Path.Combine(options.TextsPath),
+                WorkingDirectory = Path.Combine(options.WorkingDir),
                 FileName = @"C:\Windows\System32\cmd.exe",
                 Arguments = "/C" + cmd,
                 RedirectStandardOutput = true,
@@ -54,7 +54,7 @@ namespace TagsCloudContainer
 
             File.Delete(tmpFilePath);
 
-            var boringWords = File.ReadAllLines(Path.Combine(options.TextsPath, options.BoringWordsName))
+            var boringWords = File.ReadAllLines(Path.Combine(options.WorkingDir, options.BoringWordsName))
                 .Select(x => x.ToLower())
                 .ToList();
 

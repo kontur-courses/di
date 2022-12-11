@@ -5,7 +5,7 @@
         int PictureSize { get; set; }
         int MinTagSize { get; set; }
         int MaxTagSize { get; set; }
-        string TextsPath { get; set; }
+        string WorkingDir { get; set; }
         string WordsFileName { get; set; }
         string BoringWordsName { get; set; }
         string Font { get; set; }
