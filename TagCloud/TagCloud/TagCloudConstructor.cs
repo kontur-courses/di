@@ -24,7 +24,7 @@ public class TagCloudConstructor
     {
         var text = textLoader.Load(applicationProperties.Path);
         var words = parser.Parse(text);
-        words = new WordPreprocessor().Process(words);
+        words = new WordPreprocessor().Process(words, applicationProperties.CloudProperties.ExcludedWords);
         var wordsFrequency = FrequencyDictionary.GetWordsFrequency(words);
         var texts = wrapper.Wrap(wordsFrequency);
         

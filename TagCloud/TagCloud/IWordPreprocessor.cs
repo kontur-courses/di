@@ -2,5 +2,5 @@
 
 public interface IWordPreprocessor
 {
-    public IEnumerable<string> Process(IEnumerable<string> words);
+    public IEnumerable<string> Process(IEnumerable<string> words, IEnumerable<string>? excludedWords);
 }
