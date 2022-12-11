@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Autofac;
-using TagsCloud.FileConverter;
-using TagsCloud.FileConverter.Implementation;
-using TagsCloud.FileReader;
-using TagsCloud.FileReader.Implementation;
-using TagsCloud.WordHandler;
-using TagsCloud.WordHandler.Implementation;
+using TagsCloud.ContainerConfigurator;
+using TagsCloud.ContainerConfigurator.Implementation;
 
 namespace TagsCloud.WPF
 {
@@ -24,23 +20,11 @@ namespace TagsCloud.WPF
         private static void Main()
         {
             var app = new App();
-            var container = GetContainer();
+            var container = GetContainer(new WpfContainerDocx<MainWindow>());
             var window = container.Resolve<MainWindow>();
             app.Run(window);
         }
 
-        private static IContainer GetContainer()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<MainWindow>().SingleInstance();
-            builder.Register(_ => new string("../../../Words.docx")).As<string>();
-            builder.RegisterType<LowerCaseHandler>().As<IWordHandler>();
-            builder.RegisterType<BoringRusWordsHandler>().As<IWordHandler>();
-            builder.RegisterType<RecurringWordsHandler>().As<IWordHandler>();
-            builder.RegisterType<DocxReader>().As<IFileReader>();
-            builder.RegisterType<ConvertToTxt>().As<IFileConverter>();
-
-            return builder.Build();
-        }
+        private static IContainer GetContainer(IContainerConfigurator config) => config.GetContainer();
     }
 }
