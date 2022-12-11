@@ -12,11 +12,11 @@ public class DefaultRectanglesDistributor : IRectanglesDistributor
     private Dictionary<string, Rectangle> distrubutedRectangles;
 
     public DefaultRectanglesDistributor(IWordsHandler wordsHandler,
-        ISettingsProvider settingsProvider)
+        ISettingsProvider settingsProvider, ICloudLayouter cloudLayouter)
     {
         settings = settingsProvider.Settings;
         this.wordsHandler = wordsHandler;
-        layouter = LayouterRegistry.GetLayout(settings.Layouter);
+        layouter = cloudLayouter;
     }
 
     public Dictionary<string, Rectangle> DistributedRectangles

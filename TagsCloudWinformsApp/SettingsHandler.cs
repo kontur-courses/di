@@ -16,8 +16,7 @@ namespace TagsCloudWinformsApp
                 FontColor = LocalSettings.FontColor,
                 Font = LocalSettings.Font,
                 FrequencyRatio = LocalSettings.FrequencyRatio,
-                ImageSize = LocalSettings.ImageSize,
-                Layouter = LocalSettings.Layouter
+                ImageSize = LocalSettings.ImageSize
             };
 
 
@@ -27,8 +26,7 @@ namespace TagsCloudWinformsApp
             FontColor = Color.Cyan,
             Font = new Font(FontFamily.GenericSerif, 26),
             FrequencyRatio = 1.2f,
-            ImageSize = new Size(1000, 1000),
-            Layouter = LayouterType.Spiral
+            ImageSize = new Size(1000, 1000)
         };
     }
 }

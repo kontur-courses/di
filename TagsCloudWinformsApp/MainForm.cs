@@ -1,7 +1,9 @@
+using System.Configuration;
 using System.Drawing.Imaging;
 using Autofac;
 using TagsCloudContainer;
 using TagsCloudContainer.Colorers;
+using TagsCloudVisualization;
 
 namespace TagsCloudWinformsApp;
 
@@ -17,6 +19,7 @@ public partial class MainForm : Form
         InitializeComponent();
 
         wordColoring_comboBox.SelectedIndex = 0;
+        layout_comboBox.SelectedIndex = 0;
         UpdateSettingsView();
     }
 
@@ -37,12 +40,12 @@ public partial class MainForm : Form
                           settingsHandler.LocalSettings.Font.Name;
         backgroundColor_button.BackColor = settingsHandler.LocalSettings.BackgroundColor;
         fontColor_button.BackColor = settingsHandler.LocalSettings.FontColor;
-        layout_comboBox.SelectedIndex = (int) settingsHandler.LocalSettings.Layouter;
         growthPercent_numeric.Value = (decimal) ((settingsHandler.LocalSettings.FrequencyRatio - 1) * 100);
         imageWidth_numeric.Value = settingsHandler.LocalSettings.ImageSize.Width;
         imageHeight_numeric.Value = settingsHandler.LocalSettings.ImageSize.Height;
 
-        backgroundColor_button.Enabled = wordColoring_comboBox.SelectedIndex != 1;
+        fontColor_button.Visible = wordColoring_comboBox.SelectedIndex != 1;
+        fontColor_label.Visible = wordColoring_comboBox.SelectedIndex != 1;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -73,7 +76,6 @@ public partial class MainForm : Form
 
     private void layout_comboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        settingsHandler.LocalSettings.Layouter = (LayouterType) layout_comboBox.SelectedIndex;
         UpdateSettingsView();
     }
 
@@ -161,6 +163,16 @@ public partial class MainForm : Form
                 break;
             case 2:
                 builder.RegisterType<TransparencyOverFrequencyColorer>().As<IColorer>();
+                break;
+        }
+
+        switch (layout_comboBox.SelectedIndex)
+        {
+            case 0:
+                builder.RegisterInstance(new SpiralCloudLayouter(Point.Empty)).As<ICloudLayouter>();
+                break;
+            case 1:
+                builder.RegisterInstance(new BlockCloudLayouter(Point.Empty)).As<ICloudLayouter>();
                 break;
         }
 

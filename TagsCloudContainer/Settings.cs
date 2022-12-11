@@ -9,5 +9,4 @@ public class Settings
     public Color FontColor;
     public float FrequencyRatio;
     public Size ImageSize;
-    public LayouterType Layouter;
 }
