@@ -13,7 +13,6 @@ public class ApplicationProperties
     public SizeProperties SizeProperties { get; set; } = new();
     public CloudProperties CloudProperties { get; set; } = new()
     {
-        Density = 0.1,
-        AngleStep = 0.1
+        Density = 0.1
     };
 }
