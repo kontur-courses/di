@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FractalPainter", "FractalPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization", "TagsCloudVisualization\TagsCloudVisualization.csproj", "{7D0D2ADB-2992-4346-836B-79A64E81B917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization.Sample", "TagsCloudVisualization.Sample\TagsCloudVisualization.Sample.csproj", "{10DFA6A7-9105-44F0-8CD2-099123179816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization.CLI", "TagsCloudVisualization.CLI\TagsCloudVisualization.CLI.csproj", "{10DFA6A7-9105-44F0-8CD2-099123179816}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudVisualization.Tests", "TagsCloudVisualization.Tests\TagsCloudVisualization.Tests.csproj", "{143E1825-3292-40F8-B740-2EF574EB970D}"
 EndProject
