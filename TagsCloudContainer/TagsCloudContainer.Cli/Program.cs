@@ -1,6 +1,7 @@
 ﻿using DeepMorphy;
 using DryIoc;
 using McMaster.Extensions.CommandLineUtils;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.Cli;
 

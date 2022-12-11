@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer;
+﻿using TagsCloudContainer.Interfaces;
+
+namespace TagsCloudContainer;
 
 public class CliGraphicsProviderSettings : GraphicsProviderSettings
 {

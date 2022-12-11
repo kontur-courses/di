@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer;
+﻿namespace TagsCloudContainer.Interfaces;
 
 public abstract class GraphicsProviderSettings
 {

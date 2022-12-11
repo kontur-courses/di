@@ -33,7 +33,7 @@ public class ClassicDrawer : IDrawer
             classicDrawerSettings.NumbersSize);
         var withoutBordersLocationAddition = new Size(classicDrawerSettings.RectangleBorderSize,
             classicDrawerSettings.RectangleBorderSize);
-        
+
         graphics.FillRectangle(classicDrawerSettings.BackgroundBrush, classicDrawerSettings.ImageRectangle);
         tagPropertyItems.Foreach((item, index) => DrawTag(item.rectangle,
             withoutBordersLocationAddition,

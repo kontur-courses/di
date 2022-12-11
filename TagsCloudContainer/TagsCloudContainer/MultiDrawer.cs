@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer;
+﻿using TagsCloudContainer.Interfaces;
+
+namespace TagsCloudContainer;
 
 public class MultiDrawer
 {
@@ -33,11 +35,11 @@ public class MultiDrawer
             .Select(tuple => tuple.drawer!)
             .ToList();
 
-        foreach (var algorithm in algorithms)
-        foreach (var drawer in drawers)
+        foreach (var drawerInstance in from algorithm in algorithms
+                 from drawer in drawers
+                 let graphics = graphicsProvider.Create()
+                 select drawer(graphics, algorithm))
         {
-            var graphics = graphicsProvider.Create();
-            var drawerInstance = drawer(graphics, algorithm);
             drawerInstance.DrawCloud(cloudWords);
             graphicsProvider.Commit();
         }

@@ -1,6 +1,4 @@
-﻿using TagsCloudContainer.Interfaces;
-
-namespace TagsCloudContainer;
+﻿namespace TagsCloudContainer.Interfaces;
 
 public interface ILayouterAlgorithmFactory
 {
