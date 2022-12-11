@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using System.Text;
 using McMaster.Extensions.CommandLineUtils;
+using TagsCloud2.Lemmatizer;
 
-namespace TagsCloud2;
+namespace TagsCloud2.Manager;
 
 public class ConsoleManager : IManager
 {
@@ -48,11 +49,11 @@ public class ConsoleManager : IManager
         }
 
         var size = Prompt.GetInt(
-            "Изображение будет квадратное, введи размер стороны квадрата (от 1000 до 5000 пикселей)",
+            "Изображение будет квадратное, введи размер стороны квадрата (от 2000 до 4000 пикселей)",
             promptColor: ConsoleColor.White,
             promptBgColor: ConsoleColor.DarkCyan);
 
-        if (size < 1000 && size > 5000)
+        if (size < 2000 && size > 4000)
         {
             Console.WriteLine("Размер не из диапазона :( Пока!");
             return;

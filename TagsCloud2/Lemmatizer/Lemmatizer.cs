@@ -1,4 +1,4 @@
-﻿namespace TagsCloud2;
+﻿namespace TagsCloud2.Lemmatizer;
 
 public class Lemmatizer: ILemmatizer
 {
