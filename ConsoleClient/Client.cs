@@ -1,30 +1,29 @@
-using System.Drawing;
-using TagCloud;
 using TagCloud.Abstractions;
 
 namespace ConsoleClient;
 
 public class Client
 {
-    private readonly IWordsLoader wordsLoader;
-    private readonly IWordsProcessor wordsProcessor;
     private readonly ICloudCreator creator;
+    private readonly IWordsLoader wordsLoader;
+    private readonly IEnumerable<IWordsProcessor> wordsProcessors;
 
     public Client(
         IWordsLoader wordsLoader,
-        IWordsProcessor wordsProcessor,
+        IEnumerable<IWordsProcessor> wordsProcessors,
         ICloudCreator creator)
     {
         this.wordsLoader = wordsLoader;
-        this.wordsProcessor = wordsProcessor;
+        this.wordsProcessors = wordsProcessors;
         this.creator = creator;
     }
 
     public void Execute()
     {
         var words = wordsLoader.Load();
-        words = wordsProcessor.Process(words);
+        foreach (var processor in wordsProcessors)
+            words = processor.Process(words);
         var bitmap = creator.CreateTagCloud(words);
-        bitmap.Save("result.png");
+        bitmap.Save("../../../result.png");
     }
 }
