@@ -5,8 +5,8 @@ namespace TagsCloudContainer
 {
     public class WordsFilter : IWordsFilter
     {
-        public List<string> FilterWords(List<string> taggedWords, List<string> boringWords,
-            ICustomOptions options)
+        public List<string> FilterWords(List<string> taggedWords, ICustomOptions options,
+            List<string>? boringWords = null)
         {
             //PoS - Part of Speech; grammemes - grammatical number etc, including PoS
             var excludedPoS =
@@ -29,8 +29,7 @@ namespace TagsCloudContainer
                     var match = regex.Match(x);
                     return match.Groups[1].Value;
                 }).ToList();
-
-            return inputWords.Where(x => !boringWords.Contains(x)).ToList();
+            return boringWords is null ? inputWords : inputWords.Where(x => !boringWords.Contains(x)).ToList();
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IWordsFilter
     {
-        public List<string> FilterWords(List<string> taggedWords, List<string> boringWords,
-            ICustomOptions options);
+        public List<string> FilterWords(List<string> taggedWords,
+            ICustomOptions options, List<string>? boringWords);
     }
 }

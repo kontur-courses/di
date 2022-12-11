@@ -25,6 +25,8 @@ namespace TagsCloudContainer
             else
                 bufferedWords = File.ReadAllLines(inputWordPath)
                     .ToList();
+            if (bufferedWords.Count == 0)
+                throw new AggregateException("Words file are empty");
             bufferedWords = bufferedWords
                 .Select(x => x.ToLower())
                 .ToList();
@@ -56,7 +58,7 @@ namespace TagsCloudContainer
                 .Select(x => x.ToLower())
                 .ToList();
 
-            var filteredWords = filter.FilterWords(taggedWords, boringWords, options);
+            var filteredWords = filter.FilterWords(taggedWords, options, boringWords);
 
             var result = new Dictionary<string, int>();
             filteredWords.ForEach(x =>
