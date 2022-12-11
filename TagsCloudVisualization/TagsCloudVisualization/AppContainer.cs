@@ -16,7 +16,7 @@ public static class AppContainer
         builder.RegisterType<DefaultCloudGenerator>().As<ICloudGenerator>();
 
         builder
-            .RegisterInstance(new DefaultTextInput(Config.DefaultPath))
+            .RegisterType<DefaultTextInput>()
             .As<ITextInput>();
         builder
             .RegisterInstance(new CircularCloudLayouterSpiral(new Point(Config.CenterX, Config.CenterY)))

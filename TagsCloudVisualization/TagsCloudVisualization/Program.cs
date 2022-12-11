@@ -1,19 +1,4 @@
-﻿using System.Drawing;
-using TagsCloudVisualization;
-using Autofac;
-using TagsCloudVisualization.CloudDrawer;
-using TagsCloudVisualization.TextInput;
+﻿using TagsCloudVisualization.Clients;
 
-AppContainer.Configure();
-
-using (var scope = AppContainer.GetScope())
-{
-    var textInput = scope.Resolve<ITextInput>();
-    var text = textInput.GetInputString();
-
-    var generator = scope.Resolve<ICloudGenerator>();
-    var cloud = generator.GenerateCloud(text);
-
-    var drawer = scope.Resolve<ICloudDrawer>();
-    drawer.Draw(cloud);
-}
+var client = new ConsoleClient(args);
+client.Run();

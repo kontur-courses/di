@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace TagsCloudVisualization;
+﻿namespace TagsCloudVisualization;
 
 public class DefaultPreprocessor : IPreprocessor
 {
