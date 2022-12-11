@@ -1,6 +1,7 @@
 using System.Drawing.Imaging;
 using Autofac;
 using TagsCloudContainer;
+using TagsCloudContainer.Colorers;
 
 namespace TagsCloudWinformsApp;
 
@@ -14,6 +15,8 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
+
+        wordColoring_comboBox.SelectedIndex = 0;
         UpdateSettingsView();
     }
 
@@ -38,6 +41,8 @@ public partial class MainForm : Form
         growthPercent_numeric.Value = (decimal) ((settingsHandler.LocalSettings.FrequencyRatio - 1) * 100);
         imageWidth_numeric.Value = settingsHandler.LocalSettings.ImageSize.Width;
         imageHeight_numeric.Value = settingsHandler.LocalSettings.ImageSize.Height;
+
+        backgroundColor_button.Enabled = wordColoring_comboBox.SelectedIndex != 1;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -145,6 +150,20 @@ public partial class MainForm : Form
         builder.RegisterInstance(settingsHandler).As<ISettingsProvider>();
         builder.RegisterInstance(inputFilesReader).As<IWordSequenceProvider>();
         builder.RegisterInstance(inputFilesReader).As<IWordFilterProvider>();
+
+        switch (wordColoring_comboBox.SelectedIndex)
+        {
+            case 0:
+                builder.RegisterType<SimpleColorer>().As<IColorer>();
+                break;
+            case 1:
+                builder.RegisterType<RandomColorer>().As<IColorer>();
+                break;
+            case 2:
+                builder.RegisterType<TransparencyOverFrequencyColorer>().As<IColorer>();
+                break;
+        }
+
         return builder.Build();
     }
 
@@ -156,5 +175,10 @@ public partial class MainForm : Form
         {
             mainPictureBox.Image.Save(dialog.FileName);
         }
+    }
+
+    private void wordColoring_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateSettingsView();
     }
 }

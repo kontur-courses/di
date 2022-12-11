@@ -31,6 +31,8 @@ partial class MainForm
     {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.fontButton = new System.Windows.Forms.Button();
+            this.wordColoring_label = new System.Windows.Forms.Label();
+            this.wordColoring_comboBox = new System.Windows.Forms.ComboBox();
             this.fontColor_label = new System.Windows.Forms.Label();
             this.fontColor_button = new System.Windows.Forms.Button();
             this.backgroundColor_label = new System.Windows.Forms.Label();
@@ -48,10 +50,10 @@ partial class MainForm
             this.mainPictureBox = new System.Windows.Forms.PictureBox();
             this.generate_button = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.inputFile_button = new System.Windows.Forms.Button();
-            this.chooseFilterFile_button = new System.Windows.Forms.Button();
-            this.removeFilter_button = new System.Windows.Forms.Button();
             this.saveImage_button = new System.Windows.Forms.Button();
+            this.removeFilter_button = new System.Windows.Forms.Button();
+            this.chooseFilterFile_button = new System.Windows.Forms.Button();
+            this.inputFile_button = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.growthPercent_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageWidth_numeric)).BeginInit();
@@ -65,6 +67,8 @@ partial class MainForm
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.Controls.Add(this.fontButton);
+            this.flowLayoutPanel1.Controls.Add(this.wordColoring_label);
+            this.flowLayoutPanel1.Controls.Add(this.wordColoring_comboBox);
             this.flowLayoutPanel1.Controls.Add(this.fontColor_label);
             this.flowLayoutPanel1.Controls.Add(this.fontColor_button);
             this.flowLayoutPanel1.Controls.Add(this.backgroundColor_label);
@@ -80,7 +84,7 @@ partial class MainForm
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(2);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(134, 446);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(134, 516);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // fontButton
@@ -97,10 +101,35 @@ partial class MainForm
             this.fontButton.UseVisualStyleBackColor = true;
             this.fontButton.Click += new System.EventHandler(this.fontButton_Click);
             // 
+            // wordColoring_label
+            // 
+            this.wordColoring_label.AutoSize = true;
+            this.wordColoring_label.Location = new System.Drawing.Point(2, 63);
+            this.wordColoring_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
+            this.wordColoring_label.Name = "wordColoring_label";
+            this.wordColoring_label.Size = new System.Drawing.Size(110, 40);
+            this.wordColoring_label.TabIndex = 8;
+            this.wordColoring_label.Text = "Word Coloring Type:";
+            // 
+            // wordColoring_comboBox
+            // 
+            this.wordColoring_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.wordColoring_comboBox.FormattingEnabled = true;
+            this.wordColoring_comboBox.Items.AddRange(new object[] {
+            "Simple",
+            "Random",
+            "Transparency Over Frequency"});
+            this.wordColoring_comboBox.Location = new System.Drawing.Point(2, 105);
+            this.wordColoring_comboBox.Margin = new System.Windows.Forms.Padding(0);
+            this.wordColoring_comboBox.Name = "wordColoring_comboBox";
+            this.wordColoring_comboBox.Size = new System.Drawing.Size(131, 28);
+            this.wordColoring_comboBox.TabIndex = 7;
+            this.wordColoring_comboBox.SelectedIndexChanged += new System.EventHandler(this.wordColoring_comboBox_SelectedIndexChanged);
+            // 
             // fontColor_label
             // 
             this.fontColor_label.AutoSize = true;
-            this.fontColor_label.Location = new System.Drawing.Point(2, 63);
+            this.fontColor_label.Location = new System.Drawing.Point(2, 139);
             this.fontColor_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.fontColor_label.Name = "fontColor_label";
             this.fontColor_label.Size = new System.Drawing.Size(81, 20);
@@ -109,7 +138,7 @@ partial class MainForm
             // 
             // fontColor_button
             // 
-            this.fontColor_button.Location = new System.Drawing.Point(2, 83);
+            this.fontColor_button.Location = new System.Drawing.Point(2, 159);
             this.fontColor_button.Margin = new System.Windows.Forms.Padding(0);
             this.fontColor_button.Name = "fontColor_button";
             this.fontColor_button.Size = new System.Drawing.Size(131, 27);
@@ -120,7 +149,7 @@ partial class MainForm
             // backgroundColor_label
             // 
             this.backgroundColor_label.AutoSize = true;
-            this.backgroundColor_label.Location = new System.Drawing.Point(2, 116);
+            this.backgroundColor_label.Location = new System.Drawing.Point(2, 192);
             this.backgroundColor_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.backgroundColor_label.Name = "backgroundColor_label";
             this.backgroundColor_label.Size = new System.Drawing.Size(92, 40);
@@ -129,7 +158,7 @@ partial class MainForm
             // 
             // backgroundColor_button
             // 
-            this.backgroundColor_button.Location = new System.Drawing.Point(2, 156);
+            this.backgroundColor_button.Location = new System.Drawing.Point(2, 232);
             this.backgroundColor_button.Margin = new System.Windows.Forms.Padding(0);
             this.backgroundColor_button.Name = "backgroundColor_button";
             this.backgroundColor_button.Size = new System.Drawing.Size(131, 27);
@@ -140,7 +169,7 @@ partial class MainForm
             // layout_label
             // 
             this.layout_label.AutoSize = true;
-            this.layout_label.Location = new System.Drawing.Point(2, 189);
+            this.layout_label.Location = new System.Drawing.Point(2, 265);
             this.layout_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
             this.layout_label.Name = "layout_label";
             this.layout_label.Size = new System.Drawing.Size(89, 20);
@@ -154,7 +183,7 @@ partial class MainForm
             this.layout_comboBox.Items.AddRange(new object[] {
             "Spiral",
             "Block"});
-            this.layout_comboBox.Location = new System.Drawing.Point(2, 211);
+            this.layout_comboBox.Location = new System.Drawing.Point(2, 287);
             this.layout_comboBox.Margin = new System.Windows.Forms.Padding(0);
             this.layout_comboBox.Name = "layout_comboBox";
             this.layout_comboBox.Size = new System.Drawing.Size(131, 28);
@@ -164,7 +193,7 @@ partial class MainForm
             // growthPercent_label
             // 
             this.growthPercent_label.AutoSize = true;
-            this.growthPercent_label.Location = new System.Drawing.Point(2, 245);
+            this.growthPercent_label.Location = new System.Drawing.Point(2, 321);
             this.growthPercent_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.growthPercent_label.Name = "growthPercent_label";
             this.growthPercent_label.Size = new System.Drawing.Size(103, 40);
@@ -173,7 +202,7 @@ partial class MainForm
             // 
             // growthPercent_numeric
             // 
-            this.growthPercent_numeric.Location = new System.Drawing.Point(5, 288);
+            this.growthPercent_numeric.Location = new System.Drawing.Point(5, 364);
             this.growthPercent_numeric.Maximum = new decimal(new int[] {
             500,
             0,
@@ -192,7 +221,7 @@ partial class MainForm
             // imageWidth_label
             // 
             this.imageWidth_label.AutoSize = true;
-            this.imageWidth_label.Location = new System.Drawing.Point(2, 324);
+            this.imageWidth_label.Location = new System.Drawing.Point(2, 400);
             this.imageWidth_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.imageWidth_label.Name = "imageWidth_label";
             this.imageWidth_label.Size = new System.Drawing.Size(98, 20);
@@ -201,7 +230,7 @@ partial class MainForm
             // 
             // imageWidth_numeric
             // 
-            this.imageWidth_numeric.Location = new System.Drawing.Point(5, 347);
+            this.imageWidth_numeric.Location = new System.Drawing.Point(5, 423);
             this.imageWidth_numeric.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -225,7 +254,7 @@ partial class MainForm
             // imageHeight_label
             // 
             this.imageHeight_label.AutoSize = true;
-            this.imageHeight_label.Location = new System.Drawing.Point(2, 383);
+            this.imageHeight_label.Location = new System.Drawing.Point(2, 459);
             this.imageHeight_label.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.imageHeight_label.Name = "imageHeight_label";
             this.imageHeight_label.Size = new System.Drawing.Size(103, 20);
@@ -234,7 +263,7 @@ partial class MainForm
             // 
             // imageHeight_numeric
             // 
-            this.imageHeight_numeric.Location = new System.Drawing.Point(5, 406);
+            this.imageHeight_numeric.Location = new System.Drawing.Point(5, 482);
             this.imageHeight_numeric.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -262,7 +291,7 @@ partial class MainForm
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPictureBox.Location = new System.Drawing.Point(152, 12);
             this.mainPictureBox.Name = "mainPictureBox";
-            this.mainPictureBox.Size = new System.Drawing.Size(683, 451);
+            this.mainPictureBox.Size = new System.Drawing.Size(743, 521);
             this.mainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainPictureBox.TabIndex = 1;
             this.mainPictureBox.TabStop = false;
@@ -271,7 +300,7 @@ partial class MainForm
             // 
             this.generate_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.generate_button.Enabled = false;
-            this.generate_button.Location = new System.Drawing.Point(12, 466);
+            this.generate_button.Location = new System.Drawing.Point(12, 536);
             this.generate_button.Name = "generate_button";
             this.generate_button.Size = new System.Drawing.Size(133, 40);
             this.generate_button.TabIndex = 2;
@@ -288,53 +317,16 @@ partial class MainForm
             this.flowLayoutPanel2.Controls.Add(this.chooseFilterFile_button);
             this.flowLayoutPanel2.Controls.Add(this.inputFile_button);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(152, 466);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(152, 536);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(683, 40);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(743, 40);
             this.flowLayoutPanel2.TabIndex = 4;
-            // 
-            // inputFile_button
-            // 
-            this.inputFile_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.inputFile_button.Location = new System.Drawing.Point(131, 0);
-            this.inputFile_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.inputFile_button.Name = "inputFile_button";
-            this.inputFile_button.Size = new System.Drawing.Size(133, 40);
-            this.inputFile_button.TabIndex = 3;
-            this.inputFile_button.Text = "Choose input file";
-            this.inputFile_button.UseVisualStyleBackColor = true;
-            this.inputFile_button.Click += new System.EventHandler(this.inputFile_button_Click);
-            // 
-            // chooseFilterFile_button
-            // 
-            this.chooseFilterFile_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chooseFilterFile_button.Location = new System.Drawing.Point(269, 0);
-            this.chooseFilterFile_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.chooseFilterFile_button.Name = "chooseFilterFile_button";
-            this.chooseFilterFile_button.Size = new System.Drawing.Size(133, 40);
-            this.chooseFilterFile_button.TabIndex = 4;
-            this.chooseFilterFile_button.Text = "Choose filter file";
-            this.chooseFilterFile_button.UseVisualStyleBackColor = true;
-            this.chooseFilterFile_button.Click += new System.EventHandler(this.chooseFilterFile_button_Click);
-            // 
-            // removeFilter_button
-            // 
-            this.removeFilter_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.removeFilter_button.Enabled = false;
-            this.removeFilter_button.Location = new System.Drawing.Point(407, 0);
-            this.removeFilter_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.removeFilter_button.Name = "removeFilter_button";
-            this.removeFilter_button.Size = new System.Drawing.Size(133, 40);
-            this.removeFilter_button.TabIndex = 5;
-            this.removeFilter_button.Text = "Remove filter file";
-            this.removeFilter_button.UseVisualStyleBackColor = true;
-            this.removeFilter_button.Click += new System.EventHandler(this.removeFilter_button_Click);
             // 
             // saveImage_button
             // 
             this.saveImage_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.saveImage_button.Enabled = false;
-            this.saveImage_button.Location = new System.Drawing.Point(545, 0);
+            this.saveImage_button.Location = new System.Drawing.Point(605, 0);
             this.saveImage_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.saveImage_button.Name = "saveImage_button";
             this.saveImage_button.Size = new System.Drawing.Size(133, 40);
@@ -343,16 +335,53 @@ partial class MainForm
             this.saveImage_button.UseVisualStyleBackColor = true;
             this.saveImage_button.Click += new System.EventHandler(this.saveImage_button_Click);
             // 
+            // removeFilter_button
+            // 
+            this.removeFilter_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.removeFilter_button.Enabled = false;
+            this.removeFilter_button.Location = new System.Drawing.Point(467, 0);
+            this.removeFilter_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.removeFilter_button.Name = "removeFilter_button";
+            this.removeFilter_button.Size = new System.Drawing.Size(133, 40);
+            this.removeFilter_button.TabIndex = 5;
+            this.removeFilter_button.Text = "Remove filter file";
+            this.removeFilter_button.UseVisualStyleBackColor = true;
+            this.removeFilter_button.Click += new System.EventHandler(this.removeFilter_button_Click);
+            // 
+            // chooseFilterFile_button
+            // 
+            this.chooseFilterFile_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chooseFilterFile_button.Location = new System.Drawing.Point(329, 0);
+            this.chooseFilterFile_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.chooseFilterFile_button.Name = "chooseFilterFile_button";
+            this.chooseFilterFile_button.Size = new System.Drawing.Size(133, 40);
+            this.chooseFilterFile_button.TabIndex = 4;
+            this.chooseFilterFile_button.Text = "Choose filter file";
+            this.chooseFilterFile_button.UseVisualStyleBackColor = true;
+            this.chooseFilterFile_button.Click += new System.EventHandler(this.chooseFilterFile_button_Click);
+            // 
+            // inputFile_button
+            // 
+            this.inputFile_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.inputFile_button.Location = new System.Drawing.Point(191, 0);
+            this.inputFile_button.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.inputFile_button.Name = "inputFile_button";
+            this.inputFile_button.Size = new System.Drawing.Size(133, 40);
+            this.inputFile_button.TabIndex = 3;
+            this.inputFile_button.Text = "Choose input file";
+            this.inputFile_button.UseVisualStyleBackColor = true;
+            this.inputFile_button.Click += new System.EventHandler(this.inputFile_button_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 518);
+            this.ClientSize = new System.Drawing.Size(907, 588);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.generate_button);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(865, 565);
+            this.MinimumSize = new System.Drawing.Size(925, 635);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -392,4 +421,6 @@ partial class MainForm
     private Button chooseFilterFile_button;
     private Button removeFilter_button;
     private Button saveImage_button;
+    private Label wordColoring_label;
+    private ComboBox wordColoring_comboBox;
 }
