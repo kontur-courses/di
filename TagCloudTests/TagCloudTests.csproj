@@ -8,10 +8,18 @@
 
   <ItemGroup>
     <None Remove="aboutKonturWords.txt" />
+    <None Remove="BoringWordsDictionary.txt" />
+    <None Remove="empty.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="aboutKonturWords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BoringWordsDictionary.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="empty.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

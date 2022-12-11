@@ -18,7 +18,6 @@ namespace TagCloudTests
             data = Enumerable.Range(20,40).Select(RandomString).ToArray();
         }
 
-        [Test]
         public void SingleWordInRowTextFileReader_Read_Data()
         {
             var path = "TextFileData.txt";
@@ -29,6 +28,14 @@ namespace TagCloudTests
 
             CheckThatDataIsReadBy(fileReader);
             DeleteFile(path);
+        }
+
+        public void SingleWordInRowTextFileReader_Read_FileWithoutWords()
+        {
+            var fileReader = new SingleWordInRowTextFileReader();
+            fileReader.Open("empty.txt");
+
+            fileReader.ReadWords().Should().BeEmpty();
         }
 
         [TestCase("notExistingFile.txt", TestName = "file extension not exist")]
