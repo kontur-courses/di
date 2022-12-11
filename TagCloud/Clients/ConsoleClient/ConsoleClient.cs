@@ -82,15 +82,15 @@ public class ConsoleClient : IClient
                                       "Попробуйте сменить тип файла и запустить программу заново.");
                     return;
                 }
-                    
-                inputWordsStream.OpenFile(path, suitableFileEncoder!);
+
+                var streamContext = new FromFileStreamContext(path, suitableFileEncoder!);
                 drawingSettings.BgColor = bgColor;
                 drawingSettings.PictureSize = imageSize;
                 ((SpiralCloudLayouterSettings)cloudLayouterSettings).Center =
                     new Point(imageSize.Height / 2, imageSize.Width / 2);
                     
                 FillWordVisualisationSettings(drawingSettings);
-                var image = creator.CreatePicture();
+                var image = creator.CreatePicture(streamContext);
 
                 Console.WriteLine(imageSaver.TrySaveImage(image, new FullFileName(savePath!))
                     ? $"Файл сохранён успешно в {savePath}"

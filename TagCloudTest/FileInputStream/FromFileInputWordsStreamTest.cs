@@ -10,8 +10,9 @@ namespace TagCloudTest.FileInputStream;
 
 public class FromFileInputWordsStreamTest
 {
-    private string path = "test.txt";
     private readonly string textWithNewLines = "word1" + Environment.NewLine + "word2" + Environment.NewLine + "word3";
+    private string path = "test.txt";
+    private IInputWordsStream sut = new FromFileInputWordsStream();
 
     [OneTimeSetUp]
     public void StartTests()
@@ -21,75 +22,34 @@ public class FromFileInputWordsStreamTest
     }
         
     [Test]
-    public void Next_ShouldReturnFalse_WhenNoNextWord()
+    public void GetAllWordsFromStream_ShouldReturnEmptyList_WhenNoWords()
     {
-        var sut = CreateFileInputStream("");
-        sut.MoveNext().Should().BeFalse();
+        sut.GetAllWordsFromStream(GetContext(""), new NewLineTextSplitter()).Should().BeEmpty();
     }
 
     [Test]
-    public void Creation_ShouldThrowFileNotFoundException_WhenIncorrectFilename()
+    public void GetAllWordsFromStream_ShouldThrowFileNotFoundException_WhenIncorrectFilename()
     {
         Action creatingStreamWithIncorrectFile = () =>
-        {
-            var _ = new FromFileInputWordsStream()
-                .OpenFile("incorrect/filename", new FileEncoderСheater("", false, ""))
-                .UseSplitter(new NewLineTextSplitter());
-        };
+            sut.GetAllWordsFromStream(GetContext("", "incorrectPath"), new NewLineTextSplitter());
         creatingStreamWithIncorrectFile.Should().Throw<FileNotFoundException>();
     }
         
     [Test]
-    public void Creation_ShouldThrowIncorrectFileTypeException_WhenIncorrectFileType()
+    public void GetAllWordsFromStream_ShouldThrowException_WhenIncorrectFileType()
     {
         Action creatingStreamWithIncorrectFileType = () =>
-            CreateFileInputStream("", fileType:".docx");
+            sut.GetAllWordsFromStream(GetContext("", filetype: "docx"), new NewLineTextSplitter());
         creatingStreamWithIncorrectFileType.Should().Throw<Exception>();
     }
-        
-    [Test]
-    public void GetWord_ShouldThrowIncorrectCallException_WhenNoFirstCallMoveNext()
-    {
-        Action gettingWordWithoutCallMoveNext = () =>    
-            CreateFileInputStream("word").GetWord();
-        gettingWordWithoutCallMoveNext.Should().Throw<Exception>();
-    }
 
     [Test]
-    public void GetWord_ShouldThrowEndOfStreamException_WhenNoMoreWords()
+    public void GetAllWordsFromStream_ShouldReturnAllWordsFromFile()
     {
-        var sut = CreateFileInputStream("word");
-        sut.MoveNext();
-        sut.MoveNext();
-        Action gettingWordAfterStreamEnd = () => sut.GetWord();
-        gettingWordAfterStreamEnd.Should().Throw<EndOfStreamException>();
+        var words = sut.GetAllWordsFromStream(GetContext(textWithNewLines), new NewLineTextSplitter());
+        words.Count.Should().Be(3);
     }
-
-    [Test]
-    public void Next_ShouldReturnTrue_WhenHasMoreWords()
-    {
-        var sut = CreateFileInputStream(textWithNewLines);
-        sut.MoveNext().Should().BeTrue();
-    }
-
-    [Test]
-    public void Next_ShouldMoveIterator()
-    {
-        var sut = CreateFileInputStream(textWithNewLines);
-        sut.MoveNext().Should().BeTrue();
-        sut.MoveNext().Should().BeTrue();
-        sut.MoveNext().Should().BeTrue();
-        sut.MoveNext().Should().BeFalse();
-    }
-
-    [Test]
-    public void GetWord_ShouldReturnSameWords_WhenNoCollMoveNextBetweenThem()
-    {
-        var sut = CreateFileInputStream(textWithNewLines);
-        sut.MoveNext();
-        var w1 = sut.GetWord();
-        sut.GetWord().Should().Be(w1);
-    }
+    
         
     [OneTimeTearDown]
     public void StopTests()
@@ -103,11 +63,10 @@ public class FromFileInputWordsStreamTest
             // ignored
         }
     }
-        
-    private IInputWordsStream CreateFileInputStream(string text, bool existsFile = true, string fileType = "txt")
+
+    private IStreamContext GetContext(string textInFile, string? filepath = null, string filetype = "txt")
     {
-        return new FromFileInputWordsStream()
-            .OpenFile(path, new FileEncoderСheater(text, existsFile, fileType))
-            .UseSplitter(new NewLineTextSplitter());
+        filepath ??= path;
+        return new FromFileStreamContext(filepath, new FileEncoderСheater(textInFile, true, filetype));
     }
 }
