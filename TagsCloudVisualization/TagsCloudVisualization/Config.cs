@@ -13,5 +13,5 @@ public static class Config
     public const string
         DefaultPath = "..\\..\\..\\input.txt";
 
-    public static Brush TextBrush => new SolidBrush(Color.Blue);
+    public static Color DefaultTextColor => Color.Red;
 }

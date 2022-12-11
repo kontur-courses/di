@@ -23,7 +23,7 @@ public static class AppContainer
             .RegisterInstance(new CircularCloudLayouterSpiral(new Point(Config.CenterX, Config.CenterY)))
             .As<CircularCloudLayouter>();
         builder
-            .RegisterInstance(new DefaultCloudDrawer(options.ImageWidth, options.ImageHeight, Config.TextBrush))
+            .RegisterInstance(new DefaultCloudDrawer(options.ImageWidth, options.ImageHeight, options.Colors))
             .As<ICloudDrawer>();
 
         container = builder.Build();
