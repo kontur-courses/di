@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using TagCloud.TagCloudCreators;
 
 namespace TagCloud.TagCloudVisualizations
@@ -41,7 +42,7 @@ namespace TagCloud.TagCloudVisualizations
             if (settings.PictureSize != null)
                 bitmap = new Bitmap(bitmap, settings.PictureSize.Value);
 
-            bitmap.Save(file, settings.PictureFormat);
+            bitmap.Save(file, ImageFormat.Png);
         }
 
         private void PrepareTagCloud(ITagCloudVisualizationSettings settings)
