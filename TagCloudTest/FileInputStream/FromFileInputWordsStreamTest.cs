@@ -3,111 +3,111 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.App.WordPreprocessorDriver.InputStream;
 using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
-using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream.Exceptions;
+using TagCloud.App.WordPreprocessorDriver.InputStream.TextSplitters;
 using TagCloudTest.FileInputStream.Infrastructure;
 
-namespace TagCloudTest.FileInputStream
+namespace TagCloudTest.FileInputStream;
+
+public class FromFileInputWordsStreamTest
 {
-    [TestFixture]
-    public class FromFileInputWordsStreamTest
+    private string path = "test.txt";
+    private readonly string textWithNewLines = "word1" + Environment.NewLine + "word2" + Environment.NewLine + "word3";
+
+    [OneTimeSetUp]
+    public void StartTests()
     {
-        private string path = "test.txt";
-
-        [OneTimeSetUp]
-        public void StartTests()
-        {
-            path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-            File.Create(path + "test.txt");
-        }
+        path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "test.txt";
+        File.Create(path);
+    }
         
-        [Test]
-        public void Next_ShouldReturnFalse_WhenNoNextWord()
-        {
-            var sut = CreateFileInputStream("");
-            sut.Next().Should().BeFalse();
-        }
+    [Test]
+    public void Next_ShouldReturnFalse_WhenNoNextWord()
+    {
+        var sut = CreateFileInputStream("");
+        sut.MoveNext().Should().BeFalse();
+    }
 
-        [Test]
-        public void Creation_ShouldThrowFileNotFoundException_WhenIncorrectFilename()
+    [Test]
+    public void Creation_ShouldThrowFileNotFoundException_WhenIncorrectFilename()
+    {
+        Action creatingStreamWithIncorrectFile = () =>
         {
-            Action _ = () =>
-            {
-                var __ = new FromFileInputWordsStream("incorrect/filename",
-                    new FileEncoderСheater("", false, ""),
-                    s => s.Split('\n'));
-            };
-            _.Should().Throw<FileNotFoundException>();
-        }
+            var _ = new FromFileInputWordsStream()
+                .OpenFile("incorrect/filename", new FileEncoderСheater("", false, ""))
+                .UseSplitter(new NewLineTextSplitter());
+        };
+        creatingStreamWithIncorrectFile.Should().Throw<FileNotFoundException>();
+    }
         
-        [Test]
-        public void Creation_ShouldThrowIncorrectFileTypeException_WhenIncorrectFileType()
-        {
-            Action _ = () =>
-                CreateFileInputStream("", fileType:".docx");
-            _.Should().Throw<IncorrectFileTypeException>();
-        }
+    [Test]
+    public void Creation_ShouldThrowIncorrectFileTypeException_WhenIncorrectFileType()
+    {
+        Action creatingStreamWithIncorrectFileType = () =>
+            CreateFileInputStream("", fileType:".docx");
+        creatingStreamWithIncorrectFileType.Should().Throw<Exception>();
+    }
         
-        [Test]
-        public void GetWord_ShouldThrowIncorrectCallException_WhenNoFirstCallNext()
-        {
-            Action _ = () =>    
-                CreateFileInputStream("word").GetWord();
-            _.Should().Throw<IncorrectCallException>();
-        }
+    [Test]
+    public void GetWord_ShouldThrowIncorrectCallException_WhenNoFirstCallMoveNext()
+    {
+        Action gettingWordWithoutCallMoveNext = () =>    
+            CreateFileInputStream("word").GetWord();
+        gettingWordWithoutCallMoveNext.Should().Throw<Exception>();
+    }
 
-        [Test]
-        public void GetWord_ShouldThrowEndOfStreamException_WhenNoMoreWords()
-        {
-            var sut = CreateFileInputStream("word");
-            sut.Next();
-            sut.Next();
-            Action _ = () => sut.GetWord();
-            _.Should().Throw<EndOfStreamException>();
-        }
+    [Test]
+    public void GetWord_ShouldThrowEndOfStreamException_WhenNoMoreWords()
+    {
+        var sut = CreateFileInputStream("word");
+        sut.MoveNext();
+        sut.MoveNext();
+        Action gettingWordAfterStreamEnd = () => sut.GetWord();
+        gettingWordAfterStreamEnd.Should().Throw<EndOfStreamException>();
+    }
 
-        [Test]
-        public void Next_ShouldReturnTrue_WhenHasMoreWords()
-        {
-            var sut = CreateFileInputStream("word1\nword2\nword3");
-            sut.Next().Should().BeTrue();
-        }
+    [Test]
+    public void Next_ShouldReturnTrue_WhenHasMoreWords()
+    {
+        var sut = CreateFileInputStream(textWithNewLines);
+        sut.MoveNext().Should().BeTrue();
+    }
 
-        [Test]
-        public void Next_ShouldMoveIterator()
-        {
-            var sut = CreateFileInputStream("word1\nword2\nword3");
-            sut.Next().Should().BeTrue();
-            sut.Next().Should().BeTrue();
-            sut.Next().Should().BeTrue();
-            sut.Next().Should().BeFalse();
-        }
+    [Test]
+    public void Next_ShouldMoveIterator()
+    {
+        var sut = CreateFileInputStream(textWithNewLines);
+        sut.MoveNext().Should().BeTrue();
+        sut.MoveNext().Should().BeTrue();
+        sut.MoveNext().Should().BeTrue();
+        sut.MoveNext().Should().BeFalse();
+    }
 
-        [Test]
-        public void GetWord_ShouldReturnSameWords_WhenNoCollNext()
-        {
-            var sut = CreateFileInputStream("word1\nword2\nword3");
-            sut.Next();
-            var w1 = sut.GetWord();
-            sut.GetWord().Should().Be(w1);
-        }
+    [Test]
+    public void GetWord_ShouldReturnSameWords_WhenNoCollMoveNextBetweenThem()
+    {
+        var sut = CreateFileInputStream(textWithNewLines);
+        sut.MoveNext();
+        var w1 = sut.GetWord();
+        sut.GetWord().Should().Be(w1);
+    }
         
-        [OneTimeTearDown]
-        public void StopTests()
+    [OneTimeTearDown]
+    public void StopTests()
+    {
+        try
         {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
+            File.Delete(path);
         }
+        catch (Exception)
+        {
+            // ignored
+        }
+    }
         
-        private IInputWordsStream CreateFileInputStream(string text, bool existsFile = true, string fileType = "txt")
-        {
-            return new FromFileInputWordsStream(path + "test.txt", new FileEncoderСheater(text, existsFile, fileType),
-                s => s.Split('\n'));
-        }
+    private IInputWordsStream CreateFileInputStream(string text, bool existsFile = true, string fileType = "txt")
+    {
+        return new FromFileInputWordsStream()
+            .OpenFile(path, new FileEncoderСheater(text, existsFile, fileType))
+            .UseSplitter(new NewLineTextSplitter());
     }
 }

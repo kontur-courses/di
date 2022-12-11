@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 using TagCloud.App.CloudCreatorDriver.ImageSaver.FileTypes;
 
-namespace TagCloud.App.CloudCreatorDriver.ImageSaver
+namespace TagCloud.App.CloudCreatorDriver.ImageSaver;
+
+public interface IImageSaver
 {
-    public interface IImageSaver
-    {
-        bool TrySaveImage(Bitmap image, IFileType fileType);
-    }
+    bool TrySaveImage(Bitmap image, IFullFileName fullFileName);
 }

@@ -3,40 +3,54 @@ using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
 
-namespace TagCloudTest.FileInputStream
+namespace TagCloudTest.FileInputStream;
+
+public class TxtEncoderTest
 {
-    [TestFixture]
-    public class TxtEncoderTest
+    private static string? _filePath;
+
+    [OneTimeSetUp]
+    public void StartTests()
     {
-        private string path = "";
+        _filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "test.txt";
+    }
         
-        [TestCase("text")]
-        [TestCase("text1\ntext2")]
-        public void GetText_ShouldReturnTextFromTxtFile(string text)
-        {
-            var sut = new TxtEncoder();
-            path = CreateFileWithText(text);
-            sut.GetText(path).Should().Be(text);
-        }
+    [Test]
+    public void GetText_ShouldReturnTextFromTxtFile_WhenOnlyOneLineInFile()
+    {
+        var text = "word1 word2";
+        GetText_Helper(text, CreateFileWithText(text));
+    }
+        
+    [Test]
+    public void GetText_ShouldReturnTextFromTxtFile_WhenManyLinesInFile()
+    {
+        var text = "text1" + Environment.NewLine + "text2";
+        GetText_Helper(text, CreateFileWithText(text));
+    }
 
-        [TearDown]
-        public void OnTestStop()
+    [TearDown]
+    public void OnTestStop()
+    {
+        try
         {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
+            File.Delete(_filePath!);
         }
+        catch (Exception)
+        {
+            // ignored
+        }
+    }
 
-        private static string CreateFileWithText(string text)
-        {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            File.WriteAllText(path + "test.txt", text);
-            return path + "test.txt";
-        }
+    private static string CreateFileWithText(string text)
+    {
+        File.WriteAllText(_filePath!, text);
+        return _filePath!;
+    }
+
+    private static void GetText_Helper(string expectedText, string filePath)
+    {
+        var sut = new TxtEncoder();
+        sut.GetText(filePath).Should().Be(expectedText);
     }
 }

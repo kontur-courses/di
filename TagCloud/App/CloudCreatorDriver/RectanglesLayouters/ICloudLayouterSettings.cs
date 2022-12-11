@@ -1,9 +1,8 @@
-﻿namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters
+﻿namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters;
+
+/// <summary>
+/// Маркирующий класс настроек для раскладчика прямоугольников по кругу
+/// </summary>
+public interface ICloudLayouterSettings
 {
-    /// <summary>
-    /// Маркирующий класс настроек для раскладчика прямоугольников по кругу
-    /// </summary>
-    public interface ICloudLayouterSettings
-    {
-    }
 }

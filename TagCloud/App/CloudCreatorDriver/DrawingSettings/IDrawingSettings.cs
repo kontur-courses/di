@@ -1,25 +1,26 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.App.CloudCreatorDriver.DrawingSettings
+namespace TagCloud.App.CloudCreatorDriver.DrawingSettings;
+
+/// <summary>
+/// Интерфейс настроек для рисования облака слов
+/// </summary>
+public interface IDrawingSettings
 {
     /// <summary>
-    /// Интерфейс настроек для рисования облака слов
+    /// Цвет фона
     /// </summary>
-    public interface IDrawingSettings
-    {
-        /// <summary>
-        /// Цвет фона
-        /// </summary>
-        public Color BgColor { get; set; }
+    Color BgColor { get; set; }
         
-        /// <summary>
-        /// Список оформления слов в зависимости от их встречаемости
-        /// </summary>
-        public List<IWordVisualisation> Visualisation { get; }
+    /// <summary>
+    /// Список оформления слов в зависимости от их встречаемости
+    /// </summary>
+    List<IWordVisualisation> Visualisations { get; }
         
-        /// <summary>
-        /// Размер конечного изображения
-        /// </summary>
-        public Size PictureSize { get; set; }
-    }
+    /// <summary>
+    /// Размер конечного изображения
+    /// </summary>
+    Size PictureSize { get; set; }
+
+    void AddVisualisation(IWordVisualisation wordVisualisation);
 }

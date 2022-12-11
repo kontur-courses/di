@@ -6,18 +6,14 @@ namespace TagCloud.App.CloudCreatorDriver.ImageSaver;
 
 public class PngImageSaver : IImageSaver
 {
-    public bool TrySaveImage(Bitmap image, IFileType fileType)
+    public bool TrySaveImage(Bitmap image, IFullFileName fullFileName)
     {
         try
         {
-            image.Save(fileType.Path);
+            image.Save(fullFileName.Path);
             return true;
         }
-        catch (ArgumentNullException)
-        {
-            return false;
-        }
-        catch (ExternalException)
+        catch
         {
             return false;
         }

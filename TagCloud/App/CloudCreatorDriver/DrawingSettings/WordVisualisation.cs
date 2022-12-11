@@ -1,33 +1,17 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.App.CloudCreatorDriver.DrawingSettings
+namespace TagCloud.App.CloudCreatorDriver.DrawingSettings;
+
+public class WordVisualisation : IWordVisualisation
 {
-    public class WordVisualisation : IWordVisualisation
-    {
-        private readonly Color color;
-        private readonly double startValue;
-        private readonly Font font;
+    public Color Color { get; }
+    public double StartingValue { get; }
+    public Font Font { get; }
         
-        public WordVisualisation(Color color, double startValue, Font font)
-        {
-            this.color = color;
-            this.startValue = startValue;
-            this.font = font;
-        }
-
-        public Color GetColor()
-        {
-            return color;
-        }
-
-        public double GetStartingValue()
-        {
-            return startValue;
-        }
-
-        public Font GetFont()
-        {
-            return font;
-        }
+    public WordVisualisation(Color color, double startingValue, Font font)
+    {
+        Color = color;
+        StartingValue = startingValue;
+        Font = font;
     }
 }

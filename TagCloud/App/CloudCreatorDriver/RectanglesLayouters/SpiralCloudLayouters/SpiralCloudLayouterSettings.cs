@@ -1,14 +1,20 @@
 ﻿using System.Drawing;
 
-namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters
+namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
+
+/// <summary>
+/// Класс настроек для раскладчика прямоугольников, работающего по принципу спиральной раскладки
+/// </summary>
+public class SpiralCloudLayouterSettings : ICloudLayouterSettings
 {
-    /// <summary>
-    /// Класс настроек для раскладчика прямоугольников, работающего по принципу спиральной раскладки
-    /// </summary>
-    public class SpiralCloudLayouterSettings : ICloudLayouterSettings
+    public Point Center { get; set; }
+    public double SpiralStep { get; set; }
+    public double RotationStep { get; set; }
+        
+    public SpiralCloudLayouterSettings(Point center, double spiralStep, double rotationStep)
     {
-        public Point Center { get; set; }
-        public double SpiralStep { get; set; }
-        public double RotationStep { get; set; }
+        Center = center;
+        SpiralStep = spiralStep;
+        RotationStep = rotationStep;
     }
 }

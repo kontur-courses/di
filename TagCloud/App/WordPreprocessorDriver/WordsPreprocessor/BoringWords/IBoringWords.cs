@@ -1,15 +1,16 @@
-﻿namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords
+﻿using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
+
+namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
+
+/// <summary>
+/// Интерфейс, который позволяет проверять слова на "скучность"
+/// </summary>
+public interface IBoringWords
 {
     /// <summary>
-    /// Интерфейс, который позволяет проверять слова на "скучность"
+    /// Метод, который проверяет, является ли слово скучным, не нужным
     /// </summary>
-    public interface IBoringWords
-    {
-        /// <summary>
-        /// Метод, который проверяет, является ли слово скучным, не нужным
-        /// </summary>
-        /// <param name="word">Слово для проверки</param>
-        /// <returns>true - если слово скучное и подлежит исключению. false - в противном случае</returns>
-        bool IsBoring(Word.Word word);
-    }
+    /// <param name="word">Слово для проверки</param>
+    /// <returns>true - если слово скучное и подлежит исключению. false - в противном случае</returns>
+    bool IsBoring(IWord word);
 }

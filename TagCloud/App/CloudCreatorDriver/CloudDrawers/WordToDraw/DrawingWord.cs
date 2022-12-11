@@ -1,40 +1,39 @@
 ﻿using System.Drawing;
-using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Word;
+using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
-namespace TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw
+namespace TagCloud.App.CloudCreatorDriver.CloudDrawers.WordToDraw;
+
+public class DrawingWord : IDrawingWord
 {
-    public class DrawingWord : IDrawingWord
+    private readonly IWord word;
+
+    public string Value => word.Value;
+    public int Count
     {
-        public string Value { get; }
-        public int Count { get; set; }
-        public double Tf { get; set; }
-        public Font Font { get; }
-        public Color Color { get; }
-        public Rectangle Rectangle { get; }
-
-        public DrawingWord(string value, int count, double tf, Font font, Color color, Rectangle rectangle)
-        {
-            Value = value;
-            Count = count;
-            Tf = tf;
-            Font = font;
-            Color = color;
-            Rectangle = rectangle;
-        }
+        get => word.Count;
+        set => word.Count = value;
+    }
+    public double Tf
+    {
+        get => word.Tf;
+        set => word.Tf = value;
+    }
+    public Font Font { get; }
+    public Color Color { get; }
+    public Rectangle Rectangle { get; }
         
-        public DrawingWord(IWord word, Font font, Color color, Rectangle rectangle)
-        {
-            Value = word.Value;
-            Count = word.Count;
-            Tf = word.Tf;
-            Font = font;
-            Color = color;
-            Rectangle = rectangle;
-        }
+    public DrawingWord(IWord word, Font font, Color color, Rectangle rectangle)
+    {
+        this.word = word; 
+        Font = font;
+        Color = color;
+        Rectangle = rectangle;
+    }
+        
+    public Size MeasureWord(Font font) => word.MeasureWord(font);
 
-        public bool Equals(IWord other)
-        {
-            return ((IWord)this).Equals(other);
-        }
+    public bool Equals(IWord? other)
+    {
+        return ((IWord)this).Equals(other);
     }
 }

@@ -1,46 +1,42 @@
-﻿using TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream.Exceptions;
+﻿namespace TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream;
 
-namespace TagCloud.App.WordPreprocessorDriver.InputStream.FileInputStream
+/// <summary>
+/// Класс, который позволяет получать текст из текстовыйх файлов формата txt
+/// </summary>
+public class TxtEncoder : IFileEncoder
 {
+    private const string FileType = "txt";
+
     /// <summary>
-    /// Класс, который позволяет получать текст из текстовыйх файлов формата txt
+    /// Метод, который позволяет получить текст из файла
     /// </summary>
-    public class TxtEncoder : IFileEncoder
+    /// <param name="fileName">Полный путь к файлу</param>
+    /// <exception cref="IncorrectFileTypeException">Если тип файла не совпадает с ожидаемым типом</exception>
+    /// <exception cref="ArgumentException">Если не получается прочитать данные из файла по каким-либо причинам</exception>
+    /// <returns>Текстовое значение файла</returns>
+    public string GetText(string fileName)
     {
-        private const string FileType = "txt";
-
-        /// <summary>
-        /// Метод, который позволяет получить текст из файла
-        /// </summary>
-        /// <param name="fileName">Полный путь к файлу</param>
-        /// <exception cref="IncorrectFileTypeException">Если тип файла не совпадает с ожидаемым типом</exception>
-        /// <exception cref="ArgumentException">Если не получается прочитать данные из файла по каким-либо причинам</exception>
-        /// <returns>Текстовое значение файла</returns>
-        public string GetText(string fileName)
+        if (!IsCompatibleFileType(FileType))
+            throw new Exception($"Expected {FileType} filetype, " +
+                                $"but was found {fileName.Split('.').LastOrDefault() ?? string.Empty}");
+        try
         {
-            if (!IsCompatibleFileType(FileType))
-                throw new IncorrectFileTypeException(FileType, fileName
-                    .Split('.')
-                    .LastOrDefault() ?? string.Empty);
-            try
-            {
-                return File.ReadAllText(fileName);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Can not read words from file", e);
-            }
+            return File.ReadAllText(fileName);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException("Can not read words from file", e);
+        }
             
-        }
+    }
 
-        public bool IsCompatibleFileType(string fileName)
-        {
-            return fileName.EndsWith(FileType);
-        }
+    public bool IsCompatibleFileType(string fileName)
+    {
+        return fileName.EndsWith(FileType);
+    }
 
-        public string GetExpectedFileType()
-        {
-            return FileType;
-        }
+    public string GetExpectedFileType()
+    {
+        return FileType;
     }
 }

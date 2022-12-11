@@ -4,77 +4,70 @@ using NUnit.Framework;
 using TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
 using TagCloudTest.CloudLayouter.SpiralCloudLayouters.Infrastructure;
 
-namespace TagCloudTest.CloudLayouter.SpiralCloudLayouters
-{
-    [TestFixture]
-    public class CircularCloudLayouterTest
-    {
-        private List<Rectangle>? rectangles;
-        private Point center;
-        private SpiralCloudLayouter? sut;
-        private SpiralCloudLayouterSettings? settings;
+namespace TagCloudTest.CloudLayouter.SpiralCloudLayouters;
 
-        [OneTimeSetUp]
-        public void StartTests()
+public class CircularCloudLayouterTest
+{
+    private List<Rectangle>? rectangles;
+    private Point center;
+    private SpiralCloudLayouter? sut;
+    private SpiralCloudLayouterSettings? settings;
+
+    [OneTimeSetUp]
+    public void StartTests()
+    {
+        center = new Point(200, 100);
+        settings = new SpiralCloudLayouterSettings(center, 0.1, 0.1);
+        sut = new SpiralCloudLayouter();
+        sut.SetSettings(settings);
+    }
+        
+    [SetUp]
+    public void SetupTest()
+    {
+        rectangles = new List<Rectangle>();
+    }
+        
+    [Test]
+    public void PutNextRectangle_FirstGotRectangle_ShouldContainsCenter()
+    {
+        rectangles!.Add(sut!.PutNextRectangle(new Size(10, 5)));
+        rectangles.First().Contains(center).Should().Be(true);
+    }
+        
+    [TestCase(2)]
+    [TestCase(10)]
+    [TestCase(40)]
+    [TestCase(100)]
+    public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections(int count)
+    {
+        var size = new Size(20, 5);
+        rectangles = Enumerable.Range(0, count)
+            .Select(_ => sut!.PutNextRectangle(size))
+            .ToList();
+        for (var i = 0; i < count; i++)
         {
-            center = new Point(200, 100);
-            settings = new SpiralCloudLayouterSettings()
+            var rect = rectangles[i];
+            for (var j = 0; j < count; j++)
             {
-                Center = center,
-                RotationStep = 0.1,
-                SpiralStep = 0.1
-            };
-            sut = new SpiralCloudLayouter();
-            sut.SetSettings(settings);
-        }
-        
-        [SetUp]
-        public void SetupTest()
-        {
-            rectangles = new List<Rectangle>();
-        }
-        
-        [Test]
-        public void PutNextRectangle_FirstGotRectangle_ShouldContainsCenter()
-        {
-            rectangles!.Add(sut!.PutNextRectangle(new Size(10, 5)));
-            rectangles.First().Contains(center).Should().Be(true);
-        }
-        
-        [TestCase(2)]
-        [TestCase(10)]
-        [TestCase(40)]
-        [TestCase(100)]
-        public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections(int count)
-        {
-            var size = new Size(20, 5);
-            rectangles = Enumerable.Range(0, count)
-                .Select(_ => sut!.PutNextRectangle(size))
-                .ToList();
-            for (var i = 0; i < count; i++)
-            {
-                var rect = rectangles[i];
-                for (var j = 0; j < count; j++)
-                {
-                    if (i != j)
-                        rect.IntersectsWith(rectangles[j]).Should().Be(false);
-                }
+                if (i != j)
+                    rect.IntersectsWith(rectangles[j]).Should().Be(false);
             }
         }
+    }
 
-        [TearDown]
-        public void SaveImage_OnFailTest()
-        {
-            var a = TestContext.CurrentContext;
-            if (a.Result.FailCount == 0)
-                return;
-            var filename = $"Failed test {TestContext.CurrentContext.Test.Name} image at {DateTime.Now:dd-MM-yyyy HH_mm_ss}.jpg";
-            var bitmap = TagCloudDrawer.DrawWithAutoSize(rectangles!.ToArray(),
-                Color.Black, Color.DarkOrange,
-                true, true);
-            bitmap.Save(filename);
-            var path = AppContext.BaseDirectory;
-            TestContext.Error.Write($"Tag cloud visualization saved to file {path + filename}");
-        }
+    [TearDown]
+    public void SaveImage_OnFailTest()
+    {
+        var testContext = TestContext.CurrentContext;
+        if (testContext.Result.FailCount == 0)
+            return;
+        var filename = $"Failed test {TestContext.CurrentContext.Test.Name} image at {DateTime.Now:dd-MM-yyyy HH_mm_ss}.jpg";
+        var bitmap = TagCloudDrawer.DrawWithAutoSize(rectangles!.ToArray(),
+            Color.Black, Color.DarkOrange,
+            true, true);
+        bitmap.Save(filename);
+        var path = AppContext.BaseDirectory;
+        TestContext.Error.Write($"Tag cloud visualization saved to file {path + filename}");
     }
 }
