@@ -27,7 +27,7 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
 
     private static double GetTfIndex(int wordCount, int totalWordsCount)
     {
-        return 1d * totalWordsCount / wordCount;
+        return 1d * wordCount / totalWordsCount;
     }
         
     private static void CalculateTfIndexes(IEnumerable<IWord> words, int totalWordsCount)

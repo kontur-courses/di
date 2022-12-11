@@ -13,7 +13,7 @@ public class DrawingSettings : IDrawingSettings
     public DrawingSettings(IWordVisualisation defaultVisualisation)
     {
         this.defaultVisualisation = defaultVisualisation;
-        wordVisualisations = new List<IWordVisualisation>();
+        wordVisualisations = new List<IWordVisualisation>(){defaultVisualisation};
     }
     
     public void AddWordVisualisation(IWordVisualisation wordVisualisation)

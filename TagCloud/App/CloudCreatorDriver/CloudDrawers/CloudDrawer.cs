@@ -28,7 +28,7 @@ public class CloudDrawer : ICloudDrawer
         int width, int height,
         Color bgColor)
     {
-        using var myBitmap = new Bitmap(width, height);
+        var myBitmap = new Bitmap(width, height);
         var graphics = Graphics.FromImage(myBitmap);
         graphics.Clear(bgColor);
 
@@ -40,8 +40,9 @@ public class CloudDrawer : ICloudDrawer
                 word.Value,
                 word.Font,
                 new SolidBrush(word.Color),
-                word.Rectangle);
+                word.Rectangle.Location);
         }
+        
         return myBitmap;
     }
 }

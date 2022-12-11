@@ -47,7 +47,6 @@ public class SpiralCloudLayouter : ICloudLayouter
 
     private Rectangle FindNextRectangleOnSpiral(Size rectangleSize)
     {
-        rotationAngle = 0d;
         while (true)
         {
             var position = GetNextPositionOnSpiral();

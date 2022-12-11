@@ -93,6 +93,7 @@ public class CloudCreator : ICloudCreator
         return
             drawingSettings
                 .GetWordVisualisations()
+                .OrderByDescending(visualisation => visualisation.StartingValue)
                 .FirstOrDefault(v => v.StartingValue <= word.Tf)
             ?? drawingSettings.GetDefaultVisualisation();
     }
