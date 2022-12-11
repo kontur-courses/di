@@ -21,9 +21,16 @@ public class Program
         return CommandLineApplication.Execute<Program>(args);
     }
 
+    /// <summary>
+    ///     Using api of McMaster.Extensions.CommandLineUtils
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>status code of program execution: 1 if settings isn't provided, in case of success execution returns 0</returns>
     private int OnExecute(CommandLineApplication app, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(JsonSettingsFilename))
+        if (string.IsNullOrEmpty(JsonSettingsFilename)
+            || string.IsNullOrWhiteSpace(WordsFileName))
         {
             app.ShowHelp();
             return 1;
