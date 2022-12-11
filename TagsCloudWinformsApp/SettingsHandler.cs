@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TagsCloudContainer;
+﻿using TagsCloudContainer;
 
-namespace TagsCloudWinformsApp
+namespace TagsCloudWinformsApp;
+
+internal class SettingsHandler : ISettingsProvider
 {
-    internal class SettingsHandler : ISettingsProvider
+    public Settings LocalSettings = new()
     {
-        public Settings Settings =>
-            new()
-            {
-                BackgroundColor = LocalSettings.BackgroundColor,
-                FontColor = LocalSettings.FontColor,
-                Font = LocalSettings.Font,
-                FrequencyRatio = LocalSettings.FrequencyRatio,
-                ImageSize = LocalSettings.ImageSize
-            };
+        BackgroundColor = Color.Black,
+        FontColor = Color.Cyan,
+        Font = new Font(FontFamily.GenericSerif, 26),
+        FrequencyRatio = 1.2f,
+        ImageSize = new Size(1000, 1000)
+    };
 
-
-        public Settings LocalSettings = new()
+    public Settings Settings =>
+        new()
         {
-            BackgroundColor = Color.Black,
-            FontColor = Color.Cyan,
-            Font = new Font(FontFamily.GenericSerif, 26),
-            FrequencyRatio = 1.2f,
-            ImageSize = new Size(1000, 1000)
+            BackgroundColor = LocalSettings.BackgroundColor,
+            FontColor = LocalSettings.FontColor,
+            Font = LocalSettings.Font,
+            FrequencyRatio = LocalSettings.FrequencyRatio,
+            ImageSize = LocalSettings.ImageSize
         };
-    }
 }

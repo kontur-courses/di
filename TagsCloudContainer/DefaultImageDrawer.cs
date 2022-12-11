@@ -5,8 +5,8 @@ namespace TagsCloudContainer;
 
 public class DefaultImageDrawer : IImageDrawer
 {
-    private readonly IRectanglesDistributor rectanglesDistributor;
     private readonly IColorer colorer;
+    private readonly IRectanglesDistributor rectanglesDistributor;
     private readonly Settings settings;
     private readonly IWordsHandler wordsHandler;
 
@@ -41,6 +41,7 @@ public class DefaultImageDrawer : IImageDrawer
             graphics.DrawString(pair.Key, font, new SolidBrush(colorer.ProvideColorForWord(pair.Key, freq)),
                 rect);
         }
+
         return DrawnBitmap;
     }
 }

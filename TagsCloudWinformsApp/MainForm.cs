@@ -1,5 +1,3 @@
-using System.Configuration;
-using System.Drawing.Imaging;
 using Autofac;
 using TagsCloudContainer;
 using TagsCloudContainer.Colorers;
@@ -9,10 +7,10 @@ namespace TagsCloudWinformsApp;
 
 public partial class MainForm : Form
 {
-    private SettingsHandler settingsHandler = new();
-    private InputFilesReader inputFilesReader = new();
-    private string TextFilesFilter = "text files|*.txt";
-    private string ImageFilesFilter = "png (*.png)|*.png|jpeg (*.jpeg)|*.jpeg|jpg (*.jpg)|*.jpg";
+    private readonly string ImageFilesFilter = "png (*.png)|*.png|jpeg (*.jpeg)|*.jpeg|jpg (*.jpg)|*.jpg";
+    private readonly InputFilesReader inputFilesReader = new();
+    private readonly SettingsHandler settingsHandler = new();
+    private readonly string TextFilesFilter = "text files|*.txt";
 
     public MainForm()
     {
@@ -46,7 +44,7 @@ public partial class MainForm : Form
 
         fontColor_button.Visible = wordColoring_comboBox.SelectedIndex != 1;
         fontColor_label.Visible = wordColoring_comboBox.SelectedIndex != 1;
-        
+
         generate_button.Enabled = inputFilesReader.InputPath != null;
         removeFilter_button.Enabled = inputFilesReader.FilterPath != null;
         saveImage_button.Enabled = mainPictureBox.Image != null;
@@ -107,7 +105,7 @@ public partial class MainForm : Form
         {
             var container = BuildContainer();
             var imgDrawer = container.Resolve<IImageDrawer>();
-            Bitmap bitmap = imgDrawer.DrawImage();
+            var bitmap = imgDrawer.DrawImage();
             mainPictureBox.Image = bitmap;
             UpdateSettingsView();
         }
@@ -119,9 +117,9 @@ public partial class MainForm : Form
 
     private void inputFile_button_Click(object sender, EventArgs e)
     {
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        var openFileDialog1 = new OpenFileDialog();
         openFileDialog1.Filter = TextFilesFilter;
-        DialogResult result = openFileDialog1.ShowDialog();
+        var result = openFileDialog1.ShowDialog();
         if (result == DialogResult.OK)
         {
             inputFilesReader.InputPath = openFileDialog1.FileName;
@@ -137,9 +135,9 @@ public partial class MainForm : Form
 
     private void chooseFilterFile_button_Click(object sender, EventArgs e)
     {
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        var openFileDialog1 = new OpenFileDialog();
         openFileDialog1.Filter = TextFilesFilter;
-        DialogResult result = openFileDialog1.ShowDialog();
+        var result = openFileDialog1.ShowDialog();
         if (result == DialogResult.OK)
         {
             inputFilesReader.FilterPath = openFileDialog1.FileName;
@@ -149,18 +147,16 @@ public partial class MainForm : Form
 
     private void saveImage_button_Click(object sender, EventArgs e)
     {
-        SaveFileDialog dialog = new SaveFileDialog();
+        var dialog = new SaveFileDialog();
         dialog.Filter = ImageFilesFilter;
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-            mainPictureBox.Image.Save(dialog.FileName);
-        }
+        if (dialog.ShowDialog() == DialogResult.OK) mainPictureBox.Image.Save(dialog.FileName);
     }
 
     private void wordColoring_comboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateSettingsView();
     }
+
     private IContainer BuildContainer()
     {
         var builder = new ContainerBuilder();
