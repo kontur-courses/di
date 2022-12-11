@@ -15,12 +15,14 @@ namespace TagsCloudContainer
         private Color backgroundColor;
         private Color fontColor;
         private FontFamily fontFamily;
+        private WordsFilter wordsFilter;
         public Form1()
         {
             InitializeComponent();
             parser = new TextParser();
             ccl = new CircularCloudLayouter();
             drawer = new Drawer();
+            wordsFilter = new WordsFilter();
             BackColor = Color.White;
             fontColor = Color.Black;
             fontFamily = FontFamily.GenericMonospace;
@@ -125,6 +127,12 @@ namespace TagsCloudContainer
             }
 
             return number;
+        }
+
+        private void but_openExludedWordForm_Click(object sender, EventArgs e)
+        {
+            var form = new ExludedWordsForm(wordsFilter);
+            form.Show();
         }
     }
 }

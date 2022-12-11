@@ -40,6 +40,7 @@ namespace TagsCloudContainer
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.but_openExludedWordForm = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.but_fontColor = new System.Windows.Forms.Button();
@@ -74,7 +75,7 @@ namespace TagsCloudContainer
             // but_generate
             // 
             this.but_generate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.but_generate.Location = new System.Drawing.Point(612, 41);
+            this.but_generate.Location = new System.Drawing.Point(739, 41);
             this.but_generate.Name = "but_generate";
             this.but_generate.Size = new System.Drawing.Size(180, 23);
             this.but_generate.TabIndex = 3;
@@ -89,7 +90,7 @@ namespace TagsCloudContainer
             this.pic_main.InitialImage = ((System.Drawing.Image)(resources.GetObject("pic_main.InitialImage")));
             this.pic_main.Location = new System.Drawing.Point(0, 71);
             this.pic_main.Name = "pic_main";
-            this.pic_main.Size = new System.Drawing.Size(804, 327);
+            this.pic_main.Size = new System.Drawing.Size(931, 327);
             this.pic_main.TabIndex = 4;
             this.pic_main.TabStop = false;
             // 
@@ -122,6 +123,7 @@ namespace TagsCloudContainer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.but_openExludedWordForm);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.but_fontColor);
@@ -135,9 +137,19 @@ namespace TagsCloudContainer
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(804, 74);
+            this.groupBox1.Size = new System.Drawing.Size(931, 74);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
+            // 
+            // but_openExludedWordForm
+            // 
+            this.but_openExludedWordForm.Location = new System.Drawing.Point(570, 19);
+            this.but_openExludedWordForm.Name = "but_openExludedWordForm";
+            this.but_openExludedWordForm.Size = new System.Drawing.Size(163, 44);
+            this.but_openExludedWordForm.TabIndex = 13;
+            this.but_openExludedWordForm.Text = "Изменить список избегаемых слов";
+            this.but_openExludedWordForm.UseVisualStyleBackColor = true;
+            this.but_openExludedWordForm.Click += new System.EventHandler(this.but_openExludedWordForm_Click);
             // 
             // button1
             // 
@@ -181,7 +193,7 @@ namespace TagsCloudContainer
             // but_save
             // 
             this.but_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.but_save.Location = new System.Drawing.Point(642, 404);
+            this.but_save.Location = new System.Drawing.Point(769, 404);
             this.but_save.Name = "but_save";
             this.but_save.Size = new System.Drawing.Size(150, 23);
             this.but_save.TabIndex = 10;
@@ -217,6 +229,7 @@ namespace TagsCloudContainer
             // 
             // box_widthPic
             // 
+            this.box_widthPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.box_widthPic.Location = new System.Drawing.Point(363, 409);
             this.box_widthPic.Name = "box_widthPic";
             this.box_widthPic.Size = new System.Drawing.Size(100, 20);
@@ -227,7 +240,7 @@ namespace TagsCloudContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 434);
+            this.ClientSize = new System.Drawing.Size(931, 434);
             this.Controls.Add(this.box_widthPic);
             this.Controls.Add(this.box_heightPic);
             this.Controls.Add(this.label6);
@@ -243,6 +256,8 @@ namespace TagsCloudContainer
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button but_openExludedWordForm;
 
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
