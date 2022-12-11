@@ -90,8 +90,7 @@ public class ConsoleClient : IClient
                     new Point(imageSize.Height / 2, imageSize.Width / 2);
                     
                 FillWordVisualisationSettings(drawingSettings);
-                var image = creator.CreatePicture(inputWordsStream, wordsPreprocessor, textSplitter,
-                    boringWords, cloudLayouter, cloudLayouterSettings, cloudDrawer, drawingSettings, defaultVisualisation);
+                var image = creator.CreatePicture();
 
                 Console.WriteLine(imageSaver.TrySaveImage(image, new FullFileName(savePath!))
                     ? $"Файл сохранён успешно в {savePath}"

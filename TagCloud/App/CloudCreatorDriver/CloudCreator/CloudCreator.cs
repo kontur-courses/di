@@ -13,16 +13,37 @@ namespace TagCloud.App.CloudCreatorDriver.CloudCreator;
 
 public class CloudCreator : ICloudCreator
 {
-    public Bitmap CreatePicture(
+    private readonly IInputWordsStream inputWordsStream;
+    private readonly IWordsPreprocessor wordsPreprocessor;
+    private readonly ITextSplitter textSplitter;
+    private readonly IReadOnlyCollection<IBoringWords> boringWords;
+    private readonly ICloudLayouter cloudLayouter;
+    private readonly ICloudLayouterSettings cloudLayouterSettings;
+    private readonly ICloudDrawer cloudDrawer;
+    private readonly IDrawingSettings drawingSettings;
+    
+    public CloudCreator(
         IInputWordsStream inputWordsStream, IWordsPreprocessor wordsPreprocessor,
         ITextSplitter textSplitter, IReadOnlyCollection<IBoringWords> boringWords,
         ICloudLayouter cloudLayouter, ICloudLayouterSettings cloudLayouterSettings,
         ICloudDrawer cloudDrawer,
-        IDrawingSettings drawingSettings, IWordVisualisation defaultVisualisation)
+        IDrawingSettings drawingSettings)
+    {
+        this.inputWordsStream = inputWordsStream ?? throw new ArgumentNullException(nameof(inputWordsStream));
+        this.wordsPreprocessor = wordsPreprocessor ?? throw new ArgumentNullException(nameof(wordsPreprocessor));
+        this.textSplitter = textSplitter ?? throw new ArgumentNullException(nameof(textSplitter));
+        this.boringWords = boringWords ?? throw new ArgumentNullException(nameof(boringWords));
+        this.cloudLayouter = cloudLayouter ?? throw new ArgumentNullException(nameof(cloudLayouter));
+        this.cloudLayouterSettings = cloudLayouterSettings ?? throw new ArgumentNullException(nameof(cloudLayouterSettings));
+        this.cloudDrawer = cloudDrawer ?? throw new ArgumentNullException(nameof(cloudDrawer));
+        this.drawingSettings = drawingSettings ?? throw new ArgumentNullException(nameof(drawingSettings));
+    }
+    
+    public Bitmap CreatePicture()
     {
         var allWords = GetAllWordsFromStream(inputWordsStream, textSplitter);
-        var words = GetProcessedWords(allWords, wordsPreprocessor, boringWords);
-        var sizes = GetWordsSizes(words, defaultVisualisation, drawingSettings);
+        var words = GetProcessedWordsOrderedByTf(allWords, wordsPreprocessor, boringWords);
+        var sizes = GetWordsSizes(words, drawingSettings);
         var rectangles = cloudLayouter.GetLaidRectangles(sizes, cloudLayouterSettings);
         var drawingWords =
             CreateDrawingWords(words, rectangles, drawingSettings);
@@ -32,17 +53,12 @@ public class CloudCreator : ICloudCreator
 
     private static IEnumerable<Size> GetWordsSizes(
         IEnumerable<IWord> words,
-        IWordVisualisation defaultVisualisation,
         IDrawingSettings drawingSettings)
     {
-        return words.Select(word =>
-        {
-            var stile = GetVisualisation(word, drawingSettings);
-            return GetSizeForWord(word, stile);
-        });
+        return words.Select(word => word.MeasureWord(GetVisualisation(word, drawingSettings).Font));
     }
 
-    private static List<IWord> GetProcessedWords(
+    private static List<IWord> GetProcessedWordsOrderedByTf(
         List<string> allWordsFromStream,
         IWordsPreprocessor wordsPreprocessor,
         IReadOnlyCollection<IBoringWords> boringWords)
@@ -60,11 +76,6 @@ public class CloudCreator : ICloudCreator
         while (inputWordsStream.MoveNext())
             allWords.Add(inputWordsStream.GetWord());
         return allWords;
-    }
-
-    private static Size GetSizeForWord(IWord word, IWordVisualisation visualisation)
-    {
-        return word.MeasureWord(visualisation.Font);
     }
 
     private static List<IDrawingWord> CreateDrawingWords(IEnumerable<IWord> words,
