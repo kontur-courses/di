@@ -10,13 +10,13 @@ namespace TagsCloudContainer.App.Layouter
     public class TagsLayouter
     {
         private ICircularCloudLayouter cloudLayouter;
-        private readonly ITagsReader readTags;
+        private readonly ITagsExtractor readTags;
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
         private readonly FontText fontText;
         public List<TagInfo> Tags;
 
-        public TagsLayouter(ICircularCloudLayouter cloudLayouter, ITagsReader readTags,
+        public TagsLayouter(ICircularCloudLayouter cloudLayouter, ITagsExtractor readTags,
             FontText fontText, IImageHolder imageHolder, Palette palette)
         {
             this.cloudLayouter = cloudLayouter;
@@ -28,7 +28,7 @@ namespace TagsCloudContainer.App.Layouter
 
         public void PutAllTags()
         {
-            if (readTags.Text is null) return;
+            if (readTags.Text is null || readTags.Text.Count == 0) return; 
             var minT = readTags.Text.Values.Min();
             var maxT = readTags.Text.Values.Max();
             Tags = readTags.Text

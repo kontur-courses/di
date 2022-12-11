@@ -8,12 +8,14 @@ namespace TagsCloudContainer.App.Actions
     public class OpenFileAction : IUiAction
     {
         private readonly IImageDirectoryProvider imageDirectoryProvider;
-        private readonly ITagsReader readTags;
+        private readonly ITextReader textReader;
+        private readonly ITagsExtractor tagsExtractor;
 
-        public OpenFileAction(IImageDirectoryProvider imageDirectoryProvider, ITagsReader readTags)
+        public OpenFileAction(IImageDirectoryProvider imageDirectoryProvider, ITextReader textReader, ITagsExtractor tagsExtractor)
         {
             this.imageDirectoryProvider = imageDirectoryProvider;
-            this.readTags = readTags;
+            this.textReader = textReader;
+            this.tagsExtractor = tagsExtractor;
         }
 
         public string Category => "Настройки";
@@ -26,11 +28,14 @@ namespace TagsCloudContainer.App.Actions
             {
                 CheckFileExists = false,
                 InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
-                Filter = "Изображения (*.txt)|*.txt"
+                Filter = textReader.Filter
             };
             var res = dialog.ShowDialog();
             if (res == DialogResult.OK)
-                readTags.ReadTagsFromFile(dialog.FileName);
+            {
+                var allText = textReader.ReadText(dialog.FileName);
+                tagsExtractor.FindAllTagsInText(allText);
+            }
         }
     }
 }

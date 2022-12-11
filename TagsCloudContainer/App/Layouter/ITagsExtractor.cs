@@ -2,9 +2,9 @@
 
 namespace TagsCloudContainer.App.Layouter
 {
-    public interface ITagsReader
+    public interface ITagsExtractor
     {
-        public void ReadTagsFromFile(string path);
+        public void FindAllTagsInText(string text);
         public Dictionary<string, int> Text { get; set; }
     }
 }

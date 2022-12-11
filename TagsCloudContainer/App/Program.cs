@@ -27,7 +27,8 @@ namespace TagsCloudContainer.App
             builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>();
             builder.RegisterType<TagsLayouter>().AsSelf(); 
             builder.RegisterType<CloudLayouterSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<TagsReaderFromTxt>().As<ITagsReader>().SingleInstance();
+            builder.RegisterType<SimpleTagsExtractor>().As<ITagsExtractor>().SingleInstance();
+            builder.RegisterType<TextReaderFromTxt>().As<ITextReader>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<FontText>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxImageHolder>().As<IImageHolder, PictureBoxImageHolder>()
