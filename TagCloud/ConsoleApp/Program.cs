@@ -15,10 +15,10 @@ internal static class Program
         argsParser.Options?.Apply(container);
         if (argsParser.Options is null)
             return;
+        
+        var properties = container.Resolve<ApplicationProperties>();
+        container.Resolve<TagCloudConstructor>().Construct().Save(properties.OutputPath);
 
-        const string path = @"Cloud.png";
-        container.Resolve<TagCloudConstructor>().Construct().Save(path);
-
-        Console.WriteLine($"Tag cloud saved to file {path}");
+        Console.WriteLine($"Tag cloud saved to file {properties.OutputPath}");
     }
 }

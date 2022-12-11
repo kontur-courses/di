@@ -34,7 +34,9 @@ public class ConsoleOptions
     [Option("foreground", Required = false, Default = "#ffffff", HelpText = "Foreground color")]
     public string ForegroundColor { get; set; }
     
-
+    [Option('o', "out", Required = false, Default = "Cloud.png", HelpText = "Output image path(including name). Supported formats: .jpg, .jpeg, .png")]
+    public string OutputPath { get; set; }
+    
     public void Apply(IContainer container)
     {
         ApplySizeOption(container);
@@ -64,6 +66,11 @@ public class ConsoleOptions
     
     private void ApplyFileOption(IComponentContext container)
     {
-        container.Resolve<ApplicationProperties>().Path = File;
+        var properties = container.Resolve<ApplicationProperties>();
+        properties.Path = File;
+
+        if (Path.GetExtension(OutputPath) is not (".jpg" or ".jpeg" or ".png"))
+            throw new ArgumentException("Unsupported image format in path");
+        properties.OutputPath = OutputPath;
     }
 }

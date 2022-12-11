@@ -2,7 +2,6 @@
 
 public class SaveButton : Button
 {
-    public static event EventHandler? SaveRequired;
     public SaveButton()
     {
         Dock = DockStyle.Top;
@@ -20,7 +19,7 @@ public class SaveButton : Button
         
         var fileDialog = new SaveFileDialog();
 
-        fileDialog.Filter = "PNG image|*.png;";
+        fileDialog.Filter = "PNG image|*.png|JPG image|*.jpg;*.jpeg;";
         fileDialog.FilterIndex = 0;
         fileDialog.RestoreDirectory = true;
 
