@@ -42,7 +42,6 @@ public class CloudDrawer : ICloudDrawer
                 new SolidBrush(word.Color),
                 word.Rectangle);
         }
-
         return myBitmap;
     }
 }

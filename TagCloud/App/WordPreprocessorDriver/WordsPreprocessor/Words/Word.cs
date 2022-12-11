@@ -2,9 +2,6 @@
 
 namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
-/// <summary>
-/// Класс слова, который хранит информацию о слове, его количестве встреч в слове и индексе tf
-/// </summary>
 public class Word : IWord
 {
     public string Value { get; }

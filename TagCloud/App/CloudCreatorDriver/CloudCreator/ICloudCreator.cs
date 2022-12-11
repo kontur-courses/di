@@ -9,9 +9,6 @@ using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
 
 namespace TagCloud.App.CloudCreatorDriver.CloudCreator;
 
-/// <summary>
-/// Интерфейс, который позволяет создать изображение облака тегов
-/// </summary>
 public interface ICloudCreator
 {
     Bitmap CreatePicture(

@@ -2,20 +2,17 @@
 
 namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayouters;
 
-/// <summary>
-/// Класс раскладчика прямоугольников, который рабоатет по приницпу расположения по спирали
-/// </summary>
 public class SpiralCloudLayouter : ICloudLayouter
 {
     private SpiralCloudLayouterSettings? settings;
     private readonly List<Rectangle> setRectangles = new();
-        
     private double rotationAngle;
         
     public void SetSettings(ICloudLayouterSettings layouterSettings)
     {
         if (layouterSettings == null)
             throw new NullReferenceException("Layouter settings can not be null");
+        
         if (layouterSettings is not SpiralCloudLayouterSettings spiralLayouterSettings)
             throw new Exception("Incorrect layouter settings type. " +
                                              $"Expected {typeof(SpiralCloudLayouterSettings)}, " +
@@ -27,6 +24,7 @@ public class SpiralCloudLayouter : ICloudLayouter
     {
         if (settings == null)
             throw new NullReferenceException("Layouter settings can not be null");
+        
         Rectangle rectangle;
         if (setRectangles.Count == 0)
             rectangle = new Rectangle(
@@ -39,11 +37,6 @@ public class SpiralCloudLayouter : ICloudLayouter
         return rectangle;
     }
 
-    /// <summary>
-    /// Метод, позволяющий найти расположение следующего на спирали прямоугольника
-    /// </summary>
-    /// <param name="rectangleSize">Размеры прямоуголььника для добавления</param>
-    /// <returns>Прямоугольник, расположенный на плоскости</returns>
     private Rectangle FindNextRectangleOnSpiral(Size rectangleSize)
     {
         rotationAngle = 0d;
@@ -60,12 +53,6 @@ public class SpiralCloudLayouter : ICloudLayouter
         }
     }
     
-    /// <summary>
-    /// Метод, позволяющий получить прямоугольник, позиционированный в зависимости от угла поворота
-    /// </summary>
-    /// <param name="position">Позиция на спирали</param>
-    /// <param name="rectangleSize">Размеры прямоугольника</param>
-    /// <returns>Прямоугольник, расположенный нужным образом относительно спирали</returns>
     private Rectangle GetPositionedRectangle_DependedOnAngle(Point position, Size rectangleSize)
     {
         var angle = rotationAngle % (2 * Math.PI);
@@ -109,9 +96,6 @@ public class SpiralCloudLayouter : ICloudLayouter
         return new Rectangle(left, top, rectangleSize.Width, rectangleSize.Height);
     }
 
-    /// <summary>
-    /// Метод, позволяющий получить следующую целую точку на спирали
-    /// </summary>
     private Point GetNextPositionOnSpiral()
     {
         var radius = GetPolarRadiusByAngleOnSpiral(rotationAngle);
@@ -123,12 +107,6 @@ public class SpiralCloudLayouter : ICloudLayouter
         return new Point(intX, intY);
     }
 
-    /// <summary>
-    /// Метод, позволяющий получить удаление от центра в полярной системе координат для спирали,
-    /// в зависимости от угла поврота
-    /// </summary>
-    /// <param name="angle">Угол поворота в радианах</param>
-    /// <returns>Удалениие от центра (полярный радиус)</returns>
     private double GetPolarRadiusByAngleOnSpiral(double angle)
     {
         if (angle < 0)

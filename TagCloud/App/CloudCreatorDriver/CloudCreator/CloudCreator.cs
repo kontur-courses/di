@@ -11,9 +11,6 @@ using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
 namespace TagCloud.App.CloudCreatorDriver.CloudCreator;
 
-/// <summary>
-/// Класс, который позволяет создать облаго тегов
-/// </summary>
 public class CloudCreator : ICloudCreator
 {
     public Bitmap CreatePicture(

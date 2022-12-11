@@ -4,11 +4,6 @@ using TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.Words;
 
 namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor;
 
-/// <summary>
-/// Класс, предоставляющий возможности базовой обработки слов.
-/// Приводит все слова к нижнему регистру, подсчитывает их количество и tf индекс, изюавляется от "скучных" слов,
-/// таких как предлоги, союзы, местоимения
-/// </summary>
 public class DefaultWordsPreprocessor : IWordsPreprocessor
 {
     private readonly CultureInfo cultureInfo;
@@ -20,12 +15,6 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
         wordsSet = new HashSet<IWord>();
     }
 
-    /// <summary>
-    /// Позволяет получить обработанные неповторяющиеся слова с посчитанным индексом tf
-    /// </summary>
-    /// <param name="words">Список всех слов</param>
-    /// <param name="boringWords">Сущность, которая позволит определять, скучное ли слово</param>
-    /// <returns>Обработанные неповторяющиеся слова без скучных слов</returns>
     public ISet<IWord> GetProcessedWords(List<string> words, IReadOnlyCollection<IBoringWords> boringWords)
     {
         wordsSet = CreateWordsSet(words);
@@ -36,22 +25,11 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
             .ToHashSet();
     }
 
-    /// <summary>
-    /// Метод, который позволяет получить tf индекс
-    /// </summary>
-    /// <param name="wordCount">Количество раз, которое слова встречается в текста</param>
-    /// <param name="totalWordsCount">Общее количество слов в тексте</param>
-    /// <returns>Значение tf индекса</returns>
     private static double GetTfIndex(int wordCount, int totalWordsCount)
     {
         return 1d * totalWordsCount / wordCount;
     }
         
-    /// <summary>
-    /// Метод, который зааполняет свойства tf у каждого слова
-    /// </summary>
-    /// <param name="words">Список неповторяющихся слов текста</param>
-    /// <param name="totalWordsCount">Общее количество слов в текста</param>
     private static void CalculateTfIndexes(IEnumerable<IWord> words, int totalWordsCount)
     {
         foreach (var word in words)
@@ -60,12 +38,6 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
         }
     }
         
-    /// <summary>
-    /// Метод, который аозволяет сформировать набор уникальных слов текста, применив к каждому слову некоторый
-    /// алгоритм предварительной обработки (приведение к начальной форме, к lowercase и прочие...)
-    /// </summary>
-    /// <param name="words">Все слова в тексте</param>
-    /// <returns>Set уникальных слов в тексте</returns>
     private HashSet<IWord> CreateWordsSet(IEnumerable<string> words)
     {
         var set = new HashSet<IWord>();
@@ -76,7 +48,6 @@ public class DefaultWordsPreprocessor : IWordsPreprocessor
             else 
                 set.Add(word);
         }
-
         return set;
     }
 }

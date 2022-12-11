@@ -2,9 +2,6 @@
 
 namespace TagCloud.App.WordPreprocessorDriver.WordsPreprocessor.BoringWords;
 
-/// <summary>
-/// Класс, считающий скучными союзы, причастия и местоимения русского языка
-/// </summary>
 public class BoringUnionsAndAppealsRu : IBoringWords
 {
     private static readonly List<string> Unions = new()
