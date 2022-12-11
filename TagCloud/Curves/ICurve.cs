@@ -10,7 +10,7 @@ public interface ICurve
     {
         return name.ToLower() switch
         {
-            "spiral" => new ArchimedeanSpiral(),
+            ArchimedeanSpiral.Name => new ArchimedeanSpiral(),
             _ => throw new ArgumentException("There is no such algorithm")
         };
     }

@@ -14,6 +14,7 @@ public class ArchimedeanSpiral : ICurve
 
     public double StartRadius { get; }
     public double ExtendRatio { get; }
+    public const string Name = "spiral";
 
     public Point GetPoint(double angle)
     {
