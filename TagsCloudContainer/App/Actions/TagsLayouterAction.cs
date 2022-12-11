@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Windows.Forms;
 using TagsCloudContainer.Infrastructure;
 using TagsCloudContainer.App.Layouter;
 
@@ -8,11 +10,18 @@ namespace TagsCloudContainer.App.Actions
     {
         private TagsLayouter tagsLayouter;
         private ITagsPainter tagsPainter;
+        private readonly IImageDirectoryProvider imageDirectoryProvider;
+        private readonly ITextReader textReader;
+        private readonly ITagsExtractor tagsExtractor;
 
-        public TagsLayouterAction(TagsLayouter tagsLayouter, ITagsPainter tagsPainter)
+        public TagsLayouterAction(TagsLayouter tagsLayouter, ITagsPainter tagsPainter,
+            IImageDirectoryProvider imageDirectoryProvider, ITextReader textReader, ITagsExtractor tagsExtractor)
         {
             this.tagsLayouter = tagsLayouter;
             this.tagsPainter = tagsPainter;
+            this.imageDirectoryProvider = imageDirectoryProvider;
+            this.textReader = textReader;
+            this.tagsExtractor = tagsExtractor;
         }
 
         public string Category => "Облако тегов";
@@ -21,8 +30,19 @@ namespace TagsCloudContainer.App.Actions
 
         public void Perform()
         {
-            var tags = tagsLayouter.PutAllTags();
-            tagsPainter.Paint(tags);
+            var dialog = new OpenFileDialog()
+            {
+                CheckFileExists = false,
+                InitialDirectory = Path.GetFullPath(imageDirectoryProvider.ImagesDirectory),
+                Filter = textReader.Filter
+            };
+            var res = dialog.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                var allText = textReader.ReadText(dialog.FileName);
+                var tags = tagsLayouter.PutAllTags(allText);
+                tagsPainter.Paint(tags);
+            }
         }
     }
 }

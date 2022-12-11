@@ -6,12 +6,12 @@ using TagsCloudContainer.Infrastructure;
 
 namespace TagsCloudContainer.App.Layouter
 {
-    class SimpleTagsPainter : ITagsPainter
+    class TwoColorsTagsPainter : ITagsPainter
     {
         private readonly IImageHolder imageHolder;
         private readonly Palette palette;
 
-        public SimpleTagsPainter(IImageHolder imageHolder, Palette palette)
+        public TwoColorsTagsPainter(IImageHolder imageHolder, Palette palette)
         {
             this.imageHolder = imageHolder;
             this.palette = palette;
@@ -22,12 +22,16 @@ namespace TagsCloudContainer.App.Layouter
             var imageSize = imageHolder.GetImageSize();
             using (var graphics = imageHolder.StartDrawing())
             using (var backgroundBrush = new SolidBrush(palette.BackgroundColor))
-            using (var penBrush = new SolidBrush(palette.PrimaryColor))
             {
                 graphics.FillRectangle(backgroundBrush, 0, 0, imageSize.Width, imageSize.Height);
+                var i = 0;
                 if (tags != null)
                     foreach (var tag in tags)
-                        graphics.DrawString(tag.TagText, tag.TagFont, penBrush, tag.TagRect);
+                    {
+                        using (var penBrush = new SolidBrush(i%2 == 0 ? palette.PrimaryColor : palette.SecondaryColor))
+                            graphics.DrawString(tag.TagText, tag.TagFont, penBrush, tag.TagRect);
+                        i++;
+                    }
             }
             imageHolder.UpdateUi();
         }

@@ -11,10 +11,4 @@
     <PackageReference Include="DeepMorphy" Version="2.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="App\PictureBoxImageHolder.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-
 </Project>

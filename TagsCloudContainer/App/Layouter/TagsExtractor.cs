@@ -7,24 +7,23 @@ using DeepMorphy;
 
 namespace TagsCloudContainer.App.Layouter
 {
-    public class SimpleTagsExtractor : ITagsExtractor
+    public class TagsExtractor : ITagsExtractor
     {
-        public Dictionary<string, int> Text { get; set; }
         private readonly MorphAnalyzer morphAnalyzer;
         private string[] partsOfSpeech;
 
-        public SimpleTagsExtractor()
+        public TagsExtractor()
         {
             morphAnalyzer = new MorphAnalyzer(withLemmatization: true);
             partsOfSpeech = new[] { "сущ", "прил", "кр_прил", "гл", "инф_гл", "прич", "кр_прич", "деепр", "нареч" };
         }
 
-        public void FindAllTagsInText(string text)
+        public Dictionary<string, int> FindAllTagsInText(string text)
         {
             var textArray = text
                 .ToLower()
-                .Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
-            Text = ChooseNotBoringWordsWithSimpleForm(textArray)
+                .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            return ChooseNotBoringWordsWithSimpleForm(textArray)
                 .GroupBy(word => word)
                 .ToDictionary(group => group.Key, group => group.Count());
         }

@@ -10,25 +10,26 @@ namespace TagsCloudContainer.App.Layouter
     public class TagsLayouter
     {
         private ICircularCloudLayouter cloudLayouter;
-        private readonly ITagsExtractor readTags;
+        private readonly ITagsExtractor tagsExtractor;
         private readonly IImageHolder imageHolder;
         private readonly FontText fontText;
 
-        public TagsLayouter(ICircularCloudLayouter cloudLayouter, ITagsExtractor readTags,
+        public TagsLayouter(ICircularCloudLayouter cloudLayouter, ITagsExtractor tagsExtractor,
             FontText fontText, IImageHolder imageHolder)
         {
             this.cloudLayouter = cloudLayouter;
-            this.readTags = readTags;
+            this.tagsExtractor = tagsExtractor;
             this.imageHolder = imageHolder;
             this.fontText = fontText;
         }
 
-        public List<TagInfo> PutAllTags()
+        public List<TagInfo> PutAllTags(string text)
         {
-            if (readTags.Text is null || readTags.Text.Count == 0) return null;
-            var minT = readTags.Text.Values.Min();
-            var maxT = readTags.Text.Values.Max();
-            var tags = readTags.Text
+            var wordsWithCountRepeat = tagsExtractor.FindAllTagsInText(text);
+            if (wordsWithCountRepeat is null || wordsWithCountRepeat.Count == 0) return null;
+            var minT = wordsWithCountRepeat.Values.Min();
+            var maxT = wordsWithCountRepeat.Values.Max();
+            var tags = wordsWithCountRepeat
                 .Select(t => new TagInfo(t.Key, new Font(fontText.Font.FontFamily,
                     CalculateSizeFont(t.Value, minT, maxT, fontText.Font.Size), fontText.Font.Style)))
                 .ToList();
@@ -52,8 +53,8 @@ namespace TagsCloudContainer.App.Layouter
 
         private SizeF CalculateSizeWord(string word, Font font)
         {
-            var gph = imageHolder.StartDrawing();
-            return gph.MeasureString(word, font);
+            var graphics = imageHolder.StartDrawing();
+            return graphics.MeasureString(word, font);
         }
     }
 }

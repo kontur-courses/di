@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
@@ -10,12 +11,12 @@ namespace TagsCloudContainer_Should
 {
     public class SimpleTagsExtractor_Should
     {
-        private SimpleTagsExtractor simpleTagsExtractor;
+        private TagsExtractor simpleTagsExtractor;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            simpleTagsExtractor = new SimpleTagsExtractor();
+            simpleTagsExtractor = new TagsExtractor();
         }
 
         [Test]
@@ -56,7 +57,7 @@ namespace TagsCloudContainer_Should
         public void FindAllTagsInText_ShouldReturnOneWord_WithSameWords()
         {
             var expected = new Dictionary<string, int> { { "мама", 2 } };
-            simpleTagsExtractor.FindAllTagsInText("мама\r\nмама");
+            simpleTagsExtractor.FindAllTagsInText("мама"+ Environment.NewLine+ "мама");
             var actual = simpleTagsExtractor.Text;
 
             actual.Should().HaveCount(1);

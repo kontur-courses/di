@@ -22,13 +22,12 @@ namespace TagsCloudContainer.App
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<PaletteSettingsAction>().As<IUiAction>();
             builder.RegisterType<FontSettingsAction>().As<IUiAction>();
-            builder.RegisterType<OpenFileAction>().As<IUiAction>();
 
             builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>();
             builder.RegisterType<TagsLayouter>().AsSelf();
             builder.RegisterType<CloudLayouterSettings>().AsSelf().SingleInstance();
-            builder.RegisterType<SimpleTagsExtractor>().As<ITagsExtractor>().SingleInstance();
-            builder.RegisterType<SimpleTagsPainter>().As<ITagsPainter>();
+            builder.RegisterType<TagsExtractor>().As<ITagsExtractor>().SingleInstance();
+            builder.RegisterType<TwoColorsTagsPainter>().As<ITagsPainter>();
             builder.RegisterType<TextReaderFromTxt>().As<ITextReader>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<FontText>().AsSelf().SingleInstance();
