@@ -22,7 +22,7 @@ public class RainbowColorGenerator : IColorGenerator
         this.random = random;
     }
     
-    public Color Generate(string tag)
+    public Color Generate()
     {
         return Colors[random.Next(Colors.Length)];
     }

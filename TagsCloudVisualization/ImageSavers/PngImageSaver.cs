@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.ImageSavers;
 
-public class PngSaver : AbstractImageSaver
+public class PngImageSaver : AbstractImageSaver
 {
     protected override string Extension { get; } = "png";
     protected override ImageFormat Format { get; } = ImageFormat.Png;

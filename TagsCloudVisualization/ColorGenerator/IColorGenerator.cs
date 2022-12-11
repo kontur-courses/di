@@ -4,5 +4,5 @@ namespace TagsCloudVisualization.ColorGenerator;
 
 public interface IColorGenerator
 {
-    Color Generate(string tag);
+    Color Generate();
 }

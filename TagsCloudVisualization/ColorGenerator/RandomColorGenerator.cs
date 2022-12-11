@@ -11,7 +11,7 @@ public class RandomColorGenerator : IColorGenerator
         this.random = random;
     }
 
-    public Color Generate(string tag)
+    public Color Generate()
     {
         return Color.FromArgb(random.Next(256), random.Next(256), random.Next(256), random.Next(256));
     }

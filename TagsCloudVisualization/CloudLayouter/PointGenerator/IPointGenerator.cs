@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization.Abstractions;
+namespace TagsCloudVisualization.CloudLayouter.PointGenerator;
 
 public interface IPointGenerator
 {

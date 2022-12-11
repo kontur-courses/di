@@ -1,3 +1,3 @@
 ﻿namespace TagsCloudVisualization;
 
-public record Tag(string Text, int Weigth);
+public record Tag(string Text, float Weight);
