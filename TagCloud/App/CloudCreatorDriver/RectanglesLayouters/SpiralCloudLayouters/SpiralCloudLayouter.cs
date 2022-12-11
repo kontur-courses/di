@@ -5,10 +5,21 @@ namespace TagCloud.App.CloudCreatorDriver.RectanglesLayouters.SpiralCloudLayoute
 public class SpiralCloudLayouter : ICloudLayouter
 {
     private SpiralCloudLayouterSettings? settings;
-    private readonly List<Rectangle> setRectangles = new();
+    private readonly List<Rectangle> laidRectangles = new();
     private double rotationAngle;
+    
+    public List<Rectangle> GetLaidRectangles(IEnumerable<Size> sizes, ICloudLayouterSettings layouterSettings)
+    {
+        SetSettings(layouterSettings);
+        foreach (var size in sizes)
+        {
+            PutNextRectangle(size);
+        }
+
+        return laidRectangles;
+    }
         
-    public void SetSettings(ICloudLayouterSettings layouterSettings)
+    private void SetSettings(ICloudLayouterSettings layouterSettings)
     {
         if (layouterSettings == null)
             throw new NullReferenceException("Layouter settings can not be null");
@@ -20,20 +31,17 @@ public class SpiralCloudLayouter : ICloudLayouter
         settings = spiralLayouterSettings;
     }
 
-    public Rectangle PutNextRectangle(Size rectangleSize)
+    private Rectangle PutNextRectangle(Size rectangleSize)
     {
-        if (settings == null)
-            throw new NullReferenceException("Layouter settings can not be null");
-        
         Rectangle rectangle;
-        if (setRectangles.Count == 0)
+        if (laidRectangles.Count == 0)
             rectangle = new Rectangle(
-                settings.Center.X - rectangleSize.Width / 2,
-                settings.Center.Y - rectangleSize.Height / 2,
+                settings!.Center.X - rectangleSize.Width / 2,
+                settings!.Center.Y - rectangleSize.Height / 2,
                 rectangleSize.Width,
                 rectangleSize.Height);
         else rectangle = FindNextRectangleOnSpiral(rectangleSize);
-        setRectangles.Add(rectangle);
+        laidRectangles.Add(rectangle);
         return rectangle;
     }
 
@@ -46,7 +54,7 @@ public class SpiralCloudLayouter : ICloudLayouter
             position.X += settings!.Center.X;
             position.Y += settings!.Center.Y;
             var newRectangle = GetPositionedRectangle_DependedOnAngle(position, rectangleSize);
-            if (setRectangles.All(rectangle => !newRectangle.IntersectsWith(rectangle)))
+            if (laidRectangles.All(rectangle => !newRectangle.IntersectsWith(rectangle)))
             {
                 return newRectangle;
             }

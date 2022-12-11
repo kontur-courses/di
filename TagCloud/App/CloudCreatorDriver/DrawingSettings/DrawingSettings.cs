@@ -5,11 +5,26 @@ namespace TagCloud.App.CloudCreatorDriver.DrawingSettings;
 public class DrawingSettings : IDrawingSettings
 {
     public Color BgColor { get; set; }
-    public List<IWordVisualisation> Visualisations { get; } = new List<IWordVisualisation>();
     public Size PictureSize { get; set; }
-        
-    public void AddVisualisation(IWordVisualisation wordVisualisation)
+    private readonly IWordVisualisation defaultVisualisation;
+    
+    private readonly List<IWordVisualisation> wordVisualisations;
+
+    public DrawingSettings(IWordVisualisation defaultVisualisation)
     {
-        Visualisations.Add(wordVisualisation);
+        this.defaultVisualisation = defaultVisualisation;
+        wordVisualisations = new List<IWordVisualisation>();
     }
+    
+    public void AddWordVisualisation(IWordVisualisation wordVisualisation)
+    {
+        wordVisualisations.Add(wordVisualisation);
+    }
+
+    public IEnumerable<IWordVisualisation> GetWordVisualisations()
+    {
+        return wordVisualisations;
+    }
+
+    public IWordVisualisation GetDefaultVisualisation() => defaultVisualisation;
 }

@@ -19,19 +19,12 @@ public class CircularCloudLayouterTest
         center = new Point(200, 100);
         settings = new SpiralCloudLayouterSettings(center, 0.1, 0.1);
         sut = new SpiralCloudLayouter();
-        sut.SetSettings(settings);
     }
-        
-    [SetUp]
-    public void SetupTest()
-    {
-        rectangles = new List<Rectangle>();
-    }
-        
+
     [Test]
     public void PutNextRectangle_FirstGotRectangle_ShouldContainsCenter()
     {
-        rectangles!.Add(sut!.PutNextRectangle(new Size(10, 5)));
+        rectangles = sut!.GetLaidRectangles(new[]{new Size(10, 5)}, settings!);
         rectangles.First().Contains(center).Should().Be(true);
     }
         
@@ -42,9 +35,8 @@ public class CircularCloudLayouterTest
     public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections(int count)
     {
         var size = new Size(20, 5);
-        rectangles = Enumerable.Range(0, count)
-            .Select(_ => sut!.PutNextRectangle(size))
-            .ToList();
+        var sizes = Enumerable.Range(0, count).Select(i => size);
+        rectangles = sut!.GetLaidRectangles(sizes, settings!);
         for (var i = 0; i < count; i++)
         {
             var rect = rectangles[i];

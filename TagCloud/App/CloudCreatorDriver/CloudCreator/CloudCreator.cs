@@ -23,12 +23,9 @@ public class CloudCreator : ICloudCreator
         var allWords = GetAllWordsFromStream(inputWordsStream, textSplitter);
         var words = GetProcessedWords(allWords, wordsPreprocessor, boringWords);
         var sizes = GetWordsSizes(words, defaultVisualisation, drawingSettings);
-
-        cloudLayouter.SetSettings(cloudLayouterSettings);
-        var rectangles = GetWordsRectangles(sizes, cloudLayouter);
-
+        var rectangles = cloudLayouter.GetLaidRectangles(sizes, cloudLayouterSettings);
         var drawingWords =
-            CreateDrawingWords(words, rectangles, defaultVisualisation, drawingSettings.Visualisations);
+            CreateDrawingWords(words, rectangles, drawingSettings);
 
         return cloudDrawer.DrawWords(drawingWords, drawingSettings);
     }
@@ -40,7 +37,7 @@ public class CloudCreator : ICloudCreator
     {
         return words.Select(word =>
         {
-            var stile = GetVisualisation(word, defaultVisualisation, drawingSettings.Visualisations);
+            var stile = GetVisualisation(word, drawingSettings);
             return GetSizeForWord(word, stile);
         });
     }
@@ -65,11 +62,6 @@ public class CloudCreator : ICloudCreator
         return allWords;
     }
 
-    private static IEnumerable<Rectangle> GetWordsRectangles(IEnumerable<Size> sizes, ICloudLayouter cloudLayouter)
-    {
-        return sizes.Select(cloudLayouter.PutNextRectangle);
-    }
-
     private static Size GetSizeForWord(IWord word, IWordVisualisation visualisation)
     {
         return word.MeasureWord(visualisation.Font);
@@ -77,29 +69,29 @@ public class CloudCreator : ICloudCreator
 
     private static List<IDrawingWord> CreateDrawingWords(IEnumerable<IWord> words,
         IEnumerable<Rectangle> rectangles,
-        IWordVisualisation defaultVisualisation,
-        IReadOnlyCollection<IWordVisualisation> wordVisualisations)
+        IDrawingSettings drawingSettings)
     {
         var result = new List<IDrawingWord>();
         using var enumerator = rectangles.GetEnumerator();
         foreach (var word in words)
         {
             if (!enumerator.MoveNext()) break;
-            var stile = GetVisualisation(word, defaultVisualisation, wordVisualisations);
+            var stile = GetVisualisation(word, drawingSettings);
             result.Add(new DrawingWord(word, stile.Font, stile.Color, enumerator.Current));
         }
 
         return result;
     }
 
-    private static IWordVisualisation GetVisualisation(IWord word,
-        IWordVisualisation defaultVisualisation, IReadOnlyCollection<IWordVisualisation> wordVisualisations)
+    private static IWordVisualisation GetVisualisation(IWord word,IDrawingSettings drawingSettings)
     {
-        if (wordVisualisations == null)
-            throw new ArgumentException("words Visualisation can not be null");
+        if (word == null) throw new ArgumentNullException(nameof(word));
+        if (drawingSettings == null) throw new ArgumentNullException(nameof(drawingSettings));
 
         return
-            wordVisualisations.FirstOrDefault(v => v.StartingValue <= word.Tf)
-            ?? defaultVisualisation;
+            drawingSettings
+                .GetWordVisualisations()
+                .FirstOrDefault(v => v.StartingValue <= word.Tf)
+            ?? drawingSettings.GetDefaultVisualisation();
     }
 }

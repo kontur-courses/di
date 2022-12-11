@@ -125,7 +125,7 @@ public class ConsoleClient : IClient
             return;
         if(!TryGetFont("Название стиля шрфта на английском: ", out var font, fontSize))
             return;
-        drawingSettings.AddVisualisation(new WordVisualisation(color, startValue, font));
+        drawingSettings.AddWordVisualisation(new WordVisualisation(color, startValue, font));
         Console.WriteLine("Добавить ещё одно правило? [y/n]: ");
         if (Console.ReadLine() != "y")
             FillWordVisualisationSettings(drawingSettings);
