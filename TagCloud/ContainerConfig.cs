@@ -19,7 +19,6 @@ namespace TagCloud
         {
             var builder = new ContainerBuilder();
 
-            //получение текста и списка слов
             builder.Register<IFileReader>(
                (c, p) =>
                {
@@ -43,20 +42,16 @@ namespace TagCloud
 
             builder.RegisterType<WordsFrequencyAnalyzer>().As<IWordsFrequencyAnalyzer>();
 
-            //получение раскладчика
             builder.Register(c => new CircularCloudLayouter(new Point(0, 0))).As<ICloudLayouter>();
 
-            //получение настроек изображения
             builder.Register(с => appConfig.imageSettings).As<IImageSettings>();
-            builder.Register(с => appConfig.imageSettings.WordColoring).As<IWordColoring>();  // передать макс и мин значения в случае GradientColoring
+            builder.Register(с => appConfig.imageSettings.WordColoring).As<IWordColoring>(); 
             builder.Register(с => appConfig.imageSettings.FontFamily).As<FontFamily>();
 
-            //получение генератора изображения
             builder.RegisterType<CloudImageGenerator>().
                     UsingConstructor(typeof(ICloudLayouter), typeof(IImageSettings)).
                     As<ICloudImageGenerator>();
 
-            //получение приложения
             builder.RegisterType<ConsoleApp>().As<IApp>();
 
             return builder.Build();
