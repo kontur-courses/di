@@ -4,20 +4,24 @@ using TagCloud.Readers;
 
 namespace TagCloud.BoringWordsRepositories
 {
-    public class TextFileBoringWordsStorage : SingleWordInRowTextFileReader, IBoringWordsStorage
+    public class TextFileBoringWordsStorage : IBoringWordsStorage
     {
+        private readonly IBoringWordsReader reader;
         private HashSet<string> boringWords;
 
-        public TextFileBoringWordsStorage()
+        public TextFileBoringWordsStorage(IBoringWordsReader reader)
         {
             boringWords = new HashSet<string>();
+            this.reader = reader;
         }
+
+        public string FileExtFilter => reader.FileExtFilter;
 
         public void LoadBoringWords(string path)
         {
             boringWords.Clear();
-            Open(path);
-            boringWords = ReadWords().
+            reader.Open(path);
+            boringWords = reader.ReadWords().
                 Select(word => word.ToLower())
                 .ToHashSet();
         }

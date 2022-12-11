@@ -19,7 +19,7 @@ namespace TagCloudTests
         public void CreateWords()
         {
             wordsReader = new SingleWordInRowTextFileReader();
-            boringWordsStorage = new TextFileBoringWordsStorage();
+            boringWordsStorage = new TextFileBoringWordsStorage(new SingleWordInRowTextFileReader());
             wordsReader.Open("aboutKonturWords.txt");
         }
 

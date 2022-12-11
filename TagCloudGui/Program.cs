@@ -52,6 +52,7 @@ namespace TagCloudGui
         {
             containerBuilder.RegisterType<SingleWordInRowTextFileReader>().As<IReader>().
                 SingleInstance();
+            containerBuilder.RegisterType<SingleWordInRowTextFileReader>().As<IBoringWordsReader>();
             containerBuilder.RegisterType<TextFileBoringWordsStorage>().As<IBoringWordsStorage>().
                 SingleInstance();
             containerBuilder.RegisterType<SpiralPointGenerator>().As<IPointGenerator>();

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TagCloud.Readers
 {
-    public class SingleWordInRowTextFileReader : IReader
+    public class SingleWordInRowTextFileReader : IReader, IBoringWordsReader
     {
         private string path;
 

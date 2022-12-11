@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using TagCloud.BoringWordsRepositories;
+using TagCloud.Readers;
 
 namespace TagCloudTests
 {
@@ -10,7 +11,7 @@ namespace TagCloudTests
         [SetUp]
         public void CreateTextFileBoringWordsStorageTests()
         {
-            boringWordsStorage = new TextFileBoringWordsStorage();
+            boringWordsStorage = new TextFileBoringWordsStorage(new SingleWordInRowTextFileReader());
         }
 
         [Test]
