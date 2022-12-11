@@ -4,7 +4,7 @@ public class BoringPreprocessor : IPreprocessor
 {
     private readonly HashSet<string> boringWords;
 
-    public BoringPreprocessor(ICollection<string> boringWords)
+    public BoringPreprocessor(IReadOnlyCollection<string> boringWords)
     {
         this.boringWords = boringWords.ToHashSet();
     }
