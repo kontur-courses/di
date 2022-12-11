@@ -6,8 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TagsCloud", "TagsCloud", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{4B72AB92-A472-4B5E-9AC0-6522519A453F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainerTests", "TagsCloudContainerTests\TagsCloudContainerTests.csproj", "{70934F4F-11D4-4418-B607-5613E4C83F15}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudWinformsApp", "TagsCloudWinformsApp\TagsCloudWinformsApp.csproj", "{F593E117-ADFB-4A10-BDD6-C1C007E631BF}"
 EndProject
 Global
@@ -24,10 +22,6 @@ Global
 		{4B72AB92-A472-4B5E-9AC0-6522519A453F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B72AB92-A472-4B5E-9AC0-6522519A453F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B72AB92-A472-4B5E-9AC0-6522519A453F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70934F4F-11D4-4418-B607-5613E4C83F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70934F4F-11D4-4418-B607-5613E4C83F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70934F4F-11D4-4418-B607-5613E4C83F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70934F4F-11D4-4418-B607-5613E4C83F15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F593E117-ADFB-4A10-BDD6-C1C007E631BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F593E117-ADFB-4A10-BDD6-C1C007E631BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F593E117-ADFB-4A10-BDD6-C1C007E631BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,7 +29,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4B72AB92-A472-4B5E-9AC0-6522519A453F} = {1C0DB36D-92A7-4F26-BB85-E563427FAD2C}
-		{70934F4F-11D4-4418-B607-5613E4C83F15} = {1C0DB36D-92A7-4F26-BB85-E563427FAD2C}
 		{F593E117-ADFB-4A10-BDD6-C1C007E631BF} = {1C0DB36D-92A7-4F26-BB85-E563427FAD2C}
 	EndGlobalSection
 EndGlobal
