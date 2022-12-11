@@ -6,11 +6,13 @@ public class DefaultCloudGenerator : ICloudGenerator
 {
     public CircularCloudLayouter Layouter { get; set; }
     public IPreprocessor Preprocessor { get; set; }
+    private Font font;
 
-    public DefaultCloudGenerator(CircularCloudLayouter layouter, IPreprocessor preprocessor)
+    public DefaultCloudGenerator(CircularCloudLayouter layouter, IPreprocessor preprocessor, Font font)
     {
         Layouter = layouter;
         Preprocessor = preprocessor;
+        this.font = font;
     }
 
     public List<TextLabel> GenerateCloud(string text)
@@ -21,7 +23,6 @@ public class DefaultCloudGenerator : ICloudGenerator
         var generalCount = wordFreq.Values.Sum();
         foreach (var (word, freq) in wordFreq.OrderByDescending(pair => pair.Value))
         {
-            Font font = new Font("Arial", (int)(16f * (1 + freq * 1f / generalCount)));
             SizeF sz = g.MeasureString(word, font);
             Rectangle rc = new Rectangle(0, 0, (int)sz.Width, (int)sz.Height);
 

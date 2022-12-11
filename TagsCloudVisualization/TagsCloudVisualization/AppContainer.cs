@@ -15,6 +15,7 @@ public static class AppContainer
         var builder = new ContainerBuilder();
         builder.RegisterType<DefaultPreprocessor>().As<IPreprocessor>();
         builder.RegisterType<DefaultCloudGenerator>().As<ICloudGenerator>();
+        builder.RegisterInstance(new Font(options.Font, options.FontSize)).As<Font>();
 
         builder
             .RegisterInstance(new DefaultTextInput(options.Path))
@@ -23,7 +24,12 @@ public static class AppContainer
             .RegisterInstance(new CircularCloudLayouterSpiral(new Point(Config.CenterX, Config.CenterY)))
             .As<CircularCloudLayouter>();
         builder
-            .RegisterInstance(new DefaultCloudDrawer(options.ImageWidth, options.ImageHeight, options.Colors))
+            .RegisterInstance(
+                new DefaultCloudDrawer(
+                    options.ImageWidth,
+                    options.ImageHeight,
+                    options.Colors)
+            )
             .As<ICloudDrawer>();
 
         container = builder.Build();
