@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CommandLine;
 using TagsCloudContainer.Application;
 
 namespace TagsCloudContainer
@@ -7,7 +8,8 @@ namespace TagsCloudContainer
     {
         public static void Main(string[] args)
         {
-            var container = Container.SetDIBuilder();
+            var options = Parser.Default.ParseArguments<Options>(args).Value;
+            var container = Container.SetDIBuilder(options);
             var app = container.Resolve<IApp>();
             app.Run();
         }
