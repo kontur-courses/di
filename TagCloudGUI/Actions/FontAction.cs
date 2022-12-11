@@ -4,8 +4,8 @@ namespace TagCloudGraphicalUserInterface.Actions
 {
     internal class FontAction : IActionForm
     {
-        private TagCloudSettings settings;
-        public FontAction(TagCloudSettings settings)
+        private IAlgorithmSettings settings;
+        public FontAction(IAlgorithmSettings settings)
         {
             this.settings = settings;
         }

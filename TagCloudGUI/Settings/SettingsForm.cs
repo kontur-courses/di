@@ -1,4 +1,4 @@
-﻿namespace TagCloudGraphicalUserInterface
+﻿namespace TagCloudGraphicalUserInterface.Settings
 {
     public static class SettingsForm
     {

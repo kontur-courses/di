@@ -4,7 +4,7 @@ using TagCloudContainer.FrequencyWords;
 using TagCloudContainer.Parsers;
 using TagCloudContainer.Readers;
 using TagCloudContainer.TagsWithFont;
-using TagCloudGraphicalUserInterface.Actions;
+using TagCloudGraphicalUserInterface.Settings;
 
 namespace TagCloudGraphicalUserInterface.Interfaces
 {
@@ -13,6 +13,7 @@ namespace TagCloudGraphicalUserInterface.Interfaces
         public Switcher txtReader { get; set; }
         public Switcher Filtered { get; set; }
         public Switcher ToLowerCase { get; set; }
+        public Switcher PaletteUse { get; set; }
         public IFileReader Reader { get; }
         public IFileParser Parser { get; }
         public IFilter Filter { get; }

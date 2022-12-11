@@ -1,4 +1,5 @@
 ﻿using TagCloudGraphicalUserInterface.Interfaces;
+using TagCloudGraphicalUserInterface.Settings;
 
 namespace TagCloudGraphicalUserInterface.Actions
 {

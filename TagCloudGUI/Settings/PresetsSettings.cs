@@ -5,10 +5,9 @@ using TagCloudContainer.FrequencyWords;
 using TagCloudContainer.Parsers;
 using TagCloudContainer.Readers;
 using TagCloudContainer.TagsWithFont;
-using TagCloudGraphicalUserInterface.Actions;
 using TagCloudGraphicalUserInterface.Interfaces;
 
-namespace TagCloudGraphicalUserInterface
+namespace TagCloudGraphicalUserInterface.Settings
 {
     public class PresetsSettings : IPresetsSettings
     {
@@ -25,14 +24,13 @@ namespace TagCloudGraphicalUserInterface
 
         }
 
-        [DisplayName("Использовать .txt файл")]
-        public Switcher txtReader { get; set; }
+        [DisplayName("Использовать .txt файл")] public Switcher txtReader { get; set; }
 
         [DisplayName("Фильтрация облака")] public Switcher Filtered { get; set; }
 
-        [DisplayName("Только нижний регистр")]
-        public Switcher ToLowerCase { get; set; }
+        [DisplayName("Только нижний регистр")] public Switcher ToLowerCase { get; set; }
 
+        [DisplayName("Использовать палтиру")] public Switcher PaletteUse { get; set; }
         [Browsable(false)] public IFileReader Reader { get; }
         [Browsable(false)] public IFileParser Parser { get; }
         [Browsable(false)] public IFilter Filter { get; }

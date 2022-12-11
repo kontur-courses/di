@@ -4,7 +4,7 @@ using TagCloudContainer.PointAlgorithm;
 using TagCloudContainer.Rectangles;
 using TagCloudContainer.TagsWithFont;
 
-namespace TagsCloudVisualization
+namespace TagCloudGraphicalUserInterface
 {
     public class TagCloud
     {
@@ -81,20 +81,5 @@ namespace TagsCloudVisualization
                     x.rectangle.IntersectsWith(new Rectangle(point - new Size(size.Width / 2, size.Height / 2), size)))
                 .Contains(true);
         }
-        //public static TagCloud InitialCloud(string pathTxtFile, FontFamily font, int MaxFont, int MinFont)
-        //{
-        //    var fileReader = new Reader().Read(pathTxtFile);
-        //    var parser = new FileLinesParser();
-        //    var parsedText = parser.Parse(fileReader);
-        //    var filterWords = new FilterWords();
-        //    var filtredTags = filterWords.Filter(parsedText, s => s.Length>3);
-        //    var formatter = new WordFormatter();
-        //    var formattedTags = formatter.Normalize(filtredTags, x => x.ToLower());
-        //    var freqtag = new FrequencyTags();
-        //    var freqTags = freqtag.GetWordsFrequency(formattedTags);
-        //    var fontSizer = new FontSizer();
-        //    var fontTags = fontSizer.GetTagsWithSize(freqTags, font, MaxFont, MinFont);
-        //    return new TagCloud(fontTags);
-        //}
     }
 }

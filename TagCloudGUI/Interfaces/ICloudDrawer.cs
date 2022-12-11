@@ -1,10 +1,10 @@
-﻿using TagsCloudVisualization;
-
-namespace TagCloudGraphicalUserInterface.Interfaces
+﻿namespace TagCloudGraphicalUserInterface.Interfaces
 {
     public interface ICloudDrawer
     {
-        void DrawCloud(IEnumerable<TextRectangle> rectangles, Point offsetPoint, IImageSettingsProvider drawImageSettingsProvider,
+        void DrawCloudFromPalette(IEnumerable<TextRectangle> rectangles, Point offsetPoint, IImageSettingsProvider drawImageSettingsProvider,
             Palette palette);
+        void DrawCloudRandomColor(IEnumerable<TextRectangle> rectangles, Point offsetPoint,
+            IImageSettingsProvider drawImageSettingsProvider);
     }
 }

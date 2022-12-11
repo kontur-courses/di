@@ -6,5 +6,6 @@ namespace TagCloudContainer.PointAlgorithm
     {
         Point GetNextPoint();
         IPointConfig Config { get; set; }
+        void Reset();
     }
 }

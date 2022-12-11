@@ -4,8 +4,8 @@ namespace TagCloudGraphicalUserInterface.Actions
 {
     internal class SourceTagsAction : IActionForm
     {
-        private TagCloudSettings settings;
-        public SourceTagsAction(TagCloudSettings settings)
+        private IAlgorithmSettings settings;
+        public SourceTagsAction(IAlgorithmSettings settings)
         {
             this.settings = settings;
         }

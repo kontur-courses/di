@@ -1,12 +1,13 @@
 ﻿using TagCloudGraphicalUserInterface.Interfaces;
+using TagCloudGraphicalUserInterface.Settings;
 
 namespace TagCloudGraphicalUserInterface.Actions
 {
     public class PresetAction : IActionForm
     {
-        private PresetsSettings settings;
+        private IPresetsSettings settings;
 
-        public PresetAction(PresetsSettings settings)
+        public PresetAction(IPresetsSettings settings)
         {
             this.settings = settings;
         }
@@ -21,9 +22,5 @@ namespace TagCloudGraphicalUserInterface.Actions
         }
     }
 
-    public enum Switcher
-    {
-        On = 0,
-        Off = 1
-    }
+
 }

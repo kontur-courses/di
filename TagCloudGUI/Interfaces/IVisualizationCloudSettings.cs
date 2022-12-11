@@ -1,6 +1,6 @@
 ﻿namespace TagCloudGraphicalUserInterface.Interfaces
 {
-    internal interface IVisualizationCloudSettings
+    public interface IVisualizationCloudSettings
     {
         Point StartPoint { get; set; }
         public string ImagesDirectory { get; set; }

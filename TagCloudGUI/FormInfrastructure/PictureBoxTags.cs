@@ -1,5 +1,6 @@
 ﻿using System.Drawing.Imaging;
 using TagCloudGraphicalUserInterface.Interfaces;
+using TagCloudGraphicalUserInterface.Settings;
 
 namespace TagCloudGraphicalUserInterface
 {

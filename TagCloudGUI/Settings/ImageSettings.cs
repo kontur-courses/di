@@ -1,6 +1,6 @@
 ﻿using TagCloudGraphicalUserInterface.Interfaces;
 
-namespace TagCloudGraphicalUserInterface
+namespace TagCloudGraphicalUserInterface.Settings
 {
     public class ImageSettings : IImage
     {

@@ -3,11 +3,11 @@ using TagCloudContainer.PointAlgorithm;
 using TagCloudContainer.TagsWithFont;
 using TagCloudGraphicalUserInterface.Interfaces;
 
-namespace TagCloudGraphicalUserInterface
+namespace TagCloudGraphicalUserInterface.Settings
 {
-    public class TagCloudSettings : IProviderSettings, IVisualizationCloudSettings
+    public class AlgorithmSettings : IAlgorithmSettings
     {
-        public TagCloudSettings(IFontSettings fontSettings, IPointConfig config)
+        public AlgorithmSettings(IFontSettings fontSettings, IPointConfig config)
         {
             FontSettings = fontSettings;
             PointConfig = config;
@@ -36,12 +36,14 @@ namespace TagCloudGraphicalUserInterface
             get => FontSettings.MinFont;
             set => FontSettings.MinFont = value;
         }
+
         [DisplayName("Плотность(множитель)")]
         public double DensityMultiplier
         {
             get => PointConfig.DensityMultiplier;
             set => PointConfig.DensityMultiplier = value;
         }
+
         [DisplayName("Вертикальное сжатие облака(множитель)")]
         public double EllipsoidMultiplier
         {

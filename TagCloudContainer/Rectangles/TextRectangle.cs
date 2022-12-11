@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagCloudGraphicalUserInterface
 {
     public class TextRectangle
     {

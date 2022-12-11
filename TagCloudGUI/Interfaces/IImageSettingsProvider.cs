@@ -1,4 +1,6 @@
-﻿namespace TagCloudGraphicalUserInterface.Interfaces
+﻿using TagCloudGraphicalUserInterface.Settings;
+
+namespace TagCloudGraphicalUserInterface.Interfaces
 {
     public interface IImageSettingsProvider
     {

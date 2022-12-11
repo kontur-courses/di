@@ -10,7 +10,7 @@ using TagCloudContainer.Rectangles;
 using TagCloudContainer.TagsWithFont;
 using TagCloudGraphicalUserInterface.Actions;
 using TagCloudGraphicalUserInterface.Interfaces;
-using TagsCloudVisualization;
+using TagCloudGraphicalUserInterface.Settings;
 
 namespace TagCloudGraphicalUserInterface
 {
@@ -43,14 +43,14 @@ namespace TagCloudGraphicalUserInterface
             builder.RegisterType<SourceTagsAction>().As<IActionForm>();
             builder.RegisterType<PaletteAction>().As<IActionForm>();
 
-            builder.RegisterType<ArithmeticSpiral>().As<IPointer>();
+            builder.RegisterType<ArithmeticSpiral>().As<IPointer>().InstancePerLifetimeScope();
             builder.RegisterType<FontSettings>().As<IFontSettings>();
             builder.RegisterType<RectangleBuilder>().As<IRectangleBuilder>();
-            builder.RegisterType<TagCloudSettings>().As<TagCloudSettings>().SingleInstance();
             builder.RegisterType<CloudCreateSettings>().As<ICloudCreateSettings>();
             builder.RegisterInstance(new PointConfig(1, 1)).As<IPointConfig>();
             builder.RegisterType<Palette>().AsSelf().SingleInstance();
             builder.RegisterType<PictureBoxTags>().As<IImageSettingsProvider, PictureBoxTags>().SingleInstance();
+            builder.RegisterType<AlgorithmSettings>().As<IAlgorithmSettings>().SingleInstance();
 
             builder.RegisterTypes(typeof(TagCloud), typeof(TextRectangle), typeof(CloudForm), typeof(ImageSettings)).AsSelf();
             var container = builder.Build();

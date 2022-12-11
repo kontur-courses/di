@@ -23,7 +23,7 @@ namespace TagCloudShould.Infrastructure
         public void GetSize_WhenHaveTwoTagsNotEqualCount()
         {
             var fontSizer = new FontSizer();
-            var words = new List<string>()//5/13
+            var words = new List<string>()
             {
                 "words", "words", "words", "words", "words", "word", "word", "word", "word", "word", "word", "word", "word"
             };

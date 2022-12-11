@@ -13,5 +13,10 @@ namespace TagCloudContainer.PointAlgorithm
             angle += Math.PI / (360 * Config.DensityMultiplier);
             return nextPoint;
         }
+
+        public void Reset()
+        {
+            angle = 0;
+        }
     }
 }

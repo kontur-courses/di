@@ -30,6 +30,5 @@ namespace TagCloudShould.Infrastructure
             for (var i = 1; i < 1000; i++)
                 parsed[i].Should().Be(parsedString[i]);
         }
-
     }
 }
