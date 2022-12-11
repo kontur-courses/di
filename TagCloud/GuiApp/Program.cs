@@ -13,7 +13,12 @@ internal static class Program
         var container = DiContainerBuilder.Build();
         var constructor = container.Resolve<TagCloudConstructor>();
         var form = container.Resolve<Form>();
-        RenderButton.RenderRequired += (_, _) => Viewport.Instance.Image = constructor.Construct();
+        RenderButton.RenderRequired += (_, _) =>
+        {
+            var oldImage = Viewport.Instance.Image;
+            Viewport.Instance.Image = constructor.Construct();
+            oldImage?.Dispose();
+        };
         
         Application.Run(form);
     }
