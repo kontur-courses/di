@@ -13,6 +13,7 @@ namespace TagCloudTests
 {
     public class WordTagCloudCreatorTests
     {
+        [TestCase("empty.txt", null, "withoutWordsCloud.png", TestName = "without words")]
         [TestCase(null, null, "defaultWordsCloud.png", TestName = "with default words")]
         [TestCase("aboutKonturWords.txt", @"BoringWordsRepositories\BoringWordsDictionary.txt", "wordsCloud.png", TestName = "with words collection")]
         public void GenerateTagCloud(string wordDictionaryPath, string boringWordDictionaryPath, string picturePath)

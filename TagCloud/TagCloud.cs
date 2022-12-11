@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagCloud.Extensions;
 using TagCloud.Tags;
 
 namespace TagCloud
 {
     public class TagCloud
     {
-        public Point Center { get; private set; }
+        public Point Center { get; }
 
-        public List<ITag> Layouts { get; private set; }
+        public List<ITag> Layouts { get; }
 
         public TagCloud(Point center)
         {
@@ -19,27 +20,17 @@ namespace TagCloud
             Layouts = new List<ITag>();
         }
 
-        public int GetWidth()
-        {
-            if (Layouts.Count == 0)
-                return 0;
+        public int GetWidth() =>
+            Layouts.MaxOrDefault(r => r.Frame.Right) - 
+            Layouts.MinOrDefault(r => r.Frame.Left);
 
-            return Layouts.Max(r => r.Frame.Right) - 
-                Layouts.Min(r => r.Frame.Left);
-        }
+        public int GetHeight() =>
+            Layouts.MaxOrDefault(r => r.Frame.Bottom) - 
+            Layouts.MinOrDefault(r => r.Frame.Top);
 
-        public int GetHeight()
-        {
-            if (Layouts.Count == 0)
-                return 0;
+        public int GetLeftBound() => Layouts.MinOrDefault(r => r.Frame.Left);
 
-            return Layouts.Max(r => r.Frame.Bottom) - 
-                Layouts.Min(r => r.Frame.Top);
-        }
-
-        public int GetLeftBound() => Layouts.Min(r => r.Frame.Left);
-
-        public int GetTopBound() => Layouts.Min(r => r.Frame.Top);
+        public int GetTopBound() => Layouts.MinOrDefault(r => r.Frame.Top);
 
         public override int GetHashCode()
         {
