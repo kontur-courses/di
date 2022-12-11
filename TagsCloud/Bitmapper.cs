@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public class Bitmapper
+    public class Bitmapper : IBitmapper
     {
-        private CircularCloudLayouter layouter;
-        private Bitmap bitmap;
+        private readonly Bitmap bitmap;
         private Graphics graphics => Graphics.FromImage(bitmap);
+        
+        private readonly ICloudLayouter cloudLayouter;
+        private readonly IPrintSettings printSettings;
 
-        private readonly PrintSettings printSettings;
-
-        public Bitmapper(int width, int height, PrintSettings printSettings)
+        public Bitmapper(IPrintSettings printSettings, ICloudLayouter cloudLayouter)
         {
-            bitmap = new Bitmap(width, height);
-            layouter = new CircularCloudLayouter(new Point((int)(width / 2), (int)(height / 2)));
+            bitmap = new Bitmap(printSettings.Width, printSettings.Height);
 
+            this.cloudLayouter = cloudLayouter;
             this.printSettings = printSettings;
         }
 
@@ -27,31 +28,27 @@ namespace TagsCloud
             }
         }
 
-        private void DrawSingleWord(Pen pen, KeyValuePair<string, double> word)
+        private void DrawSingleWord(Pen pen, KeyValuePair<double, List<string>> words)
         {
-            var fontSize = (int)(word.Value * printSettings.FontSize);
-            var font = new Font(printSettings.FontName, fontSize);
-
-            var wordSizeF = graphics.MeasureString(word.Key, font);
-            var wordSize = new Size((int)wordSizeF.Width + 1, (int)wordSizeF.Height + 1);
-
-            var newWordLocation = layouter.PutNextRectangle(wordSize);
-
-            using (var solidBrush = new SolidBrush(pen.Color))
+            foreach (var word in words.Value)
             {
-                graphics.DrawString(word.Key, font, solidBrush, newWordLocation);
+                var fontSize = (int)(words.Key * printSettings.FontSize);
+                var font = new Font(printSettings.FontName, fontSize);
+
+                var wordSizeF = graphics.MeasureString(word, font);
+                var wordSize = new Size((int)wordSizeF.Width + 2, (int)wordSizeF.Height + 2);
+
+                var newWordLocation = cloudLayouter.PutNextRectangle(wordSize);
+
+                using (var solidBrush = new SolidBrush(pen.Color))
+                {
+                    graphics.DrawString(word, font, solidBrush, newWordLocation);
+                }
             }
         }
 
-        private void ClearFrame()
+        public void DrawWords(SortedDictionary<double, List<string>> words)
         {
-            bitmap = new Bitmap(bitmap.Width, bitmap.Height);
-            layouter = new CircularCloudLayouter(new Point((int)(bitmap.Width / 2), (int)(bitmap.Height / 2)));
-        }
-
-        public void DrawWords(Dictionary<string, double> words)
-        {
-            ClearFrame();
             FillBackground();
 
             var ind = 0;
@@ -75,7 +72,5 @@ namespace TagsCloud
         {
             bitmap.Save(directory);
         }
-
-        
     }
 }

@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud.TextWorkers
 {
-    public static class WordsFrequencyAnalizer
+    public class WordsFrequencyAnalyzer : IWordsFrequencyAnalyzer
     {
-        public static Dictionary<string, int> GetSortedDictOfWordsFreq(IEnumerable<string> normalFormWords)
+        private readonly IComparer<int> comparer;
+
+        public WordsFrequencyAnalyzer(IComparer<int> dictionaryComparer)
+        {
+            comparer = dictionaryComparer;
+        }
+
+        public SortedDictionary<int, List<string>> GetSortedDictOfWordsFreq(IEnumerable<string> normalFormWords)
         {
             var wordsFrequency = new Dictionary<string, int>();
 
@@ -21,18 +28,32 @@ namespace TagsCloud.TextWorkers
                 }
             }
 
-            wordsFrequency = GetOrderedDictByFrequency(wordsFrequency);
+            var orderedWordsByFreq = GetOrderedDictByFrequency(wordsFrequency);
 
-            return wordsFrequency;
+            return orderedWordsByFreq;
         }
 
-        private static Dictionary<string, int> GetOrderedDictByFrequency(Dictionary<string, int> wordsFrequency)
+        private SortedDictionary<int, List<string>> GetOrderedDictByFrequency(Dictionary<string, int> wordsFrequency)
         {
-            wordsFrequency = wordsFrequency
-                .OrderByDescending(x => x.Value)
-                .ToDictionary(x => x.Key, y => y.Value);
+            var orderedWordsFrequency = new SortedDictionary<int, List<string>>(comparer);
+                //new ReverseComparer<int>());
 
-            return wordsFrequency;
+            foreach (var pair in wordsFrequency)
+            {
+                var word = pair.Key;
+                var freq = pair.Value;
+
+                if (orderedWordsFrequency.ContainsKey(freq))
+                {
+                    orderedWordsFrequency[freq].Add(word);
+                }
+                else
+                {
+                    orderedWordsFrequency.Add(freq, new List<string>() { word });
+                }
+            }
+
+            return orderedWordsFrequency;
         }
     }
 }

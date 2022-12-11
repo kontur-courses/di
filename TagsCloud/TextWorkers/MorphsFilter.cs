@@ -1,24 +1,23 @@
 ﻿using DeepMorphy.Model;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud.TextWorkers
 {
-    public class MorphsFilter
+    public class MorphsFilter : IMorphsFilter
     {
-        private readonly string[] speechPartsToExclude =
-        {
-            "мест",
-            "межд",
-            "част",
-            "предл",
-            "союз"
-        };
+        private readonly ITextPartsToExclude excludeParts;
 
-        public IEnumerable<MorphInfo> FilterRedutantWords(IEnumerable<MorphInfo> morphs)
+        public MorphsFilter(ITextPartsToExclude excludeParts)
+        {
+            this.excludeParts = excludeParts;
+        }
+
+        public IEnumerable<MorphInfo> FilterRedundantWords(IEnumerable<MorphInfo> morphs)
         {
             var clearMorphs = morphs
-                .Where(x => !speechPartsToExclude.Contains(x.BestTag.GramsDic["чр"]));
+                .Where(x => !excludeParts.SpeechPartsToExclude.Contains(x.BestTag.GramsDic["чр"]));
 
             return clearMorphs;
         }

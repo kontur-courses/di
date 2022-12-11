@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public class Spiral
+    public class Spiral : ISpiral
     {
         public List<Point> Points { get; set; }
         public List<Point> FreePoints { get; set; }
-        public readonly Point center;
+        public Point Center { get; set; }
+
         private readonly double segmentLength;
         private readonly double helixPitch;
         private double lastX, lastY;
@@ -17,14 +19,14 @@ namespace TagsCloud
         {
             Points = new List<Point>();
             FreePoints = new List<Point>();
-            this.center = center;
+            Center = center;
             this.segmentLength = segmentLength;
             this.helixPitch = helixPitch;
 
             double x = 0, y = 0;
-            AddPoint(new Point(this.center.X, this.center.Y));
+            AddPoint(new Point(Center.X, Center.Y));
             y += segmentLength;
-            AddPoint(new Point(this.center.X + (int)x, this.center.Y + (int)y));
+            AddPoint(new Point(Center.X + (int)x, Center.Y + (int)y));
             lastX = x;
             lastY = y;
         }
@@ -58,7 +60,7 @@ namespace TagsCloud
                 double k = segmentLength / tLen;
                 lastX -= tx * k;
                 lastY -= ty * k;
-                var newPoint = new Point((int)(center.X + lastX), (int)(center.Y + lastY));
+                var newPoint = new Point((int)(Center.X + lastX), (int)(Center.Y + lastY));
                 AddPoint(newPoint);
                 yield return newPoint;
             }

@@ -1,34 +1,51 @@
-﻿using System;
-using System.IO;
-using TagsCloud.TextWorkers;
+﻿using System.IO;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public class TagCloud
+    public class TagCloud : ITagCloud
     {
-        private readonly PrintSettings printSettings;
-        private readonly string filePath;
+        private readonly IBitmapper bitmapper;
+        private readonly IMorphsFilter filter;
+        private readonly IWordsFrequencyAnalyzer freqAnalyzer;
+        private readonly IWordsRectanglesScaler wordsRectanglesScaler;
+        private readonly IMorphsParser morphsParser;
+        private readonly INormalFormParser normalFormParser;
 
-        public TagCloud(PrintSettings printSettings, string filePath)
+        public TagCloud(IBitmapper bitmapper, 
+            IMorphsFilter morphsFilter, 
+            IWordsFrequencyAnalyzer freqAnalyzer, 
+            IWordsRectanglesScaler wordsRectanglesScaler,
+            IMorphsParser morphsParser,
+            INormalFormParser normalFormParser)
         {
-            if (!File.Exists(filePath) || filePath == null) 
-                throw new FileNotFoundException("Файл с текстом отсутствует");
-
-            this.printSettings = printSettings;
-            this.filePath = filePath;
+            this.bitmapper = bitmapper;
+            filter = morphsFilter;
+            this.freqAnalyzer = freqAnalyzer;
+            this.wordsRectanglesScaler = wordsRectanglesScaler;
+            this.morphsParser = morphsParser;
+            this.normalFormParser = normalFormParser;
         }
 
-        public void PrintTagCloud(string path, string extension)
+        public void PrintTagCloud(string textFilePath, string exportFilePath, string extension)
         {
-            var fullPath = path + extension;
+            if (!File.Exists(textFilePath) || textFilePath == null)
+                throw new FileNotFoundException("Файл с текстом отсутствует");
 
-            var wordsFreq = MorphsParser.GetMorphs(filePath);
+            var fullPath = exportFilePath + extension;
 
-            var relativeWordsSize = WordsRectanglesScaler.ConvertFreqToPropotions(wordsFreq);
+            var morphInfo = morphsParser.GetMorphs(textFilePath);
 
-            var bitmap = new Bitmapper(1024, 720, printSettings);
-            bitmap.DrawWords(relativeWordsSize);
-            bitmap.SaveFile(fullPath);
+            var clearMorphs = filter.FilterRedundantWords(morphInfo);
+
+            var normalFormWords = normalFormParser.Normalize(clearMorphs);
+
+            var wordsFrequency = freqAnalyzer.GetSortedDictOfWordsFreq(normalFormWords);
+
+            var relativeWordsSize = wordsRectanglesScaler.ConvertFreqToProportions(wordsFrequency);
+
+            bitmapper.DrawWords(relativeWordsSize);
+            bitmapper.SaveFile(fullPath);
         }
     }
 }

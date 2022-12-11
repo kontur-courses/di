@@ -17,7 +17,7 @@ namespace TagsCloudTests
 
             var spiral = new Spiral(center);
 
-            spiral.center.Should().Be(center);
+            spiral.Center.Should().Be(center);
         }
 
         [Test]

@@ -1,12 +1,13 @@
 ﻿using DeepMorphy.Model;
 using System.Collections.Generic;
 using System.Linq;
+using TagsCloud.Interfaces;
 
-namespace TagsCloud.TextWorker
+namespace TagsCloud.TextWorkers
 {
-    public static class NormalFormParser
+    public class NormalFormParser : INormalFormParser
     {
-        public static IEnumerable<string> ConvertWordsToNormalForm(IEnumerable<MorphInfo> clearMorphs)
+        public IEnumerable<string> Normalize(IEnumerable<MorphInfo> clearMorphs)
         {
             var normalForms = clearMorphs.Select(x => x.BestTag.Lemma);
 

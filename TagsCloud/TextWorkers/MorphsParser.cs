@@ -1,12 +1,13 @@
 ﻿using DeepMorphy;
+using DeepMorphy.Model;
 using System.Collections.Generic;
-using TagsCloud.TextWorker;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud.TextWorkers
 {
-    public static class MorphsParser
+    public class MorphsParser : IMorphsParser
     {
-        public static Dictionary<string, int> GetMorphs(string filePath)
+        public IEnumerable<MorphInfo> GetMorphs(string filePath)
         {
             var morph = new MorphAnalyzer(true);
 
@@ -17,14 +18,7 @@ namespace TagsCloud.TextWorkers
 
             var morphInfo = morph.Parse(words);
 
-            var morphsFilter = new MorphsFilter();
-            var clearMorphs = morphsFilter.FilterRedutantWords(morphInfo);
-
-            var normalFormWords = NormalFormParser.ConvertWordsToNormalForm(clearMorphs);
-
-            var wordsFrequency = WordsFrequencyAnalizer.GetSortedDictOfWordsFreq(normalFormWords);
-
-            return wordsFrequency;
+            return morphInfo;
         }
     }
 }

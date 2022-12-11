@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public class RectangleComposer
+    public class RectangleComposer : IRectangleComposer
     {
-        public Spiral Spiral { get; set; }
+        public ISpiral Spiral { get; set; }
         public List<Rectangle> Rectangles { get; set; }
         public static readonly int StepToCenter = 5;
         public static readonly int CenterAreaRadius = 10;
 
-        public RectangleComposer(List<Rectangle> layouterRectangles, Point spiralCenter)
+        public RectangleComposer(ISpiral spiral)
         {
-            Spiral = new Spiral(spiralCenter);
-            Rectangles = layouterRectangles;
+            Spiral = spiral;
+            Rectangles = new List<Rectangle>();
+
         }
 
         public Rectangle GetNextRectangleInCloud(Size newRect)
         {
-            var location = new Point(Spiral.center.X, Spiral.center.Y);
+            var location = new Point(Spiral.Center.X, Spiral.Center.Y);
             var rectangle = new Rectangle(location, newRect);
             var rectOnSpiral = FindFreePlaceOnSpiral(rectangle);
             var centeredRect = MoveToCenter(rectOnSpiral);
@@ -51,11 +53,11 @@ namespace TagsCloud
                 rect.X + rect.Width / 2, 
                 rect.Y + rect.Height / 2);
 
-            var delX = rectCenter.X - Spiral.center.X;
-            var delY = rectCenter.Y - Spiral.center.Y;
+            var delX = rectCenter.X - Spiral.Center.X;
+            var delY = rectCenter.Y - Spiral.Center.Y;
             var angleToCenter = Math.Atan2(delY, delX);
 
-            while (!IsRectangleInCenter(rect, Spiral.center))
+            while (!IsRectangleInCenter(rect, Spiral.Center))
             {
                 Point nextPoint;
 

@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public class CircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {
-        public RectangleComposer Composer { get; set; }
+        public IRectangleComposer Composer { get; set; }
 
-        public CircularCloudLayouter(Point center) // в конструкторе это позиция центра облака тегов
+        public CircularCloudLayouter(IRectangleComposer composer)
         {
-            var rectangles = new List<Rectangle>();
-            Composer = new RectangleComposer(rectangles, center);
+            Composer = composer;
         }
 
         public Rectangle PutNextRectangle(Size rectangleSize)

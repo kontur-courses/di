@@ -1,30 +1,40 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using TagsCloud;
+using TagsCloud.Interfaces;
 
 namespace TagsCloudTests
 {
     [TestFixture]
     public class RectangleComposerShould
     {
-        private CircularCloudLayouter layouter;
+        private IServiceProvider serviceProvider;
+        private RectangleComposer rectangleComposer;
+        private ISpiral spiral;
+
+        [SetUp]
+        public void SetUp()
+        {
+            serviceProvider = ContainerBuilder.GetNewTagCloudServices(0, 0);
+            rectangleComposer = serviceProvider.GetService<RectangleComposer>();
+            spiral = rectangleComposer.Spiral;
+        }
 
         [Test]
         public void FindFreePlaceOnSpiral_WhenNoFreePlace_ShouldExpandSpiral()
         {
-            layouter = new CircularCloudLayouter(Point.Empty);
-            var beginSpiralLength = layouter.Composer.Spiral.Points.Count;
+            var beginSpiralLength = spiral.Points.Count;
             var rect = new Rectangle(0, 0, 10, 10);
 
-            layouter.Composer.FindFreePlaceOnSpiral(rect);
-            layouter.Composer.FindFreePlaceOnSpiral(rect);
-            layouter.Composer.FindFreePlaceOnSpiral(rect);
+            rectangleComposer.FindFreePlaceOnSpiral(rect);
+            rectangleComposer.FindFreePlaceOnSpiral(rect);
+            rectangleComposer.FindFreePlaceOnSpiral(rect);
 
-            layouter.Composer.Spiral.Points.Count.Should().BeGreaterThan(beginSpiralLength);
+            spiral.Points.Count.Should().BeGreaterThan(beginSpiralLength);
         }
 
         [TestCase(100, 100)]
@@ -33,38 +43,22 @@ namespace TagsCloudTests
         [TestCase(100, -100)]
         public void MoveToCenter_SingleRectAside_ShouldMoveToCenter(int posX, int posY)
         {
-            layouter = new CircularCloudLayouter(Point.Empty);
             var rect = new Rectangle(posX, posY, 10, 10);
 
-            var offsetRect = layouter.Composer.MoveToCenter(rect);
+            var offsetRect = rectangleComposer.MoveToCenter(rect);
             var offsetRectCenterX = offsetRect.X + offsetRect.Width / 2;
             var offsetRectCenterY = offsetRect.Y + offsetRect.Height / 2;
-
 
             Math.Abs(offsetRectCenterX).Should().BeLessThan(RectangleComposer.CenterAreaRadius);
             Math.Abs(offsetRectCenterY).Should().BeLessThan(RectangleComposer.CenterAreaRadius);
         }
 
         [Test]
-        public void MoveToCenter_RectAsideAndRectInCenter_AsideMoveToCenter()
-        {
-            layouter = new CircularCloudLayouter(Point.Empty);
-            layouter.PutNextRectangle(new Size(100, 100));
-            var rect = new Rectangle(500, 0, 10, 10);
-            var expectedRectLocation = new Point(52, 0);
-
-            var offsetRect = layouter.Composer.MoveToCenter(rect);
-
-            offsetRect.Location.Should().Be(expectedRectLocation);
-        }
-
-        [Test]
         public void GetNextPointToCenter_ZeroAngle_PointShouldBeZero()
         {
-            layouter = new CircularCloudLayouter(Point.Empty);
             var expectedPoint = new Point(RectangleComposer.StepToCenter, 0);
 
-            var nextPoint = layouter.Composer.GetNextPointToCenter(0);
+            var nextPoint = rectangleComposer.GetNextPointToCenter(0);
 
             nextPoint.Should().Be(expectedPoint);
         }

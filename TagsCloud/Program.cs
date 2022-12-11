@@ -1,4 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using System.Drawing;
+using TagsCloud.Interfaces;
+using TagsCloud.TextWorkers;
+using System;
+
 
 namespace TagsCloud
 {
@@ -6,16 +12,19 @@ namespace TagsCloud
     {
         static void Main(string[] args)
         {
-            var path = @"C:\Users\User\source\repos\DI\di\text.txt";
-           
-            var printSettings = new PrintSettings();
-            printSettings.SetFont("Consolas", 64);
-            printSettings.SetCentralPen(Color.White, 8);
-            printSettings.SetSurroundPen(Color.FromArgb(249, 100, 0), 4);
-            printSettings.SetBackgroudColor(Color.FromArgb(0, 34, 43));
+            var width = 1024;
+            var height = 720;
 
-            var cloud = new TagCloud(printSettings, path);
-            cloud.PrintTagCloud(@"C:\Users\User\source\repos\DI\di\pictupe", @".png");
+            var consoleClient = new ConsoleClient(@"..\..\..\..\");
+            consoleClient.StartClient();
+
+            var tagCloud = ContainerBuilder
+                .GetNewTagCloudServices(width, height)
+                .GetService<TagCloud>();
+
+            tagCloud.PrintTagCloud(consoleClient.TextFilePath,
+                consoleClient.PicFilePath,
+                consoleClient.PicFileExtension);
         }
     }
 }

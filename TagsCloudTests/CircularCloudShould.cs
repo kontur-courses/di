@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagsCloud;
+using TagsCloud.Interfaces;
 
 namespace TagsCloudTests
 {
@@ -46,27 +48,25 @@ namespace TagsCloudTests
             }
         }
 
-        public CircularCloudLayouter layouter;
+        private ICloudLayouter layouter;
+        private IRectangleComposer rectangleComposer;
+        private ServiceProvider serviceProvider;
 
         [SetUp]
         public void SetUp()
         {
             var center = Point.Empty;
 
-            layouter = new CircularCloudLayouter(center);
+            serviceProvider = ContainerBuilder.GetNewTagCloudServices(0, 0);
 
-            var printSettings = new PrintSettings();
-            printSettings.SetFont("Consolas", 64);
-            printSettings.SetCentralPen(Color.White, 8);
-            printSettings.SetSurroundPen(Color.FromArgb(249, 100, 0), 4);
-            printSettings.SetBackgroudColor(Color.FromArgb(0, 34, 43));
+            layouter = serviceProvider.GetService<CircularCloudLayouter>();
+            rectangleComposer = layouter.Composer;
         }
 
         [Test]
-        public void CircularCloudLayouter_CreateNewLayouter_ShouldInitComposerAndSpiral()
+        public void CircularCloudLayouter_CreateNewLayouter_ShouldInitComposer()
         {
             layouter.Composer.Should().NotBeNull();
-            layouter.Composer.Spiral.Should().NotBeNull();
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace TagsCloudTests
                 expectedList.Add(new Rectangle(rect.Location, size));
             }
 
-            layouter.Composer.Rectangles.Count.Should().Be(addRects.Length);
+            rectangleComposer.Rectangles.Count.Should().Be(addRects.Length);
         }
 
         [TestCaseSource(nameof(SourceLists))]
@@ -106,7 +106,7 @@ namespace TagsCloudTests
                 expectedList.Add(new Rectangle(rect.Location, size));
             }
 
-            IsRectanglesIntersect(layouter.Composer.Rectangles).Should().BeFalse();
+            IsRectanglesIntersect(rectangleComposer.Rectangles).Should().BeFalse();
         }
 
         [TestCase(0, 0)]
@@ -119,7 +119,7 @@ namespace TagsCloudTests
 
             var nextRect = layouter.PutNextRectangle(sizeToAdd);
 
-            layouter.Composer.Rectangles.Count.Should().Be(0);
+            rectangleComposer.Rectangles.Count.Should().Be(0);
             nextRect.Should().Be(Rectangle.Empty);
         }
 

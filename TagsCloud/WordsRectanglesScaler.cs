@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud
 {
-    public static class WordsRectanglesScaler
+    public class WordsRectanglesScaler : IWordsRectanglesScaler
     {
-        public static Dictionary<string, double> ConvertFreqToPropotions(Dictionary<string, int> wordsFreq)
+        private readonly IComparer<double> comparer;
+
+        public WordsRectanglesScaler(IComparer<double> dictionaryComparer)
         {
-            var scaledWords = new Dictionary<string, double>();
-            var baseHeight = wordsFreq.First().Value;
+            comparer = dictionaryComparer;
+        }
+
+        public SortedDictionary<double, List<string>> ConvertFreqToProportions(SortedDictionary<int, List<string>> wordsFreq)
+        {
+            var scaledWords = new SortedDictionary<double, List<string>>(comparer);
+            var baseHeight = (double)wordsFreq.First().Key;
 
             foreach (var word in wordsFreq)
             {
-                scaledWords.Add(word.Key, (double)word.Value / baseHeight);
+                scaledWords.Add(word.Key / baseHeight, word.Value);
             }
 
             return scaledWords;

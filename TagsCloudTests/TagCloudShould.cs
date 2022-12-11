@@ -1,62 +1,56 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using TagsCloud;
 using System.IO;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TagsCloudTests
 {
     [TestFixture]
     public class TagCloudShould
     {
-        private PrintSettings settings;
+        private TagCloud tagCloud;
+
+        private string textPath = @"..\..\..\..\text.txt";
+        private string picPath = @"..\..\..\..\testPicture";
+        private string extension = @".png";
+
+        private ServiceProvider serviceProvider;
 
         [SetUp]
-        public void CreateSettings()
+        public void SetUp()
         {
-            settings = new PrintSettings();
-            settings.SetFont("Consolas", 64);
-            settings.SetCentralPen(Color.Black, 8);
-            settings.SetSurroundPen(Color.Black, 4);
-            settings.SetBackgroudColor(Color.White);
+            serviceProvider = ContainerBuilder.GetNewTagCloudServices(1024, 720);
+            tagCloud = serviceProvider.GetService<TagCloud>();
         }
-
 
         [Test]
         public void TagCloud_CommonInput_ShouldCreateFile()
         {
-            string appPath = @"C:\Users\User\source\repos\DI\di\";
-            var textName = "text.txt";
-            var captureName = @"testPicture";
-            var extension = @".png";
-
-            var tagCloud = new TagCloud(settings, appPath + textName);
-
-            var fullPath = appPath + captureName + extension;
+            var fullPath = picPath + extension;
             
             if (File.Exists(fullPath)) File.Delete(fullPath);
 
-            tagCloud.PrintTagCloud(appPath + captureName, extension);
+            tagCloud.PrintTagCloud(textPath, picPath, extension);
 
             File.Exists(fullPath).Should().BeTrue();
         }
 
         [Test]
-        public void TagCloud_NullTextFile_ShouldThrowExeption()
+        public void TagCloud_NullTextFile_ShouldThrowException()
         {
-            Assert.Throws<FileNotFoundException>(() => new TagCloud(settings, String.Empty));
+            Assert.Throws<FileNotFoundException>(() => tagCloud.PrintTagCloud(String.Empty, picPath, picPath));
         }
 
         [Test]
         public void TagCloud_NotCreatedTextFile_ShouldThroeExeption()
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory + "testText.txt";
+            var path = @"..\..\..\..\testText.txt";
 
             if (File.Exists(path)) File.Delete(path);
 
-            Assert.Throws<FileNotFoundException>(() => new TagCloud(settings, path));
+            Assert.Throws<FileNotFoundException>(() => tagCloud.PrintTagCloud(path, picPath, extension));
         }
     }
 }
