@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using TagCloud.Clients;
@@ -14,19 +15,19 @@ internal static class Program
     public static void Main(string[] args)
     {
         var parsedArguments = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
-        IServiceCollection services = new ServiceCollection();
-        services.AddSingleton(x => IFile.GetByFileExtension(parsedArguments.InputFile));
-        services.AddSingleton(x => ICurve.GetByName(parsedArguments.Curve));
-        services.AddSingleton(x =>
-            new CloudDrawer(new Size(parsedArguments.Width, parsedArguments.Height), parsedArguments.Colors));
-        services.AddSingleton<CloudLayouter>();
-        services.AddSingleton<TextFormatter>();
-        services.AddSingleton<IBitmapSaver, HardDriveSaver>();
-        services.AddSingleton<Client>();
-        var container = services.BuildServiceProvider();
-
+        var serviceProvider = DiContainerConfiguration.Build();
+        var file = IFile.GetByFilename(parsedArguments.InputFile);
+        var curve = ICurve.GetByName(parsedArguments.Curve);
         var font = new Font(parsedArguments.FontName, parsedArguments.FontSize);
-        var client = container.GetRequiredService<Client>();
-        client.Draw(parsedArguments.OutputFile, font);
+        var size = new Size(parsedArguments.Width, parsedArguments.Height);
+        var words = new TextFormatter().Format(file.ReadAll());
+        
+        var client = serviceProvider.GetRequiredService<Client>();
+        var image = client.Draw(words, curve, size, font, parsedArguments.Colors);
+        foreach (var outputFile in parsedArguments.OutputFiles)
+        {
+            var format = ImageFormatHelper.GetImageFormat(outputFile);
+            client.Save(image, outputFile, format);
+        }
     }
 }

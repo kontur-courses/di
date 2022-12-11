@@ -6,41 +6,40 @@ namespace TagCloud;
 
 public class CloudLayouter
 {
-    private readonly ICurve _curve;
     private readonly double _curveStep;
     private readonly List<Rectangle> _rectangles = new();
     private double _lastCurveParameter;
 
-    public CloudLayouter(ICurve curve, Point center, double curveStep = 0.01)
+    public CloudLayouter(Point center, double curveStep = 0.01)
     {
         Center = center;
-        _curve = curve;
         _curveStep = curveStep;
     }
 
-    public CloudLayouter(ICurve curve) : this(curve, Point.Empty)
+    public CloudLayouter() : this(Point.Empty)
     {
+        
     }
 
     public IEnumerable<Rectangle> Rectangles => _rectangles;
     public Point Center { get; }
 
-    public Rectangle PutRectangle(Size rectangleSize)
+    public Rectangle PutRectangle(ICurve curve, Size rectangleSize)
     {
         if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
             throw new ArgumentException("Rectangles' width and height should be positive.");
         var rectangle = new Rectangle(Point.Empty, rectangleSize);
-        rectangle = PlaceRectangle(rectangle);
+        rectangle = PlaceRectangle(curve, rectangle);
         rectangle = ShiftRectangleToCenter(rectangle);
         _rectangles.Add(rectangle);
         return rectangle;
     }
 
-    private Rectangle PlaceRectangle(Rectangle rectangle)
+    private Rectangle PlaceRectangle(ICurve curve, Rectangle rectangle)
     {
         do
         {
-            rectangle.Location = _curve.GetPoint(_lastCurveParameter) + (Size)Center;
+            rectangle.Location = curve.GetPoint(_lastCurveParameter) + (Size)Center;
             _lastCurveParameter += _curveStep;
         } while (rectangle.IntersectsWith(_rectangles));
 

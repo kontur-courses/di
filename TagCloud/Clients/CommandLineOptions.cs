@@ -9,7 +9,7 @@ public class CommandLineOptions
     public string InputFile { get; set; }
 
     [Option('o', "output", Required = false, HelpText = "Output image")]
-    public string OutputFile { get; set; }
+    public IEnumerable<string> OutputFiles { get; set; }
 
     [Option('c', "colors", Required = false, Default = null, HelpText = "Colors to be used in image")]
     public IEnumerable<Color> Colors { get; set; }

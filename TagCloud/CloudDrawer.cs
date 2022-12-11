@@ -7,37 +7,36 @@ namespace TagCloud;
 
 public class CloudDrawer
 {
-    private readonly IList<Color> _colors;
-    private readonly IList<Color> _defaultColors = new List<Color> { Color.MediumVioletRed, Color.Purple, Color.Aqua };
-    private readonly Size _size;
+    private readonly IList<Color> _defaultColors = new List<Color> { Color.Black };
 
-    public CloudDrawer(Size size, IEnumerable<Color> colors)
+    public CloudDrawer()
     {
-        _size = size;
-        _colors = colors.Any() ? colors.ToList() : _defaultColors;
+        
     }
 
-    public Bitmap CreateImage(IList<WordRectangle> words, Font font)
+    public Bitmap CreateImage(IList<WordRectangle> words, Size size, Font font, IEnumerable<Color> colors)
     {
-        var image = CreateBitmap();
-        DrawWords(image, words, font);
+        var image = CreateBitmap(size);
+        colors = colors.Any() ? colors : _defaultColors;
+        DrawWords(image, words, font, colors);
         return image;
     }
 
-    private Bitmap CreateBitmap()
+    private Bitmap CreateBitmap(Size size)
     {
-        return new Bitmap(_size.Width, _size.Height);
+        return new Bitmap(size.Width, size.Height);
     }
 
-    private void DrawWords(Bitmap image, IList<WordRectangle> words, Font font)
+    private void DrawWords(Bitmap image, IList<WordRectangle> words, Font font, IEnumerable<Color> colors)
     {
         var graphics = Graphics.FromImage(image);
         graphics.SmoothingMode = SmoothingMode.HighQuality;
         var fontSize = font.Size;
         var random = new Random();
+        
         foreach (var wordRectangle in words)
         {
-            var color = GetRandomColorFromColors(random);
+            var color = GetRandomColorFromColors(colors, random);
             var brush = new SolidBrush(color);
             font = font.ChangeSize(fontSize * wordRectangle.Word.Frequency);
             graphics.DrawString(wordRectangle.Word.Value, font, brush,
@@ -45,24 +44,10 @@ public class CloudDrawer
         }
     }
 
-    private Rectangle GetRectangleOffsetToCenter(Rectangle rectangle, Bitmap image)
+    private Color GetRandomColorFromColors(IEnumerable<Color> colors, Random random)
     {
-        var rectanglePosition = rectangle.Location + image.Size.Multiply(0.5);
-        return new Rectangle(rectanglePosition, rectangle.Size);
-    }
-
-    private Color GetRandomColor(Random random)
-    {
-        var r = 25 + random.Next() % 215;
-        var g = 25 + random.Next() % 215;
-        var b = 25 + random.Next() % 215;
-
-        return Color.FromArgb(r, g, b);
-    }
-
-    private Color GetRandomColorFromColors(Random random)
-    {
-        var randomNumber = random.Next(_colors.Count);
-        return _colors[randomNumber];
+        var colorsList = colors.ToList();
+        var randomNumber = random.Next(colorsList.Count);
+        return colorsList[randomNumber];
     }
 }

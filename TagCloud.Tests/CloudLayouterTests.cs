@@ -6,19 +6,21 @@ namespace TagCloud.Tests;
 [TestFixture]
 public class CloudLayouterTests
 {
-    [SetUp]
+    
+    [SetUp] 
     public void SetUp()
     {
-        ICurve curve = new ArchimedeanSpiral();
-        _layouter = new CloudLayouter(curve);
+        _curve = new ArchimedeanSpiral();
+        _layouter = new CloudLayouter();
     }
 
     private CloudLayouter _layouter;
+    private ICurve _curve;
 
     private void PutAllRectangles(IReadOnlyList<Size> rectangles)
     {
         foreach (var rectangleSize in rectangles)
-            _layouter.PutRectangle(rectangleSize);
+            _layouter.PutRectangle(_curve, rectangleSize);
     }
 
     private static IEnumerable<TestCaseData> SizesOfRectangles
