@@ -11,7 +11,7 @@ public interface ITagsCloudMaker
         string fontFamilyName, int bigFontSize,
         Brush color,
         Size bitmapSize,
-        IBitmapMaker bitmapMaker,
+        IBitmapTagsCloudMaker bitmapTagsCloudMaker,
         ISizeDefiner sizeDefiner,
         bool withVertical);
 }

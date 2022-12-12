@@ -8,7 +8,7 @@ public class SizeDefinerTests
     [Test]
     public void DefineStringSizeAndOrientation()
     {
-        var sizeDefiner = new SizeDefiner();
+        var sizeDefiner = new RectangleSizeDefiner();
         var wordsFont = new Dictionary<string, int>
         {
             { "мама", 50 }
@@ -21,7 +21,7 @@ public class SizeDefinerTests
 
         wordsAndTextOptions["мама"].Size.Height.Should().Be(82);
         wordsAndTextOptions["мама"].Size.Width.Should().Be(192);
-        wordsAndTextOptions["мама"].Orientation.Should().Be(Orientation.Horizontal);
+        wordsAndTextOptions["мама"].WordOrientation.Should().Be(WordOrientation.Horizontal);
         wordsAndTextOptions["мама"].FontSize.Should().Be(50);
     }
 }

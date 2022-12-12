@@ -21,16 +21,14 @@ public class FrequencyCompiler : IFrequencyCompiler
 
     public List<WordFrequency> GetFrequencyList(Dictionary<string, int> frequencyOfWords, int amount)
     {
-        var frequencyList = new List<WordFrequency>();
-        foreach (var item in frequencyOfWords)
-        {
-            frequencyList.Add(new WordFrequency(item.Key, item.Value));
-        }
+        var frequencyList = frequencyOfWords.Select(
+            item => new WordFrequency(item.Key, item.Value)).ToList();
         
         frequencyList.Sort((x, y) => x.Frequency - y.Frequency);
         frequencyList.Reverse();
         var result = new List<WordFrequency>();
-        for (int i = 0; i < Math.Min(amount, frequencyList.Count); i++)
+        var realAmount = Math.Min(amount, frequencyList.Count);
+        for (int i = 0; i < realAmount; i++)
         {
             result.Add(frequencyList[i]);
         }

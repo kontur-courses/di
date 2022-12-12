@@ -1,6 +1,6 @@
 ﻿namespace TagsCloud2.TagsCloudMaker.SizeDefiner;
 
-public enum Orientation
+public enum WordOrientation
 {
     Vertical,
     Horizontal

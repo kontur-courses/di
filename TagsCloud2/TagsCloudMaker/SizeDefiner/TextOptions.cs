@@ -6,12 +6,12 @@ public class TextOptions
 {
     public int FontSize { get; }
     public Size Size { get; }
-    public Orientation Orientation { get;}
+    public WordOrientation WordOrientation { get;}
 
-    public TextOptions(Size size, Orientation orientation, int fontSize)
+    public TextOptions(Size size, WordOrientation wordOrientation, int fontSize)
     {
         Size = size;
-        Orientation = orientation;
+        WordOrientation = wordOrientation;
         FontSize = fontSize;
     }
 }

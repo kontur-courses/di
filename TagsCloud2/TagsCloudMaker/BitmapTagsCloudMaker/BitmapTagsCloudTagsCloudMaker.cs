@@ -4,11 +4,11 @@ using TagsCloud2.TagsCloudMaker.SizeDefiner;
 
 namespace TagsCloud2.TagsCloudMaker.BitmapMaker;
 
-public class BitmapMaker : IBitmapMaker
+public class BitmapTagsCloudTagsCloudMaker : IBitmapTagsCloudMaker
 {
     private ILayouter layouter;
 
-    public BitmapMaker(ILayouter layouter)
+    public BitmapTagsCloudTagsCloudMaker(ILayouter layouter)
     {
         this.layouter = layouter;
     }
@@ -31,7 +31,7 @@ public class BitmapMaker : IBitmapMaker
             var rectangle = layouter.PutNextRectangle(item.Value.Size);
             var position = new PointF(rectangle.X + centralPoint, rectangle.Y + centralPoint);
             using var font = new Font(fontFamilyName, item.Value.FontSize);
-            if (item.Value.Orientation == Orientation.Vertical)
+            if (item.Value.WordOrientation == WordOrientation.Vertical)
             {
                 var stringFormat = new StringFormat();
                 stringFormat.FormatFlags = StringFormatFlags.DirectionVertical;

@@ -2,7 +2,7 @@
 
 namespace TagsCloud2.TagsCloudMaker.SizeDefiner;
 
-public class SizeDefiner : ISizeDefiner
+public class RectangleSizeDefiner : ISizeDefiner
 {
     private int verticalCount;
     private Random rnd;
@@ -35,7 +35,7 @@ public class SizeDefiner : ISizeDefiner
             using var font = new Font(fontFamilyName, fontSize);
             var size = graphics.MeasureString(item.Key, font).ToSize();
             var orientation = DefineOrientation();
-            if (orientation == Orientation.Vertical)
+            if (orientation == WordOrientation.Vertical)
             {
                 var newSize = new Size(size.Height, size.Width);
                 size = newSize;
@@ -44,13 +44,13 @@ public class SizeDefiner : ISizeDefiner
         }
     }
 
-    private Orientation DefineOrientation()
+    private WordOrientation DefineOrientation()
     {
-        var orientation = Orientation.Horizontal;
+        var orientation = WordOrientation.Horizontal;
         var rndNumber = rnd.Next(1, 10);
         var isVertical = rndNumber > 6;
         if (verticalCount >= 10 || !isVertical) return orientation;
-        orientation = Orientation.Vertical;
+        orientation = WordOrientation.Vertical;
         verticalCount += 1;
         return orientation;
     }
@@ -66,7 +66,7 @@ public class SizeDefiner : ISizeDefiner
             var fontSize = item.Value;
             using var font = new Font(fontFamilyName, fontSize);
             var size = graphics.MeasureString(item.Key, font);
-            stringSizeAndOrientation.Add(item.Key, new TextOptions(size.ToSize(), Orientation.Horizontal, fontSize));
+            stringSizeAndOrientation.Add(item.Key, new TextOptions(size.ToSize(), WordOrientation.Horizontal, fontSize));
         }
     }
 }

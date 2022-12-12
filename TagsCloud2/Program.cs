@@ -21,7 +21,7 @@ static class Program
         var serviceProvider = services.BuildServiceProvider();
         var manager = serviceProvider.GetService<IManager>();
 
-        manager.Manage();
+        manager.StartConsoleProgram();
 
         //D:\\inputWords.txt
     }
@@ -32,18 +32,18 @@ static class Program
             .AddTransient<IReader, Reader.Reader>()
             .AddTransient<IImageSaver, ImageSaver.ImageSaver>()
             .AddTransient<IFrequencyCompiler, FrequencyCompiler.FrequencyCompiler>()
-            .AddTransient<ISizeDefiner, SizeDefiner>()
+            .AddTransient<ISizeDefiner, RectangleSizeDefiner>()
             .AddTransient<ITagsCloudMaker, TagsCloudMaker.TagsCloudMaker>()
             .AddTransient<ILemmatizer>(x =>
                 new Lemmatizer.Lemmatizer(mystemExePath))
             .AddTransient<ILayouter>(x => new CircularCloudLayouter(new Point(0, 0)))
-            .AddTransient<IBitmapMaker>(x => new BitmapMaker(x.GetRequiredService<ILayouter>()))
+            .AddTransient<IBitmapTagsCloudMaker>(x => new BitmapTagsCloudTagsCloudMaker(x.GetRequiredService<ILayouter>()))
             .AddTransient<IManager>(x => new ConsoleManager(x.GetRequiredService<IReader>(),
                 x.GetRequiredService<ILemmatizer>(),
                 x.GetRequiredService<IFrequencyCompiler>(),
                 x.GetRequiredService<IImageSaver>(),
                 x.GetRequiredService<ITagsCloudMaker>(),
-                x.GetRequiredService<IBitmapMaker>(),
+                x.GetRequiredService<IBitmapTagsCloudMaker>(),
                 x.GetRequiredService<ISizeDefiner>()
             ));
         return services;

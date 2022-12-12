@@ -18,41 +18,46 @@ public class ConsoleManager : IManager
     private IFrequencyCompiler frequencyCompiler;
     private IImageSaver imageSaver;
     private ITagsCloudMaker tagsCloudMaker;
-    private IBitmapMaker bitmapMaker;
+    private IBitmapTagsCloudMaker bitmapTagsCloudMaker;
     private ISizeDefiner sizeDefiner;
-    public ConsoleManager(IReader reader, ILemmatizer lemmatizer, IFrequencyCompiler frequencyCompiler, IImageSaver imageSaver,
-        ITagsCloudMaker tagsCloudMaker, IBitmapMaker bitmapMaker, ISizeDefiner sizeDefiner)
+
+    public ConsoleManager(IReader reader,
+        ILemmatizer lemmatizer,
+        IFrequencyCompiler frequencyCompiler,
+        IImageSaver imageSaver,
+        ITagsCloudMaker tagsCloudMaker,
+        IBitmapTagsCloudMaker bitmapTagsCloudMaker,
+        ISizeDefiner sizeDefiner)
     {
         this.reader = reader;
         this.lemmatizer = lemmatizer;
         this.frequencyCompiler = frequencyCompiler;
         this.imageSaver = imageSaver;
         this.tagsCloudMaker = tagsCloudMaker;
-        this.bitmapMaker = bitmapMaker;
+        this.bitmapTagsCloudMaker = bitmapTagsCloudMaker;
         this.sizeDefiner = sizeDefiner;
     }
-    public void Manage()
+
+    public void StartConsoleProgram()
     {
         Console.OutputEncoding = Encoding.UTF8;
         var path = GetInputWordsPath();
         if (!File.Exists(path))
         {
-            Console.WriteLine($"Файла {path} нет :( Пока!");
-            return;
+            throw new FileNotFoundException();
         }
-        
+
         var pathToSave = GetDirectoryToSave();
         if (!Directory.Exists(pathToSave))
         {
-            Console.WriteLine($"Директории {path} нет :( Пока!");
-            return;
+            throw new DirectoryNotFoundException();
         }
-        
+
         var size = GetSize();
         if (size < 2000 && size > 4000)
         {
-            Console.WriteLine("Размер не из диапазона :( Пока!");
-            return;
+            Console.WriteLine("Размер не из диапазона :(");
+            throw new ArgumentException();
         }
 
         var isVerticalWords = GetIsVerticalWords();
@@ -61,41 +66,38 @@ public class ConsoleManager : IManager
         if (color < 1 && color > 2)
         {
             Console.WriteLine("Такого цвета нет :( Пока!");
-            return;
+            throw new ArgumentException();
         }
+
         var colorBrush = ColorBrush(color);
 
         var font = GetFontFamilyName();
         if (font < 1 && font > 2)
         {
             Console.WriteLine("Такого шрифта нет :( Пока!");
-            return;
+            throw new ArgumentException();
         }
+
         var fontFamilyName = DefineFontFamilyName(font);
-        
+
         var format = GetFormatToSave();
 
         if (format < 1 && format > 2)
         {
             Console.WriteLine("Такого формата нет :( Пока!");
-            return;
+            throw new ArgumentException();
         }
 
         var formatToSave = DefineFormatToSave(format);
 
         var words = reader.ReadWordsFromFile(path);
-        Console.WriteLine("Ждите..");
         var normalizeWords = lemmatizer.Lemmatize(words);
-        Console.WriteLine("Ждите..");
         var frequencyDict = frequencyCompiler.GetFrequencyOfWords(normalizeWords);
-        Console.WriteLine("Ждите..");
         var frequencyList = frequencyCompiler.GetFrequencyList(frequencyDict, 100);
-        Console.WriteLine("Ждите..");
         var tagsCloudBitmap = tagsCloudMaker.MakeTagsCloud(frequencyList, fontFamilyName, 50,
-            colorBrush, new Size(size, size), bitmapMaker, sizeDefiner, isVerticalWords);
-        Console.WriteLine("Ждите..");
+            colorBrush, new Size(size, size), bitmapTagsCloudMaker, sizeDefiner, isVerticalWords);
         imageSaver.SaveImage(pathToSave, @"img", formatToSave, tagsCloudBitmap);
-        Console.WriteLine($"Сохранено в файле {pathToSave}+img.{formatToSave}! :)");
+        Console.WriteLine($"Готово! Сохранено в файле {pathToSave}+img.{formatToSave}! :)");
     }
 
     private static string DefineFormatToSave(int format)

@@ -9,7 +9,7 @@ public class TagsCloudMaker : ITagsCloudMaker
 {
     public Bitmap MakeTagsCloud(List<WordFrequency> frequency, 
         string fontFamilyName, int bigFontSize, Brush color, Size bitmapSize,
-        IBitmapMaker bitmapMaker, ISizeDefiner sizeDefiner, bool withVertical)
+        IBitmapTagsCloudMaker bitmapTagsCloudMaker, ISizeDefiner sizeDefiner, bool withVertical)
     {
         var listLength = frequency.Count;
         var bigFontAmount = listLength / 5;
@@ -18,7 +18,7 @@ public class TagsCloudMaker : ITagsCloudMaker
         DefineFontSize(frequency, bigFontSize, bigFontAmount, stringAndFontSize, middleFontAmount, listLength);
         var stringOptions = 
             sizeDefiner.DefineStringSizeAndOrientation(stringAndFontSize, withVertical, fontFamilyName);
-        var tagsCloudBitmap = bitmapMaker.MakeBitmap(bitmapSize, stringOptions, fontFamilyName, color);
+        var tagsCloudBitmap = bitmapTagsCloudMaker.MakeBitmap(bitmapSize, stringOptions, fontFamilyName, color);
         return tagsCloudBitmap;
     }
 

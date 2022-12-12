@@ -6,6 +6,6 @@ public class ImageSaver : IImageSaver
 {
     public void SaveImage(string path, string name, string format, Bitmap bitmap)
     {
-        bitmap.Save(path + "\\" + name + @"." + format );
+        bitmap.Save($"{path}\\{name}.{format}" );
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IManager
 {
-    public void Manage();
+    public void StartConsoleProgram();
 }
