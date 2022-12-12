@@ -87,6 +87,7 @@
     <Compile Include="App\IApp.cs" />
     <Compile Include="CloudLayouter\ArchimedeanSpiral.cs" />
     <Compile Include="CloudLayouter\CircularCloudLayouter.cs" />
+    <Compile Include="CommandLineParser\Options.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="FileReader\DocxFileReader.cs" />
     <Compile Include="ImageProcessing\ICloudImageGenerator.cs" />

@@ -6,19 +6,18 @@ using Autofac;
 using TagCloud.AppConfig;
 using TagCloud.App;
 using CommandLine;
+using TagCloud.CommandLineParser;
 
 namespace TagCloud
 {
     public class Program
-    { 
+    {
+
         static void Main(string[] args)
         {
             var appConfig = new AppConfigProvider(args).GetAppConfig();
-
             var container = ContainerConfig.Configure(appConfig);
-
             var app = container.Resolve<IApp>();
-
             app.Run(appConfig);
         }
 
@@ -58,4 +57,3 @@ namespace TagCloud
     }
 }
 
- 
