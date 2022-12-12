@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace TagCloudContainer;
+﻿namespace TagCloudContainer;
 
 public static class Colors
 {
