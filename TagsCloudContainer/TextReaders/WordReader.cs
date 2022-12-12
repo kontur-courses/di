@@ -2,7 +2,7 @@
 using System.Text;
 using Xceed.Words.NET;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TextReaders
 {
     public class WordReader : ITextReader
     {

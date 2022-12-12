@@ -3,13 +3,15 @@ using System.Drawing;
 using System.IO;
 using Autofac;
 using TagsCloudContainer.Application;
-using CommandLine;
+using TagsCloudContainer.TextReaders;
+using TagsCloudContainer.Visualisators;
+using TagsCloudContainer.WorkWithWords;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Container
 {
     public static class Container
     {
-        public static IContainer SetDIBuilder(Options options)
+        public static IContainer SetDiBuilder(Options options)
         {
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             var builder = new ContainerBuilder();

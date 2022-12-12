@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing.Imaging;
 using System.IO;
-using TagsCloudContainer.Application;
+using TagsCloudContainer.Visualisators;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Application
 {
     public class ConsoleApp : IApp
     {

@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer
+﻿namespace TagsCloudContainer.WorkWithWords
 {
     public class Word
     {

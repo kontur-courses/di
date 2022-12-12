@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TagsCloudContainer.TextReaders;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.WorkWithWords
 {
     public class WordHandler
     {

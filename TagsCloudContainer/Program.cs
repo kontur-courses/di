@@ -9,7 +9,7 @@ namespace TagsCloudContainer
         public static void Main(string[] args)
         {
             var options = Parser.Default.ParseArguments<Options>(args).Value;
-            var container = Container.SetDIBuilder(options);
+            var container = Container.Container.SetDiBuilder(options);
             var app = container.Resolve<IApp>();
             app.Run();
         }

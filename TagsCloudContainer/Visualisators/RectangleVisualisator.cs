@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using TagsCloudContainer.WorkWithWords;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Visualisators
 {
     public class RectangleVisualisator : IVisualisator
     {

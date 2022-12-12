@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.TextReaders
 {
     public class TxtReader : ITextReader
     {

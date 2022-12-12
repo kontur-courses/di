@@ -1,4 +1,4 @@
-﻿namespace TagsCloudContainer
+﻿namespace TagsCloudContainer.TextReaders
 {
     public interface ITextReader
     {

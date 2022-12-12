@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
 using TagsCloudContainer;
+using TagsCloudContainer.TextReaders;
+using TagsCloudContainer.WorkWithWords;
 
 namespace TagsCloudContainerTests
 {

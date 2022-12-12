@@ -1,6 +1,6 @@
 ﻿using System.Drawing.Imaging;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.Visualisators
 {
     public interface IVisualisator
     {

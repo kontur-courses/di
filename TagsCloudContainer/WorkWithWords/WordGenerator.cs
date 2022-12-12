@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.WorkWithWords
 {
     public static class WordGenerator
     {
