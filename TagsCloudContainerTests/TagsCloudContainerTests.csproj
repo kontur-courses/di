@@ -30,6 +30,21 @@
       <EmbeddedResource Include="filter.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
+      <None Update="DefaltWordsHandlerTests.Should_BeEmpty_WhenNoWords.approved.txt">
+        <DependentUpon>DefaltWordsHandlerTests.cs</DependentUpon>
+      </None>
+      <None Update="WordsHandlerWithFilterTests.Should_Filter_WhenWordIsInFilter.approved.txt">
+        <DependentUpon>WordsHandlerWithFilterTests.cs</DependentUpon>
+      </None>
+      <None Update="WordsHandlerWithFilterTests.Should_NotFilter_WhenFilterContainsWordNotFromWordSequence.approved.txt">
+        <DependentUpon>WordsHandlerWithFilterTests.cs</DependentUpon>
+      </None>
+      <None Update="DefaultRectangleDistributorTests.Should_IncreaseRectanglesSize_WhenWordIsRepeated.approved.txt">
+        <DependentUpon>DefaltRectanglesDistributorTests.cs</DependentUpon>
+      </None>
+      <None Update="DefaultRectangleDistributorTests.Should_DistributeEqually_WhenEqualFrequency.approved.txt">
+        <DependentUpon>DefaltRectanglesDistributorTests.cs</DependentUpon>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

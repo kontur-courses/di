@@ -1,0 +1,3 @@
+﻿AAA => {X=-40,Y=-51,Width=59,Height=34}
+Abc => {X=-29,Y=-17,Width=59,Height=34}
+DAb => {X=-11,Y=18,Width=59,Height=34}
