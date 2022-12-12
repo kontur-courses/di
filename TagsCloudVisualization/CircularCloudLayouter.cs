@@ -8,16 +8,14 @@ namespace TagsCloudVisualization
 {
     public class CircularCloudLayouter : ICloudLayouter
     {
-        private readonly Point center;
         private readonly DistributionConfiguration distributionConfiguration;
 
-        public CircularCloudLayouter(Point center, DistributionConfiguration distributionConfiguration)
+        public CircularCloudLayouter(DistributionConfiguration distributionConfiguration)
         {
-            this.center = center;
             this.distributionConfiguration = distributionConfiguration;
         }
 
-        public Rectangle GetNextRectangle(List<Rectangle> rectangles, Size nextRectangleSize)
+        public Rectangle GetNextRectangle(Point center, List<Rectangle> rectangles, Size nextRectangleSize)
         {
             var shiftX = -nextRectangleSize.Width / 2;
             var shiftY = -nextRectangleSize.Height / 2;
@@ -33,12 +31,12 @@ namespace TagsCloudVisualization
                 }), nextRectangleSize);
         }
 
-        public List<Rectangle> GenerateCloud(List<Size> rectangleSizes)
+        public List<Rectangle> GenerateCloud(Point center, List<Size> rectangleSizes)
         {
             var rectangles = new List<Rectangle>();
 
             foreach (var size in rectangleSizes)
-                rectangles.Add(GetNextRectangle(rectangles, size));
+                rectangles.Add(GetNextRectangle(center, rectangles, size));
 
             return rectangles;
         }

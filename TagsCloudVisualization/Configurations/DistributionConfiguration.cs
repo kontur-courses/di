@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace TagsCloudVisualization.Configurations
+﻿namespace TagsCloudVisualization.Configurations
 {
     public class DistributionConfiguration
     {

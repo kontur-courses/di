@@ -9,27 +9,27 @@ namespace TagsCloudVisualization
         public static readonly string ProjectDirectory 
             = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
         
-        public static string WordsFilePath = string.Concat(ProjectDirectory, @"\words.txt");
-        public static string SaveTagCloudImagePath = string.Concat(ProjectDirectory, @"\Images\");
-        public static int AmountImages = 1;
+        public string WordsFilePath = string.Concat(ProjectDirectory, @"\words.txt");
+        public string SaveTagCloudImagePath = string.Concat(ProjectDirectory, @"\Images\");
+        public int AmountImages = 1;
         
         [Option('p', "path", Required = false, HelpText = "Путь к файлу со словами")]
-        public string WordsFilePathArgument { get; set; }
+        private string WordsFilePathArgument { get; set; }
         [Option('s', "save", Required = false, HelpText = "Путь сохранения результата")]
-        public string SaveTagCloudImagePathArgument { get; set; }
+        private string SaveTagCloudImagePathArgument { get; set; }
         [Option('a', "amount", Required = false, HelpText = "Количество изображений")]
-        public int AmountImagesArgument { get; set; }
+        private int AmountImagesArgument { get; set; }
         
-        public static void RunOptions(Options opts)
+        public void RunOptions()
         {
-            if (!string.IsNullOrEmpty(opts.WordsFilePathArgument))
-                WordsFilePath = opts.WordsFilePathArgument;
+            if (!string.IsNullOrEmpty(WordsFilePathArgument))
+                WordsFilePath = WordsFilePathArgument;
 
-            if (!string.IsNullOrEmpty(opts.SaveTagCloudImagePathArgument))
-                SaveTagCloudImagePath = opts.SaveTagCloudImagePathArgument;
+            if (!string.IsNullOrEmpty(SaveTagCloudImagePathArgument))
+                SaveTagCloudImagePath = SaveTagCloudImagePathArgument;
             
-            if (opts.AmountImagesArgument != 0)
-                AmountImages = opts.AmountImagesArgument;
+            if (AmountImagesArgument != 0)
+                AmountImages = AmountImagesArgument;
         }
     }
 }
