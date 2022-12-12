@@ -7,8 +7,6 @@ namespace TagsCloudContainer.FileSavers
     /// </summary>
     public interface IFileSaver
     {
-        public string Path { get; }
-        public Bitmap Canvas { get; set; }
-        public void SaveCanvas();
+        public void SaveCanvas(string pathToSave, Bitmap canvas);
     }
 }

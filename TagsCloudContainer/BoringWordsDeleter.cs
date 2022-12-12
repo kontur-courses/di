@@ -1,21 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagsCloudContainer
 {
-    public class BoringWordsDeleter
+    public static class BoringWordsDeleter
     {
-        public Dictionary<string, int> DeleteBoringWords(Dictionary<string, int> words)
+        public static string[] DeleteBoringWords(IEnumerable<string> words)
         {
-            var res = new Dictionary<string, int>();
-            foreach (var pair in words)
-            {
-                var word = pair.Key;
-                var count = pair.Value;
-                if (word.Length > 3)
-                    res.Add(word, count);
-            }
-
-            return res;
+            return words.Where(word => word.Length > 3).ToArray();
         }
     }
 }

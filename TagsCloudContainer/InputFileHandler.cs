@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TagsCloudContainer.FileOpeners;
 
@@ -8,28 +9,30 @@ namespace TagsCloudContainer
     /// </summary>
     public class InputFileHandler
     {
-        private IFileOpener fileOpener;
+        private readonly IFileReader fileReader;
 
-        public InputFileHandler(IFileOpener fileOpener)
+        public InputFileHandler(IFileReader fileReader)
         {
-            this.fileOpener = fileOpener;
+            this.fileReader = fileReader;
         }
 
-        public Dictionary<string, int> FormFrequencyDictionary()
+        public Dictionary<string, int> FormFrequencyDictionary(string filePath)
         {
-            var words = FileToWordsArray();
-            var frequencyDict = MakeWordsFrequencyDictionary(words);
-            var filteredDict = new BoringWordsDeleter().DeleteBoringWords(frequencyDict);
-            return filteredDict;
+            var words = FileToWordsArray(filePath);
+            var filteredWords = BoringWordsDeleter.DeleteBoringWords(words);
+            var frequencyDict = MakeWordsFrequencyDictionary(filteredWords);
+            return frequencyDict;
         }
 
-        private string[] FileToWordsArray()
+        private string[] FileToWordsArray(string filePath)
         {
-            var input = fileOpener.OpenFile();
-            return input.Split(new[] {'\n', ' '});
+            var input = fileReader.ReadFile(filePath);
+            if (input.Length == 0)
+                throw new ArgumentException("Empty file");
+            return input.Split(new[] {Environment.NewLine, " "}, StringSplitOptions.None);
         }
 
-        private Dictionary<string, int> MakeWordsFrequencyDictionary(string[] words)
+        private Dictionary<string, int> MakeWordsFrequencyDictionary(IEnumerable<string> words)
         {
             var wordOccurrences = new Dictionary<string, int>();
             foreach (var word in words)

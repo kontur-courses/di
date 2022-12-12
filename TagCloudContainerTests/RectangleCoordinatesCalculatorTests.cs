@@ -1,9 +1,10 @@
-/*using System;
+using System;
 using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using TagsCloudContainer;
 
-namespace TagsCloudContainer.Tests
+namespace TagCloudContainerTests
 {
     public class RectangleCoordinatesCalculatorTests
     {
@@ -34,5 +35,4 @@ namespace TagsCloudContainer.Tests
             act.Should().Throw<ArgumentException>().WithMessage("Incorrect size of rectangle");
         }
     }
-}*/
-
+}

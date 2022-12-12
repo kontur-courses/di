@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TagsCloudContainer.UI;
 
 namespace TagsCloudContainer
 {
@@ -16,7 +17,7 @@ namespace TagsCloudContainer
         private double angle;
         private double radius;
 
-        public Spiral(CustomSettings settings)
+        public Spiral(IUi settings)
         {
             center = new Point(settings.CanvasWidth / 2, settings.CanvasHeight / 2);
             usedPoints = new List<Point>();

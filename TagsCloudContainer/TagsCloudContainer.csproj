@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{AE337334-387D-4D9F-B732-621527D7891C}</ProjectGuid>
+        <ProjectGuid>{5F845737-19FE-4725-93B7-43CDC144C7D2}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>TagsCloudContainer</RootNamespace>
@@ -43,30 +42,16 @@
           <HintPath>..\packages\CommandLineParser.2.9.1\lib\net461\CommandLine.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="FluentAssertions, Version=6.8.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
-          <HintPath>..\packages\FluentAssertions.6.8.0\lib\net47\FluentAssertions.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
           <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="mscorlib" />
-        <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
-          <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
           <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="System.Collections.Immutable, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Collections.Immutable.6.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition" />
-        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
@@ -82,17 +67,8 @@
           <HintPath>..\packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
           <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Net.Http" />
-        <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System.Numerics" />
@@ -100,76 +76,40 @@
           <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-          <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
           <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="System.Web.Http" />
         <Reference Include="System.Xml" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="WeCantSpell.Hunspell, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\WeCantSpell.Hunspell.4.0.0\lib\netstandard2.0\WeCantSpell.Hunspell.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="BoringWordsDeleter.cs" />
-        <Compile Include="CicularCloudDrawer.cs" />
-        <Compile Include="CoefficientCalculator.cs" />
-        <Compile Include="ConsoleUI.cs" />
-        <Compile Include="CustomSettings.cs" />
-        <Compile Include="FileOpeners\IFileOpener.cs" />
-        <Compile Include="FileOpeners\TxtOpener.cs" />
+        <Compile Include="CircularCloudDrawer.cs" />
+        <Compile Include="ScaleCoefficientCalculator.cs" />
+        <Compile Include="FileOpeners\IFileReader.cs" />
+        <Compile Include="FileOpeners\TxtReader.cs" />
         <Compile Include="FileSavers\IFileSaver.cs" />
-        <Compile Include="FileSavers\PNGSaver.cs" />
+        <Compile Include="FileSavers\PngSaver.cs" />
         <Compile Include="InputFileHandler.cs" />
-        <Compile Include="LayouterAlgorithms\CircularCloudLayouter.cs" />
+        <Compile Include="LayouterAlgorithms\DefaultCloudLayouter.cs" />
         <Compile Include="LayouterAlgorithms\ICloudLayouterAlgorithm.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RectangleCoordinatesCalculator.cs" />
         <Compile Include="Spiral.cs" />
-        <Compile Include="Tests\RectangleCoordinatesCalculatorTests.cs" />
-        <Compile Include="WordsColoringAlgorithms\DefaultStainer.cs" />
-        <Compile Include="WordsColoringAlgorithms\IWordStainer.cs" />
+        <Compile Include="UI\ConsoleUi.cs" />
+        <Compile Include="UI\IUi.cs" />
+        <Compile Include="WordsColoringAlgorithms\DefaultWordsPainter.cs" />
+        <Compile Include="WordsColoringAlgorithms\IWordsPainter.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>
-    <ItemGroup>
-      <Content Include="testfile.txt" />
-    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-      <PropertyGroup>
-        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-      </PropertyGroup>
-      <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
-    </Target>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

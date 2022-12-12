@@ -1,17 +1,16 @@
-using System.Drawing;
 using CommandLine;
 
-namespace TagsCloudContainer
+namespace TagsCloudContainer.UI
 {
-    public class ConsoleUi
+    public class ConsoleUi : IUi
     {
         [Option('f', "font", Required = false, Default = "Arial", HelpText = "Font name")]
         public string FontName { get; set; }
 
-        [Option("backgroundcolor", Required = false, Default = "Gray", HelpText = "Background color")]
-        public string BackGroungColor { get; set; }
+        [Option('g', "backgroundcolor", Required = false, Default = "White", HelpText = "Background color")]
+        public string BackGroundColor { get; set; }
 
-        [Option("brushcolor", Required = false, Default = "Blue", HelpText = "Brush color")]
+        [Option('c', "brushcolor", Required = false, Default = "Yellow", HelpText = "Brush color")]
         public string BrushColor { get; set; }
 
         [Option('s', "savepath", Required = false, Default = "../visualization",
