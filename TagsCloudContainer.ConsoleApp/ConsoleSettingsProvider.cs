@@ -15,32 +15,33 @@ namespace TagsCloudContainer.ConsoleApp
     {
         private readonly TextReaderSettings textReaderSettings;
         private readonly WordColorSettings wordColorSettings;
-        private readonly WordFontSettings wordFontSizeSettings;
+        private readonly WordFontSettings wordFontSettings;
         private readonly OutputImageSettings outputImageSettings;
 
-        public ConsoleSettingsProvider(string[] args)
+        public ConsoleSettingsProvider(Options options)
         {
-            var parserResult = Parser.Default.ParseArguments<Options>(args);
+            textReaderSettings = ParseTextReaderSettings(options);
+            wordColorSettings = ParseWordColorSettings(options);
+            wordFontSettings = ParseWordFontSettings(options);
+            outputImageSettings = ParseOutputImageSettings(options);
+        }
 
-            if (parserResult.Errors.Any())
-            {
-                var sentenceBuilder = SentenceBuilder.Create();
-                throw new ArgumentException("Can't parse arguments:\n" + string.Join("\n", parserResult.Errors.Select(error => sentenceBuilder.FormatError(error))));
-            }
-
-            var options = parserResult.Value;
-
-            textReaderSettings = new TextReaderSettings() { Filename = options.InputWordFilename };
-            outputImageSettings = new OutputImageSettings() { Filename = options.OutputImageFilename, Width = options.OutputImageWidth, Height = options.OutputImageWidth };
-            
+        private static TextReaderSettings ParseTextReaderSettings(Options options)
+        {
+            return new TextReaderSettings() { Filename = options.InputWordFilename };
+        }
+        private static WordColorSettings ParseWordColorSettings(Options options)
+        {
             var colorTypeConverter = TypeDescriptor.GetConverter(typeof(Color));
-            wordColorSettings = new WordColorSettings() 
+            return new WordColorSettings()
             {
                 MinFrequencyColor = (Color)colorTypeConverter.ConvertFromString(options.MinFrequencyColorString)!,
                 MaxFrequencyColor = (Color)colorTypeConverter.ConvertFromString(options.MaxFrequencyColorString)!
             };
-
-            wordFontSizeSettings = new WordFontSettings() 
+        }
+        private static WordFontSettings ParseWordFontSettings(Options options)
+        {
+            return new WordFontSettings()
             {
                 FontFamily = options.FontFamily,
                 FontSizeSettings = new WordFontSizeSettings()
@@ -50,13 +51,19 @@ namespace TagsCloudContainer.ConsoleApp
                 }
             };
         }
-
-        public OutputImageSettings GetOutputImageSettings() => outputImageSettings;
+        private static OutputImageSettings ParseOutputImageSettings(Options options)
+        {
+            return new OutputImageSettings()
+            {
+                Filename = options.OutputImageFilename,
+                Width = options.OutputImageWidth,
+                Height = options.OutputImageWidth
+            };
+        }
 
         public TextReaderSettings GetTextReaderSettings() => textReaderSettings;
-
         public WordColorSettings GetWordColorSettings() => wordColorSettings;
-
-        public WordFontSettings GetWordFontSettings() => wordFontSizeSettings;
+        public WordFontSettings GetWordFontSettings() => wordFontSettings;
+        public OutputImageSettings GetOutputImageSettings() => outputImageSettings;
     }
 }

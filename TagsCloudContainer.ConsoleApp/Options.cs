@@ -34,7 +34,7 @@ namespace TagsCloudContainer.ConsoleApp
         [Option("minFontSize", Required = false, Default = 14F, HelpText = "Set minimum frequency word font size")]
         public float MinFrequncyFontSize { get; set; }
 
-        [Option("maxFontSize", Required = false, Default = 24F, HelpText = "Set minimum frequency word font size")]
+        [Option("maxFontSize", Required = false, Default = 24F, HelpText = "Set maximum frequency word font size")]
         public float MaxFrequncyFontSize { get; set; }
     }
 }
