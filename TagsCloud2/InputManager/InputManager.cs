@@ -46,6 +46,7 @@ public class InputManager : IInputManager
             pathToExcludingWords = GetExcludingWordsPath();
             if (!File.Exists(pathToExcludingWords))
             {
+                Console.WriteLine("Файл не найден :(");
                 throw new FileNotFoundException();
             }
         }

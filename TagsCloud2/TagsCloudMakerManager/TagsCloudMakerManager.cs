@@ -56,12 +56,14 @@ public class TagsCloudMakerManager : ITagsCloudMakerManager
                 excludingWordsSet.Add(word);
             }
         }
+
+        var imageName = "tagsCloud";
         var normalizeWords = lemmatizer.Lemmatize(words);
         var frequencyDict = frequencyCompiler.GetFrequencyOfWords(normalizeWords, excludingWordsSet);
         var frequencyList = frequencyCompiler.GetFrequencyList(frequencyDict, 100);
         var tagsCloudBitmap = tagsCloudMaker.MakeTagsCloud(frequencyList, fontFamilyName, 50,
             colorBrush, new Size(size, size), bitmapTagsCloudMaker, sizeDefiner, isVerticalWords);
-        imageSaver.SaveImage(pathToSave, @"tagsCloud", formatToSave, tagsCloudBitmap);
-        Console.WriteLine($"Готово! Сохранено в файле {pathToSave}tagsCloud.{formatToSave}! :)");
+        imageSaver.SaveImage(pathToSave, imageName, formatToSave, tagsCloudBitmap);
+        Console.WriteLine($"Готово! Сохранено в файле {pathToSave}{imageName}.{formatToSave}! :)");
     }
 }

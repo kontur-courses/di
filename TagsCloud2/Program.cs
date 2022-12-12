@@ -20,10 +20,8 @@ static class Program
         var mystemExePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\..\\Lemmatizer\\mystem.exe");
         var services = ConfigureServices(mystemExePath);
         var serviceProvider = services.BuildServiceProvider();
-        var manager = serviceProvider.GetService<IProjectManager>();
-
-        manager.CollectInformationAndMakePicture();
-
+        var projectManager = serviceProvider.GetService<IProjectManager>();
+        projectManager.CollectInformationAndMakePicture();
         //D:\\inputWords.txt
     }
 
