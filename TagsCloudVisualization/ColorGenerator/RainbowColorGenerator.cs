@@ -6,7 +6,7 @@ public class RainbowColorGenerator : IColorGenerator
 {
     private readonly Random random;
 
-    private static readonly Color[] Colors =
+    private static readonly IReadOnlyList<Color> Colors = new List<Color>
     {
         Color.Red,
         Color.Orange,
@@ -24,6 +24,6 @@ public class RainbowColorGenerator : IColorGenerator
     
     public Color Generate()
     {
-        return Colors[random.Next(Colors.Length)];
+        return Colors[random.Next(Colors.Count)];
     }
 }
