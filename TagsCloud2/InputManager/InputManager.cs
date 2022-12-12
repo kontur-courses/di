@@ -13,6 +13,7 @@ public class InputManager : IInputManager
     private string fontFamilyName;
     private string formatToSave;
     private bool isVerticalWords;
+    private string pathToExcludingWords;
 
     public void GatherInformation()
     {
@@ -37,6 +38,17 @@ public class InputManager : IInputManager
         }
 
         isVerticalWords = GetIsVerticalWords();
+        
+        var isExcludingWords = GetIsExcludingWords();
+
+        if (isExcludingWords)
+        {
+            pathToExcludingWords = GetExcludingWordsPath();
+            if (!File.Exists(pathToExcludingWords))
+            {
+                throw new FileNotFoundException();
+            }
+        }
 
         var color = GetColor();
         if (color < 1 && color > 2)
@@ -69,6 +81,11 @@ public class InputManager : IInputManager
     public string Path()
     {
         return path;
+    }
+    
+    public string PathToExcludingWords()
+    {
+        return pathToExcludingWords;
     }
 
     public string PathToSave()
@@ -171,6 +188,13 @@ public class InputManager : IInputManager
             promptBgColor: ConsoleColor.DarkBlue);
     }
 
+    private static bool GetIsExcludingWords()
+    {
+        return Prompt.GetYesNo("Есть ли слова, которые нужно исключить?",
+            defaultAnswer: true,
+            promptColor: ConsoleColor.White,
+            promptBgColor: ConsoleColor.DarkMagenta);
+    }
     private static bool GetIsVerticalWords()
     {
         return Prompt.GetYesNo("В облаке могут быть вертикальные слова?",
@@ -200,5 +224,13 @@ public class InputManager : IInputManager
             "Привет! Я сделаю облако тегов из набора слов :) \nРасскажи, где лежит файл со словами:",
             promptColor: ConsoleColor.White,
             promptBgColor: ConsoleColor.DarkGreen);
+    }
+    
+    private static string? GetExcludingWordsPath()
+    {
+        return Prompt.GetString(
+            "Путь до файла со словами, которые надо исключить:",
+            promptColor: ConsoleColor.White,
+            promptBgColor: ConsoleColor.Black);
     }
 }

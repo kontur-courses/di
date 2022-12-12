@@ -12,4 +12,5 @@ public interface IInputManager
     public string FormatToSave();
     public bool IsVerticalWords();
     public void GatherInformation();
+    public string PathToExcludingWords();
 }

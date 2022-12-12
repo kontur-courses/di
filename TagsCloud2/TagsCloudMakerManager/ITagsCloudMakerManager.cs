@@ -10,5 +10,6 @@ public interface ITagsCloudMakerManager
         string pathToSave,
         string formatToSave,
         bool isVerticalWords,
-        int size);
+        int size,
+        string pathToExcludingPaths);
 }

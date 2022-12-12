@@ -14,8 +14,7 @@ public class ProjectManager : IProjectManager
         this.dataCollector = dataCollector;
         this.tagsCloudMakerManager = tagsCloudMakerManager;
     }
-
-
+    
     public void CollectInformationAndMakePicture()
     {
         dataCollector.GatherInformation();
@@ -26,7 +25,8 @@ public class ProjectManager : IProjectManager
             dataCollector.PathToSave(),
             dataCollector.FormatToSave(),
             dataCollector.IsVerticalWords(),
-            dataCollector.Size()
+            dataCollector.Size(),
+            dataCollector.PathToExcludingWords()
         );
     }
 }

@@ -4,11 +4,13 @@ public class FrequencyCompiler : IFrequencyCompiler
 {
     private IFrequencyCompiler frequencyCompilerImplementation;
 
-    public Dictionary<string, int> GetFrequencyOfWords(List<string> words)
+    public Dictionary<string, int> GetFrequencyOfWords(List<string> words, HashSet<string> excludingWords)
     {
         var frequency = new Dictionary<string, int>();
         foreach (var word in words)
         {
+            if (excludingWords.Contains(word))
+                continue;
             if (!frequency.ContainsKey(word))
             {
                 frequency.Add(word, 0);

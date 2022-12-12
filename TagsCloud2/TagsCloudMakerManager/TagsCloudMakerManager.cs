@@ -43,11 +43,21 @@ public class TagsCloudMakerManager : ITagsCloudMakerManager
         string pathToSave,
         string formatToSave,
         bool isVerticalWords,
-        int size)
+        int size,
+        string pathToExcludingPaths)
     {
         var words = wordsReader.ReadWordsFromFile(path);
+        var excludingWordsSet = new HashSet<string>();
+        if (pathToExcludingPaths != null)
+        {
+            var excludingWords = wordsReader.ReadWordsFromFile(pathToExcludingPaths);
+            foreach (var word in excludingWords)
+            {
+                excludingWordsSet.Add(word);
+            }
+        }
         var normalizeWords = lemmatizer.Lemmatize(words);
-        var frequencyDict = frequencyCompiler.GetFrequencyOfWords(normalizeWords);
+        var frequencyDict = frequencyCompiler.GetFrequencyOfWords(normalizeWords, excludingWordsSet);
         var frequencyList = frequencyCompiler.GetFrequencyList(frequencyDict, 100);
         var tagsCloudBitmap = tagsCloudMaker.MakeTagsCloud(frequencyList, fontFamilyName, 50,
             colorBrush, new Size(size, size), bitmapTagsCloudMaker, sizeDefiner, isVerticalWords);

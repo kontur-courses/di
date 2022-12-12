@@ -3,7 +3,7 @@ using TagsCloud2.FrequencyCompiler;
 
 namespace TestsTagsCloud;
 
-public class FrequencyComlilerTests
+public class FrequencyCompilerTests
 {
     [Test]
     public void FrequencyCompiler_GetFrequencyOfWords()
@@ -18,7 +18,7 @@ public class FrequencyComlilerTests
         words.Add("чистила");
         words.Add("раму");
 
-        var frequencyOfWords = frequencyCompiler.GetFrequencyOfWords(words);
+        var frequencyOfWords = frequencyCompiler.GetFrequencyOfWords(words, new HashSet<string>());
 
         frequencyOfWords["мама"].Should().Be(3);
         frequencyOfWords["чистила"].Should().Be(1);
