@@ -4,6 +4,6 @@ namespace TagCloudPainter.Common;
 
 public class Palette
 {
-    public Color BackgroundColor { get; set; } = Color.Blue;
-    public Color TagsColor { get; set; } = Color.AliceBlue;
+    public Color BackgroundColor { get; set; }
+    public Color TagsColor { get; set; }
 }

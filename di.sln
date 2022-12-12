@@ -5,9 +5,11 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FractalPainter", "FractalPainter\FractalPainter.csproj", "{4D70883B-6F8B-4166-802F-8EDC9BE93199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudPainter", "TagCloudPainter\TagCloudPainter.csproj", "{D47FAEDD-77B4-4499-AF44-F0F1E74A51ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudPainter", "TagCloudPainter\TagCloudPainter.csproj", "{D47FAEDD-77B4-4499-AF44-F0F1E74A51ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagsCloudVisualization", "..\tdd\cs\TagsCloudVisualization\TagsCloudVisualization.csproj", "{2DCB1257-1D5E-466B-BC19-D014DD4A7AE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagCloudConsoleApplication", "TagCloudConsoleApplication\TagCloudConsoleApplication.csproj", "{FE00CD77-F924-4B1D-8F3B-0B136D688F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudPainter.Tests", "TagCloudPainter.Tests\TagCloudPainter.Tests.csproj", "{8230FBEF-70D8-4117-AB77-346724ED3D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +25,14 @@ Global
 		{D47FAEDD-77B4-4499-AF44-F0F1E74A51ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D47FAEDD-77B4-4499-AF44-F0F1E74A51ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D47FAEDD-77B4-4499-AF44-F0F1E74A51ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DCB1257-1D5E-466B-BC19-D014DD4A7AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DCB1257-1D5E-466B-BC19-D014DD4A7AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DCB1257-1D5E-466B-BC19-D014DD4A7AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DCB1257-1D5E-466B-BC19-D014DD4A7AE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE00CD77-F924-4B1D-8F3B-0B136D688F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE00CD77-F924-4B1D-8F3B-0B136D688F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE00CD77-F924-4B1D-8F3B-0B136D688F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE00CD77-F924-4B1D-8F3B-0B136D688F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8230FBEF-70D8-4117-AB77-346724ED3D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8230FBEF-70D8-4117-AB77-346724ED3D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8230FBEF-70D8-4117-AB77-346724ED3D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8230FBEF-70D8-4117-AB77-346724ED3D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

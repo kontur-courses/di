@@ -2,5 +2,5 @@
 
 public interface ITagParser
 {
-    Dictionary<string, int> ParseTags(string tag);
+    Dictionary<string, int> ParseTags(string path);
 }
