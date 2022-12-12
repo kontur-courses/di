@@ -28,8 +28,6 @@ namespace TagsCloudContainer.Infrastructure
             set => height = value > 0 ? value : height;
         }
 
-
-        
         [DisplayName("Задний фон прямоугольников")]
         [Category("2. Цвета")]
         public Color RectangleBackgroundColor { get; set; } = Color.Red;

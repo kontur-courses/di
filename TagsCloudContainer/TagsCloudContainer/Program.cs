@@ -9,13 +9,29 @@ using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer
 {
-    internal static class Program
+    public static class Program
     {
         [STAThread]
         static void Main()
         {
             var builder = new ContainerBuilder();
 
+            RegisterDependencies(builder);
+
+            try
+            {
+                var container = builder.Build();
+                ApplicationConfiguration.Initialize();
+                Application.Run(container.Resolve<Form>());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        public static void RegisterDependencies(ContainerBuilder builder)
+        {
             builder.RegisterType<MainForm>().As<Form>();
             builder.RegisterType<ImageSettings>().AsSelf().SingleInstance();
             builder.RegisterType<FileSettings>().AsSelf().SingleInstance();
@@ -33,17 +49,6 @@ namespace TagsCloudContainer
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<DrawImageAction>().As<IUiAction>();
             builder.RegisterType<GuiTagCloudService>().As<ITagCloudService>();
-
-            try
-            {
-                var container = builder.Build();
-                ApplicationConfiguration.Initialize();
-                Application.Run(container.Resolve<Form>());
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
         }
     }
 }

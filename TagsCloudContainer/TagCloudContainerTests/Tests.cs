@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Autofac;
 using DeepMorphy;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json.Bson;
 using NUnit.Framework;
 using TagsCloudContainer.Algorithm;
@@ -18,7 +21,6 @@ namespace TagCloudContainerTests
     [TestFixture]
     public class Tests
     {
-        private static string asd = Environment.CurrentDirectory;
         private string PathToProj = Environment.CurrentDirectory;
         private ImageSettings imageSettings;
         private AlgorithmSettings algoSettings;
@@ -27,73 +29,37 @@ namespace TagCloudContainerTests
         private IParser parser;
         private PictureBox pictureBox;
         private IPainter painter;
+        private IWordsCounter wordsCounter;
 
 
         [SetUp]
         public void SetUp()
         {
-            imageSettings = new ImageSettings();
-            algoSettings = new AlgorithmSettings();
-            fileSettings = new FileSettings();
+            var builder = new ContainerBuilder();
+            TagsCloudContainer.Program.RegisterDependencies(builder);
+            var container = builder.Build();
+            imageSettings = container.Resolve<ImageSettings>();
+            algoSettings = container.Resolve<AlgorithmSettings>();
+            fileSettings = container.Resolve<FileSettings>();
             fileSettings.SourceFilePath = PathToProj + @"\source.txt";
             fileSettings.CustomBoringWordsFilePath = PathToProj + @"\boring.txt";
             fileSettings.ResultImagePath = PathToProj + @"\image.png";
-            parser = new Parser(fileSettings, new MorphAnalyzer());
-            cloudLayouter = new CircularCloudLayouter(imageSettings, algoSettings, parser);
-            pictureBox = new PictureBox();
-            painter = new TagCloudPainter(pictureBox, imageSettings);
+            parser = container.Resolve<IParser>();
+            cloudLayouter = container.Resolve<ICloudLayouter>();
+            pictureBox = container.Resolve<PictureBox>();
+            painter = container.Resolve<IPainter>();
+            wordsCounter = container.Resolve<IWordsCounter>();
         }
 
-        [TestCase("asd", null)]
-        [TestCase(null, "asd123")]
-        public void FileSettingThrowException_ThanIncorrectArgs(string? sourcePath, string? customBoringPath)
-        {
-            fileSettings.SourceFilePath = sourcePath != null ? sourcePath 
-                : fileSettings.SourceFilePath;
-            fileSettings.CustomBoringWordsFilePath = customBoringPath != null ? customBoringPath 
-                : fileSettings.CustomBoringWordsFilePath;
-
-            var act = () => fileSettings.ThrowExcIfFileNotFound();
-
-            act.Should().Throw<FileNotFoundException>();
-        }
-
-        [TestCase(0,1)]
-        [TestCase(1, 0)]
-        [TestCase(1, -1)]
-        [TestCase(-1, 1)]
-        public void AlgoSettingThrowException_ThanIncorrectArgs(double dr, double fi)
-        {
-            algoSettings.Dr = dr;
-            algoSettings.Fi = fi;
-
-            var act = () => algoSettings.ThrowExcIfNonPositiveArgs();
-
-            act.Should().Throw<ArgumentException>();
-        }
-
-        [TestCase(0, 1)]
-        [TestCase(1, 0)]
-        [TestCase(1, -1)]
-        [TestCase(-1, 1)]
-        public void ImageSettingThrowException_ThanIncorrectArgs(int width, int height)
-        {
-            imageSettings.Width = width;
-            imageSettings.Height = height;
-
-            var act = () => imageSettings.ThrowExcIfNonPositiveArgs();
-
-            act.Should().Throw<ArgumentException>();
-        }
-
-        [TestCase(new object[] { "—л ово" }, new object[0])]
+        [TestCase(new object[] { "—л ово" }, new object[] { "чело век" })]
         public void ParserThrowExc_ThanWhiteSpacesInWords(object[] sourceFileText, object[] boringWordsFileText)
         {
             FillSourceFile("source.txt", sourceFileText.Cast<string>());
             FillSourceFile("boring.txt", boringWordsFileText.Cast<string>());
-            var act = () => parser.GetWordsCountWithoutBoring();
+            var act1 = () => parser.CountWordsInFile(fileSettings.SourceFilePath);
+            var act2 = () => parser.FindWordsInFile(fileSettings.CustomBoringWordsFilePath);
 
-            act.Should().Throw<ArgumentException>();
+            act1.Should().Throw<ArgumentException>();
         }
 
         [TestCase(new object[] {"a","a"}, 1)]
@@ -102,7 +68,7 @@ namespace TagCloudContainerTests
         public void ParserCountAllWordsInFile_WhenCustomBoringIsEmpty(object[] sourceFileText, int expectedCount)
         {
             FillSourceFile("source.txt", sourceFileText.Cast<string>());
-            var res = parser.CountWordsInSourceFile();
+            var res = parser.CountWordsInFile(fileSettings.SourceFilePath);
 
             res.Count.Should().Be(expectedCount);
         }
@@ -113,21 +79,23 @@ namespace TagCloudContainerTests
         [TestCase(new object[] { "слово", "и" }, 1)]
         [TestCase(new object[] { "слово", "в" }, 1)]
         [TestCase(new object[] { "слово", "не" }, 1)]
-        public void ParserNotCount_SimpleBoringWords(object[] sourceFileText, int expectedCount)
+        public void WordsCounterNotCount_SimpleBoringWords(object[] sourceFileText, int expectedCount)
         {
             FillSourceFile("source.txt", sourceFileText.Cast<string>());
             FillSourceFile("boring.txt", Array.Empty<string>());
-            var res = parser.GetWordsCountWithoutBoring();
+            var res = wordsCounter.CountWords(fileSettings.SourceFilePath, 
+                fileSettings.CustomBoringWordsFilePath);
 
             res.Count.Should().Be(expectedCount);
         }
 
         [Test]
-        public void ParserNotCount_CustomBoringWords()
+        public void WordsCounterNotCount_CustomBoringWords()
         {
             FillSourceFile("source.txt", new[] { "слово", "человек" });
             FillSourceFile("boring.txt", new[] { "слово" });
-            var res = parser.GetWordsCountWithoutBoring();
+            var res = wordsCounter.CountWords(fileSettings.SourceFilePath,
+                fileSettings.CustomBoringWordsFilePath);
 
             res.Count.Should().Be(1);
         }
@@ -135,13 +103,14 @@ namespace TagCloudContainerTests
         [Test]
         public void ParserTrimmingAndLoweringWords()
         {
-            FillSourceFile("source.txt", new[] { " слово ", "чEловек", "скучный" });
-            FillSourceFile("boring.txt", new[] { " —ку„ный" });
-            var res = parser.GetWordsCountWithoutBoring();
+            FillSourceFile("source.txt", new[] { " слово ", "чEловек" });
+            FillSourceFile("boring.txt", new[] { "\t—ку„ный " });
+            var res1 = parser.CountWordsInFile(fileSettings.SourceFilePath);
+            var res2 = parser.FindWordsInFile(fileSettings.CustomBoringWordsFilePath);
 
-            res.ContainsKey("слово").Should().BeTrue();
-            res.ContainsKey("чeловек").Should().BeTrue();
-            res.ContainsKey("скучный").Should().BeFalse();
+            res1.ContainsKey("слово").Should().BeTrue();
+            res1.ContainsKey("чeловек").Should().BeTrue();
+            res2.Contains("скучный").Should().BeTrue();
         }
 
         [TestCase(new object[0], new object[0], 0)]
@@ -152,7 +121,7 @@ namespace TagCloudContainerTests
         {
             FillSourceFile("source.txt", sourceFileText.Cast<string>());
             FillSourceFile("boring.txt", boringWordsFileText.Cast<string>());
-            var res = cloudLayouter.FindRectanglesPositions();
+            var res = GetRectangles();
 
             res.Count.Should().Be(expected);
         }
@@ -165,7 +134,7 @@ namespace TagCloudContainerTests
         {
             FillSourceFile("source.txt", sourceFileText.Cast<string>());
             FillSourceFile("boring.txt", Array.Empty<string>());
-            var res = cloudLayouter.FindRectanglesPositions();
+            var res = GetRectangles();
 
             var squares = res
                 .Select(e => Convert.ToDouble(e.rectangle.Width * e.rectangle.Height))
@@ -190,10 +159,17 @@ namespace TagCloudContainerTests
                 File.Delete(fileSettings.ResultImagePath);
 
             pictureBox.RecreateImage(imageSettings);
-            painter.Paint(cloudLayouter.FindRectanglesPositions());
+            painter.Paint(GetRectangles());
             pictureBox.SaveImage(fileSettings.ResultImagePath);
 
             File.Exists(fileSettings.ResultImagePath).Should().BeTrue();
+        }
+
+        private List<(Rectangle rectangle, string text)> GetRectangles()
+        {
+            var words = wordsCounter.CountWords(fileSettings.SourceFilePath,
+                fileSettings.CustomBoringWordsFilePath);
+            return cloudLayouter.FindRectanglesPositions(imageSettings.Width, imageSettings.Height, words);
         }
 
         private void FillSourceFile(string filename, IEnumerable<string> text)
