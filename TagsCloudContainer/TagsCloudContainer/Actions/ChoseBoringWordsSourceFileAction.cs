@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 
 namespace TagsCloudContainer.Actions
 {
     public class ChoseBoringWordsSourceFileAction : IUiAction
     {
         private FileSettings fileSettings;
+        private readonly IService service;
 
-        public ChoseBoringWordsSourceFileAction(FileSettings fileSettings)
+        public ChoseBoringWordsSourceFileAction(IService service, FileSettings fileSettings)
         {
+            this.service = service;
             this.fileSettings = fileSettings;
         }
 
@@ -22,17 +25,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            var dialog = new OpenFileDialog()
-            {
-                CheckFileExists = true,
-                InitialDirectory = Path.GetFullPath(fileSettings.CustomBoringWordsFilePath),
-                DefaultExt = "txt",
-                FileName = "boring.txt",
-                Filter = "Текстовые файлы (*.txt)|*.txt"
-            };
-            var res = dialog.ShowDialog();
-            if (res == DialogResult.OK)
-                fileSettings.CustomBoringWordsFilePath = dialog.FileName;
+            fileSettings.CustomBoringWordsFilePath = service.SetFilePath(fileSettings.CustomBoringWordsFilePath);
         }
     }
 }

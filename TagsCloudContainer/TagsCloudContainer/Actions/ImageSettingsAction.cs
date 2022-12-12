@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 
 namespace TagsCloudContainer.Actions
 {
     public class ImageSettingsAction : IUiAction
     {
-        private PictureBox pictureBox;
         private ImageSettings imageSettings;
+        private readonly IService service;
 
-        public ImageSettingsAction(PictureBox pictureBox, ImageSettings imageSettings)
+        public ImageSettingsAction(IService service, PictureBox pictureBox, ImageSettings imageSettings)
         {
-            this.pictureBox = pictureBox;
+            this.service = service;
             this.imageSettings = imageSettings;
         }
 
@@ -25,15 +26,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            SettingsForm.For(imageSettings).ShowDialog();
-            if (imageSettings.Width > 0 && imageSettings.Height > 0)
-            {
-                pictureBox.RecreateImage(imageSettings);
-                return;
-            }
-
-            MessageBox.Show("Только положительные значения!");
-            Perform();
+            service.SetSettings(imageSettings);
         }
     }
 }

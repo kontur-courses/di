@@ -4,6 +4,7 @@ using DeepMorphy;
 using TagsCloudContainer.Actions;
 using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer
@@ -31,6 +32,7 @@ namespace TagsCloudContainer
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<DrawImageAction>().As<IUiAction>();
+            builder.RegisterType<GUIService>().As<IService>();
 
             try
             {

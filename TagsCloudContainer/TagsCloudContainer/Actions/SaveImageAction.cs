@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Extensions;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 
 namespace TagsCloudContainer.Actions
 {
     public class SaveImageAction : IUiAction
     {
-        private PictureBox pictureBox;
         private FileSettings fileSettings;
+        private readonly IService service;
 
-        public SaveImageAction(PictureBox pictureBox, FileSettings fileSettings)
+        public SaveImageAction(IService service, FileSettings fileSettings)
         {
-            this.pictureBox = pictureBox;
+            this.service = service;
             this.fileSettings = fileSettings;
         }
 
@@ -25,17 +26,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            var dialog = new SaveFileDialog
-            {
-                CheckFileExists = false,
-                InitialDirectory = Path.GetFullPath(fileSettings.ResultImagePath),
-                DefaultExt = "png",
-                FileName = "image.png",
-                Filter = "Изображения (*.png)|*.png|Изображения (*.jpg)|*.jpg|Изображения (*.bmp)|*.bmp"
-            };
-            var res = dialog.ShowDialog();
-            if (res == DialogResult.OK)
-                pictureBox.SaveImage(dialog.FileName);
+            service.SaveImage(fileSettings.ResultImagePath);
         }
     }
 }

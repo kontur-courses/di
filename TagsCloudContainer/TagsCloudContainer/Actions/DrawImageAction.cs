@@ -5,25 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Algorithm;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 using TagsCloudContainer.Visualisator;
 
 namespace TagsCloudContainer.Actions
 {
     public class DrawImageAction : IUiAction
     {
-        private IPainter painter;
-        private ICloudLayouter cloudLayouter;
         private ImageSettings imageSettings;
-        private readonly IWordsCounter wordscounter;
         private readonly FileSettings fileSettings;
+        private readonly IService service;
 
-        public DrawImageAction(ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings, 
+        public DrawImageAction(IService service, ICloudLayouter cloudLayouter, IPainter painter, ImageSettings imageSettings, 
             IWordsCounter wordsCounter, FileSettings fileSettings)
         {
-            this.cloudLayouter = cloudLayouter;
-            this.painter = painter;
+            this.service = service;
             this.imageSettings = imageSettings;
-            this.wordscounter = wordsCounter;
             this.fileSettings = fileSettings;
         }
 
@@ -33,9 +30,8 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            var wordsCount = wordscounter.CountWords(fileSettings.SourceFilePath
-                , fileSettings.CustomBoringWordsFilePath);
-            painter.Paint(cloudLayouter.FindRectanglesPositions(imageSettings.Width, imageSettings.Height, wordsCount));
+            service.DrawImage(fileSettings.SourceFilePath, fileSettings.CustomBoringWordsFilePath,
+                imageSettings.Width, imageSettings.Height);
         }
     }
 }

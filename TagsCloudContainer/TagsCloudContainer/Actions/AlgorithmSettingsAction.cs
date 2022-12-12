@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TagsCloudContainer.Infrastructure;
+using TagsCloudContainer.Services;
 
 namespace TagsCloudContainer.Actions
 {
     public class AlgorithmSettingsAction : IUiAction
     {
         private AlgorithmSettings algoSettings;
+        private readonly IService service;
 
-        public AlgorithmSettingsAction(AlgorithmSettings algoSettings)
+        public AlgorithmSettingsAction(IService service, AlgorithmSettings algoSettings)
         {
+            this.service = service;
             this.algoSettings = algoSettings;
         }
 
@@ -22,13 +25,7 @@ namespace TagsCloudContainer.Actions
         public string Description => "Изменить настройки алгоритма";
         public void Perform()
         {
-            SettingsForm.For(algoSettings).ShowDialog();
-
-            if (algoSettings.Fi <= 0 || algoSettings.Dr <= 0)
-            {
-                MessageBox.Show("Только положительные значения!");
-                Perform();
-            }
+            service.SetSettings(algoSettings);
         }
     }
 }
