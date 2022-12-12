@@ -7,16 +7,7 @@ namespace TagsCloud.TextWorkers
 {
     public class TextPartsToExclude : ITextPartsToExclude
     {
-        private readonly string[] speechPartsToExclude =
-        {
-            "мест",
-            "межд",
-            "част",
-            "предл",
-            "союз"
-        };
-
-        public string[] SpeechPartsToExclude => speechPartsToExclude;
+        public string[] SpeechPartsToExclude { get; } = { "мест", "межд", "част", "предл", "союз" };
 
         private readonly string[] wordsToExclude;
 

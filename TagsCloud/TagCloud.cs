@@ -6,7 +6,7 @@ namespace TagsCloud
     public class TagCloud : ITagCloud
     {
         private readonly IBitmapper bitmapper;
-        private readonly IMorphsFilter filter;
+        private readonly IMorphsFilter morphsFilter;
         private readonly IWordsFrequencyAnalyzer freqAnalyzer;
         private readonly IWordsRectanglesScaler wordsRectanglesScaler;
         private readonly IMorphsParser morphsParser;
@@ -20,7 +20,7 @@ namespace TagsCloud
             INormalFormParser normalFormParser)
         {
             this.bitmapper = bitmapper;
-            filter = morphsFilter;
+            this.morphsFilter = morphsFilter;
             this.freqAnalyzer = freqAnalyzer;
             this.wordsRectanglesScaler = wordsRectanglesScaler;
             this.morphsParser = morphsParser;
@@ -36,7 +36,7 @@ namespace TagsCloud
 
             var morphInfo = morphsParser.GetMorphs(textFilePath);
 
-            var clearMorphs = filter.FilterRedundantWords(morphInfo);
+            var clearMorphs = morphsFilter.FilterRedundantWords(morphInfo);
 
             var normalFormWords = normalFormParser.Normalize(clearMorphs);
 

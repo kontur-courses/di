@@ -36,8 +36,7 @@ namespace TagsCloud.TextWorkers
         private SortedDictionary<int, List<string>> GetOrderedDictByFrequency(Dictionary<string, int> wordsFrequency)
         {
             var orderedWordsFrequency = new SortedDictionary<int, List<string>>(comparer);
-                //new ReverseComparer<int>());
-
+               
             foreach (var pair in wordsFrequency)
             {
                 var word = pair.Key;

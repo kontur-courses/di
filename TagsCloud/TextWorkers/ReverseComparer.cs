@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class ReverseComparer<T> : IComparer<T> where T : IComparable<T>
+namespace TagsCloud.TextWorkers
 {
-    public int Compare(T obj1, T obj2)
+    public class ReverseComparer<T> : IComparer<T> where T : IComparable<T>
     {
-        if (obj1 == null || obj2 == null) throw new ArgumentException();
-        return -(obj1.CompareTo(obj2));
+        public int Compare(T obj1, T obj2)
+        {
+            if (obj1 == null || obj2 == null) throw new ArgumentException();
+            return -obj1.CompareTo(obj2);
+        }
     }
 }

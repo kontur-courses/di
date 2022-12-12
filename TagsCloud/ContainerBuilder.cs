@@ -49,9 +49,12 @@ namespace TagsCloud
 
             services.AddSingleton<IMorphsParser, MorphsParser>();
             services.AddSingleton<INormalFormParser, NormalFormParser>();
+            services.AddSingleton<ITextSplitter, TextSplitter>();
 
             services.AddSingleton<ITagCloud, TagCloud>();
             services.AddSingleton<TagCloud, TagCloud>();
+
+            services.AddSingleton<IClient>(x => new ConsoleClient(@"..\..\..\..\"));
 
             var serviceProvider = services.BuildServiceProvider();
 

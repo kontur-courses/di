@@ -7,14 +7,20 @@ namespace TagsCloud.TextWorkers
 {
     public class MorphsParser : IMorphsParser
     {
+        private ITextSplitter TextSplitter { get; }
+
+        public MorphsParser(ITextSplitter textSplitter)
+        {
+            TextSplitter = textSplitter;
+        }
+
         public IEnumerable<MorphInfo> GetMorphs(string filePath)
         {
             var morph = new MorphAnalyzer(true);
 
             var text = TextReader.ReadFile(filePath);
 
-            var textSplitter = new TextSplitter();
-            var words = textSplitter.SplitTextOnWords(text);
+            var words = TextSplitter.SplitTextOnWords(text);
 
             var morphInfo = morph.Parse(words);
 

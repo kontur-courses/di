@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using TagsCloud.Interfaces;
 
 namespace TagsCloud.TextWorkers
 {
-    public class TextSplitter
+    public class TextSplitter : ITextSplitter
     {
         private readonly char[] delimeterChars = { ' ', ',', '.', ':', '\t', '\r', '\n' };
 

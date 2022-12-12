@@ -15,16 +15,16 @@ namespace TagsCloud
             var width = 1024;
             var height = 720;
 
-            var consoleClient = new ConsoleClient(@"..\..\..\..\");
-            consoleClient.StartClient();
+            var container = ContainerBuilder.GetNewTagCloudServices(width, height);
 
-            var tagCloud = ContainerBuilder
-                .GetNewTagCloudServices(width, height)
-                .GetService<TagCloud>();
+            var client = container.GetService<IClient>();
+            client.StartClient();
 
-            tagCloud.PrintTagCloud(consoleClient.TextFilePath,
-                consoleClient.PicFilePath,
-                consoleClient.PicFileExtension);
+            var tagCloud = container.GetService<ITagCloud>();
+
+            tagCloud.PrintTagCloud(client.TextFilePath,
+                client.PicFilePath,
+                client.PicFileExtension);
         }
     }
 }

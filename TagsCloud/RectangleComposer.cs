@@ -16,7 +16,6 @@ namespace TagsCloud
         {
             Spiral = spiral;
             Rectangles = new List<Rectangle>();
-
         }
 
         public Rectangle GetNextRectangleInCloud(Size newRect)

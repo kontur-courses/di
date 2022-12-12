@@ -8,11 +8,11 @@ namespace TagsCloud
 {
     public class ConsoleClient : IClient
     {
-        public string TextFilePath{ get => basePath + textFileName; }
-        public string PicFilePath{ get => basePath + picFileName; }
+        public string TextFilePath => basePath + textFileName; 
+        public string PicFilePath => basePath + picFileName; 
         public string PicFileExtension { get; private set; }
 
-        private readonly string basePath = @"..\..\..\..\";
+        private readonly string basePath;
         private string textFileName;
         private string picFileName;
 
