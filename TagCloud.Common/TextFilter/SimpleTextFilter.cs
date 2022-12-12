@@ -17,7 +17,7 @@ public class SimpleTextFilter : ITextFilter
         return words;
     }
     
-    private string[] GetWords(string input)
+    private IEnumerable<string> GetWords(string input)
     {
         var matches = Regex.Matches(input, @"\b[\w']*\b");
 

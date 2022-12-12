@@ -19,7 +19,8 @@ public class CloudDrawer : ICloudDrawer
             foreach (var tag in tags)
             {
                 var pen = new Pen(Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)));
-                graphics.DrawRectangle(pen, tag.Bounds);
+                // раскомментить чтобы посмотреть границы слов ->
+                //graphics.DrawRectangle(pen, tag.Bounds);
                 graphics.DrawString(tag.Word, tag.Font, new SolidBrush(pen.Color), tag.Bounds);
             }
         }
