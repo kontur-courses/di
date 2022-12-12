@@ -155,4 +155,58 @@ public class ImageDrawerTests
         var container = builder.Build();
         ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
     }
+    
+    [Test]
+    public void RandomColorsTest()
+    {
+        var savePath = Path.Combine(saveDir, "random.png");
+
+        using (var mock = AutoMock.GetLoose())
+        {
+            mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
+            {
+                FontColor = Color.Aqua,
+                Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
+                FrequencyRatio = 1.3f,
+                ImageSize = new Size(5000, 5000),
+                BackgroundColor = Color.Black
+            });
+            var settings = mock.Create<ISettingsProvider>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
+
+        }
+
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
+        builder.RegisterType<RandomColorProvider>().As<IColorProvider>();
+        var container = builder.Build();
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+    }
+    
+    [Test]
+    public void TransparencyColorsTest()
+    {
+        var savePath = Path.Combine(saveDir, "transparent.png");
+
+        using (var mock = AutoMock.GetLoose())
+        {
+            mock.Mock<ISettingsProvider>().Setup(s => s.Settings).Returns(new Settings
+            {
+                FontColor = Color.Aqua,
+                Font = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold),
+                FrequencyRatio = 1.3f,
+                ImageSize = new Size(5000, 5000),
+                BackgroundColor = Color.Black
+            });
+            var settings = mock.Create<ISettingsProvider>();
+            builder.RegisterInstance(settings).As<ISettingsProvider>();
+
+        }
+
+        var testFileReader = new TestFileReader(inputPath, null);
+        builder.RegisterInstance(testFileReader).As<IWordSequenceProvider>();
+        builder.RegisterType<TransparencyOverFrequencyColorProvider>().As<IColorProvider>();
+        var container = builder.Build();
+        ImageSaver.Save(container.Resolve<IImageDrawer>().DrawImage(), savePath);
+    }
 }
