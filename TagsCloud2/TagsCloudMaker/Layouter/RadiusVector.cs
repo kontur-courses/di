@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloud2.TagsCloudMaker.Layouter
 {
     public class RadiusVector
     {

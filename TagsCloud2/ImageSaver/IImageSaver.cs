@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloud2;
+namespace TagsCloud2.ImageSaver;
 
 public interface IImageSaver
 {

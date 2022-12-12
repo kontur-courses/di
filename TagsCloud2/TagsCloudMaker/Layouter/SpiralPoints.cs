@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Drawing;
 
-namespace TagsCloudVisualization
+namespace TagsCloud2.TagsCloudMaker.Layouter
 {
     public class SpiralPoints : IEnumerator<Point>
     {

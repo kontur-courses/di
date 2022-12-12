@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using TagsCloud2.TagsCloudMaker.SizeDefiner;
 
-namespace TagsCloud2;
+namespace TagsCloud2.TagsCloudMaker.BitmapMaker;
 
 public interface IBitmapMaker
 {

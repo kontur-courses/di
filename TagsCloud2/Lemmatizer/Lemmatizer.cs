@@ -2,9 +2,7 @@
 
 public class Lemmatizer: ILemmatizer
 {
-    private MystemHandler.MystemMultiThread mystemThread; 
-    //mystemExePath = @"D:\шпора-2022\di\TagsCloud2\Lemmatizer\mystem.exe"
-    
+    private MystemHandler.MystemMultiThread mystemThread;
     public Lemmatizer(string mystemExePath)
     { 
         mystemThread = new MystemHandler.MystemMultiThread(1, mystemExePath);
@@ -17,9 +15,10 @@ public class Lemmatizer: ILemmatizer
         {
             
             enumerator.MoveNext();
-            if (!enumerator.Current.IsSlug)
+            var currentItem = enumerator.Current;
+            if (!currentItem.IsSlug)
             {
-                result.Add(enumerator.Current.Lemma);
+                result.Add(currentItem.Lemma);
             }
         }
 

@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
+using TagsCloud2.FrequencyCompiler;
+using TagsCloud2.TagsCloudMaker.BitmapMaker;
+using TagsCloud2.TagsCloudMaker.SizeDefiner;
 
-namespace TagsCloud2;
+namespace TagsCloud2.TagsCloudMaker;
 
 public class TagsCloudMaker : ITagsCloudMaker
 {
