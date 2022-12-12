@@ -11,11 +11,11 @@ namespace TagsCloudContainer.Actions
     public class ChoseSourceFileAction : IUiAction
     {
         private FileSettings fileSettings;
-        private readonly IService service;
+        private readonly ITagCloudService _tagCloudService;
 
-        public ChoseSourceFileAction(IService service, FileSettings fileSettings)
+        public ChoseSourceFileAction(ITagCloudService tagCloudService, FileSettings fileSettings)
         {
-            this.service = service;
+            this._tagCloudService = tagCloudService;
             this.fileSettings = fileSettings;
         }
 
@@ -25,7 +25,7 @@ namespace TagsCloudContainer.Actions
 
         public void Perform()
         {
-            fileSettings.SourceFilePath = service.SetFilePath(fileSettings.SourceFilePath);
+            fileSettings.SourceFilePath = _tagCloudService.SetFilePath(fileSettings.SourceFilePath);
         }
     }
 }

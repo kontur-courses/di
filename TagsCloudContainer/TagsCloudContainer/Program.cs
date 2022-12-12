@@ -32,7 +32,7 @@ namespace TagsCloudContainer
             builder.RegisterType<AlgorithmSettingsAction>().As<IUiAction>();
             builder.RegisterType<ImageSettingsAction>().As<IUiAction>();
             builder.RegisterType<DrawImageAction>().As<IUiAction>();
-            builder.RegisterType<GUIService>().As<IService>();
+            builder.RegisterType<GuiTagCloudService>().As<ITagCloudService>();
 
             try
             {

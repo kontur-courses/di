@@ -12,11 +12,11 @@ namespace TagsCloudContainer.Actions
     public class AlgorithmSettingsAction : IUiAction
     {
         private AlgorithmSettings algoSettings;
-        private readonly IService service;
+        private readonly ITagCloudService _tagCloudService;
 
-        public AlgorithmSettingsAction(IService service, AlgorithmSettings algoSettings)
+        public AlgorithmSettingsAction(ITagCloudService tagCloudService, AlgorithmSettings algoSettings)
         {
-            this.service = service;
+            this._tagCloudService = tagCloudService;
             this.algoSettings = algoSettings;
         }
 
@@ -25,7 +25,7 @@ namespace TagsCloudContainer.Actions
         public string Description => "Изменить настройки алгоритма";
         public void Perform()
         {
-            service.SetSettings(algoSettings);
+            _tagCloudService.SetSettings(algoSettings);
         }
     }
 }
