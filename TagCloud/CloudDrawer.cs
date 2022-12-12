@@ -8,10 +8,11 @@ namespace TagCloud;
 public class CloudDrawer
 {
     private readonly IList<Color> _defaultColors = new List<Color> { Color.Black };
+    private readonly Random _random;
 
-    public CloudDrawer()
+    public CloudDrawer(Random random)
     {
-        
+        _random = random;
     }
 
     public Bitmap CreateImage(IList<WordRectangle> words, Size size, Font font, IEnumerable<Color> colors)
@@ -32,11 +33,10 @@ public class CloudDrawer
         var graphics = Graphics.FromImage(image);
         graphics.SmoothingMode = SmoothingMode.HighQuality;
         var fontSize = font.Size;
-        var random = new Random();
         
         foreach (var wordRectangle in words)
         {
-            var color = GetRandomColorFromColors(colors, random);
+            var color = GetRandomColorFromColors(colors, _random);
             var brush = new SolidBrush(color);
             font = font.ChangeSize(fontSize * wordRectangle.Word.Frequency);
             graphics.DrawString(wordRectangle.Word.Value, font, brush,
