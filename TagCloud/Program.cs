@@ -5,6 +5,7 @@ using System.IO;
 using Autofac;
 using TagCloud.AppConfig;
 using TagCloud.App;
+using CommandLine;
 
 namespace TagCloud
 {
