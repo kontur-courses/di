@@ -16,8 +16,8 @@ static class Program
 {
     static void Main()
     {
-        var mystemExePath = @"D:\шпора-2022\di\TagsCloud2\Lemmatizer\mystem.exe";
-        var services = ConfigureSercices(mystemExePath);
+        var mystemExePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\..\\Lemmatizer\\mystem.exe");
+        var services = ConfigureServices(mystemExePath);
         var serviceProvider = services.BuildServiceProvider();
         var manager = serviceProvider.GetService<IManager>();
 
@@ -26,7 +26,7 @@ static class Program
         //D:\\inputWords.txt
     }
 
-    private static IServiceCollection ConfigureSercices(string mystemExePath)
+    private static IServiceCollection ConfigureServices(string mystemExePath)
     {
         var services = new ServiceCollection()
             .AddTransient<IReader, Reader.Reader>()

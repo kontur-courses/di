@@ -67,7 +67,6 @@ public class SizeDefiner : ISizeDefiner
             using var font = new Font(fontFamilyName, fontSize);
             var size = graphics.MeasureString(item.Key, font);
             stringSizeAndOrientation.Add(item.Key, new TextOptions(size.ToSize(), Orientation.Horizontal, fontSize));
-            // при вертикальной отрисовке надо местами поменть ширину и высоту rec = new Rectangle(50, 50, size.ToSize().Height, size.ToSize().Width);
         }
     }
 }
