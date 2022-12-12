@@ -12,5 +12,6 @@
         string BackgroundColor { get; set; }
         string FontColor { get; set; }
         string ExcludedParticals { get; set; }
+        string ImageFormat { get; set; }
     }
 }

@@ -74,20 +74,5 @@ namespace TagsCloudContainer
                 .OrderByDescending(x => x.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
         }
-
-        private static bool IsFileLocked(FileInfo file)
-        {
-            try
-            {
-                using var stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
-                stream.Close();
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

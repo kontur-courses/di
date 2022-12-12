@@ -4,6 +4,21 @@ namespace TagsCloudContainer
 {
     public class CustomOptionsValidator
     {
+        private static readonly HashSet<string> acceptableFormats = new()
+        {
+            "png",
+            "heif",
+            "bmp",
+            "emf",
+            "exif",
+            "gif",
+            "icon",
+            "jpeg",
+            "memorybmp",
+            "tiff",
+            "webp",
+            "wmf"
+        };
         public static void ValidateOptions(CustomOptions options)
         {
             if (options is null)
@@ -29,6 +44,8 @@ namespace TagsCloudContainer
             var font = new Font(options.Font, 1);
             if (font.Name != options.Font)
                 throw new ArgumentException($"Font \"{options.Font}\" can't be found");
+            if (!acceptableFormats.Contains(options.ImageFormat.ToLower()))
+                throw new ArgumentException("Unsupported image format");
         }
     }
 }

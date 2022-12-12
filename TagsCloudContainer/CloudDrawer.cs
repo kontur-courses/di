@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
 using CloudLayout;
 using CloudLayout.Interfaces;
@@ -39,12 +40,31 @@ namespace TagsCloudContainer
                     g.DrawString(pair.Key, pair.Value, fontColor, buffer);
             }
 
-            picture.Save(path, ImageFormat.Png);
+            picture.Save(path, GetImageFormat(options.ImageFormat));
         }
 
-        public void DrawCloud(ICustomOptions configuration)
+        public void DrawCloud(ICustomOptions options)
         {
-            DrawCloud(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\Cloud.png"), configuration);
+            DrawCloud(Path.Combine(options.WorkingDir, string.Concat("Cloud.", options.ImageFormat.ToLower())), options);
+        }
+        private static ImageFormat GetImageFormat(string format)
+        {
+            return format.ToLower() switch
+            {
+                "png" => ImageFormat.Png,
+                "heif" => ImageFormat.Heif,
+                "bmp" => ImageFormat.Bmp,
+                "emf" => ImageFormat.Emf,
+                "exif" => ImageFormat.Exif,
+                "gif" => ImageFormat.Gif,
+                "icon" => ImageFormat.Icon,
+                "jpeg" => ImageFormat.Jpeg,
+                "memorybmp" => ImageFormat.MemoryBmp,
+                "tiff" => ImageFormat.Tiff,
+                "webp" => ImageFormat.Webp,
+                "wmf" => ImageFormat.Wmf,
+                _ => throw new ArgumentException("Unexpected image format")
+            };
         }
     }
 }

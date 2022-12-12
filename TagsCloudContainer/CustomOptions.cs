@@ -14,6 +14,7 @@ namespace TagsCloudContainer
         public string BackgroundColor { get; set; } = string.Empty;
         public string FontColor { get; set; } = string.Empty;
         public string ExcludedParticals { get; set; } = string.Empty;
+        public string ImageFormat { get; set; } = string.Empty;
 
         public object Clone()
         {
@@ -28,7 +29,8 @@ namespace TagsCloudContainer
                 FontColor = FontColor,
                 ExcludedParticals = ExcludedParticals,
                 MaxTagSize = MaxTagSize,
-                MinTagSize = MinTagSize
+                MinTagSize = MinTagSize,
+                ImageFormat = ImageFormat
             };
         }
     }
