@@ -19,8 +19,8 @@ namespace TagsCloudContainer.ConsoleApp
             builder.RegisterType<TextFileReader>().As<IWordReader>().SingleInstance();
             builder.RegisterType<WordPreparer>().As<IWordPreparer>().SingleInstance();
             
-            builder.RegisterType<WordConstColorProviderFactory>().As<IWordColorProviderFactory>().SingleInstance();
-            builder.RegisterType<WordDynamicFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();
+            builder.RegisterType<WordLinearColorProviderFactory>().As<IWordColorProviderFactory>().SingleInstance();
+            builder.RegisterType<WordLinearFontSizeProviderFactory>().As<IWordFontSizeProviderFactory>().SingleInstance();
 
             builder.RegisterType<CircularWordLayoutBuilder>().As<IWordLayoutBuilder>();
             builder.RegisterType<TagsCloudGenerator>().As<ITagsCloudGenerator>();
