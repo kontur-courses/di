@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{AE337334-387D-4D9F-B732-621527D7891C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloudContainer", "TagsCloudContainer\TagsCloudContainer.csproj", "{5F845737-19FE-4725-93B7-43CDC144C7D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudContainerTests", "TagCloudContainerTests\TagCloudContainerTests.csproj", "{A30273F6-E237-4ED4-9490-CC419793B735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AE337334-387D-4D9F-B732-621527D7891C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE337334-387D-4D9F-B732-621527D7891C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE337334-387D-4D9F-B732-621527D7891C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE337334-387D-4D9F-B732-621527D7891C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F845737-19FE-4725-93B7-43CDC144C7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F845737-19FE-4725-93B7-43CDC144C7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F845737-19FE-4725-93B7-43CDC144C7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F845737-19FE-4725-93B7-43CDC144C7D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30273F6-E237-4ED4-9490-CC419793B735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30273F6-E237-4ED4-9490-CC419793B735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30273F6-E237-4ED4-9490-CC419793B735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30273F6-E237-4ED4-9490-CC419793B735}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
