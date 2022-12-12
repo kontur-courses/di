@@ -10,6 +10,6 @@ namespace TagsCloudContainer.Infrastructure
 {
     public interface ITagsCloudGenerator
     {
-        public WordPlate[] GeneratePlates(IEnumerable<string> words, string fontName, PointF center, WordFontSizeSettings fontSizeSettings);
+        public WordPlate[] GeneratePlates(IEnumerable<string> words, PointF center, WordFontSettings fontSettings);
     }
 }

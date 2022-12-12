@@ -12,8 +12,8 @@ namespace TagsCloudContainer.ConsoleApp
 
             builder.Register(ctx => new ConsoleSettingsProvider(args)).As<ISettingsProvider>().SingleInstance();
             builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetWordColorSettings()).AsSelf();
-            builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetWordFontSizeSettings()).AsSelf();
-            builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetSaveTagsCloudSettings()).AsSelf();
+            builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetWordFontSettings()).AsSelf();
+            builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetOutputImageSettings()).AsSelf();
             builder.Register(ctx => ctx.Resolve<ISettingsProvider>().GetTextReaderSettings()).AsSelf();
 
             builder.RegisterType<TextFileReader>().As<IWordReader>().SingleInstance();

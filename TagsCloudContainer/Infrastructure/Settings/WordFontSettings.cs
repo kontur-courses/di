@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace TagsCloudContainer.Infrastructure.Settings
 {
-    public class SaveTagsCloudSettings
+    public class WordFontSettings
     {
-        public string Filename { get; set; }
+        public string FontFamily { get; set; }    
+
+        public WordFontSizeSettings FontSizeSettings { get; set; }
     }
 }

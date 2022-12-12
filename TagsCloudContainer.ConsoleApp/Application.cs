@@ -41,18 +41,20 @@ namespace TagsCloudContainer.ConsoleApp
 
             var wordFrequencies = GetWordFrequencies(wordPreparer.Prepare(words));
             
-            var wordFontSizeSettings = settingsProvider.GetWordFontSizeSettings();
-            wordFontSizeSettings.WordFrequencies = wordFrequencies;
+            var wordFontSettings = settingsProvider.GetWordFontSettings();
+            wordFontSettings.FontSizeSettings.WordFrequencies = wordFrequencies;
 
             var wordColorSettings = settingsProvider.GetWordColorSettings();
             wordColorSettings.WordFrequencies = wordFrequencies;
 
             words = wordFrequencies.Keys.ToArray();
-            var pictureSize = new Size(500, 500);
-            var wordPlates = tagsCloudGenerator.GeneratePlates(words, "Consolas", new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSizeSettings);
-            wordPlateVisualizer.DrawPlatesAndSave(wordPlates, pictureSize, settingsProvider.GetSaveTagsCloudSettings().Filename, wordColorSettings);
+            var outputImageSettings = settingsProvider.GetOutputImageSettings();
+            var pictureSize = new Size(outputImageSettings.Width, outputImageSettings.Height);
 
-            Console.WriteLine("Generated and saved");
+            var wordPlates = tagsCloudGenerator.GeneratePlates(words, new PointF(pictureSize.Width / 2.0F, pictureSize.Height / 2.0F), wordFontSettings);
+            wordPlateVisualizer.DrawPlatesAndSave(wordPlates, pictureSize, settingsProvider.GetOutputImageSettings().Filename, wordColorSettings);
+
+            Console.WriteLine($"Generated and saved to '{ settingsProvider.GetOutputImageSettings().Filename }'");
         }
 
         private static Dictionary<string, int> GetWordFrequencies(IEnumerable<string> words)

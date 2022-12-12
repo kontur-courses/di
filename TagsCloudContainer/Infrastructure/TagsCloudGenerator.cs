@@ -20,14 +20,14 @@ namespace TagsCloudContainer.Infrastructure
             this.fontSizeProviderFactory = fontSizeProviderFactory;
         }
 
-        public WordPlate[] GeneratePlates(IEnumerable<string> words, string fontName, PointF center, WordFontSizeSettings fontSizeSettings)
+        public WordPlate[] GeneratePlates(IEnumerable<string> words, PointF center, WordFontSettings fontSettings)
         {
-            var fontSizeProvider = fontSizeProviderFactory.CreateDefault(fontSizeSettings);
+            var fontSizeProvider = fontSizeProviderFactory.CreateDefault(fontSettings.FontSizeSettings);
 
             var graphics = Graphics.FromImage(new Bitmap(1, 1));
             foreach (var word in words)
             {
-                var font = new Font(fontName, fontSizeProvider.GetFontSize(word));
+                var font = new Font(fontSettings.FontFamily, fontSizeProvider.GetFontSize(word));
                 var floatSize = graphics.MeasureString(word, font);
                 wordLayoutBuilder.AddWord(word, new Size((int)Math.Ceiling(floatSize.Width), (int)Math.Ceiling(floatSize.Height)));
             }
@@ -35,7 +35,7 @@ namespace TagsCloudContainer.Infrastructure
             var wordRectangles = wordLayoutBuilder.Build(center);
             return wordRectangles.Select(wr => new WordPlate()
             {
-                Font = new Font(fontName, fontSizeProvider.GetFontSize(wr.Word)),
+                Font = new Font(fontSettings.FontFamily, fontSizeProvider.GetFontSize(wr.Word)),
                 WordRectangle = wr
             }).ToArray();
         }
